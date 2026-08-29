@@ -1,24 +1,44 @@
-# Getting Started app for Discord
+# Discord chance-encounter app
 
-This project contains a basic rock-paper-scissors-style Discord app written in JavaScript, built for the [getting started guide](https://discord.com/developers/docs/getting-started).
+This Discord app gives users random chance encounters with characters via two slash commands:
 
-![Demo of app](https://github.com/discord/discord-example-app/raw/main/assets/getting-started-demo.gif?raw=true)
+- `/roam` — wander to a random location; you might run into whoever's around, weighted by house and time of day (locations ending in `_PM` only appear in the evening).
+- `/meet` — pick from 4 random characters to meet up with directly.
+
+Whichever character you meet, you respond to their dialogue (Kind / Playful / Bold / Neutral) to grow your relationship with them over time. Progress is stored per Discord user in `data/relationships.json`.
+
+Each encounter displays a canvas-composited image: the location background with the character layered on top, dialogue box at the bottom, and all 4 response options visible as buttons. Command responses are ephemeral (only visible to the user who invoked it).
 
 ## Project structure
 Below is a basic overview of the project structure:
 
 ```
-├── examples    -> short, feature-specific sample apps
+├── assets/
+│   ├── bg/     -> location background art, served at /assets/bg
+│   └── chars/  -> character portrait art, served at /assets/chars
+├── constants/
+│   ├── backgrounds.js -> houses, general locations, and PM/evening gating
+│   ├── characters.js  -> character roster, grouped by house
+│   └── game.js        -> response options, affinity values, relationship levels
+├── examples    -> short, feature-specific sample apps from the original template
 │   ├── app.js  -> finished app.js code
 │   ├── button.js
 │   ├── command.js
 │   ├── modal.js
 │   ├── selectMenu.js
-├── .env.sample -> sample .env file
-├── app.js      -> main entrypoint for app
-├── commands.js -> slash command payloads + helpers
-├── game.js     -> logic specific to RPS
-├── utils.js    -> utility functions and enums
+├── data/ -> per-user data (gitignored)
+│   ├── relationships.json -> relationship progress
+│   └── commandLimits.json -> command usage tracking
+├── db/
+│   └── schema.sql -> Postgres schema for future migration
+├── .env.sample  -> sample .env file
+├── app.js       -> main entrypoint for app
+├── commands.js  -> slash command payloads + helpers
+├── encounters.js -> builds the /roam and /meet message payloads, handles dialogue responses
+├── storage.js   -> reads/writes data/relationships.json
+├── commandLimits.js -> tracks /roam and /meet usage (2 per day: AM and PM)
+├── imageComposition.js -> canvas-based image rendering (bg + character + dialogue)
+├── utils.js     -> utility functions and enums
 ├── package.json
 ├── README.md
 └── .gitignore
@@ -42,12 +62,14 @@ git clone https://github.com/discord/discord-example-app.git
 
 Then navigate to its directory and install dependencies:
 ```
-cd discord-example-app
+cd my-tkdb
 npm install
 ```
+
+**Note:** The `canvas` package requires system dependencies. On macOS, ensure you have Xcode Command Line Tools (`xcode-select --install`). On Linux, install `libcairo2-dev` and related packages. On Windows, Visual Studio build tools are required.
 ### Get app credentials
 
-Fetch the credentials from your app's settings and add them to a `.env` file (see `.env.sample` for an example). You'll need your app ID (`APP_ID`), bot token (`DISCORD_TOKEN`), and public key (`PUBLIC_KEY`).
+Fetch the credentials from your app's settings and add them to a `.env` file (see `.env.sample` for an example). You'll need your app ID (`APP_ID`), bot token (`DISCORD_TOKEN`), and public key (`PUBLIC_KEY`). You'll also need `BASE_URL` — the public HTTPS URL this app is reachable at (your ngrok URL while developing locally, or your production domain) — since it's used to build the background/character image URLs Discord loads for `/roam` and `/meet`.
 
 Fetching credentials is covered in detail in the [getting started guide](https://discord.com/developers/docs/getting-started).
 

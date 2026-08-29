@@ -1,22 +1,25 @@
 import 'dotenv/config';
 import express from 'express';
 import {
-  ButtonStyleTypes,
-  InteractionResponseFlags,
   InteractionResponseType,
   InteractionType,
-  MessageComponentTypes,
   verifyKeyMiddleware,
 } from 'discord-interactions';
-import { getRandomEmoji, DiscordRequest } from './utils.js';
-import { getShuffledOptions, getResult } from './game.js';
+import {
+  buildMeetPickMessage,
+  buildMeetSpawnMessage,
+  buildResponseResultMessage,
+  buildRoamMessage,
+} from './encounters.js';
+import { checkCommandLimit } from './commandLimits.js';
 
 // Create an express app
 const app = express();
 // Get port, or default to 3000
 const PORT = process.env.PORT || 3000;
-// To keep track of our active games
-const activeGames = {};
+
+// Serve character/background art so Discord can load it by URL in message components
+app.use('/assets', express.static('assets'));
 
 /**
  * Interactions endpoint URL where Discord will send HTTP requests
@@ -24,7 +27,8 @@ const activeGames = {};
  */
 app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async function (req, res) {
   // Interaction id, type and data
-  const { id, type, data } = req.body;
+  const { type, data, member, user } = req.body;
+  const userId = member?.user?.id || user?.id;
 
   /**
    * Handle verification requests
@@ -40,26 +44,73 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
   if (type === InteractionType.APPLICATION_COMMAND) {
     const { name } = data;
 
-    // "test" command
-    if (name === 'test') {
-      // Send a message into the channel where command was triggered from
+    if (name === 'roam') {
+      const limit = checkCommandLimit(userId, 'roam');
+      if (!limit.allowed) {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: limit.reason,
+            flags: 64, // EPHEMERAL
+          },
+        });
+      }
+      const messageData = await buildRoamMessage(userId);
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: {
-          flags: InteractionResponseFlags.IS_COMPONENTS_V2,
-          components: [
-            {
-              type: MessageComponentTypes.TEXT_DISPLAY,
-              // Fetches a random emoji to send from a helper function
-              content: `hello world ${getRandomEmoji()}`
-            }
-          ]
-        },
+        data: messageData,
+      });
+    }
+
+    if (name === 'meet') {
+      const limit = checkCommandLimit(userId, 'meet');
+      if (!limit.allowed) {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: limit.reason,
+            flags: 64, // EPHEMERAL
+          },
+        });
+      }
+      const messageData = buildMeetPickMessage();
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: messageData,
       });
     }
 
     console.error(`unknown command: ${name}`);
     return res.status(400).json({ error: 'unknown command' });
+  }
+
+  /**
+   * Handle button clicks from /meet and dialogue responses
+   */
+  if (type === InteractionType.MESSAGE_COMPONENT) {
+    const customId = data.custom_id;
+    const [action, ...rest] = customId.split(':');
+
+    if (action === 'meet' && rest[0] === 'pick') {
+      const characterId = rest[1];
+      const messageData = await buildMeetSpawnMessage(userId, characterId);
+      return res.send({
+        type: InteractionResponseType.UPDATE_MESSAGE,
+        data: messageData,
+      });
+    }
+
+    if (action === 'resp') {
+      const [characterId, responseTypeId] = rest;
+      const messageData = buildResponseResultMessage(userId, characterId, responseTypeId);
+      return res.send({
+        type: InteractionResponseType.UPDATE_MESSAGE,
+        data: messageData,
+      });
+    }
+
+    console.error(`unknown component interaction: ${customId}`);
+    return res.status(400).json({ error: 'unknown component interaction' });
   }
 
   console.error('unknown interaction type', type);

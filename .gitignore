@@ -141,3 +141,9 @@ dist
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
 .vite/
+
+# os
+.DS_Store
+
+# per-user data (relationships, command limits)
+/data/

@@ -1,49 +1,22 @@
 import 'dotenv/config';
-import { getRPSChoices } from './game.js';
-import { capitalize, InstallGlobalCommands } from './utils.js';
+import { InstallGlobalCommands } from './utils.js';
 
-// Get the game choices from game.js
-function createCommandChoices() {
-  const choices = getRPSChoices();
-  const commandChoices = [];
-
-  for (let choice of choices) {
-    commandChoices.push({
-      name: capitalize(choice),
-      value: choice.toLowerCase(),
-    });
-  }
-
-  return commandChoices;
-}
-
-// Simple test command
-const TEST_COMMAND = {
-  name: 'test',
-  description: 'Basic command',
+const ROAM_COMMAND = {
+  name: 'roam',
+  description: 'Wander around Darkwick and see who you run into',
   type: 1,
   integration_types: [0, 1],
   contexts: [0, 1, 2],
 };
 
-// Command containing options
-const CHALLENGE_COMMAND = {
-  name: 'challenge',
-  description: 'Challenge to a match of rock paper scissors',
-  options: [
-    {
-      type: 3,
-      name: 'object',
-      description: 'Pick your object',
-      required: true,
-      choices: createCommandChoices(),
-    },
-  ],
+const MEET_COMMAND = {
+  name: 'meet',
+  description: 'Pick someone to meet up with',
   type: 1,
   integration_types: [0, 1],
-  contexts: [0, 2],
+  contexts: [0, 1, 2],
 };
 
-const ALL_COMMANDS = [TEST_COMMAND, CHALLENGE_COMMAND];
+const ALL_COMMANDS = [ROAM_COMMAND, MEET_COMMAND];
 
 InstallGlobalCommands(process.env.APP_ID, ALL_COMMANDS);
