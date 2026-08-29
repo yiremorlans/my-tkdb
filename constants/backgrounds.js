@@ -14,6 +14,20 @@ export const HOUSES = {
   SINOSTRA: 'Sinostra',
 };
 
+export const CHARACTER_ROOMS = {
+  JIN: 'Jin_Room',
+  ALAN: 'Alan_Room',
+  LEO: 'Leo_Room',
+  SHOHEI: 'Shohei_Room',
+  SUBARU: 'Subaru_Room',
+  ZENJI: 'Zenji_Room',
+  JIRO: 'Jiro_Room',
+  REN: 'Ren_Room',
+  EDWARD: 'Edward_Room',
+  RUI: 'Rui_Room',
+  TAIGA: 'Taiga_Room',
+};
+
 export const GENERAL_LOCATIONS = {
   DARKWICK: 'Darkwick',
   ULTIO: 'Ultio',
@@ -22,7 +36,7 @@ export const GENERAL_LOCATIONS = {
 };
 
 // All location keys a background (and therefore an encounter) can belong to.
-export const LOCATION_KEYS = { ...HOUSES, ...GENERAL_LOCATIONS };
+export const LOCATION_KEYS = { ...HOUSES, ...GENERAL_LOCATIONS, ...CHARACTER_ROOMS };
 
 // Backgrounds that only appear once the user's local time is past 6 PM
 // live in this list by filename convention (ends in "_PM"). Discord
@@ -42,21 +56,15 @@ export const BACKGROUNDS_BY_LOCATION = {
     'Frostheim_Entrance.png',
     'Frostheim_Entrance_PM.png',
     'Frostheim_Jin_Entrance.png',
-    'Frostheim_Jin_Room.png',
-    'Frostheim_Jin_Room_PM.png',
     'Frostheim_Vault.png',
     'Frostheim_Vault_Entrance.png',
   ],
   [HOUSES.VAGASTROM]: [
-    'Vagastrom_Alan_Room.png',
-    'Vagastrom_Alan_Room_Entrance.png',
     'Vagastrom_Back_Garage.png',
     'Vagastrom_Corridor.png',
     'Vagastrom_Garage.png',
     'Vagastrom_Garage_PM.png',
-    'Vagastrom_Leo_Room.png',
     'Vagastrom_Secret_Car.png',
-    'Vagastrom_Shohei_Room.png',
     'Vagastrom_The_Pit.png',
   ],
   [HOUSES.HOTARUBI]: [
@@ -78,12 +86,10 @@ export const BACKGROUNDS_BY_LOCATION = {
     'Hotarubi_River.png',
     'Hotarubi_Stall_Star_Festival.png',
     'Hotarubi_Stall_Star_Festival_PM.png',
-    'Hotarubi_Subaru_Room.png',
     'Hotarubi_Tea_Room.png',
     'Hotarubi_Tea_Room_PM.png',
     'Hotarubi_Temple.png',
     'Hotarubi_Temple_PM.png',
-    'Hotarubi_Zenji_Room_PM.png',
   ],
   [HOUSES.DIONYSIA]: [
     'Dionysia_Circus.png',
@@ -96,7 +102,6 @@ export const BACKGROUNDS_BY_LOCATION = {
     'Mortkranken_Examination_Room.png',
     'Mortkranken_Examination_Room_2.png',
     'Mortkranken_Examination_Room_PM.png',
-    'Mortkranken_Jiro_Room.png',
     'Mortkranken_Lab.png',
     'Mortkranken_Lab_PM.png',
     'Mortkranken_Underpass.png',
@@ -110,27 +115,20 @@ export const BACKGROUNDS_BY_LOCATION = {
     'Jabberwock_Field_PM.png',
     'Jabberwock_Kitchen.png',
     'Jabberwock_Mountain_PM.png',
-    'Jabberwock_Ren_Room.png',
     'Jabberwock_Ushi-Oni_Pen.png',
   ],
   [HOUSES.OBSCUARY]: [
     'Obscuary_Bar.png',
-    'Obscuary_Edward_Room.png',
-    'Obscuary_Edward_Room_2.png',
-    'Obscuary_Edward_Room_Entrance.png',
     'Obscuary_Entrance.png',
     'Obscuary_Garden.png',
     'Obscuary_Guest_Room.png',
     'Obscuary_Lost_Forest.png',
-    'Obscuary_Rui_Room.png',
   ],
   [HOUSES.SINOSTRA]: [
     'Sinostra_Auction_Hall.png',
     'Sinostra_Auction_Hall_Cage.png',
     'Sinostra_Casino.png',
     'Sinostra_Casino_Nook.png',
-    'Sinostra_Taiga_Room.png',
-    'Sinostra_Taiga_Room_Entrance.png',
     'Sinostra_VIP_Room.png',
     'Sinostra_VIP_Room_Entrance.png',
   ],
@@ -193,6 +191,44 @@ export const BACKGROUNDS_BY_LOCATION = {
     'Clementia_Cathedral_Hall.png',
     'Clementia_Cathedral_Hall_PM.png',
     'Clementia_Cathedral_PM.png',
+  ],
+  [CHARACTER_ROOMS.JIN]: [
+    'Frostheim_Jin_Room.png',
+    'Frostheim_Jin_Room_PM.png',
+  ],
+  [CHARACTER_ROOMS.ALAN]: [
+    'Vagastrom_Alan_Room.png',
+    'Vagastrom_Alan_Room_Entrance.png',
+  ],
+  [CHARACTER_ROOMS.LEO]: [
+    'Vagastrom_Leo_Room.png',
+  ],
+  [CHARACTER_ROOMS.SHOHEI]: [
+    'Vagastrom_Shohei_Room.png',
+  ],
+  [CHARACTER_ROOMS.SUBARU]: [
+    'Hotarubi_Subaru_Room.png',
+  ],
+  [CHARACTER_ROOMS.ZENJI]: [
+    'Hotarubi_Zenji_Room_PM.png',
+  ],
+  [CHARACTER_ROOMS.JIRO]: [
+    'Mortkranken_Jiro_Room.png',
+  ],
+  [CHARACTER_ROOMS.REN]: [
+    'Jabberwock_Ren_Room.png',
+  ],
+  [CHARACTER_ROOMS.EDWARD]: [
+    'Obscuary_Edward_Room.png',
+    'Obscuary_Edward_Room_2.png',
+    'Obscuary_Edward_Room_Entrance.png',
+  ],
+  [CHARACTER_ROOMS.RUI]: [
+    'Obscuary_Rui_Room.png',
+  ],
+  [CHARACTER_ROOMS.TAIGA]: [
+    'Sinostra_Taiga_Room.png',
+    'Sinostra_Taiga_Room_Entrance.png',
   ],
 };
 

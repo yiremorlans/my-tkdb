@@ -147,3 +147,6 @@ vite.config.ts.timestamp-*
 
 # per-user data (relationships, command limits)
 /data/
+
+# roam encounter cache (persists across restarts)
+.roam-cache.json

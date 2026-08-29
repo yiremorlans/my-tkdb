@@ -9,7 +9,8 @@ import {
   buildMeetPickMessage,
   buildMeetSpawnMessage,
   buildResponseResultMessage,
-  buildRoamMessage,
+  buildRoamDialogueMessage,
+  buildRoamSpawnMessage,
 } from './encounters.js';
 import { checkCommandLimit, resetCommandLimit } from './commandLimits.js';
 
@@ -20,6 +21,55 @@ const PORT = process.env.PORT || 3000;
 
 // Serve character/background art so Discord can load it by URL in message components
 app.use('/assets', express.static('assets'));
+
+async function sendFollowup(interactionToken, messageData, timeoutMs = 15000) {
+  const url = `https://discord.com/api/v10/webhooks/${process.env.APP_ID}/${interactionToken}`;
+  const startTime = Date.now();
+  console.log('[sendFollowup] Starting, timeout:', timeoutMs, 'ms');
+
+  return Promise.race([
+    (async () => {
+      try {
+        const form = new FormData();
+
+        if (messageData.files && messageData.files.length > 0) {
+          // Handle files separately
+          const { files, ...dataWithoutFiles } = messageData;
+          form.append('payload_json', JSON.stringify(dataWithoutFiles));
+          for (let i = 0; i < files.length; i++) {
+            const file = files[i];
+            console.log(`[sendFollowup] Appending file: ${file.name}, size: ${file.attachment.length / 1024 / 1024}MB`);
+            const blob = new Blob([file.attachment], { type: 'image/png' });
+            form.append(`files[${i}]`, blob, file.name);
+          }
+        } else {
+          form.append('payload_json', JSON.stringify(messageData));
+        }
+
+        console.log('[sendFollowup] Sending fetch request to Discord, elapsed:', Date.now() - startTime, 'ms');
+        const fetchStart = Date.now();
+        const response = await fetch(url, {
+          method: 'POST',
+          body: form,
+        });
+        console.log('[sendFollowup] Response received:', response.status, '- took', Date.now() - fetchStart, 'ms');
+        const responseText = await response.text();
+        if (!response.ok) {
+          console.error(`[sendFollowup] Failed: ${response.status}`, responseText);
+          throw new Error(`Discord API error: ${response.status}`);
+        } else {
+          console.log('[sendFollowup] Success! Total time:', Date.now() - startTime, 'ms');
+        }
+      } catch (err) {
+        console.error('[sendFollowup] Error:', err.message);
+        throw err;
+      }
+    })(),
+    new Promise((_, reject) =>
+      setTimeout(() => reject(new Error('Followup timeout after ' + timeoutMs + 'ms')), timeoutMs)
+    )
+  ]);
+}
 
 /**
  * Interactions endpoint URL where Discord will send HTTP requests
@@ -55,7 +105,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
           },
         });
       }
-      const messageData = await buildRoamMessage(userId);
+      const messageData = buildRoamDialogueMessage(userId);
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: messageData,
@@ -104,11 +154,82 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 
     if (action === 'meet' && rest[0] === 'pick') {
       const characterId = rest[1];
-      const messageData = await buildMeetSpawnMessage(userId, characterId);
-      return res.send({
+
+      // Disable the character selection buttons by copying and modifying the original message
+      const disabledComponents = req.body.message?.components?.map(row => ({
+        ...row,
+        components: row.components?.map(btn => ({ ...btn, disabled: true })) || [],
+      })) || [];
+
+      res.send({
         type: InteractionResponseType.UPDATE_MESSAGE,
-        data: messageData,
+        data: {
+          content: req.body.message?.content || 'A few familiar faces catch your eye. Who do you want to meet?',
+          components: disabledComponents,
+          flags: 64,
+        },
       });
+
+      const timeoutHandle = setTimeout(() => {
+        console.error('Meet pick command timed out after 120 seconds');
+        sendFollowup(req.body.token, {
+          content: '⏱️ This took too long to process. Try again?',
+          flags: 64,
+        }).catch(e => console.error('Failed to send timeout error:', e));
+      }, 120000);
+
+      (async () => {
+        try {
+          const messageData = await buildMeetSpawnMessage(userId, characterId);
+          await sendFollowup(req.body.token, messageData);
+          clearTimeout(timeoutHandle);
+        } catch (err) {
+          console.error('Error in /meet pick:', err);
+          clearTimeout(timeoutHandle);
+          try {
+            await sendFollowup(req.body.token, {
+              content: `Error: ${err.message}`,
+              flags: 64,
+            });
+          } catch (followupErr) {
+            console.error('Failed to send error followup:', followupErr);
+          }
+        }
+      })();
+      return;
+    }
+
+    if (action === 'roam' && rest[0] === 'spawn') {
+      const encounterId = rest[1];
+      res.send({ type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE });
+
+      const timeoutHandle = setTimeout(() => {
+        console.error('Roam spawn command timed out after 120 seconds');
+        sendFollowup(req.body.token, {
+          content: '⏱️ This took too long to process. Try again?',
+          flags: 64,
+        }).catch(e => console.error('Failed to send timeout error:', e));
+      }, 120000);
+
+      (async () => {
+        try {
+          const messageData = await buildRoamSpawnMessage(encounterId);
+          await sendFollowup(req.body.token, messageData);
+          clearTimeout(timeoutHandle);
+        } catch (err) {
+          console.error('Error in /roam spawn:', err);
+          clearTimeout(timeoutHandle);
+          try {
+            await sendFollowup(req.body.token, {
+              content: `Error: ${err.message}`,
+              flags: 64,
+            });
+          } catch (followupErr) {
+            console.error('Failed to send error followup:', followupErr);
+          }
+        }
+      })();
+      return;
     }
 
     if (action === 'resp') {

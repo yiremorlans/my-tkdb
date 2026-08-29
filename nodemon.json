@@ -1,0 +1,5 @@
+{
+  "ignore": ["assets/*", "node_modules/*", ".git/*"],
+  "ext": "js,json",
+  "delay": 500
+}
