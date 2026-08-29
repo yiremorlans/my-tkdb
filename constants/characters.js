@@ -596,7 +596,11 @@ export function getCharacterById(id) {
 }
 
 export function getCharactersByHouse(house) {
-  return CHARACTERS.filter((c) => c.house === house || (c.additionalHouses && c.additionalHouses.includes(house)));
+  return CHARACTERS.filter((c) =>
+    c.house === house ||
+    (c.additionalHouses && c.additionalHouses.includes(house)) ||
+    (c.additionalLocations && c.additionalLocations.includes(house))
+  );
 }
 
 // Characters eligible to appear at a given location: same-house characters,

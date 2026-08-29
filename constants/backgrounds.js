@@ -28,6 +28,17 @@ export const CHARACTER_ROOMS = {
   TAIGA: 'Taiga_Room',
 };
 
+export const SPECIAL_BACKGROUNDS = {
+  DARKWICK_MYSTERY_DINER: 'Darkwick_Mystery_Diner.png',
+  DARKWICK_FOOD_TRUCK: 'Darkwick_Food_Truck.png',
+  DARKWICK_DOCKS: 'Darkwick_Docks.png',
+  VAGASTROM_THE_PIT: 'Vagastrom_The_Pit.png',
+  SINOSTRA_VIP_ROOM_ENTRANCE: 'Sinostra_VIP_Room_Entrance.png',
+  OBSCUARY_BAR: 'Obscuary_Bar.png',
+  MORTKRANKEN_LAB: 'Mortkranken_Lab.png',
+  MORTKRANKEN_LAB_PM: 'Mortkranken_Lab_PM.png',
+};
+
 export const GENERAL_LOCATIONS = {
   DARKWICK: 'Darkwick',
   ULTIO: 'Ultio',
@@ -35,8 +46,12 @@ export const GENERAL_LOCATIONS = {
   CLEMENTIA: 'Clementia',
 };
 
+export const EVENT_LOCATIONS = {
+  STAR_FESTIVAL: 'Star_Festival',
+};
+
 // All location keys a background (and therefore an encounter) can belong to.
-export const LOCATION_KEYS = { ...HOUSES, ...GENERAL_LOCATIONS, ...CHARACTER_ROOMS };
+export const LOCATION_KEYS = { ...HOUSES, ...GENERAL_LOCATIONS, ...EVENT_LOCATIONS, ...CHARACTER_ROOMS };
 
 // Backgrounds that only appear once the user's local time is past 6 PM
 // live in this list by filename convention (ends in "_PM"). Discord
@@ -70,22 +85,15 @@ export const BACKGROUNDS_BY_LOCATION = {
   [HOUSES.HOTARUBI]: [
     'Hotarubi_Bamboo_Forest.png',
     'Hotarubi_Corridor.png',
-    'Hotarubi_Eternal_Bamboo.png',
     'Hotarubi_Forest_2.png',
     'Hotarubi_Garden.png',
     'Hotarubi_Garden_PM.png',
-    'Hotarubi_Garden_Star_Festival.png',
-    'Hotarubi_Garden_Star_Festival_PM.png',
     'Hotarubi_Harbor.png',
-    'Hotarubi_Harbor_Star_Festival.png',
     'Hotarubi_Lake.png',
     'Hotarubi_Lake_2.png',
     'Hotarubi_Lake_PM.png',
     'Hotarubi_Parlor.png',
     'Hotarubi_Parlor_PM.png',
-    'Hotarubi_River.png',
-    'Hotarubi_Stall_Star_Festival.png',
-    'Hotarubi_Stall_Star_Festival_PM.png',
     'Hotarubi_Tea_Room.png',
     'Hotarubi_Tea_Room_PM.png',
     'Hotarubi_Temple.png',
@@ -192,6 +200,15 @@ export const BACKGROUNDS_BY_LOCATION = {
     'Clementia_Cathedral_Hall_PM.png',
     'Clementia_Cathedral_PM.png',
   ],
+  [EVENT_LOCATIONS.STAR_FESTIVAL]: [
+    'Hotarubi_Eternal_Bamboo.png',
+    'Hotarubi_Garden_Star_Festival.png',
+    'Hotarubi_Garden_Star_Festival_PM.png',
+    'Hotarubi_Harbor_Star_Festival.png',
+    'Hotarubi_River.png',
+    'Hotarubi_Stall_Star_Festival.png',
+    'Hotarubi_Stall_Star_Festival_PM.png',
+  ],
   [CHARACTER_ROOMS.JIN]: [
     'Frostheim_Jin_Room.png',
     'Frostheim_Jin_Room_PM.png',
@@ -233,7 +250,7 @@ export const BACKGROUNDS_BY_LOCATION = {
 };
 
 export function isGeneralLocation(locationKey) {
-  return Object.values(GENERAL_LOCATIONS).includes(locationKey);
+  return Object.values(GENERAL_LOCATIONS).includes(locationKey) || Object.values(EVENT_LOCATIONS).includes(locationKey);
 }
 
 // Backgrounds available for a location right now, given the current time.

@@ -7,6 +7,7 @@ import {
   getRandomBackgroundForLocation,
   getRandomGeneralBackground,
   isGeneralLocation,
+  SPECIAL_BACKGROUNDS,
 } from './constants/backgrounds.js';
 import {
   CHARACTERS,
@@ -132,7 +133,53 @@ export function buildRoamDialogueMessage(userId, now = new Date()) {
 
   const isGeneral = isGeneralLocation(spot.locationKey);
   const candidates = getCharactersForLocation(spot.locationKey, isGeneral);
-  const character = pickRandom(candidates);
+
+  // Preferentially select certain characters at specific locations (45% chance for special character, 55% random)
+  const SPECIAL_CHARACTER_PROBABILITY = 0.45;
+  let character;
+  switch (spot.file) {
+    case SPECIAL_BACKGROUNDS.DARKWICK_MYSTERY_DINER: {
+      const ren = candidates.find(c => c.id === 'ren');
+      character = (ren && Math.random() < SPECIAL_CHARACTER_PROBABILITY) ? ren : pickRandom(candidates);
+      break;
+    }
+    case SPECIAL_BACKGROUNDS.DARKWICK_FOOD_TRUCK: {
+      const shohei = candidates.find(c => c.id === 'shohei');
+      character = (shohei && Math.random() < SPECIAL_CHARACTER_PROBABILITY) ? shohei : pickRandom(candidates);
+      break;
+    }
+    case SPECIAL_BACKGROUNDS.DARKWICK_DOCKS: {
+      const shion = candidates.find(c => c.id === 'shion');
+      character = (shion && Math.random() < SPECIAL_CHARACTER_PROBABILITY) ? shion : pickRandom(candidates);
+      break;
+    }
+    case SPECIAL_BACKGROUNDS.VAGASTROM_THE_PIT: {
+      const alan = candidates.find(c => c.id === 'alan');
+      character = (alan && Math.random() < SPECIAL_CHARACTER_PROBABILITY) ? alan : pickRandom(candidates);
+      break;
+    }
+    case SPECIAL_BACKGROUNDS.SINOSTRA_VIP_ROOM_ENTRANCE: {
+      const romeo = candidates.find(c => c.id === 'romeo');
+      character = (romeo && Math.random() < SPECIAL_CHARACTER_PROBABILITY) ? romeo : pickRandom(candidates);
+      break;
+    }
+    case SPECIAL_BACKGROUNDS.OBSCUARY_BAR: {
+      const rui = candidates.find(c => c.id === 'rui');
+      const romeo = candidates.find(c => c.id === 'romeo');
+      const preferred = [rui, romeo].filter(Boolean);
+      character = (preferred.length > 0 && Math.random() < SPECIAL_CHARACTER_PROBABILITY) ? pickRandom(preferred) : pickRandom(candidates);
+      break;
+    }
+    case SPECIAL_BACKGROUNDS.MORTKRANKEN_LAB:
+    case SPECIAL_BACKGROUNDS.MORTKRANKEN_LAB_PM: {
+      const yuri = candidates.find(c => c.id === 'yuri');
+      character = (yuri && Math.random() < SPECIAL_CHARACTER_PROBABILITY) ? yuri : pickRandom(candidates);
+      break;
+    }
+    default:
+      character = pickRandom(candidates);
+  }
+
   console.log(`[buildRoamDialogueMessage] Selected ${getFullName(character)} at ${spot.locationKey}`);
 
   const { affinity } = getRelationship(userId, character.id);
