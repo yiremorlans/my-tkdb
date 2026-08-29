@@ -28,7 +28,7 @@ export const CHARACTERS = [
     firstName: 'Jin',
     lastName: 'Kamurai',
     house: HOUSES.FROSTHEIM,
-    images: { uniform: 'Jin_Kamurai_Uniform.webp', casual: 'Jin_Kamurai_Casual.webp' },
+    images: { uniform: 'Jin_Kamurai_Uniform.png', casual: 'Jin_Kamurai_Casual.png' },
     affinityByResponse: { kind: 1, playful: 0, bold: 2 },
     dialogue: {
       new: ['The frost never bothered him — but he\'s curious why you\'re here.'],
@@ -41,7 +41,7 @@ export const CHARACTERS = [
     firstName: 'Kaito',
     lastName: 'Fuji',
     house: HOUSES.FROSTHEIM,
-    images: { uniform: 'Kaito_Fuji_Uniform.webp', casual: 'Kaito_Fuji_Casual.webp' },
+    images: { uniform: 'Kaito_Fuji_Uniform.png', casual: 'Kaito_Fuji_Casual.png' },
     affinityByResponse: { kind: 0, playful: 2, bold: 1 },
     dialogue: {
       new: ['He flashes a sharp grin. "Lost, or just brave enough to wander into Frostheim?"'],
@@ -54,7 +54,7 @@ export const CHARACTERS = [
     firstName: 'Lucas',
     lastName: 'Errant',
     house: HOUSES.FROSTHEIM,
-    images: { uniform: 'Lucas_Errant_Uniform.webp', casual: 'Lucas_Errant_Casual.webp' },
+    images: { uniform: 'Lucas_Errant_Uniform.png', casual: 'Lucas_Errant_Casual.png' },
     affinityByResponse: { kind: 2, playful: 0, bold: 1 },
     dialogue: {
       new: ['He studies you for a long moment before offering the faintest nod.'],
@@ -67,7 +67,7 @@ export const CHARACTERS = [
     firstName: 'Tohma',
     lastName: 'Ishibashi',
     house: HOUSES.FROSTHEIM,
-    images: { uniform: 'Tohma_Ishibashi_Uniform.webp', casual: 'Tohma_Ishibashi_Casual.webp' },
+    images: { uniform: 'Tohma_Ishibashi_Uniform.png', casual: 'Tohma_Ishibashi_Casual.png' },
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     dialogue: {
       new: ['Calm as still water, he tilts his head. "You\'re new around here."'],
@@ -82,7 +82,7 @@ export const CHARACTERS = [
     firstName: 'Alan',
     lastName: 'Mido',
     house: HOUSES.VAGASTROM,
-    images: { uniform: 'Alan_Mido_Uniform.webp', casual: 'Alan_Mido_Casual.webp' },
+    images: { uniform: 'Alan_Mido_Uniform.png', casual: 'Alan_Mido_Casual.png' },
     affinityByResponse: { kind: 1, playful: 2, bold: 0 },
     dialogue: {
       new: ['Grease-streaked hands, easy grin. "Careful, this place bites."'],
@@ -95,7 +95,7 @@ export const CHARACTERS = [
     firstName: 'Leo',
     lastName: 'Kurosagi',
     house: HOUSES.VAGASTROM,
-    images: { uniform: 'Leo_Kurosagi_Uniform.webp', casual: 'Leo_Kurosagi_Casual.webp' },
+    images: { uniform: 'Leo_Kurosagi_Uniform.png', casual: 'Leo_Kurosagi_Casual.png' },
     affinityByResponse: { kind: 0, playful: 1, bold: 2 },
     dialogue: {
       new: ['He revs an engine that isn\'t there just to make you jump.'],
@@ -108,7 +108,7 @@ export const CHARACTERS = [
     firstName: 'Shohei',
     lastName: 'Haizono',
     house: HOUSES.VAGASTROM,
-    images: { uniform: 'Shohei_Haizono_Uniform.webp', casual: 'Shohei_Haizono_Casual.webp' },
+    images: { uniform: 'Shohei_Haizono_Uniform.png', casual: 'Shohei_Haizono_Casual.png' },
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     dialogue: {
       new: ['He leans against the garage wall, watching you with quiet interest.'],
@@ -123,7 +123,7 @@ export const CHARACTERS = [
     firstName: 'Subaru',
     lastName: 'Kagami',
     house: HOUSES.HOTARUBI,
-    images: { uniform: 'Subaru_Kagami_Uniform.webp', casual: 'Subaru_Kagami_Casual.webp' },
+    images: { uniform: 'Subaru_Kagami_Uniform.png', casual: 'Subaru_Kagami_Casual.png' },
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     dialogue: {
       new: ['Lantern light catches his eyes as he offers a soft, knowing smile.'],
@@ -136,7 +136,7 @@ export const CHARACTERS = [
     firstName: 'Zenji',
     lastName: 'Kotodama',
     house: HOUSES.HOTARUBI,
-    images: { uniform: 'Zenji_Kotodama_Uniform.webp', casual: 'Zenji_Kotodama_Casual.webp' },
+    images: { uniform: 'Zenji_Kotodama_Uniform.png', casual: 'Zenji_Kotodama_Casual.png' },
     affinityByResponse: { kind: 2, playful: 0, bold: 1 },
     dialogue: {
       new: ['He bows slightly, voice like a low temple bell. "Welcome, traveler."'],
@@ -149,7 +149,7 @@ export const CHARACTERS = [
     firstName: 'Haku',
     lastName: 'Kusanagi',
     house: HOUSES.HOTARUBI,
-    images: { uniform: 'Haku_Kusanagi_Uniform.webp', casual: 'Haku_Kusanagi_Casual.webp' },
+    images: { uniform: 'Haku_Kusanagi_Uniform.png', casual: 'Haku_Kusanagi_Casual.png' },
     affinityByResponse: { kind: 1, playful: 2, bold: 0 },
     dialogue: {
       new: ['Petals drift past him undisturbed; he seems used to visitors like you.'],
@@ -164,7 +164,7 @@ export const CHARACTERS = [
     firstName: 'Elias',
     lastName: 'Pratt',
     house: HOUSES.DIONYSIA,
-    images: { uniform: 'Elias_Pratt_Uniform.webp' },
+    images: { uniform: 'Elias_Pratt_Uniform.png' },
     affinityByResponse: { kind: 0, playful: 2, bold: 1 },
     dialogue: {
       new: ['He juggles a stray coin between his fingers. "New audience — how lovely."'],
@@ -177,7 +177,7 @@ export const CHARACTERS = [
     firstName: 'Jo',
     lastName: 'Kongoza',
     house: HOUSES.DIONYSIA,
-    images: { uniform: 'Jo_Kongoza_Uniform.webp', casual: 'Jo_Kongoza_Casual.webp' },
+    images: { uniform: 'Jo_Kongoza_Uniform.png', casual: 'Jo_Kongoza_Casual.png' },
     affinityByResponse: { kind: 0, playful: 1, bold: 2 },
     dialogue: {
       new: ['Upside-down on a rope, she waves as if this were completely normal.'],
@@ -190,7 +190,7 @@ export const CHARACTERS = [
     firstName: 'Mio',
     lastName: 'Susuhara',
     house: HOUSES.DIONYSIA,
-    images: { uniform: 'Mio_Susuhara_Uniform.webp' },
+    images: { uniform: 'Mio_Susuhara_Uniform.png' },
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     dialogue: {
       new: ['She peers at you from behind a curtain, delighted by the surprise.'],
@@ -203,7 +203,7 @@ export const CHARACTERS = [
     firstName: 'Shion',
     lastName: 'Genkai',
     house: HOUSES.DIONYSIA,
-    images: { uniform: 'Shion_Genkai_Uniform.webp' },
+    images: { uniform: 'Shion_Genkai_Uniform.png' },
     affinityByResponse: { kind: 0, playful: 2, bold: 1 },
     dialogue: {
       new: ['A masked bow, a theatrical flourish. "Welcome to the show."'],
@@ -218,7 +218,7 @@ export const CHARACTERS = [
     firstName: 'Jiro',
     lastName: 'Kirisaki',
     house: HOUSES.MORTKRANKEN,
-    images: { uniform: 'Jiro_Kirisaki_Uniform.webp', casual: 'Jiro_Kirisaki_Casual.webp' },
+    images: { uniform: 'Jiro_Kirisaki_Uniform.png', casual: 'Jiro_Kirisaki_Casual.png' },
     affinityByResponse: { kind: 1, playful: 0, bold: 2 },
     dialogue: {
       new: ['He doesn\'t look up from his notes. "Another test subject, then?"'],
@@ -231,7 +231,7 @@ export const CHARACTERS = [
     firstName: 'Yuri',
     lastName: 'Isami',
     house: HOUSES.MORTKRANKEN,
-    images: { uniform: 'Yuri_Isami_Uniform.webp', casual: 'Yuri_Isami_Casual.webp' },
+    images: { uniform: 'Yuri_Isami_Uniform.png', casual: 'Yuri_Isami_Casual.png' },
     affinityByResponse: { kind: 2, playful: 0, bold: 1 },
     dialogue: {
       new: ['Cold eyes soften just slightly. "You shouldn\'t wander here alone."'],
@@ -246,7 +246,7 @@ export const CHARACTERS = [
     firstName: 'Ren',
     lastName: 'Shiranami',
     house: HOUSES.JABBERWOCK,
-    images: { uniform: 'Ren_Shiranami_Uniform.webp', casual: 'Ren_Shiranami_Casual.webp' },
+    images: { uniform: 'Ren_Shiranami_Uniform.png', casual: 'Ren_Shiranami_Casual.png' },
     affinityByResponse: { kind: 0, playful: 1, bold: 2 },
     dialogue: {
       new: ['He crouches by the field\'s edge, sizing you up like prey — or a friend.'],
@@ -259,7 +259,7 @@ export const CHARACTERS = [
     firstName: 'Haru',
     lastName: 'Sagara',
     house: HOUSES.JABBERWOCK,
-    images: { uniform: 'Haru_Sagara_Uniform.webp', casual: 'Haru_Sagara_Casual.webp' },
+    images: { uniform: 'Haru_Sagara_Uniform.png', casual: 'Haru_Sagara_Casual.png' },
     affinityByResponse: { kind: 0, playful: 2, bold: 1 },
     dialogue: {
       new: ['Dirt on his boots, mischief in his eyes. "You\'re either lost or looking for trouble."'],
@@ -272,7 +272,7 @@ export const CHARACTERS = [
     firstName: 'Towa',
     lastName: 'Otonashi',
     house: HOUSES.JABBERWOCK,
-    images: { uniform: 'Towa_Otonashi_Uniform.webp', casual: 'Towa_Otonashi_Casual.webp' },
+    images: { uniform: 'Towa_Otonashi_Uniform.png', casual: 'Towa_Otonashi_Casual.png' },
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     dialogue: {
       new: ['Quiet as the mountain air, he simply watches you approach.'],
@@ -287,7 +287,7 @@ export const CHARACTERS = [
     firstName: 'Edward',
     lastName: 'Hart',
     house: HOUSES.OBSCUARY,
-    images: { uniform: 'Edward_Hart_Uniform.webp', casual: 'Edward_Hart_Casual.webp' },
+    images: { uniform: 'Edward_Hart_Uniform.png', casual: 'Edward_Hart_Casual.png' },
     affinityByResponse: { kind: 0, playful: 1, bold: 2 },
     dialogue: {
       new: ['A slow, practiced smile. "Curious guest — welcome to my parlor."'],
@@ -300,7 +300,7 @@ export const CHARACTERS = [
     firstName: 'Rui',
     lastName: 'Mizuki',
     house: HOUSES.OBSCUARY,
-    images: { uniform: 'Rui_Mizuki_Uniform.webp', casual: 'Rui_Mizuki_Casual.webp' },
+    images: { uniform: 'Rui_Mizuki_Uniform.png', casual: 'Rui_Mizuki_Casual.png' },
     affinityByResponse: { kind: 1, playful: 2, bold: 0 },
     dialogue: {
       new: ['He tilts his head, unreadable. "You\'re not supposed to be here. I don\'t mind."'],
@@ -313,7 +313,7 @@ export const CHARACTERS = [
     firstName: 'Lyca',
     lastName: 'Colt',
     house: HOUSES.OBSCUARY,
-    images: { uniform: 'Lyca_Colt_Uniform.webp', casual: 'Lyca_Colt_Casual.webp' },
+    images: { uniform: 'Lyca_Colt_Uniform.png', casual: 'Lyca_Colt_Casual.png' },
     affinityByResponse: { kind: 2, playful: 0, bold: 1 },
     dialogue: {
       new: ['She leans in the doorway, arms crossed. "Well, look what wandered in."'],
@@ -328,7 +328,7 @@ export const CHARACTERS = [
     firstName: 'Taiga',
     lastName: 'Hoshibami',
     house: HOUSES.SINOSTRA,
-    images: { uniform: 'Taiga_Hoshibami_Uniform.webp', casual: 'Taiga_Hoshibami_Casual.webp' },
+    images: { uniform: 'Taiga_Hoshibami_Uniform.png', casual: 'Taiga_Hoshibami_Casual.png' },
     affinityByResponse: { kind: 0, playful: 1, bold: 2 },
     dialogue: {
       new: ['Cards shuffle idly in his hands. "Care to make this interesting?"'],
@@ -341,7 +341,7 @@ export const CHARACTERS = [
     firstName: 'Ritsu',
     lastName: 'Shinjo',
     house: HOUSES.SINOSTRA,
-    images: { uniform: 'Ritsu_Shinjo_Uniform.webp', casual: 'Ritsu_Shinjo_Casual.webp' },
+    images: { uniform: 'Ritsu_Shinjo_Uniform.png', casual: 'Ritsu_Shinjo_Casual.png' },
     affinityByResponse: { kind: 0, playful: 2, bold: 1 },
     dialogue: {
       new: ['He studies you like a hand he hasn\'t decided how to play yet.'],
@@ -354,7 +354,7 @@ export const CHARACTERS = [
     firstName: 'Romeo',
     lastName: 'Lucci',
     house: HOUSES.SINOSTRA,
-    images: { uniform: 'Romeo_Lucci_Uniform.webp', casual: 'Romeo_Lucci_Casual.webp' },
+    images: { uniform: 'Romeo_Lucci_Uniform.png', casual: 'Romeo_Lucci_Casual.png' },
     affinityByResponse: { kind: 0, playful: 1, bold: 2 },
     dialogue: {
       new: ['A sly wink. "Every newcomer\'s a gamble. Let\'s see what you\'re worth."'],

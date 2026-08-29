@@ -17,6 +17,14 @@ const MEET_COMMAND = {
   contexts: [0, 1, 2],
 };
 
-const ALL_COMMANDS = [ROAM_COMMAND, MEET_COMMAND];
+const TESTLIMIT_COMMAND = {
+  name: 'testlimit',
+  description: '[DEV] Reset your command limits for testing',
+  type: 1,
+  integration_types: [0, 1],
+  contexts: [0, 1, 2],
+};
+
+const ALL_COMMANDS = [ROAM_COMMAND, MEET_COMMAND, TESTLIMIT_COMMAND];
 
 InstallGlobalCommands(process.env.APP_ID, ALL_COMMANDS);

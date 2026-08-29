@@ -1,24 +1,17 @@
-import { createCanvas, Image } from 'canvas';
-import { readFileSync } from 'fs';
+import { createCanvas, loadImage } from 'canvas';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// Load an image file and return a Canvas Image object.
-function loadImage(filename) {
-  const img = new Image();
-  const filepath = join(__dirname, filename);
-  const buffer = readFileSync(filepath);
-  img.src = buffer;
-  return img;
-}
-
 // Composite a background and character image on canvas, optionally with dialogue.
 // Returns a buffer containing the PNG-encoded composite image.
 export async function composeEncounter(bgFilename, charFilename, dialogue = null) {
-  const bgImg = loadImage(`assets/bg/${bgFilename}`);
-  const charImg = loadImage(`assets/chars/${charFilename}`);
+  const bgPath = join(__dirname, `assets/bg/${bgFilename}`);
+  const charPath = join(__dirname, `assets/chars/${charFilename}`);
+
+  const bgImg = await loadImage(bgPath);
+  const charImg = await loadImage(charPath);
 
   // Use background dimensions as canvas size.
   const canvas = createCanvas(bgImg.width, bgImg.height);

@@ -11,7 +11,7 @@ import {
   buildResponseResultMessage,
   buildRoamMessage,
 } from './encounters.js';
-import { checkCommandLimit } from './commandLimits.js';
+import { checkCommandLimit, resetCommandLimit } from './commandLimits.js';
 
 // Create an express app
 const app = express();
@@ -77,6 +77,17 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: messageData,
+      });
+    }
+
+    if (name === 'testlimit') {
+      resetCommandLimit(userId);
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: {
+          content: '✅ Command limits reset! You can now use `/roam` and `/meet` again.',
+          flags: 64, // EPHEMERAL
+        },
       });
     }
 

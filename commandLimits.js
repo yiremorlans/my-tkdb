@@ -30,6 +30,21 @@ function getDateString(now = new Date()) {
   return now.toISOString().split('T')[0];
 }
 
+// Reset command limits for a user (for testing).
+export function resetCommandLimit(userId, command = null) {
+  const store = readStore();
+  if (!store[userId]) return false;
+
+  if (command) {
+    store[userId][command] = { am: null, pm: null };
+  } else {
+    store[userId] = {};
+  }
+
+  writeStore(store);
+  return true;
+}
+
 // Check if the user can use a command right now. Returns { allowed, reason }.
 // Each command (roam/meet) can be used once per period (AM/PM) per day.
 export function checkCommandLimit(userId, command, now = new Date()) {
