@@ -6,6 +6,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATA_DIR = join(__dirname, 'data');
 const DATA_FILE = join(DATA_DIR, 'commandLimits.json');
 
+// Each command (roam/meet) can be used once every 3 hours, tracked per user.
+// This is a rolling cooldown against the bot server's clock, so it doesn't
+// depend on the invoking user's timezone (which Discord doesn't give us).
+const COOLDOWN_MS = 3 * 60 * 60 * 1000;
+
 function readStore() {
   if (!existsSync(DATA_FILE)) return {};
   try {
@@ -20,23 +25,13 @@ function writeStore(store) {
   writeFileSync(DATA_FILE, JSON.stringify(store, null, 2));
 }
 
-// Determine if current time is in AM (before 6 PM) or PM (6 PM or after).
-export function getPeriod(now = new Date()) {
-  return now.getHours() >= 18 ? 'pm' : 'am';
-}
-
-// Format today's date as YYYY-MM-DD for comparison.
-function getDateString(now = new Date()) {
-  return now.toISOString().split('T')[0];
-}
-
 // Reset command limits for a user (for testing).
 export function resetCommandLimit(userId, command = null) {
   const store = readStore();
   if (!store[userId]) return false;
 
   if (command) {
-    store[userId][command] = { am: null, pm: null };
+    store[userId][command] = { lastUsed: null };
   } else {
     store[userId] = {};
   }
@@ -45,36 +40,43 @@ export function resetCommandLimit(userId, command = null) {
   return true;
 }
 
+// Turn a millisecond span into a short "2h 15m" / "45m" string.
+function formatDuration(ms) {
+  const totalMinutes = Math.max(1, Math.ceil(ms / 60000));
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
+  if (hours && minutes) return `${hours}h ${minutes}m`;
+  if (hours) return `${hours}h`;
+  return `${minutes}m`;
+}
+
 // Check if the user can use a command right now. Returns { allowed, reason }.
-// Each command (roam/meet) can be used once per period (AM/PM) per day.
 export function checkCommandLimit(userId, command, now = new Date()) {
   const store = readStore();
   if (!store[userId]) store[userId] = {};
-  if (!store[userId][command]) store[userId][command] = { am: null, pm: null };
+  if (!store[userId][command]) store[userId][command] = { lastUsed: null };
 
-  const period = getPeriod(now);
-  const today = getDateString(now);
-  const lastUsed = store[userId][command][period];
+  const lastUsedRaw = store[userId][command].lastUsed;
+  const lastUsed = lastUsedRaw ? new Date(lastUsedRaw).getTime() : null;
+  const elapsed = lastUsed === null ? Infinity : now.getTime() - lastUsed;
 
-  // If never used in this period, or last used on a different day, allow it.
-  if (!lastUsed || lastUsed !== today) {
-    store[userId][command][period] = today;
+  // Never used, or the 3-hour cooldown has fully elapsed.
+  if (elapsed >= COOLDOWN_MS) {
+    store[userId][command].lastUsed = now.toISOString();
     writeStore(store);
     return { allowed: true };
   }
 
-  // Already used in this period today.
-  let nextWindow;
-  if (period === 'am') {
-    nextWindow = 'after 6 PM today';
-  } else {
-    const tomorrow = new Date(now);
-    tomorrow.setDate(tomorrow.getDate() + 1);
-    const tomorrowStr = tomorrow.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-    nextWindow = `after midnight (${tomorrowStr})`;
-  }
+  // Still cooling down.
+  const readyAt = new Date(lastUsed + COOLDOWN_MS);
+  const clockTime = readyAt.toLocaleTimeString('en-US', {
+    hour: 'numeric',
+    minute: '2-digit',
+  });
   return {
     allowed: false,
-    reason: `You've already used /${command} in this time period. You can use it again ${nextWindow}.`,
+    reason: `You've used /${command} recently. You can use it again in ${formatDuration(
+      COOLDOWN_MS - elapsed,
+    )} (around ${clockTime}).`,
   };
 }

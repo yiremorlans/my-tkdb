@@ -36,7 +36,7 @@ Below is a basic overview of the project structure:
 ├── commands.js  -> slash command payloads + helpers
 ├── encounters.js -> builds the /roam and /meet message payloads, handles dialogue responses
 ├── storage.js   -> reads/writes data/relationships.json
-├── commandLimits.js -> tracks /roam and /meet usage (2 per day: AM and PM)
+├── commandLimits.js -> tracks /roam and /meet usage (rolling 3-hour cooldown per command)
 ├── imageComposition.js -> canvas-based image rendering (bg + character + dialogue)
 ├── utils.js     -> utility functions and enums
 ├── package.json
