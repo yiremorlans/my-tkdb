@@ -387,6 +387,17 @@ export async function buildResponseResultMessage(
 
 // --- /affinity ---------------------------------------------------------------
 
+// Emoji for relationship levels
+const AFFINITY_EMOJI = {
+  Stranger: '',
+  Acquaintance: '🧡',
+  Friend: '🩷',
+  'Close Friend': '💖',
+  Confidant: '💕',
+  Devoted: '❤️',
+  Soulbound: '❤️‍🔥',
+};
+
 // Avatar art in assets/avatar is named `FirstName_LastWord.png` — the last
 // word of lastName, so "Romeo Scorpius Lucci" resolves to Romeo_Lucci.png.
 function getAvatarFilename(character) {
@@ -447,10 +458,11 @@ export async function buildAffinityMessage(userId, characterIds) {
       }
     }
 
+    const emoji = AFFINITY_EMOJI[level.name] || '';
     embeds.push({
       image: imageBuffer ? { url: `attachment://${avatarFilename}` } : undefined,
       title: getFullName(character),
-      description: level.name,
+      description: emoji ? `${level.name} ${emoji}` : level.name,
       color: 0x5865f2, // Discord blurple
     });
 

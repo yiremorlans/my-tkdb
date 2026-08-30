@@ -484,4 +484,47 @@ export async function getAnalyticsDashboard() {
   };
 }
 
+/**
+ * Track individual command usage for analytics
+ */
+export async function trackCommandUsage(userId, commandName) {
+  const { data, error } = await supabase
+    .from('command_usage_log')
+    .insert([
+      {
+        discord_user_id: userId,
+        command_name: commandName,
+        used_at: new Date().toISOString(),
+      }
+    ])
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error tracking command usage:', error);
+    throw error;
+  }
+
+  return data;
+}
+
+/**
+ * Get command usage statistics for a time period (anonymized)
+ */
+export async function getCommandUsageStats(days = 30) {
+  const { data, error } = await supabase
+    .from('command_usage_log')
+    .select('command_name, COUNT(*) as usage_count', { count: 'exact' })
+    .gte('used_at', new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString())
+    .group_by('command_name')
+    .order('usage_count', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching command usage stats:', error);
+    throw error;
+  }
+
+  return data || [];
+}
+
 export default supabase;

@@ -19,6 +19,7 @@ import { checkCommandLimit, resetCommandLimit } from './commandLimits.js';
 import {
   trackUserActivity,
   trackCharacterEngagement,
+  trackCommandUsage,
 } from './db/supabase.js';
 import { validateContent } from './constants/validateContent.js';
 
@@ -193,6 +194,10 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         try {
           const messageData = await buildAffinityMessage(userId, characterIds);
           await sendFollowup(req.body.token, messageData, 15000, true);
+
+          // Track user activity and command usage
+          trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
+          trackCommandUsage(userId, 'affinity').catch(err => console.error('Error tracking command usage:', err));
         } catch (err) {
           console.error('Error in /affinity:', err);
           try {
@@ -215,6 +220,10 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         try {
           const messageData = await buildHouseMessage(userId);
           await sendFollowup(req.body.token, messageData, 15000, true);
+
+          // Track user activity and command usage
+          trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
+          trackCommandUsage(userId, 'house').catch(err => console.error('Error tracking command usage:', err));
         } catch (err) {
           console.error('Error in /house:', err);
           try {
@@ -274,6 +283,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
           // The character loaded — record the interaction
           trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
+          trackCommandUsage(userId, 'meet').catch(err => console.error('Error tracking command usage:', err));
           trackCharacterEngagement(userId, characterId).catch(err => console.error('Error tracking character engagement:', err));
         } catch (err) {
           console.error('Error in /meet pick:', err);
@@ -311,6 +321,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
           // The encounter loaded — record the interaction
           trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
+          trackCommandUsage(userId, 'roam').catch(err => console.error('Error tracking command usage:', err));
           const encounter = getCachedRoamEncounter(encounterId);
           if (encounter?.character?.id) {
             trackCharacterEngagement(userId, encounter.character.id).catch(err => console.error('Error tracking character engagement:', err));
@@ -349,6 +360,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
           // The response landed — record the interaction
           trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
+          trackCommandUsage(userId, 'respond').catch(err => console.error('Error tracking command usage:', err));
         } catch (err) {
           console.error('Error in /resp:', err);
           res.send({
