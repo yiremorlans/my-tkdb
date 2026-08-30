@@ -1,9 +1,4 @@
 import 'dotenv/config';
-
-// Suppress fontconfig warnings that don't affect rendering
-process.env.FONTCONFIG_FILE = '/etc/fonts/fonts.conf';
-process.env.FONTCONFIG_PATH = '/etc/fonts';
-
 import express from 'express';
 import {
   InteractionResponseType,
