@@ -67,16 +67,15 @@ export function checkCommandLimit(userId, command, now = new Date()) {
     return { allowed: true };
   }
 
-  // Still cooling down.
+  // Still cooling down. Render the ready time as a Discord timestamp so it
+  // shows in each viewer's own timezone — the server clock (often UTC) is not
+  // the user's, and Discord doesn't tell us their timezone.
   const readyAt = new Date(lastUsed + COOLDOWN_MS);
-  const clockTime = readyAt.toLocaleTimeString('en-US', {
-    hour: 'numeric',
-    minute: '2-digit',
-  });
+  const readyAtTag = `<t:${Math.floor(readyAt.getTime() / 1000)}:t>`;
   return {
     allowed: false,
     reason: `You can use /${command} again in ${formatDuration(
       COOLDOWN_MS - elapsed,
-    )} (around ${clockTime}).`,
+    )} (around ${readyAtTag}).`,
   };
 }
