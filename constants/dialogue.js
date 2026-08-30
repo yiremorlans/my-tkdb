@@ -839,7 +839,7 @@ export const DIALOGUE = {
     },
     responses: {
       kind: {
-        new: "Be very careful",
+        new: "Be very careful with him",
         close: "Accept his possessiveness",
       },
       playful: {
@@ -847,7 +847,7 @@ export const DIALOGUE = {
         close: "Give him your full attention",
       },
       bold: {
-        new: "Be very careful",
+        new: "Stare right back at him",
         close: "Own him completely",
       },
       neutral: {
