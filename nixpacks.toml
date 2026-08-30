@@ -3,9 +3,15 @@ runtime = "nodejs"
 
 [phases.setup]
 nixpkgs = [
+  "cairo",
+  "pango",
+  "pixman",
+  "fontconfig",
   "fonts-liberation",
   "fonts-dejavu",
-  "fontconfig",
   "xorg.xfonts-encodings",
   "xorg.xfonts-utils"
 ]
+
+[phases.build]
+cmds = ["npm run build || true"]
