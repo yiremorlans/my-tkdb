@@ -743,7 +743,7 @@ export const CHARACTERS = [
     },
     amOnlyDialogue: {
       new: ["~~~!"],
-      warm: ["~~~! 🎶"],
+      warm: ["~~~! ♫"],
       close: ["~~~! ~~~!"],
     },
     temperamentDialogue: {
