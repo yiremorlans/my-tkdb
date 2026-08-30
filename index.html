@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terms of Service - My Tkdb</title>
+    <title>TKDB Companion — Open Beta</title>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -12,6 +12,7 @@
             --text-muted: #94a3b8;
             --accent: #5865f2; /* Discord Blue */
             --border: #334155;
+            --code-bg: #0b1120;
         }
 
         body {
@@ -45,6 +46,12 @@
             color: var(--text-main);
         }
 
+        .tagline {
+            color: var(--text-muted);
+            font-size: 1.05rem;
+            margin: 0;
+        }
+
         .date {
             color: var(--text-muted);
             font-size: 0.9rem;
@@ -66,7 +73,107 @@
         }
 
         li {
-            margin-bottom: 8px;
+            margin-bottom: 10px;
+        }
+
+        strong {
+            color: var(--text-main);
+        }
+
+        code {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 4px;
+            padding: 1px 6px;
+            font-size: 0.9em;
+            color: var(--text-main);
+        }
+
+        .table-wrap {
+            overflow-x: auto;
+            margin-top: 16px;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            min-width: 520px;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 10px 12px;
+            border-bottom: 1px solid var(--border);
+            vertical-align: top;
+            font-size: 0.95rem;
+        }
+
+        th {
+            color: var(--text-main);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        td {
+            color: var(--text-muted);
+        }
+
+        td:last-child {
+            white-space: nowrap;
+        }
+
+        .note {
+            background: var(--code-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 16px 18px;
+            margin-top: 20px;
+        }
+
+        .cta {
+            margin-top: 30px;
+            padding: 16px 18px;
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            text-align: center;
+            color: var(--text-main);
+        }
+
+        details {
+            margin-top: 40px;
+            border-top: 1px solid var(--border);
+            padding-top: 20px;
+        }
+
+        details > summary {
+            cursor: pointer;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-main);
+            list-style: none;
+        }
+
+        details > summary::-webkit-details-marker {
+            display: none;
+        }
+
+        details > summary::before {
+            content: "▸ ";
+            color: var(--accent);
+        }
+
+        details[open] > summary::before {
+            content: "▾ ";
+        }
+
+        .tos-body {
+            margin-top: 16px;
+        }
+
+        .tos-body h3 {
+            font-size: 1.05rem;
+            margin-top: 24px;
+            color: var(--accent);
         }
 
         footer {
@@ -86,40 +193,164 @@
         footer a:hover {
             text-decoration: underline;
         }
+
+        a {
+            color: var(--accent);
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>Terms of Service</h1>
-        <div class="date">Last Updated: August 28, 2026</div>
+        <h1>🖤 TKDB Companion — now in open beta</h1>
+        <p class="tagline">Built for one reason: raising affinity and unlocking romantic dialogue should be
+        something you look forward to every day. Roam the campus, run into the boys, pick how you respond,
+        and watch a relationship actually grow line by line.</p>
     </header>
 
     <main>
-        <p>Welcome to <strong>My Tkdb</strong> ("the Application"). By adding, using, or interacting with this Application within your Discord server, you agree to comply with and be bound by these Terms of Service.</p>
+        <h2>Commands</h2>
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Command</th>
+                        <th>What it does</th>
+                        <th>Cooldown</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>/roam</code></td>
+                        <td>Wander Darkwick and randomly run into someone, somewhere. You get a scene, a line
+                        from them, and a choice of how to approach.</td>
+                        <td>3 hours</td>
+                    </tr>
+                    <tr>
+                        <td><code>/meet</code></td>
+                        <td>Skip the wandering — pick from 4 characters who catch your eye and go straight to them.</td>
+                        <td>3 hours <br>(separate timer from <code>/roam</code>)</td>
+                    </tr>
+                    <tr>
+                        <td><code>/affinity &lt;name&gt; [up to 5 names]</code></td>
+                        <td>Check your relationship level with one or more characters
+                        (e.g. <code>/affinity rui leo towa</code>).</td>
+                        <td>None</td>
+                    </tr>
+                    <tr>
+                        <td><code>/house</code></td>
+                        <td>See which of the 8 houses you're closest to, based on your total bonds.</td>
+                        <td>None</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-        <h2>1. Description of Service</h2>
-        <p>The Application is a private, personal-use Discord tool hosted on GitHub. It operates strictly within designated Discord servers to provide automated tools and commands as configured by the project developer.</p>
+        <div class="note">
+            <strong>How a bond grows:</strong> after each encounter you choose a reply — Kind, Playful, Bold,
+            or Neutral. Each character secretly favors a different style. Match what they like and the bond
+            climbs faster; a mismatched or neutral reply barely moves it — so you have to actually read them.
+            Levels rise <strong>Stranger &rarr; Acquaintance &rarr; Friend &rarr; Close Friend &rarr; Confidant
+            &rarr; Devoted &rarr; Soulbound</strong>.
+        </div>
 
-        <h2>2. Eligibility and Use</h2>
-        <p>The Application is intended for personal use and private implementation. You agree to use the Application only for lawful purposes and in a manner that does not infringe the rights of, restrict, or inhibit anyone else's use of the server or the Discord platform.</p>
+        <h2>🤯 Wow facts</h2>
+        <ul>
+            <li><strong>26 characters</strong>, each written across <strong>6 distinct relationship tiers</strong>
+            — the same person greets you completely differently as a <em>Stranger</em> vs. a <em>Confidant</em>
+            vs. <em>Soulbound</em>. The flirtation tier unlocks at <strong>Close Friend</strong>; the full
+            romantic tier only opens at <strong>Devoted</strong> and <strong>Soulbound</strong>.</li>
 
-        <h2>3. Compliance with Discord's Terms</h2>
-        <p>As a user of this Application, you must adhere to the official <a href="https://discord.com" style="color: var(--accent);" target="_blank">Discord Terms of Service</a> and Community Guidelines. Any use of the Application that violates Discord's platform policies is strictly prohibited and may result in the immediate removal or blocking of the Application from the server.</p>
+            <li><strong>Nearly 3,500 hand-written lines</strong> in total: <strong>822</strong> scene-narration
+            lines, <strong>780</strong> spoken in-character greetings, <strong>624</strong> "make your move"
+            button phrasings, and <strong>1,248</strong> response-button phrasings — roughly
+            <strong>130 fresh lines per relationship tier</strong>.</li>
 
-        <h2>4. Availability and Modifications</h2>
-        <p>Because this is a personal project hosted via GitHub, the Application is provided on an "as-is" and "as-available" basis. The developer reserves the right to modify, suspend, or discontinue any feature, command, or the entire service at any time without prior notice.</p>
+            <li>A single <code>/roam</code> with one character at one tier can play out <strong>100+ different
+            ways</strong> (narration &times; spoken greeting &times; approach button), and that's <em>before</em>
+            the reply step, which draws its 4 buttons from <strong>81 possible layouts</strong>. Across all 26
+            characters and all 6 tiers that's <strong>over 1.2 million distinct encounter states</strong>.</li>
 
-        <h2>5. Limitation of Liability</h2>
-        <p>In no event shall the developer or repository contributors be liable for any direct, indirect, incidental, or consequential damages (including, but not limited to, data loss, server disruptions, or bot downtime) arising out of the use or inability to use the Application.</p>
+            <li><strong>135 hand-painted backdrops</strong>, many with separate day and dusk lighting, composited
+            live under the character art. Count the character-on-location renders alone and you're past
+            <strong>6,000 unique scene images</strong>; fold in dialogue and the visually-distinct combinations
+            run into the <strong>hundreds of millions</strong>.</li>
 
-        <h2>6. Changes to Terms</h2>
-        <p>The developer reserves the right to revise these Terms of Service at any time. Any changes will be reflected directly on this page with an updated "Last Updated" date.</p>
+            <li><strong>Characters dress down as they trust you.</strong> Everyone starts in uniform. Casual
+            outfits start slipping in at <em>Acquaintance</em> (~25%) and by <em>Soulbound</em> they're in
+            casual wear <strong>95% of the time</strong>. 22 of the 26 have a full second wardrobe.</li>
+
+            <li><strong>The world runs on your clock.</strong> Some locations only render in the
+            afternoon/evening, and at least one character (<strong>Towa</strong>) will <em>only</em> appear after
+            noon — with his own separate set of morning-vs-night lines.</li>
+
+            <li><strong>It's a genuine slow burn.</strong> Reaching <strong>Soulbound</strong> with someone
+            takes hundreds of well-read responses. With a couple of check-ins a day, every character is a
+            months-long arc. That's the point.</li>
+        </ul>
+
+        <h2>🔜 Coming soon</h2>
+        <ul>
+            <li><strong>Rare special encounters.</strong> Uncommon, one-off scenes that only turn up now and
+            then — the kind of moment you'll want to screenshot.</li>
+
+            <li><strong>Warding card encounters.</strong> Run into your favorite <strong>SSR warding cards</strong>
+            around campus for slice-of-life moments pulled straight from the art you already love.</li>
+
+            <li><strong>Collectible "memories."</strong> Every warding card encounter is a chance to collect a
+            <strong>memory</strong> from that card — building a personal shelf of the moments you've found.</li>
+        </ul>
+
+        <div class="cta">
+            <strong>Start now:</strong> <code>/roam</code> and see who's out there. 🌙
+        </div>
     </main>
 
+    <details>
+        <summary>Terms of Service</summary>
+        <div class="tos-body">
+            <p class="date">Last Updated: August 28, 2026</p>
+
+            <p>Welcome to <strong>My Tkdb</strong> ("the Application"). By adding, using, or interacting with
+            this Application within your Discord server, you agree to comply with and be bound by these Terms of
+            Service.</p>
+
+            <h3>1. Description of Service</h3>
+            <p>The Application is a private, personal-use Discord tool hosted on GitHub. It operates strictly
+            within designated Discord servers to provide automated tools and commands as configured by the
+            project developer.</p>
+
+            <h3>2. Eligibility and Use</h3>
+            <p>The Application is intended for personal use and private implementation. You agree to use the
+            Application only for lawful purposes and in a manner that does not infringe the rights of, restrict,
+            or inhibit anyone else's use of the server or the Discord platform.</p>
+
+            <h3>3. Compliance with Discord's Terms</h3>
+            <p>As a user of this Application, you must adhere to the official
+            <a href="https://discord.com" target="_blank">Discord Terms of Service</a> and Community Guidelines.
+            Any use of the Application that violates Discord's platform policies is strictly prohibited and may
+            result in the immediate removal or blocking of the Application from the server.</p>
+
+            <h3>4. Availability and Modifications</h3>
+            <p>Because this is a personal project hosted via GitHub, the Application is provided on an "as-is"
+            and "as-available" basis. The developer reserves the right to modify, suspend, or discontinue any
+            feature, command, or the entire service at any time without prior notice.</p>
+
+            <h3>5. Limitation of Liability</h3>
+            <p>In no event shall the developer or repository contributors be liable for any direct, indirect,
+            incidental, or consequential damages (including, but not limited to, data loss, server disruptions,
+            or bot downtime) arising out of the use or inability to use the Application.</p>
+
+            <h3>6. Changes to Terms</h3>
+            <p>The developer reserves the right to revise these Terms of Service at any time. Any changes will
+            be reflected directly on this page with an updated "Last Updated" date.</p>
+        </div>
+    </details>
+
     <footer>
-        <p>Have questions? Open an issue on the <a href="https://github.com" target="_blank">My Tkdb GitHub Repository</a>.</p>
+        <p>Have questions? Open an issue on the <a href="https://github.com" target="_blank">My Tkdb GitHub
+        Repository</a>.</p>
     </footer>
 </div>
 
