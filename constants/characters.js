@@ -77,7 +77,7 @@ export const CHARACTERS = [
     ],
     dialogue: {
       new: [
-        "He flashes a big grin. \"Lost, or just brave enough to wander into Frostheim?\"",
+        'He flashes a big grin. "Lost, or just brave enough to wander into Frostheim?"',
       ],
       warm: ["He nudges your shoulder like you're part of the Frostheim crew."],
       close: [
@@ -147,7 +147,7 @@ export const CHARACTERS = [
     ],
     dialogue: {
       new: [
-        "Calm as still water, he tilts his head. \"You're new around here.\"",
+        'Calm as still water, he tilts his head. "You\'re new around here."',
       ],
       warm: [
         "His usual calm softens into something warmer whenever you're near.",
@@ -227,7 +227,7 @@ export const CHARACTERS = [
     ],
     dialogue: {
       new: [
-        "He smirks dangerously, eyes lit with a hint of amusement. \"What brings you to the lion's den?\"",
+        'He smirks dangerously, eyes lit with a hint of amusement. "What brings you to the lion\'s den?"',
       ],
       warm: [
         "He runs his fingers along your jawline, still taunting, but there's something protective underneath.",
@@ -344,7 +344,7 @@ export const CHARACTERS = [
     ],
     dialogue: {
       new: [
-        "He greets you with a gentle bow, the lantern light soft in his warm eyes. \"Welcome.\"",
+        'He greets you with a gentle bow, the lantern light soft in his warm eyes. "Welcome."',
       ],
       warm: [
         "His expression brightens with genuine pleasure, all formal distance melting away. \"Friend. I'm glad you're here.\"",
@@ -381,7 +381,7 @@ export const CHARACTERS = [
     ],
     dialogue: {
       new: [
-        "He regards you with gentle courtesy, petals dancing around him. \"An unexpected pleasure.\"",
+        'He regards you with gentle courtesy, petals dancing around him. "An unexpected pleasure."',
       ],
       warm: [
         "There's warmth in his eyes as he acknowledges you, a small smile playing at his lips. His usual formality softens slightly.",
@@ -416,7 +416,7 @@ export const CHARACTERS = [
     ],
     dialogue: {
       new: [
-        "He juggles a coin with practiced ease, barely sparing you a glance. \"Another spectator?\"",
+        'He juggles a coin with practiced ease, barely sparing you a glance. "Another spectator?"',
       ],
       warm: [
         "He catches the coin mid-flip, actually meeting your eyes this time. There's something almost genuine in his smile.",
@@ -538,7 +538,7 @@ export const CHARACTERS = [
       "cruel",
     ],
     dialogue: {
-      new: ["A masked bow, a theatrical flourish. \"Welcome to the show.\""],
+      new: ['A masked bow, a theatrical flourish. "Welcome to the show."'],
       warm: ["The mask tilts your way first, before anyone else in the room."],
       close: [
         '"For you," Shion says, lifting the mask just enough to show a genuine smile.',
@@ -582,7 +582,7 @@ export const CHARACTERS = [
         "He puts down his notes when he hears you. There's a shift in his expression—focused, but this time on you.",
       ],
       close: [
-        "He steps closer, his eyes direct. \"You matter more than anyone ever could.\"",
+        'He steps closer, his eyes direct. "You matter more than anyone ever could."',
       ],
     },
     temperamentDialogue: {
@@ -612,7 +612,7 @@ export const CHARACTERS = [
     ],
     dialogue: {
       new: [
-        "He studies you with clinical precision, already calculating. \"You came back. Good.\"",
+        'He studies you with clinical precision, already calculating. "You came back. Good."',
       ],
       warm: [
         "His cold demeanor cracks slightly—there's obsession in his eyes now, the drive to save you consuming him.",
@@ -654,7 +654,7 @@ export const CHARACTERS = [
     ],
     dialogue: {
       new: [
-        "He's scrolling through his phone, barely acknowledging you at first. \"Oh. Hey.\"",
+        'He\'s scrolling through his phone, barely acknowledging you at first. "Oh. Hey."',
       ],
       warm: [
         "He actually puts his phone down when you arrive. There's genuine concern in his gaze now.",
@@ -694,7 +694,7 @@ export const CHARACTERS = [
     ],
     dialogue: {
       new: [
-        "There's mischief written all over his face as he assesses you with warm eyes. \"Trouble or destiny?\"",
+        'There\'s mischief written all over his face as he assesses you with warm eyes. "Trouble or destiny?"',
       ],
       warm: [
         "His whole face lights up when he sees you—genuine delight, the kind that makes his warmth impossible to resist.",
@@ -744,7 +744,7 @@ export const CHARACTERS = [
     amOnlyDialogue: {
       new: ["~~~!"],
       warm: ["~~~! ♫"],
-      close: ["~~~! ~~~!"],
+      close: ["~~~! ~~~! ♫ ♫"],
     },
     temperamentDialogue: {
       new: ["...Dandelion?"],
@@ -901,7 +901,7 @@ export const CHARACTERS = [
     ],
     dialogue: {
       new: [
-        "He eyes you with a challenging smirk, cards deftly shuffled in his hands. \"You lost, kitten?\"",
+        'He eyes you with a challenging smirk, cards deftly shuffled in his hands. "You lost, kitten?"',
       ],
       warm: [
         "His aggressive posture softens when he sees you're really there. He pulls out a seat beside him without a word.",
@@ -940,7 +940,7 @@ export const CHARACTERS = [
     ],
     dialogue: {
       new: [
-        "He looks up with genuine interest, already assessing your potential. \"Partner, your timing is fortuitous. I could use someone sharp.\"",
+        'He looks up with genuine interest, already assessing your potential. "Partner, your timing is fortuitous. I could use someone sharp."',
       ],
       warm: [
         "His eyes light up when he sees you—he's eager now, ready to collaborate and strategize together.",
@@ -982,7 +982,7 @@ export const CHARACTERS = [
     ],
     dialogue: {
       new: [
-        "He's barking orders at the staff, managing every angle of the casino floor. \"HDY wast my time? Quick, put on this dress and work table seven—we need someone sharp out there.\"",
+        'He\'s barking orders at the staff, managing every angle of the casino floor. "HDY wast my time? Quick, put on this dress and work table seven—we need someone sharp out there."',
       ],
       warm: [
         "He pauses mid-command when he spots you, actually stepping away from the action to greet you properly. Suddenly you matter more than the operation.",
@@ -1016,10 +1016,10 @@ export const CHARACTERS = [
     keywords: ["pervy", "gentle", "kind", "nostalgic", "protective"],
     dialogue: {
       new: [
-        "He looks up from his work, a little flustered but smiling warmly. \"Oh! H-hello. Do you need help with something?\"",
+        'He looks up from his work, a little flustered but smiling warmly. "Oh! H-hello. Do you need help with something?"',
       ],
       warm: [
-        "He gets a bit red in the face when he sees you, but his smile is genuine and eager. \"You came back! Can I help you with anything?\"",
+        'He gets a bit red in the face when he sees you, but his smile is genuine and eager. "You came back! Can I help you with anything?"',
       ],
       close: [
         '"You\'re really important to me," he says softly, a hint of bashfulness in his voice. "I\'m always happy to help you with anything you need."',
@@ -1256,10 +1256,14 @@ function generateKindResponse(character, archetypeSet, keywordSet, tier) {
       return tier === "close"
         ? { label: "Accept his possessiveness" }
         : { label: "Be very careful" };
-    case "ed":
+    case "edward":
       return tier === "close"
         ? { label: "Let him get closer" }
         : { label: "Stand firm against his advances" };
+    case "taiga":
+      return tier === "close"
+        ? { label: "See the softness under the snarl" }
+        : { label: "Be kind despite his bark" };
     case "ritsu":
       return tier === "close"
         ? { label: "Show him friendship is real" }
@@ -1383,10 +1387,14 @@ function generatePlayfulResponse(character, archetypeSet, keywordSet, tier) {
       return tier === "close"
         ? { label: "Give him your full attention" }
         : { label: "Make him smile" };
-    case "ed":
+    case "edward":
       return tier === "close"
         ? { label: "Flirt back with him" }
         : { label: "Keep him at bay playfully" };
+    case "taiga":
+      return tier === "close"
+        ? { label: "Be the one who can rile him" }
+        : { label: "Trade insults with him" };
     case "ritsu":
       return tier === "close"
         ? { label: "Make him smile despite logic" }
@@ -1497,10 +1505,14 @@ function generateBoldResponse(character, archetypeSet, keywordSet, tier) {
       return tier === "close"
         ? { label: "Own him completely" }
         : { label: "Be very careful" };
-    case "ed":
+    case "edward":
       return tier === "close"
-        ? { label: "Let him get closer" }
-        : { label: "Stand firm against his advances" };
+        ? { label: "Pull him closer yourself" }
+        : { label: "Meet his gaze without flinching" };
+    case "taiga":
+      return tier === "close"
+        ? { label: "Go all-in with him" }
+        : { label: "Meet his challenge head-on" };
     case "ritsu":
       return tier === "close"
         ? { label: "Make a bold choice about him" }
@@ -1614,10 +1626,14 @@ function generateNeutralResponse(character, archetypeSet, keywordSet, tier) {
       return tier === "close"
         ? { label: "Be his constant" }
         : { label: "Observe them carefully" };
-    case "ed":
+    case "edward":
       return tier === "close"
         ? { label: "Let him watch in silence" }
         : { label: "Stay watchful" };
+    case "taiga":
+      return tier === "close"
+        ? { label: "Let the bravado run out" }
+        : { label: "Let him posture" };
     case "ritsu":
       return tier === "close"
         ? { label: "Understand his logic" }
