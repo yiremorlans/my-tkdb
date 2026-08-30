@@ -15,3 +15,7 @@ nixpkgs = [
 
 [phases.build]
 cmds = ["npm run build || true"]
+
+[env]
+FONTCONFIG_FILE = "/dev/null"
+FC_DEBUG = "0"
