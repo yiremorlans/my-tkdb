@@ -7,6 +7,7 @@ import {
   getRandomBackgroundForLocation,
   getRandomGeneralBackground,
   isGeneralLocation,
+  HOUSES,
   SPECIAL_BACKGROUNDS,
 } from './constants/backgrounds.js';
 import {
@@ -32,6 +33,13 @@ import {
 } from './constants/game.js';
 import { composeEncounter } from './imageComposition.js';
 import { getRelationship, recordResponse } from './storage.js';
+// readRelationship is the non-creating read — /affinity and /house are
+// read-only commands and must not insert rows for characters the user has
+// never actually met (getRelationship above creates one on miss).
+import {
+  getRelationship as readRelationship,
+  getUserRelationships,
+} from './db/supabase.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CACHE_FILE = path.join(__dirname, '.roam-cache.json');
@@ -375,4 +383,246 @@ export async function buildResponseResultMessage(
     components: disableComponents(shownComponents) || responseActionRow(characterId, true),
     flags: EPHEMERAL_FLAG,
   };
+}
+
+// --- /affinity ---------------------------------------------------------------
+
+// Avatar art in assets/avatar is named `FirstName_LastWord.png` — the last
+// word of lastName, so "Romeo Scorpius Lucci" resolves to Romeo_Lucci.png.
+function getAvatarFilename(character) {
+  if (!character.firstName || !character.lastName) return null;
+  const lastNamePart = character.lastName.split(' ').pop();
+  return `${character.firstName}_${lastNamePart}.png`;
+}
+
+export async function buildAffinityMessage(userId, characterIds) {
+  // The options are free-text, so ids arrive untrimmed, in any case, and
+  // possibly repeated — a repeat would collide on the attachment filename.
+  const validCharacters = [];
+  const invalidIds = [];
+  const seen = new Set();
+
+  for (const rawId of characterIds) {
+    const charId = rawId.trim().toLowerCase();
+    if (!charId || seen.has(charId)) continue;
+    seen.add(charId);
+
+    const character = getCharacterById(charId);
+    if (character) {
+      validCharacters.push(character);
+    } else {
+      invalidIds.push(rawId.trim());
+    }
+  }
+
+  const unknownNote = invalidIds.length
+    ? `Unknown character${invalidIds.length > 1 ? 's' : ''}: **${invalidIds.join('**, **')}**`
+    : null;
+
+  if (validCharacters.length === 0) {
+    return {
+      content: unknownNote || 'Please name at least one character.',
+    };
+  }
+
+  const affinities = await Promise.all(
+    validCharacters.map((character) => readRelationship(userId, character.id)),
+  );
+
+  // Build each embed alongside its attachment so an avatar that fails to load
+  // drops the embed image instead of leaving a broken attachment:// reference.
+  const embeds = [];
+  const files = [];
+
+  validCharacters.forEach((character, index) => {
+    const level = getRelationshipLevel(affinities[index]?.affinity || 0);
+    const avatarFilename = getAvatarFilename(character);
+
+    let imageBuffer = null;
+    if (avatarFilename) {
+      try {
+        imageBuffer = fs.readFileSync(path.join(__dirname, 'assets', 'avatar', avatarFilename));
+      } catch (err) {
+        console.error(`Error loading avatar for ${character.id}:`, err);
+      }
+    }
+
+    embeds.push({
+      image: imageBuffer ? { url: `attachment://${avatarFilename}` } : undefined,
+      title: getFullName(character),
+      description: level.name,
+      color: 0x5865f2, // Discord blurple
+    });
+
+    if (imageBuffer) {
+      files.push({ attachment: imageBuffer, name: avatarFilename });
+    }
+  });
+
+  const header = 'Here\'s your relationship status:';
+
+  return {
+    content: unknownNote ? `${header}\n${unknownNote}` : header,
+    embeds,
+    files: files.length > 0 ? files : undefined,
+  };
+}
+
+// --- /house ---------------------------------------------------------------
+
+// How many emblem cards a tie can show at once. Discord allows 10 embeds, but
+// the emblems are the constraint, not the embed count — see buildHouseMessage.
+const MAX_HOUSE_EMBEDS = 3;
+
+// "A and B" / "A, B, and C" — houses are bolded to match the single-house line.
+function formatHouseList(houses) {
+  const bolded = houses.map((house) => `**${house}**`);
+  if (bolded.length === 2) return bolded.join(' and ');
+  return `${bolded.slice(0, -1).join(', ')}, and ${bolded[bolded.length - 1]}`;
+}
+
+const HOUSE_DESCRIPTIONS = {
+  [HOUSES.FROSTHEIM]: [
+    'A true Frostheim ally.',
+    'Cold as ice, loyal as steel.',
+    'Winter\'s favor rests upon you.',
+    'You\'ve earned the respect of Frostheim.',
+  ],
+  [HOUSES.VAGASTROM]: [
+    'A true Vagastrom ally.',
+    'You\'ve proven yourself in the pit.',
+    'The rebels stand with you.',
+    'Vagastrom\'s fury flows through your bonds.',
+  ],
+  [HOUSES.HOTARUBI]: [
+    'A true Hotarubi ally.',
+    'The shrine welcomes you.',
+    'Your spirit resonates with Hotarubi.',
+    'Blessed by the flames of Hotarubi.',
+  ],
+  [HOUSES.DIONYSIA]: [
+    'A true Dionysia ally.',
+    'You\'ve captured the hearts of Dionysia.',
+    'Dionysian spirits celebrate you.',
+    'In Dionysia\'s embrace, you belong.',
+  ],
+  [HOUSES.MORTKRANKEN]: [
+    'A true Mortkranken ally.',
+    'Death itself recognizes your bond.',
+    'The ghouls accept you as one of their own.',
+    'Mortkranken\'s darkness has claimed your heart.',
+  ],
+  [HOUSES.JABBERWOCK]: [
+    'A true Jabberwock ally.',
+    'The beasts have chosen you.',
+    'Wild and untamed, just like Jabberwock.',
+    'Jabberwock\'s primal nature calls to you.',
+  ],
+  [HOUSES.OBSCUARY]: [
+    'A true Obscuary ally.',
+    'Secrets bind you to Obscuary.',
+    'In shadow and whisper, you are home.',
+    'Obscuary\'s mysteries are yours to uncover.',
+  ],
+  [HOUSES.SINOSTRA]: [
+    'A true Sinostra ally.',
+    'Wealth and favor flow your way.',
+    'Sinostra\'s glamour shines upon you.',
+    'You\'ve won the game of Sinostra.',
+  ],
+};
+
+export async function buildHouseMessage(userId) {
+  try {
+    // Get all relationships for the user
+    const relationships = await getUserRelationships(userId);
+
+    if (!relationships || relationships.length === 0) {
+      return {
+        content: 'You haven\'t formed any bonds yet. Go out and meet people!',
+      };
+    }
+
+    // Group affinity by house
+    const houseAffinities = {};
+
+    for (const house of Object.values(HOUSES)) {
+      houseAffinities[house] = 0;
+    }
+
+    // Sum affinity by house
+    for (const relationship of relationships) {
+      const character = getCharacterById(relationship.character_id);
+      if (character && character.house) {
+        houseAffinities[character.house] += relationship.affinity || 0;
+      }
+    }
+
+    // Find the maximum affinity
+    const maxAffinity = Math.max(...Object.values(houseAffinities));
+
+    // Find all houses with max affinity
+    const topHouses = Object.entries(houseAffinities)
+      .filter(([_, affinity]) => affinity === maxAffinity && affinity > 0)
+      .map(([house, _]) => house);
+
+    // If no houses have any affinity, return a message
+    if (topHouses.length === 0 || maxAffinity === 0) {
+      return {
+        content: 'You haven\'t formed any bonds with any house yet.',
+      };
+    }
+
+    // Every tied house is named in the content, but only the first few get an
+    // emblem card — each emblem is a ~450KB attachment, so an 8-way tie would
+    // otherwise push a multi-megabyte multipart body for one command.
+    const shownHouses = topHouses.slice(0, MAX_HOUSE_EMBEDS);
+
+    // Build embeds for top houses
+    const embeds = [];
+    const files = [];
+
+    for (const house of shownHouses) {
+      const descriptions = HOUSE_DESCRIPTIONS[house] || [`A true ${house} ally.`];
+      const randomDescription = descriptions[Math.floor(Math.random() * descriptions.length)];
+      const emblemFilename = `${house}.png`;
+
+      let imageBuffer = null;
+      try {
+        imageBuffer = fs.readFileSync(path.join(__dirname, 'assets', 'emblem', emblemFilename));
+      } catch (err) {
+        console.error(`Error loading emblem for ${house}:`, err);
+      }
+
+      embeds.push({
+        title: house,
+        description: randomDescription,
+        image: imageBuffer ? { url: `attachment://${emblemFilename}` } : undefined,
+        color: 0x5865f2, // Discord blurple
+      });
+
+      if (imageBuffer) {
+        files.push({ attachment: imageBuffer, name: emblemFilename });
+      }
+    }
+
+    let content;
+    if (topHouses.length === 1) {
+      content = `Your heart belongs to **${topHouses[0]}**.`;
+    } else {
+      content = `You have equal bonds with ${formatHouseList(topHouses)}.`;
+      if (topHouses.length > shownHouses.length) {
+        content += `\nShowing the first ${shownHouses.length} emblems.`;
+      }
+    }
+
+    return {
+      content,
+      embeds,
+      files: files.length > 0 ? files : undefined,
+    };
+  } catch (err) {
+    console.error('Error in buildHouseMessage:', err);
+    throw err;
+  }
 }

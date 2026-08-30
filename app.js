@@ -6,6 +6,8 @@ import {
   verifyKeyMiddleware,
 } from 'discord-interactions';
 import {
+  buildAffinityMessage,
+  buildHouseMessage,
   buildMeetPickMessage,
   buildMeetSpawnMessage,
   buildResponseResultMessage,
@@ -32,8 +34,12 @@ const PORT = process.env.PORT || 3000;
 // Serve character/background art so Discord can load it by URL in message components
 app.use('/assets', express.static('assets'));
 
-async function sendFollowup(interactionToken, messageData, timeoutMs = 15000) {
-  const url = `https://discord.com/api/v10/webhooks/${process.env.APP_ID}/${interactionToken}`;
+// edit: true PATCHes the deferred response instead of posting a new followup —
+// what a DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE ack needs, so the "thinking"
+// placeholder becomes the real message rather than lingering beside it.
+async function sendFollowup(interactionToken, messageData, timeoutMs = 15000, edit = false) {
+  const base = `https://discord.com/api/v10/webhooks/${process.env.APP_ID}/${interactionToken}`;
+  const url = edit ? `${base}/messages/@original` : base;
   const startTime = Date.now();
   console.log('[sendFollowup] Starting, timeout:', timeoutMs, 'ms');
   console.log('[sendFollowup] URL:', url.substring(0, 50) + '...');
@@ -63,7 +69,7 @@ async function sendFollowup(interactionToken, messageData, timeoutMs = 15000) {
 
     const fetchStart = Date.now();
     const response = await fetch(url, {
-      method: 'POST',
+      method: edit ? 'PATCH' : 'POST',
       body: form,
       signal: controller.signal,
     });
@@ -156,6 +162,71 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           flags: 64, // EPHEMERAL
         },
       });
+    }
+
+    if (name === 'affinity') {
+      // Extract character options from the interaction
+      const options = data.options || [];
+      const characterIds = [];
+
+      for (const option of options) {
+        if (option.name.startsWith('character_') && option.value) {
+          characterIds.push(option.value);
+        }
+      }
+
+      if (characterIds.length === 0) {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: 'Please specify at least one character.',
+            flags: 64, // EPHEMERAL
+          },
+        });
+      }
+
+      // Ack first: the avatars travel as attachments, which Discord only
+      // accepts as multipart — so the real message goes out via sendFollowup.
+      res.send({ type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE });
+
+      (async () => {
+        try {
+          const messageData = await buildAffinityMessage(userId, characterIds);
+          await sendFollowup(req.body.token, messageData, 15000, true);
+        } catch (err) {
+          console.error('Error in /affinity:', err);
+          try {
+            await sendFollowup(req.body.token, {
+              content: 'Something went wrong pulling up those relationships. Try again?',
+            }, 15000, true);
+          } catch (followupErr) {
+            console.error('Failed to send error followup:', followupErr);
+          }
+        }
+      })();
+      return;
+    }
+
+    if (name === 'house') {
+      // Same as /affinity: the emblem is an attachment, so ack then follow up.
+      res.send({ type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE });
+
+      (async () => {
+        try {
+          const messageData = await buildHouseMessage(userId);
+          await sendFollowup(req.body.token, messageData, 15000, true);
+        } catch (err) {
+          console.error('Error in /house:', err);
+          try {
+            await sendFollowup(req.body.token, {
+              content: 'Something went wrong working out your house. Try again?',
+            }, 15000, true);
+          } catch (followupErr) {
+            console.error('Failed to send error followup:', followupErr);
+          }
+        }
+      })();
+      return;
     }
 
     console.error(`unknown command: ${name}`);
