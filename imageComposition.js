@@ -42,8 +42,9 @@ export async function composeEncounter(bgFilename, charFilename, dialogue = null
 
     // White text.
     ctx.fillStyle = '#ffffff';
-    ctx.font = `${fontSize}px Arial, sans-serif`;
+    ctx.font = `${fontSize}px monospace`;
     ctx.textBaseline = 'top';
+    console.log('[composeEncounter] Font set to:', ctx.font);
 
     // Wrap text and calculate required height.
     const maxWidth = canvas.width - 2 * padding;
