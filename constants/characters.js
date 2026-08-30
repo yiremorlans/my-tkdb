@@ -543,7 +543,7 @@ export const CHARACTERS = [
   {
     id: "romeo",
     firstName: "Romeo",
-    lastName: "Lucci",
+    lastName: "Scorpius Lucci",
     house: HOUSES.SINOSTRA,
     images: {
       uniform: "Romeo_Lucci_Uniform.png",
@@ -680,8 +680,7 @@ export function getRandomDialogueLine(
 }
 
 export function getTemperamentGreeting(character, tier) {
-  const temperamentLines =
-    DIALOGUE[character.id]?.temperamentDialogue || {};
+  const temperamentLines = DIALOGUE[character.id]?.temperamentDialogue || {};
   const lines = temperamentLines[tier] || temperamentLines.new || ["..."];
   return pickRandom(lines);
 }
@@ -701,7 +700,12 @@ export function getRandomApproachLabel(
   if (!content) return pickRandom(APPROACH_LABEL_FALLBACK);
 
   let labels = null;
-  if (character.pmOnly && content.amOnlyApproach && now && now.getHours() < 12) {
+  if (
+    character.pmOnly &&
+    content.amOnlyApproach &&
+    now &&
+    now.getHours() < 12
+  ) {
     labels = content.amOnlyApproach[tier] || content.amOnlyApproach.new;
   }
   if (!labels) labels = content.approach?.[tier] || content.approach?.new;
