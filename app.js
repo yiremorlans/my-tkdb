@@ -18,6 +18,11 @@ import {
   trackUserActivity,
   trackCharacterEngagement,
 } from './db/supabase.js';
+import { validateContent } from './constants/validateContent.js';
+
+// Fail fast if characters.js and dialogue.js have drifted apart, rather than
+// letting a character silently fall back to generic lines in production.
+validateContent();
 
 // Create an express app
 const app = express();
