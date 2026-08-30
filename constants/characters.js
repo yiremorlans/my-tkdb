@@ -51,9 +51,9 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"You're not supposed to be here. Don't waste my time.\""],
-      warm: ["\"Your presence is... tolerable.\""],
-      close: ["\"I suppose I can make an exception for you.\""],
+      new: ["You're not supposed to be here. Don't waste my time."],
+      warm: ["Your presence is... tolerable."],
+      close: ["I suppose I can make an exception for you."],
     },
   },
   {
@@ -85,9 +85,9 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"YO! Another fresh face! You lost or what?\""],
-      warm: ["\"Hey, Honor roll! Ready to hang out?\""],
-      close: ["\"You made it! I was hoping you'd show up!\""],
+      new: ["YO! Another fresh face! You lost or what?"],
+      warm: ["Hey, Honor roll! Ready to hang out?"],
+      close: ["You made it! I was hoping you'd show up!"],
     },
   },
   {
@@ -119,9 +119,9 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"Oh... hello. Please, be careful around here.\""],
-      warm: ["\"I'm glad you're safe. How have you been?\""],
-      close: ["\"Your safety means more to me than anything else.\""],
+      new: ["Oh... hello. Please, be careful around here."],
+      warm: ["I'm glad you're safe. How have you been?"],
+      close: ["Your safety means more to me than anything else."],
     },
   },
   {
@@ -157,10 +157,10 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"State your purpose here.\""],
-      warm: ["\"I see you again. That's... acceptable.\""],
+      new: ["State your purpose here."],
+      warm: ["I see you again. That's... acceptable."],
       close: [
-        "\"Well, well..I must say your company is preferred. To my surprise.\"",
+        "Well, well..I must say your company is preferred. To my surprise.",
       ],
     },
   },
@@ -198,10 +198,10 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"This place isn't meant for people like you. Stay safe.\""],
-      warm: ["\"I'm glad you're here. Really.\""],
+      new: ["This place isn't meant for people like you. Stay safe."],
+      warm: ["I'm glad you're here. Really."],
       close: [
-        "\"You're the only constant in my life that doesn't haunt me. Please stay by my side.\"",
+        "You're the only constant in my life that doesn't haunt me. Please stay by my side.",
       ],
     },
   },
@@ -237,10 +237,10 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"You're either brave or stupid. Let's find out which.\""],
-      warm: ["\"Finally came back, huh? I was getting bored without you.\""],
+      new: ["You're either brave or stupid. Let's find out which."],
+      warm: ["Finally came back, huh? I was getting bored without you."],
       close: [
-        "\"You're the only thing sharp enough to match my wit. The only one I'd never want to hurt.\"",
+        "You're the only thing sharp enough to match my wit. The only one I'd never want to hurt.",
       ],
     },
   },
@@ -276,9 +276,9 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"Oh! Senpai! What brings you by?\""],
-      warm: ["\"Senpai! I'm always happy to see you around.\""],
-      close: ["\"Senpai... I'm really glad you're here. You know that, right?\""],
+      new: ["Oh! Senpai! What brings you by?"],
+      warm: ["Senpai! I'm always happy to see you around."],
+      close: ["Senpai... I'm really glad you're here. You know that, right?"],
     },
   },
 
@@ -316,9 +316,9 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"Welcome. Please, make yourself comfortable.\""],
-      warm: ["\"You're here... I'm very glad.\""],
-      close: ["\"I... I've missed you more than I should admit.\""],
+      new: ["Welcome. Please, make yourself comfortable."],
+      warm: ["You're here... I'm very glad."],
+      close: ["I... I've missed you more than I should admit."],
     },
   },
   {
@@ -354,9 +354,9 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"Autumn winds carry you here. Welcome, wanderer.\""],
-      warm: ["\"You return like seasons turning. My heart is at ease.\""],
-      close: ["\"With you, the world feels right. Like poetry made real.\""],
+      new: ["Autumn winds carry you here. Welcome, wanderer."],
+      warm: ["You return like seasons turning. My heart is at ease."],
+      close: ["With you, the world feels right. Like poetry made real."],
     },
   },
   {
@@ -391,9 +391,9 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"How lovely. A visitor graces us with their presence.\""],
-      warm: ["\"Princess, you honor us with your return.\""],
-      close: ["\"I... you've become someone I always look forward to seeing.\""],
+      new: ["How lovely. A visitor graces us with their presence."],
+      warm: ["Princess, you honor us with your return."],
+      close: ["I... you've become someone I always look forward to seeing."],
     },
   },
 
@@ -426,10 +426,10 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"Well, hello there. New face in town?\""],
-      warm: ["\"Always a pleasure to see you again, sweetheart.\""],
+      new: ["Well, hello there. New face in town?"],
+      warm: ["Always a pleasure to see you again, sweetheart."],
       close: [
-        "\"You've become my favorite person in this place lately, you know.\"",
+        "You've become my favorite person in this place lately, you know.",
       ],
     },
   },
@@ -479,9 +479,9 @@ export const CHARACTERS = [
       },
     },
     temperamentDialogue: {
-      new: ["\"A new admirer! How delightful! What's your name?\""],
-      warm: ["\"You're back! I was hoping you'd return.\""],
-      close: ["\"With you, I don't need to perform. I can just be myself.\""],
+      new: ["A new admirer! How delightful! What's your name?"],
+      warm: ["You're back! I was hoping you'd return."],
+      close: ["With you, I don't need to perform. I can just be myself."],
     },
   },
   {
@@ -513,10 +513,10 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"Oh! Welcome! Can I get you anything?\""],
-      warm: ["\"It's nice seeing you. You know you're always welcome here.\""],
+      new: ["Oh! Welcome! Can I get you anything?"],
+      warm: ["It's nice seeing you. You know you're always welcome here."],
       close: [
-        "\"You've become someone really important to me. I hope you know that.\"",
+        "You've become someone really important to me. I hope you know that.",
       ],
     },
   },
@@ -545,11 +545,11 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"What a delicious expression. I wonder what frightens you?\""],
+      new: ["What a delicious expression. I wonder what frightens you?"],
       warm: [
-        "\"You came back. How... thrilling. I missed that look in your eyes.\"",
+        "You came back. How... thrilling. I missed that look in your eyes.",
       ],
-      close: ["\"You're mine to protect. My wife.\""],
+      close: ["You're mine to protect. My wife."],
     },
   },
 
@@ -586,9 +586,9 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"You're not qualified for this. Leave.\""],
-      warm: ["\"You. Stay for a moment.\""],
-      close: ["\"I don't usually make exceptions. But for you... I will.\""],
+      new: ["You're not qualified for this. Leave."],
+      warm: ["You. Stay for a moment."],
+      close: ["I don't usually make exceptions. But for you... I will."],
     },
   },
   {
@@ -622,10 +622,10 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"A novice stumbles in. How amusing.\""],
-      warm: ["\"You again? ...I suppose I don't mind.\""],
+      new: ["A novice stumbles in. How amusing."],
+      warm: ["You again? ...I suppose I don't mind."],
       close: [
-        "\"Don't go worrying me like that. I have better things to do than panic over you.\"",
+        "Don't go worrying me like that. I have better things to do than panic over you.",
       ],
     },
   },
@@ -664,10 +664,10 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"Huh? Oh, didn't see you there. You lost or something?\""],
-      warm: ["\"Oh, it's you. Yeah, I was hoping you'd show up.\""],
+      new: ["Huh? Oh, didn't see you there. You lost or something?"],
+      warm: ["Oh, it's you. Yeah, I was hoping you'd show up."],
       close: [
-        "\"Hey, senpai... I'm really glad you're here. More than you know.\"",
+        "Hey, senpai... I'm really glad you're here. More than you know.",
       ],
     },
   },
@@ -704,9 +704,9 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"Well, well! Someone interesting wandered in!\""],
-      warm: ["\"Hey, Ojou-chan! Miss me?\""],
-      close: ["\"I really like seeing you smile. Can I be honest about that?\""],
+      new: ["Well, well! Someone interesting wandered in!"],
+      warm: ["Hey, Ojou-chan! Miss me?"],
+      close: ["I really like seeing you smile. Can I be honest about that?"],
     },
   },
   {
@@ -747,9 +747,9 @@ export const CHARACTERS = [
       close: ["~~~! ~~~!"],
     },
     temperamentDialogue: {
-      new: ["\"...Dandelion?\""],
-      warm: ["\"Dandelion. You're here. That's all that matters.\""],
-      close: ["\"You're mine. Only mine. Promise me you'll never leave.\""],
+      new: ["...Dandelion?"],
+      warm: ["Dandelion. You're here. That's all that matters."],
+      close: ["You're mine. Only mine. Promise me you'll never leave."],
     },
   },
 
@@ -787,9 +787,9 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"Oh my, what a lovely lady. Welcome to my home.\""],
-      warm: ["\"Lovely lady, I was hoping you'd visit. Come closer.\""],
-      close: ["\"You belong right here, next to me. Don't ever leave.\""],
+      new: ["Oh my, what a lovely lady. Welcome to my home."],
+      warm: ["Lovely lady, I was hoping you'd visit. Come closer."],
+      close: ["You belong right here, next to me. Don't ever leave."],
     },
   },
   {
@@ -827,13 +827,13 @@ export const CHARACTERS = [
     },
     temperamentDialogue: {
       new: [
-        "\"Oh! Well, well! Lucky me—you wandered in! Come closer, but not too close, yeah? Just... let me look at you.\"",
+        "Oh! Well, well! Lucky me—you wandered in! Come closer, but not too close, yeah? Just... let me look at you.",
       ],
       warm: [
-        "\"You're back! You know you make everything feel less dark when you're around? It's actually kind of amazing.\"",
+        "You're back! You know you make everything feel less dark when you're around? It's actually kind of amazing.",
       ],
       close: [
-        "\"Even with this curse, I'd bear it a thousand times if it meant seeing you smile.\"",
+        "Even with this curse, I'd bear it a thousand times if it meant seeing you smile.",
       ],
     },
   },
@@ -870,9 +870,9 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"Hmm? You're... interesting. What brings you here?\""],
-      warm: ["\"You're back. I'm... really happy about that.\""],
-      close: ["\"Seeing you safe and happy is the most important thing to me.\""],
+      new: ["Hmm? You're... interesting. What brings you here?"],
+      warm: ["You're back. I'm... really happy about that."],
+      close: ["Seeing you safe and happy is the most important thing to me."],
     },
   },
 
@@ -911,10 +911,10 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"What are you doing here?\""],
-      warm: ["\"...So you came back, kitten?\""],
+      new: ["What are you doing here?"],
+      warm: ["...So you came back, kitten?"],
       close: [
-        "\"Don't you dare go getting hurt. That's MY job to protect you. Gyahaha!\"",
+        "Don't you dare go getting hurt. That's MY job to protect you. Gyahaha!",
       ],
     },
   },
@@ -951,11 +951,11 @@ export const CHARACTERS = [
     },
     temperamentDialogue: {
       new: [
-        "\"Ah, my new partner. Perfect timing. Let's work through this together.\"",
+        "Ah, my new partner. Perfect timing. Let's work through this together.",
       ],
-      warm: ["\"I was hoping you'd come by. We make a good team, don't we?\""],
+      warm: ["I was hoping you'd come by. We make a good team, don't we?"],
       close: [
-        "\"You're the only person I trust completely. We can accomplish anything with you by my side.\"",
+        "You're the only person I trust completely. We can accomplish anything with you by my side.",
       ],
     },
   },
@@ -993,13 +993,13 @@ export const CHARACTERS = [
     },
     temperamentDialogue: {
       new: [
-        "\"Perfect timing—I need someone I can trust to manage the VIP section. You in?\"",
+        "Perfect timing—I need someone I can trust to manage the VIP section. You in?",
       ],
       warm: [
-        "\"Oh, you're back! Actually... I'm kind of happy to see you. Don't tell anyone.\"",
+        "Oh, you're back! Actually... I'm kind of happy to see you. Don't tell anyone.",
       ],
       close: [
-        "\"I'd spend all my money on you if you asked. Not that I'd ever admit that normally.\"",
+        "I'd spend all my money on you if you asked. Not that I'd ever admit that normally.",
       ],
     },
   },
@@ -1026,11 +1026,11 @@ export const CHARACTERS = [
       ],
     },
     temperamentDialogue: {
-      new: ["\"Oh! H-hi! Did you need something? I'm here to help!\""],
+      new: ["Oh! H-hi! Did you need something? I'm here to help!"],
       warm: [
-        "\"You're back! I'm really happy to see you. What can I do for you?\"",
+        "You're back! I'm really happy to see you. What can I do for you?",
       ],
-      close: ["\"You mean a lot to me. I'd do anything to help you.\""],
+      close: ["You mean a lot to me. I'd do anything to help you."],
     },
   },
 ];
