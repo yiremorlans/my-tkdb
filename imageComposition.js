@@ -1,8 +1,28 @@
-import { createCanvas, loadImage } from 'canvas';
+import { createCanvas, loadImage, registerFont } from 'canvas';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
+import fs from 'fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Try to register Liberation fonts from common paths
+const fontPaths = [
+  '/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf',
+  '/usr/local/share/fonts/LiberationMono-Regular.ttf',
+  '/nix/store/fonts/LiberationMono-Regular.ttf',
+];
+
+for (const fontPath of fontPaths) {
+  if (fs.existsSync(fontPath)) {
+    try {
+      registerFont(fontPath, { family: 'Liberation Mono' });
+      console.log('[imageComposition] Registered font from:', fontPath);
+      break;
+    } catch (e) {
+      console.log('[imageComposition] Failed to register', fontPath, ':', e.message);
+    }
+  }
+}
 
 // Composite a background and character image on canvas, optionally with dialogue.
 // Returns a buffer containing the PNG-encoded composite image.
