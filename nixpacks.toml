@@ -7,10 +7,9 @@ nixpkgs = [
   "pango",
   "pixman",
   "fontconfig",
-  "fontconfig-data",
-  "fonts-liberation",
-  "fonts-dejavu"
+  "liberation_ttf",
+  "dejavu_fonts"
 ]
 
-[phases.build]
-cmds = ["npm run build || true"]
+[env]
+FONTCONFIG_PATH = "/etc/fonts"
