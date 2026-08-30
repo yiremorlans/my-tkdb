@@ -1,0 +1,11 @@
+[providers]
+runtime = "nodejs"
+
+[phases.setup]
+nixpkgs = [
+  "fonts-liberation",
+  "fonts-dejavu",
+  "fontconfig",
+  "xorg.xfonts-encodings",
+  "xorg.xfonts-utils"
+]
