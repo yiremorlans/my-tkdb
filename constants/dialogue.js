@@ -372,7 +372,7 @@ export const DIALOGUE = {
     },
     temperamentDialogue: {
       new: [
-        "\"Autumn winds carry you here. Welcome, wanderer.\"",
+        "Autumn winds carry you here. \"Welcome, wanderer.\"",
       ],
       warm: [
         "\"You return like seasons turning. My heart is at ease.\"",
