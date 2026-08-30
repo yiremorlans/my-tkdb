@@ -42,7 +42,7 @@ export async function composeEncounter(bgFilename, charFilename, dialogue = null
 
     // White text.
     ctx.fillStyle = '#ffffff';
-    ctx.font = `${fontSize}px monospace`;
+    ctx.font = `${fontSize}px "Liberation Mono", monospace`;
     ctx.textBaseline = 'top';
     console.log('[composeEncounter] Font set to:', ctx.font);
 
