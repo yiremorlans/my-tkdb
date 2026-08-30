@@ -75,7 +75,7 @@ export function checkCommandLimit(userId, command, now = new Date()) {
   });
   return {
     allowed: false,
-    reason: `You've used /${command} recently. You can use it again in ${formatDuration(
+    reason: `You can use /${command} again in ${formatDuration(
       COOLDOWN_MS - elapsed,
     )} (around ${clockTime}).`,
   };

@@ -53,6 +53,22 @@ Go to your Supabase Dashboard:
 - Copy and execute
 - Wait for success ✓
 
+### Migration 5: Monthly Counter Reset Job
+- File: `db/migrations/005_monthly_reset.sql`
+- Enables `pg_cron` and schedules `snapshot_and_reset_monthly_counters()` for
+  00:00 UTC on the 1st of each month (snapshots the finished month into
+  `monthly_analytics`, then zeroes `commands_this_month` on `user_activity` and
+  `character_engagement`)
+- Copy and execute
+- Wait for success ✓
+
+### Migration 6: monthly_analytics RLS + trends view fix
+- File: `db/migrations/006_rls_monthly_analytics_and_trends_fix.sql`
+- Enables RLS on `monthly_analytics` (missed in migration 3) and fixes a
+  double-count in `vw_engagement_trends`
+- Copy and execute
+- Wait for success ✓
+
 ## Step 3: Verify Migrations
 
 In the Supabase Dashboard, click **Table Editor** and verify:
@@ -144,10 +160,10 @@ app.get('/api/analytics', async (req, res) => {
 
 ## Next Steps
 
-1. **Monthly Reset** — Set up a cron job (or manual query) on the last day of each month:
-   ```javascript
-   // Copy data to monthly_analytics and reset monthly counters
-   // See SCHEMA.md for the exact query
+1. **Monthly Reset** — Handled by migration 5 (`pg_cron` job
+   `monthly-counter-reset`). Run it by hand any time with:
+   ```sql
+   SELECT public.snapshot_and_reset_monthly_counters();
    ```
 
 2. **Build Analytics Page** — Use `getAnalyticsDashboard()` to power your analytics UI

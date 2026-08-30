@@ -17,6 +17,7 @@ import {
   getCharactersForLocation,
   getFullName,
   getRandomCharacterImageVariant,
+  getRandomApproachLabel,
   getRandomDialogueLine,
   getTemperamentGreeting,
   RESPONSE_TYPES,
@@ -134,6 +135,17 @@ function responseActionRow(characterId, disabled = false, tier = 'new') {
   });
 }
 
+// Grey out a set of components exactly as they were shown. Response labels are
+// picked at random per encounter, so re-deriving the row for the result message
+// would show the player a different set of buttons than the one they clicked.
+function disableComponents(rows) {
+  if (!rows?.length) return null;
+  return rows.map((row) => ({
+    ...row,
+    components: (row.components || []).map((button) => ({ ...button, disabled: true })),
+  }));
+}
+
 // --- /roam ---------------------------------------------------------------
 
 function generateEncounterId() {
@@ -237,7 +249,7 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
           {
             type: MessageComponentTypes.BUTTON,
             style: ButtonStyleTypes.PRIMARY,
-            label: 'Step forward',
+            label: getRandomApproachLabel(character, tier, variant, now),
             custom_id: `roam:spawn:${encounterId}`,
           },
         ],
@@ -330,7 +342,12 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
 
 // --- dialogue response -------------------------------------------------------
 
-export async function buildResponseResultMessage(userId, characterId, responseTypeId) {
+export async function buildResponseResultMessage(
+  userId,
+  characterId,
+  responseTypeId,
+  shownComponents = null,
+) {
   const character = getCharacterById(characterId);
   if (!character) {
     return {
@@ -340,7 +357,7 @@ export async function buildResponseResultMessage(userId, characterId, responseTy
   }
 
   const gain = getAffinityForResponse(character, responseTypeId);
-  const { affinity, level } = await recordResponse(userId, characterId, gain);
+  const { affinity, level } = await recordResponse(userId, characterId, gain, responseTypeId);
 
   let reaction;
   if (responseTypeId === RESPONSE_TYPES.NEUTRAL) {
@@ -355,7 +372,7 @@ export async function buildResponseResultMessage(userId, characterId, responseTy
 
   return {
     content: `${reaction}\n+${gain} affinity — **${level.name}** (${affinity})`,
-    components: responseActionRow(characterId, true),
+    components: disableComponents(shownComponents) || responseActionRow(characterId, true),
     flags: EPHEMERAL_FLAG,
   };
 }

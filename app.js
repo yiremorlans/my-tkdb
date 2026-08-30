@@ -117,10 +117,9 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           },
         });
       }
-      // Track user activity (fire and forget)
-      trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
-
-      // Build and respond immediately (no await)
+      // Build and respond immediately (no await). User activity is only counted
+      // once an encounter actually loads (the roam/spawn button below), not for
+      // opening the prompt.
       const messageData = await buildRoamDialogueMessage(userId);
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
@@ -139,9 +138,8 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           },
         });
       }
-      // Track user activity
-      trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
-
+      // User activity is only counted once a character actually loads (the
+      // meet/pick button below), not for opening the picker.
       const messageData = buildMeetPickMessage();
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
@@ -199,12 +197,13 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
       (async () => {
         try {
-          // Track character engagement
-          trackCharacterEngagement(userId, characterId).catch(err => console.error('Error tracking character engagement:', err));
-
           const messageData = await buildMeetSpawnMessage(userId, characterId);
           await sendFollowup(req.body.token, messageData);
           clearTimeout(timeoutHandle);
+
+          // The character loaded — record the interaction
+          trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
+          trackCharacterEngagement(userId, characterId).catch(err => console.error('Error tracking character engagement:', err));
         } catch (err) {
           console.error('Error in /meet pick:', err);
           clearTimeout(timeoutHandle);
@@ -236,15 +235,15 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       (async () => {
         try {
           const messageData = await buildRoamSpawnMessage(encounterId);
+          await sendFollowup(req.body.token, messageData);
+          clearTimeout(timeoutHandle);
 
-          // Track character engagement for roam encounter
+          // The encounter loaded — record the interaction
+          trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
           const encounter = getCachedRoamEncounter(encounterId);
           if (encounter?.character?.id) {
             trackCharacterEngagement(userId, encounter.character.id).catch(err => console.error('Error tracking character engagement:', err));
           }
-
-          await sendFollowup(req.body.token, messageData);
-          clearTimeout(timeoutHandle);
         } catch (err) {
           console.error('Error in /roam spawn:', err);
           clearTimeout(timeoutHandle);
@@ -266,11 +265,19 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
       (async () => {
         try {
-          const messageData = await buildResponseResultMessage(userId, characterId, responseTypeId);
+          const messageData = await buildResponseResultMessage(
+            userId,
+            characterId,
+            responseTypeId,
+            req.body.message?.components,
+          );
           res.send({
             type: InteractionResponseType.UPDATE_MESSAGE,
             data: messageData,
           });
+
+          // The response landed — record the interaction
+          trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
         } catch (err) {
           console.error('Error in /resp:', err);
           res.send({

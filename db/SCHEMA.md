@@ -118,26 +118,19 @@ At the end of each month:
 2. **Reset** `commands_this_month` counters to 0 in both tables
 3. Keep `total_commands` for lifetime tracking
 
-**Example reset query (run on month end):**
-```sql
--- Run this query on the last day of each month
-WITH month_data AS (
-  SELECT 
-    TO_CHAR(NOW(), 'YYYY-MM') as year_month,
-    discord_user_id,
-    NULL as character_id,
-    commands_this_month,
-    CAST(EXTRACT(DAY FROM DATE_TRUNC('month', NOW() + INTERVAL '1 month') - INTERVAL '1 day') AS INT) as unique_days_active
-  FROM user_activity
-)
-INSERT INTO monthly_analytics (year_month, discord_user_id, character_id, commands_count, unique_days_active, created_at)
-SELECT year_month, discord_user_id, character_id, commands_count, unique_days_active, NOW()
-FROM month_data;
+This is automated by migration `005_monthly_reset.sql`, which installs
+`public.snapshot_and_reset_monthly_counters()` and a `pg_cron` job
+(`monthly-counter-reset`) that runs it at 00:00 UTC on the 1st of each month.
+Run it manually any time with:
 
--- Then reset the monthly counters
-UPDATE user_activity SET commands_this_month = 0;
-UPDATE character_engagement SET commands_this_month = 0;
+```sql
+SELECT public.snapshot_and_reset_monthly_counters();
 ```
+
+As a safety net, `trackUserActivity()` / `trackCharacterEngagement()` in
+`db/supabase.js` also roll `commands_this_month` back to 1 when a row's last
+activity was in a previous UTC month, so the counter stays correct even if the
+cron job is delayed or disabled.
 
 ## Security & Privacy
 

@@ -12,6 +12,21 @@ if (!supabaseUrl || !supabaseServiceKey) {
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
 /**
+ * True if the two timestamps fall in the same UTC calendar month.
+ * Used to lazily roll `commands_this_month` over at month boundaries so the
+ * counter is correct even before the scheduled monthly reset job runs (see
+ * db/migrations/005_monthly_reset.sql).
+ */
+function isSameUtcMonth(isoTimestamp, reference = new Date()) {
+  if (!isoTimestamp) return false;
+  const then = new Date(isoTimestamp);
+  return (
+    then.getUTCFullYear() === reference.getUTCFullYear() &&
+    then.getUTCMonth() === reference.getUTCMonth()
+  );
+}
+
+/**
  * Get or create a character relationship record
  */
 export async function getOrCreateRelationship(userId, characterId) {
@@ -195,14 +210,20 @@ export async function trackUserActivity(userId) {
     return newData;
   }
 
-  // Update existing record with incremented counters
+  // Update existing record with incremented counters. commands_this_month
+  // restarts at 1 when the last activity was in a previous month.
+  const now = new Date();
+  const commandsThisMonth = isSameUtcMonth(userActivity.last_used_at, now)
+    ? (userActivity.commands_this_month || 0) + 1
+    : 1;
+
   const { data, error } = await supabase
     .from('user_activity')
     .update({
-      last_used_at: new Date().toISOString(),
-      commands_this_month: (userActivity.commands_this_month || 0) + 1,
+      last_used_at: now.toISOString(),
+      commands_this_month: commandsThisMonth,
       total_commands: (userActivity.total_commands || 0) + 1,
-      updated_at: new Date().toISOString(),
+      updated_at: now.toISOString(),
     })
     .eq('discord_user_id', userId)
     .select()
@@ -220,14 +241,38 @@ export async function trackUserActivity(userId) {
  * Track character engagement for analytics
  */
 export async function trackCharacterEngagement(userId, characterId) {
+  // Read the current counters so we can increment them. upsert can't express
+  // `col = col + 1`, so this is a read-modify-write (racy under concurrent
+  // interactions from the same user, but good enough for analytics).
+  const { data: existing, error: readError } = await supabase
+    .from('character_engagement')
+    .select('commands_this_month, total_commands, last_interacted_at')
+    .eq('discord_user_id', userId)
+    .eq('character_id', characterId)
+    .single();
+
+  if (readError && readError.code !== 'PGRST116') { // PGRST116 = no rows found
+    console.error('Error reading character engagement:', readError);
+    throw readError;
+  }
+
+  // commands_this_month restarts at 1 when the last interaction was in a
+  // previous month (matches the scheduled monthly reset in migration 005).
+  const now = new Date();
+  const commandsThisMonth = isSameUtcMonth(existing?.last_interacted_at, now)
+    ? (existing?.commands_this_month || 0) + 1
+    : 1;
+
   const { data, error } = await supabase
     .from('character_engagement')
     .upsert(
       {
         discord_user_id: userId,
         character_id: characterId,
-        last_interacted_at: new Date().toISOString(),
-        updated_at: new Date().toISOString(),
+        commands_this_month: commandsThisMonth,
+        total_commands: (existing?.total_commands || 0) + 1,
+        last_interacted_at: now.toISOString(),
+        updated_at: now.toISOString(),
       },
       { onConflict: 'discord_user_id,character_id' }
     )

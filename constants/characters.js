@@ -631,6 +631,19 @@ export function getAffinityForResponse(character, responseType) {
   return character.affinityByResponse[responseType] ?? 0;
 }
 
+function pickRandom(list) {
+  return list[Math.floor(Math.random() * list.length)];
+}
+
+// Fallback for the /roam narration button when a character has no `approach`
+// entry in dialogue.js. Deliberately generic, since it has to front any scene.
+const APPROACH_LABEL_FALLBACK = [
+  "Step forward",
+  "Close the distance",
+  "Make yourself known",
+  "Walk over to them",
+];
+
 export function getRandomDialogueLine(
   character,
   tier,
@@ -647,9 +660,7 @@ export function getRandomDialogueLine(
     if (hour < 12) {
       const amLines =
         content.amOnlyDialogue[tier] || content.amOnlyDialogue.new;
-      return Array.isArray(amLines)
-        ? amLines[Math.floor(Math.random() * amLines.length)]
-        : amLines;
+      return Array.isArray(amLines) ? pickRandom(amLines) : amLines;
     }
   }
 
@@ -665,16 +676,42 @@ export function getRandomDialogueLine(
     lines = lines[variant];
   }
 
-  return Array.isArray(lines)
-    ? lines[Math.floor(Math.random() * lines.length)]
-    : lines;
+  return Array.isArray(lines) ? pickRandom(lines) : lines;
 }
 
 export function getTemperamentGreeting(character, tier) {
   const temperamentLines =
     DIALOGUE[character.id]?.temperamentDialogue || {};
   const lines = temperamentLines[tier] || temperamentLines.new || ["..."];
-  return lines[Math.floor(Math.random() * lines.length)];
+  return pickRandom(lines);
+}
+
+// The label on the single button that turns the /roam narration into an actual
+// encounter — the "Step forward" beat. Tiered like the dialogue so the
+// invitation matches the scene the narration just set, and swapped out for a
+// pmOnly character during the hours they can't speak, the same way
+// getRandomDialogueLine is.
+export function getRandomApproachLabel(
+  character,
+  tier,
+  variant = null,
+  now = null,
+) {
+  const content = DIALOGUE[character.id];
+  if (!content) return pickRandom(APPROACH_LABEL_FALLBACK);
+
+  let labels = null;
+  if (character.pmOnly && content.amOnlyApproach && now && now.getHours() < 12) {
+    labels = content.amOnlyApproach[tier] || content.amOnlyApproach.new;
+  }
+  if (!labels) labels = content.approach?.[tier] || content.approach?.new;
+  if (!labels) return pickRandom(APPROACH_LABEL_FALLBACK);
+
+  if (variant && !Array.isArray(labels) && labels[variant]) {
+    labels = labels[variant];
+  }
+
+  return Array.isArray(labels) ? pickRandom(labels) : labels;
 }
 
 export function generateCharacterResponses(character, tier = "new") {
@@ -715,13 +752,29 @@ export function generateCharacterResponses(character, tier = "new") {
   return responses;
 }
 
-// Per-character button labels live in constants/dialogue.js. Only "close" and
-// everything-before-it are distinguished. A character with no entry falls
-// through to the archetype defaults below.
+// Button labels live in constants/dialogue.js, authored at three tiers rather
+// than all six — the buttons only need to change where the register does. The
+// dialogue tiers that share a register share a label set: everything up to
+// "warm" reads as an approach, "spark" turns flirtatious, "close" is intimate,
+// "bound" is romantic.
+const RESPONSE_LABEL_TIER = {
+  new: "new",
+  known: "new",
+  warm: "new",
+  spark: "spark",
+  close: "close",
+  bound: "bound",
+};
+
+// Each slot is a collection, picked from at random so a character the player
+// sees often doesn't always get the same four buttons. A character with no
+// entry falls through to the archetype defaults below.
 function responseLabel(characterId, responseType, tier) {
   const entry = DIALOGUE[characterId]?.responses?.[responseType];
   if (!entry) return null;
-  return tier === "close" ? entry.close : entry.new;
+  const labels = entry[RESPONSE_LABEL_TIER[tier] || "new"] || entry.new;
+  if (!labels) return null;
+  return Array.isArray(labels) ? pickRandom(labels) : labels;
 }
 
 function generateKindResponse(character, archetypeSet, keywordSet, tier) {
