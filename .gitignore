@@ -150,3 +150,8 @@ vite.config.ts.timestamp-*
 
 # roam encounter cache (persists across restarts)
 .roam-cache.json
+
+# Claude Code local configuration
+.agents/
+.claude/
+skills-lock.json

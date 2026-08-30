@@ -1,49 +1,41 @@
-// JSON-file-backed relationship storage. When this moves to Postgres
-// (see db/schema.sql), a replacement module just needs to export the same
-// two functions with the same shapes so encounters.js doesn't change.
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
+// Supabase-backed relationship storage
+// All affinity and relationship data is now stored in Postgres
 import { getRelationshipLevel } from './constants/game.js';
+import { getOrCreateRelationship, updateAffinity, incrementTimesMet } from './db/supabase.js';
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_DIR = join(__dirname, 'data');
-const DATA_FILE = join(DATA_DIR, 'relationships.json');
-
-function readStore() {
-  if (!existsSync(DATA_FILE)) return {};
+export async function getRelationship(userId, characterId) {
   try {
-    return JSON.parse(readFileSync(DATA_FILE, 'utf-8'));
-  } catch {
-    return {};
+    const relationship = await getOrCreateRelationship(userId, characterId);
+    return {
+      affinity: relationship.affinity || 0,
+      timesMet: relationship.times_met || 0,
+    };
+  } catch (err) {
+    console.error('Error fetching relationship from DB:', err);
+    // Fallback to defaults if DB is unavailable
+    return { affinity: 0, timesMet: 0 };
   }
-}
-
-function writeStore(store) {
-  if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
-  writeFileSync(DATA_FILE, JSON.stringify(store, null, 2));
-}
-
-export function getRelationship(userId, characterId) {
-  const store = readStore();
-  return store[userId]?.[characterId] || { affinity: 0, timesMet: 0 };
 }
 
 // Records a dialogue response and applies the given affinity gain (0-2,
 // computed by the caller via getAffinityForResponse). Returns the updated
 // relationship.
-export function recordResponse(userId, characterId, gain) {
-  const store = readStore();
-  if (!store[userId]) store[userId] = {};
-  const existing = store[userId][characterId] || { affinity: 0, timesMet: 0 };
+export async function recordResponse(userId, characterId, gain) {
+  try {
+    // Update affinity in DB
+    const updated = await updateAffinity(userId, characterId, gain);
 
-  const updated = {
-    affinity: existing.affinity + gain,
-    timesMet: existing.timesMet + 1,
-  };
+    // Increment times_met
+    await incrementTimesMet(userId, characterId);
 
-  store[userId][characterId] = updated;
-  writeStore(store);
-
-  return { ...updated, gain, level: getRelationshipLevel(updated.affinity) };
+    return {
+      affinity: updated.affinity || 0,
+      timesMet: (updated.times_met || 0) + 1,
+      gain,
+      level: getRelationshipLevel(updated.affinity || 0),
+    };
+  } catch (err) {
+    console.error('Error recording response to DB:', err);
+    throw err;
+  }
 }

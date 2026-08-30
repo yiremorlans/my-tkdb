@@ -51,6 +51,68 @@ function pickRandomDistinct(list, count) {
   return picked;
 }
 
+// Determine character image variant based on relationship level.
+// Stranger: always uniform. Higher levels gradually increase casual probability.
+function getImageVariant(character, levelName) {
+  // Probability of showing casual outfit at each level
+  const casualProbability = {
+    Stranger: 0,           // 0% casual
+    Acquaintance: 0.25,    // 25% casual
+    Friend: 0.40,          // 40% casual
+    'Close Friend': 0.55,  // 55% casual
+    Confidant: 0.70,       // 70% casual
+    Devoted: 0.85,         // 85% casual
+    Soulbound: 0.95,       // 95% casual
+  };
+
+  const probability = casualProbability[levelName] || 0;
+  const useCasual = Math.random() < probability && character.images.casual;
+
+  let variant = useCasual ? 'casual' : 'uniform';
+
+  // Fallback to any available variant if chosen one doesn't exist
+  if (!character.images[variant]) {
+    variant = Object.keys(character.images)[0] || 'uniform';
+  }
+
+  return variant;
+}
+
+// Character affinity preferences for special locations.
+// Higher values = more likely to appear at that location.
+const LOCATION_CHARACTER_AFFINITIES = {
+  [SPECIAL_BACKGROUNDS.DARKWICK_MYSTERY_DINER]: { ren: 2 },
+  [SPECIAL_BACKGROUNDS.DARKWICK_FOOD_TRUCK]: { shohei: 2 },
+  [SPECIAL_BACKGROUNDS.DARKWICK_DOCKS]: { shion: 2 },
+  [SPECIAL_BACKGROUNDS.VAGASTROM_THE_PIT]: { alan: 2 },
+  [SPECIAL_BACKGROUNDS.SINOSTRA_VIP_ROOM_ENTRANCE]: { romeo: 2 },
+  [SPECIAL_BACKGROUNDS.OBSCUARY_BAR]: { rui: 1.5, romeo: 1 },
+  [SPECIAL_BACKGROUNDS.MORTKRANKEN_LAB]: { yuri: 2 },
+  [SPECIAL_BACKGROUNDS.MORTKRANKEN_LAB_PM]: { yuri: 2 },
+};
+
+// Select a character using weighted probability based on location affinity.
+// Characters with higher affinity for a location are more likely to appear there.
+function selectCharacterAtLocation(candidates, location) {
+  const affinities = LOCATION_CHARACTER_AFFINITIES[location] || {};
+
+  // Build weighted pool: add characters based on affinity
+  const weightedPool = [];
+  for (const candidate of candidates) {
+    const weight = affinities[candidate.id] || 1;
+    // Add character to pool based on weight
+    for (let i = 0; i < Math.ceil(weight); i++) {
+      weightedPool.push(candidate);
+    }
+  }
+
+  if (weightedPool.length === 0) {
+    return pickRandom(candidates);
+  }
+
+  return pickRandom(weightedPool);
+}
+
 function responseActionRow(characterId, disabled = false, tier = 'new') {
   const character = getCharacterById(characterId);
   const characterResponses = character ? generateCharacterResponses(character, tier) : {};
@@ -114,7 +176,7 @@ function cacheRoamEncounter(encounterId, data) {
   saveCacheFile(cache);
 }
 
-function getCachedRoamEncounter(encounterId) {
+export function getCachedRoamEncounter(encounterId) {
   const cache = loadCacheFile();
   const entry = cache[encounterId];
   if (!entry) return null;
@@ -123,10 +185,12 @@ function getCachedRoamEncounter(encounterId) {
   return data;
 }
 
-export function buildRoamDialogueMessage(userId, now = new Date()) {
+
+export async function buildRoamDialogueMessage(userId, now = new Date()) {
   console.log('[buildRoamDialogueMessage] Starting...');
   const startTime = Date.now();
 
+  console.log('[buildRoamDialogueMessage] Getting random background...');
   const spot = getRandomBackground(now);
   if (!spot) {
     console.log('[buildRoamDialogueMessage] No background available');
@@ -136,61 +200,23 @@ export function buildRoamDialogueMessage(userId, now = new Date()) {
     };
   }
 
+  console.log('[buildRoamDialogueMessage] Getting location info...');
   const isGeneral = isGeneralLocation(spot.locationKey);
   const candidates = getCharactersForLocation(spot.locationKey, isGeneral);
 
-  // Preferentially select certain characters at specific locations (45% chance for special character, 55% random)
-  const SPECIAL_CHARACTER_PROBABILITY = 0.45;
-  let character;
-  switch (spot.file) {
-    case SPECIAL_BACKGROUNDS.DARKWICK_MYSTERY_DINER: {
-      const ren = candidates.find(c => c.id === 'ren');
-      character = (ren && Math.random() < SPECIAL_CHARACTER_PROBABILITY) ? ren : pickRandom(candidates);
-      break;
-    }
-    case SPECIAL_BACKGROUNDS.DARKWICK_FOOD_TRUCK: {
-      const shohei = candidates.find(c => c.id === 'shohei');
-      character = (shohei && Math.random() < SPECIAL_CHARACTER_PROBABILITY) ? shohei : pickRandom(candidates);
-      break;
-    }
-    case SPECIAL_BACKGROUNDS.DARKWICK_DOCKS: {
-      const shion = candidates.find(c => c.id === 'shion');
-      character = (shion && Math.random() < SPECIAL_CHARACTER_PROBABILITY) ? shion : pickRandom(candidates);
-      break;
-    }
-    case SPECIAL_BACKGROUNDS.VAGASTROM_THE_PIT: {
-      const alan = candidates.find(c => c.id === 'alan');
-      character = (alan && Math.random() < SPECIAL_CHARACTER_PROBABILITY) ? alan : pickRandom(candidates);
-      break;
-    }
-    case SPECIAL_BACKGROUNDS.SINOSTRA_VIP_ROOM_ENTRANCE: {
-      const romeo = candidates.find(c => c.id === 'romeo');
-      character = (romeo && Math.random() < SPECIAL_CHARACTER_PROBABILITY) ? romeo : pickRandom(candidates);
-      break;
-    }
-    case SPECIAL_BACKGROUNDS.OBSCUARY_BAR: {
-      const rui = candidates.find(c => c.id === 'rui');
-      const romeo = candidates.find(c => c.id === 'romeo');
-      const preferred = [rui, romeo].filter(Boolean);
-      character = (preferred.length > 0 && Math.random() < SPECIAL_CHARACTER_PROBABILITY) ? pickRandom(preferred) : pickRandom(candidates);
-      break;
-    }
-    case SPECIAL_BACKGROUNDS.MORTKRANKEN_LAB:
-    case SPECIAL_BACKGROUNDS.MORTKRANKEN_LAB_PM: {
-      const yuri = candidates.find(c => c.id === 'yuri');
-      character = (yuri && Math.random() < SPECIAL_CHARACTER_PROBABILITY) ? yuri : pickRandom(candidates);
-      break;
-    }
-    default:
-      character = pickRandom(candidates);
-  }
+  // Use weighted selection based on location affinity
+  const character = selectCharacterAtLocation(candidates, spot.file);
 
   console.log(`[buildRoamDialogueMessage] Selected ${getFullName(character)} at ${spot.locationKey}`);
 
-  const { affinity } = getRelationship(userId, character.id);
+  console.log('[buildRoamDialogueMessage] Fetching relationship from DB...');
+  const relStart = Date.now();
+  const { affinity } = await getRelationship(userId, character.id);
+  console.log('[buildRoamDialogueMessage] Got affinity after', Date.now() - relStart, 'ms');
+
   const level = getRelationshipLevel(affinity);
   const tier = getDialogueTier(level.name);
-  const variant = tier === 'new' ? 'uniform' : getRandomCharacterImageVariant(character);
+  const variant = getImageVariant(character, level.name);
   const dialogue = getRandomDialogueLine(character, tier, variant, now);
   const temperament = getTemperamentGreeting(character, tier);
   console.log('[buildRoamDialogueMessage] Got dialogue:', dialogue);
@@ -282,10 +308,10 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
   }
   const fallbackSpot = spot || getRandomGeneralBackground(now);
 
-  const { affinity } = getRelationship(userId, character.id);
+  const { affinity } = await getRelationship(userId, character.id);
   const level = getRelationshipLevel(affinity);
   const tier = getDialogueTier(level.name);
-  const variant = tier === 'new' ? 'uniform' : getRandomCharacterImageVariant(character);
+  const variant = getImageVariant(character, level.name);
   const dialogue = getRandomDialogueLine(character, tier, variant, now);
 
   const charFilename = character.images[variant];
@@ -304,7 +330,7 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
 
 // --- dialogue response -------------------------------------------------------
 
-export function buildResponseResultMessage(userId, characterId, responseTypeId) {
+export async function buildResponseResultMessage(userId, characterId, responseTypeId) {
   const character = getCharacterById(characterId);
   if (!character) {
     return {
@@ -314,7 +340,7 @@ export function buildResponseResultMessage(userId, characterId, responseTypeId) 
   }
 
   const gain = getAffinityForResponse(character, responseTypeId);
-  const { affinity, level } = recordResponse(userId, characterId, gain);
+  const { affinity, level } = await recordResponse(userId, characterId, gain);
 
   let reaction;
   if (responseTypeId === RESPONSE_TYPES.NEUTRAL) {

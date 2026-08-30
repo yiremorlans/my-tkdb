@@ -11,8 +11,13 @@ import {
   buildResponseResultMessage,
   buildRoamDialogueMessage,
   buildRoamSpawnMessage,
+  getCachedRoamEncounter,
 } from './encounters.js';
 import { checkCommandLimit, resetCommandLimit } from './commandLimits.js';
+import {
+  trackUserActivity,
+  trackCharacterEngagement,
+} from './db/supabase.js';
 
 // Create an express app
 const app = express();
@@ -26,56 +31,58 @@ async function sendFollowup(interactionToken, messageData, timeoutMs = 15000) {
   const url = `https://discord.com/api/v10/webhooks/${process.env.APP_ID}/${interactionToken}`;
   const startTime = Date.now();
   console.log('[sendFollowup] Starting, timeout:', timeoutMs, 'ms');
+  console.log('[sendFollowup] URL:', url.substring(0, 50) + '...');
 
-  return Promise.race([
-    (async () => {
-      try {
-        const form = new FormData();
+  try {
+    const form = new FormData();
 
-        if (messageData.files && messageData.files.length > 0) {
-          // Handle files separately
-          const { files, ...dataWithoutFiles } = messageData;
-          form.append('payload_json', JSON.stringify(dataWithoutFiles));
-          for (let i = 0; i < files.length; i++) {
-            const file = files[i];
-            console.log(`[sendFollowup] Appending file: ${file.name}, size: ${file.attachment.length / 1024 / 1024}MB`);
-            const blob = new Blob([file.attachment], { type: 'image/png' });
-            form.append(`files[${i}]`, blob, file.name);
-          }
-        } else {
-          form.append('payload_json', JSON.stringify(messageData));
-        }
-
-        console.log('[sendFollowup] Sending fetch request to Discord, elapsed:', Date.now() - startTime, 'ms');
-        const fetchStart = Date.now();
-        const response = await fetch(url, {
-          method: 'POST',
-          body: form,
-        });
-        console.log('[sendFollowup] Response received:', response.status, '- took', Date.now() - fetchStart, 'ms');
-        const responseText = await response.text();
-        if (!response.ok) {
-          console.error(`[sendFollowup] Failed: ${response.status}`, responseText);
-          throw new Error(`Discord API error: ${response.status}`);
-        } else {
-          console.log('[sendFollowup] Success! Total time:', Date.now() - startTime, 'ms');
-        }
-      } catch (err) {
-        console.error('[sendFollowup] Error:', err.message);
-        throw err;
+    if (messageData.files && messageData.files.length > 0) {
+      // Handle files separately
+      const { files, ...dataWithoutFiles } = messageData;
+      form.append('payload_json', JSON.stringify(dataWithoutFiles));
+      for (let i = 0; i < files.length; i++) {
+        const file = files[i];
+        console.log(`[sendFollowup] Appending file: ${file.name}, size: ${file.attachment.length / 1024 / 1024}MB`);
+        const blob = new Blob([file.attachment], { type: 'image/png' });
+        form.append(`files[${i}]`, blob, file.name);
       }
-    })(),
-    new Promise((_, reject) =>
-      setTimeout(() => reject(new Error('Followup timeout after ' + timeoutMs + 'ms')), timeoutMs)
-    )
-  ]);
+    } else {
+      const jsonData = JSON.stringify(messageData);
+      console.log('[sendFollowup] Message data:', jsonData.substring(0, 200) + '...');
+      form.append('payload_json', jsonData);
+    }
+
+    console.log('[sendFollowup] Sending fetch request to Discord, elapsed:', Date.now() - startTime, 'ms');
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+    const fetchStart = Date.now();
+    const response = await fetch(url, {
+      method: 'POST',
+      body: form,
+      signal: controller.signal,
+    });
+    clearTimeout(timeoutId);
+
+    console.log('[sendFollowup] Response received:', response.status, '- took', Date.now() - fetchStart, 'ms');
+    const responseText = await response.text();
+    if (!response.ok) {
+      console.error(`[sendFollowup] Failed: ${response.status}`, responseText);
+      throw new Error(`Discord API error: ${response.status} - ${responseText}`);
+    } else {
+      console.log('[sendFollowup] Success! Total time:', Date.now() - startTime, 'ms');
+    }
+  } catch (err) {
+    console.error('[sendFollowup] Error:', err.message, 'elapsed:', Date.now() - startTime, 'ms');
+    throw err;
+  }
 }
 
 /**
  * Interactions endpoint URL where Discord will send HTTP requests
  * Parse request body and verifies incoming requests using discord-interactions package
  */
-app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async function (req, res) {
+app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (req, res) => {
   // Interaction id, type and data
   const { type, data, member, user } = req.body;
   const userId = member?.user?.id || user?.id;
@@ -105,7 +112,11 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
           },
         });
       }
-      const messageData = buildRoamDialogueMessage(userId);
+      // Track user activity (fire and forget)
+      trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
+
+      // Build and respond immediately (no await)
+      const messageData = await buildRoamDialogueMessage(userId);
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: messageData,
@@ -123,6 +134,9 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
           },
         });
       }
+      // Track user activity
+      trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
+
       const messageData = buildMeetPickMessage();
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
@@ -180,6 +194,9 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 
       (async () => {
         try {
+          // Track character engagement
+          trackCharacterEngagement(userId, characterId).catch(err => console.error('Error tracking character engagement:', err));
+
           const messageData = await buildMeetSpawnMessage(userId, characterId);
           await sendFollowup(req.body.token, messageData);
           clearTimeout(timeoutHandle);
@@ -214,6 +231,13 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
       (async () => {
         try {
           const messageData = await buildRoamSpawnMessage(encounterId);
+
+          // Track character engagement for roam encounter
+          const encounter = getCachedRoamEncounter(encounterId);
+          if (encounter?.character?.id) {
+            trackCharacterEngagement(userId, encounter.character.id).catch(err => console.error('Error tracking character engagement:', err));
+          }
+
           await sendFollowup(req.body.token, messageData);
           clearTimeout(timeoutHandle);
         } catch (err) {
@@ -234,11 +258,26 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async fun
 
     if (action === 'resp') {
       const [characterId, responseTypeId] = rest;
-      const messageData = buildResponseResultMessage(userId, characterId, responseTypeId);
-      return res.send({
-        type: InteractionResponseType.UPDATE_MESSAGE,
-        data: messageData,
-      });
+
+      (async () => {
+        try {
+          const messageData = await buildResponseResultMessage(userId, characterId, responseTypeId);
+          res.send({
+            type: InteractionResponseType.UPDATE_MESSAGE,
+            data: messageData,
+          });
+        } catch (err) {
+          console.error('Error in /resp:', err);
+          res.send({
+            type: InteractionResponseType.UPDATE_MESSAGE,
+            data: {
+              content: `Error: ${err.message}`,
+              flags: 64,
+            },
+          });
+        }
+      })();
+      return;
     }
 
     console.error(`unknown component interaction: ${customId}`);
