@@ -17,14 +17,6 @@ const MEET_COMMAND = {
   contexts: [0, 1, 2],
 };
 
-const TESTLIMIT_COMMAND = {
-  name: 'testlimit',
-  description: '[DEV] Reset your command limits for testing',
-  type: 1,
-  integration_types: [0, 1],
-  contexts: [0, 1, 2],
-};
-
 const AFFINITY_COMMAND = {
   name: 'affinity',
   description: 'Check your relationship status with characters',
@@ -73,6 +65,6 @@ const HOUSE_COMMAND = {
   contexts: [0, 1, 2],
 };
 
-const ALL_COMMANDS = [ROAM_COMMAND, MEET_COMMAND, TESTLIMIT_COMMAND, AFFINITY_COMMAND, HOUSE_COMMAND];
+const ALL_COMMANDS = [ROAM_COMMAND, MEET_COMMAND, AFFINITY_COMMAND, HOUSE_COMMAND];
 
 InstallGlobalCommands(process.env.APP_ID, ALL_COMMANDS);
