@@ -7,16 +7,10 @@ nixpkgs = [
   "pango",
   "pixman",
   "fontconfig",
-  "fontconfig.bin",
+  "fontconfig-data",
   "fonts-liberation",
-  "fonts-dejavu",
-  "xorg.xfonts-encodings",
-  "xorg.xfonts-utils",
-  "xorg.fontbdftopcf"
+  "fonts-dejavu"
 ]
 
 [phases.build]
-cmds = [
-  "fc-cache -f -v || true",
-  "npm run build || true"
-]
+cmds = ["npm run build || true"]
