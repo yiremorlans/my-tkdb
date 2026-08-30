@@ -11,6 +11,7 @@ import {
 } from './constants/backgrounds.js';
 import {
   CHARACTERS,
+  generateCharacterResponses,
   getAffinityForResponse,
   getCharacterById,
   getCharactersForLocation,
@@ -50,21 +51,25 @@ function pickRandomDistinct(list, count) {
   return picked;
 }
 
-function responseActionRow(characterId, disabled = false) {
-  return {
-    type: MessageComponentTypes.ACTION_ROW,
-    components: RESPONSE_TYPE_ORDER.map((responseType) => {
-      const option = pickRandom(RESPONSE_OPTION_POOL[responseType]);
-      return {
-        type: MessageComponentTypes.BUTTON,
-        style: RESPONSE_STYLES[responseType],
-        label: option.label,
-        emoji: { name: option.emoji },
-        custom_id: `resp:${characterId}:${responseType}`,
-        disabled,
-      };
-    }),
-  };
+function responseActionRow(characterId, disabled = false, tier = 'new') {
+  const character = getCharacterById(characterId);
+  const characterResponses = character ? generateCharacterResponses(character, tier) : {};
+
+  return RESPONSE_TYPE_ORDER.map((responseType) => {
+    const option = characterResponses[responseType] || { label: 'Respond' };
+    return {
+      type: MessageComponentTypes.ACTION_ROW,
+      components: [
+        {
+          type: MessageComponentTypes.BUTTON,
+          style: RESPONSE_STYLES[responseType],
+          label: option.label,
+          custom_id: `resp:${characterId}:${responseType}`,
+          disabled,
+        },
+      ],
+    };
+  });
 }
 
 // --- /roam ---------------------------------------------------------------
@@ -194,7 +199,7 @@ export function buildRoamDialogueMessage(userId, now = new Date()) {
   const charFilename = character.images[variant];
 
   const encounterId = generateEncounterId();
-  cacheRoamEncounter(encounterId, { spot, character, charFilename, dialogue, temperament });
+  cacheRoamEncounter(encounterId, { spot, character, charFilename, dialogue, temperament, tier });
   console.log(`[buildRoamDialogueMessage] Cached encounter ${encounterId}, elapsed: ${Date.now() - startTime}ms`);
 
   return {
@@ -225,7 +230,7 @@ export async function buildRoamSpawnMessage(encounterId) {
     };
   }
 
-  const { spot, character, charFilename, temperament } = encounter;
+  const { spot, character, charFilename, temperament, tier } = encounter;
   console.log('[buildRoamSpawnMessage] Starting image composition...');
   const composeStart = Date.now();
   const imageBuffer = await composeEncounter(spot.file, charFilename, temperament);
@@ -234,7 +239,7 @@ export async function buildRoamSpawnMessage(encounterId) {
   return {
     content: `You wander into **${spot.locationKey}** and run into **${getFullName(character)}**...`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
-    components: [responseActionRow(character.id)],
+    components: responseActionRow(character.id, false, tier),
     flags: EPHEMERAL_FLAG,
   };
 }
@@ -292,7 +297,7 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
   return {
     content: `${getFullName(character)} agrees to meet you${locationText}`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
-    components: [responseActionRow(character.id)],
+    components: responseActionRow(character.id, false, tier),
     flags: EPHEMERAL_FLAG,
   };
 }
@@ -324,7 +329,7 @@ export function buildResponseResultMessage(userId, characterId, responseTypeId) 
 
   return {
     content: `${reaction}\n+${gain} affinity — **${level.name}** (${affinity})`,
-    components: [responseActionRow(characterId, true)],
+    components: responseActionRow(characterId, true),
     flags: EPHEMERAL_FLAG,
   };
 }
