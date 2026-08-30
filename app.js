@@ -13,7 +13,6 @@ import {
   buildResponseResultMessage,
   buildRoamDialogueMessage,
   buildRoamSpawnMessage,
-  getCachedRoamEncounter,
 } from './encounters.js';
 import { checkCommandLimit } from './commandLimits.js';
 import {
@@ -270,10 +269,8 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           await sendFollowup(req.body.token, messageData);
           clearTimeout(timeoutHandle);
 
-          // The character loaded — record the interaction
-          trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
-          trackCommandUsage(userId, 'meet').catch(err => console.error('Error tracking command usage:', err));
-          trackCharacterEngagement(userId, characterId).catch(err => console.error('Error tracking character engagement:', err));
+          // Not counted here — the flow is logged once at the response step
+          // (the 'resp' handler below), keyed to this 'meet' origin.
         } catch (err) {
           console.error('Error in /meet pick:', err);
           clearTimeout(timeoutHandle);
@@ -308,13 +305,8 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           await sendFollowup(req.body.token, messageData);
           clearTimeout(timeoutHandle);
 
-          // The encounter loaded — record the interaction
-          trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
-          trackCommandUsage(userId, 'roam').catch(err => console.error('Error tracking command usage:', err));
-          const encounter = getCachedRoamEncounter(encounterId);
-          if (encounter?.character?.id) {
-            trackCharacterEngagement(userId, encounter.character.id).catch(err => console.error('Error tracking character engagement:', err));
-          }
+          // Not counted here — the flow is logged once at the response step
+          // (the 'resp' handler below), keyed to this 'roam' origin.
         } catch (err) {
           console.error('Error in /roam spawn:', err);
           clearTimeout(timeoutHandle);
@@ -332,7 +324,9 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     }
 
     if (action === 'resp') {
-      const [characterId, responseTypeId] = rest;
+      // origin ('meet' | 'roam') identifies the flow this response completes;
+      // absent on buttons rendered before this field was added — default 'meet'.
+      const [characterId, responseTypeId, origin] = rest;
 
       (async () => {
         try {
@@ -347,9 +341,12 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             data: messageData,
           });
 
-          // The response landed — record the interaction
+          // The flow completed — record it once, against the command that
+          // started it ('meet' or 'roam'), not as a separate 'respond'.
+          const commandName = origin === 'roam' ? 'roam' : 'meet';
           trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
-          trackCommandUsage(userId, 'respond').catch(err => console.error('Error tracking command usage:', err));
+          trackCommandUsage(userId, commandName).catch(err => console.error('Error tracking command usage:', err));
+          trackCharacterEngagement(userId, characterId).catch(err => console.error('Error tracking character engagement:', err));
         } catch (err) {
           console.error('Error in /resp:', err);
           res.send({

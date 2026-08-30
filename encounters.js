@@ -122,7 +122,10 @@ function selectCharacterAtLocation(candidates, location) {
   return pickRandom(weightedPool);
 }
 
-function responseActionRow(characterId, disabled = false, tier = 'new') {
+// `origin` ('meet' | 'roam') rides along in the custom_id so the response
+// click can be logged against the command that started the flow — the flow is
+// only counted once, at the response step (see the 'resp' handler in app.js).
+function responseActionRow(characterId, disabled = false, tier = 'new', origin = 'meet') {
   const character = getCharacterById(characterId);
   const characterResponses = character ? generateCharacterResponses(character, tier) : {};
 
@@ -135,7 +138,7 @@ function responseActionRow(characterId, disabled = false, tier = 'new') {
           type: MessageComponentTypes.BUTTON,
           style: RESPONSE_STYLES[responseType],
           label: option.label,
-          custom_id: `resp:${characterId}:${responseType}`,
+          custom_id: `resp:${characterId}:${responseType}:${origin}`,
           disabled,
         },
       ],
@@ -285,7 +288,7 @@ export async function buildRoamSpawnMessage(encounterId) {
   return {
     content: `You wander into **${spot.locationKey}** and run into **${getFullName(character)}**...`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
-    components: responseActionRow(character.id, false, tier),
+    components: responseActionRow(character.id, false, tier, 'roam'),
     flags: EPHEMERAL_FLAG,
   };
 }
@@ -343,7 +346,7 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
   return {
     content: `${getFullName(character)} agrees to meet you${locationText}`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
-    components: responseActionRow(character.id, false, tier),
+    components: responseActionRow(character.id, false, tier, 'meet'),
     flags: EPHEMERAL_FLAG,
   };
 }
