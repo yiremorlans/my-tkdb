@@ -5,24 +5,20 @@ import fs from 'fs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
-// Try to register Liberation fonts from common paths
-const fontPaths = [
-  '/usr/share/fonts/truetype/liberation/LiberationMono-Regular.ttf',
-  '/usr/local/share/fonts/LiberationMono-Regular.ttf',
-  '/nix/store/fonts/LiberationMono-Regular.ttf',
-];
+// Railway's container ships no system fonts and no fontconfig config, so
+// fontconfig resolves nothing and every glyph renders as a tofu box. Shipping
+// our own face and registering it here gives canvas something to draw with
+// regardless of what the host provides. Must run before any context is created.
+const DIALOGUE_FONT_FAMILY = 'DejaVu Sans';
+const DIALOGUE_FONT_PATH = join(__dirname, 'assets/fonts/DejaVuSans.ttf');
 
-for (const fontPath of fontPaths) {
-  if (fs.existsSync(fontPath)) {
-    try {
-      registerFont(fontPath, { family: 'Liberation Mono' });
-      console.log('[imageComposition] Registered font from:', fontPath);
-      break;
-    } catch (e) {
-      console.log('[imageComposition] Failed to register', fontPath, ':', e.message);
-    }
-  }
+if (!fs.existsSync(DIALOGUE_FONT_PATH)) {
+  throw new Error(
+    `Dialogue font missing at ${DIALOGUE_FONT_PATH} — dialogue would render as boxes.`,
+  );
 }
+registerFont(DIALOGUE_FONT_PATH, { family: DIALOGUE_FONT_FAMILY });
+console.log('[imageComposition] Registered dialogue font:', DIALOGUE_FONT_PATH);
 
 // Composite a background and character image on canvas, optionally with dialogue.
 // Returns a buffer containing the PNG-encoded composite image.
@@ -62,7 +58,7 @@ export async function composeEncounter(bgFilename, charFilename, dialogue = null
 
     // White text.
     ctx.fillStyle = '#ffffff';
-    ctx.font = `${fontSize}px sans-serif`;
+    ctx.font = `${fontSize}px "${DIALOGUE_FONT_FAMILY}"`;
     ctx.textBaseline = 'top';
 
     // Wrap text and calculate required height.
