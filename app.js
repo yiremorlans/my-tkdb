@@ -289,7 +289,22 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
     if (action === 'roam' && rest[0] === 'spawn') {
       const encounterId = rest[1];
-      res.send({ type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE });
+
+      // Disable the approach button on the dialogue message so it can't be
+      // clicked again while the spawn is being composed (or afterwards).
+      const disabledComponents = req.body.message?.components?.map(row => ({
+        ...row,
+        components: row.components?.map(btn => ({ ...btn, disabled: true })) || [],
+      })) || [];
+
+      res.send({
+        type: InteractionResponseType.UPDATE_MESSAGE,
+        data: {
+          content: req.body.message?.content || '',
+          components: disabledComponents,
+          flags: 64,
+        },
+      });
 
       const timeoutHandle = setTimeout(() => {
         console.error('Roam spawn command timed out after 120 seconds');
