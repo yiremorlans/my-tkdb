@@ -49,13 +49,13 @@ export const RESPONSE_OPTION_POOL = {
 // NEUTRAL response), so the level curve is spread out over a long time —
 // meant to be built up over many, many encounters.
 export const RELATIONSHIP_LEVELS = [
-  { name: 'Stranger', min: 0 },
-  { name: 'Acquaintance', min: 20 },
-  { name: 'Friend', min: 50 },
-  { name: 'Close Friend', min: 100 },
-  { name: 'Confidant', min: 175 },
-  { name: 'Devoted', min: 275 },
-  { name: 'Soulbound', min: 400 },
+  { name: 'Stranger', min: 0, emoji: '' },
+  { name: 'Acquaintance', min: 20, emoji: '🧡' },
+  { name: 'Friend', min: 50, emoji: '🩷' },
+  { name: 'Close Friend', min: 100, emoji: '💖' },
+  { name: 'Confidant', min: 175, emoji: '💕' },
+  { name: 'Devoted', min: 275, emoji: '❤️' },
+  { name: 'Soulbound', min: 400, emoji: '❤️‍🔥' },
 ];
 
 export function getRelationshipLevel(affinity) {

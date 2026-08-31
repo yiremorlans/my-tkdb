@@ -368,7 +368,7 @@ export async function buildResponseResultMessage(
   }
 
   const gain = getAffinityForResponse(character, responseTypeId);
-  const { affinity, level } = await recordResponse(userId, characterId, gain, responseTypeId);
+  const { level } = await recordResponse(userId, characterId, gain, responseTypeId);
 
   let reaction;
   if (responseTypeId === RESPONSE_TYPES.NEUTRAL) {
@@ -381,25 +381,16 @@ export async function buildResponseResultMessage(
     reaction = `${getFullName(character)} doesn't seem impressed.`;
   }
 
+  const delta = gain > 0 ? `+${gain}` : `${gain}`;
+
   return {
-    content: `${reaction}\n+${gain} affinity — **${level.name}** (${affinity})`,
+    content: `${reaction}\n${delta} — ${level.emoji ? `${level.emoji} ` : ''}**${level.name}**`,
     components: disableComponents(shownComponents) || responseActionRow(characterId, true),
     flags: EPHEMERAL_FLAG,
   };
 }
 
 // --- /affinity ---------------------------------------------------------------
-
-// Emoji for relationship levels
-const AFFINITY_EMOJI = {
-  Stranger: '',
-  Acquaintance: '🧡',
-  Friend: '🩷',
-  'Close Friend': '💖',
-  Confidant: '💕',
-  Devoted: '❤️',
-  Soulbound: '❤️‍🔥',
-};
 
 // Avatar art in assets/avatar is named `FirstName_LastWord.png` — the last
 // word of lastName, so "Romeo Scorpius Lucci" resolves to Romeo_Lucci.png.
@@ -461,11 +452,10 @@ export async function buildAffinityMessage(userId, characterIds) {
       }
     }
 
-    const emoji = AFFINITY_EMOJI[level.name] || '';
     embeds.push({
       image: imageBuffer ? { url: `attachment://${avatarFilename}` } : undefined,
       title: getFullName(character),
-      description: emoji ? `${level.name} ${emoji}` : level.name,
+      description: level.emoji ? `${level.name} ${level.emoji}` : level.name,
       color: 0x5865f2, // Discord blurple
     });
 
