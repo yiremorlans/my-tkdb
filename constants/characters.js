@@ -153,6 +153,7 @@ export const CHARACTERS = [
   },
   {
     id: "shohei",
+    aliases: ["sho"],
     firstName: "Shohei",
     lastName: "Haizono",
     house: HOUSES.VAGASTROM,
@@ -577,7 +578,13 @@ export const CHARACTERS = [
 ];
 
 export function getCharacterById(id) {
-  return CHARACTERS.find((c) => c.id === id) || null;
+  if (!id) return null;
+  const normalized = String(id).trim().toLowerCase();
+  return (
+    CHARACTERS.find((c) => c.id === normalized) ||
+    CHARACTERS.find((c) => c.aliases && c.aliases.includes(normalized)) ||
+    null
+  );
 }
 
 export function getCharactersByHouse(house) {

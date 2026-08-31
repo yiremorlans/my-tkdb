@@ -409,13 +409,19 @@ export async function buildAffinityMessage(userId, characterIds) {
 
   for (const rawId of characterIds) {
     const charId = rawId.trim().toLowerCase();
-    if (!charId || seen.has(charId)) continue;
-    seen.add(charId);
+    if (!charId) continue;
 
     const character = getCharacterById(charId);
     if (character) {
+      // Dedupe on the resolved character so an alias (e.g. "sho") and the
+      // canonical id ("shohei") don't produce two embeds — and a colliding
+      // attachment filename — for the same person.
+      if (seen.has(character.id)) continue;
+      seen.add(character.id);
       validCharacters.push(character);
     } else {
+      if (seen.has(charId)) continue;
+      seen.add(charId);
       invalidIds.push(rawId.trim());
     }
   }
