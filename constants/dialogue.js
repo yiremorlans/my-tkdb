@@ -713,7 +713,7 @@ export const DIALOGUE = {
         '"No need to be nervous. I\'ve nothing but the noblest of intentions."',
         '"Well, well. Frostheim is ruled by a king, you see. I\'m no more than a servant."',
         '"This academy has far more than its fair share of loose cannons, wouldn\'t you agree?"',
-        "\"If you're lost, say so. I don't have time for your pride.\"",
+        "\"If you're lost, say so. I don't have time to cater to your ambivalence.\"",
         '"What do you mean? I lend a sympathetic ear to those in need — that\'s all."',
       ],
       known: [
@@ -2186,7 +2186,7 @@ export const DIALOGUE = {
     temperamentDialogue: {
       new: [
         '"Well, hello there. New face in town?"',
-        '"Careful, sugar. Everything in Dionysia costs something."',
+        '"Careful, Honor roll. Everything in Dionysia costs something."',
         '"I was thinking about taking a walk around campus. Just doing my part in staying healthy."',
         "\"You've got good instincts, walking slow like that. Keep 'em.\"",
         "\"Oh no, I just handle the odd jobs around here. So if there's anything you need, don't hesitate to ask.\"",
@@ -2354,12 +2354,14 @@ export const DIALOGUE = {
           '"House meeting with Mio in a minute. You think we shoulder too much? It\'s just quicker to handle it ourselves."',
           "He works something small you mentioned once into the conversation like it's nothing.",
           '"Have you seen Elias, cutie? Asked him to do something and he\'s still not back..."',
+          '"Elias is back, so we\'re stealing a coffee break before I lose the afternoon to that budget. Join us, cutie."',
         ],
         casual: [
           '"You came back." She sets down the pen like she\'d been looking for an excuse.',
           '"House meeting with Mio in a minute. You think we shoulder too much? It\'s just quicker to handle it ourselves."',
           "She works something small you mentioned once into the conversation like it's nothing.",
           '"Have you seen Elias, cutie? Asked him to do something and he\'s still not back..."',
+          '"Elias is back, so we\'re stealing a coffee break before I lose the afternoon to that budget. Join us, cutie."',
         ],
       },
       warm: {
@@ -2368,12 +2370,14 @@ export const DIALOGUE = {
           '"I\'m driving the Aqua-line later to catch the sunset. Come with, cutie."',
           '"My people march to the beat of their own drum. You\'ve fit right in with that."',
           '"There\'s just not enough hours in the day." He says it, then makes an hour for you.',
+          '"There\'s a coffee with your name on it and fifteen minutes I\'m refusing to spend on anything else. Sit with me, cutie."',
         ],
         casual: [
           "She lights up the moment she sees you, whatever she was signing forgotten.",
           '"I\'m driving the Aqua-line later to catch the sunset. Come with, cutie."',
           '"My people march to the beat of their own drum. You\'ve fit right in with that."',
           '"There\'s just not enough hours in the day." She says it, then makes an hour for you.',
+          '"There\'s a coffee with your name on it and fifteen minutes I\'m refusing to spend on anything else. Sit with me, cutie."',
         ],
       },
       spark: {
