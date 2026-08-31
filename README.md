@@ -70,6 +70,8 @@ npm install
 
 Fetch the credentials from your app's settings and add them to a `.env` file (see `.env.sample` for an example). You'll need your app ID (`APP_ID`), bot token (`DISCORD_TOKEN`), and public key (`PUBLIC_KEY`). You'll also need `BASE_URL` — the public HTTPS URL this app is reachable at (your ngrok URL while developing locally, or your production domain) — since it's used to build the background/character image URLs Discord loads for `/roam` and `/meet`.
 
+Set `TZ` (an IANA timezone name) to the zone the bot should treat as "evening" for time-gated `_PM` backgrounds and dialogue — Discord doesn't expose per-user timezones, so it's one zone for everyone. `app.js` defaults it to `America/Chicago` if unset; the startup log prints the timezone actually in effect.
+
 Fetching credentials is covered in detail in the [getting started guide](https://discord.com/developers/docs/getting-started).
 
 > 🔑 Environment variables can be added to the `.env` file in Glitch or when developing locally, and in the Secrets tab in Replit (the lock icon on the left).

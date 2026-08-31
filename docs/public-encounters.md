@@ -86,8 +86,9 @@ scheduler tick (every ~25s, iterates every enabled guild independently)
   └─ correct:
         atomic claim (UPDATE ... WHERE id=? AND resolved_at IS NULL)
           ├─ 0 rows  → ephemeral: "someone reached them first"
-          └─ 1 row   → ephemeral: "That was {name}. +1."
-                       async: +1 affinity (global, user-keyed), derive tier,
+          └─ 1 row   → ephemeral: "That was {name}." + milestone afterline (§16.1)
+                       async: grant pending boost + record milestone (§16),
+                              derive tier from stored (unchanged) affinity,
                               recompose reveal image, edit post → reveal + tiered winner line
 ```
 
@@ -360,14 +361,26 @@ Order of checks:
    ```
    - `data.length === 0` → race lost → `Someone else reached them first.`
    - `data.length === 1` → this user won:
-     - `res.send` ephemeral: `` That was **{Full Name}**. +1. ``
+     - `res.send` ephemeral: `` That was **{Full Name}**. `` + the chosen
+       milestone's `afterline` + a "your next `/roam` lands better" line (§16.1).
      - after send (async block):
        ```js
-       const updated = await updateAffinity(userId, characterId, 1);   // reward + gives us affinity (global, user-keyed)
-       incrementTimesMet(userId, characterId).catch(() => {});
-       const level = getRelationshipLevel(updated?.affinity ?? 0);
+       // A win does NOT change affinity — see §16. Tier for the winner line and
+       // for milestone gating comes from the current stored affinity.
+       const rel   = await getRelationship(userId, characterId);
+       const level = getRelationshipLevel(rel?.affinity ?? 0);
        const tier  = getDialogueTier(level.name);
-       const line  = pickWinnerLine(tier, {
+       const winnerBucket  = WINNER_LINE_TIER[tier] || 'new';
+       const milestoneType = pickMilestone(tier, winnerBucket);          // §16.2
+
+       grantEncounterBoost(userId, characterId).catch(() => {});          // §16.1
+       recordEncounterMilestone({                                        // §16.2, fire-and-forget
+         userId, characterId, milestoneType,
+         guildId: req.body.guild_id, sourceEncounterId: encounter.id,
+       }).catch(() => {});
+       incrementTimesMet(userId, characterId).catch(() => {});
+
+       const line = pickWinnerLine(tier, {
          user: `<@${userId}>`,
          name: getFullName(character),
          house: character.house || 'Darkwick',
@@ -381,7 +394,8 @@ Order of checks:
        trackUserActivity(userId); trackCommandUsage(userId, 'call'); trackCharacterEngagement(userId, characterId);
        ```
      - clear the in-process finalize timer for this encounter (if armed).
-     - if `updateAffinity` throws, use `tier = 'new'` and still edit the post.
+     - if `getRelationship` throws, use `tier = 'new'` (milestone still recorded
+       at `new`) and still edit the post.
 
 ### 7.1 Name matching (`matchCharacterGuess`)
 
@@ -629,6 +643,14 @@ No `system_state` table — per-guild cadence state lives in `guild_settings`.
 The winner race is decided entirely by `claimPublicEncounter` — a single atomic
 `UPDATE` statement in Postgres. No explicit locking.
 
+### Reward-model storage
+
+Migration 009 also adds `relationships.pending_encounter_boost` and the
+`encounter_milestones` table, plus `grantEncounterBoost` /
+`consumeEncounterBoost` / `recordEncounterMilestone` /
+`getEncounterMilestoneCounts` in `db/supabase.js`. Full definitions and the
+`/roam` / `/affinity` wiring are in **§16**.
+
 ---
 
 ## 11. Discord REST — multipart helpers
@@ -665,12 +687,14 @@ are **global defaults** only, used when a guild leaves a column NULL:
 | `ENCOUNTER_MIN_MINUTES` | `45` | Default lower bound of the gap between a guild's encounters |
 | `ENCOUNTER_MAX_MINUTES` | `180` | Default upper bound of the gap between a guild's encounters |
 | `ENCOUNTER_WINDOW_MINUTES` | `2` | Default `/call` window before the moment passes |
-| `ENCOUNTER_AFFINITY_GAIN` | `1` | Affinity awarded to the winner |
+| `ENCOUNTER_BOOST_GAIN` | `1` | Extra affinity added to the winner's next authored (`/roam` / `/meet`) response — see §16 |
+| `ENCOUNTER_BOOST_CAP` | `2` | Max unspent boosts a user can hold per character |
 | `ENCOUNTER_TICK_SECONDS` | `25` | Scheduler tick interval |
 
 `DISCORD_TOKEN`, `APP_ID`, `SUPABASE_*` are already present. No
-`ENCOUNTER_CHANNEL_ID` — removed in favor of `guild_settings`. Encounters post
-silently (no role ping) in this version.
+`ENCOUNTER_CHANNEL_ID` — removed in favor of `guild_settings`. No
+`ENCOUNTER_AFFINITY_GAIN` — a win grants no direct affinity (§16). Encounters
+post silently (no role ping) in this version.
 
 ---
 
@@ -690,8 +714,9 @@ silently (no role ping) in this version.
 | `/call` in the wrong channel of a configured guild | "You can only call out from <#channel>." |
 | `/call` for the right name after solve/expiry | "no one to call out to right now" / "someone reached them first" |
 | `/call` with a typo or nonsense | "I don't know who that is." — no cooldown, no penalty |
-| Winner never "met" this character before | `updateAffinity` → `getOrCreateRelationship` creates the row; affinity is global and counts toward `/house` everywhere; intended |
-| Same user wins in two different guilds | Two separate encounters, two `+1`s to the same global relationship; intended |
+| Winner never "met" this character before | `grantEncounterBoost` → `getOrCreateRelationship` creates the row (affinity 0, boost 1); milestone recorded at tier `new`; intended |
+| Same user wins in two different guilds | Two separate encounters → boost caps at `ENCOUNTER_BOOST_CAP`; each still records a milestone; intended |
+| Win, then never runs `/roam` / `/meet` | Boost sits unspent (no v1 expiry); the milestone log still grows; no affinity is ever granted |
 | Multiple app instances | Out of scope — would double-fire the tick for every guild; needs a Postgres advisory lock around the tick |
 | `_PM` backgrounds / timezone | Judged against the app-server clock, same as `/roam` |
 | Attachment size | Composited PNGs are already within Discord limits (same pipeline as `/roam`) |
@@ -704,11 +729,13 @@ silently (no role ping) in this version.
 
 - `constants/publicEncounters.js` — `ENCOUNTER_TEASERS`, `MISSED_LINES`,
   `WRONG_GUESS_LINES`, `WINNER_LINES`, `pickWinnerLine`, `matchCharacterGuess`,
-  alias map, `guessCooldown` Map + helpers, generation helper
+  alias map, `guessCooldown` Map + helpers, generation helper,
+  `ENCOUNTER_MILESTONES` + `pickMilestone` (§16.2)
 - `publicEncounters.js` — `buildEncounterPost(guild)`, `finalizeEncounter(row)`,
   `handleCall(interaction)` (mirrors the shape of `encounters.js`)
 - `encounterScheduler.js` — the per-guild tick loop
-- `db/migrations/009_create_public_encounters.sql`
+- `db/migrations/009_create_public_encounters.sql` — encounter tables **plus**
+  `encounter_milestones` and `relationships.pending_encounter_boost` (§16.4)
 
 **Changed**
 
@@ -716,7 +743,9 @@ silently (no role ping) in this version.
 - `commands.js` — register `CALL_COMMAND` and `ENCOUNTERS_COMMAND`
 - `app.js` — route `name === 'call'` and `name === 'encounters'`; start the
   scheduler after `app.listen`
-- `db/supabase.js` — the functions in §10
+- `db/supabase.js` — the functions in §10 + the reward-model functions (§16.4)
+- `encounters.js` — consume the boost in the `/roam` / `/meet` response path;
+  "Moments together" block in `buildAffinityMessage` (§16.3)
 - `utils.js` (or new `discordRest.js`) — multipart `postChannelMessage` /
   `editChannelMessage`
 - `.env.sample`, `README.md`, `db/SCHEMA.md` — document the feature and config
@@ -728,10 +757,11 @@ silently (no role ping) in this version.
 1. **Per-guild, independent.** Each of the (< 5) guilds has its own
    `guild_settings` row, its own `next_encounter_at`, its own in-flight
    encounter, and its own configured channel. No collective schedule.
-2. **Affinity is global, user-keyed.** A `/call` win applies `+1` to the Discord
-   user's relationship with that character everywhere; the winner-line tier is
-   derived from that global affinity. Only the encounter and channel are
-   guild-scoped.
+2. **Affinity is global, user-keyed — and a `/call` win never moves it
+   directly.** A win grants a *pending boost* (spent on the winner's next
+   `/roam` / `/meet` with that character) and records a *milestone*; see §16.
+   The winner-line tier is derived from the user's current global affinity.
+   Only the encounter and channel are guild-scoped.
 3. Configuration is per-guild via `/encounters channel|disable|status`
    (Manage Guild only). The `ENCOUNTER_CHANNEL_ID` env var is removed; env vars
    are global defaults only.
@@ -741,11 +771,229 @@ silently (no role ping) in this version.
    in-memory Map (no DB round trip). Unknown/gibberish → no cooldown, no penalty.
 6. On timeout the identity is **never revealed**; the post edits to an
    alternating `MISSED_LINES` entry and keeps the silhouette image.
-7. Winner reward is **+1** affinity. The public post edits to the reveal image
-   plus an alternating winner line that always names the guessing Discord user,
-   names the character's house when referencing missions, and is chosen by the
-   winner's post-increment relationship tier with that character.
+7. Winner reward is a **pending boost + a milestone**, not direct affinity
+   (§16). The boost adds `ENCOUNTER_BOOST_GAIN` (=1) to the winner's next
+   authored response with that character and is capped at `ENCOUNTER_BOOST_CAP`
+   (=2). The public post still edits to the reveal image plus an alternating,
+   relationship-tiered winner line that names the guessing Discord user and the
+   character's house.
 8. `/call` is accepted **only** in the calling guild's own configured encounter
    channel.
 9. Response window is **2 minutes** (per-guild overridable); scheduler tick is
    ~25 seconds.
+10. Every win also logs a **milestone** — a themed "what happened after" moment
+    (`ENCOUNTER_MILESTONES`), gated by the winner's real relationship tier at
+    win time and surfaced as a "Moments together" tally in `/affinity` (§16.2–3).
+
+---
+
+## 16. Reward model: encounter boost + milestone log
+
+A `/call` win does **not** change affinity directly. Affinity only ever moves
+through `/roam` and `/meet` — the authored-dialogue loop, throttled by the shared
+3-hour cooldown (`commandLimits.js:13`). A win instead does two things:
+
+1. **Boost** — grants a pending bonus that is spent on the winner's *next*
+   `/roam` / `/meet` with that character.
+2. **Milestone** — records a themed "what happened after your encounter" moment,
+   shown as a running tally in `/affinity <character>`.
+
+**Why.** Public encounters can otherwise become a second, faster affinity stream
+that races users past tiers before they have seen each tier's authored dialogue.
+Under this model a win can only *amplify one already-throttled authored
+interaction* by roughly one good response, and only if the user actually engages
+that dialogue — the public game feeds the main loop instead of bypassing it. The
+milestone log gives `/call` its own visible, collectible progression that never
+touches the relationship curve.
+
+### 16.1 Boost
+
+- New column: `relationships.pending_encounter_boost INT NOT NULL DEFAULT 0`.
+- **On a win:**
+  `pending_encounter_boost = LEAST(pending_encounter_boost + 1, ENCOUNTER_BOOST_CAP)`
+  (`ENCOUNTER_BOOST_CAP = 2`). Wins past the cap still record a milestone; they
+  do not stack more boost.
+- **On the next `/roam` / `/meet` with that character**, when a response is
+  *completed* (the same point `recordResponse` runs today, `encounters.js:371`)
+  and `pending_encounter_boost > 0`: add `ENCOUNTER_BOOST_GAIN` (=1) to that
+  response's gain, then decrement the boost by 1. A `NEUTRAL` response (gain 0)
+  **still consumes** the boost — the warmer welcome is the reunion, not the pick.
+- No expiry in v1. (If wanted later: a `boost_updated_at` column and a 7-day
+  cutoff in `consumeEncounterBoost`.)
+- Tracked per character; boosts on different characters are independent.
+
+**`/call` win reply (ephemeral)** — replaces the bare "+1." in §2 / §7.3:
+
+```
+That was **{Full Name}**.
+{milestone.afterline}
+Next time you `/roam` into {firstName}, you'll pick up right there — it lands better.
+```
+
+**Boosted `/roam` / `/meet` response** — the bonus is folded into the delta with
+its own clause:
+
+```
+{reaction}
++{gain} — {level.emoji} **{level.name}**  ·  *picking up after {milestone.hint} — a warmer welcome (+1)*
+```
+
+### 16.2 Milestones
+
+New pool + picker in `constants/publicEncounters.js`:
+
+```js
+// new < known < warm < spark < close < bound
+const TIER_RANK = { new: 0, known: 1, warm: 2, spark: 3, close: 4, bound: 5 };
+
+export const ENCOUNTER_MILESTONES = {
+  signed_report: {
+    minTier: 'new', emoji: '📋', bucket: 'any',
+    label: 'Caught them to sign a {house} report before they vanished',
+    afterline: 'They signed your {house} report on the way past.',
+    hint: 'that report hand-off',
+  },
+  coffee_break: {
+    minTier: 'new', emoji: '☕', bucket: 'new',
+    label: 'Coffee breaks together',
+    afterline: 'You both slipped off for a quick coffee after.',
+    hint: 'that coffee',
+  },
+  walked_back: {
+    minTier: 'warm', emoji: '🌙', bucket: 'warm',
+    label: 'Walked back to the dorms together',
+    afterline: 'You walked back toward the dorms, in no hurry.',
+    hint: 'that walk back',
+  },
+  shared_umbrella: {
+    minTier: 'warm', emoji: '🌧️', bucket: 'warm',
+    label: 'Shared an umbrella across the quad',
+    afterline: 'It started raining. One umbrella between you.',
+    hint: 'the umbrella',
+  },
+  movie_hooky: {
+    minTier: 'spark', emoji: '🎬', bucket: 'spark',
+    label: "Skipped a briefing to watch a movie in {name}'s room",
+    afterline: "Neither of you made the next briefing — there was a movie on in {name}'s room.",
+    hint: 'that movie',
+  },
+  rooftop_lunch: {
+    minTier: 'spark', emoji: '🌇', bucket: 'spark',
+    label: 'Ate lunch on the roof, away from everyone',
+    afterline: 'Lunch on the roof. Nobody knew where either of you were.',
+    hint: 'the roof',
+  },
+  stayed_up: {
+    minTier: 'close', emoji: '🌌', bucket: 'close',
+    label: 'Stayed up talking past curfew',
+    afterline: 'You lost track of the hour completely.',
+    hint: 'last night',
+  },
+  // add freely — every entry needs { minTier, emoji, bucket, label, afterline, hint }
+};
+
+// tier: the winner's REAL dialogue tier (getDialogueTier), NOT the collapsed
+// WINNER_LINE_TIER bucket. winnerBucket: the bucket the public line used, for a
+// gentle thematic bias only.
+export function pickMilestone(tier, winnerBucket) {
+  const eligible = Object.entries(ENCOUNTER_MILESTONES)
+    .filter(([, m]) => TIER_RANK[m.minTier] <= TIER_RANK[tier]);
+  const weighted = eligible.flatMap(([id, m]) =>
+    m.bucket === winnerBucket || m.bucket === 'any' ? [id, id] : [id]);
+  return weighted[Math.floor(Math.random() * weighted.length)];
+}
+```
+
+- Tier is evaluated **before** the win takes effect and is independent of any
+  `/roam` in flight, so a `spark` milestone can never be recorded for a caller
+  who is still a Friend.
+- `{house}` / `{name}` / `{firstName}` are filled exactly as in `WINNER_LINES`.
+- `bucket` only nudges selection; every tier-eligible milestone stays reachable.
+
+### 16.3 `/affinity` output
+
+`buildAffinityMessage` (`encounters.js:403`) gains a **Moments together** block
+on each character's embed — milestone rows with count > 0, highest count first,
+templates filled. Omitted entirely when the user has no milestones with that
+character.
+
+```
+Rui Mizuki — Close Friend 💖
+
+Moments together
+📋 Signed off a Vagastrom report right before they vanished — ×3
+☕ Coffee breaks together — ×4
+🎬 Skipped a briefing to watch a movie in Rui's room — ×2
+🌧️ Shared an umbrella across the quad — ×1
+```
+
+One `getEncounterMilestoneCounts(userId, characterId)` read per character
+(`SELECT milestone_type, count(*) ... GROUP BY milestone_type`).
+
+### 16.4 Data model (migration 009 additions)
+
+```sql
+ALTER TABLE relationships
+  ADD COLUMN IF NOT EXISTS pending_encounter_boost INT NOT NULL DEFAULT 0;
+
+-- Append-only. One row per /call win. Also a real "after the encounter"
+-- timeline (created_at ordering) for future use.
+CREATE TABLE IF NOT EXISTS encounter_milestones (
+  id                  BIGSERIAL PRIMARY KEY,
+  discord_user_id     TEXT NOT NULL,
+  character_id        TEXT NOT NULL,
+  milestone_type      TEXT NOT NULL,            -- key of ENCOUNTER_MILESTONES
+  guild_id            TEXT,
+  source_encounter_id BIGINT REFERENCES public_encounters(id) ON DELETE SET NULL,
+  created_at          TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+);
+CREATE INDEX IF NOT EXISTS idx_encounter_milestones_user_char
+  ON encounter_milestones (discord_user_id, character_id);
+
+ALTER TABLE encounter_milestones ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Block direct access" ON encounter_milestones FOR SELECT USING (FALSE);
+```
+
+New `db/supabase.js` functions:
+
+| Function | Purpose |
+|---|---|
+| `grantEncounterBoost(userId, characterId)` | `getOrCreateRelationship`, then `pending_encounter_boost = LEAST(current + 1, ENCOUNTER_BOOST_CAP)`; returns the new value |
+| `consumeEncounterBoost(userId, characterId)` | atomic `UPDATE ... SET pending_encounter_boost = pending_encounter_boost - 1 WHERE user+char AND pending_encounter_boost > 0` `.select()`; caller checks the row count |
+| `recordEncounterMilestone({ userId, characterId, milestoneType, guildId, sourceEncounterId })` | INSERT into `encounter_milestones`; fire-and-forget |
+| `getEncounterMilestoneCounts(userId, characterId)` | `{ milestone_type: count }` map for the `/affinity` block |
+
+### 16.5 Wiring summary
+
+- **`/call` win async block (§7.3):** `grantEncounterBoost` +
+  `recordEncounterMilestone` replace the old `updateAffinity(..., 1)`.
+  `incrementTimesMet` still fires. Winner-line tier = current stored affinity
+  (unchanged by the win).
+- **`/roam` / `/meet` response path (`encounters.js` ~line 370):** after
+  `recordResponse`, call `consumeEncounterBoost`; if it consumed a row, add
+  `ENCOUNTER_BOOST_GAIN` to the persisted gain and append the bonus clause to the
+  reply.
+- **`/affinity` (`encounters.js:403`):** add the "Moments together" block from
+  `getEncounterMilestoneCounts`.
+
+### 16.6 Config
+
+| Var | Default | Purpose |
+|---|---|---|
+| `ENCOUNTER_BOOST_GAIN` | `1` | Extra affinity on the winner's next authored response with that character |
+| `ENCOUNTER_BOOST_CAP` | `2` | Max unspent boosts per user per character |
+
+`ENCOUNTER_AFFINITY_GAIN` is removed — a win grants no direct affinity.
+
+### 16.7 Open questions
+
+- **Boost expiry** — v1 has none. Add a 7-day cutoff if unspent boosts feel
+  like they trivialize a later return.
+- **Does `/meet` consume the boost, or only `/roam`?** Current call: whichever
+  authored interaction with that character happens first.
+- **Bonus response button vs. flat +1** — flat +1 for v1 (cheap, predictable).
+  A themed 5th response option ("Bring up the movie", worth +2/+3) is the richer
+  follow-up if the boost should feel like content, not a number.
+- **Milestone dedup** — v1 allows the same `milestone_type` to stack to any
+  count. If some milestones should be one-time ("first walk home"), add a
+  `unique` flag and a `WHERE NOT EXISTS` guard in `recordEncounterMilestone`.

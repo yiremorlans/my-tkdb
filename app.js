@@ -22,6 +22,16 @@ import {
 } from './db/supabase.js';
 import { validateContent } from './constants/validateContent.js';
 
+// Time of day drives which backgrounds and dialogue are eligible (the `_PM`
+// evening cutoff — see constants/backgrounds.js). Discord never tells us a
+// user's timezone, so we judge "evening" against one fixed zone for everyone:
+// US Central. Set as a real env var in deploy config; this default just keeps
+// an unconfigured host (which would otherwise be UTC) from drifting the window.
+process.env.TZ ??= 'America/Chicago';
+console.log(
+  `[startup] timezone ${Intl.DateTimeFormat().resolvedOptions().timeZone} · ${new Date().toString()}`,
+);
+
 // Fail fast if characters.js and dialogue.js have drifted apart, rather than
 // letting a character silently fall back to generic lines in production.
 validateContent();

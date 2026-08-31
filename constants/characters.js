@@ -3,8 +3,12 @@
 // possible). Characters with `house: null` are general encounters only —
 // they can turn up at any GENERAL_LOCATIONS spot (see constants/backgrounds.js),
 // never inside another house.
-import { HOUSES, CHARACTER_ROOMS } from "./backgrounds.js";
-import { DIALOGUE } from "./dialogue.js";
+import { HOUSES, CHARACTER_ROOMS, timeBucket } from "./backgrounds.js";
+import {
+  DIALOGUE,
+  SHARED_APPROACH_WHEN,
+  SHARED_DIALOGUE_WHEN,
+} from "./dialogue.js";
 
 export const RESPONSE_TYPES = {
   KIND: "kind",
@@ -651,81 +655,131 @@ const APPROACH_LABEL_FALLBACK = [
   "Walk over to them",
 ];
 
-export function getRandomDialogueLine(
-  character,
-  tier,
-  variant = null,
-  now = null,
-) {
+// Resolve one tier of a dialogue pool to a flat list of lines, following the
+// variant map (Jo's uniform/casual pronouns) when one is present. Always returns
+// a fresh array — callers merge pools with `.push`, and the source arrays live
+// in DIALOGUE and must not be mutated.
+function resolvePoolTier(pool, tier, variant) {
+  if (!pool) return [];
+  let lines = pool[tier] || pool.new;
+  if (
+    variant &&
+    lines &&
+    typeof lines === "object" &&
+    !Array.isArray(lines)
+  ) {
+    lines = lines[variant] || Object.values(lines)[0];
+  }
+  if (Array.isArray(lines)) return [...lines];
+  if (typeof lines === "string") return [lines];
+  return [];
+}
+
+// The dimensions a conditional-dialogue `when` block can constrain. Each field
+// is optional (absent = "don't care") and accepts a scalar or an array; every
+// present field must match for the block to apply. Adding a genuinely new
+// dimension means one key here, one line in matchesWhen, and one key on the
+// `ctx` that encounters.js builds — nothing else.
+export const DIALOGUE_WHEN_DIMENSIONS = ["time", "location", "background", "event"];
+
+function fieldMatches(rule, value) {
+  if (rule === undefined) return true;
+  return Array.isArray(rule) ? rule.includes(value) : rule === value;
+}
+
+// Evaluate a declarative `when` block against the encounter context.
+export function matchesWhen(when, ctx = {}) {
+  if (!when) return true;
+  return (
+    fieldMatches(when.time, timeBucket(ctx.now)) &&
+    fieldMatches(when.location, ctx.locationKey) &&
+    fieldMatches(when.background, ctx.backgroundFile) &&
+    fieldMatches(when.event, ctx.event ?? null)
+  );
+}
+
+// Flatten every matching conditional entry's tier into one list. `poolKey` is
+// the field on each `{ when, <poolKey> }` block that holds the tiered lines —
+// "dialogue" for narration, "approach" for the step-forward button.
+function collectConditional(entries, poolKey, tier, variant, ctx) {
+  const out = [];
+  for (const entry of entries || []) {
+    if (matchesWhen(entry.when, ctx)) {
+      out.push(...resolvePoolTier(entry[poolKey], tier, variant));
+    }
+  }
+  return out;
+}
+
+// `ctx` carries the encounter context: { now, locationKey, backgroundFile,
+// event }. All fields optional — an absent field just means `when` rules that
+// constrain it won't match.
+export function getRandomDialogueLine(character, tier, variant = null, ctx = {}) {
   const content = DIALOGUE[character.id];
   if (!content) return "...";
 
-  // Handle pmOnly characters (e.g., Towa can only speak in afternoon/evening)
-  if (character.pmOnly && content.amOnlyDialogue && now) {
-    const hour = now.getHours();
-    // AM is 0-11 (midnight to 11:59 AM), PM is 12-23 (noon to 11:59 PM)
-    if (hour < 12) {
-      const amLines =
-        content.amOnlyDialogue[tier] || content.amOnlyDialogue.new;
-      return Array.isArray(amLines) ? pickRandom(amLines) : amLines;
-    }
+  // A pmOnly character (Towa) only truly speaks in the evening; the rest of the
+  // day it hard-swaps to a wordless replacement pool. Gated by the same evening
+  // cutoff as `_PM` backgrounds (timeBucket, off ctx.now) — not a separate
+  // threshold. Separate from the additive `when` system below.
+  if (character.pmOnly && content.daytimeDialogue && timeBucket(ctx.now) === "day") {
+    const daytime = content.daytimeDialogue[tier] || content.daytimeDialogue.new;
+    return Array.isArray(daytime) ? pickRandom(daytime) : daytime;
   }
 
-  let lines = content.dialogue[tier] || content.dialogue.new;
+  // Base pool, plus every conditional block whose `when` matches this scene —
+  // the character's own `dialogueWhen` and the shared roster-wide pool. Additive:
+  // a matched scene adds its flavor without ever emptying a tier.
+  const lines = resolvePoolTier(content.dialogue, tier, variant);
+  lines.push(...collectConditional(content.dialogueWhen, "dialogue", tier, variant, ctx));
+  lines.push(...collectConditional(SHARED_DIALOGUE_WHEN, "dialogue", tier, variant, ctx));
 
-  // Handle variant-specific dialogue (e.g., Jo with different pronouns for casual vs uniform)
-  if (
-    variant &&
-    typeof lines === "object" &&
-    !Array.isArray(lines) &&
-    lines[variant]
-  ) {
-    lines = lines[variant];
-  }
-
-  return Array.isArray(lines) ? pickRandom(lines) : lines;
+  if (lines.length === 0) return "...";
+  return pickRandom(lines);
 }
 
+// The greeting rendered onto the encounter image. Driven only by the character's
+// temperament tier — never by time, location, or event.
 export function getTemperamentGreeting(character, tier) {
-  const temperamentLines = DIALOGUE[character.id]?.temperamentDialogue || {};
-  const lines = temperamentLines[tier] || temperamentLines.new || ["..."];
+  const content = DIALOGUE[character.id] || {};
+  const lines = resolvePoolTier(content.temperamentDialogue, tier, null);
+  if (lines.length === 0) return "...";
   return pickRandom(lines);
 }
 
 // The label on the single button that turns the /roam narration into an actual
 // encounter — the "Step forward" beat. Tiered like the dialogue so the
-// invitation matches the scene the narration just set, and swapped out for a
-// pmOnly character during the hours they can't speak, the same way
-// getRandomDialogueLine is.
-export function getRandomApproachLabel(
-  character,
-  tier,
-  variant = null,
-  now = null,
-) {
+// invitation matches the scene the narration just set. `approachWhen` (per
+// character) and SHARED_APPROACH_WHEN add scene/time-specific labels the same
+// way `dialogueWhen` adds narration; the pmOnly daytime swap is still a hard
+// replacement, gated on the evening cutoff. `ctx` is the same object
+// getRandomDialogueLine takes.
+export function getRandomApproachLabel(character, tier, variant = null, ctx = {}) {
   const content = DIALOGUE[character.id];
   if (!content) return pickRandom(APPROACH_LABEL_FALLBACK);
 
-  let labels = null;
   if (
     character.pmOnly &&
-    content.amOnlyApproach &&
-    now &&
-    now.getHours() < 12
+    content.daytimeApproach &&
+    timeBucket(ctx.now) === "day"
   ) {
-    labels = content.amOnlyApproach[tier] || content.amOnlyApproach.new;
-  }
-  if (!labels) labels = content.approach?.[tier] || content.approach?.new;
-  if (!labels) return pickRandom(APPROACH_LABEL_FALLBACK);
-
-  if (variant && !Array.isArray(labels) && labels[variant]) {
-    labels = labels[variant];
+    const daytime = content.daytimeApproach[tier] || content.daytimeApproach.new;
+    return Array.isArray(daytime) ? pickRandom(daytime) : daytime;
   }
 
-  return Array.isArray(labels) ? pickRandom(labels) : labels;
+  const labels = resolvePoolTier(content.approach, tier, variant);
+  labels.push(...collectConditional(content.approachWhen, "approach", tier, variant, ctx));
+  labels.push(...collectConditional(SHARED_APPROACH_WHEN, "approach", tier, variant, ctx));
+
+  if (labels.length === 0) return pickRandom(APPROACH_LABEL_FALLBACK);
+  return pickRandom(labels);
 }
 
-export function generateCharacterResponses(character, tier = "new") {
+// `ctx` (optional, same shape as getRandomDialogueLine's) lets a character's
+// `responsesWhen` blocks add scene/time-specific button labels. No shared layer
+// for responses — a bespoke choice ("Stay till the lanterns are out") is always
+// character-specific.
+export function generateCharacterResponses(character, tier = "new", ctx = {}) {
   const archetypes = character.archetype || [];
   const keywords = character.keywords || [];
 
@@ -739,24 +793,28 @@ export function generateCharacterResponses(character, tier = "new") {
       archetypeSet,
       keywordSet,
       tier,
+      ctx,
     ),
     [RESPONSE_TYPES.PLAYFUL]: generatePlayfulResponse(
       character,
       archetypeSet,
       keywordSet,
       tier,
+      ctx,
     ),
     [RESPONSE_TYPES.BOLD]: generateBoldResponse(
       character,
       archetypeSet,
       keywordSet,
       tier,
+      ctx,
     ),
     [RESPONSE_TYPES.NEUTRAL]: generateNeutralResponse(
       character,
       archetypeSet,
       keywordSet,
       tier,
+      ctx,
     ),
   };
 
@@ -778,18 +836,25 @@ const RESPONSE_LABEL_TIER = {
 };
 
 // Each slot is a collection, picked from at random so a character the player
-// sees often doesn't always get the same four buttons. A character with no
-// entry falls through to the archetype defaults below.
-function responseLabel(characterId, responseType, tier) {
-  const entry = DIALOGUE[characterId]?.responses?.[responseType];
-  if (!entry) return null;
-  const labels = entry[RESPONSE_LABEL_TIER[tier] || "new"] || entry.new;
-  if (!labels) return null;
-  return Array.isArray(labels) ? pickRandom(labels) : labels;
+// sees often doesn't always get the same four buttons. Base labels come from
+// `responses`; any `responsesWhen` block whose `when` matches `ctx` adds its
+// labels on top. A character with nothing here falls through to the archetype
+// defaults below.
+function responseLabel(characterId, responseType, tier, ctx = {}) {
+  const content = DIALOGUE[characterId];
+  const labelTier = RESPONSE_LABEL_TIER[tier] || "new";
+  const labels = resolvePoolTier(content?.responses?.[responseType], labelTier, null);
+  for (const entry of content?.responsesWhen || []) {
+    if (matchesWhen(entry.when, ctx)) {
+      labels.push(...resolvePoolTier(entry.responses?.[responseType], labelTier, null));
+    }
+  }
+  if (labels.length === 0) return null;
+  return pickRandom(labels);
 }
 
-function generateKindResponse(character, archetypeSet, keywordSet, tier) {
-  const label = responseLabel(character.id, RESPONSE_TYPES.KIND, tier);
+function generateKindResponse(character, archetypeSet, keywordSet, tier, ctx) {
+  const label = responseLabel(character.id, RESPONSE_TYPES.KIND, tier, ctx);
   if (label) return { label };
 
   if (
@@ -815,8 +880,8 @@ function generateKindResponse(character, archetypeSet, keywordSet, tier) {
   return { label: "Offer kind words" };
 }
 
-function generatePlayfulResponse(character, archetypeSet, keywordSet, tier) {
-  const label = responseLabel(character.id, RESPONSE_TYPES.PLAYFUL, tier);
+function generatePlayfulResponse(character, archetypeSet, keywordSet, tier, ctx) {
+  const label = responseLabel(character.id, RESPONSE_TYPES.PLAYFUL, tier, ctx);
   if (label) return { label };
 
   if (archetypeSet.has("teasedere")) return { label: "Tease them back" };
@@ -829,8 +894,8 @@ function generatePlayfulResponse(character, archetypeSet, keywordSet, tier) {
   return { label: "Crack a joke" };
 }
 
-function generateBoldResponse(character, archetypeSet, keywordSet, tier) {
-  const label = responseLabel(character.id, RESPONSE_TYPES.BOLD, tier);
+function generateBoldResponse(character, archetypeSet, keywordSet, tier, ctx) {
+  const label = responseLabel(character.id, RESPONSE_TYPES.BOLD, tier, ctx);
   if (label) return { label };
 
   if (archetypeSet.has("yandere")) return { label: "Match their intensity" };
@@ -846,8 +911,8 @@ function generateBoldResponse(character, archetypeSet, keywordSet, tier) {
   return { label: "Flirt boldly" };
 }
 
-function generateNeutralResponse(character, archetypeSet, keywordSet, tier) {
-  const label = responseLabel(character.id, RESPONSE_TYPES.NEUTRAL, tier);
+function generateNeutralResponse(character, archetypeSet, keywordSet, tier, ctx) {
+  const label = responseLabel(character.id, RESPONSE_TYPES.NEUTRAL, tier, ctx);
   if (label) return { label };
 
   if (archetypeSet.has("kuudere") || archetypeSet.has("dandere"))

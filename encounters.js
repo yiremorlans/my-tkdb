@@ -125,9 +125,9 @@ function selectCharacterAtLocation(candidates, location) {
 // `origin` ('meet' | 'roam') rides along in the custom_id so the response
 // click can be logged against the command that started the flow — the flow is
 // only counted once, at the response step (see the 'resp' handler in app.js).
-function responseActionRow(characterId, disabled = false, tier = 'new', origin = 'meet') {
+function responseActionRow(characterId, disabled = false, tier = 'new', origin = 'meet', ctx = {}) {
   const character = getCharacterById(characterId);
-  const characterResponses = character ? generateCharacterResponses(character, tier) : {};
+  const characterResponses = character ? generateCharacterResponses(character, tier, ctx) : {};
 
   return RESPONSE_TYPE_ORDER.map((responseType) => {
     const option = characterResponses[responseType] || { label: 'Respond' };
@@ -240,7 +240,13 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
   const level = getRelationshipLevel(affinity);
   const tier = getDialogueTier(level.name);
   const variant = getImageVariant(character, level.name);
-  const dialogue = getRandomDialogueLine(character, tier, variant, now);
+  const dialogueCtx = {
+    now,
+    locationKey: spot.locationKey,
+    backgroundFile: spot.file,
+    event: null, // no event system yet — reserved for `when: { event }` rules
+  };
+  const dialogue = getRandomDialogueLine(character, tier, variant, dialogueCtx);
   const temperament = getTemperamentGreeting(character, tier);
   console.log('[buildRoamDialogueMessage] Got dialogue:', dialogue);
   console.log('[buildRoamDialogueMessage] Got temperament:', temperament);
@@ -248,7 +254,17 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
   const charFilename = character.images[variant];
 
   const encounterId = generateEncounterId();
-  cacheRoamEncounter(encounterId, { spot, character, charFilename, dialogue, temperament, tier });
+  // `now` is stored as epoch ms — the cache round-trips through JSON, so a Date
+  // would come back a string. buildRoamSpawnMessage rehydrates it.
+  cacheRoamEncounter(encounterId, {
+    spot,
+    character,
+    charFilename,
+    dialogue,
+    temperament,
+    tier,
+    ctx: { ...dialogueCtx, now: now ? now.getTime() : null },
+  });
   console.log(`[buildRoamDialogueMessage] Cached encounter ${encounterId}, elapsed: ${Date.now() - startTime}ms`);
 
   return {
@@ -260,7 +276,7 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
           {
             type: MessageComponentTypes.BUTTON,
             style: ButtonStyleTypes.PRIMARY,
-            label: getRandomApproachLabel(character, tier, variant, now),
+            label: getRandomApproachLabel(character, tier, variant, dialogueCtx),
             custom_id: `roam:spawn:${encounterId}`,
           },
         ],
@@ -279,7 +295,10 @@ export async function buildRoamSpawnMessage(encounterId) {
     };
   }
 
-  const { spot, character, charFilename, temperament, tier } = encounter;
+  const { spot, character, charFilename, temperament, tier, ctx } = encounter;
+  const dialogueCtx = ctx
+    ? { ...ctx, now: ctx.now != null ? new Date(ctx.now) : null }
+    : {};
   console.log('[buildRoamSpawnMessage] Starting image composition...');
   const composeStart = Date.now();
   const imageBuffer = await composeEncounter(spot.file, charFilename, temperament);
@@ -288,7 +307,7 @@ export async function buildRoamSpawnMessage(encounterId) {
   return {
     content: `You wander into **${spot.locationKey}** and run into **${getFullName(character)}**...`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
-    components: responseActionRow(character.id, false, tier, 'roam'),
+    components: responseActionRow(character.id, false, tier, 'roam', dialogueCtx),
     flags: EPHEMERAL_FLAG,
   };
 }
@@ -335,7 +354,13 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
   const level = getRelationshipLevel(affinity);
   const tier = getDialogueTier(level.name);
   const variant = getImageVariant(character, level.name);
-  const dialogue = getRandomDialogueLine(character, tier, variant, now);
+  const dialogueCtx = {
+    now,
+    locationKey: fallbackSpot?.locationKey ?? null,
+    backgroundFile: fallbackSpot?.file ?? null,
+    event: null,
+  };
+  const dialogue = getRandomDialogueLine(character, tier, variant, dialogueCtx);
 
   const charFilename = character.images[variant];
 
@@ -346,7 +371,7 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
   return {
     content: `${getFullName(character)} agrees to meet you${locationText}`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
-    components: responseActionRow(character.id, false, tier, 'meet'),
+    components: responseActionRow(character.id, false, tier, 'meet', dialogueCtx),
     flags: EPHEMERAL_FLAG,
   };
 }

@@ -20,6 +20,48 @@
 // not always get the same four buttons. A character omitted here, or missing
 // a response type, falls back to archetype defaults in constants/characters.js —
 // constants/validateContent.js reports any such gap at startup.
+//
+// Conditional pools (all optional, all per character):
+//   `dialogueWhen`   → adds narration lines   (merged into `dialogue`)
+//   `approachWhen`   → adds step-forward labels (merged into `approach`)
+//   `responsesWhen`  → adds response-button labels (merged into `responses`,
+//                      so its inner shape is { kind|playful|bold|neutral: { tier: [...] } })
+// Each is a list of `{ when, <pool> }` blocks. Every field in `when` (time /
+// location / background / event — see DIALOGUE_WHEN_DIMENSIONS in characters.js)
+// is optional and ANDed; scalar or array. A matching block's lines are *added*
+// to the base pool for that pick — never replace it. `SHARED_DIALOGUE_WHEN` and
+// `SHARED_APPROACH_WHEN` are the same shape but apply to every character
+// (roster-wide event greetings, generic scene flavor). There is no shared
+// responses layer — a bespoke choice is always character-specific.
+
+export const SHARED_DIALOGUE_WHEN = [
+  // Whole-roster evening flavor for the general-location PM scenes, where an
+  // encounter can be with anyone and most characters have no evening lines of
+  // their own. Character-specific `dialogueWhen` blocks stack on top of this.
+  {
+    when: { time: "evening", location: ["Darkwick", "Galaxy Express", "Clementia"] },
+    dialogue: {
+      new: [
+        "The path lamps have come on. Whoever's still out here, it's just the two of you now.",
+        "Campus has gone quiet and low-lit. Footsteps carry further than they did at noon.",
+      ],
+      known: [
+        "You fall into step together without discussing it. The lamps mark the way back.",
+      ],
+    },
+  },
+  // Event blocks (e.g. `when: { event: "star_festival" }`) slot in here once an
+  // event system sets `ctx.event`. `Star_Festival` already works as a `location`.
+];
+
+export const SHARED_APPROACH_WHEN = [
+  {
+    when: { time: "evening", location: ["Darkwick", "Galaxy Express", "Clementia"] },
+    approach: {
+      new: ["Head in out of the dark", "Fall into step with them"],
+    },
+  },
+];
 
 export const DIALOGUE = {
   jin: {
@@ -67,6 +109,39 @@ export const DIALOGUE = {
         "Frostheim is freezing. His bed is not. He has opinions about you leaving it.",
       ],
     },
+    dialogueWhen: [
+      {
+        when: { time: "evening" },
+        dialogue: {
+          new: [
+            "He hasn't turned on a light. The cold has teeth after dark and he seems to prefer it that way.",
+            '"Frostheim after dark is mine," he says without turning. "You\'re standing in it."',
+            "Frost has crept across the balcony doors behind him. He watches the black campus like he owns the view.",
+            '"The cold gets worse after sundown," he says. "You knew that, and came anyway."',
+          ],
+          known: [
+            '"Late," he observes. He doesn\'t say for what, and doesn\'t tell you to leave either.',
+            "The cold doesn't reach the spot he's left open beside him. He arranged that before you arrived.",
+            '"It\'s late," he says. "Stand somewhere useful and don\'t let the cold in."',
+          ],
+          warm: [
+            '"Stay until the cold drives you in," he says. "Not before."',
+            "He lights a cigarette against the dark and, for once, offers the rail beside him without a word.",
+            '"Past curfew," he notes. "I won\'t report you. Sit down."',
+          ],
+        },
+      },
+    ],
+    approachWhen: [
+      {
+        when: { time: "evening" },
+        approach: {
+          new: ["Step onto the dark balcony", "Meet him at the rail"],
+          known: ["Take the cold beside him"],
+          warm: ["Take the offered rail"],
+        },
+      },
+    ],
     temperamentDialogue: {
       new: [
         "\"You're not supposed to be here. Don't waste my time.\"",
@@ -286,6 +361,38 @@ export const DIALOGUE = {
         "He's still red about all of it. He's never once wanted it to stop.",
       ],
     },
+    dialogueWhen: [
+      {
+        when: { time: "evening" },
+        dialogue: {
+          new: [
+            "He's still in his training gear well after dark, breath fogging, hours past when he should have stopped.",
+            '"You\'re out late — everything okay?" He relaxes when you nod. "Good. Stick to the lit paths."',
+            "He's doing slow laps of the balcony in the dark and waves you over rather than break the rhythm.",
+            '"It\'s late to be out here," he says. "Let me walk you back after, okay?"',
+          ],
+          known: [
+            '"Night training," he says, a little sheepish. "You can spot me, if you want."',
+            '"I always end up out here after curfew. It\'s quieter. Easier to think."',
+            '"You should be inside by now," he says. "...So should I. Five more minutes."',
+          ],
+          warm: [
+            '"Stay for a bit. It\'s cold, but the view\'s worth it after dark."',
+            '"I kept hoping you\'d come by tonight," he admits. "Glad I waited."',
+          ],
+        },
+      },
+    ],
+    approachWhen: [
+      {
+        when: { time: "evening" },
+        approach: {
+          new: ["Spot his night training", "Wave and fall into his laps"],
+          known: ["Stay past curfew with him"],
+          warm: ["Take the cold rail beside him"],
+        },
+      },
+    ],
     temperamentDialogue: {
       new: [
         '"YO! Another fresh face! You lost or what?"',
@@ -493,11 +600,43 @@ export const DIALOGUE = {
         "He touches you like something he has been given and can hardly believe he keeps.",
       ],
     },
+    dialogueWhen: [
+      {
+        when: { time: "evening" },
+        dialogue: {
+          new: [
+            "He's doing a slow circuit of the balcony rail, checking the dark below, and only then turns to you.",
+            "The campus lights have come on behind him. He's clearly been out here a while.",
+            '"You\'re out late," he says — not quite a reproach. "I\'ll walk you back when you\'re ready."',
+            '"You shouldn\'t wander alone," he says quietly. "Not here. Not at this hour."',
+          ],
+          known: [
+            "He falls into step to walk you along the lit path before you can decline the escort.",
+            '"I don\'t like this hour for wandering," he admits. "I like that you came to find me in it."',
+            '"Curfew\'s soon," he says. "Stay a little — I\'ll make sure you\'re not caught."',
+          ],
+          warm: [
+            "He's saved you the sheltered corner out of the wind. He'd deny having planned it.",
+            "The dark makes him less careful with what he says. Not much. Enough to notice.",
+            '"The quiet out here is the honest part of my day," he says. "I\'m glad you\'re in it."',
+          ],
+        },
+      },
+    ],
+    approachWhen: [
+      {
+        when: { time: "evening" },
+        approach: {
+          new: ["Let him walk you back", "Fall into step with him"],
+          known: ["Accept the escort"],
+          warm: ["Take the sheltered corner"],
+        },
+      },
+    ],
     temperamentDialogue: {
       new: [
         '"Oh... hello. Please, be careful around here."',
         '"Ah — my apologies. Did you need something?"',
-        '"You shouldn\'t wander alone. Not here. Not at this hour."',
         "\"I'm sorry, I don't think we've met properly.\"",
         "\"You're here 10 minutes early — I'm impressed. Let's check the details for today's mission.\"",
       ],
@@ -708,6 +847,37 @@ export const DIALOGUE = {
         "He holds you the way he does everything else — deliberately, and completely.",
       ],
     },
+    dialogueWhen: [
+      {
+        when: { time: "evening" },
+        dialogue: {
+          new: [
+            "He checks his watch, then the dark stairwell behind you, and decides not to remark on the hour.",
+            '"You\'re past curfew," he notes. "So am I. We\'ll call it even."',
+            "The balcony's empty except for him. After dark, he says, is the only time it's quiet enough to think.",
+            '"It\'s after curfew. I\'m not going to report you," he says. "Stand where the light reaches, though."',
+          ],
+          known: [
+            '"I\'ll sign you back in if anyone asks," he says, already turning a blind eye.',
+            "He's less starched after dark. The clipboard is nowhere in sight.",
+            '"The balcony\'s better at night," he says. "No one to perform for."',
+          ],
+          warm: [
+            '"Nobody comes up here this late. That\'s rather the point of it."',
+          ],
+        },
+      },
+    ],
+    approachWhen: [
+      {
+        when: { time: "evening" },
+        approach: {
+          new: ["Slip past curfew with him", "Take the empty balcony"],
+          known: ["Let him sign you in"],
+          warm: ["Keep him company up here"],
+        },
+      },
+    ],
     temperamentDialogue: {
       new: [
         '"No need to be nervous. I\'ve nothing but the noblest of intentions."',
@@ -1504,7 +1674,6 @@ export const DIALOGUE = {
         "He looks up from tending the lanterns, a quiet warmth in his eyes as he notices you.",
         "He bows before he speaks. It's automatic, and completely sincere.",
         '"I\'ve been working since I was four, so people said I was mature for my age," he says. "But the truth is, I still have a lot to learn."',
-        '"Ah — a guest. Please, come in out of the dark."',
         "He finishes the row of lanterns first. Duty, then greeting. Always in that order.",
       ],
       known: [
@@ -1523,13 +1692,11 @@ export const DIALOGUE = {
       ],
       spark: [
         "The restraint is fraying and he knows you can see it.",
-        "He walks you back in lantern light and takes the longest possible route.",
         '"I shouldn\'t want this," he says quietly. "I\'m going to anyway."',
         "His hand finds the small of your back at the gate and stays there.",
         "He looks at you the way he's spent months not letting himself.",
       ],
       close: [
-        '"I was hoping... you\'d come by tonight," he admits quietly, the lantern light catching the sincerity in his gaze.',
         "He lets his shoulders drop. It's the first time all day he's allowed that.",
         '"Don\'t tell the others I stopped working," he says, already sitting down.',
         "He looks at you the way he looks at the lanterns — like something he'd hate to let go out.",
@@ -1543,6 +1710,45 @@ export const DIALOGUE = {
         "The restraint is gone entirely. What replaced it is overwhelming and very quiet.",
       ],
     },
+    dialogueWhen: [
+      {
+        when: { time: "evening" },
+        dialogue: {
+          new: [
+            '"Ah — a guest. Please, come in out of the dark."',
+            "He's lighting the last of the lanterns along the path, and waves you in toward the warm ones.",
+            '"The forest changes character after sundown," he says. "Stay close and it stays kind."',
+            '"You\'re safe here, even at this hour," he says. "That much I can promise."',
+          ],
+          known: [
+            "He walks you in by lantern light and takes, as always, the longest possible way.",
+            '"I do the last rounds about now. You\'re welcome to keep me company for them."',
+            '"The tea\'s still warm and the lanterns are lit," he says. "Stay a while."',
+          ],
+          warm: [
+            '"I find myself listening for the gate after dark lately. I wonder why."',
+            "There's a cup already poured and a lantern already set on your side of the step.",
+            '"Sit with me until the lanterns burn low? The rounds can wait."',
+          ],
+          spark: [
+            "He walks you back in lantern light and takes the longest possible route.",
+          ],
+          close: [
+            '"I was hoping... you\'d come by tonight," he admits quietly, the lantern light catching the sincerity in his gaze.',
+          ],
+        },
+      },
+    ],
+    approachWhen: [
+      {
+        when: { time: "evening" },
+        approach: {
+          new: ["Come in out of the dark", "Follow the lanterns in"],
+          known: ["Join the last rounds"],
+          warm: ["Sit by the lantern he set out"],
+        },
+      },
+    ],
     temperamentDialogue: {
       new: [
         '"Welcome. Please, make yourself comfortable."',
@@ -1758,17 +1964,46 @@ export const DIALOGUE = {
         "The lanterns burn down and neither of you notices for a very long time.",
       ],
     },
+    dialogueWhen: [
+      {
+        when: { time: "evening" },
+        dialogue: {
+          new: [
+            "He's watching the last light go out of the sky and doesn't seem to mind that it's leaving.",
+            '"Seventeen syllables for dusk," he murmurs, "and you\'ve arrived in time to be the last five."',
+            "The lanterns have come on around the step. He tips his hat and makes room on the lit side.",
+            '"A stranger at dusk — how fortunate," he says. "Sit, and let the evening happen to us."',
+          ],
+          known: [
+            '"The wanderer, and at the good hour too. The evening was getting lonely."',
+            "He's saved you the warm end of the step, where the lantern reaches.",
+            '"Sit — the step is warm," he says, "and the evening is doing something worth watching."',
+          ],
+          warm: [
+            '"You arrive like the evening does — expected, and still a gift."',
+          ],
+        },
+      },
+    ],
+    approachWhen: [
+      {
+        when: { time: "evening" },
+        approach: {
+          new: ["Sit under the lanterns", "Watch the last light with him"],
+          known: ["Take the warm end of the step"],
+          warm: ["Let the evening happen"],
+        },
+      },
+    ],
     temperamentDialogue: {
       new: [
         'Summer heat shimmers off the stones. "Why, hello there, my dear."',
-        '"A stranger at dusk — how fortunate. Sit, and let the evening happen to us."',
         '"You walk quietly. That is rarer than you\'d think."',
         '"Names come later. First, tea. That is the proper order."',
         '"Something brought you here. Let\'s not rush to name what."',
       ],
       known: [
         '"Twice is coincidence. Three times is a season. Welcome back."',
-        '"Sit — the step is warm, and the evening is doing something worth watching."',
         '"I\'ve saved a line for you. It wanted your opinion."',
         '"You listen well. That\'s not a small thing to notice about someone."',
         '"You want to know the meaning of my words? I see — I\'ll have to give you a lecture on romanticism."',
@@ -1977,6 +2212,38 @@ export const DIALOGUE = {
         "The courtesy is still there. It's just aimed somewhere much more specific now.",
       ],
     },
+    dialogueWhen: [
+      {
+        when: { time: "evening" },
+        dialogue: {
+          new: [
+            '"An unexpected pleasure — and at the loveliest hour for it," he says, petals catching the lantern light.',
+            "A perfect bow, half-lit. The dark keeps whatever the smile isn't giving away.",
+            '"The shrine\'s nicer after sundown. Fewer witnesses, better lighting. Come in."',
+            '"Mind the path," he says. "The lanterns only pretend to light it."',
+          ],
+          known: [
+            "He's lit the path lanterns already and leaves the brightest one on your side of the step.",
+            '"You always seem to arrive when the light\'s gone gold. I\'ve stopped believing it\'s luck."',
+            '"Might I walk you as far as the gate? It\'s dark, and I\'m only a little self-interested."',
+          ],
+          warm: [
+            '"The petals show off worse after dark. I\'d say I don\'t either, but you\'re here."',
+            '"Stay while the lanterns last," he says. "They last a while, if you\'re wondering."',
+          ],
+        },
+      },
+    ],
+    approachWhen: [
+      {
+        when: { time: "evening" },
+        approach: {
+          new: ["Follow the lantern light in", "Return the half-lit bow"],
+          known: ["Take the lit side of the step"],
+          warm: ["Let him walk you to the gate"],
+        },
+      },
+    ],
     temperamentDialogue: {
       new: [
         '"How lovely. A visitor graces us with their presence."',
@@ -3921,7 +4188,7 @@ export const DIALOGUE = {
         '"Everything is quiet with you. Everything. I didn\'t know it could be."',
       ],
     },
-    amOnlyDialogue: {
+    daytimeDialogue: {
       new: [
         "~~~!",
         "~~~? ...~~~.",
@@ -3997,7 +4264,7 @@ export const DIALOGUE = {
         "Don't leave",
       ],
     },
-    amOnlyApproach: {
+    daytimeApproach: {
       new: [
         "Follow the humming",
         "Hum back",

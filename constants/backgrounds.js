@@ -53,11 +53,34 @@ export const EVENT_LOCATIONS = {
 // All location keys a background (and therefore an encounter) can belong to.
 export const LOCATION_KEYS = { ...HOUSES, ...GENERAL_LOCATIONS, ...EVENT_LOCATIONS, ...CHARACTER_ROOMS };
 
-// Backgrounds that only appear once the user's local time is past 6 PM
-// live in this list by filename convention (ends in "_PM"). Discord
-// interactions don't tell us the invoking user's timezone, so "evening"
-// is judged against the bot server's local clock as a best-effort default.
+// Backgrounds that only appear in the evening live in this list by filename
+// convention (ends in "_PM"). Discord interactions don't tell us the invoking
+// user's timezone, so "evening" is judged against one fixed zone for everyone,
+// pinned via the TZ env var (app.js defaults it to America/Chicago).
 const EVENING_SUFFIX = '_PM';
+
+// The single definition of when "evening" begins. Both background filtering and
+// conditional dialogue (`when: { time: 'evening' }`) derive from this, off the
+// same `now`, so the scene that renders and the lines that get picked can never
+// disagree. If per-user timezones ever land, pass a user-local `now` and nothing
+// else changes.
+export const EVENING_HOUR = 18;
+
+export function isEveningHour(now = new Date()) {
+  return now.getHours() >= EVENING_HOUR;
+}
+
+// Coarse time-of-day label used by conditional dialogue's `when: { time }`.
+// Just 'day' vs 'evening' today; split further (morning / afternoon / night) by
+// adding cutoffs here — this stays the one place hours are bucketed. Returns
+// null when there is no clock context, so a `time` rule simply won't match
+// rather than throwing.
+export const TIME_BUCKETS = ['day', 'evening'];
+
+export function timeBucket(now) {
+  if (!now) return null;
+  return isEveningHour(now) ? 'evening' : 'day';
+}
 
 export function isEveningBackground(filename) {
   return filename.replace(/\.png$/, '').endsWith(EVENING_SUFFIX);
@@ -65,7 +88,7 @@ export function isEveningBackground(filename) {
 
 export const BACKGROUNDS_BY_LOCATION = {
   [HOUSES.FROSTHEIM]: [
-    'Frostheim_Balcony.png',
+    'Frostheim_Balcony_PM.png',
     'Frostheim_Ballroom.png',
     'Frostheim_Castle.png',
     'Frostheim_Entrance.png',
@@ -85,7 +108,7 @@ export const BACKGROUNDS_BY_LOCATION = {
   [HOUSES.HOTARUBI]: [
     'Hotarubi_Bamboo_Forest.png',
     'Hotarubi_Corridor.png',
-    'Hotarubi_Forest_2.png',
+    'Hotarubi_Forest_PM.png',
     'Hotarubi_Garden.png',
     'Hotarubi_Garden_PM.png',
     'Hotarubi_Harbor.png',
@@ -112,7 +135,7 @@ export const BACKGROUNDS_BY_LOCATION = {
     'Mortkranken_Examination_Room_PM.png',
     'Mortkranken_Lab.png',
     'Mortkranken_Lab_PM.png',
-    'Mortkranken_Underpass.png',
+    'Mortkranken_Underpass_PM.png',
   ],
   [HOUSES.JABBERWOCK]: [
     'Jabberwock_Cave.png',
@@ -123,7 +146,7 @@ export const BACKGROUNDS_BY_LOCATION = {
     'Jabberwock_Field_PM.png',
     'Jabberwock_Kitchen.png',
     'Jabberwock_Mountain_PM.png',
-    'Jabberwock_Ushi-Oni_Pen.png',
+    'Jabberwock_Ushi-Oni_Pen_PM.png',
   ],
   [HOUSES.OBSCUARY]: [
     'Obscuary_Bar.png',
@@ -141,9 +164,9 @@ export const BACKGROUNDS_BY_LOCATION = {
     'Sinostra_VIP_Room_Entrance.png',
   ],
   [GENERAL_LOCATIONS.DARKWICK]: [
-    'Camp_Darkwick.png',
+    'Camp_Darkwick_PM.png',
     'Darkwick_Artifact_Storeroom.png',
-    'Darkwick_Auditorium.png',
+    'Darkwick_Auditorium_PM.png',
     'Darkwick_Bus_Stop.png',
     'Darkwick_Cafeteria.png',
     'Darkwick_Cafeteria_Kitchen.png',
@@ -205,7 +228,7 @@ export const BACKGROUNDS_BY_LOCATION = {
     'Hotarubi_Garden_Star_Festival.png',
     'Hotarubi_Garden_Star_Festival_PM.png',
     'Hotarubi_Harbor_Star_Festival.png',
-    'Hotarubi_River.png',
+    'Hotarubi_River_PM.png',
     'Hotarubi_Stall_Star_Festival.png',
     'Hotarubi_Stall_Star_Festival_PM.png',
   ],
@@ -224,7 +247,7 @@ export const BACKGROUNDS_BY_LOCATION = {
     'Vagastrom_Shohei_Room.png',
   ],
   [CHARACTER_ROOMS.SUBARU]: [
-    'Hotarubi_Subaru_Room.png',
+    'Hotarubi_Subaru_Entrance.png',
   ],
   [CHARACTER_ROOMS.ZENJI]: [
     'Hotarubi_Zenji_Room_PM.png',
@@ -256,8 +279,7 @@ export function isGeneralLocation(locationKey) {
 // Backgrounds available for a location right now, given the current time.
 export function getAvailableBackgrounds(locationKey, now = new Date()) {
   const all = BACKGROUNDS_BY_LOCATION[locationKey] || [];
-  const isEvening = now.getHours() >= 18;
-  return isEvening ? all : all.filter((file) => !isEveningBackground(file));
+  return isEveningHour(now) ? all : all.filter((file) => !isEveningBackground(file));
 }
 
 // Picks a random location + background out of every location, weighted by
