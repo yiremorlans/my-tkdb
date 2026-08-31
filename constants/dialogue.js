@@ -2141,11 +2141,11 @@ export const DIALOGUE = {
   elias: {
     dialogue: {
       new: [
-        'He\'s coiling a length of rope, unhurried. "Well, hello there. New around here?"',
+        'He\'s winding a string of festival lights around one arm, unhurried. "Well, hello there. New around here?"',
         'The drawl arrives before he does. "Well now. Aren\'t you a long way from anywhere."',
         "He's leaning where he shouldn't be, a lollipop stick shifting from one corner of his mouth to the other, doing nothing extremely well.",
         '"Oh no, I just handle the odd jobs around here," he says. "So if there\'s anything you need, don\'t hesitate to ask."',
-        "The smile comes slow and languid, and it isn't free. You both know that.",
+        "The smile comes slow and languid and lands just right — warm, easy, and a half-second too practiced.",
       ],
       known: [
         "\"I was just tidying up around here. I know I don't really have to anymore, but... well, I just can't help myself.\"",
@@ -2186,16 +2186,16 @@ export const DIALOGUE = {
     temperamentDialogue: {
       new: [
         '"Well, hello there. New face in town?"',
-        '"Careful, Honor roll. Everything in Dionysia costs something."',
+        '"Everything in Dionysia costs something, sure. But your first favor\'s on the house — call it a welcome."',
         '"I was thinking about taking a walk around campus. Just doing my part in staying healthy."',
-        "\"You've got good instincts, walking slow like that. Keep 'em.\"",
+        "\"You've got good instincts. Those'll serve you well around here — stick with me and you'll be fine.\"",
         "\"Oh no, I just handle the odd jobs around here. So if there's anything you need, don't hesitate to ask.\"",
       ],
       known: [
         '"Well. If it isn\'t the persistent one."',
         "\"I'm sorry, but I'm a bit short on time. Would you mind if I take my leave here?\"",
         '"Sit, if you like. I\'ve nowhere pressing to be. Never do, lately."',
-        '"You listen more than you talk. Dangerous habit, around me."',
+        '"You listen more than you talk. Rare, that. I could get used to it."',
         '"Careful — I\'m starting to expect you."',
       ],
       warm: [
@@ -2207,7 +2207,7 @@ export const DIALOGUE = {
       ],
       spark: [
         "\"Now, I've been very patient. I'd like it noted.\"",
-        '"No coin, no trick, no exit. Just me asking. Say yes or say no."',
+        '"No coin, no trick, no angle. Just me asking. Say yes or say no."',
         '"You look at me like you\'ve already decided. Have you?"',
         "\"I'd behave, but you don't seem to want me to.\"",
         '"Come here, sugar. I\'m through being clever about it."',
@@ -2370,14 +2370,14 @@ export const DIALOGUE = {
           '"I\'m driving the Aqua-line later to catch the sunset. Come with, cutie."',
           '"My people march to the beat of their own drum. You\'ve fit right in with that."',
           '"There\'s just not enough hours in the day." He says it, then makes an hour for you.',
-          '"There\'s a coffee with your name on it and fifteen minutes I\'m refusing to spend on anything else. Sit with me, cutie."',
+          "\"There's a coffee with your name on it and fifteen minutes I'm refusing to spend on anything else. Sit with me, cutie.\"",
         ],
         casual: [
           "She lights up the moment she sees you, whatever she was signing forgotten.",
           '"I\'m driving the Aqua-line later to catch the sunset. Come with, cutie."',
           '"My people march to the beat of their own drum. You\'ve fit right in with that."',
           '"There\'s just not enough hours in the day." She says it, then makes an hour for you.',
-          '"There\'s a coffee with your name on it and fifteen minutes I\'m refusing to spend on anything else. Sit with me, cutie."',
+          "\"There's a coffee with your name on it and fifteen minutes I'm refusing to spend on anything else. Sit with me, cutie.\"",
         ],
       },
       spark: {
@@ -2802,42 +2802,45 @@ export const DIALOGUE = {
   shion: {
     dialogue: {
       new: [
-        'A masked bow, a theatrical flourish. "Welcome to the show."',
-        "The mask turns to follow you across the room. Nothing else about him moves.",
+        'A slow bow, a theatrical flourish. "Welcome to the Heebie Jeebie house."',
+        "His head turns to follow you across the room. Nothing else about him moves.",
         '"Ah — a fresh expression," he says, delighted. "Do hold that one a moment longer."',
         '"Closer," he says. "You\'re still too far away. Closer." He does not appear to be joking.',
         "Something about the way he watches you feels less like curiosity and more like cataloguing.",
+        '"They call this place the Heebie Jeebie house. I do so much of my best work here." He leans in. "Stay. Be startled."',
       ],
       known: [
-        "The mask finds you faster now. It has stopped being a coincidence.",
+        "His gaze finds you faster now. It has stopped being a coincidence.",
         '"The returning player," he muses. "I do love a second act."',
         "He's stopped trying to frighten you. He has begun studying you instead.",
         '"You\'ve gone quiet. This is boring." A pause. "...Don\'t. Stay. I\'ll allow talking."',
         "Something in the room decides against approaching you. He watches it decide.",
+        "He's resetting a trick in one of the Heebie Jeebie house's back corridors — a trapdoor, a cold breath, a sound from nowhere. \"People pay me to stop their hearts a moment. I never disappoint.\"",
       ],
       warm: [
-        "The mask tilts your way first, before anyone else in the room.",
+        "His attention tilts your way first, before anyone else in the room.",
         "He's been waiting in this exact spot. He'd like you to know he doesn't wait for people.",
         "\"You're not frightened anymore,\" he observes. He can't decide if he's disappointed.",
         "Whatever threat was standing near you a moment ago has quietly stopped existing.",
         '"I\'m thirsty... Go over to Elias\'s place and bring me that sickly brown stuff." A beat. "...Please."',
+        "\"Walk the Heebie Jeebie house with me tonight. I'll frighten the others. You I'd rather just watch enjoy it.\"",
       ],
       spark: [
-        "He lifts the mask an inch — just enough for you, just long enough to matter.",
+        "He lets the act slip an inch — just enough for you, just long enough to matter.",
         "He circles behind you and speaks very close to your ear, entirely on purpose.",
         '"You\'ve stopped being afraid," he murmurs. "Now you\'re something far more dangerous."',
         "He takes your wrist, turns it over, and studies your pulse like a compliment.",
         "The theatre is empty. He hasn't stopped performing. It's all for one seat now.",
       ],
       close: [
-        '"For you," Shion says, lifting the mask just enough to show a genuine smile.',
+        '"For you," Shion says, the performance slipping just enough to show a genuine smile.',
         "He places himself between you and the room without appearing to have decided to.",
-        '"Nothing here will touch you," he says pleasantly. "I\'ve made arrangements."',
+        '"Nothing here can touch you," he says pleasantly. "It\'s mine. I\'ve made arrangements."',
         "The theatrics fall away, and what remains underneath is startlingly gentle.",
-        "He lets you see his face. Only you. Only ever you.",
+        "He drops every last piece of the act. Only you get that. Only ever you.",
       ],
       bound: [
-        "The mask is off and stays off, and what's underneath adores you unbearably.",
+        "The act is off and stays off, and what's underneath adores you unbearably.",
         "He kneels to take your hand, which from him is not submission but something worse.",
         '"My wife," he breathes, and means every syllable of it.',
         "He traces your pulse with his mouth and takes an extremely long time about it.",
@@ -2851,6 +2854,7 @@ export const DIALOGUE = {
         '"Oh, don\'t run. Running is so terribly predictable."',
         '"A new player takes the stage. How does the first act go, I wonder?"',
         '"You flinched. That\'s honest of you. I appreciate honesty."',
+        '"You wandered into the Heebie Jeebie house alone. Marvelous instincts. Truly awful, but marvelous."',
       ],
       known: [
         "\"Ah — the one who didn't run. I've thought about you since.\"",
@@ -2858,6 +2862,7 @@ export const DIALOGUE = {
         "\"You've stopped flinching. I'm not certain how I feel about that.\"",
         '"Why have you gone all quiet? This is boring. ...Fine. I\'ll find something to do with you."',
         '"You interest me. That is rarely good news. It is, however, true."',
+        '"The Heebie Jeebie house had three faintings this week. I keep the records. It has been a good year."',
       ],
       warm: [
         '"You came back. How... thrilling. I missed that look in your eyes."',
@@ -2876,7 +2881,7 @@ export const DIALOGUE = {
       close: [
         '"You\'re mine to protect. My wife."',
         '"The world is a cruel theatre. You will simply never be on that stage."',
-        '"Look — no mask. Do you understand what that costs me?"',
+        '"Look — no act, no theatre, nothing performed. Do you understand what that costs me?"',
         '"Anything that reaches you goes through me first. That is not a threat to you."',
         '"I have watched a great many things suffer. I will not watch you."',
       ],
@@ -2903,7 +2908,7 @@ export const DIALOGUE = {
       ],
       warm: [
         "Take his arm",
-        "Walk into the mask's view",
+        "Step into his eyeline",
         "Greet him first",
         "Stand where he can see you",
       ],
@@ -2915,7 +2920,7 @@ export const DIALOGUE = {
       ],
       close: [
         "Go to him",
-        "Lift the mask",
+        "Let the act drop",
         "Let him take your hand",
         "Stand behind his shield",
       ],
@@ -2935,15 +2940,15 @@ export const DIALOGUE = {
         ],
         spark: [
           "Let him look properly",
-          "Touch the mask gently",
+          "Reach for him gently",
           "Tell him you're not afraid",
         ],
         close: [
           "Let him protect you",
-          "Thank him for the mask coming off",
+          "Thank him for dropping the act",
           "Tell him he isn't a monster",
         ],
-        bound: ["Touch his bare face", "Say it back", "Let him kneel"],
+        bound: ["Hold his face", "Say it back", "Let him kneel"],
       },
       playful: {
         new: [
@@ -2953,7 +2958,7 @@ export const DIALOGUE = {
         ],
         spark: [
           "Make his pulse quick instead",
-          "Steal the mask",
+          "Steal his next line",
           "Play the dangerous thing",
         ],
         close: [
@@ -2963,7 +2968,7 @@ export const DIALOGUE = {
         ],
         bound: [
           "Make him wait for it",
-          "Take the mask for yourself",
+          "Upstage him for once",
           "Refuse to say it properly",
         ],
       },
@@ -2971,7 +2976,7 @@ export const DIALOGUE = {
         new: [
           "Challenge him boldly",
           "Step closer, not back",
-          "Ask what's under the mask",
+          "Ask what's under the act",
         ],
         spark: [
           "Say you're his",
@@ -4329,14 +4334,16 @@ export const DIALOGUE = {
       known: [
         'He\'s stopped saying "not too close." He just leaves the distance where it is.',
         "He beams. \"Oh hey, it's Honor roll! Can't believe I ran into you here, so random! Guess we've gotta go on a date now, huh?\"",
-        '"You look kind of tired, Honor roll, you doing okay? Why don\'t you stop by the bar later? I can be your shoulder to cry on."',
+        '"You look kind of tired, Honor roll. Come by the bar later — I\'ll pour you something slow and you can just stop being anywhere else for a while."',
         "He asks how you are and then actually waits, which not everyone does.",
+        "He wipes down the same spot on the bar twice. \"Harurin hasn't been in. He's been flat-out with the animals again — I keep a stool open for him, just in case.\"",
         "The brightness dims for half a second, and he covers it faster than before.",
       ],
       warm: [
         "His grin is warm and genuine when he sees you, though you catch the moment his cheerfulness falters—like you're the only thing holding back the darkness.",
         "He talks with his whole body, gestures a foot from your shoulder and never landing.",
         "He's halfway through pruning something that keeps leaning toward him. \"New elixir. Try it later — it's mostly safe.\"",
+        'The Obscuary bar, lights down, your drink already waiting. He leans on his elbows across from you, close as the curse lets him get. "This is the best part of my night. Don\'t tell the others."',
         '"Look at you! Okay, tell me everything, and don\'t leave the boring parts out."',
         "He hovers close, hands carefully at his sides, and doesn't leave.",
       ],
@@ -4373,6 +4380,7 @@ export const DIALOGUE = {
       known: [
         "\"You're back! Okay, that's officially a pattern. I love a pattern.\"",
         "\"How've you been? No — the real answer. I've got time.\"",
+        '"Have you seen Harurin? He hasn\'t stopped by for his drink in days — I worry when he pushes himself that hard."',
         "\"Aw, c'mon Ed, again? Why does he always leave his socks on the floor... It's actually exhausting picking up after him all the time.\"",
         '"Careful — okay, you already knew. You\'re getting good at this."',
         '"You don\'t flinch anymore. That means a lot, actually."',
@@ -4380,7 +4388,7 @@ export const DIALOGUE = {
       warm: [
         "\"You're back! You know you make everything feel less dark when you're around? It's actually kind of amazing.\"",
         '"Tell me about your day. All of it. I\'ve got nowhere better to be."',
-        '"Come by the bar — I\'ll mix you something. I do a mean herbal elixir. Non-lethal, mostly."',
+        '"Come by the bar after — I\'ll mix you something and you can just unwind. No pressure, no plans. Just us."',
         "\"Hands to myself, promise. Doesn't mean I'm not thrilled you're here.\"",
         '"Hey, hey hey! We finally get to spend some time together — it\'s illegal to take your eyes off me!"',
       ],
