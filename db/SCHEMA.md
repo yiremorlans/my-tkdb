@@ -82,6 +82,23 @@ Historical snapshots of user and character activity for trend analysis.
 - Yearly summaries
 - Usage patterns over time
 
+### `command_usage_log`
+Append-only analytics log — one row per command invocation. Written by
+`trackCommandUsage()` in `db/supabase.js`; never read by the cooldown or
+monthly-counter logic. RLS blocks direct `SELECT` (service role only).
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `id` | BIGSERIAL | Primary key |
+| `discord_user_id` | TEXT | Discord user identifier |
+| `command_name` | TEXT | Command invoked (`roam`, `meet`, `affinity`, `house`, …) |
+| `used_at` | TIMESTAMP | When the command was invoked (roam/meet: when the encounter completed) |
+| `created_at` | TIMESTAMP | Record creation time |
+
+**Retention:** a `pg_cron` job (`prune-command-usage-log`, migration
+`009_prune_command_usage_log.sql`) deletes rows older than 90 days at 03:15 UTC
+daily. Run it manually with `SELECT public.prune_command_usage_log();`.
+
 ### `command_limits`
 Per-command cooldown state. One row per user per rate-limited command (`roam`, `meet`), holding the timestamp of that user's last **completed** encounter for it. Read by `checkCommandLimit()` to enforce the rolling 3-hour cooldown in `commandLimits.js`. Deliberately separate from `command_usage_log` (analytics, append-only, prunable) so rate-limiting never depends on that log surviving.
 

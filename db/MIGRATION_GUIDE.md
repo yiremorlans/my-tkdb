@@ -69,6 +69,31 @@ Go to your Supabase Dashboard:
 - Copy and execute
 - Wait for success ✓
 
+### Migration 7: Command Usage Log Table
+- File: `db/migrations/007_create_command_usage_log.sql`
+- Append-only analytics log — one row per command invocation
+  (`discord_user_id`, `command_name`, `used_at`)
+- Copy and execute
+- Wait for success ✓
+
+### Migration 8: Command Limits Table (Cooldowns)
+- File: `db/migrations/008_create_command_limits.sql`
+- One row per user per rate-limited command, holding the timestamp of that
+  user's last completed encounter. Read by `checkCommandLimit()` to enforce the
+  rolling 3-hour cooldown. Separate from `command_usage_log` so rate-limiting
+  never depends on that log surviving
+- Copy and execute
+- Wait for success ✓
+
+### Migration 9: Command Usage Log Prune Job
+- File: `db/migrations/009_prune_command_usage_log.sql`
+- Enables `pg_cron` and schedules `prune_command_usage_log()` for 03:15 UTC
+  daily, deleting `command_usage_log` rows older than 90 days so the log stays
+  bounded. Does not touch cooldowns or the monthly counters
+- Run it by hand any time with `SELECT public.prune_command_usage_log();`
+- Copy and execute
+- Wait for success ✓
+
 ## Step 3: Verify Migrations
 
 In the Supabase Dashboard, click **Table Editor** and verify:
