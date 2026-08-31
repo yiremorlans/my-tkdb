@@ -26,9 +26,8 @@ Below is a basic overview of the project structure:
 │   ├── command.js
 │   ├── modal.js
 │   ├── selectMenu.js
-├── data/ -> per-user data (gitignored)
-│   ├── relationships.json -> relationship progress
-│   └── commandLimits.json -> command usage tracking
+├── data/ -> legacy local per-user data (gitignored; superseded by Supabase)
+│   └── relationships.json -> relationship progress
 ├── db/
 │   └── schema.sql -> Postgres schema for future migration
 ├── .env.sample  -> sample .env file
@@ -36,7 +35,7 @@ Below is a basic overview of the project structure:
 ├── commands.js  -> slash command payloads + helpers
 ├── encounters.js -> builds the /roam and /meet message payloads, handles dialogue responses
 ├── storage.js   -> reads/writes data/relationships.json
-├── commandLimits.js -> tracks /roam and /meet usage (rolling 3-hour cooldown per command)
+├── commandLimits.js -> per-command rolling 3-hour cooldown for /roam and /meet (Supabase-backed, anchored to last completed encounter)
 ├── imageComposition.js -> canvas-based image rendering (bg + character + dialogue)
 ├── utils.js     -> utility functions and enums
 ├── package.json

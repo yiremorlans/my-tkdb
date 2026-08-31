@@ -509,6 +509,80 @@ export async function trackCommandUsage(userId, commandName) {
 }
 
 /**
+ * COMMAND COOLDOWNS
+ *
+ * command_limits holds one row per user per rate-limited command, with the
+ * timestamp of that user's last completed encounter for it. Kept separate from
+ * command_usage_log (analytics, append-only, prunable) so the cooldown never
+ * depends on that log surviving.
+ */
+
+/**
+ * Get a user's last-used timestamp for a rate-limited command.
+ * Returns an ISO string, or null if they've never completed one.
+ */
+export async function getCommandLimit(userId, commandName) {
+  const { data, error } = await supabase
+    .from('command_limits')
+    .select('last_used_at')
+    .eq('discord_user_id', userId)
+    .eq('command_name', commandName)
+    .single();
+
+  if (error && error.code !== 'PGRST116') { // PGRST116 = no rows found
+    console.error('Error fetching command limit:', error);
+    throw error;
+  }
+
+  return data?.last_used_at || null;
+}
+
+/**
+ * Stamp a user's cooldown for a command as "used now". Called once a flow
+ * actually completes (the dialogue-response step), not when the command is
+ * invoked.
+ */
+export async function recordCommandUse(userId, commandName, at = new Date()) {
+  const { error } = await supabase
+    .from('command_limits')
+    .upsert(
+      {
+        discord_user_id: userId,
+        command_name: commandName,
+        last_used_at: at.toISOString(),
+      },
+      { onConflict: 'discord_user_id,command_name' }
+    );
+
+  if (error) {
+    console.error('Error recording command use:', error);
+    throw error;
+  }
+}
+
+/**
+ * Clear a user's cooldown. Omit commandName to clear every command for the user.
+ * Intended for testing. Returns the number of rows removed.
+ */
+export async function clearCommandLimit(userId, commandName = null) {
+  let query = supabase
+    .from('command_limits')
+    .delete()
+    .eq('discord_user_id', userId);
+
+  if (commandName) query = query.eq('command_name', commandName);
+
+  const { data, error } = await query.select();
+
+  if (error) {
+    console.error('Error clearing command limit:', error);
+    throw error;
+  }
+
+  return data?.length || 0;
+}
+
+/**
  * Get command usage statistics for a time period (anonymized)
  */
 export async function getCommandUsageStats(days = 30) {

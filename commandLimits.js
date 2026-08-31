@@ -1,43 +1,26 @@
-import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const DATA_DIR = join(__dirname, 'data');
-const DATA_FILE = join(DATA_DIR, 'commandLimits.json');
+import {
+  getCommandLimit,
+  recordCommandUse,
+  clearCommandLimit,
+} from './db/supabase.js';
 
 // Each command (roam/meet) can be used once every 3 hours, tracked per user.
-// This is a rolling cooldown against the bot server's clock, so it doesn't
-// depend on the invoking user's timezone (which Discord doesn't give us).
+// The cooldown is anchored to the user's last *completed* encounter for that
+// command (recorded via recordCommandUse at the dialogue-response step), not to
+// when the command was invoked — opening a prompt and walking away costs
+// nothing. State lives in Supabase (command_limits), so it survives deploys and
+// restarts.
 const COOLDOWN_MS = 3 * 60 * 60 * 1000;
 
-function readStore() {
-  if (!existsSync(DATA_FILE)) return {};
-  try {
-    return JSON.parse(readFileSync(DATA_FILE, 'utf-8'));
-  } catch {
-    return {};
-  }
+// Mark a completed encounter. `command` is 'roam' or 'meet'. Fire-and-forget at
+// the call site; failures are logged, not thrown.
+export function recordCommandUsage(userId, command, now = new Date()) {
+  return recordCommandUse(userId, command, now);
 }
 
-function writeStore(store) {
-  if (!existsSync(DATA_DIR)) mkdirSync(DATA_DIR, { recursive: true });
-  writeFileSync(DATA_FILE, JSON.stringify(store, null, 2));
-}
-
-// Reset command limits for a user (for testing).
+// Reset a user's cooldown (for testing). Omit `command` to clear both.
 export function resetCommandLimit(userId, command = null) {
-  const store = readStore();
-  if (!store[userId]) return false;
-
-  if (command) {
-    store[userId][command] = { lastUsed: null };
-  } else {
-    store[userId] = {};
-  }
-
-  writeStore(store);
-  return true;
+  return clearCommandLimit(userId, command);
 }
 
 // Turn a millisecond span into a short "2h 15m" / "45m" string.
@@ -50,20 +33,24 @@ function formatDuration(ms) {
   return `${minutes}m`;
 }
 
-// Check if the user can use a command right now. Returns { allowed, reason }.
-export function checkCommandLimit(userId, command, now = new Date()) {
-  const store = readStore();
-  if (!store[userId]) store[userId] = {};
-  if (!store[userId][command]) store[userId][command] = { lastUsed: null };
+// Check if the user can use a command right now. Read-only — the cooldown is
+// stamped later by recordCommandUsage once the encounter completes. Returns
+// { allowed, reason }. On a Supabase error, fails open (allows the command)
+// rather than locking everyone out.
+export async function checkCommandLimit(userId, command, now = new Date()) {
+  let lastUsedRaw;
+  try {
+    lastUsedRaw = await getCommandLimit(userId, command);
+  } catch (err) {
+    console.error('checkCommandLimit: failing open after lookup error:', err);
+    return { allowed: true };
+  }
 
-  const lastUsedRaw = store[userId][command].lastUsed;
   const lastUsed = lastUsedRaw ? new Date(lastUsedRaw).getTime() : null;
   const elapsed = lastUsed === null ? Infinity : now.getTime() - lastUsed;
 
   // Never used, or the 3-hour cooldown has fully elapsed.
   if (elapsed >= COOLDOWN_MS) {
-    store[userId][command].lastUsed = now.toISOString();
-    writeStore(store);
     return { allowed: true };
   }
 

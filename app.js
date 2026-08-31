@@ -14,7 +14,7 @@ import {
   buildRoamDialogueMessage,
   buildRoamSpawnMessage,
 } from './encounters.js';
-import { checkCommandLimit } from './commandLimits.js';
+import { checkCommandLimit, recordCommandUsage } from './commandLimits.js';
 import {
   trackUserActivity,
   trackCharacterEngagement,
@@ -113,7 +113,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     const { name } = data;
 
     if (name === 'roam') {
-      const limit = checkCommandLimit(userId, 'roam');
+      const limit = await checkCommandLimit(userId, 'roam');
       if (!limit.allowed) {
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
@@ -134,7 +134,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     }
 
     if (name === 'meet') {
-      const limit = checkCommandLimit(userId, 'meet');
+      const limit = await checkCommandLimit(userId, 'meet');
       if (!limit.allowed) {
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
@@ -357,8 +357,10 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           });
 
           // The flow completed — record it once, against the command that
-          // started it ('meet' or 'roam'), not as a separate 'respond'.
+          // started it ('meet' or 'roam'), not as a separate 'respond'. This is
+          // also where the rolling cooldown clock starts (recordCommandUsage).
           const commandName = origin === 'roam' ? 'roam' : 'meet';
+          recordCommandUsage(userId, commandName).catch(err => console.error('Error recording command cooldown:', err));
           trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
           trackCommandUsage(userId, commandName).catch(err => console.error('Error tracking command usage:', err));
           trackCharacterEngagement(userId, characterId).catch(err => console.error('Error tracking character engagement:', err));

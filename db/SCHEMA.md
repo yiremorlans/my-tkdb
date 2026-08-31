@@ -82,6 +82,21 @@ Historical snapshots of user and character activity for trend analysis.
 - Yearly summaries
 - Usage patterns over time
 
+### `command_limits`
+Per-command cooldown state. One row per user per rate-limited command (`roam`, `meet`), holding the timestamp of that user's last **completed** encounter for it. Read by `checkCommandLimit()` to enforce the rolling 3-hour cooldown in `commandLimits.js`. Deliberately separate from `command_usage_log` (analytics, append-only, prunable) so rate-limiting never depends on that log surviving.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `discord_user_id` | TEXT | Discord user identifier |
+| `command_name` | TEXT | `roam` or `meet` |
+| `last_used_at` | TIMESTAMP | When the user last completed this command's encounter |
+| `created_at` | TIMESTAMP | Record creation time |
+| `PRIMARY KEY (discord_user_id, command_name)` | - | One record per user-command pair |
+
+**Use cases:**
+- Enforce the rolling 3-hour cooldown per command, per user
+- Survives deploys/restarts (previously a gitignored local JSON file)
+
 ## Helper Functions
 
 ### Activity Tracking
@@ -91,6 +106,18 @@ await trackUserActivity(userId);
 
 // Track which character the user interacted with
 await trackCharacterEngagement(userId, characterId);
+```
+
+### Command Cooldowns
+```javascript
+// Read a user's last-used timestamp for a command (ISO string or null)
+await getCommandLimit(userId, commandName);
+
+// Stamp "used now" — called once an encounter actually completes
+await recordCommandUse(userId, commandName);
+
+// Clear a user's cooldown (testing); omit commandName to clear all
+await clearCommandLimit(userId, commandName);
 ```
 
 ### Analytics Queries
