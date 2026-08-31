@@ -42,7 +42,7 @@ export const SPECIAL_BACKGROUNDS = {
 export const GENERAL_LOCATIONS = {
   DARKWICK: 'Darkwick',
   ULTIO: 'Ultio',
-  GALAXY: 'Galaxy',
+  GALAXY: 'Galaxy Express',
   CLEMENTIA: 'Clementia',
 };
 
@@ -283,7 +283,7 @@ export function getRandomBackgroundForLocation(locationKey, now = new Date()) {
   return available[Math.floor(Math.random() * available.length)];
 }
 
-// Picks a random general-location background (any of Darkwick/Ultio/Galaxy/Clementia).
+// Picks a random general-location background (any of Darkwick/Ultio/Galaxy Express/Clementia).
 export function getRandomGeneralBackground(now = new Date()) {
   const keys = Object.values(GENERAL_LOCATIONS);
   const pool = [];
