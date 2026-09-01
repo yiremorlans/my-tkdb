@@ -81,8 +81,12 @@ export function getRelationshipLevel(affinity) {
   return current;
 }
 
-// How many segments the /affinity progress bar is drawn with.
+// How many segments the plain-text /affinity progress bar is drawn with.
 export const PROGRESS_BAR_SEGMENTS = 10;
+
+// The ANSI bar sits in a code block, which renders much wider than a normal
+// line — a short bar leaves a big empty gap, so it gets its own wider count.
+export const ANSI_BAR_SEGMENTS = 20;
 
 // Progress from the current relationship level toward the next one, as a 0..1
 // ratio — enough to draw a bar without ever exposing raw affinity points.
@@ -109,16 +113,21 @@ export function renderProgressBar(ratio, segments = PROGRESS_BAR_SEGMENTS) {
   return '█'.repeat(filled) + '░'.repeat(segments - filled);
 }
 
-// The same bar wrapped in a Discord ```ansi code block so the filled segments
-// carry the level's color; the empty segments stay gray. `ansiColor` is one of
-// ANSI_COLORS. Returns the full fenced block, ready to drop into a description.
-export function renderAnsiProgressBar(ratio, ansiColor, segments = PROGRESS_BAR_SEGMENTS) {
+// The bar wrapped in a Discord ```ansi code block so the filled segments carry
+// the level's color. Both halves are solid █ blocks — the track is a gray █,
+// not a sparse ░ that all but vanishes on the code block's dark background — so
+// the bar always reads as one full-width strip: colored fill, gray remainder.
+// `ansiColor` is one of ANSI_COLORS. Returns the full fenced block.
+export function renderAnsiProgressBar(ratio, ansiColor, segments = ANSI_BAR_SEGMENTS) {
   const clamped = Math.max(0, Math.min(1, Number.isFinite(ratio) ? ratio : 0));
   const filled = Math.floor(clamped * segments);
   const color = Number.isFinite(ansiColor) ? ansiColor : ANSI_COLORS.white;
-  const fill = `[1;${color}m${'█'.repeat(filled)}[0m`;
-  const rest = `[1;${ANSI_COLORS.gray}m${'░'.repeat(segments - filled)}[0m`;
-  return `\`\`\`ansi\n${fill}${rest}\n\`\`\``;
+  const esc = String.fromCharCode(27); // raw ESC byte — Discord needs it literal
+  const paint = (code, chars) => (chars ? `${esc}[1;${code}m${chars}${esc}[0m` : '');
+  const bar =
+    paint(color, '█'.repeat(filled)) +
+    paint(ANSI_COLORS.gray, '█'.repeat(segments - filled));
+  return `\`\`\`ansi\n${bar}\n\`\`\``;
 }
 
 // Groups relationship levels into dialogue tiers — see CHARACTERS'

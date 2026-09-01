@@ -9,6 +9,7 @@ import {
   renderAnsiProgressBar,
   RELATIONSHIP_LEVELS,
   PROGRESS_BAR_SEGMENTS,
+  ANSI_BAR_SEGMENTS,
   ANSI_COLORS,
 } from '../constants/game.js';
 
@@ -100,18 +101,34 @@ test('every relationship level carries an embed color and an ANSI bar color', ()
   assert.strictEqual(getRelationshipLevel(0).ansi, ANSI_COLORS.white);
 });
 
-test('renderAnsiProgressBar wraps the bar in an ansi code block with the given color', () => {
+test('renderAnsiProgressBar wraps a solid full-width bar in an ansi code block', () => {
   const esc = String.fromCharCode(27);
+  const half = ANSI_BAR_SEGMENTS / 2;
   const out = renderAnsiProgressBar(0.5, ANSI_COLORS.pink);
   assert.ok(out.startsWith('```ansi\n'), 'is a fenced ansi block');
   assert.ok(out.endsWith('\n```'));
-  // 5 filled segments painted pink (35), 5 empty painted gray (30).
-  assert.ok(out.includes(`${esc}[1;35m${'█'.repeat(5)}${esc}[0m`));
-  assert.ok(out.includes(`${esc}[1;30m${'░'.repeat(5)}${esc}[0m`));
+  // Half the segments painted pink (35), the rest a solid gray █ track (30) —
+  // no sparse ░, so the strip always spans its full width.
+  assert.ok(out.includes(`${esc}[1;35m${'█'.repeat(half)}${esc}[0m`));
+  assert.ok(out.includes(`${esc}[1;30m${'█'.repeat(half)}${esc}[0m`));
+  assert.ok(!out.includes('░'), 'no sparse light-shade characters');
 });
 
-test('renderAnsiProgressBar falls back to white for a missing color and still fills correctly', () => {
+test('renderAnsiProgressBar fills the whole strip at ratio 1 with no gray track', () => {
+  const esc = String.fromCharCode(27);
+  const out = renderAnsiProgressBar(1, ANSI_COLORS.red);
+  assert.ok(out.includes(`${esc}[1;31m${'█'.repeat(ANSI_BAR_SEGMENTS)}${esc}[0m`));
+  assert.ok(!out.includes(`[1;30m`), 'no empty track when full');
+});
+
+test('renderAnsiProgressBar shows a full gray track at ratio 0', () => {
+  const esc = String.fromCharCode(27);
+  const out = renderAnsiProgressBar(0, ANSI_COLORS.pink);
+  assert.ok(out.includes(`${esc}[1;30m${'█'.repeat(ANSI_BAR_SEGMENTS)}${esc}[0m`));
+});
+
+test('renderAnsiProgressBar falls back to white for a missing color', () => {
   const esc = String.fromCharCode(27);
   const out = renderAnsiProgressBar(1, undefined);
-  assert.ok(out.includes(`${esc}[1;37m${'█'.repeat(PROGRESS_BAR_SEGMENTS)}${esc}[0m`));
+  assert.ok(out.includes(`${esc}[1;37m${'█'.repeat(ANSI_BAR_SEGMENTS)}${esc}[0m`));
 });
