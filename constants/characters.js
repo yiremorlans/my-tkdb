@@ -71,6 +71,7 @@ export const CHARACTERS = [
   },
   {
     id: "lucas",
+    aliases: ["luca"],
     firstName: "Lucas",
     lastName: "Errant",
     house: HOUSES.FROSTHEIM,
@@ -434,6 +435,7 @@ export const CHARACTERS = [
   // Obscuary
   {
     id: "edward",
+    aliases: ["ed"],
     firstName: "Edward",
     lastName: "Hart",
     house: HOUSES.OBSCUARY,

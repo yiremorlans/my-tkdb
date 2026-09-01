@@ -8,9 +8,10 @@ channel — **one per Discord server** — on a random cadence. The character is
 shown as a **black silhouette** over a real background. The first user to `/call`
 the correct name within a short window "reaches" them: the post is edited to
 reveal the un-overlaid image and a relationship-tiered flavor line, and the
-winner gets +1 affinity with that character. If no one gets it in time, the
-silhouette stays and the post edits to a non-committal "moment has passed"
-line — the identity is never revealed.
+winner gets a **pending boost** toward their next `/roam` / `/meet` with that
+character (plus a milestone) — a win never moves affinity directly; see §16. If
+no one gets it in time, the silhouette stays and the post edits to a
+non-committal "moment has passed" line — the identity is never revealed.
 
 **Multi-server:** the bot runs in a small number of guilds (< 5). Each guild has
 its **own independent schedule, its own in-flight encounter, and its own
@@ -31,7 +32,7 @@ No new infrastructure or dependencies. Everything builds on what exists:
 | Need | Already in place |
 |---|---|
 | Host a recurring scheduler | Long-lived Express process (`app.js`), single Railway instance |
-| Black-silhouette rendering | `canvas` — ~4 lines added to `imageComposition.js` |
+| Black-silhouette rendering | `canvas` — extract a shared base helper in `imageComposition.js`, add a `composeSilhouetteEncounter` entry point (~4 lines of silhouette fill); `composeEncounter` untouched |
 | Per-guild state + first-correct-answer arbitration | Supabase, service role, atomic conditional `UPDATE` |
 | Post to a channel + edit that post later | Bot token already configured; standard Discord REST |
 | Relationship tiers | `getRelationshipLevel` / `getDialogueTier` in `constants/game.js` |
@@ -66,7 +67,7 @@ scheduler tick (every ~25s, iterates every enabled guild independently)
             (silhouette image stays, identity never shown)
 
     SPAWN: if G has no active encounter AND now() >= G.next_encounter_at:
-      ├─ pick background  (Darkwick | Galaxy pools, PM-gated by server clock)
+      ├─ pick background  (Darkwick | Galaxy Express pools, _PM-gated by the fixed America/Chicago evening cutoff)
       ├─ pick character   (uniform random over all CHARACTERS)
       ├─ pick variant     (uniform | casual, 50/50; fall back to uniform if no casual art)
       ├─ pick teaser line
@@ -211,29 +212,52 @@ entirely per-guild via this command.
 
 ## 5. Image: black-overlay silhouette
 
-`imageComposition.js` — add an options arg to `composeEncounter`:
+`imageComposition.js` today has a single
+`composeEncounter(bgFilename, charFilename, dialogue = null)`. Rather than add a
+`silhouette` branch inside it — the function `/roam` and `/meet` depend on —
+extract its shared prefix into an internal helper and give this feature its own
+entry point:
 
 ```js
-export async function composeEncounter(bgFilename, charFilename, dialogue = null, opts = {}) {
-  // ... load bg + char, create canvas, drawImage(bg), compute charX/charY, drawImage(char) ...
+// internal, not exported. Loads bg + char, sizes the canvas to the bg, draws
+// the background, computes charX/charY, draws the character. Everything
+// composeEncounter does today up to the dialogue box, moved verbatim.
+async function drawEncounterBase(bgFilename, charFilename) {
+  // ... existing load + createCanvas(bg.w, bg.h) + drawImage(bg)
+  //     + charX/charY + drawImage(char) ...
+  return { canvas, ctx, charImg, charX, charY };
+}
 
-  if (opts.silhouette) {
+// Unchanged public API and output — /roam and /meet keep calling this as-is.
+export async function composeEncounter(bgFilename, charFilename, dialogue = null) {
+  const { canvas, ctx } = await drawEncounterBase(bgFilename, charFilename);
+  if (dialogue) {
+    // ... existing dialogue-box block, verbatim ...
+  }
+  return canvas.toBuffer('image/png');
+}
+
+// New — public encounters only. No dialogue box, ever.
+export async function composeSilhouetteEncounter(bgFilename, charFilename, { reveal = false } = {}) {
+  const { canvas, ctx, charImg, charX, charY } = await drawEncounterBase(bgFilename, charFilename);
+  if (!reveal) {
     ctx.globalCompositeOperation = 'source-atop';
     ctx.fillStyle = '#000';
     ctx.fillRect(charX, charY, charImg.width, charImg.height);
     ctx.globalCompositeOperation = 'source-over';
   }
-
-  // silhouette mode passes dialogue = null, so the existing dialogue-box block is skipped
-  // ...
+  return canvas.toBuffer('image/png');
 }
 ```
 
+- The `/roam` / `/meet` path is byte-for-byte unchanged: `composeEncounter` keeps
+  its exact signature and output. Only the shared setup moves, and both functions
+  call the same helper, so character positioning can never drift between them.
 - `source-atop` paints black only where the character's alpha already is → a
   clean cutout silhouette over the untouched background. The character PNGs are
   alpha cutouts, so this works directly.
-- **Silhouette post:** `composeEncounter(bg, charFile, null, { silhouette: true })`.
-- **Reveal post:** `composeEncounter(bg, charFile, null, { silhouette: false })` —
+- **Silhouette post:** `composeSilhouetteEncounter(bg, charFile)`.
+- **Reveal post:** `composeSilhouetteEncounter(bg, charFile, { reveal: true })` —
   same background, same character, same variant, no overlay, no dialogue box.
 - Dialogue is **never** baked into the image for this feature. The teaser and
   all flavor text live in the Discord message body.
@@ -251,15 +275,29 @@ Identical for every guild; each call is independent.
 
 ### Background
 
-Pool = `getAvailableBackgrounds('Darkwick', now)` concatenated with
-`getAvailableBackgrounds('Galaxy', now)` (the `GENERAL_LOCATIONS.DARKWICK` and
-`GENERAL_LOCATIONS.GALAXY` keys), pick one uniformly. `_PM` time-gating is
-already handled inside `getAvailableBackgrounds` against the server clock —
-consistent with `/roam`.
+Pool = `weightedBackgrounds(GENERAL_LOCATIONS.DARKWICK, now)` concatenated with
+`weightedBackgrounds(GENERAL_LOCATIONS.GALAXY, now)`, then pick one entry
+uniformly. Note `GENERAL_LOCATIONS.GALAXY` is the string `'Galaxy Express'`
+(`'Galaxy'` is not a valid key and returns `[]`); `GENERAL_LOCATIONS.DARKWICK` is
+`'Darkwick'`.
+
+`weightedBackgrounds` (not the bare `getAvailableBackgrounds`) is what `/roam`
+and `/meet` use, so this matches their behaviour exactly:
+
+- `_PM` files are excluded during the day and included in the evening, judged
+  against the fixed `America/Chicago` cutoff (`EVENING_HOUR` / `EVENING_TIMEZONE`
+  in `constants/backgrounds.js`);
+- in the evening each `_PM` file is repeated `EVENING_PM_WEIGHT` (= 3) times in
+  the list, so a uniform pick over the concatenated pool is 3× more likely to
+  land on an evening background — the bias `getAvailableBackgrounds` alone does
+  not apply.
+
+`GENERAL_LOCATIONS` also has `ULTIO` and `CLEMENTIA`; both are intentionally left
+out of the encounter pool.
 
 ### Character
 
-Uniform random over all `CHARACTERS` (all 30, Benkei included).
+Uniform random over all `CHARACTERS` (all 26, Benkei included).
 
 ### Variant
 
@@ -385,7 +423,7 @@ Order of checks:
          name: getFullName(character),
          house: character.house || 'Darkwick',
        });
-       const revealImg = await composeEncounter(bg, charFile, null, { silhouette: false });
+       const revealImg = await composeSilhouetteEncounter(bg, charFile, { reveal: true });
        await editChannelMessage(guild.encounter_channel_id, encounter.message_id, {
          content: line,
          files: [{ attachment: revealImg, name: 'reveal.png' }],
@@ -406,10 +444,12 @@ norm = input.trim().toLowerCase().replace(/\s+/g, ' ');
 Candidate strings per character:
 
 - full name — `getFullName(c)` (`${firstName} ${lastName}`)
-- `firstName` (all 30 first names are unique — first name alone is accepted)
+- `firstName` (all 26 first names are unique — first name alone is accepted)
 - `lastName` and the last word of `lastName` (covers "Romeo Scorpius Lucci" → "lucci")
-- optional `aliases` map: `sho`→shohei, `ed`/`eddie`→edward, `luca`→lucas,
-  `harurin`→haru, etc.
+- the character's own `aliases` array (already a per-character field consumed by
+  `getCharacterById`; today only `shohei: ['sho']`). Extend it in
+  `constants/characters.js` with `lucas: ['luca']` and `edward: ['ed']` — those
+  two only.
 
 Rules:
 
@@ -559,9 +599,10 @@ export const WINNER_LINES = {
 
 ## 10. Data model
 
-New migration `db/migrations/009_create_public_encounters.sql`. Follow the
-migration 008 style: `IF NOT EXISTS`, `TIMESTAMP WITH TIME ZONE`, enable RLS with
-a "block direct access" `SELECT` policy (service role bypasses).
+New migration `db/migrations/010_create_public_encounters.sql` (`009_` is already
+taken by `009_prune_command_usage_log.sql`). Follow the migration 008 style:
+`IF NOT EXISTS`, `TIMESTAMP WITH TIME ZONE`, enable RLS with a "block direct
+access" `SELECT` policy (service role bypasses).
 
 ```sql
 -- Per-guild feature config. One row per guild that has ever configured the
@@ -645,7 +686,7 @@ The winner race is decided entirely by `claimPublicEncounter` — a single atomi
 
 ### Reward-model storage
 
-Migration 009 also adds `relationships.pending_encounter_boost` and the
+Migration 010 also adds `relationships.pending_encounter_boost` and the
 `encounter_milestones` table, plus `grantEncounterBoost` /
 `consumeEncounterBoost` / `recordEncounterMilestone` /
 `getEncounterMilestoneCounts` in `db/supabase.js`. Full definitions and the
@@ -718,7 +759,7 @@ post silently (no role ping) in this version.
 | Same user wins in two different guilds | Two separate encounters → boost caps at `ENCOUNTER_BOOST_CAP`; each still records a milestone; intended |
 | Win, then never runs `/roam` / `/meet` | Boost sits unspent (no v1 expiry); the milestone log still grows; no affinity is ever granted |
 | Multiple app instances | Out of scope — would double-fire the tick for every guild; needs a Postgres advisory lock around the tick |
-| `_PM` backgrounds / timezone | Judged against the app-server clock, same as `/roam` |
+| `_PM` backgrounds / timezone | Judged against the fixed `America/Chicago` evening cutoff (`EVENING_HOUR` / `EVENING_TIMEZONE` in `constants/backgrounds.js`), same as `/roam` |
 | Attachment size | Composited PNGs are already within Discord limits (same pipeline as `/roam`) |
 
 ---
@@ -729,17 +770,20 @@ post silently (no role ping) in this version.
 
 - `constants/publicEncounters.js` — `ENCOUNTER_TEASERS`, `MISSED_LINES`,
   `WRONG_GUESS_LINES`, `WINNER_LINES`, `pickWinnerLine`, `matchCharacterGuess`,
-  alias map, `guessCooldown` Map + helpers, generation helper,
+  `guessCooldown` Map + helpers, generation helper,
   `ENCOUNTER_MILESTONES` + `pickMilestone` (§16.2)
 - `publicEncounters.js` — `buildEncounterPost(guild)`, `finalizeEncounter(row)`,
   `handleCall(interaction)` (mirrors the shape of `encounters.js`)
 - `encounterScheduler.js` — the per-guild tick loop
-- `db/migrations/009_create_public_encounters.sql` — encounter tables **plus**
+- `db/migrations/010_create_public_encounters.sql` — encounter tables **plus**
   `encounter_milestones` and `relationships.pending_encounter_boost` (§16.4)
 
 **Changed**
 
-- `imageComposition.js` — `opts.silhouette`
+- `imageComposition.js` — extract internal `drawEncounterBase` helper; add
+  `composeSilhouetteEncounter`; `composeEncounter` signature and output unchanged
+- `constants/characters.js` — add `aliases: ['luca']` to lucas, `aliases: ['ed']`
+  to edward (§7.1)
 - `commands.js` — register `CALL_COMMAND` and `ENCOUNTERS_COMMAND`
 - `app.js` — route `name === 'call'` and `name === 'encounters'`; start the
   scheduler after `app.listen`
@@ -930,7 +974,7 @@ Moments together
 One `getEncounterMilestoneCounts(userId, characterId)` read per character
 (`SELECT milestone_type, count(*) ... GROUP BY milestone_type`).
 
-### 16.4 Data model (migration 009 additions)
+### 16.4 Data model (migration 010 additions)
 
 ```sql
 ALTER TABLE relationships
