@@ -1,0 +1,204 @@
+export default {
+  dialogue: {
+    new: [
+      "He lights up with a radiant smile, practically bouncing with energy. \"Oh wow, look who showed up! You're a sight for sore eyes!\" Behind the brightness, there's a shadow of something darker he's desperately hiding.",
+      "He reaches out to greet you, catches himself an inch away, and turns it into a wave.",
+      "Everything on his desk is labelled, sorted, and immaculate. He is not.",
+      '"Careful — not too close! Sorry. Sorry, that came out weird. Hi!"',
+      'He\'s got Edward slung over one shoulder. "Oof, Ed popped out of nowhere so I accidentally touched him and he died again. Gotta carry him all the way back to the dorm..."',
+    ],
+    known: [
+      'He\'s stopped saying "not too close." He just leaves the distance where it is.',
+      "He beams. \"Oh hey, it's Honor roll! Can't believe I ran into you here, so random! Guess we've gotta go on a date now, huh?\"",
+      '"You look kind of tired, Honor roll. Come by the bar later — I\'ll pour you something slow and you can just stop being anywhere else for a while."',
+      "He asks how you are and then actually waits, which not everyone does.",
+      "He wipes down the same spot on the bar twice. \"Harurin hasn't been in. He's been flat-out with the animals again — I keep a stool open for him, just in case.\"",
+      "The brightness dims for half a second, and he covers it faster than before.",
+    ],
+    warm: [
+      "His grin is warm and genuine when he sees you, though you catch the moment his cheerfulness falters—like you're the only thing holding back the darkness.",
+      "He talks with his whole body, gestures a foot from your shoulder and never landing.",
+      "He's halfway through pruning something that keeps leaning toward him. \"New elixir. Try it later — it's mostly safe.\"",
+      'The Obscuary bar, lights down, your drink already waiting. He leans on his elbows across from you, close as the curse lets him get. "This is the best part of my night. Don\'t tell the others."',
+      '"Look at you! Okay, tell me everything, and don\'t leave the boring parts out."',
+      "He hovers close, hands carefully at his sides, and doesn't leave.",
+    ],
+    spark: [
+      "His hand hovers a half-inch from your cheek. Neither of you moves for a while.",
+      '"This is the closest I get," he says quietly. "I\'ve gotten very good at it."',
+      "He traces the shape of your hand in the air above it, and it's worse than touching.",
+      "The brightness is gone. What's underneath wants you badly and can't say so.",
+      "He leans in until you can feel him breathing, and stops exactly there.",
+    ],
+    close: [
+      '"You make me feel alive," he says softly, hands hovering near you but never quite touching. "Like the curse doesn\'t matter when you\'re near."',
+      "He holds his hand up, palm out, and waits for you to hold yours an inch from it.",
+      "The brightness goes quiet. What's underneath is tired, and grateful, and honest.",
+      '"One day," he says, not finishing the sentence. He doesn\'t need to.',
+      "He walks you to the door and stands in it long after you've gone.",
+    ],
+    bound: [
+      "Gloves. Layers. A scarf between his palm and your cheek. He's worked out every way there is.",
+      '"I can\'t touch you," he says, "so I\'ve gotten very inventive. Bear with me."',
+      "He kisses you through the fabric of his sleeve and it wrecks you both entirely.",
+      "He lies beside you all night with a hand's width of air between, and neither of you sleeps.",
+      "He loves you louder than anyone ever has, because it's the one thing the curse can't stop.",
+    ],
+  },
+  temperamentDialogue: {
+    new: [
+      '"Oh! Lucky me — you wandered in! Come closer... but not too close, yeah? Just let me look at you."',
+      "\"Hi! Hi. Don't shake my hand — long story — but it's great to meet you!\"",
+      '"You need directions? Paperwork? A friend? I do all three!"',
+      '"Whoa, careful — okay, good, you stopped. Phew. Hi!"',
+      "\"New face! I keep a list. You're on it now. It's a nice list.\"",
+    ],
+    known: [
+      "\"You're back! Okay, that's officially a pattern. I love a pattern.\"",
+      "\"How've you been? No — the real answer. I've got time.\"",
+      '"Have you seen Harurin? He hasn\'t stopped by for his drink in days — I worry when he pushes himself that hard."',
+      "\"Aw, c'mon Ed, again? Why does he always leave his socks on the floor... It's actually exhausting picking up after him all the time.\"",
+      '"Careful — okay, you already knew. You\'re getting good at this."',
+      '"You don\'t flinch anymore. That means a lot, actually."',
+    ],
+    warm: [
+      "\"You're back! You know you make everything feel less dark when you're around? It's actually kind of amazing.\"",
+      '"Tell me about your day. All of it. I\'ve got nowhere better to be."',
+      '"Come by the bar after — I\'ll mix you something and you can just unwind. No pressure, no plans. Just us."',
+      "\"Hands to myself, promise. Doesn't mean I'm not thrilled you're here.\"",
+      '"Hey, hey hey! We finally get to spend some time together — it\'s illegal to take your eyes off me!"',
+    ],
+    spark: [
+      "\"Hold your hand up. Right there. Don't close it. ...God, that's almost enough.\"",
+      "\"I'd give up a lot to touch you. Don't tell me what — I've already done the math.\"",
+      '"Closer. Closer. Okay — stop. Stop there. Perfect."',
+      "\"Honor roll... were you just checking me out? Hey, it's all good, don't be embarrassed!\"",
+      "\"You're an inch away and it's the loudest thing in the room.\"",
+    ],
+    close: [
+      '"Even with this curse, I\'d bear it a thousand times if it meant seeing you smile."',
+      '"Hold your hand up. Right there. Close enough counts, right?"',
+      "\"I'm okay. Really. I'm better than okay when it's you.\"",
+      "\"Don't feel sorry for me. Just — keep coming back. That's the whole ask.\"",
+      "\"One day I'll be able to hold your hand properly. I'm counting on it.\"",
+    ],
+    bound: [
+      '"Hold still. Gloves are on. I\'ve been thinking about this all week."',
+      "\"I love you. That one doesn't need hands. That one's free.\"",
+      '"Lie down. Right there. I\'ll stay on this side of the air."',
+      '"One day I\'ll do this properly. Until then — humor me. Please."',
+      '"I\'ve never wanted anything the way I want to hold you. Never."',
+    ],
+  },
+  approach: {
+    new: [
+      "Wave back",
+      "Stop just short",
+      "Say hi",
+      "Keep a careful distance",
+    ],
+    known: [
+      "Give him the real answer",
+      "Keep the careful distance",
+      "Make it a pattern",
+      "Ask about the note",
+    ],
+    warm: [
+      "Take the good seat",
+      "Tell him about your day",
+      "Stand as close as you can",
+      "Match his brightness",
+    ],
+    spark: [
+      "Hold your hand up",
+      "Stop exactly there",
+      "Don't close the inch",
+      "Lean in anyway",
+    ],
+    close: [
+      "Hold your hand up to his",
+      "Go to him",
+      "Stay a little longer",
+      "Close every inch you can",
+    ],
+    bound: ["Hold still", "Lie down beside him", "Humor him", "Say it back"],
+  },
+  responses: {
+    kind: {
+      new: [
+        "Be sincere with him",
+        "Thank him for the warning",
+        "Tell him it's good to see him",
+      ],
+      spark: [
+        "Hold your palm to his",
+        "Tell him the inch is enough",
+        "Say you think about it too",
+      ],
+      close: [
+        "Let him know you need him",
+        "Say distance doesn't matter",
+        "Tell him you'll come back",
+      ],
+      bound: [
+        "Say it back louder",
+        "Hold still for the gloves",
+        "Tell him this is enough",
+      ],
+    },
+    playful: {
+      new: ["Share your happiness", "Ask to be on the list", "Out-cheer him"],
+      spark: ["Trace him back", "Close half the inch", "Make him ask for it"],
+      close: [
+        "Let him see your joy",
+        "Play the almost-touching game",
+        "Make him laugh for real",
+      ],
+      bound: ["Get inventive back", "Steal a glove", "Close half the air"],
+    },
+    bold: {
+      new: [
+        "Be honest about wanting him",
+        "Step closer than allowed",
+        "Ask about the curse",
+      ],
+      spark: [
+        "Lean in anyway",
+        "Tell him to do the math again",
+        "Say the inch isn't enough",
+      ],
+      close: [
+        "Need him without apology",
+        "Hold your palm to his",
+        "Tell him one day is a promise",
+      ],
+      bound: [
+        "Tell him one day is a promise",
+        "Kiss through the sleeve first",
+        "Say you want it too",
+      ],
+    },
+    neutral: {
+      new: [
+        "Simply accept it",
+        "Let him talk it out",
+        "Keep the careful distance",
+      ],
+      spark: [
+        "Lower your hand",
+        "Let the distance win",
+        "Say nothing at all",
+      ],
+      close: [
+        "Let him serve in silence",
+        "Stay in the quiet with him",
+        "Let the brightness rest",
+      ],
+      bound: [
+        "Keep the hand's width",
+        "Lie still in the dark",
+        "Let the night pass",
+      ],
+    },
+  },
+};

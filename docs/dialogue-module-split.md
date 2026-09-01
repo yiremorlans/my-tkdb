@@ -1,7 +1,8 @@
 # Refactor: split `constants/dialogue.js` into per-character modules
 
-**Status:** proposed, not started. Mechanical, no behaviour change. Do it as its
-own commit/PR — never bundled with a content or logic change.
+**Status:** applied. Mechanical, no behaviour change — done as its own commit,
+`Object.keys(DIALOGUE)` order and every pool byte-identical, `npm test` green
+before and after. Kept below as the record of what was done and why.
 
 ---
 
@@ -40,9 +41,10 @@ until then.
 - **No computed keys** in `DIALOGUE` itself (all ids are plain identifiers), but
   blocks use inline comments and prose with apostrophes, so the modules must stay
   `.js`, not JSON.
-- **Contract enforcement:** `validateContent()` (run at startup from `app.js`)
-  already fails loudly on a missing/malformed character or conditional block.
-  This is what makes the split safe.
+- **Contract enforcement:** `validateContent()` (run at startup from `app.js`,
+  and asserted by `test/validate-content.test.js`) already fails loudly on a
+  missing/malformed character or conditional block. This is what makes the split
+  safe — run `npm test` before and after and expect an unchanged pass.
 
 ## 3. Target structure
 
@@ -100,6 +102,11 @@ verbatim. Optionally repoint them at `"./dialogue/index.js"` and delete the
 barrel — but the barrel costs nothing and keeps the diff to just the new
 directory.
 
+Keep the barrel regardless: `test/response-labels.test.js` does
+`mock.module('../constants/dialogue.js', …)`, and that interception only works
+while `characters.js` imports from `"./dialogue.js"`. Deleting the barrel would
+force that test (and any future one mocking the same path) to be updated too.
+
 ## 4. Migration steps
 
 1. `mkdir constants/dialogue`.
@@ -119,6 +126,8 @@ to keep it separate from feature work.
 
 ## 5. Verification (must all hold, before == after)
 
+- `npm test` passes unchanged (covers `validateContent()` and the
+  `dialogue.js`-mocking label tests).
 - `node --check` passes on every new file.
 - `node -e "import('./constants/validateContent.js').then(m => { const r = m.validateContent(); console.log(r.errors.length, r.warnings.length); })"`
   prints `0 0` (same as before the split).
