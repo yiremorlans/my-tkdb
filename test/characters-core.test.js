@@ -36,6 +36,30 @@ test('getCharacterById returns null for an unknown or empty id', () => {
   assert.strictEqual(getCharacterById(undefined), null);
 });
 
+test('every character resolves by its own id, with or without an aliases field', () => {
+  for (const c of CHARACTERS) {
+    assert.strictEqual(getCharacterById(c.id)?.id, c.id, `${c.id} should resolve by its canonical id`);
+    assert.strictEqual(getCharacterById(c.id.toUpperCase())?.id, c.id, `${c.id} should resolve case-insensitively`);
+  }
+});
+
+test('the aliases field, where present, is a normalized string array that collides with nothing', () => {
+  const ids = new Set(CHARACTERS.map((c) => c.id));
+  const claimedBy = new Map();
+  for (const c of CHARACTERS) {
+    if (!('aliases' in c)) continue; // characters without aliases are fine — nothing to check
+    assert.ok(Array.isArray(c.aliases), `${c.id}.aliases must be an array when present`);
+    for (const alias of c.aliases) {
+      assert.strictEqual(typeof alias, 'string', `alias on ${c.id} must be a string`);
+      assert.strictEqual(alias, alias.trim().toLowerCase(), `alias "${alias}" on ${c.id} must be stored lowercase and trimmed (getCharacterById only normalizes the lookup, not the catalog)`);
+      assert.ok(!ids.has(alias), `alias "${alias}" on ${c.id} shadows a real character id`);
+      assert.ok(!claimedBy.has(alias), `alias "${alias}" is claimed by both ${claimedBy.get(alias)} and ${c.id}`);
+      claimedBy.set(alias, c.id);
+      assert.strictEqual(getCharacterById(alias)?.id, c.id, `alias "${alias}" should resolve to ${c.id}`);
+    }
+  }
+});
+
 test('getAffinityForResponse always yields 0 for NEUTRAL, regardless of character', () => {
   assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.NEUTRAL), 0);
 });

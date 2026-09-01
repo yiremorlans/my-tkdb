@@ -93,12 +93,18 @@ export const LOCATION_KEYS = {
 // user's timezone, so "evening" is judged against one fixed zone for everyone.
 const EVENING_SUFFIX = "_PM";
 
-// The single definition of when "evening" begins. Both background filtering and
-// conditional dialogue (`when: { time: 'evening' }`) derive from this, off the
-// same `now`, so the scene that renders and the lines that get picked can never
-// disagree. If per-user timezones ever land, pass a user-local `now` and nothing
-// else changes.
+// The single definition of the "evening" window. It runs from EVENING_HOUR
+// (inclusive) through MORNING_HOUR (exclusive), wrapping past midnight: 18:00
+// up to 23:59, then 00:00 up to 03:59. The pre-dawn hours count as evening so
+// overnight scenes keep their _PM backgrounds instead of snapping back to
+// daytime at midnight. 04:00 through 17:59 is "day".
+//
+// Both background filtering and conditional dialogue (`when: { time: 'evening' }`)
+// derive from this, off the same `now`, so the scene that renders and the lines
+// that get picked can never disagree. If per-user timezones ever land, pass a
+// user-local `now` and nothing else changes.
 export const EVENING_HOUR = 18;
+export const MORNING_HOUR = 4;
 
 // The one fixed zone "evening" is judged against, for every user regardless
 // of their own timezone. Read explicitly via Intl below rather than relying
@@ -119,7 +125,9 @@ const eveningHourFormatter = new Intl.DateTimeFormat("en-US", {
 });
 
 export function isEveningHour(now = new Date()) {
-  return Number(eveningHourFormatter.format(now)) >= EVENING_HOUR;
+  const hour = Number(eveningHourFormatter.format(now));
+  // Wraps past midnight: evening is [EVENING_HOUR, 24) plus [0, MORNING_HOUR).
+  return hour >= EVENING_HOUR || hour < MORNING_HOUR;
 }
 
 // Coarse time-of-day label used by conditional dialogue's `when: { time }`.

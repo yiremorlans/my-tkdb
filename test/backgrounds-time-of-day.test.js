@@ -19,6 +19,7 @@ import {
   weightedBackgrounds,
   getRandomBackgroundForCharacter,
   EVENING_HOUR,
+  MORNING_HOUR,
   EVENING_PM_WEIGHT,
   HOUSES,
   GENERAL_LOCATIONS,
@@ -33,11 +34,16 @@ function atHour(hour) {
   return new Date(`2026-06-15T${String(hour).padStart(2, '0')}:00:00-05:00`);
 }
 
-test('isEveningHour is false right up to the cutoff and true from it on', () => {
+test('isEveningHour covers the evening cutoff through the pre-dawn wrap past midnight', () => {
+  // Evening starts at EVENING_HOUR and is not yet on the hour before it.
   assert.strictEqual(isEveningHour(atHour(EVENING_HOUR - 1)), false);
   assert.strictEqual(isEveningHour(atHour(EVENING_HOUR)), true);
   assert.strictEqual(isEveningHour(atHour(23)), true);
-  assert.strictEqual(isEveningHour(atHour(0)), false);
+  // Wraps past midnight: still evening until MORNING_HOUR, then day from it on.
+  assert.strictEqual(isEveningHour(atHour(0)), true);
+  assert.strictEqual(isEveningHour(atHour(MORNING_HOUR - 1)), true);
+  assert.strictEqual(isEveningHour(atHour(MORNING_HOUR)), false);
+  assert.strictEqual(isEveningHour(atHour(12)), false);
 });
 
 test('timeBucket returns null with no clock context, so a `when.time` rule simply never matches', () => {
@@ -45,9 +51,11 @@ test('timeBucket returns null with no clock context, so a `when.time` rule simpl
   assert.strictEqual(timeBucket(undefined), null);
 });
 
-test('timeBucket returns "day" or "evening" derived from the same isEveningHour cutoff', () => {
+test('timeBucket returns "day" or "evening" derived from the same isEveningHour window', () => {
   assert.strictEqual(timeBucket(atHour(EVENING_HOUR - 1)), 'day');
   assert.strictEqual(timeBucket(atHour(EVENING_HOUR)), 'evening');
+  assert.strictEqual(timeBucket(atHour(1)), 'evening');
+  assert.strictEqual(timeBucket(atHour(MORNING_HOUR)), 'day');
 });
 
 test('isEveningBackground recognizes the _PM filename convention', () => {
@@ -65,6 +73,11 @@ test('getAvailableBackgrounds excludes _PM backgrounds during the day', () => {
   const day = getAvailableBackgrounds(HOUSES.FROSTHEIM, atHour(EVENING_HOUR - 1));
   assert.ok(day.length > 0, 'Frostheim should have at least one daytime background');
   assert.ok(day.every((f) => !isEveningBackground(f)), 'no _PM background should be offered during the day');
+});
+
+test('getAvailableBackgrounds still offers _PM backgrounds in the pre-dawn hours before MORNING_HOUR', () => {
+  const preDawn = getAvailableBackgrounds(HOUSES.FROSTHEIM, atHour(MORNING_HOUR - 1));
+  assert.ok(preDawn.some((f) => isEveningBackground(f)), '_PM backgrounds should still be offered after midnight until MORNING_HOUR');
 });
 
 test('getAvailableBackgrounds includes every background (day and _PM) in the evening', () => {
