@@ -10,6 +10,8 @@ import {
   RELATIONSHIP_LEVELS,
   PROGRESS_BAR_SEGMENTS,
   ANSI_BAR_SEGMENTS,
+  ANSI_BAR_FILL,
+  ANSI_BAR_TRACK,
   ANSI_COLORS,
 } from '../constants/game.js';
 
@@ -101,34 +103,49 @@ test('every relationship level carries an embed color and an ANSI bar color', ()
   assert.strictEqual(getRelationshipLevel(0).ansi, ANSI_COLORS.white);
 });
 
-test('renderAnsiProgressBar wraps a solid full-width bar in an ansi code block', () => {
+test('renderAnsiProgressBar wraps a full-width bar in an ansi code block', () => {
   const esc = String.fromCharCode(27);
   const half = ANSI_BAR_SEGMENTS / 2;
   const out = renderAnsiProgressBar(0.5, ANSI_COLORS.pink);
   assert.ok(out.startsWith('```ansi\n'), 'is a fenced ansi block');
   assert.ok(out.endsWith('\n```'));
-  // Half the segments painted pink (35), the rest a solid gray █ track (30) —
-  // no sparse ░, so the strip always spans its full width.
-  assert.ok(out.includes(`${esc}[1;35m${'█'.repeat(half)}${esc}[0m`));
-  assert.ok(out.includes(`${esc}[1;30m${'█'.repeat(half)}${esc}[0m`));
-  assert.ok(!out.includes('░'), 'no sparse light-shade characters');
+  // Half solid █ painted pink (35), the rest a gray ▒ track (30) — a glyph
+  // distinct from the fill so the boundary is readable, and the strip always
+  // spans its full width.
+  assert.ok(out.includes(`${esc}[1;35m${ANSI_BAR_FILL.repeat(half)}${esc}[0m`));
+  assert.ok(out.includes(`${esc}[1;30m${ANSI_BAR_TRACK.repeat(half)}${esc}[0m`));
+  assert.notStrictEqual(ANSI_BAR_FILL, ANSI_BAR_TRACK, 'fill and track glyphs differ');
 });
 
-test('renderAnsiProgressBar fills the whole strip at ratio 1 with no gray track', () => {
+test('a one-point affinity difference moves the bar by one segment at Stranger', () => {
+  // Stranger spans 0..20 and the bar is 20 wide, so each point is one segment.
+  const bar = (a) => {
+    const { level, ratio } = getRelationshipProgress(a);
+    return renderAnsiProgressBar(ratio, level.ansi);
+  };
+  const count = (s, glyph) => (s.match(new RegExp(glyph, 'g')) || []).length;
+  assert.strictEqual(count(bar(3), ANSI_BAR_FILL), 3);
+  assert.strictEqual(count(bar(4), ANSI_BAR_FILL), 4);
+  assert.strictEqual(count(bar(5), ANSI_BAR_FILL), 5);
+});
+
+test('renderAnsiProgressBar fills the whole strip at ratio 1 with no track', () => {
   const esc = String.fromCharCode(27);
   const out = renderAnsiProgressBar(1, ANSI_COLORS.red);
-  assert.ok(out.includes(`${esc}[1;31m${'█'.repeat(ANSI_BAR_SEGMENTS)}${esc}[0m`));
-  assert.ok(!out.includes(`[1;30m`), 'no empty track when full');
+  assert.ok(out.includes(`${esc}[1;31m${ANSI_BAR_FILL.repeat(ANSI_BAR_SEGMENTS)}${esc}[0m`));
+  assert.ok(!out.includes(`[1;30m`), 'no track when full');
+  assert.ok(!out.includes(ANSI_BAR_TRACK));
 });
 
-test('renderAnsiProgressBar shows a full gray track at ratio 0', () => {
+test('renderAnsiProgressBar shows a full track and no fill at ratio 0', () => {
   const esc = String.fromCharCode(27);
   const out = renderAnsiProgressBar(0, ANSI_COLORS.pink);
-  assert.ok(out.includes(`${esc}[1;30m${'█'.repeat(ANSI_BAR_SEGMENTS)}${esc}[0m`));
+  assert.ok(out.includes(`${esc}[1;30m${ANSI_BAR_TRACK.repeat(ANSI_BAR_SEGMENTS)}${esc}[0m`));
+  assert.ok(!out.includes(ANSI_BAR_FILL));
 });
 
 test('renderAnsiProgressBar falls back to white for a missing color', () => {
   const esc = String.fromCharCode(27);
   const out = renderAnsiProgressBar(1, undefined);
-  assert.ok(out.includes(`${esc}[1;37m${'█'.repeat(ANSI_BAR_SEGMENTS)}${esc}[0m`));
+  assert.ok(out.includes(`${esc}[1;37m${ANSI_BAR_FILL.repeat(ANSI_BAR_SEGMENTS)}${esc}[0m`));
 });

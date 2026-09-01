@@ -113,11 +113,15 @@ export function renderProgressBar(ratio, segments = PROGRESS_BAR_SEGMENTS) {
   return '█'.repeat(filled) + '░'.repeat(segments - filled);
 }
 
-// The bar wrapped in a Discord ```ansi code block so the filled segments carry
-// the level's color. Both halves are solid █ blocks — the track is a gray █,
-// not a sparse ░ that all but vanishes on the code block's dark background — so
-// the bar always reads as one full-width strip: colored fill, gray remainder.
+// The bar wrapped in a Discord ```ansi code block. The filled part is a solid █
+// in the level's color; the track is a gray ▒ — a distinct, still-visible glyph
+// (a sparse ░ vanishes on the dark background, and a gray █ blends into the
+// colored fill so the fill edge can't be read). This keeps the fill boundary
+// crisp, so even a one-segment difference is legible.
 // `ansiColor` is one of ANSI_COLORS. Returns the full fenced block.
+export const ANSI_BAR_FILL = '█';
+export const ANSI_BAR_TRACK = '▒';
+
 export function renderAnsiProgressBar(ratio, ansiColor, segments = ANSI_BAR_SEGMENTS) {
   const clamped = Math.max(0, Math.min(1, Number.isFinite(ratio) ? ratio : 0));
   const filled = Math.floor(clamped * segments);
@@ -125,8 +129,8 @@ export function renderAnsiProgressBar(ratio, ansiColor, segments = ANSI_BAR_SEGM
   const esc = String.fromCharCode(27); // raw ESC byte — Discord needs it literal
   const paint = (code, chars) => (chars ? `${esc}[1;${code}m${chars}${esc}[0m` : '');
   const bar =
-    paint(color, '█'.repeat(filled)) +
-    paint(ANSI_COLORS.gray, '█'.repeat(segments - filled));
+    paint(color, ANSI_BAR_FILL.repeat(filled)) +
+    paint(ANSI_COLORS.gray, ANSI_BAR_TRACK.repeat(segments - filled));
   return `\`\`\`ansi\n${bar}\n\`\`\``;
 }
 
