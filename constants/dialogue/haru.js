@@ -3,7 +3,7 @@ export default {
     new: [
       "He's got a feed bucket in one hand and something small in his sling backpack. \"Don't mind Peekaboo. He's shy.\"",
       "He looks up from a fence post and grins wide. \"Well, hey there. You after somethin', or just havin' a wander?\"",
-      "\"Phew... finally finished harvesting all the feed crops for the day. Everyone's health is dependent on their quality, so now's the time to do it right.\"",
+      "\"Phew... that's the last of the feed crops in for the day. Every critter here's only as healthy as what's in the bucket, so you do it right or you don't bother.\"",
       "He smells like feed and straw and something faintly sulfurous, and seems entirely unbothered by all three.",
       'Something skitters behind him. "Ah, ignore that," he says cheerfully. "That one\'s supposed to be in a pen."',
     ],
@@ -17,9 +17,9 @@ export default {
     warm: [
       "His whole face lights up when he sees you—genuine delight, the kind that makes his warmth impossible to resist.",
       '"You reckon I work hard? Nah, this is nothing to write home about." He\'s filthy to the elbows and beaming.',
-      '"Hey, nice work out there today! Let\'s knock a few more jobs off the list then take a break, yeah?"',
+      '"Hey, nice work out there today! Let\'s knock a few more jobs off the list then take a break, hey?"',
       "Peekaboo comes out when you arrive now. Haru says that has never once happened before.",
-      '"Honor roll!" he calls, over the noise of about nine different anomalies.',
+      '"Honor roll!" he calls, over the noise of about nine different critters.',
     ],
     spark: [
       "The teasing lands differently now. He's noticed. He's doing it more.",
@@ -53,14 +53,14 @@ export default {
     ],
     known: [
       '"Hey, Honor roll! That\'s the name that stuck, huh? Fair enough."',
-      "\"Perfect timing — I'm on the evening rounds. You're comin' with me, yeah? C'mon.\"",
+      "\"Perfect timing — I'm on the evening rounds. You're comin' with me, hey? C'mon, let's get this show on the road.\"",
       '"You sure are fond of Honor roll, aren\'t you, Peekaboo? You did nothing but bite me for the first three days after we met."',
-      '"You keep turnin\' up wherever I am. Not that I mind. Grab a bucket."',
+      '"What a coinkydink — you keep turnin\' up wherever I am. Not that I mind. Grab a bucket."',
       '"Everyone stuffs up sometimes. Don\'t let it get to you — just think of it as a funny story you can pull out later and laugh at! Gahaha!"',
     ],
     warm: [
       '"Hey, Honor roll! Miss me?"',
-      "\"Grab a bucket, we're behind. I'll make it fun, I promise.\"",
+      "\"Grab a bucket, we're flat out today. I'll make it fun, I promise.\"",
       "\"Peekaboo, look who's here — no, don't hide. Don't — okay. He'll come around.\"",
       "\"You've got a way with the mean ones. That's a genuine skill, you know.\"",
       "\"Stay for the night feed. It's the good shift. Everything's sleepy.\"",
@@ -82,7 +82,7 @@ export default {
     bound: [
       '"C\'mere, Honor roll. No joke this time. Not even a small one."',
       '"I love you. Told you I\'d say it eventually. Took me long enough, huh?"',
-      '"Come do the night rounds with me. Then come back to bed."',
+      '"Ren and Towa can hold down the fort. Come do the night rounds with me, then come back to bed."',
       "\"You're it for me. That's the whole thing. That's all I've got.\"",
       "\"Peekaboo picked you before I'd admit it myself. He's real smug about that, too. Gahaha.\"",
     ],
@@ -134,7 +134,7 @@ export default {
       ],
       spark: [
         "Tell him you knew",
-        "Say the anomalies adore him",
+        "Say the critters adore him",
         "Take his hand properly",
       ],
       close: [
@@ -150,7 +150,7 @@ export default {
     },
     playful: {
       new: [
-        "Give as good as you get",
+        "Call it a coinkydink",
         "Feed something you shouldn't",
         "Tease him before he teases you",
       ],

@@ -1,7 +1,7 @@
 export default {
   dialogue: {
     new: [
-      'Grease-stained and worn, he looks at you with eyes that have seen too much. "Get back. It\'s dangerous."',
+      'Grease-stained and worn, he looks you over once. "Get back. It\'s dangerous."',
       "He doesn't stop working. He just moves the toolbox so you won't trip over it.",
       "The engine dies under his hand. In the quiet, he finally acknowledges you exist.",
       '"Don\'t touch that," he says flatly. "It\'s hot." That\'s the whole greeting.',
@@ -29,10 +29,10 @@ export default {
       '"...Come here," he says. It takes him a long time to get those two words out.',
     ],
     close: [
-      '"You make everything feel... lighter," he says softly, like a confession. "Thank you."',
+      '"I keep my head better with you around," he says, low, like a confession. "Thank you."',
       "He stops working entirely. For him, that's practically a declaration.",
       "He puts his jacket over your shoulders before you've admitted you're cold.",
-      '"Stay a while," he says. Four words from him weigh more than most speeches.',
+      '"Stay a while," he says. Three words from him weigh more than most speeches.',
       "The tired in his shoulders eases the moment you sit down beside him.",
     ],
     bound: [
@@ -48,7 +48,7 @@ export default {
       '"This place isn\'t meant for people like you. Stay safe."',
       '"Watch your step. Half this floor\'s sharp."',
       '"...What do you want?"',
-      '"Vagastrom eats tourists. Don\'t be one."',
+      '"You wandered into the wrong house. Go back the way you came."',
       '"...Hm. You\'re still standing there."',
     ],
     known: [
@@ -68,12 +68,12 @@ export default {
     spark: [
       '"Come here. Closer than that."',
       "\"I'm no good at saying it. You'll have to read it off me.\"",
-      '"Hold still. Got oil on your cheek. ...There. Kept you."',
+      '"Hold still. Got oil on your cheek. ...There. Got it."',
       '"You keep standing that close, I\'m gonna do something about it."',
       "\"Don't go home yet. That's all. That's the whole ask.\"",
     ],
     close: [
-      "\"You're the only constant in my life that doesn't haunt me. Please stay by my side.\"",
+      "\"Most of what sticks with me, I'd rather forget. You're not on that list. Stay.\"",
       "\"I don't sleep much. It's easier when I know you're all right.\"",
       '"Come here. Let me look at you."',
       '"Whatever it is — you tell me first. I\'ll handle it."',
@@ -84,7 +84,7 @@ export default {
       '"Stay. Whole night. I sleep better."',
       '"...Love you. Don\'t make me repeat it, I barely got it out."',
       '"Sit here. On me. Yeah. Like that."',
-      '"I don\'t say much. You already know what all of it means."',
+      '"I don\'t say much. Never had to, with you."',
     ],
   },
   approach: {
@@ -95,14 +95,14 @@ export default {
       "Wait for the engine to stop",
     ],
     known: [
-      "Hand him the wrench",
+      "Hand him the spanner",
       "Sit, if you're staying",
       "Stay out from underfoot",
       "Ask what it is",
     ],
     warm: [
       "Take the second stool",
-      "Pick up the wrench",
+      "Pick up the spanner",
       "Work beside him",
       "Break the quiet",
     ],
@@ -155,7 +155,7 @@ export default {
         "Answer his grunt with a grin",
       ],
       spark: [
-        "Get oil on him back",
+        "Get oil back on him",
         "Stand closer on purpose",
         "Make him say it",
       ],
@@ -189,7 +189,7 @@ export default {
       bound: [
         "Climb into his lap",
         "Say it first",
-        "Tell him not to wash up",
+        "Tell him to leave the grease",
       ],
     },
     neutral: {
@@ -198,7 +198,7 @@ export default {
       close: [
         "Understand his quiet",
         "Sit through the long pause",
-        "Say nothing, stay anyway",
+        "Match his silence",
       ],
       bound: ["Let him sleep", "Sit in the quiet", "Say nothing at all"],
     },

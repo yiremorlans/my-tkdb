@@ -5,7 +5,7 @@ export default {
       "One earbud comes out. That's the entire greeting, and it's more than most people get.",
       "He's found the one spot in the whole building where nobody looks. You found him anyway.",
       '"...You need something?" He sounds like he hopes the answer is no.',
-      "\"Shift at the Darkwick Mystery Diner. Summer was our busy period back home too — always killing myself helping out. Now I'm here... nothing's changed.\"",
+      "\"Shift at the Darkwick Mystery Diner. Summer was our busy period back home, so I always killed myself helping out. Now I'm here though... nothing's changed.\"",
     ],
     known: [
       "Both earbuds come out. That's a significant escalation.",
@@ -15,7 +15,7 @@ export default {
       "He remembers what you said about the ending. He'd been thinking about it.",
     ],
     warm: [
-      "He actually puts his phone down when you arrive. There's genuine concern in his gaze now.",
+      "He actually puts his phone down when you arrive. Doesn't pick it back up, either.",
       "He shifts over on the couch without looking up. The space is for you.",
       "\"You're behind on the episodes,\" he says. He's been keeping count for you.",
       "He hands you the second controller. He's already set your profile up.",
@@ -29,7 +29,7 @@ export default {
       '"...I like you," he says, flat as a weather report, and goes back to the show.',
     ],
     close: [
-      '"Senpai... you know I\'ll always have your back, right?" he says quietly, protective concern replacing his usual detachment.',
+      '"Senpai... look, if it comes down to it, I\'m on your side. Obviously. Don\'t make it weird." The phone\'s already face down.',
       "He notices you're off before you've said a word, and quietly changes the plan.",
       '"Stay," he says, casual as anything, meaning it more than anything.',
       "He plays badly on purpose so the round lasts longer. He'd never admit that.",
@@ -121,53 +121,58 @@ export default {
     ],
   },
   responses: {
+    // playful is Ren's register — dry banter, gaming, ribbing the clown; it
+    // lands hardest (affinityByResponse.playful = 2). kind reaches him too, but
+    // only low-key and unsentimental (1). bold glances off — he deflects
+    // forwardness rather than meeting it (0), so those moves read as the player
+    // pushing and Ren not biting.
     kind: {
       new: [
         "Be steady with him",
-        "Let him keep the quiet",
-        "Thank him for the space",
+        "Match his quiet",
+        "Don't make it a thing",
       ],
-      spark: ["Say it back", "Stay on his shoulder", "Let him off the hook"],
+      spark: ["Say it back, low-key", "Stay on his shoulder", "Let him off the hook"],
       close: [
-        "Heal what his family broke",
+        "Tell him he's off the clock",
         "Tell him he's not lazy",
-        "Say you'll stay",
+        "Say you'll stick it out",
       ],
       bound: ["Say it back", "Stay right there", "Let him keep hold"],
     },
     playful: {
       new: [
-        "Be playful around him",
-        "Spoil the episode",
+        "Trade deadpan with him",
+        "Rib him about the clown",
         "Challenge him to a round",
       ],
       spark: [
         "Make him say it twice",
-        "Take up more space",
-        "Pause the episode",
+        "Out-deadpan him",
+        "Pause it to mess with him",
       ],
       close: [
-        "Make him genuinely smile",
+        "Get a real laugh out of him",
         "Beat him at his own game",
         "Steal his hoodie",
       ],
       bound: [
         "Lose the level for him",
-        "Take more of the couch",
+        "Hog the whole couch",
         "Make him say it again",
       ],
     },
     bold: {
       new: [
-        "Be bold with him",
+        "Ask the blunt question",
         "Sit far too close",
-        "Ask the direct question",
+        "Put it right out there",
       ],
       spark: ["Say it first", "Sit closer without asking", "Stay over"],
       close: [
-        "Fight for him",
-        "Tell him to stop hiding",
-        "Say the word and mean it",
+        "Name what this is",
+        "Push him to stop hiding",
+        "Say it before he does",
       ],
       bound: ["Pull him back to bed", "Say it first", "Turn the game off"],
     },

@@ -65,10 +65,10 @@ test('getAffinityForResponse always yields 0 for NEUTRAL, regardless of characte
 });
 
 test('getAffinityForResponse reads the character\'s own KIND/PLAYFUL/BOLD ranking', () => {
-  // ren: { kind: 0, playful: 1, bold: 2 }
-  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.KIND), 0);
-  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.PLAYFUL), 1);
-  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.BOLD), 2);
+  // ren: { kind: 1, playful: 2, bold: 0 }
+  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.KIND), 1);
+  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.PLAYFUL), 2);
+  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.BOLD), 0);
 });
 
 test('getAffinityForResponse defaults to 0 for a response type missing from affinityByResponse', () => {
