@@ -6,8 +6,10 @@ import {
   getDialogueTier,
   getRelationshipProgress,
   renderProgressBar,
+  renderAnsiProgressBar,
   RELATIONSHIP_LEVELS,
   PROGRESS_BAR_SEGMENTS,
+  ANSI_COLORS,
 } from '../constants/game.js';
 
 test('getRelationshipLevel returns Stranger below the first threshold', () => {
@@ -86,4 +88,30 @@ test('renderProgressBar draws a fixed-width bar and never hits full before the n
   assert.strictEqual(renderProgressBar(0.5), '█████░░░░░');
   // 0.99 of the way there must still show at least one empty segment.
   assert.ok(renderProgressBar(0.99).endsWith('░'));
+});
+
+test('every relationship level carries an embed color and an ANSI bar color', () => {
+  const ansiValues = new Set(Object.values(ANSI_COLORS));
+  for (const level of RELATIONSHIP_LEVELS) {
+    assert.strictEqual(typeof level.color, 'number', `${level.name} needs an embed color`);
+    assert.ok(ansiValues.has(level.ansi), `${level.name} needs a known ANSI color`);
+  }
+  // Stranger has no heart emoji, so it stays white.
+  assert.strictEqual(getRelationshipLevel(0).ansi, ANSI_COLORS.white);
+});
+
+test('renderAnsiProgressBar wraps the bar in an ansi code block with the given color', () => {
+  const esc = String.fromCharCode(27);
+  const out = renderAnsiProgressBar(0.5, ANSI_COLORS.pink);
+  assert.ok(out.startsWith('```ansi\n'), 'is a fenced ansi block');
+  assert.ok(out.endsWith('\n```'));
+  // 5 filled segments painted pink (35), 5 empty painted gray (30).
+  assert.ok(out.includes(`${esc}[1;35m${'█'.repeat(5)}${esc}[0m`));
+  assert.ok(out.includes(`${esc}[1;30m${'░'.repeat(5)}${esc}[0m`));
+});
+
+test('renderAnsiProgressBar falls back to white for a missing color and still fills correctly', () => {
+  const esc = String.fromCharCode(27);
+  const out = renderAnsiProgressBar(1, undefined);
+  assert.ok(out.includes(`${esc}[1;37m${'█'.repeat(PROGRESS_BAR_SEGMENTS)}${esc}[0m`));
 });

@@ -31,7 +31,7 @@ import {
   getDialogueTier,
   getRelationshipLevel,
   getRelationshipProgress,
-  renderProgressBar,
+  renderAnsiProgressBar,
 } from './constants/game.js';
 import { getReactionLine } from './constants/reactions.js';
 import { composeEncounter } from './imageComposition.js';
@@ -487,15 +487,16 @@ export async function buildAffinityMessage(userId, characterIds) {
     }
 
     const formatLevel = (lvl) => (lvl.emoji ? `${lvl.name} ${lvl.emoji}` : lvl.name);
-    const progressLine = nextLevel
-      ? renderProgressBar(ratio)
-      : `${renderProgressBar(ratio)}  Bond fully forged`;
+    const bar = renderAnsiProgressBar(ratio, level.ansi);
+    const description = nextLevel
+      ? `${formatLevel(level)}\n${bar}`
+      : `${formatLevel(level)}\n${bar}\nBond fully forged`;
 
     embeds.push({
       image: imageBuffer ? { url: `attachment://${avatarFilename}` } : undefined,
       title: getFullName(character),
-      description: `${formatLevel(level)}\n${progressLine}`,
-      color: 0x5865f2, // Discord blurple
+      description,
+      color: level.color, // tracks the relationship level, not a fixed blurple
     });
 
     if (imageBuffer) {
