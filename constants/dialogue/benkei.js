@@ -145,42 +145,50 @@ export default {
     },
     playful: {
       new: [
-        "Appreciate his warmth",
-        "Fluster him gently",
+        "Fluster him on purpose",
+        "Tease him about the fussing",
         "Ask for the second snack",
+        "Catch him mid-apology and grin",
       ],
-      spark: ["Make him say it again", "Walk even slower", "Tease the blush"],
+      spark: [
+        "Make him say it again",
+        "Slow down just to watch him",
+        "Tease the blush",
+        "Make him lose his nerve",
+      ],
       close: [
-        "Enjoy his quiet humor",
+        "Match his dry humor",
         "Tease him about the old days",
         "Make him laugh out loud",
+        "Needle him just to get a rise",
       ],
       bound: [
         "Make him blush again",
-        "Call him an old fool",
+        "Call him an old fool, fondly",
         "Kiss him first",
+        "Steal his last bite",
       ],
     },
     bold: {
       new: [
-        "Be honest with him",
-        "Carry it yourself",
+        "Say just what you're thinking",
+        "Take the load from his arms",
         "Ask him straight out",
       ],
       spark: [
-        "Say it for him",
+        "Say the thing he won't",
         "Take his hand at the gate",
-        "Tell him he's not too old",
+        "Close the distance first",
       ],
       close: [
-        "Accept his strength",
-        "Tell him you'll look after him",
+        "Tell him you're staying",
+        "Promise to look after him",
         "Say you'd stay too",
       ],
       bound: [
         "Say it first",
         "Tell him to stop pretending",
-        "Stay the night",
+        "Pull him in",
       ],
     },
     neutral: {

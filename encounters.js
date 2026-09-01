@@ -31,6 +31,7 @@ import {
   getDialogueTier,
   getRelationshipLevel,
 } from './constants/game.js';
+import { getReactionLine } from './constants/reactions.js';
 import { composeEncounter } from './imageComposition.js';
 import { recordResponse } from './storage.js';
 // readRelationship is the non-creating read. A character being shown —
@@ -397,16 +398,12 @@ export async function buildResponseResultMessage(
   const gain = getAffinityForResponse(character, responseTypeId);
   const { level } = await recordResponse(userId, characterId, gain, responseTypeId);
 
-  let reaction;
-  if (responseTypeId === RESPONSE_TYPES.NEUTRAL) {
-    reaction = `${getFullName(character)} doesn't seem to react much either way.`;
-  } else if (gain === 2) {
-    reaction = `${getFullName(character)} lights up at that.`;
-  } else if (gain === 1) {
-    reaction = `${getFullName(character)} seems to appreciate that.`;
-  } else {
-    reaction = `${getFullName(character)} doesn't seem impressed.`;
-  }
+  const reaction = getReactionLine(
+    character,
+    getDialogueTier(level.name),
+    responseTypeId,
+    gain,
+  );
 
   const delta = gain > 0 ? `+${gain}` : `${gain}`;
 

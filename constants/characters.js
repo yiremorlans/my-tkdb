@@ -577,7 +577,7 @@ export const CHARACTERS = [
     lastName: null,
     house: null,
     images: { uniform: "Benkei_Uniform.png", work: "Benkei_Work.png" },
-    affinityByResponse: { kind: 2, playful: 0, bold: 1 },
+    affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Deredere"],
     keywords: ["pervy", "gentle", "kind", "nostalgic", "protective"],
   },
@@ -664,12 +664,7 @@ const APPROACH_LABEL_FALLBACK = [
 function resolvePoolTier(pool, tier, variant) {
   if (!pool) return [];
   let lines = pool[tier] || pool.new;
-  if (
-    variant &&
-    lines &&
-    typeof lines === "object" &&
-    !Array.isArray(lines)
-  ) {
+  if (variant && lines && typeof lines === "object" && !Array.isArray(lines)) {
     lines = lines[variant] || Object.values(lines)[0];
   }
   if (Array.isArray(lines)) return [...lines];
@@ -682,7 +677,12 @@ function resolvePoolTier(pool, tier, variant) {
 // present field must match for the block to apply. Adding a genuinely new
 // dimension means one key here, one line in matchesWhen, and one key on the
 // `ctx` that encounters.js builds — nothing else.
-export const DIALOGUE_WHEN_DIMENSIONS = ["time", "location", "background", "event"];
+export const DIALOGUE_WHEN_DIMENSIONS = [
+  "time",
+  "location",
+  "background",
+  "event",
+];
 
 function fieldMatches(rule, value) {
   if (rule === undefined) return true;
@@ -716,7 +716,12 @@ function collectConditional(entries, poolKey, tier, variant, ctx) {
 // `ctx` carries the encounter context: { now, locationKey, backgroundFile,
 // event }. All fields optional — an absent field just means `when` rules that
 // constrain it won't match.
-export function getRandomDialogueLine(character, tier, variant = null, ctx = {}) {
+export function getRandomDialogueLine(
+  character,
+  tier,
+  variant = null,
+  ctx = {},
+) {
   const content = DIALOGUE[character.id];
   if (!content) return "...";
 
@@ -724,8 +729,13 @@ export function getRandomDialogueLine(character, tier, variant = null, ctx = {})
   // day it hard-swaps to a wordless replacement pool. Gated by the same evening
   // cutoff as `_PM` backgrounds (timeBucket, off ctx.now) — not a separate
   // threshold. Separate from the additive `when` system below.
-  if (character.pmOnly && content.daytimeDialogue && timeBucket(ctx.now) === "day") {
-    const daytime = content.daytimeDialogue[tier] || content.daytimeDialogue.new;
+  if (
+    character.pmOnly &&
+    content.daytimeDialogue &&
+    timeBucket(ctx.now) === "day"
+  ) {
+    const daytime =
+      content.daytimeDialogue[tier] || content.daytimeDialogue.new;
     return Array.isArray(daytime) ? pickRandom(daytime) : daytime;
   }
 
@@ -733,8 +743,12 @@ export function getRandomDialogueLine(character, tier, variant = null, ctx = {})
   // the character's own `dialogueWhen` and the shared roster-wide pool. Additive:
   // a matched scene adds its flavor without ever emptying a tier.
   const lines = resolvePoolTier(content.dialogue, tier, variant);
-  lines.push(...collectConditional(content.dialogueWhen, "dialogue", tier, variant, ctx));
-  lines.push(...collectConditional(SHARED_DIALOGUE_WHEN, "dialogue", tier, variant, ctx));
+  lines.push(
+    ...collectConditional(content.dialogueWhen, "dialogue", tier, variant, ctx),
+  );
+  lines.push(
+    ...collectConditional(SHARED_DIALOGUE_WHEN, "dialogue", tier, variant, ctx),
+  );
 
   if (lines.length === 0) return "...";
   return pickRandom(lines);
@@ -756,7 +770,12 @@ export function getTemperamentGreeting(character, tier) {
 // way `dialogueWhen` adds narration; the pmOnly daytime swap is still a hard
 // replacement, gated on the evening cutoff. `ctx` is the same object
 // getRandomDialogueLine takes.
-export function getRandomApproachLabel(character, tier, variant = null, ctx = {}) {
+export function getRandomApproachLabel(
+  character,
+  tier,
+  variant = null,
+  ctx = {},
+) {
   const content = DIALOGUE[character.id];
   if (!content) return pickRandom(APPROACH_LABEL_FALLBACK);
 
@@ -765,13 +784,18 @@ export function getRandomApproachLabel(character, tier, variant = null, ctx = {}
     content.daytimeApproach &&
     timeBucket(ctx.now) === "day"
   ) {
-    const daytime = content.daytimeApproach[tier] || content.daytimeApproach.new;
+    const daytime =
+      content.daytimeApproach[tier] || content.daytimeApproach.new;
     return Array.isArray(daytime) ? pickRandom(daytime) : daytime;
   }
 
   const labels = resolvePoolTier(content.approach, tier, variant);
-  labels.push(...collectConditional(content.approachWhen, "approach", tier, variant, ctx));
-  labels.push(...collectConditional(SHARED_APPROACH_WHEN, "approach", tier, variant, ctx));
+  labels.push(
+    ...collectConditional(content.approachWhen, "approach", tier, variant, ctx),
+  );
+  labels.push(
+    ...collectConditional(SHARED_APPROACH_WHEN, "approach", tier, variant, ctx),
+  );
 
   if (labels.length === 0) return pickRandom(APPROACH_LABEL_FALLBACK);
   return pickRandom(labels);
@@ -845,10 +869,16 @@ const RESPONSE_LABEL_TIER = {
 function responseLabel(characterId, responseType, tier, ctx = {}) {
   const content = DIALOGUE[characterId];
   const labelTier = RESPONSE_LABEL_TIER[tier] || "new";
-  const labels = resolvePoolTier(content?.responses?.[responseType], labelTier, null);
+  const labels = resolvePoolTier(
+    content?.responses?.[responseType],
+    labelTier,
+    null,
+  );
   for (const entry of content?.responsesWhen || []) {
     if (matchesWhen(entry.when, ctx)) {
-      labels.push(...resolvePoolTier(entry.responses?.[responseType], labelTier, null));
+      labels.push(
+        ...resolvePoolTier(entry.responses?.[responseType], labelTier, null),
+      );
     }
   }
   if (labels.length === 0) return null;
@@ -882,7 +912,13 @@ function generateKindResponse(character, archetypeSet, keywordSet, tier, ctx) {
   return { label: "Offer kind words" };
 }
 
-function generatePlayfulResponse(character, archetypeSet, keywordSet, tier, ctx) {
+function generatePlayfulResponse(
+  character,
+  archetypeSet,
+  keywordSet,
+  tier,
+  ctx,
+) {
   const label = responseLabel(character.id, RESPONSE_TYPES.PLAYFUL, tier, ctx);
   if (label) return { label };
 
@@ -913,7 +949,13 @@ function generateBoldResponse(character, archetypeSet, keywordSet, tier, ctx) {
   return { label: "Flirt boldly" };
 }
 
-function generateNeutralResponse(character, archetypeSet, keywordSet, tier, ctx) {
+function generateNeutralResponse(
+  character,
+  archetypeSet,
+  keywordSet,
+  tier,
+  ctx,
+) {
   const label = responseLabel(character.id, RESPONSE_TYPES.NEUTRAL, tier, ctx);
   if (label) return { label };
 

@@ -168,8 +168,8 @@ export default {
     bold: {
       new: [
         "Challenge him back",
-        "Insult him in kind",
-        "Refuse the diagnosis",
+        "Poke a hole in his logic",
+        "Refuse to be his specimen",
       ],
       spark: [
         "Close the distance yourself",
@@ -179,12 +179,12 @@ export default {
       close: [
         "Match his intensity",
         "Tell him you won't give up",
-        "Take his hand off the file",
+        "Say you're his to save",
       ],
       bound: [
         "Cross the lab first",
         "Say it before he can",
-        "Tell him to stop working",
+        "Kiss him mid-argument",
       ],
     },
     neutral: {
