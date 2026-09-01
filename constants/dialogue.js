@@ -237,8 +237,8 @@ export const DIALOGUE = {
           "Lean in when he allows it",
         ],
         close: [
-          "Acknowledge his pain without judgment",
-          "Tell him he doesn't carry it alone",
+          "See his pain without judgment",
+          "Tell him he's not alone",
           "Let the crown come off",
         ],
         bound: [
@@ -525,7 +525,7 @@ export const DIALOGUE = {
         spark: [
           "Say it for him",
           "Pull him closer",
-          "Tell him you've thought about him too",
+          "Tell him he's on your mind",
         ],
         close: [
           "Embrace the chaos together",
@@ -728,11 +728,11 @@ export const DIALOGUE = {
         ],
         close: [
           "Trust his quiet strength",
-          "Tell him he can stop apologizing",
+          "Tell him he can stop",
           "Let him take care of you",
         ],
         bound: [
-          "Tell him it doesn't frighten you",
+          "Tell him you're not scared",
           "Say it back softly",
           "Hold him through it",
         ],
@@ -1018,7 +1018,7 @@ export const DIALOGUE = {
         ],
         close: [
           "Demand the truth from him",
-          "Tell him you're not going anywhere",
+          "Tell him you're staying",
           "Meet him without flinching",
         ],
         bound: [
@@ -1178,7 +1178,7 @@ export const DIALOGUE = {
     responses: {
       kind: {
         new: [
-          "Appreciate his straightforwardness",
+          "Appreciate his honesty",
           "Thank him for the warning",
           "Ask if he's eaten",
         ],
@@ -1239,7 +1239,7 @@ export const DIALOGUE = {
         bound: [
           "Climb into his lap",
           "Say it first",
-          "Tell him not to bother washing up",
+          "Tell him not to wash up",
         ],
       },
       neutral: {
@@ -1352,7 +1352,7 @@ export const DIALOGUE = {
         "Give him something interesting",
       ],
       known: [
-        "Give him something worth filming",
+        "Give him filming material",
         "Refuse to be rattled",
         "Say his name back",
         "Let him decide about you",
@@ -1390,9 +1390,9 @@ export const DIALOGUE = {
           "Say his name gently",
         ],
         close: [
-          "See the real him beneath the act",
+          "See who's under the act",
           "Tell him the mask isn't needed",
-          "Be gentle where nobody's looking",
+          "Be gentle when alone",
         ],
         bound: [
           "Be soft with him at 3am",
@@ -1821,7 +1821,7 @@ export const DIALOGUE = {
       close: [
         "Go sit beside him",
         "Take the work from his hands",
-        "Stay till the lanterns burn down",
+        "Stay till lanterns burn down",
         "Tell him to rest",
       ],
       bound: [
@@ -2040,7 +2040,7 @@ export const DIALOGUE = {
     approach: {
       new: [
         "Return his bow",
-        "Give him his last five syllables",
+        "Give him the last syllables",
         "Sit under the lanterns",
         "Listen with him",
       ],
@@ -2151,7 +2151,7 @@ export const DIALOGUE = {
         spark: [
           "Let the verse stand",
           "Watch the lanterns",
-          "Leave it in seventeen syllables",
+          "Leave it in haiku",
         ],
         close: [
           "Accept his silence",
@@ -2348,7 +2348,7 @@ export const DIALOGUE = {
         new: ["Banter with him", "Out-flirt him", "Flatter him outrageously"],
         spark: ["Ruin the speech again", "Wait him out", "Ask him to be rash"],
         close: [
-          "See if you can catch him in a truth",
+          "Catch him in the moment",
           "Fluster him deliberately",
           "Finish his sentence for him",
         ],
@@ -2383,7 +2383,7 @@ export const DIALOGUE = {
       neutral: {
         new: [
           "Let him observe you",
-          "Say nothing, and let him wonder",
+          "Say nothing, let him wonder",
           "Walk in silence",
         ],
         spark: [
@@ -2393,7 +2393,7 @@ export const DIALOGUE = {
         ],
         close: [
           "Let him read your mind",
-          "Give him time to gather himself",
+          "Give him time to gather",
           "Let the petals fall",
         ],
         bound: [
@@ -2541,7 +2541,7 @@ export const DIALOGUE = {
         ],
         close: [
           "Ask what he's really after",
-          "Tell him the armor can come off",
+          "Tell him walls can come off",
           "Say you liked him anyway",
         ],
         bound: ["Say it back", "Take his hands", "Tell him he's someone's now"],
@@ -2761,7 +2761,7 @@ export const DIALOGUE = {
       ],
       close: [
         "Go to them",
-        "Take the work out of their hands",
+        "Free them from the work",
         "Say it can be handed off",
         "Stay past the sunset",
       ],
@@ -2775,7 +2775,7 @@ export const DIALOGUE = {
     responses: {
       kind: {
         new: [
-          "Admire the way they command a room",
+          "Admire how they command a room",
           "Thank them for making the time",
           "Say the work can wait",
         ],
@@ -2786,13 +2786,13 @@ export const DIALOGUE = {
         ],
         close: [
           "See the tired under the charm",
-          "Tell them to let someone else carry it",
-          "Say they needn't run everything",
+          "Tell them to share the burden",
+          "Say they needn't manage alone",
         ],
         bound: [
           "Say it back",
           "Close the laptop for them",
-          "Tell them they're allowed to stop",
+          "Tell them they can rest now",
         ],
       },
       playful: {
@@ -2814,14 +2814,14 @@ export const DIALOGUE = {
         bound: [
           "Make them leave the work",
           "Take the wheel",
-          "Refuse to let them go back to it",
+          "Keep them away from it",
         ],
       },
       bold: {
         new: [
           "Meet the charisma head-on",
           "Name what you want",
-          "Ask them to drop the work for you",
+          "Ask them to work less for you",
         ],
         spark: [
           "Get in the passenger seat",
@@ -2829,9 +2829,9 @@ export const DIALOGUE = {
           "Take their hand first",
         ],
         close: [
-          "Tell them to let the house run itself",
-          "Take their hand in front of everyone",
-          "Say the work can wait on you",
+          "Tell them it runs itself",
+          "Hold their hand openly",
+          "Say the work can wait for you",
         ],
         bound: ["Take them to bed", "Drive off with them", "Say it first"],
       },
@@ -2848,7 +2848,7 @@ export const DIALOGUE = {
         ],
         close: [
           "Keep them company at the desk",
-          "Sit through the long to-do list",
+          "Sit through their to-do list",
           "Stay after the others leave",
         ],
         bound: [
@@ -3036,7 +3036,7 @@ export const DIALOGUE = {
         ],
         close: [
           "Be bold enough to need him",
-          "Tell him to stop fixing everyone",
+          "Tell him to stop fixing",
           "Take the work out of his hands",
         ],
         bound: [
@@ -3392,13 +3392,13 @@ export const DIALOGUE = {
         "Take the clear chair",
         "Answer his question honestly",
         "Make him laugh",
-        "Sit down before he tells you to",
+        "Sit before he asks",
       ],
       spark: [
         "Hold still",
         "Confirm it",
         "Sit on the table",
-        "Let him stop being professional",
+        "Let him relax",
       ],
       close: [
         "Go to him",
@@ -3462,7 +3462,7 @@ export const DIALOGUE = {
         spark: [
           "Say it back, blunt",
           "Close the last inch",
-          "Tell him to stop being professional",
+          "Tell him to drop the act",
         ],
         close: [
           "Stand firm for him",
@@ -3621,7 +3621,7 @@ export const DIALOGUE = {
     responses: {
       kind: {
         new: [
-          "Don't take his coldness to heart",
+          "Don't take it so hard",
           "Thank him anyway",
           "Let the insult slide",
         ],
@@ -3676,7 +3676,7 @@ export const DIALOGUE = {
         ],
         close: [
           "Match his intensity",
-          "Tell him you're not giving up either",
+          "Tell him you won't give up",
           "Take his hand off the file",
         ],
         bound: [
@@ -3838,7 +3838,7 @@ export const DIALOGUE = {
         spark: ["Say it back", "Stay on his shoulder", "Let him off the hook"],
         close: [
           "Heal what his family broke",
-          "Tell him he's not a slacker to you",
+          "Tell him he's not lazy",
           "Say you'll stay",
         ],
         bound: ["Say it back", "Stay right there", "Let him keep hold"],
@@ -4329,7 +4329,7 @@ export const DIALOGUE = {
         new: [
           "Make him smile",
           "Hum the tune back",
-          "Tuck the dandelion behind your ear",
+          "Tuck it behind your ear",
         ],
         spark: [
           "Hum it back against him",
@@ -4497,7 +4497,7 @@ export const DIALOGUE = {
       spark: [
         "Come closer",
         "Offer your hand",
-        "Say he needn't restrain himself",
+        "Say he can let loose",
         "Stand there anyway",
       ],
       close: [
@@ -4516,7 +4516,7 @@ export const DIALOGUE = {
     responses: {
       kind: {
         new: [
-          "Stand firm against his advances",
+          "Stand firm against him",
           "Accept the courtesy",
           "Thank him for the escort",
         ],
@@ -4527,7 +4527,7 @@ export const DIALOGUE = {
         ],
         close: [
           "Let him get closer",
-          "Tell him he isn't alone anymore",
+          "Tell him he's not alone",
           "Say the act was never needed",
         ],
         bound: ["Say yes again", "Tell him he's yours too", "Let him ask"],
@@ -4552,14 +4552,14 @@ export const DIALOGUE = {
       },
       bold: {
         new: [
-          "Meet his gaze without flinching",
+          "Meet his gaze with strength",
           "Step closer instead of back",
           "Give him permission",
         ],
         spark: [
-          "Tell him he needn't restrain himself",
+          "Tell him to let loose",
           "Tilt your head back",
-          "Say you know exactly what he is",
+          "Say you know what he is",
         ],
         close: [
           "Pull him closer yourself",
@@ -4728,8 +4728,8 @@ export const DIALOGUE = {
         ],
         close: [
           "Let him know you need him",
-          "Say the distance doesn't matter",
-          "Tell him you'll keep coming back",
+          "Say distance doesn't matter",
+          "Tell him you'll come back",
         ],
         bound: [
           "Say it back louder",
@@ -4966,7 +4966,7 @@ export const DIALOGUE = {
         ],
         close: [
           "Stand with him proudly",
-          "Refuse to let him take the front",
+          "Refuse to let him lead",
           "Say wherever you go, he goes",
         ],
         bound: ["Close what's left", "Say it first", "Tell him it's both"],
@@ -4977,7 +4977,7 @@ export const DIALOGUE = {
         close: [
           "Understand his quiet",
           "Walk in silence together",
-          "Let him lean, and don't mention it",
+          "Let him lean on you",
         ],
         bound: ["Let him sleep", "Lie still", "Say nothing at all"],
       },
@@ -5124,7 +5124,7 @@ export const DIALOGUE = {
           "Tell him he's already won",
         ],
         close: [
-          "See the softness under the snarl",
+          "See past the snarl",
           "Tell him you worry too",
           "Take the bet off his shoulders",
         ],
@@ -5327,7 +5327,7 @@ export const DIALOGUE = {
         ],
         spark: [
           "Let him skip to the conclusion",
-          "Tell him no precedent is needed",
+          "Tell him there's precedent",
           "Say yes kindly",
         ],
         close: [
@@ -5360,7 +5360,7 @@ export const DIALOGUE = {
         bound: [
           "Object one last time",
           "Take his glasses",
-          "Make him state it for the record",
+          "Make him say it out loud",
         ],
       },
       bold: {
@@ -5372,7 +5372,7 @@ export const DIALOGUE = {
         ],
         close: [
           "Make a bold choice about him",
-          "Tell him he's more than a partner",
+          "Tell him he's more than that",
           "Close the deal yourself",
         ],
         bound: [
@@ -5539,7 +5539,7 @@ export const DIALOGUE = {
         spark: [
           "Give him the second",
           "Wear it for him",
-          "Tell him he's not a transaction",
+          "Tell him he's not business",
         ],
         close: [
           "Know his real worth is you",
@@ -5549,7 +5549,7 @@ export const DIALOGUE = {
         bound: [
           "Say it back",
           "Wear it for him",
-          "Tell him he's more than the money",
+          "Tell him he's more than money",
         ],
       },
       playful: {
@@ -5576,7 +5576,7 @@ export const DIALOGUE = {
         close: [
           "Know you're worth his money",
           "Tell him to say it plainly",
-          "Take his hand in front of the floor",
+          "Take his hand openly",
         ],
         bound: [
           "Close the floor yourself",

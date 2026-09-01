@@ -1,21 +1,7 @@
 // Supabase-backed relationship storage
 // All affinity and relationship data is now stored in Postgres
 import { getRelationshipLevel } from './constants/game.js';
-import { getOrCreateRelationship, updateAffinity, incrementTimesMet, updateLastResponseType } from './db/supabase.js';
-
-export async function getRelationship(userId, characterId) {
-  try {
-    const relationship = await getOrCreateRelationship(userId, characterId);
-    return {
-      affinity: relationship.affinity || 0,
-      timesMet: relationship.times_met || 0,
-    };
-  } catch (err) {
-    console.error('Error fetching relationship from DB:', err);
-    // Fallback to defaults if DB is unavailable
-    return { affinity: 0, timesMet: 0 };
-  }
-}
+import { updateAffinity, incrementTimesMet, updateLastResponseType } from './db/supabase.js';
 
 // Records a dialogue response and applies the given affinity gain (0-2,
 // computed by the caller via getAffinityForResponse). responseType is the

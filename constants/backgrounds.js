@@ -55,8 +55,7 @@ export const LOCATION_KEYS = { ...HOUSES, ...GENERAL_LOCATIONS, ...EVENT_LOCATIO
 
 // Backgrounds that only appear in the evening live in this list by filename
 // convention (ends in "_PM"). Discord interactions don't tell us the invoking
-// user's timezone, so "evening" is judged against one fixed zone for everyone,
-// pinned via the TZ env var (app.js defaults it to America/Chicago).
+// user's timezone, so "evening" is judged against one fixed zone for everyone.
 const EVENING_SUFFIX = '_PM';
 
 // The single definition of when "evening" begins. Both background filtering and
@@ -66,8 +65,26 @@ const EVENING_SUFFIX = '_PM';
 // else changes.
 export const EVENING_HOUR = 18;
 
+// The one fixed zone "evening" is judged against, for every user regardless
+// of their own timezone. Read explicitly via Intl below rather than relying
+// on the process's ambient local time (a plain `now.getHours()` depends on
+// process.env.TZ, which app.js only sets as a fallback default (`??=`) and
+// which not every runtime honors if set after startup) — this keeps 18:00
+// Central definitive no matter what timezone the host process actually runs
+// under, or whether something else already set TZ to a different zone first.
+export const EVENING_TIMEZONE = 'America/Chicago';
+
+// Intl.DateTimeFormat construction has nonzero overhead — build once.
+// hourCycle: 'h23' pins the output to 0-23 (some locales otherwise render
+// midnight as "24", which would need separate handling).
+const eveningHourFormatter = new Intl.DateTimeFormat('en-US', {
+  timeZone: EVENING_TIMEZONE,
+  hour: 'numeric',
+  hourCycle: 'h23',
+});
+
 export function isEveningHour(now = new Date()) {
-  return now.getHours() >= EVENING_HOUR;
+  return Number(eveningHourFormatter.format(now)) >= EVENING_HOUR;
 }
 
 // Coarse time-of-day label used by conditional dialogue's `when: { time }`.
@@ -282,14 +299,36 @@ export function getAvailableBackgrounds(locationKey, now = new Date()) {
   return isEveningHour(now) ? all : all.filter((file) => !isEveningBackground(file));
 }
 
+// In the evening, a _PM background should usually be what a random pick
+// lands on — not just occasionally alongside every regular background for
+// that location. Each _PM file is repeated this many times in the weighted
+// pool built below, so it's this many times as likely to be drawn as a
+// regular one. A no-op during the day, since _PM files aren't in the list to
+// begin with (getAvailableBackgrounds already excludes them), and a no-op
+// for a location with no _PM variant at all.
+export const EVENING_PM_WEIGHT = 3;
+
+// Exported for direct, deterministic testing of the pool composition itself
+// (see test/backgrounds-time-of-day.test.js) rather than asserting on the
+// distribution of many random draws.
+export function weightedBackgrounds(locationKey, now) {
+  const out = [];
+  for (const file of getAvailableBackgrounds(locationKey, now)) {
+    const copies = isEveningBackground(file) ? EVENING_PM_WEIGHT : 1;
+    for (let i = 0; i < copies; i++) out.push(file);
+  }
+  return out;
+}
+
 // Picks a random location + background out of every location, weighted by
-// how many eligible backgrounds each location currently has.
+// how many eligible backgrounds each location currently has (and, in the
+// evening, biased toward _PM backgrounds — see EVENING_PM_WEIGHT).
 export function getRandomBackground(now = new Date()) {
   const entries = Object.keys(LOCATION_KEYS).map((key) => LOCATION_KEYS[key]);
   const pool = [];
 
   for (const locationKey of entries) {
-    for (const file of getAvailableBackgrounds(locationKey, now)) {
+    for (const file of weightedBackgrounds(locationKey, now)) {
       pool.push({ locationKey, file });
     }
   }
@@ -300,7 +339,7 @@ export function getRandomBackground(now = new Date()) {
 
 // Picks a random background scoped to one specific location.
 export function getRandomBackgroundForLocation(locationKey, now = new Date()) {
-  const available = getAvailableBackgrounds(locationKey, now);
+  const available = weightedBackgrounds(locationKey, now);
   if (available.length === 0) return null;
   return available[Math.floor(Math.random() * available.length)];
 }
@@ -310,7 +349,7 @@ export function getRandomGeneralBackground(now = new Date()) {
   const keys = Object.values(GENERAL_LOCATIONS);
   const pool = [];
   for (const locationKey of keys) {
-    for (const file of getAvailableBackgrounds(locationKey, now)) {
+    for (const file of weightedBackgrounds(locationKey, now)) {
       pool.push({ locationKey, file });
     }
   }

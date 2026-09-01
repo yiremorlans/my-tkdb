@@ -1,0 +1,33 @@
+#!/bin/sh
+# Pre-commit hook: validate button label lengths before committing
+# This ensures no label exceeds MAX_BUTTON_LABEL_LENGTH (30 chars)
+
+echo "🔍 Validating button label lengths..."
+
+node << 'VALIDATION'
+import('./constants/validateContent.js').then(m => {
+  try {
+    m.validateContent();
+    console.log('✅ All button labels are valid!');
+    process.exit(0);
+  } catch (err) {
+    console.error('❌ Validation failed:', err.message);
+    process.exit(1);
+  }
+}).catch(err => {
+  console.error('❌ Error running validation:', err.message);
+  process.exit(1);
+});
+VALIDATION
+
+exit_code=$?
+
+if [ $exit_code -ne 0 ]; then
+  echo ""
+  echo "❌ COMMIT BLOCKED: Button labels exceed the 30-character limit."
+  echo "   Please fix the labels in constants/dialogue.js before committing."
+  echo ""
+  exit 1
+fi
+
+exit 0

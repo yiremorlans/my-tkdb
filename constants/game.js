@@ -3,6 +3,12 @@ import { RESPONSE_TYPES } from './characters.js';
 // How many characters /meet offers the user to pick from.
 export const MEET_OPTION_COUNT = 4;
 
+// Maximum length for button labels (response and approach labels).
+// Discord's native limit is 80 chars, but mobile clients truncate at ~30 chars
+// for readability. Keep all labels at or under this to ensure they display
+// fully on all devices without truncation.
+export const MAX_BUTTON_LABEL_LENGTH = 30;
+
 // Discord button styles: PRIMARY 1, SECONDARY 2, SUCCESS 3, DANGER 4.
 export const RESPONSE_STYLES = {
   [RESPONSE_TYPES.KIND]: 3,

@@ -136,11 +136,22 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       // Build and respond immediately (no await). User activity is only counted
       // once an encounter actually loads (the roam/spawn button below), not for
       // opening the prompt.
-      const messageData = await buildRoamDialogueMessage(userId);
-      return res.send({
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: messageData,
-      });
+      try {
+        const messageData = await buildRoamDialogueMessage(userId);
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: messageData,
+        });
+      } catch (err) {
+        console.error('Error in /roam:', err);
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: 'Something went wrong wandering out. Try again?',
+            flags: 64, // EPHEMERAL
+          },
+        });
+      }
     }
 
     if (name === 'meet') {
@@ -396,6 +407,9 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
   return res.status(400).json({ error: 'unknown interaction type' });
 });
 
-app.listen(PORT, () => {
+// Exported (not just started) so tests can spin this up in-process and call
+// server.close() afterward — importing app.js otherwise leaves the process
+// unable to exit.
+export const server = app.listen(PORT, () => {
   console.log('Listening on port', PORT);
 });

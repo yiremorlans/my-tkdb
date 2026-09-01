@@ -32,10 +32,12 @@ import {
   getRelationshipLevel,
 } from './constants/game.js';
 import { composeEncounter } from './imageComposition.js';
-import { getRelationship, recordResponse } from './storage.js';
-// readRelationship is the non-creating read — /affinity and /house are
-// read-only commands and must not insert rows for characters the user has
-// never actually met (getRelationship above creates one on miss).
+import { recordResponse } from './storage.js';
+// readRelationship is the non-creating read. A character being shown —
+// via /affinity, /house, a /roam encounter, or a /meet pick — is only a
+// preview and must not insert a relationship row. Only recordResponse
+// (the user actually picking a reply) counts as a real "meeting" and
+// creates/updates the row, atomically, via getOrCreateRelationship.
 import {
   getRelationship as readRelationship,
   getUserRelationships,
@@ -234,7 +236,7 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
 
   console.log('[buildRoamDialogueMessage] Fetching relationship from DB...');
   const relStart = Date.now();
-  const { affinity } = await getRelationship(userId, character.id);
+  const affinity = (await readRelationship(userId, character.id))?.affinity || 0;
   console.log('[buildRoamDialogueMessage] Got affinity after', Date.now() - relStart, 'ms');
 
   const level = getRelationshipLevel(affinity);
@@ -350,7 +352,7 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
   }
   const fallbackSpot = spot || getRandomGeneralBackground(now);
 
-  const { affinity } = await getRelationship(userId, character.id);
+  const affinity = (await readRelationship(userId, character.id))?.affinity || 0;
   const level = getRelationshipLevel(affinity);
   const tier = getDialogueTier(level.name);
   const variant = getImageVariant(character, level.name);

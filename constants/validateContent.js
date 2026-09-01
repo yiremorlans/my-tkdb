@@ -24,16 +24,13 @@ import {
   SPECIAL_BACKGROUNDS,
   TIME_BUCKETS,
 } from "./backgrounds.js";
+import { MAX_BUTTON_LABEL_LENGTH } from "./game.js";
 
 const TIERS = ["new", "known", "warm", "spark", "close", "bound"];
 
 // Buttons are authored at fewer tiers than the dialogue — see
 // RESPONSE_LABEL_TIER in constants/characters.js.
 const RESPONSE_TIERS = ["new", "spark", "close", "bound"];
-
-// Discord rejects a button whose label exceeds 80 characters, taking the whole
-// encounter message down with it. Labels are authored prose, so check them.
-const MAX_BUTTON_LABEL = 80;
 
 const KNOWN_LOCATIONS = new Set(Object.values(LOCATION_KEYS));
 const KNOWN_BACKGROUNDS = new Set([
@@ -158,7 +155,7 @@ export function validateContent() {
 
   validateWhenList(SHARED_DIALOGUE_WHEN, "SHARED_DIALOGUE_WHEN", "dialogue", errors, warnings);
   validateWhenList(SHARED_APPROACH_WHEN, "SHARED_APPROACH_WHEN", "approach", errors, warnings, {
-    maxLabel: MAX_BUTTON_LABEL,
+    maxLabel: MAX_BUTTON_LABEL_LENGTH,
   });
 
   for (const character of CHARACTERS) {
@@ -195,9 +192,9 @@ export function validateContent() {
         }
       }
       for (const label of collectLabels(content.approach)) {
-        if (label.length > MAX_BUTTON_LABEL) {
+        if (label.length > MAX_BUTTON_LABEL_LENGTH) {
           errors.push(
-            `${id} approach label is ${label.length} chars (max ${MAX_BUTTON_LABEL}): "${label}"`,
+            `${id} approach label is ${label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${label}"`,
           );
         }
       }
@@ -216,13 +213,106 @@ export function validateContent() {
     // dead content.
     validateWhenList(content.dialogueWhen, `${id} dialogueWhen`, "dialogue", errors, warnings);
     validateWhenList(content.approachWhen, `${id} approachWhen`, "approach", errors, warnings, {
-      maxLabel: MAX_BUTTON_LABEL,
+      maxLabel: MAX_BUTTON_LABEL_LENGTH,
     });
     validateWhenList(content.responsesWhen, `${id} responsesWhen`, "responses", errors, warnings, {
       tiers: RESPONSE_TIERS,
-      maxLabel: MAX_BUTTON_LABEL,
+      maxLabel: MAX_BUTTON_LABEL_LENGTH,
       nested: true,
     });
+
+    // CRITICAL: Check for empty dialogue pools (breaks random selection)
+    if (content.dialogue) {
+      for (const tier of TIERS) {
+        const poolData = content.dialogue[tier];
+        if (!poolData) continue;
+
+        // Handle variant-keyed pools (uniform/casual)
+        if (typeof poolData === 'object' && !Array.isArray(poolData)) {
+          // Variant pool: check both variants exist if one is defined
+          const variants = Object.keys(poolData);
+          if (variants.length > 1) {
+            for (const variant of variants) {
+              const variantPool = poolData[variant];
+              if (!Array.isArray(variantPool) || variantPool.length === 0) {
+                errors.push(
+                  `${id} dialogue[${tier}].${variant} is empty — random selection would fail`
+                );
+              }
+            }
+            // Ensure consistency: if one variant exists, the other should too
+            if (variants.includes('uniform') && !variants.includes('casual')) {
+              warnings.push(
+                `${id} dialogue[${tier}] has "uniform" but missing "casual" variant`
+              );
+            }
+            if (variants.includes('casual') && !variants.includes('uniform')) {
+              warnings.push(
+                `${id} dialogue[${tier}] has "casual" but missing "uniform" variant`
+              );
+            }
+          } else if (Array.isArray(poolData)) {
+            // Single variant, check it's not empty
+            if (poolData.length === 0) {
+              errors.push(
+                `${id} dialogue[${tier}] is empty — random selection would fail`
+              );
+            }
+          }
+        } else if (Array.isArray(poolData)) {
+          // Standard array pool
+          if (poolData.length === 0) {
+            errors.push(
+              `${id} dialogue[${tier}] is empty — random selection would fail`
+            );
+          }
+        }
+      }
+    }
+
+    // CRITICAL: Check for empty approach pools (breaks /roam button)
+    if (content.approach) {
+      for (const tier of TIERS) {
+        const poolData = content.approach[tier];
+        if (!poolData) continue;
+
+        // Same variant consistency check for approach
+        if (typeof poolData === 'object' && !Array.isArray(poolData)) {
+          const variants = Object.keys(poolData);
+          if (variants.length > 0) {
+            for (const variant of variants) {
+              const variantPool = poolData[variant];
+              if (!Array.isArray(variantPool) || variantPool.length === 0) {
+                errors.push(
+                  `${id} approach[${tier}].${variant} is empty — step-forward button would fail`
+                );
+              }
+            }
+          }
+        } else if (Array.isArray(poolData)) {
+          if (poolData.length === 0) {
+            errors.push(
+              `${id} approach[${tier}] is empty — step-forward button would fail`
+            );
+          }
+        }
+      }
+    }
+
+    // CRITICAL: Check for mismatched tiers between dialogue and responses
+    const dialogueTiers = content.dialogue ? Object.keys(content.dialogue).filter(k => TIERS.includes(k)) : [];
+    const responseTiers = content.responses ?
+      new Set(Object.values(content.responses).flatMap(r => Object.keys(r).filter(k => RESPONSE_TIERS.includes(k)))) :
+      new Set();
+
+    // Response tiers should map to dialogue tiers (with RESPONSE_LABEL_TIER mapping)
+    const requiredDialogueTiers = new Set();
+    for (const rTier of responseTiers) {
+      if (rTier === 'new') requiredDialogueTiers.add('new', 'known', 'warm');
+      if (rTier === 'spark') requiredDialogueTiers.add('spark');
+      if (rTier === 'close') requiredDialogueTiers.add('close');
+      if (rTier === 'bound') requiredDialogueTiers.add('bound');
+    }
 
     // A missing response entry is legal (archetype defaults cover it) but is
     // almost always an oversight, so name it.
@@ -239,13 +329,21 @@ export function validateContent() {
           continue;
         }
         const labels = collectLabels(entry[tier]);
+
+        // CRITICAL: Check for empty response label arrays
+        if (labels.length === 0) {
+          errors.push(
+            `${id} ${type} labels at "${tier}" is empty — button selection would fail`
+          );
+        }
+
         if (new Set(labels).size !== labels.length) {
           warnings.push(`${id} repeats a "${type}" label at "${tier}"`);
         }
         for (const label of labels) {
-          if (label.length > MAX_BUTTON_LABEL) {
+          if (label.length > MAX_BUTTON_LABEL_LENGTH) {
             errors.push(
-              `${id} ${type} label is ${label.length} chars (max ${MAX_BUTTON_LABEL}): "${label}"`,
+              `${id} ${type} label is ${label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${label}"`,
             );
           }
           // Two identically worded buttons paying different affinity reads as a
