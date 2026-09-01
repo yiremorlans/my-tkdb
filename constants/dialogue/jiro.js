@@ -25,21 +25,21 @@ export default {
       "He tilts your chin to check something, and the examination stops being one.",
       '"Pulse is elevated," he notes, with his fingers still on your wrist. "Interesting."',
       "The bedside manner has gone somewhere else entirely.",
-      "He laughs at something you said, low, and the ward suddenly feels very small.",
+      '"I\'m aware this isn\'t an examination anymore," he says, unhurried. "I\'m not stopping."',
       "He stands close enough that the clipboard is doing nothing but occupying his hands.",
     ],
     close: [
-      'He steps closer, his eyes direct. "You matter more than anyone ever could."',
+      'He steps closer, his eyes direct. "If I lost you it would be a significant problem. Factor that in."',
       "He checks you over without being asked, and doesn't pretend it's professional.",
       '"Tell me where it hurts," he says. He does not mean physically.',
       "The efficiency drops. What's underneath is warm, and stubbornly protective.",
-      "He laughs at something you said, fully, and half the ward turns around in shock.",
+      "He's stopped triaging the room. There's just you, and the focus he usually reserves for a chart.",
     ],
     bound: [
       "He's blunt about wanting you, which turns out to be extraordinarily effective.",
       "He pins your chart to the board, then pins you to the door. Efficient, as ever.",
       '"I don\'t waste time," he says against your jaw. "You should know that by now."',
-      "He laughs low against your skin and the whole ward could fall down for all he cares.",
+      '"I wanted this before I should have," he says, matter-of-fact. "Poor professional conduct. I\'ve made peace with it."',
       "He checks you over every morning. It stopped being medical a long time ago.",
     ],
   },
@@ -63,17 +63,17 @@ export default {
       "\"Sit down before you fall down. I've seen the way you've been walking.\"",
       "\"When did you last sleep? Don't lie, I'll know.\"",
       "\"You're not an interruption. That's as warm as I get, so take it.\"",
-      '"Hah — you\'re funnier than the rest of this building combined."',
+      "\"People keep telling me that was rude. You didn't. That's... restful. Stay.\"",
     ],
     spark: [
       '"Hold still. This isn\'t a diagnosis and we both know it."',
       '"Your heart rate says something you haven\'t. Care to confirm it?"',
       "\"I'm blunt. So: I want you. That's the whole statement.\"",
       '"Sit on the table. Closer. No, I don\'t need the light."',
-      '"Ha — that face. Do that again and I\'ll stop being professional."',
+      '"That look. Do it again and I stop being professional."',
     ],
     close: [
-      '"I don\'t usually make exceptions. But for you... I will."',
+      "\"I don't make exceptions. You're the exception. Don't make me say it twice.\"",
       '"Come here. Let me see. Humor me."',
       "\"You're the one case I'd never hand off to anyone else.\"",
       '"Tell me the truth. I can\'t fix a lie."',
@@ -103,15 +103,10 @@ export default {
     warm: [
       "Take the clear chair",
       "Answer his question honestly",
-      "Make him laugh",
+      "Match his bluntness",
       "Sit before he asks",
     ],
-    spark: [
-      "Hold still",
-      "Confirm it",
-      "Sit on the table",
-      "Let him relax",
-    ],
+    spark: ["Hold still", "Confirm it", "Sit on the table", "Let him relax"],
     close: [
       "Go to him",
       "Let him check you over",
@@ -133,7 +128,7 @@ export default {
         "Tell him plainly, too",
       ],
       close: [
-        "Help him remember what matters",
+        "Tell him plainly he matters",
         "Tell him to sleep too",
         "Let him take care of you",
       ],
@@ -146,16 +141,16 @@ export default {
     playful: {
       new: [
         "Try to lighten the mood",
-        "Chase that laugh",
+        "Crack a joke mid-exam",
         "Be deliberately unhelpful",
       ],
       spark: [
         "Make the reading worse",
         "Take the clipboard away",
-        "Chase that laugh",
+        "Fluff the pulse count",
       ],
       close: [
-        "Make him laugh",
+        "Poke at his bedside manner",
         "Tease him in front of the ward",
         "Diagnose him right back",
       ],
@@ -177,7 +172,7 @@ export default {
         "Tell him to drop the act",
       ],
       close: [
-        "Stand firm for him",
+        "Match his bluntness",
         "Tell him he's not untouchable",
         "Ask him to stop working",
       ],
@@ -188,11 +183,7 @@ export default {
       ],
     },
     neutral: {
-      new: [
-        "Give him quiet",
-        "Let him finish the chart",
-        "Say only the facts",
-      ],
+      new: ["Give him quiet", "Let him finish the chart", "Say only the facts"],
       spark: ["Let it stay a diagnosis", "Sit back down", "Say nothing"],
       close: [
         "Be patient with his silence",

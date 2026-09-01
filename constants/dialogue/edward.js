@@ -128,14 +128,14 @@ export default {
   responses: {
     kind: {
       new: [
-        "Stand firm against him",
+        "Let him be gracious",
         "Accept the courtesy",
         "Thank him for the escort",
       ],
       spark: [
         "Offer your hand",
         "Tell him you're not frightened",
-        "Let him behave, for now",
+        "Take him at his word",
       ],
       close: [
         "Let him get closer",
