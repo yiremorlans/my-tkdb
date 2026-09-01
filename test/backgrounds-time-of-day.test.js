@@ -17,11 +17,13 @@ import {
   isGeneralLocation,
   getAvailableBackgrounds,
   weightedBackgrounds,
+  getRandomBackgroundForCharacter,
   EVENING_HOUR,
   EVENING_PM_WEIGHT,
   HOUSES,
   GENERAL_LOCATIONS,
   EVENT_LOCATIONS,
+  CHARACTER_ROOMS,
 } from '../constants/backgrounds.js';
 
 // June 15 2026 is CDT (UTC-5) in America/Chicago (verified: Intl reports
@@ -103,4 +105,46 @@ test('weightedBackgrounds applies no weighting during the day (no _PM files pres
 
 test('getAvailableBackgrounds returns an empty list for an unknown location', () => {
   assert.deepStrictEqual(getAvailableBackgrounds('not-a-real-location', atHour(12)), []);
+});
+
+// getRandomBackgroundForCharacter backs /meet's spawn location — a character
+// can now land in either their house or their exclusive room, not just the
+// house (see encounters.js's buildMeetSpawnMessage).
+test('getRandomBackgroundForCharacter draws from both the house and the exclusive room', () => {
+  const character = { house: HOUSES.FROSTHEIM, exclusiveRoom: CHARACTER_ROOMS.JIN };
+  const houseFiles = new Set(getAvailableBackgrounds(HOUSES.FROSTHEIM, atHour(EVENING_HOUR - 1)));
+  const roomFiles = new Set(getAvailableBackgrounds(CHARACTER_ROOMS.JIN, atHour(EVENING_HOUR - 1)));
+
+  // Frostheim (6 day backgrounds) + Jin_Room (1 day background) = 7 total,
+  // so 200 draws makes "the room is never picked" astronomically unlikely
+  // ((6/7)^200) rather than a real chance of flaking.
+  const seenLocations = new Set();
+  for (let i = 0; i < 200; i++) {
+    const spot = getRandomBackgroundForCharacter(character, atHour(EVENING_HOUR - 1));
+    assert.ok(
+      (spot.locationKey === HOUSES.FROSTHEIM && houseFiles.has(spot.file)) ||
+        (spot.locationKey === CHARACTER_ROOMS.JIN && roomFiles.has(spot.file)),
+      `unexpected spot: ${JSON.stringify(spot)}`,
+    );
+    seenLocations.add(spot.locationKey);
+  }
+  assert.deepStrictEqual(
+    seenLocations,
+    new Set([HOUSES.FROSTHEIM, CHARACTER_ROOMS.JIN]),
+    'both the house and the exclusive room should be reachable over enough draws',
+  );
+});
+
+test('getRandomBackgroundForCharacter only draws from the house when there is no exclusive room', () => {
+  const character = { house: HOUSES.FROSTHEIM };
+  const houseFiles = new Set(getAvailableBackgrounds(HOUSES.FROSTHEIM, atHour(EVENING_HOUR - 1)));
+  for (let i = 0; i < 20; i++) {
+    const spot = getRandomBackgroundForCharacter(character, atHour(EVENING_HOUR - 1));
+    assert.strictEqual(spot.locationKey, HOUSES.FROSTHEIM);
+    assert.ok(houseFiles.has(spot.file));
+  }
+});
+
+test('getRandomBackgroundForCharacter returns null for a character with neither a house nor a room (e.g. Benkei)', () => {
+  assert.strictEqual(getRandomBackgroundForCharacter({}, atHour(12)), null);
 });

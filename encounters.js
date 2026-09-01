@@ -4,7 +4,7 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import {
   getRandomBackground,
-  getRandomBackgroundForLocation,
+  getRandomBackgroundForCharacter,
   getRandomGeneralBackground,
   isGeneralLocation,
   HOUSES,
@@ -345,11 +345,11 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
     };
   }
 
-  let spot = null;
-  if (character.house) {
-    const file = getRandomBackgroundForLocation(character.house, now);
-    if (file) spot = { locationKey: character.house, file };
-  }
+  // Pools the character's house and exclusive room together (see
+  // getRandomBackgroundForCharacter) so /meet can now land in either —
+  // previously this only ever considered the house. Falls back to a
+  // general location only for a character with neither (e.g. Benkei).
+  const spot = getRandomBackgroundForCharacter(character, now);
   const fallbackSpot = spot || getRandomGeneralBackground(now);
 
   const affinity = (await readRelationship(userId, character.id))?.affinity || 0;
