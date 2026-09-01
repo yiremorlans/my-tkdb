@@ -154,6 +154,10 @@ export const CHARACTERS = [
       "influencer",
       "teasing",
       "sharp-tongued",
+      "gossip-monger",
+      "brand-conscious",
+      "entitled",
+      "possessive",
     ],
   },
   {
