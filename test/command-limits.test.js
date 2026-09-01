@@ -55,6 +55,31 @@ test('checkCommandLimit is scoped per command — a roam cooldown does not block
   assert.strictEqual(result.allowed, true);
 });
 
+test('checkCommandLimit block message reports both commands, invoked one first', async () => {
+  const now = new Date('2026-06-15T12:00:00Z');
+  resetTable([
+    { discord_user_id: 'user-1', command_name: 'roam', last_used_at: new Date(now.getTime() - 60 * 60 * 1000).toISOString() },
+    { discord_user_id: 'user-1', command_name: 'meet', last_used_at: new Date(now.getTime() - 2 * 60 * 60 * 1000).toISOString() },
+  ]);
+  const result = await checkCommandLimit('user-1', 'roam', now);
+  assert.strictEqual(result.allowed, false);
+  const lines = result.reason.split('\n');
+  assert.match(lines[0], /^You can use \/roam again in/);
+  assert.match(lines[1], /^You can use \/meet again in/);
+});
+
+test('checkCommandLimit block message shows the other command as ready when it is off cooldown', async () => {
+  const now = new Date('2026-06-15T12:00:00Z');
+  resetTable([
+    { discord_user_id: 'user-1', command_name: 'meet', last_used_at: new Date(now.getTime() - 60 * 1000).toISOString() },
+  ]);
+  const result = await checkCommandLimit('user-1', 'meet', now);
+  assert.strictEqual(result.allowed, false);
+  const lines = result.reason.split('\n');
+  assert.match(lines[0], /^You can use \/meet again in/);
+  assert.strictEqual(lines[1], '/roam is ready now.');
+});
+
 test('checkCommandLimit fails open (allows) when the DB lookup errors', async () => {
   resetTable([]);
   fake.forceError('command_limits', 'select', { code: 'DB_DOWN', message: 'simulated outage' });

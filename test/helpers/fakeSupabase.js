@@ -1,6 +1,6 @@
 // A minimal in-memory stand-in for the @supabase/supabase-js client, covering
 // only the chainable shapes this codebase actually uses: select/insert/
-// update/upsert/delete with .eq()/.order()/.single(). Good enough to exercise
+// update/upsert/delete with .eq()/.in()/.order()/.single(). Good enough to exercise
 // db/supabase.js's logic without a real Supabase project.
 //
 // Usage:
@@ -11,7 +11,9 @@
 //   const { getRelationship } = await import('../db/supabase.js');
 
 function matches(row, filters) {
-  return filters.every(([col, val]) => row[col] === val);
+  return filters.every(([col, val, kind]) =>
+    kind === 'in' ? val.includes(row[col]) : row[col] === val,
+  );
 }
 
 export function createFakeSupabase(initialTables = {}) {
@@ -40,6 +42,7 @@ export function createFakeSupabase(initialTables = {}) {
       upsert(payload, opts) { state.op = 'upsert'; state.payload = payload; state.upsertOpts = opts; return builder; },
       delete() { state.op = 'delete'; return builder; },
       eq(col, val) { state.filters.push([col, val]); return builder; },
+      in(col, vals) { state.filters.push([col, vals, 'in']); return builder; },
       order(col, opts) { state.order = { col, opts }; return builder; },
       single() { state.single = true; return builder; },
       then(resolve, reject) { return execute(state).then(resolve, reject); },

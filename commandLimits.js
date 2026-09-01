@@ -1,5 +1,5 @@
 import {
-  getCommandLimit,
+  getCommandLimits,
   recordCommandUse,
   clearCommandLimit,
 } from './db/supabase.js';
@@ -11,6 +11,11 @@ import {
 // nothing. State lives in Supabase (command_limits), so it survives deploys and
 // restarts.
 const COOLDOWN_MS = 3 * 60 * 60 * 1000;
+
+// The commands that share this rolling cooldown. When any one of them is
+// blocked, the message reports the state of all of them, so a user who typed
+// /roam still learns where /meet stands (and vice versa).
+const RATE_LIMITED_COMMANDS = ['roam', 'meet'];
 
 // Mark a completed encounter. `command` is 'roam' or 'meet'. Fire-and-forget at
 // the call site; failures are logged, not thrown.
@@ -38,31 +43,44 @@ function formatDuration(ms) {
 // { allowed, reason }. On a Supabase error, fails open (allows the command)
 // rather than locking everyone out.
 export async function checkCommandLimit(userId, command, now = new Date()) {
-  let lastUsedRaw;
+  let timestamps;
   try {
-    lastUsedRaw = await getCommandLimit(userId, command);
+    timestamps = await getCommandLimits(userId, RATE_LIMITED_COMMANDS);
   } catch (err) {
     console.error('checkCommandLimit: failing open after lookup error:', err);
     return { allowed: true };
   }
 
-  const lastUsed = lastUsedRaw ? new Date(lastUsedRaw).getTime() : null;
-  const elapsed = lastUsed === null ? Infinity : now.getTime() - lastUsed;
+  const statusFor = (name) => {
+    const lastUsed = timestamps[name] ? new Date(timestamps[name]).getTime() : null;
+    const elapsed = lastUsed === null ? Infinity : now.getTime() - lastUsed;
+    return { name, lastUsed, elapsed, ready: elapsed >= COOLDOWN_MS };
+  };
+
+  const invoked = statusFor(command);
 
   // Never used, or the 3-hour cooldown has fully elapsed.
-  if (elapsed >= COOLDOWN_MS) {
+  if (invoked.ready) {
     return { allowed: true };
   }
 
-  // Still cooling down. Render the ready time as a Discord timestamp so it
-  // shows in each viewer's own timezone — the server clock (often UTC) is not
-  // the user's, and Discord doesn't tell us their timezone.
-  const readyAt = new Date(lastUsed + COOLDOWN_MS);
-  const readyAtTag = `<t:${Math.floor(readyAt.getTime() / 1000)}:t>`;
+  // Still cooling down. Report every rate-limited command's state, invoked one
+  // first, so the user sees both clocks whichever command they typed. Ready
+  // times render as Discord timestamps so they show in each viewer's own
+  // timezone — the server clock (often UTC) is not the user's, and Discord
+  // doesn't tell us their timezone.
+  const line = (status) => {
+    if (status.ready) return `/${status.name} is ready now.`;
+    const readyAt = new Date(status.lastUsed + COOLDOWN_MS);
+    const readyAtTag = `<t:${Math.floor(readyAt.getTime() / 1000)}:t>`;
+    return `You can use /${status.name} again in ${formatDuration(
+      COOLDOWN_MS - status.elapsed,
+    )} (around ${readyAtTag}).`;
+  };
+
+  const others = RATE_LIMITED_COMMANDS.filter((name) => name !== command).map(statusFor);
   return {
     allowed: false,
-    reason: `You can use /${command} again in ${formatDuration(
-      COOLDOWN_MS - elapsed,
-    )} (around ${readyAtTag}).`,
+    reason: [invoked, ...others].map(line).join('\n'),
   };
 }

@@ -518,23 +518,25 @@ export async function trackCommandUsage(userId, commandName) {
  */
 
 /**
- * Get a user's last-used timestamp for a rate-limited command.
- * Returns an ISO string, or null if they've never completed one.
+ * Get last-used timestamps for several rate-limited commands in one round trip.
+ * Returns an object with an entry for every name asked for: an ISO string, or
+ * null if the user has never completed that command.
  */
-export async function getCommandLimit(userId, commandName) {
+export async function getCommandLimits(userId, commandNames) {
   const { data, error } = await supabase
     .from('command_limits')
-    .select('last_used_at')
+    .select('command_name, last_used_at')
     .eq('discord_user_id', userId)
-    .eq('command_name', commandName)
-    .single();
+    .in('command_name', commandNames);
 
-  if (error && error.code !== 'PGRST116') { // PGRST116 = no rows found
-    console.error('Error fetching command limit:', error);
+  if (error) {
+    console.error('Error fetching command limits:', error);
     throw error;
   }
 
-  return data?.last_used_at || null;
+  const out = Object.fromEntries(commandNames.map((name) => [name, null]));
+  for (const row of data || []) out[row.command_name] = row.last_used_at;
+  return out;
 }
 
 /**
