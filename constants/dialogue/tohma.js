@@ -9,9 +9,9 @@ export default {
     ],
     known: [
       "You've moved from unknown to accounted for. From him, that's a promotion.",
-      "He doesn't ask your name. He logged it the first time.",
-      '"Twelve days," he notes. "That\'s the interval. I keep track."',
-      "The assessment is shorter now. He's already reached his conclusion about you.",
+      "He doesn't ask your name. He had it the first time and kept it.",
+      '"Twelve days since last time," he notes. "Yes, I keep track. It\'s rather the job."',
+      "The once-over is shorter now. He reached his conclusion about you some time ago.",
       "He nods once as you pass. It isn't nothing.",
     ],
     warm: [
@@ -20,12 +20,14 @@ export default {
       '"You\'re on time," he says, which from him is close to a compliment.',
       "He shifts to make room without ever acknowledging that he did.",
       "The report in his hands stops being urgent the moment you speak.",
+      "He pours a second cup of tea without asking whether you wanted one. You did.",
+      'The chessboard is set up between you. "Sit. I\'ll go easy. Somewhat."',
     ],
     spark: [
       "The composure holds. It is very obviously costing him something.",
       "He straightens something on your uniform with unnecessary precision.",
-      '"I\'ve run the assessment repeatedly," he says. "The result doesn\'t change."',
-      "He stands closer than protocol allows and does not correct it.",
+      '"I\'ve turned this over more than once," he says. "The answer keeps coming back the same."',
+      "He stands closer than is proper and does not correct it.",
       '"You\'re a distraction," he states, without any apparent intention of removing it.',
     ],
     close: [
@@ -38,7 +40,7 @@ export default {
     bound: [
       "He states what he wants plainly, and then is exceedingly efficient about it.",
       "He wakes at his usual hour, looks at you, and elects to be late for the first time.",
-      '"I\'ve stopped assessing you," he says. "The conclusion was reached some time ago."',
+      '"I stopped weighing you up a long while ago," he says. "The matter was settled."',
       "His hands are precise everywhere. It is deeply unfair.",
       "He holds you the way he does everything else — deliberately, and completely.",
     ],
@@ -93,18 +95,18 @@ export default {
       '"Well, well. You again. I find I don\'t mind it."',
       '"You\'re consistent. I respect consistency."',
       "\"I've adjusted my schedule. Don't read into it.\"",
-      '"Report, then. How have you been?"',
+      '"Well, then. How have you been? And the truth, this time."',
       '"There are worse interruptions than you."',
     ],
     spark: [
       '"Hold still. This will take a moment and I intend to take it."',
-      '"My focus is compromised. You are the variable. I\'ve stopped trying to correct for it."',
+      '"My focus is not what it was. You\'re the reason. I\'ve stopped trying to do anything about it."',
       "\"Closer. I'm not going to ask twice, and I'd rather not have to.\"",
-      '"That look is inefficient and I would like you to keep making it."',
+      '"That look is doing nothing for my concentration and I would like you to keep making it."',
       '"State plainly what you want. I\'ll tell you whether I want the same."',
     ],
     close: [
-      '"Well, well..I must say your company is preferred. To my surprise."',
+      '"Well, well. I must say your company is preferred. To my surprise."',
       '"I\'ve stopped calling this a coincidence. So should you."',
       '"Say it plainly. I\'d rather hear the truth from you than anything else."',
       "\"I don't make exceptions. I've made one. Draw your own conclusions.\"",
@@ -112,10 +114,10 @@ export default {
     ],
     bound: [
       "\"Stay. I've cleared the morning. I've never cleared a morning.\"",
-      '"Tell me what you want. I\'d rather be accurate about this."',
-      '"I love you. It\'s not a complicated finding. It simply took a while to confirm."',
+      '"Tell me what you want. I\'d rather not have to guess with you."',
+      '"I love you. Hardly a complicated thing to work out. It simply took me a while to say it."',
       "\"Closer. That's better. That's — yes.\"",
-      '"You are the only disorder in my life I have no intention of correcting."',
+      '"You are the one disruption to my order that I have no intention of resolving."',
     ],
   },
   approach: {
@@ -132,7 +134,7 @@ export default {
       "Return the nod",
     ],
     warm: [
-      "Report in",
+      "Check in with him",
       "Walk up to him",
       "Interrupt him anyway",
       "Ask what he's working on",
@@ -140,7 +142,7 @@ export default {
     spark: [
       "Hold still",
       "Be the distraction",
-      "Step inside protocol",
+      "Step past his manners",
       "State what you want",
     ],
     close: [
@@ -176,7 +178,7 @@ export default {
       bound: [
         "Say it back plainly",
         "Let him be late",
-        "Tell him the finding is mutual",
+        "Tell him it goes both ways",
       ],
     },
     playful: {
@@ -187,8 +189,8 @@ export default {
       ],
       spark: [
         "Compromise his focus",
-        "Break protocol on purpose",
-        "Ask for the assessment",
+        "Break a rule on purpose",
+        "Ask what he's concluded",
       ],
       close: [
         "Crack through his mask",
@@ -205,12 +207,12 @@ export default {
       new: [
         "Hold your own",
         "Give him a straight answer",
-        "Refuse to be assessed",
+        "Refuse the once-over",
       ],
       spark: [
         "Say plainly what you want",
         "Close the last step",
-        "Tell him to stop correcting",
+        "Tell him to stop holding back",
       ],
       close: [
         "Demand the truth from him",
@@ -232,7 +234,7 @@ export default {
       spark: [
         "Let him recompose",
         "Give him nothing",
-        "Stand at regulation distance",
+        "Keep a proper distance",
       ],
       close: [
         "See what he won't say",

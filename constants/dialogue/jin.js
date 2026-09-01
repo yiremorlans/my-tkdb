@@ -82,7 +82,7 @@ export default {
       '"Don\'t just stand there like an idiot. Hurry up."',
       '"Frostheim does not entertain wanderers. Explain yourself, servant."',
       '"Get to the point. The trash here is so long-winded."',
-      '"Speak quickly. I am not in the habit of waiting."',
+      '"Speak quickly. I don\'t like to wait."',
     ],
     known: [
       '"You. I remember you. Don\'t let it go to your head."',
@@ -94,7 +94,7 @@ export default {
     warm: [
       '"Your presence is... tolerable."',
       '"You again. Sit, if you must. Don\'t touch anything."',
-      '"I did not summon you. But you may stay."',
+      '"I didn\'t summon you. But you can stay."',
       '"Hmph. At least you had the sense to come to me directly."',
       "\"Don't stand in the doorway. You're letting the cold out.\"",
     ],

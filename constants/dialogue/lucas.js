@@ -84,7 +84,7 @@ export default {
       "\"You're here 10 minutes early — I'm impressed. Let's check the details for today's mission.\"",
     ],
     known: [
-      '"Ah — it\'s you. I mean, of course it is. Hello."',
+      '"Ah — it\'s you. Good. I\'d hoped it would be."',
       "\"You've been coming by more often. That's... that's good.\"",
       '"Do I find it tough training every day? Those with strength have a duty to use it for others. I\'m perfectly all right."',
       '"I invited Kaito to train with me, but he turned me down. I\'m worried about his lack of strength..."',

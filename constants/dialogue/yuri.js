@@ -8,22 +8,22 @@ export default {
       '"You should feel honored to be chosen as the test subject of Dr. Yuri Isami, genius and visionary!"',
     ],
     known: [
-      "He's stopped calling you a novice. He hasn't replaced it with anything yet.",
+      "He's stopped calling you 'worm.' He hasn't replaced it with anything yet.",
       "There's a second chair in the lab. He'll insist it has always been there.",
-      '"Are you injured or ill? Oh dear, how unfortunate. I shall begin the experi— Ahem, the treatment right away."',
+      '"Are you injured or ill? Oh dear, how unfortunate. I shall begin the experi— Ahem, the treatment, immediately."',
       "He notes something about you in the margin, and covers it when you look.",
       "The insults have gotten more specific, which means he's been paying attention.",
     ],
     warm: [
-      "His cold demeanor cracks slightly—there's obsession in his eyes now, the drive to save you consuming him.",
+      "His cold demeanor cracks slightly — there's obsession in his eyes now, the drive to save you consuming him.",
       "He has a new set of notes. Every page of them is about you.",
-      '"You\'re late," he snaps, having clearly rearranged his entire evening.',
+      '"Where on earth have you been, worm?" he snaps. "Next time you take a leave of absence, you inform me in advance."',
       "He shoves a bottle at you without a word. It's the good painkiller. He'd deny caring.",
       "He turns bright red mid-sentence and blames the lab lighting.",
     ],
     spark: [
       "He takes your pulse for the fourth time today. It's fine. It's always fine.",
-      "He goes crimson, blames the lab lighting, and does not move away.",
+      "He's gone red to the tips of his ears and has not taken his hand back.",
       '"Purely clinical," he mutters, with his hand still on your face.',
       "The insults have gone quiet. What replaced them is much harder for him.",
       "He leans in to examine something, and forgets to invent a reason.",
@@ -32,7 +32,7 @@ export default {
       '"I\'ll find your cure," he says with absolute conviction, "because I\'m the only one capable enough. And you\'re mine to save."',
       "He's asleep at the bench over your file. He'd rather die than let you say so.",
       '"Don\'t you dare thank me," he warns, ears scarlet. "I\'m not doing it for gratitude."',
-      "The insults keep coming, and every single one of them means something kinder.",
+      "He's stopped flinching when you reach for your coat. He hadn't noticed he was doing it until it stopped.",
       "He grips your wrist a moment too long, checking a pulse he already knows is fine.",
     ],
     bound: [
@@ -40,12 +40,12 @@ export default {
       '"Don\'t look at me like that," he snaps, already crossing the lab toward you.',
       "He falls asleep on your chest mid-argument and would deny it under oath.",
       "He kisses you like it's a problem he intends to solve thoroughly and repeatedly.",
-      "The insults have become endearments. He'd rather die than have that pointed out.",
+      '"Stay," is all he says now, where he used to build a whole excuse around the word.',
     ],
   },
   temperamentDialogue: {
     new: [
-      '"A novice stumbles in. How amusing."',
+      '"A test subject wanders in of its own accord. How convenient."',
       '"Don\'t touch that. Or that. Honestly, just stand still."',
       '"Are you here to be useful, or to be a variable?"',
       '"Hm. Poor posture, poor sleep, poor decisions. Textbook."',
@@ -80,7 +80,7 @@ export default {
       '"I will solve this. You don\'t get to give up before I do."',
     ],
     bound: [
-      '"Get over here. No — I\'m not asking. Get over here."',
+      '"You belong to me. I won\'t hand you to another researcher — " He stops cold. "N-No. You\'ve misunderstood. I merely —"',
       '"I love you. There. I said it. Never bring it up again. ...Bring it up again."',
       "\"You're impossible and I've stopped wanting you to be anything else.\"",
       "\"Stay the night. The lab's cold. That's the reason. That's the only reason.\"",
@@ -121,11 +121,31 @@ export default {
     ],
   },
   responses: {
+    // kind is Yuri's real channel (affinityByResponse.kind = 2): steady,
+    // unsentimental care he never has to perform anything back for — telling
+    // him to sleep, letting "worm" slide, not laughing at the novel he hides,
+    // being gentle with the fear of failure under the bravado. playful reaches
+    // him too (1): he flusters more easily than anyone in the script, so
+    // teasing lands and is half the fun — it just makes him sputter and re-arm
+    // rather than open up. bold glances off (0): a blunt challenge to his
+    // genius or a refusal to be his specimen hits the one nerve he can't
+    // defend and makes him bombastic instead of honest — not dislike, just the
+    // move that doesn't get through.
     kind: {
       new: [
-        "Don't take it so hard",
+        "Let the 'worm' slide",
         "Thank him anyway",
-        "Let the insult slide",
+        "Tell him to get some sleep",
+      ],
+      known: [
+        "Take the second chair",
+        "Don't laugh at the novel",
+        "Say the research can wait",
+      ],
+      warm: [
+        "Take the painkiller",
+        "Sleep — doctor's orders",
+        "Let him fuss over your pulse",
       ],
       spark: [
         "Let him keep pretending",
@@ -133,7 +153,7 @@ export default {
         "Be gentle about the blush",
       ],
       close: [
-        "Show him his care shows",
+        "Say the next one won't fail",
         "Tell him to sleep",
         "Say the thanks he forbade",
       ],
@@ -146,14 +166,20 @@ export default {
     playful: {
       new: [
         "Tease him carefully",
-        "Touch the thing he said not to",
+        "Touch what he said not to",
         "Be a deliberate variable",
       ],
-      spark: [
-        "Laugh anyway",
-        "Take his pulse instead",
-        "Call it clinical too",
+      known: [
+        "Read his margin notes aloud",
+        "Claim the second chair",
+        "Ask what counts as 'lowbrow'",
       ],
+      warm: [
+        "Blame the lab lighting",
+        "Show up late on purpose",
+        "Quote his novel back at him",
+      ],
+      spark: ["Laugh anyway", "Take his pulse instead", "Call it clinical too"],
       close: [
         "Make him laugh despite himself",
         "Fluster him on purpose",
@@ -167,9 +193,19 @@ export default {
     },
     bold: {
       new: [
-        "Challenge him back",
+        "Talk back to the genius",
         "Poke a hole in his logic",
         "Refuse to be his specimen",
+      ],
+      known: [
+        "Say the bravado's showing",
+        "Demand he say what he means",
+        "Push past the lab-coat act",
+      ],
+      warm: [
+        "Say he was clearly waiting",
+        "Name the savior complex",
+        "Match his volume",
       ],
       spark: [
         "Close the distance yourself",
@@ -189,21 +225,19 @@ export default {
     },
     neutral: {
       new: ["Give him space", "Let him work", "Answer only what's asked"],
-      spark: [
-        "Let it stay clinical",
-        "Move away first",
-        "Say nothing at all",
+      known: [
+        "Take the chair quietly",
+        "Let him finish his notes",
+        "Say nothing",
       ],
+      warm: ["Let it stay clinical", "Sit in the lab quietly", "Don't name it"],
+      spark: ["Let it stay clinical", "Move away first", "Say nothing at all"],
       close: [
         "Understand his withdrawal",
         "Sit quietly in the lab",
         "Let him pretend it's nothing",
       ],
-      bound: [
-        "Let him pretend it's the cold",
-        "Say nothing",
-        "Let him sleep",
-      ],
+      bound: ["Let him blame the cold", "Say nothing", "Let him sleep"],
     },
   },
 };

@@ -121,11 +121,21 @@ export default {
     bound: ["Close the door", "Come here", "Stay", "Let him lean back"],
   },
   responses: {
+    // kind is Mio's channel (affinityByResponse.kind = 2): he pours care outward
+    // and waves off anything coming back ("Make sure you give yourself a break",
+    // "I don't need much sleep", "bit of spit and it'll heal"), so noticing him,
+    // telling him to rest, and letting him lean is what actually lands. playful
+    // reaches him too (1): dry banter and fake-scares ("Boo! Ha ha, did I scare
+    // you?") are a register he enjoys, but they double as his deflection, so
+    // they land softer. bold glances off (0): he can't finish his own confession
+    // ("This one keeps not coming out") and undercuts sincerity the moment it
+    // turns heavy, so a blunt push reads as the player pressing and Mio easing
+    // back rather than meeting it.
     kind: {
       new: [
-        "Show appreciation for him",
-        "Thank him for making room",
         "Notice how much he does",
+        "Tell him to actually rest",
+        "Thank him, and mean it",
       ],
       spark: [
         "Give him your hand",
@@ -146,7 +156,7 @@ export default {
     playful: {
       new: [
         "Share a laugh",
-        "Poke at the tiny gears",
+        "Fake-scare him back",
         "Give him a fake emergency",
       ],
       spark: ["Sit closer still", "Catch him looking again", "Wind him up"],
@@ -163,9 +173,9 @@ export default {
     },
     bold: {
       new: [
-        "Express yourself boldly",
-        "Ask him for a favor",
         "Say you came just for him",
+        "Ask him for a favor",
+        "Hold his gaze",
       ],
       spark: [
         "Stay past closing",
@@ -188,7 +198,7 @@ export default {
       spark: [
         "Let him find the words",
         "Let go first",
-        "Let the workshop tick",
+        "Let the phone ring",
       ],
       close: [
         "Sit with him",

@@ -38,15 +38,40 @@ export const CHARACTERS = [
       uniform: "Jin_Kamurai_Uniform.png",
       casual: "Jin_Kamurai_Casual.png",
     },
+    // bold is what actually reaches Jin (affinityByResponse.bold = 2). The
+    // Himedere/Oujidere crown only comes off for someone who meets him as an
+    // equal and refuses to be dismissed: "You've got guts abandoning your
+    // place at my back, servant" and "You want to practice the waltz? Bold,
+    // aren't you?" are approval, not reproach, and he says outright that
+    // deference bores him — "A party? I don't waste air on bootlickers",
+    // "Kneel! Tsk..." kind lands too (1): once he's let you close he leans
+    // into being looked after — the standing order to wake him every morning
+    // ("that's an order"), "Massage me, servant", "Your house is too far.
+    // Stay here tonight" — and the Max Affinity line ("I don't take you being
+    // here for granted. I know it won't last forever") wants gentleness in
+    // reply, not a push. playful lands worst (0): he does the teasing himself
+    // and has no patience for it lobbed back — "...Get to the point. The trash
+    // here is so long-winded", "Spit it out", "Why are you so chatty today?
+    // Just pour my tea", "Just arrange it around me" — so banter as a reply is
+    // one more thing he has to sit through. Note this is "didn't resonate,"
+    // not dislike.
     affinityByResponse: { kind: 1, playful: 0, bold: 2 },
     archetype: ["Himedere", "Oujidere"],
     keywords: [
-      "arrogant",
-      "high-status",
-      "treats others as servants",
-      "short-spoken",
-      "protective",
-      "aristocratic",
+      "Frostheim captain",
+      "imperious — calls you 'servant', 'peasant'",
+      "commands, never asks ('Kneel!', 'That's an order')",
+      "old-money heir — private helicopter, personal chef",
+      "classically raised — waltz, piano duets, dining etiquette",
+      "short-tempered, no patience for long-windedness",
+      "despises bootlickers, respects guts",
+      "tsundere generosity ('take it before I change my mind')",
+      "smokes",
+      "a betrayed figurehead under the crown",
+      "knows nothing good lasts",
+      "possessive — 'you wear my name well'",
+      "protective — 'your place at my back'",
+      "keeps Tohma as his attendant",
     ],
   },
   {
@@ -58,15 +83,30 @@ export const CHARACTERS = [
       uniform: "Kaito_Fuji_Uniform.png",
       casual: "Kaito_Fuji_Casual.png",
     },
-    affinityByResponse: { kind: 1, playful: 2, bold: 0 },
+    // kind is what actually reaches Kaito (affinityByResponse.kind = 2):
+    // under the loud grin the script is one long plea for reassurance — "Am
+    // I being annoying?! I'm sorry!", "why am I such a moron?!", "It's not
+    // like me being there is any help to anyone", the Welcome Back "Please
+    // don't leave me again", and the Max Affinity "I know I'm weak, and a
+    // coward. But I really do want to become your knight in shining armor" —
+    // all of it wants warmth back, not a bit or a push. playful lands
+    // second (1): the surface is real too — WickHive leaks, "it's all over
+    // TikTok", meme-sharing, the "winn... er, earnings" bravado you can
+    // bounce off of. bold lands worst (0): he's a coward by his own account
+    // — bails before Luca can "rope me in", dreads a summons from Tohma,
+    // "time to man up and bite the bullet... Nope, absolutely not, can't do
+    // it!" — so a blunt or demanding advance just makes him feel smaller.
+    affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Bakadere"],
     keywords: [
-      "excitable",
-      "clumsy",
-      "loud",
-      "expressive",
+      "self-deprecating",
+      "anxious",
+      "cowardly",
+      "gambling debt",
+      "social-media-obsessed",
+      "makes sweets",
+      "clingy",
       "good-hearted",
-      "enthusiastic",
     ],
   },
   {
@@ -79,15 +119,40 @@ export const CHARACTERS = [
       uniform: "Lucas_Errant_Uniform.png",
       casual: "Lucas_Errant_Casual.png",
     },
+    // kind is what actually reaches Lucas (affinityByResponse.kind = 2): the
+    // script is a boy who looks after everyone but himself — "you need to make
+    // sure you eat a proper breakfast", "rest is the best medicine", the worry
+    // over Kaito's strength — while punishing himself with training he calls
+    // never enough ("I haven't trained nearly enough... I have to do more").
+    // A partner who turns that care back on him and meets the grief gently
+    // ("yet again, I've failed to protect the people most important to me";
+    // "please don't make that face") is the one who gets through. bold lands
+    // second (1): under the courtesy is a hard, duty-bound resolve — "those
+    // with strength have a duty to use it for others", "this is the only path
+    // left", "I'm not always as harmless as I let people believe", "sometimes
+    // I feel out of sorts, like I'm not myself" — and a partner who doesn't
+    // flinch at that side and stands level with it reaches him where softness
+    // alone can't. playful lands worst (0): there is almost no play in him —
+    // he takes "pajama party" and "Penny for them?" in complete earnest — so
+    // banter volleyed back is received politely but doesn't land. Note this is
+    // "didn't resonate," not dislike.
     affinityByResponse: { kind: 2, playful: 0, bold: 1 },
     archetype: ["Dandere", "Pure Angel"],
     keywords: [
       "polite",
       "soft-spoken",
-      "innocent",
-      "protective",
+      "old-world British courtesy",
+      "apologizes for taking up space",
       "gentle",
       "sincere",
+      "fiercely protective",
+      "'those with strength have a duty to use it for others'",
+      "self-sacrificing — 'the only path left'",
+      "trains himself past exhaustion to subjugate demons",
+      "tends everyone's wellbeing but his own",
+      "haunted by those he couldn't protect",
+      "a darker self he keeps leashed",
+      "earnestly curious about Japanese folklore",
     ],
   },
   {
@@ -101,15 +166,47 @@ export const CHARACTERS = [
       uniform: "Tohma_Ishibashi_Uniform.png",
       casual: "Tohma_Ishibashi_Casual.png",
     },
-    affinityByResponse: { kind: 2, playful: 0, bold: 1 },
+    // kind is what actually reaches Tohma (affinityByResponse.kind = 2): he does
+    // all the caretaking in the script and none of it comes back to him — "Take
+    // care not to overdo it today... I can tell at a glance that you're
+    // fatigued", "Good health is the greatest treasure... Good night, I'll
+    // finish up here", "If something is concerning you, perhaps I could lend an
+    // ear". The beats where the butler's guard drops all want warmth in reply,
+    // not wit or a push: the tired "I've no interest in hearing your excuses",
+    // the Goodnight LVL 24 "Forgetting about everything I've got to do and be,
+    // just for a night... It's not a bad feeling", the Max Affinity "turn to
+    // those around you for help. I will be there to keep you safe". playful
+    // lands too (1): the sly courtier runs through the whole script — the "Well,
+    // well" with a sly smile, the jokes that aren't quite jokes ("Would you
+    // like some? ...I assure you, it's not poisoned"), "I can show you how to
+    // win — against opponents other than myself, of course", "Ignoring me, are
+    // you? You've certainly got guts" — so a partner who volleys the banter
+    // back is meeting him where he plays. bold lands worst (0): his whole
+    // surface is unflappable courtesy and smooth deflection — "I've nothing but
+    // the noblest of intentions", "it's nothing serious... whatever do you
+    // mean?", "This conversation never happened. Understand?" — so a blunt,
+    // demanding advance slides off it, received graciously but not what moves
+    // him. Note this is "didn't resonate," not dislike. (Was playful 0 / bold 1:
+    // that read him as an enforcer — "blunt", "rule-focused", "lawful neutral" —
+    // which the script contradicts. He turns a blind eye to curfew, signs you
+    // back in, works in the shadows, and never speaks bluntly in his life.)
+    affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Kuudere"],
     keywords: [
-      "serious",
-      "blunt",
-      "rule-focused",
-      "lawful neutral",
-      "composed",
-      "mission-oriented",
+      "eloquent",
+      "formal, old-fashioned courtesy",
+      "composed, hard to read",
+      "devoted attendant to Jin ('our king')",
+      "butler-ish caretaking — tea, chess, sleep, schedules",
+      "offers a sympathetic ear",
+      "sly, dark humor",
+      "says 'Honestly.' and 'Well, well'",
+      "secretive fixer — 'this conversation never happened'",
+      "eavesdrops, keeps track",
+      "ends justify means — 'any means necessary'",
+      "disciplinarian mentor, high standards",
+      "moves in high society",
+      "quietly protective",
     ],
   },
 
@@ -308,15 +405,38 @@ export const CHARACTERS = [
     lastName: "Pratt",
     house: HOUSES.DIONYSIA,
     images: { uniform: "Elias_Pratt_Uniform.png" },
+    // kind is what actually reaches Elias (affinityByResponse.kind = 2): the
+    // voiceline script is a tired caretaker who is quietly lonely under the
+    // charm — he buys snacks "for everyone in the dorm", makes the coffee,
+    // sets out the somen bamboo, tells you to "go ahead and rest first", and
+    // drops his guard only to admit small aches: "I was lost in thought... I
+    // didn't even realize you were here", "I don't dislike quiet nights... but
+    // right now I feel a little unsatisfied", "I only hope these peaceful days
+    // can last forever". Genuine warmth and being noticed is what lands.
+    // playful is real but secondary (1): he deflects with a coy wink rather
+    // than escalating — "What we talked about? Secret", "Up late tonight?
+    // Hehe. Bad kid", "My true self? I'll leave that to your imagination", the
+    // candy he keeps offering you. bold lands worst (0): nothing in the script
+    // pushes or dares, and even his one forward line is a soft, lonely
+    // invitation — "You can't sleep? ...Would you keep me company for just one
+    // drink?" — so a blunt or demanding advance meets only courtly deflection.
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Kuudere", "Shundere"],
     keywords: [
-      "charming southern gentleman",
-      "manipulative",
-      "former captain",
-      "tired",
-      "demoted",
-      "smooth-talking",
+      "unhurried Southern-gentleman drawl",
+      "calls you 'sugar'",
+      "easy charm worn as armor over a hidden self",
+      "guards his true self — 'leave that to your imagination'",
+      "former Dionysia captain, quietly demoted",
+      "runs errands and odd jobs for Jo",
+      "ex-campus-janitor, still tidies from habit",
+      "quietly looks after the whole dorm",
+      "always working a lollipop or candy",
+      "world-weary, often lost in thought",
+      "melancholy under the ease",
+      "out of practice, doubts he can keep up on missions",
+      "treasures the peace, dreads it ending",
+      "unruffled by the macabre",
     ],
   },
   {
@@ -328,15 +448,41 @@ export const CHARACTERS = [
       uniform: "Jo_Kongoza_Uniform.png",
       casual: "Jo_Kongoza_Casual.png",
     },
+    // kind is what actually reaches Jo (affinityByResponse.kind = 2): the
+    // script runs on work as avoidance — "review the proposal, adjust the
+    // schedule, check the program lineup, calculate the budget... 24 hours
+    // just isn't enough", and the Night LVL 18 tell, "When I'm working, I
+    // don't have to think about anything unnecessary." He pours care outward
+    // (snacks for the dorm, sending you to check on Elias and Shion, "turn
+    // the good and the bad into fuel for yourself", the secret hot milk at
+    // LVL 24) and never lets it come back. A partner who notices the tired
+    // under the competence and makes him stop is the one who gets in. bold
+    // lands second (1): he leads Dionysia but defaults to yielding — "People
+    // don't change that easily, so it's usually easier to be the one who
+    // adapts" — and answers directness in kind, from the LVL 23 "No. I'm
+    // taking you home" to the Max Affinity "So then — how are you going to
+    // take responsibility?" Someone who meets him level and won't be managed
+    // around registers. playful lands worst (0): the charisma is real but the
+    // register is calm, weary and earnest, not a banter volley — teasing him
+    // back glances off the workload armor instead of getting under it. Note
+    // this is "didn't resonate," not dislike.
     affinityByResponse: { kind: 2, playful: 0, bold: 1 },
     archetype: ["Charismatic Oujidere"],
     keywords: [
       "brilliant performer",
-      "commands attention",
-      "Venus of Dionysia",
-      "transformation artifact",
-      "beautiful",
-      "legendary",
+      "legendary Venus of Dionysia",
+      "transformation artifact — a look for any venue",
+      "Dionysia dorm leader, co-runs the house with Mio",
+      "effortless charisma, commands a room",
+      "calls you 'cutie'",
+      "calm, measured, unshowy off the stage",
+      "workaholic — buries feeling in the workload",
+      "over-shoulders responsibility, would rather do it himself",
+      "caretaker of a house of eccentrics",
+      "adapts to others by default",
+      "disciplined routine — daily jog, strength training",
+      "gently protective, quietly firm when it counts",
+      "weary under the competence",
     ],
   },
   {
@@ -345,16 +491,39 @@ export const CHARACTERS = [
     lastName: "Susuhara",
     house: HOUSES.DIONYSIA,
     images: { uniform: "Mio_Susuhara_Uniform.png" },
+    // Verified against his voiceline script. kind is what actually reaches him
+    // (affinityByResponse.kind = 2): the whole script is someone who pours care
+    // outward and waves it off when it comes back — "Takes one to know one. Make
+    // sure you give yourself a break", "I'm good, though. I don't need much
+    // sleep", "bit of spit and it'll heal", plus the Welcome Back and Max
+    // Affinity lines ("You disappearing really did make way more work for me...
+    // Ha ha, kidding. Mostly", "When I'm with you, I... Sorry, never mind"), so
+    // being noticed, told to rest, and let to lean is what lands. playful lands
+    // second (1): he trades dry banter and fake-scares ("Boo! Ha ha, did I scare
+    // you?", the picture-book bit) and you can bounce off him, but every "Ha ha,
+    // kidding" walks back something real, so it's his deflection as much as real
+    // play. bold lands worst (0): he can't finish his own confession ("This one
+    // keeps not coming out") and undercuts sincerity the moment it turns heavy,
+    // so a blunt or demanding advance is received kindly but slides off.
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
-    archetype: ["Deredere"],
+    // Dandere over Deredere: the underlying disposition is genuinely loving, but
+    // he never says the warm thing outright — he undercuts it every time.
+    archetype: ["Dandere", "Deredere"],
     keywords: [
       "reliable",
       "loyal",
       "clockwork artisan",
-      "glue of the group",
-      "socially aware",
-      "smooth",
-      "mediator",
+      "roving campus handyman",
+      "contraption-builder",
+      "overworked, runs on little sleep",
+      "deflects concern about himself",
+      "redirects care to others",
+      "safety-minded and protective",
+      "defuses conflict",
+      "put-upon caretaker of Shion",
+      "older-sibling instinct",
+      "dry, understated affection",
+      "can't voice his feelings",
     ],
   },
   {
@@ -363,16 +532,43 @@ export const CHARACTERS = [
     lastName: "Genkai",
     house: HOUSES.DIONYSIA,
     images: { uniform: "Shion_Genkai_Uniform.png" },
+    // Verified against his voiceline script. bold is what actually reaches Shion
+    // (affinityByResponse.bold = 2): the yandere/sadodere wants to be met, not
+    // soothed. "Come closer. You're still too far away. Closer." rewards
+    // someone who closes the distance instead of running; "Come to see me,
+    // have you? With no clue what I might do to you... Foolish girl." and
+    // "You're getting bold just 'cause you're my wife, aren't you?" are
+    // approval, and Noon LVL 21 demands she talk back ("you better start
+    // wagging that tongue before I lose my temper"). A partner who steps in,
+    // doesn't flinch, and claims him back is the one who lands. playful lands
+    // second (1): his own play is cruel and childish — worms in Mio's toolbox,
+    // "You want a bite? ...Keep dreaming", scaring people "for a laugh", the
+    // flat "Ha ha ha..." — so matching the mischief reaches him, it just
+    // doesn't cut as deep as being met head-on. kind lands worst (0):
+    // gentleness bores him ("Why've you gone all quiet? This is boring. I'm
+    // going home.") and softness gets no purchase; his tender beats (Goodnight
+    // LVL 24's fear of the dark, "She's my family. I've got to cherish her.")
+    // are him lowering his guard, not answering being coddled. "Didn't
+    // resonate," not dislike. (Was keyworded "theatrical" — the script has no
+    // performer in it: he's terse, plain, and childish, and lurks the
+    // Heebie-Jeebie House to frighten people, not to put on a show.)
     affinityByResponse: { kind: 0, playful: 1, bold: 2 },
     archetype: ["Yandere", "Sadodere"],
     keywords: [
-      "obsessive",
-      "protective",
-      "loves to watch suffering",
-      "dangerous",
-      "intense",
-      "theatrical",
-      "cruel",
+      "obsessive yandere — calls you 'my wife', talks of 'forever'",
+      "possessive, territorial — 'Who was that man? I'll remember his face'",
+      "no sense of personal space — 'Closer. Closer.'",
+      "blunt, flat, childish register — short sentences, Irish lilt ('shite', \"'cause\", 'mightn't')",
+      "petulant — sulks over a missed breakfast, guilt-trips ('Don't you feel sorry for me?')",
+      "loves to watch fear and suffering — 'the life fading right out of his skin'",
+      "frightens people for fun around the Heebie-Jeebie House",
+      "casual gruesome imagery — stitching mouths shut, 'a bite of this flesh'",
+      "keeps a disturbing pet",
+      "devoted to his found family (Mio, Jo, Elias); rejects blood ties as 'hateful shackles'",
+      "Mio's older brother and constant burden",
+      "sadistic streak — 'If you want me to make you cry, come back later'",
+      "lullaby motif — 'You mightn't ever wake up after it, mind'",
+      "hates the night — 'it's hot, it hurts, it's hard to breathe'",
     ],
   },
 
@@ -407,15 +603,47 @@ export const CHARACTERS = [
       uniform: "Yuri_Isami_Uniform.png",
       casual: "Yuri_Isami_Casual.png",
     },
-    affinityByResponse: { kind: 1, playful: 0, bold: 2 },
-    archetype: ["Sadodere", "Hinedere"],
+    // kind is what actually reaches Yuri (affinityByResponse.kind = 2). The
+    // "genius and visionary" act is armor bolted over a terror of failure and
+    // loss — the opening cutscene is his life's research in flames and a small
+    // voice saying "Goodbye... Mama"; Goodnight LVL 24 is "My next surgery must
+    // be a success... I cannot afford another failure"; Night LVL 23 is him
+    // chanting his own name to stay upright ("There is no life I can't save...
+    // There can't be..."). What gets under the bravado is steady, unsentimental
+    // care he would never ask for: telling him to sleep (his own "lack of sleep
+    // is the root of all illness" turned back on him), letting "worm" slide,
+    // not laughing at the isekai medical novel he hides. playful lands second
+    // (1): he is the script's biggest fluster machine — "Good morning, M... M...
+    // My", "Wh-Where did you come from!?", the Max Affinity meltdown ("You
+    // belong to me... N-N-N-No, you've misunderstood!") — so teasing genuinely
+    // lands, it just makes him sputter and re-arm rather than open up. bold
+    // lands worst (0): his rawest nerve is his intellect and status going
+    // unacknowledged ("You should feel honored", "make a genius like myself
+    // wait around", Frostheim "kneeling before me"), so a blunt challenge to
+    // his logic or a refusal to be his specimen hits exactly there and makes
+    // him bombastic instead of honest. "Didn't resonate," not dislike. The
+    // inverse of his housemate Jiro (kind 1 / bold 2), whose calm has no armor
+    // to tease and so meets directness head-on.
+    affinityByResponse: { kind: 2, playful: 1, bold: 0 },
+    archetype: ["Hinedere", "Bodere"],
     keywords: [
-      "cynical",
-      "medical genius",
-      "cold",
-      "easily flustered",
-      "callous exterior",
-      "mocking",
+      "self-proclaimed genius and visionary",
+      "grandiose, theatrical bravado",
+      "mad-scientist menace — 'the experi— ahem, treatment'",
+      "calls you 'worm' / 'test subject' / 'specimen'",
+      "Mortkranken house captain",
+      "shouts for his ghoul Jiro constantly",
+      "experiments on Jiro under the guise of treatment",
+      "savior complex — obsessed with preserving every life",
+      "terror of failure and inadequacy under the bravado",
+      "lost his lab and research to a fire",
+      "cries for 'Mama' / Slavic mad-scientist cackle",
+      "no fighter — sends Jiro on missions in his stead",
+      "diligent student — 'all studies are linked'",
+      "easily flustered — stammers and goes red",
+      "hides an isekai medical light novel",
+      "possessive over his patients — 'you belong to me'",
+      "Frostheim rivalry",
     ],
   },
 

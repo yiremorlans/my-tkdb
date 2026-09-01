@@ -17,7 +17,7 @@ export default {
     warm: [
       "He puts down his notes when he hears you. There's a shift in his expression—focused, but this time on you.",
       '"Sit," he says, gesturing at the chair he\'s apparently started leaving clear.',
-      'He\'s favoring one side. "Sutures pulled loose. From the Clash. I should get back to Mortkranken — Yuri needs to redo them."',
+      'He\'s favoring one side. "Sutures pulled loose. I should get back to Mortkranken — Yuri needs to redo them."',
       "The laugh escapes before he can stop it. It's an unfairly good laugh.",
       "He's short with everyone in the ward today. Not with you. He noticed that too.",
     ],
