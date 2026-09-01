@@ -72,6 +72,34 @@ export function getRelationshipLevel(affinity) {
   return current;
 }
 
+// How many segments the /affinity progress bar is drawn with.
+export const PROGRESS_BAR_SEGMENTS = 10;
+
+// Progress from the current relationship level toward the next one, as a 0..1
+// ratio — enough to draw a bar without ever exposing raw affinity points.
+// At the top level there is no next level, so `nextLevel` is null and the
+// ratio is a full 1.
+export function getRelationshipProgress(affinity) {
+  const value = Number.isFinite(affinity) ? affinity : 0;
+  const level = getRelationshipLevel(value);
+  const index = RELATIONSHIP_LEVELS.findIndex((l) => l.name === level.name);
+  const nextLevel = RELATIONSHIP_LEVELS[index + 1] || null;
+
+  if (!nextLevel) return { level, nextLevel: null, ratio: 1 };
+
+  const span = nextLevel.min - level.min;
+  const ratio = span > 0 ? (value - level.min) / span : 0;
+  return { level, nextLevel, ratio: Math.max(0, Math.min(1, ratio)) };
+}
+
+// A text progress bar like "██████░░░░". `filled` uses floor so a full bar
+// only ever means the next level has actually been reached, never "almost".
+export function renderProgressBar(ratio, segments = PROGRESS_BAR_SEGMENTS) {
+  const clamped = Math.max(0, Math.min(1, Number.isFinite(ratio) ? ratio : 0));
+  const filled = Math.floor(clamped * segments);
+  return '█'.repeat(filled) + '░'.repeat(segments - filled);
+}
+
 // Groups relationship levels into dialogue tiers — see CHARACTERS'
 // `dialogue` collections in constants/characters.js. Fewer tiers than levels,
 // so several levels share a set of lines. 'known' keeps Acquaintance off the

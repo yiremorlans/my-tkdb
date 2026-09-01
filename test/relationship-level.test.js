@@ -1,7 +1,14 @@
 // Pure logic: affinity -> relationship level -> dialogue tier. No DB, no I/O.
 import { test } from 'node:test';
 import assert from 'node:assert';
-import { getRelationshipLevel, getDialogueTier, RELATIONSHIP_LEVELS } from '../constants/game.js';
+import {
+  getRelationshipLevel,
+  getDialogueTier,
+  getRelationshipProgress,
+  renderProgressBar,
+  RELATIONSHIP_LEVELS,
+  PROGRESS_BAR_SEGMENTS,
+} from '../constants/game.js';
 
 test('getRelationshipLevel returns Stranger below the first threshold', () => {
   assert.strictEqual(getRelationshipLevel(0).name, 'Stranger');
@@ -44,4 +51,39 @@ test('getDialogueTier maps every real relationship level to a known tier', () =>
 test('getDialogueTier falls back to "new" for an unrecognized level name', () => {
   assert.strictEqual(getDialogueTier('Nonexistent Level'), 'new');
   assert.strictEqual(getDialogueTier(undefined), 'new');
+});
+
+test('getRelationshipProgress reports the ratio between the current and next level', () => {
+  // Friend is 50, Close Friend is 100 — 75 is exactly halfway.
+  const { level, nextLevel, ratio } = getRelationshipProgress(75);
+  assert.strictEqual(level.name, 'Friend');
+  assert.strictEqual(nextLevel.name, 'Close Friend');
+  assert.strictEqual(ratio, 0.5);
+});
+
+test('getRelationshipProgress clamps to 0 at the bottom of a band and for negative affinity', () => {
+  assert.strictEqual(getRelationshipProgress(50).ratio, 0); // exactly on Friend
+  assert.strictEqual(getRelationshipProgress(-100).ratio, 0);
+  assert.strictEqual(getRelationshipProgress(-100).level.name, 'Stranger');
+});
+
+test('getRelationshipProgress has no next level and a full ratio at the top', () => {
+  const { level, nextLevel, ratio } = getRelationshipProgress(100000);
+  assert.strictEqual(level.name, 'Soulbound');
+  assert.strictEqual(nextLevel, null);
+  assert.strictEqual(ratio, 1);
+});
+
+test('getRelationshipProgress tolerates non-finite affinity', () => {
+  assert.strictEqual(getRelationshipProgress(undefined).level.name, 'Stranger');
+  assert.strictEqual(getRelationshipProgress(NaN).ratio, 0);
+});
+
+test('renderProgressBar draws a fixed-width bar and never hits full before the next level', () => {
+  assert.strictEqual(renderProgressBar(0).length, PROGRESS_BAR_SEGMENTS);
+  assert.strictEqual(renderProgressBar(0), '░'.repeat(PROGRESS_BAR_SEGMENTS));
+  assert.strictEqual(renderProgressBar(1), '█'.repeat(PROGRESS_BAR_SEGMENTS));
+  assert.strictEqual(renderProgressBar(0.5), '█████░░░░░');
+  // 0.99 of the way there must still show at least one empty segment.
+  assert.ok(renderProgressBar(0.99).endsWith('░'));
 });

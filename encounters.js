@@ -30,6 +30,8 @@ import {
   RESPONSE_TYPE_ORDER,
   getDialogueTier,
   getRelationshipLevel,
+  getRelationshipProgress,
+  renderProgressBar,
 } from './constants/game.js';
 import { getReactionLine } from './constants/reactions.js';
 import { composeEncounter } from './imageComposition.js';
@@ -470,7 +472,9 @@ export async function buildAffinityMessage(userId, characterIds) {
   const files = [];
 
   validCharacters.forEach((character, index) => {
-    const level = getRelationshipLevel(affinities[index]?.affinity || 0);
+    const { level, nextLevel, ratio } = getRelationshipProgress(
+      affinities[index]?.affinity || 0,
+    );
     const avatarFilename = getAvatarFilename(character);
 
     let imageBuffer = null;
@@ -482,10 +486,15 @@ export async function buildAffinityMessage(userId, characterIds) {
       }
     }
 
+    const formatLevel = (lvl) => (lvl.emoji ? `${lvl.name} ${lvl.emoji}` : lvl.name);
+    const progressLine = nextLevel
+      ? renderProgressBar(ratio)
+      : `${renderProgressBar(ratio)}  Bond fully forged`;
+
     embeds.push({
       image: imageBuffer ? { url: `attachment://${avatarFilename}` } : undefined,
       title: getFullName(character),
-      description: level.emoji ? `${level.name} ${level.emoji}` : level.name,
+      description: `${formatLevel(level)}\n${progressLine}`,
       color: 0x5865f2, // Discord blurple
     });
 
