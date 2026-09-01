@@ -51,26 +51,22 @@ export const RESPONSE_OPTION_POOL = {
   ],
 };
 
-// Discord renders only a small foreground palette inside ```ansi code blocks.
-// These are the codes we lean on for the /affinity bar — no true orange exists,
-// so Acquaintance borrows yellow.
-export const ANSI_COLORS = { gray: 30, red: 31, yellow: 33, pink: 35, white: 37 };
-
 // Relationships grow slowly (0-2 points per response, always 0 for a
 // NEUTRAL response), so the level curve is spread out over a long time —
 // meant to be built up over many, many encounters.
 //
-// `color` tints the embed's left strip; `ansi` colors the filled part of the
-// /affinity progress bar. Both track the level's heart emoji — Stranger has no
-// emoji and stays white.
+// `emoji` trails the level name in text; `heart` is the /affinity progress
+// bar's filled cell; `color` tints the embed's left strip. `heart` and `color`
+// track the level's tone — Stranger has no name emoji but still gets a purple
+// heart and a matching strip so its bar reads in color like the rest.
 export const RELATIONSHIP_LEVELS = [
-  { name: 'Stranger', min: 0, emoji: '', color: 0xe6e7e8, ansi: ANSI_COLORS.white },
-  { name: 'Acquaintance', min: 20, emoji: '🧡', color: 0xf4900c, ansi: ANSI_COLORS.yellow },
-  { name: 'Friend', min: 50, emoji: '🩷', color: 0xf7a8c4, ansi: ANSI_COLORS.pink },
-  { name: 'Close Friend', min: 100, emoji: '💖', color: 0xff6fb5, ansi: ANSI_COLORS.pink },
-  { name: 'Confidant', min: 175, emoji: '💕', color: 0xff4fa3, ansi: ANSI_COLORS.pink },
-  { name: 'Devoted', min: 275, emoji: '❤️', color: 0xed4245, ansi: ANSI_COLORS.red },
-  { name: 'Soulbound', min: 400, emoji: '❤️‍🔥', color: 0xd22730, ansi: ANSI_COLORS.red },
+  { name: 'Stranger', min: 0, emoji: '', heart: '💜', color: 0xa855f7 },
+  { name: 'Acquaintance', min: 20, emoji: '🧡', heart: '🧡', color: 0xf4900c },
+  { name: 'Friend', min: 50, emoji: '🩷', heart: '🩷', color: 0xf7a8c4 },
+  { name: 'Close Friend', min: 100, emoji: '💖', heart: '💖', color: 0xff6fb5 },
+  { name: 'Confidant', min: 175, emoji: '💕', heart: '💕', color: 0xff4fa3 },
+  { name: 'Devoted', min: 275, emoji: '❤️', heart: '❤️', color: 0xed4245 },
+  { name: 'Soulbound', min: 400, emoji: '❤️‍🔥', heart: '❤️‍🔥', color: 0xd22730 },
 ];
 
 export function getRelationshipLevel(affinity) {
@@ -81,12 +77,19 @@ export function getRelationshipLevel(affinity) {
   return current;
 }
 
-// How many segments the plain-text /affinity progress bar is drawn with.
-export const PROGRESS_BAR_SEGMENTS = 10;
+// The /affinity bar is built from colored heart emoji — no ```ansi code block,
+// so no grey <pre> box: it sits inline in the embed description and wraps
+// naturally on any screen.
+//
+// 10 cells is the sweet spot. The tightest band is Stranger (0..20), so each
+// cell is worth 2 affinity points there — the smallest step a single response
+// can add — which means every 2-point gain advances the bar by exactly one
+// heart. More cells would show finer moves but a row of ~11+ emoji starts
+// wrapping on narrow mobile; fewer would hide 2-point gains.
+export const HEART_BAR_SEGMENTS = 10;
 
-// The ANSI bar sits in a code block, which renders much wider than a normal
-// line — a short bar leaves a big empty gap, so it gets its own wider count.
-export const ANSI_BAR_SEGMENTS = 20;
+// The unfilled cell, shared by every level.
+export const HEART_BAR_TRACK = '🤍';
 
 // Progress from the current relationship level toward the next one, as a 0..1
 // ratio — enough to draw a bar without ever exposing raw affinity points.
@@ -105,33 +108,13 @@ export function getRelationshipProgress(affinity) {
   return { level, nextLevel, ratio: Math.max(0, Math.min(1, ratio)) };
 }
 
-// A text progress bar like "██████░░░░". `filled` uses floor so a full bar
-// only ever means the next level has actually been reached, never "almost".
-export function renderProgressBar(ratio, segments = PROGRESS_BAR_SEGMENTS) {
+// A heart bar like "💖💖💖💖🤍🤍🤍🤍🤍🤍": `fillHeart` for progress, 🤍 for the
+// rest. `filled` uses floor, so a full bar of `fillHeart` only ever means the
+// next level has actually been reached, never "almost".
+export function renderHeartBar(ratio, fillHeart, segments = HEART_BAR_SEGMENTS) {
   const clamped = Math.max(0, Math.min(1, Number.isFinite(ratio) ? ratio : 0));
   const filled = Math.floor(clamped * segments);
-  return '█'.repeat(filled) + '░'.repeat(segments - filled);
-}
-
-// The bar wrapped in a Discord ```ansi code block. The filled part is a solid █
-// in the level's color; the track is a gray ▒ — a distinct, still-visible glyph
-// (a sparse ░ vanishes on the dark background, and a gray █ blends into the
-// colored fill so the fill edge can't be read). This keeps the fill boundary
-// crisp, so even a one-segment difference is legible.
-// `ansiColor` is one of ANSI_COLORS. Returns the full fenced block.
-export const ANSI_BAR_FILL = '█';
-export const ANSI_BAR_TRACK = '▒';
-
-export function renderAnsiProgressBar(ratio, ansiColor, segments = ANSI_BAR_SEGMENTS) {
-  const clamped = Math.max(0, Math.min(1, Number.isFinite(ratio) ? ratio : 0));
-  const filled = Math.floor(clamped * segments);
-  const color = Number.isFinite(ansiColor) ? ansiColor : ANSI_COLORS.white;
-  const esc = String.fromCharCode(27); // raw ESC byte — Discord needs it literal
-  const paint = (code, chars) => (chars ? `${esc}[1;${code}m${chars}${esc}[0m` : '');
-  const bar =
-    paint(color, ANSI_BAR_FILL.repeat(filled)) +
-    paint(ANSI_COLORS.gray, ANSI_BAR_TRACK.repeat(segments - filled));
-  return `\`\`\`ansi\n${bar}\n\`\`\``;
+  return fillHeart.repeat(filled) + HEART_BAR_TRACK.repeat(segments - filled);
 }
 
 // Groups relationship levels into dialogue tiers — see CHARACTERS'

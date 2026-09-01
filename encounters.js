@@ -31,7 +31,7 @@ import {
   getDialogueTier,
   getRelationshipLevel,
   getRelationshipProgress,
-  renderAnsiProgressBar,
+  renderHeartBar,
 } from './constants/game.js';
 import { getReactionLine } from './constants/reactions.js';
 import { composeEncounter } from './imageComposition.js';
@@ -487,7 +487,7 @@ export async function buildAffinityMessage(userId, characterIds) {
     }
 
     const formatLevel = (lvl) => (lvl.emoji ? `${lvl.name} ${lvl.emoji}` : lvl.name);
-    const bar = renderAnsiProgressBar(ratio, level.ansi);
+    const bar = renderHeartBar(ratio, level.heart);
     const description = nextLevel
       ? `${formatLevel(level)}\n${bar}`
       : `${formatLevel(level)}\n${bar}\nBond fully forged`;
