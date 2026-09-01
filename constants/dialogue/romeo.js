@@ -5,18 +5,18 @@ export default {
       "He's on two conversations and one phone call. You are somehow now the third conversation.",
       "\"Come to my private office later — I've got a little proposal I think you'll want to hear. But make sure you come alone.\"",
       "He looks you up and down, does arithmetic, and apparently likes the result.",
-      "Something goes wrong across the room. He fixes it without stopping talking to you.",
+      "He's got a sheet mask on and a phone to his ear and does not consider either a reason to stop running the floor.",
     ],
     known: [
       "He's stopped trying to put you to work. Mostly.",
       '"Oh, it\'s YOU," at a volume that carries across the entire floor.',
       "He complains about something to you specifically, which is a form of trust.",
       '"Have you seen Shinjo anywhere? I just asked him to organize some documents and he ran off to make copies!"',
-      "Somebody has put a drink in front of you. Nobody will admit who.",
+      'He pushes a glass of something green across the desk. "Noni juice. Drink it. Your skin cell turnover is suboptimal and it shows."',
     ],
     warm: [
       "He pauses mid-command when he spots you, actually stepping away from the action to greet you properly. Suddenly you matter more than the operation.",
-      '"HDY show up unannounced — sit down, I\'ll get you something. Ugh. Fine. I want to."',
+      '"You show up unannounced, no appointment — sit down. I\'ll get you something. Ugh. Fine. I want to."',
       "He complains about you at length to someone else, loudly, entirely as a compliment.",
       "He's had the good seat held all night. He will absolutely deny that.",
       "The yelling drops a full register when he turns to you. Everyone notices. He doesn't.",
@@ -33,11 +33,11 @@ export default {
       "He hands the floor to someone else — the floor — because you looked like you needed a minute.",
       "\"Don't tell me what it cost. It's yours. That's the end of the conversation.\"",
       "The performance of not caring finally collapses, and he's not even embarrassed about it.",
-      '"HDY make me like you this much," he mutters, and doesn\'t let go of your hand.',
+      '"I like you. This much. It\'s ridiculous," he mutters, and doesn\'t let go of your hand.',
     ],
     bound: [
       "He's bought out the floor for the night. For you. He'll never explain it properly.",
-      '"HDY make me like this," he mutters, with his face in your neck.',
+      '"Look what you\'ve done to me," he mutters, with his face in your neck.',
       "He yells at everyone all day and comes home and is completely, quietly undone.",
       "He drapes something absurdly expensive over your shoulders and refuses all thanks.",
       "The money means nothing. He's finally, loudly, stopped pretending otherwise.",
@@ -46,7 +46,7 @@ export default {
   temperamentDialogue: {
     new: [
       '"Perfect timing—I need someone I can trust to manage the VIP section. You in?"',
-      '"HDY stand in my doorway looking like that. Move, or be useful."',
+      '"HDY come in here with your skin like that and no routine. Sit. We are fixing this."',
       "\"Tch... If you don't have any business for me, I'm leaving! You're wasting my precious time!\"",
       '"Fuji-kun... Come out, come out, wherever you are... Tch, where did he go? Why is running away the only thing he\'s good at?!"',
       "\"You're new. Rule one: don't touch the chips. Rule two: see rule one.\"",
@@ -61,13 +61,13 @@ export default {
     warm: [
       "\"Oh, you're back! Actually... I'm kind of happy to see you. Don't tell anyone.\"",
       '"Sit. The good seat. No, I didn\'t hold it. Shut up."',
-      '"HDY make me worry about you all evening. Explain yourself."',
+      '"You had me worried all evening. Somebody put that look on your face — give me a name. I\'ll have a word. ...A thorough one."',
       '"You eaten? Don\'t answer, I already ordered."',
       "\"You're not staff and you're not a guest. You're... whatever. You're welcome here.\"",
     ],
     spark: [
       '"Everybody out. Not you. Obviously not you."',
-      '"HDY make me feel like this. Do you have ANY idea what you\'ve cost me."',
+      '"You\'ve cost me something I can\'t put a number on. Do you have ANY idea how much that irritates me?"',
       '"Wear it. I bought it. Don\'t argue, just — just wear it for me."',
       "\"I'm not good at quiet. Give me a second. I'm trying.\"",
       "\"You're the only thing in this building that isn't for sale. That's the problem.\"",
@@ -75,7 +75,7 @@ export default {
     close: [
       "\"I'd spend all my money on you if you asked. Not that I'd ever admit that normally.\"",
       "\"Take it. Don't look at the price. I said don't look.\"",
-      '"HDY be the only thing on this floor I can\'t calculate."',
+      '"Everything on this floor, I can price. Then there\'s you. It\'s infuriating."',
       "\"I've got people for everything. I don't have anyone for you. That's the point.\"",
       '"Stay till close. I\'ll be insufferable the whole time. You like that."',
     ],
@@ -128,8 +128,8 @@ export default {
   responses: {
     kind: {
       new: [
-        "Match his sass",
-        "Take the job seriously",
+        "Let him fuss over you",
+        "Take the work seriously",
         "Thank him and mean it",
       ],
       spark: [
@@ -138,7 +138,7 @@ export default {
         "Tell him he's not business",
       ],
       close: [
-        "Know his real worth is you",
+        "Know his worth is you",
         "Tell him to stop buying things",
         "Say the money was never it",
       ],
@@ -149,7 +149,7 @@ export default {
       ],
     },
     playful: {
-      new: ["Trade sass with him", "Use his own acronym", "Touch the chips"],
+      new: ["Trade sass back", "Use his own acronym", "Touch the chips"],
       spark: ["Ask what it cost", "Out-yell him", "Refuse to wear it"],
       close: [
         "Match his wit",

@@ -204,16 +204,30 @@ export const CHARACTERS = [
       uniform: "Subaru_Kagami_Uniform.png",
       casual: "Subaru_Kagami_Casual.png",
     },
+    // kind is what actually reaches Subaru (affinityByResponse.kind = 2): the
+    // script is starved for gentle notice and reassurance — "I really am so
+    // lucky to be surrounded by so many kind people like you", "You've been
+    // kind to this house. I notice these things" — and every anxious beat
+    // ("I was worried I'd done something to make you feel uncomfortable", the
+    // Max Affinity "I get really anxious sometimes... I'm being weird, aren't
+    // I?") wants warmth in reply, not wit or a push. playful lands second (1):
+    // he takes gentle ribbing and deflects with it himself — "You think I'm
+    // always smiling? Ha ha" — and by Goodnight LVL 24 he'll spin ghost
+    // stories for you. bold lands worst (0): he's conflict-averse to the bone
+    // — "If I cancel now, they'll hate me", compulsive apology, the figurehead
+    // who defers every call to Haku — so a blunt or demanding advance makes
+    // him comply anxiously instead of opening up.
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Dandere", "Megaredere"],
     keywords: [
       "polite",
-      "earnest",
+      "self-deprecating",
+      "anxious",
+      "people-pleaser",
+      "selfless",
       "hardworking",
-      "captain",
-      "overly kind",
       "bottled emotions",
-      "responsible",
+      "former child performer",
     ],
   },
   {
@@ -226,16 +240,34 @@ export const CHARACTERS = [
       uniform: "Zenji_Kotodama_Uniform.png",
       casual: "Zenji_Kotodama_Casual.png",
     },
+    // kind is what actually reaches Zenji (affinityByResponse.kind = 2): under
+    // the showmanship the script is a ghost on borrowed time who treasures
+    // being listened to and looked after — "Watching you is enough food for my
+    // soul", "if I can save you, and our friends, I could ask for nothing
+    // more", the quiet worry when you go silent or head for Mortkranken.
+    // playful lands too (1): he's a performer who lives for banter, wordplay
+    // and gentle spooky teasing — "Has this inspired man of the quill left you
+    // speechless?", "Horsefeathers, I'd never. I was there the night before
+    // last." bold lands worst (0): he deflects directness into metaphor and the
+    // moon ("The moon is beautiful" carries "I love you" until the very last
+    // line), so a blunt advance is received graciously but isn't what moves him.
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Deredere"],
     keywords: [
-      "empathetic",
+      "florid theatrical showman",
+      "self-styled genius of the pen",
+      "romantic novelist and folklorist",
+      "old-fashioned romanticist",
+      "Jazz-Age slang",
+      "calls you 'my dear'",
       "gentle",
-      "caring",
-      "observant",
-      "haiku-writer",
       "warm",
+      "empathetic",
+      "observant",
       "spiritual",
+      "haunted by mortality",
+      "ghostly, uncanny presence",
+      "quietly protective",
     ],
   },
   {
@@ -247,16 +279,25 @@ export const CHARACTERS = [
       uniform: "Haku_Kusanagi_Uniform.png",
       casual: "Haku_Kusanagi_Casual.png",
     },
+    // Verified against his voiceline script: quiet, undemanding care is what
+    // reaches him (kind 2); deadpan and his fake-scare bits are his default
+    // register but read as deflection, so playful lands softer (1); he meets
+    // forwardness by keeping it light and undercutting himself, so bold glances
+    // off (0).
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
-    archetype: ["Oujidere"],
+    archetype: ["Dandere", "Kuudere"],
     keywords: [
-      "formal",
-      "courtesy",
-      "flirty",
-      "priest-family",
-      "charming",
-      "chickens out",
-      "teasing",
+      "laid-back",
+      "deadpan",
+      "slacker",
+      "dorm handyman",
+      "fake-scares people",
+      "folk-supernatural patter",
+      "quietly attentive",
+      "world-weary",
+      "self-deprecating",
+      "deflects sincerity",
+      "shrine-raised",
     ],
   },
 
@@ -439,12 +480,18 @@ export const CHARACTERS = [
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Yandere", "Mayadere"],
     keywords: [
+      "childlike",
+      "hums constantly",
       "obsessive",
       "intensely attached",
-      "clinging",
-      "dandelion",
-      "dangerous vibe",
+      "clingy",
       "possessive",
+      "jealous",
+      "dandelion",
+      "eats flowers",
+      "nature-attuned",
+      "casually morbid",
+      "quietly unnerving",
       "devoted",
     ],
     pmOnly: true,
@@ -462,15 +509,34 @@ export const CHARACTERS = [
       uniform: "Edward_Hart_Uniform.png",
       casual: "Edward_Hart_Casual.png",
     },
+    // bold is what actually reaches Edward (affinityByResponse.bold = 2). The
+    // frail gentleman is a performance — parasol, cough, "carry me to bed,"
+    // eyesight too poor to read his own letters — and underneath it is an
+    // ancient, lonely predator tired of the act. The partner who sees past it
+    // and does not flinch is the one who gets there: "you've stopped
+    // flinching," he observes, thrilled and put out; "wicked girl, you ought to
+    // know better than to play with fire"; "what were you hoping for? Go on,
+    // say it." kind lands too (1): he genuinely wants to be doted on — head on
+    // your lap, held until he sleeps, "it would be troublesome for me if you
+    // were to disappear" — so tending the act is welcome, just not the deepest
+    // hit. playful lands worst (0): he is the one who does the teasing, and he
+    // is too languid and melancholy for banter volleyed back to land — "sorry,
+    // but could we continue this tomorrow?" Note this is "didn't resonate," not
+    // dislike.
     affinityByResponse: { kind: 1, playful: 0, bold: 2 },
     archetype: ["Bodere", "Deredere"],
     keywords: [
       "fragile act",
-      "powerful vampire",
-      "affectionate",
-      "flirty",
+      "secretly the most powerful vampire",
+      "old-world, courtly eloquence",
+      "languid, wants to be doted on",
+      "predatory charm under the manners",
+      "asks before he bites",
+      "detached about humans — 'they die so quickly'",
+      "YouTube addict, conspiracy theories",
+      "centuries-old loneliness, a lost 'her'",
       "no personal space",
-      "lovely lady",
+      "wicked girl / lovely lady",
       "possessive",
     ],
   },
@@ -484,17 +550,34 @@ export const CHARACTERS = [
       uniform: "Rui_Mizuki_Uniform.png",
       casual: "Rui_Mizuki_Casual.png",
     },
+    // kind is what actually reaches Rui (affinityByResponse.kind = 2). The home
+    // script is a bright surface with a crack running under it — the onion-
+    // cutting excuse for red eyes, "my face is my only redeeming feature",
+    // "you're not doing this all for me, are you?", "I wish I could've met you
+    // as a regular guy" — and a partner who is gentle and sincere is the one
+    // who gets past the cheer. playful lands too but only on the surface (1):
+    // he loves matching energy ("it's illegal to take your eyes off me",
+    // "leaving me on delivered! Ahaha") and enjoys the banter without it
+    // touching the thing underneath. bold lands worst (0): recklessness toward
+    // the curse — closing the distance he carefully keeps, testing the touch —
+    // frightens him more than it flatters him ("don't think about trying to
+    // grab my hand", "just be happy enough for the both of us"). Note this is
+    // "didn't resonate," not dislike.
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Bright Deredere"],
     keywords: [
-      "bright soul",
       "reaper",
-      "cursed",
+      "bright soul",
+      "cheer that masks his pain",
+      "self-deprecating",
+      "cursed touch kills the living",
+      "gloves and careful distance",
+      "bartender and mixologist",
+      "tends the anomaly garden",
+      "houseparent to Obscuary",
       "organized",
-      "enthusiastic",
-      "caring",
-      "flirty",
-      "cannot touch",
+      "forward about his affection",
+      "dodges missions and class",
     ],
   },
   {
@@ -510,13 +593,26 @@ export const CHARACTERS = [
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Deredere"],
     keywords: [
-      "loyal companion",
-      "empathetic",
-      "emotionally intelligent",
-      "learns constantly",
-      "observant",
-      "hardworking",
-      "protective",
+      "part werewolf",
+      "raised apart from humans",
+      "learning to read",
+      "blunt, simple speech",
+      "childlike, literal phrasing",
+      "coins phonetic words (thingy, so-shul skill, roo-teen)",
+      "reads emotions by scent",
+      "wary of strangers",
+      "skittish about attraction",
+      "moon-cycle transformation",
+      "territorial about his dirty blanket",
+      "possessive",
+      "dog-like loyalty",
+      "walks as bonding",
+      "protective and self-sacrificing",
+      "wants to belong with humans (Neros)",
+      "defies rules and authority",
+      "calls Edward 'moth-eaten Casanova'",
+      "not tech-savvy",
+      "hardworking, eager to prove himself",
     ],
   },
 
@@ -536,12 +632,23 @@ export const CHARACTERS = [
     keywords: [
       "rough",
       "aggressive",
-      "insults",
+      "blunt insults",
+      "domineering",
       "kitten",
+      "kitty-cat",
       "dumbass",
+      "Gyahaha laugh",
+      "gambler",
+      "Sinostra captain",
+      "huge appetite",
+      "eats anomaly beasts",
+      "time-slipping stigma",
+      "forgets people and places",
+      "fatalistic",
+      "easily bored",
+      "predatory flirtation",
+      "possessive",
       "protective",
-      "flirty",
-      "loyal",
     ],
   },
   {
@@ -553,15 +660,19 @@ export const CHARACTERS = [
       uniform: "Ritsu_Shinjo_Uniform.png",
       casual: "Ritsu_Shinjo_Casual.png",
     },
-    affinityByResponse: { kind: 2, playful: 0, bold: 1 },
+    affinityByResponse: { kind: 1, playful: 0, bold: 2 },
     archetype: ["Kuudere"],
     keywords: [
-      "analytical",
-      "legalistic",
       "lawyer",
+      "legalistic",
+      "analytical",
+      "runs behavioral models",
+      "punctual to the second",
+      "transactional",
+      "keeps meticulous records",
+      "formal and polite",
+      "diligent overachiever",
       "verbose",
-      "calculation",
-      "logical",
       "warms up slowly",
     ],
   },
@@ -574,17 +685,30 @@ export const CHARACTERS = [
       uniform: "Romeo_Lucci_Uniform.png",
       casual: "Romeo_Lucci_Casual.png",
     },
+    // bold is what Romeo actually respects (affinityByResponse.bold = 2): the
+    // script hires for nerve — "someone sharp", "someone I can trust", "walk
+    // with your head held high or I'll step on it" — and rewards a partner who
+    // names their price and meets him level. kind reaches him too, but only
+    // sideways and embarrassed — "I'm kind of happy to see you, don't tell
+    // anyone" (1). playful lands worst (0): being needled genuinely gets under
+    // his skin — Taiga's "Lulu", Frostheim whispering — so teasing reads as the
+    // player poking a short fuse, not banter he enjoys.
     affinityByResponse: { kind: 1, playful: 0, bold: 2 },
     archetype: ["Teasedere", "Kanedere"],
     keywords: [
-      "sassy",
-      "money-oriented",
-      "high-maintenance",
-      "teasing sarcasm",
-      "yells",
-      "acronyms",
+      "vain",
+      "elaborate skincare and gym regimen",
+      "money-solves-everything worldview",
+      "casino floor boss",
+      "protection-fee collector",
+      "yells constantly",
+      "coins acronyms",
       "HDY",
-      "genuine concern",
+      "teasing sarcasm",
+      "casual menace",
+      "brand- and status-obsessed",
+      "backhanded care",
+      "fiercely claims his people",
     ],
   },
 

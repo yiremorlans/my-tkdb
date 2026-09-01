@@ -4,6 +4,7 @@ export default {
       "He looks up from tending the lanterns, a quiet warmth in his eyes as he notices you.",
       "He bows before he speaks. It's automatic, and completely sincere.",
       '"I\'ve been working since I was four, so people said I was mature for my age," he says. "But the truth is, I still have a lot to learn."',
+      '"Forgive the mannerisms," he says, unprompted. "The stage was my whole childhood. People say I turned out a little peculiar. ...It bothers you too, doesn\'t it?"',
       "He finishes the row of lanterns first. Duty, then greeting. Always in that order.",
     ],
     known: [
@@ -16,14 +17,14 @@ export default {
     warm: [
       "His usual composure softens immediately—there's genuine gladness in his expression when he sees you.",
       "He's set out a second cup. He'd been hoping, and he'd never admit to hoping.",
-      '"You\'re just in time," he says, though nothing in particular is happening.',
+      '"You\'re just in time," he says, though nothing in particular is happening. Then, catching himself: "...Sorry. That was a strange thing to say, wasn\'t it?"',
       "The paperwork gets set aside faster than his own rules should allow.",
       '"I may be the captain, but it\'s just in name," he says mildly. "Haku is much better suited for the job than me."',
     ],
     spark: [
       "The restraint is fraying and he knows you can see it.",
-      '"I shouldn\'t want this," he says quietly. "I\'m going to anyway."',
-      "His hand finds the small of your back at the gate and stays there.",
+      '"I shouldn\'t want this," he says quietly. "I\'ve stopped being able to talk myself out of it."',
+      "His sleeve brushes yours at the gate. He notices — and for once doesn't apologize, or move away.",
       "He looks at you the way he's spent months not letting himself.",
     ],
     close: [
@@ -35,7 +36,7 @@ export default {
     bound: [
       "He finally lets someone hold him. It takes him a long time to stop apologizing for it.",
       "He kisses you at the gate, in full view, and doesn't check who's watching.",
-      '"I\'ve been the captain all my life," he says. "With you I\'m just yours."',
+      '"I\'ve been performing my whole life," he says. "With you I\'m just yours."',
       "He falls asleep against you before the lanterns are even out.",
       "The restraint is gone entirely. What replaced it is overwhelming and very quiet.",
     ],
@@ -81,7 +82,7 @@ export default {
   ],
   temperamentDialogue: {
     new: [
-      '"Welcome. Please, make yourself comfortable."',
+      '"Welcome. Forgive the state of the path — I meant to sweep it this morning and lost track of the hour."',
       '"Mind the step — the stones are uneven past the gate."',
       "\"I'm very sorry to have kept you waiting. It's wonderful to see you again.\"",
       '"A visitor? Then let me at least offer you tea."',
@@ -203,7 +204,7 @@ export default {
       bound: [
         "Make him skip the rounds",
         "Kiss him where they'll see",
-        "Steal his haori",
+        "Blow the lantern out early",
       ],
     },
     bold: {

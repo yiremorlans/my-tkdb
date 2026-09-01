@@ -18,7 +18,7 @@ export default {
       "The guarded distance closes when he recognizes you. A genuine, warm smile breaks through his usual reserve.",
       "He's practiced something to say to you. It comes out slightly formal and completely sincere.",
       "He falls in at your side without being asked, and stays exactly a step behind.",
-      '"You seem sad today," he says. He\'s rarely wrong about that.',
+      '"Your scent\'s all squeezy today. You\'re sad," he says. He\'s rarely wrong about that.',
       "\"I'm gonna go practice swimming at Harurin's place. Can you do other stuff besides doggy paddle?\"",
     ],
     spark: [
@@ -29,7 +29,7 @@ export default {
       "He looks at your mouth, then away, then back, and gives up on the away part.",
     ],
     close: [
-      '"You\'re my most important person," he says simply, sincerely. "Your safety, your happiness—that\'s everything to me."',
+      '"You\'re my most important person," he says, plain and certain. "You safe. You happy. Nothing matters more than that."',
       "He puts himself between you and the noise without thinking about it at all.",
       "He rests his head against your shoulder, briefly, and pretends he didn't.",
       '"I understand more now," he says. "Mostly because of you."',
@@ -45,7 +45,7 @@ export default {
   },
   temperamentDialogue: {
     new: [
-      '"Hmm? You\'re... interesting. What brings you here?"',
+      '"Hmm? I don\'t know your scent yet. ...What do you want?"',
       '"You smell like somewhere else. Sorry — is that rude? I\'m still learning."',
       '"Stay there a moment. I want to understand you first."',
       "\"You're not afraid. Most people are. Why aren't you?\"",
@@ -73,7 +73,7 @@ export default {
       '"Everyone else, I keep a distance. You, I keep close. That\'s the difference."',
     ],
     close: [
-      '"Seeing you safe and happy is the most important thing to me."',
+      '"You being safe. You being happy. That\'s the most important thing there is."',
       '"Wherever you go, I go. That\'s already decided."',
       '"You taught me what this feeling is called. I use it a lot now."',
       '"Let me stand in front. Just this once. Just let me."',
@@ -133,7 +133,7 @@ export default {
         "Tell him he's allowed",
       ],
       close: [
-        "Remind him he's not a monster",
+        "Remind him he's not an animal",
         "Teach him another word",
         "Say he taught you too",
       ],
@@ -151,7 +151,7 @@ export default {
         "Hold the hand hostage",
       ],
       close: [
-        "Play with his playfulness",
+        "Roughhouse with him",
         "Ruffle his hair",
         "Let him win the race",
       ],

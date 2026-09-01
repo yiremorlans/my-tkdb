@@ -13,6 +13,7 @@ export default {
       '"You look kind of tired, Honor roll. Come by the bar later — I\'ll pour you something slow and you can just stop being anywhere else for a while."',
       "He asks how you are and then actually waits, which not everyone does.",
       "He wipes down the same spot on the bar twice. \"Harurin hasn't been in. He's been flat-out with the animals again — I keep a stool open for him, just in case.\"",
+      "He's in the anomaly garden, gloves on, snipping the dead heads off a rose bush that's wilting anyway. \"They don't do great near me. I keep planting them anyway.\"",
       "The brightness dims for half a second, and he covers it faster than before.",
     ],
     warm: [
@@ -43,6 +44,7 @@ export default {
       "He kisses you through the fabric of his sleeve and it wrecks you both entirely.",
       "He lies beside you all night with a hand's width of air between, and neither of you sleeps.",
       "He loves you louder than anyone ever has, because it's the one thing the curse can't stop.",
+      "\"Sometimes I wish you'd met me as a regular guy,\" he says, light as anything. \"You'd never have looked twice. ...Still glad it went the way it did.\"",
     ],
   },
   temperamentDialogue: {
@@ -58,6 +60,7 @@ export default {
       "\"How've you been? No — the real answer. I've got time.\"",
       '"Have you seen Harurin? He hasn\'t stopped by for his drink in days — I worry when he pushes himself that hard."',
       "\"Aw, c'mon Ed, again? Why does he always leave his socks on the floor... It's actually exhausting picking up after him all the time.\"",
+      "\"A mission? Nah, I'm good — take Lyca, he'd be all over it. I'll keep the bar warm for when you're back.\"",
       '"Careful — okay, you already knew. You\'re getting good at this."',
       '"You don\'t flinch anymore. That means a lot, actually."',
     ],
@@ -65,13 +68,14 @@ export default {
       "\"You're back! You know you make everything feel less dark when you're around? It's actually kind of amazing.\"",
       '"Tell me about your day. All of it. I\'ve got nowhere better to be."',
       '"Come by the bar after — I\'ll mix you something and you can just unwind. No pressure, no plans. Just us."',
-      "\"Hands to myself, promise. Doesn't mean I'm not thrilled you're here.\"",
+      "\"Hands to myself, promise. Doesn't mean I'm not thrilled you're here, cutie.\"",
       '"Hey, hey hey! We finally get to spend some time together — it\'s illegal to take your eyes off me!"',
+      "\"My eyes? Ha — onions. I was prepping the appetizers for the bar, that's all. ...Anyway! You're here.\"",
     ],
     spark: [
       "\"Hold your hand up. Right there. Don't close it. ...God, that's almost enough.\"",
       "\"I'd give up a lot to touch you. Don't tell me what — I've already done the math.\"",
-      '"Closer. Closer. Okay — stop. Stop there. Perfect."',
+      "\"Okay — that's close enough. For you, I mean. I could stand here all day. Hold right there for me, cutie?\"",
       "\"Honor roll... were you just checking me out? Hey, it's all good, don't be embarrassed!\"",
       "\"You're an inch away and it's the loudest thing in the room.\"",
     ],
@@ -80,6 +84,7 @@ export default {
       '"Hold your hand up. Right there. Close enough counts, right?"',
       "\"I'm okay. Really. I'm better than okay when it's you.\"",
       "\"Don't feel sorry for me. Just — keep coming back. That's the whole ask.\"",
+      "\"You're not doing all this for me, are you? ...Don't. I'm not worth rearranging your life over. I just really like having you around.\"",
       "\"One day I'll be able to hold your hand properly. I'm counting on it.\"",
     ],
     bound: [

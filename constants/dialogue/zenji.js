@@ -2,9 +2,9 @@ export default {
   dialogue: {
     new: [
       'He greets you with a flourish, straw hat tipped. "Why, hello there, my dear. Suppose we kick off another swanky day here?"',
-      "He's mid-verse when you arrive. He finishes the line before he finishes turning around.",
-      '"Seventeen syllables," he murmurs, "and you\'ve just given me the last five."',
-      "The wind moves through the grass. He listens to it like it said something worth hearing.",
+      "He's mid-sentence when you arrive — a story, out loud, to no one. He finishes the line before he finishes turning around.",
+      '"Seventeen syllables," he murmurs, "and you\'ve just handed me the last five, my dear."',
+      '"Well, if it isn\'t a new face. Has this inspired man of the quill left you speechless? ...No? A pity. It happens to some."',
       '"Oh, have you come to see me? This is troubling." He smiles. "I\'m afraid I\'m out of autographs."',
     ],
     known: [
@@ -17,27 +17,27 @@ export default {
     warm: [
       "His expression brightens with genuine pleasure, all formal distance melting away. \"My dear. I'm glad you're here.\"",
       "He's saved the last of the tea. He'd been saving it for a while.",
-      '"You arrive like a season," he says, delighted. "Expected, and still a gift."',
-      "He shows you the verse he's been working on. He shows almost no one.",
+      '"You arrive like a season, my dear," he says, delighted. "Expected, and still a gift."',
+      "He shows you the pages he's been working on. He shows almost no one.",
       "The brush pauses. He'd rather talk to you than finish the line.",
     ],
     spark: [
-      "The verse he's writing has stopped being about the season.",
+      "The story he's writing has quietly stopped being about anyone but you.",
       "He tucks a flower behind your ear and lets his fingers stay in your hair.",
       '"I\'ve written this one badly on purpose," he admits. "I wanted an excuse to read it to you."',
       "He sits closer than the step requires, and doesn't pretend otherwise.",
       '"Some things," he says softly, "are better in seventeen syllables. Others aren\'t."',
     ],
     close: [
-      '"With you, everything feels like it\'s exactly as it should be," he says softly, eyes reflecting starlight and something deeper.',
+      '"With you," he says, "the world behaves as though a story were being told well. I hadn\'t expected to feel that again."',
       "He doesn't reach for a metaphor this time. He just says he's happy.",
       '"I\'ve written you badly a hundred times," he laughs. "You deserve better than my words."',
-      "He tucks a flower behind your ear without ceremony, as if it had always belonged there.",
+      "He says your name the way he'd read the last line of something he didn't want to end.",
       "The world quiets around him when you're near. He's noticed. He's grateful.",
     ],
     bound: [
       "He's stopped writing about longing. The new poems are far less publishable.",
-      "He undoes your hair slowly, one pin at a time, and calls it a form of verse.",
+      "He reads you the old folktale badly, on purpose, so it takes all night.",
       '"Seventeen syllables can\'t hold this," he murmurs. "I\'ve stopped trying."',
       "He traces something on your back with one finger. It's a poem. You'll never read it.",
       "The lanterns burn down and neither of you notices for a very long time.",
@@ -49,7 +49,7 @@ export default {
       dialogue: {
         new: [
           "He's watching the last light go out of the sky and doesn't seem to mind that it's leaving.",
-          '"Seventeen syllables for dusk," he murmurs, "and you\'ve arrived in time to be the last five."',
+          '"Dusk becomes a genius of the pen, don\'t you think? Sit — the light\'s nearly gone, and it\'s worth watching it go."',
           "The lanterns have come on around the step. He tips his hat and makes room on the lit side.",
           '"A stranger at dusk — how fortunate," he says. "Sit, and let the evening happen to us."',
         ],
@@ -77,8 +77,8 @@ export default {
   temperamentDialogue: {
     new: [
       'Summer heat shimmers off the stones. "Why, hello there, my dear."',
-      '"You walk quietly. That is rarer than you\'d think."',
-      '"Names come later. First, tea. That is the proper order."',
+      '"You walk quietly, my dear. That\'s rarer than you\'d think."',
+      '"Names come later. First, tea — that\'s the proper order, and I\'m a stickler for the proper order."',
       '"Something brought you here. Let\'s not rush to name what."',
     ],
     known: [
@@ -111,7 +111,7 @@ export default {
     bound: [
       '"Stay until morning. The night has been generous; let\'s not insult it."',
       '"I love you. There. No metaphor. I\'ve been saving the plain version."',
-      '"Let your hair down. No — let me."',
+      '"Stay till the last lantern\'s out. I never did get enough night — less of it now."',
       '"Come here. I want to memorize something and it isn\'t a poem."',
       "\"You've made a very poor poet of me. I've never been happier about anything.\"",
     ],
@@ -149,7 +149,7 @@ export default {
     ],
     bound: [
       "Stay until morning",
-      "Let him take your hair down",
+      "Stay till the last lantern",
       "Come here",
       "Hear the plain version",
     ],
@@ -173,7 +173,7 @@ export default {
       ],
       bound: [
         "Say the plain version back",
-        "Let him take your hair down",
+        "Let the night run long",
         "Stay until morning",
       ],
     },
@@ -217,7 +217,7 @@ export default {
       ],
       bound: [
         "Tell him to stop writing",
-        "Take his hair down instead",
+        "Kiss him mid-sentence",
         "Say it without metaphor",
       ],
     },

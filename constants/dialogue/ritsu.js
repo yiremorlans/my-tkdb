@@ -15,7 +15,7 @@ export default {
       '"I have been assigned to Sinostra, so I will not allow them to stand trial, no matter how villainous their actions. That is the Shinjo family policy."',
     ],
     warm: [
-      "His eyes light up when he sees you—he's eager now, ready to collaborate and strategize together.",
+      "His eyes light up when he sees you — he's eager now, ready to collaborate and strategize together.",
       "He's drafted something with your name on it. He drafted it optimistically.",
       '"Partner. Excellent. I\'ve had a thought and no one worth telling it to."',
       "The verbosity slows down around you. He's actually listening, which is the tell.",
@@ -70,7 +70,7 @@ export default {
       "\"I've prepared an argument. It's excellent. May I skip to the conclusion?\"",
       "\"Objection — you're distracting. Sustained. I'm not asking you to stop.\"",
       "\"Everything I've calculated says this is unwise. I'm proceeding regardless.\"",
-      "\"Say no and I'll never raise it again. Say yes and I'll never shut up about it.\"",
+      "\"Say no and I'll never raise it again. Say yes and I'll not let it rest.\"",
     ],
     close: [
       '"You\'re the only person I trust completely. We can accomplish anything with you by my side."',
@@ -128,14 +128,14 @@ export default {
   responses: {
     kind: {
       new: [
-        "Be logical with him",
+        "Tell him you trust his read",
         "Take the advice seriously",
         "Thank him for the free hour",
       ],
       spark: [
         "Let him skip to the conclusion",
         "Tell him there's precedent",
-        "Say yes kindly",
+        "Say yes gently",
       ],
       close: [
         "Show him friendship is real",
