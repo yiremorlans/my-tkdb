@@ -325,6 +325,25 @@ export function isGeneralLocation(locationKey) {
   );
 }
 
+const CHARACTER_ROOM_KEYS = new Set(Object.values(CHARACTER_ROOMS));
+
+// Player-facing label for an encounter spot ({ locationKey, file }).
+// Character-room location keys ("Alan_Room", "Jin_Room", …) are internal
+// ids, not something to print — resolve the actual background file through
+// BACKGROUND_DISPLAY_NAMES first. House / general keys ("Vagastrom",
+// "Darkwick") are already readable, so fall back to those; last resort is a
+// de-underscored version of a room key ("Alan_Room" -> "Alan Room").
+export function getLocationDisplayName(spot) {
+  if (!spot) return "";
+  if (spot.file && BACKGROUND_DISPLAY_NAMES[spot.file]) {
+    return BACKGROUND_DISPLAY_NAMES[spot.file];
+  }
+  if (CHARACTER_ROOM_KEYS.has(spot.locationKey)) {
+    return spot.locationKey.replace(/_/g, " ");
+  }
+  return spot.locationKey || "";
+}
+
 // Backgrounds available for a location right now, given the current time.
 export function getAvailableBackgrounds(locationKey, now = new Date()) {
   const all = BACKGROUNDS_BY_LOCATION[locationKey] || [];

@@ -6,6 +6,7 @@ import {
   getRandomBackground,
   getRandomBackgroundForCharacter,
   getRandomGeneralBackground,
+  getLocationDisplayName,
   isGeneralLocation,
   HOUSES,
   SPECIAL_BACKGROUNDS,
@@ -310,7 +311,7 @@ export async function buildRoamSpawnMessage(encounterId) {
   console.log(`[buildRoamSpawnMessage] Image composition took ${Date.now() - composeStart}ms`);
 
   return {
-    content: `You wander into **${spot.locationKey}** and run into **${getFullName(character)}**...`,
+    content: `You wander into **${getLocationDisplayName(spot)}** and run into **${getFullName(character)}**...`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
     components: responseActionRow(character.id, false, tier, 'roam', dialogueCtx),
     flags: EPHEMERAL_FLAG,
@@ -371,7 +372,7 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
 
   const imageBuffer = await composeEncounter(fallbackSpot.file, charFilename, dialogue);
 
-  const locationText = fallbackSpot ? ` at **${fallbackSpot.locationKey}**.` : '.';
+  const locationText = fallbackSpot ? ` at **${getLocationDisplayName(fallbackSpot)}**.` : '.';
 
   return {
     content: `${getFullName(character)} agrees to meet you${locationText}`,

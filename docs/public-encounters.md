@@ -1,17 +1,20 @@
 # Spec: Public "call out" encounters
 
 Status: **design / not implemented**
-Last updated: 2026-08-31
+Last updated: 2026-09-02
 
 A scheduled job posts a public, everyone-can-see encounter into a designated
 channel — **one per Discord server** — on a random cadence. The character is
-shown as a **black silhouette** over a real background. The first user to `/call`
-the correct name within a short window "reaches" them: the post is edited to
-reveal the un-overlaid image and a relationship-tiered flavor line, and the
-winner gets a **pending boost** toward their next `/roam` / `/meet` with that
-character (plus a milestone) — a win never moves affinity directly; see §16. If
-no one gets it in time, the silhouette stays and the post edits to a
-non-committal "moment has passed" line — the identity is never revealed.
+shown as a **black silhouette** over a real background. The first user to `/call {name}` with the correct name within a short window "reaches" them: the post is
+edited to **add an embed** carrying a relationship-tiered flavor line unique to
+that winner and that character (the line names them) and a small thumbnail of
+the real character art — the big silhouette stays put beneath it. The winner
+also gets a **pending boost** toward their next `/roam` / `/meet` with that
+character plus a milestone — a win never moves affinity directly; see §16. If no
+one gets it in time, the post's text edits to a non-committal "moment has
+passed" line, the image is dropped, and the name is never spoken. **No new image
+is ever composed** — the reveal thumbnail is the existing character asset served
+by `/assets`.
 
 **Multi-server:** the bot runs in a small number of guilds (< 5). Each guild has
 its **own independent schedule, its own in-flight encounter, and its own
@@ -41,9 +44,11 @@ No new infrastructure or dependencies. Everything builds on what exists:
 responds to interactions) and later *editing* it. Both are well-trodden Discord
 endpoints.
 
-**HTTP-interactions bot, no gateway.** There is no WebSocket / shard concern —
-the scheduler is a cron-like loop, and this is simpler than a gateway bot would
-be.
+**Scheduler is a REST cron loop, not a gateway bot.** No WebSocket / shard
+concern for this feature — the scheduler ticks on a timer and posts via Discord
+REST. The bot does now hold a lightweight presence-only gateway login
+(`gateway.js`, added so it shows the green "online" dot); that is unrelated to
+this feature and the scheduler does not use it.
 
 **Assumption:** a single app instance. Two instances would double-fire the
 scheduler for every guild; if the app is ever scaled out, gate the scheduler
@@ -52,6 +57,29 @@ tick behind a Postgres advisory lock.
 **Effort:** ~1.5–2 days. Riskiest part is the multipart channel POST/edit (new
 for this codebase). Silhouette compositing and the atomic claim are quick. The
 per-guild machinery is straightforward at this scale.
+
+### Prerequisites (one-time, before any of §2–§16)
+
+The spec assumes the bot can already POST to a guild channel. Setup for that —
+and the bot's re-invite and hosting requirements — is in
+[`channel-call-response-feature.md`](./channel-call-response-feature.md). In
+short:
+
+1. **Guild install with the `bot` scope.** An interactions endpoint alone does
+   not make the bot a guild member, and `commands.js` registers commands with
+   `integration_types: [0, 1]` — a user-only install cannot post to a channel.
+   Re-invite with scopes `bot` + `applications.commands` and channel permissions
+   **View Channels + Send Messages + Attach Files + Embed Links** (Attach Files
+   for the silhouette POST, Embed Links for the win edit's reveal embed — §5.1),
+   permission integer **`52224`**.
+2. **`DISCORD_TOKEN` present** (Developer Portal → Bot → Reset Token), distinct
+   from `APP_ID` / `PUBLIC_KEY`. The §11 REST helpers send
+   `Authorization: Bot ${DISCORD_TOKEN}`.
+3. **Host stays awake.** The §3 tick loop only runs while the process runs — on
+   Railway, disable **Serverless** for the service, or a sleeping container
+   silently stops spawning encounters (§3 "Sleeping hosts").
+4. **No privileged intents.** `/call` answers arrive as command options, so
+   Presence / Server Members / Message Content stay off.
 
 ---
 
@@ -63,8 +91,8 @@ scheduler tick (every ~25s, iterates every enabled guild independently)
 
     FINALIZE: public_encounters WHERE guild_id=G AND resolved_at IS NULL AND expires_at < now()
       └─ atomic UPDATE ... SET outcome='expired'
-         └─ edit G's post: content only → alternating "moment has passed" line
-            (silhouette image stays, identity never shown)
+         └─ edit G's post → alternating "moment has passed" line,
+            drop the image (attachments: []), identity never shown
 
     SPAWN: if G has no active encounter AND now() >= G.next_encounter_at:
       ├─ pick background  (Darkwick | Galaxy Express pools, _PM-gated by the fixed America/Chicago evening cutoff)
@@ -82,15 +110,17 @@ scheduler tick (every ~25s, iterates every enabled guild independently)
   ├─ wrong channel                       → ephemeral: "you can only call out from <#channel>"
   ├─ no active encounter for this guild  → ephemeral: "no one to call out to right now"
   ├─ input matches nothing               → ephemeral: "don't know who that is"  (no cooldown, no penalty)
-  ├─ input matches a DIFFERENT character → ephemeral: alternating "wrong" line, start 30s cooldown
-  ├─ within 30s of your last wrong guess → ephemeral: "try again in Ns"
+  ├─ input matches a DIFFERENT character → ephemeral: alternating "wrong" line, start 10s cooldown
+  ├─ within 10s of your last wrong guess → ephemeral: "try again in Ns"
   └─ correct:
         atomic claim (UPDATE ... WHERE id=? AND resolved_at IS NULL)
           ├─ 0 rows  → ephemeral: "someone reached them first"
           └─ 1 row   → ephemeral: "That was {name}." + milestone afterline (§16.1)
                        async: grant pending boost + record milestone (§16),
                               derive tier from stored (unchanged) affinity,
-                              recompose reveal image, edit post → reveal + tiered winner line
+                              edit post → ADD embed { tiered winner line,
+                              thumbnail = character art URL }; silhouette
+                              attachment untouched, no image composed
 ```
 
 `next_encounter_at` for a guild is set **right after that guild's post
@@ -212,6 +242,55 @@ entirely per-guild via this command.
 
 ## 5. Image: black-overlay silhouette
 
+**The image is composed once, at spawn.** No second image is ever composed —
+a win keeps the spawn silhouette, a miss drops it. `composeSilhouetteEncounter`
+needs no `reveal` mode; the block below keeps it as an optional flag only in
+case a future version wants an un-overlaid variant, but this version never
+calls it with `reveal: true`.
+
+### 5.1 What the resolution edit does to the image
+
+Both resolutions are a plain JSON `PATCH` — no multipart, no `canvas`, no
+recompose. The big silhouette attachment from spawn is the only composited
+image the feature ever makes.
+
+| Outcome | PATCH body | Renders as |
+|---|---|---|
+| **Win** | `{ content: '<@winnerId>', embeds: [ reveal ] }` — omit `attachments` | silhouette stays as the message's main image; an embed sits beneath it holding the tiered winner line + a thumbnail of the real character art |
+| **Miss** | `{ content: missedLine, attachments: [] }` — no embed | silhouette removed; just the "moment has passed" text |
+
+The **reveal embed** (win only):
+
+```js
+{
+  description: pickWinnerLine(tier, { user, name, house }),  // §9.3
+  color: level.color,                    // reuse the relationship level's color
+  thumbnail: { url: getCharacterImageUrl(character, encounter.variant) },
+  footer: { text: character.house || 'Darkwick' },
+}
+```
+
+- `getCharacterImageUrl` (`constants/characters.js:997`) already builds
+  `${BASE_URL}/assets/chars/<file>` — the same helper `/affinity` uses. No
+  upload, no compositing; Discord fetches the asset over HTTPS.
+- The `{user}` mention must be in **`content`**, not the embed — mentions inside
+  an embed don't ping. Put the bare `<@winnerId>` (or a short lead) in `content`
+  and the full flavor line in `description`.
+- The thumbnail renders small (~80px). The full-body character cutout is legible
+  enough at that size; a dedicated face-crop asset would read better if you ever
+  want one, but it's not required.
+- **Embed Links permission is required** for this edit (any bot message with an
+  `embeds` array needs it). See §1 Prerequisites / §11 — permission `52224`.
+
+Rationale for keeping the silhouette on a win: it becomes a stylized "solved"
+stamp and preserves the channel's visual rhythm, while the embed does the actual
+reveal. On a miss there's nothing to reveal, so the image just goes.
+
+Replace-the-big-image-with-un-overlaid-art (recompose PNG + multipart PATCH with
+`attachments:[{id:0}]` + `files[0]`) is the only option with real cost — the
+multipart edit path, a 2nd ~1–2s composite, its own tests — and is explicitly
+**out** (that was the original design; this supersedes it).
+
 `imageComposition.js` today has a single
 `composeEncounter(bgFilename, charFilename, dialogue = null)`. Rather than add a
 `silhouette` branch inside it — the function `/roam` and `/meet` depend on —
@@ -256,15 +335,18 @@ export async function composeSilhouetteEncounter(bgFilename, charFilename, { rev
 - `source-atop` paints black only where the character's alpha already is → a
   clean cutout silhouette over the untouched background. The character PNGs are
   alpha cutouts, so this works directly.
-- **Silhouette post:** `composeSilhouetteEncounter(bg, charFile)`.
-- **Reveal post:** `composeSilhouetteEncounter(bg, charFile, { reveal: true })` —
-  same background, same character, same variant, no overlay, no dialogue box.
+- **Silhouette post (the only composite this feature makes):**
+  `composeSilhouetteEncounter(bg, charFile)`.
+- No second image is ever composed or uploaded. On a **win** the silhouette PNG
+  from spawn stays put and a reveal embed is added (its thumbnail is a `/assets`
+  URL, §5.1); on a **miss** the silhouette is dropped. Either way `canvas` is
+  not touched on the guess path.
 - Dialogue is **never** baked into the image for this feature. The teaser and
   all flavor text live in the Discord message body.
 
 At < 5 guilds the composite cost (~1–2s each, a handful per hour total) is
 negligible — no image cache or worker pool needed. If guild count ever grows,
-disk-cache composited PNGs keyed `${bg}__${char}__${variant}__{sil|reveal}.png`
+disk-cache composited PNGs keyed `${bg}__${char}__${variant}.png`
 (deterministic, reusable across guilds and time).
 
 ---
@@ -366,8 +448,10 @@ accurately is the game.
 
 All replies are ephemeral (`flags: 64`). Responds within the 3s budget: at most
 **one DB read** for a wrong/blocked guess, one read + one atomic write for a
-correct guess. Heavier work (affinity, reveal-image recompose, message edit,
-analytics) runs after `res.send`, fire-and-forget.
+correct guess. Follow-up work (affinity boost, milestone, the message edit —
+content + reveal embed, analytics) runs after `res.send`, fire-and-forget. No
+image is composed on the guess path — the silhouette was rendered once at spawn
+and the reveal thumbnail is a `/assets` URL.
 
 Order of checks:
 
@@ -423,10 +507,18 @@ Order of checks:
          name: getFullName(character),
          house: character.house || 'Darkwick',
        });
-       const revealImg = await composeSilhouetteEncounter(bg, charFile, { reveal: true });
+       // Add a reveal embed; leave the spawn silhouette in place. No file is
+       // composed or uploaded — the thumbnail is the /assets URL for the
+       // character art. Omit `attachments` so the silhouette isn't dropped.
+       // The mention goes in `content` (mentions inside an embed don't ping).
        await editChannelMessage(guild.encounter_channel_id, encounter.message_id, {
-         content: line,
-         files: [{ attachment: revealImg, name: 'reveal.png' }],
+         content: `<@${userId}>`,
+         embeds: [{
+           description: line,
+           color: level.color,
+           thumbnail: { url: getCharacterImageUrl(character, encounter.variant) },
+           footer: { text: character.house || 'Darkwick' },
+         }],
        });
        // analytics, fire-and-forget:
        trackUserActivity(userId); trackCommandUsage(userId, 'call'); trackCharacterEngagement(userId, characterId);
@@ -492,8 +584,10 @@ retries.
 
 ### 9.1 Missed opportunity (`MISSED_LINES`)
 
-Edit **content only**; the silhouette image stays; components removed. Identity
-is never revealed.
+PATCH `{ content: <MISSED_LINES entry>, attachments: [] }` — the silhouette is
+**removed**; any components removed too. Identity is never revealed. (Contrast
+the win edit, §7.3, which omits `attachments` and leaves the silhouette in
+place.)
 
 ```js
 export const MISSED_LINES = [
@@ -694,27 +788,28 @@ Migration 010 also adds `relationships.pending_encounter_boost` and the
 
 ---
 
-## 11. Discord REST — multipart helpers
+## 11. Discord REST — helpers
 
-`utils.js` `DiscordRequest` is JSON-only. Add multipart helpers (in `utils.js`
-or a new `discordRest.js`), modeled on `sendFollowup` in `app.js`:
+`utils.js` `DiscordRequest` is JSON-only. This feature needs:
 
 ```js
-// POST /channels/{channelId}/messages
+// POST /channels/{channelId}/messages — multipart: the silhouette PNG rides
+// along as files[0]. Modeled on sendFollowup in app.js.
 postChannelMessage(channelId, { content, files, allowed_mentions })
 
-// PATCH /channels/{channelId}/messages/{messageId}
-// To swap the image, send attachments: [{ id: 0, filename: 'reveal.png' }] in
-// payload_json plus files[0], which replaces the previous attachment.
-editChannelMessage(channelId, messageId, { content, files, components })
+// PATCH /channels/{channelId}/messages/{messageId} — plain JSON, never a file:
+//   win  → { content: '<@id>', embeds: [reveal] }   (omit attachments → silhouette stays)
+//   miss → { content: missedLine, attachments: [] } (drop the silhouette, no embed)
+editChannelMessage(channelId, messageId, { content, components, attachments, embeds })
 ```
 
-Both use `Authorization: Bot ${DISCORD_TOKEN}` and `FormData` with a
-`payload_json` part, exactly like `sendFollowup`.
+Only the POST needs multipart / `FormData` + `payload_json` (like `sendFollowup`);
+the edit is a plain JSON `PATCH`. Both use `Authorization: Bot ${DISCORD_TOKEN}`.
 
 **Bot permissions in each guild's encounter channel:** View Channel, Send
-Messages, Attach Files. (Embed Links not required — the image is an attachment.)
-Missing permissions surface via §3 "Post failure" handling.
+Messages, Attach Files (the silhouette POST), **Embed Links** (the win edit's
+reveal embed — §5.1). Permission integer `52224`. Missing permissions surface
+via §3 "Post failure" handling.
 
 ---
 
@@ -732,8 +827,11 @@ are **global defaults** only, used when a guild leaves a column NULL:
 | `ENCOUNTER_BOOST_CAP` | `2` | Max unspent boosts a user can hold per character |
 | `ENCOUNTER_TICK_SECONDS` | `25` | Scheduler tick interval |
 
-`DISCORD_TOKEN`, `APP_ID`, `SUPABASE_*` are already present. No
-`ENCOUNTER_CHANNEL_ID` — removed in favor of `guild_settings`. No
+`DISCORD_TOKEN`, `APP_ID`, `SUPABASE_*` are already present. **`BASE_URL`**
+(already in `.env.sample`, used by `getCharacterImageUrl` /
+`getBackgroundImageUrl`) must be set to the app's public HTTPS origin — the win
+reveal embed's thumbnail is a `${BASE_URL}/assets/chars/...` URL Discord fetches
+(§5.1). No `ENCOUNTER_CHANNEL_ID` — removed in favor of `guild_settings`. No
 `ENCOUNTER_AFFINITY_GAIN` — a win grants no direct affinity (§16). Encounters
 post silently (no role ping) in this version.
 
@@ -772,8 +870,9 @@ post silently (no role ping) in this version.
   `WRONG_GUESS_LINES`, `WINNER_LINES`, `pickWinnerLine`, `matchCharacterGuess`,
   `guessCooldown` Map + helpers, generation helper,
   `ENCOUNTER_MILESTONES` + `pickMilestone` (§16.2)
-- `publicEncounters.js` — `buildEncounterPost(guild)`, `finalizeEncounter(row)`,
-  `handleCall(interaction)` (mirrors the shape of `encounters.js`)
+- `publicEncounters.js` — `buildEncounterPost(guild)`, `finalizeEncounter(row)`
+  (miss edit: text + `attachments: []`), `handleCall(interaction)` (win edit:
+  reveal embed via `getCharacterImageUrl`) — mirrors the shape of `encounters.js`
 - `encounterScheduler.js` — the per-guild tick loop
 - `db/migrations/010_create_public_encounters.sql` — encounter tables **plus**
   `encounter_milestones` and `relationships.pending_encounter_boost` (§16.4)
@@ -790,8 +889,8 @@ post silently (no role ping) in this version.
 - `db/supabase.js` — the functions in §10 + the reward-model functions (§16.4)
 - `encounters.js` — consume the boost in the `/roam` / `/meet` response path;
   "Moments together" block in `buildAffinityMessage` (§16.3)
-- `utils.js` (or new `discordRest.js`) — multipart `postChannelMessage` /
-  `editChannelMessage`
+- `utils.js` (or new `discordRest.js`) — `postChannelMessage` (multipart) /
+  `editChannelMessage` (plain JSON: `content` / `embeds` / `attachments`)
 - `.env.sample`, `README.md`, `db/SCHEMA.md` — document the feature and config
 
 ---
@@ -813,14 +912,20 @@ post silently (no role ping) in this version.
    per-guild `setTimeout`; all timing state in Postgres; restart-safe.
 5. Wrong real-name guess → 30s cooldown before the next attempt, tracked in an
    in-memory Map (no DB round trip). Unknown/gibberish → no cooldown, no penalty.
-6. On timeout the identity is **never revealed**; the post edits to an
-   alternating `MISSED_LINES` entry and keeps the silhouette image.
+6. **No second image is ever composed.** The resolution edit is a plain JSON
+   `PATCH`. A **win** keeps the spawn silhouette and adds a reveal **embed**
+   (tiered winner line + a `/assets` thumbnail of the real character art +
+   tier color + house footer); `attachments` is omitted so the silhouette
+   stays. A **miss** drops the image (`{ content, attachments: [] }`), no embed.
+   On a miss the name is never spoken (`MISSED_LINES`); on a win it appears in
+   the embed. The win edit needs **Embed Links** — permission `52224` (§5.1,
+   §11).
 7. Winner reward is a **pending boost + a milestone**, not direct affinity
    (§16). The boost adds `ENCOUNTER_BOOST_GAIN` (=1) to the winner's next
    authored response with that character and is capped at `ENCOUNTER_BOOST_CAP`
-   (=2). The public post still edits to the reveal image plus an alternating,
-   relationship-tiered winner line that names the guessing Discord user and the
-   character's house.
+   (=2). The reveal embed's `description` is an alternating, relationship-tiered
+   winner line naming the guessing Discord user (mention in `content` so it
+   pings), the revealed character, and the character's house.
 8. `/call` is accepted **only** in the calling guild's own configured encounter
    channel.
 9. Response window is **2 minutes** (per-guild overridable); scheduler tick is
