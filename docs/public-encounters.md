@@ -467,7 +467,7 @@ Order of checks:
    - matches a different character → wrong (step 6)
    - matches the encounter's character → correct (step 7)
 6. **Wrong real-name guess:**
-   - in-memory cooldown check (§8). Within 30s of this user's last wrong guess
+   - in-memory cooldown check (§8). Within 10s of this user's last wrong guess
      for this encounter → `Give it a moment — try again in ${n}s.`
    - otherwise set `guessCooldown[`${encounterId}:${userId}`] = Date.now()` and
      reply with an alternating line from `WRONG_GUESS_LINES`.
@@ -571,7 +571,7 @@ const GUESS_COOLDOWN_MS = 30_000;
   rare moment a deploy lands mid-encounter.
 - Entries are tiny and short-lived (encounters last `window_minutes`). Cleared in
   `finalizeEncounter()` and on the scheduler tick.
-- With a 30s cooldown inside a 2-minute window, a user gets ~3 attempts.
+- With a 10s cooldown inside a 2-minute window, a user gets ~3 attempts.
 
 The append-only `public_encounter_guesses` log is still written (after
 `res.send`, fire-and-forget) for analytics only. It has **no** unique constraint
@@ -737,7 +737,7 @@ CREATE INDEX IF NOT EXISTS idx_public_encounters_active
 
 -- Append-only guess log. Analytics only; NO unique constraint on
 -- (encounter_id, discord_user_id) — retries are limited by the in-memory
--- 30s cooldown, not the schema.
+-- 10s cooldown, not the schema.
 CREATE TABLE IF NOT EXISTS public_encounter_guesses (
   id              BIGSERIAL PRIMARY KEY,
   encounter_id    BIGINT NOT NULL REFERENCES public_encounters(id) ON DELETE CASCADE,
@@ -910,7 +910,7 @@ post silently (no role ping) in this version.
    are global defaults only.
 4. Scheduler is a single ~25s tick loop over `guild_settings WHERE enabled` — no
    per-guild `setTimeout`; all timing state in Postgres; restart-safe.
-5. Wrong real-name guess → 30s cooldown before the next attempt, tracked in an
+5. Wrong real-name guess → 10s cooldown before the next attempt, tracked in an
    in-memory Map (no DB round trip). Unknown/gibberish → no cooldown, no penalty.
 6. **No second image is ever composed.** The resolution edit is a plain JSON
    `PATCH`. A **win** keeps the spawn silhouette and adds a reveal **embed**

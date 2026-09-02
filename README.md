@@ -7,6 +7,12 @@ This Discord app gives users random chance encounters with characters via two sl
 
 Whichever character you meet, you respond to their dialogue (Kind / Playful / Bold / Neutral) to grow your relationship with them over time. Progress is stored per Discord user in `data/relationships.json`.
 
+Three read-only commands report on that progress — no cooldown:
+
+- `/affinity <name> [up to 5 names]` — relationship level and progress bar for the named characters.
+- `/house` — which of the 8 houses your total bonds lean toward.
+- `/bonds` — a plain-text list of every character you have at least 1 point with, ranked closest first, each with their relationship level. **ephemeral**
+
 Each encounter displays a canvas-composited image: the location background with the character layered on top, dialogue box at the bottom, and all 4 response options visible as buttons. Command responses are ephemeral (only visible to the user who invoked it).
 
 ## Project structure
@@ -33,7 +39,7 @@ Below is a basic overview of the project structure:
 ├── .env.sample  -> sample .env file
 ├── app.js       -> main entrypoint for app
 ├── commands.js  -> slash command payloads + helpers
-├── encounters.js -> builds the /roam and /meet message payloads, handles dialogue responses
+├── encounters.js -> builds the slash-command message payloads (/roam, /meet, /affinity, /house, /bonds), handles dialogue responses
 ├── storage.js   -> reads/writes data/relationships.json
 ├── commandLimits.js -> per-command rolling 3-hour cooldown for /roam and /meet (Supabase-backed, anchored to last completed encounter)
 ├── imageComposition.js -> canvas-based image rendering (bg + character + dialogue)

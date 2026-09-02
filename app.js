@@ -7,6 +7,7 @@ import {
 } from 'discord-interactions';
 import {
   buildAffinityMessage,
+  buildBondsMessage,
   buildHouseMessage,
   buildMeetPickMessage,
   buildMeetSpawnMessage,
@@ -244,6 +245,30 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           }
         }
       })();
+      return;
+    }
+
+    if (name === 'bonds') {
+      // Text-only (no attachments), so respond in-band like /roam — no defer.
+      try {
+        const messageData = await buildBondsMessage(userId);
+        res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: messageData,
+        });
+
+        trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
+        trackCommandUsage(userId, 'bonds').catch(err => console.error('Error tracking command usage:', err));
+      } catch (err) {
+        console.error('Error in /bonds:', err);
+        res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: 'Something went wrong pulling up your bonds. Try again?',
+            flags: 64, // EPHEMERAL
+          },
+        });
+      }
       return;
     }
 

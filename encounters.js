@@ -672,3 +672,43 @@ export async function buildHouseMessage(userId) {
     throw err;
   }
 }
+
+// --- /bonds --------------------------------------------------------------
+
+// A plain text roster of every character the user has any bond with, ranked
+// closest first. No art or embeds — one "Name — Level" line per character,
+// with the level's name emoji trailing (Stranger has none). Only characters
+// with at least 1 affinity point are listed; an unknown character_id in the
+// row set is skipped rather than shown as a broken line.
+export async function buildBondsMessage(userId) {
+  const relationships = await getUserRelationships(userId);
+
+  const bonds = (relationships || [])
+    .map((rel) => {
+      const character = getCharacterById(rel.character_id);
+      if (!character) return null;
+      const affinity = rel.affinity || 0;
+      if (affinity < 1) return null;
+      return { name: getFullName(character), affinity, level: getRelationshipLevel(affinity) };
+    })
+    .filter(Boolean)
+    // Greatest affinity first; ties fall back to name so the order is stable.
+    .sort((a, b) => b.affinity - a.affinity || a.name.localeCompare(b.name));
+
+  if (bonds.length === 0) {
+    return {
+      content: 'You haven\'t formed any bonds yet. Go out and meet people!',
+      flags: EPHEMERAL_FLAG,
+    };
+  }
+
+  const lines = bonds.map(({ name, level }) => {
+    const emoji = level.emoji ? ` ${level.emoji}` : '';
+    return `${name} — ${level.name}${emoji}`;
+  });
+
+  return {
+    content: `**Your bonds**\n${lines.join('\n')}`,
+    flags: EPHEMERAL_FLAG,
+  };
+}

@@ -65,6 +65,14 @@ const HOUSE_COMMAND = {
   contexts: [0, 1, 2],
 };
 
-const ALL_COMMANDS = [ROAM_COMMAND, MEET_COMMAND, AFFINITY_COMMAND, HOUSE_COMMAND];
+const BONDS_COMMAND = {
+  name: 'bonds',
+  description: 'See everyone you\'ve bonded with, ranked by closeness',
+  type: 1,
+  integration_types: [0, 1],
+  contexts: [0, 1, 2],
+};
+
+const ALL_COMMANDS = [ROAM_COMMAND, MEET_COMMAND, AFFINITY_COMMAND, HOUSE_COMMAND, BONDS_COMMAND];
 
 InstallGlobalCommands(process.env.APP_ID, ALL_COMMANDS);
