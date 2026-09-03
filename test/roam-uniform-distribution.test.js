@@ -247,7 +247,7 @@ test('every character belongs to exactly one house', () => {
   // The catalog invariant that /house depends on: buildHouseMessage tallies
   // affinity by character.house alone, so a character with two houses would
   // silently have their bond counted once and attributed to whichever came
-  // first. additionalHouses is scenery and must never be read as standing.
+  // first. additionalLocations is scenery and must never be read as standing.
   for (const character of CHARACTERS) {
     if (character.house === null) continue; // Benkei is houseless by design
     assert.strictEqual(

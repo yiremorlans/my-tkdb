@@ -397,19 +397,24 @@ export function weightedBackgrounds(locationKey, now) {
 //
 // IMPORTANT: this is about scenery, not membership. Every character belongs to
 // exactly one house — `character.house` — and that is the only field house
-// standing is ever read from (see buildHouseMessage). `additionalHouses` and
-// `additionalRooms` say nothing about who a character *is*; they only say where
-// they can plausibly be found. Lyca is an Obscuary character who turns up
-// around Hotarubi; Tohma is Frostheim, seen at Vagastrom and in Jin's room.
-// Adding a key here widens where someone appears and changes nothing else —
-// not their house, not their affinity, and (since the character is drawn before
-// this is read) not how often they show up.
+// standing is ever read from (see buildHouseMessage). `additionalLocations`
+// says nothing about who a character *is*; it only says where else they can
+// plausibly be found. Lyca is an Obscuary character who turns up around
+// Hotarubi; Tohma is Frostheim, seen at Vagastrom and in Jin's room. Adding a
+// key there widens where someone appears and changes nothing else — not their
+// house, not their affinity, and (since the character is drawn before this is
+// read) not how often they show up.
+//
+// It holds background keys of any kind, houses and character rooms alike. This
+// was three fields once — additionalHouses, additionalRooms, additionalLocations
+// — all spread into the same list here and never told apart by any caller. The
+// house/room split bought nothing and the "houses" name kept reading as a second
+// membership, so they were collapsed into the one name that describes what the
+// field actually holds.
 export function attributedLocations(character) {
   return [
     character.house,
     character.exclusiveRoom,
-    ...(character.additionalHouses || []),
-    ...(character.additionalRooms || []),
     ...(character.additionalLocations || []),
   ].filter(Boolean);
 }

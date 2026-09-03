@@ -6,13 +6,14 @@
 //
 // `house` is the single source of truth for house standing: every character
 // belongs to exactly one house (or none), and /house tallies affinity from this
-// field alone. `additionalHouses` and `additionalRooms` are NOT a second
-// membership — they are scenery, listing where else a character can plausibly
-// be encountered. Lyca is an Obscuary character who is sometimes found around
-// Hotarubi; Tohma is Frostheim, seen at Vagastrom and in Jin's room. Only
-// attributedLocations() in constants/backgrounds.js reads them, and only to
-// decide backgrounds. Adding one changes where a character appears and nothing
-// else — not their house, not their affinity, not how often they show up.
+// field alone. `additionalLocations` is NOT a second membership — it is
+// scenery, listing where else a character can plausibly be encountered, and it
+// takes background keys of any kind (houses and character rooms alike). Lyca is
+// an Obscuary character who is sometimes found around Hotarubi; Tohma is
+// Frostheim, seen at Vagastrom and in Jin's room. Only attributedLocations() in
+// constants/backgrounds.js reads it, and only to decide backgrounds. Adding an
+// entry changes where a character appears and nothing else — not their house,
+// not their affinity, not how often they show up.
 import { HOUSES, CHARACTER_ROOMS, timeBucket } from "./backgrounds.js";
 import {
   DIALOGUE,
@@ -170,8 +171,7 @@ export const CHARACTERS = [
     firstName: "Tohma",
     lastName: "Ishibashi",
     house: HOUSES.FROSTHEIM,
-    additionalHouses: [HOUSES.VAGASTROM],
-    additionalRooms: [CHARACTER_ROOMS.JIN],
+    additionalLocations: [HOUSES.VAGASTROM, CHARACTER_ROOMS.JIN],
     images: {
       uniform: "Tohma_Ishibashi_Uniform.png",
       casual: "Tohma_Ishibashi_Casual.png",
@@ -685,7 +685,7 @@ export const CHARACTERS = [
     firstName: "Haru",
     lastName: "Sagara",
     house: HOUSES.JABBERWOCK,
-    additionalHouses: [HOUSES.DIONYSIA],
+    additionalLocations: [HOUSES.DIONYSIA],
     images: {
       uniform: "Haru_Sagara_Uniform.png",
       casual: "Haru_Sagara_Casual.png",
@@ -823,7 +823,7 @@ export const CHARACTERS = [
     firstName: "Lyca",
     lastName: "Colt",
     house: HOUSES.OBSCUARY,
-    additionalHouses: [HOUSES.HOTARUBI],
+    additionalLocations: [HOUSES.HOTARUBI],
     images: {
       uniform: "Lyca_Colt_Uniform.png",
       casual: "Lyca_Colt_Casual.png",
