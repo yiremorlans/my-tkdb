@@ -483,9 +483,44 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       // origin ('meet' | 'roam') identifies the flow this response completes;
       // absent on buttons rendered before this field was added — default 'meet'.
       const [characterId, responseTypeId, origin] = rest;
+      const commandName = origin === 'roam' ? 'roam' : 'meet';
 
       (async () => {
         try {
+          // Re-check the cooldown at redemption, not only at command-invoke. The
+          // invoke check (in the /roam and /meet handlers) is read-only, and the
+          // clock is only stamped once a flow *completes* — here. Without this
+          // gate a user could fire /roam or /meet many times before finishing
+          // any of them (every invoke check passes because none has stamped
+          // yet), then click through all the queued response buttons in one
+          // sitting, redeeming N affinity gains against a "once per 3h" limit.
+          // Checking here means only the first completion in a window lands; the
+          // rest get the cooldown notice. Opening a prompt and walking away
+          // still costs nothing, because nothing stamps before this point.
+          const limit = await checkCommandLimit(userId, commandName);
+          if (!limit.allowed) {
+            const collapsed = (req.body.message?.components || []).map(row => ({
+              ...row,
+              components: (row.components || []).map(btn => ({ ...btn, disabled: true })),
+            }));
+            res.send({
+              type: InteractionResponseType.UPDATE_MESSAGE,
+              data: {
+                content: limit.reason,
+                components: collapsed,
+                flags: 64, // EPHEMERAL
+              },
+            });
+            return;
+          }
+
+          // Stamp the cooldown *before* granting the reward, so two responses
+          // clicked in quick succession can't both clear the check above before
+          // either writes. A stamp followed by a failed grant only costs the
+          // user this one turn — the safe direction; stamping afterwards would
+          // leave the redemption ungated for the width of the affinity write.
+          await recordCommandUsage(userId, commandName);
+
           const messageData = await buildResponseResultMessage(
             userId,
             characterId,
@@ -497,11 +532,8 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             data: messageData,
           });
 
-          // The flow completed — record it once, against the command that
-          // started it ('meet' or 'roam'), not as a separate 'respond'. This is
-          // also where the rolling cooldown clock starts (recordCommandUsage).
-          const commandName = origin === 'roam' ? 'roam' : 'meet';
-          recordCommandUsage(userId, commandName).catch(err => console.error('Error recording command cooldown:', err));
+          // The flow completed — log it against the command that started it
+          // ('meet' or 'roam'), not as a separate 'respond'.
           trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
           trackCommandUsage(userId, commandName).catch(err => console.error('Error tracking command usage:', err));
           trackCharacterEngagement(userId, characterId).catch(err => console.error('Error tracking character engagement:', err));
