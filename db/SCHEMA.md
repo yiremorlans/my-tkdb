@@ -210,7 +210,7 @@ Migration 011 schedules `prune_encounter_data()` daily at 03:30 UTC:
 | `encounter_win_stats` | 13 months | A full year plus the current month, so year-over-year still works |
 | `encounter_milestones` | forever | Player-visible progression (`/affinity`), not analytics — and a bounded per-kind tally, so it has nothing to prune |
 
-> `character_relationships` also gains `pending_encounter_boost INT NOT NULL DEFAULT 0` in migration 010 — the unspent wins a user holds with that character. A `/call` win increments it (capped at `ENCOUNTER_BOOST_CAP`); the next completed `/roam` or `/meet` response with that character spends one and adds `ENCOUNTER_BOOST_GAIN` to its gain. Both are constants in `constants/publicEncounters.js`.
+> `character_relationships` also gains `pending_encounter_boost INT NOT NULL DEFAULT 0` in migration 010 — the unspent wins a user holds with that character. A `/call` win increments it (capped at `ENCOUNTER_BOOST_CAP`); the next completed `/roam` or `/meet` response with that character spends one and adds `ENCOUNTER_BOOST_GAIN` to its gain. Both are constants in `constants/publicEncounters.js`. Both sides go through the atomic `grant_encounter_boost()` / `consume_encounter_boosts()` functions in migration 014 — never a read-then-write, which used to drop a boost when a win and a spend overlapped.
 
 ## Helper Functions
 

@@ -59,7 +59,13 @@ mock.module('../imageComposition.js', {
 const { handleCall, handleEncountersAdmin, spawnEncounter, sweepExpiredEncounters, rollGapMinutes } = await import('../publicEncounters.js');
 const { runTick, clearSpawnAttemptFence } = await import('../encounterScheduler.js');
 const { buildResponseResultMessage } = await import('../encounters.js');
-const { recordEncounterMilestone, getEncounterMilestoneCounts, getOrCreateRelationship } = await import('../db/supabase.js');
+const {
+  recordEncounterMilestone,
+  getEncounterMilestoneCounts,
+  getOrCreateRelationship,
+  grantEncounterBoost,
+  consumeAllEncounterBoosts,
+} = await import('../db/supabase.js');
 const { clearGuessCooldowns, matchCharacterGuess } = await import('../constants/publicEncounters.js');
 const { CHARACTERS, RESPONSE_TYPES } = await import('../constants/characters.js');
 
@@ -362,10 +368,11 @@ describe('/call', () => {
   });
 
   it('creates the relationship exactly once when the winner has never met the character', async () => {
-    // No character_relationships row seeded: grantEncounterBoost and
-    // incrementTimesMet both have to create it. They run in series now, so the
-    // result is a single row with both writes applied — not two INSERTs (one of
-    // which a real unique constraint would reject, dropping a reward).
+    // No character_relationships row seeded. grantEncounterBoost creates it
+    // inside its own upsert (db/migrations/014) and incrementTimesMet then
+    // updates it — in series, so the result is a single row with both writes
+    // applied, not two INSERTs (one of which a real unique constraint would
+    // reject, dropping a reward).
     reset({ guild_settings: [guildRow()], public_encounters: [encounterRow()] });
 
     const { afterReply } = await handleCall(callBody(), NOW);
@@ -446,6 +453,69 @@ describe('the encounter boost', () => {
     assert.equal(fake.tables.character_relationships[0].affinity, 64, 'kind 2 + both boosts');
     assert.equal(fake.tables.character_relationships[0].pending_encounter_boost, 0, 'all spent');
     assert.match(message.content, /warmer welcome \(\+2\)/);
+  });
+
+  // Both halves of the ledger used to be a SELECT then an UPDATE, and a win
+  // landing between the two was lost — wiped by the spend without being paid
+  // out, or overwritten by a second grant that had read the same count. Both
+  // are one statement now (db/migrations/014). The fake does not model row
+  // locks, so what these pin is the shape that makes the lock possible: one
+  // RPC, and no read-then-write against the table from JS.
+  const boostTableWrites = () => fake.calls.filter(
+    (c) => c.table === 'character_relationships' && c.op !== 'select',
+  );
+
+  it('stacks wins up to the cap, one statement per grant', async () => {
+    reset({ character_relationships: [relationship()] });
+    fake.calls.length = 0;
+
+    assert.equal(await grantEncounterBoost('user-1', 'rui', 2), 1);
+    assert.equal(await grantEncounterBoost('user-1', 'rui', 2), 2);
+    assert.equal(await grantEncounterBoost('user-1', 'rui', 2), 2, 'held at the cap');
+
+    assert.equal(
+      fake.calls.filter((c) => c.table === 'rpc:grant_encounter_boost').length,
+      3,
+      'one RPC per win',
+    );
+    assert.equal(boostTableWrites().length, 0, 'no read-modify-write from JS');
+  });
+
+  it('creates the relationship in the grant itself for a never-met character', async () => {
+    reset({});
+    fake.calls.length = 0;
+
+    assert.equal(await grantEncounterBoost('newcomer', 'rui', 2), 1);
+
+    const rows = fake.tables.character_relationships;
+    assert.equal(rows.length, 1, 'the upsert created the row');
+    assert.equal(rows[0].pending_encounter_boost, 1);
+    assert.equal(rows[0].affinity, 0, 'a win never moves affinity');
+    assert.equal(boostTableWrites().length, 0, 'no separate INSERT to race');
+  });
+
+  it('credits the pending count and clears it in one statement', async () => {
+    reset({ character_relationships: [relationship({ pending_encounter_boost: 2 })] });
+    fake.calls.length = 0;
+
+    assert.equal(await consumeAllEncounterBoosts('user-1', 'rui'), 2);
+
+    assert.equal(fake.tables.character_relationships[0].pending_encounter_boost, 0);
+    assert.equal(
+      fake.calls.filter((c) => c.table === 'rpc:consume_encounter_boosts').length,
+      1,
+    );
+    assert.equal(boostTableWrites().length, 0, 'the spend is not a JS read-then-write');
+  });
+
+  it('spends nothing, and writes nothing, for a character with no relationship row', async () => {
+    reset({});
+    fake.calls.length = 0;
+
+    assert.equal(await consumeAllEncounterBoosts('newcomer', 'rui'), 0);
+
+    assert.equal(fake.tables.character_relationships.length, 0, 'a spend never creates a row');
+    assert.equal(boostTableWrites().length, 0);
   });
 });
 

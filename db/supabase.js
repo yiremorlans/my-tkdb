@@ -1086,55 +1086,53 @@ export async function getUserEncounterWins(userId, { yearMonth = toYearMonth(), 
 
 /**
  * Add a boost for the winner, capped. Wins past the cap still record their
- * milestone; they just don't stack more boost. Returns the new value.
+ * milestone; they just don't stack more boost. Returns the new pending count.
+ *
+ * One RPC (db/migrations/014), not a read-then-write: two wins resolving in the
+ * same instant used to both read the old count and both write count + 1, losing
+ * one of them. The function also creates the relationship row when the winner
+ * has never met the character, so there is no getOrCreateRelationship call here
+ * to race with either.
  */
 export async function grantEncounterBoost(userId, characterId, cap = 2) {
-  const relationship = await getOrCreateRelationship(userId, characterId);
-  const next = Math.min((relationship.pending_encounter_boost || 0) + 1, cap);
-
-  const { data, error } = await supabase
-    .from('character_relationships')
-    .update({ pending_encounter_boost: next })
-    .eq('discord_user_id', userId)
-    .eq('character_id', characterId)
-    .select()
-    .single();
+  const { data, error } = await supabase.rpc('grant_encounter_boost', {
+    p_user_id: userId,
+    p_character_id: characterId,
+    p_cap: cap,
+  });
 
   if (error) {
     console.error('Error granting encounter boost:', error);
     throw error;
   }
 
-  return data?.pending_encounter_boost ?? next;
+  return data ?? 0;
 }
 
 /**
  * Spend every pending boost for this character at once, returning how many
- * were consumed (0 if none). Two /call wins with the same character are one
- * reunion, not two, so the next authored response picks up their latest
- * moment and folds in the full bonus rather than dribbling +1 across two
- * /roams. The `> 0` guard is in the UPDATE itself, so two responses
- * completing at once can't both claim the same boosts.
+ * were consumed (0 if none, including when the user has never met them). Two
+ * /call wins with the same character are one reunion, not two, so the next
+ * authored response picks up their latest moment and folds in the full bonus
+ * rather than dribbling +1 across two /roams.
+ *
+ * One RPC (db/migrations/014) holding a row lock across the read and the
+ * zeroing. The old two-statement version credited the count it had read, so a
+ * win landing in between was wiped without being paid out; now that win waits
+ * for the lock and its boost survives to the next /roam.
  */
 export async function consumeAllEncounterBoosts(userId, characterId) {
-  const relationship = await getRelationship(userId, characterId);
-  const current = relationship?.pending_encounter_boost || 0;
-  if (current <= 0) return 0;
-
-  const { data, error } = await supabase
-    .from('character_relationships')
-    .update({ pending_encounter_boost: 0 })
-    .eq('discord_user_id', userId)
-    .eq('character_id', characterId)
-    .gt('pending_encounter_boost', 0)
-    .select();
+  const { data, error } = await supabase.rpc('consume_encounter_boosts', {
+    p_user_id: userId,
+    p_character_id: characterId,
+  });
 
   if (error) {
     console.error('Error consuming encounter boosts:', error);
     throw error;
   }
 
-  return (data?.length || 0) > 0 ? current : 0;
+  return data ?? 0;
 }
 
 export async function recordEncounterMilestone({ userId, characterId, milestoneType }) {

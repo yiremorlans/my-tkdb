@@ -177,6 +177,25 @@ Go to your Supabase Dashboard:
 - Copy and execute
 - Wait for success ✓
 
+### Migration 14: Atomic Encounter Boosts
+- File: `db/migrations/014_atomic_encounter_boosts.sql`
+- Creates `grant_encounter_boost()` and `consume_encounter_boosts()`, replacing
+  the SELECT-then-UPDATE pairs in `db/supabase.js`. Both had a gap a win could
+  fall into: two wins resolving together each read the old count and each wrote
+  `count + 1` (one reward lost), and a win landing mid-spend was zeroed by the
+  spend without ever being credited
+- `grant_encounter_boost()` is an upsert, so it also creates the relationship row
+  for a never-met winner — the `/call` path no longer calls
+  `getOrCreateRelationship` first
+- Adds no table; `character_relationships.pending_encounter_boost` (migration 10)
+  is unchanged. The cap is passed in, so `ENCOUNTER_BOOST_CAP` in
+  `constants/publicEncounters.js` stays the source of truth
+- ⚠️ **Run this BEFORE deploying the app code that calls it.** Without the
+  functions, every win logs a failed grant and the boost is silently never
+  stored, while the reveal still promises one
+- Copy and execute
+- Wait for success ✓
+
 ## Step 3: Verify Migrations
 
 In the Supabase Dashboard, click **Table Editor** and verify:

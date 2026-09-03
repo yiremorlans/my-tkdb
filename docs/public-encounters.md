@@ -1325,8 +1325,8 @@ New `db/supabase.js` functions:
 
 | Function | Purpose |
 |---|---|
-| `grantEncounterBoost(userId, characterId)` | `getOrCreateRelationship`, then `pending_encounter_boost = LEAST(current + 1, ENCOUNTER_BOOST_CAP)`; returns the new value |
-| `consumeAllEncounterBoosts(userId, characterId)` | atomic `UPDATE ... SET pending_encounter_boost = 0 WHERE user+char AND pending_encounter_boost > 0` `.select()`; returns how many were pending (0 if the guarded update matched nothing) |
+| `grantEncounterBoost(userId, characterId, cap)` | RPC to `grant_encounter_boost()` (migration 014) — one upsert doing `pending_encounter_boost = LEAST(current + 1, cap)`, creating the row for a never-met winner; returns the new count |
+| `consumeAllEncounterBoosts(userId, characterId)` | RPC to `consume_encounter_boosts()` (migration 014) — `SELECT ... FOR UPDATE` then zero, under one row lock; returns how many were spent (0 if none, or if there is no row) |
 | `recordEncounterMilestone({ userId, characterId, milestoneType })` | RPC to `record_encounter_milestone()` — atomic `total = total + 1`; fire-and-forget |
 | `getEncounterMilestoneCounts(userId, characterId)` | `{ milestone_type: total }` map for the `/affinity` block |
 | `getLatestEncounterMilestone(userId, characterId)` | the kind with the newest `last_at` — names the moment a boosted `/roam` picks up from |

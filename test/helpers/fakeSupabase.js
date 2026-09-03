@@ -230,6 +230,52 @@ export function createFakeSupabase(initialTables = {}) {
       return true;
     },
 
+    // db/migrations/014: INSERT ... ON CONFLICT DO UPDATE
+    //                    SET pending_encounter_boost = LEAST(pending + 1, cap)
+    grant_encounter_boost({ p_user_id, p_character_id, p_cap }) {
+      tables.character_relationships = tables.character_relationships || [];
+
+      const existing = tables.character_relationships.find(
+        (r) => r.discord_user_id === p_user_id && r.character_id === p_character_id,
+      );
+      if (existing) {
+        existing.pending_encounter_boost = Math.min(
+          (existing.pending_encounter_boost || 0) + 1,
+          p_cap,
+        );
+        return existing.pending_encounter_boost;
+      }
+
+      // The real function creates the row on a first win, so the /call path no
+      // longer calls getOrCreateRelationship ahead of it.
+      const row = {
+        discord_user_id: p_user_id,
+        character_id: p_character_id,
+        affinity: 0,
+        times_met: 0,
+        pending_encounter_boost: Math.min(1, p_cap),
+      };
+      tables.character_relationships.push(row);
+      return row.pending_encounter_boost;
+    },
+
+    // db/migrations/014: SELECT ... FOR UPDATE, then SET pending = 0, returning
+    // the count that was claimed. The row lock that makes a concurrent grant
+    // wait is a Postgres property and is NOT modelled here — same caveat as the
+    // other rpc stand-ins.
+    consume_encounter_boosts({ p_user_id, p_character_id }) {
+      tables.character_relationships = tables.character_relationships || [];
+
+      const existing = tables.character_relationships.find(
+        (r) => r.discord_user_id === p_user_id && r.character_id === p_character_id,
+      );
+      const claimed = existing?.pending_encounter_boost || 0;
+      if (claimed <= 0) return 0;
+
+      existing.pending_encounter_boost = 0;
+      return claimed;
+    },
+
     // db/migrations/011: INSERT ... ON CONFLICT DO UPDATE SET wins = wins + 1
     record_encounter_win({ p_user_id, p_guild_id }) {
       const yearMonth = `${rpcNow.getUTCFullYear()}-${String(rpcNow.getUTCMonth() + 1).padStart(2, '0')}`;
