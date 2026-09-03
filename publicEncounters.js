@@ -659,10 +659,13 @@ export async function handleCall(body, now = new Date()) {
       // No file is composed or uploaded here: the spawn silhouette stays as the
       // message's image (omitting `attachments` leaves it alone) and the reveal
       // rides in an embed beneath it, whose thumbnail is the /assets URL for
-      // the real art. The mention has to be in `content` — a mention inside an
-      // embed renders but never pings.
+      // the real art. The winner's mention lives in the embed's winner line;
+      // `content` is cleared so the reveal doesn't tag them a second time above
+      // the post. A mention inside an embed renders but never pings, so the
+      // public reveal no longer pings the winner — they still get the ephemeral
+      // ack from the guess itself.
       await editChannelMessage(encounter.channel_id, encounter.message_id, {
-        content: `<@${userId}>`,
+        content: '',
         embeds: [embed],
       });
     } catch (err) {
