@@ -51,31 +51,31 @@ export const ENCOUNTER_LOCATIONS = [
 ];
 
 export const ENCOUNTER_TEASERS = [
-  "You see a familiar figure in the distance… call out to them?",
-  "Someone's standing just past the light. Do you know them?",
-  "A silhouette lingers at the edge of the platform. Say a name?",
-  "You catch a shape you recognize out of the corner of your eye.",
-  "Someone you know is standing there, half in shadow.",
-  "There's a figure up ahead. If you're quick, you could reach them!",
+  "A familiar figure, off in the distance. Call out?",
+  "Someone just past the light. Know them?",
+  "A silhouette at the edge of the platform. Name them?",
+  "A shape you recognize, caught out of the corner of your eye.",
+  "Someone you know, standing half in shadow.",
+  "A figure up ahead — quick, you could reach them.",
   "A shadow you almost recognize pauses on the walkway.",
-  "Someone stops, just out of the light. You know that outline.",
-  "A familiar shape waits at the far end of the corridor.",
-  "There's a figure by the rail, not going anywhere yet.",
-  "Someone slows down ahead of you, like they might be waiting.",
-  "A silhouette cuts across the dark. You have seen them before.",
-  "That outline is familiar. Call their name before they move on.",
-  "Someone lingers where the light stops. Do you place them?",
-  "A shape you recognize hesitates, half-turned away.",
+  "Someone stops just out of the light. You know that outline.",
+  "A familiar shape at the far end of the corridor.",
+  "A figure by the rail, not moving yet.",
+  "Someone slows ahead of you, like they're waiting.",
+  "A silhouette cuts across the dark. You've seen them before.",
+  "That outline's familiar. Say the name before they go.",
+  "Someone lingers where the light stops. Place them?",
+  "A shape you recognize, half-turned away.",
 ];
 
 // PATCHed in as the message content when a window closes unsolved — the
 // silhouette is dropped alongside it and the name is never spoken.
 export const MISSED_LINES = [
-  "The moment has passed.",
-  "They were gone before anyone could place them.",
-  "The figure slips out of sight. Maybe next time.",
-  "Whoever it was, they didn't wait around.",
-  "You lost your chance this time.",
+  "The moment's passed.",
+  "Gone before anyone could place them.",
+  "The figure slips out of sight. Next time.",
+  "Whoever it was, they didn't wait.",
+  "You missed your chance.",
   "The shape dissolves back into the dark.",
 ];
 
@@ -83,10 +83,10 @@ export const MISSED_LINES = [
 // Gibberish resolves to nothing and is answered with "I don't know who that
 // is" — no cooldown, no penalty.
 export const WRONG_GUESS_LINES = [
-  "That's not them. They slip further away.",
-  "No — the figure stays where they are.",
-  "Wrong name. You feel the moment tightening.",
-  "That isn't who's standing there.",
+  "Not them. They slip further away.",
+  "No — the figure stays put.",
+  "Wrong name. The moment tightens.",
+  "That's not who's standing there.",
 ];
 
 // --- winner lines -----------------------------------------------------------
@@ -107,61 +107,61 @@ export const WINNER_LINES = {
   // House / mission themed — valid at any relationship tier, so these are
   // merged into every bucket's pool rather than replacing it.
   any: [
-    "{user} flagged **{name}** down for a signature on the last **{house}** mission report.",
-    "{user} caught **{name}** just before the next **{house}** briefing and pulled them aside.",
-    "**{name}** was headed out on a **{house}** mission when {user} called out.",
-    "{user} intercepted **{name}** between **{house}** missions — perfect timing.",
-    "{user} caught **{name}** to sign off on the **{house}** anomaly report just in time.",
-    "**{name}** turned at the sound of their name. {user} had a **{house}** mission to go over.",
-    "{user} picked **{name}** out of the crowd and got to them first.",
-    "{user} snagged **{name}** to walk through the **{house}** assignment.",
-    "**{name}** almost vanished into the crowd, but {user} called it right and reeled them back for the **{house}** rundown.",
-    "{user} matched the silhouette to **{name}** and waved them over before the **{house}** mission clock started.",
-    "{user} caught up to **{name}** with a **{house}** dispatch order in hand.",
-    "**{name}** stopped mid-step. {user} needed them for the **{house}** patrol roster.",
-    "{user} logged **{name}** in for the **{house}** briefing with seconds to spare.",
-    "The **{house}** debrief could wait — {user} had already called **{name}** over.",
-    "{user} pinned down **{name}** between rounds of **{house}** business.",
+    "{user} flagged **{name}** down to sign the **{house}** mission report.",
+    "{user} caught **{name}** on the way to a **{house}** briefing.",
+    "**{name}** was off on a **{house}** mission when {user} called out.",
+    "{user} caught **{name}** between **{house}** missions — perfect timing.",
+    "{user} grabbed **{name}** to sign the **{house}** anomaly report.",
+    "**{name}** turned at their name. {user} had a **{house}** mission to go over.",
+    "{user} picked **{name}** out of the crowd and got there first.",
+    "{user} snagged **{name}** for the **{house}** assignment.",
+    "**{name}** nearly slipped into the crowd, but {user} called them back.",
+    "{user} matched the silhouette to **{name}** and waved them over.",
+    "{user} caught up to **{name}**, **{house}** dispatch in hand.",
+    "**{name}** stopped mid-step. {user} needed them for the **{house}** roster.",
+    "{user} logged **{name}** for the **{house}** briefing with seconds to spare.",
+    "The **{house}** debrief could wait — {user} already had **{name}**.",
+    "{user} pinned **{name}** down between rounds of **{house}** business.",
   ],
 
   new: [
-    "**{name}** doesn't quite place {user} yet, but stops anyway.",
-    "{user} got a name out before **{name}** could disappear. A first, cautious nod.",
-    "**{name}** studies {user} for a second, then decides they're worth a moment.",
-    '"…Do I know you?" **{name}** asks — but they don\'t walk off. {user} guessed right.',
-    "**{name}** gives {user} a measured look, then stays put.",
+    "**{name}** doesn't quite place {user}, but stops anyway.",
+    "{user} got the name out before **{name}** could go. A cautious nod.",
+    "**{name}** studies {user} a second, then decides they're worth a moment.",
+    '"…Do I know you?" **{name}** asks — but doesn\'t walk off. {user} got it right.',
+    "**{name}** gives {user} a measured look, then stays.",
   ],
 
   warm: [
-    "**{name}** breaks into an easy grin the second {user} calls out.",
-    '"There you are." **{name}** falls into step beside {user} without missing a beat.',
-    "{user} nailed the name and **{name}** laughs — caught, and not minding it.",
-    "**{name}** was hoping it'd be {user}. The mission talk can wait a minute.",
+    "**{name}** grins the second {user} calls out.",
+    '"There you are." **{name}** falls into step with {user}.',
+    "{user} nailed the name and **{name}** laughs — caught, not minding it.",
+    "**{name}** was hoping it'd be {user}. Mission talk can wait.",
     "**{name}** turns like they already knew it was {user}.",
   ],
 
   spark: [
-    "**{name}** turns, sees {user}, and takes their time about answering.",
+    "**{name}** turns, sees {user}, and takes their time answering.",
     "{user} says the name and **{name}**'s whole posture changes.",
-    '"Of course it\'s you." **{name}** says it like {user} has been caught at something.',
-    "**{name}** was already half-turned before {user} finished the name.",
-    "{user} got there first, and **{name}** looks pleased about exactly that.",
+    "\"Of course it's you.\" **{name}** says it like {user}'s been caught at something.",
+    "**{name}** was already half-turned before {user} finished.",
+    "{user} got there first, and **{name}** looks pleased about it.",
   ],
 
   close: [
-    "**{name}** would've known that voice anywhere. They cross straight to {user}.",
-    "{user} barely finished the name before **{name}** was already turning, already smiling.",
-    '"Took you long enough." **{name}** bumps {user}\'s shoulder and pretends the mission is why they stayed.',
-    "**{name}** drops the debrief face entirely when it's {user} doing the calling.",
-    "**{name}** was watching for {user} the whole time, if anyone asked. No one asked.",
+    "**{name}** knows that voice anywhere. Straight over to {user}.",
+    "{user} barely finished the name before **{name}** was turning, smiling.",
+    '"Took you long enough." **{name}** bumps {user}\'s shoulder.',
+    "**{name}** drops the debrief face when it's {user} calling.",
+    "**{name}** was watching for {user} the whole time. Not that they'd say so.",
   ],
 
   bound: [
-    "**{name}** doesn't even look surprised — of course it's {user}. It's always {user}.",
-    "{user} says the name and **{name}** is already there, mission report forgotten on the desk.",
-    "\"You didn't have to guess. You know it's me.\" **{name}** takes {user}'s hand and the **{house}** briefing loses.",
-    "**{name}** crosses to {user} like the rest of the room isn't there.",
-    "The **{house}** paperwork hits the floor. **{name}** reached {user} first.",
+    "**{name}** isn't even surprised — of course it's {user}. Always {user}.",
+    "{user} says the name and **{name}**'s already there, report forgotten.",
+    "\"You didn't have to guess.\" **{name}** takes {user}'s hand and the **{house}** briefing loses.",
+    "**{name}** crosses to {user} like the room isn't there.",
+    "The **{house}** paperwork hits the floor. **{name}** got to {user} first.",
   ],
 };
 

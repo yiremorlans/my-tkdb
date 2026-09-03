@@ -665,7 +665,7 @@ export async function handleCall(body, now = new Date()) {
       // public reveal no longer pings the winner — they still get the ephemeral
       // ack from the guess itself.
       await editChannelMessage(encounter.channel_id, encounter.message_id, {
-        content: '',
+        content: null,
         embeds: [embed],
       });
     } catch (err) {

@@ -280,9 +280,10 @@ describe('/call', () => {
 
     // The silhouette stays; the reveal rides in an added embed.
     const [edit] = edits;
-    assert.equal(edit.body.content, '<@user-1>', 'mention in content so it pings');
+    assert.equal(edit.body.content, null, 'content cleared so the winner is not tagged above the post');
     assert.equal('attachments' in edit.body, false, 'silhouette kept');
     assert.equal(edit.body.embeds[0].thumbnail.url, 'https://example.test/assets/chars/Rui_Mizuki_Uniform.png');
+    assert.match(edit.body.embeds[0].description, /<@user-1>/, 'the winner is mentioned inside the reveal line');
     assert.ok(!/[{}]/.test(edit.body.embeds[0].description), 'no unfilled placeholder');
   });
 

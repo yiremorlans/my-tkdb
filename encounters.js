@@ -507,7 +507,7 @@ function renderMomentsTogether(character, counts) {
     });
 
   if (rows.length === 0) return null;
-  return `**Moments together**\n${rows.join('\n')}`;
+  return `**Moments together** 💞\n${rows.join('\n')}`;
 }
 
 export async function buildAffinityMessage(userId, characterIds) {
