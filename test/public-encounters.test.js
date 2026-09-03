@@ -56,7 +56,7 @@ mock.module('../imageComposition.js', {
   },
 });
 
-const { handleCall, spawnEncounter, sweepExpiredEncounters } = await import('../publicEncounters.js');
+const { handleCall, spawnEncounter, sweepExpiredEncounters, rollGapMinutes } = await import('../publicEncounters.js');
 const { runTick, clearSpawnAttemptFence } = await import('../encounterScheduler.js');
 const { buildResponseResultMessage } = await import('../encounters.js');
 const { recordEncounterMilestone, getEncounterMilestoneCounts, getOrCreateRelationship } = await import('../db/supabase.js');
@@ -248,6 +248,16 @@ describe('the scheduler loop', () => {
     const after = fake.tables.guild_settings[0];
     assert.equal(after.last_encounter_at, before.last_encounter_at, 'anchor untouched');
     assert.equal(after.next_gap_minutes, before.next_gap_minutes, 'no fresh gap rolled');
+  });
+
+  it('rolls a whole number of minutes — next_gap_minutes is an INT column', async () => {
+    // The fake Supabase does not type-check, so a float here fails only in
+    // real Postgres (22P02). Guard it directly.
+    for (let i = 0; i < 200; i++) {
+      const gap = rollGapMinutes();
+      assert.ok(Number.isInteger(gap), `rollGapMinutes returned ${gap}`);
+      assert.ok(gap >= 45 && gap <= 180, `rollGapMinutes returned ${gap}`);
+    }
   });
 
 });

@@ -63,7 +63,9 @@ const EPHEMERAL = 64;
 export function rollGapMinutes() {
   const min = Math.min(ENCOUNTER_MIN_MINUTES, ENCOUNTER_MAX_MINUTES);
   const max = Math.max(ENCOUNTER_MIN_MINUTES, ENCOUNTER_MAX_MINUTES);
-  return min + Math.random() * (max - min);
+  // guild_settings.next_gap_minutes is an INT column — round rather than hand
+  // Postgres a float. Sub-minute precision on a 45–180 minute gap is noise.
+  return Math.round(min + Math.random() * (max - min));
 }
 
 // Is this guild due? Read the /roam way: how long since the last one, against
