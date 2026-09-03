@@ -1,17 +1,14 @@
 // Pure logic against the real character catalog: id/alias resolution,
-// affinity scoring per response type, name formatting, and location-based
-// character selection. No DB, no I/O.
+// affinity scoring per response type, and name formatting. No DB, no I/O.
 import { test } from 'node:test';
 import assert from 'node:assert';
 import {
   getAffinityForResponse,
   getCharacterById,
-  getCharactersForLocation,
   getFullName,
   RESPONSE_TYPES,
   CHARACTERS,
 } from '../constants/characters.js';
-import { HOUSES, CHARACTER_ROOMS } from '../constants/backgrounds.js';
 
 const ren = getCharacterById('ren');
 const shohei = getCharacterById('shohei');
@@ -84,17 +81,7 @@ test('getFullName falls back to the first name alone when there is no last name'
   assert.strictEqual(getFullName(benkei), benkei.firstName);
 });
 
-test('getCharactersForLocation(isGeneral=true) returns every character regardless of location', () => {
-  const result = getCharactersForLocation('anything', true);
-  assert.strictEqual(result.length, CHARACTERS.length);
-});
-
-test('getCharactersForLocation resolves a character-exclusive room', () => {
-  const result = getCharactersForLocation(CHARACTER_ROOMS.REN, false);
-  assert.ok(result.some((c) => c.id === 'ren'));
-});
-
-test('getCharactersForLocation falls back to house membership when no room matches', () => {
-  const result = getCharactersForLocation(HOUSES.JABBERWOCK, false);
-  assert.ok(result.some((c) => c.id === 'ren'), 'ren belongs to Jabberwock house');
-});
+// The location -> characters direction (getCharactersForLocation) was removed
+// along with location-first /roam selection; attributedLocations() is now the
+// single source for the character/location relation and is covered by
+// test/roam-uniform-distribution.test.js.

@@ -3,6 +3,16 @@
 // possible). Characters with `house: null` are general encounters only —
 // they can turn up at any GENERAL_LOCATIONS spot (see constants/backgrounds.js),
 // never inside another house.
+//
+// `house` is the single source of truth for house standing: every character
+// belongs to exactly one house (or none), and /house tallies affinity from this
+// field alone. `additionalHouses` and `additionalRooms` are NOT a second
+// membership — they are scenery, listing where else a character can plausibly
+// be encountered. Lyca is an Obscuary character who is sometimes found around
+// Hotarubi; Tohma is Frostheim, seen at Vagastrom and in Jin's room. Only
+// attributedLocations() in constants/backgrounds.js reads them, and only to
+// decide backgrounds. Adding one changes where a character appears and nothing
+// else — not their house, not their affinity, not how often they show up.
 import { HOUSES, CHARACTER_ROOMS, timeBucket } from "./backgrounds.js";
 import {
   DIALOGUE,
@@ -962,31 +972,12 @@ export function getCharacterById(id) {
   );
 }
 
-export function getCharactersByHouse(house) {
-  return CHARACTERS.filter(
-    (c) =>
-      c.house === house ||
-      (c.additionalHouses && c.additionalHouses.includes(house)) ||
-      (c.additionalLocations && c.additionalLocations.includes(house)),
-  );
-}
-
-// Characters eligible to appear at a given location: same-house characters,
-// plus (for general locations) every character in the game.
-// Exclusive rooms only allow their specific character.
-export function getCharactersForLocation(locationKey, isGeneral) {
-  if (isGeneral) return CHARACTERS;
-
-  // Check if this is an exclusive room location
-  const charsForRoom = CHARACTERS.filter(
-    (c) =>
-      c.exclusiveRoom === locationKey ||
-      (c.additionalRooms && c.additionalRooms.includes(locationKey)),
-  );
-  if (charsForRoom.length > 0) return charsForRoom;
-
-  return getCharactersByHouse(locationKey);
-}
+// NOTE: getCharactersByHouse / getCharactersForLocation used to live here —
+// "given a location, who can appear at it". Nothing asks that question any
+// more. /roam and /meet both draw the character first and then resolve their
+// settings via attributedLocations() in constants/backgrounds.js, which is the
+// same character/location relation read in the opposite direction. Keeping only
+// one direction means the two can never drift out of agreement.
 
 export function getFullName(character) {
   return character.lastName

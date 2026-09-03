@@ -3,11 +3,11 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import {
-  getRandomBackground,
+  attributedLocations,
   getRandomBackgroundForCharacter,
   getRandomGeneralBackground,
   getLocationDisplayName,
-  isGeneralLocation,
+  weightedBackgrounds,
   HOUSES,
   SPECIAL_BACKGROUNDS,
 } from './constants/backgrounds.js';
@@ -16,7 +16,6 @@ import {
   generateCharacterResponses,
   getAffinityForResponse,
   getCharacterById,
-  getCharactersForLocation,
   getFullName,
   getRandomCharacterImageVariant,
   getRandomApproachLabel,
@@ -102,39 +101,70 @@ function getImageVariant(character, levelName) {
   return variant;
 }
 
-// Character affinity preferences for special locations.
-// Higher values = more likely to appear at that location.
-const LOCATION_CHARACTER_AFFINITIES = {
-  [SPECIAL_BACKGROUNDS.DARKWICK_MYSTERY_DINER]: { ren: 2 },
-  [SPECIAL_BACKGROUNDS.DARKWICK_FOOD_TRUCK]: { shohei: 2 },
-  [SPECIAL_BACKGROUNDS.DARKWICK_DOCKS]: { shion: 2 },
-  [SPECIAL_BACKGROUNDS.VAGASTROM_THE_PIT]: { alan: 2 },
-  [SPECIAL_BACKGROUNDS.SINOSTRA_VIP_ROOM_ENTRANCE]: { romeo: 2 },
-  [SPECIAL_BACKGROUNDS.OBSCUARY_BAR]: { rui: 1.5, romeo: 1 },
-  [SPECIAL_BACKGROUNDS.MORTKRANKEN_LAB]: { yuri: 2 },
-  [SPECIAL_BACKGROUNDS.MORTKRANKEN_LAB_PM]: { yuri: 2 },
+// Signature spots: given an already-chosen character, these backgrounds are
+// this much likelier among the spots available to them.
+//
+// This is the inverse of the LOCATION_CHARACTER_AFFINITIES map it replaces,
+// which boosted a *character* at a location. "Ren haunts the Mystery Diner"
+// reads the same either way, but the direction matters: /roam used to pick the
+// location first, so boosting a character there changed how often that
+// character appeared at all. P(character) came out proportional to how many
+// backgrounds their house had and inversely proportional to how many housemates
+// shared it — 1.73% for Benkei against 6.22% for Edward, a 3.6x spread nobody
+// authored. Weighting a *spot* for a character who has already been drawn
+// expresses the same flavor and cannot touch the character distribution.
+const CHARACTER_SIGNATURE_SPOTS = {
+  ren: { [SPECIAL_BACKGROUNDS.DARKWICK_MYSTERY_DINER]: 2 },
+  shohei: { [SPECIAL_BACKGROUNDS.DARKWICK_FOOD_TRUCK]: 2 },
+  shion: { [SPECIAL_BACKGROUNDS.DARKWICK_DOCKS]: 2 },
+  alan: { [SPECIAL_BACKGROUNDS.VAGASTROM_THE_PIT]: 2 },
+  romeo: {
+    [SPECIAL_BACKGROUNDS.SINOSTRA_VIP_ROOM_ENTRANCE]: 2,
+    [SPECIAL_BACKGROUNDS.OBSCUARY_BAR]: 1,
+  },
+  rui: { [SPECIAL_BACKGROUNDS.OBSCUARY_BAR]: 1.5 },
+  yuri: {
+    [SPECIAL_BACKGROUNDS.MORTKRANKEN_LAB]: 2,
+    [SPECIAL_BACKGROUNDS.MORTKRANKEN_LAB_PM]: 2,
+  },
 };
 
-// Select a character using weighted probability based on location affinity.
-// Characters with higher affinity for a location are more likely to appear there.
-function selectCharacterAtLocation(candidates, location) {
-  const affinities = LOCATION_CHARACTER_AFFINITIES[location] || {};
+// Fraction of /roam encounters set on the character's own turf; the rest are
+// general locations (Darkwick, Ultio, Galaxy Express, Clementia).
+//
+// A fixed constant, deliberately NOT derived from how many backgrounds a
+// character's turf happens to hold. Deriving it would give Edward (Obscuary +
+// a three-background private room) a different turf/out-and-about feel than
+// Mio (a crowded Dionysia and no room) for reasons no one chose. It cannot
+// affect who appears — the character is already drawn by the time this is read
+// — only where they are when they do.
+const TURF_PROBABILITY = 0.55;
 
-  // Build weighted pool: add characters based on affinity
-  const weightedPool = [];
-  for (const candidate of candidates) {
-    const weight = affinities[candidate.id] || 1;
-    // Add character to pool based on weight
-    for (let i = 0; i < Math.ceil(weight); i++) {
-      weightedPool.push(candidate);
+// Every eligible background on this character's turf, with their signature
+// spots repeated to weight them. Returns [] for a character with no attributed
+// location that has anything eligible right now (Benkei, who has no house).
+function turfSpots(character, now) {
+  const signature = CHARACTER_SIGNATURE_SPOTS[character.id] || {};
+  const pool = [];
+  for (const locationKey of attributedLocations(character)) {
+    for (const file of weightedBackgrounds(locationKey, now)) {
+      for (let i = 0; i < Math.ceil(signature[file] || 1); i++) {
+        pool.push({ locationKey, file });
+      }
     }
   }
+  return pool;
+}
 
-  if (weightedPool.length === 0) {
-    return pickRandom(candidates);
+// Pick where an already-chosen character is found. Their own turf most of the
+// time, a general location otherwise; a character with no eligible turf right
+// now falls through to general rather than returning nothing.
+function selectRoamSpot(character, now) {
+  if (Math.random() < TURF_PROBABILITY) {
+    const turf = turfSpots(character, now);
+    if (turf.length) return pickRandom(turf);
   }
-
-  return pickRandom(weightedPool);
+  return getRandomGeneralBackground(now);
 }
 
 // `origin` ('meet' | 'roam') rides along in the custom_id so the response
@@ -228,8 +258,18 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
   console.log('[buildRoamDialogueMessage] Starting...');
   const startTime = Date.now();
 
-  console.log('[buildRoamDialogueMessage] Getting random background...');
-  const spot = getRandomBackground(now);
+  // Character first, setting second — the same order /meet uses. This used to
+  // draw the location first and then pick among whoever was attributed to it,
+  // which made P(character) an accident of three unrelated things: how many
+  // backgrounds their house happened to have, how many housemates shared it,
+  // and whether they owned a private room. Drawing the character first makes it
+  // exactly 1/CHARACTERS.length for everyone, and leaves the setting free to be
+  // weighted however the flavor wants (TURF_PROBABILITY, signature spots, the
+  // evening _PM bias) without any of it bending who shows up.
+  console.log('[buildRoamDialogueMessage] Picking character...');
+  const character = pickRandom(CHARACTERS);
+
+  const spot = selectRoamSpot(character, now);
   if (!spot) {
     console.log('[buildRoamDialogueMessage] No background available');
     return {
@@ -237,13 +277,6 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
       flags: EPHEMERAL_FLAG,
     };
   }
-
-  console.log('[buildRoamDialogueMessage] Getting location info...');
-  const isGeneral = isGeneralLocation(spot.locationKey);
-  const candidates = getCharactersForLocation(spot.locationKey, isGeneral);
-
-  // Use weighted selection based on location affinity
-  const character = selectCharacterAtLocation(candidates, spot.file);
 
   console.log(`[buildRoamDialogueMessage] Selected ${getFullName(character)} at ${spot.locationKey}`);
 

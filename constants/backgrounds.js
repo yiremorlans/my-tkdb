@@ -373,22 +373,14 @@ export function weightedBackgrounds(locationKey, now) {
   return out;
 }
 
-// Picks a random location + background out of every location, weighted by
-// how many eligible backgrounds each location currently has (and, in the
-// evening, biased toward _PM backgrounds — see EVENING_PM_WEIGHT).
-export function getRandomBackground(now = new Date()) {
-  const entries = Object.keys(LOCATION_KEYS).map((key) => LOCATION_KEYS[key]);
-  const pool = [];
-
-  for (const locationKey of entries) {
-    for (const file of weightedBackgrounds(locationKey, now)) {
-      pool.push({ locationKey, file });
-    }
-  }
-
-  if (pool.length === 0) return null;
-  return pool[Math.floor(Math.random() * pool.length)];
-}
+// NOTE: there is deliberately no "pick any location, then find who's there"
+// helper here any more. /roam used to start that way, which made a character's
+// odds of appearing an accident of how many backgrounds their house held and
+// how many housemates they shared it with — a 1.73%-6.22% spread nobody
+// authored. Both /roam and /meet now draw the character first and the setting
+// second (getRandomBackgroundForCharacter below), so every character appears
+// equally often and the background weighting is free to express flavor only.
+// Reintroducing a location-first picker would reintroduce the skew.
 
 // Picks a random background from everywhere a specific character could be
 // found on their own turf: their house, plus their exclusive room if they
@@ -397,14 +389,34 @@ export function getRandomBackground(now = new Date()) {
 // a location with more eligible backgrounds is proportionally more likely
 // to come up — same principle getRandomBackground applies globally, just
 // scoped to one character instead of every location. Returns null if the
-// character has neither a house nor a room with anything eligible right
-// now (e.g. Benkei, who has no house) — callers fall back to
+// character has no attributed location with anything eligible right now
+// (e.g. Benkei, who has no house) — callers fall back to
 // getRandomGeneralBackground in that case.
+
+// Every location a character can be encountered in.
+//
+// IMPORTANT: this is about scenery, not membership. Every character belongs to
+// exactly one house — `character.house` — and that is the only field house
+// standing is ever read from (see buildHouseMessage). `additionalHouses` and
+// `additionalRooms` say nothing about who a character *is*; they only say where
+// they can plausibly be found. Lyca is an Obscuary character who turns up
+// around Hotarubi; Tohma is Frostheim, seen at Vagastrom and in Jin's room.
+// Adding a key here widens where someone appears and changes nothing else —
+// not their house, not their affinity, and (since the character is drawn before
+// this is read) not how often they show up.
+export function attributedLocations(character) {
+  return [
+    character.house,
+    character.exclusiveRoom,
+    ...(character.additionalHouses || []),
+    ...(character.additionalRooms || []),
+    ...(character.additionalLocations || []),
+  ].filter(Boolean);
+}
+
 export function getRandomBackgroundForCharacter(character, now = new Date()) {
   const pool = [];
-  for (const locationKey of [character.house, character.exclusiveRoom].filter(
-    Boolean,
-  )) {
+  for (const locationKey of attributedLocations(character)) {
     for (const file of weightedBackgrounds(locationKey, now)) {
       pool.push({ locationKey, file });
     }
