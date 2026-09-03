@@ -194,4 +194,37 @@ export default {
       bound: ["Let him cook", "Prep in easy silence", "Stay curled up"],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '**{name}** turns on {user} with a knife still moving and a grin that doesn\'t match the street. "Senpai? You know me?"',
+      "{user} says the name, and **{name}** waves them over before deciding anything else.",
+      '"Sho. Just Sho." **{name}** corrects {user} cheerfully and hands them something hot.',
+    ],
+    warm: [
+      "\"Senpai!\" **{name}** has {user}'s order on before they've finished crossing the road.",
+      "{user} calls out, and **{name}**'s whole face does the thing it does.",
+      "**{name}** was closing up. He is now, somehow, cooking for {user}.",
+    ],
+    spark: [
+      '"Say it again, Senpai." **{name}** is grinning at {user} like he won something.',
+      "{user} says the name, and **{name}** forgets the pan entirely.",
+      "**{name}** wipes his hands twice on the way to {user}. He wanted them clean.",
+    ],
+    close: [
+      "**{name}** hears {user} and leaves the truck running. Somebody else's problem.",
+      "\"Don't move, Senpai. I'm coming to you.\" **{name}** is already halfway to {user}.",
+      "{user} calls, and **{name}** kisses their temple on the way past without thinking about it.",
+    ],
+    bound: [
+      '"I love you, Senpai. Yeah, I say it a lot now." **{name}** tells {user} he isn\'t sorry.',
+      "**{name}** was humming. {user} calling his name made it considerably worse.",
+      "{user} says the name, and **{name}** decides the **{house}** shift can run itself tonight.",
+    ],
+  },
 };

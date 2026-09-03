@@ -203,4 +203,37 @@ export default {
       bound: ["Let him sleep", "Sit in the quiet", "Say nothing at all"],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '**{name}** looks {user} over once. "...Yeah. That\'s me."',
+      "**{name}** had been at that corner a while, working out which way it went. {user} named him before he managed it.",
+      '"Careful." **{name}** moves something sharp out of {user}\'s way before he says anything else.',
+    ],
+    warm: [
+      "{user} calls out, and **{name}** stops walking. He doesn't do that for people.",
+      "**{name}** was going the wrong way again. {user} saying his name fixed it.",
+      '**{name}** grunts. {user} has learned to hear "good" in it.',
+    ],
+    spark: [
+      "**{name}** turns at {user}'s voice and takes a second too long to look away.",
+      '"You came looking." **{name}** says it flat to {user}, and stays put.',
+      "**{name}** had no idea which block this was. He knew {user}'s voice.",
+    ],
+    close: [
+      "**{name}** is lost again. He won't say so. {user} calling out saves him having to.",
+      "{user} calls, and **{name}** puts a hand at their back, steering them out of the crowd.",
+      "**{name}** says nothing. He stays where {user} can reach him.",
+    ],
+    bound: [
+      '"Come here. Don\'t need a reason anymore, do I." **{name}** says it low, only to {user}.',
+      "**{name}** hears {user}, and his shoulders finally come down.",
+      "**{name}** has never once known where he is. He always knows where {user} is.",
+    ],
+  },
 };

@@ -17,6 +17,10 @@ import {
   DIALOGUE,
   SHARED_APPROACH_WHEN,
   SHARED_DIALOGUE_WHEN,
+  SHARED_ENCOUNTER_TEASERS,
+  SHARED_MISSED_LINES,
+  SHARED_WINNER_LINES,
+  SHARED_WRONG_GUESS_LINES,
 } from "./dialogue.js";
 import {
   BACKGROUNDS_BY_LOCATION,
@@ -25,6 +29,10 @@ import {
   TIME_BUCKETS,
 } from "./backgrounds.js";
 import { MAX_BUTTON_LABEL_LENGTH } from "./game.js";
+import {
+  WINNER_LINE_BUCKETS,
+  WINNER_LINE_PLACEHOLDERS,
+} from "./publicEncounters.js";
 
 const TIERS = ["new", "known", "warm", "spark", "close", "bound"];
 
@@ -142,6 +150,101 @@ function validateWhenList(list, label, poolKey, errors, warnings, opts = {}) {
   });
 }
 
+// /call reveal lines, per character or the shared fallback pool. For a
+// character, absent or partial is legal — SHARED_WINNER_LINES fronts whatever
+// is missing — but for the shared pool itself a missing register has nothing
+// left to fall back to, so `required` promotes those to errors. A line that
+// can't name the winner or the character is a broken public message either way.
+function validateWinnerLines(at, winnerLines, errors, warnings, opts = {}) {
+  const { required = false, extraBuckets = [] } = opts;
+  if (winnerLines === undefined) {
+    const message = `${at} has no winnerLines`;
+    if (required) errors.push(message);
+    else warnings.push(`${message} — /call reveals use the shared pool`);
+    return;
+  }
+  if (typeof winnerLines !== "object" || winnerLines === null || Array.isArray(winnerLines)) {
+    errors.push(`${at} winnerLines must be an object keyed by register`);
+    return;
+  }
+
+  const buckets = [...extraBuckets, ...WINNER_LINE_BUCKETS];
+  for (const bucket of Object.keys(winnerLines)) {
+    if (!buckets.includes(bucket)) {
+      warnings.push(`${at} winnerLines has unknown register "${bucket}" — never picked`);
+    }
+  }
+
+  for (const bucket of buckets) {
+    const lines = winnerLines[bucket];
+    if (lines === undefined) {
+      const message = `${at} has no "${bucket}" winner lines`;
+      if (required) errors.push(message);
+      else warnings.push(`${message} — that register uses the shared pool`);
+      continue;
+    }
+    if (!Array.isArray(lines) || lines.length === 0) {
+      errors.push(
+        `${at} winnerLines.${bucket} is empty — winnerLinePool would fall through to the shared pool`,
+      );
+      continue;
+    }
+    if (new Set(lines).size !== lines.length) {
+      warnings.push(`${at} repeats a winner line at "${bucket}"`);
+    }
+    for (const line of lines) {
+      if (typeof line !== "string") {
+        errors.push(`${at} winnerLines.${bucket} has a non-string line`);
+        continue;
+      }
+      const used = [...line.matchAll(/\{(\w+)\}/g)].map((m) => m[1]);
+      for (const key of used) {
+        if (!WINNER_LINE_PLACEHOLDERS.includes(key)) {
+          // fillTemplate resolves an unknown placeholder to '', so this ships a
+          // sentence with a hole in it rather than throwing.
+          errors.push(`${at} winnerLines.${bucket} uses unknown placeholder "{${key}}": "${line}"`);
+        }
+      }
+      // The embed's winner line is the only place the reveal names either of
+      // them — the message content is cleared and the milestone afterline
+      // names neither.
+      if (!used.includes("user")) {
+        errors.push(`${at} winnerLines.${bucket} never mentions {user}: "${line}"`);
+      }
+      if (!used.includes("name") && !used.includes("firstName")) {
+        errors.push(`${at} winnerLines.${bucket} never names the character: "${line}"`);
+      }
+    }
+  }
+}
+
+// A time-keyed /call pool ({ any, day, evening }). What actually has to hold is
+// that every hour of the day can draw something: pickTeaser and pickMissedLine
+// merge `any` with the current bucket, so a bucket may be absent, but the merge
+// must never come out empty.
+function validateTimedPool(label, pools, errors, warnings) {
+  if (!pools || typeof pools !== "object" || Array.isArray(pools)) {
+    errors.push(`${label} must be an object keyed by time bucket`);
+    return;
+  }
+  for (const key of Object.keys(pools)) {
+    if (key !== "any" && !TIME_BUCKETS.includes(key)) {
+      warnings.push(`${label} has unknown time bucket "${key}" — never picked`);
+    }
+  }
+  for (const [key, lines] of Object.entries(pools)) {
+    if (!Array.isArray(lines) || lines.some((l) => typeof l !== "string")) {
+      errors.push(`${label}.${key} must be an array of strings`);
+    }
+  }
+  for (const bucket of TIME_BUCKETS) {
+    const merged = [...(pools.any || []), ...(pools[bucket] || [])];
+    if (merged.length === 0) {
+      errors.push(`${label} has nothing to draw from at "${bucket}"`);
+    }
+  }
+}
+
 export function validateContent() {
   const errors = [];
   const warnings = [];
@@ -152,6 +255,18 @@ export function validateContent() {
       errors.push(`dialogue.js has "${key}", which is not a character id`);
     }
   }
+
+  // The roster-wide /call pools. Nothing falls back to these, so a hole in one
+  // is an outage of the feature's message rather than a downgrade.
+  validateTimedPool("SHARED_ENCOUNTER_TEASERS", SHARED_ENCOUNTER_TEASERS, errors, warnings);
+  validateTimedPool("SHARED_MISSED_LINES", SHARED_MISSED_LINES, errors, warnings);
+  if (!Array.isArray(SHARED_WRONG_GUESS_LINES) || SHARED_WRONG_GUESS_LINES.length === 0) {
+    errors.push("SHARED_WRONG_GUESS_LINES is empty — a wrong guess would answer with nothing");
+  }
+  validateWinnerLines("SHARED_WINNER_LINES", SHARED_WINNER_LINES, errors, warnings, {
+    required: true,
+    extraBuckets: ["any"],
+  });
 
   validateWhenList(SHARED_DIALOGUE_WHEN, "SHARED_DIALOGUE_WHEN", "dialogue", errors, warnings);
   validateWhenList(SHARED_APPROACH_WHEN, "SHARED_APPROACH_WHEN", "approach", errors, warnings, {
@@ -207,6 +322,8 @@ export function validateContent() {
     if (!content.temperamentDialogue) {
       warnings.push(`${id} has no temperamentDialogue — greets with "..."`);
     }
+
+    validateWinnerLines(id, content.winnerLines, errors, warnings);
 
     // Conditional pools are optional; when present, every block must be
     // well-formed and its `when` must reference real dimensions/values or it is

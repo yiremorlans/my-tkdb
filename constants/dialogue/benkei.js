@@ -202,4 +202,37 @@ export default {
       bound: ["Sit with him quietly", "Let the evening pass", "Say nothing"],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '"Oh! H-hello." **{name}** is carrying far too much and insists to {user} that it\'s no trouble.',
+      '{user} says the name, and **{name}** goes red to the ears. "You— you remembered?"',
+      '"Careful there — mind the—" **{name}** stops. {user} has already got it.',
+    ],
+    warm: [
+      '"You came back!" **{name}** beams at {user} and immediately offers to carry something.',
+      "{user} calls out, and **{name}** sets down the crate he'd been managing badly.",
+      "**{name}** had put something aside for {user}. He does that most days now, just in case.",
+    ],
+    spark: [
+      "**{name}** goes red, apologizes for going red, and stays exactly where {user} can see him.",
+      '"You remind me of someone," **{name}** tells {user} fondly, and doesn\'t finish the thought.',
+      "{user} says the name, and **{name}** forgets the whole afternoon's list.",
+    ],
+    close: [
+      '"Come here, love. Let me look at you a minute." **{name}** means it to {user} kindly. Mostly.',
+      "**{name}** hears {user}, and every ache of the day goes somewhere else.",
+      "{user} calls, and **{name}** walks the long way round with them, just to have the time.",
+    ],
+    bound: [
+      '"I\'d got used to being alone," **{name}** tells {user}. "You\'ve ruined that entirely."',
+      "**{name}** kisses {user}'s forehead in front of half the campus, like a man observing a sacrament.",
+      "{user} says the name, and **{name}** stops going red about it. Mostly.",
+    ],
+  },
 };

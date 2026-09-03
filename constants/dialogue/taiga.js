@@ -203,4 +203,37 @@ export default {
       bound: ["Play the hand out", "Let him growl", "Say nothing"],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '"Huh." **{name}** looks {user} over. "You got guts, kitten. Stupid ones, but guts."',
+      '{user} says the name, and **{name}** grins around it. "Do I know you? ...Whatever. C\'mere."',
+      '"You lost, kitten?" **{name}** asks {user}, shuffling the whole time.',
+    ],
+    warm: [
+      '"Took your damn time." **{name}** had very obviously been waiting on {user}.',
+      "{user} calls out, and **{name}** kicks a chair out in their direction.",
+      "**{name}** calls {user} a dumbass and deals them in. Same thing, from him.",
+    ],
+    spark: [
+      '"Kitten." **{name}** says it to {user}, and this time it isn\'t a jab at all.',
+      "{user} says the name, and **{name}** folds a hand he was winning.",
+      "**{name}** hooks a finger in {user}'s collar to pull them down to his level, grinning.",
+    ],
+    close: [
+      '"Anybody touches you, they answer to me." **{name}** tells {user} that was always the deal.',
+      "**{name}** hears {user}, and everyone else stops existing.",
+      "{user} calls, and **{name}** walks away from a bet he was about to win.",
+    ],
+    bound: [
+      '"Love you, kitten," **{name}** growls, daring {user} to make something of it.',
+      "**{name}** pulls {user} in right there in the open, and the passers-by pretend not to notice.",
+      "{user} says the name, and **{name}** — who loses whole days — remembers exactly this.",
+    ],
+  },
 };

@@ -243,4 +243,37 @@ export default {
       ],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      "**{name}** turns and apologizes to {user} for not noticing sooner, which wasn't his fault.",
+      '"You have me at a disadvantage." **{name}** inclines his head anyway — {user} had it right.',
+      "{user} says the name, and **{name}** steps out of the way first and greets them second.",
+    ],
+    warm: [
+      '"I\'d hoped that was you." **{name}** takes whatever {user} is carrying without asking.',
+      "{user} calls out, and **{name}**'s careful expression goes entirely soft.",
+      "**{name}** had been checking the crowd for hazards. Now he's checking {user} for the same.",
+    ],
+    spark: [
+      "**{name}** hears his name in {user}'s voice and loses count of the drill entirely.",
+      '"You shouldn\'t be out here alone." **{name}** falls in beside {user} rather than say the rest of it.',
+      "{user} got there first, and **{name}** looks at them a moment too long to be only polite.",
+    ],
+    close: [
+      "**{name}** doesn't ask whether {user} needs anything. He simply stays.",
+      '"Please don\'t make that face." **{name}** is smiling — {user} caught him mid-training again.',
+      "{user} calls, and **{name}** sets the **{house}** dispatch down without finishing the line.",
+    ],
+    bound: [
+      '"I\'d burn a great deal down for you," **{name}** says quietly, because {user} called his name in public and he is still not over it.',
+      "**{name}** kisses {user}'s knuckles with people going past on both sides, and does not apologize for it.",
+      "{user} says the name, and every ounce of **{name}**'s restraint goes somewhere else.",
+    ],
+  },
 };

@@ -206,4 +206,37 @@ export default {
       ],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '"Oh wow, look who showed up!" **{name}** beams at {user} from a careful arm\'s length.',
+      "{user} says the name, and **{name}** reaches out, catches himself an inch away, and turns it into a wave.",
+      '"Don\'t shake my hand — long story!" **{name}** tells {user} cheerfully.',
+    ],
+    warm: [
+      '"You\'re back!" **{name}** talks to {user} with his whole body and never quite lands a touch.',
+      "{user} calls out, and **{name}**'s brightness stops being a performance for a second.",
+      '"Come by the bar after," **{name}** tells {user}. "I\'ll mix you something."',
+    ],
+    spark: [
+      "**{name}** forgets the careful distance {user} is owed. Then remembers. Then regrets remembering.",
+      "\"It's illegal to take your eyes off me,\" **{name}** informs {user}, who wasn't going to.",
+      "{user} says the name, and the crack under **{name}**'s cheer shows, briefly.",
+    ],
+    close: [
+      '"You\'re not doing all this for me, are you?" **{name}** asks {user}, gloves already on.',
+      "**{name}** puts his sleeve between his hand and {user}'s cheek. He's worked out every way there is.",
+      "{user} calls, and **{name}** leaves the cuttings he was carrying on the nearest bench.",
+    ],
+    bound: [
+      '"That one doesn\'t need hands," **{name}** says, telling {user} he loves them across two feet of air.',
+      "**{name}** reaches {user} and stands as close as the curse allows, which is closer than it used to be.",
+      "{user} says the name, and **{name}** stops being happy enough for the both of them and is simply happy.",
+    ],
+  },
 };

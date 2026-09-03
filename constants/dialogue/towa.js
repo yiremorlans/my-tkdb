@@ -283,4 +283,37 @@ export default {
       bound: ["Let him sleep", "Stay exactly there", "Say nothing at all"],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      "**{name}** stops humming. His eyes land on {user} and stay there, unblinking.",
+      '"...Dandelion?" **{name}** tries the word out on {user} for the first time.',
+      "{user} says the name, and **{name}** turns a dandelion over and over, watching them.",
+    ],
+    warm: [
+      "\"You're here.\" **{name}** catches {user}'s sleeve before they've stopped walking.",
+      "{user} calls out, and **{name}** holds out a dandelion without a word.",
+      '"I counted the days." **{name}** tells {user} the number. It is exact.',
+    ],
+    spark: [
+      "**{name}** starts humming again the moment {user} says his name. He does that for them.",
+      '"Come give me a sorry cuddle," **{name}** says to {user}, who hadn\'t done anything wrong.',
+      "{user} got there first, and **{name}** looks at everyone else like they lost.",
+    ],
+    close: [
+      "\"Closer.\" **{name}** has {user}'s sleeve and isn't giving it back.",
+      "**{name}** had been watching the dark. It stopped mattering when {user} called.",
+      "{user} calls, and **{name}** tucks another dandelion into their pocket. There are several now.",
+    ],
+    bound: [
+      '"Mine," **{name}** hums into {user}\'s shoulder, like a lullaby he wrote himself.',
+      "**{name}** reaches {user} and breathes out like someone finally safe.",
+      "{user} says the name, and **{name}** decides never to let them out of sight again.",
+    ],
+  },
 };

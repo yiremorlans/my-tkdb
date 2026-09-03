@@ -198,4 +198,37 @@ export default {
       bound: ["Refuse to say it", "Let him talk", "Turn over and sleep"],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      "**{name}**'s phone is up before he's turned. \"Oh, this is good.\" {user} had guessed right.",
+      '"Brave or stupid?" **{name}** asks {user}, already deciding it\'s content.',
+      "{user} says the name, and **{name}** smiles the way a lens does.",
+    ],
+    warm: [
+      "**{name}** raises the camera at {user}, then lowers it. They're not for the feed.",
+      '"Finally," **{name}** drawls at {user}, having very obviously been watching for them.',
+      "{user} calls out, and **{name}** insults them warmly, which is how he says hello now.",
+    ],
+    spark: [
+      "**{name}** stops the recording. {user} gets the version nobody else does.",
+      '"Say it again. Slower." **{name}** isn\'t talking about his name, and {user} knows it.',
+      "{user} got there first, and **{name}** looks entirely too pleased to be caught.",
+    ],
+    close: [
+      '"Mine," **{name}** says, loud enough for everyone nearby. {user} had only called his name.',
+      "**{name}** is cruel to everyone in earshot and unbearably soft the moment {user} reaches him.",
+      "{user} calls, and **{name}** puts the phone away. Face down.",
+    ],
+    bound: [
+      "**{name}** takes {user}'s hand in public specifically so that it is seen.",
+      '"Do you have any idea what that does to me?" **{name}** mutters, crossing to {user} anyway.',
+      "{user} says the name, and **{name}** — who monetizes everything — keeps this one off the record.",
+    ],
+  },
 };

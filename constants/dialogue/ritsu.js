@@ -207,4 +207,37 @@ export default {
       bound: ["Let him work", "Sit in the quiet office", "Say nothing"],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '"Partner. Your timing is fortuitous." **{name}** had not, until {user} spoke, been expecting one.',
+      "{user} says the name, and **{name}** notes the exact hour, out of habit.",
+      '"Consultations are 5,500 yen per half hour." **{name}** waives it for {user}, and mentions that he is waiving it.',
+    ],
+    warm: [
+      '"Partner. Excellent." **{name}** had a thought and no one worth telling it to until {user} turned up.',
+      "{user} calls out, and **{name}** caps the pen mid-clause.",
+      "**{name}** has drafted something with {user}'s name on it. He drafted it optimistically.",
+    ],
+    spark: [
+      "**{name}** loses his place in a sentence. {user} watches it happen and says nothing.",
+      '"Argue the other side for me," **{name}** says to {user}. "You\'re the only one who does it properly."',
+      "{user} says the name, and **{name}** files it under nothing at all. There is no file.",
+    ],
+    close: [
+      "**{name}** takes his glasses off, sets them down deliberately, and goes to {user}.",
+      '"I have no argument for this," **{name}** tells {user}, "and no interest in constructing one."',
+      "{user} calls, and **{name}** — punctual to the second — is late to the **{house}** meeting.",
+    ],
+    bound: [
+      '"No preamble, no clause, no conditions." **{name}** says it to {user} in front of everyone.',
+      "**{name}** closes the file. For {user}, he closes all of them.",
+      "{user} says the name, and **{name}** clears the docket, and then the week.",
+    ],
+  },
 };

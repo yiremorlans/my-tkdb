@@ -221,4 +221,37 @@ export default {
       bound: ["Let the lanterns burn down", "Stay still", "Drift back to sleep"],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '"Oh. Hey." **{name}** doesn\'t get up. {user} still got it right.',
+      "{user} says the name, and **{name}** considers faking a haunting about it. Decides against.",
+      '"Don\'t expect much from me," **{name}** warns {user}, not moving from the step.',
+    ],
+    warm: [
+      "**{name}** shifts over on the step. The space is for {user}.",
+      '"I\'d say I wasn\'t waiting." **{name}** looks at {user}. "...Nah. I was."',
+      "{user} calls out, and **{name}** starts a sentence that was heading somewhere honest.",
+    ],
+    spark: [
+      "**{name}** hears his name and the deadpan slips for about a second. {user} caught it.",
+      '"You make it hard to stay unbothered." **{name}** says it to {user} like a complaint.',
+      "{user} got there first, and **{name}** stops pretending to be asleep.",
+    ],
+    close: [
+      "**{name}** has stopped keeping it light. {user} calling his name did that.",
+      '"Yeah, yeah. Coming." **{name}** is already up for {user}, which from him is a declaration.',
+      "{user} calls, and **{name}** leaves the busted fixture exactly where it is.",
+    ],
+    bound: [
+      '"I keep meaning to play this cool," **{name}** tells {user}. "Going badly."',
+      "**{name}** crosses to {user} like a man who quit arguing with himself months ago.",
+      "{user} says the name, and **{name}** doesn't deflect it. Not even a little.",
+    ],
+  },
 };

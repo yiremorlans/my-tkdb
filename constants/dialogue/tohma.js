@@ -244,4 +244,37 @@ export default {
       bound: ["Let him keep the hour", "Lie still", "Say nothing at all"],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '"Well, well." **{name}** turns to {user} with a courtesy that gives away nothing.',
+      '{user} names him, and **{name}** files it somewhere, smiling. "How resourceful."',
+      '**{name}** inclines his head. "You have the advantage of me. For now." {user} had it right.',
+    ],
+    warm: [
+      '"Honestly." **{name}** was two steps from a clean escape, and {user} caught him anyway.',
+      "{user} calls out, and **{name}** gives them his whole attention. That is rare.",
+      "**{name}** checks his pocket watch, then decides {user} is worth being late for.",
+    ],
+    spark: [
+      '"Shouting my name across half the campus. You\'ve certainly got guts." **{name}** looks delighted with {user}.',
+      "{user} says the name, and something behind **{name}**'s composure gives, briefly.",
+      "**{name}** was en route to the **{house}** briefing. He is now walking {user}'s way instead.",
+    ],
+    close: [
+      '"This conversation never happened," **{name}** murmurs, already steering {user} out of earshot.',
+      "**{name}** hears {user}, and the servant's mask comes off between one step and the next.",
+      "{user} calls, and **{name}** — who has never in his life been late — elects to be.",
+    ],
+    bound: [
+      '"I stopped weighing you up a long while ago," **{name}** tells {user}, taking their hand in the open.',
+      "**{name}** hands the **{house}** dispatch to a passing first-year. {user} called; the matter is settled.",
+      "{user} says the name, and **{name}** clears his entire afternoon, which he has never once done.",
+    ],
+  },
 };

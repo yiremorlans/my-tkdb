@@ -248,4 +248,37 @@ export default {
       ],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '**{name}** does not turn. "...Speak. You have my attention for exactly that long." {user} had used his name.',
+      "{user} named him, and **{name}** looked over — unimpressed that it took this long.",
+      '"You know who I am. Good." **{name}** allows {user} one step closer.',
+    ],
+    warm: [
+      "\"Walk with me, then. Don't dawdle.\" **{name}** doesn't break stride, but {user} had guessed right.",
+      '"You again." **{name}** says it to {user} like a verdict he has stopped appealing.',
+      "{user} got the name out, and **{name}** waved off whoever else was waiting.",
+    ],
+    spark: [
+      '"Say it again." **{name}** turns fully to {user} this time.',
+      "{user} named him first, and **{name}** looks far too pleased for a man of his composure.",
+      "**{name}** does not summon {user} over. He simply stops, and waits, which is worse.",
+    ],
+    close: [
+      "The **{house}** dispatch goes to Tohma. **{name}** goes to {user}.",
+      "\"You needn't shout. I hear you before anyone.\" **{name}** is already at {user}'s side.",
+      "**{name}** drops the court voice the second it's {user} saying his name.",
+    ],
+    bound: [
+      '"Mine," **{name}** says, as though {user} calling out had settled an argument he\'d been having alone.',
+      "**{name}** hands the **{house}** roster to someone else without looking. {user} called; that ends it.",
+      "{user} says the name, and **{name}** — who has spent a lifetime being denied things — takes what is his.",
+    ],
+  },
 };

@@ -203,4 +203,37 @@ export default {
       ],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '"Well, hey there!" **{name}** grins at {user} over an armful of feed sacks. "You after somethin\'?"',
+      '{user} says the name, and **{name}** laughs, delighted. "Gahaha! Look at that."',
+      "\"Don't mind Peekaboo, he's shy.\" **{name}** introduces the sling before he introduces himself to {user}.",
+    ],
+    warm: [
+      '"Hey, Honor roll!" **{name}** is filthy to the elbows and beaming at {user}.',
+      "{user} calls out, and **{name}** drops the sack he was hauling. It can wait.",
+      '"Grab a bucket." That is how **{name}** tells {user} he\'s glad they came.',
+    ],
+    spark: [
+      "**{name}** flirts, lands it, and immediately looks somewhere else. {user} is used to this.",
+      '"Miss me, Honor roll?" **{name}** asks {user}, then can\'t hold eye contact for the answer.',
+      "{user} says the name, and **{name}**'s grin goes about ten percent honest.",
+    ],
+    close: [
+      '"C\'mere, Honor roll. No joke this time." **{name}** means it at {user}, for once.',
+      "**{name}** kisses {user} mid-sentence, in front of everyone, as is his habit.",
+      "{user} calls, and **{name}** leaves the rounds to Ren without a second thought.",
+    ],
+    bound: [
+      '"Home," **{name}** says, meaning {user}, with his forehead against theirs.',
+      "**{name}** hears his name, and every animal in the park can wait. {user} can't.",
+      "{user} says the name, and **{name}** stops chickening out about any of it.",
+    ],
+  },
 };

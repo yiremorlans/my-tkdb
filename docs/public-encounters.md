@@ -580,20 +580,22 @@ Documented, not a bug.
 
 ### Teaser line
 
-New pool `ENCOUNTER_TEASERS`, ~15 lines, e.g.:
+`SHARED_ENCOUNTER_TEASERS` in `constants/dialogue/_shared.js`, keyed by time of
+day, picked with `pickTeaser(now)`:
 
 ```js
-export const ENCOUNTER_TEASERS = [
-  'You see a familiar figure in the distance… call out to them?',
-  "Someone's standing just past the light. Do you know them?",
-  'A silhouette lingers at the edge of the platform. Say a name?',
-  'You catch a shape you recognize out of the corner of your eye.',
-  'Someone you know is standing there, half in shadow.',
-  "There's a figure up ahead. If you're quick, you could reach them.",
-  'A shadow you almost recognize pauses on the walkway.',
-  // ...
-];
+export const SHARED_ENCOUNTER_TEASERS = {
+  any: ["Someone you know, up ahead.", "That outline's familiar. Call out?", /* ... */],
+  day: ['A familiar figure in the between-class crowd.', /* ... */],
+  evening: ['A silhouette at the edge of the lamplight.', /* ... */],
+};
 ```
+
+`any` merges into whichever `TIME_BUCKETS` pool is current — the same merge rule
+as the `when: { time }` dialogue blocks. The split is the point: shadows and
+half-light are an evening register, and at midday the same figure is lost in a
+crush of students instead. Lines are deliberately short; the message body below
+already carries the how and the deadline.
 
 ### Message content (silhouette post)
 
@@ -771,112 +773,107 @@ retries.
 
 ## 9. Flavor text
 
-### 9.1 Missed opportunity (`MISSED_LINES`)
+All four flavor pools are authored in `constants/dialogue/_shared.js` alongside
+every other line in the game; `constants/publicEncounters.js` holds only the
+pickers and re-exports the pools under their old names.
 
-PATCH `{ content: <MISSED_LINES entry>, attachments: [] }` — the silhouette is
-**removed**; any components removed too. Identity is never revealed. (Contrast
-the win edit, §7.3, which omits `attachments` and leaves the silhouette in
-place.)
+### 9.1 Missed opportunity (`SHARED_MISSED_LINES`)
+
+PATCH `{ content: pickMissedLine(new Date()), attachments: [] }` — the
+silhouette is **removed**; any components removed too. Identity is never
+revealed. (Contrast the win edit, §7.3, which omits `attachments` and leaves the
+silhouette in place.)
+
+Time-keyed like the teasers, and for the same reason — a figure lost to the
+crowd at noon, lost to the dark after the lamps come on:
 
 ```js
-export const MISSED_LINES = [
-  'The moment has passed.',
-  'They were gone before anyone could place them.',
-  'The figure slips out of sight. Maybe next time.',
-  "Whoever it was, they didn't wait around.",
-  'You lost your chance this time.',
-  'The shape dissolves back into the dark.',
+export const SHARED_MISSED_LINES = {
+  any: ["The moment's passed.", "Whoever it was, they didn't wait.", /* ... */],
+  day: ['The crowd closes up. Whoever it was is somewhere in it now.', /* ... */],
+  evening: ['The shape dissolves back into the dark.', /* ... */],
+};
+```
+
+### 9.2 Wrong guess (`SHARED_WRONG_GUESS_LINES`)
+
+A flat pool — a wrong name reads the same at any hour.
+
+```js
+export const SHARED_WRONG_GUESS_LINES = [
+  'Not them. They slip further away.',
+  'No — the figure stays put.',
+  'Wrong name. The moment tightens.',
+  // ...
 ];
 ```
 
-### 9.2 Wrong guess (`WRONG_GUESS_LINES`)
+### 9.3 Winner lines — per character, relationship-tiered
+
+Every line names `{user}` and the character. Placeholders: `{user}` (mention —
+renders as the caller's server name), `{name}` (revealed full name),
+`{firstName}`, `{house}` (`character.house`, or `Darkwick` for Benkei). The
+reveal embed's winner line is the **only** place either of them is named —
+`content` is cleared and the milestone afterline (§16.2) names neither — so
+`validateContent()` fails the build on a line missing `{user}` or the name.
+
+Tier comes from the winner's stored affinity with that character (global, not
+per-guild): `getRelationshipLevel(affinity).name` → `getDialogueTier(...)`.
+`WINNER_LINE_TIER` collapses the six dialogue tiers onto the five registers the
+lines are authored at (`known` folds into `new`), mirroring `RESPONSE_LABEL_TIER`
+in `constants/characters.js`.
+
+Lines are **per character**, authored beside that character's other content in
+`constants/dialogue/<id>.js` and keyed by register:
 
 ```js
-export const WRONG_GUESS_LINES = [
-  "That's not them. They slip further away.",
-  'No — the figure stays where it is.',
-  'Wrong name. You feel the moment tightening.',
-  "That isn't who's standing there.",
-];
-```
-
-### 9.3 Winner lines — relationship-tiered + house/mission themed
-
-Every line names `{user}`. Placeholders: `{user}` (mention — renders as the
-caller's server name), `{name}` (revealed full name), `{house}`
-(`character.house`, or `Darkwick` for Benkei).
-
-Tier comes from the winner's **post-increment** affinity with that character
-(global, not per-guild): `getRelationshipLevel(affinity).name` →
-`getDialogueTier(...)`. Resolver mirrors `RESPONSE_LABEL_TIER` in
-`constants/characters.js` — authored at 4 registers, `WINNER_LINES.any` merged in
-at every tier, expandable later:
-
-```js
-const WINNER_LINE_TIER = { new:'new', known:'new', warm:'new', spark:'spark', close:'close', bound:'bound' };
-
-export function pickWinnerLine(dialogueTier, vars) {
-  const bucket = WINNER_LINE_TIER[dialogueTier] || 'new';
-  const pool = [...WINNER_LINES.any, ...(WINNER_LINES[bucket] || WINNER_LINES.new)];
-  const raw = pool[Math.floor(Math.random() * pool.length)];
-  return raw.replace(/\{(\w+)\}/g, (_, k) => vars[k] ?? '');
+// constants/dialogue/taiga.js
+winnerLines: {
+  new: ['"Huh." **{name}** looks {user} over. "You got guts, kitten. Stupid ones, but guts."', /* ... */],
+  warm: ['"Took your damn time." **{name}** had very obviously been waiting on {user}.', /* ... */],
+  spark: [/* ... */], close: [/* ... */], bound: [/* ... */],
 }
 ```
 
+A character's own pool **replaces** the shared one for that register rather than
+merging with it, so an authored reveal always sounds like them instead of like
+house-mission boilerplate:
+
 ```js
-export const WINNER_LINES = {
-  // house / mission themed — valid at any relationship tier
-  any: [
-    '{user} flagged **{name}** down and got their signature on the last **{house}** mission report before they slipped away.',
-    '{user} caught **{name}** just before the next **{house}** briefing and pulled them aside.',
-    '**{name}** was headed to a **{house}** debrief when {user}, the inspector, called out.',
-    '{user} intercepted **{name}** between **{house}** missions — perfect timing.',
-    '{user} got **{name}** to sign off on the **{house}** anomaly report right as they were leaving.',
-    '**{name}** turned at the sound of their name. {user} had a **{house}** mission to go over.',
-    '{user} chased down **{name}** before the **{house}** patrol rotated out.',
-    '{user} snagged **{name}** for a coffee break to walk through the **{house}** assignment.',
-    '**{name}** almost vanished into the crowd, but {user} called out to him and reeled them back for the **{house}** rundown.',
-    '{user} matched the silhouette to **{name}** and waved them over before the **{house}** mission clock started.',
-    '{user} caught up to **{name}** with a **{house}** dispatch order in hand.',
-    '**{name}** stopped mid-step. {user} needed them for the **{house}** patrol roster.',
-    '{user} logged **{name}** in for the **{house}** briefing with seconds to spare.',
-    'The **{house}** debrief could wait — {user} had already called **{name}** over.',
-    '{user} pinned down **{name}** before they could disappear into **{house}** business again.',
-  ],
-
-  new: [
-    "**{name}** doesn't quite place {user} yet, but stops anyway.",
-    '{user} got a name out before **{name}** could disappear. A first, cautious nod.',
-    "**{name}** studies {user} for a second, then decides they're worth a moment.",
-    '"…Do I know you?" **{name}** asks — but they don\'t walk off. {user} guessed right.',
-    '**{name}** gives {user} a measured look, then stays put.',
-  ],
-
-  warm: [
-    '**{name}** breaks into an easy grin the second {user} calls out.',
-    '"There you are." **{name}** falls into step beside {user} without missing a beat.',
-    '{user} nailed the name and **{name}** laughs — caught, and not minding it.',
-    '**{name}** was hoping it\'d be {user}. The mission talk can wait a minute.',
-    '**{name}** turns like they already knew it was {user}.',
-  ],
-
-  close: [
-    "**{name}** would've known that voice anywhere. They cross straight to {user}.",
-    '{user} barely finished the name before **{name}** was already turning, already smiling.',
-    '"Took you long enough." **{name}** bumps {user}\'s shoulder and pretends the mission is why they stayed.',
-    '**{name}** drops the debrief face entirely when it\'s {user} doing the calling.',
-    '**{name}** was watching for {user} the whole time, if anyone asked. No one asked.',
-  ],
-
-  bound: [
-    "**{name}** doesn't even look surprised — of course it's {user}. It's always {user}.",
-    '{user} says the name and **{name}** is already there, mission report forgotten on the desk.',
-    '"You didn\'t have to guess. You know it\'s me." **{name}** takes {user}\'s hand and the **{house}** briefing loses.',
-    '**{name}** crosses to {user} like the rest of the room isn\'t there.',
-    'The **{house}** paperwork hits the floor. **{name}** reached {user} first.',
-  ],
-};
+export function winnerLinePool(bucket, characterId) {
+  const authored = DIALOGUE[characterId]?.winnerLines?.[bucket];
+  if (Array.isArray(authored) && authored.length > 0) return authored;
+  return [...WINNER_LINES.any, ...(WINNER_LINES[bucket] || WINNER_LINES.new)];
+}
 ```
+
+`SHARED_WINNER_LINES` (`constants/dialogue/_shared.js`, re-exported as
+`WINNER_LINES`) is therefore a **fallback**, not a mixer: it fronts a character
+with no lines at the register in play, which is what keeps an unauthored roster
+addition revealing correctly. Its `any` sub-pool is house/mission themed and
+valid at every register, so it merges into each bucket. All 26 characters are
+authored at all five registers today, so it is currently unreachable in
+practice; `validateContent()` warns the moment that stops being true.
+
+**Two invariants every line has to hold.**
+
+*It has to end with the character staying with the caller.* A milestone
+afterline (§16.2) is always appended beneath it. Walking off their own duty
+toward the caller is fine and common ("**{name}** leaves the busted fixture
+exactly where it is"); walking away from the caller contradicts the beat that
+follows. Milestones are character-agnostic and gated only by tier, so don't
+write a line that forecloses one — in particular, don't have the character
+dispose of a **report**, which `signed_report` then has them signing.
+
+*It can't name a place.* An encounter spawns only at the two general
+`ENCOUNTER_LOCATIONS`, so the composited background is any of Darkwick's
+corridors, courtyards, streets, classrooms and cafeteria, or the Galaxy Express
+platform — and the line doesn't know which. It also can't put the character at
+their own house's venue, which is never where an encounter is: no lab for Yuri,
+no anomaly garden for Rui, no card table for Taiga, no couch for Ren. Write the
+crowd and the openness instead ("in full view of everyone", "through the crowd",
+"in the middle of campus"), and keep their work portable — what they set down or
+walk away from can travel, the room it belongs in cannot.
 
 ---
 
@@ -1057,10 +1054,15 @@ post silently (no role ping) in this version.
 
 **New**
 
-- `constants/publicEncounters.js` — `ENCOUNTER_TEASERS`, `MISSED_LINES`,
-  `WRONG_GUESS_LINES`, `WINNER_LINES`, `pickWinnerLine`, `matchCharacterGuess`,
-  `guessCooldown` Map + helpers, generation helper,
-  `ENCOUNTER_MILESTONES` + `pickMilestone` (§16.2)
+- `constants/publicEncounters.js` — `pickTeaser`, `pickMissedLine`,
+  `winnerLinePool` / `pickWinnerLine`, `matchCharacterGuess`, `guessCooldown`
+  Map + helpers, generation helper, `ENCOUNTER_MILESTONES` + `pickMilestone`
+  (§16.2). Holds the pickers and the tuning constants; no prose of its own, and
+  re-exports the pools below under their old names
+- `constants/dialogue/_shared.js` — the roster-wide prose:
+  `SHARED_ENCOUNTER_TEASERS`, `SHARED_MISSED_LINES`,
+  `SHARED_WRONG_GUESS_LINES`, `SHARED_WINNER_LINES`
+- `constants/dialogue/<id>.js` — each character's own `winnerLines` (§9.3)
 - `publicEncounters.js` — `buildEncounterPost(guild)`, `finalizeEncounter(row)`
   (miss edit: text + `attachments: []`), `handleCall(interaction)` (win edit:
   reveal embed via `getCharacterImageUrl`) — mirrors the shape of `encounters.js`

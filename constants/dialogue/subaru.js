@@ -248,4 +248,37 @@ export default {
       ],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      "**{name}** bows before he's finished turning. {user} got the name right, and he's flustered about it.",
+      '"You— you knew?" **{name}** asks {user}, then apologizes for asking.',
+      "{user} says the name, and **{name}** sets down the crate of lanterns he was carrying across campus.",
+    ],
+    warm: [
+      '"You\'re just in time," **{name}** tells {user}, though nothing in particular is happening.',
+      "{user} calls out, and **{name}**'s composure goes soft before he can manage it.",
+      "**{name}** had been hoping. He'd never say so, but {user} arriving makes it obvious.",
+    ],
+    spark: [
+      "**{name}** hears his name in {user}'s voice and forgets, entirely, what the rounds were for.",
+      '"Sorry — that was a strange face to make." **{name}** says it to {user}, still making it.',
+      "{user} got there first, and **{name}** is quietly undone about it.",
+    ],
+    close: [
+      "**{name}** stops apologizing mid-sentence when he sees it's {user}.",
+      '"The rounds can wait." **{name}** never says that, and says it to {user}.',
+      "{user} calls, and **{name}** leaves the lanterns untended for the first time all year.",
+    ],
+    bound: [
+      '"I\'ve been performing my whole life," **{name}** says, reaching {user}. "Not with you."',
+      "**{name}** kisses {user} in full view of everyone and doesn't check who's watching.",
+      "{user} says the name, and **{name}** — who apologizes for everything — apologizes for none of it.",
+    ],
+  },
 };

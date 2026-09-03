@@ -196,4 +196,37 @@ export default {
       bound: ["Let him talk", "Turn over", "Let the morning come"],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '"Well now." The drawl reaches {user} a good second before **{name}** does.',
+      "{user} says the name, and **{name}** shifts the lollipop to the other cheek. \"Aren't you somethin', sugar.\"",
+      "**{name}** had been leaning where he shouldn't be. He straightens up for {user}, slowly.",
+    ],
+    warm: [
+      '"Seein\' you makes my day, sugar. No angle on it." **{name}** means it, and {user} can tell.',
+      "{user} calls out, and **{name}** puts down whatever errand Jo sent him on.",
+      "**{name}** offers {user} a candy before he offers a hello.",
+    ],
+    spark: [
+      '"Keep that up and I\'ll think you like me." **{name}** says it to {user}, unhurried as ever.',
+      "{user} says the name, and **{name}**'s easy smile goes real for a second.",
+      "**{name}** takes his time getting to {user}. He takes his time about everything.",
+    ],
+    close: [
+      '"Can\'t sleep either, sugar?" **{name}** falls in beside {user} like the errand never existed.',
+      "**{name}** drops the charm the moment it's {user}, which is the dangerous part.",
+      "{user} calls, and **{name}** stops working the room entirely.",
+    ],
+    bound: [
+      '"Spent years bein\' nobody\'s," **{name}** tells {user}, low. "Turns out I\'m yours."',
+      "**{name}** says {user}'s name back in that drawl, and it is genuinely unfair.",
+      "{user} says the name, and **{name}** lets the **{house}** errands rot where they stand.",
+    ],
+  },
 };

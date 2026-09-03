@@ -187,4 +187,37 @@ export default {
       bound: ["Let the menu screen run", "Stay still", "Fall back asleep"],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      "One earbud comes out. From **{name}**, that's a full greeting for {user}.",
+      '"Oh. Hey." **{name}** is mildly impressed {user} found him at all.',
+      "{user} says the name, and **{name}** pauses the game. Doesn't unpause it, either.",
+    ],
+    warm: [
+      "**{name}** puts the phone down for {user}, and doesn't pick it back up.",
+      "\"You're behind on the episodes,\" **{name}** tells {user}, who didn't know he'd been counting.",
+      "{user} calls out, and **{name}** shifts over. The space is for them.",
+    ],
+    spark: [
+      "\"Second controller's charged.\" **{name}** says it to {user} like it isn't a confession.",
+      "{user} says the name, and **{name}** goes very deliberately deadpan about it.",
+      "**{name}** was in the one spot on campus nobody looks. {user} looked.",
+    ],
+    close: [
+      '"Don\'t move. Seriously." **{name}** arrives at {user} and stays exactly there.',
+      "**{name}** loses the run because {user} called his name. Worth it, apparently.",
+      "{user} calls, and **{name}** pockets the phone and straightens up, both unprecedented.",
+    ],
+    bound: [
+      '"Love you, senpai. Yeah, I know I said it this morning." **{name}** says it to {user} again anyway.',
+      "**{name}** reaches {user} and puts his chin on their shoulder. That was the whole plan.",
+      "{user} says the name, and **{name}** decides the **{house}** roster can manage without him.",
+    ],
+  },
 };

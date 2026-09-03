@@ -197,4 +197,37 @@ export default {
       ],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '"Symptoms or errand." **{name}** doesn\'t slow down for {user}. "Pick one."',
+      '{user} says the name, and **{name}** revises his estimate of the walk. "...Fine. Two minutes."',
+      '"You got that from a silhouette." **{name}** tells {user} it was efficient. It is a compliment.',
+    ],
+    warm: [
+      "**{name}** stops for {user}. He does not stop for most people.",
+      '"Sit down before you fall down." **{name}** has been watching how {user} walks.',
+      "{user} calls out, and **{name}** postpones the thing he was being punctual about.",
+    ],
+    spark: [
+      "**{name}** looks at {user} a full second longer than any diagnosis requires.",
+      '"When did you last sleep?" **{name}** asks {user}. "Don\'t lie. I\'ll know."',
+      "{user} got there first, and **{name}** files that somewhere he doesn't file work.",
+    ],
+    close: [
+      '"I don\'t waste time," **{name}** says, reaching {user} in about four strides.',
+      "**{name}** hears {user} and hands the **{house}** chart to whoever is nearest.",
+      "{user} calls, and **{name}** — who is never off shift — is abruptly off shift.",
+    ],
+    bound: [
+      '"That\'s the diagnosis," **{name}** tells {user}. "Treatment is ongoing."',
+      "**{name}** kisses {user} right there in the open, with the same efficiency he does everything else.",
+      "{user} says the name, and **{name}** lets Yuri shout for him. Let him shout.",
+    ],
+  },
 };

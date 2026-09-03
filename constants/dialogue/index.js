@@ -25,7 +25,14 @@ import ritsu from "./ritsu.js";
 import romeo from "./romeo.js";
 import benkei from "./benkei.js";
 
-export { SHARED_DIALOGUE_WHEN, SHARED_APPROACH_WHEN } from "./_shared.js";
+export {
+  SHARED_DIALOGUE_WHEN,
+  SHARED_APPROACH_WHEN,
+  SHARED_ENCOUNTER_TEASERS,
+  SHARED_MISSED_LINES,
+  SHARED_WRONG_GUESS_LINES,
+  SHARED_WINNER_LINES,
+} from "./_shared.js";
 
 export const DIALOGUE = {
   jin, kaito, lucas, tohma, alan, leo, shohei, subaru, zenji, haku,

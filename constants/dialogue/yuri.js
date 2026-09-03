@@ -240,4 +240,37 @@ export default {
       bound: ["Let him blame the cold", "Say nothing", "Let him sleep"],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '"A test subject, wandering in of its own accord." **{name}** looks {user} over, delighted.',
+      '{user} says the name, and **{name}** draws himself up. "You should feel honored to have recognized me."',
+      '"You know of me. Naturally." **{name}** informs {user} of this at considerable length.',
+    ],
+    warm: [
+      '"Where on earth have you been, worm?" **{name}** demands of {user}, having clearly counted the days.',
+      "{user} calls out, and **{name}** drops a pipette. He denies dropping it.",
+      '**{name}** waves {user} over. "You\'re late. Not that I was— never mind." ',
+    ],
+    spark: [
+      '"Wh-Where did you come from!?" **{name}** knows exactly where {user} came from.',
+      "{user} says the name, and **{name}** goes an interesting color. Science cannot explain it.",
+      "**{name}** re-arms the bravado twice on the way to {user}. Neither attempt survives.",
+    ],
+    close: [
+      '"You belong to—" **{name}** stops. "...You\'ve misunderstood." {user} hasn\'t.',
+      "**{name}** abandons whatever he was striding off to do, mid-stride, because {user} called his name.",
+      "{user} calls, and **{name}** shouts for Jiro to cover the **{house}** ward. Jiro already was.",
+    ],
+    bound: [
+      '"I love you. There. Never bring it up again." **{name}** immediately requires {user} to bring it up again.',
+      "**{name}** is furious about how much he loves {user}, and crosses to them anyway.",
+      "{user} says the name, and the entire genius act falls off **{name}** at once.",
+    ],
+  },
 };

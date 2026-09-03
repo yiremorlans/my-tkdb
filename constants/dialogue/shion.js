@@ -211,4 +211,37 @@ export default {
       ],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '**{name}**\'s eyes track over first, then his head, slow. "...You knew my name." {user} did.',
+      '"Come closer." **{name}** says it to {user} flatly, and means all of it.',
+      "{user} says the name, and **{name}** looks pleased in a way that isn't reassuring.",
+    ],
+    warm: [
+      "**{name}** had been waiting in this exact spot. He'd like {user} to know he doesn't wait for people.",
+      "\"You came.\" **{name}** doesn't say the rest of it to {user}, but it's all over his face.",
+      "{user} calls out, and **{name}** stops frightening whoever he was frightening.",
+    ],
+    spark: [
+      "\"You're not scared of me.\" **{name}** can't decide whether that disappoints him about {user}.",
+      "{user} says the name, and **{name}** closes the distance immediately. All of it.",
+      '"Closer." **{name}** has said it to {user} before. It works every time.',
+    ],
+    close: [
+      "**{name}** takes {user}'s hand and does not give it back.",
+      '"Who else was out here?" **{name}** asks {user}, already deciding to remember their faces.',
+      "{user} calls, and **{name}** leaves the dark he likes for the lit part of campus he doesn't.",
+    ],
+    bound: [
+      '"My wife," **{name}** breathes, and means every letter of it to {user}.',
+      "**{name}** kneels to take {user}'s hand in the open, which from him is something heavier than it looks.",
+      "{user} says the name, and **{name}** decides, again, that forever is the plan.",
+    ],
+  },
 };

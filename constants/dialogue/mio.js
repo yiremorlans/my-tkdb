@@ -212,4 +212,37 @@ export default {
       ],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      "**{name}** looks up from something tiny and intricate, and has a ready smile for {user}.",
+      '{user} says the name, and **{name}** sets the tweezers down. "Huh. Good eye."',
+      '"Careful — everything I\'m carrying is smaller than it looks." **{name}** tells {user} that first, hello second.',
+    ],
+    warm: [
+      "**{name}** sets the work aside completely. {user} gets his whole attention, as usual.",
+      '"Perfect timing. I needed an excuse to stop." **{name}** tells {user} that every time.',
+      "{user} calls out, and **{name}** has already fixed the thing they mentioned last week.",
+    ],
+    spark: [
+      "**{name}**'s steady hands are, briefly, not steady. {user} pretends not to notice.",
+      '"Ha ha. Kidding." **{name}** wasn\'t, and {user} is getting good at telling.',
+      "{user} says the name, and **{name}** loses the thread of what he was building.",
+    ],
+    close: [
+      '"You undo me," **{name}** says calmly to {user}, which from him is shouting.',
+      "**{name}** hears {user} and leaves a repair half-finished, which he has never once done.",
+      "{user} calls, and **{name}** gets there before Shion can invent an emergency.",
+    ],
+    bound: [
+      '"I love you. I\'ll say it daily to make up the deficit." **{name}** greets {user} with it, deadpan.',
+      "**{name}** kisses the back of {user}'s neck in the middle of campus and goes right back to complaining about his day.",
+      "{user} says the name, and **{name}** — who never asks for anything — asks {user} to stay.",
+    ],
+  },
 };

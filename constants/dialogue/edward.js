@@ -199,4 +199,37 @@ export default {
       bound: ["Draw the curtains", "Let him wait", "Say nothing"],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      "**{name}** bows over {user}'s hand and asks permission afterward, as is his custom.",
+      '"Oh my. What a lovely lady." **{name}** greets {user} as though they were in a drawing room and not the middle of everything.',
+      "{user} says the name, and **{name}** smiles with rather too many implications in it.",
+    ],
+    warm: [
+      '"You\'ve stopped flinching," **{name}** observes to {user}, thrilled and slightly put out.',
+      "{user} calls out, and **{name}**'s cough evaporates. He forgets to bring it back.",
+      '"Do come here." **{name}** informs {user} that personal space is a modern invention.',
+    ],
+    spark: [
+      '"Wicked girl." **{name}** says it to {user} as a compliment, which it is.',
+      "{user} says the name, and **{name}** stops performing frailty for the length of one look.",
+      '"What were you hoping for? Go on — say it." **{name}** waits on {user}, unhurried.',
+    ],
+    close: [
+      '"May I?" **{name}** asks {user}, in public, about something unspecified.',
+      "**{name}** takes {user}'s arm and leaves the **{house}** business entirely unattended.",
+      "{user} calls, and the ancient thing under **{name}**'s manners answers immediately.",
+    ],
+    bound: [
+      '"Centuries," **{name}** murmurs to {user}, "and not one of them was this."',
+      "**{name}** crosses to {user} without the parasol, the cough, or any of the rest of it.",
+      "{user} says the name, and **{name}** — who has been alone a very long time — isn't.",
+    ],
+  },
 };

@@ -191,4 +191,37 @@ export default {
       bound: ["Let him rant", "Sit in the empty room", "Say nothing"],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '"HDY know my name?" **{name}** demands of {user}, thrilled and pretending not to be.',
+      "{user} says the name, and **{name}** is already talking. About three things. At once.",
+      '"Perfect timing — I need someone I can trust." **{name}** decides this about {user} instantly.',
+    ],
+    warm: [
+      "**{name}** steps away from the floor to greet {user} properly. Suddenly the operation can wait.",
+      '"Sit. The good seat. No, I didn\'t hold it. Shut up." **{name}** absolutely held it for {user}.',
+      "{user} calls out, and **{name}** complains about them loudly to somebody else, as a compliment.",
+    ],
+    spark: [
+      "\"I'm kind of happy to see you. Don't tell anyone.\" **{name}** says this to {user} at volume.",
+      "{user} says the name, and **{name}** loses his thread entirely, which never happens.",
+      "**{name}** yells at three people on his way over to {user}, and none of it was about them.",
+    ],
+    close: [
+      '"Somebody put that look on your face? Give me a name." **{name}** is already rolling his sleeves for {user}.',
+      "**{name}** hears {user}, and whatever he was collecting on becomes somebody else's job.",
+      "{user} calls, and **{name}** buys out the rest of the night without explaining why.",
+    ],
+    bound: [
+      '"HDY make me say it out loud. Ugh. I love you." **{name}** tells {user} this in front of everyone in earshot.',
+      "**{name}** yells at everyone all day, reaches {user}, and goes completely, quietly undone.",
+      "{user} says the name, and **{name}** claims them out loud, because that is what he does with his people.",
+    ],
+  },
 };

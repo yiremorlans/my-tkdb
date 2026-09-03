@@ -3,8 +3,19 @@
 // dependency-light so it can be unit tested without Discord or Supabase — the
 // I/O lives in ../publicEncounters.js and ../encounterScheduler.js.
 
-import { GENERAL_LOCATIONS, weightedBackgrounds } from "./backgrounds.js";
+import {
+  GENERAL_LOCATIONS,
+  timeBucket,
+  weightedBackgrounds,
+} from "./backgrounds.js";
 import { CHARACTERS, getFullName } from "./characters.js";
+import {
+  DIALOGUE,
+  SHARED_ENCOUNTER_TEASERS,
+  SHARED_MISSED_LINES,
+  SHARED_WINNER_LINES,
+  SHARED_WRONG_GUESS_LINES,
+} from "./dialogue.js";
 
 // --- tuning -----------------------------------------------------------------
 
@@ -50,50 +61,43 @@ export const ENCOUNTER_LOCATIONS = [
   GENERAL_LOCATIONS.GALAXY,
 ];
 
-export const ENCOUNTER_TEASERS = [
-  "A familiar figure, off in the distance. Call out?",
-  "Someone just past the light. Know them?",
-  "A silhouette at the edge of the platform. Name them?",
-  "A shape you recognize, caught out of the corner of your eye.",
-  "Someone you know, standing half in shadow.",
-  "A figure up ahead — quick, you could reach them.",
-  "A shadow you almost recognize pauses on the walkway.",
-  "Someone stops just out of the light. You know that outline.",
-  "A familiar shape at the far end of the corridor.",
-  "A figure by the rail, not moving yet.",
-  "Someone slows ahead of you, like they're waiting.",
-  "A silhouette cuts across the dark. You've seen them before.",
-  "That outline's familiar. Say the name before they go.",
-  "Someone lingers where the light stops. Place them?",
-  "A shape you recognize, half-turned away.",
-];
+// --- teasers, misses and wrong guesses --------------------------------------
+//
+// All four /call content pools are authored in constants/dialogue/_shared.js
+// alongside every other line in the game; only the picking lives here. They are
+// re-exported under their old names so the pools stay reachable from one import
+// (and so a test can assert on them without reaching into dialogue internals).
+export const ENCOUNTER_TEASERS = SHARED_ENCOUNTER_TEASERS;
+export const MISSED_LINES = SHARED_MISSED_LINES;
+export const WRONG_GUESS_LINES = SHARED_WRONG_GUESS_LINES;
 
-// PATCHed in as the message content when a window closes unsolved — the
-// silhouette is dropped alongside it and the name is never spoken.
-export const MISSED_LINES = [
-  "The moment's passed.",
-  "Gone before anyone could place them.",
-  "The figure slips out of sight. Next time.",
-  "Whoever it was, they didn't wait.",
-  "You missed your chance.",
-  "The shape dissolves back into the dark.",
-];
+// A time-keyed pool ({ any, day, evening }) flattened for the hour in question:
+// the always-valid lines plus that bucket's. Same merge rule as the `when:
+// { time }` dialogue blocks — the bucket adds to the base pool, never replaces
+// it — so a pool with an empty or missing bucket still has lines to draw from.
+function timedPool(pools, now) {
+  const bucket = timeBucket(now);
+  return [...(pools.any || []), ...((bucket && pools[bucket]) || [])];
+}
 
-// Only a wrong *real name* gets one of these (and starts the cooldown).
-// Gibberish resolves to nothing and is answered with "I don't know who that
-// is" — no cooldown, no penalty.
-export const WRONG_GUESS_LINES = [
-  "Not them. They slip further away.",
-  "No — the figure stays put.",
-  "Wrong name. The moment tightens.",
-  "That's not who's standing there.",
-];
+// The teaser for a fresh spawn. Evening draws the shadow-and-lamplight lines;
+// during the day the same figure is lost in a crowd of students instead.
+export function pickTeaser(now = new Date()) {
+  return pickRandom(timedPool(SHARED_ENCOUNTER_TEASERS, now));
+}
+
+// The "moment has passed" line for a window that closed unsolved, keyed to the
+// hour the same way.
+export function pickMissedLine(now = new Date()) {
+  return pickRandom(timedPool(SHARED_MISSED_LINES, now));
+}
 
 // --- winner lines -----------------------------------------------------------
 
-// Collapses the six dialogue tiers onto the four registers the winner lines are
-// authored at, mirroring RESPONSE_LABEL_TIER in characters.js. Add a bucket
-// here and in WINNER_LINES together.
+// Collapses the six dialogue tiers onto the five registers the winner lines are
+// authored at — "known" folds into "new" and the rest map straight through,
+// mirroring RESPONSE_LABEL_TIER in characters.js. Add a bucket here, in
+// WINNER_LINE_BUCKETS and in WINNER_LINES together.
 const WINNER_LINE_TIER = {
   new: "new",
   known: "new",
@@ -103,67 +107,22 @@ const WINNER_LINE_TIER = {
   bound: "bound",
 };
 
-export const WINNER_LINES = {
-  // House / mission themed — valid at any relationship tier, so these are
-  // merged into every bucket's pool rather than replacing it.
-  any: [
-    "{user} flagged **{name}** down to sign the **{house}** mission report.",
-    "{user} caught **{name}** on the way to a **{house}** briefing.",
-    "**{name}** was off on a **{house}** mission when {user} called out.",
-    "{user} caught **{name}** between **{house}** missions — perfect timing.",
-    "{user} grabbed **{name}** to sign the **{house}** anomaly report.",
-    "**{name}** turned at their name. {user} had a **{house}** mission to go over.",
-    "{user} picked **{name}** out of the crowd and got there first.",
-    "{user} snagged **{name}** for the **{house}** assignment.",
-    "**{name}** nearly slipped into the crowd, but {user} called them back.",
-    "{user} matched the silhouette to **{name}** and waved them over.",
-    "{user} caught up to **{name}**, **{house}** dispatch in hand.",
-    "**{name}** stopped mid-step. {user} needed them for the **{house}** roster.",
-    "{user} logged **{name}** for the **{house}** briefing with seconds to spare.",
-    "The **{house}** debrief could wait — {user} already had **{name}**.",
-    "{user} pinned **{name}** down between rounds of **{house}** business.",
-  ],
+// The registers a character's `winnerLines` may be keyed by (the values of
+// WINNER_LINE_TIER, deduped). constants/validateContent.js walks every
+// character's pool against this list, so a typo'd bucket is reported at startup
+// rather than silently never being picked.
+export const WINNER_LINE_BUCKETS = ["new", "warm", "spark", "close", "bound"];
 
-  new: [
-    "**{name}** doesn't quite place {user}, but stops anyway.",
-    "{user} got the name out before **{name}** could go. A cautious nod.",
-    "**{name}** studies {user} a second, then decides they're worth a moment.",
-    '"…Do I know you?" **{name}** asks — but doesn\'t walk off. {user} got it right.',
-    "**{name}** gives {user} a measured look, then stays.",
-  ],
+// Every placeholder fillTemplate knows how to resolve. Anything else is filled
+// with '' rather than left as literal braces, so an unknown one is a silent
+// hole in a public message — validateContent treats it as an error.
+export const WINNER_LINE_PLACEHOLDERS = ["user", "name", "firstName", "house"];
 
-  warm: [
-    "**{name}** grins the second {user} calls out.",
-    '"There you are." **{name}** falls into step with {user}.',
-    "{user} nailed the name and **{name}** laughs — caught, not minding it.",
-    "**{name}** was hoping it'd be {user}. Mission talk can wait.",
-    "**{name}** turns like they already knew it was {user}.",
-  ],
-
-  spark: [
-    "**{name}** turns, sees {user}, and takes their time answering.",
-    "{user} says the name and **{name}**'s whole posture changes.",
-    "\"Of course it's you.\" **{name}** says it like {user}'s been caught at something.",
-    "**{name}** was already half-turned before {user} finished.",
-    "{user} got there first, and **{name}** looks pleased about it.",
-  ],
-
-  close: [
-    "**{name}** knows that voice anywhere. Straight over to {user}.",
-    "{user} barely finished the name before **{name}** was turning, smiling.",
-    '"Took you long enough." **{name}** bumps {user}\'s shoulder.',
-    "**{name}** drops the debrief face when it's {user} calling.",
-    "**{name}** was watching for {user} the whole time. Not that they'd say so.",
-  ],
-
-  bound: [
-    "**{name}** isn't even surprised — of course it's {user}. Always {user}.",
-    "{user} says the name and **{name}**'s already there, report forgotten.",
-    "\"You didn't have to guess.\" **{name}** takes {user}'s hand and the **{house}** briefing loses.",
-    "**{name}** crosses to {user} like the room isn't there.",
-    "The **{house}** paperwork hits the floor. **{name}** got to {user} first.",
-  ],
-};
+// The fallback /call reveal pool, authored in constants/dialogue/_shared.js
+// with the rest of the game's prose and re-exported here so every caller has
+// one import for the feature. Used only where a character has no winnerLines
+// of their own at the register in play (see winnerLinePool).
+export const WINNER_LINES = SHARED_WINNER_LINES;
 
 // Fills {user} / {name} / {house} / {firstName}. An unknown placeholder
 // resolves to '' rather than being left as literal braces in a public message.
@@ -171,14 +130,23 @@ export function fillTemplate(raw, vars = {}) {
   return String(raw).replace(/\{(\w+)\}/g, (_, key) => vars[key] ?? "");
 }
 
+// The lines a win at `bucket` can draw from. A character with authored
+// `winnerLines` for that register draws from those *alone* — the generic pool
+// is a fallback, not a mixer, so a reveal for an authored character always
+// sounds like them rather than like the house-mission boilerplate. A character
+// missing the register (or missing winnerLines entirely) falls back, which is
+// why an unauthored roster addition still reveals correctly.
+export function winnerLinePool(bucket, characterId) {
+  const authored = DIALOGUE[characterId]?.winnerLines?.[bucket];
+  if (Array.isArray(authored) && authored.length > 0) return authored;
+  return [...WINNER_LINES.any, ...(WINNER_LINES[bucket] || WINNER_LINES.new)];
+}
+
 // `dialogueTier` is the winner's real tier (getDialogueTier). Returns the
-// filled line for the reveal embed's description.
-export function pickWinnerLine(dialogueTier, vars = {}) {
-  const bucket = winnerLineBucket(dialogueTier);
-  const pool = [
-    ...WINNER_LINES.any,
-    ...(WINNER_LINES[bucket] || WINNER_LINES.new),
-  ];
+// filled line for the reveal embed's description. `characterId` selects that
+// character's authored pool; omitting it is the generic pool.
+export function pickWinnerLine(dialogueTier, vars = {}, characterId = null) {
+  const pool = winnerLinePool(winnerLineBucket(dialogueTier), characterId);
   return fillTemplate(pickRandom(pool), vars);
 }
 
@@ -516,7 +484,7 @@ export function generateEncounter(now = new Date(), overrides = {}) {
     background: spot.file,
     locationKey: spot.locationKey,
     variant,
-    teaser: pickRandom(ENCOUNTER_TEASERS),
+    teaser: pickTeaser(now),
   };
 }
 

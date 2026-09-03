@@ -14,7 +14,7 @@ import {
   generateEncounter,
   getGuessCooldownRemaining,
   getMilestone,
-  MISSED_LINES,
+  pickMissedLine,
   pickMilestone,
   POST_FAILURE_LIMIT,
   pickRandom,
@@ -232,7 +232,10 @@ export async function finalizeEncounter(row) {
 
   try {
     await editChannelMessage(row.channel_id, row.message_id, {
-      content: pickRandom(MISSED_LINES),
+      // Keyed to the hour the window closed, not the hour it opened: a two
+      // minute window never straddles the day/evening boundary by enough to
+      // matter, and this is the moment the line describes.
+      content: pickMissedLine(new Date()),
       attachments: [],
       components: [],
       embeds: [],
@@ -650,10 +653,12 @@ export async function handleCall(body, now = new Date()) {
 
     if (!encounter.message_id) return;
 
-    // The public reveal: the catch (winner line, tuned to the relationship
-    // register) and then the milestone's "what happened after" beat, the same
+    // The public reveal: the catch (this character's own winner line, in the
+    // register their relationship with the caller has reached — the generic
+    // pool only fronts a character with no authored lines for that register)
+    // and then the milestone's "what happened after" beat, the same
     // afterline whose `label` shows under /affinity's Moments together.
-    const revealLines = [pickWinnerLine(tier, vars)];
+    const revealLines = [pickWinnerLine(tier, vars, encounter.character_id)];
     if (milestone) revealLines.push(fillTemplate(milestone.afterline, vars));
 
     // Discord rejects the whole edit (400 URL_TYPE_INVALID_URL) if the thumbnail

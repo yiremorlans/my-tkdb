@@ -49,7 +49,7 @@ export default {
       dialogue: {
         new: [
           "He's watching the last light go out of the sky and doesn't seem to mind that it's leaving.",
-          '"Dusk becomes a genius of the pen, don\'t you think? Sit — the light\'s nearly gone, and it\'s worth watching it go."',
+          "\"Dusk becomes a genius of the pen, don't you think? Sit — the light's nearly gone, and it's worth watching it go.\"",
           "The lanterns have come on around the step. He tips his hat and makes room on the lit side.",
           '"A stranger at dusk — how fortunate," he says. "Sit, and let the evening happen to us."',
         ],
@@ -77,8 +77,8 @@ export default {
   temperamentDialogue: {
     new: [
       'Summer heat shimmers off the stones. "Why, hello there, my dear."',
-      '"You walk quietly, my dear. That\'s rarer than you\'d think."',
-      '"Names come later. First, tea — that\'s the proper order, and I\'m a stickler for the proper order."',
+      "\"You walk quietly, my dear. That's rarer than you'd think.\"",
+      "\"Names come later. First, tea — that's the proper order, and I'm a stickler for the proper order.\"",
       '"Something brought you here. Let\'s not rush to name what."',
     ],
     known: [
@@ -227,11 +227,7 @@ export default {
         "Listen to the wind with him",
         "Let the verse finish",
       ],
-      spark: [
-        "Let the verse stand",
-        "Watch the lanterns",
-        "Leave it in haiku",
-      ],
+      spark: ["Let the verse stand", "Watch the lanterns", "Leave it in haiku"],
       close: [
         "Accept his silence",
         "Share the quiet syllables",
@@ -243,5 +239,38 @@ export default {
         "Stay quiet with him",
       ],
     },
+  },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '"Why, hello there, my dear." **{name}** smiles at {user} as though they were expected.',
+      '{user} names him, and **{name}** beams. "Seventeen syllables, and you\'ve handed me the last five."',
+      "**{name}** finishes his sentence to no one at all, then turns to {user} with a flourish.",
+    ],
+    warm: [
+      '"You arrive like a season, my dear." **{name}** is delighted with {user}.',
+      "{user} calls out, and **{name}** abandons a perfectly good line mid-composition.",
+      "**{name}** had been saving the last of the tea. He tells {user} so, at length.",
+    ],
+    spark: [
+      '"Horsefeathers." **{name}** had absolutely been watching for {user}.',
+      "{user} says the name, and **{name}** — a man of many words — is briefly short of them.",
+      "**{name}** offers {user} his arm with rather more ceremony than the hour requires.",
+    ],
+    close: [
+      '"The moon is beautiful tonight," **{name}** tells {user}, who knows exactly what he means by it.',
+      "**{name}** has stopped writing about longing. {user} is standing right there.",
+      "{user} calls, and **{name}** puts the notebook away, which he never does.",
+    ],
+    bound: [
+      '"Seventeen syllables can\'t hold this, my dear." **{name}** stops trying and crosses to {user} instead.',
+      "**{name}** hasn't much time, and spends all of it getting to {user}.",
+      "{user} says the name, and **{name}** gives up the metaphor entirely.",
+    ],
   },
 };

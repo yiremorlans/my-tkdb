@@ -245,4 +245,37 @@ export default {
       ],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '**{name}** jumps a foot. "AH— oh. Oh, it\'s just you." {user} had only said his name.',
+      '"Wait, you know my name? Mine?" **{name}** looks at {user} like it\'s a prize.',
+      "{user} calls out, and **{name}** startles, recovers, and pretends he didn't.",
+    ],
+    warm: [
+      '"There you are!" **{name}** is talking to {user} at twice his usual speed already.',
+      "{user} says his name, and **{name}** lights up like it's going in his story later.",
+      "**{name}** was halfway into a WickHive rant. {user} turning up improved it enormously.",
+    ],
+    spark: [
+      "**{name}** goes red before he's finished turning around. {user} does that to him now.",
+      '"You— you called ME." **{name}** will be replaying this at {user} for a week.',
+      "{user} got there first, and **{name}** forgot every word of what he was saying.",
+    ],
+    close: [
+      "**{name}** is through the crowd before {user} finishes the second syllable.",
+      "\"Please don't leave again,\" **{name}** says into {user}'s shoulder. Half joking.",
+      "{user} calls, and **{name}** doesn't check who's watching. That's new for him.",
+    ],
+    bound: [
+      "\"I still can't believe it's you,\" **{name}** says, arriving at {user} at a run.",
+      "**{name}** had been working up the nerve for something. {user} calling out did the work for him.",
+      "{user} says the name, and **{name}** decides he can be brave today after all.",
+    ],
+  },
 };

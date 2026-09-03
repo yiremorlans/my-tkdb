@@ -257,4 +257,37 @@ export default {
       ],
     },
   },
+  // The /call reveal lines for this character, keyed by the register in
+  // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
+  // like the dialogue; {user} is the winner's mention and {name} their full
+  // name, and the embed's winner line is the only place the reveal names
+  // either of them. A register left out here falls back to the generic
+  // WINNER_LINES pool.
+  winnerLines: {
+    new: [
+      '"A new face." **{name}** looks up from the budget for {user} and doesn\'t look back down.',
+      "{user} says the name, and **{name}** turns the charisma on like a stage light.",
+      '"Come on over, cutie." **{name}** greets {user} as though the schedule weren\'t already ruined.',
+    ],
+    warm: [
+      '"You\'re back!" **{name}** forgets whatever he was signing. {user} did that.',
+      "{user} calls out, and **{name}** puts the pen down mid-signature.",
+      "\"I'm driving the Aqua-line later, cutie. Come with.\" **{name}** isn't really asking {user}.",
+    ],
+    spark: [
+      "**{name}** hears his name, and the professional smile becomes a real one for {user}.",
+      '"Proposal, schedule, budget... and yet here I am." **{name}** is walking over to {user} regardless.',
+      "{user} got there first, and **{name}** looks caught in the nicest possible way.",
+    ],
+    close: [
+      "**{name}** takes the paint off for {user}, right there in the middle of everyone.",
+      '"No. I\'m taking you home." **{name}** says it to {user} the way he never says anything.',
+      "{user} calls, and **{name}** — who is never off the clock — clocks off.",
+    ],
+    bound: [
+      '"No audience," **{name}** murmurs, reaching {user}. "Only you."',
+      "**{name}** hands the **{house}** program to Mio without explaining. {user} called.",
+      "{user} says the name, and every version of **{name}** answers to it.",
+    ],
+  },
 };
