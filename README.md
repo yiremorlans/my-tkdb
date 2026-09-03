@@ -15,6 +15,19 @@ Three read-only commands report on that progress — no cooldown:
 
 Each encounter displays a canvas-composited image: the location background with the character layered on top, dialogue box at the bottom, and all 4 response options visible as buttons. Command responses are ephemeral (only visible to the user who invoked it).
 
+### Public "call out" encounters
+
+On top of the private loop above, the bot posts a **public** encounter into one configured channel per server, on its own random cadence. The character is shown as a black silhouette over a real background, and the first person to name them wins:
+
+- `/call <name>` — say who you think the silhouette is. Only works in that server's encounter channel. A wrong *real name* costs you a 10-second pause; a typo or nonsense costs nothing. **ephemeral**
+- `/encounters channel|disable|status` — **Manage Server permission required**, checked on every invocation rather than relying on Discord's overridable default. Points the feature at a channel (re-running it moves the channel, bringing any live encounter with it), turns it off, or reports whether it's running.
+
+Get it right first and the post is edited to add a reveal embed: a relationship-tiered line naming you and the character, over a thumbnail of their real art. The big silhouette stays put. Nobody gets it in time and the post edits to a non-committal "the moment has passed" — the image is dropped and the name is never spoken.
+
+**A win never moves affinity.** Affinity only ever grows through `/roam` and `/meet`, so the public game can't race anyone past dialogue tiers they haven't seen. Instead a win grants a *pending boost* — worth one extra point on your next `/roam` or `/meet` with that character (win twice before you go back and both apply to that one reunion) — and logs a *milestone*, a themed "what happened after" moment that shows up as a **Moments together** tally in `/affinity`.
+
+Each server runs independently: its own schedule, its own in-flight encounter, its own channel. Affinity stays global to the Discord user. Full design notes are in [`docs/public-encounters.md`](docs/public-encounters.md); the one-time bot install this needs is in [`docs/channel-call-response-feature.md`](docs/channel-call-response-feature.md).
+
 ## Project structure
 Below is a basic overview of the project structure:
 
@@ -25,7 +38,8 @@ Below is a basic overview of the project structure:
 ├── constants/
 │   ├── backgrounds.js -> houses, general locations, and PM/evening gating
 │   ├── characters.js  -> character roster, grouped by house
-│   └── game.js        -> response options, affinity values, relationship levels
+│   ├── game.js        -> response options, affinity values, relationship levels
+│   └── publicEncounters.js -> teasers/winner lines/milestones, name matching, guess cooldown
 ├── examples    -> short, feature-specific sample apps from the original template
 │   ├── app.js  -> finished app.js code
 │   ├── button.js
@@ -42,7 +56,10 @@ Below is a basic overview of the project structure:
 ├── encounters.js -> builds the slash-command message payloads (/roam, /meet, /affinity, /house, /bonds), handles dialogue responses
 ├── storage.js   -> reads/writes data/relationships.json
 ├── commandLimits.js -> per-command rolling 3-hour cooldown for /roam and /meet (Supabase-backed, anchored to last completed encounter)
-├── imageComposition.js -> canvas-based image rendering (bg + character + dialogue)
+├── publicEncounters.js -> public call-out encounters: spawn, expiry, /call and /encounters handlers
+├── encounterScheduler.js -> the per-guild tick loop that drives those spawns
+├── discordRest.js -> bot-initiated channel POST/PATCH (everything else answers an interaction)
+├── imageComposition.js -> canvas-based image rendering (bg + character + dialogue, or a black silhouette)
 ├── utils.js     -> utility functions and enums
 ├── package.json
 ├── README.md

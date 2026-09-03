@@ -114,6 +114,104 @@ Per-command cooldown state. One row per user per rate-limited command (`roam`, `
 - Enforce the rolling 3-hour cooldown per command, per user
 - Survives deploys/restarts (previously a gitignored local JSON file)
 
+### `guild_settings`
+Per-guild configuration for public "call out" encounters (see `docs/public-encounters.md`). One row per guild that has ever run `/encounters channel`. The scheduler in `encounterScheduler.js` iterates rows `WHERE enabled = true` on every tick.
+
+Only the channel and the on/off switch are per-guild. Cadence and window are fixed constants in `constants/publicEncounters.js` (`ENCOUNTER_MIN_MINUTES` etc.), identical everywhere and not configurable at runtime; this table deliberately carries no override columns for them. Add them back alongside an `/encounters` subcommand that writes them, not before.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `guild_id` | TEXT (PK) | Discord guild identifier — the PK is what guarantees one encounter channel per server; `/encounters channel` upserts on it, so re-running the command moves the channel rather than adding one |
+| `encounter_channel_id` | TEXT | Channel encounters post in |
+| `enabled` | BOOLEAN | Whether the scheduler ticks for this guild |
+| `last_encounter_at` | TIMESTAMP | When this guild last spawned — the cadence anchor, in the same shape as `command_limits.last_used_at` |
+| `next_gap_minutes` | INT | Minutes to wait from that point; rolled fresh per spawn |
+| `post_failures` | INT | Consecutive failed channel POSTs; 3 auto-disables the guild |
+| `configured_by` | TEXT | Who ran `/encounters channel` |
+| `created_at` / `updated_at` | TIMESTAMP | Record timestamps |
+
+**Use cases:**
+- Give each guild its own schedule, channel and in-flight encounter
+- Survive redeploys with no timers to re-arm (all timing state is here, not in memory)
+
+Readiness is derived as `now >= last_encounter_at + next_gap_minutes`, the way `/roam` and `/meet` derive theirs from `command_limits.last_used_at` — an elapsed-time check against a past event, never a stored "next spawn at HH:MM". Time that passes while the process is down therefore counts normally: a restart resumes the existing schedule rather than resetting it. It also means the database never holds the one fact the game depends on hiding; `/encounters status` shows no timing at all.
+
+### `public_encounters`
+One row per posted encounter. At most one per guild should be unresolved at any time.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `id` | BIGSERIAL | Primary key |
+| `guild_id` / `channel_id` | TEXT | Where it was posted |
+| `message_id` | TEXT | Set once the POST succeeds; NULL means nothing to edit later |
+| `character_id` | TEXT | Who the silhouette is |
+| `variant` | TEXT | `uniform` or `casual` |
+| `background` | TEXT | Background filename |
+| `teaser` | TEXT | The flavor line the post opened with |
+| `expires_at` | TIMESTAMP | When the window closes |
+| `resolved_at` | TIMESTAMP | Set on solve **or** expiry-finalize — also the winner-race arbiter |
+| `outcome` | TEXT | `solved` or `expired` |
+| `solved_by` | TEXT | Discord user id of the winner |
+
+**Use cases:**
+- Decide the winner with one conditional `UPDATE ... WHERE resolved_at IS NULL` — no locking
+- Let a restart finalize whatever expired while the process was down
+
+### `encounter_milestones`
+A per-kind tally — one row per `(user, character, milestone_type)`, its `total` bumped on each `/call` win of that kind, not one row per win. The visible progression for a game that deliberately never touches affinity. Bounded (at most one row per milestone kind per relationship), so it never needs pruning. Written by `record_encounter_milestone()`, an atomic `INSERT ... ON CONFLICT DO UPDATE SET total = total + 1`.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `discord_user_id` | TEXT | Who won |
+| `character_id` | TEXT | Who they reached |
+| `milestone_type` | TEXT | Key of `ENCOUNTER_MILESTONES` |
+| `total` | INT | Wins of this kind with this character |
+| `first_at` | TIMESTAMP | First win of this kind |
+| `last_at` | TIMESTAMP | Most recent win of this kind |
+| `PRIMARY KEY (discord_user_id, character_id, milestone_type)` | - | One row per kind per relationship |
+
+**Use cases:**
+- The "Moments together" tally in `/affinity` — a direct read of `total` per kind
+- Name the moment a boosted `/roam` response is picking up from — the kind with the newest `last_at`
+
+> The earlier append-only shape (`id BIGSERIAL`, one row per win, `guild_id` / `source_encounter_id` / `created_at`) supported a per-win chronological timeline; nothing read it, so it was folded into this tally. Migration 010 migrates an existing table in place.
+
+### `encounter_win_stats`
+Monthly `/call` engagement, and the only per-user record this feature keeps. One row per user, per guild, per month — keyed by guild as well as user so both a per-server board (filter on `guild_id`) and a global one (sum across guilds) are available.
+
+Engagement here means **reaching a character** — a correct `/call`. Wrong guesses are not recorded anywhere, so a player who calls out often and never gets there first does not appear. That is deliberate: the alternative was a per-guess log that nothing read.
+
+Written at win time by `record_encounter_win()`, an atomic `INSERT ... ON CONFLICT DO UPDATE SET wins = wins + 1`, and **deliberately not derived from `public_encounters`** — that table is pruned at 90 days, and the leaderboard has to outlive it.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `discord_user_id` | TEXT | Who won |
+| `guild_id` | TEXT | Which server |
+| `year_month` | TEXT | `'YYYY-MM'`, UTC — same convention as `monthly_analytics` |
+| `wins` | INT | Correct `/call` guesses that month |
+| `last_win_at` | TIMESTAMP | Most recent win, used to break ranking ties |
+| `created_at` / `updated_at` | TIMESTAMP | Record timestamps |
+| `PRIMARY KEY (discord_user_id, guild_id, year_month)` | - | One row per user-guild-month |
+
+**Use cases:**
+- "Who is engaging with public encounters, and how often", per server or across all of them
+- Survives the retention window on `public_encounters`
+
+> ⚠️ A leaderboard is inherently identifying, so unlike the `vw_*` analytics views there is **no** anonymized view for this table. Keep it behind the service role.
+
+### Retention
+
+Migration 011 schedules `prune_encounter_data()` daily at 03:30 UTC:
+
+| Table | Kept for | Why |
+|---|---|---|
+| `public_encounters` — unsolved | 7 days after `resolved_at` | Nobody reached the character; the row records only that the scheduler fired |
+| `public_encounters` — solved | 90 days after `resolved_at` | Matches `command_usage_log`; unresolved rows are never touched |
+| `encounter_win_stats` | 13 months | A full year plus the current month, so year-over-year still works |
+| `encounter_milestones` | forever | Player-visible progression (`/affinity`), not analytics — and a bounded per-kind tally, so it has nothing to prune |
+
+> `character_relationships` also gains `pending_encounter_boost INT NOT NULL DEFAULT 0` in migration 010 — the unspent wins a user holds with that character. A `/call` win increments it (capped at `ENCOUNTER_BOOST_CAP`); the next completed `/roam` or `/meet` response with that character spends one and adds `ENCOUNTER_BOOST_GAIN` to its gain. Both are constants in `constants/publicEncounters.js`.
+
 ## Helper Functions
 
 ### Activity Tracking

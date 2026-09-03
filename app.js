@@ -15,6 +15,8 @@ import {
   buildRoamDialogueMessage,
   buildRoamSpawnMessage,
 } from './encounters.js';
+import { handleCall, handleEncountersAdmin, handleEncounterDev } from './publicEncounters.js';
+import { startEncounterScheduler } from './encounterScheduler.js';
 import { checkCommandLimit, recordCommandUsage } from './commandLimits.js';
 import {
   trackUserActivity,
@@ -22,6 +24,7 @@ import {
   trackCommandUsage,
 } from './db/supabase.js';
 import { validateContent } from './constants/validateContent.js';
+import { startGateway } from './gateway.js';
 
 // Time of day drives which backgrounds and dialogue are eligible (the `_PM`
 // evening cutoff — see constants/backgrounds.js). Discord never tells us a
@@ -272,6 +275,98 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       return;
     }
 
+    if (name === 'call') {
+      // Deferred + ephemeral. handleCall does up to three sequential Supabase
+      // round-trips before it can answer; on a slow or contended connection
+      // (several near-simultaneous /calls, a cold pool, the event loop busy
+      // compositing a spawn) that can blow Discord's 3s budget, and the winner
+      // would see "the application did not respond" even though the encounter
+      // was already claimed and revealed. Deferring drops the deadline. The ack
+      // is ephemeral, so only the caller sees the "thinking…" flash; the public
+      // reveal is a channel-message edit inside afterReply and is unaffected.
+      res.send({
+        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+        data: { flags: 64 }, // EPHEMERAL
+      });
+
+      (async () => {
+        let result;
+        try {
+          result = await handleCall(req.body);
+        } catch (err) {
+          console.error('Error in /call:', err);
+          result = { reply: { content: 'Something went wrong there. Try again?' }, afterReply: null };
+        }
+
+        try {
+          // The defer already made the message ephemeral — drop the redundant
+          // flag from the edit body.
+          const { flags, ...body } = result.reply;
+          await sendFollowup(req.body.token, body, 15000, true);
+        } catch (followupErr) {
+          console.error('Failed to send /call followup:', followupErr);
+        }
+
+        // Runs regardless of the followup: the reward grant and public reveal
+        // must not hinge on the winner's ephemeral ack landing.
+        result.afterReply?.().catch(err => console.error('Error in /call follow-up:', err));
+      })();
+      return;
+    }
+
+    if (name === 'encounters') {
+      // Admin command, answered ephemerally and in-band. Only two DB round-trips
+      // before the reply, and an admin re-running it costs nothing, so the 3s
+      // budget is not a real risk here — no defer.
+      let result;
+      try {
+        result = await handleEncountersAdmin(req.body);
+      } catch (err) {
+        console.error('Error in /encounters:', err);
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: 'Something went wrong there. Try again?',
+            flags: 64, // EPHEMERAL
+          },
+        });
+      }
+
+      res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: result.reply,
+      });
+
+      result.afterReply?.().catch(err => console.error('Error in /encounters follow-up:', err));
+      return;
+    }
+
+    if (name === 'encdev') {
+      // Deferred + ephemeral: a manual spawn composes a silhouette and POSTs it
+      // to Discord, which can run past the 3s inline budget. The owner gets the
+      // outcome (or the reason it failed) as the followup.
+      res.send({
+        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+        data: { flags: 64 }, // EPHEMERAL
+      });
+
+      (async () => {
+        let message;
+        try {
+          message = await handleEncounterDev(req.body);
+        } catch (err) {
+          console.error('Error in /encdev:', err);
+          message = { content: 'Something went wrong there. Check the logs.' };
+        }
+        try {
+          await sendFollowup(req.body.token, message, 15000, true);
+        } catch (followupErr) {
+          console.error('Failed to send /encdev followup:', followupErr);
+        }
+      })();
+      return;
+    }
+
     console.error(`unknown command: ${name}`);
     return res.status(400).json({ error: 'unknown command' });
   }
@@ -438,3 +533,13 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 export const server = app.listen(PORT, () => {
   console.log('Listening on port', PORT);
 });
+
+// Open the presence-only gateway session unless we're under `npm test`, where
+// app.js is imported to exercise the HTTP routes and a live Discord connection
+// would just leave the process hanging. No-ops too when DISCORD_TOKEN is unset.
+// The encounter scheduler is held back for the same reason — it would tick
+// against the test's fake Supabase and post to Discord for real.
+if (process.env.npm_lifecycle_event !== 'test') {
+  startGateway();
+  startEncounterScheduler();
+}

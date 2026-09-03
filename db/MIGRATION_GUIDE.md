@@ -94,6 +94,44 @@ Go to your Supabase Dashboard:
 - Copy and execute
 - Wait for success ✓
 
+### Migration 10: Public Encounter Tables
+- File: `db/migrations/010_create_public_encounters.sql`
+- Creates `guild_settings`, `public_encounters` and `encounter_milestones`
+  (a per-`(user, character, milestone_type)` tally with a `total`, plus the
+  atomic `record_encounter_milestone()` that bumps it), and adds
+  `pending_encounter_boost` to `character_relationships`. There is deliberately
+  no per-guess log. See `docs/public-encounters.md`
+- If an earlier run of this file created `encounter_milestones` in its old
+  append-only shape (one row per win), re-running folds those rows into the
+  tally by `(user, character, milestone_type)` and drops the old table
+- Cadence is stored as `last_encounter_at` + `next_gap_minutes` (an elapsed-time
+  anchor, like `command_limits.last_used_at`), so a redeploy resumes the
+  existing schedule instead of resetting it, and the database never holds a
+  literal next-spawn timestamp
+- Adds a partial unique index (`guild_id WHERE resolved_at IS NULL`) so two
+  instances overlapping during a rolling redeploy cannot both post an encounter.
+  If it fails to create, a guild already has two unresolved rows — the file has
+  the clean-up query in a comment
+- Copy and execute
+- Wait for success ✓
+
+### Migration 11: Encounter Win Stats + Retention
+- File: `db/migrations/011_encounter_win_stats.sql`
+- Creates `encounter_win_stats` (monthly `/call` engagement — one row per user
+  per guild per month) and `record_encounter_win()`, an atomic
+  `INSERT ... ON CONFLICT` the bot calls via RPC on every win
+- Also schedules `prune_encounter_data()` at 03:30 UTC daily, which is what
+  keeps the encounter tables from growing forever:
+  | Table | Kept for |
+  |---|---|
+  | `public_encounters` — unsolved | 7 days |
+  | `public_encounters` — solved | 90 days |
+  | `encounter_win_stats` | 13 months |
+  | `encounter_milestones` | **not pruned** — player-visible progression, and a bounded per-kind tally with nothing to prune |
+- Run it by hand any time with `SELECT public.prune_encounter_data();`
+- Copy and execute
+- Wait for success ✓
+
 ## Step 3: Verify Migrations
 
 In the Supabase Dashboard, click **Table Editor** and verify:

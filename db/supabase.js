@@ -58,6 +58,27 @@ export async function getOrCreateRelationship(userId, characterId) {
       .single();
 
     if (insertError) {
+      // 23505 = unique_violation. A concurrent getOrCreateRelationship for the
+      // same (discord_user_id, character_id) inserted the row between our SELECT
+      // above and this INSERT — e.g. a /call win fires grantEncounterBoost and
+      // incrementTimesMet at once for a character the winner has never met. The
+      // row exists now, so read it back instead of failing the caller.
+      if (insertError.code === '23505') {
+        const { data: raced, error: reselectError } = await supabase
+          .from('character_relationships')
+          .select('*')
+          .eq('discord_user_id', userId)
+          .eq('character_id', characterId)
+          .single();
+
+        if (reselectError) {
+          console.error('Error re-fetching relationship after insert race:', reselectError);
+          throw reselectError;
+        }
+
+        return raced;
+      }
+
       console.error('Error creating relationship:', insertError);
       throw insertError;
     }
@@ -601,6 +622,566 @@ export async function getCommandUsageStats(days = 30) {
   }
 
   return data || [];
+}
+
+/**
+ * PUBLIC ENCOUNTERS (docs/public-encounters.md)
+ *
+ * guild_settings holds each guild's independent schedule and channel, and
+ * public_encounters one row per posted encounter, with resolved_at doubling as
+ * the winner-race arbiter. There is deliberately no per-guess log — engagement
+ * is measured as correct calls only, in encounter_win_stats below.
+ * See db/migrations/010_create_public_encounters.sql.
+ */
+
+/**
+ * Every guild the scheduler should tick for. Called once per tick, so it stays
+ * a single indexed read over a table with fewer rows than the bot has guilds.
+ */
+export async function getEnabledGuilds() {
+  const { data, error } = await supabase
+    .from('guild_settings')
+    .select('*')
+    .eq('enabled', true);
+
+  if (error) {
+    console.error('Error fetching enabled guilds:', error);
+    throw error;
+  }
+
+  return data || [];
+}
+
+/**
+ * One guild's settings, or null if the feature was never configured there.
+ */
+export async function getGuildSettings(guildId) {
+  const { data, error } = await supabase
+    .from('guild_settings')
+    .select('*')
+    .eq('guild_id', guildId)
+    .single();
+
+  if (error && error.code !== 'PGRST116') {
+    console.error('Error fetching guild settings:', error);
+    throw error;
+  }
+
+  return data || null;
+}
+
+/**
+ * `/encounters channel` — point the feature at a channel and turn it on.
+ * post_failures resets so a guild that auto-disabled after three bad posts is
+ * given a clean slate by reconfiguring.
+ */
+export async function upsertGuildChannel(guildId, channelId, userId, { at, gapMinutes }) {
+  const { data, error } = await supabase
+    .from('guild_settings')
+    .upsert(
+      {
+        guild_id: guildId,
+        encounter_channel_id: channelId,
+        enabled: true,
+        // Anchor at "now" with a fresh gap, so the first encounter lands one
+        // normal interval out rather than the instant the admin hits enter.
+        last_encounter_at: at instanceof Date ? at.toISOString() : at,
+        next_gap_minutes: gapMinutes,
+        configured_by: userId,
+        post_failures: 0,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: 'guild_id' }
+    )
+    .select();
+
+  if (error) {
+    console.error('Error saving guild encounter channel:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/**
+ * `/encounters disable` (and the auto-disable after repeated post failures).
+ */
+export async function setGuildEnabled(guildId, enabled) {
+  const { data, error } = await supabase
+    .from('guild_settings')
+    .update({ enabled, updated_at: new Date().toISOString() })
+    .eq('guild_id', guildId)
+    .select();
+
+  if (error) {
+    console.error('Error setting guild enabled flag:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/**
+ * Re-anchor a guild's cadence to "an encounter just happened", with the gap to
+ * wait before the next one. Called right after a post succeeds, so the interval
+ * is independent of how fast that encounter gets solved.
+ *
+ * A failed post re-anchors too (so a broken channel isn't retried every tick)
+ * but must leave `post_failures` alone — hence the explicit flag rather than
+ * always clearing it here.
+ */
+export async function recordGuildSpawn(guildId, { at, gapMinutes, resetFailures = false }) {
+  const { data, error } = await supabase
+    .from('guild_settings')
+    .update({
+      last_encounter_at: at instanceof Date ? at.toISOString() : at,
+      next_gap_minutes: gapMinutes,
+      ...(resetFailures ? { post_failures: 0 } : {}),
+      updated_at: new Date().toISOString(),
+    })
+    .eq('guild_id', guildId)
+    .select();
+
+  if (error) {
+    console.error('Error recording guild spawn:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/**
+ * Count one failed channel POST against a guild. Three consecutive failures
+ * (bad permissions, a deleted channel) disable the feature there rather than
+ * letting the scheduler retry into the void every cadence. Returns the new
+ * count and whether this call disabled the guild.
+ */
+export async function bumpGuildPostFailure(guildId, threshold = 3) {
+  const settings = await getGuildSettings(guildId);
+  const failures = (settings?.post_failures || 0) + 1;
+  const disabled = failures >= threshold;
+
+  const { error } = await supabase
+    .from('guild_settings')
+    .update({
+      post_failures: failures,
+      ...(disabled ? { enabled: false } : {}),
+      updated_at: new Date().toISOString(),
+    })
+    .eq('guild_id', guildId);
+
+  if (error) {
+    console.error('Error recording guild post failure:', error);
+    throw error;
+  }
+
+  return { failures, disabled };
+}
+
+/**
+ * Insert a new encounter row. The message_id is filled in afterwards, once the
+ * channel POST comes back — the row exists first so a POST that fails still
+ * has something to mark expired.
+ *
+ * Returns null (rather than throwing) when the guild already has an unresolved
+ * encounter. A partial unique index enforces that, so two instances racing
+ * during a rolling redeploy resolve to exactly one spawn: the loser sees a
+ * unique violation here and quietly stands down.
+ */
+export async function createPublicEncounter({
+  guildId,
+  channelId,
+  characterId,
+  variant,
+  background,
+  teaser,
+  expiresAt,
+}) {
+  const { data, error } = await supabase
+    .from('public_encounters')
+    .insert([
+      {
+        guild_id: guildId,
+        channel_id: channelId,
+        character_id: characterId,
+        variant,
+        background,
+        teaser,
+        expires_at: expiresAt instanceof Date ? expiresAt.toISOString() : expiresAt,
+      }
+    ])
+    .select()
+    .single();
+
+  if (error) {
+    // 23505 = unique_violation on idx_public_encounters_one_active: this guild
+    // already has an unresolved encounter. Expected during a rolling redeploy,
+    // when two instances briefly overlap; not an error worth shouting about.
+    if (error.code === '23505') {
+      console.log(`[supabase] Guild ${guildId} already has a live encounter — skipping spawn`);
+      return null;
+    }
+    console.error('Error creating public encounter:', error);
+    throw error;
+  }
+
+  return data;
+}
+
+/**
+ * Repoint a live encounter at a different channel and message. Used when an
+ * admin moves the guild's encounter channel mid-flight: every later step —
+ * the win edit, the miss edit, the finalize sweep — reads channel_id and
+ * message_id off this row, so updating them relocates the whole encounter.
+ */
+export async function setPublicEncounterLocation(id, channelId, messageId) {
+  const { data, error } = await supabase
+    .from('public_encounters')
+    .update({ channel_id: channelId, message_id: messageId })
+    .eq('id', id)
+    .is('resolved_at', null)
+    .select();
+
+  if (error) {
+    console.error('Error moving public encounter:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+export async function setPublicEncounterMessageId(id, messageId) {
+  const { data, error } = await supabase
+    .from('public_encounters')
+    .update({ message_id: messageId })
+    .eq('id', id)
+    .select();
+
+  if (error) {
+    console.error('Error setting encounter message id:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/**
+ * The guild's in-flight encounter, or null. Used both as the /call target and
+ * as the scheduler's "is this guild busy?" guard.
+ */
+export async function getActivePublicEncounter(guildId, now = new Date()) {
+  const { data, error } = await supabase
+    .from('public_encounters')
+    .select('*')
+    .eq('guild_id', guildId)
+    .is('resolved_at', null)
+    .gt('expires_at', now.toISOString())
+    .order('created_at', { ascending: false })
+    .limit(1);
+
+  if (error) {
+    console.error('Error fetching active public encounter:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/**
+ * Decide the winner. One conditional UPDATE — Postgres serializes the matching
+ * row, so of two simultaneous correct calls exactly one comes back with a row
+ * and the other with none. No explicit locking, no read-then-write race.
+ * Returns the claimed row, or null if someone else already had it.
+ */
+export async function claimPublicEncounter(id, userId, at = new Date()) {
+  const { data, error } = await supabase
+    .from('public_encounters')
+    .update({
+      resolved_at: at.toISOString(),
+      outcome: 'solved',
+      solved_by: userId,
+    })
+    .eq('id', id)
+    .is('resolved_at', null)
+    .select();
+
+  if (error) {
+    console.error('Error claiming public encounter:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/**
+ * Close out every window that ran out unsolved, optionally for one guild.
+ * Returns the rows it finalized so the caller can edit each one's Discord post
+ * to a "moment has passed" line. Conditional on resolved_at, so an encounter
+ * solved in the same instant is never double-finalized.
+ */
+export async function finalizeExpiredEncounters(guildId = null, now = new Date()) {
+  let query = supabase
+    .from('public_encounters')
+    .update({ resolved_at: now.toISOString(), outcome: 'expired' })
+    .is('resolved_at', null)
+    .lt('expires_at', now.toISOString());
+
+  if (guildId) query = query.eq('guild_id', guildId);
+
+  const { data, error } = await query.select();
+
+  if (error) {
+    console.error('Error finalizing expired encounters:', error);
+    throw error;
+  }
+
+  return data || [];
+}
+
+/**
+ * Close one encounter out as expired, whatever its window says. Used when a
+ * channel POST fails: the row exists but nobody can see it, and leaving it
+ * unresolved would block the guild's next spawn for the rest of the window.
+ */
+export async function expirePublicEncounter(id, at = new Date()) {
+  const { data, error } = await supabase
+    .from('public_encounters')
+    .update({ resolved_at: at.toISOString(), outcome: 'expired' })
+    .eq('id', id)
+    .is('resolved_at', null)
+    .select();
+
+  if (error) {
+    console.error('Error expiring public encounter:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/**
+ * MONTHLY /call WIN LEADERBOARD (db/migrations/011_encounter_win_stats.sql)
+ *
+ * encounter_win_stats is a durable rollup written at win time — deliberately
+ * not derived from public_encounters, so those raw rows can be pruned on a
+ * 90-day retention window without taking the leaderboard with them.
+ */
+
+/**
+ * Count one /call win for this user, in this guild, in the current UTC month.
+ * Atomic INSERT ... ON CONFLICT inside Postgres: two wins in the same instant
+ * (the same user solving in two guilds at once) can't lose a count the way a
+ * read-modify-write would, and it costs one round trip on the win path rather
+ * than two. Returns the user's new total for the month.
+ */
+export async function recordEncounterWin(userId, guildId) {
+  const { data, error } = await supabase.rpc('record_encounter_win', {
+    p_user_id: userId,
+    p_guild_id: guildId,
+  });
+
+  if (error) {
+    console.error('Error recording encounter win:', error);
+    throw error;
+  }
+
+  return data ?? 0;
+}
+
+/**
+ * 'YYYY-MM' for a date, in UTC — the convention monthly_analytics and
+ * record_encounter_win both use.
+ */
+export function toYearMonth(date = new Date()) {
+  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(2, '0')}`;
+}
+
+/**
+ * Who won the most /call encounters in a month, ranked.
+ *
+ * Omit `guildId` for a global board — rows are then summed across guilds in JS,
+ * because PostgREST can't express the GROUP BY. That's a few hundred rows a
+ * month at this guild count; revisit with a view if the bot ever grows.
+ *
+ * Returns `[{ userId, wins, lastWinAt }]`, highest first.
+ */
+export async function getEncounterLeaderboard({
+  yearMonth = toYearMonth(),
+  guildId = null,
+  limit = 10,
+} = {}) {
+  let query = supabase
+    .from('encounter_win_stats')
+    .select('discord_user_id, guild_id, wins, last_win_at')
+    .eq('year_month', yearMonth);
+
+  if (guildId) query = query.eq('guild_id', guildId);
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error('Error fetching encounter leaderboard:', error);
+    throw error;
+  }
+
+  const totals = new Map();
+  for (const row of data || []) {
+    const entry = totals.get(row.discord_user_id) || { userId: row.discord_user_id, wins: 0, lastWinAt: null };
+    entry.wins += row.wins || 0;
+    if (!entry.lastWinAt || (row.last_win_at && row.last_win_at > entry.lastWinAt)) {
+      entry.lastWinAt = row.last_win_at;
+    }
+    totals.set(row.discord_user_id, entry);
+  }
+
+  return [...totals.values()]
+    // Ties break on who got there first, so the ranking is stable.
+    .sort((a, b) => b.wins - a.wins || String(a.lastWinAt).localeCompare(String(b.lastWinAt)))
+    .slice(0, limit);
+}
+
+/**
+ * One user's win count for a month — their own standing, without pulling the
+ * whole board. Summed across guilds unless one is named.
+ */
+export async function getUserEncounterWins(userId, { yearMonth = toYearMonth(), guildId = null } = {}) {
+  let query = supabase
+    .from('encounter_win_stats')
+    .select('wins')
+    .eq('discord_user_id', userId)
+    .eq('year_month', yearMonth);
+
+  if (guildId) query = query.eq('guild_id', guildId);
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error('Error fetching user encounter wins:', error);
+    throw error;
+  }
+
+  return (data || []).reduce((sum, row) => sum + (row.wins || 0), 0);
+}
+
+/**
+ * ENCOUNTER REWARD MODEL (docs/public-encounters.md §16)
+ *
+ * A /call win never moves affinity. It grants a pending boost, spent on the
+ * winner's next /roam or /meet with that character, and bumps a per-kind
+ * milestone tally shown as "Moments together" in /affinity.
+ */
+
+/**
+ * Add a boost for the winner, capped. Wins past the cap still record their
+ * milestone; they just don't stack more boost. Returns the new value.
+ */
+export async function grantEncounterBoost(userId, characterId, cap = 2) {
+  const relationship = await getOrCreateRelationship(userId, characterId);
+  const next = Math.min((relationship.pending_encounter_boost || 0) + 1, cap);
+
+  const { data, error } = await supabase
+    .from('character_relationships')
+    .update({ pending_encounter_boost: next })
+    .eq('discord_user_id', userId)
+    .eq('character_id', characterId)
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error granting encounter boost:', error);
+    throw error;
+  }
+
+  return data?.pending_encounter_boost ?? next;
+}
+
+/**
+ * Spend every pending boost for this character at once, returning how many
+ * were consumed (0 if none). Two /call wins with the same character are one
+ * reunion, not two, so the next authored response picks up their latest
+ * moment and folds in the full bonus rather than dribbling +1 across two
+ * /roams. The `> 0` guard is in the UPDATE itself, so two responses
+ * completing at once can't both claim the same boosts.
+ */
+export async function consumeAllEncounterBoosts(userId, characterId) {
+  const relationship = await getRelationship(userId, characterId);
+  const current = relationship?.pending_encounter_boost || 0;
+  if (current <= 0) return 0;
+
+  const { data, error } = await supabase
+    .from('character_relationships')
+    .update({ pending_encounter_boost: 0 })
+    .eq('discord_user_id', userId)
+    .eq('character_id', characterId)
+    .gt('pending_encounter_boost', 0)
+    .select();
+
+  if (error) {
+    console.error('Error consuming encounter boosts:', error);
+    throw error;
+  }
+
+  return (data?.length || 0) > 0 ? current : 0;
+}
+
+export async function recordEncounterMilestone({ userId, characterId, milestoneType }) {
+  const { error } = await supabase.rpc('record_encounter_milestone', {
+    p_user_id: userId,
+    p_character_id: characterId,
+    p_milestone_type: milestoneType,
+  });
+
+  if (error) {
+    console.error('Error recording encounter milestone:', error);
+    throw error;
+  }
+}
+
+/**
+ * The milestone kind the user last collected with a character, or null. Read
+ * only when a boost is actually being spent, so it costs nothing on an ordinary
+ * /roam — it's there to name the moment the warmer welcome is picking up from.
+ * "Latest" is by last_at (the newest win of that kind), across all kinds.
+ */
+export async function getLatestEncounterMilestone(userId, characterId) {
+  const { data, error } = await supabase
+    .from('encounter_milestones')
+    .select('*')
+    .eq('discord_user_id', userId)
+    .eq('character_id', characterId)
+    .order('last_at', { ascending: false })
+    .limit(1);
+
+  if (error) {
+    console.error('Error fetching latest encounter milestone:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/**
+ * `{ milestone_type: total }` for the /affinity "Moments together" block. The
+ * table is already a per-kind tally, so this is a direct read of each row's
+ * `total` — a relationship has at most one row per milestone kind.
+ */
+export async function getEncounterMilestoneCounts(userId, characterId) {
+  const { data, error } = await supabase
+    .from('encounter_milestones')
+    .select('milestone_type, total')
+    .eq('discord_user_id', userId)
+    .eq('character_id', characterId);
+
+  if (error) {
+    console.error('Error fetching encounter milestones:', error);
+    throw error;
+  }
+
+  const counts = {};
+  for (const row of data || []) {
+    counts[row.milestone_type] = row.total;
+  }
+  return counts;
 }
 
 export default supabase;

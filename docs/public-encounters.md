@@ -1,7 +1,196 @@
 # Spec: Public "call out" encounters
 
-Status: **design / not implemented**
+Status: **implemented** (code merged; the §1 prerequisites are still a manual,
+one-time setup step per deployment)
 Last updated: 2026-09-02
+
+### Where the implementation departs from this document
+
+1. **The affinity table is `character_relationships`, not `relationships`**
+   (migration 000). §16.4's `ALTER TABLE relationships` is written against the
+   real table in `db/migrations/010_create_public_encounters.sql`.
+2. **The wrong-guess cooldown is 10s.** §8's snippet says `30_000` but its own
+   prose and the locked decision at §15.5 both say 10 seconds; 10s is what
+   shipped, as `GUESS_COOLDOWN_MS`.
+3. **§5's silhouette snippet is wrong and was not used verbatim.** Running
+   `source-atop` + `fillRect` against the composite paints a black *rectangle*:
+   the background has already made the whole canvas opaque, so "only where the
+   destination has alpha" is everywhere, not just the character. The shipped
+   version blacks the character out on its own offscreen canvas with
+   `source-in` and draws that onto the background, which is a true cutout.
+   `test/silhouette-composition.test.js` pins both halves of this.
+4. **`aliases` for Lucas and Edward already existed** in `constants/characters.js`,
+   so the §14 change to that file was a no-op.
+5. **Cadence is anchored on the last spawn, not on a stored next-spawn time.**
+   §3 and §10 keep `guild_settings.next_encounter_at` — a future target. That is
+   replaced by `last_encounter_at` + `next_gap_minutes`, and readiness is
+   `now >= last_encounter_at + next_gap_minutes`. Two reasons. It matches how
+   `/roam` and `/meet` already work (`command_limits.last_used_at` plus a fixed
+   cooldown; the only difference is that this gap is randomised per spawn, so it
+   has to be stored alongside the anchor). And it keeps the database from
+   literally holding "the next encounter is at HH:MM", which is the single fact
+   the game depends on nobody having. Behaviour under restart is identical
+   either way — both are pure Postgres state — but the anchor form reads as what
+   it is: an elapsed-time check against a past event.
+6. **Setting the channel again *moves* it, and closes out anything stranded.**
+   §4 doesn't say what a second `/encounters channel` does. It replaces: the
+   write is an upsert on `guild_settings.guild_id`, which is the PRIMARY KEY, so
+   a guild structurally cannot have two encounter channels — there is no check
+   in the handler because there is no state to check for. The reply names the
+   channel being left behind.
+
+   What the spec misses is that a move would strand any encounter still live in
+   the old channel: its silhouette sits somewhere `/call` no longer accepts,
+   counting down to a deadline nobody can answer. A live encounter now **comes
+   with the channel**. Discord has no "move a message", so `moveEncounterToChannel`
+   re-posts it — recomposing the silhouette from the `background`, `character_id`
+   and `variant` already on the row — and repoints `channel_id` and `message_id`.
+   Since the win edit, the miss edit and the finalize sweep all read those two
+   columns off the row, that is what relocates the whole encounter; `expires_at`
+   is untouched, so the deadline does not restart. The old post is edited to a
+   pointer at the new channel with the silhouette dropped. If the re-post fails
+   the encounter is expired where it stands rather than left unanswerable, and
+   the repoint is conditional on `resolved_at`, so a win landing mid-move keeps
+   its reveal in the channel it actually happened in. This is the only time the
+   feature composites twice; it is a rare admin action, not the hot path.
+7. **The Manage Server gate is enforced in the handler, not just declared.**
+   §4 sets `default_member_permissions: '32'` and treats that as the whole
+   permission story. It isn't: that value is a *default*, and a server admin can
+   override it under Server Settings → Integrations to grant `/encounters` to
+   any role. `handleEncountersAdmin` now re-checks the invoking member's real
+   computed permissions (`member.permissions`, a bitfield inside the signed
+   interaction body, so unforgeable) for Manage Server or Administrator, and
+   fails closed on anything missing or malformed. It gates every subcommand, not
+   just `disable` — `channel` can relocate encounters into a channel nobody
+   reads, which stops the feature just as effectively.
+8. **`/encounters status` is a health report, and shows no timing.** §4 has it
+   list the channel, cadence, next spawn time and settings; the setup reply
+   quoted the next spawn too. All timing is removed — the command is
+   Manage-Guild-only, but an admin who can see the next spawn can camp the
+   channel and win every encounter, and the cadence range brackets it just as
+   well once you've seen one land. What remains answers one question, "is this
+   working?", in a single line: **Running** (with the channel), **Running, with
+   errors** (some posts failed, how many before it stops), **Stopped** (the
+   auto-disable tripped — named separately from a deliberate `disable`, since
+   reporting a broken bot as merely "off" hides it, with the permissions to
+   check and how to restart), **Off**, or **Not running** (no channel set).
+9. **A partial unique index enforces one live encounter per guild.**
+   `CREATE UNIQUE INDEX ... ON public_encounters (guild_id) WHERE resolved_at IS NULL`.
+   §13 lists "multiple app instances" as out of scope, but a *rolling* redeploy
+   overlaps two instances for a few seconds by design, and the
+   `getActivePublicEncounter`-then-`INSERT` guard is two statements. The index
+   turns that race into a unique violation, which `createPublicEncounter`
+   returns `null` for and `spawnEncounter` treats as "someone else got there
+   first". Cheap insurance against the one duplicate the spec's guard can't stop.
+10. **The scheduler runs one tick immediately on start**, not only after the
+   first 25-second interval — so a redeploy resumes at once instead of leaving
+   anything already due waiting out a dead window.
+11. **`recordGuildSpawn` (was `setGuildNextEncounter`) takes an explicit `resetFailures` flag.** §3 has a
+   successful post clear `post_failures`, but a *failed* post also has to move
+   the clock forward (or a broken channel is retried every tick) — and doing
+   that must not wipe the counter it just incremented.
+12. **The `/call` handler reads the relationship in parallel with the claim.**
+   §7 budgets one read plus one write for a win, but §16.1's win reply includes
+   the milestone afterline, which needs the tier. The two calls are independent,
+   so `Promise.all` gets the tier for no extra latency.
+13. **Milestone templates use `{firstName}`, not `{name}`, for possessives**
+   ("a movie in Rui's room" rather than "in Rui Mizuki's room").
+14. **§16.7's open questions are unchanged**: no boost expiry, either `/roam` or
+   `/meet` may spend the boost (whichever comes first), a flat +1 per win rather
+   than a themed bonus response, and milestones stack without dedup. The next
+   authored response redeems *every* pending boost for that character at once
+   (see §16.1) — two wins is one reunion, not two `/roam`s each nudged +1.
+
+### Added beyond this spec
+
+**The milestone set is 15 campus-life situations, not the 7 sketched in §16.2.**
+Each is its own independent tally per user *per character* — `milestone_type` is
+a discrete key, so "Moments together" renders one row per situation rather than
+a single combined counter. Gating is cumulative: a Stranger draws from 3, a
+Devoted from all 15. Spread is roughly 3 / 2 / 4 / 3 / 2 / 1 across
+new → known → warm → spark → close → bound, so every step up the relationship
+curve visibly unlocks something.
+
+§16.2's `movie_hooky` is split into `skipped_briefing` and `movie_night` — they
+were one entry doing two jobs, and they read better as separate collectibles.
+Adding or renaming a milestone needs **no migration** (`milestone_type` is free
+TEXT) and the `/affinity` renderer skips keys it no longer recognizes, so a
+retired key stops displaying rather than breaking.
+
+**Monthly win leaderboard + retention** (`db/migrations/011_encounter_win_stats.sql`).
+This document specifies no analytics for `/call` and no retention for the tables
+it creates, which left `public_encounters` and `public_encounter_guesses` growing
+without bound. Migration 011 adds:
+
+- `encounter_win_stats` — a durable rollup of correct guesses, keyed
+  `(user, guild, YYYY-MM)`, written at win time by the atomic
+  `record_encounter_win()`. Read with `getEncounterLeaderboard()` /
+  `getUserEncounterWins()` in `db/supabase.js`.
+- `prune_encounter_data()` on pg_cron, daily at 03:30 UTC — win stats at 13
+  months, and `public_encounters` split on outcome: unsolved at 7 days (the row
+  records only that the scheduler fired), solved at 90.
+
+The rollup is written at win time rather than aggregated from
+`public_encounters` on demand *because* those rows are now pruned; deriving the
+board from them would quietly lose history at the 90-day mark.
+`encounter_milestones` is exempt from pruning — it is player-visible
+progression, not analytics, and since it is now a per-kind tally (one row per
+`(user, character, milestone_type)`, bumped with a `total`, not one row per win)
+it is bounded and has nothing to prune anyway.
+
+**§10's `public_encounter_guesses` is dropped entirely.** The spec has it as an
+append-only analytics log; in practice nothing ever read it — two writes, zero
+readers. Engagement is defined as *reaching a character*, so it is measured by
+`encounter_win_stats` alone and a wrong guess now writes no row anywhere. The
+tradeoff, accepted deliberately: a player who calls out often and never wins is
+invisible to analytics, and an encounter fifteen people guessed at and missed is
+indistinguishable from one nobody looked at. Both were judged not worth a table
+that grows with every keystroke. §8's note that the log "is still written for
+analytics" no longer holds; the in-memory cooldown is the only thing limiting
+retries, exactly as §8 otherwise describes.
+
+**§12's environment variables do not exist.** The spec configures the feature
+through `ENCOUNTER_MIN_MINUTES`, `ENCOUNTER_MAX_MINUTES`,
+`ENCOUNTER_WINDOW_MINUTES`, `ENCOUNTER_TICK_SECONDS`, `ENCOUNTER_BOOST_GAIN` and
+`ENCOUNTER_BOOST_CAP`. All six are now plain exported constants — the first five
+in `constants/publicEncounters.js`, the tick interval in
+`encounterScheduler.js` — and `.env.sample` carries none of them. They are game
+balance rather than deployment config: identical in every server and every
+deployment, so retuning one is a code change and a redeploy, the same bar as
+changing `RELATIONSHIP_LEVELS` or a per-character affinity value. The names in
+§12, §16.6 and throughout still refer to real identifiers; only their source
+changed. `ENCOUNTER_CHANNEL_ID` and `ENCOUNTER_AFFINITY_GAIN` are absent exactly
+as the spec says, so `.env` gains nothing at all from this feature.
+
+**§10's `guild_settings` drops `cadence_min_minutes` / `cadence_max_minutes` /
+`window_minutes`.** They were read by `resolveGuildConfig` but written by
+nothing — `/encounters` has no subcommand for them — so they were NULL in every
+row and the three settings were global in practice while reading as a working
+per-guild feature. Cadence and window are now plainly global
+(`resolveEncounterConfig()`, no arguments). Add the columns back alongside a
+command that writes them, not before.
+
+**`runTick` sweeps expired encounters across all guilds, not just enabled ones.**
+§3 has the sweep inside the per-guild loop, but `/encounters disable` drops a
+guild out of `getEnabledGuilds()` immediately — so a guild disabled mid-encounter
+would never finalize the in-flight row, leaving its post showing a countdown that
+had already run out and the row unresolved forever (and therefore never pruned).
+§4's "any in-flight encounter is left to finalize normally" only holds with the
+sweep hoisted out of the loop.
+
+**`/encdev` — owner-only manual trigger.** Not in this spec. A global command
+registered with `default_member_permissions: '0'` (hidden from non-admins) whose
+handler hard-gates on the `OWNER_DISCORD_ID` env var and answers everyone else
+with a bare "Unknown command." so the command's existence isn't confirmed.
+`/encdev spawn [character] [variant]` forces one encounter immediately —
+`character` takes a name/alias (resolved through `matchCharacterGuess`),
+`variant` is `uniform`/`casual`; both optional. `/encdev clear` expires the
+guild's live encounter so another can be spawned without waiting out the
+2-minute window. A manual spawn passes `reanchor: false` to `spawnEncounter`, so
+it never writes `guild_settings`: the real cadence anchor and the post-failure
+counter are untouched, and a test spawn neither moves nor masks the live
+schedule. Purely a testing aid — the cadence is otherwise 45–180 minutes.
+
 
 A scheduled job posts a public, everyone-can-see encounter into a designated
 channel — **one per Discord server** — on a random cadence. The character is
@@ -780,11 +969,13 @@ The winner race is decided entirely by `claimPublicEncounter` — a single atomi
 
 ### Reward-model storage
 
-Migration 010 also adds `relationships.pending_encounter_boost` and the
-`encounter_milestones` table, plus `grantEncounterBoost` /
-`consumeEncounterBoost` / `recordEncounterMilestone` /
-`getEncounterMilestoneCounts` in `db/supabase.js`. Full definitions and the
-`/roam` / `/affinity` wiring are in **§16**.
+Migration 010 also adds `relationships.pending_encounter_boost`, the
+`encounter_milestones` tally table and its atomic writer
+`record_encounter_milestone()`, plus `grantEncounterBoost` /
+`consumeAllEncounterBoosts` / `recordEncounterMilestone` /
+`getEncounterMilestoneCounts` / `getLatestEncounterMilestone` in
+`db/supabase.js`. Full definitions and the `/roam` / `/affinity` wiring are in
+**§16**.
 
 ---
 
@@ -823,8 +1014,8 @@ are **global defaults** only, used when a guild leaves a column NULL:
 | `ENCOUNTER_MIN_MINUTES` | `45` | Default lower bound of the gap between a guild's encounters |
 | `ENCOUNTER_MAX_MINUTES` | `180` | Default upper bound of the gap between a guild's encounters |
 | `ENCOUNTER_WINDOW_MINUTES` | `2` | Default `/call` window before the moment passes |
-| `ENCOUNTER_BOOST_GAIN` | `1` | Extra affinity added to the winner's next authored (`/roam` / `/meet`) response — see §16 |
-| `ENCOUNTER_BOOST_CAP` | `2` | Max unspent boosts a user can hold per character |
+| `ENCOUNTER_BOOST_GAIN` | `1` | Extra affinity per pending boost, all redeemed together on the winner's next authored (`/roam` / `/meet`) response — see §16 |
+| `ENCOUNTER_BOOST_CAP` | `2` | Max unspent boosts a user can hold per character (so the combined redemption tops out at +2) |
 | `ENCOUNTER_TICK_SECONDS` | `25` | Scheduler tick interval |
 
 `DISCORD_TOKEN`, `APP_ID`, `SUPABASE_*` are already present. **`BASE_URL`**
@@ -854,8 +1045,8 @@ post silently (no role ping) in this version.
 | `/call` for the right name after solve/expiry | "no one to call out to right now" / "someone reached them first" |
 | `/call` with a typo or nonsense | "I don't know who that is." — no cooldown, no penalty |
 | Winner never "met" this character before | `grantEncounterBoost` → `getOrCreateRelationship` creates the row (affinity 0, boost 1); milestone recorded at tier `new`; intended |
-| Same user wins in two different guilds | Two separate encounters → boost caps at `ENCOUNTER_BOOST_CAP`; each still records a milestone; intended |
-| Win, then never runs `/roam` / `/meet` | Boost sits unspent (no v1 expiry); the milestone log still grows; no affinity is ever granted |
+| Same user wins in two different guilds | Two separate encounters → boost caps at `ENCOUNTER_BOOST_CAP`; each still records a milestone; the winner's next `/roam` / `/meet` redeems both at once (+2); intended |
+| Win, then never runs `/roam` / `/meet` | Boosts sit unspent (no v1 expiry); the milestone tally still grows; no affinity is ever granted |
 | Multiple app instances | Out of scope — would double-fire the tick for every guild; needs a Postgres advisory lock around the tick |
 | `_PM` backgrounds / timezone | Judged against the fixed `America/Chicago` evening cutoff (`EVENING_HOUR` / `EVENING_TIMEZONE` in `constants/backgrounds.js`), same as `/roam` |
 | Attachment size | Composited PNGs are already within Discord limits (same pipeline as `/roam`) |
@@ -949,11 +1140,12 @@ through `/roam` and `/meet` — the authored-dialogue loop, throttled by the sha
 
 **Why.** Public encounters can otherwise become a second, faster affinity stream
 that races users past tiers before they have seen each tier's authored dialogue.
-Under this model a win can only *amplify one already-throttled authored
-interaction* by roughly one good response, and only if the user actually engages
-that dialogue — the public game feeds the main loop instead of bypassing it. The
-milestone log gives `/call` its own visible, collectible progression that never
-touches the relationship curve.
+Under this model wins only *amplify one already-throttled authored interaction*
+by roughly one good response each — and up to the `ENCOUNTER_BOOST_CAP` (=2) of
+them are redeemed together on that single interaction, not one per `/roam` — and
+only if the user actually engages that dialogue, so the public game feeds the
+main loop instead of bypassing it. The milestone log gives `/call` its own
+visible, collectible progression that never touches the relationship curve.
 
 ### 16.1 Boost
 
@@ -964,11 +1156,14 @@ touches the relationship curve.
   do not stack more boost.
 - **On the next `/roam` / `/meet` with that character**, when a response is
   *completed* (the same point `recordResponse` runs today, `encounters.js:371`)
-  and `pending_encounter_boost > 0`: add `ENCOUNTER_BOOST_GAIN` (=1) to that
-  response's gain, then decrement the boost by 1. A `NEUTRAL` response (gain 0)
-  **still consumes** the boost — the warmer welcome is the reunion, not the pick.
+  and `pending_encounter_boost > 0`: add `pending_encounter_boost ×
+  ENCOUNTER_BOOST_GAIN` (=1 each) to that response's gain, then zero the boost.
+  Every pending boost is redeemed at once — two `/call` wins with one character
+  are a single reunion (+2 on one response), not two `/roam`s each nudged +1.
+  A `NEUTRAL` response (gain 0) **still consumes** the boosts — the warmer
+  welcome is the reunion, not the pick.
 - No expiry in v1. (If wanted later: a `boost_updated_at` column and a 7-day
-  cutoff in `consumeEncounterBoost`.)
+  cutoff in `consumeAllEncounterBoosts`.)
 - Tracked per character; boosts on different characters are independent.
 
 **`/call` win reply (ephemeral)** — replaces the bare "+1." in §2 / §7.3:
@@ -984,8 +1179,11 @@ its own clause:
 
 ```
 {reaction}
-+{gain} — {level.emoji} **{level.name}**  ·  *picking up after {milestone.hint} — a warmer welcome (+1)*
++{gain} — {level.emoji} **{level.name}**  ·  *picking up after {milestone.hint} — a warmer welcome (+{boostsSpent})*
 ```
+
+When more than one boost is redeemed at once the clause still names a single
+moment — the latest milestone — and reports the summed bonus (`+2`).
 
 ### 16.2 Milestones
 
@@ -1077,7 +1275,8 @@ Moments together
 ```
 
 One `getEncounterMilestoneCounts(userId, characterId)` read per character
-(`SELECT milestone_type, count(*) ... GROUP BY milestone_type`).
+(`SELECT milestone_type, total ...` — the table is already a per-kind tally, so
+no `GROUP BY`).
 
 ### 16.4 Data model (migration 010 additions)
 
@@ -1085,32 +1284,52 @@ One `getEncounterMilestoneCounts(userId, characterId)` read per character
 ALTER TABLE relationships
   ADD COLUMN IF NOT EXISTS pending_encounter_boost INT NOT NULL DEFAULT 0;
 
--- Append-only. One row per /call win. Also a real "after the encounter"
--- timeline (created_at ordering) for future use.
+-- Per-kind tally: one row per (user, character, milestone_type), its `total`
+-- bumped on each win of that kind. Not one row per win — there is no per-win
+-- timeline, only first_at / last_at per kind. Bounded, so never pruned.
 CREATE TABLE IF NOT EXISTS encounter_milestones (
-  id                  BIGSERIAL PRIMARY KEY,
-  discord_user_id     TEXT NOT NULL,
-  character_id        TEXT NOT NULL,
-  milestone_type      TEXT NOT NULL,            -- key of ENCOUNTER_MILESTONES
-  guild_id            TEXT,
-  source_encounter_id BIGINT REFERENCES public_encounters(id) ON DELETE SET NULL,
-  created_at          TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW()
+  discord_user_id TEXT NOT NULL,
+  character_id    TEXT NOT NULL,
+  milestone_type  TEXT NOT NULL,            -- key of ENCOUNTER_MILESTONES
+  total           INT  NOT NULL DEFAULT 0,
+  first_at        TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+  last_at         TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
+  PRIMARY KEY (discord_user_id, character_id, milestone_type)
 );
-CREATE INDEX IF NOT EXISTS idx_encounter_milestones_user_char
-  ON encounter_milestones (discord_user_id, character_id);
 
 ALTER TABLE encounter_milestones ENABLE ROW LEVEL SECURITY;
 CREATE POLICY "Block direct access" ON encounter_milestones FOR SELECT USING (FALSE);
+
+-- Atomic tally bump, same reasoning as record_encounter_win (migration 011).
+CREATE OR REPLACE FUNCTION public.record_encounter_milestone(
+  p_user_id TEXT, p_character_id TEXT, p_milestone_type TEXT
+) RETURNS INT LANGUAGE plpgsql SECURITY DEFINER SET search_path = '' AS $$
+DECLARE new_total INT;
+BEGIN
+  INSERT INTO public.encounter_milestones
+    (discord_user_id, character_id, milestone_type, total, first_at, last_at)
+  VALUES (p_user_id, p_character_id, p_milestone_type, 1, now(), now())
+  ON CONFLICT (discord_user_id, character_id, milestone_type) DO UPDATE
+    SET total = public.encounter_milestones.total + 1, last_at = now()
+  RETURNING total INTO new_total;
+  RETURN new_total;
+END; $$;
 ```
+
+An earlier revision created `encounter_milestones` append-only (`id BIGSERIAL`,
+one row per win, `guild_id` / `source_encounter_id` / `created_at`); re-running
+migration 010 folds those rows into the tally by `(user, character,
+milestone_type)` and drops the old table.
 
 New `db/supabase.js` functions:
 
 | Function | Purpose |
 |---|---|
 | `grantEncounterBoost(userId, characterId)` | `getOrCreateRelationship`, then `pending_encounter_boost = LEAST(current + 1, ENCOUNTER_BOOST_CAP)`; returns the new value |
-| `consumeEncounterBoost(userId, characterId)` | atomic `UPDATE ... SET pending_encounter_boost = pending_encounter_boost - 1 WHERE user+char AND pending_encounter_boost > 0` `.select()`; caller checks the row count |
-| `recordEncounterMilestone({ userId, characterId, milestoneType, guildId, sourceEncounterId })` | INSERT into `encounter_milestones`; fire-and-forget |
-| `getEncounterMilestoneCounts(userId, characterId)` | `{ milestone_type: count }` map for the `/affinity` block |
+| `consumeAllEncounterBoosts(userId, characterId)` | atomic `UPDATE ... SET pending_encounter_boost = 0 WHERE user+char AND pending_encounter_boost > 0` `.select()`; returns how many were pending (0 if the guarded update matched nothing) |
+| `recordEncounterMilestone({ userId, characterId, milestoneType })` | RPC to `record_encounter_milestone()` — atomic `total = total + 1`; fire-and-forget |
+| `getEncounterMilestoneCounts(userId, characterId)` | `{ milestone_type: total }` map for the `/affinity` block |
+| `getLatestEncounterMilestone(userId, characterId)` | the kind with the newest `last_at` — names the moment a boosted `/roam` picks up from |
 
 ### 16.5 Wiring summary
 
@@ -1119,9 +1338,9 @@ New `db/supabase.js` functions:
   `incrementTimesMet` still fires. Winner-line tier = current stored affinity
   (unchanged by the win).
 - **`/roam` / `/meet` response path (`encounters.js` ~line 370):** after
-  `recordResponse`, call `consumeEncounterBoost`; if it consumed a row, add
-  `ENCOUNTER_BOOST_GAIN` to the persisted gain and append the bonus clause to the
-  reply.
+  `recordResponse`, call `consumeAllEncounterBoosts`; if it consumed any, add
+  `count × ENCOUNTER_BOOST_GAIN` to the persisted gain and append the bonus
+  clause (reporting the summed `+count`) to the reply.
 - **`/affinity` (`encounters.js:403`):** add the "Moments together" block from
   `getEncounterMilestoneCounts`.
 
@@ -1129,7 +1348,7 @@ New `db/supabase.js` functions:
 
 | Var | Default | Purpose |
 |---|---|---|
-| `ENCOUNTER_BOOST_GAIN` | `1` | Extra affinity on the winner's next authored response with that character |
+| `ENCOUNTER_BOOST_GAIN` | `1` | Extra affinity per pending boost, all spent together on the winner's next authored response with that character |
 | `ENCOUNTER_BOOST_CAP` | `2` | Max unspent boosts per user per character |
 
 `ENCOUNTER_AFFINITY_GAIN` is removed — a win grants no direct affinity.
@@ -1143,6 +1362,7 @@ New `db/supabase.js` functions:
 - **Bonus response button vs. flat +1** — flat +1 for v1 (cheap, predictable).
   A themed 5th response option ("Bring up the movie", worth +2/+3) is the richer
   follow-up if the boost should feel like content, not a number.
-- **Milestone dedup** — v1 allows the same `milestone_type` to stack to any
-  count. If some milestones should be one-time ("first walk home"), add a
-  `unique` flag and a `WHERE NOT EXISTS` guard in `recordEncounterMilestone`.
+- **Milestone dedup** — v1 lets a `milestone_type`'s `total` climb without
+  bound. If some milestones should be one-time ("first walk home"), add a
+  `unique` flag and have `record_encounter_milestone()` cap `total` at 1 (or
+  `DO NOTHING`) for those keys.

@@ -43,9 +43,18 @@ import { recordResponse } from './storage.js';
 // (the user actually picking a reply) counts as a real "meeting" and
 // creates/updates the row, atomically, via getOrCreateRelationship.
 import {
+  consumeAllEncounterBoosts,
+  getEncounterMilestoneCounts,
+  getLatestEncounterMilestone,
   getRelationship as readRelationship,
   getUserRelationships,
 } from './db/supabase.js';
+import {
+  ENCOUNTER_BOOST_GAIN,
+  ENCOUNTER_MILESTONES,
+  fillTemplate,
+  getMilestone,
+} from './constants/publicEncounters.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CACHE_FILE = path.join(__dirname, '.roam-cache.json');
@@ -398,23 +407,73 @@ export async function buildResponseResultMessage(
     };
   }
 
-  const gain = getAffinityForResponse(character, responseTypeId);
+  const baseGain = getAffinityForResponse(character, responseTypeId);
+
+  // A /call win never moves affinity itself — it leaves a pending boost that
+  // the next authored response with that character spends. Multiple wins with
+  // one character are a single reunion, so this claims *all* pending boosts at
+  // once rather than one per /roam. Consumed *before* the write so the bonus
+  // folds into one affinity update: if that update then fails the user is out
+  // those boosts, which is far better than the other ordering, where a failure
+  // would leave spent boosts still claimable. A NEUTRAL response (gain 0) still
+  // consumes them — the warmer welcome is the reunion, not the reply they picked.
+  let boostsSpent = 0;
+  try {
+    boostsSpent = await consumeAllEncounterBoosts(userId, characterId);
+  } catch (err) {
+    console.error('Error consuming encounter boosts:', err);
+  }
+
+  const gain = baseGain + boostsSpent * ENCOUNTER_BOOST_GAIN;
   const { level } = await recordResponse(userId, characterId, gain, responseTypeId);
 
   const reaction = getReactionLine(
     character,
     getDialogueTier(level.name),
     responseTypeId,
-    gain,
+    baseGain,
   );
 
   const delta = gain > 0 ? `+${gain}` : `${gain}`;
+  let deltaLine = `${delta} — ${level.emoji ? `${level.emoji} ` : ''}**${level.name}**`;
+
+  if (boostsSpent > 0) {
+    deltaLine += `  ·  *${await describeBoost(userId, character, boostsSpent)}*`;
+  }
 
   return {
-    content: `${reaction}\n${delta} — ${level.emoji ? `${level.emoji} ` : ''}**${level.name}**`,
+    content: `${reaction}\n${deltaLine}`,
     components: disableComponents(shownComponents) || responseActionRow(characterId, true),
     flags: EPHEMERAL_FLAG,
   };
+}
+
+// The bonus clause on a boosted response, naming the encounter moment it is
+// picking up from. Only reached when a boost was actually spent, so the extra
+// read costs an ordinary /roam nothing — and it degrades to the generic phrasing
+// rather than failing the response if the lookup errors or the milestone row is
+// missing (a win whose milestone insert failed still granted its boost). When
+// several wins are being redeemed at once the clause still names one moment —
+// the latest — and just reports the summed bonus.
+async function describeBoost(userId, character, boostsSpent) {
+  const suffix = `a warmer welcome (+${boostsSpent * ENCOUNTER_BOOST_GAIN})`;
+
+  try {
+    const latest = await getLatestEncounterMilestone(userId, character.id);
+    const milestone = latest && getMilestone(latest.milestone_type);
+    if (milestone) {
+      const hint = fillTemplate(milestone.hint, {
+        name: getFullName(character),
+        firstName: character.firstName,
+        house: character.house || 'Darkwick',
+      });
+      return `picking up after ${hint} — ${suffix}`;
+    }
+  } catch (err) {
+    console.error('Error reading latest encounter milestone:', err);
+  }
+
+  return `picking up where you left off — ${suffix}`;
 }
 
 // --- /affinity ---------------------------------------------------------------
@@ -425,6 +484,30 @@ function getAvatarFilename(character) {
   if (!character.firstName || !character.lastName) return null;
   const lastNamePart = character.lastName.split(' ').pop();
   return `${character.firstName}_${lastNamePart}.png`;
+}
+
+// The "Moments together" block: one row per milestone the user has collected
+// with this character, most-collected first. Returns null — and the block is
+// omitted entirely — when there are none, so an /affinity for someone they've
+// never caught in a public encounter looks exactly as it did before.
+function renderMomentsTogether(character, counts) {
+  const vars = {
+    name: getFullName(character),
+    firstName: character.firstName,
+    house: character.house || 'Darkwick',
+  };
+
+  const rows = Object.entries(counts || {})
+    .filter(([type, count]) => count > 0 && ENCOUNTER_MILESTONES[type])
+    // Ties fall back to the milestone key so the order is stable between runs.
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([type, count]) => {
+      const milestone = ENCOUNTER_MILESTONES[type];
+      return `${milestone.emoji} ${fillTemplate(milestone.label, vars)} — ×${count}`;
+    });
+
+  if (rows.length === 0) return null;
+  return `**Moments together**\n${rows.join('\n')}`;
 }
 
 export async function buildAffinityMessage(userId, characterIds) {
@@ -467,6 +550,18 @@ export async function buildAffinityMessage(userId, characterIds) {
     validCharacters.map((character) => readRelationship(userId, character.id)),
   );
 
+  // Public-encounter wins never move affinity, so they'd otherwise leave no
+  // trace here — the milestone tally is their whole visible progression.
+  // A failed read drops the block rather than the embed.
+  const milestoneCounts = await Promise.all(
+    validCharacters.map((character) =>
+      getEncounterMilestoneCounts(userId, character.id).catch((err) => {
+        console.error(`Error loading milestones for ${character.id}:`, err);
+        return {};
+      }),
+    ),
+  );
+
   // Build each embed alongside its attachment so an avatar that fails to load
   // drops the embed image instead of leaving a broken attachment:// reference.
   const embeds = [];
@@ -489,9 +584,13 @@ export async function buildAffinityMessage(userId, characterIds) {
 
     const formatLevel = (lvl) => (lvl.emoji ? `${lvl.name} ${lvl.emoji}` : lvl.name);
     const bar = renderHeartBar(ratio, level.heart);
-    const description = nextLevel
-      ? `${formatLevel(level)}\n${bar}`
-      : `${formatLevel(level)}\n${bar}\nBond fully forged`;
+    const parts = [formatLevel(level), bar];
+    if (!nextLevel) parts.push('Bond fully forged');
+
+    const moments = renderMomentsTogether(character, milestoneCounts[index]);
+    if (moments) parts.push('', moments);
+
+    const description = parts.join('\n');
 
     embeds.push({
       image: imageBuffer ? { url: `attachment://${avatarFilename}` } : undefined,

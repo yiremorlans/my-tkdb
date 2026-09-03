@@ -20,9 +20,15 @@ if (!fs.existsSync(DIALOGUE_FONT_PATH)) {
 registerFont(DIALOGUE_FONT_PATH, { family: DIALOGUE_FONT_FAMILY });
 console.log('[imageComposition] Registered dialogue font:', DIALOGUE_FONT_PATH);
 
-// Composite a background and character image on canvas, optionally with dialogue.
-// Returns a buffer containing the PNG-encoded composite image.
-export async function composeEncounter(bgFilename, charFilename, dialogue = null) {
+// Background + character on a canvas sized to the background, with the
+// character centered horizontally and stood on the bottom edge. Internal:
+// every public compositor starts here, so character positioning can never
+// drift between /roam's dialogue scenes and a public encounter's silhouette.
+// `drawCharacter: false` lays down the background and works out where the
+// character goes without painting it — for callers that draw their own
+// treatment of it (composeSilhouetteEncounter) and must not have the real art
+// underneath, where antialiased edges would bleed through.
+async function drawEncounterBase(bgFilename, charFilename, { drawCharacter = true } = {}) {
   const bgPath = join(__dirname, `assets/bg/${bgFilename}`);
   const charPath = join(__dirname, `assets/chars/${charFilename}`);
 
@@ -47,7 +53,15 @@ export async function composeEncounter(bgFilename, charFilename, dialogue = null
   console.log('[composeEncounter] Drawing character at', charImg.width, 'x', charImg.height);
   const charX = (canvas.width - charImg.width) / 2;
   const charY = canvas.height - charImg.height;
-  ctx.drawImage(charImg, charX, charY);
+  if (drawCharacter) ctx.drawImage(charImg, charX, charY);
+
+  return { canvas, ctx, charImg, charX, charY };
+}
+
+// Composite a background and character image on canvas, optionally with dialogue.
+// Returns a buffer containing the PNG-encoded composite image.
+export async function composeEncounter(bgFilename, charFilename, dialogue = null) {
+  const { canvas, ctx } = await drawEncounterBase(bgFilename, charFilename);
 
   // Draw dialogue box if provided.
   if (dialogue) {
@@ -100,5 +114,47 @@ export async function composeEncounter(bgFilename, charFilename, dialogue = null
   const bufferStart = Date.now();
   const buffer = canvas.toBuffer('image/png');
   console.log('[composeEncounter] Buffer created in', Date.now() - bufferStart, 'ms, size:', buffer.length);
+  return buffer;
+}
+
+// Public "call out" encounters only: the same scene, but the character painted
+// out as a solid black cutout so the channel sees a shape and not a face. No
+// dialogue box, ever — the teaser and every flavor line live in the Discord
+// message instead (docs/public-encounters.md §5).
+//
+// This is the single composite the feature ever makes: a win keeps this image
+// and adds a reveal embed beside it, a miss drops it. `reveal` is here only so
+// a future version can ask for the un-overlaid scene; nothing calls it today.
+export async function composeSilhouetteEncounter(bgFilename, charFilename, { reveal = false } = {}) {
+  const { canvas, ctx, charImg, charX, charY } = await drawEncounterBase(
+    bgFilename,
+    charFilename,
+    // A silhouette draws its own blacked-out copy below; only a reveal wants
+    // the real art on the canvas.
+    { drawCharacter: reveal },
+  );
+
+  if (!reveal) {
+    // The blackout has to happen on a canvas holding *only* the character, not
+    // on the composite: the background already makes the full canvas opaque, so
+    // a source-atop fill there would land a black rectangle over the scene
+    // rather than a cutout. Drawn off to the side, source-in keeps the
+    // character's alpha and replaces every color with black — a clean
+    // silhouette, edges included — which then drops onto the background at the
+    // same position the real art would have taken.
+    console.log('[composeSilhouetteEncounter] Filling character silhouette');
+    const cutout = createCanvas(charImg.width, charImg.height);
+    const cutoutCtx = cutout.getContext('2d');
+    cutoutCtx.drawImage(charImg, 0, 0);
+    cutoutCtx.globalCompositeOperation = 'source-in';
+    cutoutCtx.fillStyle = '#000';
+    cutoutCtx.fillRect(0, 0, charImg.width, charImg.height);
+
+    ctx.drawImage(cutout, charX, charY);
+  }
+
+  const bufferStart = Date.now();
+  const buffer = canvas.toBuffer('image/png');
+  console.log('[composeSilhouetteEncounter] Buffer created in', Date.now() - bufferStart, 'ms, size:', buffer.length);
   return buffer;
 }
