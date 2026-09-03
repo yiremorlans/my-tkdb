@@ -636,6 +636,24 @@ export async function handleCall(body, now = new Date()) {
     const revealLines = [pickWinnerLine(tier, vars)];
     if (milestone) revealLines.push(fillTemplate(milestone.afterline, vars));
 
+    // Discord rejects the whole edit (400 URL_TYPE_INVALID_URL) if the thumbnail
+    // isn't an absolute URL — which is what getCharacterImageUrl returns when
+    // BASE_URL is unset. A missing BASE_URL is a deploy-config gap; it must not
+    // cost the channel its entire reveal, so drop the thumbnail and keep the
+    // text when the URL isn't usable.
+    const thumbUrl = getCharacterImageUrl(character, encounter.variant);
+    const embed = {
+      description: revealLines.join('\n\n'),
+      color: level.color,
+    };
+    if (/^https?:\/\//i.test(thumbUrl)) {
+      embed.thumbnail = { url: thumbUrl };
+    } else {
+      console.error(
+        `[publicEncounters] BASE_URL is unset or invalid — revealing encounter ${encounter.id} without a thumbnail (got "${thumbUrl}")`,
+      );
+    }
+
     try {
       // No file is composed or uploaded here: the spawn silhouette stays as the
       // message's image (omitting `attachments` leaves it alone) and the reveal
@@ -644,13 +662,7 @@ export async function handleCall(body, now = new Date()) {
       // embed renders but never pings.
       await editChannelMessage(encounter.channel_id, encounter.message_id, {
         content: `<@${userId}>`,
-        embeds: [
-          {
-            description: revealLines.join('\n\n'),
-            color: level.color,
-            thumbnail: { url: getCharacterImageUrl(character, encounter.variant) },
-          },
-        ],
+        embeds: [embed],
       });
     } catch (err) {
       // The winner already has their ack and their reward; a failed edit only
