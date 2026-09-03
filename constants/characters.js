@@ -163,7 +163,11 @@ export const CHARACTERS = [
       "tends everyone's wellbeing but his own",
       "haunted by those he couldn't protect",
       "a darker self he keeps leashed",
-      "earnestly curious about Japanese folklore",
+      "came to Darkwick to learn how to subjugate demons",
+      "searching for his missing twin brother, Nox",
+      "any mention of demons lights a cold fire in him",
+      "trusts too easily and acts impulsively",
+      "bad at keeping a secret",
     ],
   },
   {
@@ -203,6 +207,7 @@ export const CHARACTERS = [
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Kuudere"],
     keywords: [
+      "Frostheim vice-captain",
       "eloquent",
       "formal, old-fashioned courtesy",
       "composed, hard to read",
@@ -243,7 +248,11 @@ export const CHARACTERS = [
       "gruffly affectionate",
       "mechanic",
       "biker",
-      "captain",
+      "Vagastrom captain",
+      "rumored to have killed someone",
+      "afraid of his own strength — 'only if someone is about to die'",
+      "harsh on Sho and Leo, but says they have potential",
+      "rare smiles, and mostly around you",
       "haunted past",
       "big appetite",
       "no sense of direction",
@@ -262,6 +271,7 @@ export const CHARACTERS = [
     affinityByResponse: { kind: 0, playful: 1, bold: 2 },
     archetype: ["Sadodere", "Teasedere"],
     keywords: [
+      "Vagastrom vice-captain",
       "cynical",
       "mocking",
       "ego-driven",
@@ -288,14 +298,18 @@ export const CHARACTERS = [
     affinityByResponse: { kind: 2, playful: 0, bold: 1 },
     archetype: ["Deredere"],
     keywords: [
-      "sweet",
-      "respectful",
+      "cocky delinquent front — aggressive or apathetic on the surface",
+      "does what he's asked despite his mouth",
       "underclassman",
       "nonchalant",
       "sweary",
       "biker",
       "fighter",
-      "food-truck",
+      "food-truck — a capable cook, particular about his dishes",
+      "hates cold food, despises wasted food",
+      "teases his friends, you most of all",
+      "draws the line when Leo mocks his friends",
+      "Professor Hyde's younger brother",
       "earnest",
     ],
   },
@@ -334,7 +348,10 @@ export const CHARACTERS = [
       "selfless",
       "hardworking",
       "bottled emotions",
-      "former child performer",
+      "Hotarubi captain — 'I'm just a figurehead, really'",
+      "esteemed kabuki actor since childhood, currently on hiatus",
+      "stigma reads residual thoughts from anything he touches — calls it gross",
+      "quietly harsh on people — 'humans are much nastier than any anomalies'",
     ],
   },
   {
@@ -363,8 +380,11 @@ export const CHARACTERS = [
     keywords: [
       "florid theatrical showman",
       "self-styled genius of the pen",
-      "romantic novelist and folklorist",
+      "eccentric poet — speaks in metaphors",
       "old-fashioned romanticist",
+      "Taro Kirisaki — Jiro's late older brother",
+      "thinks every student at Darkwick is talented; compliments everyone",
+      "worrywart",
       "Jazz-Age slang",
       "calls you 'my dear'",
       "gentle",
@@ -372,8 +392,9 @@ export const CHARACTERS = [
       "empathetic",
       "observant",
       "spiritual",
-      "haunted by mortality",
-      "ghostly, uncanny presence",
+      "died at Darkwick last year and bears it no grudge",
+      "spirit too weak for most people to see him",
+      "oblivious that the Hotarubi ghost rumors are about him",
       "quietly protective",
     ],
   },
@@ -387,24 +408,32 @@ export const CHARACTERS = [
       casual: "Haku_Kusanagi_Casual.png",
     },
     // Verified against his voiceline script: quiet, undemanding care is what
-    // reaches him (kind 2); deadpan and his fake-scare bits are his default
-    // register but read as deflection, so playful lands softer (1); he meets
-    // forwardness by keeping it light and undercutting himself, so bold glances
-    // off (0).
+    // reaches him (kind 2); deadpan and the spooking he does to get a reaction
+    // out of you are his default register but read as deflection, so playful
+    // lands softer (1); he meets forwardness by keeping it light and
+    // undercutting himself, so bold glances off (0).
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
-    archetype: ["Dandere", "Kuudere"],
+    // Not a Dandere: he is the one who rescues Subaru when Subaru can't get a
+    // sentence out, and Zenji compares his charm to Don Juan. The reserve is
+    // Kuudere deflection, and the spooking is Teasedere.
+    archetype: ["Kuudere", "Teasedere"],
     keywords: [
+      "Hotarubi vice-captain",
       "laid-back",
       "deadpan",
-      "slacker",
-      "dorm handyman",
-      "fake-scares people",
-      "folk-supernatural patter",
+      "slacker — insists he's lazy, does the work anyway",
+      "'It's okay to half-ass stuff, you know'",
+      "dorm handyman — cleans up the other ghouls' messes",
+      "genuine medium — sees ghosts even other ghouls can't",
+      "heir to the Kusanagi shrine clan, a long line of mediums",
+      "estranged from his family, who were glad to see him go",
+      "spooks and teases you to watch your reaction",
+      "'devilish charm' — Zenji's Don Juan comparison",
+      "looks after Subaru; manages Zenji's video work",
       "quietly attentive",
       "world-weary",
       "self-deprecating",
       "deflects sincerity",
-      "shrine-raised",
     ],
   },
 
@@ -479,6 +508,7 @@ export const CHARACTERS = [
     affinityByResponse: { kind: 2, playful: 0, bold: 1 },
     archetype: ["Charismatic Oujidere"],
     keywords: [
+      "Dionysia captain",
       "brilliant performer",
       "legendary Venus of Dionysia",
       "transformation artifact — a look for any venue",
@@ -520,6 +550,7 @@ export const CHARACTERS = [
     // he never says the warm thing outright — he undercuts it every time.
     archetype: ["Dandere", "Deredere"],
     keywords: [
+      "Dionysia vice-captain",
       "reliable",
       "loyal",
       "clockwork artisan",
@@ -562,6 +593,12 @@ export const CHARACTERS = [
     // resonate," not dislike. (Was keyworded "theatrical" — the script has no
     // performer in it: he's terse, plain, and childish, and lurks the
     // Heebie-Jeebie House to frighten people, not to put on a show.)
+    //
+    // The Heebie-Jeebie House is the canon story name for Shion's hangout and
+    // is deliberate. constants/dialogue/reference.md calls the same place the
+    // "Exciting House" (Shion's and Mio's lines) and the "Waku-Waku House"
+    // (Jo's) — those are translation variants of the same location, not a
+    // different building. Do not "correct" this name against the reference.
     affinityByResponse: { kind: 0, playful: 1, bold: 2 },
     archetype: ["Yandere", "Sadodere"],
     keywords: [
@@ -596,6 +633,7 @@ export const CHARACTERS = [
     affinityByResponse: { kind: 1, playful: 0, bold: 2 },
     archetype: ["Kuudere"],
     keywords: [
+      "Mortkranken vice-captain",
       "blunt",
       "clinical",
       "detached",
@@ -701,7 +739,12 @@ export const CHARACTERS = [
       "devoted caretaker",
       "protective of every life in the park",
       "hardworking",
-      "self-deprecating",
+      "Jabberwock captain",
+      "relentlessly optimistic — 'You'll be right, you got this!'",
+      "relentless tour promoter — pushes Jabberwock at any moment",
+      "drags everyone around him into his antics",
+      "prosthetic right arm, kept under a black glove",
+      "ex-Dionysia acrobat; a thief until Jo turned him around",
       "chickens out when flirting lands",
       "Aussie drawl",
     ],
@@ -718,6 +761,7 @@ export const CHARACTERS = [
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Yandere", "Mayadere"],
     keywords: [
+      "Jabberwock vice-captain",
       "childlike",
       "hums constantly",
       "obsessive",
@@ -764,6 +808,7 @@ export const CHARACTERS = [
     affinityByResponse: { kind: 1, playful: 0, bold: 2 },
     archetype: ["Bodere", "Deredere"],
     keywords: [
+      "Obscuary captain, with little interest in the duties",
       "fragile act",
       "secretly the most powerful vampire",
       "old-world, courtly eloquence",
@@ -804,7 +849,11 @@ export const CHARACTERS = [
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Bright Deredere"],
     keywords: [
+      "Obscuary vice-captain",
       "reaper",
+      "flirtatious playboy — Lyca's 'blond gigolo'",
+      "against violence",
+      "chases Edward off you",
       "bright soul",
       "cheer that masks his pain",
       "self-deprecating",
@@ -815,7 +864,7 @@ export const CHARACTERS = [
       "houseparent to Obscuary",
       "organized",
       "forward about his affection",
-      "dodges missions and class",
+      "the curse means he can never feel tired, so he refuses to be idle",
     ],
   },
   {
@@ -846,8 +895,11 @@ export const CHARACTERS = [
       "dog-like loyalty",
       "walks as bonding",
       "protective and self-sacrificing",
-      "wants to belong with humans (Neros)",
-      "defies rules and authority",
+      "hopes to reunite with a human from his past",
+      "ignores etiquette when it suits him; obedient when it counts",
+      "bite scars on his arms — stops himself from biting others",
+      "imprisoned on campus before he was allowed to be a student",
+      "born of a human and a werewolf",
       "calls Edward 'moth-eaten Casanova'",
       "not tech-savvy",
       "hardworking, eager to prove himself",
@@ -900,6 +952,7 @@ export const CHARACTERS = [
     affinityByResponse: { kind: 1, playful: 0, bold: 2 },
     archetype: ["Kuudere"],
     keywords: [
+      "Sinostra first-year",
       "lawyer",
       "legalistic",
       "analytical",
@@ -933,6 +986,7 @@ export const CHARACTERS = [
     affinityByResponse: { kind: 1, playful: 0, bold: 2 },
     archetype: ["Teasedere", "Kanedere"],
     keywords: [
+      "Sinostra vice-captain",
       "vain",
       "elaborate skincare and gym regimen",
       "money-solves-everything worldview",

@@ -155,7 +155,7 @@ export default {
   responses: {
     // kind is Haku's channel — low-key, unsentimental care he doesn't have to
     // perform anything back for (affinityByResponse.kind = 2). playful reaches
-    // him too: deadpan and playing along with his fake-scares is his default
+    // him too: deadpan and playing along when he spooks you is his default
     // register, but it reads as his deflection more than a real bid, so it lands
     // softer (1). bold glances off (0) — he meets forwardness by keeping it
     // light and undercutting himself, so those moves read as the player pushing
@@ -173,7 +173,7 @@ export default {
     playful: {
       new: [
         "Trade deadpan with him",
-        "Call his fake-scare",
+        "Refuse to be spooked",
         "Rib him about filming Zenji",
       ],
       spark: [
@@ -187,7 +187,7 @@ export default {
         "Steal his hoodie",
       ],
       bound: [
-        "Fake-scare him for once",
+        "Spook him for once",
         "Hog the whole step",
         "Say it back, deadpan",
       ],
@@ -230,7 +230,7 @@ export default {
   winnerLines: {
     new: [
       '"Oh. Hey." **{name}** doesn\'t get up. {user} still got it right.',
-      "{user} says the name, and **{name}** considers faking a haunting about it. Decides against.",
+      "{user} says the name, and **{name}** glances at something over their shoulder. \"...Ignore that.\"",
       '"Don\'t expect much from me," **{name}** warns {user}, not moving from the step.',
     ],
     warm: [
