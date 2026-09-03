@@ -1,27 +1,27 @@
 import {
   getCommandLimits,
-  recordCommandUse,
   clearCommandLimit,
+  claimCommandSlot,
 } from './db/supabase.js';
 
 // Each command (roam/meet) can be used once every 3 hours, tracked per user.
 // The cooldown is anchored to the user's last *completed* encounter for that
-// command (recorded via recordCommandUse at the dialogue-response step), not to
+// command (claimed via claimCommandUse at the dialogue-response step), not to
 // when the command was invoked — opening a prompt and walking away costs
 // nothing. State lives in Supabase (command_limits), so it survives deploys and
 // restarts.
+//
+// Two entry points, and the difference is the whole point:
+//   checkCommandLimit — read-only, for the fast fail at command-invoke. Its
+//                       answer is stale the moment it returns, so it must never
+//                       be what guards a reward.
+//   claimCommandUse   — decides and stamps atomically. This is the gate.
 const COOLDOWN_MS = 3 * 60 * 60 * 1000;
 
 // The commands that share this rolling cooldown. When any one of them is
 // blocked, the message reports the state of all of them, so a user who typed
 // /roam still learns where /meet stands (and vice versa).
 const RATE_LIMITED_COMMANDS = ['roam', 'meet'];
-
-// Mark a completed encounter. `command` is 'roam' or 'meet'. Fire-and-forget at
-// the call site; failures are logged, not thrown.
-export function recordCommandUsage(userId, command, now = new Date()) {
-  return recordCommandUse(userId, command, now);
-}
 
 // Reset a user's cooldown (for testing). Omit `command` to clear both.
 export function resetCommandLimit(userId, command = null) {
@@ -39,9 +39,10 @@ function formatDuration(ms) {
 }
 
 // Check if the user can use a command right now. Read-only — the cooldown is
-// stamped later by recordCommandUsage once the encounter completes. Returns
+// claimed later by claimCommandUse once the encounter completes. Returns
 // { allowed, reason }. On a Supabase error, fails open (allows the command)
-// rather than locking everyone out.
+// rather than locking everyone out: this is only the invoke-time pre-check and
+// the reward is gated separately, so being generous here costs nothing.
 export async function checkCommandLimit(userId, command, now = new Date()) {
   let timestamps;
   try {
@@ -82,5 +83,42 @@ export async function checkCommandLimit(userId, command, now = new Date()) {
   return {
     allowed: false,
     reason: [invoked, ...others].map(line).join('\n'),
+  };
+}
+
+/**
+ * Claim this user's slot for `command` — the gate on actually granting a
+ * reward, as opposed to checkCommandLimit's read-only pre-check at the moment a
+ * command is invoked.
+ *
+ * The distinction matters. checkCommandLimit asks a question; the answer is
+ * stale the instant it returns. This claims the slot in the same statement that
+ * decides, so two dialogue responses arriving together can't both pass (see
+ * db/migrations/012). Call this immediately before granting, and only grant
+ * when it returns allowed.
+ *
+ * Fails CLOSED, unlike checkCommandLimit: if the claim errors we don't know
+ * whether the slot was taken, and assuming it wasn't is exactly what reopens
+ * the stack-and-redeem farm. A read error costing someone one response is the
+ * cheaper mistake.
+ */
+export async function claimCommandUse(userId, command, now = new Date()) {
+  let claimed;
+  try {
+    claimed = await claimCommandSlot(userId, command, Math.round(COOLDOWN_MS / 1000));
+  } catch (err) {
+    console.error('claimCommandUse: failing closed after claim error:', err);
+    return { allowed: false, reason: 'Something went wrong there. Try again?' };
+  }
+
+  if (claimed) return { allowed: true };
+
+  // Refused. The claim deliberately doesn't report how long is left — re-read
+  // for that, purely to render the message (both clocks, invoked one first).
+  // This read never influences the decision, so it's safe for it to fail.
+  const limit = await checkCommandLimit(userId, command, now).catch(() => null);
+  return {
+    allowed: false,
+    reason: limit?.reason || 'You need to wait a while before doing that again.',
   };
 }

@@ -132,6 +132,51 @@ Go to your Supabase Dashboard:
 - Copy and execute
 - Wait for success ✓
 
+### Migration 12: Atomic Command Cooldown Claim
+- File: `db/migrations/012_atomic_command_limit_claim.sql`
+- Creates `claim_command_slot()`, which decides *and* stamps a `/roam` or
+  `/meet` cooldown in one statement. It replaces a SELECT-then-UPSERT pair whose
+  gap let two dialogue responses arriving together both pass the check and both
+  grant affinity — the "queue up prompts, redeem them all at once" bypass
+- Adds no table; `command_limits` (migration 8) is unchanged
+- ⚠️ **Run this BEFORE deploying the app code that calls it.** `claimCommandUse`
+  fails *closed* by design, so if the function is missing every dialogue
+  response is refused with "Something went wrong there. Try again?" — `/roam`
+  and `/meet` will hand out nothing until this migration lands
+- Verify with: `SELECT public.claim_command_slot('test-user', 'roam', 10800);`
+  → returns `true` the first time, `false` immediately after. Clean up with
+  `DELETE FROM command_limits WHERE discord_user_id = 'test-user';`
+- Copy and execute
+- Wait for success ✓
+
+### Migration 13: Guild Kill Switch (`locked`)
+- File: `db/migrations/013_guild_settings_locked.sql`
+- Adds `guild_settings.locked` (BOOLEAN NOT NULL DEFAULT FALSE) — an owner-only
+  switch that outranks `enabled`
+- Why it exists: `enabled` alone does not hold. `/encounters channel` is an
+  upsert that writes `enabled: true` unconditionally, so any member with Manage
+  Server can undo a manual disable with one command. **No bot command writes
+  `locked`** — set it in SQL only
+- Enforced in three places: `handleEncountersAdmin` (every subcommand refuses),
+  `getEnabledGuilds` (the scheduler never sees the guild), and `handleCall` (a
+  guild locked mid-flight stops being answerable)
+- ⚠️ **Run this BEFORE deploying the app code.** `getEnabledGuilds` filters on
+  the column, so if it's missing that query errors and **no guild spawns
+  anywhere** until the migration lands
+- Lock a guild:
+  ```sql
+  UPDATE guild_settings SET locked = TRUE, enabled = FALSE WHERE guild_id = '<guild id>';
+  ```
+- See who is locked:
+  ```sql
+  SELECT guild_id, enabled, locked, encounter_channel_id, configured_by
+  FROM guild_settings ORDER BY locked DESC, guild_id;
+  ```
+- Unlocking sets only `locked = FALSE`; `enabled` stays false, so an admin has
+  to run `/encounters channel` again to actually resume
+- Copy and execute
+- Wait for success ✓
+
 ## Step 3: Verify Migrations
 
 In the Supabase Dashboard, click **Table Editor** and verify:

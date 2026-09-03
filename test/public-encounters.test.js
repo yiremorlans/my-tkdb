@@ -56,7 +56,7 @@ mock.module('../imageComposition.js', {
   },
 });
 
-const { handleCall, spawnEncounter, sweepExpiredEncounters, rollGapMinutes } = await import('../publicEncounters.js');
+const { handleCall, handleEncountersAdmin, spawnEncounter, sweepExpiredEncounters, rollGapMinutes } = await import('../publicEncounters.js');
 const { runTick, clearSpawnAttemptFence } = await import('../encounterScheduler.js');
 const { buildResponseResultMessage } = await import('../encounters.js');
 const { recordEncounterMilestone, getEncounterMilestoneCounts, getOrCreateRelationship } = await import('../db/supabase.js');
@@ -68,6 +68,9 @@ function guildRow(overrides = {}) {
     guild_id: GUILD,
     encounter_channel_id: CHANNEL,
     enabled: true,
+    // NOT NULL DEFAULT FALSE in the schema (migration 013), so a real row always
+    // carries it — the owner's kill switch, which outranks `enabled`.
+    locked: false,
     post_failures: 0,
     // Far enough back that any rolled gap has elapsed.
     last_encounter_at: new Date(NOW.getTime() - 200 * 60 * 1000).toISOString(),
@@ -443,5 +446,70 @@ describe('the encounter boost', () => {
     assert.equal(fake.tables.character_relationships[0].affinity, 64, 'kind 2 + both boosts');
     assert.equal(fake.tables.character_relationships[0].pending_encounter_boost, 0, 'all spent');
     assert.match(message.content, /warmer welcome \(\+2\)/);
+  });
+});
+
+// --- 5. the owner's kill switch --------------------------------------------
+
+// `locked` (migration 013) outranks `enabled`. A guild admin's own switch is
+// `enabled`, and `/encounters channel` writes it back to true on every run —
+// so a manual disable only sticks if something they can't reach enforces it.
+// Every row below is `enabled: true` on purpose: the point is that `locked`
+// wins anyway.
+describe('a locked guild', () => {
+  function adminBody({ userId = 'admin-1', permissions = '32', sub = 'status', options = [] } = {}) {
+    return {
+      guild_id: GUILD,
+      member: { user: { id: userId }, permissions }, // '32' = MANAGE_GUILD
+      data: { name: 'encounters', options: [{ type: 1, name: sub, options }] },
+    };
+  }
+
+  it('is invisible to the scheduler even while enabled is true', async () => {
+    reset({ guild_settings: [guildRow({ locked: true })] });
+
+    await runTick(NOW);
+
+    assert.equal(posts.length, 0, 'a locked guild must never spawn');
+  });
+
+  it('cannot be re-enabled with /encounters channel', async () => {
+    reset({ guild_settings: [guildRow({ locked: true, enabled: false })] });
+
+    const result = await handleEncountersAdmin(
+      adminBody({ sub: 'channel', options: [{ name: 'channel', value: 'channel-2' }] }),
+    );
+
+    assert.match(result.reply.content, /aren't available/);
+    const row = fake.tables.guild_settings[0];
+    assert.equal(row.enabled, false, 'the upsert must not run and flip enabled back on');
+    assert.equal(row.locked, true, 'nothing reachable from Discord clears the lock');
+    assert.equal(row.encounter_channel_id, CHANNEL, 'the channel is not repointed either');
+  });
+
+  it('says nothing about why — the reply is the same for every subcommand', async () => {
+    reset({ guild_settings: [guildRow({ locked: true })] });
+
+    const status = await handleEncountersAdmin(adminBody({ sub: 'status' }));
+    const disable = await handleEncountersAdmin(adminBody({ sub: 'disable' }));
+
+    // No mention of locking, who did it, or that a lock exists at all.
+    for (const result of [status, disable]) {
+      assert.equal(result.reply.content, "Encounters aren't available in this server.");
+      assert.doesNotMatch(result.reply.content, /lock/i);
+    }
+  });
+
+  it('stops an already-posted encounter from being answerable', async () => {
+    reset({
+      guild_settings: [guildRow({ locked: true })],
+      public_encounters: [encounterRow()],
+    });
+
+    const result = await handleCall(callBody({ guess: 'rui' }), NOW);
+
+    assert.match(result.reply.content, /aren't set up/);
+    assert.equal(result.afterReply, null, 'no reward path runs');
+    assert.equal(fake.tables.public_encounters[0].resolved_at, null, 'the encounter is not claimed');
   });
 });

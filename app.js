@@ -17,7 +17,7 @@ import {
 } from './encounters.js';
 import { handleCall, handleEncountersAdmin, handleEncounterDev } from './publicEncounters.js';
 import { startEncounterScheduler } from './encounterScheduler.js';
-import { checkCommandLimit, recordCommandUsage } from './commandLimits.js';
+import { checkCommandLimit, claimCommandUse } from './commandLimits.js';
 import {
   trackUserActivity,
   trackCharacterEngagement,
@@ -487,17 +487,21 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
       (async () => {
         try {
-          // Re-check the cooldown at redemption, not only at command-invoke. The
-          // invoke check (in the /roam and /meet handlers) is read-only, and the
-          // clock is only stamped once a flow *completes* — here. Without this
-          // gate a user could fire /roam or /meet many times before finishing
-          // any of them (every invoke check passes because none has stamped
-          // yet), then click through all the queued response buttons in one
-          // sitting, redeeming N affinity gains against a "once per 3h" limit.
-          // Checking here means only the first completion in a window lands; the
-          // rest get the cooldown notice. Opening a prompt and walking away
-          // still costs nothing, because nothing stamps before this point.
-          const limit = await checkCommandLimit(userId, commandName);
+          // The cooldown gate, at redemption rather than only at command-invoke.
+          // The invoke check (in the /roam and /meet handlers) is read-only and
+          // the clock is only stamped once a flow *completes* — here — so
+          // without a gate at this point a user could fire /roam or /meet many
+          // times before finishing any of them (every invoke check passes
+          // because none has stamped yet), then click through all the queued
+          // response buttons in one sitting, redeeming N affinity gains against
+          // a "once per 3h" limit.
+          //
+          // claimCommandUse decides and stamps in one statement, so two
+          // responses arriving inside the same round trip can't both pass; a
+          // check-then-stamp pair would leave exactly that window open. Opening
+          // a prompt and walking away still costs nothing, because nothing is
+          // claimed before this point.
+          const limit = await claimCommandUse(userId, commandName);
           if (!limit.allowed) {
             const collapsed = (req.body.message?.components || []).map(row => ({
               ...row,
@@ -514,13 +518,10 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             return;
           }
 
-          // Stamp the cooldown *before* granting the reward, so two responses
-          // clicked in quick succession can't both clear the check above before
-          // either writes. A stamp followed by a failed grant only costs the
-          // user this one turn — the safe direction; stamping afterwards would
-          // leave the redemption ungated for the width of the affinity write.
-          await recordCommandUsage(userId, commandName);
-
+          // The slot is claimed and the cooldown already stamped by the claim
+          // above. If the grant below fails the user is out this one turn —
+          // the safe direction, and the same trade consumeAllEncounterBoosts
+          // makes for the same reason.
           const messageData = await buildResponseResultMessage(
             userId,
             characterId,

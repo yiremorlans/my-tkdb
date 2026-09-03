@@ -369,6 +369,23 @@ export async function handleEncountersAdmin(body) {
     };
   }
 
+  // One read for every subcommand — `channel` needs the previous channel to
+  // detect a move, `status` renders from it, and all three are gated on `locked`.
+  const settings = await getGuildSettings(guildId);
+
+  // The owner's kill switch (db/migrations/013), checked before the subcommand
+  // rather than inside each one. `enabled` is the admin's own switch and they
+  // may flip it freely; `locked` outranks it and nothing reachable from Discord
+  // can clear it — which is the point, since `/encounters channel` is an upsert
+  // that would otherwise write `enabled: true` straight back.
+  if (settings?.locked) {
+    console.warn(`[publicEncounters] Refused /encounters in locked guild ${guildId} (from ${userId})`);
+    return {
+      reply: ephemeral("Encounters aren't available in this server."),
+      afterReply: null,
+    };
+  }
+
   const sub = body.data?.options?.[0];
   const subcommand = sub?.name;
 
@@ -378,8 +395,7 @@ export async function handleEncountersAdmin(body) {
       return { reply: ephemeral('Pick a channel to post encounters in.'), afterReply: null };
     }
 
-    const existing = await getGuildSettings(guildId);
-    const previousChannelId = existing?.encounter_channel_id || null;
+    const previousChannelId = settings?.encounter_channel_id || null;
     const isMove = previousChannelId !== null && previousChannelId !== channelId;
 
     // One channel per server, enforced by the schema rather than by a check
@@ -458,7 +474,6 @@ export async function handleEncountersAdmin(body) {
   }
 
   if (subcommand === 'status') {
-    const settings = await getGuildSettings(guildId);
     if (!settings) {
       return {
         reply: ephemeral('Encounters have never been set up here. Run `/encounters channel` to start.'),
@@ -516,7 +531,10 @@ export async function handleCall(body, now = new Date()) {
   }
 
   const guild = await getGuildSettings(guildId);
-  if (!guild || !guild.enabled || !guild.encounter_channel_id) {
+  // `locked` is checked alongside `enabled` so a guild locked while an
+  // encounter was already posted stops being answerable immediately, rather
+  // than paying out one last win. The sweep still finalizes that post normally.
+  if (!guild || !guild.enabled || guild.locked || !guild.encounter_channel_id) {
     return { reply: ephemeral("Encounters aren't set up in this server."), afterReply: null };
   }
 
@@ -721,6 +739,15 @@ export async function handleEncounterDev(body) {
   const guild = await getGuildSettings(guildId);
   if (!guild || !guild.encounter_channel_id) {
     return { content: "Encounters aren't set up here. Run `/encounters channel` first." };
+  }
+
+  // Respect your own kill switch: handleCall refuses in a locked guild, so a
+  // manual spawn here would only post a silhouette nobody can answer. Kept
+  // terse and free of any SQL or column names — this is owner-only, but a
+  // Discord message is screenshottable and the reply should not double as
+  // documentation. See db/migrations/013 for how to clear a lock.
+  if (guild.locked) {
+    return { content: 'This server is locked. Encounters stay off here.' };
   }
 
   const sub = body.data?.options?.[0];

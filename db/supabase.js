@@ -561,26 +561,32 @@ export async function getCommandLimits(userId, commandNames) {
 }
 
 /**
- * Stamp a user's cooldown for a command as "used now". Called once a flow
- * actually completes (the dialogue-response step), not when the command is
- * invoked.
+ * Atomically claim this user's cooldown slot for a command
+ * (db/migrations/012_atomic_command_limit_claim.sql).
+ *
+ * One statement, so the "is the cooldown up?" check and the stamp cannot be
+ * split: Postgres row-locks the conflict, and of N callers racing for the same
+ * slot exactly one gets TRUE. This is the gate on actually granting a reward.
+ * It replaced a getCommandLimits-then-upsert pair, which as two statements left
+ * a window where two responses both passed the read before either wrote.
+ *
+ * Returns true if the caller may proceed (the cooldown is now stamped), false
+ * if the slot is still held. Throws on a database error — a failure here means
+ * the slot was NOT claimed, so the caller must fail closed.
  */
-export async function recordCommandUse(userId, commandName, at = new Date()) {
-  const { error } = await supabase
-    .from('command_limits')
-    .upsert(
-      {
-        discord_user_id: userId,
-        command_name: commandName,
-        last_used_at: at.toISOString(),
-      },
-      { onConflict: 'discord_user_id,command_name' }
-    );
+export async function claimCommandSlot(userId, commandName, cooldownSeconds) {
+  const { data, error } = await supabase.rpc('claim_command_slot', {
+    p_user_id: userId,
+    p_command: commandName,
+    p_cooldown_seconds: cooldownSeconds,
+  });
 
   if (error) {
-    console.error('Error recording command use:', error);
+    console.error('Error claiming command slot:', error);
     throw error;
   }
+
+  return data === true;
 }
 
 /**
@@ -638,11 +644,18 @@ export async function getCommandUsageStats(days = 30) {
  * Every guild the scheduler should tick for. Called once per tick, so it stays
  * a single indexed read over a table with fewer rows than the bot has guilds.
  */
+/**
+ * Every guild the scheduler should tick. `locked` is the owner's kill switch
+ * (db/migrations/013) and outranks `enabled`, which is the server admin's — a
+ * locked guild is invisible here no matter what its admins do with
+ * `/encounters channel`.
+ */
 export async function getEnabledGuilds() {
   const { data, error } = await supabase
     .from('guild_settings')
     .select('*')
-    .eq('enabled', true);
+    .eq('enabled', true)
+    .eq('locked', false);
 
   if (error) {
     console.error('Error fetching enabled guilds:', error);

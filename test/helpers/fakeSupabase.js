@@ -199,6 +199,37 @@ export function createFakeSupabase(initialTables = {}) {
       return 1;
     },
 
+    // db/migrations/012: INSERT ... ON CONFLICT DO UPDATE SET last_used_at = now()
+    //                    WHERE last_used_at < now() - <cooldown>
+    // Returns whether this call claimed the slot. The real function's atomicity
+    // is a Postgres row-lock property and is NOT modelled here — this only
+    // verifies the caller passes the right arguments and reads the result back
+    // correctly, same caveat as the other rpc stand-ins above.
+    claim_command_slot({ p_user_id, p_command, p_cooldown_seconds }) {
+      tables.command_limits = tables.command_limits || [];
+      const stamp = rpcNow.toISOString();
+
+      const existing = tables.command_limits.find(
+        (r) => r.discord_user_id === p_user_id && r.command_name === p_command,
+      );
+
+      if (!existing) {
+        tables.command_limits.push({
+          discord_user_id: p_user_id,
+          command_name: p_command,
+          last_used_at: stamp,
+          created_at: stamp,
+        });
+        return true;
+      }
+
+      const elapsedMs = rpcNow.getTime() - new Date(existing.last_used_at).getTime();
+      if (elapsedMs < p_cooldown_seconds * 1000) return false;
+
+      existing.last_used_at = stamp;
+      return true;
+    },
+
     // db/migrations/011: INSERT ... ON CONFLICT DO UPDATE SET wins = wins + 1
     record_encounter_win({ p_user_id, p_guild_id }) {
       const yearMonth = `${rpcNow.getUTCFullYear()}-${String(rpcNow.getUTCMonth() + 1).padStart(2, '0')}`;
