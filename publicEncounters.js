@@ -591,9 +591,10 @@ export async function handleCall(body, now = new Date()) {
 
   const replyLines = [
     `That was **${getFullName(character)}**.`,
-    // The boost is spent by the next authored response with this character —
-    // /roam or /meet, whichever comes first — so keep the copy command-neutral.
-    `Next time you catch up with ${character.firstName}, you'll pick up right there — it lands better.`,
+    // Spell out the reward rather than hint at it: a pending boost, redeemed by
+    // the next authored response with this character — /roam or /meet, whichever
+    // comes first.
+    `Your next \`/roam\` or \`/meet\` with ${character.firstName} is boosted from this encounter.`,
   ];
 
   const afterReply = async () => {
