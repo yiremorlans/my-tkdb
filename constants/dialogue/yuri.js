@@ -268,7 +268,7 @@ export default {
       "{user} calls, and **{name}** shouts for Jiro to cover the **{house}** ward. Jiro already was.",
     ],
     bound: [
-      '"I love you. There. Never bring it up again." **{name}** immediately requires {user} to bring it up again.',
+      '"You are indispensable. To the research. And— and to me. Obviously to me." **{name}** announces it to {user} at volume, then urgently requires a distraction.',
       "**{name}** is furious about how much he loves {user}, and crosses to them anyway.",
       "{user} says the name, and the entire genius act falls off **{name}** at once.",
     ],

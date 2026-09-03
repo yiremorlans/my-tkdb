@@ -277,7 +277,7 @@ export default {
     ],
     bound: [
       '"I\'ve been performing my whole life," **{name}** says, reaching {user}. "Not with you."',
-      "**{name}** kisses {user} in full view of everyone and doesn't check who's watching.",
+      "**{name}** reaches {user} and stops scanning the crowd for who might be watching. That took him a year.",
       "{user} says the name, and **{name}** — who apologizes for everything — apologizes for none of it.",
     ],
   },

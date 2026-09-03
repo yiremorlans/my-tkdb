@@ -236,6 +236,15 @@ export const CHARACTERS = [
       uniform: "Alan_Mido_Uniform.png",
       casual: "Alan_Mido_Casual.png",
     },
+    // Derived from reference.md, not yet voiceline-verified. kind (2): the
+    // guarded man has "a soft spot for the MC, showing a rare smile on a few
+    // occasions when she's around", and his one confessed fear is his own
+    // strength ("only enhance his stigma if someone is about to die") — that
+    // asks for gentleness, not a push. bold (1): a Vagastrom captain of
+    // "unshakeable conviction" who is harsh with Sho and Leo answers someone
+    // who stands level with him. playful (0): "stern and stoic attitude,
+    // smiling on extremely rare occasion", and "by his own admission, he is
+    // not good with words" — banter has nothing to land on.
     affinityByResponse: { kind: 2, playful: 0, bold: 1 },
     archetype: ["Kuudere"],
     keywords: [
@@ -268,6 +277,14 @@ export const CHARACTERS = [
       uniform: "Leo_Kurosagi_Uniform.png",
       casual: "Leo_Kurosagi_Casual.png",
     },
+    // Derived from reference.md, not yet voiceline-verified. bold (2): he is
+    // "always in search of the next thrill and not shy about using others to
+    // get it" — nerve is the thing he actually finds interesting. playful (1):
+    // "witty and cynical" is his native register, but like Jin and Edward he
+    // is the one doing the needling, so it volleys rather than lands deepest.
+    // kind (0): "careless blunt remarks" and an "egotistical nature" that
+    // "leads him to appear disobedient" give warmth nothing to grip. "Didn't
+    // resonate," not dislike.
     affinityByResponse: { kind: 0, playful: 1, bold: 2 },
     archetype: ["Sadodere", "Teasedere"],
     keywords: [
@@ -295,7 +312,20 @@ export const CHARACTERS = [
       uniform: "Shohei_Haizono_Uniform.png",
       casual: "Shohei_Haizono_Casual.png",
     },
-    affinityByResponse: { kind: 2, playful: 0, bold: 1 },
+    // Derived from reference.md, not yet voiceline-verified. kind stays top
+    // (2): he is "hardworking and responsible when it comes to his craft",
+    // takes pride in the food truck, "dislikes when people leave their food
+    // cold and despises it even more when people waste perfectly good food",
+    // and reprimands Leo the moment he mocks Subaru — care given and returned
+    // is his real currency, under the mouth. playful moved 0 -> 1: the one
+    // explicitly MC-directed line in his profile is "Sho also develops a
+    // liking to tease his friends, particularly the MC", so banter volleyed
+    // back is a channel he opens himself, not one that misses. bold moved
+    // 1 -> 0: the aggression is a front he drops ("initially comes off as a
+    // typical delinquent", "despite his words, he does what he is asked"), so
+    // meeting a delinquent with more force pushes on the surface rather than
+    // getting under it. "Didn't resonate," not dislike.
+    affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Deredere"],
     keywords: [
       "cocky delinquent front — aggressive or apathetic on the surface",
@@ -630,6 +660,15 @@ export const CHARACTERS = [
       uniform: "Jiro_Kirisaki_Uniform.png",
       casual: "Jiro_Kirisaki_Casual.png",
     },
+    // Derived from reference.md, not yet voiceline-verified, but cross-checked
+    // against Yuri's entry, which pairs them deliberately. bold (2): "calm and
+    // apathetic, seemingly unfazed by things that would normally disturb
+    // others" — there is no armor to get through, so directness meets him
+    // head-on. kind (1): he "shows little concern for his own deteriorating
+    // health" and leans on Yuri's medication to stay upright, so someone who
+    // notices reaches something real, quietly. playful (0): his one flicker of
+    // humor is laughing *at* the MC's fear of corpses and ghosts, not banter
+    // he trades.
     affinityByResponse: { kind: 1, playful: 0, bold: 2 },
     archetype: ["Kuudere"],
     keywords: [
@@ -706,6 +745,15 @@ export const CHARACTERS = [
       uniform: "Ren_Shiranami_Uniform.png",
       casual: "Ren_Shiranami_Casual.png",
     },
+    // Derived from reference.md, not yet voiceline-verified. playful (2):
+    // deadpan complaint is his whole voice — "That's harassment. Is everyone
+    // in this place from the past?", the "forced labor" defence, the phone as
+    // his only sanctuary — so someone who trades it back is speaking his
+    // language. kind (1): "although on the surface he seems rude and uncaring,
+    // Ren cares and thinks a lot" and "tends to hide his feelings", so warmth
+    // reaches the real one, past the deflection. bold (0): he is "desperate to
+    // avoid as much work as possible" and gets out of rooms fast, so a demand
+    // is one more thing to dodge.
     affinityByResponse: { kind: 1, playful: 2, bold: 0 },
     archetype: ["Dandere"],
     keywords: [
@@ -728,6 +776,15 @@ export const CHARACTERS = [
       uniform: "Haru_Sagara_Uniform.png",
       casual: "Haru_Sagara_Casual.png",
     },
+    // Derived from reference.md, not yet voiceline-verified. playful (2):
+    // "laid back and relentlessly cheerful", "makes jokes", and he "drags
+    // those around him into trouble with his antics" — matching the bit is
+    // how you join him. kind (1): he runs Jabberwock day and night and no one
+    // carries him back, so being noticed lands, just under the noise. bold
+    // (0): he is the one doing the pushing — a tracking device on Ren,
+    // forcing him out of his room, hawking the tour "by any means possible" —
+    // so force answered with force is a register he already occupies, and the
+    // moment flirting actually lands he retreats.
     affinityByResponse: { kind: 1, playful: 2, bold: 0 },
     archetype: ["Teasedere", "Deredere"],
     keywords: [
@@ -758,6 +815,15 @@ export const CHARACTERS = [
       uniform: "Towa_Otonashi_Uniform.png",
       casual: "Towa_Otonashi_Casual.png",
     },
+    // Derived from reference.md, not yet voiceline-verified, and the profile
+    // is unusually direct about it: he is "capable of reading people well,
+    // understanding who is kind-hearted and who is more hostile". kind (2) is
+    // literally the axis he sorts people on, and he "immediately appears
+    // friendly with the MC" for having a "pleasant" presence. bold (0): read
+    // as hostility, it turns him — "he stops smiling and his eyes become
+    // thinner... his voice also becomes deeper, the sky becomes cloudier".
+    // playful (1): the humming, bubbles and flower-eating whimsy are easy to
+    // meet, they just are not what he is weighing you on.
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Yandere", "Mayadere"],
     keywords: [
@@ -877,6 +943,16 @@ export const CHARACTERS = [
       uniform: "Lyca_Colt_Uniform.png",
       casual: "Lyca_Colt_Casual.png",
     },
+    // Derived from reference.md, not yet voiceline-verified. kind (2): "easily
+    // wary of new people, and it can take him a while to get used to being
+    // around them", won over by patience — he thanked a Hotarubi student for
+    // lending him a pencil, and stopped himself from harming the MC mid-
+    // transformation. bold (0): he is "short-tempered, especially when he is
+    // being nagged", and pressure from a stranger reads as threat before it
+    // reads as interest. playful (1): he can be met in play, but note the
+    // tension — he "gets irritated when he hears rumors about him or anyone
+    // making fun of him", so the line between teasing and mockery is thin
+    // here, and this is the weakest-evidenced 1 in the roster.
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Deredere"],
     keywords: [
@@ -917,6 +993,17 @@ export const CHARACTERS = [
       uniform: "Taiga_Hoshibami_Uniform.png",
       casual: "Taiga_Hoshibami_Casual.png",
     },
+    // Derived from reference.md, not yet voiceline-verified. bold (2):
+    // "reckless and impulsive... willing to use violence and cause trouble
+    // until he gets what he wants", trigger-happy, and openly predatory
+    // ("Quit squirming around. You that excited to be my next meal?") — only
+    // someone who does not flinch is in the conversation. playful (1): the
+    // riddles, the nicknames and the Gyahaha are real, and matching the
+    // mischief reaches him. kind (0): he "gets bored easily and tends to keep
+    // silent in most conversations", so softness loses him — note Elias's
+    // read that "Taiga's a sensitive soul... waiting for someone who truly
+    // believes in him", which is him lowering his guard, not him answering
+    // being coddled. Same shape as Shion. "Didn't resonate," not dislike.
     affinityByResponse: { kind: 0, playful: 1, bold: 2 },
     archetype: ["Tsundere", "Thugdere"],
     keywords: [
@@ -949,6 +1036,15 @@ export const CHARACTERS = [
       uniform: "Ritsu_Shinjo_Uniform.png",
       casual: "Ritsu_Shinjo_Casual.png",
     },
+    // Derived from reference.md, not yet voiceline-verified. bold (2): he is
+    // transactional to the bone and engages when he is met head-on — "when he
+    // is talked ill of, his ego cracks and he retorts in response", and his
+    // pitch is a challenge in itself ("As long as I am your attorney, I will
+    // not allow you to stand trial before anyone"). kind (1): "he is not
+    // entirely inhumane" — warmth registers, slowly, past the formality.
+    // playful (0): "extraordinarily formal, and due to that, can sometimes be
+    // blind to people's feelings and seem insufferable" — a joke lands in
+    // front of him and simply files itself.
     affinityByResponse: { kind: 1, playful: 0, bold: 2 },
     archetype: ["Kuudere"],
     keywords: [
@@ -1010,6 +1106,10 @@ export const CHARACTERS = [
     lastName: null,
     house: null,
     images: { uniform: "Benkei_Uniform.png", work: "Benkei_Work.png" },
+    // UNVERIFIED. Benkei has no section in constants/dialogue/reference.md and
+    // no voiceline script here, so this split and the keywords below are the
+    // only character data in the project with no source document behind them.
+    // Confirm against canon before leaning on either.
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Deredere"],
     keywords: ["pervy", "gentle", "kind", "nostalgic", "protective"],

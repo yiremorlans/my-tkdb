@@ -183,7 +183,7 @@ export default {
     },
     playful: {
       new: [
-        "Be bold enough for him",
+        "Tease the frost right back",
         "Refuse to be impressed",
         "Call his bluff lightly",
       ],

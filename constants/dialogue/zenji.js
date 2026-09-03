@@ -1,7 +1,7 @@
 export default {
   dialogue: {
     new: [
-      'He greets you with a flourish, straw hat tipped. "Why, hello there, my dear. Suppose we kick off another swanky day here?"',
+      'He greets you with a flourish, "Why, hello there, my dear. Suppose we kick off another swanky day here?"',
       "He's mid-sentence when you arrive — a story, out loud, to no one. He finishes the line before he finishes turning around.",
       '"Seventeen syllables," he murmurs, "and you\'ve just handed me the last five, my dear."',
       '"Well, if it isn\'t a new face. Has this inspired man of the quill left you speechless? ...No? A pity. It happens to some."',

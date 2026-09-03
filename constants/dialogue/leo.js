@@ -208,7 +208,7 @@ export default {
     new: [
       "**{name}**'s phone is up before he's turned. \"Oh, this is good.\" {user} had guessed right.",
       '"Brave or stupid?" **{name}** asks {user}, already deciding it\'s content.',
-      "{user} says the name, and **{name}** smiles the way a lens does.",
+      "{user} says the name, and **{name}** grins like he's already framing the shot.",
     ],
     warm: [
       "**{name}** raises the camera at {user}, then lowers it. They're not for the feed.",

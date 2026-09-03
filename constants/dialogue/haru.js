@@ -227,7 +227,7 @@ export default {
     ],
     close: [
       '"C\'mere, Honor roll. No joke this time." **{name}** means it at {user}, for once.',
-      "**{name}** kisses {user} mid-sentence, in front of everyone, as is his habit.",
+      "**{name}** goes to kiss {user} mid-sentence, clocks the audience, and grins his way out of it instead.",
       "{user} calls, and **{name}** leaves the rounds to Ren without a second thought.",
     ],
     bound: [

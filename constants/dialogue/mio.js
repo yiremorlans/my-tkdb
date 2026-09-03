@@ -241,7 +241,7 @@ export default {
     ],
     bound: [
       '"I love you. I\'ll say it daily to make up the deficit." **{name}** greets {user} with it, deadpan.',
-      "**{name}** kisses the back of {user}'s neck in the middle of campus and goes right back to complaining about his day.",
+      "**{name}** rests his forehead on {user}'s shoulder for about three seconds, then goes right back to complaining about his day.",
       "{user} says the name, and **{name}** — who never asks for anything — asks {user} to stay.",
     ],
   },
