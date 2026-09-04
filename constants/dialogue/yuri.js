@@ -38,7 +38,7 @@ export default {
       },
       keepsake: {
         emoji: "🔬",
-        line: "The date the first person praised his facility while conscious.",
+        line: "A tally he keeps of every visit, still filed under 'unexplained'.",
       },
     },
 

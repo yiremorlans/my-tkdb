@@ -1106,10 +1106,12 @@ export const CHARACTERS = [
     lastName: null,
     house: null,
     images: { uniform: "Benkei_Uniform.png", work: "Benkei_Work.png" },
-    // UNVERIFIED. Benkei has no section in constants/dialogue/reference.md and
-    // no voiceline script here, so this split and the keywords below are the
-    // only character data in the project with no source document behind them.
-    // Confirm against canon before leaning on either.
+    // PARTIALLY VERIFIED. reference.md has a short section for Benkei now
+    // (kind hearted, warm/gentle smile, former professor and advisor to the
+    // now-defunct Clementia House and Ultio House, no voiceline script), which
+    // backs "gentle" and "kind" below. The affinity split, archetype, and the
+    // rest of the keywords still have no source document behind them. Confirm
+    // against canon before leaning on those.
     affinityByResponse: { kind: 2, playful: 1, bold: 0 },
     archetype: ["Deredere"],
     keywords: ["pervy", "gentle", "kind", "nostalgic", "protective"],

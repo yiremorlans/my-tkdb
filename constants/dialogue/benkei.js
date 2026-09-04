@@ -1,306 +1,308 @@
 export default {
   // The level-up DMs (docs/bond-scene-dms.md).
   //
-  // SOURCE CAVEAT, same as the note on his entry in constants/characters.js:
-  // Benkei has no section in reference.md and no voiceline script. These scenes
-  // are extrapolated from his tiered dialogue above — the fluster, the things
-  // set aside on the counter, the "you remind me of someone" he never finishes —
-  // and from nothing else. Confirm against canon before treating any detail here
-  // as established, particularly the person he is nostalgic about.
+  // SOURCE NOTE: reference.md now carries a (short) entry for Benkei. Everything
+  // below is written to stay inside it: shopkeep at Darkwick's campus store,
+  // former professor and advisor to the now-defunct Clementia House and Ultio
+  // House, kind hearted, warm and gentle smile, managed day-to-day by one of
+  // Cornelius' cats. No age is established, no name for anyone but himself, and
+  // no reason either house ended. None of that is invented here.
   //
-  // He is much older than everyone else in this game and the scenes are written
-  // to know it: the intimacy is careful, unhurried, and always slightly braced
-  // for being told it isn't wanted.
+  // The one piece of connective tissue added on top of canon: a man who used to
+  // be responsible for a whole house of people, now answers to a cat, and is
+  // still working out whether that was a demotion or a mercy. That throughline
+  // is interpretation, not established fact, but it's the thread every scene
+  // below pulls on.
   bondScenes: {
     acquaintance: {
       beats: [
-        '**{firstName}**: "Ah, hello. It\'s Benkei. From the shop. I hope this is all right; the young man who set this up for me assured me it was, but he assures me of a great many things."',
-        "\"I've been putting something aside for you. Not today. For a while now. There's a shelf under the counter and it's got rather more on it than I'd like to admit.\"\n\n\"You've been in {timesMet} times and you say thank you every single one. I remember the ones who say thank you. I've been doing this a long while and it's a shorter list than you'd think.\"\n\n\"That's all. That's the whole message. I did draft a longer one.\"",
+        '**{firstName}**: "Ah, hello. It\'s Benkei, from the shop. I hope you don\'t mind the message. My manager insisted, and when your manager is a cat, you learn not to argue."',
+        "\"There's a shelf under the counter with a few things set aside on it. Nothing dramatic. I just noticed you actually read the labels instead of grabbing and going, and I don't get many people who do that.\"",
       ],
       choice: {
-        prompt: "\"Do come and take it off my hands. It's getting to be a fire hazard.\"",
+        prompt: "\"Do come by and collect it. I'd rather it not just gather dust.\"",
         options: [
           {
             key: "kind",
-            label: "Say you'll come tomorrow",
+            label: "Say you'll come by soon",
             style: 3,
-            close: "\"Oh, good. Good!\"\n\n*A pause.*\n\n\"I shall tidy. There's no need for me to tidy. I'm going to tidy.\"",
+            close: "\"Oh, good. Good.\"\n\n*A pause.*\n\n\"I'll tidy up a little. Not that it needs tidying.\"",
           },
           {
             key: "playful",
-            label: "Ask how big the shelf is",
+            label: "Ask what's on the shelf",
             style: 1,
-            close: "\"It's a normal shelf.\"\n\n\"...It was a normal shelf. It has become a project. Please come before it becomes a second shelf.\"",
+            close: "\"That would rather spoil it, wouldn't it.\"\n\n*He almost smiles.* \"Come and see.\"",
           },
           {
             key: "bold",
-            label: "Ask why you got a shelf",
+            label: "Ask why you got noticed",
             style: 4,
-            close: "*There's a longer pause than the question wants.*\n\n\"Because you looked at the old things,\" *he says.* \"Not the new stock. The old things at the back that nobody's asked about in eleven years.\"\n\n\"I'd rather forgotten what that felt like. Good night, now.\"",
+            close: "\"Would you like the honest answer? You're the only person who's ever asked to meet the cat.\"\n\n*A pause.* \"She was flattered. I don't believe cats are meant to be flattered, but there it is.\"",
           },
         ],
       },
       keepsake: {
         emoji: "🏷️",
-        line: "A shelf under the counter that was only meant to hold one thing.",
+        line: "A shelf under the counter, kept for someone who reads the labels.",
       },
     },
 
     friend: {
       beats: [
-        '**{firstName}**: "May I say something, and will you forgive an old man for saying it badly?"',
-        "\"You've got {favResponse} for me every time you come in. Every time, without fail, and I've noticed because it doesn't happen much at my age.\"\n\n\"People are perfectly polite. I'm not complaining. The students here are better than they're given credit for. But there's a way of being polite to somebody old that's really just being polite to the counter, and I've had about thirty years of it and I stopped minding a long while ago.\"\n\n\"You talk to me. Not to the counter. I don't think you know you're doing anything unusual.\"",
+        "**{firstName}**: \"May I say something, and will you let an old habit of plain speaking through?\"",
+        "\"You've got {favResponse} for me every time you come in, and you talk to me like I'm a person and not part of the shelving. I spent a long while being called 'Professor' by people who mostly wanted something from me. This is a different thing entirely, and I don't think you know you're doing anything unusual by it.\"",
       ],
       choice: {
-        prompt: "\"There. That's said. You needn't answer, I shan't be offended.\"",
+        prompt: "\"There. Said. You needn't answer, I shan't be offended.\"",
         options: [
           {
             key: "kind",
             label: "Say he's worth talking to",
             style: 3,
-            close: "\"Oh, now.\"\n\n*A rather long silence.*\n\n\"That's... well. Thank you. I shall be thinking about that on and off for a week, which is more than I've got out of most conversations this decade.\"",
+            close: "\"Oh, now.\"\n\n*A rather long silence.*\n\n\"Thank you. I shall be turning that over for a good while, which is more than I've gotten out of most conversations lately.\"",
           },
           {
             key: "playful",
-            label: "Say the counter listens well",
+            label: "Say the shelf listens well",
             style: 1,
-            close: "\"It is! It's an excellent listener. It's never once interrupted.\"\n\n\"...That was funnier than it ought to have been. You'll have to stop doing that, I'm out of practice at laughing in an empty shop.\"",
+            close: "\"It does! Excellent listener. Never once interrupts.\"\n\n\"...That was funnier than it had any right to be. You'll have to stop doing that, I'm out of practice laughing in an empty shop.\"",
           },
           {
             key: "bold",
-            label: "Ask what thirty years is like",
+            label: "Ask if he misses the title",
             style: 4,
-            close: "\"Quiet.\"\n\n*He doesn't dress it up at all, which he usually would.*\n\n\"Quiet, and full of other people's beginnings. That's the job: they arrive, they're loud for four years, they go. You get very good at the goodbye bit and very rusty at the rest of it.\"",
+            close: "\"Sometimes.\"\n\n*He doesn't dress it up at all, which he usually would.* \"Not the standing at the front of a room. The being needed for something particular. I've made my peace with it. Mostly.\"",
           },
         ],
       },
       keepsake: {
         emoji: "🫖",
-        line: "The first conversation in a decade that wasn't with the counter.",
+        line: "The first real conversation in a good while that wasn't with the shelf.",
       },
     },
 
     closeFriend: {
       beats: [
-        "**{firstName}**: \"Come by after closing, if you would. I've something at the back I'd like to show somebody, and I've been waiting rather a long time for the right somebody.\"",
-        "*The back room is full of boxes and one of them is old enough to have handwriting on it that isn't his. He opens it with a great deal of care.*\n\n*It's a photograph, and a folded paper crane gone yellow, and a pair of reading glasses with one arm mended.*\n\n\"That's the shop in its first year. That's me, the one looking terrified, and that's the woman who ran it before I did.\"",
-        "\"She taught me the trade and put up with me and mended those about four times rather than let me buy new ones. She had views about waste.\"\n\n\"I've not had this box out in eleven years. It isn't sad, particularly. It's just that there's no one to get it out *for*. You can't show a box like this to a student who'll be gone by summer. It'd be a weight on them.\"\n\n\"You've been coming a good while now. I decided you weren't going by summer. I hope that wasn't presumptuous of me.\"",
+        "**{firstName}**: \"Come by after closing, if you would. I've something at the back I'd like to show somebody, and I've been waiting for the right somebody to show it to.\"",
+        "*The back room has a drawer that doesn't get opened often. He opens it carefully.*\n\n*It's two pins, one crimson-trimmed and one iron-gray, and a photograph gone soft at the corners.*",
+        "\"That one's Clementia's. That one's Ultio's. I advised them both, in their time, and neither house exists anymore, so there's nobody left who asks after them.\"\n\n\"You've been coming around a good while now. I decided you were somebody who might actually want to see it, rather than just be polite about it.\"",
       ],
       choice: {
-        prompt: "\"Say if it was. I've a thick skin and I'd rather know.\"",
+        prompt: "\"Say if I've misjudged that. I've a thick skin and I'd rather know.\"",
         options: [
           {
             key: "kind",
-            label: "Say you're not going anywhere",
+            label: "Ask to hear about them",
             style: 3,
-            close: "*He busies himself with the box for rather a long time.*\n\n\"...Well,\" *he says, to the box.* \"Good. Good.\"\n\n*He doesn't put it away that night. It stays out on the back table, and it stays out for weeks.*",
+            close: "*He turns the pins over in his hand for a moment.*\n\n\"All right,\" *he says, to the drawer as much as to you.* \"All right, then.\"\n\n*He doesn't put them away that night.*",
           },
           {
             key: "playful",
-            label: "Ask about the terrified face",
+            label: "Ask which house was worse",
             style: 1,
-            close: "\"I was twenty-two and I'd broken a whole crate on my first morning.\"\n\n\"She never let me forget it. Thirty years and she never once let me forget it, and I've been rather at a loss for someone to not let me forget things since.\"",
+            close: "\"Ultio, without question. Clementia at least pretended to listen to me.\"\n\n*He says it fondly.* \"I've missed being exasperated by a whole house of people. It's a very particular kind of tired.\"",
           },
           {
             key: "bold",
-            label: "Ask who you remind him of",
+            label: "Ask if that's a lonely thing",
             style: 4,
-            close: "*He goes very still, because you have finished a sentence he has started in front of you perhaps a dozen times.*\n\n\"...Her,\" *he says.* \"Not the face. The way you go to the back of the shop first.\"\n\n\"I've been not saying that for about a year, in case it was a strange thing to put on a person. It probably is. I'm glad it's said.\"",
+            close: "*He goes quiet for a moment, turning the photograph rather than looking up.*\n\n\"Yes,\" *he says simply.* \"I hadn't said that plainly to anyone before. I'm glad it's said now.\"",
           },
         ],
       },
       keepsake: {
-        emoji: "🕊️",
-        line: "A paper crane gone yellow, out of its box for the first time in eleven years.",
+        emoji: "📌",
+        line: "Two house pins from houses that don't exist anymore, out of their drawer for someone who actually asked.",
       },
     },
 
     confidant: {
       beats: [
-        "**{firstName}**: \"It's late and I'm going to say a thing I've never said to a living soul, and I'd ask you not to be kind about it straight away. Let it sit a moment first.\"",
-        "\"I'm frightened of the summers.\"\n\n\"Every year the same. They come in, they're marvelous, they're loud, they're in and out of here four times a day for four years, and then it's summer and the shop's quiet and I go through the shelf under the counter and throw out the things I'd set aside for people who've gone.\"",
-        "\"I've done that thirty times. I'm quite good at it. That's the part that troubles me: that I'm good at it.\"\n\n\"And this year I've been standing at that counter in March thinking about next summer, which I have never once done before, and I know precisely why and I've been refusing to look at it directly for months.\"\n\n\"There. It's said. You may be kind now.\"",
+        "**{firstName}**: \"It's late, and I'm going to say a thing I don't say, and I'd ask you not to be kind about it straight away. Let it sit a moment first.\"",
+        "\"I used to be responsible for an entire house of people. Advising them, arguing with them, worrying over the ones who skipped breakfast. And now I'm responsible for a shelf of snacks and a schedule set by a cat, and most days I don't mind that at all, which is the part that troubles me.\"",
+        "\"I've turned it over a great many times: whether it was a demotion or a mercy. I still don't know. I only know I've never said any of that aloud before, and I'm saying it to you because you're the one who actually asks how I'm doing, rather than what I've got in stock.\"",
       ],
       choice: {
-        prompt: "\"Go on. I've braced myself and everything.\"",
+        prompt: "\"There. Go on. I've braced myself and everything.\"",
         options: [
           {
             key: "kind",
-            label: "Say you'll still be here",
+            label: "Say it sounds like both",
             style: 3,
-            close: "\"You can't know that.\"\n\n*Then, after some minutes:* \"...No. Say it anyway. I've spent thirty years being sensible about this and I should like, just once, to be told something lovely and not immediately weigh it.\"",
+            close: "\"Both.\"\n\n*He tests the word.* \"Yes. I think that's probably the honest shape of it. Thank you for not making me choose.\"",
           },
           {
             key: "playful",
-            label: "Say you'll write from anywhere",
+            label: "Say the cat has good taste",
             style: 1,
-            close: "\"A letter? An actual letter, on paper?\"\n\n\"Nobody's written me a letter since... well. A very long while. If you did that I should have to buy a frame, and then I'd be embarrassed about the frame, and then I'd keep it up anyway.\"",
+            close: "\"She'd agree with you, and never let me hear the end of it.\"\n\n*A real, surprised laugh.* \"I needed that more than I expected.\"",
           },
           {
             key: "bold",
-            label: "Tell him to stop throwing out",
+            label: "Ask if he misses Professor",
             style: 4,
-            close: "\"Then the shelf never empties.\"\n\n*A pause.*\n\n\"...That's rather the point you're making, isn't it. Yes. All right. I shall stop throwing them out.\"\n\n\"I've kept yours anyway. All of it. Every single week's, since the beginning. I've been quietly not throwing yours out for about a year and telling myself I'd get to it.\"",
+            close: "*A longer pause than the question wants.*\n\n\"Some days. Less than I thought I would, and that frightens me a little, if I'm honest.\"",
           },
         ],
       },
       keepsake: {
-        emoji: "📦",
-        line: "A year of set-aside things he never quite got round to throwing out.",
+        emoji: "🗝️",
+        line: "The truth about the shelf and the cat, told plainly for the first time.",
       },
     },
 
     devoted: {
       beats: [
-        "**{firstName}**: \"You'll have heard by now. I'd rather you heard it from me, and I'd rather you didn't hear a heroic version of it, because there isn't one.\"",
-        "\"There was a man in the shop at closing who oughtn't have been, and he'd come in about you, and I asked him to leave and he didn't, and so I stood in the doorway.\"\n\n\"That's all I did. I'm sixty-one and I've not raised a hand to anybody in forty years and I couldn't have done a thing if he'd pressed it. I simply stood in the doorway and was extremely stubborn.\"",
-        "\"He went. They usually go, when somebody won't move.\"\n\n\"And I've been sat in the back since with a cup of tea going cold thinking about how badly that could have finished, and I find I don't mind. That's the part I wanted to tell you.\"\n\n\"I've spent thirty years being careful and useful and out of the way. I stood in a doorway on Tuesday and I'd stand in it again tomorrow, and I'm sixty-one and I've only just found that out about myself.\"",
+        "**{firstName}**: \"You'll have heard about this by now. I'd rather you heard it from me, and I'd rather you didn't hear a heroic version of it, because there isn't one.\"",
+        "\"There was a man in the shop at closing who oughtn't have been there, and he'd come in about you, and I asked him to leave. He didn't. So I stood in the doorway and used a voice I haven't needed since I stopped being anyone's advisor.\"",
+        "\"He went. They generally go, when somebody won't move and means it. And I've been sitting in the back since, rather surprised at myself, because I'd assumed that part of me had gone quiet along with the title.\"",
       ],
       choice: {
-        prompt: "\"Now don't fuss. I've had Rui fuss and it was quite enough.\"",
+        prompt: "\"Now don't fuss. I've had quite enough fussing already today.\"",
         options: [
           {
             key: "kind",
             label: "Fuss anyway",
             style: 3,
-            close: "\"I said not to.\"\n\n*He lets you, though. He sits in the back room and lets you make the tea he was going to make himself and doesn't argue about a single thing.*\n\n\"...It's nice,\" *he admits eventually.* \"Being fussed over. I'd forgotten. I've been the one doing it for so long I'd genuinely forgotten what the other side was like.\"",
+            close: "\"I said not to.\"\n\n*He lets you, though. He doesn't argue about a single thing.*\n\n\"It's nice,\" *he admits eventually.* \"Being looked after. I'd nearly forgotten what that felt like from this side of it.\"",
           },
           {
             key: "playful",
-            label: "Ask if he did a stern face",
+            label: "Ask if he did the stern voice",
             style: 1,
-            close: "\"I did a *tremendous* face. Thirty years of retail, you learn one.\"\n\n\"He was a good foot taller than me and he went. I've been unbearably pleased with myself about it since Tuesday and there's been nobody to tell.\"",
+            close: "\"I did a tremendous voice. Advising a house teaches you exactly one, but it's a good one.\"\n\n*He looks unbearably pleased with himself, and there's been nobody to tell until now.*",
           },
           {
             key: "bold",
             label: "Tell him not to do it again",
             style: 4,
-            close: "\"No.\"\n\n*It's the flattest thing he has ever said to you, and there isn't a trace of the fluster anywhere in it.*\n\n\"I'm sorry. Anything else you ask me, I'll do. Not that.\"\n\n*Then, gentler:* \"Come and have the tea. I've made two, rather optimistically.\"",
+            close: "\"No.\"\n\n*Flat, with none of the usual fluster in it.* \"Anything else you ask of me, I'll do. Not that one.\"\n\n*Then, gentler:* \"Come sit down. I've put the kettle on.\"",
           },
         ],
       },
       keepsake: {
         emoji: "🚪",
-        line: "A doorway stood in on a Tuesday by somebody who couldn't have won.",
+        line: "A doorway held by someone who thought that part of him had gone quiet.",
       },
     },
 
     soulbound: {
       beats: [
-        "**{firstName}**: \"I've written this out on the back of an order form because I think better with a pen, and I'm copying it across word for word so I don't lose my nerve in the middle.\"",
-        "\"{timesMet} times you've come through that door. I've the number because I've kept the shelf, and there's a thing on it for every one, and I couldn't throw out a single one of them.\"",
-        "\"I'm sixty-one years old. I want that at the front, because everything after it has to be read with it in mind, and because I've spent a year finding reasons why that ought to be the end of the sentence rather than the start of one.\"\n\n\"I've been very sensible. I've been sensible for thirty years and it's kept me safe and it's kept me alone and I've called it contentment and mostly meant it.\"",
-        "\"So here it is, and then I shall put the kettle on and let you think.\"\n\n\"I love you. I'm well aware of how that reads and I've decided to send it regardless, because I stood in a doorway on a Tuesday and found out I'm not as careful a man as I've been pretending.\"\n\n\"There's no expectation in it. Truly none. I'd simply rather you knew than have another summer come round with it unsaid. I've had one of those already, a long while ago, and I've never got over it.\"",
+        "**{firstName}**: \"I've written this out because I think better with a pen, and I'm reading it back to you word for word so I don't lose my nerve partway through.\"",
+        "\"{timesMet} times you've come through that door. I've kept count without meaning to, and there's a thing on the shelf for every single one, and I couldn't bring myself to throw out a single one of them.\"",
+        "\"I'm not a young man, and I'd like that said plainly before anything else, because I've spent a long while treating it as a reason to stay quiet rather than a reason to say something sooner.\"",
+        "\"So here it is, and then I'll put the kettle on and let you think.\"\n\n\"I love you. I ran two houses into the ground, or watched them go, at any rate, and ended up answering to a cat, and I did not expect any part of that story to lead here. I'm glad it did. There's no expectation in this. I'd simply rather you knew than let another year pass with it unsaid.\"",
       ],
       choice: {
-        prompt: "\"Take all the time you want. The kettle's on and the shop's not going anywhere and neither am I.\"",
+        prompt: "\"Take whatever time you need. The kettle's on and the shop isn't going anywhere, and neither am I.\"",
         options: [
           {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "*He doesn't reply at all, which is not like him.*\n\n*When you get to the shop the door is unlocked and he is standing behind the counter with the order form still in his hand, and he has very obviously been standing exactly there for some time.*\n\n\"Say it here,\" *he says.* \"Where I can see you say it. I'm sorry. I've waited a long while and I find I want the whole of it.\"\n\n*And afterwards he holds onto both your hands across the counter and doesn't manage to say anything else for quite a while.*",
+            close: "*He doesn't reply right away, which isn't like him.*\n\n*When you get to the shop the door's unlocked, and he's standing behind the counter with the page still in his hand, clearly having stood there a while.*\n\n\"Say it here,\" *he says.* \"Where I can see you say it.\"\n\n*Afterward he holds both your hands across the counter and doesn't manage another word for quite some time.*",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
-            close: "\"Of course. Of course, take it. I'd think rather less of you if you didn't.\"\n\n\"And I'd like to be very clear, because I know how these things curdle: nothing alters. The shelf stays. There'll be something set aside on Thursday same as every Thursday, and I shall be glad to see you, and none of that was ever a bid for anything.\"\n\n\"I've had thirty years of practice at being glad to see people who don't stay. This is the first time I've had any hope in it at all, and that's already a good deal more than I had in March.\"",
+            close: "\"Of course. Of course, take it. I'd think rather less of you if you didn't.\"\n\n\"And I want to be clear, because I know how these things can curdle: nothing changes. The shelf stays. There'll be something set aside on Thursday same as every Thursday, and I'll be glad to see you regardless. None of this was ever a bid for anything back.\"",
           },
         ],
       },
       keepsake: {
         emoji: "🧾",
-        line: "The back of an order form, copied across word for word.",
+        line: "The page he read back word for word so he wouldn't lose his nerve.",
       },
     },
   },
   dialogue: {
     new: [
-      'He looks up from his work, a little flustered but smiling warmly. "Oh! H-hello. Do you need help with something?"',
+      'He looks up from restocking, a little flustered, and gives you a warm, gentle smile. "Oh! Hello. Can I help you find something?"',
+      '"That\'s my manager," he says, nodding at a cat asleep on the counter, like it explains everything. It somehow does.',
       "He's carrying far too much and insists it's no trouble at all.",
-      '"Careful there, mind the... ah, you\'ve got it. Good, good."',
       "He starts to say something, thinks better of it, and offers you a snack instead.",
-      "There's a kindness to him that's older than everyone else in this school put together.",
+      "There's a kindness to him that feels worn in, like it's had a long career to settle into.",
     ],
     known: [
       "He knows your name, and says it like he's glad of the chance to.",
       "He's stopped asking whether you need help. He just starts helping.",
-      "There's something set aside on the counter. It's been there a couple of days.",
-      '"You\'re one of the ones who says thank you," he says. "I remember those."',
-      "The fluster has settled into something easier.",
+      "There's something set aside on the counter, like it's been waiting for you specifically.",
+      '"You\'re one of the ones who says thank you," he says. "I notice that."',
+      "Even the cat seems to tolerate you, which he says is rare praise.",
     ],
     warm: [
-      'He gets a bit red in the face when he sees you, but his smile is genuine and eager. "You came back! Can I help you with anything?"',
-      "He's set something aside for you. He does that most days now, just in case.",
-      '"You remind me of someone," he says fondly, and doesn\'t finish the thought.',
-      "He fusses over whether you're warm enough, then apologizes for fussing.",
+      'He gets a bit red in the face when he sees you, but his smile stays warm and gentle. "You came back! What can I get you?"',
+      "He's set something aside for you. He's started doing that most days, just in case.",
+      '"You\'d have made a good student," he says, then looks briefly startled that he said it out loud.',
+      "He fusses over whether you're eating enough, then apologizes for fussing.",
       "He remembers exactly what you asked about last time, down to the detail.",
     ],
     spark: [
       "He goes red to the ears and busies himself with something that needed no attention.",
       "He steadies you by the elbow, and takes a long moment letting go.",
       "\"Ah, I've been meaning to say... no, it'll keep. It'll keep.\"",
-      'He\'s practiced this in his head about forty times. It comes out as "you look nice."',
+      'He\'s clearly rehearsed something. What comes out is "you look nice today."',
       "He walks you to the gate and finds three reasons to walk slower.",
     ],
     close: [
       '"You\'re really important to me," he says softly, a hint of bashfulness in his voice. "I\'m always happy to help you with anything you need."',
-      "He tells you a story about the old days that he doesn't tell anyone.",
+      "He tells you a story from his advising days that he doesn't tell anyone else.",
       '"Don\'t push yourself so hard," he says gently. "Somebody ought to say it."',
       "He's quietly made your life easier in three ways this week and mentioned none of them.",
-      "He looks at you the way one looks at something worth having stayed around for.",
+      "He looks at you the way someone looks at a reason to be glad about where they ended up.",
     ],
     bound: [
       "He still goes red. He's stopped letting it stop him.",
-      "He kisses your forehead every single morning like a man observing a sacrament.",
-      '"I\'d got used to being alone," he admits quietly. "You\'ve ruined that entirely."',
+      "He kisses your forehead every morning like it's a small ceremony he takes seriously.",
+      '"I\'d made my peace with a quiet life," he admits. "You\'ve ruined that rather thoroughly."',
       "He holds you carefully, like something he's been trusted with and means to deserve.",
-      "He's old-fashioned about all of it, and it turns out that's devastating.",
+      "He's old-fashioned about all of it, and it turns out that's rather lovely.",
     ],
   },
   temperamentDialogue: {
     new: [
-      '"Oh! H-hi! Did you need something? I\'m here to help!"',
-      '"Whoa there, careful now. This old floor\'s got opinions."',
-      '"You look hungry. Ah, sorry, that was forward of me."',
-      '"Anything you need carried? I\'m good for it, honest."',
-      '"New face! Well, welcome. It\'s a strange place, but it grows on you."',
+      '"Oh! H-hi there. Need a hand with something?"',
+      '"Careful, that shelf\'s got opinions of its own."',
+      '"New around here? It\'s a strange school. It grows on you."',
+      '"My manager\'s a cat, if you\'re wondering about the sign."',
+      '"Anything you need carried, just say the word."',
     ],
     known: [
-      '"Oh, you\'re back! Good, good. I set something aside, hang on."',
+      '"Oh, you\'re back. Good, good. I set something aside, hang on."',
       "\"Don't carry that yourself, I've got two good arms doing nothing.\"",
       '"You always say thank you. Not everyone does, you know."',
-      "\"How've you been keeping? Eating properly? Ah, sorry, I'm fussing.\"",
+      "\"Eating properly? Ah, sorry, that was forward of me.\"",
       '"Take it. No charge. I\'d only have eaten it myself."',
     ],
     warm: [
-      "\"You're back! I'm really happy to see you. What can I do for you?\"",
+      "\"You're back! I'm glad. What can I do for you?\"",
       '"Set that down, I\'ll take it. No arguing."',
       "\"I kept this aside for you. Wasn't sure you'd come. Glad you did.\"",
-      '"Warm enough? Here, take it, I\'ve got another."',
-      '"Ah, it\'s good to see a friendly face. Been a long day."',
+      '"Warm enough? Here, take mine."',
+      '"Good to see a friendly face. Been a long day."',
     ],
     spark: [
-      "\"You look... ah. Very nice. That's all. That's what I meant to say.\"",
-      '"I\'m too old to be this flustered and here we are."',
-      "\"Let me walk you back. It's dark. That's the reason. That's the only reason.\"",
-      '"I\'ve been meaning to tell you something. Give me a minute to lose my nerve."',
-      '"You make an old man feel very silly. I don\'t mind it a bit."',
+      "\"You look... ah. Very nice. That's what I meant to say.\"",
+      '"I\'m too old for this kind of nervous, and here we are."',
+      "\"Let me walk you back. It's dark. That's the only reason.\"",
+      '"I\'ve been meaning to tell you something. Give me a moment to find my nerve."',
+      '"You make an old shopkeep feel rather silly. I don\'t mind it."',
     ],
     close: [
-      '"You mean a lot to me. I\'d do anything to help you."',
-      '"Sit with me a bit. These old bones like the company."',
+      '"You mean a great deal to me. I\'d do anything to help you."',
+      '"Sit with me a bit. The shop can spare me a few minutes."',
       "\"You've been running yourself ragged. Don't think I haven't noticed.\"",
-      "\"I've seen a lot of students come and go. You're the one I'll remember.\"",
-      "\"Whatever it is, bring it to me first. That's what I'm here for.\"",
+      "\"I've watched a lot of students come and go. You're the one I'll remember.\"",
+      "\"Whatever it is, bring it here first. That's what I'm for.\"",
     ],
     bound: [
-      '"Come here, love. Let me look at you a minute."',
-      '"I love you. Took an old man far too long to get that out."',
-      "\"Stay the night? I'll not pretend I don't want you to.\"",
-      "\"You make me feel like a young fool. I've decided I don't mind.\"",
-      '"Sit with me. Just here. That\'s all I ever want, most days."',
+      '"Come here. Let me look at you a moment."',
+      '"I love you. Took me far too long to say that plainly."',
+      "\"Stay a while? I won't pretend I don't want you to.\"",
+      "\"You make me feel young and foolish. I've decided I don't mind.\"",
+      '"Sit with me. Just here. That\'s all I want, most days."',
     ],
   },
   approach: {
@@ -308,7 +310,7 @@ export default {
       "Offer to help carry",
       "Accept the snack",
       "Say hello",
-      "Mind the floor",
+      "Mind the shelf",
     ],
     known: [
       "Take what he set aside",
@@ -334,7 +336,7 @@ export default {
       "Bring it to him first",
       "Tell him he matters",
     ],
-    bound: ["Come here", "Stay the night", "Sit with him", "Say it back"],
+    bound: ["Come here", "Stay a while", "Sit with him", "Say it back"],
   },
   responses: {
     kind: {
@@ -346,37 +348,37 @@ export default {
       spark: [
         "Tell him it came out fine",
         "Take his arm",
-        "Let him lose his nerve",
+        "Let him find his nerve",
       ],
       close: [
         "Let him care for you",
         "Tell him to rest too",
-        "Say he's been remembered",
+        "Say he's been noticed",
       ],
       bound: [
         "Say it back",
         "Let him look at you",
-        "Tell him he's not a fool",
+        "Tell him he's not foolish",
       ],
     },
     playful: {
       new: [
         "Fluster him on purpose",
-        "Tease him about the fussing",
-        "Ask for the second snack",
-        "Catch him mid-apology and grin",
+        "Tease him about fussing",
+        "Ask for a second snack",
+        "Catch him mid-apology",
       ],
       spark: [
         "Make him say it again",
-        "Slow down just to watch him",
+        "Slow down to watch him",
         "Tease the blush",
         "Make him lose his nerve",
       ],
       close: [
         "Match his dry humor",
-        "Tease him about the old days",
+        "Tease him about the shop",
         "Make him laugh out loud",
-        "Needle him just to get a rise",
+        "Needle him for a rise",
       ],
       bound: [
         "Make him blush again",
@@ -411,8 +413,8 @@ export default {
       new: ["Be quiet", "Let him fuss", "Wait while he finishes"],
       spark: ["Let it keep", "Say goodnight", "Walk on ahead"],
       close: [
-        "Rest with his wisdom",
-        "Sit in the old quiet",
+        "Rest in the quiet",
+        "Sit and say nothing",
         "Let the story trail off",
       ],
       bound: ["Sit with him quietly", "Let the evening pass", "Say nothing"],
@@ -428,7 +430,7 @@ export default {
     new: [
       '"Oh! H-hello." **{name}** is carrying far too much and insists to {user} that it\'s no trouble.',
       '{user} says the name, and **{name}** goes red to the ears. "You... you remembered?"',
-      '"Careful there, mind the..." **{name}** stops. {user} has already got it.',
+      'A cat watches with total disdain as **{name}** waves {user} over. "Don\'t mind her," he says. "She\'s the manager."',
     ],
     warm: [
       '"You came back!" **{name}** beams at {user} and immediately offers to carry something.',
@@ -437,17 +439,17 @@ export default {
     ],
     spark: [
       "**{name}** goes red, apologizes for going red, and stays exactly where {user} can see him.",
-      '"You remind me of someone," **{name}** tells {user} fondly, and doesn\'t finish the thought.',
-      "{user} says the name, and **{name}** forgets the whole afternoon's list.",
+      '"You\'d have made a good student," **{name}** tells {user}, then looks startled he said it aloud.',
+      "{user} says the name, and **{name}** forgets the whole afternoon's restocking list.",
     ],
     close: [
-      '"Come here, love. Let me look at you a minute." **{name}** means it to {user} kindly. Mostly.',
+      '"Come here. Let me look at you a moment." **{name}** means it to {user} kindly. Mostly.',
       "**{name}** hears {user}, and every ache of the day goes somewhere else.",
       "{user} calls, and **{name}** walks the long way round with them, just to have the time.",
     ],
     bound: [
-      '"I\'d got used to being alone," **{name}** tells {user}. "You\'ve ruined that entirely."',
-      "**{name}** kisses {user}'s forehead in front of half the campus, like a man observing a sacrament.",
+      '"I\'d made my peace with a quiet life," **{name}** tells {user}. "You\'ve ruined that rather thoroughly."',
+      "**{name}** kisses {user}'s forehead in front of half the campus, like a small ceremony he takes seriously.",
       "{user} says the name, and **{name}** stops going red about it. Mostly.",
     ],
   },
