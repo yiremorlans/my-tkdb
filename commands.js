@@ -192,6 +192,33 @@ const ENCDEV_COMMAND = {
       name: "clear",
       description: "Expire this server's live encounter right now",
     },
+    {
+      type: 1, // SUB_COMMAND
+      name: "bond",
+      description: "Fire a bond scene DM for testing, bypassing affinity",
+      options: [
+        {
+          name: "character",
+          description: "Who the scene is from (name or alias)",
+          type: 3, // STRING
+          required: true,
+        },
+        {
+          name: "level",
+          description: "Which level's scene to send",
+          type: 3, // STRING
+          required: true,
+          choices: [
+            { name: "Acquaintance", value: "acq" },
+            { name: "Friend", value: "fri" },
+            { name: "Close Friend", value: "cfr" },
+            { name: "Confidant", value: "con" },
+            { name: "Devoted", value: "dev" },
+            { name: "Soulbound", value: "sol" },
+          ],
+        },
+      ],
+    },
   ],
 };
 

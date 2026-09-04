@@ -29,9 +29,10 @@ import {
   getCharacterImageUrl,
   getFullName,
 } from './constants/characters.js';
-import { getDialogueTier, getRelationshipLevel } from './constants/game.js';
+import { bondLevelFromSlug, getDialogueTier, getRelationshipLevel } from './constants/game.js';
 import { composeSilhouetteEncounter } from './imageComposition.js';
 import { editChannelMessage, postChannelMessage } from './discordRest.js';
+import { deliverBondScene } from './bondScenes.js';
 import {
   bumpGuildPostFailure,
   claimPublicEncounter,
@@ -722,10 +723,17 @@ function isEncounterDevOwner(userId) {
  *
  *   /encdev spawn [character] [variant]   force one encounter now
  *   /encdev clear                         expire this guild's live encounter
+ *   /encdev bond <character> <level>      fire a bond scene DM directly (docs/bond-scene-dms.md)
  *
  * A manual spawn passes `reanchor: false`, so it never writes guild_settings —
  * the real cadence anchor and the post-failure counter are left exactly as they
  * were. Testing never moves or masks the live schedule.
+ *
+ * `bond` calls `deliverBondScene` exactly as a real level-up would — same claim,
+ * same opt-out check, same queue behavior — it just skips grinding affinity to
+ * trigger it. It still respects the one-scene-per-level-ever guard, so a level
+ * already claimed for you (any status) needs its `bond_scene_progress` row
+ * deleted before it can be re-fired; see docs/bond-scene-dms.md's testing note.
  *
  * Returns a plain message-data object (`{ content }`). app.js defers this
  * interaction ephemerally and delivers the return value as the followup, so the
@@ -742,6 +750,41 @@ export async function handleEncounterDev(body) {
 
   if (!guildId) return { content: 'This only works in a server.' };
 
+  const sub = body.data?.options?.[0];
+  const subcommand = sub?.name;
+
+  // `bond` needs neither this guild's encounter setup nor its lock state — a
+  // bond scene DM is unrelated to public encounters, so it's dispatched before
+  // either check.
+  if (subcommand === 'bond') {
+    const rawCharacter = sub.options?.find((o) => o.name === 'character')?.value;
+    const levelSlug = sub.options?.find((o) => o.name === 'level')?.value;
+
+    const characterId = matchCharacterGuess(rawCharacter);
+    if (!characterId) return { content: `I don't know who "${rawCharacter}" is.` };
+
+    const levelName = bondLevelFromSlug(levelSlug);
+    if (!levelName) return { content: `Unknown level "${levelSlug}".` };
+
+    const character = getCharacterById(characterId);
+    const result = await deliverBondScene(userId, characterId, levelName);
+
+    if (result.delivered) {
+      return { content: `📨 Sent — **${getFullName(character)}**'s ${levelName} scene is in your DMs.` };
+    }
+
+    const reasons = {
+      'already-claimed': `That scene already exists for you in some state. Delete its row from \`bond_scene_progress\` (and \`bond_keepsakes\` if it completed) to re-fire it — \`WHERE discord_user_id = '${userId}' AND character_id = '${characterId}' AND level_name = '${levelName}'\`.`,
+      'opted-out': "Your bond DMs are off — run `/bonds dms:on` first.",
+      'queued-behind': `Blocked behind an unfinished **${result.behind}** scene for ${getFullName(character)} — clear or finish that one first.`,
+      'no-content': `${getFullName(character)} has left the roster — no scene content resolved.`,
+      'no-scene-at-level': `"${levelName}" isn't a scripted level.`,
+      'pending-dm': "Couldn't open a DM — make sure you share a server with the bot (or have DMs from server members on).",
+      'post-failed': 'DM channel opened, but the post failed. Check the logs.',
+    };
+    return { content: reasons[result.reason] || `Not delivered (${result.reason}).` };
+  }
+
   const guild = await getGuildSettings(guildId);
   if (!guild || !guild.encounter_channel_id) {
     return { content: "Encounters aren't set up here. Run `/encounters channel` first." };
@@ -755,9 +798,6 @@ export async function handleEncounterDev(body) {
   if (guild.locked) {
     return { content: 'This server is locked. Encounters stay off here.' };
   }
-
-  const sub = body.data?.options?.[0];
-  const subcommand = sub?.name;
 
   if (subcommand === 'clear') {
     const live = await getActivePublicEncounter(guildId);

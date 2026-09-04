@@ -44,6 +44,11 @@ mock.module('../discordRest.js', {
       edits.push({ channelId, messageId, body });
       return {};
     },
+    // Unused by anything under test here — publicEncounters.js pulls in
+    // bondScenes.js (for /encdev bond), which imports these statically, so the
+    // mock has to provide them or the whole module graph fails to load.
+    openDmChannel: async () => 'dm-channel-1',
+    postChannelTyping: async () => {},
   },
 });
 
