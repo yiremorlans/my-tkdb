@@ -17,7 +17,7 @@ import {
 } from './encounters.js';
 import { handleCall, handleEncountersAdmin, handleEncounterDev } from './publicEncounters.js';
 import { startEncounterScheduler } from './encounterScheduler.js';
-import { checkCommandLimit, claimCommandUse } from './commandLimits.js';
+import { claimCommandInvoke, checkCommandLimit, claimCommandUse } from './commandLimits.js';
 import {
   trackUserActivity,
   trackCharacterEngagement,
@@ -127,6 +127,19 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     const { name } = data;
 
     if (name === 'roam') {
+      // In-memory flood throttle, checked before the Supabase pre-check so a
+      // spammed /roam never reaches the DB or buildRoamDialogueMessage. Shared
+      // with /meet — see claimCommandInvoke.
+      const flood = claimCommandInvoke(userId);
+      if (!flood.allowed) {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: flood.reason,
+            flags: 64, // EPHEMERAL
+          },
+        });
+      }
       const limit = await checkCommandLimit(userId, 'roam');
       if (!limit.allowed) {
         return res.send({
@@ -159,6 +172,17 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     }
 
     if (name === 'meet') {
+      // Same in-memory flood throttle as /roam, shared across both commands.
+      const flood = claimCommandInvoke(userId);
+      if (!flood.allowed) {
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: flood.reason,
+            flags: 64, // EPHEMERAL
+          },
+        });
+      }
       const limit = await checkCommandLimit(userId, 'meet');
       if (!limit.allowed) {
         return res.send({

@@ -21,7 +21,12 @@ mock.module('@supabase/supabase-js', {
   namedExports: { createClient: () => fake.client },
 });
 
-const { checkCommandLimit, claimCommandUse } = await import('../commandLimits.js');
+const {
+  checkCommandLimit,
+  claimCommandUse,
+  claimCommandInvoke,
+  clearCommandInvokeThrottle,
+} = await import('../commandLimits.js');
 
 const COOLDOWN_MS = 3 * 60 * 60 * 1000;
 
@@ -169,4 +174,59 @@ test('claimCommandUse fails CLOSED when the claim errors (unlike checkCommandLim
     undefined,
     'a failed claim writes nothing',
   );
+});
+
+// --- claimCommandInvoke: the in-memory flood throttle ----------------------
+// A per-user debounce over /roam + /meet together, checked before anything
+// touches Supabase. Purely a spam guard — never a reward gate.
+
+test('claimCommandInvoke allows the first invoke and records it', () => {
+  clearCommandInvokeThrottle();
+  const t0 = 1_000_000;
+  assert.strictEqual(claimCommandInvoke('flood-1', t0).allowed, true);
+});
+
+const THROTTLE_MS = 60 * 1000;
+
+test('claimCommandInvoke blocks a second invoke inside the throttle window', () => {
+  clearCommandInvokeThrottle();
+  const t0 = 1_000_000;
+  assert.strictEqual(claimCommandInvoke('flood-2', t0).allowed, true);
+
+  const again = claimCommandInvoke('flood-2', t0 + THROTTLE_MS - 1);
+  assert.strictEqual(again.allowed, false);
+  assert.match(again.reason, /minute/i);
+});
+
+test('claimCommandInvoke shares the window across /roam and /meet (one user, one throttle)', () => {
+  clearCommandInvokeThrottle();
+  const t0 = 1_000_000;
+  // The command name is not passed in — the throttle is keyed by user alone, so
+  // whichever command invoked first blocks the other for the window.
+  assert.strictEqual(claimCommandInvoke('flood-3', t0).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-3', t0 + 30_000).allowed, false);
+});
+
+test('claimCommandInvoke lets the user back in once the window fully elapses', () => {
+  clearCommandInvokeThrottle();
+  const t0 = 1_000_000;
+  assert.strictEqual(claimCommandInvoke('flood-4', t0).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-4', t0 + THROTTLE_MS).allowed, true);
+});
+
+test('claimCommandInvoke is scoped per user — one user flooding does not block another', () => {
+  clearCommandInvokeThrottle();
+  const t0 = 1_000_000;
+  assert.strictEqual(claimCommandInvoke('flood-5a', t0).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-5a', t0 + 100).allowed, false);
+  assert.strictEqual(claimCommandInvoke('flood-5b', t0 + 100).allowed, true);
+});
+
+test('claimCommandInvoke re-blocks after a throttled hit without extending the window from the hit', () => {
+  clearCommandInvokeThrottle();
+  const t0 = 1_000_000;
+  assert.strictEqual(claimCommandInvoke('flood-6', t0).allowed, true);
+  // A blocked attempt mid-window must not push the window out from itself.
+  assert.strictEqual(claimCommandInvoke('flood-6', t0 + 40_000).allowed, false);
+  assert.strictEqual(claimCommandInvoke('flood-6', t0 + THROTTLE_MS).allowed, true);
 });

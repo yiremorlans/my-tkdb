@@ -11,11 +11,15 @@ import {
 // nothing. State lives in Supabase (command_limits), so it survives deploys and
 // restarts.
 //
-// Two entry points, and the difference is the whole point:
-//   checkCommandLimit — read-only, for the fast fail at command-invoke. Its
-//                       answer is stale the moment it returns, so it must never
-//                       be what guards a reward.
-//   claimCommandUse   — decides and stamps atomically. This is the gate.
+// Three entry points, and the differences are the whole point:
+//   claimCommandInvoke — in-memory, seconds-scale. A per-user flood throttle
+//                        over both commands, checked before anything touches
+//                        the DB. Not a reward gate — just keeps a spammed
+//                        /roam or /meet from doing real work every keystroke.
+//   checkCommandLimit  — read-only, for the fast fail at command-invoke. Its
+//                        answer is stale the moment it returns, so it must
+//                        never be what guards a reward.
+//   claimCommandUse    — decides and stamps atomically. This is the gate.
 const COOLDOWN_MS = 3 * 60 * 60 * 1000;
 
 // The commands that share this rolling cooldown. When any one of them is
@@ -26,6 +30,58 @@ const RATE_LIMITED_COMMANDS = ['roam', 'meet'];
 // Reset a user's cooldown (for testing). Omit `command` to clear both.
 export function resetCommandLimit(userId, command = null) {
   return clearCommandLimit(userId, command);
+}
+
+// ---------------------------------------------------------------------------
+// Invoke-flood throttle (in-memory)
+// ---------------------------------------------------------------------------
+// The 3h cooldown guards the *reward*, claimed at the dialogue-response step.
+// It says nothing about how often the command may be *invoked* — opening a
+// picker and walking away is free by design. That leaves one gap: a user can
+// still hammer /roam or /meet without ever responding, and every invoke costs
+// a Supabase read, a message build (buildRoamDialogueMessage runs affinity
+// lookups; the spawn button after it composes an image), a Discord round trip,
+// and a line of channel noise.
+//
+// This is a per-user debounce over both commands together — they share the
+// reward cooldown, so they share the flood throttle. It lives in memory:
+// single app instance, the cost of a miss is one extra picker, and a deploy
+// just hands everyone one free invoke. It is NOT a substitute for the DB
+// cooldown, which stays the only thing between a user and a second reward.
+const INVOKE_THROTTLE_MS = 60 * 1000;
+
+// discord_user_id -> epoch ms of that user's last /roam or /meet invoke.
+const lastInvokeAt = new Map();
+
+// Drop aged-out entries. Amortized-cheap: entries expire after
+// INVOKE_THROTTLE_MS, and this only walks the map once it has grown past a
+// size normal load never reaches.
+function sweepInvokeThrottle(now) {
+  if (lastInvokeAt.size < 1024) return;
+  for (const [userId, ts] of lastInvokeAt) {
+    if (now - ts >= INVOKE_THROTTLE_MS) lastInvokeAt.delete(userId);
+  }
+}
+
+// Claim this user's invoke slot for /roam + /meet: decide and stamp in one
+// call, like claimCommandUse but in memory and on a seconds scale. Returns
+// { allowed: true } and records the invoke, or { allowed: false, reason } when
+// the previous invoke was under INVOKE_THROTTLE_MS ago. Call this first, before
+// the Supabase pre-check, so a flood never reaches the DB or a message build.
+export function claimCommandInvoke(userId, now = Date.now()) {
+  const last = lastInvokeAt.get(userId);
+  if (last !== undefined && now - last < INVOKE_THROTTLE_MS) {
+    return { allowed: false, reason: 'One moment — give it a minute before opening another.' };
+  }
+  lastInvokeAt.set(userId, now);
+  sweepInvokeThrottle(now);
+  return { allowed: true };
+}
+
+// Test hook: wipe the throttle between cases (mirrors clearGuessCooldowns and
+// clearSpawnAttemptFence).
+export function clearCommandInvokeThrottle() {
+  lastInvokeAt.clear();
 }
 
 // Turn a millisecond span into a short "2h 15m" / "45m" string.
