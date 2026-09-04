@@ -8,7 +8,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: \"Hey, cutie. Hope this isn't a strange hour. I've stopped being able to tell which hours are strange.\"",
-        "\"Quick thing and then I'll leave you alone. You came through the hall on Tuesday while I was dealing with three separate crises and you didn't add a fourth.\"\n\n\"That's it. That's the whole compliment. {timesMet} times you've been in this house and not once have you needed something from me, and I would like you to understand that in Dionysia that makes you a rare and precious artifact.\"",
+        "\"Quick thing and then I'll leave you alone. You came through the hall on Tuesday while I was dealing with three separate crises and you didn't add a fourth.\"\n\n\"That's it. That's the whole compliment. {timesMet} times you've been in this house and not once have you needed something from me, and I would like you to understand that in Dionysia, that makes you rare. Precious, even, and I don't say that lightly.\"",
       ],
       choice: {
         prompt: '"Anyway. How are you? And answer properly, I\'ll know."',

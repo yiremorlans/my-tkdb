@@ -118,6 +118,19 @@ async function sendFollowup(interactionToken, messageData, timeoutMs = 15000, ed
 // directly against a mocked discordRest.
 const IS_TEST = process.env.npm_lifecycle_event === 'test';
 
+// Grey out every button on a clicked bond message rather than removing it.
+// Stripping (`components: []`) used to be how a used Continue/choice button
+// went away, but it shrinks the message and shoves everything below it up
+// the DM on every click — jarring mid-scene. Disabling keeps the message's
+// height (and the rest of the conversation) put; a greyed button also still
+// reads as "done" and can't be pressed twice, same as stripping did.
+function disabledComponents(components) {
+  return (components || []).map((row) => ({
+    ...row,
+    components: (row.components || []).map((b) => ({ ...b, disabled: true })),
+  }));
+}
+
 // A bond scene owed a beat it couldn't deliver (no shared server, DMs closed,
 // Discord down, a POST that failed mid-walk) waits on its row until the user's
 // next command, which offers a one-press button to put it back in their DMs.
@@ -684,13 +697,17 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         // These three all live on a message already sitting in the DM (the
         // scene's own closing line, or an earlier replay beat), so the new
         // message landing there is confirmation enough — no followup.
-        // `rnext`/`rchoice` strip the button just used, same as a live beat.
+        // `rnext`/`rchoice` grey out the button just used, same as a live
+        // beat (see `disabledComponents` above for why not stripped).
         // `replaystart`'s button is left alone — nothing about the ACK
         // changes it — so the scene can be replayed again later.
         res.send(
           kind === 'replaystart'
             ? { type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE }
-            : { type: InteractionResponseType.UPDATE_MESSAGE, data: { components: [] } },
+            : {
+                type: InteractionResponseType.UPDATE_MESSAGE,
+                data: { components: disabledComponents(req.body.message?.components) },
+              },
         );
         handleBondReplayClick(userId, { kind, characterId: charId, levelKey, arg })
           .catch(err => console.error('Error in bond replay:', err));
@@ -715,26 +732,13 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         return;
       }
 
-      // ACK, which is the only thing here that uses the interaction.
-      //
-      // A scene button is *stripped*: the beat stays in the DM as part of the
-      // conversation, minus a control that has been used. The resume button is
-      // *disabled* instead — it is the only thing on its message, so removing
-      // it would leave a bare line with no explanation of what happened; greyed
-      // out, it reads as "done" and still can't be pressed twice.
-      //
-      // Both answers are correct for a stale click too, which strips or greys a
-      // dead button and posts nothing.
+      // ACK, which is the only thing here that uses the interaction. Every
+      // bond button — scene or resume — is greyed out via `disabledComponents`
+      // rather than stripped; correct for a stale click too, which just greys
+      // a dead button and posts nothing.
       res.send({
         type: InteractionResponseType.UPDATE_MESSAGE,
-        data: kind === 'resume'
-          ? {
-              components: (req.body.message?.components || []).map((row) => ({
-                ...row,
-                components: (row.components || []).map((b) => ({ ...b, disabled: true })),
-              })),
-            }
-          : { components: [] },
+        data: { components: disabledComponents(req.body.message?.components) },
       });
 
       // Everything after the ACK is a plain bot-token POST into the DM channel

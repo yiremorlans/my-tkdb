@@ -9,7 +9,7 @@ export default {
     acquaintance: {
       beats: [
         '**{firstName}**: "oi. kitten."\n\n"this is Taiga. writing it down so I know it\'s me later. long story."',
-        "\"Here's the deal. I've got your name on a bit of paper in my pocket. Been there about a month.\"\n\n\"Every time I find it I have to sit there for a second and work out who you are, and then I do, and then I'm in a good mood about it, which is a stupid thing for a bit of paper to do.\"\n\n\"{timesMet} times you've turned up. That's from Lulu, not from me. I don't have the number, I've got the paper. Gyahaha.\"",
+        "\"Here's the deal. I've got your name on a bit of paper in my pocket. Been there about a month.\"\n\n\"Every time I find it I have to sit there for a second and work out who you are, and then I do, and then I'm in a good mood about it, which is a stupid thing for a bit of paper to do.\"\n\n\"{timesMet} times you've turned up. That's from Lulu, not from me. I don't have the number, I've got the paper. Gyahaha!\"",
       ],
       choice: {
         prompt: '"So. Say something worth writing down, dumbass."',
@@ -33,7 +33,7 @@ export default {
             label: "Ask why he wrote you down",
             style: 4,
             close:
-              "*There's a longer gap than he'd ever admit to.*\n\n\"'Cause I forgot you once and it was annoying.\"\n\n\"That's it. That's the whole reason. Don't make it a thing, kitten, I hate it when things get made into things.\"",
+              "*There's a longer gap than he'd ever admit to.*\n\n\"'Cause I forgot you once and it was annoying.\"\n\n\"That's it. That's the whole reason. Don't make it a thing, kitten.\"",
           },
         ],
       },

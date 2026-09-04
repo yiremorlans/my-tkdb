@@ -462,8 +462,8 @@ export async function releaseQueuedBondScene(userId, characterId) {
 // --- the button walk ---------------------------------------------------------
 
 /**
- * Handle one bond button click, after app.js has already ACKed it by stripping
- * the button from the clicked message.
+ * Handle one bond button click, after app.js has already ACKed it by greying
+ * out the button on the clicked message.
  *
  * Everything a scene says goes out on the bot token into the stored DM channel.
  * `sendFollowup` is used only to answer the clicker about the *mechanism* — the
@@ -537,9 +537,9 @@ export async function handleBondClick(userId, { kind, characterId, levelKey, arg
     const posted = await post(row, beat);
     // current_beat only moves once the beat is actually out, so a Discord 5xx
     // here leaves the row pointing at the last beat the user actually saw. The
-    // ACK has already stripped the button they clicked, so nothing live remains
-    // in the DM — `pending_dm` is what tells the next /roam or /meet to offer
-    // the resume button. Never an automatic retry inside the failed request.
+    // ACK has already greyed out the button they clicked, so nothing live is
+    // waiting in the DM — `pending_dm` is what tells the next /roam or /meet to
+    // offer the resume button. Never an automatic retry inside the failed request.
     if (!posted) {
       await advanceBondScene(userId, character.id, levelName, { status: 'pending_dm' });
       return { acted: false, reason: 'post-failed' };

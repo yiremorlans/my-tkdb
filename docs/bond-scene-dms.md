@@ -237,7 +237,7 @@ not land — `status = 'pending_dm'`. Three things produce that state:
 | Cause | Row afterwards |
 |---|---|
 | Beat 0 never went out — no shared guild (§2.3), DMs closed, bot offline, `DISCORD_TOKEN` unset, Discord 5xx | `pending_dm`, `current_beat` NULL |
-| A later beat's POST failed mid-walk — the ACK had already stripped the button the user clicked, so nothing live remains in the DM | `pending_dm`, `current_beat` = last beat actually seen |
+| A later beat's POST failed mid-walk — the ACK had already greyed out the button the user clicked, so nothing live remains in the DM | `pending_dm`, `current_beat` = last beat actually seen |
 | A claim stranded by a database failure before the scene started | `queued`, never surfaced directly — delivery is attempted instead, which tells a stranded claim apart from one legitimately waiting its turn (§8.4) |
 
 An `in_progress` row is **never** offered the button: its `Continue` is sitting
@@ -267,10 +267,10 @@ command, newest first, so a burst of level-ups can't wall off the encounter the
 user actually asked for.
 
 **What pressing it does.** `bond:resume:<charId>:<levelKey>:x`. The ACK
-**disables** the button rather than stripping it (it is the only thing on its
-message, so removing it would leave a bare line with no account of what
-happened; greyed out it reads as *done* and can't be pressed twice). Then, off
-the interaction:
+**disables** the button rather than stripping it — the same treatment every
+bond button gets (§3.2): greyed out it reads as *done*, can't be pressed
+twice, and the message's height (and the ephemeral's one line here in
+particular) doesn't shift. Then, off the interaction:
 
 - `current_beat` NULL → run delivery from the top, posting beat 0 into the DM.
 - otherwise → re-post the one beat that was owed, and set the row back to
@@ -321,8 +321,9 @@ stays in the DM as a back-readable exchange. Beats `0..n-2` carry a single
 
 **One click → one new message.** Clicking `Continue` on beat *k*:
 
-1. strips the button from beat *k*'s message (its text is untouched — it stays
-   in the log as part of the conversation), and
+1. greys out (disables) the button on beat *k*'s message — its text and the
+   button itself stay in the log as part of the conversation, just unusable,
+   so the message's height never changes and nothing below it shifts, and
 2. **posts beat *k+1* as a new message** into the DM, with its own `Continue`
    (or the choice row).
 
@@ -355,8 +356,8 @@ if (action === 'bond') {
   // 1. load the bond_scene_progress row for (userId, charId, level(levelKey))
   // 2. reject if missing / not this user / stale beat index (§3.3)
   // 3. ACK the click:  res.send({ type: 7 /* UPDATE_MESSAGE */,
-  //                               data: { components: [] } })
-  //    → strips the button from the clicked message, keeps its text
+  //                               data: { components: disabledComponents(...) } })
+  //    → greys out the button on the clicked message, keeps its text
   // 4. post the next message with the BOT TOKEN into row.dm_channel_id:
   //      kind === 'next'   → postChannelMessage(dm, { content: beat[arg],
   //                            components: [ continue | choiceRow ] })
@@ -367,14 +368,15 @@ if (action === 'bond') {
 }
 ```
 
-Step 3 (`UPDATE_MESSAGE`, `components: []`) is the only thing that uses the
-interaction, and it fits well inside the 3-second ACK window. Step 4 is a plain
-bot-token POST with no deadline — it is what makes the sequence outlive the
-interaction token. If step 4 fails (Discord 5xx), the row's `current_beat` is
-unchanged; recovery is §8.2 (a `/bonds` "▸ Continue" re-post), never an
-auto-retry.
+Step 3 (`UPDATE_MESSAGE`, greying out the clicked row) is the only thing that
+uses the interaction, and it fits well inside the 3-second ACK window. Greying
+rather than stripping (`components: []`) keeps the message's height fixed, so
+nothing below it in the DM jumps on click. Step 4 is a plain bot-token POST
+with no deadline — it is what makes the sequence outlive the interaction
+token. If step 4 fails (Discord 5xx), the row's `current_beat` is unchanged;
+recovery is §8.2 (a `/bonds` "▸ Continue" re-post), never an auto-retry.
 
-Stripping the button in step 3 makes each `Continue` single-use at the Discord
+Disabling the button in step 3 makes each `Continue` single-use at the Discord
 level; `current_beat` (§3.3) is the backstop for a click that races the edit or
 replays an old `custom_id`.
 
@@ -386,7 +388,7 @@ Scene content never travels that way.
 
 The row stores `current_beat`. An incoming `bond:next:…:<n>` is honoured only if
 `n === current_beat + 1`; anything else is a stale or duplicate click and gets a
-bare `UPDATE_MESSAGE` (`components: []`) and **no new post**. `choice` is
+bare `UPDATE_MESSAGE` (greys out the button) and **no new post**. `choice` is
 honoured only once — after `choice_key` is set, further choice clicks get the
 same bare ACK and post nothing. This makes every button idempotent regardless of
 how long ago it was rendered — important precisely because buttons here never
@@ -515,9 +517,9 @@ finished it, without typing `/bonds character:<name>` at all. Clicking it ACKs
 with `DEFERRED_UPDATE_MESSAGE` — no change to the closing message at all, button
 included — so it stays clickable for another replay whenever; then beat 0 goes
 out as a **new** message via the bot token, same as any beat. `rnext` /
-`rchoice` clicks on a replay's own messages ACK with `UPDATE_MESSAGE`
-(`components: []`), stripping the button just used exactly like a live beat,
-before posting the next beat or the closing line as another new message.
+`rchoice` clicks on a replay's own messages ACK with `UPDATE_MESSAGE`,
+greying out the button just used exactly like a live beat, before posting
+the next beat or the closing line as another new message.
 Nothing here needs a followup: the new message landing in the DM is the only
 confirmation required.
 
@@ -816,8 +818,8 @@ record of what the player has seen and earned, not analytics. Nothing to add to
    granted. Alternative: claim them `complete` with `completed_at = now()` and a
    keepsake, so `/bonds` recap lists them as auto-passed. Pick one; never start
    two sequences at once.
-2. **A beat fails to post** (Discord 5xx on step 4). The ACK already stripped
-   beat *k*'s button, so there's nothing in the DM to re-click. `current_beat`
+2. **A beat fails to post** (Discord 5xx on step 4). The ACK already greyed out
+   beat *k*'s button, so there's nothing live in the DM to re-click. `current_beat`
    is unchanged, so the row still knows where it is. Recovery: `/bonds
    <character>` shows a **"▸ Continue with {firstName}"** entry for any
    `in_progress` row and re-posts the pending beat into `dm_channel_id` with the

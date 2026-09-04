@@ -30,7 +30,7 @@ export default {
             label: "Ask if that took long",
             style: 1,
             close:
-              '"40 minutes."\n\n*No defensiveness in it at all. Just the number, handed over.*\n\n"Worth it."',
+              '"40 minutes."\n\n*No defensiveness in it at all. Just the number, handed over.*\n\n"Wasnt so bad."',
           },
           {
             key: "bold",
