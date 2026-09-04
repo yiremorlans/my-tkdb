@@ -1,10 +1,218 @@
 export default {
+  // The level-up DMs (docs/bond-scene-dms.md). Jin does not ask, so none of
+  // these are requests; the warmth is in what he permits and what he admits to
+  // having noticed. The arc is the crown coming off by degrees — bold is the
+  // register that reaches him, so every choice rewards refusing to be dismissed.
+  bondScenes: {
+    acquaintance: {
+      beats: [
+        '**{firstName}**: "Servant."\n\n"Tohma\'s decided I can\'t keep sending someone to fetch you every time I want a word. Says it\'s a waste of the staff. Fine. His way, then. Answer."',
+        "\"You've been underfoot {timesMet} times now. I haven't had you thrown out. Make of that whatever you want. I'm not explaining it.\"\n\nThe typing indicator starts. Stops. Starts again.\n\n\"Don't get ideas. It's not a promotion.\"",
+      ],
+      choice: {
+        prompt: "\"Well? Say something. You've got a mouth, use it.\"",
+        options: [
+          {
+            key: "kind",
+            label: "Say you're glad he wrote",
+            style: 3,
+            close: "\"...Glad.\" A long pause. \"Ha. Whatever. Be glad, then. Costs me nothing.\"",
+          },
+          {
+            key: "playful",
+            label: "Ask if that was praise",
+            style: 1,
+            close: "\"Praise? Tsk. That was a fact.\"\n\nA beat.\n\n\"...You don't need praise anyway. You'd just get cocky. Forget I said that.\"",
+          },
+          {
+            key: "bold",
+            label: "Tell him you'll decide that",
+            style: 4,
+            close: "\"Ha.\" It comes back instantly. \"*There* it is.\"\n\n\"I've got no use for anyone who waits to be told what to think. Go to bed, servant.\"",
+          },
+        ],
+      },
+      keepsake: {
+        emoji: "❄️",
+        line: "The first order he gave you that wasn't really an order.",
+      },
+    },
+
+    friend: {
+      beats: [
+        '**{firstName}**: "Question. Answer it straight or don\'t bother."',
+        "\"Every time I throw something at you, you come back with {favResponse}. Not once have you tried to sweeten me up first.\"\n\n\"Everyone in this house has a voice they save for me. Softer. Rehearsed as hell. I hear it coming three rooms off and I quit listening at the first word.\"\n\n\"You've never used it. So which is it: guts, or you're too dumb to know better?\"",
+      ],
+      choice: {
+        prompt: "\"Think before you open your mouth. I'll know if you're lying.\"",
+        options: [
+          {
+            key: "kind",
+            label: "Say he's worth honesty",
+            style: 3,
+            close: "The typing indicator comes and goes three separate times.\n\n\"...Then keep it up,\" he sends eventually. Nothing else. Four words took him two minutes.",
+          },
+          {
+            key: "playful",
+            label: "Say it's mostly ignorance",
+            style: 1,
+            close: "\"Ignorance.\" A pause. \"You're lying, you're bad at it, and I don't care.\"\n\n\"Stay dumb, then. It suits you better than the alternative.\"",
+          },
+          {
+            key: "bold",
+            label: "Tell him guts, obviously",
+            style: 4,
+            close: "\"Obviously,\" he repeats, and there's something in it that's too close to a laugh.\n\n\"You know what happens to people who talk to me like that? Nothing. Not a damn thing. That's the whole problem with this place.\"",
+          },
+        ],
+      },
+      keepsake: {
+        emoji: "🖋️",
+        line: "A note in a hand that never writes anything down twice.",
+      },
+    },
+
+    closeFriend: {
+      beats: [
+        "There's no message first. There's a photo of a small flat box on a desk, and then, half a minute later, the words.\n\n**{firstName}**: \"That's yours. Has been for weeks. I just didn't get around to saying so.\"",
+        "\"It's nothing. A signet. The house's, not the family's, so don't go building a fantasy out of it. Frostheim's, so anyone who wonders what you're doing here has an answer that isn't me.\"\n\n\"Take it before I change my mind. I change my mind constantly.\"",
+        "\"...Picked it out in March,\" he adds, after a silence that clearly cost him something. \"Been finding reasons not to hand it over ever since. Do whatever you want with that.\"",
+      ],
+      choice: {
+        prompt: "\"Say something. Not thank you. I hate being thanked.\"",
+        options: [
+          {
+            key: "kind",
+            label: "Tell him you'll wear it",
+            style: 3,
+            close: "\"Obviously you'll wear it. That's what it's *for*.\"\n\nThen, after a moment: \"...Suits you. Wearing my house suits you. I heard how that sounded. I'm not saying it again.\"",
+          },
+          {
+            key: "playful",
+            label: "Ask what took him so long",
+            style: 1,
+            close: "\"I was *busy*.\" A pause. \"I wasn't busy. I was a coward about a piece of metal. Don't tell Tohma. He'll be unbearable and he'll be right.\"",
+          },
+          {
+            key: "bold",
+            label: "Ask him to put it on you",
+            style: 4,
+            close: "The reply takes a long time.\n\n\"Come up. Now, before I change my mind.\"\n\nHe does it in the captain's room without turning the lamp on, your hand held flat in both of his, and he takes a hell of a lot longer over it than the job needs. Neither of you mentions that.",
+          },
+        ],
+      },
+      keepsake: {
+        emoji: "💍",
+        line: "The house signet he chose in March and took until now to hand over.",
+      },
+    },
+
+    confidant: {
+      beats: [
+        "It comes through at an hour when even Frostheim is dark.\n\n**{firstName}**: \"You don't repeat this. I'm not asking.\"",
+        "\"Everyone here calls me king. Not one of them picked me. I got handed a room, a title, and a set of faces people arrange before they knock: a figurehead with a good view. I've been holding the whole thing up by myself since before you showed up.\"\n\n\"There was someone here once who didn't do that. He's not here now. I'm not getting into it.\"",
+        "\"I worked out a long time ago that nothing good sticks around. That's not self-pity, it's just the math.\"\n\n\"Then you kept turning up, and I caught myself running the math again, hoping it'd come out different. That's it. That's the whole thing. I hate every word of it.\"",
+      ],
+      choice: {
+        prompt: "\"Now tell me I'm being pathetic so we can both move on.\"",
+        options: [
+          {
+            key: "kind",
+            label: "Refuse to move past it",
+            style: 3,
+            close: "Nothing for a long time.\n\n\"No. You wouldn't, would you.\" A pause. \"That was the whole risk of telling you.\"\n\n\"...Stay put. I'm not done being looked at.\"",
+          },
+          {
+            key: "playful",
+            label: "Call him extremely pathetic",
+            style: 1,
+            close: "\"Thanks. That's exactly what I asked for and I hate it.\"\n\nA pause. \"Do it again tomorrow. Apparently I need it.\"",
+          },
+          {
+            key: "bold",
+            label: "Tell him you're not leaving",
+            style: 4,
+            close: "\"Nobody gets to promise that,\" he writes, fast, almost angry. \"People say it and then the math happens anyway.\"\n\nThen, much slower: \"...Say it again. I won't believe you. Say it anyway.\"\n\nYou say it four times before he stops asking. He never once says thank you, and he doesn't put the phone down until it's light.",
+          },
+        ],
+      },
+      keepsake: {
+        emoji: "🕰️",
+        line: "The hour he spent admitting he'd been alone in that room.",
+      },
+    },
+
+    devoted: {
+      beats: [
+        '**{firstName}**: "Where the hell are you."\n\n"That\'s not a question you get to ignore. Where. Exactly."',
+        "You send it. Nothing comes back for four minutes.\n\n\"Good,\" he says finally. \"I heard what went down in the east corridor tonight and I couldn't account for you. Turns out I'm not someone who handles that well.\"",
+        "\"It's been drilled into me my whole life that a captain doesn't run down a hallway.\"\n\n\"I ran.\"\n\n\"Your place is at my back. I've said that to you before and you took it for possessiveness. It was. It was also the only way I had of saying I want to know where you are.\"",
+      ],
+      choice: {
+        prompt: "\"So. What are you going to do about a man who ran?\"",
+        options: [
+          {
+            key: "kind",
+            label: "Tell him you're all right",
+            style: 3,
+            close: "\"I know you're all right. I've known for six minutes.\"\n\n\"Turns out knowing and believing aren't the same thing. Say it once more and I'll work on the second one.\"",
+          },
+          {
+            key: "playful",
+            label: "Say you'd pay to see it",
+            style: 1,
+            close: "\"Nobody saw it. I made sure nobody saw it.\"\n\nA pause.\n\n\"Tohma saw it. Tohma hasn't said a word, which from him is basically a parade. I'm never living it down.\"",
+          },
+          {
+            key: "bold",
+            label: "Tell him to come find you",
+            style: 4,
+            close: "No reply at all.\n\nSeven minutes later there are footsteps outside, unhurried, because he won't be caught hurrying twice in one night. He doesn't knock. He takes your face in both hands, rings cold against your jaw, looks at you far longer than he needs to, and says, \"There. Accounted for,\" and doesn't let go for a good while after that.",
+          },
+        ],
+      },
+      keepsake: {
+        emoji: "🧥",
+        line: "The coat he put around you without once admitting he'd run.",
+      },
+    },
+
+    soulbound: {
+      beats: [
+        "**{firstName}**: \"I'm going to say something and I'd rather do it where I can't see your face. Yeah. That's cowardice. Doing it anyway.\"",
+        "\"I counted. {timesMet} times you've come to me, and not once did I send for you.\"\n\n\"I want that on the record. My whole life people have been delivered to me. You just showed up.\"",
+        "\"I was raised to make a good match. I can name you the families, the terms, the damn seating charts. There's no version of that where someone like you turns up at all.\"\n\n\"And I don't care. Haven't for a while. I've just been managing it carefully enough not to notice.\"",
+        "\"So.\"\n\nThe typing indicator holds for a long while.\n\n\"I love you. I know exactly what it costs me to put that in writing. I wrote it anyway. No title in front of it, no order behind it.\"\n\n\"Do what you want with it. You always do. It's the single most infuriating thing about you and I wouldn't take it back.\"",
+      ],
+      choice: {
+        prompt: "\"Answer or don't. I can take either one.\"",
+        options: [
+          {
+            key: "answered",
+            label: "Say it back",
+            style: 3,
+            close: "Nothing. Nothing for so long that you check the message sent.\n\n\"Come here. Now. I don't care what time it is.\"\n\nHe meets you at the top of the stairs still in yesterday's shirt, and for a man who has never in his life been at a loss for what to say, he says nothing at all for a very long moment before he kisses you, carefully, the way he does everything, and then not carefully in the least.",
+          },
+          {
+            key: "held",
+            label: "Ask him to give you time",
+            style: 2,
+            close: "\"Fine.\" It comes back without a second's hesitation, and there's nothing wounded in it.\n\n\"I've never wanted anything I could just order. Take as long as you need. I'm terrible at waiting. I'll learn.\"\n\nAnd he does. Nothing changes. He's exactly where he always is, insufferable and immovable, holding open the door of a room he has never once made you knock at.",
+          },
+        ],
+      },
+      keepsake: {
+        emoji: "💌",
+        line: "The night the king wrote it down without a title in front of it.",
+      },
+    },
+  },
   dialogue: {
     new: [
       "The frost never bothered him. That you walked into Frostheim uninvited is another matter.",
       "He doesn't turn to look at you. The cold in the room sharpens anyway.",
       "Frostheim's captain is holding court with no one at all. He notices you, and says nothing.",
-      "He weighs you the way one weighs a servant he did not hire — quickly, and without much interest.",
+      "He weighs you the way one weighs a servant he did not hire, quickly, and without much interest.",
       "Ice creeps along the window frame beside him. He lights a cigarette and waits for you to explain yourself.",
     ],
     known: [
@@ -15,7 +223,7 @@ export default {
       "He looks up, places you, and looks back down. From Jin, that is nearly a greeting.",
     ],
     warm: [
-      "He almost looks pleased when he sees you coming — almost.",
+      "He almost looks pleased when he sees you coming. Almost.",
       "He keeps speaking to whoever's in front of him, but the door stays open behind them.",
       "The room is still freezing. Somehow the chair nearest to him is not.",
       "He's already turned toward the sound of your footsteps by the time you round the corner.",
@@ -257,7 +465,7 @@ export default {
   winnerLines: {
     new: [
       '**{name}** does not turn. "...Speak. You have my attention for exactly that long." {user} had used his name.',
-      "{user} named him, and **{name}** looked over — unimpressed that it took this long.",
+      "{user} named him, and **{name}** looked over, unimpressed that it took this long.",
       '"You know who I am. Good." **{name}** allows {user} one step closer.',
     ],
     warm: [
@@ -278,7 +486,7 @@ export default {
     bound: [
       '"Mine," **{name}** says, as though {user} calling out had settled an argument he\'d been having alone.',
       "**{name}** hands the **{house}** roster to someone else without looking. {user} called; that ends it.",
-      "{user} says the name, and **{name}** — who has spent a lifetime being denied things — takes what is his.",
+      "{user} says the name, and **{name}**, who has spent a lifetime being denied things, takes what is his.",
     ],
   },
 };

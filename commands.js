@@ -65,12 +65,35 @@ const HOUSE_COMMAND = {
   contexts: [0, 1, 2],
 };
 
+// `dms` is an option rather than a subcommand: Discord makes a command with
+// subcommands invocable *only* through them, and bare /bonds — the roster list
+// — has to keep working. `/bonds dms:off` turns off the level-up DMs
+// (docs/bond-scene-dms.md §4.9); the same switch is offered as a button on the
+// first bond DM a user ever gets.
 const BONDS_COMMAND = {
   name: "bonds",
   description: "See everyone you've bonded with, ranked by closeness",
   type: 1,
   integration_types: [0, 1],
   contexts: [0, 1, 2],
+  options: [
+    {
+      name: "character",
+      description: "Look back on your moments with one character (e.g. ren, leo)",
+      type: 3, // STRING
+      required: false,
+    },
+    {
+      name: "dms",
+      description: "Turn private level-up messages on or off",
+      type: 3, // STRING
+      required: false,
+      choices: [
+        { name: "on", value: "on" },
+        { name: "off", value: "off" },
+      ],
+    },
+  ],
 };
 
 // No autocomplete on `character`: recognizing the silhouette and typing the

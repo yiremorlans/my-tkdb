@@ -458,7 +458,7 @@ export async function buildResponseResultMessage(
   }
 
   const gain = baseGain + boostsSpent * ENCOUNTER_BOOST_GAIN;
-  const { level } = await recordResponse(userId, characterId, gain, responseTypeId);
+  const { level, leveledUp } = await recordResponse(userId, characterId, gain, responseTypeId);
 
   const reaction = getReactionLine(
     character,
@@ -478,6 +478,13 @@ export async function buildResponseResultMessage(
     content: `${reaction}\n${deltaLine}`,
     components: disableComponents(shownComponents) || responseActionRow(characterId, true),
     flags: EPHEMERAL_FLAG,
+    // Not part of the message — the crossing, for app.js to act on after the
+    // reply has gone out. A bond scene is a DM (docs/bond-scene-dms.md) and the
+    // interaction must not wait on Discord's DM endpoints, so this is
+    // deliberately data rather than a call made from in here. `level` is where
+    // the user landed, and since a single gain can never clear two bands that
+    // is always exactly one step above where they were.
+    levelUp: leveledUp ? { characterId, levelName: level.name } : null,
   };
 }
 

@@ -199,6 +199,50 @@ Written at win time by `record_encounter_win()`, an atomic `INSERT ... ON CONFLI
 
 > ⚠️ A leaderboard is inherently identifying, so unlike the `vw_*` analytics views there is **no** anonymized view for this table. Keep it behind the service role.
 
+### `bond_scene_progress`
+Where a level-up DM has got to (migration 015, `docs/bond-scene-dms.md`). One row per `(user, character, level)`, created the moment a crossing is detected — **before any Discord call** — by `record_bond_scene()`, an `INSERT ... ON CONFLICT DO NOTHING RETURNING *`. Zero rows back means the scene already exists in some state and delivery stops there: that primary key is the entire "never send the same scene twice" guarantee, and it holds against a replayed interaction, a double-processed click, and an affinity value edited down and back up in the database.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `discord_user_id` | TEXT | Who crossed |
+| `character_id` | TEXT | With whom |
+| `level_name` | TEXT | A `RELATIONSHIP_LEVELS` name — the scene key |
+| `status` | TEXT | `queued` \| `in_progress` \| `complete` \| `pending_dm` \| `skipped_optout` \| `skipped_gone` |
+| `dm_channel_id` | TEXT | The channel every later beat is posted into with the bot token |
+| `current_beat` | INT | Highest beat posted so far; `0` right after beat 0 |
+| `choice_key` | TEXT | The closing pick, once made |
+| `completed_at` | TIMESTAMP | Set by `complete_bond_scene()`; also the keepsake's `earned_at` |
+| `created_at` / `updated_at` | TIMESTAMP | Record timestamps |
+| `PRIMARY KEY (discord_user_id, character_id, level_name)` | - | One scene per level, forever |
+
+**Use cases:**
+- Idempotent delivery — the claim is the first thing that happens and the only thing that has to be atomic
+- Recovering a scene whose beat failed to post: `pending_dm` is what the resume button offers on the user's next command
+- Holding a newly crossed level behind an unfinished lower one with the same character
+
+> There is **no expiry column and no TTL**, by design. Every beat is posted with the bot token into `dm_channel_id` rather than through an interaction webhook, so a `Continue` button works indefinitely — which means a row sitting at `in_progress` for a month is a user who has not clicked yet, not a stuck job. `current_beat` is what makes those never-expiring buttons safe: a click is honoured only when its index is exactly `current_beat + 1`.
+
+### `bond_keepsakes`
+What finishing a scene leaves behind — an emoji and one line in that character's voice. Written by `complete_bond_scene()` in the same statement that closes the scene, guarded on `choice_key IS NULL` so a double-click grants nothing. At most six per bond.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `discord_user_id` | TEXT | Who earned it |
+| `character_id` | TEXT | From whom |
+| `level_name` | TEXT | Which scene granted it |
+| `emoji` | TEXT | The item glyph |
+| `line` | TEXT | One line naming it, in that character's voice |
+| `earned_at` | TIMESTAMP | = the scene's `completed_at` |
+| `PRIMARY KEY (discord_user_id, character_id, level_name)` | - | One keepsake per scene |
+
+**Use cases:**
+- The tangible collectible in a game that otherwise hides progression behind a heart bar
+- Shown in the scene's own closing message, and readable later per character
+
+> The emoji and line are **copied in at the moment they are earned** rather than looked up from `constants/dialogue/<id>.js` later, so re-authoring a character's scene never rewrites a keepsake somebody already has.
+
+> `user_activity` also gains `bond_dms_enabled BOOLEAN NOT NULL DEFAULT TRUE` in migration 015 — the opt-out behind the button on a user's first bond DM, and behind `/bonds dms:on|off`. Only an explicit `false` counts as an opt-out, so rows written before the column existed still get their scenes.
+
 ### Retention
 
 Migration 011 schedules `prune_encounter_data()` daily at 03:30 UTC:
@@ -209,6 +253,8 @@ Migration 011 schedules `prune_encounter_data()` daily at 03:30 UTC:
 | `public_encounters` — solved | 90 days after `resolved_at` | Matches `command_usage_log`; unresolved rows are never touched |
 | `encounter_win_stats` | 13 months | A full year plus the current month, so year-over-year still works |
 | `encounter_milestones` | forever | Player-visible progression (`/affinity`), not analytics — and a bounded per-kind tally, so it has nothing to prune |
+| `bond_scene_progress` | forever | The record of what a player has been sent; dropping a row would re-send a scene they have already read |
+| `bond_keepsakes` | forever | Player-visible progression; dropping a row would take back a collectible |
 
 > `character_relationships` also gains `pending_encounter_boost INT NOT NULL DEFAULT 0` in migration 010 — the unspent wins a user holds with that character. A `/call` win increments it (capped at `ENCOUNTER_BOOST_CAP`); the next completed `/roam` or `/meet` response with that character spends one and adds `ENCOUNTER_BOOST_GAIN` to its gain. Both are constants in `constants/publicEncounters.js`. Both sides go through the atomic `grant_encounter_boost()` / `consume_encounter_boosts()` functions in migration 014 — never a read-then-write, which used to drop a boost when a win and a spend overlapped.
 

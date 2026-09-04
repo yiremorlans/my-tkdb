@@ -118,6 +118,35 @@ export const WINNER_LINE_BUCKETS = ["new", "warm", "spark", "close", "bound"];
 // hole in a public message — validateContent treats it as an error.
 export const WINNER_LINE_PLACEHOLDERS = ["user", "name", "firstName", "house"];
 
+// Every placeholder a bond scene (docs/bond-scene-dms.md) may use — beats,
+// choice prompt, closing lines and keepsake line alike. Frozen here beside the
+// /call set so constants/validateContent.js has one place to check both, and
+// resolved in bondScenes.js at delivery.
+//
+// Deliberately a different, smaller set than WINNER_LINE_PLACEHOLDERS: a scene
+// is a DM, so there is nobody to @-mention ({user} would be noise in a
+// one-to-one thread) and no third party to introduce the character to — they
+// are already talking. What a scene gets instead is the player's own history
+// with them:
+//
+//   {firstName}    the character
+//   {house}        their house, or "Darkwick"
+//   {timesMet}     character_relationships.times_met, as a bare number
+//   {favResponse}  the response type this player leans on, as a noun phrase
+//                  ("a joke") — FAV_RESPONSE_PHRASE in constants/game.js
+//   {lastMoment}   the last /call moment collected with them, as the same noun
+//                  phrase describeBoost uses ("that coffee")
+//   {since}        how long since the last interaction, as a noun phrase
+//                  ("a few days"), so it reads after "It's been ..."
+export const BOND_SCENE_PLACEHOLDERS = [
+  "firstName",
+  "house",
+  "timesMet",
+  "favResponse",
+  "lastMoment",
+  "since",
+];
+
 // The fallback /call reveal pool, authored in constants/dialogue/_shared.js
 // with the rest of the game's prose and re-exported here so every caller has
 // one import for the feature. Used only where a character has no winnerLines

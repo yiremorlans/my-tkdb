@@ -12,10 +12,10 @@ import {
 // restarts.
 //
 // Three entry points, and the differences are the whole point:
-//   claimCommandInvoke — in-memory, seconds-scale. A per-user flood throttle
-//                        over both commands, checked before anything touches
-//                        the DB. Not a reward gate — just keeps a spammed
-//                        /roam or /meet from doing real work every keystroke.
+//   claimCommandInvoke — in-memory, seconds-scale. A per-user, per-command
+//                        flood throttle, checked before anything touches the
+//                        DB. Not a reward gate — just keeps a spammed /roam or
+//                        /meet from doing real work every keystroke.
 //   checkCommandLimit  — read-only, for the fast fail at command-invoke. Its
 //                        answer is stale the moment it returns, so it must
 //                        never be what guards a reward.
@@ -43,14 +43,16 @@ export function resetCommandLimit(userId, command = null) {
 // lookups; the spawn button after it composes an image), a Discord round trip,
 // and a line of channel noise.
 //
-// This is a per-user debounce over both commands together — they share the
-// reward cooldown, so they share the flood throttle. It lives in memory:
-// single app instance, the cost of a miss is one extra picker, and a deploy
-// just hands everyone one free invoke. It is NOT a substitute for the DB
-// cooldown, which stays the only thing between a user and a second reward.
+// This is a per-user debounce, and like the 3h reward cooldown it is keyed per
+// command. Repeating the same command is the flood worth stopping; going /roam
+// then /meet is one of each, which is normal play and stays free. It lives in memory: single app instance, the cost
+// of a miss is one extra picker, and a deploy just hands everyone one free
+// invoke. It is NOT a substitute for the DB cooldown, which stays the only
+// thing between a user and a second reward.
 const INVOKE_THROTTLE_MS = 60 * 1000;
 
-// discord_user_id -> epoch ms of that user's last /roam or /meet invoke.
+// "<discord_user_id>:<command>" -> epoch ms of that user's last invoke of that
+// command. Keyed by both so /roam and /meet throttle independently.
 const lastInvokeAt = new Map();
 
 // Drop aged-out entries. Amortized-cheap: entries expire after
@@ -58,22 +60,28 @@ const lastInvokeAt = new Map();
 // size normal load never reaches.
 function sweepInvokeThrottle(now) {
   if (lastInvokeAt.size < 1024) return;
-  for (const [userId, ts] of lastInvokeAt) {
-    if (now - ts >= INVOKE_THROTTLE_MS) lastInvokeAt.delete(userId);
+  for (const [key, ts] of lastInvokeAt) {
+    if (now - ts >= INVOKE_THROTTLE_MS) lastInvokeAt.delete(key);
   }
 }
 
-// Claim this user's invoke slot for /roam + /meet: decide and stamp in one
-// call, like claimCommandUse but in memory and on a seconds scale. Returns
+// Claim this user's invoke slot for one command: decide and stamp in one call,
+// like claimCommandUse but in memory and on a seconds scale. Returns
 // { allowed: true } and records the invoke, or { allowed: false, reason } when
-// the previous invoke was under INVOKE_THROTTLE_MS ago. Call this first, before
-// the Supabase pre-check, so a flood never reaches the DB or a message build.
-export function claimCommandInvoke(userId, now = Date.now()) {
-  const last = lastInvokeAt.get(userId);
+// this user's previous invoke *of this same command* was under
+// INVOKE_THROTTLE_MS ago. A different command is never blocked by this one.
+// Call this first, before the Supabase pre-check, so a flood never reaches the
+// DB or a message build.
+export function claimCommandInvoke(userId, command, now = Date.now()) {
+  const key = `${userId}:${command}`;
+  const last = lastInvokeAt.get(key);
   if (last !== undefined && now - last < INVOKE_THROTTLE_MS) {
-    return { allowed: false, reason: 'One moment — give it a minute before opening another.' };
+    return {
+      allowed: false,
+      reason: `One moment — give it a minute before running /${command} again.`,
+    };
   }
-  lastInvokeAt.set(userId, now);
+  lastInvokeAt.set(key, now);
   sweepInvokeThrottle(now);
   return { allowed: true };
 }

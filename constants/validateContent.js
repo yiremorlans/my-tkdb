@@ -28,8 +28,13 @@ import {
   SPECIAL_BACKGROUNDS,
   TIME_BUCKETS,
 } from "./backgrounds.js";
-import { MAX_BUTTON_LABEL_LENGTH } from "./game.js";
 import {
+  BOND_SCENE_KEYS,
+  BOND_SCENE_MAX_BEATS,
+  MAX_BUTTON_LABEL_LENGTH,
+} from "./game.js";
+import {
+  BOND_SCENE_PLACEHOLDERS,
   WINNER_LINE_BUCKETS,
   WINNER_LINE_PLACEHOLDERS,
 } from "./publicEncounters.js";
@@ -218,6 +223,190 @@ function validateWinnerLines(at, winnerLines, errors, warnings, opts = {}) {
   }
 }
 
+// Bond scenes — the level-up DMs (docs/bond-scene-dms.md).
+//
+// A scene is one continuous exchange in one character's voice, so unlike the
+// dialogue and response pools there is nothing to fall back on — not within a
+// scene and not across characters. Every character owes a scene at every level,
+// and a missing one is an error rather than a warning: at runtime it would mean
+// a level-up that silently sends nothing.
+//
+// The uniqueness rule is the other half of that. Every beat, closing line and
+// keepsake line has to be unique across the whole game: two characters sending
+// the same words at the same level would give away that the moment is not
+// really theirs, which is the one thing a private scene cannot survive.
+function validateBondScene(at, scene, errors, warnings, seenLines) {
+  if (!scene || typeof scene !== "object" || Array.isArray(scene)) {
+    errors.push(`${at} must be an object with beats, choice and keepsake`);
+    return;
+  }
+
+  // Every string a player can actually read, tagged with where it came from, so
+  // both the placeholder check and the uniqueness check walk one list.
+  const prose = [];
+
+  // --- beats ---
+  const { beats } = scene;
+  if (!Array.isArray(beats) || beats.length === 0) {
+    errors.push(`${at}.beats must be a non-empty array — the scene would post nothing`);
+  } else {
+    if (beats.length > BOND_SCENE_MAX_BEATS) {
+      errors.push(
+        `${at}.beats has ${beats.length} beats (max ${BOND_SCENE_MAX_BEATS}) — past that a DM stops being a moment`,
+      );
+    }
+    beats.forEach((beat, i) => {
+      if (typeof beat !== "string" || beat.trim() === "") {
+        errors.push(`${at}.beats[${i}] is empty — that click would post a blank message`);
+        return;
+      }
+      prose.push([`${at}.beats[${i}]`, beat]);
+    });
+  }
+
+  // --- choice ---
+  const { choice } = scene;
+  if (!choice || typeof choice !== "object" || Array.isArray(choice)) {
+    errors.push(`${at}.choice is missing — every scene ends on one`);
+  } else {
+    if (typeof choice.prompt !== "string" || choice.prompt.trim() === "") {
+      errors.push(`${at}.choice.prompt is empty — the buttons would answer nothing`);
+    } else {
+      prose.push([`${at}.choice.prompt`, choice.prompt]);
+    }
+
+    const options = choice.options;
+    if (!Array.isArray(options) || options.length < 2 || options.length > 3) {
+      errors.push(`${at}.choice.options must hold 2-3 options`);
+    } else {
+      const keys = new Set();
+      options.forEach((option, i) => {
+        const where = `${at}.choice.options[${i}]`;
+        if (!option || typeof option !== "object") {
+          errors.push(`${where} is not an object`);
+          return;
+        }
+        if (typeof option.key !== "string" || option.key.trim() === "") {
+          errors.push(`${where}.key is empty — the pick could not be recorded`);
+        } else if (keys.has(option.key)) {
+          // Both buttons would write the same choice_key and only the first
+          // would ever resolve to a closing line.
+          errors.push(`${where}.key "${option.key}" is used twice in this scene`);
+        } else {
+          keys.add(option.key);
+        }
+
+        if (typeof option.label !== "string" || option.label.trim() === "") {
+          errors.push(`${where}.label is empty`);
+        } else if (option.label.length > MAX_BUTTON_LABEL_LENGTH) {
+          errors.push(
+            `${where}.label is ${option.label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${option.label}"`,
+          );
+        }
+
+        if (option.style !== undefined && ![1, 2, 3, 4].includes(option.style)) {
+          errors.push(`${where}.style must be a Discord button style (1-4), got ${option.style}`);
+        }
+
+        if (typeof option.close !== "string" || option.close.trim() === "") {
+          errors.push(`${where}.close is empty — picking it would end the scene on silence`);
+        } else {
+          prose.push([`${where}.close`, option.close]);
+        }
+      });
+    }
+  }
+
+  // --- keepsake ---
+  const { keepsake } = scene;
+  if (!keepsake || typeof keepsake !== "object" || Array.isArray(keepsake)) {
+    errors.push(`${at}.keepsake is missing — finishing the scene would grant nothing`);
+  } else {
+    if (typeof keepsake.emoji !== "string" || keepsake.emoji.trim() === "") {
+      errors.push(`${at}.keepsake.emoji is empty`);
+    }
+    if (typeof keepsake.line !== "string" || keepsake.line.trim() === "") {
+      errors.push(`${at}.keepsake.line is empty`);
+    } else {
+      prose.push([`${at}.keepsake.line`, keepsake.line]);
+    }
+  }
+
+  for (const [where, text] of prose) {
+    // fillTemplate resolves an unknown placeholder to '', so a typo ships as a
+    // hole in the middle of a sentence rather than throwing.
+    for (const match of text.matchAll(/\{(\w+)\}/g)) {
+      if (!BOND_SCENE_PLACEHOLDERS.includes(match[1])) {
+        errors.push(`${where} uses unknown placeholder "{${match[1]}}"`);
+      }
+    }
+
+    const key = text.trim();
+    const firstSeenAt = seenLines.get(key);
+    if (firstSeenAt) {
+      errors.push(`${where} repeats a line already used at ${firstSeenAt}`);
+    } else {
+      seenLines.set(key, where);
+    }
+  }
+}
+
+// A whole `bondScenes` pool. Every level
+// is required in both: a character because the scene has to be theirs, and the
+// shared pool because it is what a roster addition falls back to before anyone
+// has written for them.
+function validateBondScenes(at, pool, errors, warnings, seenLines) {
+  if (pool === undefined) {
+    errors.push(
+      `${at} has no bondScenes — every character needs their own scene at each of the six levels`,
+    );
+    return;
+  }
+  if (typeof pool !== "object" || pool === null || Array.isArray(pool)) {
+    errors.push(`${at} bondScenes must be an object keyed by level`);
+    return;
+  }
+
+  for (const key of Object.keys(pool)) {
+    if (!BOND_SCENE_KEYS.includes(key)) {
+      warnings.push(`${at} bondScenes has unknown level "${key}" — never delivered`);
+    }
+  }
+
+  for (const key of BOND_SCENE_KEYS) {
+    if (pool[key] === undefined) {
+      errors.push(`${at} has no "${key}" bond scene — that level-up would deliver nothing`);
+      continue;
+    }
+    validateBondScene(`${at} bondScenes.${key}`, pool[key], errors, warnings, seenLines);
+  }
+
+  // Keepsake emojis are checked for reuse within one character, not across the
+  // game. Two characters sharing 🚪 is fine and common — a player sees one
+  // character's six at a time, and /bonds never puts two rosters side by side.
+  // Within a single journal they sit in one list, where a repeat reads as a
+  // rendering bug rather than two different keepsakes. A warning rather than an
+  // error: it is a legibility call, and the near-misses that actually confuse
+  // (📱 against 📲) are ones only a human can judge.
+  const levelsByEmoji = new Map();
+  for (const key of BOND_SCENE_KEYS) {
+    const emoji = pool[key]?.keepsake?.emoji;
+    if (typeof emoji !== "string" || emoji.trim() === "") continue;
+    const norm = emoji.trim();
+    if (!levelsByEmoji.has(norm)) levelsByEmoji.set(norm, []);
+    levelsByEmoji.get(norm).push(key);
+  }
+  for (const [emoji, levels] of levelsByEmoji) {
+    if (levels.length > 1) {
+      warnings.push(
+        `${at} reuses the keepsake emoji ${emoji} at ${levels
+          .map((l) => `"${l}"`)
+          .join(" and ")} — they show in the same journal`,
+      );
+    }
+  }
+}
+
 // A time-keyed /call pool ({ any, day, evening }). What actually has to hold is
 // that every hour of the day can draw something: pickTeaser and pickMissedLine
 // merge `any` with the current bucket, so a bucket may be absent, but the merge
@@ -249,6 +438,11 @@ export function validateContent() {
   const errors = [];
   const warnings = [];
   const ids = new Set(CHARACTERS.map((c) => c.id));
+
+  // Every bond scene line the roster uses, so the same words can't appear in two
+  // characters' scenes — or twice in one character's. Built up across the shared
+  // pool and all 26 characters below; see validateBondScene.
+  const bondSceneLines = new Map();
 
   for (const key of Object.keys(DIALOGUE)) {
     if (!ids.has(key)) {
@@ -324,6 +518,8 @@ export function validateContent() {
     }
 
     validateWinnerLines(id, content.winnerLines, errors, warnings);
+
+    validateBondScenes(id, content.bondScenes, errors, warnings, bondSceneLines);
 
     // Conditional pools are optional; when present, every block must be
     // well-formed and its `when` must reference real dimensions/values or it is

@@ -113,7 +113,7 @@ export const SHARED_ENCOUNTER_TEASERS = {
     "You've seen that walk before.",
     "A figure ahead. Know them?",
     "Someone slows, like they're waiting.",
-    "Quick — you could still reach them.",
+    "Quick, you could still reach them.",
   ],
   day: [
     "A familiar figure in the between-class crowd.",
@@ -147,7 +147,7 @@ export const SHARED_MISSED_LINES = {
   ],
   day: [
     "The crowd closes up. Whoever it was is somewhere in it now.",
-    "Too slow — half the academy has walked through that spot since.",
+    "Too slow, half the academy has walked through that spot since.",
     "Gone, off toward the lecture halls with everyone else.",
     "They round the corner with the rest of the between-class rush.",
   ],
@@ -164,7 +164,7 @@ export const SHARED_MISSED_LINES = {
 // is" — no cooldown, no penalty.
 export const SHARED_WRONG_GUESS_LINES = [
   "Not them. They slip further away.",
-  "No — the figure stays put.",
+  "No, the figure stays put.",
   "Wrong name. The moment tightens.",
   "That's not who's standing there.",
   "Heads turn on the walkway. None of them are theirs.",
@@ -183,7 +183,7 @@ export const SHARED_WINNER_LINES = {
     "{user} flagged **{name}** down to sign the **{house}** mission report.",
     "{user} caught **{name}** on the way to a **{house}** briefing.",
     "**{name}** was off on a **{house}** mission when {user} called out.",
-    "{user} caught **{name}** between **{house}** missions — perfect timing.",
+    "{user} caught **{name}** between **{house}** missions. Perfect timing.",
     "{user} grabbed **{name}** to sign the **{house}** anomaly report.",
     "**{name}** turned at their name. {user} had a **{house}** mission to go over.",
     "{user} picked **{name}** out of the crowd and got there first.",
@@ -193,7 +193,7 @@ export const SHARED_WINNER_LINES = {
     "{user} caught up to **{name}**, **{house}** dispatch in hand.",
     "**{name}** stopped mid-step. {user} needed them for the **{house}** roster.",
     "{user} logged **{name}** for the **{house}** briefing with seconds to spare.",
-    "The **{house}** debrief could wait — {user} already had **{name}**.",
+    "The **{house}** debrief could wait. {user} already had **{name}**.",
     "{user} pinned **{name}** down between rounds of **{house}** business.",
   ],
 
@@ -201,14 +201,14 @@ export const SHARED_WINNER_LINES = {
     "**{name}** doesn't quite place {user}, but stops anyway.",
     "{user} got the name out before **{name}** could go. A cautious nod.",
     "**{name}** studies {user} a second, then decides they're worth a moment.",
-    '"…Do I know you?" **{name}** asks — but doesn\'t walk off. {user} got it right.',
+    '"…Do I know you?" **{name}** asks, but doesn\'t walk off. {user} got it right.',
     "**{name}** gives {user} a measured look, then stays.",
   ],
 
   warm: [
     "**{name}** grins the second {user} calls out.",
     '"There you are." **{name}** falls into step with {user}.',
-    "{user} nailed the name and **{name}** laughs — caught, not minding it.",
+    "{user} nailed the name and **{name}** laughs, caught, not minding it.",
     "**{name}** was hoping it'd be {user}. Mission talk can wait.",
     "**{name}** turns like they already knew it was {user}.",
   ],
@@ -230,7 +230,7 @@ export const SHARED_WINNER_LINES = {
   ],
 
   bound: [
-    "**{name}** isn't even surprised — of course it's {user}. Always {user}.",
+    "**{name}** isn't even surprised. Of course it's {user}. Always {user}.",
     "{user} says the name and **{name}**'s already there, report forgotten.",
     "\"You didn't have to guess.\" **{name}** takes {user}'s hand and the **{house}** briefing loses.",
     "**{name}** crosses to {user} like the room isn't there.",

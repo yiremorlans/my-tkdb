@@ -24,6 +24,73 @@ In contrast to his stoic assistant, Jiro, Yuri appears to be a very expressive a
 He has some quirks, like humming classical music and having a poor sense of direction. As apparent from his Affinity 23 and 24 dialogues, Yuri struggles with the idea of losing patients.
 
 In Episode 14: The Infectious Death Wish when two of Frostheim students humiliated Yuri during a medical check-up, Yuri raises his voice at them, but shortly after is speechless. When the two students leave Yuri starts crying, revealing that he might be a much more sensitive and insecure person than he appears.
+
+Character Selection	 Allow me to grant you the privilege of becoming my test subject.
+Opening Cutscene	It's all going up in flames... All my research... The fruit of my blood, sweat, and tears! НА... НА НА AH HA HA AH НА HA HA!! Goodbye... Mama...
+Summon	Are you feeling ill? Allow me to examine you.
+Login Bonus	 TBA
+Home Screen
+Title & Affinity LVL	Voiceline
+Login	 What are you dawdling for? Change out of those rags and report to my lab immediately!
+New Message	 What madness is this? Why do you have unread messages!? Check them immediately! Research is a race against time!
+Default 1	 You should feel honored to be chosen as the test subject of Dr. Yuri Isami, genius and visionary!
+Default 2	 Jiro! Jiro!! What on earth are you doing!?
+Default 3	 Lowbrow schools of thought with the gall to oppose my research will bear a mark of shame for generations to come. One day, the world will be forced to acknowledge me.
+Default 4	 I always preserve the lives of my patients. I cannot make guarantees for any other parts of them, however.
+Default 5	 I ask their cooperation for the sake of the future of humanity, and this is what I get!? Jiro, how much do we have left in our research budget!?
+Idle 1	 I am a very busy man, so if you don't require examination, then we're done here.
+Idle 2	 Hmph. You really think yourself important enough to make a genius like myself wait around!?
+Welcome Back	 Where on earth have you been, worm!? Next time you plan on taking an extended leave of absence, I expect you to inform me in advance!
+Morning 1
+Affinity LVL 1	 What a bracing morning. Jiro, prepare my wake-up tonic."
+Morning 2
+Affinity LVL 14	 What is that slovenly visage, worm? Tell me, do you have an excuse for looking more emaciated than me when I spent all night researching? I didn't think so!
+Morning 3
+Affinity LVL 15	 I must personally administer Jiro's shots three times a day. The treatment is rather unique, you see.
+Morning 4
+Affinity LVL 11	 Prepare the new formula, Jiro. A specimen has arrived. What? You're not here for treatment?
+Morning 5
+Affinity LVL 20	 Good morning, M... M... M... My, what an adequate morning it is, no!? Hmph... Don't confuse me like that...
+Noon 1
+Affinity LVL 2	 Are you injured or ill? Oh dear, how unfortunate. I shall begin the experi— Ahem, the treatment, immediately.
+Noon 2
+Affinity LVL 7	 Anomalous medical science is uncharted territory. Should I become its pioneer, all will bow before my intellect until the end of time... Ha ha... Ah ha ha ha ha!
+Noon 3
+Affinity LVL 16	 You have business with Jiro? Not before bringing it to me, you don't. He is merely my assistant—as house captain, it is I who possesses the authority.
+Noon 4
+Affinity LVL 12	 I will soon be finished with today's lessons— then I shall return to the lab to confirm the status of my latest test subject.
+Noon 5
+Affinity LVL 21	 Mark my words, I'll have those pompous, preening parasites at Frostheim kneeling before me...
+Evening 1
+Affinity LVL 3	 Jiro's not feeling well, you say? Very well. I shall test my latest formula on him.
+Evening 2
+Affinity LVL 6	 The only blood I stain myself with is that atop the operating table. On missions, I have Jiro to fight in my stead
+Evening 3
+Affinity LVL 8	 Hmph. We have no time to spare on your drivel. Hurry up, Jiro!
+Evening 4
+Affinity LVL 13	 Why yes, I attended every lesson today, as always. All studies are linked, after all. Though it takes a mind such as mine to recognize that.
+Evening 5
+Affinity LVL 22	 Jiro's gone!? ...So be it, then. I grant you the privilege of being my assistant for the day. Be grateful, worm.
+Night 1
+Affinity LVL 4	 Oh, it's you. And here I thought I had a patient. I am currently reviewing today's lessons, so please leave unless you're here for treatment.
+Night 2
+Affinity LVL 5	 Wha... Wh-Where did you come from!? Th-Th-Th-This!? It is a medical journal! The Ace Doctor Wows Minds In Another World Thesis!
+Night 3
+Affinity LVL 9	 It's about time for Jiro's check-up... Hm? Wake up, Jiro! I've discovered an abnormality already!
+Night 4
+Affinity LVL 18	 Even harmful anomalies can have use as medicinal ingredients... This is the sort of immeasurable value my work provides.
+Night 5
+Affinity LVL 23	 There is no life I can't save... There can't be... I am Yuri Isami...the genius visionary doctor...
+Goodnight 1
+Affinity LVL 10	 Hmm, this case is somewhat complex... No, there's no need for my expertise here. Jiro, prepare to operate immediately.
+Goodnight 2
+Affinity LVL 17	 I'm busy with my experiments. Go back to your dorm and ready yourself for your next appointment. Jiro, see her home.
+Goodnight 3
+Affinity LVL 19	 Don't forget that body of yours is a vital specimen! Is it not common knowledge that lack of sleep is the root of all illness!?
+Goodnight 4
+Affinity LVL 24	 My next surgery must be a success... I... I cannot afford another failure...
+Max Affinity
+Affinity LVL 25	 You belong to me. I will never hand you over to another researcher... (gasp) N-N-N-No, you've misunderstood! I-I just...!
 -------
 
 Alan
@@ -39,7 +106,75 @@ It's implied that he may be afraid of his own strength, requesting the MC not to
 
 Alan seems to have a soft spot for the MC, showing a rare smile on a few occasions when she's around.
 
-By his own admission, he is not good with words.
+By his own admission, he is not good with words. 
+
+Character Selection	 I got something I need to do here.
+Opening Cutscene	Don't come any closer. I don't want to hurt you any more. ...Time's up. Sorry...
+Summon	I got something I need to do here.
+Login Bonus	 I've noticed your efforts today.
+Home Screen
+Title & Affinity LVL	Voiceline
+Login	 Get your things. We're going.
+New Message	 Some letters here for you.
+Default 1	 ...What do you want?
+Default 2	 Don't get involved with me.
+Default 3	 I'm going out. You guys get back to work.
+Default 4	 Get back. It's dangerous.
+Default 5	 Slack off once, and you'll find out how hard it is to get back in the game.
+Idle 1	 ...You okay?
+Idle 2	 ...You seem busy. Let me know if you need anything.
+Welcome Back	 ...You came back. You look all right. We're gonna need you for the next mission.
+Morning 1
+Affinity LVL 1	 Oh, you're awake.
+Morning 2
+Affinity LVL 14	 Bandana's got potential. He's quick, and he's strong. Rest comes down to motivation.
+Morning 3
+Affinity LVL 15	 I'm heading out. Mission. Make sure you go to class. ...I'll let you know when I'm back.
+Morning 4
+Affinity LVL 11	 497... 498... 499... 500... Phew...
+Morning 5
+Affinity LVL 20	 I'm taking some of the Vagastrom guys to the mountains today. ...You want to come too?
+Noon 1
+Affinity LVL 2	 I don't eat in the cafeteria. Portions aren't big enough. That's the only reason.
+Noon 2
+Affinity LVL 7	 Lunch? Huh. I forgot to eat. Guess I'll just grill some meat and have it with rice and miso soup. That's my go-to.
+Noon 3
+Affinity LVL 16	 Where am I...? Guess I should tell them I'm gonna be late. WickChat was this picture, wasn't it...?
+Noon 3 (Variant)	 N/A
+Noon 4
+Affinity LVL 12	 Bandana seems to disappear right around this time every day lately... What's he doing?
+Noon 5
+Affinity LVL 21	 This one's all fixed up. I'm gonna take a shower. Wait there.
+Evening 1
+Affinity LVL 3	 My wallet? Yeah, it's pretty beat up. Can't bring myself to chuck it though. Got some good memories with it.
+Evening 2
+Affinity LVL 6	 Was that class really revision...? I didn't think I missed that many...
+Evening 3
+Affinity LVL 8	 One of the Vagastrom guys asked me to add him on WickChat... Do you know how to do that?
+Evening 4
+Affinity LVL 13	 The first-years've each got their own strengths. Both can do stuff I can't.
+Evening 5
+Affinity LVL 22	 MC. Got time after this? A friend of mine gave me some fresh boar meat.
+Night 1
+Affinity LVL 4	 I'm going to the Pit. You should go back to your house, MC.
+Night 2
+Affinity LVL 5	 That sounds like a bike engine, but it's not one I know. ...Be right back.
+Night 3
+Affinity LVL 9	 I don't want to get anyone mixed up in my life.
+Night 4
+Affinity LVL 18	 Oh, didn't see you there. I'm heading out for a run, but... Could you wait here for me?
+Night 5
+Affinity LVL 23	 You're you, not someone else. You're doing a good job. Hold your head high.
+Goodnight 1
+Affinity LVL 10	 Better sleep. Got an early day tomorrow.
+Goodnight 2
+Affinity LVL 17	 You're still awake? Don't stay up too late.
+Goodnight 3
+Affinity LVL 19	 I pat people on the head a lot? Didn't notice. I'm doing it again? ...Sorry.
+Goodnight 4
+Affinity LVL 24	 Can't sleep? ...I'll take you for a drive. Quick run should help you reset.
+Max Affinity
+Affinity LVL 25	 I'm lucky I've got you, MC. As long as you're with me, I feel like I won't lose sight of who I am.
 -------
 
 Zenji
@@ -63,6 +198,67 @@ Even though Zenji died at the hands of Darkwick, he doesn't seem to harbor a gru
 Zenji seems to be very friendly and has no problem talking to people or receiving criticism.
 
 Though, oftentimes in his voicelines, he seems to not be aware that the rumors of a ghost or a floating biwa in the music room of Hotarubi were referring to Zenji himself.
+
+Login	 Why, hello there, my dear. Suppose we kick off another swanky day here?
+New Message	 Come now, read those messages out, won't you? They're fan letters for me, aren't they? ...They're not?
+Default 1	 You want to know the meaning of my words? I see—I'll have to give you a lecture on romanticism.
+Default 2	 What's this? Well, it's a biwa, of course. It's a biwa just as you are yourself.
+Default 3	 Girls, be ambitious... Dream big, my dear.
+Default 4	 A man who's everywhere but can be found nowhere... That's what it means to be an inspired man of the quill.
+Default 5	 Heh. There's no doubt about it. Zenji Kotodama is once again the most styling man on campus. These glad rags are the cat's pajamas.
+Idle 1	 ...And they lived happily ever after. How did you like my new story? I'd love to hear your— What? You weren't listening!?
+Idle 2	 Can you see me? Phew... You've been so quiet, you had me worried, my dear.
+Welcome Back	 Ah, I'm so relieved you're all right, my dear. I wondered if something had happened on a mission... I'm glad my fears had no teeth.
+Morning 1
+Affinity LVL 1	 Come now, let's depart in search of something sensational.
+Morning 2
+Affinity LVL 14	 A swanky morning calls for a swanky breakfast, and some swanky radio calisthenics.
+Morning 3
+Affinity LVL 15	 Why, Subaru hasn't risen yet. Go ahead and wake him, won't you, my dear? I'll accompany your efforts from here with my biwa.
+Morning 4
+Affinity LVL 11	 Have you got any siblings, my dear? Why no, I don't mean anything by it. Just a little morning conversation.
+Morning 5
+Affinity LVL 20	 I was standing by your pillow last night? Horsefeathers, I'd never. I was there the night before last.
+Noon 1
+Affinity LVL 2	 Oh, have you come to see me? This is troubling. I'm afraid I'm out of autographs.
+Noon 2
+Affinity LVL 7	 It truly is the age of YouTube. Can you fathom the romance of my artistry spreading to all four corners of the globe?
+Noon 3
+Affinity LVL 16	 A burst of inspiration has taken hold of me... No. The ghost of artistry has possessed my soul!
+Noon 4
+Affinity LVL 12	 Are you going to Mortkranken, my dear? ...I see. No, I don't mean anything by it. Are you hurt? I hope you'll take care.
+Noon 5
+Affinity LVL 21	 Go ahead and eat. No, don't give me another thought—I'm on a diet, you see. Watching you is enough food for my soul.
+Evening 1
+Affinity LVL 3	 What am I doing here? ...I'm people-watching.
+Evening 2
+Affinity LVL 6	 My folktale videos? I filmed them at Haku's behest, but I can't imagine these old things will capture my fans' hearts...
+Evening 3
+Affinity LVL 8	 Every tool has its own knack you've got to acquire to use it properly. Behold—my mastery with a fishing pole!
+Evening 4
+Affinity LVL 13	 I'm sorry, I didn't mean to sneak up on you. Apparently my footsteps give the general students the heebie-jeebies...
+Evening 5
+Affinity LVL 22	 Haku's busy today—film me in his stead, won't you?
+Night 1
+Affinity LVL 4	 Ordinarily I ask for write-ins for my advice salon on the World Wide Web... but tonight, I'm taking it out into the field.
+Night 2
+Affinity LVL 5	 The moon is beautiful... I always look forward to passing the hours in conversation with you and Towa on nights like these.
+Night 3
+Affinity LVL 9	 This doll here is special. The moment I met him I felt a destiny such that I knew we couldn't be strangers.
+Night 4
+Affinity LVL 18	 Zenji Kotodama is a wonderful name, don't you think? A sensational name befitting of my sensational sensibilities.
+Night 5
+Affinity LVL 23	 I've got a little story about a hapless fool of a man... I'm sure it's hardly worth listening to. I wonder if I'll ever get the chance to share it with you?
+Goodnight 1
+Affinity LVL 10	 Oh, I didn't mean to give you a fright... I ought to have expected this. A sudden brush with an inspired man of the quill would take anyone's breath away.
+Goodnight 2
+Affinity LVL 17	 To be a Darkwick student is to greet danger as an old friend... But I hope that Haku and Subaru have a long life ahead of them.
+Goodnight 3
+Affinity LVL 19	 Trouble sleeping? Then I'll read you a story. How about Urashima Taro?
+Goodnight 4
+Affinity LVL 24	 To be able to look into your eyes and bid you good night... I'm the luckiest fella for miles around.
+Max Affinity
+Affinity LVL 25	 Maybe we did meet too late. But it's all right. I promise I'll find you in the next life.
 --------
 Subaru
 Subaru Kagami (加賀見 昴流 Kagami Subaru) is a third year student at Darkwick Academy and is the captain of the Hotarubi House. Though earnest and hardworking, Subaru's strong sense of responsibility often leads him to bottle things up. An esteemed kabuki actor since childhood, he is currently on hiatus for certain, rumored reasons.
@@ -80,6 +276,71 @@ Subaru is a gentle person, always fretting and apologizing if he thinks he did a
 Subaru thinks lowly of his stigma, with its ability he can read residual thoughts from almost anything he touches, calling it gross.
 
 He is critical of people, breaking away from his kind and meek demeanor and making comments that humans are much nastier than any anomalies.
+
+Summon	 I'll do my best to live up to your expectations.
+Login Bonus	 TBA
+Home Screen
+Title & Affinity LVL	Voiceline
+Login	 I'm very sorry to have kept you waiting. It's wonderful to see you again.
+New Message	 It looks like there's a notice for you. I'd be happy to go pick it up for you if you've got your hands full. Oh, forgive me if I'm overstepping.
+Default 1	 I really am so lucky to be surrounded by so many kind people like you.
+Default 2	 I never thought I'd get the chance to enjoy the lifestyle of a student until I came to Darkwick. Every day truly is fulfilling here.
+Default 3	 You think I'm always smiling? Ha ha, I hear that a lot. It just happens when I'm around all of you.
+Default 4	 I may be the captain, but it's just in name. I think Haku is much better suited for the job than me.
+Default 5	 I've been working since I was four, so people often said I was mature for my age. But the truth is, I've still got a lot to learn.
+Idle 1	 Everyone seems busy at the moment. Maybe I should use this opportunity to tidy the garden...
+Idle 2	 MC? Oh... I'm sorry, I didn't mean to disturb you. I was just worried because you were so quiet...
+Welcome Back	 You're back... I'm so relieved. I was worried I'd done something to make you feel uncomfortable...
+Morning 1
+Affinity LVL 1	 I tend to just have hot water for breakfast. I know it would be better for me to eat a proper meal, but it's just so much effort.
+Morning 2
+Affinity LVL 14	 ... ...Oh! Hello, MC—I didn't even notice you there. My mind was somewhere else.
+Morning 3
+Affinity LVL 15	 Good morning! Sorry? My hair's messy? You're right, it's sticking right up at the front... That's embarrassing. I'll fix it right away.
+Morning 4
+Affinity LVL 11	 I have an Anomalous Ecology test coming up. It's such a fascinating subject, I couldn't help but stay up all night studying. Now I'm a little sleep-deprived.
+Morning 5
+Affinity LVL 20	 Oh, I couldn't ask you to come all the way to my room to wake me up—I'd feel terrible. I do very much appreciate the thought, though.
+Noon 1
+Affinity LVL 2	 I'm sorry I'm so late. The campus is so crowded I can never manage to walk in a straight line, so it always takes me longer than I think. Silly, isn't it?
+Noon 2
+Affinity LVL 7	 I'd like to go to the cafeteria, but the line is always so long. I feel bad taking time to choose while people are waiting behind me. The bar of entry feels a little high.
+Noon 3
+Affinity LVL 16	 I usually have lunch in the dormitory. I do eat on the terrace with Lyca every now and then, but he seems so busy these days...
+Noon 4
+Affinity LVL 12	 I'm going to stretch my legs a little. I might not have a show to practice for right now, but I need to keep putting myself through my paces. I'll get rusty otherwise.
+Noon 5
+Affinity LVL 21	 Oh, hello, MC. Sorry, I was actually just on my way out. I should be back by evening—do you mind if we speak then?
+Evening 1
+Affinity LVL 3	 What would I do without Haku's help? Hotarubi would be a mess without him.
+Evening 2
+Affinity LVL 6	 Ever since I was a child, the performing arts were my only focus. Maybe that's why people always say my mannerisms are so peculiar. It bothers you too, doesn't it?
+Evening 3
+Affinity LVL 8	 I'm just about to go and meet a friend. I hate to inconvenience you like this, but if it's something urgent, could you speak to Haku about it instead?
+Evening 4
+Affinity LVL 13	 I'm sorry my phone's been making so much noise. I recently downloaded an app by mistake, and it won't stop sending me notifications...
+Evening 5
+Affinity LVL 22	 Lyca has seen my message, so why hasn't he responded to it? I hope nothing bad has happened to him...
+Night 1
+Affinity LVL 4	 I wonder if I should apply early to take out any common artifacts I might need for this mission. I'll ask Haku what he thinks...
+Night 2
+Affinity LVL 5	 Ah! You surprised me there... I just got back from a small errand. Do you need something?
+Night 3
+Affinity LVL 9	 What am I going to do? We're supposed to be meeting up in an hour... If I cancel now, they'll hate me...
+Night 4
+Affinity LVL 18	 Do you visit Sinostra very often, MC? I see... Oh, no reason. I was just making conversation. Ha ha.
+Night 5
+Affinity LVL 23	 Lyca will adapt well to human society, I'm sure of it. I'm so relieved that Darkwick chose to trust him. I can't thank you enough for your help.
+Goodnight 1
+Affinity LVL 10	 Whew... I'll walk you back to your house, MC. Oh, it's no problem at all, I assure you! I wanted some fresh air anyway.
+Goodnight 2
+Affinity LVL 17	 I didn't take you for a night owl, MC. Since you're here, I suppose I'll stay up a little longer. You're sure you're okay? You're not sleepy?
+Goodnight 3
+Affinity LVL 19	 It's getting late, MC. How about we finish this tomorrow? Thank you for keeping me company all this time.
+Goodnight 4
+Affinity LVL 24	 You can't sleep? Then let me tell you some stories. Legend has it that evil spirits appear once you've told a hundred. Now, what number was I up to...
+Max Affinity
+Affinity LVL 25	 I don't want to seem like I'm testing you, I just... I get really anxious sometimes... I'm sorry. I'm being weird, aren't I?
 ----------
 
 Elias
@@ -266,6 +527,72 @@ Edward usually appears with a slight smile on his lips and somewhat amused, liki
 Despite being a long-lived vampire, Edward always appears indifferent and tired of everything around him, just lying in his room and sleeping, not bothering with his duties as Obscuary's captain.
 
 Even so, Edward can know everything and is very clear about it. He also likes to be a love advisor to MC by asking her if she likes Rui or Lyca, and even flirts with her himself at times, much to his housemates' chagrins.
+Character Selection	 It will soon be the devil's hour, when the spooks gather... That is when I come out to play.
+Opening Cutscene	I knew this day would come. It's a little earlier than I expected, perhaps. I'll shut these lowly creatures up—their bleating is unbearable. You can thank me in the next life.
+Summon	Wicked girl. You ought to know better than to play with fire.
+Login Bonus	 TBA
+Home Screen
+Title & Affinity LVL	Voiceline
+Login	 Ah, there you are. I've a favor to ask of you— come to my room and I'll explain.
+New Message	 Oh? It appears we have some letters. Alas, my eyesight is not what it used to be. Read them out to me, would you?
+Default 1	 I have much to learn about the human world... Rui is teaching me a lot, but I cannot seem to divorce myself of careless blunders.
+Default 2	 What did I do before Darkwick? I eked out a humble existence in Eastern Europe. Hm? The most powerful vampire? No, those are just rumors.
+Default 3	 I was taken by a sudden whim to travel abroad. I had heard good things about Japan so I came over to play, but alas, I was captured.
+Default 4	 I have no interest in harming humans. After all, they die so quickly. They should enjoy their short lives while they can.
+Default 5	 (cough cough) Oh, it's you... I'm feeling worse than usual today. I don't suppose you could carry me to bed?
+Idle 1	 I'm going to lie down a while. If you need something, ask Rui.
+Idle 2	 Hello? Oh good, there you are. It would be troublesome for me if you were to disappear. Let me know next time you decide to wander off.
+Welcome Back	 Well, hello there. It's been a while. Come over here—I've been looking forward to your return.
+Morning 1
+Affinity LVL 1	 (yawn) Good morning... What time is it? ...Still that early? Wake me up again at midday, would you?
+Morning 2
+Affinity LVL 14	 How strange... I can't find my other sock. I could have sworn I put it here... Have you seen it?
+Morning 3
+Affinity LVL 15	 Lyca made a mess again? Ah ha ha ha. Try not to judge him too harshly—he's not human, after all.
+Morning 4
+Affinity LVL 11	 Are you going for a walk? Take care not to spend too long in the garden. Humans are rather susceptible to the miasma there.
+Morning 5
+Affinity LVL 20	 Ah, thank you for coming so early. I slept even worse than usual last night... The cleaning can wait. Let me rest my head on your lap, would you?
+Noon 1
+Affinity LVL 2	 If this is about a mission, I can't help you, I'm afraid. I leave such day-to-day duties to Rui, so I suggest you ask him instead.
+Noon 2
+Affinity LVL 7	 I can't survive much sunlight. Without my parasol, I can barely go outside... (sigh) It really is quite punishing...
+Noon 3
+Affinity LVL 16	 Rui? Is my lunch ready yet? ...Oh, it's you. You wouldn't happen to be feeling heartsore, would you?
+Noon 4
+Affinity LVL 12	 Do you realize that human society is controlled by a shady cabal of elites? There are many videos about it on YouTube.
+Noon 5
+Affinity LVL 21	 How are you finding Obscuary? Anomalies live quite differently to humans, so you're adapting to it remarkably well... Perhaps you're predisposed?
+Evening 1
+Affinity LVL 3	 I'm more or less confined to this house most days, for various reasons. I'm on my best behavior. But I'll do what I can to support you from the sidelines.
+Evening 2
+Affinity LVL 6	 Oh, it hurts... I cannot seem to shake this ache in the place Rui touched me earlier... I think I'll rest a while.
+Evening 3
+Affinity LVL 8	 Sounds like Lyca's having fun, from all that yapping. I think it's good for him to develop some temporary bonds with humans at this time in his life.
+Evening 4
+Affinity LVL 13	 he ghouls are rioting again? Ah ha ha ha, they certainly are full of energy. If you'll excuse me, I was in the middle of a YouTube video.
+Evening 5
+Affinity LVL 22	 My, where did the time go? Talking to you is just so relaxing. Why? Perhaps it's because I know I could feast upon you at any moment.
+Night 1
+Affinity LVL 4	 My favorite channel should be posting a new video at any moment... Sorry, but could we continue this tomorrow?
+Night 2
+Affinity LVL 5	 I don't suppose you know where Rui is? How troubling... My YouTube video has stopped playing...
+Night 3
+Affinity LVL 9	 I felt the urge to go stargazing, so I went to a hill nearby, but Towa was there already and he chased me away.
+Night 4
+Affinity LVL 18	 Has night fallen already? Do keep in mind that my vitality returns at this hour. You really should be more careful.
+Night 5
+Affinity LVL 23	 Really. You became embroiled in another petty human dispute? How absurd you humans are. Come here.
+Goodnight 1
+Affinity LVL 10	 You ought to be getting ready for bed. Me? Oh, I'll turn in soon... Just one more YouTube video.
+Goodnight 2
+Affinity LVL 17	 Rui has his tavern work at this hour. He made sure I had everything I needed before he left, though.
+Goodnight 3
+Affinity LVL 19	 You can't sleep? Come, close your eyes. I'll hold you in my arms until you surrender yourself to the land of slumber.
+Goodnight 4
+Affinity LVL 24	 So, you've come sneaking into my room in the middle of the night? You really are a wicked girl. What were you hoping for? Go on, say it.
+Max Affinity
+Affinity LVL 25	 Being with you brings up old, old memories... Perhaps it's because you remind me a little of her.
 ---------
 
 Jin
@@ -280,9 +607,75 @@ Jin Kamurai has pale skin, icy blue eyes, and silver hair with a subtle blue omb
 Personality
 Jin possesses a strong sense of self-assurance and confidence, which is supplemented by his wide array of skills. He often presents an air of aloofness and commonly uses profanity.
 
-However, Tohma describes him as "actually very kind," and his preparedness during the Mr. Long-Legs investigation prove him to be an intelligent, forward-thinking individual.
+However, Tohma describes him as "actually very kind," and his preparedness during the Mr. Long-Legs investigation prove him to be an intelligent, forward-thinking individual. Jin seems to smoke often, sometimes with Tohma.
 
 Jin tends to take on a dominant role and expects the MC to carry out tasks for him on a regular basis, and spends most of his time in the captain's room in Frostheim.
+
+Opening Cutscene	We were just playing out a fixed match. And I was nothing but a figurehead all along... There's no time left. Get out of here. ...That's my final order to you.
+Summon	Ha. Guess I'll give you some attention.
+Login Bonus	 Hey servant, take this with you. I'm in a good mood today. Take it before I change my mind.
+Home Screen
+Title & Affinity LVL	Voiceline
+Login	 Where the hell do you think you're going? Quit dawdling and help me get ready.
+New Message	 Hey, you've got mail. Don't tell me you're not going to open it. What if it was for me?
+Default 1	 ...Get to the point. The trash here is so long-winded.
+Default 2	 A party? I don't waste air on bootlickers. Try Tohma.
+Default 3	 Don't just stand there like an idiot. Hurry up. ...What? You got a problem? Spit it out.
+Default 4	 Kneel! Tsk... Where's MC? Bring her to my room.
+Default 5	 What? Your schedule's not my problem. Just arrange it around me.
+Idle 1	 ...Where the hell did she go?
+Idle 2	 Shit... This is throwing me off. Who does that servant think she is?
+Welcome Back	 ...You've got guts abandoning your place at my back, servant. I'm going to have to retrain you.
+Morning 1
+Affinity LVL 1	 ...Huh? I don't want to see your face at the crack of dawn. Get out.
+Morning 2
+Affinity LVL 11	 You're late. You've got some nerve making me wait, servant.
+Morning 3
+Affinity LVL 14	 ...Why are you so chatty today? Just pour my tea and get out of my face.
+Morning 4
+Affinity LVL 15	 You should be grateful I'm giving you the time of day this early in the morning.
+Morning 5
+Affinity LVL 20	 Waking me up every morning was your idea, so I'd better see you here tomorrow too. That's an order.
+Noon 1
+Affinity LVL 2	 Tell the chef I'm not in the mood for meat today.
+Noon 2
+Affinity LVL 7	 What about class? Ha. What makes you think you can lecture me? Worry about yourself.
+Noon 3
+Affinity LVL 12	 ...I'm hungry. Go order lunch. For two.
+Noon 4
+Affinity LVL 16	 Why do you look so worn out? If you're going to serve me, learn how to take better care of yourself. Tohma, take her to the infirmary.
+Noon 5
+Affinity LVL 21	 ...I was too active yesterday. Massage me, servant. ...What the hell was that? Put some muscle into it.
+Evening 1
+Affinity LVL 3	 I'm not wasting my time fooling around with those brats today. If they're really that bored, just make them go on a low-ranking mission or something.
+Evening 2
+Affinity LVL 6	 A Class C anomaly? Miss me with that weak shit. Why do you think we have a vice-captain?
+Evening 3
+Affinity LVL 8	 You don't even know that? What do they teach here?
+Evening 4
+Affinity LVL 13	 You have plans? Take a second and really think about whether your plans are more important than me before you open that mouth again.
+Evening 5
+Affinity LVL 22	 You don't know about dining etiquette? I don't have time for this... If you want me to teach you, I better see that nose on the grindstone.
+Night 1
+Affinity LVL 4	 Put my dinner over there. I'll eat later if I feel like it.
+Night 2
+Affinity LVL 5	 There aren't enough documents for the mission. Call my servant, Tohma.
+Night 3
+Affinity LVL 9	 Bianerus! ...I'm not feeling it today. You can go.
+Night 4
+Affinity LVL 18	 You want to dine with me? Ha. All right. Show me if you've learned anything.
+Night 5
+Affinity LVL 23	 What's that? My helicopter, obviously. Quit gawking and get in.
+Goodnight 1
+Affinity LVL 10	 It's late. We're done here. Leave.
+Goodnight 2
+Affinity LVL 17	 It's still early... You want to practice the waltz? Bold, aren't you? You're going to be sore tomorrow.
+Goodnight 3
+Affinity LVL 19	 It's quiet tonight... Sit here, next to me. We're playing a duet. Don't give me that look. You'll know this song.
+Goodnight 4
+Affinity LVL 24	 I've got plans early tomorrow. Your house is too far. Stay here tonight.
+Max Affinity
+Affinity LVL 25	 Never learn, do you? I don't take you being here for granted. I know it won't last forever. That's all I'm going to say.
 --------
 
 Taiga
@@ -308,6 +701,72 @@ Although, Taiga always gets bored easily and tend to keep silent in most convers
 He could also be found eating anomalies, for example, the like dove in Episode 4: The Carnivorous Casino and the anomalous mask in Episode 9: Spooks' Paradise. He also tries to eat Peekaboo but never succeeds in doing so.
 
 In a flashback during Episode 22: Who Killed Robin? Act II, Elias says "You wouldn't know it to look at him, but Taiga's a sensitive soul. Maybe he's just waiting for someone who truly believes in him."
+
+Opening Cutscene	Gyahaha! Time to cash in your chips! Guess this whole thing was just a busted flush, huh? Tell me something, would you? What could I have done different to change this outcome?
+Summon	All right, who the hell called me?
+Login Bonus	 TBA
+Home Screen
+Title & Affinity LVL	Voiceline
+Login	 ...Who're you? Don't pop up out of nowhere like that. Wouldn't want me to shoot you by mistake, would you?
+New Message	 Huh? You got a letter. If it's for me just reply for me, yeah?
+Default 1	 What are you again? A middle school student? A transfer student? Got it, an honor student! Gyahaha! I'm never gonna remember that!
+Default 2	 Heads or tails, even or odd, on or off... It's all so fucking tedious!
+Default 3	 Playing with these morons is exhausting... Lulu gets all mad if I win too much...
+Default 4	 Don't talk to me. I feel like shit.
+Default 5	 That smells amazing... Shit, where's it coming from?
+Idle 1	 ...This is boring. I'm outta here.
+Idle 2	 Are you done yet? I'm hungry over here.
+Welcome Back	 Long time no see! You decide to ditch this future too? Sorry I'm not dead yet.
+Morning 1
+Affinity LVL 1	 It's too early for your bleating. Shut your trap unless you wanna get abducted.
+Morning 2
+Affinity LVL 14	 I'm starving... You, get my usual. It's breakfast time.
+Morning 3
+Affinity LVL 15	 How does Lulu always have so much energy this early in the morning? Is it 'cause of all that expensive water he drinks?
+Morning 4
+Affinity LVL 11	 ...I'm not gonna play today. I'm sleeping. I don't care if the place is burning down— don't wake me up.
+Morning 5
+Affinity LVL 20	 Where you going, kitty-cat? Class? You don't need to go there. I got something more fun in mind for us.
+Noon 1
+Affinity LVL 2	 That dealer sucks. He's been here the longest? Why should I give a shit? Fire him.
+Noon 2
+Affinity LVL 7	 Gambling and shoot-outs are pretty much the same thing. Morons who panic mess up and get dead. Gyahaha!
+Noon 3
+Affinity LVL 16	 Stop talking. I don't care.
+Noon 4
+Affinity LVL 12	 What's that guy's name again? You know, the one who's gonna become a judge or a cop or something. ...Whatever, I'll just forget it again.
+Noon 5
+Affinity LVL 21	 That's it, kitty-cat. I feel like my luck'll change if you're around.
+Evening 1
+Affinity LVL 3	 You wanna know what kinda meat this is? Anomaly meat. What else would it be? ...Who the fuck're you again?
+Evening 2
+Affinity LVL 6	 They nabbed one of ours? You guys aren't toddlers. Deal with it yourselves.
+Evening 3
+Affinity LVL 8	 None of you morons have any flair for the table. Lulu needs to raise the minimum bet already.
+Evening 4
+Affinity LVL 13	 I spy, with my little eye, a tasty-looking kitty-cat... Come over here so I can pat you. ...Nah, changed my mind. Scram.
+Evening 5
+Affinity LVL 22	 I'm starving... This isn't enough... I want more... More...
+Night 1
+Affinity LVL 4	 Oops. I lost all the money Lulu gave me. Better make a run for it before he notices
+Night 2
+Affinity LVL 5	 I'm bored... Hey, you over there. Come play five finger filet with me. Gimme your left hand.
+Night 3
+Affinity LVL 9	 You're a real smooth talker, huh? Don't remember anything you said though. Ciao!
+Night 4
+Affinity LVL 18	 You want a surefire way to win at the table? Doesn't exist. You just gotta keep playing.
+Night 5
+Affinity LVL 23	 I'm the only one who sees how fucked we are. But he won't believe me. So just let it all burn down—I don't give a shit anymore.
+Goodnight 1
+Affinity LVL 10	 Can't sleep? Sit over there. I'll deal the cards.
+Goodnight 2
+Affinity LVL 17	 You going to bed already? Aren't you a good little kitty-cat. Whatever, do what you want.
+Goodnight 3
+Affinity LVL 19	 Hey, go warm up my bed for me. What do you mean how? Get in there, dumbass.
+Goodnight 4
+Affinity LVL 24	 If you don't like pain then quit flailing around. I'm getting a taste of you, so close your eyes and shut up.
+Max Affinity
+Affinity LVL 25	 You're not getting away from me, kitten. You're here till death do us part, whether you like it or not.
 ---------
 
 Romeo 
@@ -325,6 +784,73 @@ Romeo is a proud, greedy and sharp-tongued person who often snaps at other peopl
 In the flashback featuring Sinostra in "Episode 22: Who Killed Robin? Act II", it is revealed that Romeo and Taiga were already acquainted before the two were assigned to become Sinostra's captain and vice captain, and that, for reasons unknown, Romeo separated from Taiga, and Professor Hyde's offer to turn the unofficial gambling den into a casino officiated by the academy forced Romeo to "come back to" Taiga because the former was "strapped for cash".
 
 He's interested in fashion and brands, and has a great fixation on his beauty, continuously maintaining his appearance. It is revealed that Romeo has a prosthetic limb. Mio, like for Haru's prosthetic arm, created it.
+
+Character Selection	 Hmph. If you want to survive here, you better not piss me off!
+Opening Cutscene	Tch... What do you want? Coming up here now... You're just getting in my way! I've got one last job for you. Tell everyone I looked flawless in my final moments.
+Summon	I see you have an eye for quality. That's unexpected.
+Login Bonus	 TBA
+Home Screen
+Title & Affinity LVL	Voiceline
+Login	 Hey! I'm talking to you, BB! If you've got time to wander around, you've got time to wipe the tables!
+New Message	 Excuse me? What sane person lets their messages pile up like this!? Deal with them or I'll deal with you!
+Default 1	 Fuji... Come out, come out, wherever you are... Tch, where did he go? Why is running away the only thing he's good at!?
+Default 2	 Listen up—call me Fico. That's the only name I'll respond to, understand!?
+Default 3	 Come to my private office later—I've got a little proposal I think you'll want to hear. But make sure you come alone.
+Default 4	 Just go! I cannot deal with this WTWUT! Wall-To-Wall Useless Trash, obviously!
+Default 5	 Time to count this month's protection fees... Not bad. I'll up this group by 2% next month. This one could go a little higher too...
+Idle 1	 Tch... If you don't have any business for me, I'm leaving! You're wasting my precious time!
+Idle 2	 My drink is empty. Hey! I'm talking to you! Go bring me a refill!
+Welcome Back	 Well, look what the cat dragged in. Do I have to teach you how to maintain an adult relationship? This is your last chance, got it!?
+Morning 1
+Affinity LVL 1	 Why does that DOF want to meet so early in the morning? If I get bags under my eyes because of this, I'm going to slit his throat
+Morning 2
+Affinity LVL 14	 What is going on with your skin!? Do you even have a proper routine in place? Unacceptable. Your overnight skin cell turnover is suboptimal and it shows.
+Morning 3
+Affinity LVL 15	 That BTH...! I was almost impressed to see him out so early until I realized he's been playing all night!!
+Morning 4
+Affinity LVL 11	 I have to drink a cup of room-temperature water, do an electric facial and a mask, apply body cream, do my neck routine... I have no free time in the morning.
+Morning 5
+Affinity LVL 20	 What? I'm on my way to the gym for a workout. ...You can join me if you're interested.
+Noon 1
+Affinity LVL 2	 Hello? Yes, I was just eating lunch. Again? ...Fine. Tonight? All right. Bye now.
+Noon 2
+Affinity LVL 7	 ...Looks like I'm due for a tune up soon. Keeping my posture beautiful isn't easy, no matter how much I train my core.
+Noon 3
+Affinity LVL 16	 What do you mean you don't need any more noni juice? I went out of my way to prepare it for you. Come on now, drink it.
+Noon 4
+Affinity LVL 12	 Hey! There's a hair on the ground over here! And there's dust over here! Can't you even clean something properly without me holding your hand!?
+Noon 5
+Affinity LVL 21	 Why are you carrying that!? What if you drop it and it breaks? I'll get one of our young guys to do it, so put it down already!
+Evening 1
+Affinity LVL 3	 Have you seen Shinjo anywhere? I just asked him to organize some documents and he ran off to make copies!
+Evening 2
+Affinity LVL 6	 How dare those Frostheim slugs start whispering the moment they see my face... One day they'll be groveling at my feet...
+Evening 3
+Affinity LVL 8	 You're smelling the bedtime fragrance I bought from Kurossa earlier. He has a good eye, so I often ask him to pick things out for me.
+Evening 4
+Affinity LVL 13	 I maintain my bullets myself. You really think I'd let another man handle my crown jewels?
+Evening 5
+Affinity LVL 22	 I won't let anyone destroy what I've built— not even my OAOF.
+Night 1
+Affinity LVL 4	 Mickey's bar? Yes, I am going again tonight, but it's only because there's nowhere else to go for a drink.
+Night 2
+Affinity LVL 5	 This is when the regulars usually come, so I have to sweeten the pot. I saw that HNTW out there earlier too.
+Night 3
+Affinity LVL 9	 You want to see my Insta? I suppose that's fine, but do you even know anything about brands?
+Night 4
+Affinity LVL 18	 Money, hard work, and patience... That's the cost of true beauty. Don't think it's something you can easily imitate.
+Night 5
+Affinity LVL 23	 Most of humanity's problems can be solved with money. If you put that another way, without money, you don't stand a chance. That's the way the world works.
+Goodnight 1
+Affinity LVL 10	 Fuji's pendant? Of course I haven't given up on it. He has no idea of the value of what's hanging around his neck.
+Goodnight 2
+Affinity LVL 17	 Finally, some goods worth talking about. I have to ring that DOF and arrange the next event...
+Goodnight 3
+Affinity LVL 19	 How about a smoke before bed? I'm joking. If I wasn't selling it, I wouldn't be touching this unhealthy garbage.
+Goodnight 4
+Affinity LVL 24	 Coming here alone this time of night, haven't you made progress? Come over here, I'll evaluate your efforts.
+Max Affinity
+Affinity LVL 25	 What could you possibly be afraid of? You're one of my people! Walk with your head held high or I'll step on it!
 --------
 
 Leo
@@ -349,6 +875,73 @@ Most of what captures Leo's curiosity is usually recorded or taken photos of on 
 In middle school, Leo would rarely show up to classes unless to take tests, and consistently scored at the very top of his class. When confronted by his homeroom teacher, he made a remark on the usefulness of textbooks compared to the "crusty old dude with halitosis" before being punched in the face. The homeroom teacher was fired for corporal punishment, and would be first of four teachers to quit their position due to Leo in three years.
 
 Leo scored 2nd highest in the freshmen exams, earning him the title of vice-captain over Sho(who scored 5th).
+
+Character Selection	 Aren't you curious about what wish the ghouls sold their souls for?
+Opening Cutscene	Life sucks then you die, right? I just want to make the assholes responsible regret it. Gross, don't make that face at me. You think I'm suddenly pathetic enough to be moved by your ugly crying?
+Summon	Wow, you wanted me that bad?
+Login Bonus	 TBA
+Home Screen
+Title & Affinity LVL	Voiceline
+Login	 Nice timing, Honor Roll. Give me your hand. Come on, just do it.
+New Message	 Hey, your messages are piling up. Hurry up and open them, it's annoying.
+Default 1	 Ugh, you're so loud. Ask for permission if you want to talk to me. ...Nope, denied.
+Default 2	 I'm thirsty, go buy me a drink. What kind? Why don't you take a guess?
+Default 3	 Hey Honor Roll! ...Don't make that face at me. I'm being totally genuine right now.
+Default 4	 Have you seen Cap? Ugh, bet he's lurching around lost again...
+Default 5	 We're fighting again? Which house? ...Ugh, pass.
+Idle 1	 Was that on purpose? Are you seriously ignoring me right now?
+Idle 2	 Ugh, everyone's so loud. I'm putting my headphones on, so tap here if you need me, okay?
+Welcome Back	 Who are you? Ah ha ha! I'm kidding. Have you got a good excuse for why you've been gone so long?
+Morning 1
+Affinity LVL 1	 Ugh, I'm so tired... I'm done with these classes already. I'll just show up for tests and skip the rest.
+Morning 2
+Affinity LVL 14	 You think I smell good? It's L'Occitane body lotion. I just throw some on after showering in the morning.
+Morning 3
+Affinity LVL 15	 Okay, okay, I'm coming... Ugh. Calling the whole house out at the ass crack of dawn... What is wrong with that himbo?
+Morning 4
+Affinity LVL 11	 Night, then. What? I haven't slept yet. Unlike you, I actually have shit to do.
+Morning 5
+Affinity LVL 20	 There she is. Hey, Honor Roll! You free? There's something I was really hoping you could help me with.
+Noon 1
+Affinity LVL 2	 I'm starving! Huh? Where'd Sho go? I swear he was here a second ago... Whatever. I'll make that NPC go buy something for me.
+Noon 2
+Affinity LVL 7	 Hey, over here. Give this tabloid to that national treasure wannabe in front of the food truck. Just do it!
+Noon 3
+Affinity LVL 16	 Ugh, I totally missed out on that ultra-spicy chicken thing they had in Shin-Okubo. Guess I'll read the reviews and get Sho to recreate it.
+Noon 4
+Affinity LVL 12	 Why is this place so overrun with fucking losers?! My eardrums are going to burst!! ...I'm going back to the garage to play with Cap.
+Noon 5
+Affinity LVL 21	 Hey, Honor Roll, come sit down. Not over there, next to me. Good, you're comfy. Don't move, I'm taking a nap.
+Evening 1
+Affinity LVL 3	 That fucking himbo left me behind again...
+Evening 2
+Affinity LVL 6	 Who's DMing me? Oh, it's this account. Huh... Now that's interesting.
+Evening 3
+Affinity LVL 8	 Hey, Cap, could you open this bottle for me? Do it yourself? I can't, that's why I'm— hey! Where are you going?!
+Evening 4
+Affinity LVL 13	 Huh... The little kabuki prince's sister married an actor from a different troupe? Bet there's something going on there.
+Evening 5
+Affinity LVL 22	 They went to the Pit again? Must really get a kick out of it... Like big, dumb animals throwing themselves at each other.
+Night 1
+Affinity LVL 4	 Right now? I'm programming an app. I'm not doing anything that complex, just making an ordering system.
+Night 2
+Affinity LVL 5	 Ugh... Cap smashed my woofer. I was just playing music in the Pit since we can't go clubbing...
+Night 3
+Affinity LVL 9	 Time to see what the bug I planted in his car picked up... Huh? What the fuck?! Someone broke it!!
+Night 4
+Affinity LVL 18	 That dumb video got over 10k interacts? God, you're all so basic... Muting.
+Night 5
+Affinity LVL 23	 The whole demon nickname? People can call me whatever they want. I know who I am.
+Goodnight 1
+Affinity LVL 10	 This pillow mist? I only bought it because it was trending, but it's better than I thought it'd be. Ro-Ro's hooked on it too.
+Goodnight 2
+Affinity LVL 17	 Wow, so late already. Better get a bath going and get ready for bed. Here you go. It's for scrubbing the bath.
+Goodnight 3
+Affinity LVL 19	 I can touch you, but you can't touch me. That's how this works, got it?
+Goodnight 4
+Affinity LVL 24	 Stay like this till I tell you to leave, okay? Got it? I didn't hear an answer.
+Max Affinity
+Affinity LVL 25	 Wanna make a bet, Honor Roll? Over which will come first—me falling for you, or you getting hooked on me.
 -------
 
 Kaito
@@ -376,6 +969,71 @@ In Episode 9, Romeo digs up a grave with an expensive but nameless headstone, an
 In Episode 20, it is revealed that Kaito's grandmother was the one who adopted him, and refuses to tell him what happened to his parents.
 
 At some point, his grandmother grew ill and was revealed to have developed cancer. After deciding to go hang out with his classmates rather than check up on her in the hospital, Kaito grew guilty and decided to run straight back home, only to be greeted by a pot of curry with his grandmother's note on it.
+Opening Cutscene	I really was weak and useless all the way to the bitter end, huh? I'm sorry. I'm probably just delaying the inevitable, but... this is all a guy like me can do, you know?
+Summon	What!? M-Me!? I mean of course! I-I've got you covered!
+Login Bonus	 TBA
+Home Screen
+Title & Affinity LVL	Voiceline
+Login	MC! Over here! Hiya!
+New Message	 Hey, new message. Better check it out, yeah? Or are you the type who's got like a ton of of unread inbox messages?
+Default 1	 God, please don't make me go on any more missions... It's not like me being there is any help to anyone anyway...
+Default 2	 Oh yeah, have you been on WickHive yet? Someone leaked next month's cafeteria menu! Oh wait... I-I already told you that, didn't I?!
+Default 3	 Damn it... I could've taken MC to lunch with that money! God, why am I such a moron?!
+Default 4	 Ask me anything you want to know! I'm pretty savvy when it comes to Darkwick!
+Default 5	 Urgh... Limited time only, you are not my friend... Huh? Oh, I'm on TikTok. I really want this, but I'm pretty broke this month...
+Idle 1	 Huh? MC? Am I being annoying?! I'm sorry! You're probably busy, right?!
+Idle 2	 MC seems kind of busy... I know! I'll find a video that'll help take her mind off things!
+Welcome Back	 Ah...! Oh my god, you're back!! I'm so happy to see you!!!! (sob) Please don't leave me again...
+Morning 1
+Affinity LVL 1	 Ahem... Testing, testing... Morning! Heh, nailed it... Ack! How long've you been there, MC?!
+Morning 2
+Affinity LVL 14	 (yawn) Man, my bed's like a freaking marshmallow. I can never get any good sleep on that thing...
+Morning 3
+Affinity LVL 15	 Huh? Oh, my pendant! You're always wearing it? Does that mean you've actually been paying attention to me?!
+Morning 4
+Affinity LVL 11	 Hey MC, you seem different somehow today. Did you change something? Or am I just imagining things?!
+Morning 5
+Affinity LVL 20	 Morning! Hey, guess what? Luca's busy after class, so how about we hit up the diner? It's been ages!
+Noon 1
+Affinity LVL 2	 Phew, should be safe here... EEEEEEEEEEK! Oh thank god, it's just a cat... I thought he found me...
+Noon 2
+Affinity LVL 7	 Argh, I want junk food! And I want to try all the new snack flavors!!
+Noon 3
+Affinity LVL 16	 Hey MC, how 'bout we grab a bite?! I've got tons to splurge in winn... er, earnings, so it's all on me! Get whatever you want!
+Noon 4
+Affinity LVL 12	 Noooo why does Tohma want to see me...? No way it's about something good! Could you come with me, MC?!
+Noon 5
+Affinity LVL 21	 Sorry, I gotta stay after class today... (sniffle) This sucks, I really wanted to walk home with you...
+Evening 1
+Affinity LVL 3	 Shit, it's Luca... Judging by the outfit he must be going to train. I better bail before he tries to rope me in too...
+Evening 2
+Affinity LVL 6	 So your father runs a company, huh? Who the hell leads with that?! This is why I hate talking to Frostheimers...
+Evening 3
+Affinity LVL 8	 All right, time to man up and bite the bullet... Nope, absolutely not, can't do it!
+Evening 4
+Affinity LVL 13	 Crap, I fell asleep in class so I don't know what our homework is... Help me, MC!
+Evening 5
+Affinity LVL 22	 Hey I'm really sorry but do you mind if we stop by the campus store after class? I'm almost out of granulated sugar.
+Night 1
+Affinity LVL 4	 Eeeek?! Oh, it's just you... Geez, you almost gave me a heart attack!
+Night 2
+Affinity LVL 5	 Ugh, Romeo's texting me... Not gonna open that...
+Night 3
+Affinity LVL 9	 How is Jin's skin so perfect? Fucking rich kids and their stupidly expensive fancy-ass toner!!!
+Night 4
+Affinity LVL 18	 Ha ha ha! Have you seen this yet?! It's all over TikTok. Ah man, it's killing me...
+Night 5
+Affinity LVL 23	 Hey, do you like stars? Oh, um, I was just wondering 'cause there's this place where you can see them really well, so I thought maybe you'd want to go some time...
+Goodnight 1
+Affinity LVL 10	 (yawn) Guess I'll go brush my teeth...
+Goodnight 2
+Affinity LVL 17	 ...Huh?! Man, nearly fell sleep without putting my phone on the charger... 5%, that would've sucked tomorrow...
+Goodnight 3
+Affinity LVL 19	 Whoa, when did it get so late?! Sorry MC, I didn't mean to keep you up... What? You're still good?
+Goodnight 4
+Affinity LVL 24	 Sure is dark. Reminds me of the closet where we first met. Remember?
+Max Affinity
+Affinity LVL 25	 I know I'm weak, and a coward. But I really do want to become your knight in shining armor, MC.
 ------
 
 Ren
@@ -399,6 +1057,73 @@ Always carrying his phone with him everywhere, Ren is not cowardly but in some c
 Ren hates anything water-related. And despite liking horror movies, he is scared of actual horror in front of him.
 
 Although on the surface he seems rude and uncaring, Ren cares and thinks a lot. When necessary, he chooses to do the right thing, like when he saved Calamari from death. He also tends to hide his feelings.
+
+Character Selection	 That's harassment. Is everyone in this place from the past?
+Opening Cutscene	This is exactly why I didn't want to do this! I knew this was how it was gonna end! What am I even doing here...? This is all your fault...
+Summon	 If anything happens to me, it's your fault.
+Login Bonus	 TBA
+Home Screen
+Title & Affinity LVL	Voiceline
+Login	 Great, shift change. I'm gonna head out then... What? Do I really need to be here for that?
+New Message	 I think you've got a notification... Aren't you going to look at it?
+Default 1	 Who did I disappoint in a past life to end up in Jabberwock... There's no general students or even a single other sane person, and these jumpsuits are a crime...
+Default 2	 Why do I have to look after all these weird-ass animals? This is forced labor... Ugh, they're so gross...
+Default 3	 If you're just gonna stand there, could you go feed the animals in the aquatic zone? I'm too busy.
+Default 4	 Ugh, why is that clown calling me... ...Whatever, I'll just let it ring out.
+Default 5	 Oh, hey... Could you open the link I sent you? No, you don't have to sign up or anything. Thanks.
+Idle 1	 Where'd she go...? Whatever. Guess I'll catch up on some of my games.
+Idle 2	 Pfft... This edit's awesome. I'm a genius. I'll show MC when she gets back.
+Welcome Back	 It's not like I was waiting for you or anything. It's just this hell hole is even more unbearable when you're not around...
+Morning 1
+Affinity LVL 1	 Ugh... Tell me how I'm supposed to sit through classes when I've been up since 4 AM? (yawn) I'm exhausted...
+Morning 2
+Affinity LVL 14	 That rabbit sure has it good. All it has to do is breathe and everyone fawns over it. Doesn't even have to feed itself. Just wait till it grows up and learns what the world's really like.
+Morning 3
+Affinity LVL 15	 Sup... Huh? I'm alone today. I just got up on my own since if I don't that clown'll wake me up anyway.
+Morning 4
+Affinity LVL 11	 My head's killing me... This is the worst... Rise and shine! my ass... It's basically still the middle of the night. Guess I should padlock my windows...
+Morning 5
+Affinity LVL 20	 You're being forced to help out again? Wow, a doormat out in the wild. So? Where do you want me to carry all this food?
+Noon 1
+Affinity LVL 2	 Ugh... I can't believe I'm hiding right now... Why the hell does that clown have to chase me around at lunch time too?
+Noon 2
+Affinity LVL 7	 You think I sigh a lot? Got a problem with that? You realize trying to take away people's freedom of speech is power harrassment, right?
+Noon 3
+Affinity LVL 16	 Oof, nearly missed the noon raid... Not like I'll have any time to myself once I get back to the dorm, so I guess I should do it now...
+Noon 4
+Affinity LVL 12	 The cafeteria's way over capacity... The assholes who save seats before it's even noon are ruining it for everyone else...
+Noon 5
+Affinity LVL 21	 This? It's a video I uploaded. People seem really into it. It's of that clown getting chased by a dog and flailing around like one of those inflatable air dancers.
+Evening 1
+Affinity LVL 3	 Preach about doing it for the sake of your friends or the animals or whatever all you want— I really don't give a shit. People who say that stuff are just deluding themselves.
+Evening 2
+Affinity LVL 6	 Don't people get embarrassed calling out those words when they use their stigmas? It makes them look like LARPers...
+Evening 3
+Affinity LVL 8	 I'm so done... I'm out of HP... Shouldn't I be exempt from missions and classes since I'm looking after all those animals?
+Evening 4
+Affinity LVL 13	 Why's my pay so low... Huh? What's this deduction for? "Consultation Fee: Ritsu Shinjo..." He's seriously charging me for complaining...?
+Evening 5
+Affinity LVL 22	 What am I doing today? Working at the diner. Oh, if you want to keep me company, feel free to come by. As long as you serve yourself.
+Night 1
+Affinity LVL 4	 Huh? I can't see that clown anywhere... Hell yes. Gonna get through my watch list. I hope he never comes back.
+Night 2
+Affinity LVL 5	 I'm grinding this game on my phone, so could you not talk to me for a while? Crap, I think my RSI is flaring up...
+Night 3
+Affinity LVL 9	 Pfft... The video of that clown getting attacked by that hawk thing is getting so many interacts. This editing thing's actually pretty fun.
+Night 4
+Affinity LVL 18	 Well done me for surviving another day... Oh, same to you too, MC. I don't how you can do this stuff voluntarily.
+Night 5
+Affinity LVL 23	 Huh? You were waiting for me to get off work? Oh... Thanks. Wait, that clown put you up to this?! I'm gonna kill him...
+Goodnight 1
+Affinity LVL 10	 Gotta change the locks so that clown can't get in again. I've bought enough padlocks to start my own business by now...
+Goodnight 2
+Affinity LVL 17	 No, I'm not going to sleep yet. I'm gonna watch a horror B-movie. You don't have to think, so they're the perfect thing to watch before bed.
+Goodnight 3
+Affinity LVL 19	 Huh? I'm going to the campus store to buy some stuff, where are you going? Well, I'm going that way, so... bye.
+Goodnight 4
+Affinity LVL 24	 When did it get this late? That was horrifyingly fast... I'll walk part of the way back with you. I was gonna go buy something to drink anyway...
+Max Affinity
+Affinity LVL 25	 Every day here is a fresh hell, sure, but... You're suffering through it with me, so I guess I'll stick it out a little longer...
 -------
 
 Shohei
@@ -420,6 +1145,73 @@ A big deal of this is seen with Leo, though, despite his words, he does what he 
 While he appears to tolerate Leo's antagonistic actions, he draws a line when Leo starts to mock his friends. This is shown when Subaru brings his motorbike to Kamata Prison when he heard they needed help. Leo starts to mock Subaru for not feeding Bonnie properly, and Sho reprimands him, telling him to knock it off.
 
 Sho also develops a liking to tease his friends, particularly the MC.
+
+Character Selection	 Pass. I'm not going on some kindergarten field trip with you.
+Opening Cutscene	What're you doing here? Geez... What else am I supposed to do, huh? I'm the only guy for the job. Pfft... What's with that face? At least see me off with a smile. Well... it's been a fun ride. Thanks for everything.
+Summon	 What're you looking at? C'mon, let's go.
+Login Bonus	 TBA
+Home Screen
+Title & Affinity LVL	Voiceline
+Login	 Hey, good timing. You got a second?
+New Message	 You got a message. Gonna check it or what?
+Default 1	 Here you go, Bonnie. Barbecue sandwiches, your favorite.
+Default 2	 Huh? Was that your stomach? You hungry?
+Default 3	 Pit's on again? I'm done with that already. They're all normies—what's the point?
+Default 4	 Yeah I got it, you want to train. You go ahead, I'll catch up.
+Default 5	 Did you just see a creep in a black mask over there? ...Nah, never mind. I'm hallucinating.
+Idle 1	 What're you looking at?
+Idle 2	 C'mon. Hurry up, or I'm gonna leave you behind.
+Welcome Back	 What took you so long? Your food's cold. Go wash up.
+Morning 1
+Affinity LVL 1	 Too early... What's Leo doing today? Guess I'll text him.
+Morning 2
+Affinity LVL 14	 You think I look grumpy? The stream for the finals started at 3 AM, what do you want me to do about that? (yawn)
+Morning 3
+Affinity LVL 15	 Hey... Pfft. What are you panicking for? You need to be somewhere? Hop on—I'll give you a ride.
+Morning 4
+Affinity LVL 11	 All right, that's the morning prep done. Guess I'll shower and go back to bed.
+Morning 5
+Affinity LVL 20	 Seriously, it's way too early for this... What? I'm going to class. You're the one who wouldn't shut up about it.
+Noon 1
+Affinity LVL 2	 Freakin' sasquatch... Would it kill him to approve an R&R permit every once in a while?
+Noon 2
+Affinity LVL 7	 Nice, got an order. More demand than I thought. Getting Leo to make this app was a good call.
+Noon 3
+Affinity LVL 16	 You hungry, MC? I made lunch, but Leo bailed on me, so I was just gonna eat it myself.
+Noon 4
+Affinity LVL 12	 This? It's a fishing rod. Sometimes I catch and filet the fish myself. It's pretty easy, and it saves cash.
+Noon 5
+Affinity LVL 21	 I've finally got the hang of running this food truck. I want to thank you for helping me out—think of something you want.
+Evening 1
+Affinity LVL 3	 Class? What's the point? It's all written in the textbooks—all you gotta do is memorize it.
+Evening 2
+Affinity LVL 6	 Huh, haven't ridden a skateboard since middle school but I guess I still have the muscle memory. Watch this, I'm gonna do a trick.
+Evening 3
+Affinity LVL 8	 What's Mido texting me for? come tot hr epuit... Pfft. What the hell is this, some kinda secret code?
+Evening 4
+Affinity LVL 13	 MC, there you are. I'm headed to the diner, could you come with and help me carry some stuff?
+Evening 5
+Affinity LVL 22	 Huh? No, I don't really need any help today... You don't have to make excuses to hang out with me, you know. Just ask.
+Night 1
+Affinity LVL 4	 All right, time to go for a spin. C'mon, Bonnie.
+Night 2
+Affinity LVL 5	 (yawn) What time is it? Seriously? Damn, overslept.
+Night 3
+Affinity LVL 9	 Shit, my whole body's killing me... Sparring five sets of fifteen rounds, are you kidding me? Mido's insane...
+Night 4
+Affinity LVL 18	 MC, black or white? I'm trying to choose some packaging for the food truck, what'd you think I meant? ...I'll keep it in mind, anyway.
+Night 5
+Affinity LVL 23	 What time you planning on heading home, MC? Anytime's fine for me. You can stay over if you want.
+Goodnight 1
+Affinity LVL 10	 What am I gonna do tomorrow... Got nothing on, guess I could go to class... That asshole's on the schedule. Pass.
+Goodnight 2
+Affinity LVL 17	 Last year I would've been in a club around this time. Leo was always getting in fights though, so we got banned from almost every joint in Shibuya.
+Goodnight 3
+Affinity LVL 19	 Geez, it's pretty late. Wait there—I'll give you a ride back.
+Goodnight 4
+Affinity LVL 24	 Can't sleep? Come over here—I'll warm you up. Pfft... I was kidding, don't get mad.
+Max Affinity
+Affinity LVL 25	 Here, this helmet's for you. I got some time today, so I'll take you somewhere. Anywhere you wanna go.
 ------
 
 Lucas
@@ -990,7 +1782,7 @@ He is not afraid to get his hands dirty in pursuit of his goals and has been run
 "I lend a sympathetic ear to those in need—that's all."
 
 Appearance
-Tohma has ashy-blonde hair, pale skin, pale blue eyes, sharp features, and often wears a monocle on his left eye. Jin describes him as having a lot of brute strength, Yuri calls him "musclehead", and he is shown to be almost as tall as Alan (one of the tallest ghouls).[1]
+Tohma has ashy-blonde hair, pale skin, pale blue eyes, sharp features, and often wears a monocle on his left eye. Jin describes him as having a lot of brute strength, Yuri calls him "musclehead", and he is shown to be almost as tall as Alan (one of the tallest ghouls).
 
 Personality
 Tohma is known to have a cunning gaze. Contrary to his appearance, Tohma is a rather easygoing and responsible person. He runs Frostheim for Jin even when it's a tiring job, or whenever he's on a mission.
@@ -998,7 +1790,7 @@ Tohma is known to have a cunning gaze. Contrary to his appearance, Tohma is a ra
 He is also open and enthusiastic if the MC needs some or help with work.
 
 Background
-Tohma used to be a Vagastrom student in until the middle of last year[2], with his transfer being first implied by Yumiko before she gets cut off by him in the first episode.
+Tohma used to be a Vagastrom student in until the middle of last year, with his transfer being first implied by Yumiko before she gets cut off by him in the first episode.
 
 In the first episode, Yumiko Sumitomo implies that Tohma may have orchestrated the downfall of one of Jin Kamurai's close friends, filling in the void "almost as though it was planned", and possibly played a role in the transfer of aforementioned friend to another house. This, however, remains speculation.
 --------

@@ -276,6 +276,70 @@ export function createFakeSupabase(initialTables = {}) {
       return claimed;
     },
 
+    // db/migrations/015: INSERT ... ON CONFLICT DO NOTHING RETURNING *.
+    // Returns a one-row array on a fresh claim and an empty one when the scene
+    // already exists in any status — which is the whole idempotency guard for
+    // bond scene delivery. Atomicity is a Postgres property and is NOT modelled
+    // here; same caveat as the other rpc stand-ins.
+    record_bond_scene({ p_user_id, p_character_id, p_level_name }) {
+      tables.bond_scene_progress = tables.bond_scene_progress || [];
+
+      const existing = tables.bond_scene_progress.find(
+        (r) => r.discord_user_id === p_user_id
+          && r.character_id === p_character_id
+          && r.level_name === p_level_name,
+      );
+      if (existing) return [];
+
+      const now = rpcNow.toISOString();
+      const row = {
+        discord_user_id: p_user_id,
+        character_id: p_character_id,
+        level_name: p_level_name,
+        status: 'queued',
+        channel: null,
+        dm_channel_id: null,
+        current_beat: null,
+        choice_key: null,
+        completed_at: null,
+        created_at: now,
+        updated_at: now,
+      };
+      tables.bond_scene_progress.push(row);
+      return [{ ...row }];
+    },
+
+    // db/migrations/015: close the row and insert the keepsake in one statement,
+    // guarded on choice_key IS NULL. Returns whether this call was the one that
+    // closed the scene, so a replayed choice click grants nothing.
+    complete_bond_scene({ p_user_id, p_character_id, p_level_name, p_choice_key, p_emoji, p_line }) {
+      tables.bond_scene_progress = tables.bond_scene_progress || [];
+      tables.bond_keepsakes = tables.bond_keepsakes || [];
+
+      const row = tables.bond_scene_progress.find(
+        (r) => r.discord_user_id === p_user_id
+          && r.character_id === p_character_id
+          && r.level_name === p_level_name,
+      );
+      if (!row || row.choice_key != null) return false;
+
+      const now = rpcNow.toISOString();
+      row.choice_key = p_choice_key;
+      row.status = 'complete';
+      row.completed_at = now;
+      row.updated_at = now;
+
+      tables.bond_keepsakes.push({
+        discord_user_id: p_user_id,
+        character_id: p_character_id,
+        level_name: p_level_name,
+        emoji: p_emoji,
+        line: p_line,
+        earned_at: now,
+      });
+      return true;
+    },
+
     // db/migrations/011: INSERT ... ON CONFLICT DO UPDATE SET wins = wins + 1
     record_encounter_win({ p_user_id, p_guild_id }) {
       const yearMonth = `${rpcNow.getUTCFullYear()}-${String(rpcNow.getUTCMonth() + 1).padStart(2, '0')}`;

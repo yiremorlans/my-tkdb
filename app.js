@@ -16,6 +16,14 @@ import {
   buildRoamSpawnMessage,
 } from './encounters.js';
 import { handleCall, handleEncountersAdmin, handleEncounterDev } from './publicEncounters.js';
+import {
+  buildBondJournal,
+  deliverBondScene,
+  handleBondClick,
+  handleBondReplayClick,
+  setBondDmsEnabled,
+  surfaceBondSceneResume,
+} from './bondScenes.js';
 import { startEncounterScheduler } from './encounterScheduler.js';
 import { claimCommandInvoke, checkCommandLimit, claimCommandUse } from './commandLimits.js';
 import {
@@ -103,6 +111,25 @@ async function sendFollowup(interactionToken, messageData, timeoutMs = 15000, ed
   }
 }
 
+// Anything that reaches out to Discord on its own initiative is held back under
+// `npm test`, where app.js is imported to exercise the HTTP routes: the gateway
+// and the encounter scheduler for the same reason at the bottom of this file,
+// and the two bond-scene triggers here. bondScenes.js itself is unit-tested
+// directly against a mocked discordRest.
+const IS_TEST = process.env.npm_lifecycle_event === 'test';
+
+// A bond scene owed a beat it couldn't deliver (no shared server, DMs closed,
+// Discord down, a POST that failed mid-walk) waits on its row until the user's
+// next command, which offers a one-press button to put it back in their DMs.
+// The ephemeral message is only ever that button — the scene itself is never
+// rendered here. Fire-and-forget, after the real reply has gone out: a pending
+// scene must never delay or fail an encounter.
+function maybeSurfaceBondScene(userId, interactionToken) {
+  if (IS_TEST) return;
+  surfaceBondSceneResume(userId, (messageData) => sendFollowup(interactionToken, messageData))
+    .catch((err) => console.error('Error surfacing bond scene:', err));
+}
+
 /**
  * Interactions endpoint URL where Discord will send HTTP requests
  * Parse request body and verifies incoming requests using discord-interactions package
@@ -128,9 +155,9 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
     if (name === 'roam') {
       // In-memory flood throttle, checked before the Supabase pre-check so a
-      // spammed /roam never reaches the DB or buildRoamDialogueMessage. Shared
-      // with /meet — see claimCommandInvoke.
-      const flood = claimCommandInvoke(userId);
+      // spammed /roam never reaches the DB or buildRoamDialogueMessage. Scoped
+      // to /roam alone — a /meet in the same minute is unaffected.
+      const flood = claimCommandInvoke(userId, 'roam');
       if (!flood.allowed) {
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
@@ -155,10 +182,12 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       // opening the prompt.
       try {
         const messageData = await buildRoamDialogueMessage(userId);
-        return res.send({
+        res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: messageData,
         });
+        maybeSurfaceBondScene(userId, req.body.token);
+        return;
       } catch (err) {
         console.error('Error in /roam:', err);
         return res.send({
@@ -172,8 +201,8 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     }
 
     if (name === 'meet') {
-      // Same in-memory flood throttle as /roam, shared across both commands.
-      const flood = claimCommandInvoke(userId);
+      // Same in-memory flood throttle as /roam, but on its own /meet window.
+      const flood = claimCommandInvoke(userId, 'meet');
       if (!flood.allowed) {
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
@@ -196,10 +225,12 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       // User activity is only counted once a character actually loads (the
       // meet/pick button below), not for opening the picker.
       const messageData = buildMeetPickMessage();
-      return res.send({
+      res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
         data: messageData,
       });
+      maybeSurfaceBondScene(userId, req.body.token);
+      return;
     }
 
     if (name === 'affinity') {
@@ -231,6 +262,8 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         try {
           const messageData = await buildAffinityMessage(userId, characterIds);
           await sendFollowup(req.body.token, messageData, 15000, true);
+
+          maybeSurfaceBondScene(userId, req.body.token);
 
           // Track user activity and command usage
           trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
@@ -276,6 +309,45 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     }
 
     if (name === 'bonds') {
+      // `dms` is an option rather than a subcommand on purpose: Discord makes a
+      // command with subcommands *only* invocable through them, and bare
+      // /bonds — the roster list — has to keep working. So `/bonds dms:off`
+      // toggles the level-up DMs and `/bonds` alone is unchanged.
+      // `/bonds character:<name>` is the relationship journal: what you have
+      // finished with one person, each scene replayable in your DMs as many
+      // times as you like — the same beats, the same buttons, just without
+      // moving anything (bond:replay below). The scene's own closing DM
+      // message offers the same replay directly (bond:replaystart), so this
+      // command isn't the only way in.
+      const characterOption = (data.options || []).find((o) => o.name === 'character');
+      if (characterOption) {
+        try {
+          const messageData = await buildBondJournal(userId, characterOption.value);
+          res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: messageData,
+          });
+          trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
+          trackCommandUsage(userId, 'bonds').catch(err => console.error('Error tracking command usage:', err));
+        } catch (err) {
+          console.error('Error in /bonds character:', err);
+          res.send({
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: { content: 'Something went wrong looking those up. Try again?', flags: 64 },
+          });
+        }
+        return;
+      }
+
+      const dmsOption = (data.options || []).find((o) => o.name === 'dms');
+      if (dmsOption) {
+        const content = await setBondDmsEnabled(userId, dmsOption.value === 'on');
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: { content, flags: 64 }, // EPHEMERAL
+        });
+      }
+
       // Text-only (no attachments), so respond in-band like /roam — no defer.
       try {
         const messageData = await buildBondsMessage(userId);
@@ -546,7 +618,9 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           // above. If the grant below fails the user is out this one turn —
           // the safe direction, and the same trade consumeAllEncounterBoosts
           // makes for the same reason.
-          const messageData = await buildResponseResultMessage(
+          // `levelUp` is carried on the result but is not part of the message —
+          // it is split off here so it never reaches Discord as a stray field.
+          const { levelUp, ...messageData } = await buildResponseResultMessage(
             userId,
             characterId,
             responseTypeId,
@@ -556,6 +630,17 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             type: InteractionResponseType.UPDATE_MESSAGE,
             data: messageData,
           });
+
+          // The bond scene for a level the user just crossed into
+          // (docs/bond-scene-dms.md). Never awaited: the reply above must not
+          // wait on Discord's DM endpoints, and a DM that can't be delivered —
+          // the ordinary outcome for a user who shares no server with the bot —
+          // must never surface as a /roam error. Everything it does is
+          // idempotent at the database, so a retried interaction can't double it.
+          if (levelUp && !IS_TEST) {
+            deliverBondScene(userId, levelUp.characterId, levelUp.levelName)
+              .catch(err => console.error('Error delivering bond scene:', err));
+          }
 
           // The flow completed — log it against the command that started it
           // ('meet' or 'roam'), not as a separate 'respond'.
@@ -573,6 +658,96 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           });
         }
       })();
+      return;
+    }
+
+    if (action === 'bond') {
+      // bond:next:<charId>:<levelSlug>:<beatIndex>
+      // bond:choice:<charId>:<levelSlug>:<choiceKey>
+      // bond:optout:<charId>:<levelSlug>:x
+      // bond:resume:<charId>:<levelSlug>:x
+      // bond:replay:<charId>:<levelSlug>:x        (journal button — starts a replay)
+      // bond:replaystart:<charId>:<levelSlug>:x   (the closing DM message's own button)
+      // bond:rnext:<charId>:<levelSlug>:<beatIndex>    (pages a replay)
+      // bond:rchoice:<charId>:<levelSlug>:<choiceKey>  (ends a replay)
+      //
+      // No user id in the custom_id — the interaction already carries the
+      // clicker (req.body.user.id in a DM, member.user.id on the ephemeral
+      // journal/resume message), and handleBondClick / handleBondReplayClick
+      // ignore a click whose scene row isn't theirs.
+      const [kind, charId, levelKey, arg] = rest;
+
+      // Replay: bondScenes.js handleBondReplayClick posts the exact same
+      // Continue / choice buttons a live scene does, for real, into the DM —
+      // it just never touches bond_scene_progress or bond_keepsakes.
+      if (kind === 'replaystart' || kind === 'rnext' || kind === 'rchoice') {
+        // These three all live on a message already sitting in the DM (the
+        // scene's own closing line, or an earlier replay beat), so the new
+        // message landing there is confirmation enough — no followup.
+        // `rnext`/`rchoice` strip the button just used, same as a live beat.
+        // `replaystart`'s button is left alone — nothing about the ACK
+        // changes it — so the scene can be replayed again later.
+        res.send(
+          kind === 'replaystart'
+            ? { type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE }
+            : { type: InteractionResponseType.UPDATE_MESSAGE, data: { components: [] } },
+        );
+        handleBondReplayClick(userId, { kind, characterId: charId, levelKey, arg })
+          .catch(err => console.error('Error in bond replay:', err));
+        return;
+      }
+
+      if (kind === 'replay') {
+        // The journal's button might not be in the DM at all (/bonds can run
+        // in a guild channel), so — unlike the three kinds above — this one
+        // gets an explicit confirmation, the same shape as the resume
+        // button's: deferred now, answered once the first beat lands or
+        // doesn't.
+        res.send({
+          type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+          data: { flags: 64 }, // EPHEMERAL
+        });
+        handleBondReplayClick(
+          userId,
+          { kind, characterId: charId, levelKey, arg },
+          { sendFollowup: (messageData) => sendFollowup(req.body.token, messageData, 15000, true) },
+        ).catch(err => console.error('Error in bond replay:', err));
+        return;
+      }
+
+      // ACK, which is the only thing here that uses the interaction.
+      //
+      // A scene button is *stripped*: the beat stays in the DM as part of the
+      // conversation, minus a control that has been used. The resume button is
+      // *disabled* instead — it is the only thing on its message, so removing
+      // it would leave a bare line with no explanation of what happened; greyed
+      // out, it reads as "done" and still can't be pressed twice.
+      //
+      // Both answers are correct for a stale click too, which strips or greys a
+      // dead button and posts nothing.
+      res.send({
+        type: InteractionResponseType.UPDATE_MESSAGE,
+        data: kind === 'resume'
+          ? {
+              components: (req.body.message?.components || []).map((row) => ({
+                ...row,
+                components: (row.components || []).map((b) => ({ ...b, disabled: true })),
+              })),
+            }
+          : { components: [] },
+      });
+
+      // Everything after the ACK is a plain bot-token POST into the DM channel
+      // stored on the row, with no deadline — which is exactly why a Continue
+      // button in a bond scene still works weeks after it was rendered. The
+      // webhook below is used only to answer the clicker about the mechanism
+      // (the resume button confirming it sent, or explaining why it could not);
+      // scene content never travels that way.
+      handleBondClick(
+        userId,
+        { kind, characterId: charId, levelKey, arg },
+        { sendFollowup: (messageData) => sendFollowup(req.body.token, messageData) },
+      ).catch(err => console.error('Error in bond scene click:', err));
       return;
     }
 

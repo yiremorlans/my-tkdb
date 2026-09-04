@@ -94,6 +94,13 @@ export async function getOrCreateRelationship(userId, characterId) {
  */
 export async function updateAffinity(userId, characterId, affinityChange) {
   const relationship = await getOrCreateRelationship(userId, characterId);
+  // The pre-write affinity, handed back on the result as `previous_affinity`.
+  // The read above already has it, so this costs nothing, and it is the only
+  // way a caller can tell a level *crossing* from a level: recordResponse needs
+  // both sides to decide whether a bond scene fires (storage.js, and
+  // docs/bond-scene-dms.md §1.1). Named in the row's snake_case so it reads as
+  // part of the same record rather than something bolted onto it.
+  const previousAffinity = relationship.affinity || 0;
 
   const { data, error } = await supabase
     .from('character_relationships')
@@ -111,7 +118,7 @@ export async function updateAffinity(userId, characterId, affinityChange) {
     throw error;
   }
 
-  return data;
+  return { ...data, previous_affinity: previousAffinity };
 }
 
 /**
@@ -1193,6 +1200,240 @@ export async function getEncounterMilestoneCounts(userId, characterId) {
     counts[row.milestone_type] = row.total;
   }
   return counts;
+}
+
+// --- bond scenes (docs/bond-scene-dms.md) ------------------------------------
+
+/**
+ * Claim a scene: INSERT ... ON CONFLICT DO NOTHING (db/migrations/015).
+ * Returns the new row, or null when one already exists for this
+ * (user, character, level) in any status.
+ *
+ * This is the first thing delivery does and the last word on idempotency —
+ * every "don't send this twice" case (a replayed interaction, a manual affinity
+ * edit, re-earning a level after a correction) resolves to a null here.
+ */
+export async function recordBondScene(userId, characterId, levelName) {
+  const { data, error } = await supabase.rpc('record_bond_scene', {
+    p_user_id: userId,
+    p_character_id: characterId,
+    p_level_name: levelName,
+  });
+
+  if (error) {
+    console.error('Error claiming bond scene:', error);
+    throw error;
+  }
+
+  // SETOF: a claim comes back as a one-row array, a conflict as an empty one.
+  return (Array.isArray(data) ? data[0] : data) || null;
+}
+
+/**
+ * One scene's row, or null. The button handler's first read — every click has
+ * to be checked against the stored beat index before anything is posted.
+ */
+export async function getBondSceneRow(userId, characterId, levelName) {
+  const { data, error } = await supabase
+    .from('bond_scene_progress')
+    .select('*')
+    .eq('discord_user_id', userId)
+    .eq('character_id', characterId)
+    .eq('level_name', levelName)
+    .limit(1);
+
+  if (error) {
+    console.error('Error fetching bond scene row:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/**
+ * Every bond scene row for a user, optionally narrowed to one character.
+ *
+ * Two callers, both of which need whole rows rather than a count: the queue
+ * check (is an *earlier* level with this character still open?) and the release
+ * that follows a completion (which queued level starts next?). Both order by
+ * the relationship ladder, which only constants/game.js knows about, so the
+ * ordering is deliberately left to the caller instead of being expressed here
+ * as a second, drifting copy of the level list.
+ */
+export async function listBondScenes(userId, characterId = null) {
+  let query = supabase
+    .from('bond_scene_progress')
+    .select('*')
+    .eq('discord_user_id', userId);
+
+  if (characterId) query = query.eq('character_id', characterId);
+
+  const { data, error } = await query;
+
+  if (error) {
+    console.error('Error listing bond scenes:', error);
+    throw error;
+  }
+
+  return data || [];
+}
+
+/**
+ * Move a claimed scene along: which channel it started in, the DM channel its
+ * beats are posted into, the highest beat posted, or a terminal status.
+ *
+ * `patch` is written as given, so callers name the columns
+ * (status / channel / dm_channel_id / current_beat) directly. There is no
+ * expiry to maintain and nothing to clear — a row only ever moves forward.
+ */
+export async function advanceBondScene(userId, characterId, levelName, patch) {
+  const { data, error } = await supabase
+    .from('bond_scene_progress')
+    .update({ ...patch, updated_at: new Date().toISOString() })
+    .eq('discord_user_id', userId)
+    .eq('character_id', characterId)
+    .eq('level_name', levelName)
+    .select();
+
+  if (error) {
+    console.error('Error advancing bond scene:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/**
+ * The closing click: record the choice, close the row and grant the keepsake,
+ * in one statement (db/migrations/015). Returns true only for the call that
+ * actually closed the scene — a double-click or a Discord retry gets false and
+ * must post nothing, because the keepsake has already been granted once.
+ */
+export async function completeBondScene({
+  userId,
+  characterId,
+  levelName,
+  choiceKey,
+  emoji,
+  line,
+}) {
+  const { data, error } = await supabase.rpc('complete_bond_scene', {
+    p_user_id: userId,
+    p_character_id: characterId,
+    p_level_name: levelName,
+    p_choice_key: choiceKey,
+    p_emoji: emoji,
+    p_line: line,
+  });
+
+  if (error) {
+    console.error('Error completing bond scene:', error);
+    throw error;
+  }
+
+  return data === true;
+}
+
+/**
+ * Everything a user has earned, newest first — optionally for one character.
+ * Bounded at six per bond, so this is never a large read.
+ */
+export async function getBondKeepsakes(userId, characterId = null) {
+  let query = supabase
+    .from('bond_keepsakes')
+    .select('*')
+    .eq('discord_user_id', userId);
+
+  if (characterId) query = query.eq('character_id', characterId);
+
+  const { data, error } = await query.order('earned_at', { ascending: false });
+
+  if (error) {
+    console.error('Error fetching bond keepsakes:', error);
+    throw error;
+  }
+
+  return data || [];
+}
+
+/**
+ * The user's DM preferences: whether bond DMs are wanted, and when they were
+ * last nudged about not being reachable.
+ *
+ * A user with no user_activity row yet has never run a command, so they cannot
+ * have crossed a level either; the default is still returned rather than null
+ * so callers never have to branch on "no row".
+ */
+export async function getBondDmPref(userId) {
+  const { data, error } = await supabase
+    .from('user_activity')
+    .select('bond_dms_enabled')
+    .eq('discord_user_id', userId)
+    .limit(1);
+
+  if (error) {
+    console.error('Error reading bond DM preference:', error);
+    throw error;
+  }
+
+  // Only an explicit false is an opt-out — a row written before this column
+  // existed reads as undefined and should still get its scenes.
+  return { enabled: data?.[0]?.bond_dms_enabled !== false };
+}
+
+/**
+ * Flip the opt-out. Upsert rather than update: the opt-out button can be the
+ * first thing a user ever presses in a DM, and /bonds dms:on has to work for
+ * somebody whose activity row was never created.
+ */
+export async function setBondDmPref(userId, enabled) {
+  const patch = {
+    discord_user_id: userId,
+    bond_dms_enabled: enabled,
+    updated_at: new Date().toISOString(),
+  };
+
+  const { error } = await supabase
+    .from('user_activity')
+    .upsert(patch, { onConflict: 'discord_user_id' });
+
+  if (error) {
+    console.error('Error setting bond DM preference:', error);
+    throw error;
+  }
+}
+
+/**
+ * The scenes that are owed something and have no live button to deliver it:
+ *
+ *   pending_dm  a beat did not land — beat 0 never went out, or a later one's
+ *               POST failed. Nothing is sitting in the DM to click.
+ *   queued      claimed but not started. Usually legitimate (waiting behind an
+ *               earlier level with the same character), occasionally a claim
+ *               stranded by a failure right after it; the caller tells them
+ *               apart by attempting delivery.
+ *
+ * `in_progress` is deliberately excluded: its Continue is in the user's DMs and
+ * works indefinitely, so offering a second way in would duplicate a live
+ * conversation. `complete` and the two `skipped_*` states are done with.
+ *
+ * Newest first — a burst of level-ups offers the most recent one back first.
+ * See surfaceBondSceneResume.
+ */
+export async function listResumableBondScenes(userId) {
+  const { data, error } = await supabase
+    .from('bond_scene_progress')
+    .select('*')
+    .eq('discord_user_id', userId)
+    .in('status', ['pending_dm', 'queued'])
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    console.error('Error listing resumable bond scenes:', error);
+    throw error;
+  }
+
+  return data || [];
 }
 
 export default supabase;

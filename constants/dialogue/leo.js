@@ -1,4 +1,219 @@
 export default {
+  // The level-up DMs (docs/bond-scene-dms.md). One of the six volatile
+  // characters — see docs/negative-affinity-enemies-to-lovers.md. Leo stays
+  // thorny the whole way up: he never softens his mouth, he just stops aiming
+  // it at you, and the warmth is entirely in what he does while insulting you.
+  // Bold is what reaches him; being flattered makes him worse.
+  //
+  // Texting voice, per reference.md: "Ugh" surfaces even in private DMs, casual
+  // profanity (shit/fuck) when riled or deflecting, and "Honor Roll" as his own
+  // address for her, same as everyone else in the game calls her — mocking at
+  // Acquaintance, protective by Devoted, said straight by Soulbound. Alan is
+  // "Cap" to him, same as in every other pool.
+  bondScenes: {
+    acquaintance: {
+      beats: [
+        '**{firstName}**: "ugh, don\'t get excited"\n\n"I message a lot of people. you\'re not special. you\'re like, extremely not special."',
+        "\"So there's a thread going round about you. Nothing bad, which honestly is the boring outcome, I was hoping for something I could use.\"\n\n\"Anyway I killed it. You're welcome. Don't make it weird, I just didn't like the guy who started it and this was cheaper than dealing with him properly.\"\n\n\"{timesMet} times you've been round and nobody's got anything on you. That's actually kind of impressive and I'm annoyed about it.\"",
+      ],
+      choice: {
+        prompt: "\"So. Thank me.\"",
+        options: [
+          {
+            key: "kind",
+            label: "Thank him sincerely",
+            style: 3,
+            close: "\"...ew.\"\n\n\"Do it again but sarcastic. I don't know what to do with the other kind, it's making my skin crawl.\"\n\nHe doesn't leave the chat, though.",
+          },
+          {
+            key: "playful",
+            label: "Ask what it cost him",
+            style: 1,
+            close: "\"Nothing! God. Not everything's a transaction.\"\n\nA pause.\n\n\"It cost me a favor I was saving. Don't tell anyone I said that, I have a brand.\"",
+          },
+          {
+            key: "bold",
+            label: "Say you didn't ask him to",
+            style: 4,
+            close: "\"No, you didn't. That's the entire point, Honor Roll. Anyone can do a favor they got asked for.\"\n\nThen, faster, like he's covering: \"anyway don't read into it. reading into it is so embarrassing for you.\"",
+          },
+        ],
+      },
+      keepsake: {
+        emoji: "🗑️",
+        line: "A thread about you that got deleted before you ever saw it.",
+      },
+    },
+
+    friend: {
+      beats: [
+        '**{firstName}**: "okay serious question and if you screenshot this I\'ll ruin your life"',
+        "\"You come at me with {favResponse} and you never flinch. Not once. Everyone flinches. That's the whole job, I say something and I watch the face do the thing.\"\n\n\"You just answer. Like I'm a person having a conversation instead of a hazard.\"\n\n\"It's throwing off my entire operation, and I need to know if you're doing it on purpose, because it's genuinely pissing me off how much I don't mind it.\"",
+      ],
+      choice: {
+        prompt: "\"And be honest, I'll know if you're managing me. Everyone manages me.\"",
+        options: [
+          {
+            key: "kind",
+            label: "Say you like talking to him",
+            style: 3,
+            close: "\"Nobody likes talking to me. People like being *near* me. There's a difference and I've built a career on it.\"\n\nA long gap.\n\n\"...say that again in like a week and see if I still hate it.\"",
+          },
+          {
+            key: "playful",
+            label: "Say you flinch on the inside",
+            style: 1,
+            close: "\"HA. Okay. Okay, that's good, I'm using that.\"\n\n\"Also that's a lie and we both know it. But it's a funny lie, so, points.\"",
+          },
+          {
+            key: "bold",
+            label: "Say he isn't that intimidating",
+            style: 4,
+            close: "\"I'm extremely intimidating.\"\n\n\"...I'm not, am I. God. Two years of work and one person just walks in and doesn't do the face.\"\n\n\"Don't tell Sho. Sho does the face. It's the only thing keeping me going.\"",
+          },
+        ],
+      },
+      keepsake: {
+        emoji: "🕶️",
+        line: "The admission that the whole act isn't working on you.",
+      },
+    },
+
+    closeFriend: {
+      beats: [
+        '**{firstName}**: "so I need you to look at something and not be normal about it"',
+        "It's a folder. Photos, hundreds of them, and none of them are the ones he posts: no ring light, no angles, no captions. Cap asleep in the garage. Sho with his mouth full. A courtyard at six in the morning with nobody in it.\n\n\"That's the real drive. Nobody's seen it. Not the house, not the numbers guys, definitely not the internet.\"",
+        "\"The stuff I put out is the product. This is just some pointless shit I take and then never do anything with, and I've never worked out why.\"\n\n\"You're in a bunch of them. I didn't crop you out. I want you to know I thought about cropping you out for like an hour and then didn't.\"",
+      ],
+      choice: {
+        prompt: "\"Ugh, say something withering. Please. The sincerity in this chat is unbearable.\"",
+        options: [
+          {
+            key: "kind",
+            label: "Tell him they're better",
+            style: 3,
+            close: "\"Better than the ones that make me money? Cool. Great. Love that for my business model.\"\n\nA pause.\n\n\"...yeah. I know. That's why I don't post them.\"",
+          },
+          {
+            key: "playful",
+            label: "Ask for one of yourself",
+            style: 1,
+            close: "\"Absolutely not, they're MINE...\"\n\nOne arrives four minutes later anyway. It's from a night you don't remember him being at, and you're laughing at something out of frame, and he's clearly been sitting on it for months.",
+          },
+          {
+            key: "bold",
+            label: "Ask why you get to see",
+            style: 4,
+            close: "\"Because you're the only person who'd look at them and not immediately ask what the play is.\"\n\n\"There's no play. That's the whole horrible thing about it. Go away now.\"",
+          },
+        ],
+      },
+      keepsake: {
+        emoji: "📸",
+        line: "A photo off the drive nobody else has ever been shown.",
+      },
+    },
+
+    confidant: {
+      beats: [
+        '**{firstName}**: "the numbers dipped this week"\n\n"I know that\'s not a thing to message a person at 3am about. I\'m doing it anyway."',
+        "\"Here's the bit nobody gets. It's not vanity. Vanity would be fine, vanity's cheap. It's that if the numbers go, there's nothing under them.\"\n\n\"Cap's got the strength. Sho's got... whatever Sho's got, the food thing, people love him for free. I've got a follower count and a very good jawline and both of those depreciate.\"",
+        "\"I'm the vice-captain of a house where everyone would pick him over me in a heartbeat, including me, and I've built an entire personality out of not letting that land.\"\n\n\"Anyway. Don't be nice about it. If you're nice about it I'll have to block you, that's just how I'm built.\"",
+      ],
+      choice: {
+        prompt: "\"Go on. Worst thing you've got. I've earned it.\"",
+        options: [
+          {
+            key: "kind",
+            label: "Be nice about it anyway",
+            style: 3,
+            close: "\"I said I'd block you.\"\n\nHe doesn't block you.\n\n\"...I'm not blocking you. Obviously. Say the rest of it, I hate it, keep going.\"",
+          },
+          {
+            key: "playful",
+            label: "Insult the jawline",
+            style: 1,
+            close: "\"THE JAWLINE IS THE ONE THING.\"\n\n\"Okay. That helped. I'm furious that helped. You're a menace and I'm going to sleep.\"",
+          },
+          {
+            key: "bold",
+            label: "Tell him you'd pick him",
+            style: 4,
+            close: "There's no answer for eleven minutes.\n\n\"don't say stuff like that at 3am,\" he sends finally, and there's none of the voice left in it at all. \"I'll believe it at 3am. that's how it gets you.\"\n\n\"...say it again in daylight and I'll decide then.\"",
+          },
+        ],
+      },
+      keepsake: {
+        emoji: "💻",
+        line: "The week the numbers dipped and he told exactly one person.",
+      },
+    },
+
+    devoted: {
+      beats: [
+        '**{firstName}**: "saw what he said to you in the courtyard"',
+        "\"He's done. Not like... nothing dramatic, I'm not Cap, I don't hit people. He's just going to find that everyone's suddenly very busy for about a month and he's never going to work out why the fuck that is.\"\n\n\"That's the version of me people know better than to test. You've never seen it pointed anywhere near you and you never will.\"",
+        "\"And yeah, I know that's not a nice thing about me. I'm aware. I've got a whole list.\"\n\n\"But you looked at the floor when he said it, and I've spent two years making sure nobody ever makes me look at the floor, so.\"\n\n\"So nobody gets to do it to you either. That's it. That's the rule now.\"",
+      ],
+      choice: {
+        prompt: "\"Don't tell me not to, Honor Roll. I've already done it.\"",
+        options: [
+          {
+            key: "kind",
+            label: "Tell him you didn't need it",
+            style: 3,
+            close: "\"I know you didn't.\"\n\nA pause.\n\n\"That's not why I did it. I did it because I had to do something with my hands or I was going to have a whole feeling in public.\"",
+          },
+          {
+            key: "playful",
+            label: "Ask if that's a declaration",
+            style: 1,
+            close: "\"It's a *hit job*. Completely different thing. Wildly different.\"\n\n\"...it's the same thing, isn't it. God. This is so beneath me.\"",
+          },
+          {
+            key: "bold",
+            label: "Tell him to come here",
+            style: 4,
+            close: "He shows up twenty minutes later in a hoodie with the hood up, which for Leo Kurosagi is basically appearing in public undressed.\n\nHe doesn't say anything clever. He just gets an arm around you, hard, chin on the top of your head, and stands there in the corridor where anyone could see, which is the most reckless thing he's ever done.",
+          },
+        ],
+      },
+      keepsake: {
+        emoji: "🧢",
+        line: "A hood pulled up so he could stand in a corridor and hold on.",
+      },
+    },
+
+    soulbound: {
+      beats: [
+        "**{firstName}**: \"right so I've drafted this eleven times and every version made me sound insane so I'm just going to type it badly\"",
+        "\"{timesMet} times. And every single one of them I've had a bit ready: something cutting, something that'd land. I'm never not holding one.\"\n\n\"And the bits have got worse and worse because I stopped meaning them somewhere around the middle, and a bit you don't mean is just noise, and you've been listening to noise for months.\"",
+        "\"Here's the actual thing. I'm not a nice person. I'm not going to become one. I gossip, I'm petty, I keep score, and I will absolutely ruin someone's month over a look they gave you.\"\n\n\"None of that's changing. What changed is I stopped wanting to point any of it at you and started wanting to point all of it *for* you, and I don't know what to call that except the obvious.\"",
+        "\"I love you, Honor Roll. There. Typed it. Not deleting it, which is genuinely the hardest thing I've done this year.\"\n\n\"And before you say anything, I know exactly what I am and I know exactly what you could have instead, and I've done the math on that at three in the morning more times than I'm going to admit.\"\n\n\"Say whatever you want. I've survived worse crowds.\"",
+      ],
+      choice: {
+        prompt: "\"Come on then. I'm not going to break. I'm probably not going to break.\"",
+        options: [
+          {
+            key: "answered",
+            label: "Say it back",
+            style: 3,
+            close: "\"...say that again.\"\n\n\"no wait don't, I've got to... hang on.\"\n\nThe next thing is a voice note, eight seconds, and it's just him swearing quietly and then laughing at himself.\n\n\"Okay,\" he says at the end of it, and for once there is not one single ounce of performance in his voice. \"Okay. I'm coming over. Don't be normal about it, I'm going to be so weird when I get there.\"",
+          },
+          {
+            key: "held",
+            label: "Ask him to give you time",
+            style: 2,
+            close: "\"Yeah. Yep. Cool. Totally.\"\n\nA gap.\n\n\"That was three lies in a row, sorry. Give me one second.\"\n\n\"...Okay. Take whatever you need. I mean that one. I've been holding it for ages and it's not heavy, it just talks a lot.\"\n\n\"And I'm not going anywhere, obviously, I live here and I'm extremely attention-seeking. You'll be sick of me. That's the plan, Honor Roll.\"",
+          },
+        ],
+      },
+      keepsake: {
+        emoji: "📱",
+        line: "The twelfth draft, sent badly, and never deleted.",
+      },
+    },
+  },
   dialogue: {
     new: [
       'He smirks dangerously, eyes lit with a hint of amusement. "What brings you to the lion\'s den?"',
@@ -21,7 +236,7 @@ export default {
       "The camera comes up when you walk in, then goes back down. He's decided you're not for the feed.",
       '"Late again," he drawls, having very obviously been checking.',
       '"We\'re fighting again? Which house? ...Ugh, pass." He means the Pit. He stays right where he is, next to you.',
-      "Headphones on against the noise — but he lifts one side when you talk. Only for you, and he'd deny it.",
+      "Headphones on against the noise, but he lifts one side when you talk. Only for you, and he'd deny it.",
       '"You think I smell good? L\'Occitane. I throw it on after a shower." He says it like it bores him.',
     ],
     spark: [
@@ -38,7 +253,7 @@ export default {
       "He pulls you out of the crowd's eyeline before he lets his face change.",
       '"Say something cruel to me," he grins. "You\'re the only one who does it right."',
       "He's been waiting. He'll spend the next ten minutes pretending he wasn't.",
-      '"Sit. Not there — next to me. Good." He puts his head down on you. "Don\'t move. I\'m taking a nap."',
+      '"Sit. Not there, next to me. Good." He puts his head down on you. "Don\'t move. I\'m taking a nap."',
     ],
     bound: [
       "He leaves marks where a collar won't hide them, and looks extremely pleased about it.",
@@ -46,13 +261,13 @@ export default {
       "He's cruel to everyone else and unbearably soft with you at three in the morning.",
       "He keeps you in bed by simply refusing to let go, which is unanswerable.",
       "The camera has never once been pointed at this. He's not sharing you.",
-      '"Wanna make a bet?" he murmurs. "Which comes first — me falling for you, or you getting hooked on me."',
+      '"Wanna make a bet?" he murmurs. "Which comes first: me falling for you, or you getting hooked on me."',
     ],
   },
   temperamentDialogue: {
     new: [
       "\"You're either brave or stupid. Let's find out which.\"",
-      '"Smile. You\'re on camera. Ah — too late."',
+      '"Smile. You\'re on camera. Ah, too late."',
       '"New face. Cute. How long do you think you\'ll last?"',
       '"Say something interesting. I\'m running low on entertainment."',
       '"Ask for permission if you want to talk to me. ...Nope. Denied."',
@@ -78,8 +293,8 @@ export default {
       '"Look at you. Standing there like you want something. Say it."',
       "\"I could ruin you. Slowly. You'd let me, wouldn't you?\"",
       '"No camera. No audience. Just me being awful at you. Lucky."',
-      '"Say my name. The way you did last time. Yes — that."',
-      "\"You're not scared. You're something else. I like that better.\"",
+      '"Say my name. The way you did last time. Yes, that."',
+      "\"You're not intimidated. You're something else. I like that better.\"",
       '"I can touch you. You can\'t touch me. Those are the rules. I make the rules."',
     ],
     close: [
@@ -95,7 +310,7 @@ export default {
       '"You\'ve got that look. Yeah, that one. Come here before I lose my mind."',
       '"Do you have any idea what you do to me? No? Good. Stay ignorant."',
       "\"Stay in bed. The world's boring and you're not.\"",
-      '"Wanna make a bet? Which comes first — me falling for you, or you getting hooked on me. ...I already lost. Don\'t tell anyone."',
+      '"Wanna make a bet? Which comes first: me falling for you, or you getting hooked on me. ...I already lost. Don\'t tell anyone."',
       '"Stay like this till I tell you to leave. ...I didn\'t hear an answer."',
     ],
   },
@@ -228,7 +443,7 @@ export default {
     bound: [
       "**{name}** takes {user}'s hand in public specifically so that it is seen.",
       '"Do you have any idea what that does to me?" **{name}** mutters, crossing to {user} anyway.',
-      "{user} says the name, and **{name}** — who monetizes everything — keeps this one off the record.",
+      "{user} says the name, and **{name}**, who monetizes everything, keeps this one off the record.",
     ],
   },
 };

@@ -31,9 +31,16 @@ async function readError(res) {
  * POST a new message into a channel. Files ride along as multipart with the
  * rest of the payload in `payload_json`, the same shape sendFollowup uses.
  * Returns the created message object (its `id` is what a later edit needs).
+ *
+ * `components` matter for bond scenes (docs/bond-scene-dms.md): every beat of a
+ * scene is posted here, with the bot token, rather than through an interaction
+ * webhook — which is exactly why a scene's Continue button never expires.
  */
-export async function postChannelMessage(channelId, { content, files, embeds, allowed_mentions } = {}) {
-  const payload = { content, embeds, allowed_mentions };
+export async function postChannelMessage(
+  channelId,
+  { content, files, embeds, components, allowed_mentions } = {},
+) {
+  const payload = { content, embeds, components, allowed_mentions };
   for (const key of Object.keys(payload)) {
     if (payload[key] === undefined) delete payload[key];
   }
@@ -70,4 +77,44 @@ export async function editChannelMessage(channelId, messageId, body) {
 
   if (!res.ok) throw await readError(res);
   return res.json();
+}
+
+/**
+ * Open (or re-open) the DM channel with a user and return its id.
+ *
+ * Discord dedupes these server-side — asking twice for the same recipient gives
+ * back the same channel — so there is nothing to cache locally beyond the id we
+ * store on the scene row.
+ *
+ * A bot can only DM someone it shares a guild with. This app is dual-install, so
+ * a user who added it only as a user app and never joined a server with the bot
+ * cannot be reached: that surfaces as a 403 here, or on the first POST into the
+ * channel. Callers treat it as a soft failure and fall back to an ephemeral
+ * reply, never as an error — it is the expected outcome for a chunk of the user
+ * base, not a fault.
+ */
+export async function openDmChannel(userId) {
+  const res = await fetch(`${API_BASE}/users/@me/channels`, {
+    method: 'POST',
+    headers: { ...authHeaders(), 'Content-Type': 'application/json; charset=UTF-8' },
+    body: JSON.stringify({ recipient_id: userId }),
+  });
+
+  if (!res.ok) throw await readError(res);
+  const channel = await res.json();
+  return channel.id;
+}
+
+/**
+ * Show the "typing…" indicator in a channel for a few seconds. Pure flavour, so
+ * every caller fires it without awaiting and ignores what it returns — a bond
+ * scene beat must never fail to post because the typing hint didn't.
+ */
+export async function postChannelTyping(channelId) {
+  const res = await fetch(`${API_BASE}/channels/${channelId}/typing`, {
+    method: 'POST',
+    headers: authHeaders(),
+  });
+
+  if (!res.ok) throw await readError(res);
 }

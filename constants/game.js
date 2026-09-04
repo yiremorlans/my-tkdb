@@ -136,3 +136,69 @@ export const DIALOGUE_TIER_BY_LEVEL = {
 export function getDialogueTier(levelName) {
   return DIALOGUE_TIER_BY_LEVEL[levelName] || 'new';
 }
+
+// --- bond scenes -------------------------------------------------------------
+// The level-up DM sequences (docs/bond-scene-dms.md). Stranger is the starting
+// level and has no scene — the first one fires on the crossing *into*
+// Acquaintance — so everything below covers the six levels above Stranger.
+
+// The levels that have a scene, in ladder order.
+export const BOND_SCENE_LEVELS = RELATIONSHIP_LEVELS.slice(1).map((l) => l.name);
+
+// Content key: camelCase of the level name. This is the key a character's
+// `bondScenes` pool (constants/dialogue/<id>.js) is written under.
+export function bondSceneKey(levelName) {
+  const words = String(levelName || '').trim().split(/\s+/);
+  return words
+    .map((w, i) => (i === 0 ? w.toLowerCase() : w[0].toUpperCase() + w.slice(1).toLowerCase()))
+    .join('');
+}
+
+// The keys every authored `bondScenes` pool is checked against.
+export const BOND_SCENE_KEYS = BOND_SCENE_LEVELS.map(bondSceneKey);
+
+// A short per-level token for button custom_ids. `bond:next:<charId>:<slug>:<n>`
+// has to fit Discord's 100-char custom_id limit, and the level names don't
+// (and "Close Friend" carries a space).
+export const BOND_LEVEL_SLUGS = {
+  Acquaintance: 'acq',
+  Friend: 'fri',
+  'Close Friend': 'cfr',
+  Confidant: 'con',
+  Devoted: 'dev',
+  Soulbound: 'sol',
+};
+
+const BOND_LEVEL_BY_SLUG = Object.fromEntries(
+  Object.entries(BOND_LEVEL_SLUGS).map(([name, slug]) => [slug, name]),
+);
+
+export function bondLevelSlug(levelName) {
+  return BOND_LEVEL_SLUGS[levelName] || null;
+}
+
+export function bondLevelFromSlug(slug) {
+  return BOND_LEVEL_BY_SLUG[slug] || null;
+}
+
+// Position on the ladder, used to order a character's queued scenes: a newly
+// crossed level waits behind any lower one that is still unfinished.
+export function bondLevelIndex(levelName) {
+  return RELATIONSHIP_LEVELS.findIndex((l) => l.name === levelName);
+}
+
+// How a scene names the response type this player leans on — the character's
+// own +2 slot in affinityByResponse. Read after "you always did lead with",
+// so each one is a noun phrase. NEUTRAL is never a +2 slot, but it is included
+// so a lookup can never come back undefined.
+export const FAV_RESPONSE_PHRASE = {
+  [RESPONSE_TYPES.KIND]: 'a kind word',
+  [RESPONSE_TYPES.PLAYFUL]: 'a joke',
+  [RESPONSE_TYPES.BOLD]: 'something bold',
+  [RESPONSE_TYPES.NEUTRAL]: 'a quiet moment',
+};
+
+// Beats per scene. One is a legal scene (the closing beat alone); four is the
+// Soulbound finale and the ceiling — past that the DM stops being a moment and
+// starts being a chapter.
+export const BOND_SCENE_MAX_BEATS = 4;
