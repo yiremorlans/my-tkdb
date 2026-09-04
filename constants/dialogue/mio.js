@@ -18,7 +18,7 @@ export default {
             label: "Say yes, and thank him",
             style: 3,
             close:
-              '"It\'s a hinge."\n\nA pause.\n\n"...Thanks. For the thanking. Nobody thanks me for hinges, they just stop noticing the door."',
+              '"It\'s a hinge."\n\n*A pause.*\n\n"...Thanks. For the thanking. Nobody thanks me for hinges, they just stop noticing the door."',
           },
           {
             key: "playful",
@@ -32,7 +32,7 @@ export default {
             label: "Ask him to stay after",
             style: 4,
             close:
-              "There's a long gap.\n\n\"After? To... do what?\"\n\nThen: \"...Sorry. That was a stupid question. Yes. I'll stay after. I'll bring some of Elias' sweet tea, Shion drinks all of it. I hide some.\"",
+              "*There's a long gap.*\n\n\"After? To... do what?\"\n\n*Then:* \"...Sorry. That was a stupid question. Yes. I'll stay after. I'll bring some of Elias' sweet tea, Shion drinks all of it. I hide some.\"",
           },
         ],
       },
@@ -45,7 +45,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: \"I made you something. It's not a big thing. Please don't make it a big thing.\"",
-        "The photo is a small brass mechanism, about the size of a matchbox, with a tiny fold-out arm.\n\n\"It's a doorstop. It's a *clockwork* doorstop, because I couldn't help myself, and it releases when the room gets to a certain temperature so your door shuts on its own when it gets cold. Which it does, in that corridor, at about two.\"",
+        "*The photo is a small brass mechanism, about the size of a matchbox, with a tiny fold-out arm.*\n\n\"It's a doorstop. It's a *clockwork* doorstop, because I couldn't help myself, and it releases when the room gets to a certain temperature so your door shuts on its own when it gets cold. Which it does, in that corridor, at about two.\"",
         "\"I've noticed you leave it open. I've noticed you've got {favResponse} for everyone including me. I notice a lot and I never do anything with any of it except build things about it, which Jo says is a personality problem.\"\n\n\"Anyway. It's a doorstop.\"",
       ],
       choice: {
@@ -57,7 +57,7 @@ export default {
             label: "Say nobody's done that",
             style: 3,
             close:
-              '"...Oh."\n\nThen, after several minutes: "I\'ve built about two hundred of these. For the house, for the halls, for Shion. I built Haru\'s arm, and Romeo\'s leg. Neither of them ever said it like that, they just started using them. Which is fine, that\'s the job."\n\n"Nobody\'s said it like that before. I might have to go and sit down."',
+              '"...Oh."\n\n*Then, after several minutes:* "I\'ve built about two hundred of these. For the house, for the halls, for Shion. I built Haru\'s arm, and Romeo\'s leg. Neither of them ever said it like that, they just started using them. Which is fine, that\'s the job."\n\n"Nobody\'s said it like that before. I might have to go and sit down."',
           },
           {
             key: "playful",
@@ -71,7 +71,7 @@ export default {
             label: "Ask him to fit it himself",
             style: 4,
             close:
-              "He's there in eleven minutes with the toolbox, and it takes him four times as long as it should because his hands aren't behaving.\n\nHe doesn't look up from the floor once. But when it's done he says, to the doorframe: \"I'll come and check it. Regularly. It'll need checking.\"\n\nIt does not need checking.",
+              "*He's there in eleven minutes with the toolbox, and it takes him four times as long as it should because his hands aren't behaving.*\n\n*He doesn't look up from the floor once. But when it's done he says, to the doorframe:* \"I'll come and check it. Regularly. It'll need checking.\"\n\n*It does not need checking.*",
           },
         ],
       },
@@ -84,8 +84,8 @@ export default {
     closeFriend: {
       beats: [
         "**{firstName}**: \"Are you up? I'm in the workshop. Come down if you're up. Don't if you're not, it's not important.\"",
-        "It is three in the morning and he has clearly not slept. The bench is covered in the same mechanism attempted eleven times, and ten of them are wrong.\n\n\"Shion had a night. I've been up since one with him and now I can't stop, so I'm doing this instead.\"",
-        "He finally puts the file down.\n\n\"Everyone in this house thinks I've got it handled. Jo thinks it. Elias thinks it. Shion definitely thinks it, he's never once asked. And I *have* got it handled, that's the thing, I'm not complaining. I'd do it forever.\"\n\n\"I just wanted one person in the building to have seen me at three in the morning with ten failed ones on the bench. That's all. You can go back to bed.\"",
+        "*It is three in the morning and he has clearly not slept. The bench is covered in the same mechanism attempted eleven times, and ten of them are wrong.*\n\n\"Shion had a night. I've been up since one with him and now I can't stop, so I'm doing this instead.\"",
+        "*He finally puts the file down.*\n\n\"Everyone in this house thinks I've got it handled. Jo thinks it. Elias thinks it. Shion definitely thinks it, he's never once asked. And I *have* got it handled, that's the thing, I'm not complaining. I'd do it forever.\"\n\n\"I just wanted one person in the building to have seen me at three in the morning with ten failed ones on the bench. That's all. You can go back to bed.\"",
       ],
       choice: {
         prompt:
@@ -96,21 +96,21 @@ export default {
             label: "Sit down and stay",
             style: 3,
             close:
-              'You pull the other stool over and sit. He doesn\'t say anything about it.\n\nSomewhere around five he gets the eleventh one right, holds it up, and finally looks at you properly for the first time all night.\n\n"...Thanks for not going," he says. "That\'s the whole thing I wanted and I couldn\'t ask for it."',
+              '*You pull the other stool over and sit. He doesn\'t say anything about it.*\n\n*Somewhere around five he gets the eleventh one right, holds it up, and finally looks at you properly for the first time all night.*\n\n"...Thanks for not going," *he says.* "That\'s the whole thing I wanted and I couldn\'t ask for it."',
           },
           {
             key: "playful",
             label: "Count the failures for him",
             style: 1,
             close:
-              "\"Ten. It's ten. I know it's ten, I've been looking at them for two hours.\"\n\nA pause, and then something that's almost a laugh.\n\n\"...Say it's eleven again in an hour. I'd rather be wound up than fussed over. I don't know what to do with fussed over.\"",
+              "\"Ten. It's ten. I know it's ten, I've been looking at them for two hours.\"\n\n*A pause, and then something that's almost a laugh.*\n\n\"...Say it's eleven again in an hour. I'd rather be wound up than fussed over. I don't know what to do with fussed over.\"",
           },
           {
             key: "bold",
             label: "Ask who looks after him",
             style: 4,
             close:
-              "He goes completely still.\n\n\"That's not... that's not really how it works. He's my brother.\"\n\nThen, much quieter, at the bench: \"Nobody. The answer's nobody. I've known that for six years and you're the first person who's made me say it out loud, and I'd quite like you to stop.\"\n\nHe doesn't move away when you put a hand on his back, though. He leans into it a bit.",
+              "*He goes completely still.*\n\n\"That's not... that's not really how it works. He's my brother.\"\n\n*Then, much quieter, at the bench:* \"Nobody. The answer's nobody. I've known that for six years and you're the first person who's made me say it out loud, and I'd quite like you to stop.\"\n\n*He doesn't move away when you put a hand on his back, though. He leans into it a bit.*",
           },
         ],
       },
@@ -135,7 +135,7 @@ export default {
             label: "Say he's allowed to miss it",
             style: 3,
             close:
-              'The reply takes eleven minutes.\n\n"I don\'t think I am. But I\'m going to sit with you saying it for a bit."\n\nThen, much later: "Are you still there. You don\'t have to answer. I just want to see the two ticks."\n\nYou stay up. He checks four more times.',
+              '*The reply takes eleven minutes.*\n\n"I don\'t think I am. But I\'m going to sit with you saying it for a bit."\n\n*Then, much later:* "Are you still there. You don\'t have to answer. I just want to see the two ticks."\n\n*You stay up. He checks four more times.*',
           },
           {
             key: "playful",
@@ -149,7 +149,7 @@ export default {
             label: "Tell him to say it to Shion",
             style: 4,
             close:
-              '"No."\n\nImmediate. Then a long silence.\n\n"...He\'d take it as me being tired of him. He\'d take it as leaving. He\'s spent his whole life waiting for somebody to leave and I\'ve made a job out of not being the one who does."\n\n"Ask me again in a year. You will, won\'t you. God, you will."',
+              '"No."\n\n*Immediate. Then a long silence.*\n\n"...He\'d take it as me being tired of him. He\'d take it as leaving. He\'s spent his whole life waiting for somebody to leave and I\'ve made a job out of not being the one who does."\n\n"Ask me again in a year. You will, won\'t you. God, you will."',
           },
         ],
       },
@@ -162,7 +162,7 @@ export default {
     devoted: {
       beats: [
         '**{firstName}**: "Don\'t be angry."',
-        "The photo is his forearm, bandaged from wrist to elbow, and behind it on the bench is something bent very badly out of shape.\n\n\"The gantry in the lower hall was going to come down and you were under it, and there wasn't time to do it properly, so I did it improperly. I got about four seconds. It held for six. That's fine, that's within tolerance.\"\n\n\"Normally I'd say spit on it and it'll heal. I've said that to Shion more times than I can count. I'm not saying it this time. I don't know what to do with the ones where I can't say that.\"",
+        "*The photo is his forearm, bandaged from wrist to elbow, and behind it on the bench is something bent very badly out of shape.*\n\n\"The gantry in the lower hall was going to come down and you were under it, and there wasn't time to do it properly, so I did it improperly. I got about four seconds. It held for six. That's fine, that's within tolerance.\"\n\n\"Normally I'd say spit on it and it'll heal. I've said that to Shion more times than I can count. I'm not saying it this time. I don't know what to do with the ones where I can't say that.\"",
         "\"I want to be honest about something. I do the math on everything. Every job, every load, every risk: that's the whole of me, I'm the one who checks the numbers before anyone moves.\"\n\n\"I didn't check anything. I looked up and saw where you were standing and my hands were already on it.\"\n\n\"That's never happened. In six years of this, not once. I've been sitting here since with a bandage on trying to work out what to call it, and I've got nothing, and I build things for a living so not having a word for something is genuinely upsetting.\"",
       ],
       choice: {
@@ -173,21 +173,21 @@ export default {
             label: "Ask to see the arm",
             style: 3,
             close:
-              '"It\'s fine. It\'s a very boring arm."\n\nIt is not a boring arm, and he lets you redo the bandage anyway, sitting on the workshop stool with his sleeve pushed up, watching your hands the entire time and not saying one word.\n\n"...You\'re better at this than I am," he manages eventually. It is the only thing he says for an hour.',
+              '"It\'s fine. It\'s a very boring arm."\n\n*It is not a boring arm, and he lets you redo the bandage anyway, sitting on the workshop stool with his sleeve pushed up, watching your hands the entire time and not saying one word.*\n\n"...You\'re better at this than I am," *he manages eventually. It is the only thing he says for an hour.*',
           },
           {
             key: "playful",
             label: "Say six over four is a brag",
             style: 1,
             close:
-              "\"It's a fifty percent margin. That's not showing off, that's competent engineering.\"\n\nA pause.\n\n\"It was showing off. Slightly. There was nobody watching, which makes it worse, doesn't it.\"",
+              "\"It's a fifty percent margin. That's not showing off, that's competent engineering.\"\n\n*A pause.*\n\n\"It was showing off. Slightly. There was nobody watching, which makes it worse, doesn't it.\"",
           },
           {
             key: "bold",
             label: "Give the thing a name for him",
             style: 4,
             close:
-              'You tell him what to call it.\n\nThe typing indicator comes on and goes off four separate times.\n\n"...Right," he says finally. "Yes. That\'s the word. I did know it was that word."\n\n"I\'m going to need a minute. Possibly several. Please don\'t go anywhere."',
+              '*You tell him what to call it.*\n\n*The typing indicator comes on and goes off four separate times.*\n\n"...Right," *he says finally.* "Yes. That\'s the word. I did know it was that word."\n\n"I\'m going to need a minute. Possibly several. Please don\'t go anywhere."',
           },
         ],
       },
@@ -200,7 +200,7 @@ export default {
     soulbound: {
       beats: [
         "**{firstName}**: \"I've built a thing and I'm going to describe it badly and then say the actual sentence, because if I only build the thing you'll have to guess again and that's not fair on you.\"",
-        'The photo is a small brass box with two dials on it. One says a number. The other is blank.\n\n"The first dial is {timesMet}. It goes up on its own. I wired it to the door sensor, which took a month and is completely absurd."\n\n"The second one doesn\'t do anything. I couldn\'t work out how to build the second one. That\'s been the problem for about eight months."',
+        '*The photo is a small brass box with two dials on it. One says a number. The other is blank.*\n\n"The first dial is {timesMet}. It goes up on its own. I wired it to the door sensor, which took a month and is completely absurd."\n\n"The second one doesn\'t do anything. I couldn\'t work out how to build the second one. That\'s been the problem for about eight months."',
         "\"I've made you a doorstop, a latch, a lamp, a thing that chimes at three, and about forty other objects, and every single one of them was a sentence I couldn't say. My dad gave me a music box when I was small, the kind you wind up, no words needed. I think that's where all of this started.\"\n\n\"You've kept all of them. I've noticed that too. I notice everything and do nothing about any of it, and you have never once made me feel stupid for it.\"",
         "\"So here's the second dial.\"\n\n\"I love you. I've loved you since roughly the hinge. I've been building around it for a year because building is the only language I'm any good at and I was frightened that if I said it in words you'd hear how ordinary it sounds.\"\n\n\"It does sound ordinary. I've just read it back. It's the truest ordinary thing I've ever written and I'm sending it before I take the dial off.\"",
       ],
@@ -213,14 +213,14 @@ export default {
             label: "Say it back",
             style: 3,
             close:
-              "The reply is nothing at all for six minutes.\n\nThen there are footsteps on the stairs, fast, which Mio never does, and he's at your door with the box still in his hand and no plan whatsoever for having arrived.\n\nHe puts it down. Then he takes your face in both hands, carefully, the way he handles everything he's afraid of breaking, and kisses you, and it is the least careful thing he has ever done.",
+              "*The reply is nothing at all for six minutes.*\n\n*Then there are footsteps on the stairs, fast, which Mio never does, and he's at your door with the box still in his hand and no plan whatsoever for having arrived.*\n\n*He puts it down. Then he takes your face in both hands, carefully, the way he handles everything he's afraid of breaking, and kisses you, and it is the least careful thing he has ever done.*",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
             close:
-              "\"Yes. Obviously. Take as long as you want.\"\n\n\"I've spent a year not saying it. It would be completely unreasonable of me to hand it over and then start counting.\"\n\n\"I'm still going to fix your latch. And the second stair, which you've been ignoring. None of that was ever about this. I'd have done it if you'd never spoken to me at all. That's just what I do about people.\"\n\nThe box stays on your shelf. The first dial keeps going up.",
+              "\"Yes. Obviously. Take as long as you want.\"\n\n\"I've spent a year not saying it. It would be completely unreasonable of me to hand it over and then start counting.\"\n\n\"I'm still going to fix your latch. And the second stair, which you've been ignoring. None of that was ever about this. I'd have done it if you'd never spoken to me at all. That's just what I do about people.\"\n\n*The box stays on your shelf. The first dial keeps going up.*",
           },
         ],
       },

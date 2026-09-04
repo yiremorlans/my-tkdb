@@ -18,21 +18,21 @@ export default {
             label: "Thank him for it",
             style: 3,
             close:
-              "\"Don't thank me, it's undignified for both of us.\"\n\nA pause.\n\n\"...You're welcome. That's all you're getting. That's the entire allocation for the year.\"",
+              "\"Don't thank me, it's undignified for both of us.\"\n\n*A pause.*\n\n\"...You're welcome. That's all you're getting. That's the entire allocation for the year.\"",
           },
           {
             key: "playful",
             label: "Ask if you're still a mark",
             style: 1,
             close:
-              "\"Obviously not, or I wouldn't be wasting a perfectly good morning explaining myself to you.\"\n\nA pause.\n\n\"...You're something else. I haven't worked out what yet. Don't push it.\"",
+              "\"Obviously not, or I wouldn't be wasting a perfectly good morning explaining myself to you.\"\n\n*A pause.*\n\n\"...You're something else. I haven't worked out what yet. Don't push it.\"",
           },
           {
             key: "bold",
             label: "Ask what it cost him",
             style: 4,
             close:
-              '"Nothing."\n\nThen, four seconds later: "A favor, two hundred thousand yen of goodwill, and I had to be nice to a man I hate. Don\'t mention it. Genuinely. Do not mention it, ever, to anyone."',
+              '"Nothing."\n\n*Then, four seconds later:* "A favor, two hundred thousand yen of goodwill, and I had to be nice to a man I hate. Don\'t mention it. Genuinely. Do not mention it, ever, to anyone."',
           },
         ],
       },
@@ -56,14 +56,14 @@ export default {
             label: "Ask him to sit down a minute",
             style: 3,
             close:
-              "\"That's not a... that's not an ASK, that's not...\"\n\nA long pause.\n\n\"...Fine. Fine! I'm sitting. I've sat. Are you happy? This is the worst favor I've ever done anyone.\"\n\nHe sits for forty minutes.",
+              "\"That's not a... that's not an ASK, that's not...\"\n\n*A long pause.*\n\n\"...Fine. Fine! I'm sitting. I've sat. Are you happy? This is the worst favor I've ever done anyone.\"\n\n*He sits for forty minutes.*",
           },
           {
             key: "playful",
             label: "Ask for his skincare routine",
             style: 1,
             close:
-              "\"NOW you're talking. Right. Clear your evening. There are ELEVEN STEPS and I'm not skipping the explanations.\"\n\nHe sends fourteen messages about serums. It's the happiest you've ever seen him.",
+              "\"NOW you're talking. Right. Clear your evening. There are ELEVEN STEPS and I'm not skipping the explanations.\"\n\n*He sends fourteen messages about serums. It's the happiest you've ever seen him.*",
           },
           {
             key: "bold",
@@ -83,8 +83,8 @@ export default {
     closeFriend: {
       beats: [
         "**{firstName}**: \"Casino. After close. Come up to the balcony office, not the floor, and DON'T let Taiga see you on the way up or he'll steal you for the night at the casino before I've said two words.\"",
-        "The floor is dark below and he is sitting on the balcony with his jacket off and his hair down and a ledger open in front of him, and he doesn't do the voice when you come in.\n\n\"This is the real book. Not the one the academy sees. Every fee, every mark, every person in this house who owes and every person who's owed to.\"",
-        "He turns it round so you can see, which is the single most dangerous thing anyone in Sinostra could do.\n\n\"Half of that is people who'll never pay and I've never once chased. Fuji-kun's on there four times. There's a second-year on there whose mom's ill and she's never going to know I wrote it off.\"\n\n\"Everyone thinks I'm the money. I AM the money. But nobody's ever asked what I actually spend it on, and it turns out the answer's on page nine and I've never shown anybody page nine.\"",
+        "*The floor is dark below and he is sitting on the balcony with his jacket off and his hair down and a ledger open in front of him, and he doesn't do the voice when you come in.*\n\n\"This is the real book. Not the one the academy sees. Every fee, every mark, every person in this house who owes and every person who's owed to.\"",
+        "*He turns it round so you can see, which is the single most dangerous thing anyone in Sinostra could do.*\n\n\"Half of that is people who'll never pay and I've never once chased. Fuji-kun's on there four times. There's a second-year on there whose mom's ill and she's never going to know I wrote it off.\"\n\n\"Everyone thinks I'm the money. I AM the money. But nobody's ever asked what I actually spend it on, and it turns out the answer's on page nine and I've never shown anybody page nine.\"",
       ],
       choice: {
         prompt:
@@ -95,21 +95,21 @@ export default {
             label: "Say page nine is the real book",
             style: 3,
             close:
-              'He shuts the ledger rather harder than necessary.\n\n"...Yeah. Yeah, alright."\n\nHe doesn\'t say anything else for a bit. Then: "Don\'t repeat that. I\'ve got a reputation and it does about ninety percent of my job for me."',
+              '*He shuts the ledger rather harder than necessary.*\n\n"...Yeah. Yeah, alright."\n\n*He doesn\'t say anything else for a bit. Then:* "Don\'t repeat that. I\'ve got a reputation and it does about ninety percent of my job for me."',
           },
           {
             key: "playful",
             label: "Threaten to tell everyone",
             style: 1,
             close:
-              "\"HDY. I will RUIN you. I will ruin you SO efficiently...\"\n\nA pause.\n\n\"...You wouldn't though. That's the annoying bit. You're the only person I've shown this to and I'm not even slightly worried, and I've been worried about everything since I was nine.\"",
+              "\"HDY. I will RUIN you. I will ruin you SO efficiently...\"\n\n*A pause.*\n\n\"...You wouldn't though. That's the annoying bit. You're the only person I've shown this to and I'm not even slightly worried, and I've been worried about everything since I was nine.\"",
           },
           {
             key: "bold",
             label: "Ask if you're in the book",
             style: 4,
             close:
-              "He goes very still.\n\n\"...Page one.\"\n\nHe doesn't turn it back round.\n\n\"Not as a debt. There's a second column. There's exactly one name in the second column and it's been there since about March and I'm not explaining what the column is.\"",
+              "*He goes very still.*\n\n\"...Page one.\"\n\n*He doesn't turn it back round.*\n\n\"Not as a debt. There's a second column. There's exactly one name in the second column and it's been there since about March and I'm not explaining what the column is.\"",
           },
         ],
       },
@@ -134,14 +134,14 @@ export default {
             label: "Ask if he's all right again",
             style: 3,
             close:
-              '"DON\'T..."\n\nNothing for four minutes.\n\n"No," he writes eventually, and it\'s the quietest thing he\'s ever sent. "No, I\'m not. Obviously I\'m not."\n\n"Come up. Don\'t say anything about it when you get here. Just be up here."',
+              '"DON\'T..."\n\n*Nothing for four minutes.*\n\n"No," *he writes eventually, and it\'s the quietest thing he\'s ever sent.* "No, I\'m not. Obviously I\'m not."\n\n"Come up. Don\'t say anything about it when you get here. Just be up here."',
           },
           {
             key: "playful",
             label: "Agree that he looks incredible",
             style: 1,
             close:
-              '"THANK YOU. Finally. Somebody in this building with EYES."\n\nThen, much later: "...that helped, actually. Don\'t tell anyone that helped. I\'d rather people thought I was unreachable."',
+              '"THANK YOU. Finally. Somebody in this building with EYES."\n\n*Then, much later:* "...that helped, actually. Don\'t tell anyone that helped. I\'d rather people thought I was unreachable."',
           },
           {
             key: "bold",
@@ -173,7 +173,7 @@ export default {
             label: "Tell him to stop",
             style: 3,
             close:
-              '"...Right."\n\nA long silence.\n\n"Stopped. Done. It\'s... yeah. It\'s stopped."\n\nThen: "Come up anyway. I\'ve canceled a whole evening of being frightening and I\'ve got nothing to do with myself and I\'d rather not sit here alone with it."',
+              '"...Right."\n\n*A long silence.*\n\n"Stopped. Done. It\'s... yeah. It\'s stopped."\n\n*Then:* "Come up anyway. I\'ve canceled a whole evening of being frightening and I\'ve got nothing to do with myself and I\'d rather not sit here alone with it."',
           },
           {
             key: "playful",
@@ -187,7 +187,7 @@ export default {
             label: "Say you don't want him to",
             style: 4,
             close:
-              "\"That's not the same as telling me to stop and you know it isn't.\"\n\nA pause.\n\n\"...It's better, actually. It's worse for me and it's better. Because now I've got to want to stop rather than just being told, and I don't, and I'm going to anyway.\"\n\n\"HDY. Genuinely. How dare you.\"",
+              "\"That's not the same as telling me to stop and you know it isn't.\"\n\n*A pause.*\n\n\"...It's better, actually. It's worse for me and it's better. Because now I've got to want to stop rather than just being told, and I don't, and I'm going to anyway.\"\n\n\"HDY. Genuinely. How dare you.\"",
           },
         ],
       },
@@ -200,7 +200,7 @@ export default {
     soulbound: {
       beats: [
         "**{firstName}**: \"Balcony. Now. And before you get there, I've had eleven weeks to do this properly and I've decided to do it badly instead, so brace.\"",
-        "The ledger is open on the desk at page one. He's turned it round already.\n\nThere is a second column, and there's one name in it, and it says: *not a debt. never bill.*\n\n\"March. I wrote that in March and I've looked at it about four hundred times.\"",
+        "*The ledger is open on the desk at page one. He's turned it round already.*\n\n_There is a second column, and there's one name in it, and it says: *not a debt. never bill.*_\n\n\"March. I wrote that in March and I've looked at it about four hundred times.\"",
         "\"Everything's a price. That's not a philosophy, it's the only language I was taught. My family bought their way out of things and into things and I learned exactly one skill, which is knowing what everybody costs.\"\n\n\"I can price anyone in this academy in about four seconds. Taiga. Jo. The captain of Frostheim, who thinks he's above it, and isn't.\"\n\n\"{timesMet} visits and I have NEVER been able to price you. Not once. It's been driving me out of my MIND for a year.\"",
         "\"So here's the badly done bit.\"\n\n\"I love you. There's no invoice, there's no favor attached, and there's nothing you owe me, and if you ever try to pay me back for anything I have EVER done for you I will genuinely never speak to you again.\"\n\n\"That's it. That's the whole thing. I've spent my entire life making sure everything had a number on it and there's one thing that doesn't and it's you and I've just told you, out loud, on a balcony, like a MANIAC.\"",
       ],
@@ -213,14 +213,14 @@ export default {
             label: "Say it back",
             style: 3,
             close:
-              "There is a sound that is almost certainly a chair going over.\n\n\"Say it AGAIN... no. No, don't. Don't, I heard it, I'm...\"\n\nHe stops trying to type. He comes round the desk instead, and for once he isn't loud at all: he takes your hands, both of them, and looks at them rather than at you.\n\n\"Nobody's ever done that for free,\" he says. \"Not once, in my whole life. Say it again in the morning. I'll need it in the morning.\"",
+              "*There is a sound that is almost certainly a chair going over.*\n\n\"Say it AGAIN... no. No, don't. Don't, I heard it, I'm...\"\n\n*He stops trying to type. He comes round the desk instead, and for once he isn't loud at all: he takes your hands, both of them, and looks at them rather than at you.*\n\n\"Nobody's ever done that for free,\" *he says.* \"Not once, in my whole life. Say it again in the morning. I'll need it in the morning.\"",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
             close:
-              "\"Fine. GREAT. Excellent. Take all of it.\"\n\nA pause. Then, without the volume:\n\n\"...That wasn't sarcasm, for once. Take it. I dropped that on you off a balcony at two in the morning, you're entitled to a bit of thinking.\"\n\n\"Second column stays. That's not a maneuver. It was true in March and it's true now and it'd be true if you never came up here again. Nobody bills you. That's the arrangement and it isn't up for negotiation, which I'm aware is a very me way of being kind.\"",
+              "\"Fine. GREAT. Excellent. Take all of it.\"\n\n*A pause. Then, without the volume:*\n\n\"...That wasn't sarcasm, for once. Take it. I dropped that on you off a balcony at two in the morning, you're entitled to a bit of thinking.\"\n\n\"Second column stays. That's not a maneuver. It was true in March and it's true now and it'd be true if you never came up here again. Nobody bills you. That's the arrangement and it isn't up for negotiation, which I'm aware is a very me way of being kind.\"",
           },
         ],
       },

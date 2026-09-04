@@ -179,7 +179,7 @@ function continueButton(characterId, levelName, nextBeat, kind = 'next') {
     components: [
       {
         type: BUTTON,
-        style: 2, // SECONDARY — the scene is the message; the button is a page turn
+        style: 1, // PRIMARY — grey (SECONDARY) was hard to see; this is the one thing to click
         label: 'Continue',
         custom_id: `bond:${kind}:${characterId}:${bondLevelSlug(levelName)}:${nextBeat}`,
       },
@@ -297,7 +297,7 @@ function replayStartRow(characterId, levelName) {
     components: [
       {
         type: BUTTON,
-        style: 2,
+        style: 1, // PRIMARY — matches the Continue button now that grey is gone
         label: '🔁 Replay this scene',
         custom_id: `bond:replaystart:${characterId}:${bondLevelSlug(levelName)}:x`,
       },

@@ -17,7 +17,7 @@ export default {
             key: "kind",
             label: "Say you feel safe there",
             style: 3,
-            close: "There is a pause of forty seconds, which for him is enormous.\n\n\"That is not a variable I track.\"\n\nThen: \"I will begin tracking it. Thank you for the datum.\"",
+            close: "*There is a pause of forty seconds, which for him is enormous.*\n\n\"That is not a variable I track.\"\n\n*Then:* \"I will begin tracking it. Thank you for the datum.\"",
           },
           {
             key: "playful",
@@ -29,7 +29,7 @@ export default {
             key: "bold",
             label: "Ask what his pulse does",
             style: 4,
-            close: "The reply takes nearly two minutes.\n\n\"I do not measure my own.\"\n\n\"I have measured my own. The result was not consistent with my model and I have not repeated the measurement. Good night.\"",
+            close: "*The reply takes nearly two minutes.*\n\n\"I do not measure my own.\"\n\n\"I have measured my own. The result was not consistent with my model and I have not repeated the measurement. Good night.\"",
           },
         ],
       },
@@ -51,7 +51,7 @@ export default {
             key: "kind",
             label: "Say he's easy to be near",
             style: 3,
-            close: "\"That is inconsistent with all available evidence.\"\n\nA long pause.\n\n\"I am going to record it anyway. I would like there to be one entry in the file that says that.\"",
+            close: "\"That is inconsistent with all available evidence.\"\n\n*A long pause.*\n\n\"I am going to record it anyway. I would like there to be one entry in the file that says that.\"",
           },
           {
             key: "playful",
@@ -76,7 +76,7 @@ export default {
     closeFriend: {
       beats: [
         '**{firstName}**: "Come to the lower theater at eleven. The captain will be asleep. Bring nothing."',
-        "The room is dark except for one lamp. On the bench is a wooden case, old, clearly not medical, and he opens it without preamble.\n\nInside is a set of children's calligraphy brushes.\n\n\"These are my brother's. He is dead. He died here when I was eleven and I have carried these through four moves and never once used them.\"",
+        "*The room is dark except for one lamp. On the bench is a wooden case, old, clearly not medical, and he opens it without preamble.*\n\n*Inside is a set of children's calligraphy brushes.*\n\n\"These are my brother's. He is dead. He died here when I was eleven and I have carried these through four moves and never once used them.\"",
         "\"I do not know why I keep them. I have written the reasoning out three times and it does not resolve: sentiment is not a category I have any facility with.\"\n\n\"But I found myself wanting you to have seen them, and that impulse also did not resolve, and I have decided to stop attempting to resolve things where you are concerned because the failure rate is one hundred percent.\"",
       ],
       choice: {
@@ -86,19 +86,19 @@ export default {
             key: "kind",
             label: "Ask what he was like",
             style: 3,
-            close: "Jiro does not answer for a long time. When he does, he does not sound like himself.\n\n\"Loud. Extremely loud. He talked in metaphors and it was intolerable and I would give a great deal to be made to sit through it once more.\"\n\nHe closes the case. \"That is the question spent. Thank you for spending it on that one.\"",
+            close: "*Jiro does not answer for a long time. When he does, he does not sound like himself.*\n\n\"Loud. Extremely loud. He talked in metaphors and it was intolerable and I would give a great deal to be made to sit through it once more.\"\n\n*He closes the case.* \"That is the question spent. Thank you for spending it on that one.\"",
           },
           {
             key: "playful",
             label: "Ask if he was any good",
             style: 1,
-            close: "\"Terrible. Genuinely terrible. He was told so repeatedly and it never once landed.\"\n\nSomething almost moves at the corner of his mouth.\n\n\"I have not said that out loud in nine years. It is still funny. I had assumed it would have stopped being funny.\"",
+            close: "\"Terrible. Genuinely terrible. He was told so repeatedly and it never once landed.\"\n\n*Something almost moves at the corner of his mouth.*\n\n\"I have not said that out loud in nine years. It is still funny. I had assumed it would have stopped being funny.\"",
           },
           {
             key: "bold",
             label: "Ask him to use one",
             style: 4,
-            close: "\"No.\"\n\nThen he sits down, and takes one out, and holds it for a very long time without doing anything with it.\n\n\"...If you stay,\" he says eventually, not looking up, \"I will try. I have found I can attempt things in front of you that I cannot attempt alone. I have no explanation for that and I have stopped looking for one.\"",
+            close: "\"No.\"\n\n*Then he sits down, and takes one out, and holds it for a very long time without doing anything with it.*\n\n\"...If you stay,\" *he says eventually, not looking up,* \"I will try. I have found I can attempt things in front of you that I cannot attempt alone. I have no explanation for that and I have stopped looking for one.\"",
           },
         ],
       },
@@ -121,7 +121,7 @@ export default {
             key: "kind",
             label: "Ask if it hurts",
             style: 3,
-            close: "\"Yes.\"\n\nOne word, immediate, without a single qualifier attached to it, which from Jiro is the most naked thing he has ever done.\n\n\"Nobody has asked that. In four years, nobody has asked the pain question. They ask about the results.\"",
+            close: "\"Yes.\"\n\n*One word, immediate, without a single qualifier attached to it, which from Jiro is the most naked thing he has ever done.*\n\n\"Nobody has asked that. In four years, nobody has asked the pain question. They ask about the results.\"",
           },
           {
             key: "playful",
@@ -133,7 +133,7 @@ export default {
             key: "bold",
             label: "Tell him to refuse the next",
             style: 4,
-            close: "\"That is not a variable I control.\"\n\nA long silence.\n\n\"That is a lie. It is entirely a variable I control and I have never once exercised it.\"\n\n\"I will consider it. That is a larger statement than it appears and I would appreciate it not being repeated.\"",
+            close: "\"That is not a variable I control.\"\n\n*A long silence.*\n\n\"That is a lie. It is entirely a variable I control and I have never once exercised it.\"\n\n\"I will consider it. That is a larger statement than it appears and I would appreciate it not being repeated.\"",
           },
         ],
       },
@@ -156,7 +156,7 @@ export default {
             key: "kind",
             label: "Tell him to put the phone down",
             style: 3,
-            close: "He puts it down.\n\nThen he sits there, hands flat on his knees, entirely still, looking at you with an expression nobody in Mortkranken has ever seen on him.\n\n\"I do not know what to do now,\" he says. \"There is no procedure. Tell me what to do.\"\n\nYou tell him to hold your hand. He does, for four hours, and does not measure anything at all.",
+            close: "*He puts it down.*\n\n*Then he sits there, hands flat on his knees, entirely still, looking at you with an expression nobody in Mortkranken has ever seen on him.*\n\n\"I do not know what to do now,\" *he says.* \"There is no procedure. Tell me what to do.\"\n\n*You tell him to hold your hand. He does, for four hours, and does not measure anything at all.*",
           },
           {
             key: "playful",
@@ -168,7 +168,7 @@ export default {
             key: "bold",
             label: "Tell him to label the term",
             style: 4,
-            close: "The typing indicator runs, stops, runs again.\n\nThen he simply puts the phone face down on the bed and says it out loud instead, quietly, to your hand rather than your face: one word, the correct one, in the flat voice he uses for readings.\n\nThen: \"There. It is labeled. The model is considerably worse now and I do not care.\"",
+            close: "*The typing indicator runs, stops, runs again.*\n\n*Then he simply puts the phone face down on the bed and says it out loud instead, quietly, to your hand rather than your face: one word, the correct one, in the flat voice he uses for readings.*\n\n*Then:* \"There. It is labeled. The model is considerably worse now and I do not care.\"",
           },
         ],
       },
@@ -192,7 +192,7 @@ export default {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "\"Repeat that.\"\n\nYou do.\n\n\"Again. I am attempting to record it accurately and I am failing, which does not happen.\"\n\nAnd then, thirty seconds later, he is in the doorway, having run, plainly, which he does not do, and he crosses the room and takes hold of you with a complete absence of technique, and it is the least clinical thing that has ever happened in Mortkranken.",
+            close: "\"Repeat that.\"\n\n*You do.*\n\n\"Again. I am attempting to record it accurately and I am failing, which does not happen.\"\n\n*And then, thirty seconds later, he is in the doorway, having run, plainly, which he does not do, and he crosses the room and takes hold of you with a complete absence of technique, and it is the least clinical thing that has ever happened in Mortkranken.*",
           },
           {
             key: "held",

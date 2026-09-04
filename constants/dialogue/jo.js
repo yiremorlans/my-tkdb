@@ -18,7 +18,7 @@ export default {
             label: "Ask him back",
             style: 3,
             close:
-              '"Ha. Nice try."\n\nA pause. A long one, for someone whose whole job is having an answer ready.\n\n"...Tired. That\'s the honest one. Don\'t tell Mio, he\'ll build me something."',
+              '"Ha. Nice try."\n\n*A pause. A long one, for someone whose whole job is having an answer ready.*\n\n"...Tired. That\'s the honest one. Don\'t tell Mio, he\'ll build me something."',
           },
           {
             key: "playful",
@@ -32,7 +32,7 @@ export default {
             label: "Say you'd need something",
             style: 4,
             close:
-              "\"Oh, would you.\"\n\nThere's real interest in it, the first thing in the whole message that isn't managed.\n\n\"Well. Ask, then. I'd like to see what it does to me, and I don't get many chances to find that out.\"",
+              "\"Oh, would you.\"\n\n*There's real interest in it, the first thing in the whole message that isn't managed.*\n\n\"Well. Ask, then. I'd like to see what it does to me, and I don't get many chances to find that out.\"",
           },
         ],
       },
@@ -55,7 +55,7 @@ export default {
             label: "Say you'd like the real one",
             style: 3,
             close:
-              "\"That's the trouble. I'd have to find him first.\"\n\nA pause.\n\n\"...I'll look. Give me a while. He's under a lot of paperwork.\"",
+              "\"That's the trouble. I'd have to find him first.\"\n\n*A pause.*\n\n\"...I'll look. Give me a while. He's under a lot of paperwork.\"",
           },
           {
             key: "playful",
@@ -69,7 +69,7 @@ export default {
             label: "Tell him to stop adapting",
             style: 4,
             close:
-              "There is no reply for some minutes.\n\n\"Nobody's ever said that to me.\"\n\n\"They've said 'be yourself', which is different. That's a compliment with nothing in it. You said stop, which is an instruction, and I don't get given those.\"\n\n\"I don't know how yet. But I noticed you said it.\"",
+              "*There is no reply for some minutes.*\n\n\"Nobody's ever said that to me.\"\n\n\"They've said 'be yourself', which is different. That's a compliment with nothing in it. You said stop, which is an instruction, and I don't get given those.\"\n\n\"I don't know how yet. But I noticed you said it.\"",
           },
         ],
       },
@@ -82,8 +82,8 @@ export default {
     closeFriend: {
       beats: [
         "**{firstName}**: \"Five thirty. The east gate. Don't be late and don't ask why.\"",
-        "It's still dark. He's in a hoodie and running shoes with none of the artifact on him at all, and he looks about six years younger and considerably less finished.\n\n\"This is the jog. Every morning, five thirty, an hour, alone. It's the only part of the day nobody has an opinion about.\"",
-        "You run. He doesn't talk for the first twenty minutes, which from Jo is unheard of.\n\nSomewhere near the water he says, without slowing down: \"I've done this alone for six years. Mio's asked. Haru's asked twice. I said no both times without even thinking about it.\"\n\n\"Then I thought about asking you and I couldn't come up with a single reason not to, which frankly alarmed me.\"",
+        "*It's still dark. He's in a hoodie and running shoes with none of the artifact on him at all, and he looks about six years younger and considerably less finished.*\n\n\"This is the jog. Every morning, five thirty, an hour, alone. It's the only part of the day nobody has an opinion about.\"",
+        "*You run. He doesn't talk for the first twenty minutes, which from Jo is unheard of.*\n\n*Somewhere near the water he says, without slowing down:* \"I've done this alone for six years. Mio's asked. Haru's asked twice. I said no both times without even thinking about it.\"\n\n\"Then I thought about asking you and I couldn't come up with a single reason not to, which frankly alarmed me.\"",
       ],
       choice: {
         prompt: '"Well? Verdict. And be honest, you\'re wheezing."',
@@ -93,7 +93,7 @@ export default {
             label: "Ask to come tomorrow",
             style: 3,
             close:
-              'He does actually stop running for a second.\n\n"...Yeah. All right."\n\nHe doesn\'t say anything else about it. But the next morning he waits at the gate rather than starting without you, and every morning after that.',
+              '*He does actually stop running for a second.*\n\n"...Yeah. All right."\n\n*He doesn\'t say anything else about it. But the next morning he waits at the gate rather than starting without you, and every morning after that.*',
           },
           {
             key: "playful",
@@ -107,7 +107,7 @@ export default {
             label: "Ask what he thinks about",
             style: 4,
             close:
-              'He runs another hundred meters before answering.\n\n"Nothing. That\'s the point of it."\n\nThen: "That was a lie and you\'d have let me get away with it. Everybody in the house. Every single one of them, one at a time, for an hour, and then I go back in and do the day."\n\n"You were in it this morning. That\'s new, and I haven\'t decided what to do about it."',
+              '*He runs another hundred meters before answering.*\n\n"Nothing. That\'s the point of it."\n\n*Then:* "That was a lie and you\'d have let me get away with it. Everybody in the house. Every single one of them, one at a time, for an hour, and then I go back in and do the day."\n\n"You were in it this morning. That\'s new, and I haven\'t decided what to do about it."',
           },
         ],
       },
@@ -131,7 +131,7 @@ export default {
             label: "Tell him you like him",
             style: 3,
             close:
-              "There's a very long gap.\n\n\"...Say that in the morning too. When I'm not like this.\"\n\n\"I want to find out if I can hear it when I'm the competent one. I don't think I can. I'd like to be wrong.\"",
+              "*There's a very long gap.*\n\n\"...Say that in the morning too. When I'm not like this.\"\n\n\"I want to find out if I can hear it when I'm the competent one. I don't think I can. I'd like to be wrong.\"",
           },
           {
             key: "playful",
@@ -145,7 +145,7 @@ export default {
             label: "Tell him to ask them",
             style: 4,
             close:
-              "\"Absolutely not.\"\n\nA pause.\n\n\"...Because I'd have to survive the answer, and I've built the whole thing on not needing one.\"\n\n\"You'd ask, wouldn't you. You'd just walk in and ask. God. I've spent six years being impressed by nobody and now this.\"",
+              "\"Absolutely not.\"\n\n*A pause.*\n\n\"...Because I'd have to survive the answer, and I've built the whole thing on not needing one.\"\n\n\"You'd ask, wouldn't you. You'd just walk in and ask. God. I've spent six years being impressed by nobody and now this.\"",
           },
         ],
       },
@@ -170,7 +170,7 @@ export default {
             label: "Tell him you're all right",
             style: 3,
             close:
-              "\"I know. I've known for an hour.\"\n\nA pause.\n\n\"Say it in person. I'm outside. I've been outside for a while and I couldn't work out how to knock without it meaning something.\"",
+              "\"I know. I've known for an hour.\"\n\n*A pause.*\n\n\"Say it in person. I'm outside. I've been outside for a while and I couldn't work out how to knock without it meaning something.\"",
           },
           {
             key: "playful",
@@ -184,7 +184,7 @@ export default {
             label: "Tell him it wasn't idiotic",
             style: 4,
             close:
-              "He's at the door before you've finished, still half in costume with the paint smudged, having very clearly walked straight there.\n\nHe doesn't say anything for a while. He just puts both hands on your shoulders, holds you at arm's length to check, and then gives up entirely and pulls you in.\n\n\"Nine years,\" he says into your hair. \"Nine years and one of you.\"",
+              "*He's at the door before you've finished, still half in costume with the paint smudged, having very clearly walked straight there.*\n\n*He doesn't say anything for a while. He just puts both hands on your shoulders, holds you at arm's length to check, and then gives up entirely and pulls you in.*\n\n\"Nine years,\" *he says into your hair.* \"Nine years and one of you.\"",
           },
         ],
       },
@@ -210,14 +210,14 @@ export default {
             label: "Say it back",
             style: 3,
             close:
-              '"...East gate. Now. I know it\'s not five thirty."\n\nHe\'s there in the dark with no shoes on properly and no explanation for that, and when you get to him he laughs, a real one, cracked open, nothing performed anywhere in it.\n\n"Say it out here," he says, hands either side of your face. "Where there\'s nobody to be a captain in front of."',
+              '"...East gate. Now. I know it\'s not five thirty."\n\n*He\'s there in the dark with no shoes on properly and no explanation for that, and when you get to him he laughs, a real one, cracked open, nothing performed anywhere in it.*\n\n"Say it out here," *he says, hands either side of your face.* "Where there\'s nobody to be a captain in front of."',
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
             close:
-              "\"Of course. Take it.\"\n\nAnd then, because he cannot help himself: \"And don't manage me about it. If you decide no, say no. I've had a lifetime of people arranging their faces at me and I'd rather have one person who doesn't.\"\n\n\"The gate's at five thirty. It was at five thirty before any of this and it'll be at five thirty after. I'll wait. That part isn't a favor, it's just where I am.\"",
+              "\"Of course. Take it.\"\n\n*And then, because he cannot help himself:* \"And don't manage me about it. If you decide no, say no. I've had a lifetime of people arranging their faces at me and I'd rather have one person who doesn't.\"\n\n\"The gate's at five thirty. It was at five thirty before any of this and it'll be at five thirty after. I'll wait. That part isn't a favor, it's just where I am.\"",
           },
         ],
       },

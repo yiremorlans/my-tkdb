@@ -7,7 +7,7 @@ export default {
     acquaintance: {
       beats: [
         '**{firstName}**: "hey senpai"\n\n"[link]"\n\n"don\'t open that during a shift. or do. I\'m not your supervisor"',
-        "You open it. It's an invite code for the gacha game he's been grinding on his phone between shifts, already redeemed under your name, starter items and all.\n\n\"Needed a second account for the co-op event. Yours was just... convenient.\"\n\n\"I've sent {timesMet} of those out before. Deleted every account before it finished downloading. I haven't deleted this one, which I've decided not to think about too hard.\"",
+        "*You open it. It's an invite code for the gacha game he's been grinding on his phone between shifts, already redeemed under your name, starter items and all.*\n\n\"Needed a second account for the co-op event. Yours was just... convenient.\"\n\n\"I've sent {timesMet} of those out before. Deleted every account before it finished downloading. I haven't deleted this one, which I've decided not to think about too hard.\"",
       ],
       choice: {
         prompt:
@@ -18,7 +18,7 @@ export default {
             label: "Give it a ten",
             style: 3,
             close:
-              '"A ten."\n\nA pause.\n\n"You\'ve inflated the currency. Now I have to actually optimize it. This is your fault and I\'m going to be up until four."',
+              '"A ten."\n\n*A pause.*\n\n"You\'ve inflated the currency. Now I have to actually optimize it. This is your fault and I\'m going to be up until four."',
           },
           {
             key: "playful",
@@ -32,7 +32,7 @@ export default {
             label: "Ask to join his guild",
             style: 4,
             close:
-              '"My guild?"\n\nA long gap.\n\n"...Yeah, alright. Give me a sec, I have to kick somebody first."\n\nHe kicks somebody. He never says who.',
+              '"My guild?"\n\n*A long gap.*\n\n"...Yeah, alright. Give me a sec, I have to kick somebody first."\n\n*He kicks somebody. He never says who.*',
           },
         ],
       },
@@ -55,7 +55,7 @@ export default {
             label: "Say there's no strategy",
             style: 3,
             close:
-              '"There\'s always a strategy."\n\nA pause.\n\n"...huh. Okay. There isn\'t, is there."\n\n"That\'s worse actually. That\'s so much worse. I\'m going to lie down."',
+              '"There\'s always a strategy."\n\n*A pause.*\n\n"...huh. Okay. There isn\'t, is there."\n\n"That\'s worse actually. That\'s so much worse. I\'m going to lie down."',
           },
           {
             key: "playful",
@@ -69,7 +69,7 @@ export default {
             label: "Tell him to take it out",
             style: 4,
             close:
-              'It\'s a photo, thirty seconds later. Both earbuds, on the table, next to his phone.\n\n"There. Happy?"\n\nThen: "...Don\'t answer that. I know the answer. It\'s annoying that I know the answer."',
+              '*It\'s a photo, thirty seconds later. Both earbuds, on the table, next to his phone.*\n\n"There. Happy?"\n\n*Then:* "...Don\'t answer that. I know the answer. It\'s annoying that I know the answer."',
           },
         ],
       },
@@ -82,8 +82,8 @@ export default {
     closeFriend: {
       beats: [
         '**{firstName}**: "diner. after close. I\'ll leave the back door"',
-        "The place is dark and the chairs are up and he's behind the counter making something that isn't on the menu, with a paused game glowing on the little screen wedged behind the milkshake machine and a second controller charging next to the till for reasons he hasn't explained yet.\n\n\"I do this every Thursday. Have done since I got here. It's the only two hours a week nobody wants anything off me.\"",
-        "\"I've never told anyone about it. Not because it's a secret, just because if people knew it'd become a thing, and then it'd stop being the two hours.\"\n\nHe slides the plate over without pausing the game.\n\n\"You're in it now. Congratulations. You've halved my only two hours and I'm somehow fine about it, which I'd like a doctor to look at.\"",
+        "*The place is dark and the chairs are up and he's behind the counter making something that isn't on the menu, with a paused game glowing on the little screen wedged behind the milkshake machine and a second controller charging next to the till for reasons he hasn't explained yet.*\n\n\"I do this every Thursday. Have done since I got here. It's the only two hours a week nobody wants anything off me.\"",
+        "\"I've never told anyone about it. Not because it's a secret, just because if people knew it'd become a thing, and then it'd stop being the two hours.\"\n\n*He slides the plate over without pausing the game.*\n\n\"You're in it now. Congratulations. You've halved my only two hours and I'm somehow fine about it, which I'd like a doctor to look at.\"",
       ],
       choice: {
         prompt:
@@ -94,7 +94,7 @@ export default {
             label: "Say you'll keep it quiet",
             style: 3,
             close:
-              '"...yeah. Cheers."\n\nHe doesn\'t say anything else about it. But he unplugs the second controller and just leaves it sitting in front of you, which is the largest gesture he has ever made.',
+              '"...yeah. Cheers."\n\n*He doesn\'t say anything else about it. But he unplugs the second controller and just leaves it sitting in front of you, which is the largest gesture he has ever made.*',
           },
           {
             key: "playful",
@@ -108,7 +108,7 @@ export default {
             label: "Sit on his side of the counter",
             style: 4,
             close:
-              "He looks at the space you've taken for a second, then just shoves the controller into your hands instead of arguing about it.\n\nSomewhere in the second match you fall asleep against his shoulder, and he keeps playing one-handed for two hours rather than wake you up to switch you out.\n\nHe never mentions it. He starts leaving a cushion on that side of the counter, though.",
+              "*He looks at the space you've taken for a second, then just shoves the controller into your hands instead of arguing about it.*\n\n*Somewhere in the second match you fall asleep against his shoulder, and he keeps playing one-handed for two hours rather than wake you up to switch you out.*\n\n*He never mentions it. He starts leaving a cushion on that side of the counter, though.*",
           },
         ],
       },
@@ -132,21 +132,21 @@ export default {
             label: "Say you don't need anything",
             style: 3,
             close:
-              "There's a long gap.\n\n\"...I know.\"\n\n\"That's the whole reason it's you on Thursdays. Took me about six months to work out why and then I just didn't look at it directly for another four.\"",
+              "*There's a long gap.*\n\n\"...I know.\"\n\n\"That's the whole reason it's you on Thursdays. Took me about six months to work out why and then I just didn't look at it directly for another four.\"",
           },
           {
             key: "playful",
             label: "Ask him for a favor",
             style: 1,
             close:
-              '"Oh, immediately? Straight in?"\n\n"...go on then. What is it."\n\nYou ask him to do nothing for an hour. He calls you a menace and then actually does it, and reports back afterwards that it was horrible and he might try it again.',
+              '"Oh, immediately? Straight in?"\n\n"...go on then. What is it."\n\n*You ask him to do nothing for an hour. He calls you a menace and then actually does it, and reports back afterwards that it was horrible and he might try it again.*',
           },
           {
             key: "bold",
             label: "Tell him it's okay to refuse",
             style: 4,
             close:
-              '"Can\'t. If I stop, what\'s left."\n\nThen, four minutes later:\n\n"That was a bad sentence. I\'ve read it back. Don\'t answer it, I don\'t think I want the answer yet."\n\n"...Ask me again on a Thursday."',
+              '"Can\'t. If I stop, what\'s left."\n\n*Then, four minutes later:*\n\n"That was a bad sentence. I\'ve read it back. Don\'t answer it, I don\'t think I want the answer yet."\n\n"...Ask me again on a Thursday."',
           },
         ],
       },
@@ -159,7 +159,7 @@ export default {
     devoted: {
       beats: [
         '**{firstName}**: "don\'t be weird about this"',
-        "It's a screenshot of a phone's home screen. There's an alarm on it, set for a time that means nothing, labeled with your name.\n\n\"It's for when your last class ends. I set it about three months ago so I'd know when to stop being anywhere else.\"\n\n\"I have never once told you I was waiting. I've just always happened to be in the courtyard. Every time. Three months of happening to be in the courtyard.\"",
+        "*It's a screenshot of a phone's home screen. There's an alarm on it, set for a time that means nothing, labeled with your name.*\n\n\"It's for when your last class ends. I set it about three months ago so I'd know when to stop being anywhere else.\"\n\n\"I have never once told you I was waiting. I've just always happened to be in the courtyard. Every time. Three months of happening to be in the courtyard.\"",
         "\"Tonight you came out late and I'd been there forty minutes, technically grinding the same event on my phone the whole time so it looked like I was just there for the game, and Haru saw me and did a whole face about it, and I realized I've been running an entire secret operation to look casual and it is genuinely more effort than just saying it.\"\n\n\"So: I wasn't happening to be there. Not once. That's the message.\"",
       ],
       choice: {
@@ -170,7 +170,7 @@ export default {
             label: "Say you always hoped he'd be",
             style: 3,
             close:
-              '"...say that again."\n\n"No, don\'t. I heard it. I\'m just... give me a second."\n\nThe second is nine minutes long. Then: "Okay. Alarm stays. Obviously the alarm stays."',
+              '"...say that again."\n\n"No, don\'t. I heard it. I\'m just... give me a second."\n\n*The second is nine minutes long. Then:* "Okay. Alarm stays. Obviously the alarm stays."',
           },
           {
             key: "playful",
@@ -184,7 +184,7 @@ export default {
             label: "Tell him to wait inside",
             style: 4,
             close:
-              "There's a pause.\n\n\"Inside's worse. Inside's obvious.\"\n\nThen, much later, from the courtyard: \"...I'm outside. I'm outside right now, actually, I've been typing this from the wall.\"\n\nWhen you come out he doesn't get up. He just holds a hand out until you take it, and stays sitting on the cold wall holding onto it for a good twenty minutes without saying anything at all.",
+              "*There's a pause.*\n\n\"Inside's worse. Inside's obvious.\"\n\n*Then, much later, from the courtyard:* \"...I'm outside. I'm outside right now, actually, I've been typing this from the wall.\"\n\n*When you come out he doesn't get up. He just holds a hand out until you take it, and stays sitting on the cold wall holding onto it for a good twenty minutes without saying anything at all.*",
           },
         ],
       },
@@ -209,14 +209,14 @@ export default {
             label: "Say it back",
             style: 3,
             close:
-              'The typing indicator goes on and off about six times.\n\nThen: "back door\'s open."\n\nHe\'s behind the counter when you get there and he doesn\'t do the deadpan thing once. He comes round the front, takes your face in both hands, and kisses you like a man who has been running a very good system for twenty years and has just decided the system was rubbish.\n\n"Yeah, I know I said it already," he says afterwards. "I\'m going to keep saying it."',
+              '*The typing indicator goes on and off about six times.*\n\n*Then:* "back door\'s open."\n\n*He\'s behind the counter when you get there and he doesn\'t do the deadpan thing once. He comes round the front, takes your face in both hands, and kisses you like a man who has been running a very good system for twenty years and has just decided the system was rubbish.*\n\n"Yeah, I know I said it already," *he says afterwards.* "I\'m going to keep saying it."',
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
             close:
-              "\"Yeah, course.\"\n\nA pause. Then, without a single flat note in it:\n\n\"For real. Take ages. I've been sitting on it for a year, it's not going to go off.\"\n\n\"Thursday's still Thursday. That was never a move. I'd have given you the two hours whatever you said tonight. That's not me being noble, that's just genuinely how it is.\"\n\nThe cushion stays on your side of the counter. He never says anything about that either.",
+              "\"Yeah, course.\"\n\n*A pause. Then, without a single flat note in it:*\n\n\"For real. Take ages. I've been sitting on it for a year, it's not going to go off.\"\n\n\"Thursday's still Thursday. That was never a move. I'd have given you the two hours whatever you said tonight. That's not me being noble, that's just genuinely how it is.\"\n\n*The cushion stays on your side of the counter. He never says anything about that either.*",
           },
         ],
       },

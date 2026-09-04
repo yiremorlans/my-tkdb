@@ -19,7 +19,7 @@ export default {
             label: "Say you'll keep turning up",
             style: 3,
             close:
-              "\"Yeah, they all say that.\"\n\nA pause.\n\n\"...Right. Writing it on the paper. If you don't turn up I'm going to look like an idiot to myself and I'll never know why. That's your problem now.\"",
+              "\"Yeah, they all say that.\"\n\n*A pause.*\n\n\"...Right. Writing it on the paper. If you don't turn up I'm going to look like an idiot to myself and I'll never know why. That's your problem now.\"",
           },
           {
             key: "playful",
@@ -33,7 +33,7 @@ export default {
             label: "Ask why he wrote you down",
             style: 4,
             close:
-              "There's a longer gap than he'd ever admit to.\n\n\"'Cause I forgot you once and it was annoying.\"\n\n\"That's it. That's the whole reason. Don't make it a thing, kitten, I hate it when things get made into things.\"",
+              "*There's a longer gap than he'd ever admit to.*\n\n\"'Cause I forgot you once and it was annoying.\"\n\n\"That's it. That's the whole reason. Don't make it a thing, kitten, I hate it when things get made into things.\"",
           },
         ],
       },
@@ -56,7 +56,7 @@ export default {
             label: "Say it isn't a big deal",
             style: 3,
             close:
-              '"It is a big deal."\n\nA pause.\n\n"...Keep saying it isn\'t though. It\'s easier when someone says it isn\'t."',
+              '"It is a big deal."\n\n*A pause.*\n\n"...Keep saying it isn\'t though. It\'s easier when someone says it isn\'t."',
           },
           {
             key: "playful",
@@ -83,8 +83,8 @@ export default {
     closeFriend: {
       beats: [
         '**{firstName}**: "come up to the floor after close. not the tables. the office."',
-        "The office is a mess and there is a corkboard on the back wall that is not a mess at all. It is the only organized thing in the building.\n\nIt is covered in paper. Names, places, times, a lot of them in his own handwriting getting steadily worse down the years.\n\n\"That's the whole system. That's everything I've had to nail down 'cause I couldn't keep it in my head.\"",
-        "He points at the top left, which is neat and old and faded.\n\n\"Mom. That's from when I still thought I could win it back.\"\n\nThen he points at the bottom right, where there are eleven notes about the same person, in eleven different pens, over what is clearly months.\n\n\"That's you. Eleven. Lulu's the only other person on this board more than twice and he's on it 'cause he pays me.\"",
+        "*The office is a mess and there is a corkboard on the back wall that is not a mess at all. It is the only organized thing in the building.*\n\n*It is covered in paper. Names, places, times, a lot of them in his own handwriting getting steadily worse down the years.*\n\n\"That's the whole system. That's everything I've had to nail down 'cause I couldn't keep it in my head.\"",
+        "*He points at the top left, which is neat and old and faded.*\n\n\"Mom. That's from when I still thought I could win it back.\"\n\n*Then he points at the bottom right, where there are eleven notes about the same person, in eleven different pens, over what is clearly months.*\n\n\"That's you. Eleven. Lulu's the only other person on this board more than twice and he's on it 'cause he pays me.\"",
       ],
       choice: {
         prompt:
@@ -95,21 +95,21 @@ export default {
             label: "Say eleven isn't enough",
             style: 3,
             close:
-              'He actually stops.\n\n"...What?"\n\nYou say it again.\n\n"Right." He takes a pen out. He writes a twelfth one, right there, while you\'re standing in the room, and pins it up without looking at you.\n\n"Don\'t say anything. Get out. Come back tomorrow."',
+              '*He actually stops.*\n\n"...What?"\n\n*You say it again.*\n\n"Right." *He takes a pen out. He writes a twelfth one, right there, while you\'re standing in the room, and pins it up without looking at you.*\n\n"Don\'t say anything. Get out. Come back tomorrow."',
           },
           {
             key: "playful",
             label: "Read one of them out loud",
             style: 1,
             close:
-              '"Don\'t..."\n\nToo late. It says, in handwriting that got away from him halfway: *the one who doesn\'t do the face. keep this one.*\n\nThere\'s a very long silence.\n\n"Gyahaha," he says, entirely without conviction. "Yeah. Alright."',
+              '"Don\'t..."\n\n_Too late. It says, in handwriting that got away from him halfway: *the one who doesn\'t do the face. keep this one.*_\n\n*There\'s a very long silence.*\n\n"Gyahaha," *he says, entirely without conviction.* "Yeah. Alright."',
           },
           {
             key: "bold",
             label: "Ask him to write one now",
             style: 4,
             close:
-              '"About what."\n\nYou tell him what. He looks at you for a good while, then writes it, slowly, properly, the best handwriting on the whole board, and pins it dead center where the light hits.\n\n"There," he says. "That one\'s not going anywhere. I don\'t care what my head does."',
+              '"About what."\n\n*You tell him what. He looks at you for a good while, then writes it, slowly, properly, the best handwriting on the whole board, and pins it dead center where the light hits.*\n\n"There," *he says.* "That one\'s not going anywhere. I don\'t care what my head does."',
           },
         ],
       },
@@ -133,21 +133,21 @@ export default {
             label: "Say you'd tell him about you",
             style: 3,
             close:
-              'There\'s nothing for a long time.\n\n"Every time?"\n\nYou say yes.\n\n"...Every time. Right."\n\nThen: "come up. I said don\'t and now I\'m saying do, and I\'m not explaining the change."',
+              '*There\'s nothing for a long time.*\n\n"Every time?"\n\n*You say yes.*\n\n"...Every time. Right."\n\n*Then:* "come up. I said don\'t and now I\'m saying do, and I\'m not explaining the change."',
           },
           {
             key: "playful",
             label: "Say you moved the chair",
             style: 1,
             close:
-              '"YOU MOVED THE..."\n\nA pause. Then a noise that is almost the laugh.\n\n"Gyahaha. You dickhead. Right. One mystery down."\n\n"...Don\'t do that again. Actually do. It was the best hour I\'ve had since Wednesday."',
+              '"YOU MOVED THE..."\n\n*A pause. Then a noise that is almost the laugh.*\n\n"Gyahaha. You dickhead. Right. One mystery down."\n\n"...Don\'t do that again. Actually do. It was the best hour I\'ve had since Wednesday."',
           },
           {
             key: "bold",
             label: "Say the board isn't the point",
             style: 4,
             close:
-              "\"It's the only point I've got.\"\n\nThen, four minutes later:\n\n\"Explain that. Properly. I'm not being funny, kitten, I want the actual argument, 'cause I've had this one with myself for six years and I keep losing it.\"\n\nYou give him the argument. He doesn't concede. But he asks you to say it again the next week, and the week after.",
+              "\"It's the only point I've got.\"\n\n*Then, four minutes later:*\n\n\"Explain that. Properly. I'm not being funny, kitten, I want the actual argument, 'cause I've had this one with myself for six years and I keep losing it.\"\n\n*You give him the argument. He doesn't concede. But he asks you to say it again the next week, and the week after.*",
           },
         ],
       },
@@ -171,21 +171,21 @@ export default {
             label: "Say you'll stay put",
             style: 3,
             close:
-              '"Good."\n\nNothing for three hours.\n\nThen, at half four: "done. all fine. counted the hour and it\'s all there."\n\nAnd then, much later, when he thinks you\'ve gone to sleep: "was thinking about the paper the whole way down. that\'s never happened before. it\'s usually nothing down there."',
+              '"Good."\n\n*Nothing for three hours.*\n\n*Then, at half four:* "done. all fine. counted the hour and it\'s all there."\n\n*And then, much later, when he thinks you\'ve gone to sleep:* "was thinking about the paper the whole way down. that\'s never happened before. it\'s usually nothing down there."',
           },
           {
             key: "playful",
             label: "Ask what's on the menu",
             style: 1,
             close:
-              "\"Gyahaha! That's my girl... that's my...\"\n\nA pause where he clearly reconsiders the sentence and then decides not to fix it.\n\n\"Something with too many legs. I'll tell you if it's any good.\"",
+              "\"Gyahaha! That's my girl... that's my...\"\n\n*A pause where he clearly reconsiders the sentence and then decides not to fix it.*\n\n\"Something with too many legs. I'll tell you if it's any good.\"",
           },
           {
             key: "bold",
             label: "Refuse to promise",
             style: 4,
             close:
-              "\"Don't.\"\n\nIt's the only time he has ever sent you a single word.\n\n\"Kitten. Don't. I've got about four things left that I'm sure of and you're all of them, and I'm not putting one of them in a corridor to find out what I am.\"\n\n\"...Promise me. Please. That's the first time I've used that word in about nine years.\"",
+              "\"Don't.\"\n\n*It's the only time he has ever sent you a single word.*\n\n\"Kitten. Don't. I've got about four things left that I'm sure of and you're all of them, and I'm not putting one of them in a corridor to find out what I am.\"\n\n\"...Promise me. Please. That's the first time I've used that word in about nine years.\"",
           },
         ],
       },
@@ -198,9 +198,9 @@ export default {
     soulbound: {
       beats: [
         "**{firstName}**: \"office. now. I'm not typing this one out, I'll lose it halfway.\"",
-        'The board has been rebuilt. Everything else is gone: the debts, the room numbers, the rest of it in a box on the floor.\n\nIt is all you. {timesMet} notes, one for every single time, in eleven different pens.\n\n"Took me two days. Lulu thinks I\'ve cracked."',
+        '*The board has been rebuilt. Everything else is gone: the debts, the room numbers, the rest of it in a box on the floor.*\n\n*It is all you. {timesMet} notes, one for every single time, in eleven different pens.*\n\n"Took me two days. Lulu thinks I\'ve cracked."',
         "\"Here's the thing I've never said out loud to anybody, so shut up for a minute.\"\n\n\"I don't get to keep things. That's not me being dramatic, that's just the arrangement: people go through me and out the other side and I get a bit of paper out of it if I'm quick. I've been fine with that. Honestly fine. Bored of people anyway, mostly.\"\n\n\"And then you turned up and I started writing things down before I needed to. Not after I'd forgotten. *Before.* Like I was frightened of it for the first time in six years.\"",
-        'He points at the middle of the board, at the one in the good handwriting.\n\n"That one says I love you. Been there since March. I wrote it for me, not for you, so that whatever happens up here, some version of me walks in one morning and reads it and knows."\n\n"So that\'s it. That\'s the whole thing, kitten, and I\'ve said it in the worst possible way, off a wall, like a dumbass."',
+        '*He points at the middle of the board, at the one in the good handwriting.*\n\n"That one says I love you. Been there since March. I wrote it for me, not for you, so that whatever happens up here, some version of me walks in one morning and reads it and knows."\n\n"So that\'s it. That\'s the whole thing, kitten, and I\'ve said it in the worst possible way, off a wall, like a dumbass."',
       ],
       choice: {
         prompt: '"Go on. Whatever it is. I\'ve read worse off this board."',
@@ -210,14 +210,14 @@ export default {
             label: "Say it back",
             style: 3,
             close:
-              'He doesn\'t say anything for a long moment. Then he takes the pen out again and holds it out to you, handle first.\n\n"Write it. Your handwriting, not mine."\n\nAnd when you have, and it\'s pinned up next to his, he looks at the two of them together for a while, and then just picks you up off the floor entirely, one arm, no warning, the way he does everything, and holds on.\n\n"Now it\'s on the wall," he says into your hair. "Now it\'s true even when I\'m not."',
+              '*He doesn\'t say anything for a long moment. Then he takes the pen out again and holds it out to you, handle first.*\n\n"Write it. Your handwriting, not mine."\n\n*And when you have, and it\'s pinned up next to his, he looks at the two of them together for a while, and then just picks you up off the floor entirely, one arm, no warning, the way he does everything, and holds on.*\n\n"Now it\'s on the wall," *he says into your hair.* "Now it\'s true even when I\'m not."',
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
             close:
-              "\"Yeah.\"\n\nNo argument, which from him is unheard of.\n\n\"Board stays up either way. That's not pressure, kitten, that's just... I need it up there. It's not for you, it's for whoever I am in the morning.\"\n\nHe puts the pen away.\n\n\"Take as long as you want. And keep turning up, 'cause I'll still ask your name some days and I'd rather ask you than read you.\"",
+              "\"Yeah.\"\n\n*No argument, which from him is unheard of.*\n\n\"Board stays up either way. That's not pressure, kitten, that's just... I need it up there. It's not for you, it's for whoever I am in the morning.\"\n\n*He puts the pen away.*\n\n\"Take as long as you want. And keep turning up, 'cause I'll still ask your name some days and I'd rather ask you than read you.\"",
           },
         ],
       },

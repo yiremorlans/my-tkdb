@@ -6,8 +6,8 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        'Nine messages arrive at once, then a tenth that just says *ignore all that*.\n\n**{firstName}**: "okay so I got your contact off the house sheet which is probably WEIRD, is that weird? that\'s weird"\n\n"I\'m deleting this"\n\n"I can\'t delete this you\'ve already seen it"',
-        '"Okay okay okay. Real reason." A photo comes through: a tray of something small and burnt on one side. "I made too many. Like, a genuinely stupid amount. And I thought... you\'ve turned up {timesMet} times now and you never once looked at me like I was a waste of a conversation, so."\n\n"So there\'s some with your name on. Literally. I wrote your name on the paper. That\'s the part I regret."',
+        '_Nine messages arrive at once, then a tenth that just says *ignore all that*._\n\n**{firstName}**: "okay so I got your contact off the house sheet which is probably WEIRD, is that weird? that\'s weird"\n\n"I\'m deleting this"\n\n"I can\'t delete this you\'ve already seen it"',
+        '"Okay okay okay. Real reason." *A photo comes through: a tray of something small and burnt on one side.* "I made too many. Like, a genuinely stupid amount. And I thought... you\'ve turned up {timesMet} times now and you never once looked at me like I was a waste of a conversation, so."\n\n"So there\'s some with your name on. Literally. I wrote your name on the paper. That\'s the part I regret."',
       ],
       choice: {
         prompt:
@@ -18,21 +18,21 @@ export default {
             label: "Say yes before he spirals",
             style: 3,
             close:
-              '"WAIT REALLY?"\n\nThen, immediately: "cool. cool cool cool. that\'s... yeah. cool."\n\nThe next message is a photo of him grinning so hard his eyes have shut, and then a fourth message that just says *ignore that one*.',
+              '"WAIT REALLY?"\n\n*Then, immediately:* "cool. cool cool cool. that\'s... yeah. cool."\n\n_The next message is a photo of him grinning so hard his eyes have shut, and then a fourth message that just says *ignore that one*._',
           },
           {
             key: "playful",
             label: "Ask about the burnt side",
             style: 1,
             close:
-              '"THAT\'S THE CARAMELISED SIDE. That\'s on PURPOSE."\n\nA pause.\n\n"It is not on purpose. I panicked and turned the oven up. Please still come."',
+              '"THAT\'S THE CARAMELISED SIDE. That\'s on PURPOSE."\n\n*A pause.*\n\n"It is not on purpose. I panicked and turned the oven up. Please still come."',
           },
           {
             key: "bold",
             label: "Ask if yours came first",
             style: 4,
             close:
-              'There is a very long gap.\n\n"...I made the tray for you and then made extra so it\'d look like an accident," he types, all at once, like ripping a plaster off. "OKAY BYE."',
+              '*There is a very long gap.*\n\n"...I made the tray for you and then made extra so it\'d look like an accident," *he types, all at once, like ripping a plaster off.* "OKAY BYE."',
           },
         ],
       },
@@ -55,7 +55,7 @@ export default {
             label: "Tell him you like listening",
             style: 3,
             close:
-              'The typing indicator runs for a long time and produces one word.\n\n"oh."\n\nThen, four minutes later: "sorry I had to put the phone down for a sec."',
+              '*The typing indicator runs for a long time and produces one word.*\n\n"oh."\n\n*Then, four minutes later:* "sorry I had to put the phone down for a sec."',
           },
           {
             key: "playful",
@@ -69,7 +69,7 @@ export default {
             label: "Tell him to stop apologizing",
             style: 4,
             close:
-              '"Sorr... okay. Not saying it."\n\nA pause.\n\n"That\'s really hard actually. Can I have one? Just one, banked, for emergencies."',
+              '"Sorr... okay. Not saying it."\n\n*A pause.*\n\n"That\'s really hard actually. Can I have one? Just one, banked, for emergencies."',
           },
         ],
       },
@@ -81,7 +81,7 @@ export default {
 
     closeFriend: {
       beats: [
-        "It's late. The message isn't loud, which from him is the first sign something is off.\n\n**{firstName}**: \"are you up\"\n\n\"don't answer if you're not up. I'll be fine. I'm always fine.\"",
+        "*It's late. The message isn't loud, which from him is the first sign something is off.*\n\n**{firstName}**: \"are you up\"\n\n\"don't answer if you're not up. I'll be fine. I'm always fine.\"",
         "\"Collections came round again. It's handled. It's... I handled it. Mostly.\"\n\n\"I didn't tell anyone in the house because they'd look at me the way they look at me. Lucas would want to *help*. Jin would pay it and then own me forever, which honestly, you know, tempting.\"",
         "\"I just wanted to say it out loud to someone who's not going to fix it. Does that make sense? I don't want it fixed, I want it to have been heard.\"\n\n\"You're the only person I could think of at two in the morning. That's not a small thing for me. That's basically the biggest thing.\"",
       ],
@@ -93,21 +93,21 @@ export default {
             label: "Tell him you're staying up",
             style: 3,
             close:
-              '"You don\'t have to."\n\nA pause.\n\n"Stay up. Please stay up. You can just leave the read receipt on, you don\'t even have to type, I just want to see it say online."\n\nIt says online until six.',
+              '"You don\'t have to."\n\n*A pause.*\n\n"Stay up. Please stay up. You can just leave the read receipt on, you don\'t even have to type, I just want to see it say online."\n\n*It says online until six.*',
           },
           {
             key: "playful",
             label: "Send him something stupid",
             style: 1,
             close:
-              'He reacts to it in under a second. Then sends four worse ones back. Then: "okay I\'m laughing. I hate that that worked. thank you for making that work."',
+              '*He reacts to it in under a second. Then sends four worse ones back. Then:* "okay I\'m laughing. I hate that that worked. thank you for making that work."',
           },
           {
             key: "bold",
             label: "Tell him you're coming over",
             style: 4,
             close:
-              '"WHAT... no, it\'s two in the..."\n\nHe stops typing.\n\n"...The side door sticks. You have to lift it. I\'ll leave the light on."\n\nHe doesn\'t say a word when you get there. He just sits down against you on the floor of the kitchen with his head on your shoulder, and the two of you stay there until the ovens come on.',
+              '"WHAT... no, it\'s two in the..."\n\n*He stops typing.*\n\n"...The side door sticks. You have to lift it. I\'ll leave the light on."\n\n*He doesn\'t say a word when you get there. He just sits down against you on the floor of the kitchen with his head on your shoulder, and the two of you stay there until the ovens come on.*',
           },
         ],
       },
@@ -132,7 +132,7 @@ export default {
             label: "Say he already is worth it",
             style: 3,
             close:
-              '"don\'t."\n\nThen: "sorry. don\'t stop. say it again but slower, I want to actually hear it this time instead of deciding you didn\'t mean it."\n\nSo you say it again, slower. He goes quiet for a while, and when he comes back all he sends is a heart, which from him, who sends fourteen of everything, is the loudest thing he has ever done.',
+              '"don\'t."\n\n*Then:* "sorry. don\'t stop. say it again but slower, I want to actually hear it this time instead of deciding you didn\'t mean it."\n\n*So you say it again, slower. He goes quiet for a while, and when he comes back all he sends is a heart, which from him, who sends fourteen of everything, is the loudest thing he has ever done.*',
           },
           {
             key: "playful",
@@ -146,7 +146,7 @@ export default {
             label: "Tell him to be brave right now",
             style: 4,
             close:
-              '"Right now? Like... now now?"\n\nThe phone rings before you can answer. He is audibly holding it with both hands.\n\n"Hi. Hi. I called. That\'s the bravest thing available at this hour, I checked."\n\nHe doesn\'t hang up for an hour and a half, and mostly you both just breathe at each other.',
+              '"Right now? Like... now now?"\n\n*The phone rings before you can answer. He is audibly holding it with both hands.*\n\n"Hi. Hi. I called. That\'s the bravest thing available at this hour, I checked."\n\n*He doesn\'t hang up for an hour and a half, and mostly you both just breathe at each other.*',
           },
         ],
       },
@@ -159,7 +159,7 @@ export default {
     devoted: {
       beats: [
         '**{firstName}**: "don\'t be mad"\n\n"I did something"',
-        'The photo is his hand, wrapped badly, the bandage clearly done one-handed by somebody who has never bandaged anything.\n\n"So there was a thing in the corridor and it was going for you and I did the... I did a shout. I shouted at it. Really loud. And it looked at me instead."\n\n"Which was the plan! That was the entire plan! I don\'t have a second part of the plan, that was it, and it WORKED."',
+        '*The photo is his hand, wrapped badly, the bandage clearly done one-handed by somebody who has never bandaged anything.*\n\n"So there was a thing in the corridor and it was going for you and I did the... I did a shout. I shouted at it. Really loud. And it looked at me instead."\n\n"Which was the plan! That was the entire plan! I don\'t have a second part of the plan, that was it, and it WORKED."',
         "\"Yuri says it's fine in like a week. Yuri also said 'fascinating' twice, which I've decided not to think about.\"\n\n\"I'm not telling you so you'll feel bad. I'm telling you because I've spent my whole life being the one who runs, and tonight I was in front of you and I didn't, and I need someone to know that happened. Specifically you. Only you, really.\"",
       ],
       choice: {
@@ -170,7 +170,7 @@ export default {
             label: "Tell him he did good",
             style: 3,
             close:
-              "There's no reply for a bit. Then a voice note, four seconds long, of him just breathing out.\n\nThen: \"okay. okay. I'm going to listen to you say that on a loop probably forever.\"\n\nWhen you find him he lets you redo the bandage properly, and he watches your hands the whole time and doesn't say one word.",
+              "*There's no reply for a bit. Then a voice note, four seconds long, of him just breathing out.*\n\n*Then:* \"okay. okay. I'm going to listen to you say that on a loop probably forever.\"\n\n*When you find him he lets you redo the bandage properly, and he watches your hands the whole time and doesn't say one word.*",
           },
           {
             key: "playful",
@@ -184,7 +184,7 @@ export default {
             label: "Tell him never to do it again",
             style: 4,
             close:
-              '"...No."\n\nIt\'s the flattest thing he\'s ever sent you. No caps, no scramble, nothing.\n\n"Sorry. Anything else. Not that. I said I wanted to be your knight in shining armor and everyone thought it was a bit, including me, honestly. It wasn\'t a bit."',
+              '"...No."\n\n*It\'s the flattest thing he\'s ever sent you. No caps, no scramble, nothing.*\n\n"Sorry. Anything else. Not that. I said I wanted to be your knight in shining armor and everyone thought it was a bit, including me, honestly. It wasn\'t a bit."',
           },
         ],
       },
@@ -210,14 +210,14 @@ export default {
             label: "Say it back",
             style: 3,
             close:
-              'The phone is face down for exactly eleven seconds.\n\nThen it\'s a call, then it\'s him at your door out of breath with his jacket on inside out, and he gets about half of "I ran" out before you pull him in, and he holds onto you like someone who genuinely expected to be turned away and has no plan for this at all.\n\n"Say it again," he says into your shoulder. "Sorry. Say it like ninety more times."',
+              '*The phone is face down for exactly eleven seconds.*\n\n*Then it\'s a call, then it\'s him at your door out of breath with his jacket on inside out, and he gets about half of* "I ran" *out before you pull him in, and he holds onto you like someone who genuinely expected to be turned away and has no plan for this at all.*\n\n"Say it again," *he says into your shoulder.* "Sorry. Say it like ninety more times."',
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
             close:
-              "\"Yeah! Yeah, of course, that's... that's completely fine, that's so fine.\"\n\nA pause. Then, quieter, and much more honestly:\n\n\"I mean it. Take ages. I've been carrying this around for two years, I'm extremely good at carrying it, it's basically the one thing I'm good at.\"\n\n\"And I'll still be here being annoying at you tomorrow. That was never conditional. That was never even a question.\"",
+              "\"Yeah! Yeah, of course, that's... that's completely fine, that's so fine.\"\n\n*A pause. Then, quieter, and much more honestly:*\n\n\"I mean it. Take ages. I've been carrying this around for two years, I'm extremely good at carrying it, it's basically the one thing I'm good at.\"\n\n\"And I'll still be here being annoying at you tomorrow. That was never conditional. That was never even a question.\"",
           },
         ],
       },

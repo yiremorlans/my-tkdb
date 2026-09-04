@@ -8,7 +8,7 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "It arrives after dark, which is the only time he says much at all.\n\n**{firstName}**: \"I picked you a dandelion. It's already dead. I picked it three days ago and I kept forgetting to give it to you, so now it's dead, and I'm sorry but I'm still going to give it to you.\"",
+        "*It arrives after dark, which is the only time he says much at all.*\n\n**{firstName}**: \"I picked you a dandelion. It's already dead. I picked it three days ago and I kept forgetting to give it to you, so now it's dead, and I'm sorry but I'm still going to give it to you.\"",
         "\"You've come to the park {timesMet} times. I know because I count the days between. The most was nine. That was a bad nine.\"\n\n\"I don't like talking in the daytime. Everything's too loud and my mouth doesn't work properly. At night it's fine. At night I could say anything.\"\n\n\"So this is the night version. I'm nicer at night. Everyone says so.\"",
       ],
       choice: {
@@ -18,13 +18,13 @@ export default {
             key: "kind",
             label: "Say you want it",
             style: 3,
-            close: "\"...Oh.\"\n\nThe humming starts up in the background of the next voice note and doesn't stop.\n\n\"Then I'll pick you a live one too. And another one. I'll pick you all of them, I don't mind, they grow back.\"",
+            close: "\"...Oh.\"\n\n*The humming starts up in the background of the next voice note and doesn't stop.*\n\n\"Then I'll pick you a live one too. And another one. I'll pick you all of them, I don't mind, they grow back.\"",
           },
           {
             key: "playful",
             label: "Ask if he eats those",
             style: 1,
-            close: "\"Only the yellow bit. The stem is horrible, it's like drinking a wall.\"\n\nA pause.\n\n\"You can try it. I'll pick you a fresh one, I wouldn't give you a dead one to eat. I'm not strange.\"",
+            close: "\"Only the yellow bit. The stem is horrible, it's like drinking a wall.\"\n\n*A pause.*\n\n\"You can try it. I'll pick you a fresh one, I wouldn't give you a dead one to eat. I'm not strange.\"",
           },
           {
             key: "bold",
@@ -52,13 +52,13 @@ export default {
             key: "kind",
             label: "Say nothing he says is wrong",
             style: 3,
-            close: "\"That's not true. I said a really bad one to Haru in March.\"\n\nA pause.\n\n\"But you can keep saying it. I'd like you to keep saying it. I'll pretend it's true when it's dark.\"",
+            close: "\"That's not true. I said a really bad one to Haru in March.\"\n\n*A pause.*\n\n\"But you can keep saying it. I'd like you to keep saying it. I'll pretend it's true when it's dark.\"",
           },
           {
             key: "playful",
             label: "Say you've stepped closer",
             style: 1,
-            close: "\"...Closer?\"\n\nThe humming stops completely, which is more alarming than it starting.\n\n\"Do it again. The closer thing. Do it tomorrow where I can see it.\"",
+            close: "\"...Closer?\"\n\n*The humming stops completely, which is more alarming than it starting.*\n\n\"Do it again. The closer thing. Do it tomorrow where I can see it.\"",
           },
           {
             key: "bold",
@@ -77,8 +77,8 @@ export default {
     closeFriend: {
       beats: [
         '**{firstName}**: "Come to the far field. The one past the fence where nobody goes because they think it\'s out of bounds. It is out of bounds. Come anyway."',
-        "It is completely dark and completely silent, and the field is full of dandelions gone to seed, thousands of them, the whole slope, pale in what light there is.\n\n\"I planted this. Not the first ones, they were already here. But I've been carrying seed heads out from the park for two years and letting them go here.\"",
-        "He sits down in the middle of it without checking whether you'll follow.\n\n\"Nobody knows. Not Haru, and Haru knows every square foot of that park. This bit isn't the park. This bit's mine.\"\n\nHe hums for a while.\n\n\"You can be in it. That's what I'm asking. Not visiting it, *in* it, so it's a place with you in it and then I can come here when you're not here and you'll still sort of be here.\"",
+        "*It is completely dark and completely silent, and the field is full of dandelions gone to seed, thousands of them, the whole slope, pale in what light there is.*\n\n\"I planted this. Not the first ones, they were already here. But I've been carrying seed heads out from the park for two years and letting them go here.\"",
+        "*He sits down in the middle of it without checking whether you'll follow.*\n\n\"Nobody knows. Not Haru, and Haru knows every square foot of that park. This bit isn't the park. This bit's mine.\"\n\n*He hums for a while.*\n\n\"You can be in it. That's what I'm asking. Not visiting it, *in* it, so it's a place with you in it and then I can come here when you're not here and you'll still sort of be here.\"",
       ],
       choice: {
         prompt: "\"Is that all right? You can say no. Say no properly if you mean it, I get confused by the polite kind.\"",
@@ -87,19 +87,19 @@ export default {
             key: "kind",
             label: "Say yes and sit down",
             style: 3,
-            close: "You sit. He goes very still for a moment, and then leans over sideways until his whole weight is against you, exactly like a child falling asleep on a bus.\n\n\"Good,\" he says. \"That's it now. That's done. You're in it.\"\n\nHe hums until it gets light.",
+            close: "*You sit. He goes very still for a moment, and then leans over sideways until his whole weight is against you, exactly like a child falling asleep on a bus.*\n\n\"Good,\" *he says.* \"That's it now. That's done. You're in it.\"\n\n*He hums until it gets light.*",
           },
           {
             key: "playful",
             label: "Blow a seed head at him",
             style: 1,
-            close: "It goes everywhere. He is absolutely delighted and appalled in equal measure.\n\n\"That's a WHOLE ONE. That's about two hundred!\"\n\n\"...Good. Do another. There should be more of them if you're going to be in it.\"",
+            close: "*It goes everywhere. He is absolutely delighted and appalled in equal measure.*\n\n\"That's a WHOLE ONE. That's about two hundred!\"\n\n\"...Good. Do another. There should be more of them if you're going to be in it.\"",
           },
           {
             key: "bold",
             label: "Ask what happens if you go",
             style: 4,
-            close: "The humming stops.\n\n\"Then it's still yours,\" he says, after a long time. \"I'd still come. I'd just be sad in it instead.\"\n\n\"That's better than not having it. I worked that out already. I worked it out before I brought you.\"",
+            close: "*The humming stops.*\n\n\"Then it's still yours,\" *he says, after a long time.* \"I'd still come. I'd just be sad in it instead.\"\n\n\"That's better than not having it. I worked that out already. I worked it out before I brought you.\"",
           },
         ],
       },
@@ -122,7 +122,7 @@ export default {
             key: "kind",
             label: "Say you'll come more often",
             style: 3,
-            close: "\"How often.\"\n\nYou tell him.\n\n\"...Say the days. Say them out loud so I can put them somewhere.\"\n\nYou list them. He repeats every one back. He never misses one after that, and neither do you.",
+            close: "\"How often.\"\n\n*You tell him.*\n\n\"...Say the days. Say them out loud so I can put them somewhere.\"\n\n*You list them. He repeats every one back. He never misses one after that, and neither do you.*",
           },
           {
             key: "playful",
@@ -134,7 +134,7 @@ export default {
             key: "bold",
             label: "Tell him to sleep instead",
             style: 4,
-            close: "\"I can't do it on my own.\"\n\nA long pause. Then, very simply, with no wheedling anywhere in it:\n\n\"You could sit in the field with me. I've slept there before. I've never slept there with anyone.\"\n\nHe does sleep, that night, for about three hours, flat out in the seed heads with his head on your leg, humming even in his sleep.",
+            close: "\"I can't do it on my own.\"\n\n*A long pause. Then, very simply, with no wheedling anywhere in it:*\n\n\"You could sit in the field with me. I've slept there before. I've never slept there with anyone.\"\n\n*He does sleep, that night, for about three hours, flat out in the seed heads with his head on your leg, humming even in his sleep.*",
           },
         ],
       },
@@ -157,19 +157,19 @@ export default {
             key: "kind",
             label: "Tell him it was right",
             style: 3,
-            close: "\"...Good.\"\n\nA long silence, and then the humming starts up again, unsteady at first.\n\n\"I'll do the flowers every time. That's the rule now. You made the rule and I'm keeping it.\"",
+            close: "\"...Good.\"\n\n*A long silence, and then the humming starts up again, unsteady at first.*\n\n\"I'll do the flowers every time. That's the rule now. You made the rule and I'm keeping it.\"",
           },
           {
             key: "playful",
             label: "Offer to replant them with him",
             style: 1,
-            close: "\"They won't grow. I've done it before. It doesn't work.\"\n\nA pause.\n\n\"...You can help anyway. I'd like there to be two of us doing something that doesn't work.\"",
+            close: "\"They won't grow. I've done it before. It doesn't work.\"\n\n*A pause.*\n\n\"...You can help anyway. I'd like there to be two of us doing something that doesn't work.\"",
           },
           {
             key: "bold",
             label: "Tell him to lie to you never",
             style: 4,
-            close: "\"I haven't. Not once. That's why I told you about the eleven minutes.\"\n\n\"I could have not told you. It would have been so easy to not tell you.\"\n\nThen, after a while: \"Come to the field. I want to be next to you when you're not angry with me. I've been imagining it all afternoon and it's much better than the other thing I was imagining.\"",
+            close: "\"I haven't. Not once. That's why I told you about the eleven minutes.\"\n\n\"I could have not told you. It would have been so easy to not tell you.\"\n\n*Then, after a while:* \"Come to the field. I want to be next to you when you're not angry with me. I've been imagining it all afternoon and it's much better than the other thing I was imagining.\"",
           },
         ],
       },
@@ -193,13 +193,13 @@ export default {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "The humming stops dead.\n\nThen, after a very long time: \"Say it in the field. I want it to happen there so it's in the ground with everything else.\"\n\nHe's sitting in the middle of the slope when you get there, absolutely still for once, and when you say it he closes his eyes and tips forward until his forehead is against yours.\n\n\"There,\" he says. \"Now it's a place with that in it. Now it can't go anywhere.\"",
+            close: "*The humming stops dead.*\n\n*Then, after a very long time:* \"Say it in the field. I want it to happen there so it's in the ground with everything else.\"\n\n*He's sitting in the middle of the slope when you get there, absolutely still for once, and when you say it he closes his eyes and tips forward until his forehead is against yours.*\n\n\"There,\" *he says.* \"Now it's a place with that in it. Now it can't go anywhere.\"",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
-            close: "\"All right.\"\n\nNo wheedling. No guilt. He doesn't ask how long, which is the most enormous thing he has ever not done.\n\n\"I said you could go, so I have to mean the smaller ones too. That's how it works. Ren explained it.\"\n\n\"The field's still yours. That was done ages ago and it doesn't undo. And I'll still know your feet on the gravel, and I'll still be glad, and you don't have to do anything about that at all.\"",
+            close: "\"All right.\"\n\n*No wheedling. No guilt. He doesn't ask how long, which is the most enormous thing he has ever not done.*\n\n\"I said you could go, so I have to mean the smaller ones too. That's how it works. Ren explained it.\"\n\n\"The field's still yours. That was done ages ago and it doesn't undo. And I'll still know your feet on the gravel, and I'll still be glad, and you don't have to do anything about that at all.\"",
           },
         ],
       },

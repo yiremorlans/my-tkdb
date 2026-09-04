@@ -30,7 +30,7 @@ export default {
             label: "Say you'd like that",
             style: 3,
             close:
-              '"...cool."\n\nThen, immediately: "don\'t make it a thing. it\'s leftovers."\n\nIt is not leftovers. There\'s a second bowl already set out when you get there.',
+              '"...cool."\n\n*Then, immediately:* "don\'t make it a thing. it\'s leftovers."\n\n*It is not leftovers. There\'s a second bowl already set out when you get there.*',
           },
           {
             key: "playful",
@@ -44,7 +44,7 @@ export default {
             label: "Ask what he's making",
             style: 4,
             close:
-              '"Why, you gonna have opinions?"\n\nA pause.\n\n"...ask me again when you get here. I\'ll make the one you like. I\'ve been paying attention. Shut up."',
+              '"Why, you gonna have opinions?"\n\n*A pause.*\n\n"...ask me again when you get here. I\'ll make the one you like. I\'ve been paying attention. Shut up."',
           },
         ],
       },
@@ -67,7 +67,7 @@ export default {
             label: "Say you feel it too",
             style: 3,
             close:
-              '"...yeah?"\n\nA long pause.\n\n"Okay. Cool. That\'s... yeah. That\'s good, actually."\n\nThen, way too fast: "anyway what\'re you eating tonight"',
+              '"...yeah?"\n\n*A long pause.*\n\n"Okay. Cool. That\'s... yeah. That\'s good, actually."\n\n*Then, way too fast:* "anyway what\'re you eating tonight"',
           },
           {
             key: "playful",
@@ -81,7 +81,7 @@ export default {
             label: "Say he seeks you out",
             style: 4,
             close:
-              '"I do not seek you... okay, the diner thing. And the packaging thing. And the boxes."\n\nA pause.\n\n"Yeah, all right. I didn\'t need help with any of those."\n\n"You don\'t gotta make excuses to hang out with me, y\'know. Goes both ways. Just ask, Senpai."',
+              '"I do not seek you... okay, the diner thing. And the packaging thing. And the boxes."\n\n*A pause.*\n\n"Yeah, all right. I didn\'t need help with any of those."\n\n"You don\'t gotta make excuses to hang out with me, y\'know. Goes both ways. Just ask, Senpai."',
           },
         ],
       },
@@ -94,8 +94,8 @@ export default {
     closeFriend: {
       beats: [
         '**{firstName}**: "truck. 2am. don\'t tell anybody, I mean it"',
-        "The food truck is shut, the shutter's down, and he's inside with one light on and something going on the burner that smells nothing like what he sells.\n\n\"This is the one I actually cook. Not the menu stuff. Menu stuff is for the money and the line out front and Leo's cut for building the app. This one's just mine.\"",
-        "\"Mom's, technically. She wrote it out on the back of a receipt before I came here and I've never given it to anybody.\"\n\nHe puts the bowl in front of you and immediately looks somewhere else.\n\n\"So, yeah. Don't say anything nice or I'm throwing you out. Just eat it while it's hot, Senpai. I've been keeping it warm twenty minutes waiting on you.\"",
+        "*The food truck is shut, the shutter's down, and he's inside with one light on and something going on the burner that smells nothing like what he sells.*\n\n\"This is the one I actually cook. Not the menu stuff. Menu stuff is for the money and the line out front and Leo's cut for building the app. This one's just mine.\"",
+        "\"Mom's, technically. She wrote it out on the back of a receipt before I came here and I've never given it to anybody.\"\n\n*He puts the bowl in front of you and immediately looks somewhere else.*\n\n\"So, yeah. Don't say anything nice or I'm throwing you out. Just eat it while it's hot, Senpai. I've been keeping it warm twenty minutes waiting on you.\"",
       ],
       choice: {
         prompt: '"...Well? Say something. Not that. Something else."',
@@ -105,21 +105,21 @@ export default {
             label: "Tell him it's the best thing",
             style: 3,
             close:
-              "He turns all the way around to face the burner so you can't see him.\n\n\"...yeah, all right.\"\n\nHe doesn't turn back for a while. When he does his ears are red and he blames the steam.",
+              "*He turns all the way around to face the burner so you can't see him.*\n\n\"...yeah, all right.\"\n\n*He doesn't turn back for a while. When he does his ears are red and he blames the steam.*",
           },
           {
             key: "playful",
             label: "Ask for the recipe",
             style: 1,
             close:
-              "\"Absolutely not.\"\n\nA pause.\n\n\"...I'll make it. Whenever. That's better than the recipe anyway. You'd wreck it, you don't own one decent pan.\"",
+              "\"Absolutely not.\"\n\n*A pause.*\n\n\"...I'll make it. Whenever. That's better than the recipe anyway. You'd wreck it, you don't own one decent pan.\"",
           },
           {
             key: "bold",
             label: "Ask why you get this one",
             style: 4,
             close:
-              "He goes quiet, which is the rarest thing he does.\n\n\"Because you're the only one who ever asks if *I've* eaten, Senpai,\" he says, at the wall. \"Everybody else just holds a bowl out. You've done it four times. I counted. That's embarrassing, so shut up.\"",
+              "*He goes quiet, which is the rarest thing he does.*\n\n\"Because you're the only one who ever asks if *I've* eaten, Senpai,\" *he says, at the wall.* \"Everybody else just holds a bowl out. You've done it four times. I counted. That's embarrassing, so shut up.\"",
           },
         ],
       },
@@ -143,7 +143,7 @@ export default {
             label: "Say it's his own name",
             style: 3,
             close:
-              "There's a long gap.\n\n\"...say that to Leo next time he's being a jerk about it. Actually don't. Actually I wanna have said it myself.\"\n\n\"Thanks, Senpai. Seriously. Don't make me say it twice.\"",
+              "*There's a long gap.*\n\n\"...say that to Leo next time he's being a jerk about it. Actually don't. Actually I wanna have said it myself.\"\n\n\"Thanks, Senpai. Seriously. Don't make me say it twice.\"",
           },
           {
             key: "playful",
@@ -157,7 +157,7 @@ export default {
             label: "Ask who he'd be without it",
             style: 4,
             close:
-              'The reply takes a long time.\n\n"Dunno. Never got to find out."\n\nThen: "...some guy who cooks for you at 2am, maybe. Yeah. I\'d take that."',
+              '*The reply takes a long time.*\n\n"Dunno. Never got to find out."\n\n*Then:* "...some guy who cooks for you at 2am, maybe. Yeah. I\'d take that."',
           },
         ],
       },
@@ -170,7 +170,7 @@ export default {
     devoted: {
       beats: [
         '**{firstName}**: "don\'t come by the truck tomorrow"\n\n"face is a mess. it\'s fine. it\'s not a big one."',
-        'You ask. He caves in about four seconds, because he always does.\n\n"Leo said something about you. In front of people. And I\'ve let him say a thousand things about me and never once cared, so I know exactly how this looks."\n\n"But that one wasn\'t about me, was it."',
+        '*You ask. He caves in about four seconds, because he always does.*\n\n"Leo said something about you. In front of people. And I\'ve let him say a thousand things about me and never once cared, so I know exactly how this looks."\n\n"But that one wasn\'t about me, was it."',
         '"Mido already got me for it. Week off the truck, which... fine. Whatever."\n\n"Would do it again though. Wouldn\'t even think about it. Didn\'t think about it the first time, that\'s the whole problem. Hands were already moving."',
       ],
       choice: {
@@ -181,7 +181,7 @@ export default {
             label: "Ask to see his face",
             style: 3,
             close:
-              "He video calls before you've finished typing, and it's worse than he said, and he's grinning through it like an idiot.\n\n\"See? Nothing. Barely even... ow. Okay. Slight something.\"\n\nHe lets you talk him into ice and stays on the call while you watch him hold it there, complaining the whole time and not hanging up.",
+              "*He video calls before you've finished typing, and it's worse than he said, and he's grinning through it like an idiot.*\n\n\"See? Nothing. Barely even... ow. Okay. Slight something.\"\n\n*He lets you talk him into ice and stays on the call while you watch him hold it there, complaining the whole time and not hanging up.*",
           },
           {
             key: "playful",
@@ -195,7 +195,7 @@ export default {
             label: "Say you'd have done it too",
             style: 4,
             close:
-              "\"...don't say stuff like that, Senpai, I'll get ideas.\"\n\nHe turns up at your place an hour later with food, one eye swollen shut, and hands the bag over before he says anything.\n\nThen he just stands there. Then he puts his forehead down on your shoulder and stays there, and doesn't say another word for a while.",
+              "\"...don't say stuff like that, Senpai, I'll get ideas.\"\n\n*He turns up at your place an hour later with food, one eye swollen shut, and hands the bag over before he says anything.*\n\n*Then he just stands there. Then he puts his forehead down on your shoulder and stays there, and doesn't say another word for a while.*",
           },
         ],
       },
@@ -220,14 +220,14 @@ export default {
             label: "Say it back",
             style: 3,
             close:
-              "\"...you're kidding.\"\n\n\"You're not kidding. Okay. All right. Don't move.\"\n\nThe shutter goes up eight minutes later with him under it, still in his apron, having clearly sprinted the whole way and refusing to admit it.\n\nHe takes your face in both hands (flour on them, of course there's flour on them) and kisses you like he's been holding onto it since the third bowl, which he has.",
+              "\"...you're kidding.\"\n\n\"You're not kidding. Okay. All right. Don't move.\"\n\n*The shutter goes up eight minutes later with him under it, still in his apron, having clearly sprinted the whole way and refusing to admit it.*\n\n*He takes your face in both hands (flour on them, of course there's flour on them) and kisses you like he's been holding onto it since the third bowl, which he has.*",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
             close:
-              "\"Yeah. Yeah, sure. Take forever, I don't care.\"\n\nA pause.\n\n\"That's not me playing it cool, by the way. I'm bummed. But I'd be way more bummed if you said something you didn't mean because I put you on the spot at one thirty in the morning.\"\n\n\"Thursday's still on. Obviously Thursday's still on. Thursday was never about this. I'd still be feeding you if you told me to get lost. That's just how it is.\"",
+              "\"Yeah. Yeah, sure. Take forever, I don't care.\"\n\n*A pause.*\n\n\"That's not me playing it cool, by the way. I'm bummed. But I'd be way more bummed if you said something you didn't mean because I put you on the spot at one thirty in the morning.\"\n\n\"Thursday's still on. Obviously Thursday's still on. Thursday was never about this. I'd still be feeding you if you told me to get lost. That's just how it is.\"",
           },
         ],
       },

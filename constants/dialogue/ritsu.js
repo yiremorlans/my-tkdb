@@ -21,7 +21,7 @@ export default {
             label: "Say you don't want anything",
             style: 3,
             close:
-              '"That is not a category the record has."\n\nA pause of some length.\n\n"I will create one. It will contain a single entry. Good night."',
+              '"That is not a category the record has."\n\n*A pause of some length.*\n\n"I will create one. It will contain a single entry. Good night."',
           },
           {
             key: "playful",
@@ -35,7 +35,7 @@ export default {
             label: "Ask what he wants instead",
             style: 4,
             close:
-              'There is no reply for nearly two minutes, which for a man who is punctual to the second is a great deal of time.\n\n"That question is outside the scope of this correspondence," he writes.\n\n"I have not deleted it, however. I want that noted also."',
+              '*There is no reply for nearly two minutes, which for a man who is punctual to the second is a great deal of time.*\n\n"That question is outside the scope of this correspondence," *he writes.*\n\n"I have not deleted it, however. I want that noted also."',
           },
         ],
       },
@@ -58,7 +58,7 @@ export default {
             label: "Say you're not a transaction",
             style: 3,
             close:
-              '"Everything is a transaction."\n\nA long pause.\n\n"That was said reflexively and I have reviewed it and I do not think it survives scrutiny. I will require some days."',
+              '"Everything is a transaction."\n\n*A long pause.*\n\n"That was said reflexively and I have reviewed it and I do not think it survives scrutiny. I will require some days."',
           },
           {
             key: "playful",
@@ -85,7 +85,7 @@ export default {
     closeFriend: {
       beats: [
         '**{firstName}**: "I am proposing a standing arrangement. Tuesdays, 19:00 to 20:30, the small reading room on the second floor. Attendance optional; I will be present regardless."',
-        'You go. He has laid out two chairs, a lamp, tea, and absolutely no paperwork whatsoever, which for Ritsu Shinjo is a room stripped bare.\n\n"There is no purpose. I want that stated plainly at the outset, because you will look for one and its absence is the entire point."',
+        '*You go. He has laid out two chairs, a lamp, tea, and absolutely no paperwork whatsoever, which for Ritsu Shinjo is a room stripped bare.*\n\n"There is no purpose. I want that stated plainly at the outset, because you will look for one and its absence is the entire point."',
         '"Every hour of my week is allocated. I have kept a schedule since I was twelve. There is a block on Tuesdays that has read \'contingency\' for four years and has never once been used for a contingency."\n\n"I have been sitting in this room in it. Alone. Reading things that are of no professional use to me and telling nobody."\n\n"I am now telling one person. The chair is for you. I bought it in March and I have been rehearsing this since roughly the same period."',
       ],
       choice: {
@@ -97,14 +97,14 @@ export default {
             label: "Take the chair",
             style: 3,
             close:
-              'You sit down. He does not say anything at all for about four minutes, which is the longest he has ever gone without speaking in your presence.\n\n"...Good," he says eventually. "That is Tuesdays settled, then."\n\nHe is there at 18:52 every week after that, and never once mentions being early.',
+              '*You sit down. He does not say anything at all for about four minutes, which is the longest he has ever gone without speaking in your presence.*\n\n"...Good," *he says eventually.* "That is Tuesdays settled, then."\n\n*He is there at 18:52 every week after that, and never once mentions being early.*',
           },
           {
             key: "playful",
             label: "Ask what he reads in here",
             style: 1,
             close:
-              '"That is not relevant to the arrangement."\n\nA pause.\n\n"Poetry. It is extremely bad poetry and I have never told a living person. Romeo would have it engraved on something."',
+              '"That is not relevant to the arrangement."\n\n*A pause.*\n\n"Poetry. It is extremely bad poetry and I have never told a living person. Romeo would have it engraved on something."',
           },
           {
             key: "bold",
@@ -136,21 +136,21 @@ export default {
             label: "Say he's still deciding",
             style: 3,
             close:
-              'There is a very long silence.\n\n"That is not established."\n\nThen, at 03:41: "I would like it to be established. I have not wanted anything in that particular way in some years and I am finding it difficult to sit still, which does not happen."',
+              '*There is a very long silence.*\n\n"That is not established."\n\n*Then, at 03:41:* "I would like it to be established. I have not wanted anything in that particular way in some years and I am finding it difficult to sit still, which does not happen."',
           },
           {
             key: "playful",
             label: "Ask what it'd cost to hire him",
             style: 1,
             close:
-              '"You could not afford me."\n\nA pause.\n\n"You have never been billed. Not once, in {timesMet} visits. I have handled four matters on your behalf that you are not aware of and there is no invoice for any of them, and I have declined to examine why."',
+              '"You could not afford me."\n\n*A pause.*\n\n"You have never been billed. Not once, in {timesMet} visits. I have handled four matters on your behalf that you are not aware of and there is no invoice for any of them, and I have declined to examine why."',
           },
           {
             key: "bold",
             label: "Tell him to stop collecting",
             style: 4,
             close:
-              '"I cannot. There is a contract and I drafted it, which makes it rather difficult to argue my way out of."\n\nThen, some minutes later:\n\n"There is a clause. I put it in at the time without knowing why. It permits termination on ninety days\' notice and I have read it perhaps two hundred times."\n\n"I have never given the notice. Ask me again in the spring."',
+              '"I cannot. There is a contract and I drafted it, which makes it rather difficult to argue my way out of."\n\n*Then, some minutes later:*\n\n"There is a clause. I put it in at the time without knowing why. It permits termination on ninety days\' notice and I have read it perhaps two hundred times."\n\n"I have never given the notice. Ask me again in the spring."',
           },
         ],
       },
@@ -175,7 +175,7 @@ export default {
             label: "Tell him to come to the room",
             style: 3,
             close:
-              'He arrives at the reading room at 04:11 with his tie undone, which you have never seen.\n\nHe sits in his chair and says nothing for a long while, and then leans over and puts his head on your shoulder, an entirely unprecedented breach of everything he has ever observed about distance, and stays there.\n\n"I am not going to discuss this," he says. "I am simply going to be here for a period."',
+              '*He arrives at the reading room at 04:11 with his tie undone, which you have never seen.*\n\n*He sits in his chair and says nothing for a long while, and then leans over and puts his head on your shoulder, an entirely unprecedented breach of everything he has ever observed about distance, and stays there.*\n\n"I am not going to discuss this," *he says.* "I am simply going to be here for a period."',
           },
           {
             key: "playful",
@@ -215,14 +215,14 @@ export default {
             label: "Say it back",
             style: 3,
             close:
-              'He is silent for a length of time that would be alarming in anyone else and is unprecedented in him.\n\n"Repeat that. I am not being difficult. I have modeled a considerable number of outcomes and that one had a low weighting and I would like to hear it again."\n\nYou repeat it. He stands up, crosses the small reading room, and kisses you with the entire eleven weeks of drafting behind it, and afterwards says, unsteadily, "That was not in any of the twenty-four versions."',
+              '*He is silent for a length of time that would be alarming in anyone else and is unprecedented in him.*\n\n"Repeat that. I am not being difficult. I have modeled a considerable number of outcomes and that one had a low weighting and I would like to hear it again."\n\n*You repeat it. He stands up, crosses the small reading room, and kisses you with the entire eleven weeks of drafting behind it, and afterwards says, unsteadily,* "That was not in any of the twenty-four versions."',
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
             close:
-              '"Of course. That is the correct handling of an instrument of this kind and I would have advised it."\n\nA pause.\n\n"I will say one thing that is not advice. Tuesday is not conditional. The chair was bought in March and it is not being taken away, and I will be in that room at 19:00 for as long as I am in this academy whether or not you ever attend again."\n\n"That is on the record. It is the only entry in it that I have made for my own benefit."',
+              '"Of course. That is the correct handling of an instrument of this kind and I would have advised it."\n\n*A pause.*\n\n"I will say one thing that is not advice. Tuesday is not conditional. The chair was bought in March and it is not being taken away, and I will be in that room at 19:00 for as long as I am in this academy whether or not you ever attend again."\n\n"That is on the record. It is the only entry in it that I have made for my own benefit."',
           },
         ],
       },

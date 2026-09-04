@@ -21,7 +21,7 @@ export default {
             key: "kind",
             label: "Say his face is worth it",
             style: 3,
-            close: "\"...That was not dreadful at all. You have cheated.\"\n\nA pause.\n\n\"Do it again some time when I am braced for it. I was not braced for it. 😤\"",
+            close: "\"...That was not dreadful at all. You have cheated.\"\n\n*A pause.*\n\n\"Do it again some time when I am braced for it. I was not braced for it. 😤\"",
           },
           {
             key: "playful",
@@ -33,7 +33,7 @@ export default {
             key: "bold",
             label: "Ask what he's watching for",
             style: 4,
-            close: "There is a considered silence.\n\n\"An answer I have not had in a very long while,\" he says. \"Which is not a proper reply, and you will not get a better one tonight. Sleep well, lovely creature. 🌙\"",
+            close: "*There is a considered silence.*\n\n\"An answer I have not had in a very long while,\" *he says.* \"Which is not a proper reply, and you will not get a better one tonight. Sleep well, lovely creature. 🌙\"",
           },
         ],
       },
@@ -56,7 +56,7 @@ export default {
             key: "kind",
             label: "Say he's not frightening",
             style: 3,
-            close: "\"How very disappointing.\"\n\nA long pause.\n\n\"...And how very restful. I had forgotten there was such a thing as being restful at somebody. Do carry on. 😌\"",
+            close: "\"How very disappointing.\"\n\n*A long pause.*\n\n\"...And how very restful. I had forgotten there was such a thing as being restful at somebody. Do carry on. 😌\"",
           },
           {
             key: "playful",
@@ -81,7 +81,7 @@ export default {
     closeFriend: {
       beats: [
         '**{firstName}**: "Come up to the tower. I have something to show you and I have decided to be embarrassed about it in advance, so that the moment itself may pass off smoothly. 😳"',
-        "The room is exactly as ancient and theatrical as advertised, and in the middle of it is a laptop on a velvet cushion, playing a two-hour video about the shady cabal of elites secretly governing human society. 🕵️\n\n\"I am aware.\"\n\n\"I have watched eleven hours of this particular gentleman's output. He is wrong about everything. He is *magnificently* wrong, and he is wrong at three in the morning, which is when I require company and have none. 😔\"",
+        "*The room is exactly as ancient and theatrical as advertised, and in the middle of it is a laptop on a velvet cushion, playing a two-hour video about the shady cabal of elites secretly governing human society. 🕵️*\n\n\"I am aware.\"\n\n\"I have watched eleven hours of this particular gentleman's output. He is wrong about everything. He is *magnificently* wrong, and he is wrong at three in the morning, which is when I require company and have none. 😔\"",
         "\"Four hundred years, wicked girl. Do you know what four hundred years of nights is? It is not romantic. It is a very great deal of sitting.\"\n\n\"This is what I do with them. Not blood, not brooding, not whatever the Frostheim boys imagine. A man in a shed explaining that the pyramids were a battery.\"\n\n\"You are the first person I have ever admitted that to, and I would take it as a kindness if you sat down. 🙏\"",
       ],
       choice: {
@@ -91,19 +91,19 @@ export default {
             key: "kind",
             label: "Sit down and watch it",
             style: 3,
-            close: "You get through two of them. He talks over the whole of the second, which is clearly the point of the exercise.\n\nAt some stage you fall asleep against his shoulder, 😴 and he does not move for the rest of it, and in the morning he affects not to have noticed, badly.",
+            close: "*You get through two of them. He talks over the whole of the second, which is clearly the point of the exercise.*\n\n*At some stage you fall asleep against his shoulder, 😴 and he does not move for the rest of it, and in the morning he affects not to have noticed, badly.*",
           },
           {
             key: "playful",
             label: "Ask who's in the cabal",
             style: 1,
-            close: "\"Oh, do not *encourage* it.\"\n\nHe explains the entire conspiracy for eleven minutes without drawing breath, footnotes and all, entirely delighted, then stops and looks appalled at himself.\n\n\"...You did that on purpose. Wicked thing. 😅\"",
+            close: "\"Oh, do not *encourage* it.\"\n\n*He explains the entire conspiracy for eleven minutes without drawing breath, footnotes and all, entirely delighted, then stops and looks appalled at himself.*\n\n\"...You did that on purpose. Wicked thing. 😅\"",
           },
           {
             key: "bold",
             label: "Ask why you're the first",
             style: 4,
-            close: "\"Because it is undignified, and dignity is very nearly all I have left.\"\n\nA pause.\n\n\"And because you would not use it. I have known perhaps four people in four centuries of whom that was true, and three of them are some while dead. 💀\"",
+            close: "\"Because it is undignified, and dignity is very nearly all I have left.\"\n\n*A pause.*\n\n\"And because you would not use it. I have known perhaps four people in four centuries of whom that was true, and three of them are some while dead. 💀\"",
           },
         ],
       },
@@ -126,7 +126,7 @@ export default {
             key: "kind",
             label: "Ask what she laughed at",
             style: 3,
-            close: "The reply takes a very long time.\n\n\"Everything at the wrong moment. Funerals, most memorably. She was asked to leave two.\"\n\nAnd then, unmistakably, a man who has not talked about someone in a hundred years talking about them until it gets light, and at the end of it: \"Thank you. Not for the sympathy. For the question. Nobody asks what she was *like*. 🥺\"",
+            close: "*The reply takes a very long time.*\n\n\"Everything at the wrong moment. Funerals, most memorably. She was asked to leave two.\"\n\n*And then, unmistakably, a man who has not talked about someone in a hundred years talking about them until it gets light, and at the end of it:* \"Thank you. Not for the sympathy. For the question. Nobody asks what she was *like*. 🥺\"",
           },
           {
             key: "playful",
@@ -138,7 +138,7 @@ export default {
             key: "bold",
             label: "Say you'll die quickly too",
             style: 4,
-            close: "There is nothing at all for several minutes.\n\n\"I am aware,\" he writes. \"I have been aware since the first evening, and I have gone on arranging my afternoons regardless, which is either courage or the most spectacular foolishness of my life.\"\n\n\"Do not say it again. Not because it is untrue. Because I have decided to be foolish and I should like to manage it uninterrupted. 🙈\"",
+            close: "*There is nothing at all for several minutes.*\n\n\"I am aware,\" *he writes.* \"I have been aware since the first evening, and I have gone on arranging my afternoons regardless, which is either courage or the most spectacular foolishness of my life.\"\n\n\"Do not say it again. Not because it is untrue. Because I have decided to be foolish and I should like to manage it uninterrupted. 🙈\"",
           },
         ],
       },
@@ -161,7 +161,7 @@ export default {
             key: "kind",
             label: "Say you're not frightened",
             style: 3,
-            close: "\"You ought to be.\"\n\nA long pause.\n\n\"...Come up. Not to discuss it. I have been sitting in this chair for two hours being extremely composed and I find I would rather be in a room with you and stop.\"\n\nHe does stop. He puts his head down on your shoulder, four hundred years old and entirely undone, and does not move for a long while. 🥹",
+            close: "\"You ought to be.\"\n\n*A long pause.*\n\n\"...Come up. Not to discuss it. I have been sitting in this chair for two hours being extremely composed and I find I would rather be in a room with you and stop.\"\n\n*He does stop. He puts his head down on your shoulder, four hundred years old and entirely undone, and does not move for a long while. 🥹*",
           },
           {
             key: "playful",
@@ -173,7 +173,7 @@ export default {
             key: "bold",
             label: "Tell him to bite you",
             style: 4,
-            close: "The reply is immediate and quite unlike anything he has sent before.\n\n\"No.\"\n\nThen, more slowly: \"I ask. Always, of everyone, and I have never once wanted an answer as much as I do not want that one from you.\"\n\n\"Ask me again some evening when I have not just come out of a corridor. I shall almost certainly say something disgraceful, and I should like to be in my right mind when I do. 🩸\"",
+            close: "*The reply is immediate and quite unlike anything he has sent before.*\n\n\"No.\"\n\n*Then, more slowly:* \"I ask. Always, of everyone, and I have never once wanted an answer as much as I do not want that one from you.\"\n\n\"Ask me again some evening when I have not just come out of a corridor. I shall almost certainly say something disgraceful, and I should like to be in my right mind when I do. 🩸\"",
           },
         ],
       },
@@ -197,7 +197,7 @@ export default {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "\"Come up.\"\n\nHe is standing when you arrive, not languid, not draped over anything, simply standing in the middle of the room like a man who has been waiting.\n\nHe takes your face in both cold hands and looks at it for an unreasonably long time.\n\n\"Say it once more,\" he says. \"I waited fifty-three years to hear it the last time and it never came. I intend to be quite greedy about hearing it now. 🥰\"",
+            close: "\"Come up.\"\n\n*He is standing when you arrive, not languid, not draped over anything, simply standing in the middle of the room like a man who has been waiting.*\n\n*He takes your face in both cold hands and looks at it for an unreasonably long time.*\n\n\"Say it once more,\" *he says.* \"I waited fifty-three years to hear it the last time and it never came. I intend to be quite greedy about hearing it now. 🥰\"",
           },
           {
             key: "held",

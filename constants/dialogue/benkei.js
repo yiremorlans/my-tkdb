@@ -24,7 +24,7 @@ export default {
             key: "kind",
             label: "Say you'll come tomorrow",
             style: 3,
-            close: "\"Oh, good. Good!\"\n\nA pause.\n\n\"I shall tidy. There's no need for me to tidy. I'm going to tidy.\"",
+            close: "\"Oh, good. Good!\"\n\n*A pause.*\n\n\"I shall tidy. There's no need for me to tidy. I'm going to tidy.\"",
           },
           {
             key: "playful",
@@ -36,7 +36,7 @@ export default {
             key: "bold",
             label: "Ask why you got a shelf",
             style: 4,
-            close: "There's a longer pause than the question wants.\n\n\"Because you looked at the old things,\" he says. \"Not the new stock. The old things at the back that nobody's asked about in eleven years.\"\n\n\"I'd rather forgotten what that felt like. Good night, now.\"",
+            close: "*There's a longer pause than the question wants.*\n\n\"Because you looked at the old things,\" *he says.* \"Not the new stock. The old things at the back that nobody's asked about in eleven years.\"\n\n\"I'd rather forgotten what that felt like. Good night, now.\"",
           },
         ],
       },
@@ -58,7 +58,7 @@ export default {
             key: "kind",
             label: "Say he's worth talking to",
             style: 3,
-            close: "\"Oh, now.\"\n\nA rather long silence.\n\n\"That's... well. Thank you. I shall be thinking about that on and off for a week, which is more than I've got out of most conversations this decade.\"",
+            close: "\"Oh, now.\"\n\n*A rather long silence.*\n\n\"That's... well. Thank you. I shall be thinking about that on and off for a week, which is more than I've got out of most conversations this decade.\"",
           },
           {
             key: "playful",
@@ -70,7 +70,7 @@ export default {
             key: "bold",
             label: "Ask what thirty years is like",
             style: 4,
-            close: "\"Quiet.\"\n\nHe doesn't dress it up at all, which he usually would.\n\n\"Quiet, and full of other people's beginnings. That's the job: they arrive, they're loud for four years, they go. You get very good at the goodbye bit and very rusty at the rest of it.\"",
+            close: "\"Quiet.\"\n\n*He doesn't dress it up at all, which he usually would.*\n\n\"Quiet, and full of other people's beginnings. That's the job: they arrive, they're loud for four years, they go. You get very good at the goodbye bit and very rusty at the rest of it.\"",
           },
         ],
       },
@@ -83,7 +83,7 @@ export default {
     closeFriend: {
       beats: [
         "**{firstName}**: \"Come by after closing, if you would. I've something at the back I'd like to show somebody, and I've been waiting rather a long time for the right somebody.\"",
-        "The back room is full of boxes and one of them is old enough to have handwriting on it that isn't his. He opens it with a great deal of care.\n\nIt's a photograph, and a folded paper crane gone yellow, and a pair of reading glasses with one arm mended.\n\n\"That's the shop in its first year. That's me, the one looking terrified, and that's the woman who ran it before I did.\"",
+        "*The back room is full of boxes and one of them is old enough to have handwriting on it that isn't his. He opens it with a great deal of care.*\n\n*It's a photograph, and a folded paper crane gone yellow, and a pair of reading glasses with one arm mended.*\n\n\"That's the shop in its first year. That's me, the one looking terrified, and that's the woman who ran it before I did.\"",
         "\"She taught me the trade and put up with me and mended those about four times rather than let me buy new ones. She had views about waste.\"\n\n\"I've not had this box out in eleven years. It isn't sad, particularly. It's just that there's no one to get it out *for*. You can't show a box like this to a student who'll be gone by summer. It'd be a weight on them.\"\n\n\"You've been coming a good while now. I decided you weren't going by summer. I hope that wasn't presumptuous of me.\"",
       ],
       choice: {
@@ -93,7 +93,7 @@ export default {
             key: "kind",
             label: "Say you're not going anywhere",
             style: 3,
-            close: "He busies himself with the box for rather a long time.\n\n\"...Well,\" he says, to the box. \"Good. Good.\"\n\nHe doesn't put it away that night. It stays out on the back table, and it stays out for weeks.",
+            close: "*He busies himself with the box for rather a long time.*\n\n\"...Well,\" *he says, to the box.* \"Good. Good.\"\n\n*He doesn't put it away that night. It stays out on the back table, and it stays out for weeks.*",
           },
           {
             key: "playful",
@@ -105,7 +105,7 @@ export default {
             key: "bold",
             label: "Ask who you remind him of",
             style: 4,
-            close: "He goes very still, because you have finished a sentence he has started in front of you perhaps a dozen times.\n\n\"...Her,\" he says. \"Not the face. The way you go to the back of the shop first.\"\n\n\"I've been not saying that for about a year, in case it was a strange thing to put on a person. It probably is. I'm glad it's said.\"",
+            close: "*He goes very still, because you have finished a sentence he has started in front of you perhaps a dozen times.*\n\n\"...Her,\" *he says.* \"Not the face. The way you go to the back of the shop first.\"\n\n\"I've been not saying that for about a year, in case it was a strange thing to put on a person. It probably is. I'm glad it's said.\"",
           },
         ],
       },
@@ -128,7 +128,7 @@ export default {
             key: "kind",
             label: "Say you'll still be here",
             style: 3,
-            close: "\"You can't know that.\"\n\nThen, after some minutes: \"...No. Say it anyway. I've spent thirty years being sensible about this and I should like, just once, to be told something lovely and not immediately weigh it.\"",
+            close: "\"You can't know that.\"\n\n*Then, after some minutes:* \"...No. Say it anyway. I've spent thirty years being sensible about this and I should like, just once, to be told something lovely and not immediately weigh it.\"",
           },
           {
             key: "playful",
@@ -140,7 +140,7 @@ export default {
             key: "bold",
             label: "Tell him to stop throwing out",
             style: 4,
-            close: "\"Then the shelf never empties.\"\n\nA pause.\n\n\"...That's rather the point you're making, isn't it. Yes. All right. I shall stop throwing them out.\"\n\n\"I've kept yours anyway. All of it. Every single week's, since the beginning. I've been quietly not throwing yours out for about a year and telling myself I'd get to it.\"",
+            close: "\"Then the shelf never empties.\"\n\n*A pause.*\n\n\"...That's rather the point you're making, isn't it. Yes. All right. I shall stop throwing them out.\"\n\n\"I've kept yours anyway. All of it. Every single week's, since the beginning. I've been quietly not throwing yours out for about a year and telling myself I'd get to it.\"",
           },
         ],
       },
@@ -163,7 +163,7 @@ export default {
             key: "kind",
             label: "Fuss anyway",
             style: 3,
-            close: "\"I said not to.\"\n\nHe lets you, though. He sits in the back room and lets you make the tea he was going to make himself and doesn't argue about a single thing.\n\n\"...It's nice,\" he admits eventually. \"Being fussed over. I'd forgotten. I've been the one doing it for so long I'd genuinely forgotten what the other side was like.\"",
+            close: "\"I said not to.\"\n\n*He lets you, though. He sits in the back room and lets you make the tea he was going to make himself and doesn't argue about a single thing.*\n\n\"...It's nice,\" *he admits eventually.* \"Being fussed over. I'd forgotten. I've been the one doing it for so long I'd genuinely forgotten what the other side was like.\"",
           },
           {
             key: "playful",
@@ -175,7 +175,7 @@ export default {
             key: "bold",
             label: "Tell him not to do it again",
             style: 4,
-            close: "\"No.\"\n\nIt's the flattest thing he has ever said to you, and there isn't a trace of the fluster anywhere in it.\n\n\"I'm sorry. Anything else you ask me, I'll do. Not that.\"\n\nThen, gentler: \"Come and have the tea. I've made two, rather optimistically.\"",
+            close: "\"No.\"\n\n*It's the flattest thing he has ever said to you, and there isn't a trace of the fluster anywhere in it.*\n\n\"I'm sorry. Anything else you ask me, I'll do. Not that.\"\n\n*Then, gentler:* \"Come and have the tea. I've made two, rather optimistically.\"",
           },
         ],
       },
@@ -199,7 +199,7 @@ export default {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "He doesn't reply at all, which is not like him.\n\nWhen you get to the shop the door is unlocked and he is standing behind the counter with the order form still in his hand, and he has very obviously been standing exactly there for some time.\n\n\"Say it here,\" he says. \"Where I can see you say it. I'm sorry. I've waited a long while and I find I want the whole of it.\"\n\nAnd afterwards he holds onto both your hands across the counter and doesn't manage to say anything else for quite a while.",
+            close: "*He doesn't reply at all, which is not like him.*\n\n*When you get to the shop the door is unlocked and he is standing behind the counter with the order form still in his hand, and he has very obviously been standing exactly there for some time.*\n\n\"Say it here,\" *he says.* \"Where I can see you say it. I'm sorry. I've waited a long while and I find I want the whole of it.\"\n\n*And afterwards he holds onto both your hands across the counter and doesn't manage to say anything else for quite a while.*",
           },
           {
             key: "held",
