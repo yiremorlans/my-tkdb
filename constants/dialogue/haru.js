@@ -9,7 +9,7 @@ export default {
     ],
     known: [
       "\"Honor roll, right? That's what everyone's calling you. Suits you.\" He shoulders the feed bucket.",
-      "Peekaboo peers at you from inside his sling and immediately vanishes again.",
+      "Peekaboo peers at you over the edge of his sling and immediately ducks back down.",
       "He hands you the feed bucket without asking. You've been drafted into the rounds.",
       '"You remembered which one bites," he says, delighted. "That\'s more than most of my house manages."',
       '"Folks are going wild over the Anomalous Animal Back To Nature Tour — your chance to experience it at a discount rate! C\'mon, help me hand out these fliers."',
@@ -213,7 +213,7 @@ export default {
     new: [
       '"Well, hey there!" **{name}** grins at {user} over an armful of feed sacks. "You after somethin\'?"',
       '{user} says the name, and **{name}** laughs, delighted. "Gahaha! Look at that."',
-      "\"Don't mind Peekaboo, he's shy.\" **{name}** introduces the sling before he introduces himself to {user}.",
+      "\"Don't mind Peekaboo, he's shy.\" **{name}** introduces Peekaboo before he introduces himself to {user}.",
     ],
     warm: [
       '"Hey, Honor roll!" **{name}** is filthy to the elbows and beaming at {user}.',
