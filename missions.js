@@ -1170,8 +1170,8 @@ export async function buildDossierMessage(userId) {
   if (!mission && stats.filed === 0) {
     return {
       content: closestHouse
-        ? `**INSPECTOR DOSSIER** — <@${userId}>\n\nNo missions on record yet. Watch for a briefing in the channel and hit Accept first.\n\nClosest house (by affinity): **${closestHouse}**`
-        : `**INSPECTOR DOSSIER** — <@${userId}>\n\nNo missions on record yet. Watch for a briefing in the channel and hit Accept first.`,
+        ? `**INSPECTOR DOSSIER**\n\nNo missions on record yet. Watch for a briefing in the channel and hit Accept first.\n\nClosest house (by affinity): **${closestHouse}**`
+        : `**INSPECTOR DOSSIER**\n\nNo missions on record yet. Watch for a briefing in the channel and hit Accept first.`,
       allowed_mentions: { parse: [] },
     };
   }
@@ -1179,7 +1179,7 @@ export async function buildDossierMessage(userId) {
   const rank = inspectorRank(stats.points);
 
   const lines = [
-    `**INSPECTOR DOSSIER** — <@${userId}>`,
+    `**INSPECTOR DOSSIER**`,
     '',
     `Rank: **${rank.name}**  ·  ${stats.points} house log${stats.points === 1 ? '' : 's'} · ${
       stats.filed
