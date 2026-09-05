@@ -58,6 +58,9 @@ mock.module('../imageComposition.js', {
   namedExports: {
     composeEncounter: async () => Buffer.from('png'),
     composeSilhouetteEncounter: async () => Buffer.from('silhouette-png'),
+    // Unused here, but missions.js imports it statically (via the scheduler),
+    // so the mock has to provide it or the module graph fails to load.
+    composeFieldReport: async () => Buffer.from('report-png'),
   },
 });
 
@@ -296,7 +299,7 @@ describe('/call', () => {
     const [edit] = edits;
     assert.equal(edit.body.content, null, 'content cleared so the winner is not tagged above the post');
     assert.equal('attachments' in edit.body, false, 'silhouette kept');
-    assert.equal(edit.body.embeds[0].thumbnail.url, 'https://example.test/assets/chars/Rui_Mizuki_Uniform.png');
+    assert.equal(edit.body.embeds[0].thumbnail.url, 'https://example.test/assets/cards/Rui_Mizuki.png');
     assert.match(edit.body.embeds[0].description, /<@user-1>/, 'the winner is mentioned inside the reveal line');
     assert.ok(!/[{}]/.test(edit.body.embeds[0].description), 'no unfilled placeholder');
   });

@@ -1149,6 +1149,21 @@ export function getCharacterImageUrl(character, variant) {
   return `${baseUrl}/assets/chars/${images[key]}`;
 }
 
+// Card art in assets/cards is named `FirstName_LastWord.png` — the last word
+// of lastName, so "Romeo Scorpius Lucci" resolves to Romeo_Lucci.png (the same
+// convention as assets/avatar and assets/signatures). A character with no
+// lastName is just `FirstName.png` (Benkei.png). Returns null only when there's
+// no firstName either, so the caller can fall back rather than point at a file
+// that doesn't exist.
+export function getCharacterCardUrl(character) {
+  if (!character?.firstName) return null;
+  const lastNamePart = character.lastName
+    ? `_${character.lastName.split(" ").pop()}`
+    : "";
+  const baseUrl = process.env.BASE_URL || "";
+  return `${baseUrl}/assets/cards/${character.firstName}${lastNamePart}.png`;
+}
+
 export function getRandomCharacterImageVariant(character) {
   const keys = Object.keys(character.images);
   return keys[Math.floor(Math.random() * keys.length)];

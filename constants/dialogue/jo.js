@@ -7,32 +7,32 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: \"Hey, cutie. Hope this isn't a strange hour. I've stopped being able to tell which hours are strange.\"",
-        "\"Quick thing and then I'll leave you alone. You came through the hall on Tuesday while I was dealing with three separate crises and you didn't add a fourth.\"\n\n\"That's it. That's the whole compliment. {timesMet} times you've been in this house and not once have you needed something from me, and I would like you to understand that in Dionysia, that makes you rare. Precious, even, and I don't say that lightly.\"",
+        "**{firstName}**: Hey, cutie. Hope this isn't a strange hour. I've stopped being able to tell which hours are strange.",
+        "Quick thing and then I'll leave you alone. You came through the hall on Tuesday while I was dealing with three separate crises and you didn't add a fourth.\n\nThat's it. That's the whole compliment. {timesMet} times you've been in this house and not once have you needed something from me, and I would like you to understand that in Dionysia, that makes you rare. Precious, even, and I don't say that lightly.",
       ],
       choice: {
-        prompt: '"Anyway. How are you? And answer properly, I\'ll know."',
+        prompt: "Anyway. How are you? And answer properly, I'll know.",
         options: [
           {
             key: "kind",
             label: "Ask him back",
             style: 3,
             close:
-              '"Ha. Nice try."\n\n*A pause. A long one, for someone whose whole job is having an answer ready.*\n\n"...Tired. That\'s the honest one. Don\'t tell Mio, he\'ll build me something."',
+              "Ha. Nice try.\n\n*A pause. A long one, for someone whose whole job is having an answer ready.*\n\n...Tired. That's the honest one. Don't tell Mio, he'll build me something.",
           },
           {
             key: "playful",
             label: "Offer to be crisis four",
             style: 1,
             close:
-              "\"Don't you dare. I've got a system and it does not have room for a fourth.\"\n\n\"...Although. If you were the fourth I'd probably enjoy the day more. Forget I said that, I'm running on about two hours.\"",
+              "Don't you dare. I've got a system and it does not have room for a fourth.\n\n...Although. If you were the fourth I'd probably enjoy the day more. Forget I said that, I'm running on about two hours.",
           },
           {
             key: "bold",
             label: "Say you'd need something",
             style: 4,
             close:
-              "\"Oh, would you.\"\n\n*There's real interest in it, the first thing in the whole message that isn't managed.*\n\n\"Well. Ask, then. I'd like to see what it does to me, and I don't get many chances to find that out.\"",
+              "Oh, would you.\n\n*There's real interest in it, the first thing in the whole message that isn't managed.*\n\nWell. Ask, then. I'd like to see what it does to me, and I don't get many chances to find that out.",
           },
         ],
       },
@@ -44,32 +44,32 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: \"Something's been bothering me and I've decided you're going to hear about it.\"",
-        "\"I adapt. It's what I do: I read a room and I become the version of me that room needs, and I've been doing it so long I couldn't tell you where the seam is any more. On stage, in the hall, with Shion, with the board. Different man every time and all of them mine.\"\n\n\"You come at me with {favResponse} no matter which one you're getting. Same every time. And it's started to feel like being addressed by name in a room where everyone else is calling me by a job.\"",
+        "**{firstName}**: Something's been bothering me and I've decided you're going to hear about it.",
+        "I adapt. It's what I do: I read a room and I become the version of me that room needs, and I've been doing it so long I couldn't tell you where the seam is any more. On stage, in the hall, with Shion, with the board. Different man every time and all of them mine.\n\nYou come at me with {favResponse} no matter which one you're getting. Same every time. And it's started to feel like being addressed by name in a room where everyone else is calling me by a job.",
       ],
       choice: {
-        prompt: '"So what am I supposed to do with that, cutie?"',
+        prompt: "So what am I supposed to do with that, cutie?",
         options: [
           {
             key: "kind",
             label: "Say you'd like the real one",
             style: 3,
             close:
-              "\"That's the trouble. I'd have to find him first.\"\n\n*A pause.*\n\n\"...I'll look. Give me a while. He's under a lot of paperwork.\"",
+              "That's the trouble. I'd have to find him first.\n\n...I'll look. Give me a while. He's under a lot of paperwork.",
           },
           {
             key: "playful",
             label: "Ask which one you're getting",
             style: 1,
             close:
-              '"Honestly? The one who\'s had four hours\' sleep and is being charming at you out of sheer muscle memory."\n\n"Which is not the good one. Come back Thursday, the Thursday one is much better company."',
+              "Honestly? The one who's had four hours' sleep and is being charming at you out of sheer muscle memory.\n\nWhich is not the good one. Come back Thursday, the Thursday one is much better company.",
           },
           {
             key: "bold",
             label: "Tell him to stop adapting",
             style: 4,
             close:
-              "*There is no reply for some minutes.*\n\n\"Nobody's ever said that to me.\"\n\n\"They've said 'be yourself', which is different. That's a compliment with nothing in it. You said stop, which is an instruction, and I don't get given those.\"\n\n\"I don't know how yet. But I noticed you said it.\"",
+              "*There is no reply for some minutes.*\n\nNobody's ever said that to me.\n\nThey've said \"be yourself\", which is different. That's a compliment with nothing in it. You said stop, which is an instruction, and I don't get given those.\n\nI don't know how yet. But I noticed you said it.",
           },
         ],
       },
@@ -81,33 +81,33 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: \"Five thirty. The east gate. Don't be late and don't ask why.\"",
-        "*It's still dark. He's in a hoodie and running shoes with none of the artifact on him at all, and he looks about six years younger and considerably less finished.*\n\n\"This is the jog. Every morning, five thirty, an hour, alone. It's the only part of the day nobody has an opinion about.\"",
-        "*You run. He doesn't talk for the first twenty minutes, which from Jo is unheard of.*\n\n*Somewhere near the water he says, without slowing down:* \"I've done this alone for six years. Mio's asked. Haru's asked twice. I said no both times without even thinking about it.\"\n\n\"Then I thought about asking you and I couldn't come up with a single reason not to, which frankly alarmed me.\"",
+        "**{firstName}**: Five thirty. The east gate. Don't be late and don't ask why.",
+        "*It's still dark. He's in a hoodie and running shoes with none of the artifact on him at all, and he looks about six years younger and considerably less finished.*\n\n> This is the jog. Every morning, five thirty, an hour, alone. It's the only part of the day nobody has an opinion about.",
+        "*You run. He doesn't talk for the first twenty minutes, which from Jo is unheard of.*\n\n*Somewhere near the water he says, without slowing down:*\n\n> I've done this alone for six years. Mio's asked. Haru's asked twice. I said no both times without even thinking about it.\n\n> Then I thought about asking you and I couldn't come up with a single reason not to, which frankly alarmed me.",
       ],
       choice: {
-        prompt: '"Well? Verdict. And be honest, you\'re wheezing."',
+        prompt: "Well? Verdict. And be honest, you're wheezing.",
         options: [
           {
             key: "kind",
             label: "Ask to come tomorrow",
             style: 3,
             close:
-              '*He does actually stop running for a second.*\n\n"...Yeah. All right."\n\n*He doesn\'t say anything else about it. But the next morning he waits at the gate rather than starting without you, and every morning after that.*',
+              "*He does actually stop running for a second.*\n\n> ...Yeah. All right.\n\n*He doesn't say anything else about it. But the next morning he waits at the gate rather than starting without you, and every morning after that.*",
           },
           {
             key: "playful",
             label: "Say he set the pace wrong",
             style: 1,
             close:
-              '"I set it *low*, cutie. That was the courteous pace."\n\n"...Fine. Tomorrow I\'ll set it properly and you can find out what I actually do out here. Bring water. I\'m serious about the water."',
+              "> I set it *low*, cutie. That was the courteous pace.\n\n> ...Fine. Tomorrow I'll set it properly and you can find out what I actually do out here. Bring water. I'm serious about the water.",
           },
           {
             key: "bold",
             label: "Ask what he thinks about",
             style: 4,
             close:
-              '*He runs another hundred meters before answering.*\n\n"Nothing. That\'s the point of it."\n\n*Then:* "That was a lie and you\'d have let me get away with it. Everybody in the house. Every single one of them, one at a time, for an hour, and then I go back in and do the day."\n\n"You were in it this morning. That\'s new, and I haven\'t decided what to do about it."',
+              "*He runs another hundred meters before answering.*\n\n> Nothing. That's the point of it.\n\n*Then:*\n\n> That was a lie and you'd have let me get away with it. Everybody in the house. Every single one of them, one at a time, for an hour, and then I go back in and do the day.\n\n> You were in it this morning. That's new, and I haven't decided what to do about it.",
           },
         ],
       },
@@ -119,33 +119,33 @@ export default {
 
     confidant: {
       beats: [
-        "**{firstName}**: \"I'm going to tell you a thing about this house and then I'd like you to forget I have a title.\"",
-        "\"Shion's had a bad week. Mio's covering and pretending he isn't tired. Elias is doing three jobs and calling it errands so nobody has to say the word demotion.\"\n\n\"I hold all of that. That's not a complaint, it's an inventory. I chose it, I'd choose it again, and I'm good at it.\"",
-        "\"Here's the part I've never said.\"\n\n\"I don't know if any of them like me. I know they need me. I've built an entire life out of being needed because it's load-bearing and being liked is not, and somewhere in the last six years I stopped being able to tell the difference from the inside.\"\n\n\"And then there's you, who has never needed a single thing from me, and keeps turning up anyway, and I have genuinely no idea what to do with that. I run an hour a morning thinking about it.\"",
+        "**{firstName}**: I'm going to tell you a thing about this house and then I'd like you to forget I have a title.",
+        "Shion's had a bad week. Mio's covering and pretending he isn't tired. Elias is doing three jobs and calling it errands so nobody has to say the word demotion.\n\nI hold all of that. That's not a complaint, it's an inventory. I chose it, I'd choose it again, and I'm good at it.",
+        "Here's the part I've never said.\n\nI don't know if any of them like me. I know they need me. I've built an entire life out of being needed because it's load-bearing and being liked is not, and somewhere in the last six years I stopped being able to tell the difference from the inside.\n\nAnd then there's you, who has never needed a single thing from me, and keeps turning up anyway, and I have genuinely no idea what to do with that. I run an hour a morning thinking about it.",
       ],
       choice: {
-        prompt: '"Go on. You\'re the only person I could ask."',
+        prompt: "Go on. You're the only person I could ask.",
         options: [
           {
             key: "kind",
             label: "Tell him you like him",
             style: 3,
             close:
-              "*There's a very long gap.*\n\n\"...Say that in the morning too. When I'm not like this.\"\n\n\"I want to find out if I can hear it when I'm the competent one. I don't think I can. I'd like to be wrong.\"",
+              "*There's a very long gap.*\n\n...Say that in the morning too. When I'm not like this.\n\nI want to find out if I can hear it when I'm the competent one. I don't think I can. I'd like to be wrong.",
           },
           {
             key: "playful",
             label: "Say you're here for the jog",
             style: 1,
             close:
-              '"The jog. Six years of holding this house together and you\'re in it for cardio."\n\n"That\'s the funniest thing anyone\'s said to me in a month and I needed it more than the sincere version. Thank you, cutie. Genuinely."',
+              "The jog. Six years of holding this house together and you're in it for cardio.\n\nThat's the funniest thing anyone's said to me in a month and I needed it more than the sincere version. Thank you, cutie. Genuinely.",
           },
           {
             key: "bold",
             label: "Tell him to ask them",
             style: 4,
             close:
-              "\"Absolutely not.\"\n\n*A pause.*\n\n\"...Because I'd have to survive the answer, and I've built the whole thing on not needing one.\"\n\n\"You'd ask, wouldn't you. You'd just walk in and ask. God. I've spent six years being impressed by nobody and now this.\"",
+              "Absolutely not.\n\n...Because I'd have to survive the answer, and I've built the whole thing on not needing one.\n\nYou'd ask, wouldn't you. You'd just walk in and ask. God. I've spent six years being impressed by nobody and now this.",
           },
         ],
       },
@@ -157,34 +157,34 @@ export default {
 
     devoted: {
       beats: [
-        '**{firstName}**: "I canceled the show."',
-        '"Full house. Two months of rehearsal. Board\'s furious, Romeo\'s going to bill me for the room, and I have not canceled a performance in nine years, not for illness, not for a funeral, not once."\n\n"You were in the lower halls when it went wrong and nobody could tell me where. So I put the artifact down mid-transformation in front of a hundred and forty people and I walked off, and I did not think about it. That\'s the part I want you to have: I did not think about it."',
-        "\"I've spent my whole life being the one who decides what gets sacrificed. I'm extremely good at it. I've sacrificed sleep, friendships, four years of my twenties, and I've never once resented any of it.\"\n\n\"Tonight somebody else did the deciding and it wasn't me, and it turns out that person is you, and you weren't even in the room.\"",
+        "**{firstName}**: I canceled the show.",
+        "Full house. Two months of rehearsal. Board's furious, Romeo's going to bill me for the room, and I have not canceled a performance in nine years, not for illness, not for a funeral, not once.\n\nYou were in the lower halls when it went wrong and nobody could tell me where. So I put the artifact down mid-transformation in front of a hundred and forty people and I walked off, and I did not think about it. That's the part I want you to have: I did not think about it.",
+        "I've spent my whole life being the one who decides what gets sacrificed. I'm extremely good at it. I've sacrificed sleep, friendships, four years of my twenties, and I've never once resented any of it.\n\nTonight somebody else did the deciding and it wasn't me, and it turns out that person is you, and you weren't even in the room.",
       ],
       choice: {
         prompt:
-          '"Tell me I was an idiot. Nobody else is going to, they\'re all too polite."',
+          "Tell me I was an idiot. Nobody else is going to, they're all too polite.",
         options: [
           {
             key: "kind",
             label: "Tell him you're all right",
             style: 3,
             close:
-              "\"I know. I've known for an hour.\"\n\n*A pause.*\n\n\"Say it in person. I'm outside. I've been outside for a while and I couldn't work out how to knock without it meaning something.\"",
+              "I know. I've known for an hour.\n\nSay it in person. I'm outside. I've been outside for a while and I couldn't work out how to knock without it meaning something.",
           },
           {
             key: "playful",
             label: "Ask what Romeo billed him",
             style: 1,
             close:
-              '"More than the show made. He put it in writing. He put it in an *acronym*."\n\n"Worth it. Don\'t tell him that, he\'ll raise it."',
+              "More than the show made. He put it in writing. He put it in an *acronym*.\n\nWorth it. Don't tell him that, he'll raise it.",
           },
           {
             key: "bold",
             label: "Tell him it wasn't idiotic",
             style: 4,
             close:
-              "*He's at the door before you've finished, still half in costume with the paint smudged, having very clearly walked straight there.*\n\n*He doesn't say anything for a while. He just puts both hands on your shoulders, holds you at arm's length to check, and then gives up entirely and pulls you in.*\n\n\"Nine years,\" *he says into your hair.* \"Nine years and one of you.\"",
+              "*He's at the door before you've finished, still half in costume with the paint smudged, having very clearly walked straight there.*\n\n*He doesn't say anything for a while. He just puts both hands on your shoulders, holds you at arm's length to check, and then gives up entirely and pulls you in.*\n\n> Nine years,\n\n*he says into your hair.*\n\n> Nine years and one of you.",
           },
         ],
       },
@@ -196,28 +196,28 @@ export default {
 
     soulbound: {
       beats: [
-        '**{firstName}**: "No nickname on this one. You\'ll notice, and I want you to."',
-        "\"{timesMet} times. I've counted, which I don't do, because I don't keep count of people. Keeping count is how you end up with a ledger of who owes what and I have quite enough of those.\"\n\n\"You're the only person in my life who isn't on one. Not on the debit side, not on the credit side. You're just there, at five thirty, at the gate.\"",
-        "\"I adapt to everybody. I told you that months ago and you told me to stop and I said I didn't know how.\"\n\n\"I've worked out that I do know how. I know exactly how. It's this: it's whoever I am at six in the morning halfway round the water with no artifact on and nothing to run. That's the seam. You've been looking at it for a year.\"",
-        '"So: I love you."\n\n"Not the captain, not the Venus of Dionysia, not whichever version the room ordered. The one who\'s out of breath and hasn\'t got a line ready."\n\n"You can take that at whatever speed you like. I\'ve spent nine years making decisions for a house full of people. I\'m quite happy to not make this one."',
+        "**{firstName}**: No nickname on this one. You'll notice, and I want you to.",
+        "{timesMet} times. I've counted, which I don't do, because I don't keep count of people. Keeping count is how you end up with a ledger of who owes what and I have quite enough of those.\n\nYou're the only person in my life who isn't on one. Not on the debit side, not on the credit side. You're just there, at five thirty, at the gate.",
+        "I adapt to everybody. I told you that months ago and you told me to stop and I said I didn't know how.\n\nI've worked out that I do know how. I know exactly how. It's this: it's whoever I am at six in the morning halfway round the water with no artifact on and nothing to run. That's the seam. You've been looking at it for a year.",
+        "So: I love you.\n\nNot the captain, not the Venus of Dionysia, not whichever version the room ordered. The one who's out of breath and hasn't got a line ready.\n\nYou can take that at whatever speed you like. I've spent nine years making decisions for a house full of people. I'm quite happy to not make this one.",
       ],
       choice: {
         prompt:
-          '"Your call. Entirely, and I mean that more than I\'ve meant anything."',
+          "Your call. Entirely, and I mean that more than I've meant anything.",
         options: [
           {
             key: "answered",
             label: "Say it back",
             style: 3,
             close:
-              '"...East gate. Now. I know it\'s not five thirty."\n\n*He\'s there in the dark with no shoes on properly and no explanation for that, and when you get to him he laughs, a real one, cracked open, nothing performed anywhere in it.*\n\n"Say it out here," *he says, hands either side of your face.* "Where there\'s nobody to be a captain in front of."',
+              "...East gate. Now. I know it's not five thirty.\n\n*He's there in the dark with no shoes on properly and no explanation for that, and when you get to him he laughs, a real one, cracked open, nothing performed anywhere in it.*\n\n> Say it out here,\n\n*he says, hands either side of your jaw.*\n\n> Where there's nobody to be a captain in front of.",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
             close:
-              "\"Of course. Take it.\"\n\n*And then, because he cannot help himself:* \"And don't manage me about it. If you decide no, say no. I've had a lifetime of people arranging their faces at me and I'd rather have one person who doesn't.\"\n\n\"The gate's at five thirty. It was at five thirty before any of this and it'll be at five thirty after. I'll wait. That part isn't a favor, it's just where I am.\"",
+              "Of course. Take it.\n\n*And then, because he cannot help himself:* And don't manage me about it. If you decide no, say no. I've had a lifetime of people managing me and I'd rather have one person who doesn't.\n\nThe gate's at five thirty. It was at five thirty before any of this and it'll be at five thirty after. I'll wait. That part isn't a favor, it's just where I am.",
           },
         ],
       },

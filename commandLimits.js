@@ -2,6 +2,7 @@ import {
   getCommandLimits,
   clearCommandLimit,
   claimCommandSlot,
+  spendCooldownReset,
 } from './db/supabase.js';
 
 // Each command (roam/meet) can be used once every 3 hours, tracked per user.
@@ -28,8 +29,36 @@ const COOLDOWN_MS = 3 * 60 * 60 * 1000;
 const RATE_LIMITED_COMMANDS = ['roam', 'meet'];
 
 // Reset a user's cooldown (for testing). Omit `command` to clear both.
+//
+// Deliberately NOT how missions pay out. A finished mission banks a reset the
+// player spends themselves (redeemCooldownReset below); clearing the clock from
+// the outside, at a moment the player didn't choose, is exactly the waste that
+// change exists to stop.
 export function resetCommandLimit(userId, command = null) {
   return clearCommandLimit(userId, command);
+}
+
+/**
+ * Spend one banked mission reward on a cooldown the user is actually waiting
+ * on (docs/scheduled-missions.md §13). The decision, the credit and the clear
+ * all happen inside `spend_cooldown_reset` (db/migrations/017) — this only
+ * supplies the cooldown length, so COOLDOWN_MS below stays the one place game
+ * balance is written down.
+ *
+ * Returns 'roam' | 'meet' | 'both' for what was cleared, 'none' when the user
+ * has nothing banked, or 'not_needed' when that clock is already clear.
+ *
+ * Fails CLOSED, like claimCommandUse: on an error we don't know whether a
+ * credit was consumed, and reporting a success that didn't happen would cost
+ * the player a real reward.
+ */
+export async function redeemCooldownReset(userId, command) {
+  try {
+    return await spendCooldownReset(userId, command, Math.round(COOLDOWN_MS / 1000));
+  } catch (err) {
+    console.error('redeemCooldownReset: failing closed after spend error:', err);
+    return 'error';
+  }
 }
 
 // ---------------------------------------------------------------------------

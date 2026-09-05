@@ -1436,4 +1436,637 @@ export async function listResumableBondScenes(userId) {
   return data || [];
 }
 
+/**
+ * SCHEDULED MISSIONS (db/migrations/016_create_missions.sql)
+ *
+ * Three requests a day per guild, one Accept button each, at most one held
+ * mission per user. Every state transition that two people can reach at once —
+ * the Accept race, filing an errand, backing up a co-op — goes through an RPC
+ * rather than a read-then-write; see docs/scheduled-missions.md §11.
+ */
+
+/**
+ * Every guild the mission pass should tick. `locked` is the owner's kill switch
+ * and outranks the admin's `missions_enabled`, exactly as it does for
+ * encounters — a locked guild goes quiet on both features at once.
+ */
+export async function getMissionGuilds() {
+  const { data, error } = await supabase
+    .from('guild_settings')
+    .select('*')
+    .eq('missions_enabled', true)
+    .eq('locked', false);
+
+  if (error) {
+    console.error('Error fetching mission guilds:', error);
+    throw error;
+  }
+
+  return data || [];
+}
+
+/**
+ * `/missions enable` — point missions at a channel and turn them on. Clearing
+ * mission_slots_day is what makes the next tick roll a fresh set of slot times
+ * rather than inheriting whatever was rolled before the feature was off.
+ */
+export async function enableGuildMissions(guildId, channelId) {
+  const { data, error } = await supabase
+    .from('guild_settings')
+    .upsert(
+      {
+        guild_id: guildId,
+        mission_channel_id: channelId,
+        missions_enabled: true,
+        mission_slots_day: null,
+        mission_slots_fired: [],
+        mission_post_failures: 0,
+        updated_at: new Date().toISOString(),
+      },
+      { onConflict: 'guild_id' },
+    )
+    .select();
+
+  if (error) {
+    console.error('Error enabling guild missions:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/** `/missions disable`, and the auto-disable after repeated post failures. */
+export async function setGuildMissionsEnabled(guildId, enabled) {
+  const { data, error } = await supabase
+    .from('guild_settings')
+    .update({ missions_enabled: enabled, updated_at: new Date().toISOString() })
+    .eq('guild_id', guildId)
+    .select();
+
+  if (error) {
+    console.error('Error setting guild missions flag:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/** Write today's three slot times and reset the fired list. Once per local day. */
+export async function rollGuildMissionSlots(guildId, day, slots) {
+  const { data, error } = await supabase
+    .from('guild_settings')
+    .update({
+      mission_slots_day: day,
+      mission_slots_today: slots,
+      mission_slots_fired: [],
+      updated_at: new Date().toISOString(),
+    })
+    .eq('guild_id', guildId)
+    .select();
+
+  if (error) {
+    console.error('Error rolling guild mission slots:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/**
+ * Mark one slot spent. Read-modify-write, which is safe under this app's
+ * single-instance assumption (the same one the whole scheduler rests on) and
+ * idempotent regardless: appending an index that is already there changes
+ * nothing, because the caller reads it back as a Set.
+ */
+export async function markMissionSlotFired(guildId, index, firedSoFar = null) {
+  const current = firedSoFar ?? (await getGuildSettings(guildId))?.mission_slots_fired ?? [];
+  const fired = Array.from(new Set([...current.map(Number), Number(index)]));
+
+  const { data, error } = await supabase
+    .from('guild_settings')
+    .update({ mission_slots_fired: fired, updated_at: new Date().toISOString() })
+    .eq('guild_id', guildId)
+    .select();
+
+  if (error) {
+    console.error('Error marking mission slot fired:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/**
+ * Count one failed mission POST against a guild. Deliberately its own counter
+ * and its own switch: a broken mission channel must not silence public
+ * encounters, which may well be posting fine somewhere else.
+ */
+export async function bumpGuildMissionPostFailure(guildId, threshold = 3) {
+  const settings = await getGuildSettings(guildId);
+  const failures = (settings?.mission_post_failures || 0) + 1;
+  const disabled = failures >= threshold;
+
+  const { error } = await supabase
+    .from('guild_settings')
+    .update({
+      mission_post_failures: failures,
+      ...(disabled ? { missions_enabled: false } : {}),
+      updated_at: new Date().toISOString(),
+    })
+    .eq('guild_id', guildId);
+
+  if (error) {
+    console.error('Error recording mission post failure:', error);
+    throw error;
+  }
+
+  return { failures, disabled };
+}
+
+/** Clear the consecutive-failure count after a mission post lands. */
+export async function clearGuildMissionPostFailures(guildId) {
+  const { error } = await supabase
+    .from('guild_settings')
+    .update({ mission_post_failures: 0, updated_at: new Date().toISOString() })
+    .eq('guild_id', guildId);
+
+  if (error) {
+    console.error('Error clearing mission post failures:', error);
+    throw error;
+  }
+}
+
+/**
+ * Insert the mission row. Like an encounter, the row exists before the POST so
+ * a POST that fails still has something to mark expired.
+ */
+export async function createMission({
+  guildId,
+  channelId,
+  missionType,
+  house,
+  riddleId = null,
+  targetIds = null,
+  teaser,
+  postExpiresAt,
+}) {
+  const { data, error } = await supabase
+    .from('missions')
+    .insert([
+      {
+        guild_id: guildId,
+        channel_id: channelId,
+        mission_type: missionType,
+        house,
+        riddle_id: riddleId,
+        // The errand's frozen target list, unsigned. Written with the row
+        // rather than after it, so a mission can never exist in the window
+        // where it claims to be an errand but has nothing to collect.
+        signatures: targetIds ? Object.fromEntries(targetIds.map((id) => [id, null])) : null,
+        teaser,
+        post_expires_at:
+          postExpiresAt instanceof Date ? postExpiresAt.toISOString() : postExpiresAt,
+      },
+    ])
+    .select()
+    .single();
+
+  if (error) {
+    console.error('Error creating mission:', error);
+    throw error;
+  }
+
+  return data;
+}
+
+export async function setMissionMessageId(id, messageId) {
+  const { data, error } = await supabase
+    .from('missions')
+    .update({ message_id: messageId })
+    .eq('id', id)
+    .select();
+
+  if (error) {
+    console.error('Error setting mission message id:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+export async function setAssistMessageId(id, messageId) {
+  const { data, error } = await supabase
+    .from('missions')
+    .update({ assist_message_id: messageId })
+    .eq('id', id)
+    .select();
+
+  if (error) {
+    console.error('Error setting assist message id:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/** The guild's live request, if any — the "never two on the board" guard. */
+export async function getOpenMission(guildId) {
+  const { data, error } = await supabase
+    .from('missions')
+    .select('*')
+    .eq('guild_id', guildId)
+    .eq('status', 'open')
+    .order('created_at', { ascending: false })
+    .limit(1);
+
+  if (error) {
+    console.error('Error fetching open mission:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+export async function getMissionById(id) {
+  const { data, error } = await supabase
+    .from('missions')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error && error.code !== 'PGRST116') {
+    console.error('Error fetching mission:', error);
+    throw error;
+  }
+
+  return data || null;
+}
+
+/**
+ * The mission this user is holding. At most one exists — the partial unique
+ * index on (accepted_by) WHERE status = 'accepted' is what guarantees that, so
+ * this never has to disambiguate.
+ */
+export async function getAcceptedMission(userId) {
+  const { data, error } = await supabase
+    .from('missions')
+    .select('*')
+    .eq('accepted_by', userId)
+    .eq('status', 'accepted')
+    .limit(1);
+
+  if (error) {
+    console.error('Error fetching accepted mission:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/**
+ * The Accept button. Returns 'claimed' | 'taken' | 'capped' | 'busy:<type>'.
+ *
+ * `dayStart` and `dailyLeadCap` drive the per-player daily limit (migration
+ * 018). The day boundary is computed here in JS rather than in SQL because
+ * "today" means the local day the slot window is drawn against, and
+ * constants/missions.js already owns that conversion.
+ *
+ * 23505 is the partial unique index catching a truly simultaneous double-accept
+ * of two different missions, where the RPC's NOT EXISTS could not see the other
+ * uncommitted claim. There is no mission type to report in that case, so it
+ * degrades to the generic busy line rather than failing the click.
+ */
+export async function claimMission(id, userId, { acceptHours = 48, dayStart = null, dailyLeadCap = null } = {}) {
+  const { data, error } = await supabase.rpc('claim_mission', {
+    p_mission_id: id,
+    p_user_id: userId,
+    p_accept_hours: acceptHours,
+    p_day_start: dayStart,
+    p_daily_lead_cap: dailyLeadCap,
+  });
+
+  if (error) {
+    if (error.code === '23505') return 'busy:unknown';
+    console.error('Error claiming mission:', error);
+    throw error;
+  }
+
+  return data;
+}
+
+/**
+ * `/docs` Complete mission. Returns `'filed:<points>'` | 'not_ready' | 'gone'.
+ * The point value comes back from the same locked row the RPC checked, so the
+ * caller cannot pay out a count that disagrees with what was verified.
+ */
+export async function fileErrand(id, userId) {
+  const { data, error } = await supabase.rpc('file_errand', {
+    p_mission_id: id,
+    p_user_id: userId,
+  });
+
+  if (error) {
+    console.error('Error filing errand:', error);
+    throw error;
+  }
+
+  return data;
+}
+
+/** The co-op Join button. Returns 'joined' | 'self' | 'taken'. */
+export async function claimCoopHelper(id, userId) {
+  const { data, error } = await supabase.rpc('claim_coop_helper', {
+    p_mission_id: id,
+    p_user_id: userId,
+  });
+
+  if (error) {
+    console.error('Error claiming coop helper:', error);
+    throw error;
+  }
+
+  return data;
+}
+
+/** The riddle solve. Returns whether this call was the one that closed it. */
+export async function completeMission(id, userId, type) {
+  const { data, error } = await supabase.rpc('complete_mission', {
+    p_mission_id: id,
+    p_user_id: userId,
+    p_type: type,
+  });
+
+  if (error) {
+    console.error('Error completing mission:', error);
+    throw error;
+  }
+
+  return Boolean(data);
+}
+
+/**
+ * Sign one errand target off at the /roam or /meet response step.
+ *
+ * Resolved entirely inside the RPC from the user id, because this runs on every
+ * single dialogue response and almost none of them have an errand behind them:
+ * doing it here is one round trip whether or not there is anything to sign,
+ * where a lookup-then-write was two reads and a write. Idempotent — meeting the
+ * same target twice signs once.
+ *
+ * Returns `{ house, signed, total }` when a signature actually flipped, or null.
+ */
+export async function signErrandTarget(userId, characterId) {
+  const { data, error } = await supabase.rpc('sign_errand_target', {
+    p_user_id: userId,
+    p_character_id: characterId,
+  });
+
+  if (error) {
+    console.error('Error signing errand target:', error);
+    throw error;
+  }
+
+  return data || null;
+}
+
+/**
+ * `[{ characterId, signed }]` off a mission row already in hand. Pure — the
+ * signature list lives on the row, so /docs, the /mission briefing and the
+ * dossier all read it without a second query.
+ */
+export function errandTargets(mission) {
+  return Object.entries(mission?.signatures || {}).map(([characterId, signedAt]) => ({
+    characterId,
+    signed: signedAt != null,
+    signedAt: signedAt ?? null,
+  }));
+}
+
+/**
+ * The per-user lookup behind the /roam roll bias and the /meet pick list.
+ *
+ * One indexed read: the signature list is on the mission row, so there is no
+ * second query for it. Returns null when there is nothing to boost, so every
+ * caller can treat it as "no change".
+ */
+export async function getActiveErrandBoost(userId) {
+  const { data, error } = await supabase
+    .from('missions')
+    .select('*')
+    .eq('accepted_by', userId)
+    .eq('status', 'accepted')
+    .eq('mission_type', 'errand')
+    .limit(1);
+
+  if (error) {
+    console.error('Error fetching active errand:', error);
+    throw error;
+  }
+
+  const mission = data?.[0];
+  if (!mission) return null;
+
+  const targets = errandTargets(mission);
+  return {
+    missionId: mission.id,
+    house: mission.house,
+    targetCount: targets.length,
+    signedCount: targets.filter((t) => t.signed).length,
+    unsignedTargetIds: targets.filter((t) => !t.signed).map((t) => t.characterId),
+  };
+}
+
+/**
+ * Close out every mission past its deadline. Two separate statements because
+ * they are two different deadlines with two different consequences:
+ *
+ *   withdrawn — nobody ever picked it up, so its channel post is still showing
+ *               a live Accept button and has to be edited.
+ *   lapsed    — somebody picked it up and ran out of time. The post already
+ *               said "X has picked up the mission" hours ago, so there is
+ *               nothing to correct there; the row just frees their slot.
+ */
+export async function finalizeExpiredMissions(guildId = null, now = new Date()) {
+  const nowIso = now.toISOString();
+
+  let openQuery = supabase
+    .from('missions')
+    .update({ status: 'expired' })
+    .eq('status', 'open')
+    .lt('post_expires_at', nowIso);
+  if (guildId) openQuery = openQuery.eq('guild_id', guildId);
+
+  const { data: withdrawn, error: openError } = await openQuery.select();
+  if (openError) {
+    console.error('Error withdrawing expired mission posts:', openError);
+    throw openError;
+  }
+
+  let acceptedQuery = supabase
+    .from('missions')
+    .update({ status: 'expired' })
+    .eq('status', 'accepted')
+    .lt('accept_expires_at', nowIso);
+  if (guildId) acceptedQuery = acceptedQuery.eq('guild_id', guildId);
+
+  const { data: lapsed, error: acceptedError } = await acceptedQuery.select();
+  if (acceptedError) {
+    console.error('Error lapsing accepted missions:', acceptedError);
+    throw acceptedError;
+  }
+
+  return { withdrawn: withdrawn || [], lapsed: lapsed || [] };
+}
+
+/** Close one mission out, whatever its deadlines say. Used when a POST fails. */
+export async function expireMission(id) {
+  const { data, error } = await supabase
+    .from('missions')
+    .update({ status: 'expired' })
+    .eq('id', id)
+    .eq('status', 'open')
+    .select();
+
+  if (error) {
+    console.error('Error expiring mission:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/**
+ * One completion row. Written fire-and-forget AFTER the claim RPC has confirmed
+ * the mission actually closed, so a lost race can never bank points.
+ *
+ * `points` is the whole progression: N for an errand (one per signature), 1 for
+ * a riddle or either side of a co-op.
+ */
+export async function recordMissionCompletion({
+  userId,
+  house,
+  missionType,
+  missionId = null,
+  role = 'lead',
+  points = 1,
+}) {
+  const { data, error } = await supabase
+    .from('mission_log')
+    .insert([
+      {
+        discord_user_id: userId,
+        house,
+        mission_type: missionType,
+        mission_id: missionId,
+        role,
+        points,
+      },
+    ])
+    .select();
+
+  if (error) {
+    console.error('Error recording mission completion:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/**
+ * The dossier's numbers: `points` is SUM(points) and drives the rank, `filed`
+ * is the raw row count, `byHouse` is the per-house point tally behind the bars.
+ *
+ * Summed in JS rather than with a GROUP BY: PostgREST cannot aggregate without
+ * a view or an RPC, and a single player's mission_log is a handful of rows on
+ * an indexed read.
+ */
+export async function getMissionLogStats(userId) {
+  const { data, error } = await supabase
+    .from('mission_log')
+    .select('*')
+    .eq('discord_user_id', userId);
+
+  if (error) {
+    console.error('Error fetching mission log stats:', error);
+    throw error;
+  }
+
+  const rows = data || [];
+  const byHouse = {};
+  let points = 0;
+  let banked = 0;
+  const latestByHouse = {};
+
+  for (const row of rows) {
+    const value = row.points ?? 1;
+    points += value;
+    byHouse[row.house] = (byHouse[row.house] || 0) + value;
+    // The unspent reward balance falls out of the rows the dossier is already
+    // reading, so /house never queries for it separately.
+    if (row.reset_spent_at == null) banked += 1;
+    const at = row.completed_at ? new Date(row.completed_at).getTime() : 0;
+    if (!(row.house in latestByHouse) || at > latestByHouse[row.house]) {
+      latestByHouse[row.house] = at;
+    }
+  }
+
+  return { points, filed: rows.length, byHouse, latestByHouse, banked };
+}
+
+/**
+ * BANKED COOLDOWN RESETS
+ *
+ * A finished mission grants one, and there is already exactly one mission_log
+ * row per completion — so the credit IS that row, unspent while
+ * reset_spent_at IS NULL. No separate credits table, and the audit trail of
+ * which mission paid for which cleared cooldown comes free.
+ *
+ * The player spends it from a button that only appears when /roam or /meet
+ * actually turns them away, so finishing a mission four minutes before the
+ * cooldown lapsed costs them nothing.
+ */
+
+/**
+ * Spend one, if the command really is on cooldown and the user really has one.
+ * Returns 'roam' | 'meet' | 'both' (what was cleared), 'none', or 'not_needed'.
+ *
+ * Every guard lives inside the RPC, which is the only way a stale button on an
+ * old ephemeral can't quietly burn a reward — see migration 017.
+ */
+export async function spendCooldownReset(userId, command, cooldownSeconds) {
+  const { data, error } = await supabase.rpc('spend_cooldown_reset', {
+    p_user_id: userId,
+    p_command: command,
+    p_cooldown_seconds: cooldownSeconds,
+  });
+
+  if (error) {
+    console.error('Error spending cooldown reset:', error);
+    throw error;
+  }
+
+  return data;
+}
+
+/**
+ * How many unspent resets this user holds. Read on the cooldown-blocked path of
+ * /roam and /meet — a path that was already turning the user away, so a normal
+ * command pays nothing for it. The dossier gets the same number out of
+ * getMissionLogStats without a second query.
+ */
+export async function countCooldownResets(userId) {
+  const { data, error } = await supabase
+    .from('mission_log')
+    .select('*')
+    .eq('discord_user_id', userId)
+    .is('reset_spent_at', null);
+
+  if (error) {
+    console.error('Error counting cooldown resets:', error);
+    throw error;
+  }
+
+  return (data || []).length;
+}
+
 export default supabase;

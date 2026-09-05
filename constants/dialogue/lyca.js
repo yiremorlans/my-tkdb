@@ -8,33 +8,33 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        '**{firstName}**: "is this you"\n\n"the blond gigolo put your name in the thingy for me. i pressed it four times. sorry if it went four times"',
-        '*A voice note arrives instead of a message. He sounds like he is walking.*\n\n"You smell the same every time. Did you know that? Most people change: angry in the morning, tired at night, scared when the moth-eaten Casanova walks past. All different smells, all day."\n\n"You\'ve come {timesMet} times and it hasn\'t changed once. Nobody does that."\n\n"I don\'t know what it means yet. I wanted to say it out loud though."',
+        "**{firstName}**: is this you\n\nthe blond gigolo put your name in the thingy for me. i pressed it four times. sorry if it went four times",
+        "*A voice note arrives instead of a message. He sounds like he is walking.*\n\n> You smell the same every time. Did you know that? Most people change: angry in the morning, tired at night, scared when the moth-eaten Casanova walks past. All different smells, all day.\n\n> You've come {timesMet} times and it hasn't changed once. Nobody does that.\n\n> I don't know what it means yet. I wanted to say it out loud though.",
       ],
       choice: {
         prompt:
-          '"Is that a rude thing to say? The blond gigolo says half the things I say are rude."',
+          "Is that a rude thing to say? The blond gigolo says half the things I say are rude.",
         options: [
           {
             key: "kind",
             label: "Say it's not rude at all",
             style: 3,
             close:
-              '"Good."\n\n*A pause on the recording. Then, quieter:*\n\n"...I\'ll say it again then. You smell the same. I like it. That\'s the whole thing I wanted to say."',
+              "> Good.\n\n*A pause on the recording. Then, quieter:*\n\n> ...I'll say it again then. You smell the same. I like it. That's the whole thing I wanted to say.",
           },
           {
             key: "playful",
             label: "Ask what you smell of",
             style: 1,
             close:
-              '"Cold outside and paper and the soap in the west block."\n\n*He says it instantly, with no hesitation whatsoever.*\n\n"...That was too fast, wasn\'t it. The blond gigolo says when I know things too fast it makes people do the face. Did you do the face?"',
+              "> Cold outside and paper and the soap in the west block.\n\n*He says it instantly, with no hesitation whatsoever.*\n\n> ...That was too fast, wasn't it. The blond gigolo says when I know things too fast it makes people go quiet and step back. Did you go quiet?",
           },
           {
             key: "bold",
             label: "Ask him to walk with you",
             style: 4,
             close:
-              '*The recording stops. A new one starts about ten seconds later and he is very obviously somewhere else and moving faster.*\n\n"Yes. Now? Tomorrow. Both. Walking\'s the best one. You can be next to someone for ages and nobody has to do talking."\n\n"That\'s my favorite thing. I\'ve never had anyone to do it with."',
+              "*The recording stops. A new one starts about ten seconds later and he is very obviously somewhere else and moving faster.*\n\n> Yes. Now? Tomorrow. Both. Walking's the best one. You can be next to someone for ages and nobody has to do talking.\n\n> That's my favorite thing. I've never had anyone to do it with.",
           },
         ],
       },
@@ -46,32 +46,32 @@ export default {
 
     friend: {
       beats: [
-        '**{firstName}**: "i have a question. i wrote it down first so i get it right"',
-        '"You give me {favResponse} every time. Even when I got the words wrong. Even the time I said the bad thing about the moth-eaten Casanova in front of the blond gigolo."\n\n"People do a thing when I get words wrong. They go slow. Like this: they... talk... like... that. And they smile more. It\'s supposed to be nice and it smells like sorry."\n\n"You just carry on normal. You\'ve never once gone slow at me."',
+        "**{firstName}**: i have a question. i wrote it down first so i get it right",
+        "> You give me {favResponse} every time. Even when I got the words wrong. Even the time I said the bad thing about the moth-eaten Casanova in front of the blond gigolo.\n\n> People do a thing when I get words wrong. They go slow. Like this: they... talk... like... that. And they smile more. It's supposed to be nice and it smells like sorry.\n\n> You just carry on normal. You've never once gone slow at me.",
       ],
       choice: {
-        prompt: '"Why don\'t you go slow? Everyone goes slow."',
+        prompt: "Why don't you go slow? Everyone goes slow.",
         options: [
           {
             key: "kind",
             label: "Say you don't need to",
             style: 3,
             close:
-              "*There's a long pause on the voice note.*\n\n\"...Say that again into the thingy so I can keep it.\"\n\n*You do. He plays it back eleven times over the next week. He tells you that, too, because it doesn't occur to him not to.*",
+              "*There's a long pause on the voice note.*\n\n> ...Say that again into the thingy so I can keep it.\n\n*You do. He plays it back eleven times over the next week. He tells you that, too, because it doesn't occur to him not to.*",
           },
           {
             key: "playful",
             label: "Go very slow at him",
             style: 1,
             close:
-              '"Stop it. STOP IT."\n\n*He is laughing, which is rare and extremely loud.*\n\n"That\'s the worst. That\'s the actual worst. Do it again."',
+              "> Stop it. STOP IT.\n\n*He is laughing, which is rare and extremely loud.*\n\n> That's the worst. That's the actual worst. Do it again.",
           },
           {
             key: "bold",
             label: "Say his words aren't wrong",
             style: 4,
             close:
-              "\"They are though. I know they are. I can hear it after.\"\n\n*A pause.*\n\n\"...But you never do the face. So maybe they're wrong and it's fine. I hadn't thought about wrong and fine at the same time before. That's new.\"",
+              "> They are though. I know they are. I can hear it after.\n\n> ...But you never go slow. So maybe they're wrong and it's fine. I hadn't thought about wrong and fine at the same time before. That's new.",
           },
         ],
       },
@@ -83,33 +83,33 @@ export default {
 
     closeFriend: {
       beats: [
-        '**{firstName}**: "come to my room. bring nothing. dont bring the blond gigolo"',
-        "*The room is bare except for a bed and, folded on the end of it, a blanket that is filthy, threadbare, and clearly ancient. He is standing between you and it, which he does not seem to have decided to do.*\n\n\"That's mine. It's from before. Before the campus, before the cage, before any of it.\"",
-        "\"The blond gigolo washed it once. Two years ago. He was being kind and it took the smell out and I didn't talk to him for six days.\"\n\n*He moves out of the way, which takes him a visible amount of effort.*\n\n\"You can touch it. Not take it. Touch it.\"\n\n\"I've never let anyone. That's what I'm doing right now, I want you to know that's what I'm doing.\"",
+        "**{firstName}**: come to my room. bring nothing. dont bring the blond gigolo",
+        "*The room is bare except for a bed and, folded on the end of it, a blanket that is filthy, threadbare, and clearly ancient. He is standing between you and it, which he does not seem to have decided to do.*\n\n> That's mine. It's from before. Before the campus, before the cage, before any of it.",
+        "> The blond gigolo washed it once. Two years ago. He was being kind and it took the smell out and I didn't talk to him for six days.\n\n*He moves out of the way, which takes him a visible amount of effort.*\n\n> You can touch it. Not take it. Touch it.\n\n> I've never let anyone. That's what I'm doing right now, I want you to know that's what I'm doing.",
       ],
       choice: {
-        prompt: "\"Go on. I'll be fine. I've decided I'll be fine.\"",
+        prompt: "Go on. I'll be fine. I've decided I'll be fine.",
         options: [
           {
             key: "kind",
             label: "Touch it and say nothing",
             style: 3,
             close:
-              '*He watches your hand the entire time without breathing much.*\n\n*When you take it away he sits down on the floor rather suddenly.*\n\n"...It smells like you now," *he says, and then, before you can apologize:* "No. Good. That\'s good. That\'s the good one. Leave it."',
+              "*He watches your hand the entire time without breathing much.*\n\n*When you take it away he sits down on the floor rather suddenly.*\n\n> ...It smells like you now,\n\n*he says, and then, before you can apologize:*\n\n> No. Good. That's good. That's the good one. Leave it.",
           },
           {
             key: "playful",
             label: "Say it needs a wash",
             style: 1,
             close:
-              '"DON\'T."\n\n*Then, after a second:* "...that was a joke. That was a joke and I did the shouting anyway."\n\n"Do it again. I want to practice it being a joke."',
+              "> DON'T.\n\n*Then, after a second:*\n\n> ...that was a joke. That was a joke and I did the shouting anyway.\n\n> Do it again. I want to practice it being a joke.",
           },
           {
             key: "bold",
             label: "Ask what's from before",
             style: 4,
             close:
-              "*He is quiet for a long time.*\n\n\"A person. A human one. She had a house and there was a fire in it, the good kind, in the wall.\"\n\n\"That's all I've got left of her, and I don't know her name, and I've never said any of that out loud before because saying it makes it a real thing that's gone.\"\n\n*He leans against your side on the floor, all his weight, and stays there.*",
+              "*He is quiet for a long time.*\n\n> A person. A human one. She had a house and there was a fire in it, the good kind, in the wall.\n\n> That's all I've got left of her, and I don't know her name, and I've never said any of that out loud before because saying it makes it a real thing that's gone.\n\n*He leans against your side on the floor, all his weight, and stays there.*",
           },
         ],
       },
@@ -121,34 +121,34 @@ export default {
 
     confidant: {
       beats: [
-        "*It comes at four in the morning and it is a voice note, not a message.*\n\n**{firstName}**: \"it's the moon week. i'm in the far room. i'm not coming out.\"",
-        "\"The blond gigolo locks it. I ask him to. That's the arrangement. I ask, he locks, he doesn't say anything about it after.\"\n\n\"It's not scary in here. Everyone thinks it's scary. It's just very long.\"",
-        "*There's a rustling, and then he says something he has clearly been building up to.*\n\n\"I want to show you my arms after. Not now. After, when it's over.\"\n\n\"They're all bites. All of them are mine. I did all of them. When it gets bad I have to put it somewhere and the somewhere is me, because the other option is a person.\"\n\n\"Nobody's seen them on purpose. The blond gigolo's seen them because he's the one with the key. That's different.\"",
+        "*It comes at four in the morning and it is a voice note, not a message.*\n\n**{firstName}**: It's the moon week. I'm in the far room. I'm not coming out.",
+        "> The blond gigolo locks it. I ask him to. That's the arrangement. I ask, he locks, he doesn't say anything about it after.\n\n> It's not scary in here. Everyone thinks it's scary. It's just very long.",
+        "*There's a rustling, and then he says something he has clearly been building up to.*\n\n> I want to show you my arms after. Not now. After, when it's over.\n\n> They're all bites. All of them are mine. I did all of them. When it gets bad I have to put it somewhere and the somewhere is me, because the other option is a person.\n\n> Nobody's seen them on purpose. The blond gigolo's seen them because he's the one with the key. That's different.",
       ],
       choice: {
         prompt:
-          '"Is that all right? You can say no and I\'ll never bring it up."',
+          "Is that all right? You can say no and I'll never bring it up.",
         options: [
           {
             key: "kind",
             label: "Say you'll be there after",
             style: 3,
             close:
-              '*There is a very long silence on the recording.*\n\n"...Okay. Okay. Six days."\n\n*He counts them out loud to you every single night. On the seventh he pushes both sleeves up without a word, and lets you look, and does not once say anything about it.*',
+              "*There is a very long silence on the recording.*\n\n> ...Okay. Okay. Six days.\n\n*He counts them out loud to you every single night. On the seventh he pushes both sleeves up without a word, and lets you look, and does not once say anything about it.*",
           },
           {
             key: "playful",
             label: "Ask what he does in there",
             style: 1,
             close:
-              '"Sleep. Pace. Count things."\n\n*A pause.*\n\n"I count how many times you\'ve come. That\'s a thing I do in here. It\'s better than the other counting."',
+              "> Sleep. Pace. Count things.\n\n> I count how many times you've come. That's a thing I do in here. It's better than the other counting.",
           },
           {
             key: "bold",
             label: "Ask to sit outside the door",
             style: 4,
             close:
-              '"No. NO."\n\n*Then, immediately, much smaller:* "...sorry. Sorry. That was the loud one."\n\n"You can\'t be near the door. That\'s the whole point of the door."\n\n*A long gap.*\n\n"You could talk into the thingy though. From your room. I could have it next to me. That\'s not near."\n\n*You talk into it every night for six nights. He keeps all of them.*',
+              "> No. NO.\n\n*Then, immediately, much smaller:*\n\n> ...sorry. Sorry. That was the loud one.\n\n> You can't be near the door. That's the whole point of the door.\n\n*A long gap.*\n\n> You could talk into the thingy though. From your room. I could have it next to me. That's not near.\n\n*You talk into it every night for six nights. He keeps all of them.*",
           },
         ],
       },
@@ -160,33 +160,33 @@ export default {
 
     devoted: {
       beats: [
-        '**{firstName}**: "i did a bad thing and im telling you before the blond gigolo does"',
-        '"There was a person near you in the courtyard and I got between. I didn\'t decide to. I was there and then I was there, and there wasn\'t any bit in the middle where I picked."\n\n"I growled. Out loud. At a student. In front of everyone."',
-        "\"They put me in a cage for two years for that. Not that exact thing. That sort of thing.\"\n\n\"Suba had to come. He talked to them for an hour and now it's fine and nothing happens. But it was two years, before, for less.\"\n\n\"And I've been sitting here since and the bad part isn't the cage. The bad part is I'd do it again and I know I would, so I've been trying to be sorry and it won't come.\"",
+        "**{firstName}**: i did a bad thing and im telling you before the blond gigolo does",
+        "> There was a person near you in the courtyard and I got between. I didn't decide to. I was there and then I was there, and there wasn't any bit in the middle where I picked.\n\n> I growled. Out loud. At a student. In front of everyone.",
+        "> They put me in a cage for two years for that. Not that exact thing. That sort of thing.\n\n> Suba had to come. He talked to them for an hour and now it's fine and nothing happens. But it was two years, before, for less.\n\n> And I've been sitting here since and the bad part isn't the cage. The bad part is I'd do it again and I know I would, so I've been trying to be sorry and it won't come.",
       ],
       choice: {
-        prompt: '"Tell me to be sorry. If you say it I might manage it."',
+        prompt: "Tell me to be sorry. If you say it I might manage it.",
         options: [
           {
             key: "kind",
             label: "Say you're not asking that",
             style: 3,
             close:
-              "\"...Then what do I do with it.\"\n\n*A pause.*\n\n\"Can I come and sit next to you. That's what I want to do. I've wanted to do that for two hours and I didn't know if it was allowed after growling.\"\n\n*He sits on the floor by your chair with his head against your knee for most of the night and doesn't say another word.*",
+              "> ...Then what do I do with it.\n\n> Can I come and sit next to you. That's what I want to do. I've wanted to do that for two hours and I didn't know if it was allowed after growling.\n\n*He sits on the floor by your chair with his head against your knee for most of the night and doesn't say another word.*",
           },
           {
             key: "playful",
             label: "Ask if it was a good growl",
             style: 1,
             close:
-              '"It was a really good one."\n\n*He says it before he can stop himself, and then:* "...that\'s not the right answer, is it. The blond gigolo would do a face."\n\n"It was a really good one though."',
+              "> It was a really good one.\n\n*He says it before he can stop himself, and then:*\n\n> ...that's not the right answer, is it. The blond gigolo would tell me off for that.\n\n> It was a really good one though.",
           },
           {
             key: "bold",
             label: "Tell him you'd do it too",
             style: 4,
             close:
-              "*There's no reply for a while. When it comes it's a voice note and he's much closer to the microphone than usual.*\n\n\"Say that once more.\"\n\n*You do.*\n\n\"...Okay. Then I'm not sorry and I'm not going to try to be, and it's fine, because there's two of us.\"",
+              "*There's no reply for a while. When it comes it's a voice note and he's much closer to the microphone than usual.*\n\n> Say that once more.\n\n*You do.*\n\n> ...Okay. Then I'm not sorry and I'm not going to try to be, and it's fine, because there's two of us.",
           },
         ],
       },
@@ -198,28 +198,28 @@ export default {
 
     soulbound: {
       beats: [
-        '**{firstName}**: "ive been practicing this all week. im going to do it in the thingy because the writing is too hard for this one"',
-        '"{timesMet} times. I counted every one, even the ones in the far room where I couldn\'t see you."\n\n"I asked the blond gigolo how to say a thing and he asked what thing and I wouldn\'t tell him, and he laughed, and then he stopped laughing and helped me for two hours."',
-        '"Here\'s what I know about me. I hold on too hard. I go in front of people without picking. I bite my own arms so I don\'t bite anything else. I can\'t read most signs and I never will properly."\n\n"I was in a cage for two years and everyone here was kind about it and nobody ever asked me what it was like. You asked. On the third walk. You just asked, like it was a normal thing to ask about."',
-        "*There is a long pause on the recording, and a deep breath.*\n\n\"I love you. That's the thing. That's the one I was practicing.\"\n\n\"The blond gigolo says you say it and then you stop and let the other person have a go. So I'm going to stop now.\"\n\n*The recording doesn't end. He just breathes, and waits, for eleven whole seconds before it cuts out.*",
+        "**{firstName}**: ive been practicing this all week. im going to do it in the thingy because the writing is too hard for this one",
+        "> {timesMet} times. I counted every one, even the ones in the far room where I couldn't see you.\n\n> I asked the blond gigolo how to say a thing and he asked what thing and I wouldn't tell him, and he laughed, and then he stopped laughing and helped me for two hours.",
+        "> Here's what I know about me. I hold on too hard. I go in front of people without picking. I bite my own arms so I don't bite anything else. I can't read most signs and I never will properly.\n\n> I was in a cage for two years and everyone here was kind about it and nobody ever asked me what it was like. You asked. On the third walk. You just asked, like it was a normal thing to ask about.",
+        "*There is a long pause on the recording, and a deep breath.*\n\n> I love you. That's the thing. That's the one I was practicing.\n\n> The blond gigolo says you say it and then you stop and let the other person have a go. So I'm going to stop now.\n\n*The recording doesn't end. He just breathes, and waits, for eleven whole seconds before it cuts out.*",
       ],
       choice: {
         prompt:
-          '"That\'s me stopped. The blond gigolo says this is the bit where I wait."',
+          "That's me stopped. The blond gigolo says this is the bit where I wait.",
         options: [
           {
             key: "answered",
             label: "Say it back",
             style: 3,
             close:
-              '*He does not send anything at all.*\n\n*He is outside your door in four minutes, having plainly run the whole way, and he does not say a word. He just puts his forehead against your shoulder the way he does and stands there breathing you in, both hands fisted in the back of your coat.*\n\n"Say it in the thingy after," *he says eventually, into your collar.* "So I\'ve got it for the moon week."',
+              "*He does not send anything at all.*\n\n*He is outside your door in four minutes, having plainly run the whole way, and he does not say a word. He just puts his forehead against your shoulder the way he does and stands there breathing you in, both hands fisted in the back of your coat.*\n\n> Say it in the thingy after,\n\n*he says eventually, into your collar.*\n\n> So I've got it for the moon week.",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
             close:
-              '"Okay."\n\n*No argument. No wheedling. Just:* "Okay. The blond gigolo said that might happen and he told me what to do, and what to do is say okay and mean it."\n\n"Walks are still walks. That\'s not a swap for anything, that\'s just the best bit of the week and it was the best bit before I said the thing."\n\n*A pause.*\n\n"And you can still touch the blanket. That doesn\'t undo. That one\'s forever whatever you say."',
+              "> Okay.\n\n*No argument. No wheedling. Just:*\n\n> Okay. The blond gigolo said that might happen and he told me what to do, and what to do is say okay and mean it.\n\n> Walks are still walks. That's not a swap for anything, that's just the best bit of the week and it was the best bit before I said the thing.\n\n> And you can still touch the blanket. That doesn't undo. That one's forever whatever you say.",
           },
         ],
       },

@@ -8,7 +8,6 @@ import {
   getRandomGeneralBackground,
   getLocationDisplayName,
   weightedBackgrounds,
-  HOUSES,
   SPECIAL_BACKGROUNDS,
 } from './constants/backgrounds.js';
 import {
@@ -43,10 +42,12 @@ import { recordResponse } from './storage.js';
 // creates/updates the row, atomically, via getOrCreateRelationship.
 import {
   consumeAllEncounterBoosts,
+  getActiveErrandBoost,
   getEncounterMilestoneCounts,
   getLatestEncounterMilestone,
   getRelationship as readRelationship,
   getUserRelationships,
+  signErrandTarget,
 } from './db/supabase.js';
 import {
   ENCOUNTER_BOOST_GAIN,
@@ -54,6 +55,7 @@ import {
   fillTemplate,
   getMilestone,
 } from './constants/publicEncounters.js';
+import { ERRAND_ROAM_TARGET_BIAS } from './constants/missions.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const CACHE_FILE = path.join(__dirname, '.roam-cache.json');
@@ -202,6 +204,31 @@ function disableComponents(rows) {
   }));
 }
 
+// --- errand targeting -------------------------------------------------------
+
+// A user holding a scheduled errand (docs/scheduled-missions.md §5) has to run
+// into N *specific* students inside 48h, against a shared 3-hour cooldown. At
+// 26 characters and a four-option picker that is close to hopeless unheld, so
+// their still-unsigned targets are boosted in their own /roam and /meet while
+// the errand is open.
+//
+// The boost changes only WHO appears. It never touches the cooldown, and it is
+// entirely per-user — each builder looks up the invoking user's own errand, so
+// nothing here is global state and nobody else's rolls move.
+//
+// Read failures degrade to "no boost" rather than failing the command: a
+// missions outage must not take /roam and /meet down with it.
+async function unsignedErrandTargets(userId) {
+  if (!userId) return [];
+  try {
+    const boost = await getActiveErrandBoost(userId);
+    return boost?.unsignedTargetIds || [];
+  } catch (err) {
+    console.error('Error reading errand boost:', err);
+    return [];
+  }
+}
+
 // --- /roam ---------------------------------------------------------------
 
 function generateEncounterId() {
@@ -267,7 +294,15 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
   // weighted however the flavor wants (TURF_PROBABILITY, signature spots, the
   // evening _PM bias) without any of it bending who shows up.
   console.log('[buildRoamDialogueMessage] Picking character...');
-  const character = pickRandom(CHARACTERS);
+  // Uniform over the whole roster, unless this user is holding an errand — see
+  // unsignedErrandTargets. ERRAND_ROAM_TARGET_BIAS of the time the roll is
+  // steered to somebody they still need; the rest of the time it is the same
+  // 1/CHARACTERS.length draw as always, so /roam still surprises them.
+  const errandTargets = await unsignedErrandTargets(userId);
+  const character =
+    errandTargets.length && Math.random() < ERRAND_ROAM_TARGET_BIAS
+      ? getCharacterById(pickRandom(errandTargets)) || pickRandom(CHARACTERS)
+      : pickRandom(CHARACTERS);
 
   const spot = selectRoamSpot(character, now);
   if (!spot) {
@@ -362,8 +397,35 @@ export async function buildRoamSpawnMessage(encounterId) {
 
 // --- /meet -----------------------------------------------------------------
 
-export function buildMeetPickMessage(candidates = null, disabled = false) {
-  const chars = candidates || pickRandomDistinct(CHARACTERS, MEET_OPTION_COUNT);
+/**
+ * The /meet picker. `userId` is only used to look up an active errand: its
+ * still-unsigned targets take guaranteed slots in the list, and the remaining
+ * slots fill at random as before. Four unsigned targets means every slot is a
+ * target; one means one slot is.
+ *
+ * The seeded targets are shuffled in with the rest so their position never
+ * telegraphs which of the four is the one the mission wants.
+ *
+ * `candidates` bypasses all of it (tests, and the disabled re-render).
+ */
+export async function buildMeetPickMessage(userId = null, candidates = null, disabled = false) {
+  let chars = candidates;
+
+  if (!chars) {
+    const targets = (await unsignedErrandTargets(userId))
+      .map((id) => getCharacterById(id))
+      .filter(Boolean)
+      .slice(0, MEET_OPTION_COUNT);
+
+    const seededIds = new Set(targets.map((character) => character.id));
+    const rest = pickRandomDistinct(
+      CHARACTERS.filter((character) => !seededIds.has(character.id)),
+      MEET_OPTION_COUNT - targets.length,
+    );
+
+    chars = pickRandomDistinct([...targets, ...rest], MEET_OPTION_COUNT);
+  }
+
   return {
     content: 'A few familiar faces catch your eye. Who do you want to meet?',
     components: [
@@ -474,8 +536,13 @@ export async function buildResponseResultMessage(
     deltaLine += `  ·  *${await describeBoost(userId, character, boostsSpent)}*`;
   }
 
+  // The one point where a "meeting" becomes real is also the point an errand
+  // signature is earned (docs/scheduled-missions.md §5). A /roam that happened
+  // to surface a target counts exactly as much as a deliberate /meet.
+  const signatureLine = await maybeSignErrandTarget(userId, characterId);
+
   return {
-    content: `${reaction}\n${deltaLine}`,
+    content: [`${reaction}\n${deltaLine}`, signatureLine].filter(Boolean).join('\n'),
     components: disableComponents(shownComponents) || responseActionRow(characterId, true),
     flags: EPHEMERAL_FLAG,
     // Not part of the message — the crossing, for app.js to act on after the
@@ -486,6 +553,37 @@ export async function buildResponseResultMessage(
     // is always exactly one step above where they were.
     levelUp: leveledUp ? { characterId, levelName: level.name } : null,
   };
+}
+
+/**
+ * Sign this character off, if the user is holding an errand that still wants
+ * them. Returns the line to append to the response message, or null.
+ *
+ * Signatures flip here, silently and automatically, but the errand is NOT filed
+ * until the holder clicks Complete mission in `/docs` — the "return to base and
+ * do the paperwork" beat, and the reason the mission slot stays occupied until
+ * they do.
+ *
+ * Never throws: a mission-side failure must not cost the player the affinity
+ * they just earned, which is already written by this point.
+ */
+async function maybeSignErrandTarget(userId, characterId) {
+  try {
+    // One round trip, whether or not there is an errand behind this response —
+    // and for almost every response there isn't. The RPC resolves the user's
+    // held errand, checks this character is a still-unsigned target and flips
+    // it, all in the one conditional statement.
+    const progress = await signErrandTarget(userId, characterId);
+    if (!progress) return null;
+
+    const { signed, total } = progress;
+    return signed >= total
+      ? `📋 Signature collected — ${signed} / ${total}. File it with \`/docs\`.`
+      : `📋 Signature collected — ${signed} / ${total}.`;
+  } catch (err) {
+    console.error('Error signing errand target:', err);
+    return null;
+  }
 }
 
 // The bonus clause on a boosted response, naming the encounter moment it is
@@ -651,165 +749,6 @@ export async function buildAffinityMessage(userId, characterIds) {
     embeds,
     files: files.length > 0 ? files : undefined,
   };
-}
-
-// --- /house ---------------------------------------------------------------
-
-// How many emblem cards a tie can show at once. Discord allows 10 embeds, but
-// the emblems are the constraint, not the embed count — see buildHouseMessage.
-const MAX_HOUSE_EMBEDS = 3;
-
-// "A and B" / "A, B, and C" — houses are bolded to match the single-house line.
-function formatHouseList(houses) {
-  const bolded = houses.map((house) => `**${house}**`);
-  if (bolded.length === 2) return bolded.join(' and ');
-  return `${bolded.slice(0, -1).join(', ')}, and ${bolded[bolded.length - 1]}`;
-}
-
-const HOUSE_DESCRIPTIONS = {
-  [HOUSES.FROSTHEIM]: [
-    'A true Frostheim ally.',
-    'Cold as ice, loyal as steel.',
-    'Winter\'s favor rests upon you.',
-    'You\'ve earned the respect of Frostheim.',
-  ],
-  [HOUSES.VAGASTROM]: [
-    'A true Vagastrom ally.',
-    'You\'ve proven yourself in the pit.',
-    'The rebels stand with you.',
-    'Vagastrom\'s fury flows through your bonds.',
-  ],
-  [HOUSES.HOTARUBI]: [
-    'A true Hotarubi ally.',
-    'The shrine welcomes you.',
-    'Your spirit resonates with Hotarubi.',
-    'Blessed by the flames of Hotarubi.',
-  ],
-  [HOUSES.DIONYSIA]: [
-    'A true Dionysia ally.',
-    'You\'ve captured the hearts of Dionysia.',
-    'Dionysian spirits celebrate you.',
-    'In Dionysia\'s embrace, you belong.',
-  ],
-  [HOUSES.MORTKRANKEN]: [
-    'A true Mortkranken ally.',
-    'Death itself recognizes your bond.',
-    'The ghouls accept you as one of their own.',
-    'Mortkranken\'s darkness has claimed your heart.',
-  ],
-  [HOUSES.JABBERWOCK]: [
-    'A true Jabberwock ally.',
-    'The beasts have chosen you.',
-    'Wild and untamed, just like Jabberwock.',
-    'Jabberwock\'s primal nature calls to you.',
-  ],
-  [HOUSES.OBSCUARY]: [
-    'A true Obscuary ally.',
-    'Secrets bind you to Obscuary.',
-    'In shadow and whisper, you are home.',
-    'Obscuary\'s mysteries are yours to uncover.',
-  ],
-  [HOUSES.SINOSTRA]: [
-    'A true Sinostra ally.',
-    'Wealth and favor flow your way.',
-    'Sinostra\'s glamour shines upon you.',
-    'You\'ve won the game of Sinostra.',
-  ],
-};
-
-export async function buildHouseMessage(userId) {
-  try {
-    // Get all relationships for the user
-    const relationships = await getUserRelationships(userId);
-
-    if (!relationships || relationships.length === 0) {
-      return {
-        content: 'You haven\'t formed any bonds yet. Go out and meet people!',
-      };
-    }
-
-    // Group affinity by house
-    const houseAffinities = {};
-
-    for (const house of Object.values(HOUSES)) {
-      houseAffinities[house] = 0;
-    }
-
-    // Sum affinity by house
-    for (const relationship of relationships) {
-      const character = getCharacterById(relationship.character_id);
-      if (character && character.house) {
-        houseAffinities[character.house] += relationship.affinity || 0;
-      }
-    }
-
-    // Find the maximum affinity
-    const maxAffinity = Math.max(...Object.values(houseAffinities));
-
-    // Find all houses with max affinity
-    const topHouses = Object.entries(houseAffinities)
-      .filter(([_, affinity]) => affinity === maxAffinity && affinity > 0)
-      .map(([house, _]) => house);
-
-    // If no houses have any affinity, return a message
-    if (topHouses.length === 0 || maxAffinity === 0) {
-      return {
-        content: 'You haven\'t formed any bonds with any house yet.',
-      };
-    }
-
-    // Every tied house is named in the content, but only the first few get an
-    // emblem card — each emblem is a ~450KB attachment, so an 8-way tie would
-    // otherwise push a multi-megabyte multipart body for one command.
-    const shownHouses = topHouses.slice(0, MAX_HOUSE_EMBEDS);
-
-    // Build embeds for top houses
-    const embeds = [];
-    const files = [];
-
-    for (const house of shownHouses) {
-      const descriptions = HOUSE_DESCRIPTIONS[house] || [`A true ${house} ally.`];
-      const randomDescription = descriptions[Math.floor(Math.random() * descriptions.length)];
-      const emblemFilename = `${house}.png`;
-
-      let imageBuffer = null;
-      try {
-        imageBuffer = fs.readFileSync(path.join(__dirname, 'assets', 'emblem', emblemFilename));
-      } catch (err) {
-        console.error(`Error loading emblem for ${house}:`, err);
-      }
-
-      embeds.push({
-        title: house,
-        description: randomDescription,
-        image: imageBuffer ? { url: `attachment://${emblemFilename}` } : undefined,
-        color: 0x5865f2, // Discord blurple
-      });
-
-      if (imageBuffer) {
-        files.push({ attachment: imageBuffer, name: emblemFilename });
-      }
-    }
-
-    let content;
-    if (topHouses.length === 1) {
-      content = `Your heart belongs to **${topHouses[0]}**.`;
-    } else {
-      content = `You have equal bonds with ${formatHouseList(topHouses)}.`;
-      if (topHouses.length > shownHouses.length) {
-        content += `\nShowing the first ${shownHouses.length} emblems.`;
-      }
-    }
-
-    return {
-      content,
-      embeds,
-      files: files.length > 0 ? files : undefined,
-    };
-  } catch (err) {
-    console.error('Error in buildHouseMessage:', err);
-    throw err;
-  }
 }
 
 // --- /bonds --------------------------------------------------------------

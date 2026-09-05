@@ -158,3 +158,175 @@ export async function composeSilhouetteEncounter(bgFilename, charFilename, { rev
   console.log('[composeSilhouetteEncounter] Buffer created in', Date.now() - bufferStart, 'ms, size:', buffer.length);
   return buffer;
 }
+
+// --- errand field report (docs/scheduled-missions.md §5) ---------------------
+
+// The /docs sheet: one signature block per student the errand needs, with the
+// character's real signature art dropped onto the line once they've been met.
+// Purely a visual — the same roster is in the message text underneath, which is
+// what a client with images turned off reads, and what /docs falls back to on
+// its own if this throws.
+//
+// assets/signatures holds one 400x120 PNG per house character, named the way
+// avatars are: `FirstName_LastWord.png`.
+// 640 rather than 720: the signature art is 400px wide at source and is never
+// upscaled, so a wider sheet would only add blank paper and bytes.
+const REPORT_WIDTH = 640;
+const REPORT_PADDING = 44;
+const REPORT_HEADER_H = 132;
+const REPORT_ROW_H = 124;
+const REPORT_PAPER = '#f2ece0';
+const REPORT_INK = '#2b2620';
+
+/**
+ * The ink's bounding box within a signature PNG.
+ *
+ * The art is a uniform 400x120 canvas, but how much of it each signature
+ * actually fills varies a lot — "Jin K." occupies a fraction of the width that
+ * "Tohma Ishibashi" needs. Scaling the raw canvas therefore renders some
+ * signatures half the size of others for no reason the player can see. Fitting
+ * the *ink* instead makes every block look deliberate.
+ *
+ * Returns null for a fully transparent image, so the caller can skip it rather
+ * than divide by zero.
+ */
+function inkBounds(image) {
+  const probe = createCanvas(image.width, image.height);
+  const probeCtx = probe.getContext('2d');
+  probeCtx.drawImage(image, 0, 0);
+  const { data } = probeCtx.getImageData(0, 0, image.width, image.height);
+
+  let minX = image.width;
+  let minY = image.height;
+  let maxX = -1;
+  let maxY = -1;
+
+  for (let y = 0; y < image.height; y++) {
+    for (let x = 0; x < image.width; x++) {
+      // Alpha only: the ink is dark on transparent, and a low threshold keeps
+      // antialiased edges from being cropped off.
+      if (data[(y * image.width + x) * 4 + 3] > 8) {
+        if (x < minX) minX = x;
+        if (x > maxX) maxX = x;
+        if (y < minY) minY = y;
+        if (y > maxY) maxY = y;
+      }
+    }
+  }
+
+  if (maxX < 0) return null;
+  return { x: minX, y: minY, width: maxX - minX + 1, height: maxY - minY + 1 };
+}
+
+/**
+ * `rows` is `[{ name, file, signedAt }]` — `file` is a filename in
+ * assets/signatures, or null when that target hasn't signed yet. Kept as plain
+ * data rather than character objects so this module stays ignorant of the
+ * roster, the same way composeEncounter takes filenames.
+ */
+export async function composeFieldReport(house, rows) {
+  const height = REPORT_HEADER_H + rows.length * REPORT_ROW_H + REPORT_PADDING - 12;
+  const canvas = createCanvas(REPORT_WIDTH, height);
+  const ctx = canvas.getContext('2d');
+
+  // Paper, with a faint edge so it reads as a sheet rather than a background.
+  ctx.fillStyle = REPORT_PAPER;
+  ctx.fillRect(0, 0, REPORT_WIDTH, height);
+  ctx.strokeStyle = 'rgba(43, 38, 32, 0.18)';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(1, 1, REPORT_WIDTH - 2, height - 2);
+
+  ctx.textBaseline = 'top';
+
+  ctx.fillStyle = REPORT_INK;
+  ctx.font = `28px "${DIALOGUE_FONT_FAMILY}"`;
+  ctx.fillText('DARKWICK FIELD REPORT', REPORT_PADDING, REPORT_PADDING);
+
+  const signedCount = rows.filter((r) => r.signedAt).length;
+  ctx.font = `19px "${DIALOGUE_FONT_FAMILY}"`;
+  ctx.fillStyle = 'rgba(43, 38, 32, 0.6)';
+  ctx.fillText(
+    `${house}   ·   ${signedCount} of ${rows.length} signature${rows.length === 1 ? '' : 's'} collected`,
+    REPORT_PADDING,
+    REPORT_PADDING + 40,
+  );
+
+  ctx.strokeStyle = 'rgba(43, 38, 32, 0.3)';
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(REPORT_PADDING, REPORT_HEADER_H - 18);
+  ctx.lineTo(REPORT_WIDTH - REPORT_PADDING, REPORT_HEADER_H - 18);
+  ctx.stroke();
+
+  const lineLeft = REPORT_PADDING;
+  const lineRight = REPORT_WIDTH - REPORT_PADDING;
+
+  for (let i = 0; i < rows.length; i++) {
+    const row = rows[i];
+    const ruleY = REPORT_HEADER_H + i * REPORT_ROW_H + 84;
+
+    // The signature sits ON the rule, so it has to be drawn before it.
+    if (row.file) {
+      try {
+        const sig = await loadImage(join(__dirname, `assets/signatures/${row.file}`));
+        const ink = inkBounds(sig);
+        if (ink) {
+          const maxW = lineRight - lineLeft - 56;
+          const maxH = 74;
+          // Never past 1:1. Upscaling the art blurs the ink AND is most of what
+          // this PNG costs to send — smooth interpolated edges over a large
+          // area are exactly what PNG compresses worst, so a signature drawn
+          // above its native size is paid for twice.
+          const scale = Math.min(maxW / ink.width, maxH / ink.height, 1);
+          const w = ink.width * scale;
+          const h = ink.height * scale;
+          // Sitting slightly low so the ink crosses the rule, the way a real
+          // signature does rather than floating above it.
+          ctx.drawImage(sig, ink.x, ink.y, ink.width, ink.height, lineLeft + 24, ruleY - h + 10, w, h);
+        }
+      } catch (err) {
+        // A missing or unreadable file costs this row its flourish, not the
+        // whole report.
+        console.error(`[composeFieldReport] Could not load signature ${row.file}:`, err.message);
+        ctx.fillStyle = REPORT_INK;
+        ctx.font = `italic 26px "${DIALOGUE_FONT_FAMILY}"`;
+        ctx.fillText('signed', lineLeft + 24, ruleY - 36);
+      }
+    }
+
+    ctx.strokeStyle = 'rgba(43, 38, 32, 0.45)';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(lineLeft, ruleY);
+    ctx.lineTo(lineRight, ruleY);
+    ctx.stroke();
+
+    // Printed name under the line, the way a signature block prints it.
+    ctx.font = `19px "${DIALOGUE_FONT_FAMILY}"`;
+    ctx.fillStyle = row.signedAt ? 'rgba(43, 38, 32, 0.82)' : 'rgba(43, 38, 32, 0.42)';
+    ctx.fillText(row.name, lineLeft, ruleY + 10);
+
+    // Right-hand status: when it was signed, or what is still wanted.
+    ctx.textAlign = 'right';
+    if (row.signedAt) {
+      const when = new Date(row.signedAt);
+      ctx.fillStyle = 'rgba(43, 38, 32, 0.5)';
+      ctx.fillText(
+        Number.isNaN(when.getTime())
+          ? 'signed'
+          : when.toLocaleDateString('en-US', { month: 'short', day: 'numeric' }),
+        lineRight,
+        ruleY + 10,
+      );
+    } else {
+      ctx.fillStyle = 'rgba(43, 38, 32, 0.32)';
+      ctx.fillText('awaiting signature', lineRight, ruleY + 10);
+    }
+    ctx.textAlign = 'left';
+  }
+
+  // Level 9 over the default 6. The sheet is flat color and line art, so the
+  // extra effort is cheap and the result is a file Discord serves to every
+  // viewer of the ephemeral.
+  return canvas.toBuffer('image/png', { compressionLevel: 9 });
+}

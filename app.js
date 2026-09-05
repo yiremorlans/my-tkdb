@@ -8,7 +8,6 @@ import {
 import {
   buildAffinityMessage,
   buildBondsMessage,
-  buildHouseMessage,
   buildMeetPickMessage,
   buildMeetSpawnMessage,
   buildResponseResultMessage,
@@ -16,6 +15,19 @@ import {
   buildRoamSpawnMessage,
 } from './encounters.js';
 import { handleCall, handleEncountersAdmin, handleEncounterDev } from './publicEncounters.js';
+import {
+  buildDossierMessage,
+  cooldownReplyWithReset,
+  handleCooldownReset,
+  handleDocs,
+  handleMission,
+  handleMissionAccept,
+  handleMissionAssistJoin,
+  handleMissionDev,
+  handleMissionFile,
+  handleMissionsAdmin,
+  handleRiddle,
+} from './missions.js';
 import {
   buildBondJournal,
   deliverBondScene,
@@ -36,6 +48,7 @@ import {
   trackCharacterEngagement,
   trackCommandUsage,
 } from './db/supabase.js';
+import { RESET_SPENT_LINES } from './constants/missions.js';
 import { validateContent } from './constants/validateContent.js';
 import { startGateway } from './gateway.js';
 
@@ -187,12 +200,12 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       }
       const limit = await checkCommandLimit(userId, 'roam');
       if (!limit.allowed) {
+        // The one place a banked mission reward is offered: a button to spend
+        // it, attached only when the user is actually being turned away and
+        // actually has one (docs/scheduled-missions.md §13).
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: {
-            content: limit.reason,
-            flags: 64, // EPHEMERAL
-          },
+          data: await cooldownReplyWithReset(userId, 'roam', limit.reason),
         });
       }
       // Build and respond immediately (no await). User activity is only counted
@@ -237,18 +250,20 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       }
       const limit = await checkCommandLimit(userId, 'meet');
       if (!limit.allowed) {
+        // The one place a banked mission reward is offered: a button to spend
+        // it, attached only when the user is actually being turned away and
+        // actually has one (docs/scheduled-missions.md §13).
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: {
-            content: limit.reason,
-            flags: 64, // EPHEMERAL
-          },
+          data: await cooldownReplyWithReset(userId, 'meet', limit.reason),
         });
       }
       // User activity is only counted once a character actually loads (the
       // meet/pick button below), not for opening the picker.
       try {
-        const messageData = buildMeetPickMessage();
+        // userId, because an errand holder's still-unsigned targets take
+        // guaranteed slots in the pick list (docs/scheduled-missions.md §5).
+        const messageData = await buildMeetPickMessage(userId);
         res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: messageData,
@@ -321,12 +336,18 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     }
 
     if (name === 'house') {
-      // Same as /affinity: the emblem is an attachment, so ack then follow up.
-      res.send({ type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE });
+      // The Inspector dossier (docs/scheduled-missions.md §9). Same shape as
+      // /affinity: the emblem is an attachment, so ack then follow up.
+      // Ephemeral: it names the player's current mission's house and type,
+      // which /mission and /docs otherwise keep private to the accepter.
+      res.send({
+        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+        data: { flags: 64 }, // EPHEMERAL
+      });
 
       (async () => {
         try {
-          const messageData = await buildHouseMessage(userId);
+          const messageData = await buildDossierMessage(userId);
           await sendFollowup(req.body.token, messageData, 15000, true);
 
           // Track user activity and command usage
@@ -336,7 +357,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           console.error('Error in /house:', err);
           try {
             await sendFollowup(req.body.token, {
-              content: 'Something went wrong working out your house. Try again?',
+              content: 'Something went wrong pulling up your dossier. Try again?',
             }, 15000, true);
           } catch (followupErr) {
             console.error('Failed to send error followup:', followupErr);
@@ -475,9 +496,52 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       return;
     }
 
-    if (name === 'encdev') {
-      // Deferred + ephemeral: a manual spawn composes a silhouette and POSTs it
-      // to Discord, which can run past the 3s inline budget. The owner gets the
+    // /mission, /docs and /riddle all answer ephemerally and all do two or
+    // three sequential Supabase round trips before they can — and /mission
+    // assist adds a channel POST on top. Deferred for the same reason /call is:
+    // the 3s inline budget is not reliably enough, and the user seeing "the
+    // application did not respond" after a mission was already claimed would be
+    // the worst possible failure here.
+    if (name === 'mission' || name === 'docs' || name === 'riddle' || name === 'missions') {
+      res.send({
+        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+        data: { flags: 64 }, // EPHEMERAL
+      });
+
+      (async () => {
+        const handlers = {
+          mission: handleMission,
+          docs: handleDocs,
+          riddle: handleRiddle,
+          missions: handleMissionsAdmin,
+        };
+
+        let result;
+        try {
+          result = await handlers[name](req.body);
+        } catch (err) {
+          console.error(`Error in /${name}:`, err);
+          result = { reply: { content: 'Something went wrong there. Try again?' }, afterReply: null };
+        }
+
+        try {
+          // The defer already made this ephemeral — drop the redundant flag.
+          const { flags, ...body } = result.reply;
+          await sendFollowup(req.body.token, body, 15000, true);
+        } catch (followupErr) {
+          console.error(`Failed to send /${name} followup:`, followupErr);
+        }
+
+        // Runs regardless of the followup: the analytics and the setup check
+        // must not hinge on the user's ephemeral ack landing.
+        result.afterReply?.().catch(err => console.error(`Error in /${name} follow-up:`, err));
+      })();
+      return;
+    }
+
+    if (name === 'encdev' || name === 'missiondev') {
+      // Deferred + ephemeral: a manual spawn composes an image and POSTs it to
+      // Discord, which can run past the 3s inline budget. The owner gets the
       // outcome (or the reason it failed) as the followup.
       res.send({
         type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
@@ -487,15 +551,18 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       (async () => {
         let message;
         try {
-          message = await handleEncounterDev(req.body);
+          message =
+            name === 'encdev'
+              ? await handleEncounterDev(req.body)
+              : await handleMissionDev(req.body);
         } catch (err) {
-          console.error('Error in /encdev:', err);
+          console.error(`Error in /${name}:`, err);
           message = { content: 'Something went wrong there. Check the logs.' };
         }
         try {
           await sendFollowup(req.body.token, message, 15000, true);
         } catch (followupErr) {
-          console.error('Failed to send /encdev followup:', followupErr);
+          console.error(`Failed to send /${name} followup:`, followupErr);
         }
       })();
       return;
@@ -777,6 +844,115 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         { kind, characterId: charId, levelKey, arg },
         { sendFollowup: (messageData) => sendFollowup(req.body.token, messageData) },
       ).catch(err => console.error('Error in bond scene click:', err));
+      return;
+    }
+
+    if (action === 'mission') {
+      // mission:accept:<id>  — the public request's one button (§11)
+      // mission:file:<id>    — /docs' Complete mission
+      // mission:assist:<id>  — a second user backing up a co-op
+      //
+      // Answered inline rather than deferred: each is a single RPC round trip,
+      // and 'accept' has to reply with UPDATE_MESSAGE to rewrite the shared
+      // post, which a deferred ephemeral ack could not do.
+      //
+      // No user id in the custom_id — the interaction already carries the
+      // clicker, and every claim is decided by the RPC against that id.
+      const [kind, missionId] = rest;
+
+      // mission:reset:<roam|meet> — spend a banked cooldown reset. Handled
+      // apart from the three claim buttons because success here means dropping
+      // the caller straight into the command they were blocked on, and those
+      // builders live in encounters.js.
+      if (kind === 'reset') {
+        const command = missionId === 'meet' ? 'meet' : 'roam';
+
+        let result;
+        try {
+          result = await handleCooldownReset(req.body, command);
+        } catch (err) {
+          console.error('Error in mission:reset:', err);
+          result = {
+            refusal: {
+              type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+              data: { content: 'Something went wrong there. Try again?', flags: 64 },
+            },
+          };
+        }
+
+        // A refusal is a fresh ephemeral, so the "you're on cooldown" message
+        // and its button survive — nothing was spent, and the offer should
+        // still be there when it becomes worth taking.
+        if (result.refusal) return res.send(result.refusal);
+
+        // Spent. Replace that message in place with the command itself rather
+        // than making them run it again — the click already said what they
+        // wanted. Deferred because buildRoamDialogueMessage reads affinity and
+        // buildMeetPickMessage reads the user's errand, and the spend has
+        // already cost one round trip.
+        res.send({ type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE });
+
+        (async () => {
+          try {
+            const messageData = command === 'roam'
+              ? await buildRoamDialogueMessage(userId)
+              : await buildMeetPickMessage(userId);
+
+            // Say what was actually spent above the prompt. A 'both' reset
+            // clears the command they didn't ask about too, and they'd have no
+            // way to know that from a /roam prompt appearing on its own.
+            await sendFollowup(req.body.token, {
+              ...messageData,
+              content: `${RESET_SPENT_LINES[result.outcome]}\n\n${messageData.content ?? ''}`.trim(),
+            }, 15000, true);
+          } catch (err) {
+            // The reset is already spent and the cooldown really is clear, so
+            // the reward is not lost — say so, and let them run the command.
+            console.error('Error rendering after a cooldown reset:', err);
+            try {
+              await sendFollowup(req.body.token, {
+                content: `${RESET_SPENT_LINES[result.outcome]} Something went wrong opening it though — run \`/${command}\` again.`,
+                components: [],
+              }, 15000, true);
+            } catch (followupErr) {
+              console.error('Failed to send cooldown reset error followup:', followupErr);
+            }
+          }
+        })();
+        return;
+      }
+
+      const handlers = {
+        accept: handleMissionAccept,
+        file: handleMissionFile,
+        assist: handleMissionAssistJoin,
+      };
+
+      const handler = handlers[kind];
+      if (!handler) {
+        console.error(`unknown mission component: ${customId}`);
+        return res.status(400).json({ error: 'unknown component interaction' });
+      }
+
+      let result;
+      try {
+        result = await handler(req.body, missionId);
+      } catch (err) {
+        console.error(`Error in mission:${kind}:`, err);
+        result = {
+          response: {
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: { content: 'Something went wrong there. Try again?', flags: 64 },
+          },
+        };
+      }
+
+      res.send(result.response);
+
+      // The reward writes and the cooldown resets, after the click has been
+      // answered — a slow mission_log insert must never cost someone their
+      // "you picked it up" reply.
+      result.afterReply?.().catch(err => console.error(`Error in mission:${kind} follow-up:`, err));
       return;
     }
 

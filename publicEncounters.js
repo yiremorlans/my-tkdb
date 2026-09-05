@@ -26,7 +26,7 @@ import {
 } from './constants/publicEncounters.js';
 import {
   getCharacterById,
-  getCharacterImageUrl,
+  getCharacterCardUrl,
   getFullName,
 } from './constants/characters.js';
 import { bondLevelFromSlug, getDialogueTier, getRelationshipLevel } from './constants/game.js';
@@ -663,28 +663,28 @@ export async function handleCall(body, now = new Date()) {
     if (milestone) revealLines.push(fillTemplate(milestone.afterline, vars));
 
     // Discord rejects the whole edit (400 URL_TYPE_INVALID_URL) if the thumbnail
-    // isn't an absolute URL — which is what getCharacterImageUrl returns when
+    // isn't an absolute URL — which is what getCharacterCardUrl returns when
     // BASE_URL is unset. A missing BASE_URL is a deploy-config gap; it must not
     // cost the channel its entire reveal, so drop the thumbnail and keep the
-    // text when the URL isn't usable.
-    const thumbUrl = getCharacterImageUrl(character, encounter.variant);
+    // text when there's no usable URL.
+    const thumbUrl = getCharacterCardUrl(character);
     const embed = {
       description: revealLines.join('\n\n'),
       color: level.color,
     };
-    if (/^https?:\/\//i.test(thumbUrl)) {
+    if (thumbUrl && /^https?:\/\//i.test(thumbUrl)) {
       embed.thumbnail = { url: thumbUrl };
     } else {
       console.error(
-        `[publicEncounters] BASE_URL is unset or invalid — revealing encounter ${encounter.id} without a thumbnail (got "${thumbUrl}")`,
+        `[publicEncounters] No usable card URL — revealing encounter ${encounter.id} without a thumbnail (got "${thumbUrl}")`,
       );
     }
 
     try {
       // No file is composed or uploaded here: the spawn silhouette stays as the
       // message's image (omitting `attachments` leaves it alone) and the reveal
-      // rides in an embed beneath it, whose thumbnail is the /assets URL for
-      // the real art. The winner's mention lives in the embed's winner line;
+      // rides in an embed beneath it, whose thumbnail is the /assets/cards URL
+      // for the character card. The winner's mention lives in the winner line;
       // `content` is cleared so the reveal doesn't tag them a second time above
       // the post. A mention inside an embed renders but never pings, so the
       // public reveal no longer pings the winner — they still get the ephemeral

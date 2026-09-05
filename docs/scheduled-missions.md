@@ -1,11 +1,166 @@
 # Spec: Scheduled missions
 
-Status: **design / not implemented**
-Last updated: 2026-09-02
+Status: **built**
+Last updated: 2026-09-04
+
+> **As built.** Everything below is implemented. Where the code differs from
+> this document, the code is right and the difference is listed here:
+>
+> - **Migration is `016_create_missions.sql`**, not `011`, and it is the only
+>   one. Public encounters shipped first and took `010`; `011`-`015` went to
+>   encounter win stats, atomic command limits, the guild lock, atomic boosts
+>   and bond scenes.
+> - **Two tables, not four.** §10 specifies `missions`, `mission_signatures` and
+>   `mission_log`, and the banking change below originally added a fourth for
+>   credits. Both satellites are folded into their parents, because neither was
+>   ever read on its own — each was only fetched alongside the row it hangs off,
+>   so it cost a second round trip on every read path and bought nothing a
+>   column could not hold:
+>   - `mission_signatures` → **`missions.signatures`** JSONB,
+>     `{"<character_id>": null | "<timestamp>"}`. The key count is what
+>     `signatures_required` was, so the two can no longer disagree.
+>     `sign_errand_target()` still flips one entry in a single conditional
+>     `UPDATE`, so the concurrency story is unchanged.
+>   - the banked resets → **`mission_log.reset_spent_at`**. A completion grants
+>     exactly one reset and there is already exactly one log row per completion,
+>     so the credit IS the row, unspent while `reset_spent_at IS NULL`. Its
+>     scope is derived from `mission_type` rather than stored.
+>
+>   Measured effect: `/docs` and the `/mission` briefing are one round trip each
+>   rather than two, the dossier three rather than five, and the signature flip
+>   at the response step a constant one call whether or not the player has an
+>   errand at all.
+> - **`/mission assist` is `/mission assist:True`.** Discord makes a command
+>   with subcommands invocable *only* through them, and bare `/mission` — the
+>   briefing, which every instruction block points at — has to keep working. So
+>   `assist` is a boolean option, exactly as `dms` is on `/bonds` for the same
+>   reason. Every user-facing string says `assist:True`.
+> - **Mission post failures get their own counter and switch**
+>   (`guild_settings.mission_post_failures`, auto-disabling `missions_enabled`)
+>   rather than reusing encounters' `post_failures` / `enabled`. §16 said "reuse
+>   the encounter handling", but sharing the counter would let a broken mission
+>   channel silence public encounters that are posting fine.
+> - **`getCharactersByHouse` no longer exists.** It was removed from
+>   `constants/characters.js` before this feature was built (that file now only
+>   answers "where can this character be found", not the reverse). The house
+>   roster helper is `getHouseRoster(house)` in `constants/missions.js`, which
+>   is missions' only caller.
+> - **A public mission message is an embed, in the same shape as an encounter
+>   reveal** (`publicEncounters.js`): a description, the board's colour, and the
+>   messenger cat as a `thumbnail`. The cat is served from `/assets/sprites`
+>   rather than uploaded, so a request post and every edit to it carry no
+>   attachment payload at all. Two coats (`Messenger_Cat.png`,
+>   `Messenger_Cat_2.png`) alternate on the mission's BIGSERIAL `id`, so
+>   consecutive requests never arrive with the same cat and every edit to one
+>   post keeps the cat it was posted with. Never a house sprite or a house
+>   background, which would read as a tell about the withheld house. If
+>   `BASE_URL` is unset the thumbnail is dropped and the text still posts —
+>   the same fallback the encounter reveal uses.
+> - **`/docs` renders a composited field report.** §5 describes only the text
+>   checklist; the reply now also carries one signature block per target, with
+>   the character's real signature art from `assets/signatures/` dropped onto
+>   the line once they have been met, and the date beside it. All 25 house
+>   characters have art (Benkei has no house, so is never a target) — a test
+>   pins that, because a target with no art would render a blank line on an
+>   otherwise signed sheet and read as a bug.
+>
+>   Unlike the messenger cat this cannot be URL-served: the cat is one static
+>   file every viewer shares, so Discord fetches it once and caches it forever,
+>   while the sheet is per-player, per-mission state and has no static file to
+>   point at. The cost is bounded instead — the whole sheet is ONE attachment
+>   however many targets it has, signatures are never upscaled past 1:1 (which
+>   was most of the bytes: ~93 KB before, ~71 KB after), the sheet is only as
+>   tall as its target count, and a report with nothing signed yet is not
+>   composed at all, so a fresh errand costs no image payload until it has
+>   earned one. For scale, one `/roam` encounter image is ~527 KB. The text
+>   checklist is always in the message, so a failed compose costs the flourish
+>   and nothing else.
+> - **`/house` moved to `missions.js`** as `buildDossierMessage`, rather than
+>   being rewritten in place in `encounters.js`. The dossier is mission-shaped;
+>   `encounters.js` no longer has a `/house` section at all.
+> - **At most one request is posted per tick.** If two slots come due together
+>   after an outage, the second waits for the next tick rather than landing
+>   back-to-back in the channel.
+> - **Open questions in §19 are all still open** — nothing there was decided as
+>   part of building this. The one exception is that `/docs` kept its name.
+>
+> **Change after the first build (2026-09-05): cooldown resets are banked.**
+> §5, §6, §7 and §13 below all say a completed mission calls
+> `resetCommandLimit` and clears the clock on the spot. It no longer does.
+>
+> - Completing a mission leaves its `mission_log` row unspent
+>   (`reset_spent_at IS NULL`) and touches `command_limits` not at all.
+> - The player spends it from a **Use a cooldown reset** button that appears
+>   *only* on the "you're still on cooldown" reply to `/roam` or `/meet`, and
+>   only when they actually hold one. Clicking it clears the cooldown and drops
+>   them straight into the command they were blocked on.
+> - **Why:** clearing the clock at completion time quietly punished good
+>   timing. A player who solved a riddle with four minutes left on their
+>   cooldown got four minutes of value out of the same reward another player
+>   got three hours from, and nothing in the game told them to wait. Banking it
+>   makes the reward worth the same to everyone, and makes *when* to spend it a
+>   decision rather than an accident.
+> - **The co-op coin flip is gone.** §7 and §13 roll `roam` or `meet` once and
+>   apply it to both users. Banked, that produces a reset stamped `roam` that
+>   is worth nothing to someone who later wants `/meet` — the exact waste this
+>   change exists to prevent. A co-op now banks a `single`-scope reset for each
+>   user, and *which* command it clears is decided when they spend it. Solo
+>   missions bank a `both`-scope reset, so the "co-op is worth half a solo
+>   clear" gap in decision 4 is preserved.
+> - Nothing can be wasted by a mistimed click: `spend_cooldown_reset` refuses
+>   (keeping the credit) if that clock is already clear, and refuses if nothing
+>   is banked. `/house` shows how many the player is holding.
+> - A successful spend also drops the **in-memory invoke throttle**
+>   (`releaseCommandInvoke`) for every command it cleared. That throttle is a
+>   60s per-command debounce stamped at command-invoke, so the player is always
+>   inside it when they click — the stamp came from the very `/roam` or `/meet`
+>   that turned them away. Leaving it would refuse them the reward they just
+>   paid for. It only ever shortens the seconds-scale debounce, never the 3h
+>   reward cooldown, so it cannot buy a second reward; and it is bounded by
+>   having earned a reset to spend. A refusal (`none` / `not_needed`) spends
+>   nothing and leaves the throttle alone.
+> - The offer is **not** attached to the redemption-gate refusal at the
+>   dialogue-response step (`claimCommandUse` in the `resp` handler). That path
+>   means the player stacked prompts rather than waited, and the reward belongs
+>   at the command, not mid-flow.
+>
+> **Change after the first build (2026-09-05): 6 requests a day, 2 per player.**
+> §3 and §18 decision 1 say 3 slots a day. It is now **6**, with a new
+> **`DAILY_LEAD_CAP = 2`** enforced inside `claim_mission`.
+>
+> - **Why 6:** sized against roughly 20 active players. At 3/day the average
+>   player won one request a week, too scarce for a feature with four commands
+>   and a dossier behind it. At 6 it is one per three or four days, and still
+>   under half the ~13 encounter posts the same channel already gets each day.
+> - **7 is the ceiling** this slot algorithm supports. Each band is
+>   `WINDOW / N` wide and has to hold `MIN_GAP_MS`, so the re-roll starts
+>   hitting its fallback at 8 (2% of days), does so half the time at 9, and at
+>   10 the last slot spills past midnight on every roll. Going higher means
+>   lowering `MIN_GAP_MS`, not just the count. There is a test pinning this.
+> - **Why the cap:** count alone does nothing for distribution. The board is
+>   first-click-wins, so 6/day mostly hands more of it to the same always-online
+>   players, and "one held at a time" barely slows them when a riddle can be
+>   solved inside a minute. At 6/day with a cap of 2, at least three different
+>   players win something each day.
+> - It counts missions **accepted**, not completed. Accepting is what denies
+>   everyone else; a player who takes two and lets both lapse has still spent
+>   the server's requests and must not be handed a fresh attempt for failing.
+> - `'capped'` is reported ahead of `'busy:<type>'` when both apply: telling
+>   someone to go finish their current mission implies another is waiting for
+>   them afterwards, which at cap is false.
+> - **Banked resets are deliberately NOT capped.** §19's "per-day completion
+>   cap" question is answered on the *lead* side instead. A hold cap on resets
+>   would bind only on the one or two players who win most requests — and since
+>   those players earn up to 2/day, any cap low enough to matter would sit on
+>   them permanently and put them back on use-it-or-lose-it, which is the exact
+>   thing banking removed. Supply is the limiter: at 6 requests a day shared
+>   across ~20 players, the average player earns well under one reset a day. If
+>   a burst ever does need bounding, cap the **spend rate** (resets cashed per
+>   day) rather than the balance, so nothing earned is ever destroyed.
 
 Three times a day, at unpredictable-but-spread times, a scheduled job posts a
 public **mission request** into the same channel the public "call out"
-encounters use. The post has an attachment image, a rotating
+encounters use. The post is an embed carrying the messenger cat, a rotating
 Darkwick-Academy-flavored line ("Calling Inspector — a new mission request!",
 "Come to the Chancellor's office for a briefing!"), and one **Accept** button.
 The first user to click it "picks up" the mission: the button is disabled and
@@ -66,7 +221,7 @@ pull that shared infra into this feature's scope and renumber the migration to
 | Need | Already in place |
 |---|---|
 | Recurring scheduler | Long-lived Express process; the encounter tick loop |
-| Post an image + button, edit it later | `postChannelMessage` / `editChannelMessage` (public-encounters §11) |
+| Post an embed + button, edit it later | `postChannelMessage` / `editChannelMessage` (public-encounters §11) |
 | First-click arbitration + "max one held" | Supabase, atomic conditional `UPDATE` in an RPC + a **partial unique index** (§11) |
 | Reset a user's `/roam` + `/meet` cooldown | `resetCommandLimit(userId, command?)` in `commandLimits.js` already exists (`clearCommandLimit` in `db/supabase.js`) |
 | Riddle answer matching | `matchCharacterGuess` (public-encounters §7.1) |
@@ -96,7 +251,7 @@ scheduler tick (shared with encounters; every ~25s, per enabled guild):
 
   FINALIZE:
     ├─ missions WHERE status='open'      AND now() >= post_expires_at
-    │    └─ status='expired'; edit post → MISSION_WITHDRAWN_LINES entry, drop image, remove button
+    │    └─ status='expired'; edit post → MISSION_WITHDRAWN_LINES entry, drop embed, remove button
     └─ missions WHERE status='accepted'  AND now() >= accept_expires_at
          └─ status='expired' (slot frees via the partial index; no channel edit — the pickup post already moved on)
 
@@ -104,11 +259,11 @@ scheduler tick (shared with encounters; every ~25s, per enabled guild):
          with slot_time <= now():
     ├─ if slot_time is > STALE_SLOT_MINUTES late           → mark fired, skip (host was asleep)
     ├─ if guild already has a status='open' mission        → mark fired, skip (never two live requests)
-    ├─ roll house (uniform over 8) + type (riddle 55 / errand 20 / coop 25)
+    ├─ roll house (uniform over 8) + type (riddle 50 / errand 25 / coop 25)
     ├─ type='riddle' → pick a riddle from RIDDLES[house]
     ├─ type='errand' → signatures_required = randInt(1, getCharactersByHouse(house).length)
     ├─ INSERT missions row (status='open', post_expires_at = now + POST_TTL_HOURS)
-    ├─ compose/pick the attachment image, pick a MISSION_TEASERS line
+    ├─ pick a MISSION_TEASERS line, build the embed (cat alternates on mission id)
     ├─ POST to guild.mission_channel_id (or encounter_channel_id) with one Accept button
     │    → store message_id; on failure mark row 'expired', bump post_failures (reuse encounter handling)
     └─ mark slot i fired
@@ -122,7 +277,7 @@ Accept button  (custom_id: mission:accept:<id>)
 
 /mission            (ephemeral) → reveal house + type + objective + progress + always-on instructions (§8)
 /docs               (ephemeral) → errand only: roster + signature checklist + "Complete mission" button (§5)
-/riddle <answer>    (ephemeral) → riddle only: match, reward on correct, 60s cooldown on wrong (§6)
+/riddle <answer>    (ephemeral) → riddle only: match, reward on correct, 20s cooldown on wrong (§6)
 /mission assist      (public)   → coop only: post a "Join the mission" button in the channel (§7)
 ```
 
@@ -343,7 +498,7 @@ export const RIDDLES = {
   [HOUSES.HOTARUBI]: [
     { id: 'hotarubi_bell', answer: 'haru',
       prompt: 'A bell in the bamboo rings with no hand near it. The student who tends the shrine each dawn would know its voice. Name them.' },
-    // …several per house, keyed to that house's flavor
+    // …exactly two per student of that house, keyed to their own script
   ],
   [HOUSES.FROSTHEIM]: [ /* … */ ],
   // … all 8 houses
@@ -352,6 +507,8 @@ export const RIDDLES = {
 
 - `answer` is a character id; the mission stores `riddle_id` at spawn so two
   accepters who drew different missions face different riddles.
+- Every student gets exactly two, so a house's pool never collapses to one
+  known report; `test/missions.test.js` holds the count at two.
 - Non-character-answer riddles (buttons A/B/C, keyword) are a possible later
   variant; v1 is "name the student", matched by `matchCharacterGuess`.
 
@@ -359,12 +516,12 @@ export const RIDDLES = {
 
 1. No pending mission / not a riddle mission → redirect line (mirror `/docs`).
 2. In-memory wrong-guess cooldown (`Map<`${missionId}:${userId}`, epochMs>`,
-   `RIDDLE_WRONG_COOLDOWN_SECONDS = 60`). Within the window →
+   `RIDDLE_WRONG_COOLDOWN_SECONDS = 20`). Within the window →
    *"Give it a moment — try again in {n}s."*
 3. `matchCharacterGuess(input)`:
    - resolves to `riddle.answer` → **correct** (step 4)
    - resolves to a different character, or nothing → **wrong**: set the cooldown,
-     reply with a `RIDDLE_WRONG_LINES` entry. No hard attempt cap; the 60s gate
+     reply with a `RIDDLE_WRONG_LINES` entry. No hard attempt cap; the 20s gate
      is what stops brute-forcing 26 names, and the riddle dies with the mission
      (`accept_expires_at`).
 4. **Correct** — `complete_mission(missionId, userId, 'riddle')` RPC
@@ -453,9 +610,9 @@ Progress: {progress line}
 
 | Type | Progress line | Instruction block |
 |---|---|---|
-| errand | `2 / N signatures` | `Your targets are boosted in your /roam and /meet while this is open. Meet them, then check the sheet and file with /docs — 1 point per signature.` |
-| riddle | `unsolved` | `Answer with /riddle <your answer>. Solve it and your /roam and /meet cooldowns reset immediately.` |
-| coop | `waiting on a partner` / `partner post is live` | `Call a partner with /mission assist. The first inspector to back you up completes it for both of you.` |
+| errand | `2 / N signatures` | `Your targets are boosted in your /roam and /meet while this is open. Meet them, then check the sheet and file it with /docs. One house log per signature, plus a banked cooldown reset that clears both.` |
+| riddle | `unsolved` | `Answer with /riddle <your answer>. Solve it for one house log, plus a banked cooldown reset: spend it the next time /roam or /meet tells you to wait, and it clears both.` |
+| coop | `waiting on a partner` / `partner post is live` | `Call a partner with /mission assist. The first inspector to back you up completes it for both of you. One house log each, plus a banked cooldown reset good for one of /roam or /meet.` |
 
 The per-type "how you finish this" phrasing (`MISSION_NEXT_STEP`, §11.3) is the
 same string the `busy:<type>` Accept response uses, so a user who clicks Accept
@@ -473,8 +630,8 @@ emblem-attachment shape of `buildHouseMessage` (`encounters.js:581`,
 ```
 INSPECTOR DOSSIER — @user
 
-Rank: Senior Inspector          (17 pts · 11 missions filed)
-Next: Special Inspector at 25 pts
+Rank: Senior Inspector          (45 house logs · 11 missions filed)
+Next: Special Inspector at 90 house logs
 
 By house
 Frostheim   ███████░░░  7
@@ -491,14 +648,20 @@ Closest house (by affinity): Frostheim
   alongside, since an errand can be worth up to 4.
 
   ```js
-  export const INSPECTOR_RANKS = [   // thresholds are POINT totals
-    { min: 0,  name: 'Novice Inspector' },
-    { min: 3,  name: 'Field Inspector' },
-    { min: 10, name: 'Senior Inspector' },
-    { min: 25, name: 'Special Inspector' },
-    { min: 50, name: "Chancellor's Right Hand" },
+  export const INSPECTOR_RANKS = [   // thresholds are POINT (house log) totals
+    { min: 0,   name: 'Novice Inspector' },
+    { min: 15,  name: 'Field Inspector' },
+    { min: 40,  name: 'Senior Inspector' },
+    { min: 90,  name: 'Special Inspector' },
+    { min: 160, name: "Chancellor's Right Hand" },
   ];
   ```
+
+  Paced against `RELATIONSHIP_LEVELS` (constants/game.js): an average player
+  earns ~0.36 house logs/day (one accepted lead every 3-4 days at the current
+  type weights), so these clear in ~41 / ~110 / ~250 / ~440 days — roughly the
+  same order of magnitude as maxing affinity on one favorite character
+  (~67 days to Soulbound, always picking their best response).
 
 - **By house** from `SELECT house, SUM(points) FROM mission_log WHERE
   discord_user_id = $1 GROUP BY house`. Bar via `renderHeartBar`
@@ -838,12 +1001,12 @@ export const RIDDLE_WRONG_LINES = [
   'Not them. The anomaly persists.',
 ];
 
-export const INSPECTOR_RANKS = [   // thresholds are mission_log POINT totals (§9)
-  { min: 0,  name: 'Novice Inspector' },
-  { min: 3,  name: 'Field Inspector' },
-  { min: 10, name: 'Senior Inspector' },
-  { min: 25, name: 'Special Inspector' },
-  { min: 50, name: "Chancellor's Right Hand" },
+export const INSPECTOR_RANKS = [   // thresholds are mission_log POINT (house log) totals (§9)
+  { min: 0,   name: 'Novice Inspector' },
+  { min: 15,  name: 'Field Inspector' },
+  { min: 40,  name: 'Senior Inspector' },
+  { min: 90,  name: 'Special Inspector' },
+  { min: 160, name: "Chancellor's Right Hand" },
 ];
 
 // signatures_required roll (§5): randInt(1, getCharactersByHouse(house).length)
@@ -869,8 +1032,8 @@ admin-configurable.
 | `STALE_SLOT_MINUTES` | `90` | Skip a slot that comes due more than this late |
 | `POST_TTL_HOURS` | `6` | Unaccepted post → withdrawn |
 | `ACCEPT_WINDOW_HOURS` | `48` | Accepted-but-unfinished → expired, slot frees |
-| `RIDDLE_WRONG_COOLDOWN_SECONDS` | `60` | Gap between wrong `/riddle` guesses (in-memory) |
-| `WEIGHT_RIDDLE` / `WEIGHT_ERRAND` / `WEIGHT_COOP` | `55` / `20` / `25` | Type roll at spawn |
+| `RIDDLE_WRONG_COOLDOWN_SECONDS` | `20` | Gap between wrong `/riddle` guesses (in-memory) |
+| `WEIGHT_RIDDLE` / `WEIGHT_ERRAND` / `WEIGHT_COOP` | `50` / `25` / `25` | Type roll at spawn |
 | `ERRAND_ROAM_TARGET_BIAS` | `~0.5` | Chance a `/roam` by an errand holder is steered to a still-unsigned target instead of the normal roll |
 
 `DISCORD_TOKEN`, `APP_ID`, `SUPABASE_*`, `BASE_URL` already present; this feature
@@ -901,7 +1064,7 @@ adds nothing to `.env`.
 | Co-op: two helpers click together | `claim_coop_helper` row lock → one `'joined'`, one `'taken'` |
 | Co-op: helper already has their own accepted mission | Allowed — assisting doesn't consume a slot |
 | Co-op: nobody joins before expiry | Mission `expired`, slot frees; optional "moment passed" edit |
-| `/riddle` brute-forcing names | 60s cooldown per wrong guess; riddle dies at `accept_expires_at` |
+| `/riddle` brute-forcing names | 20s cooldown per wrong guess; riddle dies at `accept_expires_at` |
 | `/mission` / `/docs` / `/riddle` with no pending mission | Ephemeral guidance (next slot time / redirect) |
 | Mission channel POST fails (perms/deleted/5xx) | Row `expired`; reuse encounter `post_failures` handling |
 | Process restart mid-day | Tick re-reads `guild_settings`; regenerates slots only if `mission_slots_day` stale; posts due-unfired slots |
@@ -956,7 +1119,7 @@ adds nothing to `.env`.
    admin-configurable. The admin command is enable / disable / status only.
    Spread for early-morning and late-night players, unpredictable day to day.
    Slot state in `guild_settings`; restart-safe.
-2. **Type weights: riddle 55 / errand 20 / co-op 25**, rolled at spawn with the
+2. **Type weights: riddle 50 / errand 25 / co-op 25**, rolled at spawn with the
    house. Neither type nor house is shown in the channel — only `/mission`
    reveals them.
 3. **At most one accepted mission per user**, enforced by a partial unique index
@@ -978,7 +1141,7 @@ adds nothing to `.env`.
      `mission_log` row worth `N` points** (lead) + reset **both** `/roam` and
      `/meet` cooldowns.
    - **Riddle** — `/riddle <answer>` matched by `matchCharacterGuess`; correct
-     → **1 point** (lead) + reset **both** cooldowns. Wrong → 60s cooldown, no
+     → **1 point** (lead) + reset **both** cooldowns. Wrong → 20s cooldown, no
      cap.
    - **Co-op** — `/mission assist` posts a public **Join the mission** button; a
      *different* user clicks → **1 point each** for both (lead + assist) + reset

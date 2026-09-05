@@ -7,32 +7,32 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: \"Tch. Before you say anything, no, you're not in trouble, and no, this isn't a bill. Yet.\"",
-        '"Somebody put your name on the floor list as a mark. Standard stuff, happens to everyone who walks through here more than twice, it\'s not personal, it\'s just Sinostra."\n\n"I took it off. Personally. Which cost me a conversation I did not enjoy having at nine in the morning with my face not done."\n\n"{timesMet} visits and you\'ve never once tried to get anything out of this house. Do you know how rare that is? That\'s a rounding error. That\'s ONE person."',
+        "**{firstName}**: Tch. Before you say anything, no, you're not in trouble, and no, this isn't a bill. Yet.",
+        "Somebody put your name on the floor list as a mark. Standard stuff, happens to everyone who walks through here more than twice, it's not personal, it's just Sinostra.\n\nI took it off. Personally. Which cost me a conversation I did not enjoy having at nine in the morning with my face not done.\n\n{timesMet} visits and you've never once tried to get anything out of this house. Do you know how rare that is? That's a rounding error. That's ONE person.",
       ],
       choice: {
-        prompt: "\"So don't make me regret it. That's it.\"",
+        prompt: "So don't make me regret it. That's it.",
         options: [
           {
             key: "kind",
             label: "Thank him for it",
             style: 3,
             close:
-              "\"Don't thank me, it's undignified for both of us.\"\n\n*A pause.*\n\n\"...You're welcome. That's all you're getting. That's the entire allocation for the year.\"",
+              "Don't thank me, it's undignified for both of us.\n\n...You're welcome. That's all you're getting. That's the entire allocation for the year.",
           },
           {
             key: "playful",
             label: "Ask if you're still a mark",
             style: 1,
             close:
-              "\"Obviously not, or I wouldn't be wasting a perfectly good morning explaining myself to you.\"\n\n*A pause.*\n\n\"...You're something else. I haven't worked out what yet. Don't push it.\"",
+              "Obviously not, or I wouldn't be wasting a perfectly good morning explaining myself to you.\n\n...You're something else. I haven't worked out what yet. Don't push it.",
           },
           {
             key: "bold",
             label: "Ask what it cost him",
             style: 4,
             close:
-              '"Nothing."\n\n*Then, four seconds later:* "A favor, two hundred thousand yen of goodwill, and I had to be nice to a man I hate. Don\'t mention it. Genuinely. Do not mention it, ever, to anyone."',
+              "Nothing.\n\n*Then, four seconds later:* A favor, two hundred thousand yen of goodwill, and I had to be nice to a man I hate. Don't mention it. Genuinely. Do not mention it, ever, to anyone.",
           },
         ],
       },
@@ -44,33 +44,33 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: \"Right. Something's been irritating me for a MONTH and I've finally worked out what it is.\"",
-        "\"You do {favResponse} with me every single time and you have NEVER ONCE ASKED ME FOR ANYTHING.\"\n\n\"Everybody wants something. That's not me being bleak, that's the actual operating model of this entire academy. People try to suck up to me and then there's an ask, and I've priced that in since I was eleven, and honestly it's fine. I like being useful, it's the only currency I've got that doesn't depreciate.\"\n\n\"You've had a month of opportunities. Nothing. It's INSULTING.\"",
+        "**{firstName}**: Right. Something's been irritating me for a MONTH and I've finally worked out what it is.",
+        "You do {favResponse} with me every single time and you have NEVER ONCE ASKED ME FOR ANYTHING.\n\nEverybody wants something. That's not me being bleak, that's the actual operating model of this entire academy. People try to suck up to me and then there's an ask, and I've priced that in since I was eleven, and honestly it's fine. I like being useful, it's the only currency I've got that doesn't depreciate.\n\nYou've had a month of opportunities. Nothing. It's INSULTING.",
       ],
       choice: {
         prompt:
-          "\"So ask me for something. Anything. I'm begging you, it's making me itch.\"",
+          "So ask me for something. Anything. I'm begging you, it's making me itch.",
         options: [
           {
             key: "kind",
             label: "Ask him to sit down a minute",
             style: 3,
             close:
-              "\"That's not a... that's not an ASK, that's not...\"\n\n*A long pause.*\n\n\"...Fine. Fine! I'm sitting. I've sat. Are you happy? This is the worst favor I've ever done anyone.\"\n\n*He sits for forty minutes.*",
+              "That's not a... that's not an ASK, that's not...\n\n*A long pause.*\n\n...Fine. Fine! I'm sitting. I've sat. Are you happy? This is the worst favor I've ever done anyone.\n\n*He sits for forty minutes.*",
           },
           {
             key: "playful",
             label: "Ask for his skincare routine",
             style: 1,
             close:
-              "\"NOW you're talking. Right. Clear your evening. There are ELEVEN STEPS and I'm not skipping the explanations.\"\n\n*He sends fourteen messages about serums. It's the happiest you've ever seen him.*",
+              "NOW you're talking. Right. Clear your evening. There are ELEVEN STEPS and I'm not skipping the explanations.\n\n*He sends fourteen messages about serums. It's the happiest you've ever seen him.*",
           },
           {
             key: "bold",
             label: "Say you don't want anything",
             style: 4,
             close:
-              '"Everyone wants something."\n\n"...You\'re going to keep saying that, aren\'t you. And I\'m going to keep waiting for the ask, and it\'s going to be like this for years, and I\'m going to be extremely annoyed the entire time."\n\n"Fine. FINE. Consider me annoyed."',
+              "Everyone wants something.\n\n...You're going to keep saying that, aren't you. And I'm going to keep waiting for the ask, and it's going to be like this for years, and I'm going to be extremely annoyed the entire time.\n\nFine. FINE. Consider me annoyed.",
           },
         ],
       },
@@ -82,34 +82,34 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: \"Casino. After close. Come up to the balcony office, not the floor, and DON'T let Taiga see you on the way up or he'll steal you for the night at the casino before I've said two words.\"",
-        "*The floor is dark below and he is sitting on the balcony with his jacket off and his hair down and a ledger open in front of him, and he doesn't do the voice when you come in.*\n\n\"This is the real book. Not the one the academy sees. Every fee, every mark, every person in this house who owes and every person who's owed to.\"",
-        "*He turns it round so you can see, which is the single most dangerous thing anyone in Sinostra could do.*\n\n\"Half of that is people who'll never pay and I've never once chased. Fuji-kun's on there four times. There's a second-year on there whose mom's ill and she's never going to know I wrote it off.\"\n\n\"Everyone thinks I'm the money. I AM the money. But nobody's ever asked what I actually spend it on, and it turns out the answer's on page nine and I've never shown anybody page nine.\"",
+        "**{firstName}**: Casino. After close. Come up to the balcony office, not the floor, and DON'T let Taiga see you on the way up or he'll steal you for the night at the casino before I've said two words.",
+        "*The floor is dark below and he is sitting on the balcony with his jacket off and his hair down and a ledger open in front of him, and he doesn't do the voice when you come in.*\n\n> This is the real book. Not the one the academy sees. Every fee, every mark, every person in this house who owes and every person who's owed to.",
+        "*He turns it round so you can see, which is the single most dangerous thing anyone in Sinostra could do.*\n\n> Half of that is people who'll never pay and I've never once chased. Fuji-kun's on there four times. There's a second-year on there whose mom's ill and she's never going to know I wrote it off.\n\n> Everyone thinks I'm the money. I AM the money. But nobody's ever asked what I actually spend it on, and it turns out the answer's on page nine and I've never shown anybody page nine.",
       ],
       choice: {
         prompt:
-          "\"Say something. And if you say I'm secretly nice I'm throwing you off this balcony.\"",
+          "Say something. And if you say I'm secretly nice I'm throwing you off this balcony.",
         options: [
           {
             key: "kind",
             label: "Say page nine is the real book",
             style: 3,
             close:
-              '*He shuts the ledger rather harder than necessary.*\n\n"...Yeah. Yeah, alright."\n\n*He doesn\'t say anything else for a bit. Then:* "Don\'t repeat that. I\'ve got a reputation and it does about ninety percent of my job for me."',
+              "*He shuts the ledger rather harder than necessary.*\n\n> ...Yeah. Yeah, alright.\n\n*He doesn't say anything else for a bit. Then:*\n\n> Don't repeat that. I've got a reputation and it does about ninety percent of my job for me.",
           },
           {
             key: "playful",
             label: "Threaten to tell everyone",
             style: 1,
             close:
-              "\"HDY. I will RUIN you. I will ruin you SO efficiently...\"\n\n*A pause.*\n\n\"...You wouldn't though. That's the annoying bit. You're the only person I've shown this to and I'm not even slightly worried, and I've been worried about everything since I was nine.\"",
+              "> HDY. I will RUIN you. I will ruin you SO efficiently...\n\n> ...You wouldn't though. That's the annoying bit. You're the only person I've shown this to and I'm not even slightly worried, and I've been worried about everything since I was nine.",
           },
           {
             key: "bold",
             label: "Ask if you're in the book",
             style: 4,
             close:
-              "*He goes very still.*\n\n\"...Page one.\"\n\n*He doesn't turn it back round.*\n\n\"Not as a debt. There's a second column. There's exactly one name in the second column and it's been there since about March and I'm not explaining what the column is.\"",
+              "*He goes very still.*\n\n> ...Page one.\n\n*He doesn't turn it back round.*\n\n> Not as a debt. There's a second column. There's exactly one name in the second column and it's been there since about March and I'm not explaining what the column is.",
           },
         ],
       },
@@ -121,34 +121,34 @@ export default {
 
     confidant: {
       beats: [
-        '**{firstName}**: "Taiga lost three days again. I\'ve been running the floor since Wednesday and I have not slept and I look INCREDIBLE, which is not the point."',
-        "\"Here's the bit I don't say. He doesn't remember that I do it. Every time. I cover four days, he comes back, and by lunch we're back to screaming at each other about the bar tab like nothing happened. He's not being ungrateful, he genuinely doesn't clock it.\"\n\n\"So I've been holding this house up for two years for a man I fight with on a near-daily basis, and if he ever worked it out, he wouldn't say thank you. He'd never say thank you. He'd turn it into ammunition and bring it up every single time we argue for the rest of our lives, and I would rather run this floor blind than give him that.\"",
-        "\"I yell because if I'm the loudest person in the room nobody asks what I'm actually doing. It's worked brilliantly. It's worked for eleven years, and it works best of all on him, because he's too busy yelling back to ever notice what I'm covering.\"\n\n\"You asked. Last Tuesday. You just said 'are you all right' in the corridor like it was a normal question and I've been thinking about it for six days and I'm FURIOUS about it.\"",
+        "**{firstName}**: Taiga lost three days again. I've been running the floor since Wednesday and I have not slept and I look INCREDIBLE, which is not the point.",
+        "Here's the bit I don't say. He doesn't remember that I do it. Every time. I cover four days, he comes back, and by lunch we're back to screaming at each other about the bar tab like nothing happened. He's not being ungrateful, he genuinely doesn't clock it.\n\nSo I've been holding this house up for two years for a man I fight with on a near-daily basis, and if he ever worked it out, he wouldn't say thank you. He'd never say thank you. He'd turn it into ammunition and bring it up every single time we argue for the rest of our lives, and I would rather run this floor blind than give him that.",
+        "I yell because if I'm the loudest person in the room nobody asks what I'm actually doing. It's worked brilliantly. It's worked for eleven years, and it works best of all on him, because he's too busy yelling back to ever notice what I'm covering.\n\nYou asked. Last Tuesday. You just said \"are you all right\" in the corridor like it was a normal question and I've been thinking about it for six days and I'm FURIOUS about it.",
       ],
       choice: {
         prompt:
-          "\"So? Go on. You've clearly got something, you've had that face on for a week.\"",
+          "So? Go on. You've clearly got something, you've been chewing on it for a week.",
         options: [
           {
             key: "kind",
             label: "Ask if he's all right again",
             style: 3,
             close:
-              '"DON\'T..."\n\n*Nothing for four minutes.*\n\n"No," *he writes eventually, and it\'s the quietest thing he\'s ever sent.* "No, I\'m not. Obviously I\'m not."\n\n"Come up. Don\'t say anything about it when you get here. Just be up here."',
+              "DON'T...\n\n*Nothing for four minutes.*\n\nNo, *he writes eventually, and it's the quietest thing he's ever sent.* No, I'm not. Obviously I'm not.\n\nCome up. Don't say anything about it when you get here. Just be up here.",
           },
           {
             key: "playful",
             label: "Agree that he looks incredible",
             style: 1,
             close:
-              '"THANK YOU. Finally. Somebody in this building with EYES."\n\n*Then, much later:* "...that helped, actually. Don\'t tell anyone that helped. I\'d rather people thought I was unreachable."',
+              "THANK YOU. Finally. Somebody in this building with EYES.\n\n*Then, much later:* ...that helped, actually. Don't tell anyone that helped. I'd rather people thought I was unreachable.",
           },
           {
             key: "bold",
             label: "Say he should tell Taiga",
             style: 4,
             close:
-              "\"Absolutely not.\"\n\n\"He'd never let it go. He'd bring it up every time we argue for the rest of our lives, turn it into a scoreboard, and somehow make ME feel like I owe HIM for having 'let' me do it. That's not... no. I'm not handing him that.\"\n\n\"Besides. I've got the better memory. It's the one advantage I've got over him and I'm keeping it.\"",
+              "Absolutely not.\n\nHe'd never let it go. He'd bring it up every time we argue for the rest of our lives, turn it into a scoreboard, and somehow make ME feel like I owe HIM for having \"let\" me do it. That's not... no. I'm not handing him that.\n\nBesides. I've got the better memory. It's the one advantage I've got over him and I'm keeping it.",
           },
         ],
       },
@@ -160,34 +160,34 @@ export default {
 
     devoted: {
       beats: [
-        "**{firstName}**: \"Don't come in tomorrow. I mean it. The floor's closed and I'm dealing with something.\"",
-        "\"Somebody had a go at you in the west block. Verbally. In front of about nine people.\"\n\n\"I've heard about it from three separate sources and I've spent the evening finding out exactly who he owes, what to, and when it's due, and it turns out he owes a REMARKABLE amount and it's due whenever I say it is.\"",
-        "\"I want to be honest about what this is, because you'll hear it as protecting you and it's uglier than that.\"\n\n\"This is me being the most frightening thing in the building on purpose, at somebody, because he made you look at the floor. That's the whole of it. There's no noble version.\"\n\n\"You're mine. Not like... I'm not TAIGA about it. I mean you're on my list, and everyone on my list is protected, and nobody has ever got onto that list without paying and you never paid a thing.\"",
+        "**{firstName}**: Don't come in tomorrow. I mean it. The floor's closed and I'm dealing with something.",
+        "Somebody had a go at you in the west block. Verbally. In front of about nine people.\n\nI've heard about it from three separate sources and I've spent the evening finding out exactly who he owes, what to, and when it's due, and it turns out he owes a REMARKABLE amount and it's due whenever I say it is.",
+        "I want to be honest about what this is, because you'll hear it as protecting you and it's uglier than that.\n\nThis is me being the most frightening thing in the building on purpose, at somebody, because he made you look at the floor. That's the whole of it. There's no noble version.\n\nYou're mine. Not like... I'm not TAIGA about it. I mean you're on my list, and everyone on my list is protected, and nobody has ever got onto that list without paying and you never paid a thing.",
       ],
       choice: {
         prompt:
-          "\"Now tell me to stop. You're the only one who could and I'd like to know if you will.\"",
+          "Now tell me to stop. You're the only one who could and I'd like to know if you will.",
         options: [
           {
             key: "kind",
             label: "Tell him to stop",
             style: 3,
             close:
-              '"...Right."\n\n*A long silence.*\n\n"Stopped. Done. It\'s... yeah. It\'s stopped."\n\n*Then:* "Come up anyway. I\'ve canceled a whole evening of being frightening and I\'ve got nothing to do with myself and I\'d rather not sit here alone with it."',
+              "...Right.\n\n*A long silence.*\n\nStopped. Done. It's... yeah. It's stopped.\n\n*Then:* Come up anyway. I've canceled a whole evening of being frightening and I've got nothing to do with myself and I'd rather not sit here alone with it.",
           },
           {
             key: "playful",
             label: "Ask how remarkable the debt is",
             style: 1,
             close:
-              '"OBSCENE. Genuinely obscene. He\'s been rolling it over for a year and a half and I\'ve been letting him because it amuses me."\n\n"It has stopped amusing me. Funny how that works."',
+              "OBSCENE. Genuinely obscene. He's been rolling it over for a year and a half and I've been letting him because it amuses me.\n\nIt has stopped amusing me. Funny how that works.",
           },
           {
             key: "bold",
             label: "Say you don't want him to",
             style: 4,
             close:
-              "\"That's not the same as telling me to stop and you know it isn't.\"\n\n*A pause.*\n\n\"...It's better, actually. It's worse for me and it's better. Because now I've got to want to stop rather than just being told, and I don't, and I'm going to anyway.\"\n\n\"HDY. Genuinely. How dare you.\"",
+              "That's not the same as telling me to stop and you know it isn't.\n\n...It's better, actually. It's worse for me and it's better. Because now I've got to want to stop rather than just being told, and I don't, and I'm going to anyway.\n\nHDY. Genuinely. How dare you.",
           },
         ],
       },
@@ -199,28 +199,28 @@ export default {
 
     soulbound: {
       beats: [
-        "**{firstName}**: \"Balcony. Now. And before you get there, I've had eleven weeks to do this properly and I've decided to do it badly instead, so brace.\"",
-        "*The ledger is open on the desk at page one. He's turned it round already.*\n\n_There is a second column, and there's one name in it, and it says: *not a debt. never bill.*_\n\n\"March. I wrote that in March and I've looked at it about four hundred times.\"",
-        "\"Everything's a price. That's not a philosophy, it's the only language I was taught. My family bought their way out of things and into things and I learned exactly one skill, which is knowing what everybody costs.\"\n\n\"I can price anyone in this academy in about four seconds. Taiga. Jo. The captain of Frostheim, who thinks he's above it, and isn't.\"\n\n\"{timesMet} visits and I have NEVER been able to price you. Not once. It's been driving me out of my MIND for a year.\"",
-        "\"So here's the badly done bit.\"\n\n\"I love you. There's no invoice, there's no favor attached, and there's nothing you owe me, and if you ever try to pay me back for anything I have EVER done for you I will genuinely never speak to you again.\"\n\n\"That's it. That's the whole thing. I've spent my entire life making sure everything had a number on it and there's one thing that doesn't and it's you and I've just told you, out loud, on a balcony, like a MANIAC.\"",
+        "**{firstName}**: Balcony. Now. And before you get there, I've had eleven weeks to do this properly and I've decided to do it badly instead, so brace.",
+        "*The ledger is open on the desk at page one. He's turned it round already.*\n\n*There is a second column, and there's one name in it, and it says: \"not a debt. never bill.\"*\n\n> March. I wrote that in March and I've looked at it about four hundred times.",
+        "> Everything's a price. That's not a philosophy, it's the only language I was taught. My family bought their way out of things and into things and I learned exactly one skill, which is knowing what everybody costs.\n\n> I can price anyone in this academy in about four seconds. Taiga. Jo. The captain of Frostheim, who thinks he's above it, and isn't.\n\n> {timesMet} visits and I have NEVER been able to price you. Not once. It's been driving me out of my MIND for a year.",
+        "> So here's the badly done bit.\n\n> I love you. There's no invoice, there's no favor attached, and there's nothing you owe me, and if you ever try to pay me back for anything I have EVER done for you I will genuinely never speak to you again.\n\n> That's it. That's the whole thing. I've spent my entire life making sure everything had a number on it and there's one thing that doesn't and it's you and I've just told you, out loud, on a balcony, like a MANIAC.",
       ],
       choice: {
         prompt:
-          "\"Say something. Anything. I'm going to start yelling in about four seconds and it won't be at you, it'll just be VOLUME.\"",
+          "Say something. Anything. I'm going to start yelling in about four seconds and it won't be at you, it'll just be VOLUME.",
         options: [
           {
             key: "answered",
             label: "Say it back",
             style: 3,
             close:
-              "*There is a sound that is almost certainly a chair going over.*\n\n\"Say it AGAIN... no. No, don't. Don't, I heard it, I'm...\"\n\n*He stops trying to type. He comes round the desk instead, and for once he isn't loud at all: he takes your hands, both of them, and looks at them rather than at you.*\n\n\"Nobody's ever done that for free,\" *he says.* \"Not once, in my whole life. Say it again in the morning. I'll need it in the morning.\"",
+              "*There is a sound that is almost certainly a chair going over.*\n\nSay it AGAIN... no. No, don't. Don't, I heard it, I'm...\n\n*He stops trying to type. He comes round the desk instead, and for once he isn't loud at all: he takes your hands, both of them, and looks at them rather than at you.*\n\n> Nobody's ever done that for free,\n\n*he says.*\n\n> Not once, in my whole life. Say it again in the morning. I'll need it in the morning.",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
             close:
-              "\"Fine. GREAT. Excellent. Take all of it.\"\n\n*A pause. Then, without the volume:*\n\n\"...That wasn't sarcasm, for once. Take it. I dropped that on you off a balcony at two in the morning, you're entitled to a bit of thinking.\"\n\n\"Second column stays. That's not a maneuver. It was true in March and it's true now and it'd be true if you never came up here again. Nobody bills you. That's the arrangement and it isn't up for negotiation, which I'm aware is a very me way of being kind.\"",
+              "Fine. GREAT. Excellent. Take all of it.\n\n*A pause. Then, without the volume:*\n\n...That wasn't sarcasm, for once. Take it. I dropped that on you off a balcony at two in the morning, you're entitled to a bit of thinking.\n\nSecond column stays. That's not a maneuver. It was true in March and it's true now and it'd be true if you never came up here again. Nobody bills you. That's the arrangement and it isn't up for negotiation, which I'm aware is a very me way of being kind.",
           },
         ],
       },

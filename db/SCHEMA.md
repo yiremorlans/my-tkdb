@@ -128,7 +128,17 @@ Only the channel and the on/off switch are per-guild. Cadence and window are fix
 | `next_gap_minutes` | INT | Minutes to wait from that point; rolled fresh per spawn |
 | `post_failures` | INT | Consecutive failed channel POSTs; 3 auto-disables the guild |
 | `configured_by` | TEXT | Who ran `/encounters channel` |
+| `mission_channel_id` | TEXT | Where mission requests post; NULL falls back to `encounter_channel_id` |
+| `missions_enabled` | BOOLEAN | Whether the mission pass ticks for this guild |
+| `mission_slots_day` | DATE | The local date `mission_slots_today` was rolled for |
+| `mission_slots_today` | JSONB | Today's three request times, as ISO timestamps |
+| `mission_slots_fired` | JSONB | Indices into that array which have already been spent |
+| `mission_post_failures` | INT | Consecutive failed mission POSTs; 3 auto-disables **missions only** |
 | `created_at` / `updated_at` | TIMESTAMP | Record timestamps |
+
+Missions (migration 016, `docs/scheduled-missions.md`) share this row so one guild has one config, but keep their own switch and their own failure counter: a broken mission channel must not silence public encounters, which may be posting fine elsewhere. Count (3/day), spacing (2h) and window (05:00-24:00 America/Chicago) are constants in `constants/missions.js`, so there are no override columns for them here either.
+
+`mission_slots_today` + `mission_slots_fired` are what make the mission schedule restart-safe, in the same spirit as `last_encounter_at`: the day's times are decided once and written down, the tick re-reads them and posts anything due and unfired, and a slot that came due while the process was down is either posted (if it is less than `STALE_SLOT_MINUTES` late) or quietly burned. Nothing is held in memory, so there is no timer to lose.
 
 **Use cases:**
 - Give each guild its own schedule, channel and in-flight encounter
@@ -243,6 +253,67 @@ What finishing a scene leaves behind — an emoji and one line in that character
 
 > `user_activity` also gains `bond_dms_enabled BOOLEAN NOT NULL DEFAULT TRUE` in migration 015 — the opt-out behind the button on a user's first bond DM, and behind `/bonds dms:on|off`. Only an explicit `false` counts as an opt-out, so rows written before the column existed still get their scenes.
 
+### `missions`
+One row per posted mission request (`docs/scheduled-missions.md`). `status` is the whole state machine: `open` → `accepted` → `completed`, or `expired` from either.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `id` | BIGSERIAL | Primary key; rides in every `mission:*` custom_id |
+| `guild_id` / `channel_id` | TEXT | Where it was posted |
+| `message_id` | TEXT | Set once the POST succeeds; NULL means no pickup/withdrawal edit is possible |
+| `mission_type` | TEXT | `errand`, `riddle` or `coop` — rolled at spawn, never shown in the channel |
+| `house` | TEXT | The house it's for — also never shown in the channel |
+| `riddle_id` | TEXT | Which riddle was drawn from `RIDDLES[house]`; NULL unless `riddle` |
+| `signatures` | JSONB | Errand only: `{"<character_id>": null \| "<timestamp>"}`, frozen at spawn |
+| `teaser` | TEXT | The flavor line the post opened with |
+| `post_expires_at` | TIMESTAMP | Unaccepted after this → withdrawn (`POST_TTL_HOURS`) |
+| `accepted_by` / `accepted_at` | TEXT / TIMESTAMP | Who picked it up, and when |
+| `accept_expires_at` | TIMESTAMP | Unfinished after this → lapsed (`ACCEPT_WINDOW_HOURS`) |
+| `helper_user_id` | TEXT | Co-op only: the second inspector |
+| `assist_message_id` | TEXT | Co-op only: the public `/mission assist` post |
+| `status` | TEXT | `open` / `accepted` / `completed` / `expired` |
+| `completed_at` | TIMESTAMP | Set on any of the three completion paths |
+
+**Use cases:**
+- Arbitrate the Accept race with one atomic `claim_mission()` statement
+- Enforce "at most one held mission per user" at the database, not in the app
+
+**`signatures` is JSONB rather than a child table.** An earlier draft had `mission_signatures`, one row per errand target. It was never read on its own: every consumer (`/docs`, the `/mission` briefing, the dossier's progress line, the `/roam` and `/meet` target boost) already had the mission row in hand, so the separate table cost a second round trip on every one of those paths and bought nothing a column could not hold. The key count is now what `signatures_required` used to be, so the two can no longer disagree — an invariant the old shape had to be careful about at spawn. Concurrency is unchanged: `sign_errand_target()` still flips one entry in a single conditional `UPDATE`, guarded on `signatures->>'<id>' IS NULL`, so meeting the same target twice signs once and two simultaneous responses cannot lose a signature.
+
+`sign_errand_target()` takes the **user**, not a mission id, and resolves their held errand itself. It runs on every `/roam` and `/meet` response and almost none of those have an errand behind them, so folding the lookup in makes it one round trip either way instead of a read plus a conditional write.
+
+`claim_mission()` enforces the **per-player daily lead cap**: `p_day_start` and `p_daily_lead_cap` are passed in, and the count of missions that user has *accepted* since local midnight is tested inside the same `UPDATE` as everything else, so a capped click still updates zero rows and still leaves the request open for the next person. It counts accepts rather than completions on purpose — accepting is the act that denies everybody else, so taking two and letting both lapse spends the day either way. `idx_missions_accepted_by_at` serves that count.
+
+`missions_one_accepted_per_user`, a unique index on `(accepted_by) WHERE status = 'accepted'`, is the real invariant. `claim_mission()`'s `NOT EXISTS` handles the ordinary case with a friendly message, but it is vulnerable to write skew — one user double-clicking two *different* fresh requests within milliseconds, where under READ COMMITTED both subqueries read "no accepted mission" before either commits. The index makes that lose loudly (`23505`, reported as "you already have a mission") rather than silently handing someone two. It also means a mission slot frees itself: a completed or expired row leaves the index's predicate, so there is no cleanup job.
+
+### `mission_log`
+The durable completion record, the Inspector dossier's whole progression (`/house`), **and** the banked-reset ledger. Deliberately not derived from `missions`, so those raw rows can be pruned without taking a player's rank with them.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `id` | BIGSERIAL | Primary key |
+| `discord_user_id` | TEXT | Who finished it |
+| `house` | TEXT | Which house it was for — the per-house bars sum on this |
+| `mission_type` | TEXT | `errand` / `riddle` / `coop`; also the reset's scope |
+| `mission_id` | BIGINT | The mission, `ON DELETE SET NULL` |
+| `role` | TEXT | `lead` or `assist`; both count identically toward rank |
+| `points` | INT | Errand: the signature count. Riddle and either side of a co-op: 1 |
+| `completed_at` | TIMESTAMP | When it was filed |
+| `reset_spent_at` / `reset_spent_on` | TIMESTAMP / TEXT | The banked cooldown reset this completion granted; NULL = still held |
+
+**Use cases:**
+- Rank a player from `SUM(points)` — never `count(*)`, since one errand can be worth four
+- Hold the player's unspent cooldown resets, without a second table
+- Show which houses they've actually worked for, and pick the dossier's emblem
+
+Rows are written fire-and-forget **after** the relevant claim RPC has confirmed the mission actually closed, so a lost race can never bank points.
+
+**There is no separate credits table.** Finishing a mission used to clear the `/roam` and `/meet` cooldowns on the spot, which quietly punished good timing: a player who solved a riddle with four minutes left on the clock got four minutes of value from the same reward another player got three hours from. So the reward is banked and spent by the player, from a button that appears only on the "you're still on cooldown" reply to `/roam` or `/meet`. A completion grants exactly one reset and there is already exactly one row here per completion — so the credit **is** the row, unspent while `reset_spent_at IS NULL`. That gets the audit trail (which mission paid for which cleared cooldown) for free, and lets the dossier read rank, per-house tally and unspent balance out of a single query. `idx_mission_log_unspent` serves the one hot read.
+
+The reset's **scope is derived, not stored**: a co-op clears one command, anything else clears both. That is a fact about `mission_type`, so storing it separately would only create a way for the two to disagree. Which command a co-op reset clears is decided when it is spent, never when it is earned — a reset stamped `roam` months earlier is worth nothing to someone who wants `/meet`, which is exactly the waste banking exists to prevent.
+
+`spend_cooldown_reset()` does the whole thing in one transaction — lock the `command_limits` row, confirm the cooldown is genuinely still running, take the cheapest sufficient unspent row (`coop` before the rest, oldest first) `FOR UPDATE SKIP LOCKED`, delete the cooldown rows its scope covers, and stamp it spent. That is what makes every double-click safe: a second click either finds nothing unspent (`none`) or finds the clock already clear (`not_needed`) and hands the spare credit back rather than burning it.
+
 ### Retention
 
 Migration 011 schedules `prune_encounter_data()` daily at 03:30 UTC:
@@ -255,6 +326,8 @@ Migration 011 schedules `prune_encounter_data()` daily at 03:30 UTC:
 | `encounter_milestones` | forever | Player-visible progression (`/affinity`), not analytics — and a bounded per-kind tally, so it has nothing to prune |
 | `bond_scene_progress` | forever | The record of what a player has been sent; dropping a row would re-send a scene they have already read |
 | `bond_keepsakes` | forever | Player-visible progression; dropping a row would take back a collectible |
+| `missions` | not pruned yet | Bounded by the schedule (3/guild/day). Add to `prune_encounter_data()` alongside `public_encounters` if that stops being true |
+| `mission_log` | forever | Player-visible progression (`/house`) and the banked-reset ledger — an unspent row is a reward the player is still owed |
 
 > `character_relationships` also gains `pending_encounter_boost INT NOT NULL DEFAULT 0` in migration 010 — the unspent wins a user holds with that character. A `/call` win increments it (capped at `ENCOUNTER_BOOST_CAP`); the next completed `/roam` or `/meet` response with that character spends one and adds `ENCOUNTER_BOOST_GAIN` to its gain. Both are constants in `constants/publicEncounters.js`. Both sides go through the atomic `grant_encounter_boost()` / `consume_encounter_boosts()` functions in migration 014 — never a read-then-write, which used to drop a boost when a win and a spend overlapped.
 

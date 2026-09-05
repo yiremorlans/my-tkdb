@@ -1,7 +1,9 @@
 // The tick loop behind public "call out" encounters (docs/public-encounters.md
-// §3). One interval for the whole process, iterating every enabled guild — not
+// §3) and scheduled missions (docs/scheduled-missions.md §3). One interval for
+// the whole process, two passes inside it, iterating every enabled guild — not
 // a setTimeout per guild — because all the timing state lives in Postgres
-// (guild_settings.last_encounter_at + next_gap_minutes). Nothing about the
+// (guild_settings.last_encounter_at + next_gap_minutes for encounters,
+// mission_slots_today + mission_slots_fired for missions). Nothing about either
 // schedule is held in memory, so a redeploy has nothing to lose: the first tick
 // after boot re-reads the table and compares elapsed time against the gap that
 // was rolled before the restart. Time that passed while the process was down
@@ -13,8 +15,10 @@
 // lock.
 
 import { clearGuessCooldowns } from './constants/publicEncounters.js';
+import { clearRiddleCooldowns } from './constants/missions.js';
 import { isSpawnDue, spawnEncounter, sweepExpiredEncounters } from './publicEncounters.js';
-import { getActivePublicEncounter, getEnabledGuilds } from './db/supabase.js';
+import { runGuildMissionPass, sweepExpiredMissions } from './missions.js';
+import { getActivePublicEncounter, getEnabledGuilds, getMissionGuilds } from './db/supabase.js';
 
 // How often the loop looks for work. Must stay well under
 // ENCOUNTER_WINDOW_MINUTES (2), or an encounter can outlive its own deadline by
@@ -47,6 +51,53 @@ export function clearSpawnAttemptFence() {
  * `/tick` endpoint for a host that sleeps — can drive it directly.
  */
 export async function runTick(now = new Date()) {
+  await runEncounterPass(now);
+  await runMissionPass(now);
+}
+
+/**
+ * The scheduled-missions half of the tick (docs/scheduled-missions.md §3).
+ *
+ * Missions ride this loop rather than an interval of their own: at three posts
+ * a day the work per tick is one indexed read plus, on the rare tick where a
+ * slot has come due, one spawn. All of the schedule state — today's three slot
+ * times and which have fired — lives on guild_settings, so this is restart-safe
+ * for exactly the reason the encounter cadence is: nothing is held in memory,
+ * and the first tick after boot re-derives everything from the row.
+ */
+async function runMissionPass(now) {
+  // Same reasoning as the encounter sweep: finalize every guild's expired
+  // missions, not just the enabled ones, so an admin running `/missions
+  // disable` mid-flight doesn't strand a request on the board forever.
+  try {
+    await sweepExpiredMissions(null, now);
+  } catch (err) {
+    console.error('[encounterScheduler] Mission sweep failed:', err.message);
+  }
+
+  let guilds;
+  try {
+    guilds = await getMissionGuilds();
+  } catch (err) {
+    console.error('[encounterScheduler] Could not read mission guilds:', err.message);
+    return;
+  }
+
+  if (guilds.length === 0) {
+    clearRiddleCooldowns();
+    return;
+  }
+
+  for (const guild of guilds) {
+    try {
+      await runGuildMissionPass(guild, now);
+    } catch (err) {
+      console.error(`[encounterScheduler] Mission pass failed for guild ${guild.guild_id}:`, err.message);
+    }
+  }
+}
+
+async function runEncounterPass(now) {
   // Sweep every guild's expired encounters, not just the enabled ones. An
   // admin who runs `/encounters disable` while an encounter is in flight drops
   // their guild out of getEnabledGuilds() immediately — if the sweep were

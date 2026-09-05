@@ -7,29 +7,29 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        '**{firstName}**: "Observation. Your resting pulse in this building is higher than baseline by roughly twelve. Everyone\'s is. Mortkranken has that effect and the captain considers it a feature."\n\n"Yours has dropped every visit. It is now near baseline. This is the {timesMet}th visit."',
-        "\"I record this sort of thing. It is not surveillance. It is a habit and I have been told it comes across badly.\"\n\n\"I am telling you because the data has a shape and I have looked at it long enough that not mentioning it began to feel like withholding.\"\n\n\"The shape is: you are getting comfortable here. Nobody gets comfortable here.\"",
+        "**{firstName}**: Observation. Your resting pulse in this building is higher than baseline by roughly twelve. Everyone's is. Mortkranken has that effect and the captain considers it a feature.\n\nYours has dropped every visit. It is now near baseline. This is the {timesMet}th visit.",
+        "I record this sort of thing. It is not surveillance. It is a habit and I have been told it comes across badly.\n\nI am telling you because the data has a shape and I have looked at it long enough that not mentioning it began to feel like withholding.\n\nThe shape is: you are getting comfortable here. Nobody gets comfortable here.",
       ],
       choice: {
-        prompt: "\"I have no follow-up question. That was the whole message. You may respond or not.\"",
+        prompt: "I have no follow-up question. That was the whole message. You may respond or not.",
         options: [
           {
             key: "kind",
             label: "Say you feel safe there",
             style: 3,
-            close: "*There is a pause of forty seconds, which for him is enormous.*\n\n\"That is not a variable I track.\"\n\n*Then:* \"I will begin tracking it. Thank you for the datum.\"",
+            close: "*There is a pause of forty seconds, which for him is enormous.*\n\nThat is not a variable I track.\n\n*Then:* I will begin tracking it. Thank you for the datum.",
           },
           {
             key: "playful",
             label: "Ask what else he's recorded",
             style: 1,
-            close: "\"A considerable amount.\"\n\n\"I am now aware, having typed that, of how it reads. I would like to state for the record that I do this for everyone.\"\n\n\"That is untrue. I stopped doing it for everyone some time ago.\"",
+            close: "A considerable amount.\n\nI am now aware, having typed that, of how it reads. I would like to state for the record that I do this for everyone.\n\nThat is untrue. I stopped doing it for everyone some time ago.",
           },
           {
             key: "bold",
             label: "Ask what his pulse does",
             style: 4,
-            close: "*The reply takes nearly two minutes.*\n\n\"I do not measure my own.\"\n\n\"I have measured my own. The result was not consistent with my model and I have not repeated the measurement. Good night.\"",
+            close: "*The reply takes nearly two minutes.*\n\nI do not measure my own.\n\nI have measured my own. The result was not consistent with my model and I have not repeated the measurement. Good night.",
           },
         ],
       },
@@ -41,29 +41,29 @@ export default {
 
     friend: {
       beats: [
-        '**{firstName}**: "A question, formulated over some weeks. I have removed four earlier versions for being imprecise."',
-        "\"Your response to me is {favResponse}. It does not vary with my tone, my workload, or whether the captain is shouting in the background. I have checked for all three.\"\n\n\"People modulate. It is normal and I do not resent it. I am aware I am difficult to be near. You do not modulate.\"\n\n\"I have run out of hypotheses. I am asking directly, which I understand is the socially expensive option.\"",
+        "**{firstName}**: A question, formulated over some weeks. I have removed four earlier versions for being imprecise.",
+        "Your response to me is {favResponse}. It does not vary with my tone, my workload, or whether the captain is shouting in the background. I have checked for all three.\n\nPeople modulate. It is normal and I do not resent it. I am aware I am difficult to be near. You do not modulate.\n\nI have run out of hypotheses. I am asking directly, which I understand is the socially expensive option.",
       ],
       choice: {
-        prompt: "\"Why do you not modulate.\"",
+        prompt: "Why do you not modulate.",
         options: [
           {
             key: "kind",
             label: "Say he's easy to be near",
             style: 3,
-            close: "\"That is inconsistent with all available evidence.\"\n\n*A long pause.*\n\n\"I am going to record it anyway. I would like there to be one entry in the file that says that.\"",
+            close: "That is inconsistent with all available evidence.\n\n*A long pause.*\n\nI am going to record it anyway. I would like there to be one entry in the file that says that.",
           },
           {
             key: "playful",
             label: "Say you don't have a range",
             style: 1,
-            close: "\"That is a joke. I have identified it as a joke.\"\n\n\"It is also probably false. You have a range. I have seen it deployed at the captain. I am simply not in it, which I find I prefer.\"",
+            close: "That is a joke. I have identified it as a joke.\n\nIt is also probably false. You have a range. I have seen it deployed at the captain. I am simply not in it, which I find I prefer.",
           },
           {
             key: "bold",
             label: "Tell him to stop checking",
             style: 4,
-            close: "\"I cannot.\"\n\n\"Checking is the entire method by which I determine whether a person is still there. Without it I would have to ask, and asking has a failure mode I am not equipped for.\"\n\n\"...I will attempt it. Once. Not tonight.\"",
+            close: "I cannot.\n\nChecking is the entire method by which I determine whether a person is still there. Without it I would have to ask, and asking has a failure mode I am not equipped for.\n\n...I will attempt it. Once. Not tonight.",
           },
         ],
       },
@@ -75,30 +75,30 @@ export default {
 
     closeFriend: {
       beats: [
-        '**{firstName}**: "Come to the lower theater at eleven. The captain will be asleep. Bring nothing."',
-        "*The room is dark except for one lamp. On the bench is a wooden case, old, clearly not medical, and he opens it without preamble.*\n\n*Inside is a set of children's calligraphy brushes.*\n\n\"These are my brother's. He is dead. He died here when I was eleven and I have carried these through four moves and never once used them.\"",
-        "\"I do not know why I keep them. I have written the reasoning out three times and it does not resolve: sentiment is not a category I have any facility with.\"\n\n\"But I found myself wanting you to have seen them, and that impulse also did not resolve, and I have decided to stop attempting to resolve things where you are concerned because the failure rate is one hundred percent.\"",
+        "**{firstName}**: Come to the lower theater at eleven. The captain will be asleep. Bring nothing.",
+        "*The room is dark except for one lamp. On the bench is a wooden case, old, clearly not medical, and he opens it without preamble.*\n\n*Inside is a set of children's calligraphy brushes.*\n\n> These are my brother's. He is dead. He died here when I was eleven and I have carried these through four moves and never once used them.",
+        "> I do not know why I keep them. I have written the reasoning out three times and it does not resolve: sentiment is not a category I have any facility with.\n\n> But I found myself wanting you to have seen them, and that impulse also did not resolve, and I have decided to stop attempting to resolve things where you are concerned because the failure rate is one hundred percent.",
       ],
       choice: {
-        prompt: "\"You may ask one question about him. One. I have a limited supply of answers.\"",
+        prompt: "You may ask one question about him. One. I have a limited supply of answers.",
         options: [
           {
             key: "kind",
             label: "Ask what he was like",
             style: 3,
-            close: "*Jiro does not answer for a long time. When he does, he does not sound like himself.*\n\n\"Loud. Extremely loud. He talked in metaphors and it was intolerable and I would give a great deal to be made to sit through it once more.\"\n\n*He closes the case.* \"That is the question spent. Thank you for spending it on that one.\"",
+            close: "*Jiro does not answer for a long time. When he does, he does not sound like himself.*\n\n> Loud. Extremely loud. He talked in metaphors and it was intolerable and I would give a great deal to be made to sit through it once more.\n\n*He closes the case.*\n\n> That is the question spent. Thank you for spending it on that one.",
           },
           {
             key: "playful",
             label: "Ask if he was any good",
             style: 1,
-            close: "\"Terrible. Genuinely terrible. He was told so repeatedly and it never once landed.\"\n\n*Something almost moves at the corner of his mouth.*\n\n\"I have not said that out loud in nine years. It is still funny. I had assumed it would have stopped being funny.\"",
+            close: "> Terrible. Genuinely terrible. He was told so repeatedly and it never once landed.\n\n*Something almost moves at the corner of his mouth.*\n\n> I have not said that out loud in nine years. It is still funny. I had assumed it would have stopped being funny.",
           },
           {
             key: "bold",
             label: "Ask him to use one",
             style: 4,
-            close: "\"No.\"\n\n*Then he sits down, and takes one out, and holds it for a very long time without doing anything with it.*\n\n\"...If you stay,\" *he says eventually, not looking up,* \"I will try. I have found I can attempt things in front of you that I cannot attempt alone. I have no explanation for that and I have stopped looking for one.\"",
+            close: "> No.\n\n*Then he sits down, and takes one out, and holds it for a very long time without doing anything with it.*\n\n> ...If you stay,\n\n*he says eventually, not looking up,*\n\n> I will try. I have found I can attempt things in front of you that I cannot attempt alone. I have no explanation for that and I have stopped looking for one.",
           },
         ],
       },
@@ -110,30 +110,30 @@ export default {
 
     confidant: {
       beats: [
-        '**{firstName}**: "I am going to state something and I would prefer you not to characterise it as a complaint."',
-        "\"The captain's treatments are not treatments. I am aware. I have been aware since the first one.\"\n\n\"I permit them because the data is genuinely valuable, because he would find someone less able to tolerate it, and because he does not have anybody else. Those are three reasons and I have never needed a fourth.\"",
-        "\"I am telling you because you have begun looking at my arms and stopping yourself from asking, and the not-asking has been going on for eleven days, and it is having an effect on me that I have not previously experienced and cannot name.\"\n\n\"The effect is not distress. I want to be clear. I have no word for what it is. I am hoping that saying it out loud will resolve the ambiguity and I do not think it is going to.\"",
+        "**{firstName}**: I am going to state something and I would prefer you not to characterize it as a complaint.",
+        "The captain's treatments are not treatments. I am aware. I have been aware since the first one.\n\nI permit them because the data is genuinely valuable, because he would find someone less able to tolerate it, and because he does not have anybody else. Those are three reasons and I have never needed a fourth.",
+        "I am telling you because you have begun looking at my arms and stopping yourself from asking, and the not-asking has been going on for eleven days, and it is having an effect on me that I have not previously experienced and cannot name.\n\nThe effect is not distress. I want to be clear. I have no word for what it is. I am hoping that saying it out loud will resolve the ambiguity and I do not think it is going to.",
       ],
       choice: {
-        prompt: "\"You may ask now. You have plainly wanted to for some time.\"",
+        prompt: "You may ask now. You have plainly wanted to for some time.",
         options: [
           {
             key: "kind",
             label: "Ask if it hurts",
             style: 3,
-            close: "\"Yes.\"\n\n*One word, immediate, without a single qualifier attached to it, which from Jiro is the most naked thing he has ever done.*\n\n\"Nobody has asked that. In four years, nobody has asked the pain question. They ask about the results.\"",
+            close: "Yes.\n\n*One word, immediate, without a single qualifier attached to it, which from Jiro is the most naked thing he has ever done.*\n\nNobody has asked that. In four years, nobody has asked the pain question. They ask about the results.",
           },
           {
             key: "playful",
             label: "Say eleven days is impressive",
             style: 1,
-            close: "\"It is. I counted.\"\n\n\"I counted because I was waiting. I have concluded that I was disappointed each day that you did not, which is not a conclusion I enjoy having reached.\"",
+            close: "It is. I counted.\n\nI counted because I was waiting. I have concluded that I was disappointed each day that you did not, which is not a conclusion I enjoy having reached.",
           },
           {
             key: "bold",
             label: "Tell him to refuse the next",
             style: 4,
-            close: "\"That is not a variable I control.\"\n\n*A long silence.*\n\n\"That is a lie. It is entirely a variable I control and I have never once exercised it.\"\n\n\"I will consider it. That is a larger statement than it appears and I would appreciate it not being repeated.\"",
+            close: "That is not a variable I control.\n\n*A long silence.*\n\nThat is a lie. It is entirely a variable I control and I have never once exercised it.\n\nI will consider it. That is a larger statement than it appears and I would appreciate it not being repeated.",
           },
         ],
       },
@@ -145,30 +145,30 @@ export default {
 
     devoted: {
       beats: [
-        '**{firstName}**: "You are stable. I have checked personally, three times, at intervals. The third was unnecessary."',
-        "\"I was not on that mission. I was told the outcome forty minutes after it resolved and I have spent the intervening period attempting to work normally.\"\n\n\"My hands were not steady. That has never happened. I have operated through worse information than that and my hands have never once been a problem.\"",
-        "\"I have been at your bedside since the second check. You have been unconscious for most of it. I did not want you to wake and find me here without an explanation, so this message is the explanation, written at the bedside, which I recognize is absurd.\"\n\n\"I have concluded that the variable I could not name is you. The whole variable. I have been running a model with a term in it I refused to label for eight months.\"",
+        "**{firstName}**: You are stable. I have checked personally, three times, at intervals. The third was unnecessary.",
+        "I was not on that mission. I was told the outcome forty minutes after it resolved and I have spent the intervening period attempting to work normally.\n\nMy hands were not steady. That has never happened. I have operated through worse information than that and my hands have never once been a problem.",
+        "I have been at your bedside since the second check. You have been unconscious for most of it. I did not want you to wake and find me here without an explanation, so this message is the explanation, written at the bedside, which I recognize is absurd.\n\nI have concluded that the variable I could not name is you. The whole variable. I have been running a model with a term in it I refused to label for eight months.",
       ],
       choice: {
-        prompt: "\"You are awake now. I can see that you are reading this. Say something.\"",
+        prompt: "You are awake now. I can see that you are reading this. Say something.",
         options: [
           {
             key: "kind",
             label: "Tell him to put the phone down",
             style: 3,
-            close: "*He puts it down.*\n\n*Then he sits there, hands flat on his knees, entirely still, looking at you with an expression nobody in Mortkranken has ever seen on him.*\n\n\"I do not know what to do now,\" *he says.* \"There is no procedure. Tell me what to do.\"\n\n*You tell him to hold your hand. He does, for four hours, and does not measure anything at all.*",
+            close: "*He puts it down.*\n\n*Then he sits there, hands flat on his knees, entirely still, looking at you with an expression nobody in Mortkranken has ever seen on him.*\n\n> I do not know what to do now,\n\n*he says.*\n\n> There is no procedure. Tell me what to do.\n\n*You tell him to hold your hand. He does, for four hours, and does not measure anything at all.*",
           },
           {
             key: "playful",
             label: "Ask for the third check result",
             style: 1,
-            close: "\"Identical to the second.\"\n\n\"I am aware that was the point of your question. I am answering it literally because the alternative is answering it properly, and I have been at this bedside for nine hours and my defenses are not what they were.\"",
+            close: "> Identical to the second.\n\n> I am aware that was the point of your question. I am answering it literally because the alternative is answering it properly, and I have been at this bedside for nine hours and my defenses are not what they were.",
           },
           {
             key: "bold",
             label: "Tell him to label the term",
             style: 4,
-            close: "*The typing indicator runs, stops, runs again.*\n\n*Then he simply puts the phone face down on the bed and says it out loud instead, quietly, to your hand rather than your face: one word, the correct one, in the flat voice he uses for readings.*\n\n*Then:* \"There. It is labeled. The model is considerably worse now and I do not care.\"",
+            close: "*The typing indicator runs, stops, runs again.*\n\n*Then he simply puts the phone face down on the bed and says it out loud instead, quietly, to your hand rather than to you: one word, the correct one, in the flat voice he uses for readings.*\n\n> There. It is labeled. The model is considerably worse now and I do not care.",
           },
         ],
       },
@@ -180,25 +180,25 @@ export default {
 
     soulbound: {
       beats: [
-        '**{firstName}**: "This message contains no observations. I want that noted at the top, because it is the first one that has not."',
-        "\"{timesMet}. I have that number without looking it up. I have had it without looking it up for some time.\"\n\n\"I have kept a file on you since the fourth visit. It began as habit. It stopped being habit at approximately visit twenty and I continued anyway, which means it became something else, and I have known what that something else was for a year and have declined to write it down.\"",
-        "\"My brother used to say that a thing not said out loud has not happened. He said a great many things and most of them were nonsense. That one has been sitting in my head for nine years like a splinter.\"\n\n\"I am inclined to think he was right, which is intolerable, and which is why I am doing this rather than continuing to be extremely comfortable.\"",
-        "\"I love you.\"\n\n\"I have no supporting data. There is no measurement I could take that would demonstrate it and I have looked for one. I spent two months looking for one, which I am telling you because it is the most honest thing I know about myself.\"\n\n\"It is simply true and it is not going to stop being true, and I have said it out loud, so now it has happened.\"",
+        "**{firstName}**: This message contains no observations. I want that noted at the top, because it is the first one that has not.",
+        "{timesMet}. I have that number without looking it up. I have had it without looking it up for some time.\n\nI have kept a file on you since the fourth visit. It began as habit. It stopped being habit at approximately visit twenty and I continued anyway, which means it became something else, and I have known what that something else was for a year and have declined to write it down.",
+        "My brother used to say that a thing not said out loud has not happened. He said a great many things and most of them were nonsense. That one has been sitting in my head for nine years like a splinter.\n\nI am inclined to think he was right, which is intolerable, and which is why I am doing this rather than continuing to be extremely comfortable.",
+        "I love you.\n\nI have no supporting data. There is no measurement I could take that would demonstrate it and I have looked for one. I spent two months looking for one, which I am telling you because it is the most honest thing I know about myself.\n\nIt is simply true and it is not going to stop being true, and I have said it out loud, so now it has happened.",
       ],
       choice: {
-        prompt: "\"Take whatever time you require. I am extremely good at intervals.\"",
+        prompt: "Take whatever time you require. I am extremely good at intervals.",
         options: [
           {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "\"Repeat that.\"\n\n*You do.*\n\n\"Again. I am attempting to record it accurately and I am failing, which does not happen.\"\n\n*And then, thirty seconds later, he is in the doorway, having run, plainly, which he does not do, and he crosses the room and takes hold of you with a complete absence of technique, and it is the least clinical thing that has ever happened in Mortkranken.*",
+            close: "Repeat that.\n\n*You do.*\n\nAgain. I am attempting to record it accurately and I am failing, which does not happen.\n\n*And then, thirty seconds later, he is in the doorway, having run, plainly, which he does not do, and he crosses the room and takes hold of you with a complete absence of technique, and it is the least clinical thing that has ever happened in Mortkranken.*",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
-            close: "\"Understood. That is a reasonable request and I would have made the same one.\"\n\n\"I want to state, so that it is unambiguous: nothing in my behavior is contingent on your answer. I will continue to check on you. I will continue to be at the lower theater at eleven. I would have done both of those things regardless and did, for eight months, while refusing to label the term.\"\n\n\"The brushes stay in the case on the bench. You know where they are.\"",
+            close: "Understood. That is a reasonable request and I would have made the same one.\n\nI want to state, so that it is unambiguous: nothing in my behavior is contingent on your answer. I will continue to check on you. I will continue to be at the lower theater at eleven. I would have done both of those things regardless and did, for eight months, while refusing to label the term.\n\nThe brushes stay in the case on the bench. You know where they are.",
           },
         ],
       },

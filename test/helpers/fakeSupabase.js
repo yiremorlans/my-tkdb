@@ -340,6 +340,179 @@ export function createFakeSupabase(initialTables = {}) {
       return true;
     },
 
+    // db/migrations/016: the Accept button. One conditional UPDATE whose WHERE
+    // tests "the mission is open" and "this user holds nothing" together, so an
+    // ineligible click matches zero rows and the mission stays open.
+    //
+    // The partial unique index that backstops it against write skew is a
+    // Postgres property and is NOT modelled here — same caveat as the other rpc
+    // stand-ins.
+    claim_mission({ p_mission_id, p_user_id, p_accept_hours = 48, p_day_start = null, p_daily_lead_cap = null }) {
+      tables.missions = tables.missions || [];
+
+      const mission = tables.missions.find((r) => r.id === p_mission_id);
+      const held = tables.missions.find(
+        (r) => r.accepted_by === p_user_id && r.status === 'accepted',
+      );
+
+      // db/migrations/018: counted on accepts, not completions — taking two and
+      // letting both lapse still spends the player's day.
+      const ledToday = (p_day_start == null || p_daily_lead_cap == null)
+        ? 0
+        : tables.missions.filter(
+            (r) => r.accepted_by === p_user_id && r.accepted_at != null && r.accepted_at >= p_day_start,
+          ).length;
+      const capped = p_daily_lead_cap != null && p_day_start != null && ledToday >= p_daily_lead_cap;
+
+      if (mission && mission.status === 'open' && !held && !capped) {
+        const now = rpcNow.toISOString();
+        mission.accepted_by = p_user_id;
+        mission.accepted_at = now;
+        mission.accept_expires_at = new Date(
+          rpcNow.getTime() + p_accept_hours * 60 * 60 * 1000,
+        ).toISOString();
+        mission.status = 'accepted';
+        return 'claimed';
+      }
+
+      if (mission && mission.status === 'open') {
+        // Reported ahead of 'busy' when both apply: telling someone to finish
+        // their current mission implies another is waiting afterwards.
+        if (capped) return 'capped';
+        return `busy:${held?.mission_type || 'unknown'}`;
+      }
+
+      return 'taken';
+    },
+
+    // db/migrations/016: lock the row, re-check the signature map, then close
+    // it. The re-check is what makes a stale /docs button harmless, and the
+    // point count comes back from the same row so it can't disagree.
+    file_errand({ p_mission_id, p_user_id }) {
+      tables.missions = tables.missions || [];
+
+      const mission = tables.missions.find(
+        (r) =>
+          r.id === p_mission_id
+          && r.accepted_by === p_user_id
+          && r.status === 'accepted'
+          && r.mission_type === 'errand',
+      );
+      if (!mission) return 'gone';
+
+      const signatures = mission.signatures || {};
+      if (Object.values(signatures).some((at) => at == null)) return 'not_ready';
+
+      mission.status = 'completed';
+      mission.completed_at = rpcNow.toISOString();
+      return `filed:${Object.keys(signatures).length}`;
+    },
+
+    // db/migrations/016: resolve the user's held errand, and flip one target if
+    // that character is still unsigned. Conditional on still-unsigned, so
+    // meeting the same target twice signs once.
+    sign_errand_target({ p_user_id, p_character_id }) {
+      tables.missions = tables.missions || [];
+
+      const mission = tables.missions.find(
+        (r) =>
+          r.accepted_by === p_user_id
+          && r.status === 'accepted'
+          && r.mission_type === 'errand'
+          && r.signatures
+          && p_character_id in r.signatures
+          && r.signatures[p_character_id] == null,
+      );
+      if (!mission) return null;
+
+      mission.signatures[p_character_id] = rpcNow.toISOString();
+      const values = Object.values(mission.signatures);
+      return {
+        house: mission.house,
+        total: values.length,
+        signed: values.filter((at) => at != null).length,
+      };
+    },
+
+    // db/migrations/016: a second user backing up a co-op. Nothing here touches
+    // accepted_by, which is why assisting never spends the helper's own slot.
+    claim_coop_helper({ p_mission_id, p_user_id }) {
+      tables.missions = tables.missions || [];
+
+      const mission = tables.missions.find((r) => r.id === p_mission_id);
+      if (
+        !mission
+        || mission.status !== 'accepted'
+        || mission.mission_type !== 'coop'
+        || mission.helper_user_id != null
+      ) {
+        return 'taken';
+      }
+      if (mission.accepted_by === p_user_id) return 'self';
+
+      mission.helper_user_id = p_user_id;
+      mission.status = 'completed';
+      mission.completed_at = rpcNow.toISOString();
+      return 'joined';
+    },
+
+    // db/migrations/016: spend one banked reset, but only on a command that is
+    // genuinely still cooling down. The credit is an unspent mission_log row —
+    // there is no separate credits table. The row locks that serialize two
+    // clicks are a Postgres property and are NOT modelled here; this checks the
+    // decision table, not the atomicity.
+    spend_cooldown_reset({ p_user_id, p_command, p_cooldown_seconds }) {
+      tables.command_limits = tables.command_limits || [];
+      tables.mission_log = tables.mission_log || [];
+
+      const limit = tables.command_limits.find(
+        (r) => r.discord_user_id === p_user_id && r.command_name === p_command,
+      );
+      if (!limit) return 'not_needed';
+
+      const elapsedMs = rpcNow.getTime() - new Date(limit.last_used_at).getTime();
+      if (elapsedMs >= p_cooldown_seconds * 1000) return 'not_needed';
+
+      // Cheapest sufficient credit first: a co-op's reset clears the one
+      // command they're blocked on just as well, so spend it and leave the
+      // two-command one banked. Oldest first within a scope.
+      const credit = tables.mission_log
+        .filter((r) => r.discord_user_id === p_user_id && r.reset_spent_at == null)
+        .sort(
+          (a, b) =>
+            (a.mission_type !== 'coop') - (b.mission_type !== 'coop')
+            || new Date(a.completed_at || 0) - new Date(b.completed_at || 0),
+        )[0];
+      if (!credit) return 'none';
+
+      const cleared = credit.mission_type === 'coop' ? [p_command] : ['roam', 'meet'];
+      tables.command_limits = tables.command_limits.filter(
+        (r) => !(r.discord_user_id === p_user_id && cleared.includes(r.command_name)),
+      );
+
+      credit.reset_spent_at = rpcNow.toISOString();
+      credit.reset_spent_on = credit.mission_type === 'coop' ? p_command : 'both';
+      return credit.reset_spent_on;
+    },
+
+    // db/migrations/016: the riddle solve.
+    complete_mission({ p_mission_id, p_user_id, p_type }) {
+      tables.missions = tables.missions || [];
+
+      const mission = tables.missions.find(
+        (r) =>
+          r.id === p_mission_id
+          && r.accepted_by === p_user_id
+          && r.status === 'accepted'
+          && r.mission_type === p_type,
+      );
+      if (!mission) return false;
+
+      mission.status = 'completed';
+      mission.completed_at = rpcNow.toISOString();
+      return true;
+    },
+
     // db/migrations/011: INSERT ... ON CONFLICT DO UPDATE SET wins = wins + 1
     record_encounter_win({ p_user_id, p_guild_id }) {
       const yearMonth = `${rpcNow.getUTCFullYear()}-${String(rpcNow.getUTCMonth() + 1).padStart(2, '0')}`;

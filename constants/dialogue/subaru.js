@@ -9,29 +9,29 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: \"Is it all right that I'm messaging you like this? Do say if it's an intrusion. I'd rather know now than wonder about it all evening.\"",
-        "\"I wanted to say thank you properly and I kept not managing it in person. You've been round {timesMet} times now and every time I've had a whole sentence ready and then said something about the weather instead.\"\n\n\"So this is the sentence. You never call me Captain. Everyone calls me Captain and I have to smile and let it stand each time, because I'm not one, not really. I'm a figurehead, whatever the sheet says.\"\n\n\"You just use my name. It's a small thing. It's been the nicest part of my week for several weeks.\"",
+        "**{firstName}**: Is it all right that I'm messaging you like this? Do say if it's an intrusion. I'd rather know now than wonder about it all evening.",
+        "I wanted to say thank you properly and I kept not managing it in person. You've been round {timesMet} times now and every time I've had a whole sentence ready and then said something about the weather instead.\n\nSo this is the sentence. You never call me Captain. Everyone calls me Captain and I have to smile and let it stand each time, because I'm not one, not really. I'm a figurehead, whatever the sheet says.\n\nYou just use my name. It's a small thing. It's been the nicest part of my week for several weeks.",
       ],
       choice: {
-        prompt: "\"...That was rather a lot at once, wasn't it. Tell me if it was too much.\"",
+        prompt: "...That was rather a lot at once, wasn't it. Tell me if it was too much.",
         options: [
           {
             key: "kind",
             label: "Say his name back",
             style: 3,
-            close: "*There's a pause.*\n\n\"Oh.\"\n\n*Then, after a moment:* \"That's... yes. That. Thank you. I don't think I'll manage much composure for the rest of the evening.\"",
+            close: "*There's a pause.*\n\nOh.\n\n*Then, after a moment:* That's... yes. That. Thank you. I don't think I'll manage much composure for the rest of the evening.",
           },
           {
             key: "playful",
             label: "Ask about the weather",
             style: 1,
-            close: "\"...You're teasing me.\"\n\n\"That's all right. I don't mind it from you. Actually I've noticed I don't mind quite a lot of things from you, which is a whole separate thing I'm not going to examine tonight.\"",
+            close: "...You're teasing me.\n\nThat's all right. I don't mind it from you. Actually I've noticed I don't mind quite a lot of things from you, which is a whole separate thing I'm not going to examine tonight.",
           },
           {
             key: "bold",
             label: "Tell him he is the captain",
             style: 4,
-            close: "\"Please don't.\"\n\n*Then, more gently:* \"That came out sharper than I meant it. It's just that when people say it, I have to be it, and for about ten minutes in this conversation I wasn't having to be anything.\"\n\n\"...Could we go back to that part?\"",
+            close: "Please don't.\n\n*Then, more gently:* That came out sharper than I meant it. It's just that when people say it, I have to be it, and for about ten minutes in this conversation I wasn't having to be anything.\n\n...Could we go back to that part?",
           },
         ],
       },
@@ -43,29 +43,29 @@ export default {
 
     friend: {
       beats: [
-        '**{firstName}**: "May I tell you something slightly unpleasant about myself? I\'d rather you heard it from me."',
-        "\"Everyone thinks I'm kind. I'm not especially. I'm accommodating, which looks the same from outside and is mostly fear.\"\n\n\"And the truth is I think people are worse than the anomalies. I've read enough of what they leave on things. Doorframes, handrails, cups. People put the ugliest parts of themselves down without noticing and I pick them all up.\"\n\n\"You answer me with {favResponse} every time and it never once has a second thing under it. Do you know how rare that is, for someone who can check?\"",
+        "**{firstName}**: May I tell you something slightly unpleasant about myself? I'd rather you heard it from me.",
+        "Everyone thinks I'm kind. I'm not especially. I'm accommodating, which looks the same from outside and is mostly fear.\n\nAnd the truth is I think people are worse than the anomalies. I've read enough of what they leave on things. Doorframes, handrails, cups. People put the ugliest parts of themselves down without noticing and I pick them all up.\n\nYou answer me with {favResponse} every time and it never once has a second thing under it. Do you know how rare that is, for someone who can check?",
       ],
       choice: {
-        prompt: "\"There. Now you know I'm a bit horrible. Say something.\"",
+        prompt: "There. Now you know I'm a bit horrible. Say something.",
         options: [
           {
             key: "kind",
             label: "Say that isn't horrible",
             style: 3,
-            close: "\"It is a bit.\"\n\n*A pause.*\n\n\"But thank you for arguing. Nobody argues with me. They agree with whatever I've said about myself, and I've never once found that comforting.\"",
+            close: "It is a bit.\n\nBut thank you for arguing. Nobody argues with me. They agree with whatever I've said about myself, and I've never once found that comforting.",
           },
           {
             key: "playful",
             label: "Ask what your doorframe said",
             style: 1,
-            close: "\"I'd never...!\"\n\n\"...Nothing bad. Nothing at all, actually, which almost never happens. It was like putting my hand on clean water.\"\n\n\"That was far too much. Good night.\"",
+            close: "I'd never...!\n\n...Nothing bad. Nothing at all, actually, which almost never happens. It was like putting my hand on clean water.\n\nThat was far too much. Good night.",
           },
           {
             key: "bold",
             label: "Tell him to stop accommodating",
             style: 4,
-            close: "*A long silence.*\n\n\"I don't know what I'd be,\" *he writes.* \"That's the honest answer. I've been accommodating since I was eight years old and standing on a stage.\"\n\n\"But you're the first person who's asked to find out. I might try. Slowly. Please be patient with me.\"",
+            close: "*A long silence.*\n\nI don't know what I'd be, *he writes.* That's the honest answer. I've been accommodating since I was eight years old and standing on a stage.\n\nBut you're the first person who's asked to find out. I might try. Slowly. Please be patient with me.",
           },
         ],
       },
@@ -77,30 +77,30 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: \"Are you awake? There's something in the Hotarubi music room I'd like you to see, and it has to be tonight. It's the anniversary and I don't think I can do it on my own this year.\"",
-        "*The room is dark. He's laid out a fan, a comb, and a folded haori on the low table, arranged with a precision that is clearly ritual.*\n\n\"These were my grandmother's. She taught me the first dance I ever performed. I hold them once a year and I read what's left on them, and it's the only time I've ever been glad of this stigma.\"",
-        "\"I've never brought anyone. It felt like it would spoil it. It hasn't.\"\n\n*He holds the fan out to you, then hesitates, then puts it in your hands anyway.*\n\n\"There. Now there'll be some of you on it, and next year I'll read that too. I've just made you part of a very old thing and I didn't ask first. I'm not sorry, which is new for me.\"",
+        "**{firstName}**: Are you awake? There's something in the Hotarubi music room I'd like you to see, and it has to be tonight. It's the anniversary and I don't think I can do it on my own this year.",
+        "*The room is dark. He's laid out a fan, a comb, and a folded haori on the low table, arranged with a precision that is clearly ritual.*\n\n> These were my grandmother's. She taught me the first dance I ever performed. I hold them once a year and I read what's left on them, and it's the only time I've ever been glad of this stigma.",
+        "> I've never brought anyone. It felt like it would spoil it. It hasn't.\n\n*He holds the fan out to you, then hesitates, then puts it in your hands anyway.*\n\n> There. Now there'll be some of you on it, and next year I'll read that too. I've just made you part of a very old thing and I didn't ask first. I'm not sorry, which is new for me.",
       ],
       choice: {
-        prompt: "\"...Say something. My hands are shaking a bit.\"",
+        prompt: "...Say something. My hands are shaking a bit.",
         options: [
           {
             key: "kind",
             label: "Ask about the first dance",
             style: 3,
-            close: "*He tells you, and then he shows you: three steps of it in the dark in his socks, and stops halfway, embarrassed and lit up all at once.*\n\n\"I haven't done that in two years,\" *he says.* \"Not for anyone. Not even for myself.\"",
+            close: "*He tells you, and then he shows you: three steps of it in the dark in his socks, and stops halfway, embarrassed and lit up all at once.*\n\n> I haven't done that in two years,\n\n*he says.*\n\n> Not for anyone. Not even for myself.",
           },
           {
             key: "playful",
             label: "Ask what the fan says now",
             style: 1,
-            close: "*He goes very red.*\n\n\"I'm not telling you.\"\n\n*A pause.*\n\n\"It's warm. That's all you're getting. It's warm and I'm going to be thinking about it for a year.\"",
+            close: "*He goes very red.*\n\n> I'm not telling you.\n\n> It's warm. That's all you're getting. It's warm and I'm going to be thinking about it for a year.",
           },
           {
             key: "bold",
             label: "Take his hand instead",
             style: 4,
-            close: "*He freezes completely, the one thing he never lets happen, skin on skin, no glove, nothing between.*\n\n*Then he doesn't pull away. He closes his eyes and stands very still, and after a long moment he says, unsteadily:* \"There's nothing frightening in you at all. I've been so afraid there would be.\"",
+            close: "*He freezes completely, the one thing he never lets happen, skin on skin, no glove, nothing between.*\n\n*Then he doesn't pull away. He closes his eyes and stands very still, and after a long moment he says, unsteadily:*\n\n> There's nothing frightening in you at all. I've been so afraid there would be.",
           },
         ],
       },
@@ -112,30 +112,30 @@ export default {
 
     confidant: {
       beats: [
-        "**{firstName}**: \"I know it's late. I've started this message six times and deleted it, and the seventh one is going to go whether I'm ready or not.\"",
-        "\"They ask when I'm going back to the stage. Every letter, every visit. The hiatus is 'temporary'. It's been three years of temporary.\"\n\n\"I can't tell them the truth, which is that the last time I stood in the wings I touched the curtain rope and read everything the man before me had left on it, and I have not been able to go near a theater since.\"",
-        "\"So I'm here being a captain I'm not, and a kabuki actor who doesn't act, and rather good, I'm told, at making everyone else comfortable and rather bad at ever doing the same for myself.\"\n\n\"And I have told exactly nobody. Haku suspects. Zenji would understand and I can't bear the idea of him being gentle about it.\"\n\n\"You get it because you're the only person I don't have to be anything in front of. That's not a small thing to hand somebody. Please be careful with it.\"",
+        "**{firstName}**: I know it's late. I've started this message six times and deleted it, and the seventh one is going to go whether I'm ready or not.",
+        "They ask when I'm going back to the stage. Every letter, every visit. The hiatus is \"temporary\". It's been three years of temporary.\n\nI can't tell them the truth, which is that the last time I stood in the wings I touched the curtain rope and read everything the man before me had left on it, and I have not been able to go near a theater since.",
+        "So I'm here being a captain I'm not, and a kabuki actor who doesn't act, and rather good, I'm told, at making everyone else comfortable and rather bad at ever doing the same for myself.\n\nAnd I have told exactly nobody. Haku suspects. Zenji would understand and I can't bear the idea of him being gentle about it.\n\nYou get it because you're the only person I don't have to be anything in front of. That's not a small thing to hand somebody. Please be careful with it.",
       ],
       choice: {
-        prompt: "\"Now. Please say something before I talk myself out of having sent any of this.\"",
+        prompt: "Now. Please say something before I talk myself out of having sent any of this.",
         options: [
           {
             key: "kind",
             label: "Tell him he's allowed to stop",
             style: 3,
-            close: "*There's no reply for a long time.*\n\n\"Nobody has ever said that to me,\" *he writes finally.* \"Not once, in twenty years. Everyone's always been so *encouraging*.\"\n\n\"I think I'm going to cry, and I'd rather do that here than anywhere with people in it. Stay a minute?\"\n\n*You stay all night.*",
+            close: "*There's no reply for a long time.*\n\nNobody has ever said that to me, *he writes finally.* Not once, in twenty years. Everyone's always been so *encouraging*.\n\nI think I'm going to cry, and I'd rather do that here than anywhere with people in it. Stay a minute?\n\n*You stay all night.*",
           },
           {
             key: "playful",
             label: "Ask if Haku wrote this",
             style: 1,
-            close: "\"Absolutely not, this is all me, and now I'm a little offended.\"\n\n*A pause.*\n\n\"...Though he did talk me out of three different endings. He's very patient with me.\"",
+            close: "Absolutely not, this is all me, and now I'm a little offended.\n\n...Though he did talk me out of three different endings. He's very patient with me.",
           },
           {
             key: "bold",
             label: "Offer to go with him",
             style: 4,
-            close: "\"To a *theater*?\"\n\n*A long pause.*\n\n\"...If you were holding the other end of my sleeve, I might manage the door. Not the stage. The door.\"\n\n\"That's more than I've had in three years. Ask me again in the spring, and don't let me talk you out of it, because I will absolutely try.\"",
+            close: "To a *theater*?\n\n*A long pause.*\n\n...If you were holding the other end of my sleeve, I might manage the door. Not the stage. The door.\n\nThat's more than I've had in three years. Ask me again in the spring, and don't let me talk you out of it, because I will absolutely try.",
           },
         ],
       },
@@ -147,30 +147,30 @@ export default {
 
     devoted: {
       beats: [
-        '**{firstName}**: "You left your scarf in the common room. I picked it up without thinking, and... well."',
-        "\"I read it. Not on purpose. That's the whole trouble with this thing, it doesn't ask me first.\"\n\n\"There was a great deal of me on it. Rather more than I was expecting. You've been thinking about me at times when there was no reason to be thinking about me at all.\"",
-        "\"I should have put it down the moment I realized. I held onto it for nearly an hour instead, in an empty room, like a thief.\"\n\n\"I've spent my whole life reading things people never meant to tell me and being ashamed of it. This is the first time I haven't been ashamed, and that frightens me more than the reading ever did.\"",
+        "**{firstName}**: You left your scarf in the common room. I picked it up without thinking, and... well.",
+        "I read it. Not on purpose. That's the whole trouble with this thing, it doesn't ask me first.\n\nThere was a great deal of me on it. Rather more than I was expecting. You've been thinking about me at times when there was no reason to be thinking about me at all.",
+        "I should have put it down the moment I realized. I held onto it for nearly an hour instead, in an empty room, like a thief.\n\nI've spent my whole life reading things people never meant to tell me and being ashamed of it. This is the first time I haven't been ashamed, and that frightens me more than the reading ever did.",
       ],
       choice: {
-        prompt: "\"So. Am I forgiven, or ought I to be?\"",
+        prompt: "So. Am I forgiven, or ought I to be?",
         options: [
           {
             key: "kind",
             label: "Tell him you don't mind",
             style: 3,
-            close: "\"You should mind. Everyone minds.\"\n\n*A pause.*\n\n\"...I'm keeping it until tomorrow, then. Just tonight. Please don't ask me to explain why.\"",
+            close: "You should mind. Everyone minds.\n\n...I'm keeping it until tomorrow, then. Just tonight. Please don't ask me to explain why.",
           },
           {
             key: "playful",
             label: "Ask what else it told him",
             style: 1,
-            close: "\"Absolutely not.\"\n\n\"...It told me you were cold. Which I'd have known if I'd simply looked at you, so really the stigma was no help at all and I've been dramatic for nothing.\"",
+            close: "Absolutely not.\n\n...It told me you were cold. Which I'd have known if I'd simply looked at you, so really the stigma was no help at all and I've been dramatic for nothing.",
           },
           {
             key: "bold",
             label: "Tell him he read it right",
             style: 4,
-            close: "*The typing indicator starts and stops for nearly five minutes.*\n\n*Then he's at your door with the scarf in both hands, and he doesn't hand it over. He puts it round your neck himself, very carefully, and doesn't step back afterwards.*\n\n\"I read it right,\" *he says, barely above a whisper.* \"I've never once wanted to be right about something so badly.\"",
+            close: "*The typing indicator starts and stops for nearly five minutes.*\n\n*Then he's at your door with the scarf in both hands, and he doesn't hand it over. He puts it round your neck himself, very carefully, and doesn't step back afterwards.*\n\n> I read it right,\n\n*he says, barely above a whisper.*\n\n> I've never once wanted to be right about something so badly.",
           },
         ],
       },
@@ -182,25 +182,25 @@ export default {
 
     soulbound: {
       beats: [
-        "**{firstName}**: \"I've rehearsed this more than I've ever rehearsed anything for the stage, which given my history is saying a great deal.\"",
-        "\"{timesMet} times. I've read every doorframe you've touched in this house and I have never once found a bad thought about me on any of them, and I have looked. I want you to know I looked, because it's the least generous thing I've ever done and you deserve to know I did it.\"",
-        "\"I was raised to be watched. Thousands of people, and none of them could see me at all. That's rather the point of the paint.\"\n\n\"You've never seen the paint. You've had nothing but the boy who fusses and reads doorframes and can't go near a theater, and you keep coming back to *that*, which I have never in my life had happen.\"",
-        "\"I love you.\"\n\n\"I've held that on a shelf for a very long time and told myself it was inappropriate, or unfair to you, or that I'd be a burden, and every single one of those was a way of not saying it.\"\n\n\"So it's said. Badly rehearsed and entirely honest, and it's the only thing about this message I'm sure of.\"",
+        "**{firstName}**: I've rehearsed this more than I've ever rehearsed anything for the stage, which given my history is saying a great deal.",
+        "{timesMet} times. I've read every doorframe you've touched in this house and I have never once found a bad thought about me on any of them, and I have looked. I want you to know I looked, because it's the least generous thing I've ever done and you deserve to know I did it.",
+        "I was raised to be watched. Thousands of people, and none of them could see me at all. That's rather the point of the paint.\n\nYou've never seen the paint. You've had nothing but the boy who fusses and reads doorframes and can't go near a theater, and you keep coming back to *that*, which I have never in my life had happen.",
+        "I love you.\n\nI've held that on a shelf for a very long time and told myself it was inappropriate, or unfair to you, or that I'd be a burden, and every single one of those was a way of not saying it.\n\nSo it's said. Badly rehearsed and entirely honest, and it's the only thing about this message I'm sure of.",
       ],
       choice: {
-        prompt: "\"Take all the time you want. I've been patient for three years about far less important things.\"",
+        prompt: "Take all the time you want. I've been patient for three years about far less important things.",
         options: [
           {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "*The reply is just:* \"Come to the music room.\"\n\n*He's standing in the middle of it with the lights off, and when you take his hands he lets you, both of them, bare: everything you have ever thought about him arriving at once, all of it, nothing held back.*\n\n*He makes a small sound and puts his forehead against yours.*\n\n\"Oh,\" *he says.* \"Oh, I see. You've been saying it all along, haven't you. I just couldn't read it until you let me.\"",
+            close: "*The reply is just:* Come to the music room.\n\n*He's standing in the middle of it with the lights off, and when you take his hands he lets you, both of them, bare: everything you have ever thought about him arriving at once, all of it, nothing held back.*\n\n*He makes a small sound and puts his forehead against yours.*\n\n> Oh,\n\n*he says.*\n\n> Oh, I see. You've been saying it all along, haven't you. I just couldn't read it until you let me.",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
-            close: "\"Of course. Truly, of course.\"\n\n\"I've spent three years being asked when I'm going back to something I'm not ready for, so I would be the very last person to put a clock on you.\"\n\n\"Nothing changes. I'll still be in the music room on Thursdays. I'll still make far too much tea. And I shall not mention this again unless you do, not out of pride, but because I'd like you to be able to come and sit with me without a question in the room.\"\n\n*And he doesn't. Not once. But the fan stays out on the table where it can read your hands, all year.*",
+            close: "Of course. Truly, of course.\n\nI've spent three years being asked when I'm going back to something I'm not ready for, so I would be the very last person to put a clock on you.\n\nNothing changes. I'll still be in the music room on Thursdays. I'll still make far too much tea. And I shall not mention this again unless you do, not out of pride, but because I'd like you to be able to come and sit with me without a question in the room.\n\n*And he doesn't. Not once. But the fan stays out on the table where it can read your hands, all year.*",
           },
         ],
       },
