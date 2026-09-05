@@ -16,14 +16,14 @@ export default {
         '"Not good at this."\n\n*Another gap.*\n\n"Youve been around {timesMet} times now. Bandana says I shoulda said something by now. He\'s right. Not telling him that."\n\n"...So. Said something."',
       ],
       choice: {
-        prompt: "\"That's it. That's the message.\"",
+        prompt: '"That\'s it."',
         options: [
           {
             key: "kind",
             label: "Tell him it's a good start",
             style: 3,
             close:
-              '"...Yeah."\n\n*A minute later:* "Thnaks."\n\n*Then:* "*Thanks."\n\n*That\'s the last one. But the read receipt sits there a long time, so he didn\'t put the phone down.*',
+              '"...Yeah."\n\n*A minute later:* "Thnaks."\n\n*Then:* "*Thanks."\n\n*That\'s the last one.*',
           },
           {
             key: "playful",
@@ -150,13 +150,13 @@ export default {
             label: "Ask him straight out",
             style: 4,
             close:
-              '*The typing indicator runs for almost ten minutes and produces one line.*\n\n"Yes. And I\'d do it again, and that\'s the part that keeps me up."\n\n*Then:* "You still there"\n\n*You say yes. He doesn\'t answer, but the read receipt stays lit until the sun comes up.*',
+              '*The typing indicator runs for almost ten minutes and produces one line.*\n\n"Yes. And I\'d do it again, and that\'s the part that keeps me up."\n\n*Then:* "You still there"\n\n*You say yes. He doesn\'t answer. The read receipt just sits there, timestamped, until the sun comes up.*',
           },
         ],
       },
       keepsake: {
         emoji: "📲",
-        line: "A read receipt that stayed lit until sunrise.",
+        line: "A read receipt, timestamped, that never got a reply before sunrise.",
       },
     },
 

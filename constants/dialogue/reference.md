@@ -1638,6 +1638,72 @@ Lyca is also somewhat protective of the MC, whether it be from Edward and Rui's 
 
 Background
 In Episode 5, when Lyca was first introduced to MC, Haku, and Zenji by Subaru, the latter reveals Lyca was the offspring of a human and a werewolf and had always worn an earring since the day of his birth, in which Subaru was able to read his memories from with the help of his sitgma.
+
+Opening Cutscene	Dammit! Get back! You're a human, you're s'posed to run away! This is my mess to fix, I'm gonna drag 'em all to hell.
+Summon	What do you want me to do? Say it.
+Login Bonus	 TBA
+Home Screen
+Title & Affinity LVL	Voiceline
+Login	 ...You again. Where're we going today?
+New Message	 Hey, you got letters. Don't you have to read them? Oh, don't you know how?
+Default 1	 You smell sweeter than usual today... Stop. Go away.
+Default 2	 You want to touch me? Fine. Ten seconds and that's it.
+Default 3	 When I find Neros, I wanna prove I've been getting along with humans. Then he'll definitely let me live with him.
+Default 4	 Hey! Moth-eaten Casanova! Where'd you go? I'm gonna show you my special move today.
+Default 5	 This phone thingy they gave me keeps making noises and making me jump... Why do I gotta carry it everywhere? It's scary!
+Idle 1	 ...I'm going for a walk.
+Idle 2	 Hey, you alive? Huh, you're breathing so I guess so.
+Welcome Back	 How come you stopped coming? Do you hate me? It made my heart all squeezy, so don't do it again.
+Morning 1
+Affinity LVL 1	 Mnn... Let me sleep... Don't touch me... Zzz...
+Morning 2
+Affinity LVL 14	 That stupid blond gigolo ran off with my blanket. I'm not done sleeping yet...
+Morning 3
+Affinity LVL 15	 I can't get back to sleep... I'm gonna wake up that moth-eaten Casanova for a walk.
+Morning 4
+Affinity LVL 11	 What's a "so-shul skill"? That blond gigolo was talking about them. He said I don't have any. Is that a good thing?
+Morning 5
+Affinity LVL 20	 ...Did you cry? Your scent is all squeezy. How come?
+Noon 1
+Affinity LVL 2	 Laws, school regulations, anomalous law... Manners, morals, rules... How're you s'posed to remember all that?
+Noon 2
+Affinity LVL 7	 I don't mind classes. The teachers say cool stuff. Once I learn to read the textbooks and the notes and the blackboard it'll be perfect.
+Noon 3
+Affinity LVL 16	 The teacher asked us to name an anomalous plant you can eat but when I did he said humans can't eat it. So what? I can, so I'm not wrong.
+Noon 4
+Affinity LVL 12	 I'm starving... I wanna eat Sho's food, but I can't order it without Suba... Wait, you can read, right?
+Noon 5
+Affinity LVL 21	 I wanna go to the cafeteria, but the teachers won't give me my pocket money. They said I'll get "spoiled." The hell does that mean?!
+Evening 1
+Affinity LVL 3	 Urgh... My skin's crawling... Moon must be gettin' round soon...
+Evening 2
+Affinity LVL 6	 I didn't do anything wrong! Those guys were saying mean stuff about me 'cause they thought I couldn't hear. All I did was yell at them.
+Evening 3
+Affinity LVL 8	 There was this big noise in our practical class and my ears popped out. Everyone ran away screaming. Damn it...
+Evening 4
+Affinity LVL 13	 That moth-eaten Casanova's in his room all day so I tried to take him for a walk, but he locked his door and ignored me. The hell?!
+Evening 5
+Affinity LVL 22	 That moth-eaten Casanova told me humans like it if you ignore them sometimes. Something about playing hard to get? I'm gonna try it tomorrow.
+Night 1
+Affinity LVL 4	 At first I was sad 'cause I got put in a different house to Suba, but all kinds of stuff happens here every day so it was fine.
+Night 2
+Affinity LVL 5	 H-Hey, don't come so close! Somethin' about your scent makes my stomach feel weird!
+Night 3
+Affinity LVL 9	 This? It's a picture book, duh. How come you don't know that when you're a human? I study with it before bed, everyone does it.
+Night 4
+Affinity LVL 18	 I'm drawing. If I draw all the good stuff and bad stuff that happened every day I won't forget about it.
+Night 5
+Affinity LVL 23	 I'll stay here and be quiet at night, even when the moon's not round. 'Cause you're tired, aren't you? Go sleep.
+Goodnight 1
+Affinity LVL 10	 This blanket's not trash, it's just dirty. I can't sleep without it, so hands off.
+Goodnight 2
+Affinity LVL 17	 In the last place I never knew what time it was and I pretty much just slept all day. Now I gotta get used to having a "roo-teen."
+Goodnight 3
+Affinity LVL 19	 Huh? The blood on my bed? ...It's nothing. Don't touch my stuff, you're gonna get your smell all over it!
+Goodnight 4
+Affinity LVL 24	 Sleep here. Huh? Is there a law that says we can't sleep together? There's not, is there? Hurry up and lie down.
+Max Affinity
+Affinity LVL 25	 I'm gonna work hard... I'll gonna work so hard, they're gonna say I can live with humans forever...
 ------
 
 Shion

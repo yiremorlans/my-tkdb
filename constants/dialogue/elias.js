@@ -8,7 +8,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: \"Good evening. I hope this doesn't startle you, arriving out of nowhere like this. It's nothing serious, I promise. There's something I've been meaning to say, and the right moment kept not arriving, so… I suppose I'm making one now.\"",
-        "\"You've passed me on campus {timesMet} times. I've counted, which already sounds odd said aloud. Every single time, you've said good evening to the man with the mop. Not to the captain, not to anyone worth knowing by that measure, just to me.\"\n\n\"Most people don't, you know. Not out of unkindness. They simply don't see the help. I'd gotten rather used to being the sort of person nobody looks at twice, and then you kept looking, and I found I didn't mind it half so much as I ought to have.\"",
+        "\"You've passed me on campus {timesMet} times. I've counted, which already sounds odd said aloud. Every single time, you've said good evening to the man with the mop. You don't have to, but you do it anyway.\"\n\n\"Most people don't, you know. Not out of unkindness. They simply don't see the help. I've always rather liked going unnoticed, if I'm honest.\"",
         "\"There's a second half to this, and it's the part I nearly left out. You mentioned once you don't care for the east path after dark. Since then, I've found reasons to have my rounds pass through there right about when you do.\"\n\n\"It isn't much. It costs me nothing. I only wanted to know you'd gotten where you were going, and I'd rather you heard that from me than puzzled it out and thought me strange for it.\"",
       ],
       choice: {

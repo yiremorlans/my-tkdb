@@ -9,7 +9,7 @@ export default {
     acquaintance: {
       beats: [
         '**{firstName}**: "oi. kitten."\n\n"this is Taiga. writing it down so I know it\'s me later. long story."',
-        "\"Here's the deal. Your name's on a scrap of paper in my pocket. Third one down, under a room number and a debt.\"\n\n\"Every time I find it I gotta work out who the hell you are. Then I remember. Then I stop caring why.\"\n\n\"{timesMet} times now. That's Lulu's count, not mine. I just got the paper. Gyahaha!\"",
+        '"Here\'s the deal. Your name\'s on a scrap of paper in my pocket. Third one down, under a room number and a debt."\n\n"Every time I find it I gotta work out who the hell you are. Then I remember. Then I stop caring why."\n\n"{timesMet} times now. That\'s Lulu\'s count, not mine. I just got the paper. Gyahaha!"',
       ],
       choice: {
         prompt: '"So. Say something worth writing down, dumbass."',
@@ -19,7 +19,7 @@ export default {
             label: "Say you'll keep turning up",
             style: 3,
             close:
-              '"Yeah, they all say that."\n\n*A pause.*\n\n"...Writing it down anyway. Don\'t turn up, I look like an idiot for no reason. Your problem now."',
+              '"Yeah, they all say that."\n\n*A pause.*\n\n"...Writing it down anyway. Don\'t turn up, I\'ll feel like an idiot when I read this back. Your problem now."',
           },
           {
             key: "playful",
@@ -46,7 +46,7 @@ export default {
     friend: {
       beats: [
         '**{firstName}**: "right. noticed something and it\'s messing with my head."',
-        "\"You hit me with {favResponse}. Every time. Doesn't matter what mood I'm in, doesn't matter if I forgot your name an hour ago.\"\n\n\"Everyone else goes careful after that. Or sad about it. Or starts explaining who they are before I've asked, which is the worst one.\"\n\n\"You don't. Weird.\"",
+        '"You hit me with {favResponse}. Every time. Doesn\'t matter what mood I\'m in, doesn\'t matter if I forgot your name an hour ago."\n\n"Everyone else goes careful after that. Or sad about it. Or starts explaining who they are before I\'ve asked, which is the worst one."\n\n"You don\'t. Weird."',
       ],
       choice: {
         prompt: "\"So what's your angle. Everyone's got an angle.\"",
@@ -55,14 +55,15 @@ export default {
             key: "kind",
             label: "Say it isn't a big deal",
             style: 3,
-            close: '"It is a big deal."\n\n*A pause.*\n\n"...Keep saying it isn\'t, though."',
+            close:
+              '"It is a big deal."\n\n*A pause.*\n\n"...Keep saying it isn\'t, though."',
           },
           {
             key: "playful",
             label: "Say you'll start charging him",
             style: 1,
             close:
-              "\"Gyahaha! Get in line, kitten, Lulu's got first claim on everything I own.\"\n\n\"Put it on the tab. I like having a tab. Means there's a next time.\"",
+              '"Gyahaha! Get in line, kitten, Lulu\'s got first claim on everything I own."\n\n"Put it on the tab. I like having a tab. Means there\'s a next time."',
           },
           {
             key: "bold",
@@ -160,7 +161,7 @@ export default {
       beats: [
         "**{firstName}**: \"don't be in the lower halls tonight. that's not me asking.\"",
         "\"There's a thing down there, Lulu's put a price on it. I'm collecting. That's the job, I'm hungry, decent night for it.\"\n\n\"You're not coming. Before you start.\"",
-        '"Here\'s why, once, so listen."\n\n"Don\'t always know what I do down there. Come back up sometimes, an hour\'s gone, Lulu won\'t look at me."\n\n"Not finding out what I\'m like with you in the middle of it. Turn up anyway, I swear on the board I\'m done talking to you."',
+        "\"Here's why, once, so listen.\"\n\n\"Don't always know what I do down there. Come back up sometimes, an hour's gone, Lulu won't look at me.\"\n\n\"Not finding out what I'm like with you in the middle of it. Turn up anyway, I swear on the board I'm done talking to you.\"",
       ],
       choice: {
         prompt: '"Say you\'ll stay out of it. Say it so I can go."',
@@ -184,7 +185,7 @@ export default {
             label: "Refuse to promise",
             style: 4,
             close:
-              '"Don\'t."\n\n*Only time he\'s ever sent one word.*\n\n"Kitten. Don\'t. Got about four things left I\'m sure of, you\'re all of them. Not putting one in a corridor to find out what I am."\n\n"...Promise me. First time I\'ve said that in nine years."',
+              "\"Don't.\"\n\n*Only time he's ever sent one word.*\n\n\"Kitten. Don't. Got about four things left I'm sure of, you're all of them. Not putting one in a corridor to find out what I am.\"\n\n\"...Promise me. First time I've said that in nine years.\"",
           },
         ],
       },
@@ -197,7 +198,7 @@ export default {
     soulbound: {
       beats: [
         "**{firstName}**: \"office. now. I'm not typing this one out, I'll lose it halfway.\"",
-        '*Board\'s been rebuilt. Debts, room numbers, the rest, gone, boxed on the floor.*\n\n*Just you left. {timesMet} notes, one for every time, eleven different pens.*\n\n"Took two days. Lulu thinks I\'ve cracked."',
+        "*Board's been rebuilt. Debts, room numbers, the rest, gone, boxed on the floor.*\n\n*Just you left. {timesMet} notes, one for every time, eleven different pens.*\n\n\"Took two days. Lulu thinks I've cracked.\"",
         '"Never said this out loud. Shut up a minute."\n\n"Don\'t get to keep things. People go through me and out the other side, I get a bit of paper if I\'m quick. Fine with that. Mostly."\n\n"Then you turned up. Started writing things down before I forgot \'em. Before, not after. Like I was scared of it, for the first time in six years."',
         '*Points at the middle of the board. The good handwriting.*\n\n"Says I love you. Since March. Wrote it for me, not you. So whatever happens up here, some version of me reads it and knows."\n\n"That\'s it. Said it worst way possible. Off a wall. Like a dumbass."',
       ],
