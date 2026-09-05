@@ -390,8 +390,7 @@ Mortkranken errands target 1–2 students, most houses 1–3, Frostheim and
 Dionysia 1–4.
 
 `/mission` reveals the house **and names the targets**: *"{House} needs sign-off
-from **Jin Kamurai**, **Leo Kurosagi** and **Alan Mido**. Track them down —
-they'll be easier to run into while this stays open."*
+from **Jin Kamurai**, **Leo Kurosagi** and **Alan Mido**. Track them down"*
 
 ### Earning a signature
 

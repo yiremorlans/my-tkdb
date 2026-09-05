@@ -111,8 +111,10 @@ export const MISSION_TEASERS = [
   "Someone upstairs needs this handled quietly. Accept?",
 ];
 
-export const MISSION_PICKED_UP = (name) =>
-  `**${name}** has picked up the mission.`;
+// `who` is a Discord mention (`<@id>`), so the post shows a real @tag rather
+// than a bare display name. The mission message sends it with
+// allowed_mentions.parse === [], so it renders styled but pings nobody.
+export const MISSION_PICKED_UP = (who) => `${who} has picked up the mission.`;
 
 export const MISSION_WITHDRAWN_LINES = [
   "The request was withdrawn before anyone took it.",
@@ -796,7 +798,7 @@ export function missionObjectiveLine(
     case MISSION_TYPES.ERRAND:
       return `${mission.house} needs sign-off from ${formatNameList(
         targetIds,
-      )}. Track them down. They'll be easier to run into while this stays open.`;
+      )}. Track them down.`;
     case MISSION_TYPES.RIDDLE:
       return riddle
         ? `An anomaly report out of ${mission.house} needs debunking.\n\n> ${riddle.prompt}`

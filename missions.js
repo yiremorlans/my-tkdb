@@ -452,6 +452,21 @@ export async function handleMissionAccept(body, missionId, now = new Date()) {
     return { response: ephemeralResponse('Someone got there first.') };
   }
 
+  // The briefing `/mission` would show, pushed to the accepter now as an
+  // ephemeral so they learn the house, the type and their next step without
+  // having to know `/mission` exists. Best-effort: if the row can't be
+  // reloaded the pickup still stands and `/mission` is the fallback.
+  let followup;
+  try {
+    const mission = await getAcceptedMission(userId);
+    followup = mission
+      ? ephemeral(await buildMissionBriefing(userId, mission))
+      : ephemeral("You've picked up the mission. Run `/mission` for the briefing.");
+  } catch (err) {
+    console.error('[missions] Could not build the pickup briefing:', err.message);
+    followup = ephemeral("You've picked up the mission. Run `/mission` for the briefing.");
+  }
+
   return {
     response: {
       type: InteractionResponseType.UPDATE_MESSAGE,
@@ -461,11 +476,12 @@ export async function handleMissionAccept(body, missionId, now = new Date()) {
         // embed rather than keeping its first line and its upload above it.
         content: null,
         attachments: [],
-        embeds: [missionEmbed(missionId, MISSION_PICKED_UP(displayNameOf(body)))],
+        embeds: [missionEmbed(missionId, MISSION_PICKED_UP(`<@${userId}>`))],
         components: acceptRow(missionId, { disabled: true }),
         allowed_mentions: { parse: [] },
       },
     },
+    followup,
     afterReply: async () => {
       await Promise.allSettled([trackUserActivity(userId), trackCommandUsage(userId, 'mission')]);
     },
@@ -547,9 +563,9 @@ export async function handleMission(body, now = new Date()) {
 
 /**
  * What someone with nothing in hand is told. In a server with missions running
- * this points at the next unfired slot, which is deliberately fine to reveal:
- * unlike an encounter, knowing when a request lands wins you nothing — you
- * still have to be first to the button.
+ * this points at the channel the next briefing lands in, but never the time:
+ * a precise clock lets players line up on the Accept button before it posts,
+ * so the slot is described only as "later today".
  */
 async function noMissionLine(body, now) {
   const guildId = body.guild_id;
@@ -569,7 +585,7 @@ async function noMissionLine(body, now) {
   const where = channel ? ` Watch <#${channel}>.` : '';
 
   return at
-    ? `No active mission. The next briefing lands around <t:${Math.floor(at / 1000)}:t>.${where}`
+    ? `No active mission. The next briefing lands later today.${where}`
     : `No active mission. Today's briefings have all been handed out. Try again tomorrow.${where}`;
 }
 

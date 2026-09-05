@@ -304,9 +304,20 @@ describe('the Accept button', () => {
 
     assert.equal(response.type, 7); // UPDATE_MESSAGE
     assert.match(response.data.embeds[0].description, /has picked up the mission/);
+    assert.match(response.data.embeds[0].description, /^<@user-a>/, 'names the winner with an @tag, not a bare nick');
     assert.equal(response.data.components[0].components[0].disabled, true);
     assert.equal(fake.tables.missions[0].accepted_by, 'user-a');
     assert.equal(fake.tables.missions[0].status, 'accepted');
+  });
+
+  it('chases the winner with an ephemeral briefing for what to do next', async () => {
+    fake.tables.missions.push(missionRow());
+
+    const { followup } = await handleMissionAccept(click('user-a'), 1);
+
+    assert.ok(followup, 'a followup is returned for app.js to send');
+    assert.equal(followup.flags, 64); // EPHEMERAL
+    assert.match(followup.content, /MISSION BRIEFING|\/mission/);
   });
 
   it('leaves the post and its live button alone when someone loses the race', async () => {
@@ -715,7 +726,7 @@ describe('/mission', () => {
     assert.match(reply.content, /Answer with `\/riddle/, 'instructions are always present');
   });
 
-  it('points at the next briefing when the user holds nothing', async () => {
+  it('points at the next briefing channel when the user holds nothing, without a time', async () => {
     const now = new Date();
     const day = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
     fake.tables.guild_settings.push(
@@ -727,7 +738,9 @@ describe('/mission', () => {
     );
 
     const { reply } = await handleMission(command('user-a'), now);
-    assert.match(reply.content, /next briefing lands around <t:\d+:t>/);
+    assert.match(reply.content, /next briefing lands later today/);
+    assert.match(reply.content, new RegExp(`Watch <#${CHANNEL}>`), 'still names the channel');
+    assert.doesNotMatch(reply.content, /<t:\d+/, 'never reveals the slot time');
   });
 });
 

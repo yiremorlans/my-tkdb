@@ -949,6 +949,15 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
       res.send(result.response);
 
+      // An ephemeral chaser for the clicker only — the pickup briefing after
+      // an Accept. Posted as a new followup (not an edit) so it sits beside
+      // the rewritten public post rather than replacing it.
+      if (result.followup) {
+        sendFollowup(req.body.token, result.followup).catch(err =>
+          console.error(`Failed to send mission:${kind} followup:`, err),
+        );
+      }
+
       // The reward writes and the cooldown resets, after the click has been
       // answered — a slow mission_log insert must never cost someone their
       // "you picked it up" reply.
