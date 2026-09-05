@@ -234,7 +234,7 @@ export default {
       "He keeps his distance, observing you carefully. There's wariness in his posture, but curiosity flickers in his eyes.",
       "He circles wide around you, watching, deciding. Nothing about it is hostile.",
       "He repeats a word you used, quietly, testing the shape of it.",
-      'The phone in his pocket buzzes and he flinches hard. "This phone thingy keeps making noises and making me jump... Why do I gotta carry it everywhere? It\'s scary!"',
+      'The phone in his pocket buzzes and he flinches hard. "This phone thingy keeps making noises and making me jump... Why do I gotta carry it everywhere?"',
       "He doesn't come closer, but he doesn't leave either. That's the whole conversation.",
     ],
     known: [
