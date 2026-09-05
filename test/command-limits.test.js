@@ -25,6 +25,7 @@ const {
   checkCommandLimit,
   claimCommandUse,
   claimCommandInvoke,
+  releaseCommandInvoke,
   clearCommandInvokeThrottle,
 } = await import('../commandLimits.js');
 
@@ -224,6 +225,31 @@ test('claimCommandInvoke is scoped per user — one user flooding does not block
   assert.strictEqual(claimCommandInvoke('flood-5a', 'roam', t0).allowed, true);
   assert.strictEqual(claimCommandInvoke('flood-5a', 'roam', t0 + 100).allowed, false);
   assert.strictEqual(claimCommandInvoke('flood-5b', 'roam', t0 + 100).allowed, true);
+});
+
+// Regression: a command that claims its invoke slot and then fails (a server
+// error building the picker/dialogue message) must not also cost the user the
+// invoke-throttle window on top of the failure — app.js releases the slot in
+// that catch, via releaseCommandInvoke.
+test('releaseCommandInvoke frees the slot so a failed command can be retried immediately', () => {
+  clearCommandInvokeThrottle();
+  const t0 = 1_000_000;
+  assert.strictEqual(claimCommandInvoke('flood-6', 'meet', t0).allowed, true);
+
+  // Without releasing, the very next invoke would still be throttled.
+  releaseCommandInvoke('flood-6', 'meet');
+  assert.strictEqual(claimCommandInvoke('flood-6', 'meet', t0 + 1).allowed, true);
+});
+
+test('releaseCommandInvoke only clears the named command, not the user\'s other one', () => {
+  clearCommandInvokeThrottle();
+  const t0 = 1_000_000;
+  assert.strictEqual(claimCommandInvoke('flood-7', 'roam', t0).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-7', 'meet', t0).allowed, true);
+
+  releaseCommandInvoke('flood-7', 'meet');
+  assert.strictEqual(claimCommandInvoke('flood-7', 'meet', t0 + 1).allowed, true, 'meet was released');
+  assert.strictEqual(claimCommandInvoke('flood-7', 'roam', t0 + 1).allowed, false, 'roam is untouched');
 });
 
 test('claimCommandInvoke re-blocks after a throttled hit without extending the window from the hit', () => {

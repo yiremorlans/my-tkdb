@@ -25,7 +25,12 @@ import {
   surfaceBondSceneResume,
 } from './bondScenes.js';
 import { startEncounterScheduler } from './encounterScheduler.js';
-import { claimCommandInvoke, checkCommandLimit, claimCommandUse } from './commandLimits.js';
+import {
+  claimCommandInvoke,
+  releaseCommandInvoke,
+  checkCommandLimit,
+  claimCommandUse,
+} from './commandLimits.js';
 import {
   trackUserActivity,
   trackCharacterEngagement,
@@ -203,6 +208,11 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         return;
       } catch (err) {
         console.error('Error in /roam:', err);
+        // The invoke-throttle slot above was claimed before this failure, on
+        // the assumption the command would go on to produce something. It
+        // didn't, so release it — otherwise a server error costs the user a
+        // minute of "give it a minute" on top of the failure itself.
+        releaseCommandInvoke(userId, 'roam');
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
@@ -237,13 +247,28 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       }
       // User activity is only counted once a character actually loads (the
       // meet/pick button below), not for opening the picker.
-      const messageData = buildMeetPickMessage();
-      res.send({
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: messageData,
-      });
-      maybeSurfaceBondScene(userId, req.body.token);
-      return;
+      try {
+        const messageData = buildMeetPickMessage();
+        res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: messageData,
+        });
+        maybeSurfaceBondScene(userId, req.body.token);
+        return;
+      } catch (err) {
+        console.error('Error in /meet:', err);
+        // Same reasoning as /roam's catch: the invoke-throttle slot above was
+        // claimed before this failure, so release it rather than making the
+        // user eat a minute-long throttle on top of a server error.
+        releaseCommandInvoke(userId, 'meet');
+        return res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: {
+            content: 'Something went wrong finding someone to meet. Try again?',
+            flags: 64, // EPHEMERAL
+          },
+        });
+      }
     }
 
     if (name === 'affinity') {

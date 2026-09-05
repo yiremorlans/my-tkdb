@@ -86,6 +86,21 @@ export function claimCommandInvoke(userId, command, now = Date.now()) {
   return { allowed: true };
 }
 
+// Release this user's invoke-throttle stamp for one command. For when the
+// command handler claimed the slot via claimCommandInvoke and then failed
+// before producing anything — e.g. buildMeetPickMessage or
+// buildRoamDialogueMessage threw. Without this, a single failed /roam or
+// /meet (server error, "something went wrong") still leaves the user unable
+// to retry for up to INVOKE_THROTTLE_MS: the stamp above is written the
+// moment the slot is claimed, before the command has done anything that
+// could fail, and nothing was undoing it on that path. Safe to call broadly:
+// this only ever shortens a throttle window, never the 3h reward cooldown
+// (claimCommandUse/checkCommandLimit), so it can't be used to redeem more
+// than one reward per window.
+export function releaseCommandInvoke(userId, command) {
+  lastInvokeAt.delete(`${userId}:${command}`);
+}
+
 // Test hook: wipe the throttle between cases (mirrors clearGuessCooldowns and
 // clearSpawnAttemptFence).
 export function clearCommandInvokeThrottle() {

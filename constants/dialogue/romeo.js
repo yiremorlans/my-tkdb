@@ -430,7 +430,7 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"HDY know my name?" **{name}** demands of {user}, thrilled and pretending not to be.',
+      '"HDY say my name so casually." **{name}** snaps at {user}, like anyone else would dare.',
       "{user} says the name, and **{name}** is already talking. About three things. At once.",
       '"Perfect timing. I need someone I can trust." **{name}** decides this about {user} instantly.',
     ],
