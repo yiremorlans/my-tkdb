@@ -316,7 +316,7 @@ export const RIDDLES = {
       id: "vagastrom_ringlight",
       answer: "leo",
       prompt:
-        "The lunch queue was held up so one plate could be photographed in better light, with three underclassmen drafted to hold the reflector. Nobody was touched. Everybody moved. Name the student.",
+        "Campus footage of a secret incident was leaked and uploaded to WickChat before any official report, complete with subtitles and hashtags that shaped how everyone interpreted it. Name the student.",
     },
     {
       id: "vagastrom_truck",
@@ -343,7 +343,7 @@ export const RIDDLES = {
       id: "hotarubi_salon",
       answer: "zenji",
       prompt:
-        "A run of folktale videos was uploaded from a room the register lists as empty, each one narrated in the slang of a hundred years ago and closing with an invitation to write in with your romantic troubles. Name the student.",
+        "A run of folktale videos was uploaded from a room the register lists as empty, each one narrated in the style of a hundred years ago and closing with an invitation to write in with your romantic troubles. Name the student.",
     },
     {
       id: "hotarubi_prop",
@@ -361,13 +361,13 @@ export const RIDDLES = {
       id: "hotarubi_swept",
       answer: "haku",
       prompt:
-        "The dorm mess was cleaned up before anyone woke. Whoever did it left a note insisting it is fine to half-ass things. Name the student.",
+        "Multiple Hotarubi residents report finding one student having a casual conversation in an empty hallway, gesturing to empty air as if someone were there. Name the student.",
     },
     {
-      id: "hotarubi_behind",
+      id: "hotarubi_company",
       answer: "haku",
       prompt:
-        "Three general students report being told, very casually and without anyone turning around, exactly who was standing behind them. The teller did not appear to find it interesting. Name the student.",
+        "Multiple dormitory hauntings were reported throughout the term, each accompanied by strange sounds and unexplained disturbances. In every case, the activity ceased by the next morning after a student was observed walking casually through the halls nearby. Name the student.",
     },
   ],
 
@@ -382,25 +382,25 @@ export const RIDDLES = {
       id: "dionysia_jog",
       answer: "jo",
       prompt:
-        "The lap of the campus wall has been logged at the same minute every morning for a year, by someone the evening audience would walk straight past out of costume. Name the student.",
+        "A fresh pot of coffee is always brewing in the Dionysia main office, made to each visitor's exact preference. The student responsible for this routine is never there when anyone arrives. Name the student.",
     },
     {
       id: "dionysia_lollipop",
       answer: "elias",
       prompt:
-        "The corridor was swept at three in the morning by a boy with a lollipop and an unhurried drawl who says he was only passing through. Name the student.",
+        "The corridor was swept at three in the morning by a man with a lollipop and an unhurried drawl who says he was only passing through. Name the student.",
     },
     {
       id: "dionysia_wallet",
       answer: "elias",
       prompt:
-        "A witness reports a wallet handed back to him before he had noticed it was gone. Asked how it turned up, whoever found it smiled, said he would leave that to the imagination, and went back to wiping down the counter. Name the student.",
+        "A student was observed working through the dorm while several incidents occurred directly in front of him. When questioned about the commotion, he seemed genuinely confused about what everyone was referring to. Name the student.",
     },
     {
       id: "dionysia_clocks",
       answer: "mio",
       prompt:
-        "The broken campus clocks were fixed for free, overnight, by someone running on two hours of sleep who changed the subject when asked if he was all right. Name the student.",
+        "The broken campus clocks were fixed for free, overnight. Name the student.",
     },
     {
       id: "dionysia_handrails",
@@ -412,13 +412,13 @@ export const RIDDLES = {
       id: "dionysia_heebie",
       answer: "shion",
       prompt:
-        'Three students fled the Heebie-Jeebie House swearing something followed them out and called one of them "my wife". Name the student.',
+        "Residents reported gruesome injuries and blood at the Heebie-Jeebie House. Upon investigation, staff discovered only theatrical prosthetics and expertly applied makeup—so realistic that everyone believed they were genuine. Name the student.",
     },
     {
       id: "dionysia_lullaby",
       answer: "shion",
       prompt:
-        "Something in the west dorm has been singing a lullaby to a pet no one can identify, and telling passers-by, kindly, that they mightn't ever wake up after it. Name the student.",
+        "An unusual figure has been spotted at the Darkwick docks after dark, moving unnaturally along the water's edge. When students approach, it plunges into the water, vanishing beneath the surface. Name the student.",
     },
   ],
 
@@ -427,13 +427,13 @@ export const RIDDLES = {
       id: "mortkranken_ward",
       answer: "yuri",
       prompt:
-        "The whole ward heard a voice announce that a treatment was in fact an experiment, correct itself, and then start shouting for its assistant. Name the student.",
+        "A first-year was marched into the lab with the announcement, 'Congratulations, you have been selected as a test subject for my revolutionary technique. Consider yourself privileged.' When they tried to leave, the student's demeanor cracked and they desperately insisted they needed at least one volunteer. Name the student.",
     },
     {
       id: "mortkranken_drill",
       answer: "yuri",
       prompt:
-        "A fire drill in Mortkranken ended with one student on his knees in the corridor, mourning at the top of his lungs a body of research that was not on fire. Name the student.",
+        "A student was found arguing heatedly with the diagnostic equipment, insisting it had malfunctioned on purpose. Within the hour, they personally re-ran every procedure from that day, achieving perfect results and proving the machine 'inferior.' Name the student.",
     },
     {
       id: "mortkranken_chart",
@@ -454,7 +454,7 @@ export const RIDDLES = {
       id: "jabberwock_tour",
       answer: "haru",
       prompt:
-        "Every conversation in the park last week somehow ended in a discount code and an invitation to the tour, delivered by a boy with one gloved hand. Name the student.",
+        "A figure was spotted sprinting through the academy grounds after midnight, one gloved hand gripping a rope tethered to an escaped anomaly. The runner never slowed, shouting encouragement at the fleeing creature the entire way until it was contained. Name the student.",
     },
     {
       id: "jabberwock_fenceline",
@@ -517,13 +517,13 @@ export const RIDDLES = {
       id: "obscuary_scent",
       answer: "lyca",
       prompt:
-        "The thief was found by someone who never looked at the evidence at all. He smelled the room, went straight to the right door, and then went quiet about it. Name the student.",
+        "A reported thief on campus was found by someone who never looked at the evidence at all. He smelled the room, went straight to the right door, and then went quiet about it. Name the student.",
     },
     {
       id: "obscuary_blanket",
       answer: "lyca",
       prompt:
-        "A student spent the full moon on the roof and would not come down, guarding a filthy blanket he would not let anybody take away to wash. Name the student.",
+        "A large wolf figure was spotted prowling the campus after dark on the full moon. Witnesses report it moved with unusual speed, pausing to look directly at the academy buildings before disappearing into the forest. Name the student.",
     },
   ],
 
