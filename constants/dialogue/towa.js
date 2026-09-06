@@ -5,14 +5,20 @@ export default {
   // casually morbid about things nobody else would be casual about, and the
   // possessiveness is real and never played for a laugh. The intimacy is that he
   // keeps asking permission for things he could simply take.
+  //
+  // Texting voice, per reference.md's "## Bond Scenes" notes: Towa leans on
+  // stickers and one or two emojis and keeps his typed lines short. The
+  // night-verbose conceit (his confidant beat: "At night I could say anything")
+  // stays, so the prose survives — but his typed messages carry emoji/stickers
+  // and the phrasing is trimmed. Not in the `> ` lines he says out loud.
   bondScenes: {
     acquaintance: {
       beats: [
-        "*It arrives after dark, which is the only time he says much at all.*\n\n**{firstName}**: I picked you a dandelion. It's already dead. I picked it three days ago and I kept forgetting to give it to you, so now it's dead, and I'm sorry but I'm still going to give it to you.",
-        "You've come to the park {timesMet} times. I know because I count the days between. The most was nine. That was a bad nine.\n\nI don't like talking in the daytime. Everything's too loud and my mouth doesn't work properly. At night it's fine. At night I could say anything.\n\nSo this is the night version. I'm nicer at night. Everyone says so.",
+        "*It arrives after dark, which is the only time he says much at all.*\n\n**{firstName}**: I picked you a dandelion 🌼 It's dead now. I picked it three days ago and kept forgetting.\n\nI'm still going to give it to you 🥀",
+        "You've come {timesMet} times. I count the days between. The most was nine 🌙 That was a bad nine.\n\nI can't talk in the daytime. Too loud. At night it's fine.\n\nThis is the night version of me. I'm nicer at night 🎵",
       ],
       choice: {
-        prompt: "Do you want the dead one? You can say no. You'd be the first.",
+        prompt: "Do you want the dead one? 🥀 You can say no. You'd be the first.",
         options: [
           {
             key: "kind",
@@ -24,13 +30,13 @@ export default {
             key: "playful",
             label: "Ask if he eats those",
             style: 1,
-            close: "Only the yellow bit. The stem is horrible, it's like drinking a wall.\n\nYou can try it. I'll pick you a fresh one, I wouldn't give you a dead one to eat. I'm not strange.",
+            close: "Only the yellow bit 🌼 The stem's horrible. Like drinking a wall.\n\nI'll pick you a fresh one to try. I wouldn't give you a dead one to eat. I'm not strange.",
           },
           {
             key: "bold",
             label: "Ask about the bad nine days",
             style: 4,
-            close: "I counted them twice to make sure.\n\nI sat by the gate on the fourth one. And the sixth. Not the others, I had jobs.\n\nDon't do nine again. Please. I don't like what I'm like on the seventh.",
+            close: "*[a sticker of a small animal sitting alone by a gate]*\n\nI counted twice to make sure.\n\nI sat by the gate on the fourth day. And the sixth.\n\nDon't do nine again. Please 🥀 I don't like what I'm like by the seventh.",
           },
         ],
       },
@@ -42,8 +48,8 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: Ren says I'm not allowed to ask people why they're nice to me. He says it makes them go away.\n\nI'm asking anyway. It's night. I'm allowed things at night.",
-        "You've got {favResponse} for me every time. Even the times I said something wrong. I say wrong things a lot. I know when I've done it, I can hear it about a second after, and by then it's already out.\n\nEverybody does the little step back. It's tiny. They don't know they're doing it. I've seen it about four hundred times and I can spot it from right across the park.\n\nYou've never done the step back. Not once. I've been watching for it.",
+        "**{firstName}**: Ren says asking people why they're nice to me makes them go away.\n\nI'm asking anyway. It's night 🌙 I'm allowed things at night.",
+        "You've got {favResponse} for me every time. Even when I say something wrong, and I do that a lot. I hear it a second too late, when it's already out.\n\nEveryone does the little step back after. Tiny. They don't know they do it. I can spot it from across the park 🌷\n\nYou never have. Not once. I've been watching for it.",
       ],
       choice: {
         prompt: "So why don't you? Ren says don't ask. I'm asking.",
@@ -52,7 +58,7 @@ export default {
             key: "kind",
             label: "Say nothing he says is wrong",
             style: 3,
-            close: "That's not true. I said a really bad one to Haru in March.\n\nBut you can keep saying it. I'd like you to keep saying it. I'll pretend it's true when it's dark.",
+            close: "That's not true. I said a really bad one to Haru in March.\n\nBut keep saying it. I'd like you to. I'll pretend it's true when it's dark 🌙",
           },
           {
             key: "playful",
@@ -64,7 +70,7 @@ export default {
             key: "bold",
             label: "Tell him to stop watching",
             style: 4,
-            close: "I can't. It's the only way I know when.\n\nIf I stop watching then one day you'll just be gone and I won't have seen it coming, and that's worse. That's much worse. I've had that one before.\n\n...I'll watch less. A bit less. I can do a bit less.",
+            close: "I can't. It's the only way I know when.\n\nIf I stop, then one day you're just gone and I didn't see it coming. That's worse. I've had that one before.\n\n...I'll watch less. A bit less. I can do a bit less.",
           },
         ],
       },
@@ -76,7 +82,7 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: Come to the far field. The one past the fence where nobody goes because they think it's out of bounds. It is out of bounds. Come anyway.",
+        "**{firstName}**: Come to the far field 🌙 The one past the fence where nobody goes. They think it's out of bounds. It is. Come anyway.",
         "*It is completely dark and completely silent, and the field is full of dandelions gone to seed, thousands of them, the whole slope, pale in what light there is.*\n\n> I planted this. Not the first ones, they were already here. But I've been carrying seed heads out from the park for two years and letting them go here.",
         "*He sits down in the middle of it without checking whether you'll follow.*\n\n> Nobody knows. Not Haru, and Haru knows every square foot of that park. This bit isn't the park. This bit's mine.\n\n*He hums for a while.*\n\n> You can be in it. That's what I'm asking. Not visiting it, *in* it, so it's a place with you in it and then I can come here when you're not here and you'll still sort of be here.",
       ],
@@ -111,9 +117,9 @@ export default {
 
     confidant: {
       beats: [
-        "**{firstName}**: I don't sleep at night. You knew that. Here's the bit you didn't.",
-        "I don't sleep because I'm listening for the park. Everything in it makes a noise and I know all of them, and if one stops making its noise I have to go and see why.\n\nHaru thinks I'm being good at my job. I'm not being good at my job. I'm frightened all the time, and the job is the only shape I've got to put it in.",
-        "Everything I've ever liked has stopped making its noise eventually. That's not a sad thing to say, it's just true, and everyone gets upset when I say it so I stopped saying it.\n\nYou make a noise. I know what it is now. I know the sound of you coming across the gravel from about forty feet.\n\nSo now I listen for that as well, and it's much worse, because there's a lot more hours in the day when you're not on the gravel.",
+        "**{firstName}**: I don't sleep at night 🌙 You knew that. Here's the bit you didn't.",
+        "I don't sleep because I'm listening for the park. Everything in it makes a noise. I know all of them. If one stops I have to go and see why.\n\nHaru thinks that's me being good at my job. It isn't. I'm frightened all the time, and the job is the only shape I've got to put it in 🎵",
+        "Everything I've ever liked has gone quiet eventually. That's not sad, it's just true. People get upset when I say it, so I stopped.\n\nYou make a noise too. I know it now. Your feet on the gravel from forty feet off.\n\nSo I listen for that as well. It's worse, because most hours you're not on the gravel 🪨",
       ],
       choice: {
         prompt: "Is that a bad thing to have said? I can't always tell at night. Tell me if it was bad.",
@@ -128,7 +134,7 @@ export default {
             key: "playful",
             label: "Ask what your noise is like",
             style: 1,
-            close: "Uneven. You take the corner wide because of the puddle. Everyone else walks through the puddle.\n\nIt's my favorite one. Don't tell the birds.",
+            close: "Uneven. You take the corner wide because of the puddle. Everyone else walks through the puddle.\n\nIt's my favorite one 🎵 Don't tell the birds.",
           },
           {
             key: "bold",
@@ -146,9 +152,9 @@ export default {
 
     devoted: {
       beats: [
-        "**{firstName}**: The one who was standing near you today. In the courtyard. I know his name and where he sleeps and what time he goes to the refectory.\n\nI found that out in about eleven minutes. I'm telling you that I found it out.",
-        "I'm not going to do anything. I want you to know I'm not going to.\n\nBut I found it out, and I sat with it for the whole afternoon, and Ren asked what was wrong and I said nothing and that was the first time I've ever lied to Ren.",
-        "Here's what I did instead. I went to the field and I pulled up about a hundred of them, and then I felt awful because they hadn't done anything, and I sat there and put the seed heads back in the ground even though that doesn't work.\n\nSo that's where it went. Into the flowers. It's always going to have to go somewhere and I'd rather it went there than anywhere with a name.",
+        "**{firstName}**: The one standing near you today. In the courtyard.\n\nI know his name, where he sleeps, when he goes to the refectory. Eleven minutes, it took me.\n\nI'm telling you that I found it out.",
+        "I'm not going to do anything. I want you to know that.\n\nBut I sat with it all afternoon. Ren asked what was wrong and I said nothing. First time I've ever lied to him.",
+        "So instead I went to the field and pulled up about a hundred of them. Then I felt awful, they hadn't done anything, and I sat there putting the seed heads back even though that doesn't work.\n\nThat's where it went. Into the flowers 💐 It has to go somewhere. I'd rather there than anywhere with a name.",
       ],
       choice: {
         prompt: "Was that right? I think it was right. I'd like you to say it was right.",
@@ -163,7 +169,7 @@ export default {
             key: "playful",
             label: "Offer to replant them with him",
             style: 1,
-            close: "They won't grow. I've done it before. It doesn't work.\n\n...You can help anyway. I'd like there to be two of us doing something that doesn't work.",
+            close: "They won't grow. I've done it before. It doesn't work.\n\n...You can help anyway 🌱 I'd like there to be two of us doing something that doesn't work.",
           },
           {
             key: "bold",
@@ -181,10 +187,10 @@ export default {
 
     soulbound: {
       beats: [
-        "**{firstName}**: It's night, so my mouth works. I've been waiting all day for it to be night.",
-        "{timesMet} times. And I know every gap between every one of them, including the nine, and including the four when you were ill and I sat at the gate all four.\n\nI never told you about the four. I'm telling you now because I'm telling you everything tonight, that's the plan.",
-        "I know what I am. Ren's explained it to me twice, kindly, and Haru's explained it once, badly.\n\nI hold on too hard and I count things I shouldn't count and I find out names in eleven minutes. That's not going to change. I've tried to change it and all that happens is I do it quietly instead, which is worse.\n\nSo I'm not going to promise I'll be normal. I'd be lying and I don't lie to you.",
-        "Here's the thing I do promise, and it's the only one I've got.\n\nI love you. And you can go. Any time, any day, and I won't follow and I won't find anything out and I won't sit at the gate where you can see me.\n\nI'd be sad in the field instead. I've already worked out how. I worked it out ages ago so that when I said this I'd be able to mean it.",
+        "**{firstName}**: It's night, so my mouth works 🌙 I've been waiting all day for it to be night.",
+        "{timesMet} times. I know every gap between them. The nine. And the four when you were ill and I sat at the gate all four.\n\nI never told you about the four. I'm telling you everything tonight. That's the plan.",
+        "I know what I am. Ren's explained it twice, kindly. Haru once, badly.\n\nI hold on too hard. I count things I shouldn't. I find out names in eleven minutes. That won't change. When I try, I just do it quietly instead, which is worse.\n\nSo I won't promise I'll be normal. That would be a lie, and I don't lie to you.",
+        "Here's the one thing I do promise. It's the only one I've got.\n\nI love you. And you can go. Any time. I won't follow, I won't find anything out, I won't sit at the gate where you can see me.\n\nI'd be sad in the field instead. I worked out how ages ago, so that when I said this I'd mean it.",
       ],
       choice: {
         prompt: "You can say anything. I've had all day to get ready for anything.",

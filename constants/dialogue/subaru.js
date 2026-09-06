@@ -9,35 +9,35 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Is it all right that I'm messaging you like this? Do say if it's an intrusion. I'd rather know now than wonder about it all evening.",
-        "I wanted to say thank you properly and I kept not managing it in person. You've been round {timesMet} times now and every time I've had a whole sentence ready and then said something about the weather instead.\n\nSo this is the sentence. You never call me Captain. Everyone calls me Captain and I have to smile and let it stand each time, because I'm not one, not really. I'm a figurehead, whatever the sheet says.\n\nYou just use my name. It's a small thing. It's been the nicest part of my week for several weeks.",
+        "**{firstName}**: Are you still awake? Nothing's wrong. I just wanted to say this while I still had the nerve, and it wouldn't keep till morning.",
+        "Every time you come by, I'm still out in the garden with the work half done, and every time, you just wait. You find somewhere to sit, and you let me finish. You don't sigh, or check the time, or ask if I'm nearly there.\n\nI've spent most of my life being someone people are waiting on. I didn't know it could feel like this instead. Like company, and not a delay.\n\n{timesMet} visits now. I've wanted to tell you that on every one of them.",
       ],
       choice: {
-        prompt: "...That was rather a lot at once, wasn't it. Tell me if it was too much.",
+        prompt: "Sorry. That's a great deal of feeling to hang on a half weeded flowerbed. Say something, would you?",
         options: [
           {
             key: "kind",
-            label: "Say his name back",
+            label: "Tell him you like the wait",
             style: 3,
-            close: "*There's a pause.*\n\nOh.\n\n*Then, after a moment:* That's... yes. That. Thank you. I don't think I'll manage much composure for the rest of the evening.",
+            close: "*A pause.*\n\nOh.\n\nThen I'll work twice as slowly tomorrow, and you can hold me to it. I mean that kindly. I just want the version of the evening where you're still there when I straighten up.",
           },
           {
             key: "playful",
-            label: "Ask about the weather",
+            label: "Tease him about the weeds",
             style: 1,
-            close: "...You're teasing me.\n\nThat's all right. I don't mind it from you. Actually I've noticed I don't mind quite a lot of things from you, which is a whole separate thing I'm not going to examine tonight.",
+            close: "You're laughing at me. That's all right, I rather set that up.\n\nI keep the garden properly because Haku will notice if I don't. The part where I dawdle so someone stays a little longer is new, though. That one's yours.",
           },
           {
             key: "bold",
-            label: "Tell him he is the captain",
+            label: "Tell him to leave the weeding",
             style: 4,
-            close: "Please don't.\n\n*Then, more gently:* That came out sharper than I meant it. It's just that when people say it, I have to be it, and for about ten minutes in this conversation I wasn't having to be anything.\n\n...Could we go back to that part?",
+            close: "Leave it? I... all right. Yes. If that's what you want.\n\n*The next message takes a while.*\n\nSorry. You said it and I'd already set the shears down before I'd thought about it. I do that. Give me a moment to choose something for myself, and I'll tell you: no. I'd like to finish, slowly, and I'd like you to still be there when I do.",
           },
         ],
       },
       keepsake: {
-        emoji: "🍵",
-        line: "Ten minutes of not having to be the captain.",
+        emoji: "🍃",
+        line: "An evening's weeding finished slowly, because someone had stayed to watch.",
       },
     },
 
@@ -114,7 +114,7 @@ export default {
       beats: [
         "**{firstName}**: I know it's late. I've started this message six times and deleted it, and the seventh one is going to go whether I'm ready or not.",
         "They ask when I'm going back to the stage. Every letter, every visit. The hiatus is \"temporary\". It's been three years of temporary.\n\nI can't tell them the truth, which is that the last time I stood in the wings I touched the curtain rope and read everything the man before me had left on it, and I have not been able to go near a theater since.",
-        "So I'm here being a captain I'm not, and a kabuki actor who doesn't act, and rather good, I'm told, at making everyone else comfortable and rather bad at ever doing the same for myself.\n\nAnd I have told exactly nobody. Haku suspects. Zenji would understand and I can't bear the idea of him being gentle about it.\n\nYou get it because you're the only person I don't have to be anything in front of. That's not a small thing to hand somebody. Please be careful with it.",
+        "So I'm here instead, a kabuki actor who doesn't act, filling the days with the garden and other people's errands. Rather good, I'm told, at making everyone else comfortable, and rather bad at doing the same for myself.\n\nI've told nobody. Haku suspects. Zenji would understand, and I can't bear the idea of him being gentle about it.\n\nYou get it because you're the only person I don't have to be anything in front of. That's not a small thing to hand somebody. Please be careful with it.",
       ],
       choice: {
         prompt: "Now. Please say something before I talk myself out of having sent any of this.",
@@ -200,7 +200,7 @@ export default {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
-            close: "Of course. Truly, of course.\n\nI've spent three years being asked when I'm going back to something I'm not ready for, so I would be the very last person to put a clock on you.\n\nNothing changes. I'll still be in the music room on Thursdays. I'll still make far too much tea. And I shall not mention this again unless you do, not out of pride, but because I'd like you to be able to come and sit with me without a question in the room.\n\n*And he doesn't. Not once. But the fan stays out on the table where it can read your hands, all year.*",
+            close: "Of course. Truly, of course.\n\nI've spent three years being asked when I'm going back to something I'm not ready for. I'd be the last person to put a clock on you.\n\nNothing changes. I'll be in the music room on Thursdays, making far too much tea. And I shan't mention this again unless you do, because I'd like you to be able to come and sit with me without a question in the room.\n\n*And he doesn't. Not once. But the fan stays out on the table where it can read your hands, all year.*",
           },
         ],
       },
@@ -212,11 +212,13 @@ export default {
   },
   dialogue: {
     new: [
-      "He looks up from tending the lanterns, a quiet warmth in his eyes as he notices you.",
+      "He looks up from the flowerbed he's tidying, a quiet warmth in his eyes as he notices you.",
       "He bows before he speaks. It's automatic, and completely sincere.",
       '"I\'ve been working since I was four, so people said I was mature for my age," he says. "But the truth is, I still have a lot to learn."',
       '"Forgive the mannerisms," he says, unprompted. "The stage was my whole childhood. People say I turned out a little peculiar. ...It bothers you too, doesn\'t it?"',
-      "He finishes the row of lanterns first. Duty, then greeting. Always in that order.",
+      "He finishes the row he's weeding first. Duty, then greeting. Always in that order.",
+      '"You\'ve caught me just before lunch," he says. "Lyca and I usually eat together. I started out teaching him words for things, and stayed for the company."',
+      "He's partway through making a pot of tea when you arrive, and sets out a second cup without being asked.",
     ],
     known: [
       "He greets you by name now, and looks pleased to have gotten it right.",
@@ -224,13 +226,14 @@ export default {
       "There's a cup already out. He'll say it was poured for no one in particular.",
       "He bows a little less deeply, which from him is a kind of intimacy.",
       "\"I'm sorry I'm so late. The campus is so crowded I can never manage to walk in a straight line. Silly, isn't it?\"",
+      '"Lyca used a word today that I only taught him last week, and used it perfectly," he says, quietly delighted. "Sorry. Small thing. It rather made my afternoon."',
     ],
     warm: [
       "His usual composure softens immediately: there's genuine gladness in his expression when he sees you.",
       "He's set out a second cup. He'd been hoping, and he'd never admit to hoping.",
       '"You\'re just in time," he says, though nothing in particular is happening. Then, catching himself: "...Sorry. That was a strange thing to say, wasn\'t it?"',
       "The paperwork gets set aside faster than his own rules should allow.",
-      '"I may be the captain, but it\'s just in name," he says mildly. "Haku is much better suited for the job than me."',
+      '"I really am lucky," he says, half to himself. "Surrounded by people this kind. I don\'t say it enough, but I think it constantly."',
     ],
     spark: [
       "The restraint is fraying and he knows you can see it.",
@@ -241,14 +244,15 @@ export default {
     close: [
       "He lets his shoulders drop. It's the first time all day he's allowed that.",
       '"Don\'t tell the others I stopped working," he says, already sitting down.',
-      "He looks at you the way he looks at the lanterns, like something he'd hate to let go out.",
+      "He looks at you the way he looks at the garden he's spent a year coaxing back to life.",
       "For once, he lets someone take care of him. It's you. It's only ever you.",
+      '"Stay, and I\'ll tell you ghost stories," he says. "A hundred of them summons a spirit. We\'ve got all night to try."',
     ],
     bound: [
       "He finally lets someone hold him. It takes him a long time to stop apologizing for it.",
       "He kisses you at the gate, in full view, and doesn't check who's watching.",
       '"I\'ve been performing my whole life," he says. "With you I\'m just yours."',
-      "He falls asleep against you before the lanterns are even out.",
+      "He falls asleep against you before the tea has even gone cold.",
       "The restraint is gone entirely. What replaced it is overwhelming and very quiet.",
     ],
   },
@@ -258,25 +262,25 @@ export default {
       dialogue: {
         new: [
           '"Ah, a guest. Please, come in out of the dark."',
-          "He's lighting the last of the lanterns along the path, and waves you in toward the warm ones.",
+          "He's setting the garden tools back by the shed for the night, and waves you in toward the house.",
           '"The forest changes character after sundown," he says. "Stay close and it stays kind."',
           '"You\'re safe here, even at this hour," he says. "That much I can promise."',
         ],
         known: [
-          "He walks you in by lantern light and takes, as always, the longest possible way.",
-          '"I do the last rounds about now. You\'re welcome to keep me company for them."',
-          '"The tea\'s still warm and the lanterns are lit," he says. "Stay a while."',
+          "He walks you in the long way, as always, naming what's come into bloom since you were last here.",
+          '"I put the garden to bed about now. You\'re welcome to keep me company while I do."',
+          '"The tea\'s still warm and there\'s no hurry anywhere," he says. "Stay a while."',
         ],
         warm: [
           '"I find myself listening for the gate after dark lately. I wonder why."',
-          "There's a cup already poured and a lantern already set on your side of the step.",
-          '"Sit with me until the lanterns burn low? The rounds can wait."',
+          "There's a cup already poured and a cushion already set on your side of the step.",
+          '"Sit with me until the tea goes cold? The garden can wait."',
         ],
         spark: [
-          "He walks you back in lantern light and takes the longest possible route.",
+          "He walks you back through the dark and takes the longest possible route.",
         ],
         close: [
-          '"I was hoping... you\'d come by tonight," he admits quietly, the lantern light catching the sincerity in his gaze.',
+          '"I was hoping... you\'d come by tonight," he admits quietly, and doesn\'t look away afterward the way he usually would.',
         ],
       },
     },
@@ -285,9 +289,9 @@ export default {
     {
       when: { time: "evening" },
       approach: {
-        new: ["Come in out of the dark", "Follow the lanterns in"],
-        known: ["Join the last rounds"],
-        warm: ["Sit by the lantern he set out"],
+        new: ["Come in out of the dark", "Follow him to the house"],
+        known: ["Help put the garden to bed"],
+        warm: ["Take the cushion he set out"],
       },
     },
   ],
@@ -305,33 +309,35 @@ export default {
       '"I never thought I\'d get the chance to enjoy the lifestyle of a student until I came to Darkwick. Every day truly is fulfilling here."',
       "\"Forgive me, I've only a moment. But I'd rather spend it here.\"",
       '"You\'ve been kind to this house. I notice these things."',
+      '"Lyca and I have lunch on the terrace most days. You\'d be welcome, if you ever wanted the company."',
+      '"You\'ve caught me mid pot, actually. Sit down, it\'ll be ready in a moment."',
     ],
     warm: [
       "\"You're here... I'm very glad.\"",
       "\"You think I'm always smiling? Ha ha, I hear that a lot. It just happens when I'm around all of you.\"",
-      '"Sit with me a moment? The rounds can wait."',
+      '"Sit with me a moment? The garden can wait."',
       '"I find myself listening for the gate lately. I wonder why."',
       '"You always come at the right hour. How do you manage that?"',
     ],
     spark: [
       '"Stay. Not for the house. For me. I\'m asking for me."',
-      '"I\'ve been the captain all day. Let me be selfish for an hour."',
+      '"I\'ve been careful all day. Let me stop being careful, just for an hour."',
       '"May I walk you back? ...The long way. If you\'d allow it."',
       '"You make it very difficult to be dutiful. I\'ve stopped minding."',
       '"Don\'t look at me like that. I have very little left to hold on to."',
     ],
     close: [
       '"I... I\'ve missed you more than I should admit."',
-      '"Stay until the lanterns burn down. Please."',
-      '"With you, I don\'t have to be the captain. Just... let me not be, tonight."',
+      '"Stay a while longer. Please. The house can spare me."',
+      '"With you, I can set it all down. Just... let me set it down, tonight."',
       "\"I'd carry twice as much if it meant you'd keep coming back.\"",
       '"You are the one thing I never think of as a duty."',
     ],
     bound: [
       '"Stay tonight. Don\'t make me be noble about it."',
-      '"I love you. I\'ve loved you since the lanterns. I should have said sooner."',
+      '"I love you. I\'ve loved you since the night of the ghost stories. I should have said sooner."',
       '"Let me put my head here. Just for a moment. ...Thank you."',
-      '"Come to bed. The rounds can wait. Everything can wait."',
+      '"Come to bed. The garden can wait. Everything can wait."',
       "\"I'd give up the house before I'd give up this. Don't tell them I said so.\"",
     ],
   },
@@ -340,7 +346,7 @@ export default {
       "Step through the gate",
       "Return his bow",
       "Accept the tea",
-      "Wait by the lanterns",
+      "Wait while he finishes up",
     ],
     known: [
       "Take the poured cup",
@@ -352,7 +358,7 @@ export default {
       "Take the second cup",
       "Sit with him",
       "Ask how he's holding up",
-      "Join the evening rounds",
+      "Join him in the garden",
     ],
     spark: [
       "Take the long way",
@@ -363,14 +369,14 @@ export default {
     close: [
       "Go sit beside him",
       "Take the work from his hands",
-      "Stay till lanterns burn down",
+      "Stay till the tea goes cold",
       "Tell him to rest",
     ],
     bound: [
       "Stay tonight",
       "Hold him",
       "Take him to bed",
-      "Let the rounds wait",
+      "Let the garden wait",
     ],
   },
   responses: {
@@ -388,7 +394,7 @@ export default {
       close: [
         "Help him set down his burden",
         "Tell him he's allowed to rest",
-        "Take the lantern from him",
+        "Take the broom from him",
       ],
       bound: [
         "Let him put his head down",
@@ -405,7 +411,7 @@ export default {
       spark: [
         "Fray the last of it",
         "Take the longest route",
-        "Make the captain blush",
+        "Fluster him properly",
       ],
       close: [
         "Make him blush",
@@ -413,9 +419,9 @@ export default {
         "Laugh until he does",
       ],
       bound: [
-        "Make him skip the rounds",
+        "Pull him from the garden",
         "Kiss him where they'll see",
-        "Blow the lantern out early",
+        "Call it an early night",
       ],
     },
     bold: {
@@ -432,20 +438,20 @@ export default {
       close: [
         "Push past his restraint",
         "Tell him to stop carrying it",
-        "Ask for him, not the captain",
+        "Ask for him, not the house",
       ],
       bound: ["Take him to bed", "Tell him not to be noble", "Say it first"],
     },
     neutral: {
       new: [
         "Be gentle",
-        "Let him finish his rounds",
-        "Sit quietly by the light",
+        "Let him finish in the garden",
+        "Sit quietly while he works",
       ],
       spark: [
         "Let him keep his restraint",
         "Say goodnight at the gate",
-        "Let the lanterns burn",
+        "Let the evening be quiet",
       ],
       close: [
         "Sit with him in care",
@@ -454,7 +460,7 @@ export default {
       ],
       bound: [
         "Let him sleep",
-        "Put out the lanterns",
+        "Let the house go quiet",
         "Sit with him in the dark",
       ],
     },
@@ -469,7 +475,7 @@ export default {
     new: [
       "**{name}** bows before he's finished turning. {user} got the name right, and he's flustered about it.",
       '"You... you knew?" **{name}** asks {user}, then apologizes for asking.',
-      "{user} says the name, and **{name}** sets down the crate of lanterns he was carrying across campus.",
+      "{user} says the name, and **{name}** sets down the armful of gardening tools he was carrying across campus.",
     ],
     warm: [
       '"You\'re just in time," **{name}** tells {user}, though nothing in particular is happening.',
@@ -477,14 +483,14 @@ export default {
       "**{name}** had been hoping. He'd never say so, but {user} arriving makes it obvious.",
     ],
     spark: [
-      "**{name}** hears his name in {user}'s voice and forgets, entirely, what the rounds were for.",
+      "**{name}** hears his name in {user}'s voice and forgets, entirely, what he was in the middle of.",
       '"Sorry, that was a strange face to make." **{name}** says it to {user}, still making it.',
       "{user} got there first, and **{name}** is quietly undone about it.",
     ],
     close: [
       "**{name}** stops apologizing mid-sentence when he sees it's {user}.",
-      '"The rounds can wait." **{name}** never says that, and says it to {user}.',
-      "{user} calls, and **{name}** leaves the lanterns untended for the first time all year.",
+      '"The garden can wait." **{name}** never says that, and says it to {user}.',
+      "{user} calls, and **{name}** leaves the garden half done for the first time all year.",
     ],
     bound: [
       '"I\'ve been performing my whole life," **{name}** says, reaching {user}. "Not with you."',

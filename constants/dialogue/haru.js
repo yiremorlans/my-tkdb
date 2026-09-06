@@ -3,7 +3,11 @@ export default {
   // the instant it lands, so his scenes are built on that reflex: he says
   // something enormous, panics, and covers it with a tour plug. The arc is the
   // gap between the enormous thing and the bolt getting shorter, until at
-  // Soulbound he says it and stays put. The glove comes off at Confidant.
+  // Soulbound he says it and stays put. At Confidant he admits the
+  // relentless-cheer act is a system he built so nobody would offer him help.
+  // The prosthetic arm is NOT a secret to him (Mio built it, he'll take the
+  // glove off in front of a tour group) — never write it as a shameful reveal,
+  // and never invent how he lost it; reference.md is silent on the cause.
   //
   // Texting voice, per reference.md's "## Bond Scenes" notes: little kaomoji
   // faces in his typed lines — (^__^;) sheepish, (;__;) for the sad ones — plus
@@ -23,14 +27,14 @@ export default {
             label: "Say you'd love to",
             style: 3,
             close:
-              "Really?!.\n\n*Then, about four seconds later:* ...that was too loud. Sorry (^__^;) That was a really normal amount of excited and I've overshot it.",
+              "Really?!\n\n*Then, about four seconds later:* ...that was too loud. Sorry (^__^;) That was a really normal amount of excited and I've overshot it.",
           },
           {
             key: "playful",
             label: "Ask who got moved",
             style: 1,
             close:
-              "Nobody! Nobody got moved!\n\n...Leo got moved (^__^;) Leo got moved and he doesn't know yet and I'd like to keep it that way for as long as humanly possible.",
+              "Nobody! Nobody got moved!\n\n...Towa got moved (^__^;) Towa got moved and he doesn't know yet and I'd like to keep it that way for as long as humanly possible.",
           },
           {
             key: "bold",
@@ -49,7 +53,7 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: right, question, and I've been sitting on it for a fortnight like a coward",
+        "**{firstName}**: Right, question, and I've been sitting on it for a fortnight like a coward.",
         "You come at me with {favResponse} every time and you never once use it as an exit.\n\nHere's the thing. I say something a bit much, and people either laugh it off to give me an out, or they go quiet and I do a bigger joke to fix it. Two options my whole life.\n\nYou just... take it. Straight. Like I meant it. Which is a nightmare, mate, because it turns out I do mean it, and the whole system falls apart if nobody hands me the out.",
       ],
       choice: {
@@ -87,8 +91,8 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: park's shut. come round the side gate anyway. bring nothing, I've got it covered",
-        "*It's the middle of the night and every enclosure light is off except one, and he's sat on an upturned crate in front of it with two thermoses.*\n\n> This is the old girl. She came in eleven years ago and she's the reason there's a park at all. Doesn't do tours. Doesn't do visitors. Doesn't really do me most days.",
+        "**{firstName}**: Park's shut. Come round the side gate anyway. Bring nothing, I've got it covered.",
+        "*It's the middle of the night and every enclosure light is off except one, and he's sitting on an upturned crate in front of it with two thermoses.*\n\n> This is the old girl. She came in eleven years ago and she's the reason there's a park at all. Doesn't do tours. Doesn't do visitors. Doesn't really do me most days.",
         "> I sit here about three nights a week. Have done since I got the captaincy. Nobody's ever come with me. I've never asked anyone, and I've had loads of chances.\n\n*He hands you the second thermos without looking over.*\n\n> Brought two of these on the off chance for about a year, by the way. Just so you know the standard of pathetic we're operating at.",
       ],
       choice: {
@@ -110,7 +114,7 @@ export default {
           },
           {
             key: "bold",
-            label: "Ask about the year of flasks",
+            label: "Ask about the second thermos",
             style: 4,
             close:
               "> Aw, don't...\n\n*He stops. He actually stops, which he never does.*\n\n> ...A year.\n\n*he says.*\n\n> Filled the second one every single night I came out here on the off chance you'd say yes to something I hadn't asked yet.\n\n*And then he doesn't cover it with a joke. He just sits there in the dark next to you and lets it be true.*",
@@ -125,19 +129,19 @@ export default {
 
     confidant: {
       beats: [
-        "**{firstName}**: gonna tell you something and I need you to just not react. at all. keep it dead flat, it's the only way I'll get through it",
-        "The glove's not a look.\n\n*A photo comes through: his right forearm, no glove, the prosthetic plain in the light of the enclosure.*\n\nNicked something I shouldn't have, off someone I shouldn't have, when I was fifteen and very sure of myself. That's the whole story. There's no better version, I've tried a few.",
-        "Jo found me about four months after. Didn't lecture me once, just gave me a job and a room and about six years of quietly not asking. That's why I'd walk into traffic for him.\n\nThree people have seen that arm. Jo, the surgeon, and now you.\n\nSo... yeah (^__^;) Say literally anything. Or plug the tour. I'd take the tour, honestly, the tour would be a mercy.",
+        "**{firstName}**: Gonna tell you something and I need you to just not make a thing of it. Dead flat. It's the only way it comes out.",
+        "First, so it's not weird: the arm's not a secret. You've watched me take the glove off to shift a fence post in front of a tour group. Mio built it, joints and all, and he'll corner anyone who stands still long enough to explain how it works.\n\nSo this isn't a big reveal. I'm not owed a gasp (^__^;)",
+        "Here's the actual thing. That whole 'nothing slows me down, all stamina and bad luck' routine? I built it. On purpose, years back. So nobody would ever look at me and go, hey, d'you need a hand with that.\n\nAnd it worked for ages. Then you started turning up and doing half my rounds without being asked and leaving food where I'd trip over it, and I let you, and that's the nearest I've come to dropping the whole act since I started running it.\n\nSay something normal now. Or plug the tour, genuinely, I'd take the tour.",
       ],
       choice: {
-        prompt: "Go on. Dead flat. You promised.",
+        prompt: "Go on then. Flat. You promised.",
         options: [
           {
             key: "kind",
-            label: "Ask if it ever hurts",
+            label: "Say he's allowed a hand",
             style: 3,
             close:
-              "...Cold days. Not much. Bit of a nothing answer, sorry.\n\nNobody's asked me that. They ask what happened. Nobody's ever asked how it *is*.\n\nGive us a sec. I've gone all... yeah (;__;) Give us a sec.",
+              "*A long pause.*\n\n...Yeah. That's the exact sentence. That's the one the whole routine exists to stop anyone saying to me.\n\nGive us a sec. Gone all... yeah (;__;) Give us a sec.",
           },
           {
             key: "playful",
@@ -148,24 +152,24 @@ export default {
           },
           {
             key: "bold",
-            label: "Ask him to take it off",
+            label: "Say you're not going to stop",
             style: 4,
             close:
-              "The glove?\n\n*A long pause.*\n\n...Yeah. Alright. But you have to be here for it, I'm not doing it over a phone.\n\n*He does it at the enclosure the next night, and holds his hand out, and lets you take it, and when you do he shuts his eyes and says, very quietly and with no drawl in it at all:*\n\n> Cheers. That's... yeah. Cheers.",
+              "*No reply for a bit.*\n\n...Yeah, I know. Clocked that a month ago. It's why I'm telling you any of this.\n\n*Then, with the drawl gone out of it:*\n\nOkay. You do the morning rounds with me. Properly, not tagging along. Don't make it weird.\n\n> ...Cheers. For not making it weird.",
           },
         ],
       },
       keepsake: {
         emoji: "🧤",
-        line: "A black glove set down on an upturned crate.",
+        line: "A black glove on the fence post, off like it was nothing, because it was.",
       },
     },
 
     devoted: {
       beats: [
-        "**{firstName}**: right so I've done something and Jo's going to have my guts",
+        "**{firstName}**: Right, so I've done something and Jo's going to have my guts.",
         "There was a thing in the park tonight and it went for the small enclosure, and you were between it and the gate, and I made a call.\n\nI opened the small enclosure. On purpose. Let the whole lot out into the park so it'd have twenty things to chase instead of one thing to chase.\n\nTook us four hours to get them back in. Got them all. Every single one, I counted twice.",
-        "Here's the bit that's doing my head in.\n\nEvery life in this park is mine. That's not a slogan, that's the actual job, I know all their names and I'd fight anyone in this academy over any one of them.\n\nAnd I put all of them at risk in about a second and a half because you were stood in the wrong place, and I'd do it again, and I don't know what that makes me.",
+        "Here's the bit that's doing my head in.\n\nEvery life in this park is mine. That's not a slogan, that's the actual job, I know all their names and I'd fight anyone in this academy over any one of them.\n\nAnd I put all of them at risk in about a second and a half because you were standing in the wrong place, and I'd do it again, and I don't know what that makes me.",
       ],
       choice: {
         prompt:
@@ -202,10 +206,10 @@ export default {
 
     soulbound: {
       beats: [
-        "**{firstName}**: no tour plug on this one. I want that noted at the top. I've never once managed a message without a tour plug.",
+        "**{firstName}**: No tour plug on this one. I want that noted at the top. I've never once managed a message without a tour plug.",
         "{timesMet} times you've come round, and every single one of them you've said hello to the animals first, and I've stood there like a lemon every single time enjoying it more than is reasonable (^__^;)",
         "Here's my whole thing, right. I say the big stuff and then I leg it. Always have. Say something that means something, watch it land, and then immediately turn it into a bit so if it wasn't wanted I can pretend I never said it.\n\nI've done it to you about forty times. You've never once used the out. You've just stood there and waited for me to come back, and I always have, and that's... mate, nobody waits.",
-        "So I'm not legging it.\n\nI love you. That's it. I'm not doing a bit after it, I'm not plugging anything, I'm not going to say something daft about the aviary in three seconds to get out of it.\n\nI'm just going to sit here having said it. Which is the single hardest thing I've done since I was fifteen.",
+        "So I'm not legging it.\n\nI love you. That's it. I'm not doing a bit after it, I'm not plugging anything, I'm not going to say something daft about the aviary in three seconds to get out of it.\n\nI'm just going to sit here having said it. Which is the single hardest thing I've ever made myself do.",
       ],
       choice: {
         prompt:
@@ -223,7 +227,7 @@ export default {
             label: "Ask him to give you time",
             style: 2,
             close:
-              "Course, mate. Take as long as you want.\n\n*A pause. Then, with none of the drawl doing any work:*\n\nAnd listen, I'm not going to get weird. I'm not going to stop asking you on the tour, I'm not going to stop filling the second thermos. That was all real before tonight and it's all still real.\n\nYou'll be right. And so will I. I'm extremely good at waiting, turns out (^__^;) Did it for a year with a flask.",
+              "Course, mate. Take as long as you want.\n\n*A pause. Then, with none of the drawl doing any work:*\n\nAnd listen, I'm not going to get weird. I'm not going to stop asking you on the tour, I'm not going to stop filling the second thermos. That was all real before tonight and it's all still real.\n\nYou'll be right. And so will I. I'm extremely good at waiting, turns out (^__^;) Did it for a year with a thermos.",
           },
         ],
       },

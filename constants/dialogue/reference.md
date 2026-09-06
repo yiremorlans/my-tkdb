@@ -1911,7 +1911,7 @@ Haru has short red hair that fades into a dark gradient, with pale skin and an a
 
 His Darkwick Academy uniform consists of an orange vest, a black and orange necktie, black gloves, black pants, a pin chain on his collar and ear piercings on both of his ears. The right ear is gauged with an earring through in the middle, while the left ear has an earring going through two holes in the earlobe.
 
-He often has a teal sling bag on him used as a carrier for Peekaboo. Haru's right arm is a prosthetic with functional joints, which he keeps covered with his black gloves.
+He often has a teal sling bag on him used as a carrier for Peekaboo. Haru's right arm is a prosthetic with functional joints, which he keeps covered with his black gloves. The prosthetic was built for him by Mio Susuhara, Dionysia's vice-captain and resident craftsman, who also made Romeo's prosthetic limb. How Haru lost the arm is not established.
 
 When he first transferred to Jabberwock, he had slightly longer hair on the back; it is also revealed in "Episode 22: Who Killed Robin? Act II", that when he fully opens his eyes, he has silver irises.
 

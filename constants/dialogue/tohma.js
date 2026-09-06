@@ -41,7 +41,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: An observation, offered without charge.",
-        "You come at me with {favResponse} every time, and you have never once adjusted it for the room. Not for the captain, not for me, not for the fact that I could make your life here considerably easier or considerably otherwise.\n\nI want you to understand that I noticed that in the first week and have been waiting for it to stop. It has not stopped. I have run out of patience for waiting and have decided to simply tell you that I find it remarkable, which is a thing I do not say.",
+        "You come at me with {favResponse} every time, and you have never once adjusted it for the room. Not for the captain, not for me, not for the fact that I could make your life here considerably easier or considerably otherwise.\n\nI noticed in the first week and have been waiting for it to stop. It has not. So I shall simply tell you that I find it remarkable, which is a thing I do not say.",
       ],
       choice: {
         prompt: "Well? I have paid you a compliment. Those are not on the house.",
