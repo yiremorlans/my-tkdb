@@ -88,7 +88,7 @@ export default {
       beats: [
         "**{firstName}**: you free? bring a coat. it's the roof and it's freezing and I'm not explaining over text.",
         "*He's already up there with two cans and a blanket he clearly brought for you, and he's looking at the far corner of the roof rather than at you.*\n\n> So there's a kid up here. Been here since before I arrived. Sits on that ledge every night and won't go, and I've tried everything and I'm out of ideas, and I come up and sit with her because that's all that's left.",
-        "> Every night. Two years. Nobody knows.\n\n*He finally looks over.*\n\n> That's the actual thing about me, by the way. Not the medium stuff, not the shrine family, not the ghosts. It's that I come up here every night because if I don't, nobody does.\n\n> You're the first person I've told. I'd like it on record that I told you sober, so I can't take it back later.",
+        "> Every night. Since I moved in here. Nobody knows.\n\n*He finally looks over.*\n\n> That's the actual thing about me, by the way. Not the medium stuff, not the shrine family, not the ghosts. It's that I come up here every night because if I don't, nobody does.\n\n> You're the first person I've told. I'd like it on record that I told you sober, so I can't take it back later.",
       ],
       choice: {
         prompt: "Right. Say something lazy so we can move on.",
@@ -125,7 +125,7 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: my family sent a letter. first one in three years. thought you should know before I do something stupid with it.",
-        "Kusanagi shrine. Long line of mediums, big house, lot of expectations. I was the strongest one they'd produced in four generations and they were *thrilled* to see the back of me.\n\nNot disappointed. Thrilled. I saw the wrong things and said so out loud, and it turns out a family business runs better when the medium tells people what they want tbh.",
+        "Kusanagi shrine. Long line of mediums, big house, lot of expectations. I was the strongest one they'd produced in a long time and they were *thrilled* to see the back of me.\n\nNot disappointed. Thrilled. I saw the wrong things and said so out loud, and it turns out a family business runs better when the medium tells people what they want tbh.",
         "So they sent me here and told everyone it was an honor, and the letter's asking when I'm coming back to be useful.\n\nI've read it eleven times. I keep waiting to feel something about it. Nothing's arriving, and that's worse than if it did.\n\nAnyway. That's the most I've ever said about myself in one go. I'd like to formally blame you for it.",
       ],
       choice: {

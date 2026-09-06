@@ -80,7 +80,7 @@ export default {
       beats: [
         "**{firstName}**: The lab. Now. Don't knock, don't announce yourself, and do not, I cannot stress this enough, laugh.",
         "*He is sitting on the floor between two benches with a paperback in his hands, and the cover has a great deal of purple on it and a young doctor being magnificent at a dragon.*\n\n> It's a medical journal. It's *research*, it's comparative anatomy, it's...\n\n*He stops. He looks at the book. He looks at you.*\n\n> It's *The Ace Doctor Wows Minds In Another World Thesis*. It's a novel. A physician transported to another world and immediately, correctly recognized as the finest mind of his generation. I've read it eleven times.",
-        "> I lost everything in the fire. Four years of research, my instruments, my notes, my... everything. This was in my coat pocket and it's the only object I own that predates it.\n\n> Jiro doesn't know. Nobody knows. I've told you because you didn't laugh, and because I've discovered that not being laughed at is a thing I've been rationing since I was nineteen.",
+        "> I lost everything in the fire. Four years of research, my instruments, my notes, my... everything. This was in my coat pocket and it's the only object I own that predates it.\n\n> Jiro doesn't know. Nobody knows. I've told you because you didn't laugh, and because I've discovered that not being laughed at is a thing I've been rationing since I was seventeen.",
       ],
       choice: {
         prompt: "Say something. And if it's unkind I shall never recover, so choose carefully.",

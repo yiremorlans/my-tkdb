@@ -110,6 +110,30 @@ test('weightedBackgrounds repeats each _PM file EVENING_PM_WEIGHT times in the e
   assert.deepStrictEqual(new Set(weighted), new Set(day.concat(pmFiles)), 'no file should be invented or dropped, only repeated');
 });
 
+test('weightedBackgrounds sizes Darkwick\'s _PM weight to hit its ~70% evening target share', () => {
+  // Darkwick opts into a target _PM share (EVENING_PM_TARGET_SHARE) instead of
+  // the flat EVENING_PM_WEIGHT: the per-file weight is derived from its actual
+  // day/_PM file counts so the share holds if that list changes. This asserts
+  // the intent (the share) rather than the derived integer weight itself.
+  const TARGET = 0.7;
+  const weighted = weightedBackgrounds(GENERAL_LOCATIONS.DARKWICK, atHour(EVENING_HOUR));
+  const evening = getAvailableBackgrounds(GENERAL_LOCATIONS.DARKWICK, atHour(EVENING_HOUR));
+  const pmFiles = evening.filter((f) => isEveningBackground(f));
+  const dayFiles = evening.filter((f) => !isEveningBackground(f));
+  assert.ok(pmFiles.length > 0 && dayFiles.length > 0, 'fixture assumption: Darkwick has both day and _PM backgrounds');
+
+  for (const file of dayFiles) {
+    assert.strictEqual(weighted.filter((f) => f === file).length, 1, `${file} should appear once (unweighted)`);
+  }
+  const pmCounts = new Set(pmFiles.map((file) => weighted.filter((f) => f === file).length));
+  assert.strictEqual(pmCounts.size, 1, 'every _PM file should share the same weight');
+  const [pmWeight] = [...pmCounts];
+  assert.ok(pmWeight >= EVENING_PM_WEIGHT, 'a target share only ever raises the weight above the default');
+
+  const pmShare = (pmFiles.length * pmWeight) / weighted.length;
+  assert.ok(Math.abs(pmShare - TARGET) < 0.03, `_PM share ${pmShare.toFixed(3)} should sit near the ${TARGET} target`);
+});
+
 test('weightedBackgrounds applies no weighting during the day (no _PM files present to weight)', () => {
   const day = getAvailableBackgrounds(HOUSES.FROSTHEIM, atHour(EVENING_HOUR - 1));
   const weighted = weightedBackgrounds(HOUSES.FROSTHEIM, atHour(EVENING_HOUR - 1));

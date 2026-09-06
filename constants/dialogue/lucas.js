@@ -75,7 +75,7 @@ export default {
     closeFriend: {
       beats: [
         "**{firstName}**: I am going to tell you something I have told no one here, and I am going to do it quickly before the sense returns to me.",
-        "I have a brother. Had... no. Have. I refuse the other word and I have refused it for four years.\n\nHis name is Nox. He is the reason I came to this place, and the reason I train past the point where it is useful, and the reason I am poor company after a mission. I have let everyone believe it is duty. It is not duty. It is a search, and it is not going well.",
+        "I have a brother. Had... no. Have. I refuse the other word and I have refused it since the day he vanished.\n\nHis name is Nox. He is the reason I came to this place, and the reason I train past the point where it is useful, and the reason I am poor company after a mission. I have let everyone believe it is duty. It is not duty. It is a search, and it is not going well.",
         "I ought not to have burdened you with that. I have been told I am hopeless at keeping things to myself and it appears I have proven it again.\n\nBut I did not tell Jin, and I did not tell Kaito, and I have had a great many opportunities. I told you. I should like you to know that I noticed myself choosing.",
       ],
       choice: {
@@ -132,7 +132,7 @@ export default {
             key: "bold",
             label: "Ask him to open the door",
             style: 4,
-            close: "You should not be in this corridor tonight.\n\n*The lock turns anyway. He is gray-faced and shaking and holds himself very straight in the doorway out of pure habit, and when you take his hand he closes his eyes as though it hurts.*\n\n> Don't go,\n\n*he says, which in four years he has never said to anybody.*\n\n> I am sorry. Don't go.",
+            close: "You should not be in this corridor tonight.\n\n*The lock turns anyway. He is gray-faced and shaking and holds himself very straight in the doorway out of pure habit, and when you take his hand he closes his eyes as though it hurts.*\n\n> Don't go,\n\n*he says, which he has not said to anybody since he lost his brother.*\n\n> I am sorry. Don't go.",
           },
         ],
       },
@@ -197,7 +197,7 @@ export default {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
-            close: "Of course. Of course, take it. I am rather relieved, if I am honest. I have had four years to arrive at that sentence and it is unreasonable to hand it to you and start a clock.\n\nI shall be exactly as I was. I shall walk you back from the east wing and I shall be unbearable about your eating properly, and none of it was ever leverage.\n\n*And he is, and it never was, and he does not ask again, not once, until you do.*",
+            close: "Of course. Of course, take it. I am rather relieved, if I am honest. I have had to fight for every honest sentence I own, and it would be unreasonable to hand you this one and start a clock.\n\nI shall be exactly as I was. I shall walk you back from the east wing and I shall be unbearable about your eating properly, and none of it was ever leverage.\n\n*And he is, and it never was, and he does not ask again, not once, until you do.*",
           },
         ],
       },

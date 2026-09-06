@@ -113,7 +113,7 @@ export default {
             label: "Ask what's from before",
             style: 4,
             close:
-              "*He is quiet for a long time.*\n\n> A person. A human one. She had a house and there was a fire in it, the good kind, in the wall.\n\n> That's all I've got left of her, and I don't know her name, and I've never said any of that out loud before because saying it makes it a real thing that's gone.\n\n*He leans against your side on the floor, all his weight, and stays there.*",
+              "*He is quiet for a long time.*\n\n> Neros. The human from before all this. He had a house, and a fire in the wall, the good kind, and he let me sleep by it.\n\n> This is all I've got of that time. I'm gonna find him. I've never said that part out loud before, 'cause saying it out loud makes it a thing I could fail at.\n\n*He leans against your side on the floor, all his weight, and stays there.*",
           },
         ],
       },
@@ -253,7 +253,7 @@ export default {
       "He's practiced something to say to you. It comes out slightly formal and completely sincere.",
       "He falls in at your side without being asked, and stays exactly a step behind.",
       "\"Your scent's all squeezy today. You're sad,\" he says. He's rarely wrong about that.",
-      "\"I'm gonna go practice swimming at Harurin's place. Can you do other stuff besides doggy paddle?\"",
+      "\"I'm gonna go practice swimming at Haru's place. Can you do other stuff besides doggy paddle?\"",
     ],
     spark: [
       "He presses his face into your shoulder and breathes in, and doesn't apologize.",

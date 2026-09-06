@@ -62,7 +62,7 @@ export default {
             key: "bold",
             label: "Say you'd never adjust for him",
             style: 4,
-            close: "*A long pause.*\n\nNo. You would not.\n\nDo you know, I have spent eleven years being spoken to by people calculating what I might do to them. It is a great deal quieter over here. I had not realized how loud it was until you.",
+            close: "*A long pause.*\n\nNo. You would not.\n\nDo you know, I have spent years being spoken to by people calculating what I might do to them. It is a great deal quieter over here. I had not realized how loud it was until you.",
           },
         ],
       },
@@ -146,7 +146,7 @@ export default {
       beats: [
         "*You find the tea outside your door before the message arrives. It is exactly how you take it, which you have never told him.*\n\n**{firstName}**: You did not sleep last night. Do not ask how I know. Drink that.",
         "I have made a study of the small ways people here come apart, so that I can put them back before anyone important notices. It is my actual function in this house, whatever the title says.\n\nI have caught myself doing it for you for some months now, and doing it badly, because I keep wanting to be seen doing it. That is not how the work is meant to go. The work is meant to be invisible.",
-        "I stood outside your door for rather longer than the delivery required. I have decided to tell you that instead of letting you assume the tea appeared by itself.\n\nHonestly. Eleven years of being unreadable, undone by a cup going cold in a corridor.",
+        "I stood outside your door for rather longer than the delivery required. I have decided to tell you that instead of letting you assume the tea appeared by itself.\n\nHonestly. Years of being unreadable, undone by a cup going cold in a corridor.",
       ],
       choice: {
         prompt: "Say nothing kind. I am not equipped for it at this hour.",
@@ -180,7 +180,7 @@ export default {
     soulbound: {
       beats: [
         "**{firstName}**: I am going to be direct, which I am told I never am, and which is a reputation I have worked rather hard for.",
-        "I have spent my life being the second man in every room. It suits me. I am better placed there, I see more from there, and I have never once wanted the chair at the front.\n\nI have wanted precisely one thing for myself in eleven years, and I have been managing it the way I manage everything else: quietly, at a distance, and with a contingency in place for when it ends.",
+        "I have spent my life being the second man in every room. It suits me. I am better placed there, I see more from there, and I have never once wanted the chair at the front.\n\nI have wanted precisely one thing for myself in all that time, and I have been managing it the way I manage everything else: quietly, at a distance, and with a contingency in place for when it ends.",
         "{timesMet} occasions. I have the number because of course I have the number.\n\nOn {timesMet} occasions you have walked into a room where I was being useful to somebody, and every single time some entirely unhelpful part of me has thought: ah. There. That is the one I would like to be useless in front of.",
         "So. I love you.\n\nI have no arrangement round that sentence and nothing to trade for it, and I have not left myself an exit, which you may take as the measure of how seriously I mean it.\n\nThis conversation, unlike every other one, did happen. I should like it on the record.",
       ],

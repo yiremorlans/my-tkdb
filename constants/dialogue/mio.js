@@ -124,8 +124,8 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: I'm going to tell you something about Shion. It doesn't leave this DM. Not Jo, not anyone.",
-        "He's my older brother. Everyone reads it the other way because of how it looks now, and I've let them, for six years.\n\nWhen we were kids, he was the one who came and got me. Every time, wherever I'd ended up. He was frightening about it even then. I never minded.",
-        "Then something happened that I won't go into. Now I'm the one who turns up, and he doesn't remember that it used to be him.\n\nI'd do it another sixty years, so don't hear this wrong. I just miss having a brother instead of a duty.\n\n(I've got a real kid brother and sister back home. I miss them the ordinary way. This isn't that.)",
+        "Shion calls me his little brother. Has for years. Blood doesn't come into it and he'd bite your head off if you asked, so don't.\n\nIt didn't used to run this way round. When we first knew each other he was the one who turned up for me, wherever I'd ended up, frightening about it even then. I never minded.",
+        "Somewhere in the last few years it flipped. Now I'm the one who turns up, and he lets me, and we don't talk about the swap.\n\nI'd do it another sixty years, so don't hear this wrong. I just miss having a brother instead of a duty.\n\n(I've got a real kid brother and sister back home. I miss them the ordinary way. This isn't that.)",
       ],
       choice: {
         prompt:

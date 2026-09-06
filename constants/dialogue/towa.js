@@ -18,25 +18,29 @@ export default {
         "You've come {timesMet} times. I count the days between. The most was nine 🌙 That was a bad nine.\n\nI can't talk in the daytime. Too loud. At night it's fine.\n\nThis is the night version of me. I'm nicer at night 🎵",
       ],
       choice: {
-        prompt: "Do you want the dead one? 🥀 You can say no. You'd be the first.",
+        prompt:
+          "Do you want the dead one? 🥀 You can say no. You'd be the first.",
         options: [
           {
             key: "kind",
             label: "Say you want it",
             style: 3,
-            close: "...Oh.\n\n*The humming starts up in the background of the next voice note and doesn't stop.*\n\n> Then I'll pick you a live one too. And another one. I'll pick you all of them, I don't mind, they grow back.",
+            close:
+              "...Oh.\n\n*The humming starts up in the background of the next voice note and doesn't stop.*\n\n> Then I'll pick you a live one too. And another one. I'll pick you all of them, I don't mind, they grow back.",
           },
           {
             key: "playful",
             label: "Ask if he eats those",
             style: 1,
-            close: "Only the yellow bit 🌼 The stem's horrible. Like drinking a wall.\n\nI'll pick you a fresh one to try. I wouldn't give you a dead one to eat. I'm not strange.",
+            close:
+              "Only the yellow bit 🌼 The stem's horrible. Like drinking a wall.\n\nI'll pick you a fresh one to try. I wouldn't give you a dead one to eat. I'm not strange.",
           },
           {
             key: "bold",
             label: "Ask about the bad nine days",
             style: 4,
-            close: "*[a sticker of a small animal sitting alone by a gate]*\n\nI counted twice to make sure.\n\nI sat by the gate on the fourth day. And the sixth.\n\nDon't do nine again. Please 🥀 I don't like what I'm like by the seventh.",
+            close:
+              "*[a sticker of a small animal sitting alone by a gate]*\n\nI counted twice to make sure.\n\nI sat by the gate on the fourth day. And the sixth.\n\nDon't do nine again. Please 🥀 I don't like what I'm like by the seventh.",
           },
         ],
       },
@@ -58,19 +62,22 @@ export default {
             key: "kind",
             label: "Say nothing he says is wrong",
             style: 3,
-            close: "That's not true. I said a really bad one to Haru in March.\n\nBut keep saying it. I'd like you to. I'll pretend it's true when it's dark 🌙",
+            close:
+              "That's not true. I said a really bad one to Haru in March.\n\nBut keep saying it. I'd like you to. I'll pretend it's true when it's dark 🌙",
           },
           {
             key: "playful",
             label: "Say you've stepped closer",
             style: 1,
-            close: "...Closer?\n\n*The humming stops completely, which is more alarming than it starting.*\n\nDo it again. The closer thing. Do it tomorrow where I can see it.",
+            close:
+              "...Closer?\n\n*The humming stops completely, which is more alarming than it starting.*\n\nDo it again. The closer thing. Do it tomorrow where I can see it.",
           },
           {
             key: "bold",
             label: "Tell him to stop watching",
             style: 4,
-            close: "I can't. It's the only way I know when.\n\nIf I stop, then one day you're just gone and I didn't see it coming. That's worse. I've had that one before.\n\n...I'll watch less. A bit less. I can do a bit less.",
+            close:
+              "I can't. It's the only way I know when.\n\nIf I stop, then one day you're just gone and I didn't see it coming. That's worse. I've had that one before.\n\n...I'll watch less. A bit less. I can do a bit less.",
           },
         ],
       },
@@ -87,25 +94,29 @@ export default {
         "*He sits down in the middle of it without checking whether you'll follow.*\n\n> Nobody knows. Not Haru, and Haru knows every square foot of that park. This bit isn't the park. This bit's mine.\n\n*He hums for a while.*\n\n> You can be in it. That's what I'm asking. Not visiting it, *in* it, so it's a place with you in it and then I can come here when you're not here and you'll still sort of be here.",
       ],
       choice: {
-        prompt: "Is that all right? You can say no. Say no properly if you mean it, I get confused by the polite kind.",
+        prompt:
+          "Is that all right? You can say no. Say no properly if you mean it, I get confused by the polite kind.",
         options: [
           {
             key: "kind",
             label: "Say yes and sit down",
             style: 3,
-            close: "*You sit. He goes very still for a moment, and then leans over sideways until his whole weight is against you, exactly like a child falling asleep on a bus.*\n\n> Good,\n\n*he says.*\n\n> That's it now. That's done. You're in it.\n\n*He hums until it gets light.*",
+            close:
+              "*You sit. He goes very still for a moment, and then leans over sideways until his whole weight is against you, exactly like a child falling asleep on a bus.*\n\n> Good,\n\n*he says.*\n\n> That's it now. That's done. You're in it.\n\n*He hums until it gets light.*",
           },
           {
             key: "playful",
             label: "Blow a seed head at him",
             style: 1,
-            close: "*It goes everywhere. He is absolutely delighted and appalled in equal measure.*\n\n> That's a WHOLE ONE. That's about two hundred!\n\n> ...Good. Do another. There should be more of them if you're going to be in it.",
+            close:
+              "*It goes everywhere. He is absolutely delighted and appalled in equal measure.*\n\n> That's a WHOLE ONE. That's about two hundred!\n\n> ...Good. Do another. There should be more of them if you're going to be in it.",
           },
           {
             key: "bold",
             label: "Ask what happens if you go",
             style: 4,
-            close: "*The humming stops.*\n\n> Then it's still yours,\n\n*he says, after a long time.*\n\n> I'd still come. I'd just be sad in it instead.\n\n> That's better than not having it. I worked that out already. I worked it out before I brought you.",
+            close:
+              "*The humming stops.*\n\n> Then it's still yours,\n\n*he says, after a long time.*\n\n> I'd still come. I'd just be sad in it instead.\n\n> That's better than not having it. I worked that out already. I worked it out before I brought you.",
           },
         ],
       },
@@ -122,25 +133,29 @@ export default {
         "Everything I've ever liked has gone quiet eventually. That's not sad, it's just true. People get upset when I say it, so I stopped.\n\nYou make a noise too. I know it now. Your feet on the gravel from forty feet off.\n\nSo I listen for that as well. It's worse, because most hours you're not on the gravel 🪨",
       ],
       choice: {
-        prompt: "Is that a bad thing to have said? I can't always tell at night. Tell me if it was bad.",
+        prompt:
+          "Is that a bad thing to have said? I can't always tell at night. Tell me if it was bad.",
         options: [
           {
             key: "kind",
             label: "Say you'll come more often",
             style: 3,
-            close: "How often.\n\n*You tell him.*\n\n...Say the days. Say them out loud so I can put them somewhere.\n\n*You list them. He repeats every one back. He never misses one after that, and neither do you.*",
+            close:
+              "How often.\n\n*You tell him.*\n\n...Say the days. Say them out loud so I can put them somewhere.\n\n*You list them. He repeats every one back. He never misses one after that, and neither do you.*",
           },
           {
             key: "playful",
             label: "Ask what your noise is like",
             style: 1,
-            close: "Uneven. You take the corner wide because of the puddle. Everyone else walks through the puddle.\n\nIt's my favorite one 🎵 Don't tell the birds.",
+            close:
+              "Uneven. You take the corner wide because of the puddle. Everyone else walks through the puddle.\n\nIt's my favorite one 🎵 Don't tell the birds.",
           },
           {
             key: "bold",
             label: "Tell him to sleep instead",
             style: 4,
-            close: "I can't do it on my own.\n\n*A long pause. Then, very simply, with no wheedling anywhere in it:*\n\nYou could sit in the field with me. I've slept there before. I've never slept there with anyone.\n\n*He does sleep, that night, for about three hours, flat out in the seed heads with his head on your leg, humming even in his sleep.*",
+            close:
+              "I can't do it on my own.\n\n*A long pause. Then, very simply, with no wheedling anywhere in it:*\n\nYou could sit in the field with me. I've slept there before. I've never slept there with anyone.\n\n*He does sleep, that night, for about three hours, flat out in the seed heads with his head on your leg, humming even in his sleep.*",
           },
         ],
       },
@@ -152,30 +167,34 @@ export default {
 
     devoted: {
       beats: [
-        "**{firstName}**: The one standing near you today. In the courtyard.\n\nI know his name, where he sleeps, when he goes to the refectory. Eleven minutes, it took me.\n\nI'm telling you that I found it out.",
+        "**{firstName}**: The one standing near you today. In the courtyard.\n\nI know his name, where he sleeps, when he eats. Eleven minutes, it took me.\n\nI'm telling you that I found it out.",
         "I'm not going to do anything. I want you to know that.\n\nBut I sat with it all afternoon. Ren asked what was wrong and I said nothing. First time I've ever lied to him.",
         "So instead I went to the field and pulled up about a hundred of them. Then I felt awful, they hadn't done anything, and I sat there putting the seed heads back even though that doesn't work.\n\nThat's where it went. Into the flowers 💐 It has to go somewhere. I'd rather there than anywhere with a name.",
       ],
       choice: {
-        prompt: "Was that right? I think it was right. I'd like you to say it was right.",
+        prompt:
+          "Was that right? I think it was right. I'd like you to say it was right.",
         options: [
           {
             key: "kind",
             label: "Tell him it was right",
             style: 3,
-            close: "...Good.\n\n*A long silence, and then the humming starts up again, unsteady at first.*\n\nI'll do the flowers every time. That's the rule now. You made the rule and I'm keeping it.",
+            close:
+              "...Good.\n\n*A long silence, and then the humming starts up again, unsteady at first.*\n\nI'll do the flowers every time. That's the rule now. You made the rule and I'm keeping it.",
           },
           {
             key: "playful",
             label: "Offer to replant them with him",
             style: 1,
-            close: "They won't grow. I've done it before. It doesn't work.\n\n...You can help anyway 🌱 I'd like there to be two of us doing something that doesn't work.",
+            close:
+              "They won't grow. I've done it before. It doesn't work.\n\n...You can help anyway 🌱 I'd like there to be two of us doing something that doesn't work.",
           },
           {
             key: "bold",
             label: "Tell him to lie to you never",
             style: 4,
-            close: "I haven't. Not once. That's why I told you about the eleven minutes.\n\nI could have not told you. It would have been so easy to not tell you.\n\n*Then, after a while:* Come to the field. I want to be next to you when you're not angry with me. I've been imagining it all afternoon and it's much better than the other thing I was imagining.",
+            close:
+              "I haven't. Not once. That's why I told you about the eleven minutes.\n\nI could have not told you. It would have been so easy to not tell you.\n\n*Then, after a while:* Come to the field. I want to be next to you when you're not angry with me. I've been imagining it all afternoon and it's much better than the other thing I was imagining.",
           },
         ],
       },
@@ -193,19 +212,22 @@ export default {
         "Here's the one thing I do promise. It's the only one I've got.\n\nI love you. And you can go. Any time. I won't follow, I won't find anything out, I won't sit at the gate where you can see me.\n\nI'd be sad in the field instead. I worked out how ages ago, so that when I said this I'd mean it.",
       ],
       choice: {
-        prompt: "You can say anything. I've had all day to get ready for anything.",
+        prompt:
+          "You can say anything. I've had all day to get ready for anything.",
         options: [
           {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "*The humming stops dead.*\n\n*Then, after a very long time:* Say it in the field. I want it to happen there so it's in the ground with everything else.\n\n*He's sitting in the middle of the slope when you get there, absolutely still for once, and when you say it he closes his eyes and tips forward until his forehead is against yours.*\n\n> There,\n\n*he says.*\n\n> Now it's a place with that in it. Now it can't go anywhere.",
+            close:
+              "*The humming stops dead.*\n\n*Then, after a very long time:* Say it in the field. I want it to happen there so it's in the ground with everything else.\n\n*He's sitting in the middle of the slope when you get there, absolutely still for once, and when you say it he closes his eyes and tips forward until his forehead is against yours.*\n\n> There,\n\n*he says.*\n\n> Now it's a place with that in it. Now it can't go anywhere.",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
-            close: "All right.\n\n*No wheedling. No guilt. He doesn't ask how long, which is the most enormous thing he has ever not done.*\n\nI said you could go, so I have to mean the smaller ones too. That's how it works. Ren explained it.\n\nThe field's still yours. That was done ages ago and it doesn't undo. And I'll still know your feet on the gravel, and I'll still be glad, and you don't have to do anything about that at all.",
+            close:
+              "All right.\n\n*No wheedling. No guilt. He doesn't ask how long, which is the most enormous thing he has ever not done.*\n\nI said you could go, so I have to mean the smaller ones too. That's how it works. Ren explained it.\n\nThe field's still yours. That was done ages ago and it doesn't undo. And I'll still know your feet on the gravel, and I'll still be glad, and you don't have to do anything about that at all.",
           },
         ],
       },
@@ -305,39 +327,39 @@ export default {
   },
   daytimeDialogue: {
     new: [
-      "~~~!",
-      "~~~? ...~~~.",
+      "~ ~ ~!",
+      "~ ~ ~? . . . ~ ~ ~ .",
       "He hums a few notes at you, and waits, expectantly.",
-      "~~~ ♪",
+      "~ ~ ~ ♪",
     ],
     known: [
-      "~~~ ...~~~?",
+      "~ ~ ~ . . . ~ ~ ~?",
       "He hums two notes, stops, and waits to see whether you stay.",
-      "~~~ ♪ (he holds out a dandelion)",
-      "~~~! ...~~~",
+      "~ ~ ~ ♪ (he holds out a dandelion)",
+      "~ ~ ~! . . . ~ ~ ~",
     ],
     warm: [
-      "~~~! ♫",
-      "~~~ ♪ ~~~ ♪",
+      "~ ~ ~! ♫",
+      "~ ~ ~ ♪ ~ ~ ~ ♪",
       "The humming picks up the moment he sees you. It's cheerful. It's for you.",
-      "~~~! ...~~~ ♫",
+      "~ ~ ~! . . .~ ~ ~ ♫",
     ],
     spark: [
-      "~~~ ♪ (he hums it against your shoulder)",
+      "~ ~ ~ ♪ (he hums it against your shoulder)",
       "He hums low, close to your ear, and doesn't step back.",
-      "~~~ ...~~~ ♫ (softer than usual, and much nearer)",
-      "~~~ ♪ (he stops mid-note when you look at him)",
+      "~ ~ ~ . . . ~ ~ ~ ♫ (softer than usual, and much nearer)",
+      "~ ~ ~ ♪ (he stops mid-note when you look at him)",
     ],
     close: [
-      "~~~! ~~~! ♫ ♫",
-      "~~~ ♪ ~~~ ♫ ~~~ ♪",
+      "~ ~ ~! ~ ~ ~! ♫ ♫",
+      "~ ~ ~ ♪ ~ ~ ~ ♫ ~ ~ ~ ♪",
       "He hums the same three notes over and over. You've come to know that one.",
-      "~~~ ♫ (he taps your sleeve, twice, and hums it again)",
+      "~ ~ ~ ♫ (he taps your sleeve, twice, and hums it again)",
     ],
     bound: [
-      "~~~ ♪ (hummed into your hair, half asleep)",
+      "~ ~ ~ ♪ (hummed into your hair, half asleep)",
       "He hums against your collarbone until you feel it more than hear it.",
-      "~~~ ♫ ...~~~ ♪ (the same three notes, over and over, just for you)",
+      "~ ~ ~ ♫ . . . ~ ~ ~ ♪ (the same three notes, over and over, just for you)",
       "He hums, stops to kiss your shoulder, and picks the tune back up.",
     ],
   },
@@ -372,12 +394,7 @@ export default {
       "Tell him you came back",
       "Promise you'll stay",
     ],
-    bound: [
-      "Stay forever",
-      "Say it's true",
-      "Let him hold on",
-      "Don't leave",
-    ],
+    bound: ["Stay forever", "Say it's true", "Let him hold on", "Don't leave"],
   },
   daytimeApproach: {
     new: [
@@ -434,18 +451,10 @@ export default {
         "Promise you'll come back",
         "Let him hold on",
       ],
-      bound: [
-        "Say it's true",
-        "Let him hold your shirt",
-        "Tell him he's safe",
-      ],
+      bound: ["Say it's true", "Let him hold your shirt", "Tell him he's safe"],
     },
     playful: {
-      new: [
-        "Make him smile",
-        "Hum the tune back",
-        "Tuck it behind your ear",
-      ],
+      new: ["Make him smile", "Hum the tune back", "Tuck it behind your ear"],
       spark: [
         "Hum it back against him",
         "Steal the dandelion",
@@ -474,11 +483,7 @@ export default {
         "Take his hand first",
         "Tell him you're not leaving",
       ],
-      bound: [
-        "Say you're his",
-        "Pull him closer still",
-        "Promise him forever",
-      ],
+      bound: ["Say you're his", "Pull him closer still", "Promise him forever"],
     },
     neutral: {
       new: [

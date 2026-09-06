@@ -1189,6 +1189,8 @@ Ren hates anything water-related. And despite liking horror movies, he is scared
 
 Although on the surface he seems rude and uncaring, Ren cares and thinks a lot. When necessary, he chooses to do the right thing, like when he saved Calamari from death. He also tends to hide his feelings.
 
+Ren addresses the MC as "senpai" (lowercase when texting, capitalised when spoken).
+
 Character Selection	 That's harassment. Is everyone in this place from the past?
 Opening Cutscene	This is exactly why I didn't want to do this! I knew this was how it was gonna end! What am I even doing here...? This is all your fault...
 Summon	 If anything happens to me, it's your fault.
@@ -1276,6 +1278,8 @@ A big deal of this is seen with Leo, though, despite his words, he does what he 
 While he appears to tolerate Leo's antagonistic actions, he draws a line when Leo starts to mock his friends. This is shown when Subaru brings his motorbike to Kamata Prison when he heard they needed help. Leo starts to mock Subaru for not feeding Bonnie properly, and Sho reprimands him, telling him to knock it off.
 
 Sho also develops a liking to tease his friends, particularly the MC.
+
+Sho addresses the MC as "Senpai" — a running joke about her being a year ahead of him that stops being a joke. Lowercase when texting, capitalised when spoken.
 
 Character Selection	 Pass. I'm not going on some kindergarten field trip with you.
 Opening Cutscene	What're you doing here? Geez... What else am I supposed to do, huh? I'm the only guy for the job. Pfft... What's with that face? At least see me off with a smile. Well... it's been a fun ride. Thanks for everything.

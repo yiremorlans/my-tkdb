@@ -155,7 +155,7 @@ export default {
             label: "Ask him straight out",
             style: 4,
             close:
-              "*The typing indicator runs for almost ten minutes and produces one line.*\n\nYes\n\nAnd I'd do it again, and that's the part that keeps me up\n\n*Then:* You still there\n\n*You say yes. He doesn't answer. The read receipt just sits there, timestamped, until the sun comes up.*",
+              "*The typing indicator runs for almost ten minutes and produces this.*\n\nEveryone who hears it decides. One way or the other. Then they're careful around me\n\nYou haven't decided. Two years\n\nNot handing you the answer just to watch which way you go. Not yet\n\n*Then:* You still there\n\n*You say yes. He doesn't answer. The read receipt just sits there, timestamped, until the sun comes up.*",
           },
         ],
       },
@@ -247,7 +247,7 @@ export default {
       "He doesn't warn you about the floor anymore. You've learned it.",
       "He grunts once in your direction. Two weeks ago he didn't do that.",
       "The toolbox has already been moved before you arrive.",
-      '"Looks like we\'ve got another mission order," he says. "There\'s more anomalies in the summer."',
+      '"Looks like we\'ve got another mission order," he says. "Rest while you can. Next one\'s a long one."',
       "\"Hand me that.\" It's the first thing he's ever asked you for.",
     ],
     warm: [

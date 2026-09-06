@@ -361,13 +361,39 @@ export function getAvailableBackgrounds(locationKey, now = new Date()) {
 // for a location with no _PM variant at all.
 export const EVENING_PM_WEIGHT = 3;
 
+// Locations where the evening should read as decisively "after dark": rather
+// than the fixed per-file multiplier above, aim for the _PM backgrounds
+// collectively taking this share of evening draws. The per-file weight is
+// derived from how many day vs _PM files the location actually has (see
+// eveningPmWeight), so the share holds even if that file list changes later.
+// Locations not listed here keep EVENING_PM_WEIGHT.
+const EVENING_PM_TARGET_SHARE = {
+  [GENERAL_LOCATIONS.DARKWICK]: 0.7,
+};
+
+// Per-file weight for _PM backgrounds at a location, given the files eligible
+// right now. Returns EVENING_PM_WEIGHT unless the location has a target share
+// and both kinds of file are present to trade off between.
+function eveningPmWeight(locationKey, files) {
+  const target = EVENING_PM_TARGET_SHARE[locationKey];
+  if (!target) return EVENING_PM_WEIGHT;
+  const pm = files.filter(isEveningBackground).length;
+  const day = files.length - pm;
+  if (pm === 0 || day === 0) return EVENING_PM_WEIGHT;
+  // Solve  pm*w / (day + pm*w) = target  for w, then keep it a sane integer.
+  const w = Math.round((target * day) / (pm * (1 - target)));
+  return Math.max(EVENING_PM_WEIGHT, w);
+}
+
 // Exported for direct, deterministic testing of the pool composition itself
 // (see test/backgrounds-time-of-day.test.js) rather than asserting on the
 // distribution of many random draws.
 export function weightedBackgrounds(locationKey, now) {
+  const files = getAvailableBackgrounds(locationKey, now);
+  const pmWeight = eveningPmWeight(locationKey, files);
   const out = [];
-  for (const file of getAvailableBackgrounds(locationKey, now)) {
-    const copies = isEveningBackground(file) ? EVENING_PM_WEIGHT : 1;
+  for (const file of files) {
+    const copies = isEveningBackground(file) ? pmWeight : 1;
     for (let i = 0; i < copies; i++) out.push(file);
   }
   return out;

@@ -3,7 +3,9 @@ export default {
   // and performs fragility as a hobby; the courtly register never drops, it just
   // stops being armor. He asks before he bites and he asks before everything
   // else too, which is the shape of the intimacy here — a predator who has made
-  // consent into a manner. The lost "her" is named at Confidant and never after.
+  // consent into a manner. The lost "her" surfaces at Confidant, unnamed and
+  // kept deliberately vague — canon only gives us "you remind me a little of
+  // her," so no name, no dates, no biography beyond what grief needs.
   // Texting is the one modern custom Rui never fully broke him of. Per
   // reference.md's "## Bond Scenes" notes he types boomer-style: ornate
   // sentences close on two or more painfully literal emojis in a row, and
@@ -119,23 +121,23 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: I am going to tell you about her, and then I shall not mention her again, and you will please not ask me to. 🥀🕯️",
-        "Her name was Amelie and she was not remarkable in any way that would survive being written down. She laughed at the wrong parts of things. She was extremely bad at cards. 🃏😄\n\nShe was thirty-one when I met her and she was eighty-four when she stopped, and I was precisely as I am now for the whole of it, which is the part nobody ever understands.",
-        "I have said for centuries that the living die so quickly. I say it languidly, at parties; people find it chilling and I let them. It is the only sentence I have built that holds the whole fact without making me feel it.\n\nThey also call me the most powerful vampire who ever lived. 🧛🦇 Useful for keeping first-years out of the east wing. Not true. I had a forgettable life in Eastern Europe for longer than all of this, and nobody repeats that one.\n\nI am telling you the dull one. You strike me as someone worth being dull with. 🫖📖",
+        "Her name is not the point and I am not going to give it to you. She was not remarkable in any way that would survive being written down, and I loved her past all sense. 🥀\n\nShe was young when I met her and she was old when she stopped, and I was precisely as I am now for the whole of it, which is the part nobody ever understands.",
+        "I have said for centuries that the living die so quickly. I say it languidly, at parties; people find it chilling and I let them. It is the only sentence I have built that holds the whole fact without making me feel it.\n\nThey also call me the most powerful vampire who ever lived. 🧛🦇 Useful for keeping first-years out of the east wing. I have never confirmed it and I have never denied it; the ambiguity does more work than either answer would.\n\nWhat I will tell you is the dull part. A long, forgettable life in Eastern Europe, quiet as a shut drawer, that nobody repeats because it makes a poor story. You strike me as someone worth being dull with. 🫖📖",
       ],
       choice: {
         prompt: "There. You may say something now, and I would very much rather it were not sympathy. 🙏🥀",
         options: [
           {
             key: "kind",
-            label: "Ask what she laughed at",
+            label: "Ask what she was like",
             style: 3,
-            close: "*The reply takes a very long time.*\n\nEverything at the wrong moment. Funerals, most memorably. She was asked to leave two.\n\n*And then, unmistakably, a man who has not talked about someone in a hundred years talking about them until it gets light, and at the end of it:* Thank you. Not for the sympathy. For the question. Nobody asks what she was *like*. 🥺💭",
+            close: "*The reply takes a very long time.*\n\nDifficult. Funny at the wrong moments. Certain about small things in a way I found exhausting and now miss unbearably.\n\n*And then, unmistakably, a man who has not talked about someone in a hundred years talking about them until it gets light, and at the end of it:* Thank you. Not for the sympathy. For the question. Nobody asks what she was *like*. 🥺💭",
           },
           {
             key: "playful",
-            label: "Ask if she beat him at cards",
+            label: "Ask if she knew what he was",
             style: 1,
-            close: "Never once. She was appalling. She played every hand as though it were personal.\n\n...I have not smiled about her in some decades. 😊🥲 That is your doing and I have not decided whether to be grateful.",
+            close: "She worked it out inside the year and stayed regardless. Appalling judgment. I adored her for it.\n\n...I have not smiled about her in some decades. 😊🥲 That is your doing and I have not decided whether to be grateful.",
           },
           {
             key: "bold",
@@ -146,8 +148,8 @@ export default {
         ],
       },
       keepsake: {
-        emoji: "📛",
-        line: "A name spoken aloud for the first time in a hundred years.",
+        emoji: "🥀",
+        line: "Someone he loved and outlived, described out loud for the first time in a hundred years.",
       },
     },
 
@@ -190,7 +192,7 @@ export default {
       beats: [
         "**{firstName}**: I have written this six times. Each attempt was more elegant than the last, and I have discarded all of them for that reason. 📝🗑️",
         "{timesMet} occasions. I Do Not Count Things. Counting is for creatures with a reason to hurry, and I have been very careful never to have one.\n\nI have counted every single one of yours. 🔢🖤",
-        "I told you about Amelie and said I would not mention her again. One more thing, then I close the subject.\n\nI never told her. Fifty-three years, and I decided, nobly I thought, that it would be cruel to make her carry it.\n\nShe died not knowing. I have had a hundred years to call that noble. It was not. It was cowardice with excellent manners. 🎭🥀",
+        "I told you about her and said I would not mention her again. One more thing, then I close the subject.\n\nI never told her what I felt. All those years of it, and I decided, nobly I thought, that it would be cruel to make her carry the weight of what I am.\n\nShe died not knowing. I have had a hundred years to call that noble. It was not. It was cowardice with excellent manners. 🎭🥀",
         "So.\n\nI love you. ❤️❤️ Said plainly, no elegant construction anywhere near it, which for me is like standing in a doorway with no clothes on.\n\nYou will die quickly. I know it, you know it, I am saying it anyway. I made that mistake once. A creature who makes it twice deserves the four hundred years he gets. 🖤⏳",
       ],
       choice: {
@@ -200,7 +202,7 @@ export default {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "Come up.\n\n*He is standing when you arrive, not languid, not draped over anything, simply standing in the middle of the room like a man who has been waiting.*\n\n*He takes your jaw in both cold hands and looks at you for an unreasonably long time.*\n\n> Say it once more.\n\n*he says.*\n\n> I waited fifty-three years to hear it the last time and it never came. I intend to be quite greedy about hearing it now. 🥰",
+            close: "Come up.\n\n*He is standing when you arrive, not languid, not draped over anything, simply standing in the middle of the room like a man who has been waiting.*\n\n*He takes your jaw in both cold hands and looks at you for an unreasonably long time.*\n\n> Say it once more.\n\n*he says.*\n\n> I waited an entire mortal lifetime to hear it the last time and it never came. I intend to be quite greedy about hearing it now. 🥰",
           },
           {
             key: "held",

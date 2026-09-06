@@ -123,7 +123,7 @@ export default {
       beats: [
         "**{firstName}**: Taiga lost three days again. I've been running the floor since Wednesday and I have not slept and I look INCREDIBLE, which is not the point.",
         "Here's the bit I don't say. He doesn't remember that I do it. Every time. I cover four days, he comes back, and by lunch we're screaming at each other about the bar tab like nothing happened. He's not ungrateful, he genuinely doesn't clock it.\n\nSo I've held this house up for two years for a man I fight with daily. And if he ever worked it out, he wouldn't say thank you. He'd make it ammunition. I'd rather run this floor blind than give him that.",
-        "I yell because if I'm the loudest person in the room nobody asks what I'm actually doing. Worked for eleven years. Works best on him, he's too busy yelling back to notice what I'm covering.\n\nYou asked. Last Tuesday. Just said \"are you all right\" in the corridor like it was a normal question, and I've been thinking about it for six days and I'm FURIOUS about it.",
+        "I yell because if I'm the loudest person in the room nobody asks what I'm actually doing. Worked for as long as I can remember. Works best on him, he's too busy yelling back to notice what I'm covering.\n\nYou asked. Last Tuesday. Just said \"are you all right\" in the corridor like it was a normal question, and I've been thinking about it for six days and I'm FURIOUS about it.",
       ],
       choice: {
         prompt:

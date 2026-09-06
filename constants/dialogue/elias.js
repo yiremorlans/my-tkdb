@@ -47,7 +47,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: A question, if I may. You're welcome to tell me to mind my own.",
-        "Every time I turn one of your questions back around, you let me. You don't push, and you don't sulk about it. Then the next time, you come at me with {favResponse} again, as if nothing happened.\n\nI have been deflecting people, professionally, for the better part of a decade. It works because people tire of it eventually. You don't seem to. I would very much like to know why.",
+        "Every time I turn one of your questions back around, you let me. You don't push, and you don't sulk about it. Then the next time, you come at me with {favResponse} again, as if nothing happened.\n\nI have been deflecting people, professionally, for a very long time. It works because people tire of it eventually. You don't seem to. I would very much like to know why.",
       ],
       choice: {
         prompt:
@@ -86,7 +86,7 @@ export default {
       beats: [
         "**{firstName}**: Are you awake? Would you come down to the hall. Bring nothing. It isn't that sort of night.",
         "*There's a record playing, something old and warm, nothing like what Dionysia usually puts on, and the whole hall smells of chicory and something frying.*\n\n> A family recipe. I imported half of it and made rather a nuisance of myself at customs for the rest. I do this once a year, at two in the morning, when nobody's awake to be polite about it.",
-        "> It's my mother's music, and my mother's cooking, and this is the closest I get to New Orleans without a passport I'm not allowed to use.\n\n*He sets the plate down in front of you and doesn't sit yet.*\n\n> Eight years I've done this alone. It wasn't a rule, exactly. It simply never occurred to me there was anyone I'd want in the room. Then it occurred to me, and it wouldn't stop occurring to me. So… here we are.",
+        "> It's my mother's music, and my mother's cooking, and this is the closest I get to New Orleans without a passport I'm not allowed to use.\n\n*He sets the plate down in front of you and doesn't sit yet.*\n\n> I've done this alone for years. It wasn't a rule, exactly. It simply never occurred to me there was anyone I'd want in the room. Then it occurred to me, and it wouldn't stop occurring to me. So… here we are.",
       ],
       choice: {
         prompt: "Well? Say something. I've gone and made myself nervous.",
@@ -110,7 +110,7 @@ export default {
             label: "Ask him to dance to it",
             style: 4,
             close:
-              "*He looks at you for a long moment over the record player.*\n\n> ...I haven't done that in eight years either.\n\n*He does it anyway, slow, unhurried, one hand at your back, the whole thing conducted at perhaps a third of the speed the song is asking for. Neither of you mentions that the record ended some time ago.*",
+              "*He looks at you for a long moment over the record player.*\n\n> ...I haven't done that in a long time either.\n\n*He does it anyway, slow, unhurried, one hand at your back, the whole thing conducted at perhaps a third of the speed the song is asking for. Neither of you mentions that the record ended some time ago.*",
           },
         ],
       },
@@ -123,7 +123,7 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: You asked me once what I used to be. I told you to ask again when it was later, and I was tired enough.\n\nIt's later. I'm tired enough.",
-        "Captain of Dionysia. Four years. It isn't a secret, exactly. It's simply something people have agreed to be tactful about, which is worse.\n\nI lost it. Not a scandal, nothing you could put in a report. I simply reached a point where I couldn't keep up, and I let it go on long enough that someone had to say so, out loud, in a room with other people in it.",
+        "Captain of Dionysia. For a good while. It isn't a secret, exactly. It's simply something people have agreed to be tactful about, which is worse.\n\nI lost it. Not a scandal, nothing you could put in a report. I simply reached a point where I couldn't keep up, and I let it go on long enough that someone had to say so, out loud, in a room with other people in it.",
         "Jo took it over. He does it better than I ever did, and I mean that entirely.\n\nNow I run his errands. Now and then someone calls me Captain by accident, and the whole hall goes quiet for half a second while everyone decides not to look at me.\n\nI've never said any of this aloud before. A year ago I'd have made a joke of it instead.",
       ],
       choice: {
@@ -162,7 +162,7 @@ export default {
     devoted: {
       beats: [
         "**{firstName}**: You're perfectly all right. I already know you're all right, I checked twice. This message is entirely for my own sake.",
-        "There was an incident in the lower hall tonight, and I went at it, and… I was slow. Not disastrously so. Slow. Eight years ago it would have taken me twenty seconds. Tonight it took four minutes, and I felt every one of them.\n\nThat's the fear I don't say aloud. Not dying. Being the man who used to be able to.",
+        "There was an incident in the lower hall tonight, and I went at it, and… I was slow. Not disastrously so. Slow. There was a time it would have taken me twenty seconds. Tonight it took four minutes, and I felt every one of them.\n\nThat's the fear I don't say aloud. Not dying. Being the man who used to be able to.",
         "And here is what I actually meant to tell you, plainly, and then I'll go to bed.\n\nI went at it anyway. Didn't weigh it, didn't count the odds, didn't think about my knees. You were on the other side of that hall, and three years of being careful went straight out the window.\n\nI'd been treasuring the quiet. Dreading the day it ended. It seems I'd rather it ended than have you on the far side of a bad hall.",
       ],
       choice: {
@@ -219,7 +219,7 @@ export default {
             label: "Ask him to give you time",
             style: 2,
             close:
-              "Of course. That's the right answer, and I mean that.\n\nIt took me eight years to work up to one sentence. It would be a poor sort of man who handed it over and started a clock.\n\nThere will be candy on your sill Tuesday, same as always, and I'll still wish you good evening in the west corridor. None of it was ever a down payment on anything. It was only ever me, glad you were there.",
+              "Of course. That's the right answer, and I mean that.\n\nIt took me a very long time to work up to one sentence. It would be a poor sort of man who handed it over and started a clock.\n\nThere will be candy on your sill Tuesday, same as always, and I'll still wish you good evening in the west corridor. None of it was ever a down payment on anything. It was only ever me, glad you were there.",
           },
         ],
       },

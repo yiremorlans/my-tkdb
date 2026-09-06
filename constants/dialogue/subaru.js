@@ -78,7 +78,7 @@ export default {
     closeFriend: {
       beats: [
         "**{firstName}**: Are you awake? There's something in the Hotarubi music room I'd like you to see, and it has to be tonight. It's the anniversary and I don't think I can do it on my own this year.",
-        "*The room is dark. He's laid out a fan, a comb, and a folded haori on the low table, arranged with a precision that is clearly ritual.*\n\n> These were my grandmother's. She taught me the first dance I ever performed. I hold them once a year and I read what's left on them, and it's the only time I've ever been glad of this stigma.",
+        "*The room is dark. He's laid out a fan, a comb, and a folded haori on the low table, arranged with a precision that is clearly ritual.*\n\n> These are from the first role I ever danced. I was four. I hold them once a year and I read what's left on them, and it's the only time I've ever been glad of this stigma.",
         "> I've never brought anyone. It felt like it would spoil it. It hasn't.\n\n*He holds the fan out to you, then hesitates, then puts it in your hands anyway.*\n\n> There. Now there'll be some of you on it, and next year I'll read that too. I've just made you part of a very old thing and I didn't ask first. I'm not sorry, which is new for me.",
       ],
       choice: {
@@ -113,7 +113,7 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: I know it's late. I've started this message six times and deleted it, and the seventh one is going to go whether I'm ready or not.",
-        "They ask when I'm going back to the stage. Every letter, every visit. The hiatus is \"temporary\". It's been three years of temporary.\n\nI can't tell them the truth, which is that the last time I stood in the wings I touched the curtain rope and read everything the man before me had left on it, and I have not been able to go near a theater since.",
+        "They ask when I'm going back to the stage. Every letter, every visit. The hiatus is \"temporary\". It's been three years of temporary.\n\nI can't tell them the truth, which is that I stopped being able to do it. The stigma. A stage is a hundred years of other people's hands on every rope and rail and prop, and it all comes through at once the moment I touch anything, and somewhere along the way I lost the knack of shutting it out.",
         "So I'm here instead, a kabuki actor who doesn't act, filling the days with the garden and other people's errands. Rather good, I'm told, at making everyone else comfortable, and rather bad at doing the same for myself.\n\nI've told nobody. Haku suspects. Zenji would understand, and I can't bear the idea of him being gentle about it.\n\nYou get it because you're the only person I don't have to be anything in front of. That's not a small thing to hand somebody. Please be careful with it.",
       ],
       choice: {
@@ -123,7 +123,7 @@ export default {
             key: "kind",
             label: "Tell him he's allowed to stop",
             style: 3,
-            close: "*There's no reply for a long time.*\n\nNobody has ever said that to me, *he writes finally.* Not once, in twenty years. Everyone's always been so *encouraging*.\n\nI think I'm going to cry, and I'd rather do that here than anywhere with people in it. Stay a minute?\n\n*You stay all night.*",
+            close: "*There's no reply for a long time.*\n\nNobody has ever said that to me, *he writes finally.* Not once, in my whole life. Everyone's always been so *encouraging*.\n\nI think I'm going to cry, and I'd rather do that here than anywhere with people in it. Stay a minute?\n\n*You stay all night.*",
           },
           {
             key: "playful",

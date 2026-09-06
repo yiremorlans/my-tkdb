@@ -76,7 +76,7 @@ export default {
     closeFriend: {
       beats: [
         "**{firstName}**: Come to the lower theater at eleven. The captain will be asleep. Bring nothing.",
-        "*The room is dark except for one lamp. On the bench is a wooden case, old, clearly not medical, and he opens it without preamble.*\n\n*Inside is a set of children's calligraphy brushes.*\n\n> These are my brother's. He is dead. He died here when I was eleven and I have carried these through four moves and never once used them.",
+        "*The room is dark except for one lamp. On the bench is a wooden case, old, clearly not medical, and he opens it without preamble.*\n\n*Inside is a set of children's calligraphy brushes.*\n\n> These are my brother's. He is dead. He died here last year and I have kept them in a drawer since and never once opened it.",
         "> I do not know why I keep them. I have written the reasoning out three times and it does not resolve. Sentiment is not a category I have any facility with.\n\n> But I found myself wanting you to have seen them, and that impulse did not resolve either. I have stopped attempting to resolve things where you are concerned. The failure rate is one hundred percent.",
       ],
       choice: {
@@ -92,7 +92,7 @@ export default {
             key: "playful",
             label: "Ask if he was any good",
             style: 1,
-            close: "> Terrible. Genuinely terrible. He was told so repeatedly and it never once landed.\n\n*Something almost moves at the corner of his mouth.*\n\n> I have not said that out loud in nine years. It is still funny. I had assumed it would have stopped being funny.",
+            close: "> Terrible. Genuinely terrible. He was told so repeatedly and it never once landed.\n\n*Something almost moves at the corner of his mouth.*\n\n> I have not said that out loud since he died. It is still funny. I had assumed it would have stopped being funny.",
           },
           {
             key: "bold",
@@ -182,7 +182,7 @@ export default {
       beats: [
         "**{firstName}**: This message contains no observations. I want that noted at the top, because it is the first one that has not.",
         "{timesMet}. I have that number without looking it up. I have had it for some time.\n\nI have kept a file on you since the fourth visit. It began as habit. It stopped being habit around visit twenty and I continued anyway, which means it became something else. I have known what that something else was for a year and declined to write it down.",
-        "My brother used to say that a thing not said out loud has not happened. He said a great many things and most of them were nonsense. That one has been sitting in my head for nine years like a splinter.\n\nI am inclined to think he was right, which is intolerable, and which is why I am doing this rather than continuing to be extremely comfortable.",
+        "My brother used to say that a thing not said out loud has not happened. He said a great many things and most of them were nonsense. That one has been sitting in my head since he died like a splinter.\n\nI am inclined to think he was right, which is intolerable, and which is why I am doing this rather than continuing to be extremely comfortable.",
         "I love you.\n\nI have no supporting data. There is no measurement I could take that would demonstrate it and I have looked for one. I spent two months looking for one, which I am telling you because it is the most honest thing I know about myself.\n\nIt is simply true and it is not going to stop being true, and I have said it out loud, so now it has happened.",
       ],
       choice: {

@@ -68,7 +68,7 @@ export default {
             key: "bold",
             label: "Say the charm isn't working",
             style: 4,
-            close: "It's working a bit.\n\n...It's not working at all, is it. God. Nine years of a flawless system and you've just wandered through it like a door was open 😂\n\nDon't tell Edward. He'll be insufferable and he'll be right.",
+            close: "It's working a bit.\n\n...It's not working at all, is it. God. Years of a flawless system and you've just wandered through it like a door was open 😂\n\nDon't tell Edward. He'll be insufferable and he'll be right.",
           },
         ],
       },
@@ -115,9 +115,9 @@ export default {
 
     confidant: {
       beats: [
-        "**{firstName}**: Can't sleep. Which is a joke, obviously 😂 I've been not-sleeping for eleven years, it's my whole personality.",
+        "**{firstName}**: Can't sleep. Which is a joke, obviously 😂 I've been not-sleeping since the curse, it's my whole personality.",
         "Here's the thing about the curse nobody gets. It's not the touching. Everyone fixates on the touching and the gloves solved that years ago.\n\nIt's that I never get tired. Not once, not ever. There's no point where my body says right, that's enough, stop now.\n\nSo I don't stop. I run the bar and the house and the garden, I keep Edward alive, I organize everyone's everything. The alternative is sitting in a chair awake for nine hours.",
-        "And everyone thinks it's cheerfulness. Rui the bright one. Rui who's always up for it.\n\nI'm not up for it. I've got nowhere to put the hours and I've had eleven years of them, and you're the only person who's ever asked me to sit down.",
+        "And everyone thinks it's cheerfulness. Rui the bright one. Rui who's always up for it.\n\nI'm not up for it. I've got nowhere to put the hours and there have been a lot of them, and you're the only person who's ever asked me to sit down.",
       ],
       choice: {
         prompt: "Right. That's the ugliest thing about me. Your go.",
@@ -126,7 +126,7 @@ export default {
             key: "kind",
             label: "Ask him to sit down now",
             style: 3,
-            close: "...Now?!\n\nI don't know how to do that. That's not a joke, I genuinely don't know what the instruction is.\n\n*So you talk him through it, badly, over text, and he sits in a chair in the garden for forty minutes doing absolutely nothing, and afterwards he says it was the worst and best thing he's done in a decade.*",
+            close: "...Now?!\n\nI don't know how to do that. That's not a joke, I genuinely don't know what the instruction is.\n\n*So you talk him through it, badly, over text, and he sits in a chair in the garden for forty minutes doing absolutely nothing, and afterwards he says it was the worst and best thing he's done in years.*",
           },
           {
             key: "playful",
@@ -138,13 +138,13 @@ export default {
             key: "bold",
             label: "Tell him he's allowed to stop",
             style: 4,
-            close: "*There's a long gap.*\n\nIf I stop I'm just a bloke who can't touch anyone, sat in a room, forever.\n\n*Then, much later:* That was the real one. Sorry. You asked and I've spent eleven years not answering it and it came out worse than I meant.\n\nDon't go, though. Say something else. Anything. I've got about six more hours.",
+            close: "*There's a long gap.*\n\nIf I stop I'm just a bloke who can't touch anyone, sat in a room, forever.\n\n*Then, much later:* That was the real one. Sorry. You asked and I've spent years not answering it and it came out worse than I meant.\n\nDon't go, though. Say something else. Anything. I've got about six more hours.",
           },
         ],
       },
       keepsake: {
         emoji: "⏳",
-        line: "Forty minutes of doing nothing, for the first time in eleven years.",
+        line: "Forty minutes of doing nothing, for the first time since the curse.",
       },
     },
 
@@ -187,7 +187,7 @@ export default {
       beats: [
         "**{firstName}**: Garden. Four in the morning. Don't answer this, just come. If I've got a reply to read I'll lose my nerve reading it.",
         "*The whole bed is out at once, which does not happen, and he is standing at the end of the row with the made-up name looking like he has been up all night rehearsing, which he has.*\n\n> {timesMet} times. I've got a mark on the bench for each one. I started doing it before I'd admitted why I was doing it.",
-        "> I want to say the worst part first, so you can decide with all of it.\n\n> I will never be able to touch you. Not once, not in forty years. No hand on your face, nothing at the end of a bad day. That doesn't get solved. I've looked properly, for eleven years, and there's nothing.",
+        "> I want to say the worst part first, so you can decide with all of it.\n\n> I will never be able to touch you. Not once, not in forty years. No hand on your face, nothing at the end of a bad day. That doesn't get solved. I've looked properly, ever since the curse, and there's nothing.",
         "> And I love you anyway. Which is monstrously unfair to you and I've spent eight months deciding not to say it for exactly that reason.\n\n> But I worked out that deciding for you was the actual unfair bit. So: I love you. I've got a garden and a bar and about a thousand spare hours and a pair of gloves, and that's the whole offer, and it's yours if you want it.",
       ],
       choice: {
@@ -203,7 +203,7 @@ export default {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
-            close: "> Good. Take it. Genuinely, take a lot of it. That's a big thing to hand someone at four in the morning next to a flowerbed.\n\n> And nothing changes. The drink's still on the bar. The garden's still open at four. The row's still called what it's called and I'm not renaming it, because it was true before tonight and it'll be true after.\n\n> I've got eleven years of spare hours, remember. Waiting's the one thing I'm actually built for.",
+            close: "> Good. Take it. Genuinely, take a lot of it. That's a big thing to hand someone at four in the morning next to a flowerbed.\n\n> And nothing changes. The drink's still on the bar. The garden's still open at four. The row's still called what it's called and I'm not renaming it, because it was true before tonight and it'll be true after.\n\n> I've got years of spare hours, remember. Waiting's the one thing I'm actually built for.",
           },
         ],
       },
@@ -226,7 +226,7 @@ export default {
       "He beams. \"Oh hey, it's Honor Roll! Can't believe I ran into you here, so random! Guess we've gotta go on a date now, huh?\"",
       '"You look kind of tired, Honor Roll. Come by the bar later, I\'ll pour you something slow and you can just stop being anywhere else for a while."',
       "He asks how you are and then actually waits, which not everyone does.",
-      "He wipes down the same spot on the bar twice. \"Harurin hasn't been in. He's been flat-out with the animals again. I keep a stool open for him, just in case.\"",
+      "He wipes down the same spot on the bar twice. \"Haru hasn't been in. He's been flat-out with the animals again. I keep a stool open for him, just in case.\"",
       "He's in the anomaly garden, gloves on, snipping the dead heads off a rose bush that's wilting anyway. \"They don't do great near me. I keep planting them anyway.\"",
       "The brightness dims for half a second, and he covers it faster than before.",
     ],
@@ -272,7 +272,7 @@ export default {
     known: [
       "\"You're back! Okay, that's officially a pattern. I love a pattern.\"",
       "\"How've you been? No, the real answer. I've got time.\"",
-      '"Have you seen Harurin? He hasn\'t stopped by for his drink in days. I worry when he pushes himself that hard."',
+      '"Have you seen Haru? He hasn\'t stopped by for his drink in days. I worry when he pushes himself that hard."',
       "\"Aw, c'mon Ed, again? Why does he always leave his socks on the floor... It's actually exhausting picking up after him all the time.\"",
       "\"A mission? Nah, I'm good. Take Lyca, he'd be all over it. I'll keep the bar warm for when you're back.\"",
       '"Careful... okay, you already knew. You\'re getting good at this."',

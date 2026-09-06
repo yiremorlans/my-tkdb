@@ -82,8 +82,8 @@ export default {
     closeFriend: {
       beats: [
         "**{firstName}**: Five thirty. The east gate. Don't be late and don't ask why.",
-        "*It's still dark. He's in a hoodie and running shoes with none of the artifact on him at all, and he looks about six years younger and considerably less finished.*\n\n> This is the jog. Every morning, five thirty, an hour, alone. It's the only part of the day nobody has an opinion about.",
-        "*You run. He doesn't talk for the first twenty minutes, which from Jo is unheard of.*\n\n*Somewhere near the water he says, without slowing down:*\n\n> I've done this alone for six years. Mio's asked. Haru's asked twice. I said no both times without even thinking about it.\n\n> Then I thought about asking you and I couldn't come up with a single reason not to, which frankly alarmed me.",
+        "*It's still dark. He's in a hoodie and running shoes with nothing of the stage on him at all, and he looks about two years younger and considerably less finished.*\n\n> This is the jog. Every morning, five thirty, an hour, alone. It's the only part of the day nobody has an opinion about.",
+        "*You run. He doesn't talk for the first twenty minutes, which from Jo is unheard of.*\n\n*Somewhere near the water he says, without slowing down:*\n\n> I've done this alone every morning since I got here. Mio's asked. Haru's asked twice. I said no both times without even thinking about it.\n\n> Then I thought about asking you and I couldn't come up with a single reason not to, which frankly alarmed me.",
       ],
       choice: {
         prompt: "Well? Verdict. And be honest, you're wheezing.",
@@ -121,7 +121,7 @@ export default {
       beats: [
         "**{firstName}**: I'm going to tell you a thing about this house and then I'd like you to forget I have a title.",
         "Shion's had a bad week. Mio's covering and pretending he isn't tired. Elias is doing three jobs and calling it errands so nobody has to say the word demotion.\n\nI hold all of that. That's not a complaint, it's an inventory. I chose it, I'd choose it again, and I'm good at it.",
-        "Here's the part I've never said.\n\nI don't know if any of them like me. I know they need me. I built a life out of being needed, because being needed is load-bearing and being liked is not, and somewhere in the last six years I lost the ability to tell them apart from the inside.\n\nThen there's you, who has never needed a single thing from me and keeps turning up anyway. I run an hour a morning thinking about it.",
+        "Here's the part I've never said.\n\nI don't know if any of them like me. I know they need me. I built a life out of being needed, because being needed is load-bearing and being liked is not, and somewhere in the last few years I lost the ability to tell them apart from the inside.\n\nThen there's you, who has never needed a single thing from me and keeps turning up anyway. I run an hour a morning thinking about it.",
       ],
       choice: {
         prompt: "Go on. You're the only person I could ask.",
@@ -138,14 +138,14 @@ export default {
             label: "Say you're here for the jog",
             style: 1,
             close:
-              "The jog. Six years of holding this house together and you're in it for cardio.\n\nThat's the funniest thing anyone's said to me in a month and I needed it more than the sincere version. Thank you, cutie. Genuinely.",
+              "The jog. Years of holding this house together and you're in it for cardio.\n\nThat's the funniest thing anyone's said to me in a month and I needed it more than the sincere version. Thank you, cutie. Genuinely.",
           },
           {
             key: "bold",
             label: "Tell him to ask them",
             style: 4,
             close:
-              "Absolutely not.\n\n...Because I'd have to survive the answer, and I've built the whole thing on not needing one.\n\nYou'd ask, wouldn't you. You'd just walk in and ask. God. I've spent six years being impressed by nobody and now this.",
+              "Absolutely not.\n\n...Because I'd have to survive the answer, and I've built the whole thing on not needing one.\n\nYou'd ask, wouldn't you. You'd just walk in and ask. God. I've spent years being impressed by nobody and now this.",
           },
         ],
       },
@@ -158,8 +158,8 @@ export default {
     devoted: {
       beats: [
         "**{firstName}**: I canceled the show.",
-        "Full house. Two months of rehearsal. Board's furious, Romeo's going to bill me for the room, and I have not canceled a performance in nine years, not for illness, not for a funeral, not once.\n\nYou were in the lower halls when it went wrong and nobody could tell me where. So I put the artifact down mid-transformation in front of a hundred and forty people and I walked off, and I did not think about it. That's the part I want you to have: I did not think about it.",
-        "I've spent my whole life being the one who decides what gets sacrificed. I'm extremely good at it. I've sacrificed sleep, friendships, four years of my twenties, and I've never once resented any of it.\n\nTonight somebody else did the deciding and it wasn't me, and it turns out that person is you, and you weren't even in the room.",
+        "Full house. Two months of rehearsal. Board's furious, Romeo's going to bill me for the room, and I have not canceled a performance in my life, not for illness, not for a funeral, not once.\n\nYou were in the lower halls when it went wrong and nobody could tell me where. So I dropped the stigma mid-transformation in front of a hundred and forty people and I walked off, and I did not think about it. That's the part I want you to have: I did not think about it.",
+        "I've spent my whole life being the one who decides what gets sacrificed. I'm extremely good at it. I've sacrificed sleep, friendships, whole years of being a person, and I've never once resented any of it.\n\nTonight somebody else did the deciding and it wasn't me, and it turns out that person is you, and you weren't even in the room.",
       ],
       choice: {
         prompt:
@@ -184,7 +184,7 @@ export default {
             label: "Tell him it wasn't idiotic",
             style: 4,
             close:
-              "*He's at the door before you've finished, still half in costume with the paint smudged, having very clearly walked straight there.*\n\n*He doesn't say anything for a while. He just puts both hands on your shoulders, holds you at arm's length to check, and then gives up entirely and pulls you in.*\n\n> Nine years,\n\n*he says into your hair.*\n\n> Nine years and one of you.",
+              "*He's at the door before you've finished, still half in costume with the paint smudged, having very clearly walked straight there.*\n\n*He doesn't say anything for a while. He just puts both hands on your shoulders, holds you at arm's length to check, and then gives up entirely and pulls you in.*\n\n> A lifetime on that stage,\n\n*he says into your hair.*\n\n> ...and one of you.",
           },
         ],
       },
@@ -198,8 +198,8 @@ export default {
       beats: [
         "**{firstName}**: No nickname on this one. You'll notice, and I want you to.",
         "{timesMet} times. I've counted, which I don't do, because I don't keep count of people. Keeping count is how you end up with a ledger of who owes what and I have quite enough of those.\n\nYou're the only person in my life who isn't on one. Not on the debit side, not on the credit side. You're just there, at five thirty, at the gate.",
-        "I adapt to everybody. I told you that months ago and you told me to stop and I said I didn't know how.\n\nI've worked out that I do know how. I know exactly how. It's this: it's whoever I am at six in the morning halfway round the water with no artifact on and nothing to run. That's the seam. You've been looking at it for a year.",
-        "So: I love you.\n\nNot the captain, not the Venus of Dionysia, not whichever version the room ordered. The one who's out of breath and hasn't got a line ready.\n\nYou can take that at whatever speed you like. I've spent nine years making decisions for a house full of people. I'm quite happy to not make this one.",
+        "I adapt to everybody. I told you that months ago and you told me to stop and I said I didn't know how.\n\nI've worked out that I do know how. I know exactly how. It's this: it's whoever I am at six in the morning halfway round the water with the stage nowhere on me and nothing to run. That's the seam. You've been looking at it for a year.",
+        "So: I love you.\n\nNot the captain, not the Venus of Dionysia, not whichever version the room ordered. The one who's out of breath and hasn't got a line ready.\n\nYou can take that at whatever speed you like. I've spent years making decisions for a house full of people. I'm quite happy to not make this one.",
       ],
       choice: {
         prompt:

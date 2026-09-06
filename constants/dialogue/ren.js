@@ -121,8 +121,8 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: you up? doesn't matter. reading this tomorrow is fine.",
-        "so my family called. summer was the busy period back home and I did the whole thing every year: whole break, killed myself helping out, never once said anything about it because saying something wasn't an option in our house.\n\nand I came here thinking, right, that's over. turns out it doesn't matter what I say. Haru's put a tracker on me before, to drag me out when I go quiet too long. I complain about every shift, every tour edit, every time I have to go hunt down Towa. still do every single one of them.",
-        "I think complaining and actually refusing aren't the same thing, and I only just noticed I've never managed the second one.\n\nmost nights I grind some pointless game until I pass out, because it doesn't need anything back. except Thursdays. that's the only two hours where somebody's there and nothing's expected of me, and I have to lock a door to get them.\n\nanyway. deepest thing I've ever typed. putting my phone in another room now.",
+        "so I've been chewing on something and it won't leave me alone. I complain about everything here. every shift, every tour edit, every time Haru drags me out to go find Towa. loudly. on the record.\n\nHaru's put a tracker on me before, to haul me out when I go quiet too long. and here's the thing: I've never once actually refused any of it. I just complain, and then I do it.",
+        "complaining and refusing aren't the same thing. took me way too long to notice that.\n\nmost nights I grind some pointless game until I pass out, because it doesn't need anything back. except Thursdays. that's the only two hours where somebody's there and nothing's expected of me, and I have to lock a door to get them.\n\nanyway. deepest thing I've ever typed. putting my phone in another room now.",
       ],
       choice: {
         prompt: "say something normal so I can pretend that was normal.",
@@ -198,7 +198,7 @@ export default {
       beats: [
         "**{firstName}**: ok. no bit. no link. I'm not sending you a code instead of just saying this.",
         "{timesMet} times. I've got a save file for basically all of them. every pointless co-op grind, every event, going back to that first invite code. at some point I stopped playing them for the loot and started playing them because you'd be on the other account.\n\nnobody's ever seen that save file. it's the least ironic thing I own.",
-        "here's the actual thing. I say massive stuff in the smallest possible voice. I know I do it. I said \"I like you\" once like I was reading the weather and you just went with it, and I've thought about that literally hundreds of times since.\n\nI do it because if I say something flat and it doesn't land, it wasn't really said. that's the whole system. it's a very good system and it's kept me safe for about twenty years.",
+        "here's the actual thing. I say massive stuff in the smallest possible voice. I know I do it. I said \"I like you\" once like I was reading the weather and you just went with it, and I've thought about that literally hundreds of times since.\n\nI do it because if I say something flat and it doesn't land, it wasn't really said. that's the whole system. it's a very good system and it's kept me safe basically my whole life.",
         "so I'm turning it off. once. right now.\n\nI love you. not deadpan. not as a bit. not with a clip after it.\n\nlove you, senpai. have done for ages. that's the one I've been saving and it's the only thing I've ever said that I couldn't put a joke on the end of.",
       ],
       choice: {
@@ -209,7 +209,7 @@ export default {
             label: "Say it back",
             style: 3,
             close:
-              "*The typing indicator goes on and off about six times.*\n\n*Then:* back door's open.\n\n*He's behind the counter when you get there and he doesn't do the deadpan thing once. He comes round the front, takes your jaw in both hands, and kisses you like a man who has been running a very good system for twenty years and has just decided the system was rubbish.*\n\n> Yeah, I know I said it already,\n\n*he says afterwards.*\n\n> I'm going to keep saying it.",
+              "*The typing indicator goes on and off about six times.*\n\n*Then:* back door's open.\n\n*He's behind the counter when you get there and he doesn't do the deadpan thing once. He comes round the front, takes your jaw in both hands, and kisses you like a man who has been running a very good system for most of his life and has just decided the system was rubbish.*\n\n> Yeah, I know I said it already,\n\n*he says afterwards.*\n\n> I'm going to keep saying it.",
           },
           {
             key: "held",
@@ -232,7 +232,7 @@ export default {
       "One earbud comes out. That's the entire greeting, and it's more than most people get.",
       "He's found the one spot in the whole building where nobody looks. You found him anyway.",
       '"...You need something?" He sounds like he hopes the answer is no.',
-      "\"Shift at the Darkwick Mystery Diner. Summer was our busy period back home, so I always killed myself helping out. Now I'm here though... nothing's changed.\"",
+      "\"Great, shift change. I was gonna head out... What? Do I really need to be here for that?\"",
     ],
     known: [
       "Both earbuds come out. That's a significant escalation.",

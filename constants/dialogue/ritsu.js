@@ -10,7 +10,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Good evening. This message is sent at 23:47, which is outside the hours I have set aside for correspondence. I am noting that at the top so that you understand it was deliberate.",
-        "I maintain a record of everyone who enters Sinostra on business. It is not surveillance; it is the reason this house has not been sued in four years.\n\nYour entry reads: {timesMet} visits, no petition, no dispute, no request for representation. That column is blank for exactly one person in a document of four hundred and six.\n\nI have checked it three times. I found the blankness irritating and then, on the third check, I found that I did not.",
+        "I maintain a record of everyone who enters Sinostra on business. It is not surveillance; it is the reason nobody has brought a successful claim against this house since I arrived.\n\nYour entry reads: {timesMet} visits, no petition, no dispute, no request for representation. That column is blank for exactly one person in a document of four hundred and six.\n\nI have checked it three times. I found the blankness irritating and then, on the third check, I found that I did not.",
       ],
       choice: {
         prompt:
@@ -48,7 +48,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: A matter I have modeled at some length and been unable to resolve. I am therefore asking, which is a method I resort to rarely and dislike.",
-        "Your conduct toward me is {favResponse} without variance. I have run it against every input available: Romeo shouting, the captain's condition, the hour, whether I have been of any use to you. It does not move.\n\nPeople are transactional. That is not cynicism, it is observed data, and I have built a practice on it: I predict what a person will do from what they are owed and what they want.\n\nI cannot predict you. That is the first time the model has failed in six years, and I have been unable to enjoy anything since I noticed.",
+        "Your conduct toward me is {favResponse} without variance. I have run it against every input available: Romeo shouting, the captain's condition, the hour, whether I have been of any use to you. It does not move.\n\nPeople are transactional. That is not cynicism, it is observed data, and I have built a practice on it: I predict what a person will do from what they are owed and what they want.\n\nI cannot predict you. That is the first time the model has failed since I built it, and I have been unable to enjoy anything since I noticed.",
       ],
       choice: {
         prompt: "Explain the discrepancy. I would like the model repaired.",
@@ -72,13 +72,13 @@ export default {
             label: "Tell him to bin the model",
             style: 4,
             close:
-              "The model is eleven years old. I built it at fourteen, in a house where knowing what everybody wanted was the only reliable safety available to me. I am aware of how that sounds, and I have never written it down before.\n\nI am not going to discard it. I am prepared to make one exception in it. That is a larger concession than it appears.",
+              "I built this model at fourteen, in a house where knowing what everybody wanted was the only reliable safety available to me. It has not failed once since. I am aware of how that sounds, and I have never written it down before.\n\nI am not going to discard it. I am prepared to make one exception in it. That is a larger concession than it appears.",
           },
         ],
       },
       keepsake: {
         emoji: "📐",
-        line: "A single exception written into an eleven-year-old model.",
+        line: "A single exception written into a model that had never had one.",
       },
     },
 
@@ -86,7 +86,7 @@ export default {
       beats: [
         "**{firstName}**: I am proposing a standing arrangement. Tuesdays, 19:00 to 20:30, the small reading room on the second floor. Attendance optional; I will be present regardless.",
         "*You go. He has laid out two chairs, a lamp, tea, and absolutely no paperwork whatsoever, which for Ritsu Shinjo is a room stripped bare.*\n\n> There is no purpose. I want that stated plainly at the outset, because you will look for one and its absence is the entire point.",
-        "> Every hour of my week is allocated. I have kept a schedule since I was twelve. One block on Tuesdays has read \"contingency\" for four years and has never once held a contingency.\n\n> I have been spending it in this room. Alone. Reading things of no professional use to me and telling nobody.\n\n> I am now telling one person. The chair is for you. I bought it in March and have been rehearsing this since roughly then.",
+        "> Every hour of my week is allocated. I have kept a schedule since I was twelve. One block on Tuesdays has read \"contingency\" since the start of the year and has never once held a contingency.\n\n> I have been spending it in this room. Alone. Reading things of no professional use to me and telling nobody.\n\n> I am now telling one person. The chair is for you. I bought it in March and have been rehearsing this since roughly then.",
       ],
       choice: {
         prompt:
@@ -124,8 +124,8 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: It is 03:14. I am aware this is a violation of the arrangement and I am proceeding.",
-        "I collect the protection fees. You know this. Everybody knows this and nobody says it in the plain form, which is: a first-year law student walks into rooms and explains to people what will happen to them if they do not pay.\n\nI am extremely good at it. That is not a boast. It is the observation that has kept me awake since Tuesday.",
-        "I do not raise my voice. I do not threaten. I set out the consequences accurately and in order, and people find that more frightening than Romeo shouting. I have known it since my second week and used it every day since.\n\nI came here to become a lawyer because the law is the one system where what is right and what is written are supposed to be the same thing. They are not. I found that out at fifteen and I have been billing by the hour ever since.\n\nThere is nobody I could say that to except you.",
+        "You know what I actually do for this house. Everybody does, and nobody says it in the plain form, so I will: I am the reason nothing that happens in Sinostra ever reaches a courtroom.\n\nEvery fee Romeo collects, every debt, every room somebody gets walked into. I make it defensible. On paper it is all consenting parties and lawful arrangements. I am extremely good at that. It is the observation that has kept me awake since Tuesday.",
+        "I told myself I came here to reform this house's reputation. What I have actually done is leave that reputation as the only ugly thing standing, because I have sanded every provable edge off the rest.\n\nI came to the law because it is the one system where what is right and what is written are supposed to be the same thing. They are not. I worked that out young, and I have been billing by the hour ever since.\n\nThere is nobody I could say that to except you.",
       ],
       choice: {
         prompt:
@@ -150,7 +150,7 @@ export default {
             label: "Tell him to stop collecting",
             style: 4,
             close:
-              "I cannot. There is a contract and I drafted it, which makes it difficult to argue my way out of.\n\n*Then, some minutes later:*\n\nThere is a clause I put in at the time without knowing why. Termination on ninety days' notice. I have read it perhaps two hundred times and never given it.\n\nAsk me again in the spring.",
+              "I cannot. There is an engagement, and I drafted the terms of it myself, which makes it difficult to argue my way out of.\n\n*Then, some minutes later:*\n\nThere is a clause I put in at the time without knowing why. Termination on ninety days' notice. I have read it perhaps two hundred times and never given it.\n\nAsk me again in the spring.",
           },
         ],
       },
@@ -189,7 +189,7 @@ export default {
             label: "Ask what happens if it's found",
             style: 4,
             close:
-              "I lose the practice, the placement, and the reference. Roughly eleven years of work.\n\nI did the calculation before I altered the file. It took four seconds. I have never completed a decision of that magnitude in four seconds, and I have been sitting here since two trying to be alarmed about it.\n\nI am not alarmed. That is the part I cannot file anywhere.",
+              "I lose the placement, the reference, and every year I have spent building toward them.\n\nI did the calculation before I altered the file. It took four seconds. I have never completed a decision of that magnitude in four seconds, and I have been sitting here since two trying to be alarmed about it.\n\nI am not alarmed. That is the part I cannot file anywhere.",
           },
         ],
       },
@@ -258,7 +258,7 @@ export default {
       "He sets down the file and gives you a look with nothing legal in it.",
       '"I\'d like to renegotiate the terms of this partnership," he says carefully.',
       "He's rehearsed this. He's a very good speaker. It isn't helping.",
-      "He takes off his glasses, which for him is practically undressing.",
+      "He switches off the recorder, which for him is practically undressing.",
       '"There is no precedent for what I want to say. So I\'ll simply say it."',
     ],
     close: [
@@ -271,7 +271,7 @@ export default {
     bound: [
       "The files stay shut. He's stopped pretending anything else has priority.",
       '"I have no argument for this," he says, "and no interest in constructing one."',
-      "He takes his glasses off, sets them down deliberately, and stops talking entirely.",
+      "He switches the recorder off, sets it down deliberately, and stops talking entirely.",
       "He's verbose about everything except this, where he's suddenly and completely direct.",
       "He holds you like the one thing in his life he never had to negotiate for.",
     ],
@@ -317,7 +317,7 @@ export default {
       '"I love you. No preamble, no clause, no conditions. It\'s rather freeing."',
       "\"Stay. I'll clear the docket. I'll clear the entire week if you ask.\"",
       "\"I've argued my way out of everything. Not this. I don't want out.\"",
-      '"Take the glasses. I won\'t be needing them."',
+      '"Switch off the recorder. I won\'t be needing it."',
     ],
   },
   approach: {
@@ -351,7 +351,7 @@ export default {
       "Take the partnership",
       "Tell him you'll stay",
     ],
-    bound: ["Close the file", "Take his glasses", "Stay the week", "Come here"],
+    bound: ["Close the file", "Switch the recorder off", "Stay the week", "Come here"],
   },
   responses: {
     kind: {
@@ -394,7 +394,7 @@ export default {
       ],
       bound: [
         "Object one last time",
-        "Take his glasses",
+        "Kill the recording",
         "Make him say it out loud",
       ],
     },
@@ -403,7 +403,7 @@ export default {
       spark: [
         "Say yes",
         "Amend the clause yourself",
-        "Take the glasses off him",
+        "Switch the recorder off",
       ],
       close: [
         "Make a bold choice about him",
@@ -454,7 +454,7 @@ export default {
       "{user} says the name, and **{name}** files it under nothing at all. There is no file.",
     ],
     close: [
-      "**{name}** takes his glasses off, sets them down deliberately, and goes to {user}.",
+      "**{name}** switches the recorder off, sets it down deliberately, and goes to {user}.",
       '"I have no argument for this," **{name}** tells {user}, "and no interest in constructing one."',
       "{user} calls, and **{name}**, punctual to the second, is late to the **{house}** meeting.",
     ],

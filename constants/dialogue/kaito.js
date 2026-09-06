@@ -200,7 +200,7 @@ export default {
 
     soulbound: {
       beats: [
-        "**{firstName}**: I'm not going to chicken out this time. I've told three people I'm doing this so I can't chicken out. Ren is watching me type.\n\n(Ren has left. Ren says good luck. I'm alone now. It's worse.)",
+        "**{firstName}**: I'm not going to chicken out this time. I've told three people I'm doing this so I can't chicken out.\n\n(One of them offered to sit here while I typed it. I said no. Now I'm alone and it's worse.)",
         "{timesMet} times. I counted them on the calendar app like a complete lunatic, I have a color for you and everything.\n\nEvery single one of them I've thought, this is it, this is the day I say it, and then you smile at something and my entire brain leaves.",
         "And I know what I am. I'm the one everyone's nice about, the one you're kind to. I've had my whole life to get used to that.\n\nBut you're not kind to me. You... you *pick* me. You keep picking me and I don't understand it and I've stopped trying to.\n\nMy gran used to say that, actually. Kindness isn't luck, it's a decision somebody keeps making about you. I was fourteen, said \"okay grandma\" and rolled my eyes so hard. I get it now.",
         "So here it is and I'm not deleting it.\n\nI love you. I've loved you since way before I was allowed to, since before I was anything worth loving back, and I'm saying it out loud with my whole chest for once instead of hiding it in nine messages at once.\n\nYou don't have to say it. Genuinely. I've already done the impossible part 😭",

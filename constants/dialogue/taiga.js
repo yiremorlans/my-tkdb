@@ -89,7 +89,7 @@ export default {
       beats: [
         "**{firstName}**: come up to the floor after close.\n\nnot the tables.\n\nthe office.",
         "*The office is a mess. The corkboard on the back wall isn't. Only organized thing in the building.*\n\n*Covered in paper. Names, places, times, his handwriting getting worse down the years.*\n\n> That's the system. Everything I couldn't keep in my head.",
-        "*He points top left. Neat, old, faded.*\n\n> Mom. From back when I thought I could win it back.\n\n*Bottom right: eleven notes, same person, eleven pens, months apart.*\n\n> You. Eleven. Lulu's the only other one with more than two, and he pays me.",
+        "*He points top left. Neat, old, faded.*\n\n> First one I ever pinned. Back when I still thought I could out-play this thing. Keep enough notes, never lose a hand.\n\n*Bottom right: eleven notes, same person, eleven pens, months apart.*\n\n> You. Eleven. Lulu's the only other one with more than two, and he pays me.",
       ],
       choice: {
         prompt:
@@ -152,7 +152,7 @@ export default {
             label: "Say the board isn't the point",
             style: 4,
             close:
-              "it's the only point I've got.\n\n*Four minutes later:*\n\nexplain that.\n\nproperly.\n\nnot messing with u, I want the actual argument.\n\nbeen losing it to myself for six years.\n\n*You give him the argument. He doesn't fold. But he asks again next week. And the week after.*",
+              "it's the only point I've got.\n\n*Four minutes later:*\n\nexplain that.\n\nproperly.\n\nnot messing with u, I want the actual argument.\n\nbeen losing it to myself for years.\n\n*You give him the argument. He doesn't fold. But he asks again next week. And the week after.*",
           },
         ],
       },
@@ -190,13 +190,13 @@ export default {
             label: "Refuse to promise",
             style: 4,
             close:
-              "don't.\n\n*Only time he's ever sent one word.*\n\nkitten.\n\ndon't.\n\ngot about four things left I'm sure of, ur all of them.\n\nnot putting one in a corridor to find out what I am.\n\n…promise me.\n\nfirst time I've said that in nine years.",
+              "don't.\n\n*Only time he's ever sent one word.*\n\nkitten.\n\ndon't.\n\ngot about four things left I'm sure of, ur all of them.\n\nnot putting one in a corridor to find out what I am.\n\n…promise me.\n\nfirst time I've said that in years.",
           },
         ],
       },
       keepsake: {
         emoji: "📩",
-        line: "The one word he sent alone, and the one he'd not used in nine years.",
+        line: "The one word he sent alone, and the one he'd not used in years.",
       },
     },
 

@@ -49,7 +49,7 @@ export default {
     friend: {
       beats: [
         "*Haku, mid-type, mutters that this is the least dignified thing he's ever transcribed, and keeps transcribing anyway.*\n\n**{firstName}**: A confession, my dear, and it does me no credit whatsoever.",
-        "I compliment everyone. It is genuine (this academy is stuffed with talent, somebody ought to say so) but it is also a splendid way of never being asked a question back.\n\nYou have never let it work. Every flourish I hand you, back it comes with {favResponse}, unimpressed, as though I were a person and not a performance.\n\nIt is *appalling*. It is the best thing to happen to me in eighteen months.",
+        "I compliment everyone. It is genuine (this academy is stuffed with talent, somebody ought to say so) but it is also a splendid way of never being asked a question back.\n\nYou have never let it work. Every flourish I hand you, back it comes with {favResponse}, unimpressed, as though I were a person and not a performance.\n\nIt is *appalling*. It is the best thing to happen to me in a year.",
       ],
       choice: {
         prompt: "So: what shall we do about it? I am open to terms.",
@@ -70,55 +70,55 @@ export default {
             key: "bold",
             label: "Ask him a question back",
             style: 4,
-            close: "*There is a very long pause for a man who types as fast as he does.*\n\nNobody has done that, *he says.* In a year and a half, not one person has turned it round.\n\nAsk me again tomorrow. I should like to have a proper answer ready, and I should like very much to have been asked twice.",
+            close: "*There is a very long pause for a man who types as fast as he does.*\n\nNobody has done that, *he says.* In a year, not one person has turned it round.\n\nAsk me again tomorrow. I should like to have a proper answer ready, and I should like very much to have been asked twice.",
           },
         ],
       },
       keepsake: {
         emoji: "✉️",
-        line: "The first question anyone had asked him back in eighteen months.",
+        line: "The first question anyone had asked him back in a year.",
       },
     },
 
     closeFriend: {
       beats: [
         "**{firstName}**: Come to the music room after dark, my dear. Bring nothing. I have something that requires an audience of precisely one.",
-        "*The biwa is on its stand and there is nobody visible in the room at all. Then the instrument shifts (a fraction, then properly) and begins to play.*\n\n> Do you see? Not the sound. *Me.* When I play I am solid enough for the strings, and when I am solid enough for the strings I am usually solid enough to be seen.",
-        "> It costs a great deal and does not last, so I ration it. Twice a year, perhaps. Never with company, so that nobody is left disappointed when it runs out.\n\n*He is there, then, for a few seconds: side ponytail, round glasses, an expression of unbearable hope.*\n\n> I have spent all of this year's at once. On you. So that you would have seen my face the one time.",
+        "*The biwa lifts off its stand on its own, hangs a moment, and begins to play.*\n\n> You have heard the rumor, I expect. The haunted music room. The instrument that plays itself. That is this. That is the loudest I get to be.",
+        "> Holding it takes a great deal out of me and I cannot keep it up for long, so I ration it. Twice a year, perhaps. Never with anyone in the room, so that nobody has to watch it give out.\n\n*The playing is unsteady, and somewhere under it is the sense of a voice.*\n\n> I have spent all of this year's on you. So that once, somebody was the audience for the whole of it, and knew who was playing.",
       ],
       choice: {
-        prompt: "Well? Say it quickly, my dear. I am going thin at the edges already.",
+        prompt: "Well? Say it quickly, my dear. The strings are already tiring.",
         options: [
           {
             key: "kind",
-            label: "Tell him what he looks like",
+            label: "Tell him what you picture",
             style: 3,
-            close: "*You describe him back to him: the ponytail, the glasses, the ink on his fingers. The playing falters in the middle of a phrase.*\n\n> ...Thank you. I had begun to forget. One forgets one's own face first, you know.\n\n*The room is empty again.*",
+            close: "*You tell him what you have built of him from fragments: the side ponytail, the round glasses, ink worked into his fingers. The playing falters in the middle of a phrase.*\n\n> ...Almost exactly. Thank you. I had begun to lose the shape of my own face. One forgets that first, you know.\n\n*The music stops. The room goes still.*",
           },
           {
             key: "playful",
-            label: "Say his glasses are crooked",
+            label: "Say he dropped a note",
             style: 1,
-            close: "> They are NOT...\n\n*A pause, and then a sound very much like laughing.*\n\n> They are, aren't they. They have been crooked for a year and nobody could tell me. My dear, that is the finest gift I have received since my funeral.",
+            close: "> I did NOT...\n\n*A pause, and then a sound very much like laughing.*\n\n> I did, didn't I. Three of them. Nobody has been near enough to catch me at that since I died. My dear, that is the finest gift I have received since my funeral.",
           },
           {
             key: "bold",
-            label: "Reach out and touch him",
+            label: "Reach toward the sound",
             style: 4,
-            close: "*Your hand goes through the first time. The second time, with the strings still sounding, it doesn't.*\n\n*Cold, barely there, unmistakably a hand, and it closes round yours with nothing theatrical in it at all.*\n\n*The music stops. So does he. He holds on for the whole three seconds he has left, and neither of you says a word.*",
+            close: "*Your hand finds nothing the first time. The second time, with the strings still sounding, there is something: cold, faint, the barest suggestion of a hand, and it closes round yours for as long as the note holds.*\n\n*Then the string stills, and so does he, and neither of you says a word.*",
           },
         ],
       },
       keepsake: {
         emoji: "🎼",
-        line: "A whole year's worth of being visible, spent on one evening.",
+        line: "A song nobody else was ever meant to be the audience for.",
       },
     },
 
     confidant: {
       beats: [
         "**{firstName}**: I am going to be plain, which you will find alarming, as I am never plain about anything.",
-        "I have a brother. He is in Mortkranken with a scalpel in his hand and a face like a closed door, and he was eleven the last time he saw me alive.\n\nJiro Kirisaki. Yes. That one. I was Taro then. I have not corrected him. He has built something out of being the one who was left, and I do not know how to take that from him gently.\n\nThere is an old story about a fisherman with my name who wandered somewhere he oughtn't and came home to find the years gone on without him. I read it to Jiro at bedtime. I never thought I would end up living inside it.",
+        "I have a brother. He is in Mortkranken with a scalpel in his hand and a face like a closed door, and he was younger, and not yet so closed-off, the last time he saw me alive.\n\nJiro Kirisaki. Yes. That one. I was Taro then. I have not corrected him. He has built something out of being the one who was left, and I do not know how to take that from him gently.\n\nThere is an old story about a fisherman with my name who wandered somewhere he oughtn't and came home to find the years gone on without him. I read it to Jiro at bedtime. I never thought I would end up living inside it.",
         "Everyone believes I bear this place no grudge. That is true and complete. I do not.\n\nBut I have never once said out loud that I mind. Not being dead. Being *unfinished*. Four hundred pages and no ending, and a boy downstairs who thinks I stopped loving him because I stopped arriving.\n\nThere. I have never written that down, and I write everything down.",
       ],
       choice: {
@@ -175,7 +175,7 @@ export default {
             key: "bold",
             label: "Go to the music room instead",
             style: 4,
-            close: "*You go. He is already playing when you arrive, which he cannot afford and does anyway, visible and going thinner by the second.*\n\n*He holds out one cold, barely-there hand.*\n\n> I know what it costs. Let me have three seconds standing where you can see me, and then scold me the whole of tomorrow.",
+            close: "*You go. He is already playing when you arrive, which he cannot afford and does anyway, the sound of it thinning by the second.*\n\n*Cold brushes your hand, the barest suggestion of fingers.*\n\n> I know what it costs. Let me have three seconds of being almost real, and then scold me the whole of tomorrow.",
           },
         ],
       },
@@ -199,7 +199,7 @@ export default {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "*The biwa starts before you have finished. He is spending it, all of it, everything he had put by.*\n\n*He is in the doorway of the music room, whole and solid and crying without the least dignity, and he takes your face in both cold hands.*\n\n> I had an ending after all. Four hundred pages, and it was never going to be on any of them.",
+            close: "*The biwa starts before you have finished. He is spending it, all of it, everything he had put by.*\n\n*In the doorway of the music room the air goes cold and close, and something that is almost hands cups your face, and he is crying without the least dignity.*\n\n> I had an ending after all. Four hundred pages, and it was never going to be on any of them.",
           },
           {
             key: "held",
@@ -239,7 +239,7 @@ export default {
     ],
     spark: [
       "The story he's writing has quietly stopped being about anyone but you.",
-      "He tucks a flower behind your ear and lets his fingers stay in your hair.",
+      "A flower turns up tucked behind your ear. You never quite catch him doing it.",
       '"I\'ve written this one badly on purpose," he admits. "I wanted an excuse to read it to you."',
       "He sits closer than the step requires, and doesn't pretend otherwise.",
       '"Some things," he says softly, "are better in seventeen syllables. Others aren\'t."',
@@ -255,7 +255,7 @@ export default {
       "He's stopped writing about longing. The new poems are far less publishable.",
       "He reads you the old folktale badly, on purpose, so it takes all night.",
       '"Seventeen syllables can\'t hold this," he murmurs. "I\'ve stopped trying."',
-      "He traces something on your back with one finger. It's a poem. You'll never read it.",
+      "He hums something low against the back of your neck. It's a poem. You'll never read it.",
       "The lanterns burn down and neither of you notices for a very long time.",
     ],
   },

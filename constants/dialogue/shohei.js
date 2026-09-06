@@ -99,7 +99,7 @@ export default {
       beats: [
         "**{firstName}**: truck\n\n2am\n\ndon't tell anybody, I mean it",
         "*The food truck is shut, the shutter's down, and he's inside with one light on and something going on the burner that smells nothing like what he sells.*\n\n> This is the one I actually cook. Not the menu stuff. Menu stuff is for the money and the line out front and Leo's cut for building the app. This one's just mine.",
-        "> Mom's, technically. She wrote it out on the back of a receipt before I came here and I've never given it to anybody.\n\n*He puts the bowl in front of you and immediately looks somewhere else.*\n\n> So, yeah. Don't say anything nice or I'm throwing you out. Just eat it while it's hot, Senpai. I've been keeping it warm twenty minutes waiting on you.",
+        "> It's not on any menu and it's not written down. Just something I've been making since before Darkwick, and I've never handed it to anybody.\n\n*He puts the bowl in front of you and immediately looks somewhere else.*\n\n> So, yeah. Don't say anything nice or I'm throwing you out. Just eat it while it's hot, Senpai. I've been keeping it warm twenty minutes waiting on you.",
       ],
       choice: {
         prompt: "...Well? Say something. Not that. Something else.",
@@ -128,8 +128,8 @@ export default {
         ],
       },
       keepsake: {
-        emoji: "🧾",
-        line: "A recipe written on the back of a receipt, in his mom's hand.",
+        emoji: "🍲",
+        line: "The one dish he actually cooks, that isn't written down anywhere.",
       },
     },
 
