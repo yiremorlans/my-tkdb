@@ -1593,7 +1593,7 @@ export async function handleMissionsAdmin(body) {
   return { reply: ephemeral("Unknown subcommand."), afterReply: null };
 }
 
-function missionStatusLine(settings, now = new Date()) {
+function missionStatusLine(settings) {
   if (!settings) {
     return "Missions have never been set up here. Run `/missions enable` to start.";
   }
@@ -1619,25 +1619,9 @@ function missionStatusLine(settings, now = new Date()) {
     );
   }
 
-  // Unlike encounters, the schedule is safe to show: knowing when a request
-  // lands wins nobody anything, because you still have to be first to the
-  // button.
-  if (
-    settings.mission_slots_day === localDayKey(now) &&
-    settings.mission_slots_today?.length
-  ) {
-    const fired = new Set((settings.mission_slots_fired || []).map(Number));
-    const slots = settings.mission_slots_today.map((iso, index) => {
-      const stamp = `<t:${Math.floor(new Date(iso).getTime() / 1000)}:t>`;
-      return fired.has(index) ? `~~${stamp}~~` : stamp;
-    });
-    lines.push(`Today: ${slots.join(" · ")} (struck through = already posted)`);
-  } else {
-    lines.push(
-      "Today's times haven't been rolled yet — the next tick will do it.",
-    );
-  }
-
+  // The day's slot times are deliberately not shown here — a server admin who
+  // could see the schedule is halfway to owning it. `/encdev missions` (owner
+  // only) has them.
   return lines.join("\n");
 }
 

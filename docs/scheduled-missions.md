@@ -363,16 +363,21 @@ options: [
   { type: 1, name: 'enable',  description: 'Start posting missions in this server',
     options: [{ type: 7, name: 'channel', description: 'Channel (defaults to the encounters channel)', required: false, channel_types: [0] }] },
   { type: 1, name: 'disable', description: 'Stop posting missions in this server' },
-  { type: 1, name: 'status',  description: "Show whether missions are on and today's slot times" },
+  { type: 1, name: 'status',  description: 'Show whether missions are running in this server' },
 ]
 ```
 
 - `enable` → upsert `guild_settings`: `missions_enabled = true`,
   `mission_channel_id = <id or NULL>`, clear `mission_slots_day` so the next
-  tick rolls fresh slots. Reply ephemerally with the channel and today's
-  remaining slot times (`<t:…:t>`).
+  tick rolls fresh slots. Reply ephemerally with the channel — **not** the times.
 - `disable` → `missions_enabled = false`. Any in-flight mission finalizes
   normally.
+- `status` → running/off state, the channel, and the post-failure count. It does
+  **not** show the day's slot times: a server admin who could see the schedule
+  is halfway to owning it, the same reason the slots aren't admin-configurable
+  (§3). The times live behind `/encdev missions`, which is owner-only
+  (`OWNER_DISCORD_ID`, via `handleEncounterDev`) — a read-only line of `<t:…:t>`
+  stamps, struck through once fired.
 - The scheduler's mission pass skips a guild unless `missions_enabled = true`
   **and** it has a resolvable channel (`mission_channel_id` or
   `encounter_channel_id`).

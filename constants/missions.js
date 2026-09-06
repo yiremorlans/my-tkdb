@@ -708,6 +708,29 @@ export function nextSlotAt(slotsToday, firedIndices, now = new Date()) {
   return upcoming[0]?.at ?? null;
 }
 
+/**
+ * Today's slot times as one line: each a `<t:…:t>` stamp, struck through once
+ * fired. This is the schedule readout that used to sit in `/missions status`;
+ * that command no longer shows it, and `/encdev missions` (owner-only) does.
+ */
+export function missionSlotsLine(settings, now = new Date()) {
+  if (!settings) return "No mission settings for this server yet.";
+
+  if (
+    settings.mission_slots_day !== localDayKey(now) ||
+    !settings.mission_slots_today?.length
+  ) {
+    return "Today's times haven't been rolled yet — the next tick will do it.";
+  }
+
+  const fired = new Set((settings.mission_slots_fired || []).map(Number));
+  const slots = settings.mission_slots_today.map((iso, index) => {
+    const stamp = `<t:${Math.floor(new Date(iso).getTime() / 1000)}:t>`;
+    return fired.has(index) ? `~~${stamp}~~` : stamp;
+  });
+  return `Today: ${slots.join(" · ")} (struck through = already posted)`;
+}
+
 // --- spawn rolls ------------------------------------------------------------
 
 export function rollMissionType() {

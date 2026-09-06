@@ -149,7 +149,7 @@ const MISSIONS_COMMAND = {
     {
       type: 1,
       name: "status",
-      description: "Show whether missions are on, and today's request times",
+      description: "Show whether missions are running in this server",
     },
   ],
 };
@@ -241,10 +241,11 @@ const ENCOUNTERS_COMMAND = {
   ],
 };
 
-// Owner-only test tooling for public encounters. default_member_permissions
-// '0' hides it from everyone without Administrator; handleEncounterDev then
-// hard-gates on OWNER_DISCORD_ID, so even another server admin who can see it
-// can't run it. Guild-install and guild-context only.
+// Owner-only test tooling for public encounters (plus a read-only `missions`
+// peek at the mission schedule, which is otherwise not shown anywhere).
+// default_member_permissions '0' hides it from everyone without Administrator;
+// handleEncounterDev then hard-gates on OWNER_DISCORD_ID, so even another server
+// admin who can see it can't run it. Guild-install and guild-context only.
 const ENCDEV_COMMAND = {
   name: "encdev",
   description: "Owner only: trigger encounters manually for testing",
@@ -280,6 +281,11 @@ const ENCDEV_COMMAND = {
       type: 1, // SUB_COMMAND
       name: "clear",
       description: "Expire this server's live encounter right now",
+    },
+    {
+      type: 1, // SUB_COMMAND
+      name: "missions",
+      description: "Show this server's mission slot times for today",
     },
     {
       type: 1, // SUB_COMMAND

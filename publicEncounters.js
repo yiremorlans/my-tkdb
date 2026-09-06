@@ -30,6 +30,7 @@ import {
   getFullName,
 } from './constants/characters.js';
 import { bondLevelFromSlug, getDialogueTier, getRelationshipLevel } from './constants/game.js';
+import { missionSlotsLine } from './constants/missions.js';
 import { composeSilhouetteEncounter } from './imageComposition.js';
 import { editChannelMessage, postChannelMessage } from './discordRest.js';
 import { deliverBondScene } from './bondScenes.js';
@@ -723,6 +724,7 @@ function isEncounterDevOwner(userId) {
  *
  *   /encdev spawn [character] [variant]   force one encounter now
  *   /encdev clear                         expire this guild's live encounter
+ *   /encdev missions                      show this guild's mission slot times for today
  *   /encdev bond <character> <level>      fire a bond scene DM directly (docs/bond-scene-dms.md)
  *
  * A manual spawn passes `reanchor: false`, so it never writes guild_settings —
@@ -783,6 +785,22 @@ export async function handleEncounterDev(body) {
       'post-failed': 'DM channel opened, but the post failed. Check the logs.',
     };
     return { content: reasons[result.reason] || `Not delivered (${result.reason}).` };
+  }
+
+  // `missions` is a read-only peek at the mission schedule — the one place it's
+  // shown, since `/missions status` deliberately doesn't. Unrelated to the
+  // encounter channel or this guild's encounter lock, so it answers before
+  // either check, same as `bond`.
+  if (subcommand === 'missions') {
+    const settings = await getGuildSettings(guildId);
+    const channelId =
+      settings?.mission_channel_id || settings?.encounter_channel_id || null;
+    const state = !settings?.missions_enabled
+      ? '⛔ Missions are off in this server.'
+      : channelId
+        ? `✅ Missions post in <#${channelId}>.`
+        : '⚠️ Missions are on but no channel is set.';
+    return { content: `${state}\n${missionSlotsLine(settings)}` };
   }
 
   const guild = await getGuildSettings(guildId);
