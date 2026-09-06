@@ -1287,6 +1287,9 @@ export async function handleCooldownReset(body, command) {
 
 // The one line of the old /house kept: which house this player's heart is in,
 // by summed affinity, alongside the record of what they have actually done.
+// Returns `{ house, totals }` — `house` is that closest house for the dossier
+// line, `totals` is the per-house affinity map the emblem uses to break a
+// mission-points tie.
 async function closestHouseByAffinity(userId) {
   const relationships = await getUserRelationships(userId).catch((err) => {
     console.error(
@@ -1308,7 +1311,7 @@ async function closestHouseByAffinity(userId) {
     .filter(([, affinity]) => affinity > 0)
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
 
-  return ranked[0]?.[0] || null;
+  return { house: ranked[0]?.[0] || null, totals };
 }
 
 /**
@@ -1317,7 +1320,7 @@ async function closestHouseByAffinity(userId) {
  * because an errand can be worth up to four of them.
  */
 export async function buildDossierMessage(userId) {
-  const [stats, mission, closestHouse] = await Promise.all([
+  const [stats, mission, closest] = await Promise.all([
     getMissionLogStats(userId),
     getAcceptedMission(userId).catch((err) => {
       console.error(
@@ -1328,6 +1331,7 @@ export async function buildDossierMessage(userId) {
     }),
     closestHouseByAffinity(userId),
   ]);
+  const closestHouse = closest.house;
 
   if (!mission && stats.filed === 0) {
     return {
@@ -1396,10 +1400,12 @@ export async function buildDossierMessage(userId) {
     lines.push(`Closest house (by affinity): **${closestHouse}**`);
 
   // The emblem is the house this player has done the most FOR, not the one they
-  // are fondest of — ties broken by whichever they filed for most recently. A
-  // player with a record but no house points (impossible today, but a cheap
-  // guard) falls back to the affinity house.
-  const emblemHouse = pickEmblemHouse(stats, closestHouse);
+  // are fondest of. A points tie goes to whichever of the tied houses they are
+  // closest to by affinity, so the emblem still means something when three
+  // houses read "1"; recency only settles a tie the bonds leave level. A player
+  // with a record but no house points (impossible today, but a cheap guard)
+  // falls back to the affinity house.
+  const emblemHouse = pickEmblemHouse(stats, closest.totals, closestHouse);
   const { embeds, files } = emblemAttachment(emblemHouse);
 
   return {
@@ -1410,12 +1416,14 @@ export async function buildDossierMessage(userId) {
   };
 }
 
-function pickEmblemHouse(stats, fallbackHouse) {
+function pickEmblemHouse(stats, affinityByHouse, fallbackHouse) {
+  const affinity = affinityByHouse || {};
   const ranked = Object.entries(stats.byHouse)
     .filter(([, points]) => points > 0)
     .sort(
       (a, b) =>
         b[1] - a[1] ||
+        (affinity[b[0]] || 0) - (affinity[a[0]] || 0) ||
         (stats.latestByHouse[b[0]] || 0) - (stats.latestByHouse[a[0]] || 0),
     );
   return ranked[0]?.[0] || fallbackHouse || null;

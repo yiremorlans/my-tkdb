@@ -98,6 +98,27 @@ test('per-house points are tallied and the busiest house takes the emblem', asyn
   assert.strictEqual(message.embeds[0].title, HOUSES.HOTARUBI);
 });
 
+test('a mission-points tie hands the emblem to the closest house by affinity, not the last one filed', async () => {
+  reset({
+    // Filed most recently for Vagastrom, so the old recency tie-break would put
+    // its emblem up. But the bonds lean Hotarubi, so that is whose house the
+    // dossier should show.
+    relationships: [
+      { discord_user_id: 'user-1', character_id: 'haku', affinity: 40 }, // Hotarubi
+      { discord_user_id: 'user-1', character_id: 'tohma', affinity: 8 }, // Frostheim
+      { discord_user_id: 'user-1', character_id: 'shohei', affinity: 3 }, // Vagastrom
+    ],
+    log: [
+      { discord_user_id: 'user-1', house: HOUSES.FROSTHEIM, mission_type: 'riddle', points: 1, role: 'lead', completed_at: '2026-01-01T00:00:00Z' },
+      { discord_user_id: 'user-1', house: HOUSES.HOTARUBI, mission_type: 'riddle', points: 1, role: 'lead', completed_at: '2026-01-02T00:00:00Z' },
+      { discord_user_id: 'user-1', house: HOUSES.VAGASTROM, mission_type: 'riddle', points: 1, role: 'lead', completed_at: '2026-01-03T00:00:00Z' },
+    ],
+  });
+
+  const message = await buildDossierMessage('user-1');
+  assert.strictEqual(message.embeds[0].title, HOUSES.HOTARUBI);
+});
+
 test('an assist counts toward the dossier exactly like a lead', async () => {
   reset({
     log: [
