@@ -110,9 +110,14 @@ function userIdOf(body) {
   return body.member?.user?.id || body.user?.id;
 }
 
+// The accepter's name for a mission post, rendered **bold**: server nickname
+// first, then the global display name, then the @handle. Plain text (no
+// `<@id>` tag) so the post names them without pinging. The "Someone" fallback
+// is left unbolded.
 function displayNameOf(body) {
   const user = body.member?.user || body.user;
-  return body.member?.nick || user?.username || user?.global_name || "Someone";
+  const name = body.member?.nick || user?.global_name || user?.username;
+  return name ? `**${name}**` : "Someone";
 }
 
 /**
@@ -805,7 +810,7 @@ export async function handleMissionAssistJoin(body, missionId) {
         embeds: [
           missionEmbed(
             mission.id,
-            `**${helperName}** answered the call for backup. Mission complete.\nBoth of you have banked a cooldown reset.`,
+            `${helperName} answered the call for backup. Mission complete.\nBoth of you have banked a cooldown reset.`,
           ),
         ],
         components: [],
@@ -1225,7 +1230,7 @@ export async function cooldownReplyWithReset(userId, command, reason) {
  * happens on success is to drop the caller straight into /roam or /meet, and
  * those builders live in encounters.js.
  *
- * Every guard is inside the RPC (db/migrations/017), so a stale button on an
+ * Every guard is inside the RPC (db/migrations/016), so a stale button on an
  * ephemeral from hours ago is safe to click: it either finds the clock already
  * clear and keeps the credit, or finds nothing banked and says so.
  */

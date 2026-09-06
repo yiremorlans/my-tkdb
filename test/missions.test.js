@@ -304,7 +304,7 @@ describe('the Accept button', () => {
 
     assert.equal(response.type, 7); // UPDATE_MESSAGE
     assert.match(response.data.embeds[0].description, /has picked up the mission/);
-    assert.match(response.data.embeds[0].description, /^Ayaka has picked up the mission/, 'names the winner by plain display name, no @tag');
+    assert.match(response.data.embeds[0].description, /^\*\*Ayaka\*\* has picked up the mission/, 'names the winner in bold, plain display name, no @tag');
     assert.equal(response.data.components[0].components[0].disabled, true);
     assert.equal(fake.tables.missions[0].accepted_by, 'user-a');
     assert.equal(fake.tables.missions[0].status, 'accepted');

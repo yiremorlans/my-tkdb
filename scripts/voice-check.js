@@ -180,7 +180,7 @@ function stringLiterals(src) {
       }
       out.push(v);
     } else if (c === "/" && src[i + 1] === "/") {
-      break; // line comment — ignore the rest
+      while (i < src.length && src[i] !== "\n") i++; // skip line comment to EOL
     } else {
       i++;
     }

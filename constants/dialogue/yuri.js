@@ -95,7 +95,7 @@ export default {
             key: "playful",
             label: "Ask if the doctor's handsome",
             style: 1,
-            close: "> Devastatingly. Obviously. That's simply accurate characterisation.\n\n> ...He's described as having teal hair in the second volume. I've thought about this more than is healthy and I would like you to say nothing at all.",
+            close: "> Devastatingly. Obviously. That's simply accurate characterization.\n\n> ...He's described as having teal hair in the second volume. I've thought about this more than is healthy and I would like you to say nothing at all.",
           },
           {
             key: "bold",

@@ -16,7 +16,7 @@ export default {
             key: "kind",
             label: "Ask if he ever rests",
             style: 3,
-            close: "Honestly. Of all the things you might have asked.\n\nNo. Not in some years. You are the first person to enquire, and I find I do not have a prepared answer, which is unusual for me.",
+            close: "Honestly. Of all the things you might have asked.\n\nNo. Not in some years. You are the first person to inquire, and I find I do not have a prepared answer, which is unusual for me.",
           },
           {
             key: "playful",
@@ -97,7 +97,7 @@ export default {
             key: "bold",
             label: "Ask why you get to know",
             style: 4,
-            close: "Because it stopped being enough on my own, *he writes, plainly, with none of the arrangement he usually puts round a sentence.*\n\nThere. That is the honest answer and I shall deny having given it. Eleven o'clock.",
+            close: "Because it stopped being enough on my own, *he writes, plainly, with none of the arrangement he usually puts around a sentence.*\n\nThere. That is the honest answer and I shall deny having given it. Eleven o'clock.",
           },
         ],
       },
@@ -109,7 +109,7 @@ export default {
 
     confidant: {
       beats: [
-        "**{firstName}**: You will have heard the rumor about how our king came to be short of a friend. I would like you to hear the rest of it from me rather than from the version that is going round.",
+        "**{firstName}**: You will have heard the rumor about how our king came to be short of a friend. I would like you to hear the rest of it from me rather than from the version that is going around.",
         "They are not wrong that I benefited. They are not wrong that I was in a position to have arranged a good deal of it. Those two facts sitting beside one another have been enough for everybody for two years and I have never once corrected anyone.\n\nI let it stand because a house runs better on a vice-captain people are slightly afraid of. That is the whole strategy. It has worked beautifully and it has cost me every friendship I might otherwise have had here.",
         "I am not asking you to believe me. I am telling you what happened and then leaving it with you, which is the single most dangerous thing I have done since I arrived.\n\nYou may do anything at all with it. That is rather the point of giving it to you.",
       ],
@@ -182,7 +182,7 @@ export default {
         "**{firstName}**: I am going to be direct, which I am told I never am, and which is a reputation I have worked rather hard for.",
         "I have spent my life being the second man in every room. It suits me. I am better placed there, I see more from there, and I have never once wanted the chair at the front.\n\nI have wanted precisely one thing for myself in all that time, and I have been managing it the way I manage everything else: quietly, at a distance, and with a contingency in place for when it ends.",
         "{timesMet} occasions. I have the number because of course I have the number.\n\nOn {timesMet} occasions you have walked into a room where I was being useful to somebody, and every single time some entirely unhelpful part of me has thought: ah. There. That is the one I would like to be useless in front of.",
-        "So. I love you.\n\nI have no arrangement round that sentence and nothing to trade for it, and I have not left myself an exit, which you may take as the measure of how seriously I mean it.\n\nThis conversation, unlike every other one, did happen. I should like it on the record.",
+        "So. I love you.\n\nI have no arrangement around that sentence and nothing to trade for it, and I have not left myself an exit, which you may take as the measure of how seriously I mean it.\n\nThis conversation, unlike every other one, did happen. I should like it on the record.",
       ],
       choice: {
         prompt: "Take your time. I am extremely good at waiting and extremely poor at hoping, so do not mind either.",

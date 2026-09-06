@@ -36,13 +36,13 @@ export default {
             label: "Ask if yours came first",
             style: 4,
             close:
-              "*There is a very long gap.*\n\n...I made the tray for you and then made extra so it'd look like an accident, *he types, all at once, like ripping a plaster off.* OKAY BYE.",
+              "*There is a very long gap.*\n\n...I made the tray for you and then made extra so it'd look like an accident, *he types, all at once, like ripping a Band-Aid off.* OKAY BYE.",
           },
         ],
       },
       keepsake: {
         emoji: "🍪",
-        line: "A slip of baking paper with your name written on it in blue biro.",
+        line: "A slip of parchment paper with your name written on it in blue ballpoint.",
       },
     },
 

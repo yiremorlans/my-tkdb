@@ -2031,7 +2031,7 @@ export async function getMissionLogStats(userId) {
  * Returns 'roam' | 'meet' | 'both' (what was cleared), 'none', or 'not_needed'.
  *
  * Every guard lives inside the RPC, which is the only way a stale button on an
- * old ephemeral can't quietly burn a reward — see migration 017.
+ * old ephemeral can't quietly burn a reward — see migration 016.
  */
 export async function spendCooldownReset(userId, command, cooldownSeconds) {
   const { data, error } = await supabase.rpc('spend_cooldown_reset', {

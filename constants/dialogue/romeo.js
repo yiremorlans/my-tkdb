@@ -122,7 +122,7 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: Taiga lost three days again. I've been running the floor since Wednesday and I have not slept and I look INCREDIBLE, which is not the point.",
-        "Here's the bit I don't say. He doesn't remember that I do it. Every time. I cover four days, he comes back, and by lunch we're screaming at each other about the bar tab like nothing happened. He's not ungrateful, he genuinely doesn't clock it.\n\nSo I've held this house up for two years for a man I fight with daily. And if he ever worked it out, he wouldn't say thank you. He'd make it ammunition. I'd rather run this floor blind than give him that.",
+        "Here's the bit I don't say. He doesn't remember that I do it. Every time. I cover four days, he comes back, and by lunch we're screaming at each other about the bar tab like nothing happened. He's not ungrateful, he genuinely doesn't register it.\n\nSo I've held this house up for two years for a man I fight with daily. And if he ever worked it out, he wouldn't say thank you. He'd make it ammunition. I'd rather run this floor blind than give him that.",
         "I yell because if I'm the loudest person in the room nobody asks what I'm actually doing. Worked for as long as I can remember. Works best on him, he's too busy yelling back to notice what I'm covering.\n\nYou asked. Last Tuesday. Just said \"are you all right\" in the corridor like it was a normal question, and I've been thinking about it for six days and I'm FURIOUS about it.",
       ],
       choice: {
@@ -161,7 +161,7 @@ export default {
     devoted: {
       beats: [
         "**{firstName}**: Don't come in tomorrow. I mean it. The floor's closed and I'm dealing with something.",
-        "Somebody had a go at you in the west block. Verbally. In front of about nine people.\n\nI've heard about it from three separate sources and I've spent the evening finding out exactly who he owes, what to, and when it's due, and it turns out he owes a REMARKABLE amount and it's due whenever I say it is.",
+        "Somebody laid into you in the west block. Verbally. In front of about nine people.\n\nI've heard about it from three separate sources and I've spent the evening finding out exactly who he owes, what to, and when it's due, and it turns out he owes a REMARKABLE amount and it's due whenever I say it is.",
         "I want to be honest about what this is, because you'll hear it as protecting you and it's uglier than that.\n\nThis is me being the most frightening thing in the building on purpose, at somebody, because he made you look at the floor. That's the whole of it. There's no noble version.\n\nYou're mine. Not like... I'm not TAIGA about it. You're on my list. Everyone on my list is protected, nobody's ever got on it without paying, and you never paid a thing.",
       ],
       choice: {

@@ -41,7 +41,7 @@ export function resetCommandLimit(userId, command = null) {
 /**
  * Spend one banked mission reward on a cooldown the user is actually waiting
  * on (docs/scheduled-missions.md §13). The decision, the credit and the clear
- * all happen inside `spend_cooldown_reset` (db/migrations/017) — this only
+ * all happen inside `spend_cooldown_reset` (db/migrations/016) — this only
  * supplies the cooldown length, so COOLDOWN_MS below stays the one place game
  * balance is written down.
  *

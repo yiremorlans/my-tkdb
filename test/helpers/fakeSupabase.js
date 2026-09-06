@@ -355,7 +355,7 @@ export function createFakeSupabase(initialTables = {}) {
         (r) => r.accepted_by === p_user_id && r.status === 'accepted',
       );
 
-      // db/migrations/018: counted on accepts, not completions — taking two and
+      // db/migrations/016: counted on accepts, not completions — taking two and
       // letting both lapse still spends the player's day.
       const ledToday = (p_day_start == null || p_daily_lead_cap == null)
         ? 0

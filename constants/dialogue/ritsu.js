@@ -69,7 +69,7 @@ export default {
           },
           {
             key: "bold",
-            label: "Tell him to bin the model",
+            label: "Tell him to scrap the model",
             style: 4,
             close:
               "I built this model at fourteen, in a house where knowing what everybody wanted was the only reliable safety available to me. It has not failed once since. I am aware of how that sounds, and I have never written it down before.\n\nI am not going to discard it. I am prepared to make one exception in it. That is a larger concession than it appears.",

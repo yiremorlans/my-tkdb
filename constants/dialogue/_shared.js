@@ -119,7 +119,7 @@ export const SHARED_ENCOUNTER_TEASERS = {
     "A familiar figure in the between-class crowd.",
     "Someone you know, cutting through the crush.",
     "Half the academy's on this walkway. One you know.",
-    "A familiar uniform in the queue ahead.",
+    "A familiar uniform in the line ahead.",
     "The platform's packed. One figure isn't a stranger.",
     "Someone breaks off from a knot of students.",
     "A student you recognize, rows of heads away.",

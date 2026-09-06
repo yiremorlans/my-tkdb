@@ -91,13 +91,14 @@ function ephemeral(content) {
   return { content, flags: EPHEMERAL };
 }
 
-// The caller's name for a winner line's {user} — server nickname first, then
-// the @handle, then the global display name. Plain text, never an `<@id>` tag:
-// the line is a channel post and a mention there would highlight and (for the
-// caller) ping.
+// The caller's name for a winner line's {user}, rendered **bold** — server
+// nickname first, then the global display name, then the @handle. Plain text,
+// never an `<@id>` tag: the line is a channel post and a mention there would
+// highlight and (for the caller) ping. The "Someone" fallback is left unbolded.
 function displayNameOf(body) {
   const user = body.member?.user || body.user;
-  return body.member?.nick || user?.username || user?.global_name || 'Someone';
+  const name = body.member?.nick || user?.global_name || user?.username;
+  return name ? `**${name}**` : 'Someone';
 }
 
 // --- spawn ------------------------------------------------------------------
