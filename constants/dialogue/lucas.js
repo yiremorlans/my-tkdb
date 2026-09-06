@@ -41,7 +41,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: May I be improper for a moment? I shall be brief about it.",
-        "You always answer me with {favResponse}, and I have been turning over why that unsettles me so, when it is plainly a good thing.\n\nI think it is this. Most people speak to me carefully, as one speaks near something that might go off. They are not wrong to. And you do not do it, and every time you do not do it I feel a little less like a loaded thing and a little more like a person, and I have grown greedy for the sensation.",
+        "You always answer me with {favResponse}, and I have been turning over why that unsettles me so, when it is plainly a good thing.\n\nI think it is this. Most people speak to me carefully, as one speaks near something that might go off. They are not wrong to. You do not. And every time you do not, I feel a little less like a loaded thing and a little more like a person, and I have grown greedy for the feeling.",
       ],
       choice: {
         prompt: "That was improper. I did warn you. Do go on and say whatever you like in return.",
@@ -146,7 +146,7 @@ export default {
       beats: [
         "**{firstName}**: You are unhurt. I have confirmed it three times through three people and I am writing to you regardless, which I recognize is excessive.",
         "I was not there. That is the whole of it. There was a thing in the west wing and I was two floors away being useful to somebody else, and I have been standing outside your door for some minutes without knocking, because it occurred to me that I have no right to.",
-        "They have always told me that strength carries a duty. I have believed it since I was a boy. It has always been an abstract, and I have always been rather proud of how well I carried the abstract.\n\nIt has stopped being one. That is what I came to say. It has a name now and it is yours, and I do not know what to do with a duty that keeps me awake.",
+        "They have always told me that strength carries a duty. I have believed it since I was a boy, and I was always rather proud of how well I carried the abstract of it.\n\nIt has stopped being an abstract. That is what I came to say. It has a name now and it is yours, and I do not know what to do with a duty that keeps me awake.",
       ],
       choice: {
         prompt: "May I come in? I shall go if you say no, and I shall be entirely all right about it.",

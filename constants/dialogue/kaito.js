@@ -3,11 +3,15 @@ export default {
   // apologizes for having sent; the intimacy is that he keeps hitting send
   // anyway. Kind is what reaches him, so every choice is really about whether
   // the reassurance he is fishing for actually arrives.
+  //
+  // Texting voice, per reference.md's "## Bond Scenes" notes: a sob emoji (😭)
+  // surfaces when he's overwhelmed, his anxious questions almost always double
+  // the "??", and he stretches letters when exasperated ("Urghhhh").
   bondScenes: {
     acquaintance: {
       beats: [
-        "*Nine messages arrive at once, then a tenth that just says: ignore all that.*\n\n**{firstName}**: okay so I got your contact off the house sheet which is probably WEIRD, is that weird? that's weird\n\nI'm deleting this\n\nI can't delete this you've already seen it",
-        "Okay okay okay. Real reason. *A photo comes through: a tray of something small and burnt on one side.* I made too many. Like, a genuinely stupid amount. And I thought... you've turned up {timesMet} times now and you never once looked at me like I was a waste of a conversation, so.\n\nSo there's some with your name on. Literally. I wrote your name on the paper. That's the part I regret.",
+        "*Nine messages arrive at once, then a tenth that just says: ignore all that.*\n\n**{firstName}**: okay so I got your contact off the house sheet which is probably WEIRD, is that weird?? that's weird\n\nI'm deleting this\n\nI can't delete this you've already seen it",
+        "Okay okay okay. Real reason. *A photo comes through: a tray of something small and burnt on one side.* I made too many. Like, a genuinely stupid amount. And I thought... you've turned up {timesMet} times now and you never once looked at me like I was a waste of a conversation, so.\n\nSo there's some with your name on. Literally. I wrote your name on the paper. That's the part I regret 😭",
       ],
       choice: {
         prompt:
@@ -18,14 +22,14 @@ export default {
             label: "Say yes before he spirals",
             style: 3,
             close:
-              "WAIT REALLY?\n\n*Then, immediately:* cool. cool cool cool. that's... yeah. cool.\n\n*The next message is a photo of him grinning so hard his eyes have shut, and then a fourth message that just says: ignore that one.*",
+              "WAIT REALLY??\n\n*Then, immediately:* cool. cool cool cool. that's... yeah. cool.\n\n*The next message is a photo of him grinning so hard his eyes have shut, and then a fourth message that just says: ignore that one.*",
           },
           {
             key: "playful",
             label: "Ask about the burnt side",
             style: 1,
             close:
-              "THAT'S THE CARAMELIZED SIDE. That's on PURPOSE.\n\nIt is not on purpose. I panicked and turned the oven up. Please still come.",
+              "THAT'S THE CARAMELIZED SIDE. That's on PURPOSE.\n\nUrghhhh it is not on purpose. I panicked and turned the oven up. Please still come 😭",
           },
           {
             key: "bold",
@@ -45,31 +49,31 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: hey can I ask you something and you have to promise not to make it a whole thing",
-        "You always come back with {favResponse}. Every single time. Even when I've been... you know. A lot. Even when I could hear myself being a lot.\n\nAnd I've been trying to work out why, because everyone else waits for me to run out of steam and then talks about something else, and I've gotten really good at not minding that. Like, professionally good.\n\nYou don't do the waiting thing. That's all. That's the question. Why don't you do the waiting thing.",
+        "You always come back with {favResponse}. Every single time. Even when I've been... you know. A lot. Even when I could hear myself being a lot.\n\nAnd I've been trying to work out why. Everyone else waits for me to run out of steam and then changes the subject, and I've gotten really good at not minding that. Professionally good.\n\nYou don't do the waiting thing. That's the question. Why don't you do the waiting thing??",
       ],
       choice: {
-        prompt: "...Was that too much? That was too much. Sorry.",
+        prompt: "...Was that too much?? That was too much. Sorry.",
         options: [
           {
             key: "kind",
             label: "Tell him you like listening",
             style: 3,
             close:
-              "*The typing indicator runs for a long time and produces one word.*\n\noh.\n\n*Then, four minutes later:* sorry I had to put the phone down for a sec.",
+              "*The typing indicator runs for a long time and produces one word.*\n\noh.\n\n*Then, four minutes later:* sorry I had to put the phone down for a sec 😭",
           },
           {
             key: "playful",
             label: "Say he's growing on you",
             style: 1,
             close:
-              "LIKE MOLD?\n\nWait, no, I'm taking that as a win. That's a win. I'm screenshotting that and looking at it later, which is a normal thing people do.",
+              "LIKE MOLD??\n\nWait, no, I'm taking that as a win. That's a win. I'm screenshotting that and looking at it later, which is a normal thing people do.",
           },
           {
             key: "bold",
             label: "Tell him to stop apologizing",
             style: 4,
             close:
-              "Sorr... okay. Not saying it.\n\nThat's really hard actually. Can I have one? Just one, banked, for emergencies.",
+              "Sorr... okay. Not saying it.\n\nThat's really hard actually. Can I have one?? Just one, banked, for emergencies.",
           },
         ],
       },
@@ -83,7 +87,7 @@ export default {
       beats: [
         "*It's late. The message isn't loud, which from him is the first sign something is off.*\n\n**{firstName}**: are you up\n\ndon't answer if you're not up. I'll be fine. I'm always fine.",
         "Collections came round again. It's handled. It's... I handled it. Mostly.\n\nI didn't tell anyone in the house because they'd look at me the way they look at me. Lucas would want to *help*. Jin would pay it and then own me forever, which honestly, you know, tempting.",
-        "I just wanted to say it out loud to someone who's not going to fix it. Does that make sense? I don't want it fixed, I want it to have been heard.\n\nYou're the only person I could think of at two in the morning. That's not a small thing for me. That's basically the biggest thing.",
+        "I just wanted to say it out loud to someone who's not going to fix it. Does that make sense?? I don't want it fixed, I want it to have been heard.\n\nYou're the only person I could think of at two in the morning. That's not a small thing for me. That's basically the biggest thing 😭",
       ],
       choice: {
         prompt: "Say something dumb so I stop feeling like this.",
@@ -93,7 +97,7 @@ export default {
             label: "Tell him you're staying up",
             style: 3,
             close:
-              "You don't have to.\n\nStay up. Please stay up. You can just leave the read receipt on, you don't even have to type, I just want to see it say online.\n\n*It says online until six.*",
+              "You don't have to.\n\nStay up. Please stay up 😭 You can just leave the read receipt on, you don't even have to type, I just want to see it say online.\n\n*It says online until six.*",
           },
           {
             key: "playful",
@@ -120,12 +124,12 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: okay I need you to read this whole thing before you say anything\n\nI've typed it out four times",
-        "Everyone here has a thing. Lucas has the strength. Jin has the... being Jin. Tohma has whatever Tohma has, which I've decided not to look into.\n\nMy gran raised me on instant ramen and hand-me-downs, and I still don't know how I ended up in a house where everyone's family tree has a crest on it. I got in on a technicality and I've been waiting nearly two years for somebody to notice and send me home. Every single mission I'm the one you have to work around. I know that. I've known that the whole time.",
-        "And the thing is I'm not brave, I'm not going to get brave, that's not... that's not a thing that's coming.\n\nBut I want to be. For you specifically, which I know is embarrassing, and I've decided to be embarrassing about it because you're the only person I've ever wanted to be worth something in front of.\n\nThat's it. That's the four drafts.",
+        "Everyone here has a thing. Lucas has the strength. Jin has the... being Jin. Tohma has whatever Tohma has, which I've decided not to look into.\n\nMy gran raised me on instant ramen and hand-me-downs. I don't know how I ended up in a house where everyone's family tree has a crest on it. Got in on a technicality, and I've spent nearly two years waiting for someone to notice and send me home. Every mission I'm the one you have to work around. I've known that the whole time.",
+        "And the thing is I'm not brave, I'm not going to get brave, that's not... that's not a thing that's coming.\n\nBut I want to be. For you specifically, which I know is embarrassing, and I've decided to be embarrassing about it because you're the only person I've ever wanted to be worth something in front of.\n\nThat's it. That's the four drafts 😭",
       ],
       choice: {
         prompt:
-          "Please say literally anything. The silence is doing numbers on me.",
+          "Please say literally anything. The silence is doing numbers on me 😭",
         options: [
           {
             key: "kind",
@@ -146,7 +150,7 @@ export default {
             label: "Tell him to be brave right now",
             style: 4,
             close:
-              "Right now? Like... now now?\n\n*The phone rings before you can answer. He is audibly holding it with both hands.*\n\n> Hi. Hi. I called. That's the bravest thing available at this hour, I checked.\n\n*He doesn't hang up for an hour and a half, and mostly you both just breathe at each other.*",
+              "Right now?? Like... now now??\n\n*The phone rings before you can answer. He is audibly holding it with both hands.*\n\n> Hi. Hi. I called. That's the bravest thing available at this hour, I checked.\n\n*He doesn't hang up for an hour and a half, and mostly you both just breathe at each other.*",
           },
         ],
       },
@@ -160,10 +164,10 @@ export default {
       beats: [
         "**{firstName}**: don't be mad\n\nI did something",
         "*The photo is his hand, wrapped badly, the bandage clearly done one-handed by somebody who has never bandaged anything.*\n\nSo there was a thing in the corridor and it was going for you and I did the... I did a shout. I shouted at it. Really loud. And it looked at me instead.\n\nWhich was the plan! That was the entire plan! I don't have a second part of the plan, that was it, and it WORKED.",
-        "Yuri says it's fine in like a week. Yuri also said \"fascinating\" twice, which I've decided not to think about.\n\nI'm not telling you so you'll feel bad. I'm telling you because I've spent my whole life being the one who runs, and tonight I was in front of you and I didn't, and I need someone to know that happened. Specifically you. Only you, really.",
+        "Yuri says it's fine in like a week. Yuri also said \"fascinating\" twice, which I've decided not to think about.\n\nI'm not telling you so you'll feel bad. I'm telling you because I've spent my whole life being the one who runs, and tonight I was in front of you and I didn't, and I need someone to know that happened. Specifically you. Only you, really 😭",
       ],
       choice: {
-        prompt: "Was that... did I do good? Tell me I did good.",
+        prompt: "Was that... did I do good?? Tell me I did good.",
         options: [
           {
             key: "kind",
@@ -177,7 +181,7 @@ export default {
             label: "Critique the bandage work",
             style: 1,
             close:
-              "IT'S STRUCTURALLY SOUND.\n\nIt is not structurally sound. It came off twice. Please come and do it, I've been sitting here for an hour hoping you'd offer so I wouldn't have to ask.",
+              "IT'S STRUCTURALLY SOUND.\n\nIt is not structurally sound. It came off twice. Please come and do it 😭 I've been sitting here for an hour hoping you'd offer so I wouldn't have to ask.",
           },
           {
             key: "bold",
@@ -198,8 +202,8 @@ export default {
       beats: [
         "**{firstName}**: I'm not going to chicken out this time. I've told three people I'm doing this so I can't chicken out. Ren is watching me type.\n\n(Ren has left. Ren says good luck. I'm alone now. It's worse.)",
         "{timesMet} times. I counted them on the calendar app like a complete lunatic, I have a color for you and everything.\n\nEvery single one of them I've thought, this is it, this is the day I say it, and then you smile at something and my entire brain leaves.",
-        "And I know what I am. I'm the one everyone's nice about. I'm the one you're kind to. I've had my whole life to get used to being the one people are kind to.\n\nBut you're not kind to me. You're... you *pick* me. You keep picking me and I don't understand it and I've stopped trying to.\n\nMy gran used to say that, actually. That kindness isn't luck, it's a decision somebody keeps making about you. I was like fourteen, I said \"okay grandma\" and rolled my eyes so hard. I get it now.",
-        "So here it is and I'm not deleting it.\n\nI love you. I've loved you since way before I was allowed to, since before I was anything worth loving back, and I'm saying it out loud with my whole chest for once instead of hiding it in nine messages at once.\n\nYou don't have to say it. Genuinely. I've already done the impossible part.",
+        "And I know what I am. I'm the one everyone's nice about, the one you're kind to. I've had my whole life to get used to that.\n\nBut you're not kind to me. You... you *pick* me. You keep picking me and I don't understand it and I've stopped trying to.\n\nMy gran used to say that, actually. Kindness isn't luck, it's a decision somebody keeps making about you. I was fourteen, said \"okay grandma\" and rolled my eyes so hard. I get it now.",
+        "So here it is and I'm not deleting it.\n\nI love you. I've loved you since way before I was allowed to, since before I was anything worth loving back, and I'm saying it out loud with my whole chest for once instead of hiding it in nine messages at once.\n\nYou don't have to say it. Genuinely. I've already done the impossible part 😭",
       ],
       choice: {
         prompt:

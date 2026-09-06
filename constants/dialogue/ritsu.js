@@ -48,7 +48,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: A matter I have modeled at some length and been unable to resolve. I am therefore asking, which is a method I resort to rarely and dislike.",
-        "Your conduct toward me is {favResponse} without variance. I have run it against every input available: Romeo shouting, the captain's condition, the hour, whether I have been of any use to you. It does not move.\n\nPeople are transactional. That is not cynicism, it is the observed data, and I have built a functioning practice on it. I predict what a person will do by determining what they are owed and what they want.\n\nI cannot predict you. That is the first time the model has failed in six years and I have been unable to enjoy anything since I noticed.",
+        "Your conduct toward me is {favResponse} without variance. I have run it against every input available: Romeo shouting, the captain's condition, the hour, whether I have been of any use to you. It does not move.\n\nPeople are transactional. That is not cynicism, it is observed data, and I have built a practice on it: I predict what a person will do from what they are owed and what they want.\n\nI cannot predict you. That is the first time the model has failed in six years, and I have been unable to enjoy anything since I noticed.",
       ],
       choice: {
         prompt: "Explain the discrepancy. I would like the model repaired.",
@@ -72,7 +72,7 @@ export default {
             label: "Tell him to bin the model",
             style: 4,
             close:
-              "The model is eleven years old.\n\nI built it at fourteen, in a house where knowing what everybody wanted was the only reliable form of safety available to me. I am aware of how that sounds and I have never written it down before.\n\nI am not going to discard it. I am prepared to make one exception in it. That is a larger concession than it appears.",
+              "The model is eleven years old. I built it at fourteen, in a house where knowing what everybody wanted was the only reliable safety available to me. I am aware of how that sounds, and I have never written it down before.\n\nI am not going to discard it. I am prepared to make one exception in it. That is a larger concession than it appears.",
           },
         ],
       },
@@ -86,7 +86,7 @@ export default {
       beats: [
         "**{firstName}**: I am proposing a standing arrangement. Tuesdays, 19:00 to 20:30, the small reading room on the second floor. Attendance optional; I will be present regardless.",
         "*You go. He has laid out two chairs, a lamp, tea, and absolutely no paperwork whatsoever, which for Ritsu Shinjo is a room stripped bare.*\n\n> There is no purpose. I want that stated plainly at the outset, because you will look for one and its absence is the entire point.",
-        "> Every hour of my week is allocated. I have kept a schedule since I was twelve. There is a block on Tuesdays that has read \"contingency\" for four years and has never once been used for a contingency.\n\n> I have been sitting in this room in it. Alone. Reading things that are of no professional use to me and telling nobody.\n\n> I am now telling one person. The chair is for you. I bought it in March and I have been rehearsing this since roughly the same period.",
+        "> Every hour of my week is allocated. I have kept a schedule since I was twelve. One block on Tuesdays has read \"contingency\" for four years and has never once held a contingency.\n\n> I have been spending it in this room. Alone. Reading things of no professional use to me and telling nobody.\n\n> I am now telling one person. The chair is for you. I bought it in March and have been rehearsing this since roughly then.",
       ],
       choice: {
         prompt:
@@ -125,7 +125,7 @@ export default {
       beats: [
         "**{firstName}**: It is 03:14. I am aware this is a violation of the arrangement and I am proceeding.",
         "I collect the protection fees. You know this. Everybody knows this and nobody says it in the plain form, which is: a first-year law student walks into rooms and explains to people what will happen to them if they do not pay.\n\nI am extremely good at it. That is not a boast. It is the observation that has kept me awake since Tuesday.",
-        "I do not raise my voice. I do not threaten. I set out the consequences accurately and in order, and people find that considerably more frightening than Romeo shouting, and I have known that since my second week and used it every day since.\n\nI came here to become a lawyer because the law is the one system in which what is right and what is written are supposed to be the same thing.\n\nThey are not the same thing. I found that out at fifteen and I have been billing by the hour ever since, and there is nobody I could say that to except you.",
+        "I do not raise my voice. I do not threaten. I set out the consequences accurately and in order, and people find that more frightening than Romeo shouting. I have known it since my second week and used it every day since.\n\nI came here to become a lawyer because the law is the one system where what is right and what is written are supposed to be the same thing. They are not. I found that out at fifteen and I have been billing by the hour ever since.\n\nThere is nobody I could say that to except you.",
       ],
       choice: {
         prompt:
@@ -150,7 +150,7 @@ export default {
             label: "Tell him to stop collecting",
             style: 4,
             close:
-              "I cannot. There is a contract and I drafted it, which makes it rather difficult to argue my way out of.\n\n*Then, some minutes later:*\n\nThere is a clause. I put it in at the time without knowing why. It permits termination on ninety days' notice and I have read it perhaps two hundred times.\n\nI have never given the notice. Ask me again in the spring.",
+              "I cannot. There is a contract and I drafted it, which makes it difficult to argue my way out of.\n\n*Then, some minutes later:*\n\nThere is a clause I put in at the time without knowing why. Termination on ninety days' notice. I have read it perhaps two hundred times and never given it.\n\nAsk me again in the spring.",
           },
         ],
       },
@@ -164,7 +164,7 @@ export default {
       beats: [
         "**{firstName}**: Your name has been removed from the Sinostra register. Every entry. Retroactively.",
         "This was not an oversight and it was not a courtesy. It was a decision I made at 02:00 and executed personally, and it required me to alter a document I have described to this house as inviolable.\n\nThe reason is that a man came to my office asking who in the register had been visiting the captain, and I gave him a complete and accurate answer that did not contain you.",
-        "I have never lied on a record. Not once, at any point, under any pressure, including from Romeo, including twice from the captain.\n\nI have now. Deliberately, cleanly, and with a fabricated audit trail that will withstand review.\n\nI would like you to understand exactly what I have handed you. If that is ever found, my practice is finished and I am finished with it. It is in your keeping now and I put it there on purpose.",
+        "I have never lied on a record. Not once, under any pressure, including from Romeo, including twice from the captain.\n\nI have now. Deliberately, cleanly, with a fabricated audit trail that will withstand review.\n\nUnderstand exactly what I have handed you. If it is ever found, my practice is finished and I am finished with it. It is in your keeping now, and I put it there on purpose.",
       ],
       choice: {
         prompt:
@@ -189,7 +189,7 @@ export default {
             label: "Ask what happens if it's found",
             style: 4,
             close:
-              "I lose the practice, the placement, and the reference. Approximately eleven years of work.\n\nI did the calculation before I altered the file. It took four seconds. I have never in my life completed a decision of that magnitude in four seconds and I have been sitting here since two trying to be alarmed about it.\n\nI am not alarmed. That is the part I cannot file anywhere.",
+              "I lose the practice, the placement, and the reference. Roughly eleven years of work.\n\nI did the calculation before I altered the file. It took four seconds. I have never completed a decision of that magnitude in four seconds, and I have been sitting here since two trying to be alarmed about it.\n\nI am not alarmed. That is the part I cannot file anywhere.",
           },
         ],
       },

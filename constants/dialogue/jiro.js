@@ -77,7 +77,7 @@ export default {
       beats: [
         "**{firstName}**: Come to the lower theater at eleven. The captain will be asleep. Bring nothing.",
         "*The room is dark except for one lamp. On the bench is a wooden case, old, clearly not medical, and he opens it without preamble.*\n\n*Inside is a set of children's calligraphy brushes.*\n\n> These are my brother's. He is dead. He died here when I was eleven and I have carried these through four moves and never once used them.",
-        "> I do not know why I keep them. I have written the reasoning out three times and it does not resolve: sentiment is not a category I have any facility with.\n\n> But I found myself wanting you to have seen them, and that impulse also did not resolve, and I have decided to stop attempting to resolve things where you are concerned because the failure rate is one hundred percent.",
+        "> I do not know why I keep them. I have written the reasoning out three times and it does not resolve. Sentiment is not a category I have any facility with.\n\n> But I found myself wanting you to have seen them, and that impulse did not resolve either. I have stopped attempting to resolve things where you are concerned. The failure rate is one hundred percent.",
       ],
       choice: {
         prompt: "You may ask one question about him. One. I have a limited supply of answers.",
@@ -112,7 +112,7 @@ export default {
       beats: [
         "**{firstName}**: I am going to state something and I would prefer you not to characterize it as a complaint.",
         "The captain's treatments are not treatments. I am aware. I have been aware since the first one.\n\nI permit them because the data is genuinely valuable, because he would find someone less able to tolerate it, and because he does not have anybody else. Those are three reasons and I have never needed a fourth.",
-        "I am telling you because you have begun looking at my arms and stopping yourself from asking, and the not-asking has been going on for eleven days, and it is having an effect on me that I have not previously experienced and cannot name.\n\nThe effect is not distress. I want to be clear. I have no word for what it is. I am hoping that saying it out loud will resolve the ambiguity and I do not think it is going to.",
+        "I am telling you because you have begun looking at my arms and stopping yourself from asking. The not-asking has gone on for eleven days, and it is having an effect on me I have not experienced before and cannot name.\n\nThe effect is not distress. I want to be clear. I have no word for what it is. I am hoping saying it out loud resolves the ambiguity. I do not think it is going to.",
       ],
       choice: {
         prompt: "You may ask now. You have plainly wanted to for some time.",
@@ -147,7 +147,7 @@ export default {
       beats: [
         "**{firstName}**: You are stable. I have checked personally, three times, at intervals. The third was unnecessary.",
         "I was not on that mission. I was told the outcome forty minutes after it resolved and I have spent the intervening period attempting to work normally.\n\nMy hands were not steady. That has never happened. I have operated through worse information than that and my hands have never once been a problem.",
-        "I have been at your bedside since the second check. You have been unconscious for most of it. I did not want you to wake and find me here without an explanation, so this message is the explanation, written at the bedside, which I recognize is absurd.\n\nI have concluded that the variable I could not name is you. The whole variable. I have been running a model with a term in it I refused to label for eight months.",
+        "I have been at your bedside since the second check. You have been unconscious for most of it. I did not want you to wake and find me here without an explanation, so this message is the explanation, written at the bedside. I recognize that is absurd.\n\nThe variable I could not name is you. The whole variable. I have been running a model with a term in it I refused to label for eight months.",
       ],
       choice: {
         prompt: "You are awake now. I can see that you are reading this. Say something.",
@@ -181,7 +181,7 @@ export default {
     soulbound: {
       beats: [
         "**{firstName}**: This message contains no observations. I want that noted at the top, because it is the first one that has not.",
-        "{timesMet}. I have that number without looking it up. I have had it without looking it up for some time.\n\nI have kept a file on you since the fourth visit. It began as habit. It stopped being habit at approximately visit twenty and I continued anyway, which means it became something else, and I have known what that something else was for a year and have declined to write it down.",
+        "{timesMet}. I have that number without looking it up. I have had it for some time.\n\nI have kept a file on you since the fourth visit. It began as habit. It stopped being habit around visit twenty and I continued anyway, which means it became something else. I have known what that something else was for a year and declined to write it down.",
         "My brother used to say that a thing not said out loud has not happened. He said a great many things and most of them were nonsense. That one has been sitting in my head for nine years like a splinter.\n\nI am inclined to think he was right, which is intolerable, and which is why I am doing this rather than continuing to be extremely comfortable.",
         "I love you.\n\nI have no supporting data. There is no measurement I could take that would demonstrate it and I have looked for one. I spent two months looking for one, which I am telling you because it is the most honest thing I know about myself.\n\nIt is simply true and it is not going to stop being true, and I have said it out loud, so now it has happened.",
       ],

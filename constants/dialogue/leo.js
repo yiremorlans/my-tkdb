@@ -5,40 +5,44 @@ export default {
   // it at you, and the warmth is entirely in what he does while insulting you.
   // Bold is what reaches him; being flattered makes him worse.
   //
-  // Texting voice, per reference.md: "Ugh" surfaces even in private DMs, casual
-  // profanity (shit/fuck) when riled or deflecting, and "Honor Roll" as his own
-  // address for her, same as everyone else in the game calls her — mocking at
-  // Acquaintance, protective by Devoted, said straight by Soulbound. Alan is
-  // "Cap" to him, same as in every other pool.
+  // Texting voice, per reference.md's "## Bond Scenes" notes: Leo texts in
+  // mixed case (never all-lowercase), drops full stops, keeps paragraphs short,
+  // and uses "u"/"ur", "lol", "rn", "tho". "Ugh" and "Tch" survive into private
+  // DMs, casual profanity (shit/fuck) when riled or deflecting, and "Honor Roll"
+  // as his own address for her, same as everyone else in the game calls her —
+  // mocking at Acquaintance, protective by Devoted, said straight by Soulbound.
+  // Alan is "Cap" to him, same as in every other pool. Spoken voice notes and
+  // narration keep normal punctuation; the texting rules are only for what he
+  // actually types.
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: don't get excited\n\nI message a lot of people. you're not special. you're like, extremely not special.",
-        "so there's a thread going round about you. nothing bad, which honestly is the boring outcome, I was hoping for something I could use.\n\nanyway I killed it. you're welcome. don't make it weird, I just didn't like the guy who started it and this was cheaper than dealing with him properly.\n\n{timesMet} times you've been round and nobody's got anything on you. that's actually kind of impressive and I'm annoyed about it.",
+        "**{firstName}**: Don't get excited\n\nI message a lot of people\n\nUr not special, ur like extremely not special",
+        "So there's a thread going round about u\n\nNothing too bad, which is honestly the boring outcome, I was hoping for something I could use\n\nAnyway I killed it, ur welcome. didn't like the guy who started it and this was cheaper than dealing with him properly\n\n{timesMet} times you've been round and nobody's got anything on u\n\nkind of impressive and I'm annoyed about it",
       ],
       choice: {
-        prompt: "so. thank me.",
+        prompt: "go on then, thank me",
         options: [
           {
             key: "kind",
             label: "Thank him sincerely",
             style: 3,
             close:
-              "ugh\n\ndo it again but sarcastic. I don't know what to do with the other kind, it's making my skin crawl.\n\n*He doesn't leave the chat, though.*",
+              "Ugh\n\nDo it again but sarcastic, I don't know what to do with the other kind, it's making my skin crawl\n\n*He doesn't leave the chat, though.*",
           },
           {
             key: "playful",
             label: "Ask what it cost him",
             style: 1,
             close:
-              "nothing! Tch. not everything's a transaction.\n\nit cost me a favor I was saving. don't tell anyone I said that, I have a brand.",
+              "Nothing! Tch, not everything's a transaction\n\nit cost me a favor I was saving\n\ndon't tell anyone I said that, I have a brand",
           },
           {
             key: "bold",
             label: "Say you didn't ask him to",
             style: 4,
             close:
-              "no, you didn't. that's the entire point, Honor Roll. anyone can do a favor they got asked for.\n\n*Then, faster, like he's covering:* anyway don't read into it. reading into it is so embarrassing for you.",
+              "No, u didn't, that's the entire point honor roll\n\nanyone can do a favor they got asked for\n\n*Then, faster, like he's covering:* anyway don't read into it, reading into it is so embarrassing for u",
           },
         ],
       },
@@ -50,33 +54,33 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: okay serious question and if you screenshot this I'll ruin your life",
-        "you come at me with {favResponse} and you never flinch. not once. everyone flinches. that's the whole job, I say something and I watch it land.\n\nyou just answer. like I'm a person having a conversation instead of a hazard.\n\nit's throwing off my entire operation, and I need to know if you're doing it on purpose, because it's genuinely pissing me off how much I don't mind it.",
+        "**{firstName}**: Ok serious question and if u screenshot this I'll ruin ur life",
+        "u come at me with {favResponse} and u never flinch\n\nnot once, everyone flinches. that's the whole job, I say something and watch it land\n\nu just answer, like I'm a person having a conversation instead of a hazard\n\nit's throwing off my entire operation, and I need to know if ur doing it on purpose, because it's pissing me off how much I don't mind it",
       ],
       choice: {
         prompt:
-          "and be honest, I'll know if you're managing me. everyone manages me.",
+          "and be honest, I'll know if ur managing me, everyone *tries* to manages me",
         options: [
           {
             key: "kind",
             label: "Say you like talking to him",
             style: 3,
             close:
-              "nobody likes talking to me. people like being *near* me. there's a difference and I've built a career on it.\n\n*A long gap.*\n\n...say that again in like a week and see if I still hate it.",
+              "nobody likes talking to me\n\npeople like being *near* me, there's a difference and I've built a career on it\n\n*A long gap.*\n\n…say that again in like a week and see if I still hate it",
           },
           {
             key: "playful",
             label: "Say you flinch on the inside",
             style: 1,
             close:
-              "HA. okay. okay, that's good, I'm using that.\n\nalso that's a lie and we both know it. but it's a funny lie, so, points.",
+              "HA\n\nokay that's good, I'm using that\n\nalso that's a lie and we both know it, but it's a funny lie, so, points",
           },
           {
             key: "bold",
             label: "Say he isn't that intimidating",
             style: 4,
             close:
-              "I'm extremely intimidating.\n\n...I'm not, am I. God. two years of work and one person just walks in and isn't rattled by any of it.\n\ndon't tell Sho. Sho's still rattled. it's the only thing keeping me going.",
+              "I'm extremely intimidating\n\nGod, two years of work and one person just walks in and isn't rattled by any of it\n\nand I can't even get properly mad about it, I've tried, it won't take\n\nSho's the only other person who's never once flinched at me and he's had since middle school to build up the tolerance, u've had like a month\n\nso yeah, it's not working on u. I'd appreciate u not looking so pleased about it",
           },
         ],
       },
@@ -88,34 +92,34 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: so I need you to look at something and not be normal about it",
-        "*It's a folder. Photos, hundreds of them, and none of them are the ones he posts: no ring light, no angles, no captions. Cap asleep in the garage. Sho with his mouth full. A courtyard at six in the morning with nobody in it.*\n\nthat's the real drive. nobody's seen it. not the house, not the numbers guys, definitely not the internet.",
-        "the stuff I put out is the product. this is just some pointless shit I take and then never do anything with, and I've never worked out why.\n\nyou're in a bunch of them. I didn't crop you out. I want you to know I thought about cropping you out for like an hour and then didn't.",
+        "**{firstName}**: So I need u to look at something rn and not be normal about it",
+        "*It's a folder. Photos, hundreds of them, and none of them are the ones he posts: no ring light, no angles, no captions. Cap asleep in the garage. Sho with his mouth full. A courtyard at six in the morning with nobody in it.*\n\nthat's the real drive\n\nnobody's seen it, not the house, not the numbers guys, definitely not the internet",
+        "the stuff I put out is the product\n\nthis is just some pointless shit I take and then never do anything with, and I've never worked out why\n\nur in a bunch of them, I didn't crop u out\n\nI want u to know I thought about cropping u out for like an hour and then didn't",
       ],
       choice: {
         prompt:
-          "ugh, say something withering. please. the sincerity in this chat is unbearable.",
+          "ugh, say something withering, please, the sincerity in this chat is unbearable",
         options: [
           {
             key: "kind",
             label: "Tell him they're better",
             style: 3,
             close:
-              "better than the ones that make me money? cool. great. love that for my business model.\n\n...yeah. I know. that's why I don't post them.",
+              "lol better than the ones that make me money? cool, great, love that for my business model\n\n…yeah, I know, that's why I don't post them",
           },
           {
             key: "playful",
             label: "Ask for one of yourself",
             style: 1,
             close:
-              "absolutely not, they're MINE...\n\n*One arrives four minutes later anyway. It's from a night you don't remember him being at, and you're laughing at something out of frame, and he's clearly been sitting on it for months.*",
+              "absolutely not, they're MINE…\n\n*One arrives four minutes later anyway. It's from a night you don't remember him being at, and you're laughing at something out of frame, and he's clearly been sitting on it for months.*",
           },
           {
             key: "bold",
             label: "Ask why you get to see",
             style: 4,
             close:
-              "because you're the only person who'd look at them and not immediately ask what the play is.\n\nthere's no play. that's the whole horrible thing about it. go away now.",
+              "because ur the only person who'd look at them and not immediately ask what the play is\n\nthere's no play, that's the whole horrible thing about it\n\ngo away now",
           },
         ],
       },
@@ -127,33 +131,33 @@ export default {
 
     confidant: {
       beats: [
-        "**{firstName}**: the numbers dipped this week\n\nI know that's not a thing to message a person at 3am about. I'm doing it anyway.",
-        "here's the bit nobody gets. it's not vanity. vanity would be fine, vanity's cheap. it's that if the numbers go, there's nothing under them.\n\nCap's got the strength. Sho's got... whatever Sho's got, the food thing, people love him for free. I've got a follower count and a very good jawline and both of those depreciate.",
-        "I'm the vice-captain of a house where everyone would pick him over me in a heartbeat, including me, and I've built an entire personality out of not letting that land.\n\nanyway. don't be nice about it. if you're nice about it I'll have to block you, that's just how I'm built.",
+        "**{firstName}**: the numbers dipped this week\n\nI know that's not a thing to message a person at 3am about\n\nI'm doing it anyway",
+        "here's the bit nobody gets\n\nit's not vanity, vanity would be fine, vanity's cheap\n\nit's that if the numbers go, there's nothing under them\n\nCap's got the strength, Sho's got… whatever Sho's got, the food thing, people love him for free\n\nI've got a follower count and a very good jawline and both of those depreciate",
+        "I'm the vice-captain of a house where everyone would pick him over me in a heartbeat, including me\n\nand I've built an entire personality out of not letting that land\n\nanyway don't be nice about it\n\nif ur nice about it I'll have to block u, that's just how I'm built",
       ],
       choice: {
-        prompt: "go on. worst thing you've got. I've earned it.",
+        prompt: "go on, worst thing you've got, I've earned it",
         options: [
           {
             key: "kind",
             label: "Be nice about it anyway",
             style: 3,
             close:
-              "I said I'd block you.\n\n*He doesn't block you.*\n\n...I'm not blocking you. obviously. say the rest of it, I hate it, keep going.",
+              "I said I'd block u\n\n*He doesn't block you.*\n\n…I'm not blocking u, obviously\n\nsay the rest of it, I hate it, keep going",
           },
           {
             key: "playful",
             label: "Insult the jawline",
             style: 1,
             close:
-              "THE JAWLINE IS THE ONE THING.\n\nokay. that helped. I'm furious that helped. you're a menace and I'm going to sleep.",
+              "THE JAWLINE IS THE ONE THING\n\nokay that helped, I'm furious that helped tho\n\nur a menace and I'm going to sleep",
           },
           {
             key: "bold",
             label: "Tell him you'd pick him",
             style: 4,
             close:
-              "*There's no answer for eleven minutes.*\n\ndon't say stuff like that at 3am, *he sends finally, and there's none of the voice left in it at all.* I'll believe it at 3am. that's how it gets you.\n\n...say it again in daylight and I'll decide then.",
+              "*There's no answer for eleven minutes.*\n\ndon't say stuff like that at 3am, *he sends finally, and there's none of the voice left in it at all.* I'll believe it at 3am, that's how it gets u\n\n…say it again in daylight and I'll decide then",
           },
         ],
       },
@@ -165,26 +169,26 @@ export default {
 
     devoted: {
       beats: [
-        "**{firstName}**: saw what he said to you in the courtyard",
-        "he's done. not like... nothing dramatic, I'm not Cap, I don't hit people. he's just going to find that everyone's suddenly very busy for about a month and he's never going to work out why the fuck that is.\n\nthat's the version of me people know better than to test. you've never seen it pointed anywhere near you and you never will.",
-        "and yeah, I know that's not a nice thing about me. I'm aware. I've got a whole list.\n\nbut you looked at the floor when he said it, and I've spent two years making sure nobody ever makes me look at the floor, so.\n\nso nobody gets to do it to you either. that's it. that's the rule now.",
+        "**{firstName}**: saw what he said to u in the courtyard",
+        "he's done\n\nnot like… nothing dramatic, I'm not Cap, I don't hit people\n\nhe's just going to find that everyone's suddenly very busy for about a month and he's never going to work out why the fuck that is\n\nthat's the version of me people know better than to test\n\nyou've never seen it pointed anywhere near u and u never will",
+        "and yeah, I know that's not a nice thing about me, I'm aware, I've got a whole list\n\nbut u looked at the floor when he said it, and I've spent two years making sure nobody ever makes me look at the floor, so\n\nso nobody gets to do it to u either\n\nthat's it, that's the rule now",
       ],
       choice: {
-        prompt: "don't tell me not to, Honor Roll. I've already done it.",
+        prompt: "don't tell me not to Honor Roll, I've already done it",
         options: [
           {
             key: "kind",
             label: "Tell him you didn't need it",
             style: 3,
             close:
-              "I know you didn't.\n\nthat's not why I did it. I did it because I had to do something with my hands or I was going to have a whole feeling in public.",
+              "I know u didn't\n\nthat's not why I did it\n\nI did it because I had to do something with my hands or I was going to have a whole feeling in public",
           },
           {
             key: "playful",
             label: "Ask if that's a declaration",
             style: 1,
             close:
-              "it's a *hit job*. completely different thing. wildly different.\n\n...it's the same thing, isn't it. God. this is so beneath me.",
+              "it's a *hit job*, completely different thing, wildly different\n\n…it's the same thing, isn't it\n\nGod, this is so beneath me",
           },
           {
             key: "bold",
@@ -203,28 +207,28 @@ export default {
 
     soulbound: {
       beats: [
-        "**{firstName}**: right so I've drafted this eleven times and every version made me sound insane so I'm just going to type it badly",
-        "{timesMet} times. and every single one of them I've had a bit ready: something cutting, something that'd land. I'm never not holding one.\n\nand the bits have got worse and worse because I stopped meaning them somewhere around the middle, and a bit you don't mean is just noise, and you've been listening to noise for months.",
-        "here's the actual thing. I'm not a nice person. I'm not going to become one. I gossip, I'm petty, I keep score, and I will absolutely ruin someone's month over a look they gave you.\n\nnone of that's changing. what changed is I stopped wanting to point any of it at you and started wanting to point all of it *for* you, and I don't know what to call that except the obvious.",
-        "I love you, Honor Roll. there. typed it. not deleting it, which is genuinely the hardest thing I've done this year.\n\nand before you say anything, I know exactly what I am and I know exactly what you could have instead, and I've done the math on that at three in the morning more times than I'm going to admit.\n\nsay whatever you want. I've survived worse crowds.",
+        "**{firstName}**: Ok so I've drafted this eleven times and every version made me sound insane so I'm just going to type it badly",
+        "{timesMet} times\n\nand every single one of them I've had a bit ready, something cutting, something that'd land, I'm never not holding one\n\nand the bits have got worse and worse because I stopped meaning them somewhere around the middle\n\na bit u don't mean is just noise, and you've been listening to noise for months",
+        "here's the actual thing\n\nI'm not a nice person and I'm not going to become one\n\nI gossip, I'm petty, I keep score, and I will absolutely ruin someone's month over a look they gave u. none of that's changing\n\nwhat changed is I stopped wanting to point any of it at u and started wanting to point all of it *for* u, and I don't know what to call that except the obvious",
+        "I love u, Honor Roll\n\nthere, typed it, not deleting it, which is genuinely the hardest thing I've done this year\n\nand before u say anything, I know exactly what I am and I know exactly what u could have instead, and I've done the math on that at 3am more times than I'm going to admit\n\nsay whatever u want, I've survived worse crowds",
       ],
       choice: {
         prompt:
-          "come on then. I'm not going to break. I'm probably not going to break.",
+          "come on then, I'm not going to break, I'm probably not going to break",
         options: [
           {
             key: "answered",
             label: "Say it back",
             style: 3,
             close:
-              "...say that again.\n\nno wait don't, I've got to... hang on.\n\n*The next thing is a voice note, eight seconds, and it's just him swearing quietly and then laughing at himself.*\n\n> Okay.\n\n*he says at the end of it, and for once there is not one single ounce of performance in his voice.*\n\n> Okay. I'm coming over. Don't be normal about it, I'm going to be so weird when I get there.",
+              "…say that again\n\nno wait don't, I've got to… hang on\n\n*The next thing is a voice note, eight seconds, and it's just him swearing quietly and then laughing at himself.*\n\n> Okay.\n\n*he says at the end of it, and for once there is not one single ounce of performance in his voice.*\n\n> Okay. I'm coming over. Don't be normal about it, I'm going to be so weird when I get there.",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
             close:
-              "yeah. yep. cool. totally.\n\n*A gap.*\n\nthat was three lies in a row, sorry. give me one second.\n\n...okay. take whatever you need. I mean that one. I've been holding it for ages and it's not heavy, it just talks a lot.\n\nand I'm not going anywhere, obviously, I live here and I'm extremely attention-seeking. you'll be sick of me. that's the plan, Honor Roll.",
+              "yeah, yep, cool, totally\n\n*A gap.*\n\nthat was three lies in a row, sorry, give me one second\n\n…okay, take whatever u need, I mean that one\n\nI've been holding it for ages and it's not heavy, it just talks a lot\n\nand I'm not going anywhere, obviously, I live here and I'm extremely attention-seeking\n\nyou'll be sick of me, that's the plan Honor Roll",
           },
         ],
       },

@@ -128,7 +128,7 @@ export default {
       beats: [
         "**{firstName}**: lost four days.\n\nfound out an hour ago.\n\ndon't come up.",
         "Lulu ran the floor.\n\nhasn't said a word.\n\nmeans he'll bring it up in a month, when I've forgot to be grateful.\n\nfour days gone.\n\nwednesday to sunday.\n\nnothing.\n\nsomebody moved a chair in my office and I've been staring at it an hour like it'll explain itself.",
-        "thing nobody gets: it doesn't hurt.\n\npeople expect it to.\n\nit doesn't.\n\nit's that one day it's just the board.\n\npaper.\n\nsome guy reading his own life off a wall, taking somebody else's word for it.\n\nur on it twelve times, kitten.\n\nspent the hour working out if that's a good thing to have done to u.",
+        "thing nobody gets: it doesn't hurt.\n\npeople expect it to. it doesn't.\n\nit's that one day it's just the board. paper. some guy reading his own life off a wall, taking somebody else's word for it.\n\nur on it twelve times, kitten.\n\nspent the hour working out if that's a good thing to have done to u.",
       ],
       choice: {
         prompt: "say it straight. don't be nice about it, I'll know.",

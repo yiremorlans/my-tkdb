@@ -61,7 +61,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: ok so I noticed something and it's bugging me",
-        "I'm not like this with anybody else, that's the thing I noticed\n\neverybody else in this house, I'm either arguing with them or waiting for them to leave\n\nit's not even on purpose, it's just my default\n\nLeo says I've got a permanent \"what\" about me, he's not wrong\n\nthen u show up and I'm just… fine, easy, not bracing for anything\n\nu come at me with {favResponse}, I hand it right back, and it costs me nothing\n\ntwo years here and ur the only one that's true, senpai",
+        "I'm not like this with anybody else, that's the thing I noticed\n\neverybody else in this house I'm either arguing with or waiting for them to leave, it's just my default\n\nLeo says I look like every conversation's about to go bad, he's not wrong\n\nthen u show up and I'm just fine, easy, not bracing for anything\n\nu come at me with {favResponse}, I hand it back, costs me nothing\n\na year here and ur the only one that's true, senpai",
       ],
       choice: {
         prompt: "so what's that about? because I didn't do it on purpose",
@@ -136,7 +136,7 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: ok so u know who my brother is",
-        "everybody knows\n\neverybody's known since day one and they all do the same thing, that little recalculation where they figure out how to talk to me now\n\nhalf this house thinks I'm here on his name\n\nother half thinks I'm here to spy for him\n\nI'm not doing either one\n\nI cook, I get in fights, I show up when people need something, and none of it counts because of the surname",
+        "everybody knows. has since day one, and they all do the same thing, that little recalculation where they work out how to talk to me now\n\nhalf this house thinks I'm here on his name, other half thinks I'm here to spy for him\n\nI cook, I get in fights, I show up when people need something, and none of it counts because of the surname",
         "u never did that, not once\n\nfirst person who didn't, and I'd been waiting on it for two years, so I noticed the exact second it didn't happen\n\nthat's it, that's the message\n\nsorry it's a downer, I'm normally way more fun than this",
       ],
       choice: {
@@ -213,8 +213,8 @@ export default {
       beats: [
         "**{firstName}**: ok\n\nshutter's down, truck's shut, nothing in my hands to keep me busy, so I'm doing this",
         "{timesMet} times you've come by\n\nI've cooked for u… I dunno, most of them\n\nI don't cook for people, I cook for *money* and I cook for the house because somebody's gotta\n\nur the only person I've ever cooked for because I wanted to watch u eat it",
-        "and I know what I am, all right\n\nI've got a mouth on me, I get in fights, I'm loud, I've got a surname that walks into every room ahead of me\n\nthere's easier people to pick\n\nbut u keep asking if I've eaten\n\ntwo years in this place and ur the only one who's ever asked me that\n\nit's such a stupid small thing to fall apart over and I fell apart over it anyway, ages ago, and I've been pretending I didn't",
-        "I've called u senpai about four thousand times\n\nstarted out because ur a year up on me and it was funny\n\nit stopped being funny a long time ago\n\nI kept saying it anyway, because it was the only way I had of saying the other thing without actually saying it\n\nso I'm saying it, I love u, senpai\n\nI don't have a clever version, since about the third bowl, and I've been cooking at u instead of telling u because that was easier, and I'm a coward about exactly one thing",
+        "and I know what I am, all right\n\nmouth on me, I get in fights, I'm loud, got a surname that walks into every room ahead of me. there's easier people to pick\n\nbut u keep asking if I've eaten. two years here and ur the only one who ever has\n\nit's such a stupid small thing to fall apart over and I did anyway, ages ago, and I've been pretending I didn't",
+        "I've called u senpai about four thousand times\n\nstarted because ur a year up on me and it was funny. stopped being funny a long time ago\n\nkept saying it anyway because it was the only way I had of saying the other thing without saying it\n\nso: I love u, senpai. no clever version. since about the third bowl\n\nI've been cooking at u instead of telling u because that was easier. I'm a coward about exactly one thing",
       ],
       choice: {
         prompt: "say whatever, I'll be fine, I'm always fine",
@@ -231,7 +231,7 @@ export default {
             label: "Ask him to give you time",
             style: 2,
             close:
-              "yeah, yeah sure, take forever, I don't care\n\nthat's not me playing it cool by the way, I'm bummed\n\nbut I'd be way more bummed if u said something u didn't mean because I put u on the spot at one thirty in the morning\n\nThursday's still on, obviously Thursday's still on\n\nThursday was never about this, I'd still be feeding u if u told me to get lost, that's just how it is",
+              "yeah, sure, take forever, I don't care\n\nthat's not me playing it cool, I'm bummed. but I'd be way more bummed if u said something u didn't mean because I put u on the spot at one thirty in the morning\n\nThursday's still on. Thursday was never about this. I'd still be feeding u if u told me to get lost, that's just how it is",
           },
         ],
       },

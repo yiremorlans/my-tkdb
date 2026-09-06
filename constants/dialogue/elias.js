@@ -7,9 +7,9 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Good evening. I hope this doesn't startle you, arriving out of nowhere like this. It's nothing serious, I promise. There's something I've been meaning to say, and the right moment seems to escape me, so… I suppose I'm making one now.",
+        "**{firstName}**: Good evening. I hope this doesn't startle you, arriving out of nowhere. It's nothing serious, I promise. There's something I've been meaning to say, and the right moment keeps escaping me, so… I suppose I'm making one.",
         "You've passed me on campus {timesMet} times. I've counted, which already sounds odd said aloud. Every single time, you've said good evening to the man with the mop. You don't have to, but you do it anyway.\n\nMost people don't, you know. Not out of unkindness. They simply don't see the help. I've always rather liked going unnoticed, if I'm honest.",
-        "There's a second half to this, and it's the part I nearly left out. You mentioned once you don't care for the east path after dark. Since then, I've found reasons to have my rounds pass through there right about when you do.\n\nIt isn't much. I only wanted to know you'd gotten where you were going, and I'd rather you heard that from me than puzzled it out and thought me strange for it.",
+        "There's a second half, and it's the part I nearly left out. You mentioned once you don't care for the east path after dark. Since then I've found reasons for my rounds to pass through there about when you do.\n\nIt isn't much. I only wanted to know you'd gotten where you were going, and I'd rather you heard it from me than puzzled it out and thought me strange.",
       ],
       choice: {
         prompt:
@@ -124,7 +124,7 @@ export default {
       beats: [
         "**{firstName}**: You asked me once what I used to be. I told you to ask again when it was later, and I was tired enough.\n\nIt's later. I'm tired enough.",
         "Captain of Dionysia. Four years. It isn't a secret, exactly. It's simply something people have agreed to be tactful about, which is worse.\n\nI lost it. Not a scandal, nothing you could put in a report. I simply reached a point where I couldn't keep up, and I let it go on long enough that someone had to say so, out loud, in a room with other people in it.",
-        "Jo took it over. He does it better than I ever did, and I mean that entirely.\n\nNow I run his errands, and I'm good at it, and every so often someone calls me Captain by accident, and the whole hall goes quiet for half a second while everyone decides not to look at me.\n\nI've never said any of this aloud before, to anyone. A year ago I'd have made a joke of it instead.",
+        "Jo took it over. He does it better than I ever did, and I mean that entirely.\n\nNow I run his errands. Now and then someone calls me Captain by accident, and the whole hall goes quiet for half a second while everyone decides not to look at me.\n\nI've never said any of this aloud before. A year ago I'd have made a joke of it instead.",
       ],
       choice: {
         prompt:
@@ -163,7 +163,7 @@ export default {
       beats: [
         "**{firstName}**: You're perfectly all right. I already know you're all right, I checked twice. This message is entirely for my own sake.",
         "There was an incident in the lower hall tonight, and I went at it, and… I was slow. Not disastrously so. Slow. Eight years ago it would have taken me twenty seconds. Tonight it took four minutes, and I felt every one of them.\n\nThat's the fear I don't say aloud. Not dying. Being the man who used to be able to.",
-        "And here is what I actually meant to tell you, so I'll say it plainly and then go to bed.\n\nI went at it anyway. I didn't weigh it, didn't count the odds, didn't think about my knees. You were on the other side of that hall, and everything I've been careful about for three years went straight out the window.\n\nI'd been treasuring the quiet. Dreading the day it ended. It seems I'd rather it ended than have you on the far side of a bad hall.",
+        "And here is what I actually meant to tell you, plainly, and then I'll go to bed.\n\nI went at it anyway. Didn't weigh it, didn't count the odds, didn't think about my knees. You were on the other side of that hall, and three years of being careful went straight out the window.\n\nI'd been treasuring the quiet. Dreading the day it ended. It seems I'd rather it ended than have you on the far side of a bad hall.",
       ],
       choice: {
         prompt: "Tell me something true. I've had rather a night of it.",

@@ -4,11 +4,15 @@ export default {
   // built as a long failure to deflect: each level he tries the joke, and each
   // level it works a little less. He sees what nobody else can, and the last
   // thing he admits is that being the only one who sees is lonely.
+  //
+  // Texting voice, per reference.md's "## Bond Scenes" notes: he clips words
+  // ("prob", "No prob") and drops "tbh" into his typed lines. Not in the `> `
+  // lines he says out loud.
   bondScenes: {
     acquaintance: {
       beats: [
         "**{firstName}**: hey. don't panic.\n\nthere's something standing behind you.\n\n...there isn't. couldn't resist. how'd you do?",
-        "Okay, real reason. You walked through the Hotarubi hall today and stepped round something in the middle of the floor.\n\nThere is something in the middle of that floor. Has been for a long time. Nobody's ever stepped round it before: they walk straight through and get a headache and blame the weather.\n\nSo that's {timesMet} times you've been here and at least one of them you saw something. Or felt it. Either way I've been curious ever since and I'm too lazy to be curious for long, so I'm asking.",
+        "Okay, real reason. You walked through the Hotarubi hall today and stepped round something in the middle of the floor.\n\nThere's something in the middle of that floor. Has been for a long time. Nobody steps round it: they walk straight through, get a headache, blame the weather.\n\nSo that's {timesMet} times here and at least once you saw something. Or felt it. I've been curious ever since, and I'm too lazy to stay curious for long tbh, so I'm asking.",
       ],
       choice: {
         prompt: "Well? Was that just a coincidence?",
@@ -18,7 +22,7 @@ export default {
             label: "Say it just felt wrong",
             style: 3,
             close:
-              "Yeah. That's how it starts.\n\nFor what it's worth, that's a decent instinct and I'd trust it.",
+              "Yeah. That's how it starts.\n\nFor what it's worth, that's a decent instinct and I'd trust it tbh.",
           },
           {
             key: "playful",
@@ -45,7 +49,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: okay observation time. don't look into it too much.",
-        "You come back with {favResponse} every single time. Even when I've deflected. Especially when I've deflected, actually. You just wait it out and go again.\n\nEveryone else takes the joke and leaves. That's what the joke is for. It's a door I hold open so people can get out of a conversation they didn't want to be in.\n\nYou keep not going through it. It's starting to be a whole thing.",
+        "You come back with {favResponse} every single time. Even when I've deflected. Especially when I've deflected, actually. You just wait it out and go again.\n\nEveryone else takes the joke and leaves. That's what the joke is for. It's a door I hold open so people can get out of a conversation they didn't want to be in.\n\nYou keep not going through it. It's starting to be a whole thing tbh.",
       ],
       choice: {
         prompt:
@@ -70,7 +74,7 @@ export default {
             label: "Tell him to stop deflecting",
             style: 4,
             close:
-              "Can't. It's load-bearing.\n\n...I'll try. Not tonight. But I'll try, and you'll have to be really obvious about noticing, because I won't be.",
+              "Can't. It's load-bearing.\n\n...I'll try. Not tonight. But I'll try, and you'll prob have to be really obvious about noticing, because I won't be.",
           },
         ],
       },
@@ -121,7 +125,7 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: my family sent a letter. first one in three years. thought you should know before I do something stupid with it.",
-        "Kusanagi shrine. Long line of mediums, big house, lot of expectations. I was the strongest one they'd produced in four generations and they were *thrilled* to see the back of me.\n\nNot disappointed. Thrilled. There's a difference and I've had a long time to work it out. I saw the wrong things and said so out loud, and it turns out a family business runs better when the medium tells people what they want.",
+        "Kusanagi shrine. Long line of mediums, big house, lot of expectations. I was the strongest one they'd produced in four generations and they were *thrilled* to see the back of me.\n\nNot disappointed. Thrilled. I saw the wrong things and said so out loud, and it turns out a family business runs better when the medium tells people what they want tbh.",
         "So they sent me here and told everyone it was an honor, and the letter's asking when I'm coming back to be useful.\n\nI've read it eleven times. I keep waiting to feel something about it. Nothing's arriving, and that's worse than if it did.\n\nAnyway. That's the most I've ever said about myself in one go. I'd like to formally blame you for it.",
       ],
       choice: {
@@ -160,8 +164,8 @@ export default {
     devoted: {
       beats: [
         "**{firstName}**: don't freak out. you're fine. I need you to not freak out.",
-        "There was something following you back from the east wing tonight. Not a big one, it wasn't going to do anything, they mostly don't, but it had picked you and it was going to keep picking you.\n\nSo I dealt with it. Properly, the shrine way, the way I swore I was never doing again because of who taught it to me.",
-        "It took about four hours and it hurt in a way I'd genuinely forgotten about, and I'd have done it if it took four days.\n\nI'm telling you because I don't want to be someone who quietly does things for you and lets you think the world is easier than it is. That's my dad's whole personality and I'd rather die.\n\nAlso I'm knackered and slightly emotional and it's five in the morning, so, you know. Grain of salt.",
+        "There was something following you back from the east wing tonight. Not a big one, it wasn't going to do anything, they mostly don't, but it had picked you and it was prob going to keep picking you.\n\nSo I dealt with it. Properly, the shrine way, the way I swore I was never doing again because of who taught it to me.",
+        "It took about four hours and it hurt in a way I'd genuinely forgotten about, and I'd have done it if it took four days.\n\nI'm telling you because I don't want to be someone who quietly does things for you and lets you think the world is easier than it is. That's my dad's whole personality and I'd rather die.\n\nAlso I'm knackered and slightly emotional and it's five in the morning tbh, so, you know. Grain of salt.",
       ],
       choice: {
         prompt: "Go on then. Have a go at me. I've earned at least one.",
@@ -200,11 +204,11 @@ export default {
         "**{firstName}**: I'm going to say this badly and I'm not going to make a joke at the end of it, which is going to take everything I've got.",
         "{timesMet} times. And I've had the deflection ready every single one of them: the door, the bit, the thing behind you. It's automatic. It's been automatic since I was nine.\n\nIt stopped working on you somewhere around the middle and I've been running it anyway, out of pure cowardice, which you've very kindly pretended not to notice.",
         "Here's the thing about being the only one who sees. Everyone thinks it's frightening. It's not frightening, it's lonely: you're in a room full of people and there's a whole other room and you're the only one in it.\n\nYou came into the other room. You didn't even make a thing of it. You just started stepping round stuff on the floor and sitting on a freezing roof with a kid you can't see.",
-        "So: I love you.\n\nNo bit. No door. I love you and I've loved you since the roof and probably before it, and I've been half-arsing every conversation we've had since because half-arsing it is the only way I know how to survive meaning something.\n\nThat's it. That's the whole message. God, this is awful.",
+        "So: I love you.\n\nNo bit. No door. I love you and I've loved you since the roof and probably before it, and I've been half-assing every conversation we've had since because half-assing it is the only way I know how to survive meaning something.\n\nThat's it. That's the whole message. God, this is awful.",
       ],
       choice: {
         prompt:
-          "Take your time. I'm extremely lazy, I'll wait forever, it's genuinely no effort.",
+          "Take your time. I'm extremely lazy, I'll wait forever, it's genuinely no effort tbh.",
         options: [
           {
             key: "answered",

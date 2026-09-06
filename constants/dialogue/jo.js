@@ -121,7 +121,7 @@ export default {
       beats: [
         "**{firstName}**: I'm going to tell you a thing about this house and then I'd like you to forget I have a title.",
         "Shion's had a bad week. Mio's covering and pretending he isn't tired. Elias is doing three jobs and calling it errands so nobody has to say the word demotion.\n\nI hold all of that. That's not a complaint, it's an inventory. I chose it, I'd choose it again, and I'm good at it.",
-        "Here's the part I've never said.\n\nI don't know if any of them like me. I know they need me. I've built an entire life out of being needed because it's load-bearing and being liked is not, and somewhere in the last six years I stopped being able to tell the difference from the inside.\n\nAnd then there's you, who has never needed a single thing from me, and keeps turning up anyway, and I have genuinely no idea what to do with that. I run an hour a morning thinking about it.",
+        "Here's the part I've never said.\n\nI don't know if any of them like me. I know they need me. I built a life out of being needed, because being needed is load-bearing and being liked is not, and somewhere in the last six years I lost the ability to tell them apart from the inside.\n\nThen there's you, who has never needed a single thing from me and keeps turning up anyway. I run an hour a morning thinking about it.",
       ],
       choice: {
         prompt: "Go on. You're the only person I could ask.",

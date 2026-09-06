@@ -11,7 +11,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: SPECIMEN. You'll attend to this message immediately. It comes from the genius and visionary Dr. Yuri Isami, and is therefore of considerable historical importance.",
-        "You've entered my facility {timesMet} times and left on your own feet each occasion. Do you understand the significance!? No. Of course you don't. Nobody does.\n\nThe significance is that you keep coming *back*. Every other student in this academy treats Mortkranken as a place one is carried into. You walk in. Unprompted.\n\nIt's either bravery or a diagnosable condition, worm, and as your physician I intend to establish which.",
+        "You've entered my facility {timesMet} times and walked out on your own feet every occasion. Do you understand the significance!? No. Of course you don't.\n\nEvery other student treats Mortkranken as a place one is carried into. You walk in. Unprompted. Repeatedly.\n\nIt's either bravery or a diagnosable condition, worm, and as your physician I intend to establish which.",
       ],
       choice: {
         prompt: "Well!? Answer! I haven't got all night. I have, but that's beside the point!",
@@ -79,7 +79,7 @@ export default {
     closeFriend: {
       beats: [
         "**{firstName}**: The lab. Now. Don't knock, don't announce yourself, and do not, I cannot stress this enough, laugh.",
-        "*He is sitting on the floor between two benches with a paperback in his hands, and the cover has a great deal of purple on it and a young doctor being magnificent at a dragon.*\n\n> It's a medical journal. It's *research*, it's comparative anatomy, it's...\n\n*He stops. He looks at the book. He looks at you.*\n\n> It's *The Ace Doctor Wows Minds In Another World Thesis*. It's a novel. It's about a physician who is transported to another world and immediately and correctly recognized as the finest mind of his generation, and I've read it eleven times.",
+        "*He is sitting on the floor between two benches with a paperback in his hands, and the cover has a great deal of purple on it and a young doctor being magnificent at a dragon.*\n\n> It's a medical journal. It's *research*, it's comparative anatomy, it's...\n\n*He stops. He looks at the book. He looks at you.*\n\n> It's *The Ace Doctor Wows Minds In Another World Thesis*. It's a novel. A physician transported to another world and immediately, correctly recognized as the finest mind of his generation. I've read it eleven times.",
         "> I lost everything in the fire. Four years of research, my instruments, my notes, my... everything. This was in my coat pocket and it's the only object I own that predates it.\n\n> Jiro doesn't know. Nobody knows. I've told you because you didn't laugh, and because I've discovered that not being laughed at is a thing I've been rationing since I was nineteen.",
       ],
       choice: {
@@ -115,7 +115,7 @@ export default {
       beats: [
         "**{firstName}**: I lost a patient tonight. Not one of ours. A second-year from Vagastrom whose name I'm not going to type.",
         "I want to be extremely clear that this isn't a failure of technique. I've gone through it six times. There was no intervention available to me at the time it presented and there is none available now.\n\nThat's the correct clinical assessment and I've delivered it to three people this evening in a very steady voice.",
-        "It doesn't help. It has never once helped. I've said that sentence perhaps nine times since I came to this academy and it has never helped and I keep saying it as though the tenth might.\n\nEveryone believes I want to be acknowledged. The world's greatest, and so forth. That's true and it's also the smaller half.\n\nThe larger half is that I want nobody to die. Not a single one. Ever. It isn't a research program, it's a... it isn't reasonable and I'm aware it isn't reasonable.",
+        "It doesn't help. It has never once helped. I've said that sentence perhaps nine times since I came here, and I keep saying it as though the tenth might.\n\nEveryone believes I want to be acknowledged. The world's greatest, and so forth. That's true, and it's the smaller half.\n\nThe larger half is that I want nobody to die. Not a single one. Ever. It isn't a research program and it isn't reasonable, and I'm aware it isn't reasonable.",
       ],
       choice: {
         prompt: "Don't tell me it wasn't my fault. I have that sentence. I have it in four languages.",

@@ -5,10 +5,14 @@ export default {
   // itself the intimacy: the harder the feeling, the less he types and the more
   // he just says. He reads people by scent, so he always knows before you tell
   // him, and the bite scars on his arms are what he is most afraid of you seeing.
+  //
+  // Per reference.md's "## Bond Scenes" notes he does not type in all-lowercase:
+  // sentence starts and "I" get a capital even though the spelling stays rough
+  // ("dont", "im"). The `> ` voice notes are already spoken, so they read clean.
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: is this you\n\nthe blond gigolo put your name in the thingy for me. i pressed it four times. sorry if it went four times",
+        "**{firstName}**: Is this you\n\nThe blond gigolo put your name in the thingy for me. I pressed it four times. Sorry if it went four times",
         "*A voice note arrives instead of a message. He sounds like he is walking.*\n\n> You smell the same every time. Did you know that? Most people change: angry in the morning, tired at night, scared when the moth-eaten Casanova walks past. All different smells, all day.\n\n> You've come {timesMet} times and it hasn't changed once. Nobody does that.\n\n> I don't know what it means yet. I wanted to say it out loud though.",
       ],
       choice: {
@@ -46,7 +50,7 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: i have a question. i wrote it down first so i get it right",
+        "**{firstName}**: I have a question. I wrote it down first so I get it right",
         "> You give me {favResponse} every time. Even when I got the words wrong. Even the time I said the bad thing about the moth-eaten Casanova in front of the blond gigolo.\n\n> People do a thing when I get words wrong. They go slow. Like this: they... talk... like... that. And they smile more. It's supposed to be nice and it smells like sorry.\n\n> You just carry on normal. You've never once gone slow at me.",
       ],
       choice: {
@@ -83,7 +87,7 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: come to my room. bring nothing. dont bring the blond gigolo",
+        "**{firstName}**: Come to my room. Bring nothing. Dont bring the blond gigolo",
         "*The room is bare except for a bed and, folded on the end of it, a blanket that is filthy, threadbare, and clearly ancient. He is standing between you and it, which he does not seem to have decided to do.*\n\n> That's mine. It's from before. Before the campus, before the cage, before any of it.",
         "> The blond gigolo washed it once. Two years ago. He was being kind and it took the smell out and I didn't talk to him for six days.\n\n*He moves out of the way, which takes him a visible amount of effort.*\n\n> You can touch it. Not take it. Touch it.\n\n> I've never let anyone. That's what I'm doing right now, I want you to know that's what I'm doing.",
       ],
@@ -160,7 +164,7 @@ export default {
 
     devoted: {
       beats: [
-        "**{firstName}**: i did a bad thing and im telling you before the blond gigolo does",
+        "**{firstName}**: I did a bad thing and im telling you before the blond gigolo does",
         "> There was a person near you in the courtyard and I got between. I didn't decide to. I was there and then I was there, and there wasn't any bit in the middle where I picked.\n\n> I growled. Out loud. At a student. In front of everyone.",
         "> They put me in a cage for two years for that. Not that exact thing. That sort of thing.\n\n> Suba had to come. He talked to them for an hour and now it's fine and nothing happens. But it was two years, before, for less.\n\n> And I've been sitting here since and the bad part isn't the cage. The bad part is I'd do it again and I know I would, so I've been trying to be sorry and it won't come.",
       ],
@@ -198,7 +202,7 @@ export default {
 
     soulbound: {
       beats: [
-        "**{firstName}**: ive been practicing this all week. im going to do it in the thingy because the writing is too hard for this one",
+        "**{firstName}**: Ive been practicing this all week. Im going to do it in the thingy because the writing is too hard for this one",
         "> {timesMet} times. I counted every one, even the ones in the far room where I couldn't see you.\n\n> I asked the blond gigolo how to say a thing and he asked what thing and I wouldn't tell him, and he laughed, and then he stopped laughing and helped me for two hours.",
         "> Here's what I know about me. I hold on too hard. I go in front of people without picking. I bite my own arms so I don't bite anything else. I can't read most signs and I never will properly.\n\n> I was in a cage for two years and everyone here was kind about it and nobody ever asked me what it was like. You asked. On the third walk. You just asked, like it was a normal thing to ask about.",
         "*There is a long pause on the recording, and a deep breath.*\n\n> I love you. That's the thing. That's the one I was practicing.\n\n> The blond gigolo says you say it and then you stop and let the other person have a go. So I'm going to stop now.\n\n*The recording doesn't end. He just breathes, and waits, for eleven whole seconds before it cuts out.*",

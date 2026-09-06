@@ -11,7 +11,7 @@ export default {
       ],
       choice: {
         prompt:
-          "anyway. rate my starter build out of ten. be honest, I can take it, I'm extremely well adjusted.",
+          "anyway. you don't have to look at the build or whatever. it's rough, I already know. wasn't the point.",
         options: [
           {
             key: "kind",
@@ -45,7 +45,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: ok this is going to sound like a normal question and it isn't one",
-        "you come back with {favResponse}. every time. even the times I've barely said anything back, which is most of them.\n\npeople usually give up. like, genuinely, it's not a complaint, I know what I'm like. I'm the guy with one earbud in. most people take that as the whole conversation and leave, which is completely correct of them.\n\nyou never leave. you just sit there until I take the other one out. nobody's ever waited me out before.",
+        "you come back with {favResponse}. every time. even the times I've barely said anything back, which is most of them.\n\npeople usually give up. not a complaint, I know what I'm like. I'm the guy with one earbud in, and most people take that as the whole conversation and leave. correct of them, honestly.\n\nyou never leave. you just sit there until I take the other one out. nobody's ever waited me out before.",
       ],
       choice: {
         prompt: "so what's the strategy. there's clearly a strategy.",
@@ -121,8 +121,8 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: you up? doesn't matter. reading this tomorrow is fine.",
-        "so my family called. summer was the busy period back home and I did the whole thing: every year, whole break, killed myself helping out and never once said anything about it because saying something wasn't really an option in our house.\n\nand I came here and I thought, right, that's over, I'm out. and it turns out it doesn't matter what I say. Haru's literally put a tracker on me before, to drag me out when I go quiet for too long. I complain about every shift, every tour edit, every time I have to go hunt down Towa. I still do every single one of them anyway.",
-        "I think complaining and actually refusing aren't the same thing, and I only just noticed I've never once managed the second one.\n\nmost nights I just grind some pointless game on my phone until I pass out, because it doesn't need anything back from me. except Thursdays. that's the only two hours in my life where somebody's actually there and nothing's still expected of me, and I have to physically lock a door to get them.\n\nanyway. that's the deepest thing I've ever typed and I'm putting my phone in another room now.",
+        "so my family called. summer was the busy period back home and I did the whole thing every year: whole break, killed myself helping out, never once said anything about it because saying something wasn't an option in our house.\n\nand I came here thinking, right, that's over. turns out it doesn't matter what I say. Haru's put a tracker on me before, to drag me out when I go quiet too long. I complain about every shift, every tour edit, every time I have to go hunt down Towa. still do every single one of them.",
+        "I think complaining and actually refusing aren't the same thing, and I only just noticed I've never managed the second one.\n\nmost nights I grind some pointless game until I pass out, because it doesn't need anything back. except Thursdays. that's the only two hours where somebody's there and nothing's expected of me, and I have to lock a door to get them.\n\nanyway. deepest thing I've ever typed. putting my phone in another room now.",
       ],
       choice: {
         prompt: "say something normal so I can pretend that was normal.",
@@ -160,7 +160,7 @@ export default {
       beats: [
         "**{firstName}**: don't be weird about this",
         "*It's a screenshot of a phone's home screen. There's an alarm on it, set for a time that means nothing, labeled with your name.*\n\nit's for when your last class ends. I set it about three months ago so I'd know when to stop being anywhere else.\n\nI have never once told you I was waiting. I've just always happened to be in the courtyard. every time. three months of happening to be in the courtyard.",
-        "tonight you came out late and I'd been there forty minutes, technically grinding the same event on my phone the whole time so it looked like I was just there for the game, and Haru saw me and made it a whole thing, and I realized I've been running an entire secret operation to look casual and it is genuinely more effort than just saying it.\n\nso: I wasn't happening to be there. not once. that's the message.",
+        "tonight you came out late and I'd been there forty minutes, grinding the same event so it'd look like I was there for the game. Haru saw me and made it a whole thing, and I realized I've been running an entire secret operation to look casual, which is more effort than just saying it.\n\nso: I wasn't happening to be there. not once. that's the message.",
       ],
       choice: {
         prompt: "okay. that's it. you can react.",

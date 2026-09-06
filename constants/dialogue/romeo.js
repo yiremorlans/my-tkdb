@@ -8,7 +8,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Tch. Before you say anything, no, you're not in trouble, and no, this isn't a bill. Yet.",
-        "Somebody put your name on the floor list as a mark. Standard stuff, happens to everyone who walks through here more than twice, it's not personal, it's just Sinostra.\n\nI took it off. Personally. Which cost me a conversation I did not enjoy having at nine in the morning with my face not done.\n\n{timesMet} visits and you've never once tried to get anything out of this house. Do you know how rare that is? That's a rounding error. That's ONE person.",
+        "Somebody put your name on the floor list as a mark. Standard stuff, happens to everyone who comes through more than twice. Not personal, just Sinostra.\n\nI took it off. Personally. Cost me a conversation I did not enjoy having at nine in the morning without my skincare done first.\n\n{timesMet} visits and you've never once tried to get anything out of this house. You know how rare that is? That's a rounding error. That's ONE person.",
       ],
       choice: {
         prompt: "So don't make me regret it. That's it.",
@@ -45,7 +45,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: Right. Something's been irritating me for a MONTH and I've finally worked out what it is.",
-        "You do {favResponse} with me every single time and you have NEVER ONCE ASKED ME FOR ANYTHING.\n\nEverybody wants something. That's not me being bleak, that's the actual operating model of this entire academy. People try to suck up to me and then there's an ask, and I've priced that in since I was eleven, and honestly it's fine. I like being useful, it's the only currency I've got that doesn't depreciate.\n\nYou've had a month of opportunities. Nothing. It's INSULTING.",
+        "You do {favResponse} with me every single time and you have NEVER ONCE ASKED ME FOR ANYTHING.\n\nEverybody wants something. That's not me being bleak, it's the operating model of this entire academy. People suck up, then comes the ask. I've priced that in since I was eleven and honestly it's fine, being useful is the only currency I've got that doesn't depreciate.\n\nYou've had a month of opportunities. Nothing. It's INSULTING.",
       ],
       choice: {
         prompt:
@@ -122,8 +122,8 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: Taiga lost three days again. I've been running the floor since Wednesday and I have not slept and I look INCREDIBLE, which is not the point.",
-        "Here's the bit I don't say. He doesn't remember that I do it. Every time. I cover four days, he comes back, and by lunch we're back to screaming at each other about the bar tab like nothing happened. He's not being ungrateful, he genuinely doesn't clock it.\n\nSo I've been holding this house up for two years for a man I fight with on a near-daily basis, and if he ever worked it out, he wouldn't say thank you. He'd never say thank you. He'd turn it into ammunition and bring it up every single time we argue for the rest of our lives, and I would rather run this floor blind than give him that.",
-        "I yell because if I'm the loudest person in the room nobody asks what I'm actually doing. It's worked brilliantly. It's worked for eleven years, and it works best of all on him, because he's too busy yelling back to ever notice what I'm covering.\n\nYou asked. Last Tuesday. You just said \"are you all right\" in the corridor like it was a normal question and I've been thinking about it for six days and I'm FURIOUS about it.",
+        "Here's the bit I don't say. He doesn't remember that I do it. Every time. I cover four days, he comes back, and by lunch we're screaming at each other about the bar tab like nothing happened. He's not ungrateful, he genuinely doesn't clock it.\n\nSo I've held this house up for two years for a man I fight with daily. And if he ever worked it out, he wouldn't say thank you. He'd make it ammunition. I'd rather run this floor blind than give him that.",
+        "I yell because if I'm the loudest person in the room nobody asks what I'm actually doing. Worked for eleven years. Works best on him, he's too busy yelling back to notice what I'm covering.\n\nYou asked. Last Tuesday. Just said \"are you all right\" in the corridor like it was a normal question, and I've been thinking about it for six days and I'm FURIOUS about it.",
       ],
       choice: {
         prompt:
@@ -162,7 +162,7 @@ export default {
       beats: [
         "**{firstName}**: Don't come in tomorrow. I mean it. The floor's closed and I'm dealing with something.",
         "Somebody had a go at you in the west block. Verbally. In front of about nine people.\n\nI've heard about it from three separate sources and I've spent the evening finding out exactly who he owes, what to, and when it's due, and it turns out he owes a REMARKABLE amount and it's due whenever I say it is.",
-        "I want to be honest about what this is, because you'll hear it as protecting you and it's uglier than that.\n\nThis is me being the most frightening thing in the building on purpose, at somebody, because he made you look at the floor. That's the whole of it. There's no noble version.\n\nYou're mine. Not like... I'm not TAIGA about it. I mean you're on my list, and everyone on my list is protected, and nobody has ever got onto that list without paying and you never paid a thing.",
+        "I want to be honest about what this is, because you'll hear it as protecting you and it's uglier than that.\n\nThis is me being the most frightening thing in the building on purpose, at somebody, because he made you look at the floor. That's the whole of it. There's no noble version.\n\nYou're mine. Not like... I'm not TAIGA about it. You're on my list. Everyone on my list is protected, nobody's ever got on it without paying, and you never paid a thing.",
       ],
       choice: {
         prompt:
@@ -201,7 +201,7 @@ export default {
       beats: [
         "**{firstName}**: Balcony. Now. And before you get there, I've had eleven weeks to do this properly and I've decided to do it badly instead, so brace.",
         "*The ledger is open on the desk at page one. He's turned it round already.*\n\n*There is a second column, and there's one name in it, and it says: \"not a debt. never bill.\"*\n\n> March. I wrote that in March and I've looked at it about four hundred times.",
-        "> Everything's a price. That's not a philosophy, it's the only language I was taught. My family bought their way out of things and into things and I learned exactly one skill, which is knowing what everybody costs.\n\n> I can price anyone in this academy in about four seconds. Taiga. Jo. The captain of Frostheim, who thinks he's above it, and isn't.\n\n> {timesMet} visits and I have NEVER been able to price you. Not once. It's been driving me out of my MIND for a year.",
+        "> Everything's a price. That's not a philosophy, it's the only language I was taught. My family bought their way out of things and into things, and I learned exactly one skill: knowing what everybody costs.\n\n> I can price anyone in this academy in four seconds. Taiga. Jo. The captain of Frostheim, who thinks he's above it and isn't.\n\n> {timesMet} visits and I have NEVER been able to price you. Not once. It's been driving me out of my MIND for a year.",
         "> So here's the badly done bit.\n\n> I love you. There's no invoice, there's no favor attached, and there's nothing you owe me, and if you ever try to pay me back for anything I have EVER done for you I will genuinely never speak to you again.\n\n> That's it. That's the whole thing. I've spent my entire life making sure everything had a number on it and there's one thing that doesn't and it's you and I've just told you, out loud, on a balcony, like a MANIAC.",
       ],
       choice: {

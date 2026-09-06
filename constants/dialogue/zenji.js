@@ -14,8 +14,8 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "*Haku is holding the phone at arm's length, typing with the patience of someone who has done this more times than he'll admit. Zenji is dictating from somewhere just out of frame, delighted with himself, as always.*\n\n**{firstName}**: My dear! Forgive the intrusion, and forgive Haku, who has been talked into rather a lot since he agreed to manage my little video empire, and finds himself apparently my secretary too.\n\nHe's one of vanishingly few people who can see me properly at all, bless the Kusanagi blood for it, which rather makes him my only candidate for this particular favor.\n\nBut between the two of us, I have discovered something rather wonderful: a message, once it has passed through a capable pair of hands, delivers my words at full volume regardless of how thin the speaker.\n\nDo you know what that means? It means that here, of all places, I am not a rumor. I am a correspondent!",
-        "Zenji Kotodama, inspired man of the quill, at your service and in your pocket. What a century.\n\nI have watched you cross the Hotarubi courtyard {timesMet} times and each time you have looked toward the music room. Not through it, mind. *Toward* it. There is a world of difference and I have had a year to learn it.\n\nSo I thought: there is a person who might not mind hearing from a draft.",
+        "*Haku holds the phone at arm's length, typing with the patience of a man who has done this too many times. Zenji dictates from just out of frame, delighted with himself.*\n\n**{firstName}**: My dear! Forgive the intrusion, and forgive Haku, who agreed to manage my little video empire and finds himself my secretary too.\n\nHe is one of vanishingly few who can see me at all, bless the Kusanagi blood for it. But we have discovered something swanky between us: a message passed through a capable pair of hands carries my words at full volume, however thin the speaker.\n\nDo you know what that makes me, here of all places? Not a rumor. A correspondent!",
+        "Zenji Kotodama, inspired man of the quill, at your service and in your pocket. What a century.\n\n{timesMet} times I have watched you cross the Hotarubi courtyard, and each time you looked toward the music room. Not through it. *Toward* it. I have had a year to learn the difference.\n\nSo I thought: here is a person who might not mind hearing from a draft.",
       ],
       choice: {
         prompt: "Well? Speak, and be as unkind as you like; I am immune to most things, being already dead.",
@@ -49,7 +49,7 @@ export default {
     friend: {
       beats: [
         "*Haku, mid-type, mutters that this is the least dignified thing he's ever transcribed, and keeps transcribing anyway.*\n\n**{firstName}**: A confession, my dear, and it does me no credit whatsoever.",
-        "I compliment everyone. It is quite genuine: this academy is stuffed to the rafters with talent and somebody ought to say so, but it is also a splendid way of never being asked a question back.\n\nYou have never let it work. Every time I have handed you a flourish you have come back with {favResponse}, quite unimpressed, as though I were a person rather than a performance.\n\nIt is *appalling*. It is the best thing that has happened to me in eighteen months.",
+        "I compliment everyone. It is genuine (this academy is stuffed with talent, somebody ought to say so) but it is also a splendid way of never being asked a question back.\n\nYou have never let it work. Every flourish I hand you, back it comes with {favResponse}, unimpressed, as though I were a person and not a performance.\n\nIt is *appalling*. It is the best thing to happen to me in eighteen months.",
       ],
       choice: {
         prompt: "So: what shall we do about it? I am open to terms.",
@@ -84,7 +84,7 @@ export default {
       beats: [
         "**{firstName}**: Come to the music room after dark, my dear. Bring nothing. I have something that requires an audience of precisely one.",
         "*The biwa is on its stand and there is nobody visible in the room at all. Then the instrument shifts (a fraction, then properly) and begins to play.*\n\n> Do you see? Not the sound. *Me.* When I play I am solid enough for the strings, and when I am solid enough for the strings I am usually solid enough to be seen.",
-        "> It costs a great deal and it does not last, so I ration it viciously. Twice a year, perhaps. Never with company. The whole point of the ration is that nobody is left disappointed when it runs out.\n\n*He is there, then, for a few seconds: side ponytail, round glasses, an expression of tremendous and unbearable hope.*\n\n> I have spent it on you. All of this year's, at once, so that you would have seen my face at least the one time.",
+        "> It costs a great deal and does not last, so I ration it. Twice a year, perhaps. Never with company, so that nobody is left disappointed when it runs out.\n\n*He is there, then, for a few seconds: side ponytail, round glasses, an expression of unbearable hope.*\n\n> I have spent all of this year's at once. On you. So that you would have seen my face the one time.",
       ],
       choice: {
         prompt: "Well? Say it quickly, my dear. I am going thin at the edges already.",
@@ -93,7 +93,7 @@ export default {
             key: "kind",
             label: "Tell him what he looks like",
             style: 3,
-            close: "*You describe him back to him (the ponytail, the glasses, the ink on his fingers), and the playing falters badly in the middle of a phrase.*\n\n> ...Thank you,\n\n*he says, from nowhere in particular, the room empty again.*\n\n> I had begun to forget. One does, you know. One forgets one's own face first.",
+            close: "*You describe him back to him: the ponytail, the glasses, the ink on his fingers. The playing falters in the middle of a phrase.*\n\n> ...Thank you. I had begun to forget. One forgets one's own face first, you know.\n\n*The room is empty again.*",
           },
           {
             key: "playful",
@@ -105,7 +105,7 @@ export default {
             key: "bold",
             label: "Reach out and touch him",
             style: 4,
-            close: "*Your hand goes through the first time. The second time, while the strings are still sounding, it doesn't.*\n\n*It is cold and it is barely there and it is unmistakably a hand, and it closes round yours with a desperation that has nothing theatrical in it at all.*\n\n*The music stops. So does he. But he holds on for the whole three seconds he has left, and neither of you says a word.*",
+            close: "*Your hand goes through the first time. The second time, with the strings still sounding, it doesn't.*\n\n*Cold, barely there, unmistakably a hand, and it closes round yours with nothing theatrical in it at all.*\n\n*The music stops. So does he. He holds on for the whole three seconds he has left, and neither of you says a word.*",
           },
         ],
       },
@@ -118,8 +118,8 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: I am going to be plain, which you will find alarming, as I am never plain about anything.",
-        "I have a brother. He is in Mortkranken with a scalpel in his hand and a face like a closed door, and he was eleven the last time he saw me alive.\n\nJiro Kirisaki. Yes. That one. I was Taro then. I have not corrected him, because he has built something out of being the one who was left and I have not the faintest idea how to take that from him gently.\n\nThere is an old story about a fisherman with my name who wandered off somewhere he oughtn't and came home to find the years had gone on without him. I used to read it to Jiro at bedtime. I never once thought I would end up living inside it.",
-        "Everyone believes I bear this place no grudge. That is quite true and quite complete. I do not.\n\nBut my dear, I have never once said out loud that I mind. Not being dead. Being *unfinished*. Four hundred pages and no ending, and a boy downstairs who thinks I stopped loving him because I stopped arriving.\n\nThere. That is the whole of it. I have never written it down, and I write everything down.",
+        "I have a brother. He is in Mortkranken with a scalpel in his hand and a face like a closed door, and he was eleven the last time he saw me alive.\n\nJiro Kirisaki. Yes. That one. I was Taro then. I have not corrected him. He has built something out of being the one who was left, and I do not know how to take that from him gently.\n\nThere is an old story about a fisherman with my name who wandered somewhere he oughtn't and came home to find the years gone on without him. I read it to Jiro at bedtime. I never thought I would end up living inside it.",
+        "Everyone believes I bear this place no grudge. That is true and complete. I do not.\n\nBut I have never once said out loud that I mind. Not being dead. Being *unfinished*. Four hundred pages and no ending, and a boy downstairs who thinks I stopped loving him because I stopped arriving.\n\nThere. I have never written that down, and I write everything down.",
       ],
       choice: {
         prompt: "Do not comfort me, my dear. Anything but that. Comfort would finish me off a second time.",
@@ -128,7 +128,7 @@ export default {
             key: "kind",
             label: "Say you'll listen instead",
             style: 3,
-            close: "...Listen.\n\n*A long pause.*\n\nYes. Yes, all right. That I can bear.\n\n*He talks until four in the morning about a boy who used to follow him round a garden, and not once does he make a metaphor out of any of it, which from Zenji Kotodama is the most naked thing there is.*",
+            close: "...Listen.\n\n*A long pause.*\n\nYes. All right. That I can bear.\n\n*He talks until four in the morning about a boy who used to follow him round a garden, and never once makes a metaphor of any of it. From Zenji Kotodama, that is the most naked thing there is.*",
           },
           {
             key: "playful",
@@ -153,8 +153,8 @@ export default {
     devoted: {
       beats: [
         "**{firstName}**: Do not go to the east wing tonight. I have never given you an instruction before and I am giving you one now.",
-        "There is something in that corridor which is not a rumor and not a draft, and I have spent the evening standing in front of it being enormously ineffective.\n\nI cannot lift a door. I cannot raise an alarm. I could not carry you three feet if the building were coming down. This is the arithmetic of what I am and I have made my peace with all of it, every day, for a year.",
-        "And then it turned toward the stairs you use, my dear, and I discovered I have made peace with nothing whatsoever.\n\nI stood in a doorway I cannot close, in front of a thing that cannot see me, all night, because it was the only thing I had. Do you understand? It was the only thing I had and I gave all of it.",
+        "There is something in that corridor which is not a rumor and not a draft, and I have spent the evening standing in front of it being enormously ineffective.\n\nI cannot lift a door. I cannot raise an alarm. I could not carry you three feet if the building came down. That is the arithmetic of what I am, and I have made my peace with it every day for a year.",
+        "And then it turned toward the stairs you use, and I discovered I have made peace with nothing whatsoever.\n\nI stood in a doorway I cannot close, in front of a thing that cannot see me, all night, because it was the only thing I had to give. So I gave all of it.",
       ],
       choice: {
         prompt: "Now scold me. I should very much like to be scolded by someone who noticed.",
@@ -175,7 +175,7 @@ export default {
             key: "bold",
             label: "Go to the music room instead",
             style: 4,
-            close: "*You go. He is already playing when you arrive, which he cannot afford and does anyway, and he is visible and going thinner by the second.*\n\n*He holds out one cold, barely-there hand.*\n\n> I know,\n\n*he says, before you can object.*\n\n> I know precisely what it costs. Let me have three seconds of standing where you can see me, and then scold me for the whole of tomorrow.",
+            close: "*You go. He is already playing when you arrive, which he cannot afford and does anyway, visible and going thinner by the second.*\n\n*He holds out one cold, barely-there hand.*\n\n> I know what it costs. Let me have three seconds standing where you can see me, and then scold me the whole of tomorrow.",
           },
         ],
       },
@@ -189,8 +189,8 @@ export default {
       beats: [
         "*Haku doesn't interrupt this one. He reads it through once before he sends it, mutters something that might be* \"about time,\" *and doesn't touch the phone again until he's told to.*\n\n**{firstName}**: My dear. I am going to write this without a single flourish, which for me is rather like writing it without a hand.",
         "{timesMet} times you have come to a room that most people walk past. You have never once asked what I was, or how I died, or whether it hurt. You simply arrived and talked to me as though I were still a going concern.",
-        "I have thought a great deal about what I am permitted to want. A dead man ought to want very little. It is only decent: one is a draft, one does not make demands of the living.\n\nI have kept to that. I have complimented everybody and wanted nothing and been very charming about it, and it has been the loneliest year of a life that already ended.",
-        "So here is the indecent thing, and then I shall not say it again unless you ask me to.\n\nI love you. Not fondly. Not poetically. I love you in the ordinary, greedy, entirely alive way that I have no business loving anyone in, and I have been dressing it up as verse for months because verse is permitted and this is not.\n\nThere. No flourish. It is the plainest sentence I have ever written and I have never been so frightened of a full stop.",
+        "I have thought a great deal about what I am permitted to want. A dead man ought to want very little; it is only decent. One is a draft. One does not make demands of the living.\n\nI have kept to that. Complimented everybody, wanted nothing, been very charming about it. It has been the loneliest year of a life that had already ended.",
+        "So here is the indecent thing, and I shall not say it again unless you ask.\n\nI love you. Not fondly. Not poetically. I love you in the ordinary, greedy, entirely alive way I have no business loving anyone, and I have been dressing it as verse for months because verse is permitted and this is not.\n\nThere. No flourish. The plainest sentence I have ever written, and I have never been so frightened of a full stop.",
       ],
       choice: {
         prompt: "Answer as you like, my dear. I have already had the impossible part: being asked a question back.",
@@ -199,13 +199,13 @@ export default {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "*The biwa starts before you have finished, he is spending it, all of it, everything he had put by.*\n\n*He is there in the doorway of the music room, whole and solid and crying without the least dignity about it, and he takes your face in both cold hands.*\n\n> I had an ending after all,\n\n*he says.*\n\n> Four hundred pages and it was never going to be on any of them.",
+            close: "*The biwa starts before you have finished. He is spending it, all of it, everything he had put by.*\n\n*He is in the doorway of the music room, whole and solid and crying without the least dignity, and he takes your face in both cold hands.*\n\n> I had an ending after all. Four hundred pages, and it was never going to be on any of them.",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
-            close: "But of course. My dear, I have all of it: it is the one thing my condition has made me rich in.\n\nAnd I want you to hear this properly, because I shall not repeat it: nothing is conditional. Not the music room, not the tea I cannot drink, not the four hundred pages. I was your friend before I was anything else and I intend to go on being it whatever you decide.\n\nTake a year. Take ten. I shall be exactly here, being a draft, and delighted to see you.\n\nAnd if the answer is never, then I shall simply wait for a kinder arrangement. I hear the next life is supposed to go easier on men named Taro. I intend to find out. I intend to find you.",
+            close: "But of course. I have all of it. Time is the one thing my condition has made me rich in.\n\nHear this properly, because I shall not repeat it: nothing is conditional. Not the music room, not the tea I cannot drink, not the four hundred pages. I was your friend before I was anything else, and I intend to go on being it whatever you decide.\n\nTake a year. Take ten. I shall be exactly here, being a draft, and delighted to see you.\n\nAnd if the answer is never, I shall wait for a kinder arrangement. The next life is meant to go easier on men named Taro. I intend to find out. I intend to find you.",
           },
         ],
       },

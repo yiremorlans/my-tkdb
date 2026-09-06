@@ -20,38 +20,42 @@ export default {
         "There's a shelf under the counter with a few things set aside on it. Nothing dramatic. I just noticed you actually read the labels instead of grabbing and going, and I don't get many people who do that.",
       ],
       choice: {
-        prompt: "Do come by and collect it. I'd rather it not just gather dust.",
+        prompt:
+          "Do come by and collect it. I'd rather it not just gather dust.",
         options: [
           {
             key: "kind",
             label: "Say you'll come by soon",
             style: 3,
-            close: "Oh, good. Good.\n\nI'll tidy up a little. Not that it needs tidying.",
+            close:
+              "Oh, good. Good.\n\nI'll tidy up a little. Not that it needs tidying.",
           },
           {
             key: "playful",
             label: "Ask what's on the shelf",
             style: 1,
-            close: "That would rather spoil it, wouldn't it.\n\n*He almost smiles.* Come and see.",
+            close:
+              "That would rather spoil it, wouldn't it.\n\n*He almost smiles.* Come and see.",
           },
           {
             key: "bold",
             label: "Ask why you got noticed",
             style: 4,
-            close: "Would you like the honest answer? You're the only person who's ever asked to meet the cat.\n\nShe was flattered. I don't believe cats are meant to be flattered, but there it is.",
+            close:
+              "Would you like the honest answer? You're the only person who's ever asked to meet the cat.\n\nShe was flattered. I don't believe cats are meant to be flattered, but there it is.",
           },
         ],
       },
       keepsake: {
         emoji: "🏷️",
-        line: "A shelf under the counter, kept for someone who reads the labels.",
+        line: "A few things on the shelf under the counter, kept for someone who reads the labels.",
       },
     },
 
     friend: {
       beats: [
         "**{firstName}**: May I say something, and will you let an old habit of plain speaking through?",
-        "You've got {favResponse} for me every time you come in, and you talk to me like I'm a person and not part of the shelving. I spent a long while being called \"Professor\" by people who mostly wanted something from me. This is a different thing entirely, and I don't think you know you're doing anything unusual by it.",
+        "You've got {favResponse} for me every time you come in, and you talk to me like a person, not part of the shelving. I spent a long while being called \"Professor\" by people who mostly wanted something. This is a different thing entirely, and I don't think you know you're doing anything unusual by it.",
       ],
       choice: {
         prompt: "There. Said. You needn't answer, I shan't be offended.",
@@ -60,19 +64,22 @@ export default {
             key: "kind",
             label: "Say he's worth talking to",
             style: 3,
-            close: "Oh, now.\n\n*A rather long silence.*\n\nThank you. I shall be turning that over for a good while, which is more than I've gotten out of most conversations lately.",
+            close:
+              "Oh, now.\n\n*A rather long silence.*\n\nThank you. I shall be turning that over for a good while, which is more than I've gotten out of most conversations lately.",
           },
           {
             key: "playful",
             label: "Say the shelf listens well",
             style: 1,
-            close: "It does! Excellent listener. Never once interrupts.\n\n...That was funnier than it had any right to be. You'll have to stop doing that, I'm out of practice laughing in an empty shop.",
+            close:
+              "It does! Excellent listener. Never once interrupts.\n\n...That was funnier than it had any right to be. You'll have to stop doing that, I'm out of practice laughing in an empty shop.",
           },
           {
             key: "bold",
             label: "Ask if he misses the title",
             style: 4,
-            close: "Sometimes.\n\n*He doesn't dress it up at all, which he usually would.* Not the standing at the front of a room. The being needed for something particular. I've made my peace with it. Mostly.",
+            close:
+              "Sometimes.\n\n*He doesn't dress it up at all, which he usually would.* Not the standing at the front of a room. The being needed for something particular. I've made my peace with it. Mostly.",
           },
         ],
       },
@@ -89,25 +96,29 @@ export default {
         "> That one's Clementia's. That one's Ultio's. I advised them both, in their time, and neither house exists anymore, so there's nobody left who asks after them.\n\n> You've been coming around a good while now. I decided you were somebody who might actually want to see it, rather than just be polite about it.",
       ],
       choice: {
-        prompt: "Say if I've misjudged that. I've a thick skin and I'd rather know.",
+        prompt:
+          "Say if I've misjudged that. I've a thick skin and I'd rather know.",
         options: [
           {
             key: "kind",
             label: "Ask to hear about them",
             style: 3,
-            close: "*He turns the pins over in his hand for a moment.*\n\n> All right.\n\n*he says, to the drawer as much as to you.*\n\n> All right, then.\n\n*He doesn't put them away that night.*",
+            close:
+              "*He turns the pins over in his hand for a moment.*\n\n> All right.\n\n*he says, to the drawer as much as to you.*\n\n> All right, then.\n\n*He doesn't put them away that night.*",
           },
           {
             key: "playful",
             label: "Ask which house was worse",
             style: 1,
-            close: "> Ultio, without question. Clementia at least pretended to listen to me.\n\n*He says it fondly.*\n\n> I've missed being exasperated by a whole house of people. It's a very particular kind of tired.",
+            close:
+              "> Ultio, without question. Clementia at least pretended to listen to me.\n\n*He says it fondly.*\n\n> I've missed being exasperated by a whole house of people. It's a very particular kind of tired.",
           },
           {
             key: "bold",
             label: "Ask if that's a lonely thing",
             style: 4,
-            close: "*He goes quiet for a moment, turning the photograph rather than looking up.*\n\n> Yes.\n\n*he says simply.*\n\n> I hadn't said that plainly to anyone before. I'm glad it's said now.",
+            close:
+              "*He goes quiet for a moment, turning the photograph rather than looking up.*\n\n> Yes.\n\n*he says simply.*\n\n> I hadn't said that plainly to anyone before. I'm glad it's said now.",
           },
         ],
       },
@@ -130,19 +141,22 @@ export default {
             key: "kind",
             label: "Say it sounds like both",
             style: 3,
-            close: "Both.\n\n*He tests the word.* Yes. I think that's probably the honest shape of it. Thank you for not making me choose.",
+            close:
+              "Both.\n\n*He tests the word.* Yes. I think that's probably the honest shape of it. Thank you for not making me choose.",
           },
           {
             key: "playful",
             label: "Say the cat has good taste",
             style: 1,
-            close: "She'd agree with you, and never let me hear the end of it.\n\n*A real, surprised laugh.* I needed that more than I expected.",
+            close:
+              "She'd agree with you, and never let me hear the end of it.\n\n*A real, surprised laugh.* I needed that more than I expected.",
           },
           {
             key: "bold",
             label: "Ask if he misses Professor",
             style: 4,
-            close: "*A longer pause than the question wants.*\n\nSome days. Less than I thought I would, and that frightens me a little, if I'm honest.",
+            close:
+              "*A longer pause than the question wants.*\n\nSome days. Less than I thought I would, and that frightens me a little, if I'm honest.",
           },
         ],
       },
@@ -165,19 +179,22 @@ export default {
             key: "kind",
             label: "Fuss anyway",
             style: 3,
-            close: "> I said not to.\n\n*He lets you, though. He doesn't argue about a single thing.*\n\n> It's nice.\n\n*he admits eventually.*\n\n> Being looked after. I'd nearly forgotten what that felt like from this side of it.",
+            close:
+              "> I said not to.\n\n*He lets you, though. He doesn't argue about a single thing.*\n\n> It's nice.\n\n*he admits eventually.*\n\n> Being looked after. I'd nearly forgotten what that felt like from this side of it.",
           },
           {
             key: "playful",
             label: "Ask if he did the stern voice",
             style: 1,
-            close: "> I did a tremendous voice. Advising a house teaches you exactly one, but it's a good one.\n\n*He looks unbearably pleased with himself, and there's been nobody to tell until now.*",
+            close:
+              "> I did a tremendous voice. Advising a house teaches you exactly one, but it's a good one.\n\n*He looks unbearably pleased with himself, and there's been nobody to tell until now.*",
           },
           {
             key: "bold",
             label: "Tell him not to do it again",
             style: 4,
-            close: "> No.\n\n*Flat, with none of the usual fluster in it.*\n\n> Anything else you ask of me, I'll do. Not that one.\n\n*Then, gentler:*\n\n> Come sit down. I've put the kettle on.",
+            close:
+              "> No.\n\n*Flat, with none of the usual fluster in it.*\n\n> Anything else you ask of me, I'll do. Not that one.\n\n*Then, gentler:*\n\n> Come sit down. I've put the kettle on.",
           },
         ],
       },
@@ -195,19 +212,22 @@ export default {
         "So here it is, and then I'll put the kettle on and let you think.\n\nI love you. I ran two houses into the ground, or watched them go, at any rate, and ended up answering to a cat, and I did not expect any part of that story to lead here. I'm glad it did. There's no expectation in this. I'd simply rather you knew than let another year pass with it unsaid.",
       ],
       choice: {
-        prompt: "Take whatever time you need. The kettle's on and the shop isn't going anywhere, and neither am I.",
+        prompt:
+          "Take whatever time you need. The kettle's on and the shop isn't going anywhere, and neither am I.",
         options: [
           {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "*He doesn't reply right away, which isn't like him.*\n\n*When you get to the shop the door's unlocked, and he's standing behind the counter with the page still in his hand, clearly having stood there a while.*\n\n> Say it here.\n\n*he says.*\n\n> Where I can see you say it.\n\n*Afterward he holds both your hands across the counter and doesn't manage another word for quite some time.*",
+            close:
+              "*He doesn't reply right away, which isn't like him.*\n\n*When you get to the shop the door's unlocked, and he's standing behind the counter with the page still in his hand, clearly having stood there a while.*\n\n> Say it here.\n\n*he says.*\n\n> Where I can see you say it.\n\n*Afterward he holds both your hands across the counter and doesn't manage another word for quite some time.*",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
-            close: "Of course. Of course, take it. I'd think rather less of you if you didn't.\n\nAnd I want to be clear, because I know how these things can curdle: nothing changes. The shelf stays. There'll be something set aside on Thursday same as every Thursday, and I'll be glad to see you regardless. None of this was ever a bid for anything back.",
+            close:
+              "Of course. Of course, take it. I'd think rather less of you if you didn't.\n\nAnd I want to be clear, because I know how these things can curdle: nothing changes. The shelf stays. There'll be something set aside on Thursday same as every Thursday, and I'll be glad to see you regardless. None of this was ever a bid for anything back.",
           },
         ],
       },
@@ -266,14 +286,14 @@ export default {
       '"Oh! H-hi there. Need a hand with something?"',
       '"Careful, that shelf\'s got opinions of its own."',
       '"New around here? It\'s a strange school. It grows on you."',
-      '"My manager\'s a cat, if you\'re wondering about the sign."',
+      "\"My manager's a cat, if you're wondering about the sign.\"",
       '"Anything you need carried, just say the word."',
     ],
     known: [
       '"Oh, you\'re back. Good, good. I set something aside, hang on."',
       "\"Don't carry that yourself, I've got two good arms doing nothing.\"",
       '"You always say thank you. Not everyone does, you know."',
-      "\"Eating properly? Ah, sorry, that was forward of me.\"",
+      '"Eating properly? Ah, sorry, that was forward of me."',
       '"Take it. No charge. I\'d only have eaten it myself."',
     ],
     warm: [
@@ -284,7 +304,7 @@ export default {
       '"Good to see a friendly face. Been a long day."',
     ],
     spark: [
-      "\"You look... ah. Very nice. That's what I meant to say.\"",
+      '"You look... ah. Very nice. That\'s what I meant to say."',
       '"I\'m too old for this kind of nervous, and here we are."',
       "\"Let me walk you back. It's dark. That's the only reason.\"",
       '"I\'ve been meaning to tell you something. Give me a moment to find my nerve."',
@@ -340,11 +360,7 @@ export default {
   },
   responses: {
     kind: {
-      new: [
-        "Trust his wisdom",
-        "Thank him warmly",
-        "Tell him it's no trouble",
-      ],
+      new: ["Trust his wisdom", "Thank him warmly", "Tell him it's no trouble"],
       spark: [
         "Tell him it came out fine",
         "Take his arm",
@@ -403,11 +419,7 @@ export default {
         "Promise to look after him",
         "Say you'd stay too",
       ],
-      bound: [
-        "Say it first",
-        "Tell him to stop pretending",
-        "Pull him in",
-      ],
+      bound: ["Say it first", "Tell him to stop pretending", "Pull him in"],
     },
     neutral: {
       new: ["Be quiet", "Let him fuss", "Wait while he finishes"],

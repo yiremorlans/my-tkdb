@@ -3,6 +3,10 @@ export default {
   // these are requests; the warmth is in what he permits and what he admits to
   // having noticed. The arc is the crown coming off by degrees — bold is the
   // register that reaches him, so every choice rewards refusing to be dismissed.
+  //
+  // Texting voice, per reference.md's "## Bond Scenes" notes: Jin is not afraid
+  // of curse words. They stay rare enough to land, and surface when he is riled
+  // or raw rather than in the cold register.
   bondScenes: {
     acquaintance: {
       beats: [
@@ -62,7 +66,7 @@ export default {
             key: "bold",
             label: "Tell him guts, obviously",
             style: 4,
-            close: "Obviously, *he repeats, and there's something in it that's too close to a laugh.*\n\nYou know what happens to people who talk to me like that? Nothing. Not a damn thing. That's the whole problem with this place.",
+            close: "Obviously, *he repeats, and the word comes out half a laugh.*\n\nYou know how many people in this house talk to me like that? One. The rest rehearse a soft voice and think I can't hear the seams. That's what's wrong with this place. You're the only part of it I haven't got memorized.",
           },
         ],
       },
@@ -111,7 +115,7 @@ export default {
       beats: [
         "*It comes through at an hour when even Frostheim is dark.*\n\n**{firstName}**: You don't repeat this. I'm not asking.",
         "Everyone here calls me king. Not one of them picked me. I got handed a room, a title, and the little performance everyone runs before they knock: a figurehead with a good view. I've been holding the whole thing up by myself since before you showed up.\n\nThere was someone here once who didn't run it. He's not here now. I'm not getting into it.",
-        "I worked out a long time ago that nothing good sticks around. That's not self-pity, it's just the math.\n\nThen you kept turning up, and I caught myself running the math again, hoping it'd come out different. That's it. That's the whole thing. I hate every word of it.",
+        "I worked out a long time ago that nothing good sticks around. That's not self-pity, it's just the math.\n\nThen you kept turning up, and I caught myself running the math again, hoping it'd come out different. That's it. That's the whole thing. I hate every fucking word of it.",
       ],
       choice: {
         prompt: "Now tell me I'm being pathetic so we can both move on.",
@@ -144,7 +148,7 @@ export default {
 
     devoted: {
       beats: [
-        "**{firstName}**: Where the hell are you.\n\nThat's not a question you get to ignore. Where. Exactly.",
+        "**{firstName}**: Where the fuck are you.\n\nThat's not a question you get to ignore. Where. Exactly.",
         "*You send it. Nothing comes back for four minutes.*\n\nGood, *he says finally.* I heard what went down in the east corridor tonight and I couldn't account for you. Turns out I'm not someone who handles that well.",
         "It's been drilled into me my whole life that a captain doesn't run down a hallway.\n\nI ran.\n\nYour place is at my back. I've said that to you before and you took it for possessiveness. It was. It was also the only way I had of saying I want to know where you are.",
       ],
@@ -181,7 +185,7 @@ export default {
       beats: [
         "**{firstName}**: I'm going to say something and I'd rather do it where I can't watch you read it. Yeah. That's cowardice. Doing it anyway.",
         "I counted. {timesMet} times you've come to me, and not once did I send for you.\n\nI want that on the record. My whole life people have been delivered to me. You just showed up.",
-        "I was raised to make a good match. I can name you the families, the terms, the damn seating charts. There's no version of that where someone like you turns up at all.\n\nAnd I don't care. Haven't for a while. I've just been managing it carefully enough not to notice.",
+        "I was raised to make a good match. I can name you the families, the terms, the fucking seating charts. There's no version of that where someone like you turns up at all.\n\nAnd I don't care. Haven't for a while. I've just been managing it carefully enough not to notice.",
         "So.\n\n*The typing indicator holds for a long while.*\n\nI love you. I know exactly what it costs me to put that in writing. I wrote it anyway. No title in front of it, no order behind it.\n\nDo what you want with it. You always do. It's the single most infuriating thing about you and I wouldn't take it back.",
       ],
       choice: {
