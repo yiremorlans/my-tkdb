@@ -327,11 +327,16 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
       // Ack first: the avatars travel as attachments, which Discord only
       // accepts as multipart — so the real message goes out via sendFollowup.
-      res.send({ type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE });
+      // Ephemeral: the result is private to the runner, with a Share button
+      // that reposts it to the channel (the `affinity:share` component below).
+      res.send({
+        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+        data: { flags: 64 }, // EPHEMERAL
+      });
 
       (async () => {
         try {
-          const messageData = await buildAffinityMessage(userId, characterIds);
+          const messageData = await buildAffinityMessage(userId, characterIds, { shareButton: true });
           await sendFollowup(req.body.token, messageData, 15000, true);
 
           maybeSurfaceBondScene(userId, req.body.token);
@@ -729,6 +734,41 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           try {
             await sendFollowup(req.body.token, {
               content: `Error: ${err.message}`,
+              flags: 64,
+            });
+          } catch (followupErr) {
+            console.error('Failed to send error followup:', followupErr);
+          }
+        }
+      })();
+      return;
+    }
+
+    if (action === 'affinity' && rest[0] === 'share') {
+      // The Share button under an ephemeral /affinity result. Only the runner
+      // ever sees that message, so `userId` here is always its owner. The
+      // click carries only the custom_id, so the public copy is rebuilt from
+      // the resolved character ids packed into it — affinity is re-read, so
+      // the shared numbers are current as of the click. Two steps: grey out
+      // the button on the private message so it can't be shared twice, then
+      // post the status again as a public (unflagged) followup.
+      const characterIds = (rest[1] || '').split('.').filter(Boolean);
+
+      res.send({
+        type: InteractionResponseType.UPDATE_MESSAGE,
+        data: { components: disabledComponents(req.body.message?.components) },
+      });
+
+      (async () => {
+        try {
+          const messageData = await buildAffinityMessage(userId, characterIds, { sharedBy: userId });
+          await sendFollowup(req.body.token, messageData);
+          trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
+        } catch (err) {
+          console.error('Error in affinity:share:', err);
+          try {
+            await sendFollowup(req.body.token, {
+              content: 'Something went wrong sharing that. Try again?',
               flags: 64,
             });
           } catch (followupErr) {

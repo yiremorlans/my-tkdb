@@ -389,7 +389,7 @@ export default {
       spark: [
         "Tell him he's allowed",
         "Let him be selfish",
-        "Take his hand at the gate",
+        "Stay till he straightens up",
       ],
       close: [
         "Help him set down his burden",
@@ -437,10 +437,10 @@ export default {
       ],
       close: [
         "Push past his restraint",
-        "Tell him to stop carrying it",
+        "Take his hand at the gate",
         "Ask for him, not the house",
       ],
-      bound: ["Take him to bed", "Tell him not to be noble", "Say it first"],
+      bound: ["Take him to bed", "Tell him to stop managing you", "Say it first"],
     },
     neutral: {
       new: [
@@ -454,7 +454,7 @@ export default {
         "Let the evening be quiet",
       ],
       close: [
-        "Sit with him in care",
+        "Keep him quiet company",
         "Let him lean, wordlessly",
         "Share the quiet hour",
       ],
@@ -473,28 +473,28 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      "**{name}** bows before he's finished turning. {user} got the name right, and he's flustered about it.",
-      '"You... you knew?" **{name}** asks {user}, then apologizes for asking.',
-      "{user} says the name, and **{name}** sets down the armful of gardening tools he was carrying across campus.",
+      '"You knew my name?" **{name}** asks {user}, then apologizes for the surprise in his voice.',
+      "**{name}** bows before he's finished turning toward {user}. Automatic, and sincere.",
+      '{user} says it first, and **{name}** goes a little pink. "Forgive me. I didn\'t expect that."',
     ],
     warm: [
-      '"You\'re just in time," **{name}** tells {user}, though nothing in particular is happening.',
-      "{user} calls out, and **{name}**'s composure goes soft before he can manage it.",
-      "**{name}** had been hoping. He'd never say so, but {user} arriving makes it obvious.",
+      '"You\'re just in time," **{name}** tells {user}, though nothing is happening.',
+      "{user} calls out, and **{name}**'s composure goes soft before he can catch it.",
+      "**{name}** had been hoping it was {user}. He'd never say so.",
     ],
     spark: [
-      "**{name}** hears his name in {user}'s voice and forgets, entirely, what he was in the middle of.",
-      '"Sorry, that was a strange face to make." **{name}** says it to {user}, still making it.',
-      "{user} got there first, and **{name}** is quietly undone about it.",
+      "**{name}** hears his name in {user}'s voice and loses his place.",
+      '"Sorry. Strange face to make." **{name}** says it to {user}, still making it.',
+      "{user} got there first, and **{name}** is quietly undone.",
     ],
     close: [
       "**{name}** stops apologizing mid-sentence when he sees it's {user}.",
-      '"The garden can wait." **{name}** never says that, and says it to {user}.',
-      "{user} calls, and **{name}** leaves the garden half done for the first time all year.",
+      '"The garden can wait." **{name}** never says that. He says it to {user}.',
+      "{user} calls, and whatever **{name}** was carrying gets set down.",
     ],
     bound: [
-      '"I\'ve been performing my whole life," **{name}** says, reaching {user}. "Not with you."',
-      "**{name}** reaches {user} and stops scanning the crowd for who might be watching. That took him a year.",
+      '"I\'ve performed my whole life," **{name}** says, reaching {user}. "Not with you."',
+      "**{name}** reaches {user} and doesn't check who's watching. That took him a year.",
       "{user} says the name, and **{name}**, who apologizes for everything, apologizes for none of it.",
     ],
   },

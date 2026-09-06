@@ -26,14 +26,14 @@ export default {
             label: "Say you want it",
             style: 3,
             close:
-              "...Oh.\n\n*The humming starts up in the background of the next voice note and doesn't stop.*\n\n> Then I'll pick you a live one too. And another one. I'll pick you all of them, I don't mind, they grow back.",
+              "...Oh.\n\n*The humming starts up in the background of the next voice note and doesn't stop.*\n\n> Then it's yours. You're the first one who said yes. I'm keeping the day.",
           },
           {
             key: "playful",
             label: "Ask if he eats those",
             style: 1,
             close:
-              "Only the yellow bit 🌼 The stem's horrible. Like drinking a wall.\n\nI'll pick you a fresh one to try. I wouldn't give you a dead one to eat. I'm not strange.",
+              "Only the yellow bit 🌼 The stem's horrible. Bitter, and it squeaks on your teeth.\n\nDon't eat the one I gave you, though. That one you just keep.",
           },
           {
             key: "bold",
@@ -437,7 +437,7 @@ export default {
   responses: {
     kind: {
       new: [
-        "Be very careful with him",
+        "Meet him at his pace",
         "Take the flower gently",
         "Speak softly to him",
       ],
@@ -465,7 +465,7 @@ export default {
         "Play the counting game back",
         "Hide, and let him find you",
       ],
-      bound: ["Hum it back", "Hide the dandelions", "Make him chase you"],
+      bound: ["Hum until it gets light", "Hide the dandelions", "Make him chase you"],
     },
     bold: {
       new: [

@@ -2121,6 +2121,9 @@ Shion has a tendency to do whatever he wants without regard for the consequences
 
 Despite his seemingly careless personality, Shion tends to use censored versions of curse words.
 
+Nature
+Shion is a mermaid. He is drawn to water and moves through it unnaturally, and has been seen at the Darkwick docks after dark, slipping beneath the surface when anyone approaches. The pull of his lullaby is a siren's: as he says himself, sing along and "you might never wake up." Long dry, airless nights wear on him ("It's hot, painful, and breathing feels hard..."), and Mio notes that Shion's haunts "reek like the seaside."
+
 Shion: Oh, you're still alive?
 
 ━━━━━━━━━━━━━━━━━━━━

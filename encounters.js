@@ -648,7 +648,12 @@ function renderMomentsTogether(character, counts) {
   return `**Moments together** 💞\n${rows.join('\n')}`;
 }
 
-export async function buildAffinityMessage(userId, characterIds) {
+// `opts.shareButton` appends a Share button that reposts this status publicly
+// (app.js, the `affinity:share` component). `opts.sharedBy` marks the message
+// as that public repost: its header names who shared it and the button is
+// never attached (the public copy has nothing left to share).
+export async function buildAffinityMessage(userId, characterIds, opts = {}) {
+  const { shareButton = false, sharedBy = null } = opts;
   // The options are free-text, so ids arrive untrimmed, in any case, and
   // possibly repeated — a repeat would collide on the attachment filename.
   const validCharacters = [];
@@ -742,13 +747,45 @@ export async function buildAffinityMessage(userId, characterIds) {
     }
   });
 
-  const header = 'Here\'s your relationship status:';
+  const header = sharedBy
+    ? `<@${sharedBy}> shared their relationship status:`
+    : 'Here\'s your relationship status:';
 
-  return {
+  const message = {
     content: unknownNote ? `${header}\n${unknownNote}` : header,
     embeds,
     files: files.length > 0 ? files : undefined,
+    // The attribution `<@id>` is a label, not a ping — the sharer clicked the
+    // button themselves. Harmless (and absent) on the private view.
+    ...(sharedBy ? { allowed_mentions: { parse: [] } } : {}),
   };
+
+  // The private /affinity result carries a Share button that rebuilds this
+  // same status as a public post. The click only carries the custom_id, so
+  // the resolved character ids ride in it. Discord caps a custom_id at 100
+  // chars; five canonical ids plus the prefix is ~50, but a defensive check
+  // drops the button rather than emit an invalid component if that ever
+  // stops holding.
+  if (shareButton && !sharedBy) {
+    const customId = `affinity:share:${validCharacters.map((c) => c.id).join('.')}`;
+    if (customId.length <= 100) {
+      message.components = [
+        {
+          type: MessageComponentTypes.ACTION_ROW,
+          components: [
+            {
+              type: MessageComponentTypes.BUTTON,
+              style: ButtonStyleTypes.SECONDARY,
+              label: 'Share',
+              custom_id: customId,
+            },
+          ],
+        },
+      ];
+    }
+  }
+
+  return message;
 }
 
 // --- /bonds --------------------------------------------------------------

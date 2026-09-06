@@ -298,7 +298,7 @@ export const RIDDLES = {
       id: "vagastrom_garage",
       answer: "alan",
       prompt:
-        "Something in the garage has been repairing the bikes overnight and leaving them better than new. Nobody has heard it say a word about it. Name the student.",
+        "Someone in the garage has been repairing the bikes overnight and leaving them better than new. Nobody has heard it say a word about it. Name the student.",
     },
     {
       id: "vagastrom_gate",
@@ -412,13 +412,13 @@ export const RIDDLES = {
       id: "dionysia_heebie",
       answer: "shion",
       prompt:
-        "Residents reported gruesome injuries and blood at the Heebie-Jeebie House. Upon investigation, staff discovered only theatrical prosthetics and expertly applied makeup—so realistic that everyone believed they were genuine. Name the student.",
+        "Residents fled the Heebie-Jeebie House over the bodies and blood inside. Staff found the wounds were prop pieces and paint, arranged to be found, and one student still there enjoying how well it had worked. Name the student.",
     },
     {
       id: "dionysia_lullaby",
       answer: "shion",
       prompt:
-        "An unusual figure has been spotted at the Darkwick docks after dark, moving unnaturally along the water's edge. When students approach, it plunges into the water, vanishing beneath the surface. Name the student.",
+        "Something keeps to the Darkwick docks after dark, at the very edge of the water, humming a lullaby and watching whoever comes to look. Get too close and it slips under without a splash and does not surface again. Name the student.",
     },
   ],
 
@@ -427,13 +427,13 @@ export const RIDDLES = {
       id: "mortkranken_ward",
       answer: "yuri",
       prompt:
-        "A first-year was marched into the lab with the announcement, 'Congratulations, you have been selected as a test subject for my revolutionary technique. Consider yourself privileged.' When they tried to leave, the student's demeanor cracked and they desperately insisted they needed at least one volunteer. Name the student.",
+        "A student was walked into the Mortkranken lab and informed, 'Congratulations, you have been selected as a test subject for my revolutionary technique. Consider yourself privileged.' When they tried to leave, the researcher whose lab it was blocked the door, indignant that anyone would refuse an honor of this magnitude, and demanded to know whose time they imagined they were wasting. Name the student.",
     },
     {
-      id: "mortkranken_drill",
+      id: "mortkranken_bellow",
       answer: "yuri",
       prompt:
-        "A student was found arguing heatedly with the diagnostic equipment, insisting it had malfunctioned on purpose. Within the hour, they personally re-ran every procedure from that day, achieving perfect results and proving the machine 'inferior.' Name the student.",
+        "Every hour or so, one name is shouted down the Mortkranken corridor loud enough to carry to the second floor, always by the same student, who never once gets up to go and find the person he is calling. Name the student.",
     },
     {
       id: "mortkranken_chart",
@@ -454,13 +454,13 @@ export const RIDDLES = {
       id: "jabberwock_tour",
       answer: "haru",
       prompt:
-        "A figure was spotted sprinting through the academy grounds after midnight, one gloved hand gripping a rope tethered to an escaped anomaly. The runner never slowed, shouting encouragement at the fleeing creature the entire way until it was contained. Name the student.",
+        "A student was seen after midnight chasing an escaped creature the length of the grounds, never panicking, just calling out that it was doing great and he would have it home soon. Name the student.",
     },
     {
       id: "jabberwock_fenceline",
       answer: "haru",
       prompt:
-        "An escaped park animal was carried back through the front gate by someone telling it the whole way that it would be right, who then walked the fence line twice to make sure nothing else had gotten out. Name the student.",
+        "Every night, long after the park has closed, one student walks the whole perimeter fence by torchlight, counts every animal twice, and only then goes to bed. Name the student.",
     },
     {
       id: "jabberwock_garden",
@@ -481,10 +481,10 @@ export const RIDDLES = {
         "A student sat through the entire anomaly alert without once looking up from a phone game, then filed a grievance about his wrist. Name the student.",
     },
     {
-      id: "jabberwock_clip",
+      id: "jabberwock_aquatic",
       answer: "ren",
       prompt:
-        "The security footage was cut into a thirty second clip with subtitles and a punchline before anybody got around to filing the report. Name the student.",
+        "The aquatic zone went unfed for a whole day. The student rostered for it says he told someone else to cover it, cannot say who, and was on his phone in the break room the entire shift. Name the student.",
     },
   ],
 
