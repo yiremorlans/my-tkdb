@@ -215,7 +215,7 @@ export function busyLine(type) {
 // this, and a mission they can't work out how to finish is just a dead slot.
 export const MISSION_INSTRUCTIONS = {
   [MISSION_TYPES.ERRAND]:
-    "Meet each of them through `/roam` or `/meet`, then check the sheet and file it with `/docs`. One house log per signature, plus a banked cooldown reset that clears both.",
+    "Targets are boosted during `/meet` and `/roam` while mission is active. Meet them, then check the sheet and file it with `/docs`. One house log per signature, plus a banked cooldown reset that clears both.",
   [MISSION_TYPES.RIDDLE]:
     "Answer with `/riddle <your answer>`. Solve it for one house log, plus a banked cooldown reset: spend it the next time `/roam` or `/meet` tells you to wait, and it clears both.",
   [MISSION_TYPES.COOP]:
@@ -796,9 +796,9 @@ export function missionObjectiveLine(
 ) {
   switch (mission.mission_type) {
     case MISSION_TYPES.ERRAND:
-      return `${mission.house} needs sign-off from ${formatNameList(
+      return `Darkwick needs signoff from ${mission.house} to complete report. Track down ${formatNameList(
         targetIds,
-      )}. Track them down.`;
+      )}.`;
     case MISSION_TYPES.RIDDLE:
       return riddle
         ? `An anomaly report out of ${mission.house} needs debunking.\n\n> ${riddle.prompt}`

@@ -8,8 +8,12 @@ export default {
   // reaches him, because nobody checks on the one who cooks. Food is the love
   // language throughout; by Devoted it's touch.
   //
-  // He types fast and fluent, lowercase, caps for emphasis. No typos: he is the
-  // one who makes fun of Alan's ("come tot hr epuit... Pfft.").
+  // He types fast and fluent in mixed case (never all-lowercase), caps for
+  // emphasis, no full stops, short lines, and "u"/"ur", "lol", "rn", "tho" —
+  // per reference.md's "## Bond Scenes" notes ("Sho - same as Leo"). No typos:
+  // he is the one who makes fun of Alan's ("come tot hr epuit... Pfft."). Only
+  // his typed DMs follow those rules; in-person `> ` speech and narration keep
+  // normal punctuation.
   //
   // He calls her Senpai, the way he does all through his `dialogue` pool below.
   // Lowercase when he's typing, capitalised when he speaks. The word carries its
@@ -19,32 +23,32 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: oi senpai\n\nyou eat today? and don't say yeah if it was a vending machine. that's not eating, that's damage control",
-        "look, I'm not being weird about it. I do a big cook Thursdays and there's always way too much because I can't scale a recipe down. it's a whole thing. don't ask.\n\nyou've been around {timesMet} times and every single time you look like you've been running on nothing. it's bugging me. just come eat something.",
+        "**{firstName}**: oi senpai\n\nu eat today? and don't say yeah if it was a vending machine\n\nthat's not eating, that's damage control",
+        "look, I'm not being weird about it\n\nI do a big cook Thursdays and there's always way too much because I can't scale a recipe down, it's a whole thing, don't ask\n\nyou've been around {timesMet} times and every single time u look like you've been running on nothing\n\nit's bugging me, just come eat something",
       ],
       choice: {
-        prompt: "and don't go making excuses about it either. just show up.",
+        prompt: "and don't go making excuses about it either, just show up",
         options: [
           {
             key: "kind",
             label: "Say you'd like that",
             style: 3,
             close:
-              "...cool.\n\n*Then, immediately:* don't make it a thing. it's leftovers.\n\n*It is not leftovers. There's a second bowl already set out when you get there.*",
+              "…cool\n\n*Then, immediately:* don't make it a thing, it's leftovers\n\n*It is not leftovers. There's a second bowl already set out when you get there.*",
           },
           {
             key: "playful",
             label: "Defend the vending machine",
             style: 1,
             close:
-              "geez. GEEZ.\n\nthat's not food, that's a hostage situation with a wrapper on it. Thursday. seven. I'm not asking twice.",
+              "geez\n\nGEEZ\n\nthat's not food, that's a hostage situation with a wrapper on it\n\nThursday, at 7, I'm not asking twice",
           },
           {
             key: "bold",
             label: "Ask what he's making",
             style: 4,
             close:
-              "why, you gonna have opinions?\n\n...ask me again when you get here. I'll make the one you like. I've been paying attention.\n\n*A beat, like he heard himself say it.* ...Pfft. forget I said that.",
+              "why, u gonna have opinions?\n\n…ask me again when u get here, I'll make the one u like, I've been paying attention\n\n*A beat, like he heard himself say it.* …pfft forget I said that",
           },
         ],
       },
@@ -57,31 +61,31 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: ok so I noticed something and it's bugging me",
-        "I'm not like this with anybody else. that's the thing I noticed.\n\neverybody else in this house, I'm either arguing with them or waiting for them to leave. it's not even on purpose, it's just my default. Leo says I've got a permanent \"what\" about me. he's not wrong.\n\nthen you show up and I'm just... fine. easy. not bracing for anything. you come at me with {favResponse}, I hand it right back, and it costs me nothing. two years here and you're the only one that's true, senpai.",
+        "I'm not like this with anybody else, that's the thing I noticed\n\neverybody else in this house, I'm either arguing with them or waiting for them to leave\n\nit's not even on purpose, it's just my default\n\nLeo says I've got a permanent \"what\" about me, he's not wrong\n\nthen u show up and I'm just… fine, easy, not bracing for anything\n\nu come at me with {favResponse}, I hand it right back, and it costs me nothing\n\ntwo years here and ur the only one that's true, senpai",
       ],
       choice: {
-        prompt: "so what's that about? because I didn't do it on purpose.",
+        prompt: "so what's that about? because I didn't do it on purpose",
         options: [
           {
             key: "kind",
             label: "Say you feel it too",
             style: 3,
             close:
-              "...yeah?\n\n*A long pause.*\n\nokay. cool. that's... yeah. that's good, actually.\n\n*Then, way too fast:* anyway what're you eating tonight",
+              "…yeah?\n\n*A long pause.*\n\nokay, cool, that's… yeah, that's good actually\n\n*Then, way too fast:* anyway what're u eating tonight",
           },
           {
             key: "playful",
             label: "Tell him he's gone soft",
             style: 1,
             close:
-              "I have NOT gone soft.\n\n...okay I made you lunch twice this week and you didn't ask either time. Pfft. fine. don't tell Leo, he'll be unbearable about it for a year.",
+              "I have NOT gone soft\n\n…okay I made u lunch twice this week and u didn't ask either time\n\nPfft, fine, don't tell Leo, he'll be unbearable about it for a year",
           },
           {
             key: "bold",
             label: "Say he seeks you out",
             style: 4,
             close:
-              "I do not seek you... okay, the diner thing. and the packaging thing. and the boxes.\n\nyeah, all right. I didn't need help with any of those.\n\nyou don't gotta make excuses to hang out with me, y'know. goes both ways. just ask, senpai.",
+              "I do not seek u out… okay, the diner thing, and the packaging thing, and the boxes\n\nyeah all right, I didn't need help with any of those\n\nu don't gotta make excuses to hang out with me, y'know, goes both ways\n\njust ask, senpai",
           },
         ],
       },
@@ -93,7 +97,7 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: truck. 2am. don't tell anybody, I mean it",
+        "**{firstName}**: truck\n\n2am\n\ndon't tell anybody, I mean it",
         "*The food truck is shut, the shutter's down, and he's inside with one light on and something going on the burner that smells nothing like what he sells.*\n\n> This is the one I actually cook. Not the menu stuff. Menu stuff is for the money and the line out front and Leo's cut for building the app. This one's just mine.",
         "> Mom's, technically. She wrote it out on the back of a receipt before I came here and I've never given it to anybody.\n\n*He puts the bowl in front of you and immediately looks somewhere else.*\n\n> So, yeah. Don't say anything nice or I'm throwing you out. Just eat it while it's hot, Senpai. I've been keeping it warm twenty minutes waiting on you.",
       ],
@@ -131,33 +135,33 @@ export default {
 
     confidant: {
       beats: [
-        "**{firstName}**: ok so you know who my brother is",
-        "everybody knows. everybody's known since day one and they all do the same thing. that little recalculation, where they figure out how to talk to me now.\n\nhalf this house thinks I'm here on his name. other half thinks I'm here to spy for him. I'm not doing either one. I cook, I get in fights, I show up when people need something, and none of it counts because of the surname.",
-        "you never did that. not once. first person who didn't, and I'd been waiting on it for two years, so I noticed the exact second it didn't happen.\n\nthat's it. that's the message. sorry it's a downer, I'm normally way more fun than this.",
+        "**{firstName}**: ok so u know who my brother is",
+        "everybody knows\n\neverybody's known since day one and they all do the same thing, that little recalculation where they figure out how to talk to me now\n\nhalf this house thinks I'm here on his name\n\nother half thinks I'm here to spy for him\n\nI'm not doing either one\n\nI cook, I get in fights, I show up when people need something, and none of it counts because of the surname",
+        "u never did that, not once\n\nfirst person who didn't, and I'd been waiting on it for two years, so I noticed the exact second it didn't happen\n\nthat's it, that's the message\n\nsorry it's a downer, I'm normally way more fun than this",
       ],
       choice: {
-        prompt: "alright. say something so this stops being weird.",
+        prompt: "alright, say something so this stops being weird",
         options: [
           {
             key: "kind",
             label: "Say it's his own name",
             style: 3,
             close:
-              "*There's a long gap.*\n\n...say that to Leo next time he's being a jerk about it. actually don't. actually I wanna have said it myself.\n\nthanks, senpai. seriously. don't make me say it twice.",
+              "*There's a long gap.*\n\n…say that to Leo next time he's being a jerk about it\n\nactually don't, actually I wanna have said it myself\n\nthanks senpai, seriously, don't make me say it twice",
           },
           {
             key: "playful",
             label: "Say you forgot he had one",
             style: 1,
             close:
-              "you did NOT forget.\n\n...you might've actually forgotten. that's insane. that's the best thing that's happened to me all week and it's just you having a bad memory.",
+              "u did NOT forget\n\n…u might've actually forgotten\n\nlol that's insane, that's the best thing that's happened to me all week and it's just u having a bad memory",
           },
           {
             key: "bold",
             label: "Ask who he'd be without it",
             style: 4,
             close:
-              "*The reply takes a long time.*\n\ndunno. never got to find out.\n\n*Then:* ...some guy who cooks for you at 2am, maybe. yeah. I'd take that.",
+              "*The reply takes a long time.*\n\ndunno, never got to find out\n\n*Then:* …some guy who cooks for u at 2am maybe\n\nyeah, I'd take that",
           },
         ],
       },
@@ -169,12 +173,12 @@ export default {
 
     devoted: {
       beats: [
-        "**{firstName}**: don't come by the truck tomorrow\n\nface is a mess. it's fine. it's not a big one.",
-        "*You ask. He caves in about four seconds, because he always does.*\n\nLeo said something about you. in front of people. and I've let him say a thousand things about me and never once cared, so I know exactly how this looks.\n\nbut that one wasn't about me, was it.",
-        "Mido already got me for it. week off the truck, which... fine. whatever.\n\nwould do it again though. wouldn't even think about it. didn't think about it the first time, that's the whole problem. hands were already moving.",
+        "**{firstName}**: don't come by the truck tomorrow\n\nface is a mess rn\n\nit's fine, it's not a big one",
+        "*You ask. He caves in about four seconds, because he always does.*\n\nLeo said something about u, in front of people\n\nand I've let him say a thousand things about me and never once cared, so I know exactly how this looks\n\nbut that one wasn't about me, was it",
+        "Mido already got me for it\n\nweek off the truck, which… fine, whatever\n\nwould do it again tho, wouldn't even think about it\n\ndidn't think about it the first time, that's the whole problem, hands were already moving",
       ],
       choice: {
-        prompt: "go on then. chew me out. everybody else has.",
+        prompt: "go on then, chew me out, everybody else has",
         options: [
           {
             key: "kind",
@@ -188,14 +192,14 @@ export default {
             label: "Ask if Leo looks worse",
             style: 1,
             close:
-              "Pfft. Leo looks like he lost a fight with the curb.\n\n...don't tell Mido I said that. or do. he'll act furious for about a minute and then laugh about it in the garage where he thinks nobody can hear him.",
+              "Pfft, Leo looks like he lost a fight with the curb\n\n…don't tell Mido I said that\n\nor do, he'll act furious for about a minute and then laugh about it in the garage where he thinks nobody can hear him",
           },
           {
             key: "bold",
             label: "Say you'd have done it too",
             style: 4,
             close:
-              "...don't say stuff like that, senpai, I'll get ideas.\n\n*He turns up at your place an hour later with food, one eye swollen shut, and hands the bag over before he says anything.*\n\n*Then he just stands there. Then he puts his forehead down on your shoulder and stays there, and doesn't say another word for a while.*",
+              "…don't say stuff like that senpai, I'll get ideas\n\n*He turns up at your place an hour later with food, one eye swollen shut, and hands the bag over before he says anything.*\n\n*Then he just stands there. Then he puts his forehead down on your shoulder and stays there, and doesn't say another word for a while.*",
           },
         ],
       },
@@ -207,27 +211,27 @@ export default {
 
     soulbound: {
       beats: [
-        "**{firstName}**: ok. shutter's down, truck's shut, nothing in my hands to keep me busy, so I'm doing this.",
-        "{timesMet} times you've come by. I've cooked for you... I dunno, most of them. I don't cook for people. I cook for *money* and I cook for the house because somebody's gotta.\n\nyou're the only person I've ever cooked for because I wanted to watch you eat it.",
-        "and I know what I am, all right. I've got a mouth on me, I get in fights, I'm loud, I've got a surname that walks into every room ahead of me. there's easier people to pick.\n\nbut you keep asking if I've eaten. two years in this place and you're the only one who's ever asked me that. it's such a stupid small thing to fall apart over and I fell apart over it anyway, ages ago, and I've been pretending I didn't.",
-        "I've called you senpai about four thousand times. started out because you're a year up on me and it was funny.\n\nit stopped being funny a long time ago. I kept saying it anyway, because it was the only way I had of saying the other thing without actually saying it.\n\nso I'm saying it. I love you, senpai. I don't have a clever version. since about the third bowl, and I've been cooking at you instead of telling you because that was easier, and I'm a coward about exactly one thing.",
+        "**{firstName}**: ok\n\nshutter's down, truck's shut, nothing in my hands to keep me busy, so I'm doing this",
+        "{timesMet} times you've come by\n\nI've cooked for u… I dunno, most of them\n\nI don't cook for people, I cook for *money* and I cook for the house because somebody's gotta\n\nur the only person I've ever cooked for because I wanted to watch u eat it",
+        "and I know what I am, all right\n\nI've got a mouth on me, I get in fights, I'm loud, I've got a surname that walks into every room ahead of me\n\nthere's easier people to pick\n\nbut u keep asking if I've eaten\n\ntwo years in this place and ur the only one who's ever asked me that\n\nit's such a stupid small thing to fall apart over and I fell apart over it anyway, ages ago, and I've been pretending I didn't",
+        "I've called u senpai about four thousand times\n\nstarted out because ur a year up on me and it was funny\n\nit stopped being funny a long time ago\n\nI kept saying it anyway, because it was the only way I had of saying the other thing without actually saying it\n\nso I'm saying it, I love u, senpai\n\nI don't have a clever version, since about the third bowl, and I've been cooking at u instead of telling u because that was easier, and I'm a coward about exactly one thing",
       ],
       choice: {
-        prompt: "say whatever. I'll be fine. I'm always fine.",
+        prompt: "say whatever, I'll be fine, I'm always fine",
         options: [
           {
             key: "answered",
             label: "Say it back",
             style: 3,
             close:
-              "...you're kidding.\n\nyou're not kidding. okay. all right. don't move.\n\n*The shutter goes up eight minutes later with him under it, still in his apron, having clearly sprinted the whole way and refusing to admit it.*\n\n*He takes your jaw in both hands (flour on them, of course there's flour on them) and kisses you like he's been holding onto it since the third bowl, which he has.*",
+              "…ur kidding\n\nur not kidding, okay, all right, don't move\n\n*The shutter goes up eight minutes later with him under it, still in his apron, having clearly sprinted the whole way and refusing to admit it.*\n\n*He takes your jaw in both hands (flour on them, of course there's flour on them) and kisses you like he's been holding onto it since the third bowl, which he has.*",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
             close:
-              "yeah. yeah, sure. take forever, I don't care.\n\nthat's not me playing it cool, by the way. I'm bummed. but I'd be way more bummed if you said something you didn't mean because I put you on the spot at one thirty in the morning.\n\nThursday's still on. obviously Thursday's still on. Thursday was never about this. I'd still be feeding you if you told me to get lost. that's just how it is.",
+              "yeah, yeah sure, take forever, I don't care\n\nthat's not me playing it cool by the way, I'm bummed\n\nbut I'd be way more bummed if u said something u didn't mean because I put u on the spot at one thirty in the morning\n\nThursday's still on, obviously Thursday's still on\n\nThursday was never about this, I'd still be feeding u if u told me to get lost, that's just how it is",
           },
         ],
       },

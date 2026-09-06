@@ -4,6 +4,11 @@ export default {
   // the intimacy is in the fact of a man who says four words a day sitting there
   // typing at all. What he cannot write, he does instead.
   //
+  // Per reference.md's "## Bond Scenes" notes, Alan's typed messages use no full
+  // stops and never put two sentences in one line — each thought gets its own
+  // line break. Narration and anything he says out loud (the `> ` lines) keep
+  // normal punctuation.
+  //
   // The typos are deliberate. He is canonically hopeless with a phone (he has to
   // ask how to add someone on WickChat), so roughly one line a scene carries a
   // dropped apostrophe, a missing full stop, or a mistype he corrects on the next
@@ -13,7 +18,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Its Alan\n\n*That's the whole message. It sits there for eleven minutes.*",
-        "Not good at this\n\n*Another gap.*\n\nYouve been around {timesMet} times now. Bandana says I shoulda said something by now. He's right. Not telling him that\n\n...So. Said something.",
+        "Not good at this\n\n*Another gap.*\n\nYouve been around {timesMet} times now\n\nBandana says I shoulda said something by now\n\nHe's right\n\nNot telling him that\n\n…So\n\nSaid something",
       ],
       choice: {
         prompt: "That's it",
@@ -23,21 +28,21 @@ export default {
             label: "Tell him it's a good start",
             style: 3,
             close:
-              "...Yeah.\n\n*A minute later:* Thnaks.\n\n*Then:* \\*Thanks.\n\n*That's the last one.*",
+              "…Yeah\n\n*A minute later:* Thnaks\n\n*Then:* \\*Thanks\n\n*That's the last one.*",
           },
           {
             key: "playful",
             label: "Ask if that took long",
             style: 1,
             close:
-              "40 minutes.\n\n*No defensiveness in it at all. Just the number, handed over.*\n\nWasnt so bad.",
+              "40 minutes\n\n*No defensiveness in it at all. Just the number, handed over.*\n\nWasnt so bad",
           },
           {
             key: "bold",
             label: "Tell him to say more",
             style: 4,
             close:
-              "*A long silence.*\n\nGarage. Tomorrow, after six.\n\n*A pause.* Easier out loud. Little bit.",
+              "*A long silence.*\n\nGarage\n\nTomorrow, after six\n\n*A pause.* Easier out loud\n\nLittle bit",
           },
         ],
       },
@@ -49,32 +54,32 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: Noticed something.",
-        "You've got {favResponse} for me. Every time. Doesn't change when I'm in a mood.\n\nPeople change when I'm in a mood. Whole house does. Been like that since I got here and I quit minding it a long time ago.\n\nYou don't. Just wanted you to know I see it.",
+        "**{firstName}**: Noticed something",
+        "You've got {favResponse} for me\n\nEvery time\n\nDoesn't change when I'm in a mood\n\nPeople change when I'm in a mood\n\nWhole house does\n\nBeen like that since I got here and I quit minding it a long time ago\n\nYou don't\n\nJust wanted you to know I see it",
       ],
       choice: {
-        prompt: "Not asking you to explain it. Say whatever you want.",
+        prompt: "Not asking you to explain it, say whatever you want",
         options: [
           {
             key: "kind",
             label: "Say you're not scared of him",
             style: 3,
             close:
-              "Know you're not.\n\n*A long pause.*\n\nThat's the part I can't figure out. Give me a while with it.",
+              "Know you're not\n\n*A long pause.*\n\nThat's the part I can't figure out\n\nGive me a while with it",
           },
           {
             key: "playful",
             label: "Say his moods aren't subtle",
             style: 1,
             close:
-              "They're not.\n\n*Then, out of nowhere:* Leo says I run in two gears. Angry and asleep.\n\nHe's wrong. There's a third. You've seen it.",
+              "They're not\n\n*Then, out of nowhere:* Leo says I run in two gears\n\nAngry and asleep\n\nHe's wrong\n\nThere's a third\n\nYou've seen it",
           },
           {
             key: "bold",
             label: "Tell him he's not that scary",
             style: 4,
             close:
-              "I am.\n\n*Flat. No argument in it. Just something he's carried a long way.*\n\nNot to you though. Don't know why that's different. Not gonna poke at it in case it stops.",
+              "I am\n\n*Flat. No argument in it. Just something he's carried a long way.*\n\nNot to you though\n\nDon't know why that's different\n\nNot gonna poke at it in case it stops",
           },
         ],
       },
@@ -86,7 +91,7 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: Come by the garage.\n\nNot urgent. Not a job.",
+        "**{firstName}**: Come by the garage\n\nNot urgent\n\nNot a job",
         "*The car is stripped down across half the floor and he doesn't look up when you come in. He hands you a spanner. That's the greeting.*\n\n*An hour goes by. Neither of you says much. He passes you things before you've asked for them.*",
         "*Later, hands black, sitting on the floor against the bench, he says it to the wall instead of to you.*\n\n> Don't let people down here. Only room where I'm not the captain and nobody's watching to see what I'll do.\n\n> You've been down here four times. Wasn't an accident.",
       ],
@@ -125,32 +130,32 @@ export default {
     confidant: {
       beats: [
         "*It comes through at four in the morning.*\n\n**{firstName}**: You awake",
-        "Bad one tonight. Dont need anything. Just didn't want to sit with it on my own and you were the only name I could stand to look at.",
-        "They say I killed someone. You've heard it. Everyone has.\n\nNobody's ever asked me. Two years, nobody's asked. They just decide, and then they're careful around me, and I let them, because careful's easier than the conversation.\n\nYou've never asked either. Difference is I don't think you're being careful. I think you're waiting on me. Been sitting with that a while.",
+        "Bad one tonight\n\nDont need anything\n\nJust didn't want to sit with it on my own and you were the only name I could stand to look at",
+        "They say I killed someone\n\nYou've heard it\n\nEveryone has\n\nNobody's ever asked me\n\nTwo years, nobody's asked\n\nThey just decide, and then they're careful around me, and I let them, because careful's easier than the conversation\n\nYou've never asked either\n\nDifference is I don't think you're being careful\n\nI think you're waiting on me\n\nBeen sitting with that a while",
       ],
       choice: {
-        prompt: "Ask me. Or don't. Either's fine. I mean that.",
+        prompt: "Ask me\n\nOr don't\n\nEither's fine\n\nI mean that",
         options: [
           {
             key: "kind",
             label: "Say you'll wait for it",
             style: 3,
             close:
-              "*Nothing for six minutes.*\n\n...Yeah. Okay.\n\nNot tonight. But it'll be you. Wanted you to know that much.",
+              "*Nothing for six minutes.*\n\n…Yeah\n\nOkay\n\nNot tonight\n\nBut it'll be you\n\nWanted you to know that much",
           },
           {
             key: "playful",
             label: "Say you'd already decided",
             style: 1,
             close:
-              "Decided what.\n\n*You tell him.*\n\n...Huh. *A long gap.* Most people decide the other way. You went and did it without the facts, same as them. Bothers me a lot less than it should.",
+              "Decided what\n\n*You tell him.*\n\n…Huh\n\n*A long gap.* Most people decide the other way\n\nYou went and did it without the facts, same as them\n\nBothers me a lot less than it should",
           },
           {
             key: "bold",
             label: "Ask him straight out",
             style: 4,
             close:
-              "*The typing indicator runs for almost ten minutes and produces one line.*\n\nYes. And I'd do it again, and that's the part that keeps me up.\n\n*Then:* You still there\n\n*You say yes. He doesn't answer. The read receipt just sits there, timestamped, until the sun comes up.*",
+              "*The typing indicator runs for almost ten minutes and produces one line.*\n\nYes\n\nAnd I'd do it again, and that's the part that keeps me up\n\n*Then:* You still there\n\n*You say yes. He doesn't answer. The read receipt just sits there, timestamped, until the sun comes up.*",
           },
         ],
       },
@@ -162,26 +167,26 @@ export default {
 
     devoted: {
       beats: [
-        "**{firstName}**: Dont go out tonight.",
-        "*You ask why. It takes him a while.*\n\nBecause I'd have to come find you, and I'd have to use it, and I've got a rule about using it.\n\nRule's held three years. Figure it'd last about four seconds where you're concerned. That scares me more than whatever's in the corridor does.",
-        "Only ever told one person what the rule is. Only if someone's about to die. Last resort, nothing before it.\n\nYou've gone and made yourself the last resort. Don't know when. Nobody asked me about it first. Including me.",
+        "**{firstName}**: Dont go out tonight",
+        "*You ask why. It takes him a while.*\n\nBecause I'd have to come find you, and I'd have to use it, and I've got a rule about using it\n\nRule's held three years\n\nFigure it'd last about four seconds where you're concerned\n\nThat scares me more than whatever's in the corridor does",
+        "Only ever told one person what the rule is\n\nOnly if someone's about to die\n\nLast resort, nothing before it\n\nYou've gone and made yourself the last resort\n\nDon't know when\n\nNobody asked me about it first\n\nIncluding me",
       ],
       choice: {
-        prompt: "So stay in. Please.",
+        prompt: "So stay in\n\nPlease",
         options: [
           {
             key: "kind",
             label: "Tell him you'll stay in",
             style: 3,
             close:
-              "Good.\n\n*Then, twenty minutes later, a photo taken from outside your building: his car, parked, engine off.*\n\nNot coming up. Just gonna be here a while.\n\n*It's still there in the morning.*",
+              "Good\n\n*Then, twenty minutes later, a photo taken from outside your building: his car, parked, engine off.*\n\nNot coming up\n\nJust gonna be here a while\n\n*It's still there in the morning.*",
           },
           {
             key: "playful",
             label: "Ask if he's on the doorstep",
             style: 1,
             close:
-              "No.\n\n*A pause.*\n\nYes. Been out here an hour. Don't come down, it's freezing and I'll just tell you to go back up.",
+              "No\n\n*A pause.*\n\nYes\n\nBeen out here an hour\n\nDon't come down, it's freezing and I'll just tell you to go back up",
           },
           {
             key: "bold",
@@ -200,13 +205,13 @@ export default {
 
     soulbound: {
       beats: [
-        "**{firstName}**: Going to try and get this right. Might take me a minute.",
-        "{timesMet} times you've turned up. Never once because you needed something off me. Took me about half of those to quit waiting for the ask.",
-        "I'm not a safe thing to be near. That's not me being modest. I've had to be told to stop before. Bandana's seen it. Leo's seen it. Neither of them looks at me the same way after.\n\nYou've seen it too. You came back the next day like nothing happened. Then the day after that.",
-        "So here it is. Only doing this once.\n\nI love you. Been true a long time. Wasnt going to say it, because saying it makes it yours to carry and I didn't want to put that on you.\n\nPutting it on you anyway. ...Sorry.",
+        "**{firstName}**: Going to try and get this right\n\nMight take me a minute",
+        "{timesMet} times you've turned up\n\nNever once because you needed something off me\n\nTook me about half of those to quit waiting for the ask",
+        "I'm not a safe thing to be near\n\nThat's not me being modest\n\nI've had to be told to stop before\n\nBandana's seen it\n\nLeo's seen it\n\nNeither of them looks at me the same way after\n\nYou've seen it too\n\nYou came back the next day like nothing happened\n\nThen the day after that",
+        "So here it is\n\nOnly doing this once\n\nI love you\n\nBeen true a long time\n\nWasnt going to say it, because saying it makes it yours to carry and I didn't want to put that on you\n\nPutting it on you anyway\n\n…Sorry",
       ],
       choice: {
-        prompt: "Take your time. I'm good at waiting. Had a lot of practice.",
+        prompt: "Take your time\n\nI'm good at waiting\n\nHad a lot of practice",
         options: [
           {
             key: "answered",
@@ -220,7 +225,7 @@ export default {
             label: "Ask him to give you time",
             style: 2,
             close:
-              "That's fine.\n\n*Two words, straight back, no wobble in them.*\n\nWasn't asking for an answer. Was just done not saying it.\n\nGarage is open. Same as always. Come by whenever.\n\n*And it is, and he never brings it up again, but the passenger seat gets finished that month, and he never mentions that either.*",
+              "That's fine\n\n*Two words, straight back, no wobble in them.*\n\nWasn't asking for an answer\n\nWas just done not saying it\n\nGarage is open\n\nSame as always\n\nCome by whenever\n\n*And it is, and he never brings it up again, but the passenger seat gets finished that month, and he never mentions that either.*",
           },
         ],
       },

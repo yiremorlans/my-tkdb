@@ -129,6 +129,24 @@ async function sendFollowup(interactionToken, messageData, timeoutMs = 15000, ed
   }
 }
 
+// Read back a non-deferred interaction's own response message. For a handler
+// whose reply went out as the public channel post (/mission assist), this is
+// the only way to recover that message's id after the fact.
+async function getOriginalResponse(interactionToken, timeoutMs = 15000) {
+  const url = `https://discord.com/api/v10/webhooks/${process.env.APP_ID}/${interactionToken}/messages/@original`;
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+  try {
+    const response = await fetch(url, { signal: controller.signal });
+    if (!response.ok) {
+      throw new Error(`Discord API error: ${response.status} - ${await response.text()}`);
+    }
+    return await response.json();
+  } finally {
+    clearTimeout(timeoutId);
+  }
+}
+
 // Anything that reaches out to Discord on its own initiative is held back under
 // `npm test`, where app.js is imported to exercise the HTTP routes: the gateway
 // and the encounter scheduler for the same reason at the bottom of this file,
@@ -496,12 +514,53 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       return;
     }
 
+    // /mission assist:True is the one mission command that answers in public and
+    // without a defer: its output is the call-for-backup post itself, sent
+    // straight back as the interaction response. Only one Supabase read sits on
+    // that path and there's no channel POST, so the 3s budget is comfortable —
+    // and if it ever isn't, "This interaction failed" with no post is a clean
+    // no-op the lead just re-runs. The post's id is read back from @original
+    // afterwards for `assist_message_id`.
+    if (name === 'mission' && (req.body.data?.options || []).some(o => o.name === 'assist' && o.value)) {
+      let result;
+      try {
+        result = await handleMission(req.body);
+      } catch (err) {
+        console.error('Error in /mission assist:', err);
+        result = { reply: { content: 'Something went wrong there. Try again?', flags: 64 } };
+      }
+
+      if (result.publicReply) {
+        res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: result.publicReply,
+        });
+
+        (async () => {
+          let originalMessageId = null;
+          try {
+            originalMessageId = (await getOriginalResponse(req.body.token))?.id ?? null;
+          } catch (err) {
+            console.error('[app] Could not read /mission assist @original:', err.message);
+          }
+          await result.afterReply?.({ originalMessageId });
+        })().catch(err => console.error('Error in /mission assist follow-up:', err));
+      } else {
+        // A guard refusal — ephemeral, private to the runner.
+        res.send({
+          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+          data: result.reply,
+        });
+        result.afterReply?.().catch(err => console.error('Error in /mission assist follow-up:', err));
+      }
+      return;
+    }
+
     // /mission, /docs and /riddle all answer ephemerally and all do two or
-    // three sequential Supabase round trips before they can — and /mission
-    // assist adds a channel POST on top. Deferred for the same reason /call is:
-    // the 3s inline budget is not reliably enough, and the user seeing "the
-    // application did not respond" after a mission was already claimed would be
-    // the worst possible failure here.
+    // three sequential Supabase round trips before they can. Deferred for the
+    // same reason /call is: the 3s inline budget is not reliably enough, and the
+    // user seeing "the application did not respond" after a mission was already
+    // claimed would be the worst possible failure here.
     if (name === 'mission' || name === 'docs' || name === 'riddle' || name === 'missions') {
       res.send({
         type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,

@@ -278,7 +278,8 @@ Accept button  (custom_id: mission:accept:<id>)
 /mission            (ephemeral) → reveal house + type + objective + progress + always-on instructions (§8)
 /docs               (ephemeral) → errand only: roster + signature checklist + "Complete mission" button (§5)
 /riddle <answer>    (ephemeral) → riddle only: match, reward on correct, 20s cooldown on wrong (§6)
-/mission assist      (public)   → coop only: post a "Join the mission" button in the channel (§7)
+/mission assist      (public)   → coop only, NOT deferred: the reply itself is the "Join the mission" post,
+                                  in the channel it's run from, pinging the lead. No ephemeral ack. (§7)
 ```
 
 ---
@@ -389,8 +390,9 @@ frozen — one `mission_signatures` row each, `signed_at = NULL` (§10). So
 Mortkranken errands target 1–2 students, most houses 1–3, Frostheim and
 Dionysia 1–4.
 
-`/mission` reveals the house **and names the targets**: *"{House} needs sign-off
-from **Jin Kamurai**, **Leo Kurosagi** and **Alan Mido**. Track them down"*
+`/mission` reveals the house **and names the targets**: *"Darkwick needs signoff
+from **{House}** to complete report. Track down **Jin Kamurai**, **Leo Kurosagi**
+and **Alan Mido**."*
 
 ### Earning a signature
 
@@ -541,22 +543,44 @@ export const RIDDLES = {
 partner — the first inspector to back you up clears it for both of you, and you
 both walk away with a cooldown reset."*
 
-### `/mission assist` (public — the one non-ephemeral mission command)
+### `/mission assist` (public — the one non-deferred, non-ephemeral mission command)
+
+Unlike bare `/mission` / `/docs` / `/riddle`, this path is **not** deferred:
+app.js routes `/mission` with `assist:True` straight to `handleMission` and
+answers inline. One Supabase read (`getAcceptedMission`) sits on the 3s path and
+there is no channel POST — the call-for-backup post *is* the interaction
+response (`CHANNEL_MESSAGE_WITH_SOURCE`). If that budget is ever blown the lead
+sees "This interaction failed" and nothing posts — a clean no-op they re-run.
+
+Guard refusals (ephemeral, private to the lead):
 
 - Not a pending co-op mission → ephemeral redirect.
-- Already has a live assist post (`missions.assist_message_id` set) → ephemeral
-  *"Your call for backup is already up in {channel}."*
-- Otherwise → `postChannelMessage` to the mission channel:
+- Live assist post already exists (`missions.assist_message_id` set) → *"Your
+  call for backup is already up in {channel}."*
+- Run outside the mission channel → *"Run `/mission assist:True` in {channel},
+  where the mission was posted."* Since the post lands wherever the command is
+  run, it has to be run where the inspectors watching for missions will see it.
+
+Otherwise the reply is the public post:
 
 ```
-🚨 {accepter} needs a partner for a {House?}… actually — house withheld.
-{accepter} needs a partner in the field. First to back them up clears it for both.
+content: 🚨 <@lead> needs help during this house mission!        allowed_mentions: { users: [lead] }
+embed:   First inspector to back them up clears it for both of you — one house
+         log each, plus a banked cooldown reset.
 [ Join the mission ]      custom_id: mission:assist:<missionId>
 ```
 
-  (Keep the house **out** of the assist post too — consistent with the pickup
-  post. The helper learns nothing until they've clicked.) Store the returned id
-  as `assist_message_id`.
+  The `<@lead>` mention lives in the message **content**, not the embed (a
+  mention inside an embed never notifies), and `allowed_mentions` is scoped to
+  the lead's id alone — so the post pings the lead and no one else. This is a
+  deliberate exception to the "pings nobody" rule the pickup post follows: an
+  unanswered co-op burns a slot for two people. The **house** still stays out of
+  the post — the helper learns nothing until they've clicked.
+
+  There is no ephemeral confirmation — the public post is the only
+  acknowledgement. Its id isn't in hand (Discord posted the reply for us), so
+  app.js reads it back with `GET …/messages/@original` and hands it to
+  `afterReply`, which stores it as `assist_message_id`.
 
 ### Join button → `claim_coop_helper` RPC (§11)
 
@@ -609,7 +633,7 @@ Progress: {progress line}
 
 | Type | Progress line | Instruction block |
 |---|---|---|
-| errand | `2 / N signatures` | `Your targets are boosted in your /roam and /meet while this is open. Meet them, then check the sheet and file it with /docs. One house log per signature, plus a banked cooldown reset that clears both.` |
+| errand | `2 / N signatures` | `Targets are boosted during /meet and /roam while mission is active. Meet them, then check the sheet and file it with /docs. One house log per signature, plus a banked cooldown reset that clears both.` |
 | riddle | `unsolved` | `Answer with /riddle <your answer>. Solve it for one house log, plus a banked cooldown reset: spend it the next time /roam or /meet tells you to wait, and it clears both.` |
 | coop | `waiting on a partner` / `partner post is live` | `Call a partner with /mission assist. The first inspector to back you up completes it for both of you. One house log each, plus a banked cooldown reset good for one of /roam or /meet.` |
 

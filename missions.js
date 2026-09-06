@@ -8,10 +8,14 @@
 // after the user already has their answer, and component handlers return a
 // ready-made interaction response so app.js stays a router.
 
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
-import { ButtonStyleTypes, InteractionResponseType, MessageComponentTypes } from 'discord-interactions';
+import fs from "fs";
+import path from "path";
+import { fileURLToPath } from "url";
+import {
+  ButtonStyleTypes,
+  InteractionResponseType,
+  MessageComponentTypes,
+} from "discord-interactions";
 
 import {
   ACCEPT_WINDOW_HOURS,
@@ -51,13 +55,13 @@ import {
   rollMissionType,
   rollSignatureCount,
   startRiddleCooldown,
-} from './constants/missions.js';
-import { matchCharacterGuess } from './constants/publicEncounters.js';
-import { composeFieldReport } from './imageComposition.js';
-import { getCharacterById, getFullName } from './constants/characters.js';
-import { HOUSES } from './constants/backgrounds.js';
-import { editChannelMessage, postChannelMessage } from './discordRest.js';
-import { redeemCooldownReset, releaseCommandInvoke } from './commandLimits.js';
+} from "./constants/missions.js";
+import { matchCharacterGuess } from "./constants/publicEncounters.js";
+import { composeFieldReport } from "./imageComposition.js";
+import { getCharacterById, getFullName } from "./constants/characters.js";
+import { HOUSES } from "./constants/backgrounds.js";
+import { editChannelMessage, postChannelMessage } from "./discordRest.js";
+import { redeemCooldownReset, releaseCommandInvoke } from "./commandLimits.js";
 import {
   bumpGuildMissionPostFailure,
   claimCoopHelper,
@@ -85,7 +89,7 @@ import {
   setMissionMessageId,
   trackCommandUsage,
   trackUserActivity,
-} from './db/supabase.js';
+} from "./db/supabase.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -108,7 +112,7 @@ function userIdOf(body) {
 
 function displayNameOf(body) {
   const user = body.member?.user || body.user;
-  return body.member?.nick || user?.global_name || user?.username || 'Someone';
+  return body.member?.nick || user?.global_name || user?.username || "Someone";
 }
 
 /**
@@ -128,7 +132,7 @@ function acceptRow(missionId, { disabled = false } = {}) {
         {
           type: MessageComponentTypes.BUTTON,
           style: ButtonStyleTypes.PRIMARY,
-          label: 'Accept',
+          label: "Accept",
           custom_id: `mission:accept:${missionId}`,
           disabled,
         },
@@ -151,7 +155,12 @@ function acceptRow(missionId, { disabled = false } = {}) {
  * `{ house, missionType }` pin what the rollers would otherwise decide. The
  * normal scheduler path passes nothing and everything is rolled.
  */
-export async function spawnMission(guild, channelId, now = new Date(), overrides = {}) {
+export async function spawnMission(
+  guild,
+  channelId,
+  now = new Date(),
+  overrides = {},
+) {
   const house = overrides.house || rollHouse();
   const missionType = overrides.missionType || rollMissionType();
   const teaser = pickRandom(MISSION_TEASERS);
@@ -164,7 +173,9 @@ export async function spawnMission(guild, channelId, now = new Date(), overrides
     // A house with no authored riddles would spawn an unanswerable mission.
     // Nothing has been posted yet, so standing down costs only this slot.
     if (!riddle) {
-      console.error(`[missions] No riddles authored for ${house} — skipping spawn`);
+      console.error(
+        `[missions] No riddles authored for ${house} — skipping spawn`,
+      );
       return null;
     }
     riddleId = riddle.id;
@@ -173,7 +184,9 @@ export async function spawnMission(guild, channelId, now = new Date(), overrides
   if (missionType === MISSION_TYPES.ERRAND) {
     targetIds = pickSignatureTargets(house, rollSignatureCount(house));
     if (targetIds.length === 0) {
-      console.error(`[missions] ${house} has no roster to draw signatures from — skipping spawn`);
+      console.error(
+        `[missions] ${house} has no roster to draw signatures from — skipping spawn`,
+      );
       return null;
     }
   }
@@ -200,19 +213,28 @@ export async function spawnMission(guild, channelId, now = new Date(), overrides
       allowed_mentions: { parse: [] },
     });
   } catch (err) {
-    console.error(`[missions] Post failed for guild ${guild.guild_id}:`, err.message);
+    console.error(
+      `[missions] Post failed for guild ${guild.guild_id}:`,
+      err.message,
+    );
 
     // Nobody can see it, so it must not sit there as this guild's "open"
     // mission and block the next slot.
     await expireMission(row.id).catch((e) =>
-      console.error('[missions] Failed to close orphaned mission row:', e.message),
+      console.error(
+        "[missions] Failed to close orphaned mission row:",
+        e.message,
+      ),
     );
 
     const { failures, disabled } = await bumpGuildMissionPostFailure(
       guild.guild_id,
       MISSION_POST_FAILURE_LIMIT,
     ).catch((e) => {
-      console.error('[missions] Failed to record mission post failure:', e.message);
+      console.error(
+        "[missions] Failed to record mission post failure:",
+        e.message,
+      );
       return { failures: 0, disabled: false };
     });
     if (disabled) {
@@ -233,7 +255,10 @@ export async function spawnMission(guild, channelId, now = new Date(), overrides
     ),
   );
   await clearGuildMissionPostFailures(guild.guild_id).catch((e) =>
-    console.error('[missions] Failed to clear mission post failures:', e.message),
+    console.error(
+      "[missions] Failed to clear mission post failures:",
+      e.message,
+    ),
   );
 
   console.log(
@@ -250,21 +275,22 @@ export async function spawnMission(guild, channelId, now = new Date(), overrides
 // same cat — parity that lives in the row rather than in a counter here, which
 // means it survives a restart, is the same in every guild's channel, and is
 // identical for every edit made to one post.
-const MESSENGER_CATS = ['Messenger_Cat.png', 'Messenger_Cat_2.png'];
+const MESSENGER_CATS = ["Messenger_Cat.png", "Messenger_Cat_2.png"];
 
 // Deliberately not a house sprite or a location: the whole design rests on the
 // post giving away neither the house nor the type, and a Frostheim courtyard
 // would read as a tell whether or not it actually correlated. The cat is the
 // same cat for every mission of every house.
 function messengerCatUrl(missionId) {
-  const baseUrl = process.env.BASE_URL || '';
-  const file = MESSENGER_CATS[Math.abs(Number(missionId) || 0) % MESSENGER_CATS.length];
+  const baseUrl = process.env.BASE_URL || "";
+  const file =
+    MESSENGER_CATS[Math.abs(Number(missionId) || 0) % MESSENGER_CATS.length];
   return `${baseUrl}/assets/sprites/${file}`;
 }
 
 // The board's colour. Missions are house-blind in public, so this is fixed
 // rather than drawn from the mission's house — the same reason the teaser is.
-const MISSION_EMBED_COLOR = 0x5865f2;
+const MISSION_EMBED_COLOR = 0x2669e6;
 
 /**
  * A public mission message, in the same shape as an encounter reveal
@@ -311,7 +337,10 @@ export async function finalizeWithdrawnMission(row) {
       embeds: [],
     });
   } catch (err) {
-    console.error(`[missions] Could not edit withdrawn mission ${row.id}:`, err.message);
+    console.error(
+      `[missions] Could not edit withdrawn mission ${row.id}:`,
+      err.message,
+    );
   }
 }
 
@@ -332,7 +361,10 @@ export async function finalizeLapsedMission(row) {
       embeds: [],
     });
   } catch (err) {
-    console.error(`[missions] Could not edit lapsed assist post ${row.id}:`, err.message);
+    console.error(
+      `[missions] Could not edit lapsed assist post ${row.id}:`,
+      err.message,
+    );
   }
 }
 
@@ -373,7 +405,9 @@ export async function runGuildMissionPass(guild, now = new Date()) {
     slotsToday = rollDailySlots(now);
     fired = [];
     await rollGuildMissionSlots(guild.guild_id, today, slotsToday);
-    console.log(`[missions] Rolled ${today} slots for guild ${guild.guild_id}: ${slotsToday.join(', ')}`);
+    console.log(
+      `[missions] Rolled ${today} slots for guild ${guild.guild_id}: ${slotsToday.join(", ")}`,
+    );
   }
 
   for (const slot of dueSlots(slotsToday, fired, now)) {
@@ -398,7 +432,10 @@ export async function runGuildMissionPass(guild, now = new Date()) {
     }
 
     await spawnMission(guild, channelId, now).catch((err) =>
-      console.error(`[missions] Spawn failed for guild ${guild.guild_id}:`, err.message),
+      console.error(
+        `[missions] Spawn failed for guild ${guild.guild_id}:`,
+        err.message,
+      ),
     );
 
     fired = [...fired, slot.index];
@@ -433,23 +470,27 @@ export async function handleMissionAccept(body, missionId, now = new Date()) {
       dailyLeadCap: DAILY_LEAD_CAP,
     });
   } catch (err) {
-    console.error('[missions] claim_mission failed:', err.message);
-    return { response: ephemeralResponse('Something went wrong picking that up. Try again?') };
+    console.error("[missions] claim_mission failed:", err.message);
+    return {
+      response: ephemeralResponse(
+        "Something went wrong picking that up. Try again?",
+      ),
+    };
   }
 
-  if (typeof outcome === 'string' && outcome.startsWith('busy')) {
-    return { response: ephemeralResponse(busyLine(outcome.split(':')[1])) };
+  if (typeof outcome === "string" && outcome.startsWith("busy")) {
+    return { response: ephemeralResponse(busyLine(outcome.split(":")[1])) };
   }
 
   // At their daily limit. Like every other refusal this leaves the request open
   // and its button live — which is the entire point of the cap, since the next
   // person to click is exactly who it was held back for.
-  if (outcome === 'capped') {
+  if (outcome === "capped") {
     return { response: ephemeralResponse(CAPPED_LINE) };
   }
 
-  if (outcome !== 'claimed') {
-    return { response: ephemeralResponse('Someone got there first.') };
+  if (outcome !== "claimed") {
+    return { response: ephemeralResponse("Someone got there first.") };
   }
 
   // The briefing `/mission` would show, pushed to the accepter now as an
@@ -461,10 +502,17 @@ export async function handleMissionAccept(body, missionId, now = new Date()) {
     const mission = await getAcceptedMission(userId);
     followup = mission
       ? ephemeral(await buildMissionBriefing(userId, mission))
-      : ephemeral("You've picked up the mission. Run `/mission` for the briefing.");
+      : ephemeral(
+          "You've picked up the mission. Run `/mission` for the briefing.",
+        );
   } catch (err) {
-    console.error('[missions] Could not build the pickup briefing:', err.message);
-    followup = ephemeral("You've picked up the mission. Run `/mission` for the briefing.");
+    console.error(
+      "[missions] Could not build the pickup briefing:",
+      err.message,
+    );
+    followup = ephemeral(
+      "You've picked up the mission. Run `/mission` for the briefing.",
+    );
   }
 
   return {
@@ -483,7 +531,10 @@ export async function handleMissionAccept(body, missionId, now = new Date()) {
     },
     followup,
     afterReply: async () => {
-      await Promise.allSettled([trackUserActivity(userId), trackCommandUsage(userId, 'mission')]);
+      await Promise.allSettled([
+        trackUserActivity(userId),
+        trackCommandUsage(userId, "mission"),
+      ]);
     },
   };
 }
@@ -498,7 +549,8 @@ export async function handleMissionAccept(body, missionId, now = new Date()) {
  * they don't know how to finish is a slot nobody can free.
  */
 export async function buildMissionBriefing(userId, mission) {
-  const label = MISSION_TYPE_LABEL[mission.mission_type] || mission.mission_type;
+  const label =
+    MISSION_TYPE_LABEL[mission.mission_type] || mission.mission_type;
 
   let objective;
   let progress;
@@ -513,7 +565,9 @@ export async function buildMissionBriefing(userId, mission) {
       required: targets.length,
     });
   } else if (mission.mission_type === MISSION_TYPES.RIDDLE) {
-    objective = missionObjectiveLine(mission, { riddle: getRiddle(mission.house, mission.riddle_id) });
+    objective = missionObjectiveLine(mission, {
+      riddle: getRiddle(mission.house, mission.riddle_id),
+    });
     progress = missionProgressLine(mission);
   } else {
     objective = missionObjectiveLine(mission);
@@ -522,18 +576,18 @@ export async function buildMissionBriefing(userId, mission) {
 
   const deadline = mission.accept_expires_at
     ? `\nCloses <t:${Math.floor(new Date(mission.accept_expires_at).getTime() / 1000)}:R>.`
-    : '';
+    : "";
 
   return [
     `**MISSION BRIEFING**  ·  ${mission.house}  ·  ${label}`,
-    '',
+    "",
     objective,
-    '',
+    "",
     `Progress: ${progress}${deadline}`,
-    '',
-    MISSION_INSTRUCTIONS[mission.mission_type] || '',
+    "",
+    MISSION_INSTRUCTIONS[mission.mission_type] || "",
   ]
-    .join('\n')
+    .join("\n")
     .trim();
 }
 
@@ -543,20 +597,28 @@ export async function buildMissionBriefing(userId, mission) {
  */
 export async function handleMission(body, now = new Date()) {
   const userId = userIdOf(body);
-  const wantsAssist = Boolean(body.data?.options?.find((o) => o.name === 'assist')?.value);
+  const wantsAssist = Boolean(
+    body.data?.options?.find((o) => o.name === "assist")?.value,
+  );
 
   const mission = await getAcceptedMission(userId);
 
   if (wantsAssist) return handleMissionAssist(body, mission);
 
   if (!mission) {
-    return { reply: ephemeral(await noMissionLine(body, now)), afterReply: null };
+    return {
+      reply: ephemeral(await noMissionLine(body, now)),
+      afterReply: null,
+    };
   }
 
   return {
     reply: ephemeral(await buildMissionBriefing(userId, mission)),
     afterReply: async () => {
-      await Promise.allSettled([trackUserActivity(userId), trackCommandUsage(userId, 'mission')]);
+      await Promise.allSettled([
+        trackUserActivity(userId),
+        trackCommandUsage(userId, "mission"),
+      ]);
     },
   };
 }
@@ -569,7 +631,8 @@ export async function handleMission(body, now = new Date()) {
  */
 async function noMissionLine(body, now) {
   const guildId = body.guild_id;
-  if (!guildId) return 'No active mission. Missions are handed out in servers, not here.';
+  if (!guildId)
+    return "No active mission. Missions are handed out in servers, not here.";
 
   const guild = await getGuildSettings(guildId).catch(() => null);
   if (!guild?.missions_enabled || guild.locked) {
@@ -577,12 +640,16 @@ async function noMissionLine(body, now) {
   }
 
   if (guild.mission_slots_day !== localDayKey(now)) {
-    return 'No active mission. The next briefing lands sometime today.';
+    return "No active mission. The next briefing lands sometime today.";
   }
 
-  const at = nextSlotAt(guild.mission_slots_today, guild.mission_slots_fired, now);
+  const at = nextSlotAt(
+    guild.mission_slots_today,
+    guild.mission_slots_fired,
+    now,
+  );
   const channel = resolveMissionChannel(guild);
-  const where = channel ? ` Watch <#${channel}>.` : '';
+  const where = channel ? ` Watch <#${channel}>.` : "";
 
   return at
     ? `No active mission. The next briefing lands later today.${where}`
@@ -596,38 +663,64 @@ async function handleMissionAssist(body, mission) {
   const guildId = body.guild_id;
 
   if (!mission) {
-    return { reply: ephemeral('You have no mission to call backup for.'), afterReply: null };
+    return {
+      reply: ephemeral("You have no mission to call backup for."),
+      afterReply: null,
+    };
   }
   if (mission.mission_type !== MISSION_TYPES.COOP) {
     return {
-      reply: ephemeral(`Your current mission doesn't need a partner. ${nextStepLine(mission)}`),
+      reply: ephemeral(
+        `Your current mission doesn't need a partner. ${nextStepLine(mission)}`,
+      ),
       afterReply: null,
     };
   }
   if (!guildId) {
     return {
-      reply: ephemeral('Call for backup from the server the mission came from.'),
+      reply: ephemeral(
+        "Call for backup from the server the mission came from.",
+      ),
       afterReply: null,
     };
   }
   if (mission.assist_message_id) {
     return {
-      reply: ephemeral(`Your call for backup is already up in <#${mission.channel_id}>.`),
+      reply: ephemeral(
+        `Your call for backup is already up in <#${mission.channel_id}>.`,
+      ),
+      afterReply: null,
+    };
+  }
+  // The call for backup goes out as this command's own reply, so it lands in
+  // the channel the command was run from. Run it anywhere but the mission
+  // channel and the inspectors watching for missions would never see it — so
+  // that's refused, with a pointer to the right channel.
+  const invokedChannelId = body.channel_id ?? body.channel?.id ?? null;
+  if (invokedChannelId && invokedChannelId !== mission.channel_id) {
+    return {
+      reply: ephemeral(
+        `Run \`/mission assist:True\` in <#${mission.channel_id}>, where the mission was posted.`,
+      ),
       afterReply: null,
     };
   }
 
-  const name = displayNameOf(body);
-
-  // The house stays out of the assist post for the same reason it stays out of
-  // the request: the helper learns nothing until they have clicked.
-  let message;
-  try {
-    message = await postChannelMessage(mission.channel_id, {
+  // The reply IS the public post — no defer, no ephemeral ack (app.js sends it
+  // as a plain CHANNEL_MESSAGE_WITH_SOURCE). The lead is @mentioned in the
+  // CONTENT — a mention inside an embed never notifies — with allowed_mentions
+  // scoped to their id alone, so the call pings the lead and nobody else. This
+  // is a deliberate departure from the pickup post, which pings no one: an
+  // unanswered co-op is a dead slot for two people, and the ping is the whole
+  // point of the command. The house still stays out of it — the helper learns
+  // nothing until they have clicked.
+  return {
+    publicReply: {
+      content: `🚨 <@${userId}> needs help during this house mission!`,
       embeds: [
         missionEmbed(
           mission.id,
-          `🚨 **${name}** needs a partner in the field. First inspector to back them up clears it for both of you.`,
+          "First inspector to back them up clears it for both of you — one house log each, plus a banked cooldown reset.",
         ),
       ],
       components: [
@@ -637,31 +730,31 @@ async function handleMissionAssist(body, mission) {
             {
               type: MessageComponentTypes.BUTTON,
               style: ButtonStyleTypes.PRIMARY,
-              label: 'Join the mission',
+              label: "Join the mission",
               custom_id: `mission:assist:${mission.id}`,
             },
           ],
         },
       ],
-      allowed_mentions: { parse: [] },
-    });
-  } catch (err) {
-    console.error(`[missions] Assist post failed for mission ${mission.id}:`, err.message);
-    return {
-      reply: ephemeral(`Couldn't post your call for backup in <#${mission.channel_id}>. Try again?`),
-      afterReply: null,
-    };
-  }
-
-  return {
-    reply: ephemeral(`Your call for backup is up in <#${mission.channel_id}>.`),
-    afterReply: async () => {
-      // If this write is lost the post is still live and still claimable — the
-      // only cost is that a second /mission assist would post a duplicate.
-      await setAssistMessageId(mission.id, message.id).catch((err) =>
-        console.error(`[missions] Could not store assist_message_id for ${mission.id}:`, err.message),
-      );
-      await Promise.allSettled([trackUserActivity(userId), trackCommandUsage(userId, 'mission')]);
+      allowed_mentions: { users: [userId] },
+    },
+    // `originalMessageId` is the id of the reply Discord posted for us, read
+    // back from @original by app.js. If it's lost the post is still live and
+    // still claimable — the only cost is that a second /mission assist would
+    // post a duplicate.
+    afterReply: async ({ originalMessageId } = {}) => {
+      if (originalMessageId) {
+        await setAssistMessageId(mission.id, originalMessageId).catch((err) =>
+          console.error(
+            `[missions] Could not store assist_message_id for ${mission.id}:`,
+            err.message,
+          ),
+        );
+      }
+      await Promise.allSettled([
+        trackUserActivity(userId),
+        trackCommandUsage(userId, "mission"),
+      ]);
     },
   };
 }
@@ -678,23 +771,28 @@ export async function handleMissionAssistJoin(body, missionId) {
   try {
     mission = await getMissionById(missionId);
   } catch (err) {
-    console.error('[missions] Could not load co-op mission:', err.message);
-    return { response: ephemeralResponse('Something went wrong there. Try again?') };
+    console.error("[missions] Could not load co-op mission:", err.message);
+    return {
+      response: ephemeralResponse("Something went wrong there. Try again?"),
+    };
   }
-  if (!mission) return { response: ephemeralResponse("That mission's already closed.") };
+  if (!mission)
+    return { response: ephemeralResponse("That mission's already closed.") };
 
   let outcome;
   try {
     outcome = await claimCoopHelper(missionId, helperId);
   } catch (err) {
-    console.error('[missions] claim_coop_helper failed:', err.message);
-    return { response: ephemeralResponse('Something went wrong there. Try again?') };
+    console.error("[missions] claim_coop_helper failed:", err.message);
+    return {
+      response: ephemeralResponse("Something went wrong there. Try again?"),
+    };
   }
 
-  if (outcome === 'self') {
+  if (outcome === "self") {
     return { response: ephemeralResponse("You can't back yourself up.") };
   }
-  if (outcome !== 'joined') {
+  if (outcome !== "joined") {
     return { response: ephemeralResponse("That mission's already covered.") };
   }
 
@@ -732,7 +830,7 @@ export async function handleMissionAssistJoin(body, missionId) {
           house: mission.house,
           missionType: mission.mission_type,
           missionId: mission.id,
-          role: 'lead',
+          role: "lead",
           points: 1,
         }),
         recordMissionCompletion({
@@ -740,12 +838,12 @@ export async function handleMissionAssistJoin(body, missionId) {
           house: mission.house,
           missionType: mission.mission_type,
           missionId: mission.id,
-          role: 'assist',
+          role: "assist",
           points: 1,
         }),
         trackUserActivity(helperId),
-        trackCommandUsage(helperId, 'mission'),
-      ]).then(reportFailures('co-op completion'));
+        trackCommandUsage(helperId, "mission"),
+      ]).then(reportFailures("co-op completion"));
     },
   };
 }
@@ -766,23 +864,26 @@ export async function buildDocsMessage(mission, targets) {
     .map((target) => {
       const character = getCharacterById(target.characterId);
       const name = character ? getFullName(character) : target.characterId;
-      return `${target.signed ? '✅' : '⬜'} ${name}`;
+      return `${target.signed ? "✅" : "⬜"} ${name}`;
     })
-    .join('\n');
+    .join("\n");
 
   const lines = [
     `**DARKWICK FIELD REPORT — ${mission.house}**   ·   ${targets.length} signature${
-      targets.length === 1 ? '' : 's'
+      targets.length === 1 ? "" : "s"
     }`,
     roster,
   ];
 
   if (!ready) {
-    lines.push('', `🔒 Need ${unsigned.length} more — ${formatNameList(unsigned.map((t) => t.characterId))}`);
+    lines.push(
+      "",
+      `🔒 Need ${unsigned.length} more — ${formatNameList(unsigned.map((t) => t.characterId))}`,
+    );
   }
 
   return {
-    content: lines.join('\n'),
+    content: lines.join("\n"),
     files: await fieldReportFile(mission, targets),
     components: [
       {
@@ -790,8 +891,10 @@ export async function buildDocsMessage(mission, targets) {
         components: [
           {
             type: MessageComponentTypes.BUTTON,
-            style: ready ? ButtonStyleTypes.SUCCESS : ButtonStyleTypes.SECONDARY,
-            label: 'Complete mission',
+            style: ready
+              ? ButtonStyleTypes.SUCCESS
+              : ButtonStyleTypes.SECONDARY,
+            label: "Complete mission",
             custom_id: `mission:file:${mission.id}`,
             disabled: !ready,
           },
@@ -806,7 +909,7 @@ export async function buildDocsMessage(mission, targets) {
 // "Romeo Scorpius Lucci" resolves to Romeo_Lucci.png.
 function signatureFilename(character) {
   if (!character?.firstName || !character?.lastName) return null;
-  return `${character.firstName}_${character.lastName.split(' ').pop()}.png`;
+  return `${character.firstName}_${character.lastName.split(" ").pop()}.png`;
 }
 
 /**
@@ -844,9 +947,12 @@ async function fieldReportFile(mission, targets) {
     });
 
     const buffer = await composeFieldReport(mission.house, rows);
-    return [{ attachment: buffer, name: 'field-report.png' }];
+    return [{ attachment: buffer, name: "field-report.png" }];
   } catch (err) {
-    console.error(`[missions] Could not compose the field report for ${mission.id}:`, err.message);
+    console.error(
+      `[missions] Could not compose the field report for ${mission.id}:`,
+      err.message,
+    );
     return undefined;
   }
 }
@@ -854,13 +960,13 @@ async function fieldReportFile(mission, targets) {
 function nextStepLine(mission) {
   switch (mission.mission_type) {
     case MISSION_TYPES.RIDDLE:
-      return 'Answer it with `/riddle`.';
+      return "Answer it with `/riddle`.";
     case MISSION_TYPES.COOP:
-      return 'Call a partner with `/mission assist:True`.';
+      return "Call a partner with `/mission assist:True`.";
     case MISSION_TYPES.ERRAND:
-      return 'Collect its signatures and file it with `/docs`.';
+      return "Collect its signatures and file it with `/docs`.";
     default:
-      return 'Check it with `/mission`.';
+      return "Check it with `/mission`.";
   }
 }
 
@@ -869,11 +975,16 @@ export async function handleDocs(body) {
   const mission = await getAcceptedMission(userId);
 
   if (!mission) {
-    return { reply: ephemeral('You have no field paperwork right now.'), afterReply: null };
+    return {
+      reply: ephemeral("You have no field paperwork right now."),
+      afterReply: null,
+    };
   }
   if (mission.mission_type !== MISSION_TYPES.ERRAND) {
     return {
-      reply: ephemeral(`Your current mission isn't paperwork. ${nextStepLine(mission)}`),
+      reply: ephemeral(
+        `Your current mission isn't paperwork. ${nextStepLine(mission)}`,
+      ),
       afterReply: null,
     };
   }
@@ -881,7 +992,10 @@ export async function handleDocs(body) {
   return {
     reply: await buildDocsMessage(mission, errandTargets(mission)),
     afterReply: async () => {
-      await Promise.allSettled([trackUserActivity(userId), trackCommandUsage(userId, 'docs')]);
+      await Promise.allSettled([
+        trackUserActivity(userId),
+        trackCommandUsage(userId, "docs"),
+      ]);
     },
   };
 }
@@ -898,8 +1012,10 @@ export async function handleMissionFile(body, missionId) {
   try {
     mission = await getMissionById(missionId);
   } catch (err) {
-    console.error('[missions] Could not load errand:', err.message);
-    return { response: ephemeralResponse('Something went wrong there. Try again?') };
+    console.error("[missions] Could not load errand:", err.message);
+    return {
+      response: ephemeralResponse("Something went wrong there. Try again?"),
+    };
   }
   if (!mission || mission.accepted_by !== userId) {
     return { response: ephemeralResponse("That mission's already closed.") };
@@ -909,27 +1025,31 @@ export async function handleMissionFile(body, missionId) {
   try {
     outcome = await fileErrand(missionId, userId);
   } catch (err) {
-    console.error('[missions] file_errand failed:', err.message);
-    return { response: ephemeralResponse('Something went wrong filing that. Try again?') };
+    console.error("[missions] file_errand failed:", err.message);
+    return {
+      response: ephemeralResponse(
+        "Something went wrong filing that. Try again?",
+      ),
+    };
   }
 
-  if (outcome === 'not_ready') {
+  if (outcome === "not_ready") {
     return { response: ephemeralResponse("You're still short a signature.") };
   }
   // 'filed:<points>' — the count comes back from the row the RPC locked and
   // checked, rather than being re-derived here from a copy that could have
   // moved on since /docs rendered it.
-  if (typeof outcome !== 'string' || !outcome.startsWith('filed')) {
+  if (typeof outcome !== "string" || !outcome.startsWith("filed")) {
     return { response: ephemeralResponse("That mission's already closed.") };
   }
 
-  const points = Number(outcome.split(':')[1]) || 1;
+  const points = Number(outcome.split(":")[1]) || 1;
 
   return {
     response: {
       type: InteractionResponseType.UPDATE_MESSAGE,
       data: {
-        content: `Report filed. ${mission.house} owes you one. **+${points} house log${points === 1 ? '' : 's'}**\n${BANKED_RESET_LINE}`,
+        content: `Report filed. ${mission.house} owes you one. **+${points} house log${points === 1 ? "" : "s"}**\n${BANKED_RESET_LINE}`,
         components: [],
       },
     },
@@ -941,12 +1061,12 @@ export async function handleMissionFile(body, missionId) {
           house: mission.house,
           missionType: mission.mission_type,
           missionId: mission.id,
-          role: 'lead',
+          role: "lead",
           points,
         }),
         trackUserActivity(userId),
-        trackCommandUsage(userId, 'docs'),
-      ]).then(reportFailures('errand filing'));
+        trackCommandUsage(userId, "docs"),
+      ]).then(reportFailures("errand filing"));
     },
   };
 }
@@ -955,32 +1075,51 @@ export async function handleMissionFile(body, missionId) {
 
 export async function handleRiddle(body, now = new Date()) {
   const userId = userIdOf(body);
-  const rawGuess = body.data?.options?.find((o) => o.name === 'answer')?.value ?? '';
+  const rawGuess =
+    body.data?.options?.find((o) => o.name === "answer")?.value ?? "";
 
   const mission = await getAcceptedMission(userId);
   if (!mission) {
-    return { reply: ephemeral('You have no mission to answer for.'), afterReply: null };
+    return {
+      reply: ephemeral("You have no mission to answer for."),
+      afterReply: null,
+    };
   }
   if (mission.mission_type !== MISSION_TYPES.RIDDLE) {
     return {
-      reply: ephemeral(`Your current mission isn't a riddle. ${nextStepLine(mission)}`),
+      reply: ephemeral(
+        `Your current mission isn't a riddle. ${nextStepLine(mission)}`,
+      ),
       afterReply: null,
     };
   }
 
   const riddle = getRiddle(mission.house, mission.riddle_id);
   if (!riddle) {
-    console.error(`[missions] Mission ${mission.id} references unknown riddle ${mission.riddle_id}`);
-    return { reply: ephemeral('That report has gone missing from the file. Nothing to answer.'), afterReply: null };
+    console.error(
+      `[missions] Mission ${mission.id} references unknown riddle ${mission.riddle_id}`,
+    );
+    return {
+      reply: ephemeral(
+        "That report has gone missing from the file. Nothing to answer.",
+      ),
+      afterReply: null,
+    };
   }
 
   // The 20s gate is what stops someone typing all 26 names in quick
   // succession. It is checked before the match so a wrong answer can't be
   // probed for free.
-  const remaining = getRiddleCooldownRemaining(mission.id, userId, now.getTime());
+  const remaining = getRiddleCooldownRemaining(
+    mission.id,
+    userId,
+    now.getTime(),
+  );
   if (remaining > 0) {
     return {
-      reply: ephemeral(`Give it a moment — try again in ${Math.ceil(remaining / 1000)}s.`),
+      reply: ephemeral(
+        `Give it a moment — try again in ${Math.ceil(remaining / 1000)}s.`,
+      ),
       afterReply: null,
     };
   }
@@ -988,19 +1127,25 @@ export async function handleRiddle(body, now = new Date()) {
   const guessedId = matchCharacterGuess(rawGuess);
   if (guessedId !== riddle.answer) {
     startRiddleCooldown(mission.id, userId, now.getTime());
-    return { reply: ephemeral(pickRandom(RIDDLE_WRONG_LINES)), afterReply: null };
+    return {
+      reply: ephemeral(pickRandom(RIDDLE_WRONG_LINES)),
+      afterReply: null,
+    };
   }
 
   let solved;
   try {
     solved = await completeMission(mission.id, userId, MISSION_TYPES.RIDDLE);
   } catch (err) {
-    console.error('[missions] complete_mission failed:', err.message);
-    return { reply: ephemeral('Something went wrong there. Try again?'), afterReply: null };
+    console.error("[missions] complete_mission failed:", err.message);
+    return {
+      reply: ephemeral("Something went wrong there. Try again?"),
+      afterReply: null,
+    };
   }
 
   if (!solved) {
-    return { reply: ephemeral('That mission just closed.'), afterReply: null };
+    return { reply: ephemeral("That mission just closed."), afterReply: null };
   }
 
   const character = getCharacterById(riddle.answer);
@@ -1016,12 +1161,12 @@ export async function handleRiddle(body, now = new Date()) {
           house: mission.house,
           missionType: mission.mission_type,
           missionId: mission.id,
-          role: 'lead',
+          role: "lead",
           points: 1,
         }),
         trackUserActivity(userId),
-        trackCommandUsage(userId, 'riddle'),
-      ]).then(reportFailures('riddle solve'));
+        trackCommandUsage(userId, "riddle"),
+      ]).then(reportFailures("riddle solve"));
     },
   };
 }
@@ -1047,7 +1192,10 @@ export async function cooldownReplyWithReset(userId, command, reason) {
   try {
     held = await countCooldownResets(userId);
   } catch (err) {
-    console.error('[missions] Could not count banked cooldown resets:', err.message);
+    console.error(
+      "[missions] Could not count banked cooldown resets:",
+      err.message,
+    );
   }
 
   if (held === 0) return { content: reason, flags: EPHEMERAL };
@@ -1088,7 +1236,7 @@ export async function handleCooldownReset(body, command) {
   const userId = userIdOf(body);
   const outcome = await redeemCooldownReset(userId, command);
 
-  if (outcome === 'not_needed') {
+  if (outcome === "not_needed") {
     return {
       outcome,
       refusal: ephemeralResponse(
@@ -1096,14 +1244,21 @@ export async function handleCooldownReset(body, command) {
       ),
     };
   }
-  if (outcome === 'none') {
+  if (outcome === "none") {
     return {
       outcome,
-      refusal: ephemeralResponse('You have no cooldown resets banked. Finish a mission to earn one.'),
+      refusal: ephemeralResponse(
+        "You have no cooldown resets banked. Finish a mission to earn one.",
+      ),
     };
   }
   if (!RESET_SPENT_LINES[outcome]) {
-    return { outcome, refusal: ephemeralResponse('Something went wrong spending that. Try again?') };
+    return {
+      outcome,
+      refusal: ephemeralResponse(
+        "Something went wrong spending that. Try again?",
+      ),
+    };
   }
 
   // The database cooldown is only half of what stands between the player and
@@ -1121,7 +1276,7 @@ export async function handleCooldownReset(body, command) {
   //
   // A 'both' reset frees the command they didn't ask about too, so its throttle
   // goes as well. Someone blocked on /roam has usually just tried /meet.
-  for (const cleared of outcome === 'both' ? ['roam', 'meet'] : [outcome]) {
+  for (const cleared of outcome === "both" ? ["roam", "meet"] : [outcome]) {
     releaseCommandInvoke(userId, cleared);
   }
 
@@ -1134,7 +1289,10 @@ export async function handleCooldownReset(body, command) {
 // by summed affinity, alongside the record of what they have actually done.
 async function closestHouseByAffinity(userId) {
   const relationships = await getUserRelationships(userId).catch((err) => {
-    console.error('[missions] Could not read relationships for the dossier:', err.message);
+    console.error(
+      "[missions] Could not read relationships for the dossier:",
+      err.message,
+    );
     return [];
   });
 
@@ -1142,7 +1300,8 @@ async function closestHouseByAffinity(userId) {
   for (const relationship of relationships || []) {
     const character = getCharacterById(relationship.character_id);
     if (!character?.house) continue;
-    totals[character.house] = (totals[character.house] || 0) + (relationship.affinity || 0);
+    totals[character.house] =
+      (totals[character.house] || 0) + (relationship.affinity || 0);
   }
 
   const ranked = Object.entries(totals)
@@ -1161,7 +1320,10 @@ export async function buildDossierMessage(userId) {
   const [stats, mission, closestHouse] = await Promise.all([
     getMissionLogStats(userId),
     getAcceptedMission(userId).catch((err) => {
-      console.error('[missions] Could not read the held mission for the dossier:', err.message);
+      console.error(
+        "[missions] Could not read the held mission for the dossier:",
+        err.message,
+      );
       return null;
     }),
     closestHouseByAffinity(userId),
@@ -1180,10 +1342,10 @@ export async function buildDossierMessage(userId) {
 
   const lines = [
     `**INSPECTOR DOSSIER**`,
-    '',
-    `Rank: **${rank.name}**  ·  ${stats.points} house log${stats.points === 1 ? '' : 's'} · ${
+    "",
+    `Rank: **${rank.name}**  ·  ${stats.points} house log${stats.points === 1 ? "" : "s"} · ${
       stats.filed
-    } mission${stats.filed === 1 ? '' : 's'} filed`,
+    } mission${stats.filed === 1 ? "" : "s"} filed`,
   ];
 
   // The ledger for the reward players hold rather than spend. The button that
@@ -1204,8 +1366,8 @@ export async function buildDossierMessage(userId) {
   // imply a bar's usual meaning — progress toward something — that isn't real.
   if (houseRows.length) {
     lines.push(
-      '',
-      `By house: ${houseRows.map(([house, points]) => `${house} ${points}`).join(' · ')}`,
+      "",
+      `By house: ${houseRows.map(([house, points]) => `${house} ${points}`).join(" · ")}`,
     );
   }
 
@@ -1221,16 +1383,17 @@ export async function buildDossierMessage(userId) {
       progress = missionProgressLine(mission);
     }
     lines.push(
-      '',
+      "",
       `Current mission: **${mission.house}** · ${
         MISSION_TYPE_LABEL[mission.mission_type] || mission.mission_type
       } · ${progress}`,
     );
   } else {
-    lines.push('', 'Current mission: none');
+    lines.push("", "Current mission: none");
   }
 
-  if (closestHouse) lines.push(`Closest house (by affinity): **${closestHouse}**`);
+  if (closestHouse)
+    lines.push(`Closest house (by affinity): **${closestHouse}**`);
 
   // The emblem is the house this player has done the most FOR, not the one they
   // are fondest of — ties broken by whichever they filed for most recently. A
@@ -1240,7 +1403,7 @@ export async function buildDossierMessage(userId) {
   const { embeds, files } = emblemAttachment(emblemHouse);
 
   return {
-    content: lines.join('\n'),
+    content: lines.join("\n"),
     embeds: embeds.length ? embeds : undefined,
     files: files.length ? files : undefined,
     allowed_mentions: { parse: [] },
@@ -1251,7 +1414,9 @@ function pickEmblemHouse(stats, fallbackHouse) {
   const ranked = Object.entries(stats.byHouse)
     .filter(([, points]) => points > 0)
     .sort(
-      (a, b) => b[1] - a[1] || (stats.latestByHouse[b[0]] || 0) - (stats.latestByHouse[a[0]] || 0),
+      (a, b) =>
+        b[1] - a[1] ||
+        (stats.latestByHouse[b[0]] || 0) - (stats.latestByHouse[a[0]] || 0),
     );
   return ranked[0]?.[0] || fallbackHouse || null;
 }
@@ -1259,14 +1424,21 @@ function pickEmblemHouse(stats, fallbackHouse) {
 // Kept from the old /house: one authored line per house, now used as the
 // caption on the dossier's emblem card.
 const HOUSE_COMMENDATIONS = {
-  [HOUSES.FROSTHEIM]: 'Frostheim has your name on file, and Frostheim keeps its files.',
-  [HOUSES.VAGASTROM]: "Vagastrom doesn't say thank you. It just stops giving you trouble.",
-  [HOUSES.HOTARUBI]: 'Hotarubi lit a lantern for you. Whether you noticed is another matter.',
-  [HOUSES.DIONYSIA]: 'Dionysia put your name on the guest list and left it there.',
-  [HOUSES.MORTKRANKEN]: 'Mortkranken has stopped calling you a specimen. Mostly.',
-  [HOUSES.JABBERWOCK]: 'Jabberwock would give you a free tour, if you asked. Or if you did not.',
-  [HOUSES.OBSCUARY]: 'Obscuary owes you a favor, and Obscuary remembers favors.',
-  [HOUSES.SINOSTRA]: 'Sinostra has your account marked in the black. Enjoy it.',
+  [HOUSES.FROSTHEIM]:
+    "Frostheim has your name on file, and Frostheim keeps its files.",
+  [HOUSES.VAGASTROM]:
+    "Vagastrom doesn't say thank you. It just stops giving you trouble.",
+  [HOUSES.HOTARUBI]:
+    "Hotarubi lit a lantern for you. Whether you noticed is another matter.",
+  [HOUSES.DIONYSIA]:
+    "Dionysia put your name on the guest list and left it there.",
+  [HOUSES.MORTKRANKEN]:
+    "Mortkranken has stopped calling you a specimen. Mostly.",
+  [HOUSES.JABBERWOCK]:
+    "Jabberwock would give you a free tour, if you asked. Or if you did not.",
+  [HOUSES.OBSCUARY]:
+    "Obscuary owes you a favor, and Obscuary remembers favors.",
+  [HOUSES.SINOSTRA]: "Sinostra has your account marked in the black. Enjoy it.",
 };
 
 function emblemAttachment(house) {
@@ -1275,18 +1447,24 @@ function emblemAttachment(house) {
   const filename = `${house}.png`;
   let buffer = null;
   try {
-    buffer = fs.readFileSync(path.join(__dirname, 'assets', 'emblem', filename));
+    buffer = fs.readFileSync(
+      path.join(__dirname, "assets", "emblem", filename),
+    );
   } catch (err) {
-    console.error(`[missions] Could not load emblem for ${house}:`, err.message);
+    console.error(
+      `[missions] Could not load emblem for ${house}:`,
+      err.message,
+    );
   }
 
   return {
     embeds: [
       {
         title: house,
-        description: HOUSE_COMMENDATIONS[house] || `${house} is glad of the help.`,
+        description:
+          HOUSE_COMMENDATIONS[house] || `${house} is glad of the help.`,
         image: buffer ? { url: `attachment://${filename}` } : undefined,
-        color: 0x5865f2,
+        color: MISSION_EMBED_COLOR,
       },
     ],
     files: buffer ? [{ attachment: buffer, name: filename }] : [],
@@ -1304,7 +1482,7 @@ const PERMISSION_MANAGE_GUILD = 1n << 5n;
 function canManageMissions(member) {
   let permissions;
   try {
-    permissions = BigInt(member?.permissions ?? '0');
+    permissions = BigInt(member?.permissions ?? "0");
   } catch {
     return false;
   }
@@ -1318,12 +1496,20 @@ export async function handleMissionsAdmin(body) {
   const userId = userIdOf(body);
   const guildId = body.guild_id;
 
-  if (!guildId) return { reply: ephemeral('This only works in a server.'), afterReply: null };
+  if (!guildId)
+    return {
+      reply: ephemeral("This only works in a server."),
+      afterReply: null,
+    };
 
   if (!canManageMissions(body.member)) {
-    console.warn(`[missions] Refused /missions from ${userId} in ${guildId} — lacks Manage Server`);
+    console.warn(
+      `[missions] Refused /missions from ${userId} in ${guildId} — lacks Manage Server`,
+    );
     return {
-      reply: ephemeral('You need the **Manage Server** permission to configure missions.'),
+      reply: ephemeral(
+        "You need the **Manage Server** permission to configure missions.",
+      ),
       afterReply: null,
     };
   }
@@ -1333,21 +1519,28 @@ export async function handleMissionsAdmin(body) {
   // The owner's kill switch (db/migrations/013) outranks the admin's switch and
   // covers both features, so a locked guild can't turn missions on either.
   if (settings?.locked) {
-    console.warn(`[missions] Refused /missions in locked guild ${guildId} (from ${userId})`);
-    return { reply: ephemeral("Missions aren't available in this server."), afterReply: null };
+    console.warn(
+      `[missions] Refused /missions in locked guild ${guildId} (from ${userId})`,
+    );
+    return {
+      reply: ephemeral("Missions aren't available in this server."),
+      afterReply: null,
+    };
   }
 
   const sub = body.data?.options?.[0];
   const subcommand = sub?.name;
 
-  if (subcommand === 'enable') {
+  if (subcommand === "enable") {
     const channelId =
-      sub.options?.find((o) => o.name === 'channel')?.value || settings?.encounter_channel_id || null;
+      sub.options?.find((o) => o.name === "channel")?.value ||
+      settings?.encounter_channel_id ||
+      null;
 
     if (!channelId) {
       return {
         reply: ephemeral(
-          'Pick a channel for missions, or set up `/encounters channel` first and missions will follow it.',
+          "Pick a channel for missions, or set up `/encounters channel` first and missions will follow it.",
         ),
         afterReply: null,
       };
@@ -1359,46 +1552,50 @@ export async function handleMissionsAdmin(body) {
       reply: ephemeral(
         [
           `Missions will post in <#${channelId}>.`,
-          'Three requests a day, at times that move inside their band from one day to the next.',
-          'The post never says which house or which type it is. Only the person who hits **Accept** finds that out, with `/mission`.',
-          'I need **View Channel**, **Send Messages**, **Attach Files** and **Embed Links** there.',
-        ].join('\n'),
+          "Three requests a day, at times that move inside their band from one day to the next.",
+          "The post never says which house or which type it is. Only the person who hits **Accept** finds that out, with `/mission`.",
+          "I need **View Channel**, **Send Messages**, **Attach Files** and **Embed Links** there.",
+        ].join("\n"),
       ),
       afterReply: async () => {
         // Surfaces a permissions problem now, at setup, rather than burning
         // three days of slots before the auto-disable notices.
         try {
           await postChannelMessage(channelId, {
-            content: 'Mission requests will come through here. Watch the board.',
+            content:
+              "Mission requests will come through here. Watch the board.",
             allowed_mentions: { parse: [] },
           });
         } catch (err) {
-          console.error(`[missions] Setup check failed for guild ${guildId}:`, err.message);
+          console.error(
+            `[missions] Setup check failed for guild ${guildId}:`,
+            err.message,
+          );
         }
       },
     };
   }
 
-  if (subcommand === 'disable') {
+  if (subcommand === "disable") {
     await setGuildMissionsEnabled(guildId, false);
     return {
       reply: ephemeral(
-        'Missions are off for this server. Anything already in flight finishes normally.',
+        "Missions are off for this server. Anything already in flight finishes normally.",
       ),
       afterReply: null,
     };
   }
 
-  if (subcommand === 'status') {
+  if (subcommand === "status") {
     return { reply: ephemeral(missionStatusLine(settings)), afterReply: null };
   }
 
-  return { reply: ephemeral('Unknown subcommand.'), afterReply: null };
+  return { reply: ephemeral("Unknown subcommand."), afterReply: null };
 }
 
 function missionStatusLine(settings, now = new Date()) {
   if (!settings) {
-    return 'Missions have never been set up here. Run `/missions enable` to start.';
+    return "Missions have never been set up here. Run `/missions enable` to start.";
   }
 
   const channelId = resolveMissionChannel(settings);
@@ -1406,7 +1603,7 @@ function missionStatusLine(settings, now = new Date()) {
   const failures = settings.mission_post_failures || 0;
 
   if (!channel) {
-    return '⚠️ **Not running** — no channel is set. Run `/missions enable`.';
+    return "⚠️ **Not running** — no channel is set. Run `/missions enable`.";
   }
   if (!settings.missions_enabled && failures >= MISSION_POST_FAILURE_LIMIT) {
     return `⚠️ **Stopped** — ${failures} mission posts in a row failed to reach ${channel}, so I stopped trying.\nCheck I have **View Channel**, **Send Messages**, **Attach Files** and **Embed Links** there, then run \`/missions enable\` again.`;
@@ -1418,25 +1615,30 @@ function missionStatusLine(settings, now = new Date()) {
   const lines = [`✅ **Running** — posting in ${channel}.`];
   if (failures > 0) {
     lines.push(
-      `⚠️ ${failures} recent post${failures === 1 ? '' : 's'} failed. After ${MISSION_POST_FAILURE_LIMIT} in a row I'll stop.`,
+      `⚠️ ${failures} recent post${failures === 1 ? "" : "s"} failed. After ${MISSION_POST_FAILURE_LIMIT} in a row I'll stop.`,
     );
   }
 
   // Unlike encounters, the schedule is safe to show: knowing when a request
   // lands wins nobody anything, because you still have to be first to the
   // button.
-  if (settings.mission_slots_day === localDayKey(now) && settings.mission_slots_today?.length) {
+  if (
+    settings.mission_slots_day === localDayKey(now) &&
+    settings.mission_slots_today?.length
+  ) {
     const fired = new Set((settings.mission_slots_fired || []).map(Number));
     const slots = settings.mission_slots_today.map((iso, index) => {
       const stamp = `<t:${Math.floor(new Date(iso).getTime() / 1000)}:t>`;
       return fired.has(index) ? `~~${stamp}~~` : stamp;
     });
-    lines.push(`Today: ${slots.join(' · ')} (struck through = already posted)`);
+    lines.push(`Today: ${slots.join(" · ")} (struck through = already posted)`);
   } else {
-    lines.push("Today's times haven't been rolled yet — the next tick will do it.");
+    lines.push(
+      "Today's times haven't been rolled yet — the next tick will do it.",
+    );
   }
 
-  return lines.join('\n');
+  return lines.join("\n");
 }
 
 // --- /missiondev (owner-only test tooling) --------------------------------
@@ -1473,50 +1675,58 @@ export async function handleMissionDev(body, now = new Date()) {
 
   if (!isMissionDevOwner(userId)) {
     console.warn(`[missions] /missiondev refused for ${userId} in ${guildId}`);
-    return { content: 'Unknown command.' };
+    return { content: "Unknown command." };
   }
 
-  if (!guildId) return { content: 'This only works in a server.' };
+  if (!guildId) return { content: "This only works in a server." };
 
   const guild = await getGuildSettings(guildId);
   if (!guild) {
-    return { content: 'This server has no settings yet. Run `/missions enable` first.' };
+    return {
+      content: "This server has no settings yet. Run `/missions enable` first.",
+    };
   }
 
   // Respect your own kill switch, same as the admin command and /encdev. Kept
   // terse and free of any SQL — this is owner-only, but a Discord message is
   // screenshottable. See db/migrations/013 for how to clear a lock.
   if (guild.locked) {
-    return { content: 'This server is locked. Missions stay off here.' };
+    return { content: "This server is locked. Missions stay off here." };
   }
 
   const channelId = resolveMissionChannel(guild);
   if (!channelId) {
     return {
-      content: 'No mission channel is set. Run `/missions enable` (or `/encounters channel`) first.',
+      content:
+        "No mission channel is set. Run `/missions enable` (or `/encounters channel`) first.",
     };
   }
 
   const sub = body.data?.options?.[0];
   const subcommand = sub?.name;
 
-  if (subcommand === 'sweep') {
+  if (subcommand === "sweep") {
     const { withdrawn, lapsed } = await sweepExpiredMissions(guildId, now);
-    return { content: `Swept: ${withdrawn.length} withdrawn, ${lapsed.length} lapsed.` };
+    return {
+      content: `Swept: ${withdrawn.length} withdrawn, ${lapsed.length} lapsed.`,
+    };
   }
 
-  if (subcommand === 'clear') {
+  if (subcommand === "clear") {
     const open = await getOpenMission(guildId);
-    if (!open) return { content: 'No open request on the board to clear.' };
+    if (!open) return { content: "No open request on the board to clear." };
 
     const expired = await expireMission(open.id);
-    if (!expired) return { content: 'That request closed before it could be cleared.' };
+    if (!expired)
+      return { content: "That request closed before it could be cleared." };
 
     await finalizeWithdrawnMission(expired);
-    return { content: `Withdrew request #${open.id}. You can \`/missiondev spawn\` again now.` };
+    return {
+      content: `Withdrew request #${open.id}. You can \`/missiondev spawn\` again now.`,
+    };
   }
 
-  if (subcommand === 'spawn') {
+  if (subcommand === "spawn") {
     const open = await getOpenMission(guildId);
     if (open) {
       return {
@@ -1524,9 +1734,10 @@ export async function handleMissionDev(body, now = new Date()) {
       };
     }
 
-    const missionType = sub.options?.find((o) => o.name === 'type')?.value || undefined;
+    const missionType =
+      sub.options?.find((o) => o.name === "type")?.value || undefined;
 
-    const rawHouse = sub.options?.find((o) => o.name === 'house')?.value;
+    const rawHouse = sub.options?.find((o) => o.name === "house")?.value;
     let house;
     if (rawHouse) {
       house = Object.values(HOUSES).find(
@@ -1535,11 +1746,14 @@ export async function handleMissionDev(body, now = new Date()) {
       if (!house) return { content: `I don't know the house "${rawHouse}".` };
     }
 
-    const row = await spawnMission(guild, channelId, now, { missionType, house });
+    const row = await spawnMission(guild, channelId, now, {
+      missionType,
+      house,
+    });
     if (!row) {
       return {
         content:
-          'Spawn failed — nothing was posted. Check the logs (the house may have no authored riddles, or no roster for an errand, or the channel POST was rejected).',
+          "Spawn failed — nothing was posted. Check the logs (the house may have no authored riddles, or no roster for an errand, or the channel POST was rejected).",
       };
     }
 
@@ -1550,7 +1764,7 @@ export async function handleMissionDev(body, now = new Date()) {
     };
   }
 
-  return { content: 'Unknown subcommand.' };
+  return { content: "Unknown subcommand." };
 }
 
 // --- shared -----------------------------------------------------------------
@@ -1560,8 +1774,11 @@ export async function handleMissionDev(body, now = new Date()) {
 function reportFailures(label) {
   return (results) => {
     for (const result of results) {
-      if (result.status === 'rejected') {
-        console.error(`[missions] ${label} side-effect failed:`, result.reason?.message);
+      if (result.status === "rejected") {
+        console.error(
+          `[missions] ${label} side-effect failed:`,
+          result.reason?.message,
+        );
       }
     }
   };
