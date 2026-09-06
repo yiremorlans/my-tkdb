@@ -492,9 +492,11 @@ export function pickEncounterVariant(character) {
 //   - variant: force 'uniform' | 'casual'; ignored if that character has no
 //     such art, falling back to the normal 50/50 pick.
 export function generateEncounter(now = new Date(), overrides = {}) {
-  const spot = pickEncounterBackground(now);
-  if (!spot) return null;
-
+  // The character is the encounter, drawn uniformly — every character has the
+  // same odds every spawn. The background is picked afterward and completely
+  // independently: it's only the setting the silhouette stands in, never scoped
+  // to the character and never a hint toward who they are. The two draws
+  // commute; character goes first purely so this reads in intent order.
   let character;
   if (overrides.characterId) {
     character = CHARACTERS.find((c) => c.id === overrides.characterId);
@@ -502,6 +504,9 @@ export function generateEncounter(now = new Date(), overrides = {}) {
   } else {
     character = pickRandom(CHARACTERS);
   }
+
+  const spot = pickEncounterBackground(now);
+  if (!spot) return null;
 
   const variant = character.images?.[overrides.variant]
     ? overrides.variant

@@ -1928,6 +1928,71 @@ His encouraging and motivating words can prove that he is quite an optimistic pe
 
 Background
 According to Ren, Haru transferred to Jabberwock from another house.[1] Janitor Elias later reveals that Haru used to be a member of Dionysia, where he was an acrobat.
+
+Summon	 All right, I'll take it from here! Gahaha!
+Login Bonus	 You're doing your best today, too! Here! This is a parting gift from me!
+Home Screen
+Title & Affinity LVL	Voiceline
+Login	 Hey, nice timing! One sec, I've just gotta finish feeding everyone.
+New Message	 You've got some letters! Better open them before that goat lookalike makes a meal out of them!
+Default 1	 Folks are going wild over the Anomalous Animal Back To Nature Tour, and this is your chance to experience it at a discount rate! C'mon, help me hand out these fliers!
+Default 2	 Everyone stuffs up sometimes. Don't let it get to you—just think of it as a funny story you can pull out later and laugh at! Gahaha!
+Default 3	 You sure are fond of MC, aren't you, Peekaboo? You did nothing but bite me for the first three days after we met.
+Default 4	 You reckon I work hard? Nah, this is nothing to write home about. All right, let's head to the next zone!
+Default 5	 Hey, nice work out there today! Let's knock a few more jobs off the list then take a break, hey?
+Idle 1	 Hey there, miss! Looking gorgeous as ever! ...Wait, I was kidding! Come back!
+Idle 2	 You seem pretty flat out today... Nothing for it, I'll get a few other things out of the way while I wait for you to get back.
+Welcome Back	 Phew, that's a relief... I was worried one of ours ate you... Glad to see you back.
+Morning 1
+Affinity LVL 1	 Morning! Let's get this show on the road!
+Morning 2
+Affinity LVL 14	 This? It's an energy drink. Don't feel like the day's started till I have one. (gulp) (gulp) Pwaaah
+Morning 3
+Affinity LVL 15	 Ah man, there's soap all over the walls again! You're so good at playing with the animals Towa, if you could just learn how to clean up after you'd get full marks...
+Morning 4
+Affinity LVL 11	 I went to wake that sleepyhead Ren up this morning, but it was like he couldn't see me even though he was looking straight at me. Reckon his eyesight's bad?
+Morning 5
+Affinity LVL 20	 I swore I'd take responsibility for protecting all the lives in this park. I can't let anyone die on my watch.
+Noon 1
+Affinity LVL 2	 Hey, MC! What a coinkydink! I just finished my rounds.
+Noon 2
+Affinity LVL 7	 You wanna know how to get the animals to like you? You just gotta show how much you love them, like this— Ow! Don't bite me, Peekaboo!
+Noon 3
+Affinity LVL 16	 Ah! I can't do dogs! How'd you get in here?! Towa!! Come here!! No!! Don't bite me!!
+Noon 4
+Affinity LVL 12	 Course I eat, don't worry about that! Just earlier I pinched some of Peekaboo's veggies when I was making his lunch and had them with a piece of bread!
+Noon 5
+Affinity LVL 21	 I don't know where I'd be without all the critters in this place if I'm honest with you. Well, gotta be my animal magnetism that's keeping them here anyway! Gahaha!
+Evening 1
+Affinity LVL 3	 Ren? He's working at that whacky restaurant again. I'll have to go pick him up later.
+Evening 2
+Affinity LVL 6	 The Sinostra folks are causing a kerfuffle again... I don't need any of that! You should take care not to get dragged into their mess too, you hear?
+Evening 3
+Affinity LVL 8	 None of our critters have warmed to Ren at all, even though he spends all day with them... Guess that handsome face only works on humans.
+Evening 4
+Affinity LVL 13	 So much to do... Gotta take in the washing and get the shopping done... Argh! There's not enough hours in the day!
+Evening 5
+Affinity LVL 22	 Hm? There's some critters whose nails were getting dangerously long so I was giving them a clip. Come here, I'll do yours too if you want!
+Night 1
+Affinity LVL 4	 Towa's off to that hill again? I was gonna ask him to hold down the fort... Guess I'll have to stay put tonight.
+Night 2
+Affinity LVL 5	 Am I tired? Nah, don't worry, if there's two things I have confidence in it's my stamina and my bad luck!
+Night 3
+Affinity LVL 9	 Phew, time for a bre— Hm? That sounded like the Capybus! I'm gonna go check on her, watch Peekaboo for me!
+Night 4
+Affinity LVL 18	 You reckon I look like an acrobat when I'm using my stigma? Gahaha! Maybe I'll practice balancing on a ball then!
+Night 5
+Affinity LVL 23	 Oh, off for a cheeky night out? Gahaha! I know a good place, want me to take you?
+Goodnight 1
+Affinity LVL 10	 All right, the kids are all in bed. I'll just ask those two to hold down the fort, then I'll head out for a little walk...
+Goodnight 2
+Affinity LVL 17	 Thanks for helping out again today, you're a real lifesaver. Sorry I can't walk you back...
+Goodnight 3
+Affinity LVL 19	 ...(gasp) Crap, I fell asleep... Did you put this blanket on me? Cheers... Maybe I'll grab a few more minutes...
+Goodnight 4
+Affinity LVL 24	 A soft bed to lie down in and someone to chat with till I drift off... I'm really living the high life here.
+Max Affinity
+Affinity LVL 25	 Really learned the ropes here, haven't you? Once we have a little cash to spare, I'll buy you your own Jabberwock uniform!
 --------
 
 Lyca
