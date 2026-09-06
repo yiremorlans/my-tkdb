@@ -4,32 +4,40 @@ export default {
   // something enormous, panics, and covers it with a tour plug. The arc is the
   // gap between the enormous thing and the bolt getting shorter, until at
   // Soulbound he says it and stays put. The glove comes off at Confidant.
+  //
+  // Texting voice, per reference.md's "## Bond Scenes" notes: little kaomoji
+  // faces in his typed lines — (^__^;) sheepish, (;__;) for the sad ones — plus
+  // shortened words like "btw". Not in the `> ` lines he says out loud.
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: OI. Big news. Enormous news.\n\nThe Jabberwock evening tour has a spare slot and I've put your name on it. Didn't ask. Bit late now, it's laminated.",
-        "Nah look, real talk for a sec: I do that with everyone, the tour thing, it's basically a nervous tic at this point. Jo says I've turned hospitality into a personality disorder.\n\nBut you've come round {timesMet} times and every single one you've said hello to the animals before you've said hello to me. Every time. Nobody does that.\n\nSo the slot's real. And I moved someone for it, which you didn't hear from me.",
+        "**{firstName}**: OI. Big news.\n\nThe Jabberwock evening tour has a spare slot and I've put your name on it. Didn't ask. Bit late now, it's laminated (^__^;)",
+        "Nah look, real talk for a sec: I do that with everyone, the tour thing, it's basically a nervous tic at this point.\n\nBut you've come round {timesMet} times and every single one you've said hello to the animals before you've said hello to me. Every time. Nobody does that.\n\nSo the slot's real. And I moved someone for it btw, which you didn't hear from me.",
       ],
       choice: {
-        prompt: "So you'll come, yeah? Say you'll come. I've already laminated it.",
+        prompt:
+          "So you'll come, yeah? Say you'll come. I've already laminated it.",
         options: [
           {
             key: "kind",
             label: "Say you'd love to",
             style: 3,
-            close: "BEAUTY.\n\n*Then, about four seconds later:* ...that was too loud. Sorry. That was a really normal amount of excited and I've overshot it.",
+            close:
+              "Really?!.\n\n*Then, about four seconds later:* ...that was too loud. Sorry (^__^;) That was a really normal amount of excited and I've overshot it.",
           },
           {
             key: "playful",
             label: "Ask who got moved",
             style: 1,
-            close: "Nobody! Nobody got moved!\n\n...Leo got moved. Leo got moved and he doesn't know yet and I'd like to keep it that way for as long as humanly possible.",
+            close:
+              "Nobody! Nobody got moved!\n\n...Leo got moved (^__^;) Leo got moved and he doesn't know yet and I'd like to keep it that way for as long as humanly possible.",
           },
           {
             key: "bold",
             label: "Ask if it's just the tour",
             style: 4,
-            close: "*There's a gap. A real one, from a bloke who types like he talks.*\n\nHa! Yeah, nah, course it is, it's the tour, it's a great tour, five stars, people rave...\n\n...Bring a jacket. It gets cold by the water and I'm not sharing mine. I am absolutely going to share mine.",
+            close:
+              "*There's a gap. A real one, from a bloke who types like he talks.*\n\nHa! Yeah, nah, course it is, it's the tour, it's a great tour, five stars, people rave...\n\n...Bring a jacket. It gets cold by the water and I'm not sharing mine. I am absolutely going to share mine.",
           },
         ],
       },
@@ -42,28 +50,32 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: right, question, and I've been sitting on it for a fortnight like a coward",
-        "You come at me with {favResponse} every time and you never once use it as an exit. You never do the thing.\n\nThe thing is: I say something a bit much, and people either laugh it off to give me an out, or they get uncomfortable and I have to do a bigger joke to fix it. Two options. Been two options my whole life.\n\nYou just... take it. Straight. Like I meant it. Which is a nightmare, mate, because it turns out I do mean it and the whole system falls apart if nobody hands me the out.",
+        "You come at me with {favResponse} every time and you never once use it as an exit.\n\nHere's the thing. I say something a bit much, and people either laugh it off to give me an out, or they go quiet and I do a bigger joke to fix it. Two options my whole life.\n\nYou just... take it. Straight. Like I meant it. Which is a nightmare, mate, because it turns out I do mean it, and the whole system falls apart if nobody hands me the out.",
       ],
       choice: {
-        prompt: "So can you stop? Or, you know. Don't. Either's... yeah. Either.",
+        prompt:
+          "So can you stop? Or, you know. Don't. Either's... yeah. Either.",
         options: [
           {
             key: "kind",
             label: "Say you'll keep taking it",
             style: 3,
-            close: "Oh, cool. Cool cool cool.\n\nThat's the worst possible answer and I'm chuffed to bits about it. I'm going to go and stand in the aviary for a bit.",
+            close:
+              "Oh, cool. Cool cool cool.\n\nThat's the worst possible answer and I'm chuffed to bits about it (^__^;) I'm going to go and stand in the aviary for a bit.",
           },
           {
             key: "playful",
             label: "Offer him one out a week",
             style: 1,
-            close: "One a WEEK? That's rationing! That's cruel and unusual!\n\n...Fine. One a week. I'm saving it for something big, don't waste it on me being weird about the weather.",
+            close:
+              "One a WEEK? That's rationing! That's cruel and unusual!\n\n...Fine. One a week. I'm saving it for something big, don't waste it on me being weird about the weather.",
           },
           {
             key: "bold",
             label: "Tell him to mean it out loud",
             style: 4,
-            close: "*There's a very long silence, and then a voice note that is four seconds of him going* \"...\" *and then hanging up.*\n\n*Then:* couldn't do it. sorry. gave it a red hot go and everything.\n\nAsk me again in a bit though. Don't let me off.",
+            close:
+              "*There's a very long silence, and then a voice note that is four seconds of him going* \"...\" *and then hanging up.*\n\n*Then:* couldn't do it. sorry (;__;) gave it a red hot go and everything.\n\nAsk me again in a bit though. Don't let me off.",
           },
         ],
       },
@@ -86,19 +98,22 @@ export default {
             key: "kind",
             label: "Say you'll come every week",
             style: 3,
-            close: "*He doesn't answer for a bit. Then he laughs at nothing, sort of helplessly.*\n\n> Yeah, alright.\n\n> You'll have to. I've got two thermoses now, haven't I. That's a commitment. That's practically a mortgage.",
+            close:
+              "*He doesn't answer for a bit. Then he laughs at nothing, sort of helplessly.*\n\n> Yeah, alright.\n\n> You'll have to. I've got two thermoses now, haven't I. That's a commitment. That's practically a mortgage.",
           },
           {
             key: "playful",
             label: "Ask how long she'll judge",
             style: 1,
-            close: "> Eleven years and counting, mate. She's still deciding about me.\n\n> Reckon she's decided about you already, though. She hasn't moved to the back once. That's... yeah. That's not nothing.",
+            close:
+              "> Eleven years and counting, mate. She's still deciding about me.\n\n> Reckon she's decided about you already, though. She hasn't moved to the back once. That's... yeah. That's not nothing.",
           },
           {
             key: "bold",
             label: "Ask about the year of flasks",
             style: 4,
-            close: "> Aw, don't...\n\n*He stops. He actually stops, which he never does.*\n\n> ...A year.\n\n*he says.*\n\n> Filled the second one every single night I came out here on the off chance you'd say yes to something I hadn't asked yet.\n\n*And then he doesn't cover it with a joke. He just sits there in the dark next to you and lets it be true.*",
+            close:
+              "> Aw, don't...\n\n*He stops. He actually stops, which he never does.*\n\n> ...A year.\n\n*he says.*\n\n> Filled the second one every single night I came out here on the off chance you'd say yes to something I hadn't asked yet.\n\n*And then he doesn't cover it with a joke. He just sits there in the dark next to you and lets it be true.*",
           },
         ],
       },
@@ -112,7 +127,7 @@ export default {
       beats: [
         "**{firstName}**: gonna tell you something and I need you to just not react. at all. keep it dead flat, it's the only way I'll get through it",
         "The glove's not a look.\n\n*A photo comes through: his right forearm, no glove, the prosthetic plain in the light of the enclosure.*\n\nNicked something I shouldn't have, off someone I shouldn't have, when I was fifteen and very sure of myself. That's the whole story. There's no better version, I've tried a few.",
-        "Jo found me about four months after. Didn't lecture me once, just gave me a job and a room and about six years of quietly not asking. That's why I'd walk into traffic for him.\n\nThree people have seen that arm. Jo, the surgeon, and now you.\n\nSo... yeah. Say literally anything. Or plug the tour. I'd take the tour, honestly, the tour would be a mercy.",
+        "Jo found me about four months after. Didn't lecture me once, just gave me a job and a room and about six years of quietly not asking. That's why I'd walk into traffic for him.\n\nThree people have seen that arm. Jo, the surgeon, and now you.\n\nSo... yeah (^__^;) Say literally anything. Or plug the tour. I'd take the tour, honestly, the tour would be a mercy.",
       ],
       choice: {
         prompt: "Go on. Dead flat. You promised.",
@@ -121,19 +136,22 @@ export default {
             key: "kind",
             label: "Ask if it ever hurts",
             style: 3,
-            close: "...Cold days. Not much. Bit of a nothing answer, sorry.\n\nNobody's asked me that. They ask what happened. Nobody's ever asked how it *is*.\n\nGive us a sec. I've gone all... yeah. Give us a sec.",
+            close:
+              "...Cold days. Not much. Bit of a nothing answer, sorry.\n\nNobody's asked me that. They ask what happened. Nobody's ever asked how it *is*.\n\nGive us a sec. I've gone all... yeah (;__;) Give us a sec.",
           },
           {
             key: "playful",
             label: "Plug the tour back at him",
             style: 1,
-            close: "OH, THAT'S LOW.\n\n*He's laughing properly, which is what you were going for.*\n\nThat's the meanest kindest thing anyone's ever done to me. Five stars. People rave.",
+            close:
+              "OH, THAT'S LOW.\n\n*He's laughing properly, which is what you were going for.*\n\nThat's the meanest kindest thing anyone's ever done to me. Five stars. People rave.",
           },
           {
             key: "bold",
             label: "Ask him to take it off",
             style: 4,
-            close: "The glove?\n\n*A long pause.*\n\n...Yeah. Alright. But you have to be here for it, I'm not doing it over a phone.\n\n*He does it at the enclosure the next night, and holds his hand out, and lets you take it, and when you do he shuts his eyes and says, very quietly and with no drawl in it at all:*\n\n> Cheers. That's... yeah. Cheers.",
+            close:
+              "The glove?\n\n*A long pause.*\n\n...Yeah. Alright. But you have to be here for it, I'm not doing it over a phone.\n\n*He does it at the enclosure the next night, and holds his hand out, and lets you take it, and when you do he shuts his eyes and says, very quietly and with no drawl in it at all:*\n\n> Cheers. That's... yeah. Cheers.",
           },
         ],
       },
@@ -150,25 +168,29 @@ export default {
         "Here's the bit that's doing my head in.\n\nEvery life in this park is mine. That's not a slogan, that's the actual job, I know all their names and I'd fight anyone in this academy over any one of them.\n\nAnd I put all of them at risk in about a second and a half because you were stood in the wrong place, and I'd do it again, and I don't know what that makes me.",
       ],
       choice: {
-        prompt: "You'll be right. You always say that to me. Say it back, I need to hear it off someone.",
+        prompt:
+          "You'll be right. You always say that to me. Say it back, I need to hear it off someone.",
         options: [
           {
             key: "kind",
             label: "Tell him he got them all back",
             style: 3,
-            close: "Yeah. Yeah, I did.\n\n*A long gap.*\n\n...say it again. Sorry. I've been counting them in my head for four hours and I can't make the number stick.\n\n*You say it about nine times. Eventually he sends a photo of the enclosure, all present, and one word:* ok.",
+            close:
+              "Yeah. Yeah, I did.\n\n*A long gap.*\n\n...say it again. Sorry (;__;) I've been counting them in my head for four hours and I can't make the number stick.\n\n*You say it about nine times. Eventually he sends a photo of the enclosure, all present, and one word:* ok.",
           },
           {
             key: "playful",
             label: "Ask what Jo said",
             style: 1,
-            close: "Nothing! That's the worst part! He just looked at me and went \"right\" and walked off!\n\nI'd rather he yelled. I'd much rather he yelled. He's going to bring it up in about eight months when I've relaxed.",
+            close:
+              "Nothing! That's the worst part! He just looked at me and went \"right\" and walked off!\n\nI'd rather he yelled. I'd much rather he yelled. He's going to bring it up in about eight months when I've relaxed.",
           },
           {
             key: "bold",
             label: "Say it makes him yours",
             style: 4,
-            close: "*There's no reply at all for about a minute.*\n\n*Then he's at the gate, still in the mud, absolutely wrecked, and he doesn't do a joke and he doesn't do the tour and he doesn't bolt.*\n\n*He just gets both arms round you, the gloved one and the other one, and holds on, and says into your shoulder,*\n\n> Yeah. Reckon it does.",
+            close:
+              "*There's no reply at all for about a minute.*\n\n*Then he's at the gate, still in the mud, absolutely wrecked, and he doesn't do a joke and he doesn't do the tour and he doesn't bolt.*\n\n*He just gets both arms round you, the gloved one and the other one, and holds on, and says into your shoulder,*\n\n> Yeah. Reckon it does.",
           },
         ],
       },
@@ -181,24 +203,27 @@ export default {
     soulbound: {
       beats: [
         "**{firstName}**: no tour plug on this one. I want that noted at the top. I've never once managed a message without a tour plug.",
-        "{timesMet} times you've come round, and every single one of them you've said hello to the animals first, and I've stood there like a lemon every single time enjoying it more than is reasonable.",
+        "{timesMet} times you've come round, and every single one of them you've said hello to the animals first, and I've stood there like a lemon every single time enjoying it more than is reasonable (^__^;)",
         "Here's my whole thing, right. I say the big stuff and then I leg it. Always have. Say something that means something, watch it land, and then immediately turn it into a bit so if it wasn't wanted I can pretend I never said it.\n\nI've done it to you about forty times. You've never once used the out. You've just stood there and waited for me to come back, and I always have, and that's... mate, nobody waits.",
         "So I'm not legging it.\n\nI love you. That's it. I'm not doing a bit after it, I'm not plugging anything, I'm not going to say something daft about the aviary in three seconds to get out of it.\n\nI'm just going to sit here having said it. Which is the single hardest thing I've done since I was fifteen.",
       ],
       choice: {
-        prompt: "Take your time. I'm not going anywhere. That's sort of the whole point of tonight.",
+        prompt:
+          "Take your time. I'm not going anywhere. That's sort of the whole point of tonight.",
         options: [
           {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "...Say that again, I've gone and dropped my phone in the mud.\n\n*He's already running by the time you've typed it. He arrives at the side gate absolutely filthy and completely undone, and for once in his life he does not bolt and he does not joke.*\n\n*He kisses you against the gate with the enclosure lights off and the old girl watching, and afterwards he laughs (properly, wrecked, delighted) and says,*\n\n> Right. Yeah. Beauty.",
+            close:
+              "...Say that again, I've gone and dropped my phone in the mud.\n\n*He's already running by the time you've typed it. He arrives at the side gate absolutely filthy and completely undone, and for once in his life he does not bolt and he does not joke.*\n\n*He kisses you against the gate with the enclosure lights off and the old girl watching, and afterwards he laughs (properly, wrecked, delighted) and says,*\n\n> Right. Yeah. Beauty.",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
-            close: "Course, mate. Take as long as you want.\n\n*A pause. Then, with none of the drawl doing any work:*\n\nAnd listen, I'm not going to get weird. I'm not going to stop asking you on the tour, I'm not going to stop filling the second thermos. That was all real before tonight and it's all still real.\n\nYou'll be right. And so will I. I'm extremely good at waiting, turns out. Did it for a year with a flask.",
+            close:
+              "Course, mate. Take as long as you want.\n\n*A pause. Then, with none of the drawl doing any work:*\n\nAnd listen, I'm not going to get weird. I'm not going to stop asking you on the tour, I'm not going to stop filling the second thermos. That was all real before tonight and it's all still real.\n\nYou'll be right. And so will I. I'm extremely good at waiting, turns out (^__^;) Did it for a year with a flask.",
           },
         ],
       },
