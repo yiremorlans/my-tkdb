@@ -58,10 +58,11 @@ test('without shareButton there is no components row (unchanged default)', async
 
 test('sharedBy makes it the public repost: attribution header, no Share button', async () => {
   reset();
-  const message = await buildAffinityMessage('user-1', ['ren'], { sharedBy: 'user-42', shareButton: true });
-  assert.match(message.content, /^<@user-42> shared their relationship status:/);
+  const message = await buildAffinityMessage('user-1', ['ren'], { sharedBy: 'Kanae', shareButton: true });
+  assert.match(message.content, /^Kanae shared their relationship status:/);
+  assert.ok(!/<@/.test(message.content), 'the sharer is named in plain text, not an @tag');
   assert.strictEqual(message.components, undefined);
-  // the attribution mention must not ping the sharer
+  // mentions stay parsed off so a name that looks like a handle can't ping
   assert.deepStrictEqual(message.allowed_mentions, { parse: [] });
 });
 

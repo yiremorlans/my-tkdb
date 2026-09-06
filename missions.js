@@ -112,7 +112,7 @@ function userIdOf(body) {
 
 function displayNameOf(body) {
   const user = body.member?.user || body.user;
-  return body.member?.nick || user?.global_name || user?.username || "Someone";
+  return body.member?.nick || user?.username || user?.global_name || "Someone";
 }
 
 /**
@@ -524,7 +524,7 @@ export async function handleMissionAccept(body, missionId, now = new Date()) {
         // embed rather than keeping its first line and its upload above it.
         content: null,
         attachments: [],
-        embeds: [missionEmbed(missionId, MISSION_PICKED_UP(`<@${userId}>`))],
+        embeds: [missionEmbed(missionId, MISSION_PICKED_UP(displayNameOf(body)))],
         components: acceptRow(missionId, { disabled: true }),
         allowed_mentions: { parse: [] },
       },
@@ -707,16 +707,13 @@ async function handleMissionAssist(body, mission) {
   }
 
   // The reply IS the public post — no defer, no ephemeral ack (app.js sends it
-  // as a plain CHANNEL_MESSAGE_WITH_SOURCE). The lead is @mentioned in the
-  // CONTENT — a mention inside an embed never notifies — with allowed_mentions
-  // scoped to their id alone, so the call pings the lead and nobody else. This
-  // is a deliberate departure from the pickup post, which pings no one: an
-  // unanswered co-op is a dead slot for two people, and the ping is the whole
-  // point of the command. The house still stays out of it — the helper learns
-  // nothing until they have clicked.
+  // as a plain CHANNEL_MESSAGE_WITH_SOURCE). The lead is named in plain text,
+  // not @mentioned, and allowed_mentions is closed off entirely, so the call
+  // pings no one. The house still stays out of it — the helper learns nothing
+  // until they have clicked.
   return {
     publicReply: {
-      content: `🚨 <@${userId}> needs help during this house mission!`,
+      content: `🚨 ${displayNameOf(body)} needs help during this house mission!`,
       embeds: [
         missionEmbed(
           mission.id,
@@ -736,7 +733,7 @@ async function handleMissionAssist(body, mission) {
           ],
         },
       ],
-      allowed_mentions: { users: [userId] },
+      allowed_mentions: { parse: [] },
     },
     // `originalMessageId` is the id of the reply Discord posted for us, read
     // back from @original by app.js. If it's lost the post is still live and
@@ -808,7 +805,7 @@ export async function handleMissionAssistJoin(body, missionId) {
         embeds: [
           missionEmbed(
             mission.id,
-            `**${helperName}** backed up <@${leadId}>. Mission complete.\nBoth of you have banked a cooldown reset.`,
+            `**${helperName}** answered the call for backup. Mission complete.\nBoth of you have banked a cooldown reset.`,
           ),
         ],
         components: [],

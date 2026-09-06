@@ -26,7 +26,7 @@
 // collapsed to five, with "known" folding into "new". A character's own pool
 // replaces the shared SHARED_WINNER_LINES pool below rather than merging with
 // it, so an authored reveal always sounds like them; a register left out falls
-// back. {user} is the winner's mention, {name} their full name, and the reveal
+// back. {user} is the winner's name (plain text, no @tag), {name} their full name, and the reveal
 // embed is the only place either is named — validateContent fails the build on
 // a line missing one.
 //

@@ -111,9 +111,9 @@ export const MISSION_TEASERS = [
   "Someone upstairs needs this handled quietly. Accept?",
 ];
 
-// `who` is a Discord mention (`<@id>`), so the post shows a real @tag rather
-// than a bare display name. The mission message sends it with
-// allowed_mentions.parse === [], so it renders styled but pings nobody.
+// `who` is the accepter's plain display name (no `<@id>` tag): the post names
+// them but never pings, and the mission message also sends it with
+// allowed_mentions.parse === [] so a name that looks like a handle can't ping.
 export const MISSION_PICKED_UP = (who) => `${who} has picked up the mission.`;
 
 export const MISSION_WITHDRAWN_LINES = [

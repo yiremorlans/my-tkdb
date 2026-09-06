@@ -649,9 +649,10 @@ function renderMomentsTogether(character, counts) {
 }
 
 // `opts.shareButton` appends a Share button that reposts this status publicly
-// (app.js, the `affinity:share` component). `opts.sharedBy` marks the message
-// as that public repost: its header names who shared it and the button is
-// never attached (the public copy has nothing left to share).
+// (app.js, the `affinity:share` component). `opts.sharedBy` is the sharer's
+// plain display name (not an `<@id>` tag) and marks the message as that public
+// repost: its header names who shared it and the button is never attached (the
+// public copy has nothing left to share).
 export async function buildAffinityMessage(userId, characterIds, opts = {}) {
   const { shareButton = false, sharedBy = null } = opts;
   // The options are free-text, so ids arrive untrimmed, in any case, and
@@ -748,15 +749,15 @@ export async function buildAffinityMessage(userId, characterIds, opts = {}) {
   });
 
   const header = sharedBy
-    ? `<@${sharedBy}> shared their relationship status:`
+    ? `${sharedBy} shared their relationship status:`
     : 'Here\'s your relationship status:';
 
   const message = {
     content: unknownNote ? `${header}\n${unknownNote}` : header,
     embeds,
     files: files.length > 0 ? files : undefined,
-    // The attribution `<@id>` is a label, not a ping — the sharer clicked the
-    // button themselves. Harmless (and absent) on the private view.
+    // The attribution is a plain-text name, never a mention — but mentions stay
+    // parsed off anyway so a name that looks like `@someone` can't ping.
     ...(sharedBy ? { allowed_mentions: { parse: [] } } : {}),
   };
 

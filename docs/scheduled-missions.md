@@ -279,7 +279,8 @@ Accept button  (custom_id: mission:accept:<id>)
 /docs               (ephemeral) → errand only: roster + signature checklist + "Complete mission" button (§5)
 /riddle <answer>    (ephemeral) → riddle only: match, reward on correct, 20s cooldown on wrong (§6)
 /mission assist      (public)   → coop only, NOT deferred: the reply itself is the "Join the mission" post,
-                                  in the channel it's run from, pinging the lead. No ephemeral ack. (§7)
+                                  in the channel it's run from. Names the lead in plain text, pings nobody.
+                                  No ephemeral ack. (§7)
 ```
 
 ---
@@ -569,18 +570,18 @@ Guard refusals (ephemeral, private to the lead):
 Otherwise the reply is the public post:
 
 ```
-content: 🚨 <@lead> needs help during this house mission!        allowed_mentions: { users: [lead] }
+content: 🚨 {lead} needs help during this house mission!          allowed_mentions: { parse: [] }
 embed:   First inspector to back them up clears it for both of you — one house
          log each, plus a banked cooldown reset.
 [ Join the mission ]      custom_id: mission:assist:<missionId>
 ```
 
-  The `<@lead>` mention lives in the message **content**, not the embed (a
-  mention inside an embed never notifies), and `allowed_mentions` is scoped to
-  the lead's id alone — so the post pings the lead and no one else. This is a
-  deliberate exception to the "pings nobody" rule the pickup post follows: an
-  unanswered co-op burns a slot for two people. The **house** still stays out of
-  the post — the helper learns nothing until they've clicked.
+  The lead is named in plain text in the message **content**, with no `<@id>`
+  tag, and `allowed_mentions` is closed off entirely — so the post pings nobody,
+  same as the pickup post. An unanswered co-op still burns a slot for two
+  people, but the lead is the one who ran the command, so a ping back to them
+  bought little. The **house** still stays out of the post — the helper learns
+  nothing until they've clicked.
 
   There is no ephemeral confirmation — the public post is the only
   acknowledgement. Its id isn't in hand (Discord posted the reply for us), so
@@ -595,8 +596,8 @@ embed:   First inspector to back them up clears it for both of you — one house
 - `'taken'` (already helped / expired / not co-op) → ephemeral *"That mission's
   already covered."*
 - `'joined'`:
-  - `UPDATE_MESSAGE` on the assist post → *"**{helper}** backed up
-    **{accepter}**. Mission complete."*, button disabled.
+  - `UPDATE_MESSAGE` on the assist post → *"**{helper}** answered the call for
+    backup. Mission complete."*, button disabled.
   - Fire-and-forget for **both** users:
     - `recordMissionCompletion({ …, points: 1 })` for each — accepter
       `role='lead'`, helper `role='assist'`, same `house`, same `mission_id`.

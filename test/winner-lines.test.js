@@ -33,7 +33,7 @@ const NOON = new Date('2026-09-02T12:00:00');
 const NIGHT = new Date('2026-09-02T22:00:00');
 
 const vars = (character) => ({
-  user: '<@user-1>',
+  user: 'Kanae',
   name: getFullName(character),
   firstName: character.firstName,
   house: character.house || 'Darkwick',

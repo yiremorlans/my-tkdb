@@ -91,6 +91,15 @@ function ephemeral(content) {
   return { content, flags: EPHEMERAL };
 }
 
+// The caller's name for a winner line's {user} — server nickname first, then
+// the @handle, then the global display name. Plain text, never an `<@id>` tag:
+// the line is a channel post and a mention there would highlight and (for the
+// caller) ping.
+function displayNameOf(body) {
+  const user = body.member?.user || body.user;
+  return body.member?.nick || user?.username || user?.global_name || 'Someone';
+}
+
 // --- spawn ------------------------------------------------------------------
 
 /**
@@ -606,7 +615,7 @@ export async function handleCall(body, now = new Date()) {
   const milestone = getMilestone(milestoneType);
 
   const vars = {
-    user: `<@${userId}>`,
+    user: displayNameOf(body),
     name: getFullName(character),
     firstName: character.firstName,
     house: character.house || 'Darkwick',

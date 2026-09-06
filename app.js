@@ -167,6 +167,14 @@ function disabledComponents(components) {
   }));
 }
 
+// The interaction user's name as plain text — server nickname first, then the
+// @handle, then the global display name. Never an `<@id>` tag: callers use this
+// for attribution in channel posts, where a mention would highlight and ping.
+function displayNameOf(body) {
+  const u = body.member?.user || body.user;
+  return body.member?.nick || u?.username || u?.global_name || 'Someone';
+}
+
 // A bond scene owed a beat it couldn't deliver (no shared server, DMs closed,
 // Discord down, a POST that failed mid-walk) waits on its row until the user's
 // next command, which offers a one-press button to put it back in their DMs.
@@ -761,7 +769,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
       (async () => {
         try {
-          const messageData = await buildAffinityMessage(userId, characterIds, { sharedBy: userId });
+          const messageData = await buildAffinityMessage(userId, characterIds, { sharedBy: displayNameOf(req.body) });
           await sendFollowup(req.body.token, messageData);
           trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
         } catch (err) {

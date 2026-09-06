@@ -131,11 +131,11 @@ function reset(tables = {}) {
   clearSpawnAttemptFence();
 }
 
-function callBody({ userId = 'user-1', guess = 'rui' } = {}) {
+function callBody({ userId = 'user-1', guess = 'rui', nick = 'Kanae' } = {}) {
   return {
     guild_id: GUILD,
     channel_id: CHANNEL,
-    member: { user: { id: userId } },
+    member: { nick, user: { id: userId } },
     data: { name: 'call', options: [{ name: 'character', value: guess }] },
   };
 }
@@ -300,7 +300,8 @@ describe('/call', () => {
     assert.equal(edit.body.content, null, 'content cleared so the winner is not tagged above the post');
     assert.equal('attachments' in edit.body, false, 'silhouette kept');
     assert.equal(edit.body.embeds[0].thumbnail.url, 'https://example.test/assets/cards/Rui_Mizuki.png');
-    assert.match(edit.body.embeds[0].description, /<@user-1>/, 'the winner is mentioned inside the reveal line');
+    assert.match(edit.body.embeds[0].description, /Kanae/, 'the winner is named (plain text, no @tag) inside the reveal line');
+    assert.ok(!/<@/.test(edit.body.embeds[0].description), 'no @mention tag in the reveal line');
     assert.ok(!/[{}]/.test(edit.body.embeds[0].description), 'no unfilled placeholder');
   });
 
