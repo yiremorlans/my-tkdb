@@ -1,6 +1,5 @@
 import {
   getCommandLimits,
-  clearCommandLimit,
   claimCommandSlot,
   spendCooldownReset,
 } from './db/supabase.js';
@@ -27,16 +26,6 @@ const COOLDOWN_MS = 3 * 60 * 60 * 1000;
 // blocked, the message reports the state of all of them, so a user who typed
 // /roam still learns where /meet stands (and vice versa).
 const RATE_LIMITED_COMMANDS = ['roam', 'meet'];
-
-// Reset a user's cooldown (for testing). Omit `command` to clear both.
-//
-// Deliberately NOT how missions pay out. A finished mission banks a reset the
-// player spends themselves (redeemCooldownReset below); clearing the clock from
-// the outside, at a moment the player didn't choose, is exactly the waste that
-// change exists to stop.
-export function resetCommandLimit(userId, command = null) {
-  return clearCommandLimit(userId, command);
-}
 
 /**
  * Spend one banked mission reward on a cooldown the user is actually waiting

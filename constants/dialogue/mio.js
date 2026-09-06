@@ -357,9 +357,9 @@ export default {
     // and waves off anything coming back ("Make sure you give yourself a break",
     // "I don't need much sleep", "bit of spit and it'll heal"), so noticing him,
     // telling him to rest, and letting him lean is what actually lands. playful
-    // reaches him too (1): dry banter and fake-scares ("Boo! Ha ha, did I scare
-    // you?") are a register he enjoys, but they double as his deflection, so
-    // they land softer. bold glances off (0): he can't finish his own confession
+    // reaches him too (1): dry banter and playing along with his fussing are a
+    // register he enjoys, but they double as his deflection, so they land
+    // softer. bold glances off (0): he can't finish his own confession
     // ("This one keeps not coming out") and undercuts sincerity the moment it
     // turns heavy, so a blunt push reads as the player pressing and Mio easing
     // back rather than meeting it.
@@ -384,7 +384,7 @@ export default {
     playful: {
       new: [
         "Share a laugh",
-        "Fake-scare him back",
+        "Tease him for tidying up",
         "Give him a fake emergency",
       ],
       spark: ["Sit closer still", "Catch him looking again", "Wind him up"],

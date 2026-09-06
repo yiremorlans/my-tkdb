@@ -348,7 +348,7 @@ export default {
     ],
   },
   responses: {
-    // playful is Ren's register — dry banter, gaming, ribbing the clown; it
+    // playful is Ren's register — dry banter, gaming, teasing his video hobby; it
     // lands hardest (affinityByResponse.playful = 2). kind reaches him too, but
     // only low-key and unsentimental (1). bold glances off — he deflects
     // forwardness rather than meeting it (0), so those moves read as the player
@@ -370,7 +370,7 @@ export default {
     playful: {
       new: [
         "Trade deadpan with him",
-        "Rib him about the clown",
+        "Tease him about his videos",
         "Challenge him to a round",
       ],
       spark: [

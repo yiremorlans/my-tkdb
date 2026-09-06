@@ -196,6 +196,53 @@ Go to your Supabase Dashboard:
 - Copy and execute
 - Wait for success ✓
 
+### Migration 15: Bond Scenes (level-up DMs)
+- File: `db/migrations/015_bond_scenes.sql` — see `docs/bond-scene-dms.md`
+- Creates `bond_scene_progress` (one row per `(user, character, level)`; its
+  primary key is the entire "never send the same scene twice" guard) and
+  `bond_keepsakes` (what finishing a scene leaves behind)
+- Adds `user_activity.bond_dms_enabled` (BOOLEAN NOT NULL DEFAULT TRUE) — the
+  opt-out behind `/bonds dms:on|off` and the button on a user's first bond DM.
+  Only an explicit `false` counts, so rows written before the column existed
+  still get their scenes
+- Creates `record_bond_scene()` (INSERT … ON CONFLICT DO NOTHING RETURNING — the
+  idempotency claim) and `complete_bond_scene()` (closes the row and writes the
+  keepsake in one statement)
+- No TTL and no pruning anywhere: a Continue button in a DM keeps working for as
+  long as the message exists; `pending_dm` is what recovers a stalled scene, not
+  a timer
+- RLS on, service role only — these rows record what each user was sent privately
+- ⚠️ **Run this BEFORE deploying the app code.** `record_bond_scene()` is called
+  on every affinity gain that crosses a level; without it the crossing throws
+- Copy and execute
+- Wait for success ✓
+
+### Migration 16: Scheduled Missions
+- File: `db/migrations/016_create_missions.sql` — see `docs/scheduled-missions.md`
+- Adds mission columns to `guild_settings` (`mission_channel_id`,
+  `missions_enabled`, `mission_slots_day`, `mission_slots_today`,
+  `mission_slots_fired`, `mission_post_failures`). Missions ride the same guild
+  row as encounters but keep their own switch and their own failure counter —
+  a broken mission channel must never silence public encounters
+- Creates `missions` (one row per posted request; `status` is the whole state
+  machine: open → accepted → completed/expired) and `mission_log` (one immutable
+  row per completion; `points` is the whole progression and `reset_spent_at` is
+  the banked-cooldown-reset ledger — no separate table)
+- Creates the claim/close RPCs, each guarding its race inside one statement:
+  `claim_mission()` (the Accept button, and the per-day lead cap),
+  `sign_errand_target()`, `file_errand()`, `claim_coop_helper()`,
+  `complete_mission()`, and `spend_cooldown_reset()` (the banked reset — decides,
+  credits and clears in one call, which is why a stale button can't burn a
+  reward)
+- Count (3/day), spacing (2h) and window (05:00–24:00 CT) are constants in
+  `constants/missions.js` — deliberately not per-guild, so there are no override
+  columns
+- RLS on, service role only
+- ⚠️ **Run this BEFORE deploying the app code.** `getMissionGuilds` and every
+  mission handler filter on or call something added here
+- Copy and execute
+- Wait for success ✓
+
 ## Step 3: Verify Migrations
 
 In the Supabase Dashboard, click **Table Editor** and verify:
@@ -205,6 +252,12 @@ In the Supabase Dashboard, click **Table Editor** and verify:
 - [ ] `character_engagement`
 - [ ] `character_relationships` (should already exist, now has RLS)
 - [ ] `monthly_analytics`
+- [ ] `command_usage_log` (migration 7)
+- [ ] `command_limits` (migration 8)
+- [ ] `public_encounters` (migration 10)
+- [ ] `encounter_win_stats` (migration 11)
+- [ ] `bond_scene_progress`, `bond_keepsakes` (migration 15)
+- [ ] `missions`, `mission_log` (migration 16)
 
 **Views Created:**
 - [ ] `vw_popular_characters`
@@ -225,10 +278,10 @@ import { updateAffinity, trackUserActivity, trackCharacterEngagement } from './d
 await trackUserActivity('discord_user_123');
 
 // Test tracking character engagement
-await trackCharacterEngagement('discord_user_123', 'alice');
+await trackCharacterEngagement('discord_user_123', 'ren');
 
 // Test updating affinity
-await updateAffinity('discord_user_123', 'alice', 10);
+await updateAffinity('discord_user_123', 'ren', 10);
 ```
 
 If these work without errors, your database is ready! ✓

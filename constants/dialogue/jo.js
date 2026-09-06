@@ -418,7 +418,7 @@ export default {
       ],
       bound: [
         "Say it back",
-        "Close the laptop for them",
+        "Set the pen down for them",
         "Tell them they can rest now",
       ],
     },

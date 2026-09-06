@@ -1828,7 +1828,7 @@ Haku has green-colored hair with two red ribbon-like earrings. His eyes are yell
 Personality
 Haku is a kind and polite person, often caring about others. Although he appears to be quite lazy, he still completes the tasks assigned or mentioned. The one who always rescues Subaru when he gets stuck or difficulty communicating. He also helps often Zenji in his video work and being his manager.
 
-As stated by Zenji, he has a kind of "devilish charm" similar to Don Juan. He is fond of the MC, sometimes scaring her to see her reaction and teasing her. He is shown to be sympathetic when she tries to run away in Episode 1, gently persuading her to stay and stating that running away won't end well for either of them.
+As stated by Zenji, he has a kind of "devilish charm" similar to Don Juan. He is fond of the MC, sometimes scaring her to see her reaction and teasing her. This charm rarely surfaces as open flirting, but when he is feeling bold he has been known to call the MC "princess." He is shown to be sympathetic when she tries to run away in Episode 1, gently persuading her to stay and stating that running away won't end well for either of them.
 
 Haku is the heir of a long line of mediums and is part of the Kusanagi clan, which is recognized for their spiritual affairs.
 

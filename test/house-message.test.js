@@ -72,6 +72,17 @@ test('rank comes from summed points, not the number of missions filed', async ()
   assert.match(message.content, /45 house logs · 3 missions filed/);
 });
 
+test('the dossier never advertises the next inspector rank', async () => {
+  reset({
+    log: [
+      { discord_user_id: 'user-1', house: HOUSES.FROSTHEIM, mission_type: 'errand', points: 20, role: 'lead' },
+    ],
+  });
+
+  const message = await buildDossierMessage('user-1');
+  assert.doesNotMatch(message.content, /Next rank:/);
+});
+
 test('another user’s mission_log rows never reach this dossier', async () => {
   reset({
     log: [

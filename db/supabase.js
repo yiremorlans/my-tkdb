@@ -597,28 +597,6 @@ export async function claimCommandSlot(userId, commandName, cooldownSeconds) {
 }
 
 /**
- * Clear a user's cooldown. Omit commandName to clear every command for the user.
- * Intended for testing. Returns the number of rows removed.
- */
-export async function clearCommandLimit(userId, commandName = null) {
-  let query = supabase
-    .from('command_limits')
-    .delete()
-    .eq('discord_user_id', userId);
-
-  if (commandName) query = query.eq('command_name', commandName);
-
-  const { data, error } = await query.select();
-
-  if (error) {
-    console.error('Error clearing command limit:', error);
-    throw error;
-  }
-
-  return data?.length || 0;
-}
-
-/**
  * Get command usage statistics for a time period (anonymized)
  */
 export async function getCommandUsageStats(days = 30) {

@@ -12,29 +12,33 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Okay so this is going to sound like a line and I promise it isn't. I've made you a drink ✨ and it's sitting on my bar going flat, so the clock is genuinely ticking.",
-        "I make everyone a drink. That's not the flattering part, don't get excited yet.\n\nThe flattering part is I've remade yours four times. {timesMet} visits, and every one I've watched what you finished and what you politely didn't, and adjusted.\n\nThis one's the fifth version ✨ I think it's right. I'd quite like to be right about something today.",
+        "**{firstName}**: Hey! Okay, first time texting you, I know, very forward of me. But I've got a reason, promise. I made you a drink ✨ and it's just sitting on my bar getting warm. Kind of a tragedy. You should come rescue it?",
+        "Okay, full disclosure: I make a drink for everyone who comes in. That part's not special. Don't be impressed yet.\n\nThe part that is: I've remade yours four times. You've been in {timesMet} times and I paid attention to every one, what you finish, what you leave. That's where the four came from.\n\nAnyway! Fifth version's in your glass now ✨ Think I finally got it. Feels good to get something right today, ahaha.",
       ],
       choice: {
-        prompt: "So?! Come and tell me I've cracked it. Or don't, and I'll do a sixth.",
+        prompt:
+          "So?! Come try it, tell me it's the best thing you've ever tasted. Or don't, and I'll just make a sixth. I've got nothing but time, trust me.",
         options: [
           {
             key: "kind",
             label: "Say you'll come right now",
             style: 3,
-            close: "Ha! Great. Excellent. Perfect. 😂\n\nI've just tidied the bar twice. That's a completely normal thing to do and you should read nothing into it.",
+            close:
+              "Ha! Okay. Great. Amazing.\n\nSo I just wiped the bar down twice for absolutely no reason. Super normal thing to do. Don't read into it.",
           },
           {
             key: "playful",
             label: "Demand a sixth on principle",
             style: 1,
-            close: "You haven't tasted the fifth!\n\n...Fine. I'll do a sixth. I'll do a sixth and a seventh and I'll enjoy every minute of it, which I feel like you already knew.",
+            close:
+              "Wait, you haven't even tried the fifth one!\n\n...Okay, fine. Sixth it is. Sixth, seventh, whatever you want, cutie, and I'll enjoy every second of it. You knew that though 😂",
           },
           {
             key: "bold",
             label: "Ask what he was watching for",
             style: 4,
-            close: "You, *he says, immediately, because he is never coy about this part.*\n\n*Then:* Sorry. That's my whole thing, I know. It's true though. Come and have the drink, I'm much better in person and only slightly less obvious.",
+            close:
+              "You.\n\n...Sorry, that was quick, wasn't it 😂 It's my whole thing though, I'm not gonna pretend it isn't. Come have the drink, cutie. I'm way better in person and only a little less obvious.",
           },
         ],
       },
@@ -46,29 +50,33 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: Right. Serious for a second, and then I'll go back to being unbearable.",
-        "You come at me with {favResponse} every time, and here's the thing: you do it after I've been unbearable, too. That's the bit I've noticed.\n\nI'm very charming. On purpose. It works on ninety percent of people and it's the most efficient way I've found of never being asked a follow-up question.\n\nYou ask follow-up questions. Constantly. It's rude and I've started looking forward to it 😂",
+        "**{firstName}**: Okay, hang on. Serious for like one second, then I go right back to normal, promise 😂",
+        "So here's what I noticed. You come back at me with {favResponse} every time. Even when I'm laying it on thick, you still do.\n\nMost people take the charm at face value and move on. That's kind of the point of it.\n\nYou don't. You ask the next question. The real one. It's a little rude and I've started looking forward to it 😂",
       ],
       choice: {
-        prompt: "So what's it going to take to make you stop?! Asking for a friend. The friend is me.",
+        prompt:
+          "So what happens now that I've gone and said all that?! Asking for a friend. The friend is me, obviously.",
         options: [
           {
             key: "kind",
             label: "Say you'll keep asking",
             style: 3,
-            close: "...Oh, that's not fair.\n\nThat's genuinely not fair. Do you know how long I've had that wall up?! Turns out it's got a door in it and you've just been knocking politely this whole time.",
+            close:
+              "...Aw, c'mon. That's not fair.\n\nThat's genuinely not fair. Do you know how long that wall took me?! And it had a door in it the whole time, apparently. You've just been knocking. Politely. Ahaha.",
           },
           {
             key: "playful",
             label: "Ask him a follow-up now",
             style: 1,
-            close: "Immediately?! Straight in? No warning?\n\n*He answers it. Properly, at length, and then goes suspiciously quiet.*\n\n...Right. Well. That was horrible and I'd like to do it again.",
+            close:
+              "Immediately?! Just straight in? No run-up?\n\n*He answers it. Fully, at length, and then goes suspiciously quiet.*\n\n...Okay. Yeah. That was awful and I kind of want to do it again.",
           },
           {
             key: "bold",
             label: "Say the charm isn't working",
             style: 4,
-            close: "It's working a bit.\n\n...It's not working at all, is it. God. Years of a flawless system and you've just wandered through it like a door was open 😂\n\nDon't tell Edward. He'll be insufferable and he'll be right.",
+            close:
+              "It's working a little.\n\n...It's not working at all, is it. Man. Years of a flawless system and you just strolled right through it 😂\n\nDon't tell Edward. He'll be unbearable about it. And he'll be right.",
           },
         ],
       },
@@ -80,30 +88,34 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: Garden. Now, if you're up. It's the good hour. Everything opens at about four ✨ and nobody's ever awake to see it.",
-        "*It is four in the morning and the anomaly garden is doing something quietly extraordinary, and he is standing in the middle of it in gloves and a coat with a look about him you've never seen at the bar.*\n\n> This is mine. Not the house's, not a job. I started it in my second year because I needed one thing on this campus I couldn't accidentally kill.",
-        "*He holds up both hands, gloved, palms out.*\n\n> Nothing living. That's the deal. Anything with a pulse, one contact, that's it. No warning, no second chance.\n\n> So I grow things instead. Things without a pulse, that I can put my hands right into.\n\n*He looks at the bed nearest you.*\n\n> That row's about eight months old. I started it the week after I met you. I'm not going to say anything else about that, you can do the math.",
+        "**{firstName}**: Hey, you up? Come to the garden. It's the good hour, everything opens around four ✨ and nobody's ever awake for it. Their loss.",
+        "*It is four in the morning and the anomaly garden is doing something quietly extraordinary, and he is standing in the middle of it in gloves and a coat with a look about him you've never seen at the bar.*\n\n> This one's mine. Not the house's, not a job, not anything. I started it my second year because I wanted one thing on this campus I couldn't accidentally kill.",
+        "*He holds up both hands, gloved, palms out.*\n\n> Nothing living. That's the deal. Anything with a pulse, one contact, that's it. No warning, no second chance.\n\n> So I grow things instead. Things without a pulse, that I can put my hands right into.\n\n*He looks at the bed nearest you.*\n\n> That row's about eight months old. Started it the week after I met you. And that's all I'm saying about that one, you can do the math.",
       ],
       choice: {
-        prompt: "Right. That's the tour. Say something before I start talking about drainage.",
+        prompt:
+          "Okay. That's the tour. Say something quick, before I start telling you about drainage.",
         options: [
           {
             key: "kind",
             label: "Ask what the row is called",
             style: 3,
-            close: "*He tells you. It is not a real name; it is very obviously a name he made up eight months ago and has been using privately ever since.*\n\n> ...Don't,\n\n*he says, before you can say anything.*\n\n> I know. I *know*. Let me have it.",
+            close:
+              "*He tells you. It is not a real name; it is very obviously a name he made up eight months ago and has been using privately ever since.*\n\n> ...Don't,\n\n*he says, before you can say anything.*\n\n> I know. I *know*. Let me have it.",
           },
           {
             key: "playful",
             label: "Ask about the drainage",
             style: 1,
-            close: "> Oh, you've done it now.\n\n*He talks about drainage for twenty-five minutes and it is the happiest you have ever seen him, and at the end of it he says:*\n\n> Nobody's ever let me finish that. Not once. Thank you, genuinely, that was the best part of my month.",
+            close:
+              "> Oh, you've done it now.\n\n*He talks about drainage for twenty-five minutes and it is the happiest you have ever seen him, and at the end of it he says:*\n\n> Nobody's ever let me finish that. Not once. Thank you, genuinely, that was the best part of my month.",
           },
           {
             key: "bold",
             label: "Take his gloved hand",
             style: 4,
-            close: "*He goes completely still.*\n\n> That's... there's leather in the way. That doesn't count. That's not really...\n\n*He stops. He looks down at your hand round his, and after a moment he closes his fingers, carefully, like a man handling something that could go off.*\n\n> ...Okay,\n\n*he says, not brightly at all.*\n\n> Okay. It counts. I'd like it to count.",
+            close:
+              "*He goes completely still.*\n\n> That's... there's leather in the way. That doesn't count. That's not really...\n\n*He stops. He looks down at your hand round his, and after a moment he closes his fingers, carefully, like a man handling something that could go off.*\n\n> ...Okay,\n\n*he says, not brightly at all.*\n\n> Okay. It counts. I'd like it to count.",
           },
         ],
       },
@@ -115,30 +127,33 @@ export default {
 
     confidant: {
       beats: [
-        "**{firstName}**: Can't sleep. Which is a joke, obviously 😂 I've been not-sleeping since the curse, it's my whole personality.",
-        "Here's the thing about the curse nobody gets. It's not the touching. Everyone fixates on the touching and the gloves solved that years ago.\n\nIt's that I never get tired. Not once, not ever. There's no point where my body says right, that's enough, stop now.\n\nSo I don't stop. I run the bar and the house and the garden, I keep Edward alive, I organize everyone's everything. The alternative is sitting in a chair awake for nine hours.",
-        "And everyone thinks it's cheerfulness. Rui the bright one. Rui who's always up for it.\n\nI'm not up for it. I've got nowhere to put the hours and there have been a lot of them, and you're the only person who's ever asked me to sit down.",
+        "**{firstName}**: Can't sleep. Which is a joke coming from me, obviously 😂 I've been not-sleeping since the curse, curse twin. It's basically my whole personality now.",
+        "Here's the part about the curse nobody gets. It's not the touching. The gloves fixed that years ago.\n\nIt's that I never get tired. Like, ever. There's no point where my body goes okay, that's enough, sit down.\n\nSo I don't. I run the bar, the house, the garden, I keep Edward alive, I sort out everyone's everything. The other option is nine hours in a chair, wide awake.",
+        "And everyone reads it as cheerfulness. Rui the bright one. Rui who's always up for it.\n\nI'm not, really. I've just got nowhere to put the hours, and there've been a lot of them. You're the first person who's ever told me to sit down.",
       ],
       choice: {
-        prompt: "Right. That's the ugliest thing about me. Your go.",
+        prompt: "Okay. That's the ugly one. Your turn.",
         options: [
           {
             key: "kind",
             label: "Ask him to sit down now",
             style: 3,
-            close: "...Now?!\n\nI don't know how to do that. That's not a joke, I genuinely don't know what the instruction is.\n\n*So you talk him through it, badly, over text, and he sits in a chair in the garden for forty minutes doing absolutely nothing, and afterwards he says it was the worst and best thing he's done in years.*",
+            close:
+              "...Now?!\n\nI don't know how to do that. That's not a joke, I genuinely don't know what the instruction is.\n\n*So you talk him through it, badly, over text, and he sits in a chair in the garden for forty minutes doing absolutely nothing, and afterwards he says it was the worst and best thing he's done in years.*",
           },
           {
             key: "playful",
             label: "Offer him the boring hours",
             style: 1,
-            close: "You want to *give* me boring?! That's the offer?\n\n...Yeah, alright. Give me the boring ones. I'll take the boring ones. Nobody's ever offered me boring, it's usually jobs.",
+            close:
+              "You want to *give* me boring?! That's the offer?\n\n...Yeah, alright. Give me the boring ones. I'll take the boring ones. Nobody's ever offered me boring, it's usually jobs.",
           },
           {
             key: "bold",
             label: "Tell him he's allowed to stop",
             style: 4,
-            close: "*There's a long gap.*\n\nIf I stop I'm just a guy who can't touch anyone, stuck in a room, forever.\n\n*Then, much later:* That was the real one. Sorry. You asked and I've spent years not answering it and it came out worse than I meant.\n\nDon't go, though. Say something else. Anything. I've got about six more hours.",
+            close:
+              "*There's a long gap.*\n\nIf I stop I'm just a guy who can't touch anyone, stuck in a room, forever.\n\n*Then, much later:* That was the real one. Sorry. You asked and I've spent years not answering it and it came out worse than I meant.\n\nDon't go, though. Say something else. Anything. I've got about six more hours.",
           },
         ],
       },
@@ -151,59 +166,66 @@ export default {
     devoted: {
       beats: [
         "**{firstName}**: I need to tell you what I did before somebody else does.",
-        "Edward was going for you in the lower corridor. Not properly. He'd have stopped, he always stops, he's four hundred years old and he has never once not stopped.\n\nI didn't wait to find out. I got between you.\n\nBare-handed. Both gloves off. In front of him.",
-        "He's not living, so it wouldn't have killed him. It would have hurt him badly and he'd have deserved none of it, and I did it anyway without a thought in my head.\n\nEleven years I've been the one against violence. It's not a pose, I've talked three people out of fights this month. And I took my gloves off in a corridor because somebody stood near you.\n\nI've been in the garden since, trying to work out who that was. It wasn't me.",
+        "Edward was going for you in the lower hallway. Not seriously. He always pulls back, he's four hundred years old and he's never once not pulled back.\n\nI didn't wait to find out. I got between you.\n\nBare-handed. Both gloves off. In front of him.",
+        "He's not living, so it wouldn't have killed him. It would've hurt him badly and he wouldn't have deserved it, and I did it anyway, no thought in my head.\n\nI'm the guy who's against violence. Always have been. I talked three people out of fights just this month. And then I pulled my gloves off in a hallway because someone stood too close to you.\n\nI've been in the garden ever since, trying to figure out who that was. Because it wasn't me.",
       ],
       choice: {
-        prompt: "Say it. Whatever it is. I've been sat here two hours waiting to be told.",
+        prompt:
+          "Say it. Whatever it is. I've been sitting out here for two hours waiting to hear it.",
         options: [
           {
             key: "kind",
             label: "Tell him to put them back on",
             style: 3,
-            close: "...They're back on. They've been back on for an hour.\n\nI keep taking them off and putting them back on. That's what I've been doing out here. Come and sit with me and make me stop, I've gone a bit strange.",
+            close:
+              "...They're back on. Have been for an hour.\n\nI keep pulling them off and putting them back on. That's the whole activity out here. Come sit with me and make me stop. I'm not quite myself tonight.",
           },
           {
             key: "playful",
             label: "Ask how Edward took it",
             style: 1,
-            close: "He went absolutely white. Four hundred years old and he looked like a man who'd been caught with his hand in the cookie jar.\n\nHe apologized. Properly, in the old-fashioned way, with the whole construction. I nearly fell over 😂",
+            close:
+              "He went white as a sheet. Four hundred years old and caught with his hand in the cookie jar.\n\nThen he apologized. The full old-world version, every formal clause of it. I almost passed out 😂",
           },
           {
             key: "bold",
             label: "Say he was defending you",
             style: 4,
-            close: "*There's no answer for a long time.*\n\n*Then he's at your door with the gloves on and a look he can't do anything about, and he holds out one hand, palm up, waiting rather than taking.*\n\n> Yeah,\n\n*he says.*\n\n> It was you. I've known for about eight months and I've been growing a row of flowers about it like an absolute coward.",
+            close:
+              "*There's no answer for a long time.*\n\n*Then he's at your door with the gloves on and a look he can't do anything about, and he holds out one hand, palm up, waiting rather than taking.*\n\n> Yeah,\n\n*he says.*\n\n> It was you. Figured that out about eight months ago, and I've been growing a flowerbed about it instead of saying so, like a total coward.",
           },
         ],
       },
       keepsake: {
         emoji: "🧤",
-        line: "Two gloves taken off in a corridor and put back on in a garden.",
+        line: "Two gloves pulled off in a hallway and put back on in a garden.",
       },
     },
 
     soulbound: {
       beats: [
-        "**{firstName}**: Garden. Four in the morning. Don't answer this, just come. If I've got a reply to read I'll lose my nerve reading it.",
+        "**{firstName}**: Garden. Four a.m. Don't reply to this, just come, okay? If there's a message sitting there for me to read I'll lose my nerve halfway through it.",
         "*The whole bed is out at once, which does not happen, and he is standing at the end of the row with the made-up name looking like he has been up all night rehearsing, which he has.*\n\n> {timesMet} times. I've got a mark on the bench for each one. I started doing it before I'd admitted why I was doing it.",
-        "> I want to say the worst part first, so you can decide with all of it.\n\n> I will never be able to touch you. Not once, not in forty years. No hand on your face, nothing at the end of a bad day. That doesn't get solved. I've looked properly, ever since the curse, and there's nothing.",
-        "> And I love you anyway. Which is monstrously unfair to you and I've spent eight months deciding not to say it for exactly that reason.\n\n> But I worked out that deciding for you was the actual unfair bit. So: I love you. I've got a garden and a bar and about a thousand spare hours and a pair of gloves, and that's the whole offer, and it's yours if you want it.",
+        "> I want to say the worst part first, so you can decide with all of it in front of you.\n\n> I will never be able to touch you. Not once, not in forty years. No hand on your face, nothing at the end of a bad day. That doesn't get fixed. I've looked, really looked, ever since the curse, and there's nothing there.",
+        "> And I love you anyway. Which is such a raw deal for you, and I spent eight months not saying it for that exact reason.\n\n> Then it hit me that making that call for you was the actually unfair part. So. I love you. I've got a garden, a bar, about a thousand spare hours, and a pair of gloves. That's the whole offer. It's yours if you want it.",
       ],
       choice: {
-        prompt: "Take as long as you need. I've got nothing but hours, remember. It's the one thing I'm rich in.",
+        prompt:
+          "Take as long as you need. I've got nothing but hours, remember. It's the one thing I'm rich in.",
         options: [
           {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "*He laughs, cracked, disbelieving, both hands over his face for a second.*\n\n*Then he pulls the gloves on tighter, deliberately, and takes both your hands in both of his through two layers of leather, and holds on hard enough that it doesn't matter.*\n\n> This is it,\n\n*he says.*\n\n> This is all of it, forever. Are you sure.\n\n*You tell him yes. He puts his forehead against yours, the one place a coat collar makes safe, and stays there until it gets light.*",
+            close:
+              "*He laughs, cracked, disbelieving, both hands over his face for a second.*\n\n*Then he pulls the gloves on tighter, deliberately, and takes both your hands in both of his through two layers of leather, and holds on hard enough that it doesn't matter.*\n\n> This is it,\n\n*he says.*\n\n> This is all of it, forever. Are you sure.\n\n*You tell him yes. He puts his forehead against yours, the one place a coat collar makes safe, and stays there until it gets light.*",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
-            close: "> Good. Take it. Genuinely, take a lot of it. That's a big thing to hand someone at four in the morning next to a flowerbed.\n\n> And nothing changes. The drink's still on the bar. The garden's still open at four. The row's still called what it's called and I'm not renaming it, because it was true before tonight and it'll be true after.\n\n> I've got years of spare hours, remember. Waiting's the one thing I'm actually built for.",
+            close:
+              "> Good. Take it. Genuinely, take a lot of it. That's a big thing to hand someone at four in the morning next to a flowerbed.\n\n> And nothing changes. The drink's still on the bar. The garden's still open at four. The row's still called what it's called and I'm not renaming it, because it was true before tonight and it'll be true after.\n\n> I've got years of spare hours, remember. Waiting's the one thing I'm actually built for.",
           },
         ],
       },
@@ -215,23 +237,23 @@ export default {
   },
   dialogue: {
     new: [
-      "He lights up with a radiant smile, practically bouncing with energy. \"Oh wow, look who showed up! You're a sight for sore eyes!\" Behind the brightness, there's a shadow of something darker he's desperately hiding.",
+      "He lights up, practically bouncing. \"Oh wow, look who showed up! You're a sight for sore eyes!\" The brightness is real. It's also working a little too hard.",
       "He reaches out to greet you, catches himself an inch away, and turns it into a wave.",
       "Everything on his desk is labeled, sorted, and immaculate. He is not.",
       '"Careful, not too close! Sorry. Sorry, that came out weird. Hi!"',
       'He\'s got Edward slung over one shoulder. "Oof, Ed popped out of nowhere so I accidentally touched him and he died again. Gotta carry him all the way back to the dorm..."',
     ],
     known: [
-      'He\'s stopped saying "not too close." He just leaves the distance where it is.',
+      "He's stopped warning you off. The careful distance is still there. It always will be. He just doesn't say it out loud anymore.",
       "He beams. \"Oh hey, it's Honor Roll! Can't believe I ran into you here, so random! Guess we've gotta go on a date now, huh?\"",
-      '"You look kind of tired, Honor Roll. Come by the bar later, I\'ll pour you something slow and you can just stop being anywhere else for a while."',
+      '"You look wiped, Honor Roll. Come by the bar later? I\'ll make you something easy and you can just... not be anywhere else for a bit."',
       "He asks how you are and then actually waits, which not everyone does.",
-      "He wipes down the same spot on the bar twice. \"Haru hasn't been in. He's been swamped with the animals again. I keep a stool open for him, just in case.\"",
+      "He wipes down the same spot on the bar twice. \"Harurin hasn't been in. He's been swamped with the animals again. I keep a stool open for him, just in case.\"",
       "He's in the anomaly garden, gloves on, snipping the dead heads off a rose bush that's wilting anyway. \"They don't do great near me. I keep planting them anyway.\"",
       "The brightness dims for half a second, and he covers it faster than before.",
     ],
     warm: [
-      "His grin is warm and genuine when he sees you, though you catch the moment his cheerfulness falters, like you're the only thing holding back the darkness.",
+      "His grin is real when he sees you. You also catch the half-second where it slips, like you're the only thing standing between him and a very long night.",
       "He talks with his whole body, gestures a foot from your shoulder and never landing.",
       "He's halfway through pruning something that keeps leaning toward him. \"New elixir. Try it later. It's mostly safe.\"",
       'The Obscuary bar, lights down, your drink already waiting. He leans on his elbows across from you, close as the curse lets him get. "This is the best part of my night. Don\'t tell the others."',
@@ -240,13 +262,13 @@ export default {
     ],
     spark: [
       "His hand hovers a half-inch from your cheek. Neither of you moves for a while.",
-      '"This is the closest I get," he says quietly. "I\'ve gotten very good at it."',
+      '"This is as close as I get," he says. "I\'ve had a lot of practice. Wish I hadn\'t, but I have."',
       "He traces the shape of your hand in the air above it, and it's worse than touching.",
       "The brightness is gone. What's underneath wants you badly and can't say so.",
       "He leans in until you can feel him breathing, and stops exactly there.",
     ],
     close: [
-      '"You make me feel alive," he says softly, hands hovering near you but never quite touching. "Like the curse doesn\'t matter when you\'re near."',
+      '"You don\'t make me forget the curse. The gloves see to that," he says, hands staying carefully at his sides. "You just make it feel less like the whole story. That\'s a big deal, actually."',
       "He holds his hand up, palm out, and waits for you to hold yours an inch from it.",
       "The brightness goes quiet. What's underneath is tired, and grateful, and honest.",
       '"One day," he says, not finishing the sentence. He doesn\'t need to.',
@@ -254,11 +276,11 @@ export default {
     ],
     bound: [
       "Gloves. Layers. A scarf between his palm and your cheek. He's worked out every way there is.",
-      '"I can\'t touch you," he says, "so I\'ve gotten very inventive. Bear with me."',
+      '"Can\'t touch you," he says, "so I\'ve gotten creative. Just go with it."',
       "He kisses you through the fabric of his sleeve and it wrecks you both entirely.",
       "He lies beside you all night with a hand's width of air between, and neither of you sleeps.",
       "He loves you louder than anyone ever has, because it's the one thing the curse can't stop.",
-      "\"Sometimes I wish you'd met me as a regular guy,\" he says, light as anything. \"You'd never have looked twice. ...Still glad it went the way it did.\"",
+      '"Sometimes I wish you\'d met me as a regular guy," he says, light as anything. "You\'d never have looked twice. ...Still glad it went the way it did."',
     ],
   },
   temperamentDialogue: {
@@ -267,7 +289,7 @@ export default {
       "\"Hi! Hi. Don't shake my hand, long story, but it's great to meet you!\"",
       '"You need directions? Paperwork? A friend? I do all three!"',
       '"Whoa, careful... okay, good, you stopped. Phew. Hi!"',
-      "\"New face! I keep a list. You're on it now. It's a nice list.\"",
+      "\"New face! I keep a list. You're on it now,\" he says with a wink.",
     ],
     known: [
       "\"You're back! Okay, that's officially a pattern. I love a pattern.\"",
@@ -279,7 +301,7 @@ export default {
       '"You don\'t flinch anymore. That means a lot, actually."',
     ],
     warm: [
-      "\"You're back! You know you make everything feel less dark when you're around? It's actually kind of amazing.\"",
+      "\"You're back! You know it's genuinely brighter in here when you're around? Like, measurably. Kind of amazing.\"",
       '"Tell me about your day. All of it. I\'ve got nowhere better to be."',
       '"Come by the bar after, I\'ll mix you something and you can just unwind. No pressure, no plans. Just us."',
       "\"Hands to myself, promise. Doesn't mean I'm not thrilled you're here, cutie.\"",
@@ -287,14 +309,14 @@ export default {
       "\"My eyes? Ha. Onions. I was prepping the appetizers for the bar, that's all. ...Anyway! You're here.\"",
     ],
     spark: [
-      "\"Hold your hand up. Right there. Don't close it. ...God, that's almost enough.\"",
-      "\"I'd give up a lot to touch you. Don't tell me what. I've already done the math.\"",
-      "\"Okay, that's close enough. For you, I mean. I could stand here all day. Hold right there for me, cutie?\"",
+      "\"Hold your hand up. Right there. Don't close it. ...Honestly, that's almost enough.\"",
+      "\"I'd trade a lot to be able to touch you right now. Don't ask me what, I've already done the math, ahaha.\"",
+      '"Okay, that\'s close enough. For you, I mean. I could stand here all day. Hold right there for me, cutie?"',
       "\"Honor Roll... were you just checking me out? Hey, it's all good, don't be embarrassed!\"",
-      "\"You're an inch away and it's the loudest thing in the room.\"",
+      "\"You're one inch away and I swear it's the loudest thing in the whole room.\"",
     ],
     close: [
-      '"Even with this curse, I\'d bear it a thousand times if it meant seeing you smile."',
+      '"This curse is worth putting up with on the days you smile at me like that. Easily."',
       '"Hold your hand up. Right there. Close enough counts, right?"',
       "\"I'm okay. Really. I'm better than okay when it's you.\"",
       "\"Don't feel sorry for me. Just... keep coming back. That's the whole ask.\"",
@@ -306,16 +328,11 @@ export default {
       "\"I love you. That one doesn't need hands. That one's free.\"",
       '"Lie down. Right there. I\'ll stay on this side of the air."',
       '"One day I\'ll do this properly. Until then, humor me. Please."',
-      '"I\'ve never wanted anything the way I want to hold you. Never."',
+      '"I\'ve never wanted anything like I want to just hold you. Never. ...Sorry. Heavy. But true."',
     ],
   },
   approach: {
-    new: [
-      "Wave back",
-      "Stop just short",
-      "Say hi",
-      "Keep a careful distance",
-    ],
+    new: ["Wave back", "Stop just short", "Say hi", "Keep a careful distance"],
     known: [
       "Give him the real answer",
       "Keep the careful distance",
@@ -403,11 +420,7 @@ export default {
         "Let him talk it out",
         "Keep the careful distance",
       ],
-      spark: [
-        "Lower your hand",
-        "Let the distance win",
-        "Say nothing at all",
-      ],
+      spark: ["Lower your hand", "Let the distance win", "Say nothing at all"],
       close: [
         "Let him serve in silence",
         "Stay in the quiet with him",

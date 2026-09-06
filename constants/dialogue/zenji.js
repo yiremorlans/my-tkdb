@@ -410,7 +410,7 @@ export default {
         "Make him laugh mid-verse",
       ],
       bound: [
-        "Ask what he wrote on your back",
+        "Hum it back at him, badly",
         "Rhyme something filthy",
         "Blow out the lantern",
       ],
