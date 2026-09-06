@@ -18,7 +18,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Its Alan\n\n*That's the whole message. It sits there for eleven minutes.*",
-        "Not good at this\n\n*Another gap.*\n\nYouve been around {timesMet} times now\n\nBandana says I shoulda said something by now\n\nHe's right\n\nNot telling him that\n\n…So\n\nSaid something",
+        "Not good at this\n\n*Another gap.*\n\nYouve been around {timesMet} times now\n\nBandana says I shoulda said something by now\n\nHe's right\n\nNot telling him that\n\nGlad you keep coming by\n\nShoulda said it sooner",
       ],
       choice: {
         prompt: "That's it",

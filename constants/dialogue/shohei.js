@@ -48,7 +48,7 @@ export default {
             label: "Ask what he's making",
             style: 4,
             close:
-              "why, u gonna have opinions?\n\n…ask me again when u get here, I'll make the one u like, I've been paying attention\n\n*A beat, like he heard himself say it.* …pfft forget I said that",
+              "why, u gonna have opinions?\n\n…ask me again when u get here, I'll make the one u like, I've been paying attention\n\n*A beat, like he heard himself say it.*\n\n…pfft forget I said that",
           },
         ],
       },

@@ -7,8 +7,8 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Hey, cutie. Hope this isn't a strange hour. I've stopped being able to tell which hours are strange.",
-        "Quick thing and then I'll leave you alone. You came through the hall on Tuesday while I was dealing with three separate crises and you didn't add a fourth.\n\nThat's it. That's the whole compliment. {timesMet} times you've been in this house and not once have you needed something from me, and I would like you to understand that in Dionysia, that makes you rare. Precious, even, and I don't say that lightly.",
+        "**{firstName}**: Odd hour for this. I've stopped being able to tell which hours are odd.",
+        "Quick thing, then I'll leave you be. You came through the hall Tuesday while I was dealing with three separate crises, and you didn't add a fourth.\n\nThat's the whole compliment, cutie. {timesMet} times in this house and you've never once needed something from me. In Dionysia, that makes you rare.",
       ],
       choice: {
         prompt: "Anyway. How are you? And answer properly, I'll know.",
@@ -18,21 +18,21 @@ export default {
             label: "Ask him back",
             style: 3,
             close:
-              "Ha. Nice try.\n\n*A pause. A long one, for someone whose whole job is having an answer ready.*\n\n...Tired. That's the honest one. Don't tell Mio, he'll build me something.",
+              "Ha. Nice try.\n\n*A long pause, for someone whose whole job is having an answer ready.*\n\n...Tired. That's the honest one. Don't tell Mio, he'll build me something.",
           },
           {
             key: "playful",
             label: "Offer to be crisis four",
             style: 1,
             close:
-              "Don't you dare. I've got a system and it does not have room for a fourth.\n\n...Although. If you were the fourth I'd probably enjoy the day more. Forget I said that, I'm running on about two hours.",
+              "Don't. The system doesn't have room for a fourth.\n\n...Though if it were you, I'd probably enjoy the day more. Forget I said that. Two hours' sleep talking.",
           },
           {
             key: "bold",
             label: "Say you'd need something",
             style: 4,
             close:
-              "Oh, would you.\n\n*There's real interest in it, the first thing in the whole message that isn't managed.*\n\nWell. Ask, then. I'd like to see what it does to me, and I don't get many chances to find that out.",
+              "Oh, would you.\n\n*Real interest, the first thing in the whole message he hasn't managed.*\n\nAsk, then. I'd like to know what it does to me. I don't get many chances to find out.",
           },
         ],
       },
