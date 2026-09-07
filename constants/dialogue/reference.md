@@ -273,7 +273,7 @@ He has his right ear pierced and wears a purple wisteria earring in that upper l
 Personality
 Subaru is a gentle person, always fretting and apologizing if he thinks he did any wrong. Even though he was assigned a role to investigate if Lyca really did kill anyone, Subaru decided to befriend him, teaching him words and telling him about the outside world.
 
-Subaru thinks lowly of his stigma, with its ability he can read residual thoughts from almost anything he touches, calling it gross.
+Subaru thinks lowly of his stigma. By touching almost anything he can read the residual thoughts left on it, and an object that belonged to someone lets him recall that person's own memories and feelings. He calls the ability gross and is ashamed of reading what people never meant to tell him, so handling other people's belongings is never neutral for him, and being handed something personal on purpose is its own kind of intimacy.
 
 He is critical of people, breaking away from his kind and meek demeanor and making comments that humans are much nastier than any anomalies.
 
