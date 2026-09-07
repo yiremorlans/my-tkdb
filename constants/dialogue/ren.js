@@ -6,33 +6,33 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: hey senpai\n\n[link]\n\ndon't open that during a shift. or do. I'm not your supervisor",
-        "*You open it. It's an invite code for the gacha game he's been grinding on his phone between shifts, already redeemed under your name, starter items and all.*\n\nneeded a second account for the co-op event. yours was just... convenient.\n\nI've sent {timesMet} of those out before. deleted every account before it finished downloading. I haven't deleted this one, which I've decided not to think about too hard.",
+        "**{firstName}**: hey senpai\n\n[link]\n\ndon't open that during a shift. Or do. I'm not your supervisor",
+        "*You open it. It's an invite code for the gacha game he's been grinding on his phone between shifts, already redeemed under your name, starter items and all.*\n\nyou've been by the diner {timesMet} times and seemed curious. So now you have your own.\n\nI've made throwaway accounts before. Deleted every one of them almost straight away. yours is still there. not going to unpack that.",
       ],
       choice: {
         prompt:
-          "anyway. you don't have to look at the build or whatever. it's rough, I already know. wasn't the point.",
+          "anyway. You don't have to look at the build or whatever. it's rough, I already know. Wasn't the point.",
         options: [
           {
             key: "kind",
             label: "Give it a ten",
             style: 3,
             close:
-              "a ten.\n\nyou've inflated the currency. now I have to actually optimize it. this is your fault and I'm going to be up until four.",
+              "a ten.\n\nyou've inflated the currency. now I have to actually optimize it. This is your fault and I'm going to be up until four.",
           },
           {
             key: "playful",
             label: "Give it a six",
             style: 1,
             close:
-              "a SIX.\n\nokay. okay, that's fair, the accessory slots are a mess. I hate that you're right. I'm re-rolling your loadout in about an hour, don't go to sleep.",
+              "a SIX.\n\nokay. Okay, that's fair, the accessory slots are a mess. I hate that you're right. I'm re-rolling your loadout in about an hour, don't go to sleep.",
           },
           {
             key: "bold",
             label: "Ask to join his guild",
             style: 4,
             close:
-              "my guild?\n\n*A long gap.*\n\n...yeah, alright. give me a sec, I have to kick somebody first.\n\n*He kicks somebody. He never says who.*",
+              "my guild?\n\n*A long gap.*\n\n...yeah, alright. Give me a sec, I have to kick somebody first.\n\n*He kicks somebody. He never says who.*",
           },
         ],
       },
@@ -45,31 +45,31 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: ok this is going to sound like a normal question and it isn't one",
-        "you come back with {favResponse}. every time. even the times I've barely said anything back, which is most of them.\n\npeople usually give up. not a complaint, I know what I'm like. I'm the guy with one earbud in, and most people take that as the whole conversation and leave. correct of them, honestly.\n\nyou never leave. you just sit there until I take the other one out. nobody's ever waited me out before.",
+        "you come back with {favResponse}. Every time. even the times I've barely said anything back, which is most of them.\n\npeople usually give up. not a complaint, I know what I'm like. I'm the guy with one earbud in, and most people take that as the whole conversation and leave. Correct of them, honestly.\n\nyou never leave. You just sit there until I take the other one out. nobody's ever waited me out before.",
       ],
       choice: {
-        prompt: "so what's the strategy. there's clearly a strategy.",
+        prompt: "so what's the strategy. There's clearly a strategy.",
         options: [
           {
             key: "kind",
             label: "Say there's no strategy",
             style: 3,
             close:
-              "there's always a strategy.\n\n...huh. okay. there isn't, is there.\n\nthat's worse actually. that's so much worse. I'm going to lie down.",
+              "there's always a strategy.\n\n...huh. Okay. there isn't, is there.\n\nthat's worse actually. That's so much worse. I'm going to lie down.",
           },
           {
             key: "playful",
             label: "Say you're waiting him out",
             style: 1,
             close:
-              "that's not a strategy, that's a siege.\n\nit's working. I want that on record. it's working and I've fully surrendered and you didn't even bring equipment.",
+              "that's not a strategy, that's a siege.\n\nit's working. I want that on record. It's working and I've fully surrendered and you didn't even bring equipment.",
           },
           {
             key: "bold",
             label: "Tell him to take it out",
             style: 4,
             close:
-              "*It's a photo, thirty seconds later. Both earbuds, on the table, next to his phone.*\n\nthere. happy?\n\n*Then:* ...don't answer that. I know the answer. it's annoying that I know the answer.",
+              "*It's a photo, thirty seconds later. Both earbuds, on the table, next to his phone.*\n\nthere. Happy?\n\n*Then:* ...don't answer that. I know the answer. It's annoying that I know the answer.",
           },
         ],
       },
@@ -81,13 +81,12 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: diner. after close. I'll leave the back door",
+        "**{firstName}**: diner. After close. I'll leave the back door",
         "*The place is dark and the chairs are up and he's behind the counter making something that isn't on the menu, with a paused game glowing on the little screen wedged behind the milkshake machine and a second controller charging next to the till for reasons he hasn't explained yet.*\n\n> I do this every Thursday. Have done since I got here. It's the only two hours a week nobody wants anything off me.",
         "> I've never told anyone about it. Not because it's a secret, just because if people knew it'd become a thing, and then it'd stop being the two hours.\n\n*He slides the plate over without pausing the game.*\n\n> You're in it now. Congratulations. You've halved my only two hours and I'm somehow fine about it, which I'd like a doctor to look at.",
       ],
       choice: {
-        prompt:
-          "Sit down. Controller's already charged, don't make it weird.",
+        prompt: "Sit down. Controller's already charged, don't make it weird.",
         options: [
           {
             key: "kind",
@@ -120,9 +119,9 @@ export default {
 
     confidant: {
       beats: [
-        "**{firstName}**: you up? doesn't matter. reading this tomorrow is fine.",
-        "so I've been chewing on something and it won't leave me alone. I complain about everything here. every shift, every tour edit, every time Haru drags me out to go find Towa. loudly. on the record.\n\nHaru's put a tracker on me before, to haul me out when I go quiet too long. and here's the thing: I've never once actually refused any of it. I just complain, and then I do it.",
-        "complaining and refusing aren't the same thing. took me way too long to notice that.\n\nmost nights I grind some pointless game until I pass out, because it doesn't need anything back. except Thursdays. that's the only two hours where somebody's there and nothing's expected of me, and I have to lock a door to get them.\n\nanyway. deepest thing I've ever typed. putting my phone in another room now.",
+        "**{firstName}**: you up? doesn't matter. Reading this tomorrow is fine.",
+        "so I've been chewing on something and it won't leave me alone. I complain about everything here. Every shift, every tour edit, every time Haru drags me out to go find Towa. loudly. On the record.\n\nHaru's put a tracker on me before, to haul me out when I go quiet too long. And here's the thing: I've never once actually refused any of it. I just complain, and then I do it.",
+        "complaining and refusing aren't the same thing. Took me way too long to notice that.\n\nmost nights I grind some pointless game until I pass out, because it doesn't need anything back. Except Thursdays. that's the only two hours where somebody's there and nothing's expected of me, and I have to lock a door to get them.\n\nanyway. Deepest thing I've ever typed. putting my phone in another room now.",
       ],
       choice: {
         prompt: "say something normal so I can pretend that was normal.",
@@ -132,21 +131,21 @@ export default {
             label: "Say you don't need anything",
             style: 3,
             close:
-              "*There's a long gap.*\n\n...I know.\n\nthat's the whole reason it's you on Thursdays. took me about six months to work out why and then I just didn't look at it directly for another four.",
+              "*There's a long gap.*\n\n...I know.\n\nthat's the whole reason it's you on Thursdays. Took me about six months to work out why and then I just didn't look at it directly for another four.",
           },
           {
             key: "playful",
             label: "Ask him for a favor",
             style: 1,
             close:
-              "oh, immediately? straight in?\n\n...go on then. what is it.\n\n*You ask him to do nothing for an hour. He calls you a menace and then actually does it, and reports back afterwards that it was horrible and he might try it again.*",
+              "oh, immediately? Straight in?\n\n...go on then. what is it.\n\n*You ask him to do nothing for an hour. He calls you a menace and then actually does it, and reports back afterwards that it was horrible and he might try it again.*",
           },
           {
             key: "bold",
             label: "Tell him it's okay to refuse",
             style: 4,
             close:
-              "can't. if I stop, what's left.\n\n*Then, four minutes later:*\n\nthat was a bad sentence. I've read it back. don't answer it, I don't think I want the answer yet.\n\n...ask me again on a Thursday.",
+              "can't. If I stop, what's left.\n\n*Then, four minutes later:*\n\nthat was a bad sentence. I've read it back. Don't answer it, I don't think I want the answer yet.\n\n...ask me again on a Thursday.",
           },
         ],
       },
@@ -159,32 +158,32 @@ export default {
     devoted: {
       beats: [
         "**{firstName}**: don't be weird about this",
-        "*It's a screenshot of a phone's home screen. There's an alarm on it, set for a time that means nothing, labeled with your name.*\n\nit's for when your last class ends. I set it about three months ago so I'd know when to stop being anywhere else.\n\nI have never once told you I was waiting. I've just always happened to be in the courtyard. every time. three months of happening to be in the courtyard.",
-        "tonight you came out late and I'd been there forty minutes, grinding the same event so it'd look like I was there for the game. Haru saw me and made it a whole thing, and I realized I've been running an entire secret operation to look casual, which is more effort than just saying it.\n\nso: I wasn't happening to be there. not once. that's the message.",
+        "*It's a screenshot of a phone's home screen. There's an alarm on it, set for a time that means nothing, labeled with your name.*\n\nit's for when your last class ends. I set it about three months ago so I'd know when to stop being anywhere else.\n\nI have never once told you I was waiting. I've just always happened to be in the courtyard. Every time. three months of happening to be in the courtyard.",
+        "tonight you came out late and I'd been there forty minutes, grinding the same event so it'd look like I was there for the game. Haru saw me and made it a whole thing, and I realized I've been running an entire secret operation to look casual, which is more effort than just saying it.\n\nso: I wasn't happening to be there. Not once. that's the message.",
       ],
       choice: {
-        prompt: "okay. that's it. you can react.",
+        prompt: "okay. That's it. you can react.",
         options: [
           {
             key: "kind",
             label: "Say you always hoped he'd be",
             style: 3,
             close:
-              "...say that again.\n\nno, don't. I heard it. I'm just... give me a second.\n\n*The second is nine minutes long. Then:* okay. alarm stays. obviously the alarm stays.",
+              "...say that again.\n\nno, don't. I heard it. I'm just... give me a second.\n\n*The second is nine minutes long. Then:* okay. Alarm stays. obviously the alarm stays.",
           },
           {
             key: "playful",
             label: "Ask what the alarm sound is",
             style: 1,
             close:
-              "it's the diner's fire alarm. I recorded it. it's the most annoying sound in the building.\n\nthat's on purpose. if it was nice I'd snooze it. I've never snoozed it. not once in three months.",
+              "it's the diner's fire alarm. I recorded it. It's the most annoying sound in the building.\n\nthat's on purpose. If it was nice I'd snooze it. I've never snoozed it. not once in three months.",
           },
           {
             key: "bold",
             label: "Tell him to wait inside",
             style: 4,
             close:
-              "inside's worse. inside's obvious.\n\n*Then, much later, from the courtyard:* ...I'm outside. I'm outside right now, actually, I've been typing this from the wall.\n\n*When you come out he doesn't get up. He just holds a hand out until you take it, and stays sitting on the cold wall holding onto it for a good twenty minutes without saying anything at all.*",
+              "inside's worse. Inside's obvious.\n\n*Then, much later, from the courtyard:* ...I'm outside. I'm outside right now, actually, I've been typing this from the wall.\n\n*When you come out he doesn't get up. He just holds a hand out until you take it, and stays sitting on the cold wall holding onto it for a good twenty minutes without saying anything at all.*",
           },
         ],
       },
@@ -196,10 +195,10 @@ export default {
 
     soulbound: {
       beats: [
-        "**{firstName}**: ok. no bit. no link. I'm not sending you a code instead of just saying this.",
-        "{timesMet} times. I've got a save file for basically all of them. every pointless co-op grind, every event, going back to that first invite code. at some point I stopped playing them for the loot and started playing them because you'd be on the other account.\n\nnobody's ever seen that save file. it's the least ironic thing I own.",
-        "here's the actual thing. I say massive stuff in the smallest possible voice. I know I do it. I said \"I like you\" once like I was reading the weather and you just went with it, and I've thought about that literally hundreds of times since.\n\nI do it because if I say something flat and it doesn't land, it wasn't really said. that's the whole system. it's a very good system and it's kept me safe basically my whole life.",
-        "so I'm turning it off. once. right now.\n\nI love you. not deadpan. not as a bit. not with a clip after it.\n\nlove you, senpai. have done for ages. that's the one I've been saving and it's the only thing I've ever said that I couldn't put a joke on the end of.",
+        "**{firstName}**: ok. No bit. no link. I'm not sending you a code instead of just saying this.",
+        "{timesMet} times. I've got a save file for basically all of them. Every pointless co-op grind, every event, going back to that first invite code. at some point I stopped playing them for the loot and started playing them because you'd be on the other account.\n\nnobody's ever seen that save file. It's the least ironic thing I own.",
+        "here's the actual thing. I say massive stuff in the smallest possible voice. I know I do it. I said \"I like you\" once like I was reading the weather and you just went with it, and I've thought about that literally hundreds of times since.\n\nI do it because if I say something flat and it doesn't land, it wasn't really said. That's the whole system. it's a very good system and it's kept me safe basically my whole life.",
+        "so I'm turning it off. once. Right now.\n\nI love you. not deadpan. not as a bit. not with a clip after it.\n\nlove you, senpai. Have done for ages. that's the one I've been saving and it's the only thing I've ever said that I couldn't put a joke on the end of.",
       ],
       choice: {
         prompt: "take your time. I've got a whole save file to get through.",
@@ -216,7 +215,7 @@ export default {
             label: "Ask him to give you time",
             style: 2,
             close:
-              "yeah, course.\n\n*A pause. Then, without a single flat note in it:*\n\nfor real. take ages. I've been sitting on it for a year, it's not going to go off.\n\nThursday's still Thursday. that was never a move. I'd have given you the two hours whatever you said tonight. that's not me being noble, that's just genuinely how it is.\n\n*The cushion stays on your side of the counter. He never says anything about that either.*",
+              "yeah, course.\n\n*A pause. Then, without a single flat note in it:*\n\nfor real. Take ages. I've been sitting on it for a year, it's not going to go off.\n\nThursday's still Thursday. That was never a move. I'd have given you the two hours whatever you said tonight. that's not me being noble, that's just genuinely how it is.\n\n*The cushion stays on your side of the counter. He never says anything about that either.*",
           },
         ],
       },
@@ -232,7 +231,7 @@ export default {
       "One earbud comes out. That's the entire greeting, and it's more than most people get.",
       "He's found the one spot in the whole building where nobody looks. You found him anyway.",
       '"...You need something?" He sounds like he hopes the answer is no.',
-      "\"Great, shift change. I was gonna head out... What? Do I really need to be here for that?\"",
+      '"Great, shift change. I was gonna head out... What? Do I really need to be here for that?"',
     ],
     known: [
       "Both earbuds come out. That's a significant escalation.",

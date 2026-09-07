@@ -27,22 +27,21 @@ export default {
             key: "kind",
             label: "Say you'll come by soon",
             style: 3,
-            close:
-              "Oh, good. Good.\n\nI'll tidy up a little. Not that it needs tidying.",
+            close: "Oh, good. Good.\n\nI'll tidy the shelf before you come by.",
           },
           {
             key: "playful",
             label: "Ask what's on the shelf",
             style: 1,
             close:
-              "That would rather spoil it, wouldn't it.\n\n*He almost smiles.* Come and see.",
+              "That would rather spoil it, wouldn't it.\n\nI'm no good at keeping a secret, so come by soon.",
           },
           {
             key: "bold",
             label: "Ask why you got noticed",
             style: 4,
             close:
-              "Would you like the honest answer? You're the only person who's ever asked to meet the cat.\n\nShe was flattered. I don't believe cats are meant to be flattered, but there it is.",
+              "Would you like the honest answer? You're the only person who's ever asked to meet the cat.\n\nShe sat up when I mentioned you. I've not once seen her sit up for anyone.",
           },
         ],
       },

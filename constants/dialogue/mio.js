@@ -9,17 +9,17 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: This is Mio. Dionysia, the toolbox. You already know who I am, so I'll skip the rest.",
-        "Your door's sticking. The bottom hinge has dropped about two millimeters and the frame's swollen with the damp. Five minute fix. I've walked past it four times.\n\nSo I'm asking. Can I fix your door.\n\n...We've talked {timesMet} times and it's always been maintenance. I did notice that.",
+        "We've talked {timesMet} times, and every one of them there's been something to fix. That's not on you. But it means I've only ever turned up here with a toolbox in my hand.\n\nSo, while I'm there, anything you actually want me to look at?\n\nDoesn't have to be broken. If there's something that'd make your week easier, I can probably build it.\n\n...Your desk, though. The light's behind you, so you've been reading in your own shadow every night. I could build you a lamp that clips on and swings clear when you don't need it. Hour, maybe.",
       ],
       choice: {
-        prompt: "Yes or no on the hinge.",
+        prompt: "Yes or no on the lamp.",
         options: [
           {
             key: "kind",
             label: "Say yes, and thank him",
             style: 3,
             close:
-              "It's a hinge.\n\n...Thanks for saying thanks, though. Most people just stop noticing the door.",
+              "It's a lamp.\n\n...You don't have to thank me for a lamp. I'll take it, though.",
           },
           {
             key: "playful",
@@ -33,13 +33,13 @@ export default {
             label: "Ask him to stay after",
             style: 4,
             close:
-              "*A pause.*\n\nStay after and do what?\n\n...Fine. Yes. I'll bring the good tea. Shion drinks all of it, so I keep some hidden.",
+              "*A pause.*\n\nStay after and do what?\n\n...Fine. Yes. I'll bring the sweet tea. Shion drinks all of it, so I keep some hidden.",
           },
         ],
       },
       keepsake: {
-        emoji: "🔩",
-        line: "A door that stopped sticking, from the one person who kept walking past it.",
+        emoji: "💡",
+        line: "A lamp that aims the light where you need it, from the one person who notices how hard you work.",
       },
     },
 
@@ -50,8 +50,7 @@ export default {
         "You leave it propped open. You've got {favResponse} for everyone, me included. I notice things and then build about them instead of saying them. Jo calls that a personality problem.\n\nAnyway. Doorstop.",
       ],
       choice: {
-        prompt:
-          "That's the message. You don't have to answer it.",
+        prompt: "That's the message. You don't have to answer it.",
         options: [
           {
             key: "kind",
@@ -128,8 +127,7 @@ export default {
         "Somewhere in the last few years it flipped. Now I'm the one who turns up, and he lets me, and we don't talk about the swap.\n\nI'd do it another sixty years, so don't hear this wrong. I just miss having a brother instead of a duty.\n\n(I've got a real kid brother and sister back home. I miss them the ordinary way. This isn't that.)",
       ],
       choice: {
-        prompt:
-          "Say something back.",
+        prompt: "Say something back.",
         options: [
           {
             key: "kind",

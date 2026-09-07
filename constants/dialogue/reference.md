@@ -2444,7 +2444,7 @@ Sho - same as Leo
 Haru - likes to use little character faces like (^__^;) and (;__;) for sad crying, uses some shorted words like "btw" 
 Towa - only communicates with stickers and 1 or 2 emojis, short phrases 
 Taiga - uses "u" and "ur", "k", says "yea" and "lol" no paragaphs, mostly short single sentences, 
-Haku - shortens words like "prob", for "No prob", says "tbh"
+Haku - shortens words like "prob", for "No prob", says "tbh". Writes in normal sentence case, not all-lowercase (capitalizes sentence starts and "I"). Cheeky/teasing register is in character - light flirting, "princess" when bold, and he quietly makes things more convenient for the MC (fetches her forms, makes the tea, walks her back to her dorm after dark) while framing every favor as no effort.
 Rui - likes to use some emojis like crying laughing emoji, sparkle. eager with "?!" on questions 
 Edward - uses LOTS of emojis, atleast 2 in a row at the end of sentence. Speaks in camel case "I've Become Rather Forgetful" not very verbose, but more direct
 Lyca - doesn't use only lowercase

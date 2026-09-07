@@ -6,13 +6,14 @@ export default {
   // thing he admits is that being the only one who sees is lonely.
   //
   // Texting voice, per reference.md's "## Bond Scenes" notes: he clips words
-  // ("prob", "No prob") and drops "tbh" into his typed lines. Not in the `> `
-  // lines he says out loud.
+  // ("prob", "No prob") and drops "tbh" into his typed lines, but writes in
+  // normal sentence case, not all-lowercase. Not in the `> ` lines he says out
+  // loud.
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: hey. don't panic.\n\nthere's something standing behind you.\n\n...there isn't. couldn't resist. how'd you do?",
-        "Okay, real reason. You walked through the Hotarubi hall today and stepped round something in the middle of the floor.\n\nThere's something in the middle of that floor. Has been for a long time. Nobody steps round it: they walk straight through, get a headache, blame the weather.\n\nSo that's {timesMet} times here and at least once you saw something. Or felt it. I've been curious ever since, and I'm too lazy to stay curious for long tbh, so I'm asking.",
+        "**{firstName}**: Hey, it's Haku. Got your number the boring way, before you ask.\n\nI do actually have a reason for this. I also just wanted an excuse to text you. The reason came first. Barely.",
+        "Okay, real reason. There's something in the middle of the Hotarubi hall floor, been there for years. Everyone walks straight through it and blames the headache on the weather.\n\nExcept you. {timesMet} times here, and you're the only one I've watched go round it instead of through. Could be nothing. I've been curious ever since tbh, so I'm asking.",
       ],
       choice: {
         prompt: "Well? Was that just a coincidence?",
@@ -22,21 +23,21 @@ export default {
             label: "Say it just felt wrong",
             style: 3,
             close:
-              "Yeah. That's how it starts.\n\nFor what it's worth, that's a decent instinct and I'd trust it tbh.",
+              "Yeah. That's how it starts.\n\nFor what it's worth, that's a decent instinct and you should trust it.",
           },
           {
             key: "playful",
             label: "Ask if you passed the test",
             style: 1,
             close:
-              "It wasn't a test.\n\n...it was completely a test. You did fine. Most people jump, which is honestly the best part of my week, so thanks for ruining it.",
+              "It wasn't a test.\n\n...It was completely a test. And you passed, which almost nobody does. Most people are still checking over their shoulder an hour later.\n\nShame, though. I had a whole second scare lined up.",
           },
           {
             key: "bold",
-            label: "Ask what's actually there",
+            label: "Ask if the excuse came first",
             style: 4,
             close:
-              "*There's a longer gap than the question deserves.*\n\nBelongs to someone who doesn't know they're finished, *he says.* That's all. It's not scary, it's just sad, and everyone would rather I said scary.",
+              "You blew right past the question I asked to go for that one. Bold.\n\nBoth reasons are real, for the record. Which one came first is a braver text than I've got in me tonight.",
           },
         ],
       },
@@ -48,7 +49,7 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: okay observation time. don't look into it too much.",
+        "**{firstName}**: Okay, observation time. Don't look into it too much.",
         "You come back with {favResponse} every single time. Even when I've deflected. Especially when I've deflected, actually. You just wait it out and go again.\n\nEveryone else takes the joke and leaves. That's what the joke is for. It's a door I hold open so people can get out of a conversation they didn't want to be in.\n\nYou keep not going through it. It's starting to be a whole thing tbh.",
       ],
       choice: {
@@ -60,7 +61,7 @@ export default {
             label: "Say the door's still open",
             style: 3,
             close:
-              "...huh.\n\nThat's annoyingly good. Give me a sec.\n\n*The sec is eleven minutes long.* Okay. Yeah. Leave it open then.",
+              "...Huh.\n\nThat's annoyingly good. Give me a sec.\n\n*The sec is eleven minutes long.* Okay. Yeah. Leave it open then.",
           },
           {
             key: "playful",
@@ -86,9 +87,9 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: you free? bring a coat. it's the roof and it's freezing and I'm not explaining over text.",
-        "*He's already up there with two cans and a blanket he clearly brought for you, and he's looking at the far corner of the roof rather than at you.*\n\n> So there's a kid up here. Been here since before I arrived. Sits on that ledge every night and won't go, and I've tried everything and I'm out of ideas, and I come up and sit with her because that's all that's left.",
-        "> Every night. Since I moved in here. Nobody knows.\n\n*He finally looks over.*\n\n> That's the actual thing about me, by the way. Not the medium stuff, not the shrine family, not the ghosts. It's that I come up here every night because if I don't, nobody does.\n\n> You're the first person I've told. I'd like it on record that I told you sober, so I can't take it back later.",
+        "**{firstName}**: You free? C'mon, bring a coat. It's the back veranda and it's freezing and I'm not explaining over text.",
+        "*He's already out there with two cans and a blanket he clearly brought for you, and he's looking at the far end of the veranda rather than at you.*\n\n> So there's a kid out here. Been here since before I arrived. Sits on the edge every night and won't go, and I've tried everything and I'm out of ideas, and I come out and sit with her because that's all that's left.",
+        "> Every night. Since I moved in here. Nobody knows.\n\n*He finally looks over.*\n\n> That's the actual thing about me, by the way. Not the medium stuff, not the shrine family, not the ghosts. It's that I come out here every night because if I don't, nobody does.\n\n> You're the first person I've told. I'd like it on record that I told you sober, so I can't take it back later.",
       ],
       choice: {
         prompt: "Right. Say something lazy so we can move on.",
@@ -98,14 +99,14 @@ export default {
             label: "Ask if you can come too",
             style: 3,
             close:
-              "*He doesn't answer for a while. Just drinks.*\n\n> ...yeah.\n\n*he says eventually, at the ledge rather than at you.*\n\n> Yeah, come. She won't know. But I'll know.\n\n*You go, most nights, after that. He never once thanks you for it, which is how you know it matters.*",
+              "*He doesn't answer for a while. Just drinks.*\n\n> ...Yeah.\n\n*he says eventually, out at the garden rather than at you.*\n\n> Yeah, come. She won't know. But I'll know.\n\n*You go, most nights, after that. He never once thanks you for it, which is how you know it matters.*",
           },
           {
             key: "playful",
             label: "Point out he brought a blanket",
             style: 1,
             close:
-              "> That's mine.\n\n> ...it's not mine, I bought it Tuesday, it's still got the tag on. Shut up. Put it on, princess, you're shaking.",
+              "> That's mine.\n\n> ...It's not mine, I bought it Tuesday, it's still got the tag on. Shut up. Put it on, princess, you're shaking.",
           },
           {
             key: "bold",
@@ -124,7 +125,7 @@ export default {
 
     confidant: {
       beats: [
-        "**{firstName}**: my family sent a letter. first one in three years. thought you should know before I do something stupid with it.",
+        "**{firstName}**: My family sent a letter. First one in three years. Thought you should know before I do something stupid with it.",
         "Kusanagi shrine. Long line of mediums, big house, lot of expectations. I was the strongest one they'd produced in a long time and they were *thrilled* to see the back of me.\n\nNot disappointed. Thrilled. I saw the wrong things and said so out loud, and it turns out a family business runs better when the medium tells people what they want tbh.",
         "So they sent me here and told everyone it was an honor, and the letter's asking when I'm coming back to be useful.\n\nI've read it eleven times. I keep waiting to feel something about it. Nothing's arriving, and that's worse than if it did.\n\nAnyway. That's the most I've ever said about myself in one go. I'd like to formally blame you for it.",
       ],
@@ -137,7 +138,7 @@ export default {
             label: "Say you'll read it with him",
             style: 3,
             close:
-              "...that's not one of the options I'd prepared for.\n\n*A long pause.*\n\nRoof. Bring the blanket. I'll read it out loud and you can tell me if I'm allowed to feel anything about it, because apparently I've stopped being able to tell.",
+              "...That's not one of the options I'd prepared for.\n\n*A long pause.*\n\nThe veranda. Bring the blanket. I'll read it out loud and you can tell me if I'm allowed to feel anything about it, because apparently I've stopped being able to tell.",
           },
           {
             key: "playful",
@@ -151,7 +152,7 @@ export default {
             label: "Tell him he's not going back",
             style: 4,
             close:
-              "You don't get to decide that.\n\n*Then, almost immediately:* sorry. that was... yeah. sorry.\n\nSay it again. I'm not going to argue this time. I just want to hear somebody say it who isn't me at 4am.",
+              "You don't get to decide that.\n\n*Then, almost immediately:* Sorry. That was... yeah. Sorry.\n\nSay it again. I'm not going to argue this time. I just want to hear somebody say it who isn't me at 4am.",
           },
         ],
       },
@@ -163,7 +164,7 @@ export default {
 
     devoted: {
       beats: [
-        "**{firstName}**: don't freak out. you're fine. I need you to not freak out.",
+        "**{firstName}**: Don't freak out. You're fine. I need you to not freak out.",
         "There was something following you back from the east wing tonight. Not a big one, it wasn't going to do anything, they mostly don't, but it had picked you and it was prob going to keep picking you.\n\nSo I dealt with it. Properly, the shrine way, the way I swore I was never doing again because of who taught it to me.",
         "It took about four hours and it hurt in a way I'd genuinely forgotten about, and I'd have done it if it took four days.\n\nI'm telling you because I don't want to be someone who quietly does things for you and lets you think the world is easier than it is. That's my dad's whole personality and I'd rather die.\n\nAlso I'm exhausted and slightly emotional and it's five in the morning tbh, so, you know. Grain of salt.",
       ],
@@ -175,7 +176,7 @@ export default {
             label: "Ask if he's okay",
             style: 3,
             close:
-              "...nobody asks that.\n\nEveryone asks if it's gone. Nobody's ever asked the other thing.\n\n*A long gap.*\n\nNo. Not really. Can you come up. You don't have to say anything, I just don't want to be on this roof by myself tonight.",
+              "...Nobody asks that.\n\nEveryone asks if it's gone. Nobody's ever asked the other thing.\n\n*A long gap.*\n\nNo. Not really. Can you come out. You don't have to say anything, I just don't want to be out there by myself tonight.",
           },
           {
             key: "playful",
@@ -186,10 +187,10 @@ export default {
           },
           {
             key: "bold",
-            label: "Go up to the roof",
+            label: "Go out to the veranda",
             style: 4,
             close:
-              "*He's flat on his back on the concrete when you get there, gray, done in, arm over his eyes.*\n\n*He doesn't sit up. He just moves over about six inches and says,*\n\n> if you're going to lie down do it now, I'm not doing the being-brave thing tonight.\n\n*You lie down. He puts his head against your shoulder and is asleep in ninety seconds, and doesn't move until it's light.*",
+              "*He's flat on his back on the boards when you get there, gray, done in, arm over his eyes.*\n\n*He doesn't sit up. He just moves over about six inches and says,*\n\n> If you're going to lie down do it now, I'm not doing the being-brave thing tonight.\n\n*You lie down. He puts his head against your shoulder and is asleep in ninety seconds, and doesn't move until it's light.*",
           },
         ],
       },
@@ -203,8 +204,8 @@ export default {
       beats: [
         "**{firstName}**: I'm going to say this badly and I'm not going to make a joke at the end of it, which is going to take everything I've got.",
         "{timesMet} times. And I've had the deflection ready every single one of them: the door, the bit, the thing behind you. It's automatic. It's been automatic since I was nine.\n\nIt stopped working on you somewhere around the middle and I've been running it anyway, out of pure cowardice, which you've very kindly pretended not to notice.",
-        "Here's the thing about being the only one who sees. Everyone thinks it's frightening. It's not frightening, it's lonely: you're in a room full of people and there's a whole other room and you're the only one in it.\n\nYou came into the other room. You didn't even make a thing of it. You just started stepping round stuff on the floor and sitting on a freezing roof with a kid you can't see.",
-        "So: I love you.\n\nNo bit. No door. I love you and I've loved you since the roof and probably before it, and I've been half-assing every conversation we've had since because half-assing it is the only way I know how to survive meaning something.\n\nThat's it. That's the whole message. God, this is awful.",
+        "Here's the thing about being the only one who sees. Everyone thinks it's frightening. It's not frightening, it's lonely: you're in a room full of people and there's a whole other room and you're the only one in it.\n\nYou came into the other room. You didn't even make a thing of it. You just started stepping round stuff on the floor and sitting on a freezing veranda with a kid you can't see.",
+        "So: I love you.\n\nNo bit. No door. I've loved you since the veranda, probably before it, and I've spent every conversation since half-assing it, because half-assing it is the only way I know how to survive meaning something.\n\nI keep going back over what I let slide. Walking you home and cracking a joke at your door instead of saying this. The morning you answered half asleep in your pajamas and I decided I wasn't allowed to notice. C'mon. Stupid things to miss. I miss them anyway.\n\nThat's the whole message. God, this is awful.",
       ],
       choice: {
         prompt:
@@ -215,14 +216,14 @@ export default {
             label: "Say it back",
             style: 3,
             close:
-              "...say it again but with the joke removed. I've put a joke in on your behalf and I need to hear it without one.\n\n*You say it again.*\n\n*The reply is just:* roof. now. *And he's standing when you get up there for once, not lying down, not looking at the ledge, looking straight at you, and he kisses you like a man finally putting down something he's carried up a lot of stairs.*",
+              "...Say it again but with the joke removed. I've put a joke in on your behalf and I need to hear it without one.\n\n*You say it again.*\n\n*The reply is just:* Veranda. Now. *And he's standing when you get out there for once, not lying down, not looking at the far end, looking straight at you, and he kisses you like a man finally putting down something he's carried a long way.*",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
             close:
-              "Yeah. Course. That's... yeah, take it.\n\n*A pause. No joke arrives, which is how you know he means it.*\n\nI'm going to be on the roof at midnight regardless. That was true before tonight and it'll be true after. Nothing I said changes what that is.\n\nAnd if you never bring it up again, I won't either. I'm world-class at not bringing things up. It's basically my only skill.\n\n*He's up there every night. He never brings it up. He always moves over six inches.*",
+              "Yeah. Course. That's... yeah, take it.\n\n*A pause. No joke arrives, which is how you know he means it.*\n\nI'm going to be on the veranda at midnight regardless. That was true before tonight and it'll be true after. Nothing I said changes what that is.\n\nAnd if you never bring it up again, I won't either. I'm world-class at not bringing things up. It's basically my only skill.\n\n*He's out there every night. He never brings it up. He always moves over six inches.*",
           },
         ],
       },
@@ -235,24 +236,31 @@ export default {
   dialogue: {
     new: [
       'He\'s found the one quiet corner of the grounds and claimed it. You found him anyway. "Oh. Hey."',
-      '"Don\'t look now, but there\'s something crouched in that corner." He lets you check, then smiles, sheepish. "...There isn\'t. I made it up. Quickest way to get you to stand still next to me."',
+      '"I wouldn\'t stand there." He waits out your look at the corner. "...No reason. Wanted to see if you\'d jump. You didn\'t. Noted."',
       '"Don\'t expect too much from me," he says, not getting up. "Ghouls are glorified street magicians, really. Let\'s keep it light."',
       "A slow nod, half a wave. That's the whole greeting, and it's more than most people get.",
       "\"What are you doing back here? Don't tell me you've gone and gotten yourself mixed up in something.\"",
+      '"Running off out here never ends well. For either of us." He tips his head at the path. "Walk back with me."',
+      '"You shouldn\'t be out this far alone." He\'s already up. "To the lights, at least. Humor me."',
     ],
     known: [
-      "\"Oh, it's you.\" He doesn't get up, but he cracks one eye open.",
-      "\"Don't put so much pressure on yourself over this curse. Whatever you need chased down, I'll help you look. It's no trouble.\"",
-      "He starts to say something honest, thinks better of it. \"...This dorm's seen better days. Walk with me while I check the spots that need fixing?\"",
-      "\"You keep turning up. I've stopped bracing for it. ...That's a compliment, kind of.\"",
-      "The wave comes half a second faster than it used to. He'd deny it.",
-    ],
-    warm: [
-      "He shifts over on the step to make room, still not looking up. The space is for you.",
-      "\"Zenji's wandered off again. I'll have to go film whatever he's up to and edit it later. He never picks the easy stuff.\"",
-      "He starts a sentence that was heading somewhere honest, then shrugs it off with a joke. You both notice.",
+      '"Oh, it\'s you." He cracks one eye open. "Good timing. I was getting bored."',
+      "\"Zenji's got me filming him again. He's wandered off to pick the spot, and it's never the easy one.\"",
+      "\"You keep turning up. I've started counting on it. ...Don't make it weird.\"",
       "\"Mornin'. You've got a sleep mark on your face. ...Good. Means you actually slept.\"",
       '"Made too much tea. You\'ll have to help me with it." He did not make too much tea by accident.',
+      '"You were hunting everywhere for those forms. I already handed them in for you. It\'s fine, it was on the way."',
+      "\"Hang on, I'll walk you. I don't love the idea of you crossing the grounds alone in the dark.\"",
+      "\"Anyway. I'll try not to keep you out this late from now on. ...No promises. Come on, I'll see you back.\"",
+    ],
+    warm: [
+      '"Careful, princess. Sit that close and people start talking." He doesn\'t move away.',
+      'He catches your sleeve as you pass. "Stay a minute. The place is better with you in it. ...God, ignore that."',
+      "\"You know Zenji's decided I've got a thing for you?\" A beat. \"He's not wrong. Don't tell him.\"",
+      '"Boo." You don\'t flinch anymore. He looks almost let down. "...Shame. It was a good excuse to catch your arm."',
+      "\"Wish I hadn't missed you in your pajamas this morning. ...I'm going to leave that there and see how it does.\"",
+      '"I had a nap planned. You\'re barely more interesting." He pats the step beside him.',
+      "\"Up you get. I'm seeing you to your door tonight. ...It's the one chore I've never minded.\"",
     ],
     spark: [
       "You fall asleep against his shoulder. He stays put until his arm goes numb, and then a while longer.",
@@ -282,7 +290,7 @@ export default {
       dialogue: {
         new: [
           "He's sitting out watching the dark come in. \"...Oh. It's you. Sit, if you want.\"",
-          "\"You're out late. This isn't a great place to wander around alone after dark.\" A beat. \"...I'll come with you.\"",
+          '"You\'re out late. This isn\'t a great place to wander around alone after dark." A beat. "...I\'ll come with you."',
           '"It\'s been too quiet tonight. Probably nothing." He doesn\'t sound sure. "Stick around a bit."',
           "\"Watch your feet on the way in. Don't come crying to me if a fox spirit gets you.\" He's mostly joking.",
         ],
@@ -290,10 +298,12 @@ export default {
           '"You always turn up right as it gets dark. I\'ve stopped calling it luck."',
           "\"Walk you back? It's dark, and I'm only half doing it to be nice.\"",
           "\"There's something I've been meaning to tell you. Not tonight. Walk with me anyway.\"",
+          "\"I'm walking you back. Don't argue. I've decided, and I'm too lazy to decide twice.\"",
         ],
         warm: [
           '"Stay a while. It\'s quieter with someone else here."',
-          "\"Can't sleep? Me neither. Walk with me a bit. It helps, the company.\"",
+          '"Can\'t sleep? Me neither. Walk with me a bit. It helps, the company."',
+          "\"Too bad I couldn't walk you back. Safety thing. ...Fine, and I wanted to catch you in your pjs. It's allowed to be both.\"",
         ],
       },
     },
@@ -313,7 +323,7 @@ export default {
       '"Well, look who wandered in. You lost, or is this on purpose?"',
       '"Come in if you\'re coming. The place bites less than the rumors say."',
       "\"You've got the look of someone with a story. Go on, I've got nowhere to be.\"",
-      "\"Watch your step out there. You shouldn't wander around with your guard down.\"",
+      '"Watch your step out there. You shouldn\'t wander around with your guard down."',
       "\"Haha. Don't expect too much from me. Let's keep it light, huh?\"",
     ],
     known: [
@@ -327,7 +337,7 @@ export default {
       '"There you are. If you ever want to talk, the curse or anything else, I\'ll listen."',
       "\"I'd say I wasn't waiting for you. ...Nah. I was.\"",
       '"You make it hard to stay unbothered. Take that as a compliment."',
-      '"Walk with me a bit. It\'s been too quiet tonight, and I\'d rather not be the only one who notices."',
+      "\"Walk with me a bit. It's been too quiet tonight, and I'd rather not be the only one who notices.\"",
       "\"Hey, you're smiling at me. That's cheating.\"",
     ],
     spark: [
@@ -359,6 +369,7 @@ export default {
       "Sit on the step with him",
       "Ask what he's fixing",
       "Let the quiet sit",
+      "Walk back with him",
     ],
     known: [
       "Take the cleared step",
@@ -460,11 +471,7 @@ export default {
         "Share the step in silence",
         "Let the night settle",
       ],
-      bound: [
-        "Let the night burn down",
-        "Stay still",
-        "Drift back to sleep",
-      ],
+      bound: ["Let the night burn down", "Stay still", "Drift back to sleep"],
     },
   },
   // The /call reveal lines for this character, keyed by the register in

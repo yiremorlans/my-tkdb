@@ -15,19 +15,19 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: OI. Big news.\n\nThe Jabberwock evening tour has a spare slot and I've put your name on it. Didn't ask. Bit late now, it's laminated (^__^;)",
-        "Nah look, real talk for a sec: I do that with everyone, the tour thing, it's basically a nervous tic at this point.\n\nBut you've come round {timesMet} times and every single one you've said hello to the animals before you've said hello to me. Every time. Nobody does that.\n\nSo the slot's real. And I moved someone for it btw, which you didn't hear from me.",
+        "**{firstName}**: Hey, Honor Roll! Big news.\n\nJabberwock evening tour's got a spare slot and I've gone and put your name on it. Didn't ask. Bit late to argue now, it's laminated (^__^;)",
+        "Nah, hang on. Honest truth for a sec: I do the tour pitch with everyone. It's basically a nervous tic at this point (^__^;)\n\nBut you've come round {timesMet} times and every single one you've said hello to the animals before you've said hello to me. Every time. Nobody does that.\n\nSo the slot's real. And I shuffled someone for it btw, which you didn't hear from me.",
       ],
       choice: {
         prompt:
-          "So you'll come, yeah? Say you'll come. I've already laminated it.",
+          "So you'll come, hey? Say you'll come. I've already laminated it.",
         options: [
           {
             key: "kind",
             label: "Say you'd love to",
             style: 3,
             close:
-              "Really?!\n\n*Then, about four seconds later:* ...that was too loud. Sorry (^__^;) That was a really normal amount of excited and I've overshot it.",
+              "YES! Best news all week!\n\n*Then, about four seconds later:* ...okay, that was a lot. Sorry (^__^;) That was a really normal amount of excited and I've overshot it a bit.",
           },
           {
             key: "playful",
@@ -41,7 +41,7 @@ export default {
             label: "Ask if it's just the tour",
             style: 4,
             close:
-              "*There's a gap. A real one, from a bloke who types like he talks.*\n\nHa! Yeah, nah, course it is, it's the tour, it's a great tour, five stars, people rave...\n\n...Bring a jacket. It gets cold by the water and I'm not sharing mine. I am absolutely going to share mine.",
+              "*There's a gap. A real one, from someone who types like he talks.*\n\nHa! Yeah, nah, course it is, it's the tour, it's a great tour, five stars, people rave...\n\n...Bring a jacket. Gets cold by the water and I'm not sharing mine. I am absolutely going to share mine.",
           },
         ],
       },
@@ -53,8 +53,8 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: Right, question, and I've been sitting on it for a fortnight like a coward.",
-        "You come at me with {favResponse} every time and you never once use it as an exit.\n\nHere's the thing. I say something a bit much, and people either laugh it off to give me an out, or they go quiet and I do a bigger joke to fix it. Two options my whole life.\n\nYou just... take it. Straight. Like I meant it. Which is a nightmare, mate, because it turns out I do mean it, and the whole system falls apart if nobody hands me the out.",
+        "**{firstName}**: Righto, got a question, and I've been sitting on it a couple weeks now like a coward.",
+        "You come at me with {favResponse} every time and you never once use it as an exit.\n\nHere's the thing. I say something a bit much, and people either laugh it off to give me an out, or they go quiet and I crack a bigger joke to patch it. Two options my whole life.\n\nYou just... take it. Straight. Like I meant it. Which is a nightmare, hey, because turns out I do mean it, and the whole thing falls apart if nobody hands me the out.",
       ],
       choice: {
         prompt:
@@ -65,7 +65,7 @@ export default {
             label: "Say you'll keep taking it",
             style: 3,
             close:
-              "Oh, cool. Cool cool cool.\n\nThat's the worst possible answer and I'm chuffed to bits about it (^__^;) I'm going to go and stand in the aviary for a bit.",
+              "Oh, cool. Cool cool cool.\n\nThat's the worst possible answer and I'm rapt about it (^__^;) I'm gonna go stand in the aviary for a bit.",
           },
           {
             key: "playful",
@@ -93,7 +93,7 @@ export default {
       beats: [
         "**{firstName}**: Park's shut. Come round the side gate anyway. Bring nothing, I've got it covered.",
         "*It's the middle of the night and every enclosure light is off except one, and he's sitting on an upturned crate in front of it with two thermoses.*\n\n> This is the old girl. She came in eleven years ago and she's the reason there's a park at all. Doesn't do tours. Doesn't do visitors. Doesn't really do me most days.",
-        "> I sit here about three nights a week. Have done since I got the captaincy. Nobody's ever come with me. I've never asked anyone, and I've had loads of chances.\n\n*He hands you the second thermos without looking over.*\n\n> Brought two of these on the off chance for about a year, by the way. Just so you know the standard of pathetic we're operating at.",
+        "> I sit here about three nights a week. Have done since I got the captaincy. Nobody's ever come with me. I've never asked anyone, and I've had plenty of chances.\n\n*He hands you the second thermos without looking over.*\n\n> Brought two of these on the off chance for about a year, by the way. Just so you know the standard of pathetic we're operating at.",
       ],
       choice: {
         prompt: "Say something. She's judging us both.",
@@ -110,7 +110,7 @@ export default {
             label: "Ask how long she'll judge",
             style: 1,
             close:
-              "> Eleven years and counting, mate. She's still deciding about me.\n\n> Reckon she's decided about you already, though. She hasn't moved to the back once. That's... yeah. That's not nothing.",
+              "> Eleven years and counting. She's still deciding about me.\n\n> Reckon she's decided about you already, though. She hasn't moved to the back once. That's... yeah. That's not nothing.",
           },
           {
             key: "bold",
@@ -155,7 +155,7 @@ export default {
             label: "Say you're not going to stop",
             style: 4,
             close:
-              "*No reply for a bit.*\n\n...Yeah, I know. Clocked that a month ago. It's why I'm telling you any of this.\n\n*Then, with the drawl gone out of it:*\n\nOkay. You do the morning rounds with me. Properly, not tagging along. Don't make it weird.\n\n> ...Cheers. For not making it weird.",
+              "*No reply for a bit.*\n\n...Yeah, I know. Worked that out a month ago. It's why I'm telling you any of this.\n\n*Then, with the drawl gone out of it:*\n\nOkay. You do the morning rounds with me. Properly, not tagging along. Don't make it weird.\n\n> ...Cheers. For not making it weird.",
           },
         ],
       },
@@ -167,9 +167,9 @@ export default {
 
     devoted: {
       beats: [
-        "**{firstName}**: Right, so I've done something and Jo's going to have my guts.",
+        "**{firstName}**: Righto, so I've done something and Jo is going to have my hide for it.",
         "There was a thing in the park tonight and it went for the small enclosure, and you were between it and the gate, and I made a call.\n\nI opened the small enclosure. On purpose. Let the whole lot out into the park so it'd have twenty things to chase instead of one thing to chase.\n\nTook us four hours to get them back in. Got them all. Every single one, I counted twice.",
-        "Here's the bit that's doing my head in.\n\nEvery life in this park is mine. That's not a slogan, that's the actual job, I know all their names and I'd fight anyone in this academy over any one of them.\n\nAnd I put all of them at risk in about a second and a half because you were standing in the wrong place, and I'd do it again, and I don't know what that makes me.",
+        "Here's the bit I can't get straight in my head.\n\nEvery life in this park is mine. That's not a slogan, that's the actual job, I know all their names and I'd fight anyone in this academy over any one of them.\n\nAnd I put all of them at risk in about a second and a half because you were standing in the wrong place, and I'd do it again, and I don't know what that makes me.",
       ],
       choice: {
         prompt:
@@ -207,9 +207,9 @@ export default {
     soulbound: {
       beats: [
         "**{firstName}**: No tour plug on this one. I want that noted at the top. I've never once managed a message without a tour plug.",
-        "{timesMet} times you've come round, and every single one of them you've said hello to the animals first, and I've stood there like a lemon every single time enjoying it more than is reasonable (^__^;)",
-        "Here's my whole thing, right. I say the big stuff and then I leg it. Always have. Say something that means something, watch it land, and then immediately turn it into a bit so if it wasn't wanted I can pretend I never said it.\n\nI've done it to you about forty times. You've never once used the out. You've just stood there and waited for me to come back, and I always have, and that's... mate, nobody waits.",
-        "So I'm not legging it.\n\nI love you. That's it. I'm not doing a bit after it, I'm not plugging anything, I'm not going to say something daft about the aviary in three seconds to get out of it.\n\nI'm just going to sit here having said it. Which is the single hardest thing I've ever made myself do.",
+        "{timesMet} times you've come round, and every single one of them you've said hello to the animals first, and I've stood there grinning like an idiot every single time, enjoying it more than is reasonable (^__^;)",
+        "Here's my whole thing, right. I say the big stuff and then I bolt. Always have. Say something that means something, watch it land, and then immediately turn it into a bit so if it wasn't wanted I can pretend I never said it.\n\nI've done it to you about forty times. You've never once used the out. You've just stood there and waited for me to come back, and I always have, and that's... yeah. Nobody waits.",
+        "So I'm not bolting.\n\nI love you. That's it. I'm not doing a bit after it, I'm not plugging anything, I'm not going to say something dumb about the aviary in three seconds to get out of it.\n\nI'm just going to sit here having said it. Which is the single hardest thing I've ever made myself do.",
       ],
       choice: {
         prompt:
