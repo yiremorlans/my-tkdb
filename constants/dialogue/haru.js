@@ -10,13 +10,13 @@ export default {
   // and never invent how he lost it; reference.md is silent on the cause.
   //
   // Texting voice, per reference.md's "## Bond Scenes" notes: little kaomoji
-  // faces in his typed lines — (^__^;) sheepish, (;__;) for the sad ones — plus
+  // faces in his typed lines — (^_^;) sheepish, (;_;) for the sad ones — plus
   // shortened words like "btw". Not in the `> ` lines he says out loud.
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Hey, Honor Roll! Big news.\n\nJabberwock evening tour's got a spare slot and I've gone and put your name on it. Didn't ask. Bit late to argue now, it's laminated (^__^;)",
-        "Nah, hang on. Honest truth for a sec: I do the tour pitch with everyone. It's basically a nervous tic at this point (^__^;)\n\nBut you've come round {timesMet} times and every single one you've said hello to the animals before you've said hello to me. Every time. Nobody does that.\n\nSo the slot's real. And I shuffled someone for it btw, which you didn't hear from me.",
+        "**{firstName}**: Hey, Honor Roll! Big news.\n\nJabberwock evening tour's got a spare slot and I've gone and put your name on it. Didn't ask. Bit late to argue now, it's laminated (^_^;)",
+        "Nah, hang on. Honest truth for a sec: I do the tour pitch with everyone. It's basically a nervous tic at this point (^_^;)\n\nBut you've come round {timesMet} times and every single one you've said hello to the animals before you've said hello to me. Every time. Nobody does that.\n\nSo the slot's real. And I shuffled someone for it btw, which you didn't hear from me.",
       ],
       choice: {
         prompt:
@@ -27,14 +27,14 @@ export default {
             label: "Say you'd love to",
             style: 3,
             close:
-              "YES! Best news all week!\n\n*Then, about four seconds later:* ...okay, that was a lot. Sorry (^__^;) That was a really normal amount of excited and I've overshot it a bit.",
+              "YES! Best news all week!\n\n*Then, about four seconds later:* ...okay, that was a lot. Sorry (^_^;) That was a really normal amount of excited and I've overshot it a bit.",
           },
           {
             key: "playful",
             label: "Ask who got moved",
             style: 1,
             close:
-              "Nobody! Nobody got moved!\n\n...Towa got moved (^__^;) Towa got moved and he doesn't know yet and I'd like to keep it that way for as long as humanly possible.",
+              "Nobody! Nobody got moved!\n\n...Towa got moved (^_^;) Towa got moved and he doesn't know yet and I'd like to keep it that way for as long as humanly possible.",
           },
           {
             key: "bold",
@@ -65,7 +65,7 @@ export default {
             label: "Say you'll keep taking it",
             style: 3,
             close:
-              "Oh, cool. Cool cool cool.\n\nThat's the worst possible answer and I'm rapt about it (^__^;) I'm gonna go stand in the aviary for a bit.",
+              "Oh, cool. Cool cool cool.\n\nThat's the worst possible answer and I'm rapt about it (^_^;) I'm gonna go stand in the aviary for a bit.",
           },
           {
             key: "playful",
@@ -79,7 +79,7 @@ export default {
             label: "Tell him to mean it out loud",
             style: 4,
             close:
-              "*There's a very long silence, and then a voice note that is four seconds of him going* \"...\" *and then hanging up.*\n\n*Then:* couldn't do it. sorry (;__;) gave it a red hot go and everything.\n\nAsk me again in a bit though. Don't let me off.",
+              "*There's a very long silence, and then a voice note that is four seconds of him going* \"...\" *and then hanging up.*\n\n*Then:* couldn't do it. sorry (;_;) gave it a red hot go and everything.\n\nAsk me again in a bit though. Don't let me off.",
           },
         ],
       },
@@ -130,7 +130,7 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: Gonna tell you something and I need you to just not make a thing of it. Dead flat. It's the only way it comes out.",
-        "First, so it's not weird: the arm's not a secret. You've watched me take the glove off to shift a fence post in front of a tour group. Mio built it, joints and all, and he'll corner anyone who stands still long enough to explain how it works.\n\nSo this isn't a big reveal. I'm not owed a gasp (^__^;)",
+        "First, so it's not weird: the arm's not a secret. You've watched me take the glove off to shift a fence post in front of a tour group. Mio built it, joints and all, and he'll corner anyone who stands still long enough to explain how it works.\n\nSo this isn't a big reveal. I'm not owed a gasp (^_^;)",
         "Here's the actual thing. That whole 'nothing slows me down, all stamina and bad luck' routine? I built it. On purpose, years back. So nobody would ever look at me and go, hey, d'you need a hand with that.\n\nAnd it worked for ages. Then you started turning up and doing half my rounds without being asked and leaving food where I'd trip over it, and I let you, and that's the nearest I've come to dropping the whole act since I started running it.\n\nSay something normal now. Or plug the tour, genuinely, I'd take the tour.",
       ],
       choice: {
@@ -141,7 +141,7 @@ export default {
             label: "Say he's allowed a hand",
             style: 3,
             close:
-              "*A long pause.*\n\n...Yeah. That's the exact sentence. That's the one the whole routine exists to stop anyone saying to me.\n\nGive us a sec. Gone all... yeah (;__;) Give us a sec.",
+              "*A long pause.*\n\n...Yeah. That's the exact sentence. That's the one the whole routine exists to stop anyone saying to me.\n\nGive us a sec. Gone all... yeah (;_;) Give us a sec.",
           },
           {
             key: "playful",
@@ -180,7 +180,7 @@ export default {
             label: "Tell him he got them all back",
             style: 3,
             close:
-              "Yeah. Yeah, I did.\n\n*A long gap.*\n\n...say it again. Sorry (;__;) I've been counting them in my head for four hours and I can't make the number stick.\n\n*You say it about nine times. Eventually he sends a photo of the enclosure, all present, and one word:* ok.",
+              "Yeah. Yeah, I did.\n\n*A long gap.*\n\n...say it again. Sorry (;_;) I've been counting them in my head for four hours and I can't make the number stick.\n\n*You say it about nine times. Eventually he sends a photo of the enclosure, all present, and one word:* ok.",
           },
           {
             key: "playful",
@@ -207,7 +207,7 @@ export default {
     soulbound: {
       beats: [
         "**{firstName}**: No tour plug on this one. I want that noted at the top. I've never once managed a message without a tour plug.",
-        "{timesMet} times you've come round, and every single one of them you've said hello to the animals first, and I've stood there grinning like an idiot every single time, enjoying it more than is reasonable (^__^;)",
+        "{timesMet} times you've come round, and every single one of them you've said hello to the animals first, and I've stood there grinning like an idiot every single time, enjoying it more than is reasonable (^_^;)",
         "Here's my whole thing, right. I say the big stuff and then I bolt. Always have. Say something that means something, watch it land, and then immediately turn it into a bit so if it wasn't wanted I can pretend I never said it.\n\nI've done it to you about forty times. You've never once used the out. You've just stood there and waited for me to come back, and I always have, and that's... yeah. Nobody waits.",
         "So I'm not bolting.\n\nI love you. That's it. I'm not doing a bit after it, I'm not plugging anything, I'm not going to say something dumb about the aviary in three seconds to get out of it.\n\nI'm just going to sit here having said it. Which is the single hardest thing I've ever made myself do.",
       ],
@@ -227,7 +227,7 @@ export default {
             label: "Ask him to give you time",
             style: 2,
             close:
-              "Course, mate. Take as long as you want.\n\n*A pause. Then, with none of the drawl doing any work:*\n\nAnd listen, I'm not going to get weird. I'm not going to stop asking you on the tour, I'm not going to stop filling the second thermos. That was all real before tonight and it's all still real.\n\nYou'll be right. And so will I. I'm extremely good at waiting, turns out (^__^;) Did it for a year with a thermos.",
+              "Course, mate. Take as long as you want.\n\n*A pause. Then, with none of the drawl doing any work:*\n\nAnd listen, I'm not going to get weird. I'm not going to stop asking you on the tour, I'm not going to stop filling the second thermos. That was all real before tonight and it's all still real.\n\nYou'll be right. And so will I. I'm extremely good at waiting, turns out (^_^;) Did it for a year with a thermos.",
           },
         ],
       },
