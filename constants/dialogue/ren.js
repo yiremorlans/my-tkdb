@@ -299,7 +299,7 @@ export default {
       '"You keep falling asleep on me. I keep letting you. Draw your own conclusions."',
     ],
     close: [
-      "\"Hey, senpai... I'm really glad you're here. More than you know.\"",
+      "\"Hey, Senpai... I'm really glad you're here. More than you know.\"",
       "\"Something's up with you. Don't bother lying, just tell me.\"",
       '"You can stay as long as you want. Seriously. As long as you want."',
       '"I don\'t do this with anybody else. You get that, right?"',
@@ -308,7 +308,7 @@ export default {
     bound: [
       '"Don\'t get up. Seriously. Stay right there."',
       '"Love you. Yeah, I know I said it this morning. Still true."',
-      '"Come back to bed, senpai. The game\'s not going anywhere."',
+      '"Come back to bed, Senpai. The game\'s not going anywhere."',
       "\"You're on my side of the couch. That's fine. That's ideal, actually.\"",
       "\"I'm not good at big gestures. This is the gesture. You, here. That's it.\"",
     ],
@@ -441,7 +441,7 @@ export default {
       "{user} calls, and **{name}** pockets the phone and straightens up, both unprecedented.",
     ],
     bound: [
-      '"Love you, senpai. Yeah, I know I said it this morning." **{name}** says it to {user} again anyway.',
+      '"Love you, Senpai. Yeah, I know I said it this morning." **{name}** says it to {user} again anyway.',
       "**{name}** reaches {user} and puts his chin on their shoulder. That was the whole plan.",
       "{user} says the name, and **{name}** decides the **{house}** roster can manage without him.",
     ],

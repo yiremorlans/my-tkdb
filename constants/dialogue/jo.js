@@ -329,7 +329,7 @@ export default {
       '"Twice now, cutie. You\'re becoming a regular around here."',
       '"Sit anywhere. Mind the paperwork... actually, don\'t. It can suffer."',
       '"Tell me honestly what you thought. No, actually honestly."',
-      '"I noticed you noticing. Don\'t stop."',
+      '"You notice things around here. Not many people bother."',
       '"House meeting with Mio soon. Between us, we probably do shoulder too much."',
     ],
     warm: [
