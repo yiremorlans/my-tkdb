@@ -12,8 +12,8 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Found your number.\n\nDidn't ask. Wasn't going to ask. You'd have said yes anyway so it's the same thing, isn't it.",
-        "You've come by {timesMet} times. I counted every one. I count everything about you.\n\nMio says that's a lot. Mio says a lot of things.\n\nCome to the Heebie-Jeebie House some night. It's dark and it's cold and folk scream in there, which is the best bit. You'd not scream, though. I've watched. Folk go stiff and back off in there. You just walk in.",
+        "**{firstName}**: Found your number.\n\nWasn't going to ask. You'd have said yes anyway so it's the same thing, isn't it.",
+        "You've come by {timesMet} times. I count everything about you.\n\nMio says that's a lot. Mio says a lot of things.\n\nCome to the Heebie-Jeebie House some night. It's dark and it's cold and folk scream in there, which is the best bit. You'd not scream, though. I've watched. Folk go stiff and back off in there. You just walk in.",
       ],
       choice: {
         prompt: "Say yes.",
@@ -22,19 +22,22 @@ export default {
             key: "kind",
             label: "Say yes",
             style: 3,
-            close: "Aye. Knew you would.\n\n...Wanted you to say it anyway. That's different from knowing. Didn't know that till just now.",
+            close:
+              "Knew you would.\n\n...Wanted you to say it anyway. That's different from knowing. Didn't know that till just now.",
           },
           {
             key: "playful",
             label: "Ask what's in there",
             style: 1,
-            close: "Me, mostly.\n\nAnd a thing in the back I've not named yet. It's got too many bits. You'll like it or you'll not, and either's fine, 'cause you'll still be stood next to me.",
+            close:
+              "Me, mostly.\n\nAnd a thing in the back I've not named yet. It's got too many bits. You'll like it or you'll not, and either's fine, 'cause you'll still be stood next to me.",
           },
           {
             key: "bold",
             label: "Tell him to ask properly",
             style: 4,
-            close: "*A long gap. Longer than he's ever left anything.*\n\n...Will you come.\n\n*Then, immediately after:* That was horrible. Don't make me do it again.\n\n*He makes himself do it again, every time, after that.*",
+            close:
+              "*A long gap. Longer than he's ever left anything.*\n\n...Will you come.\n\n*Then, immediately after:* That was horrible. Don't make me do it again.\n\n*He makes himself do it again, every time, after that.*",
           },
         ],
       },
@@ -56,19 +59,22 @@ export default {
             key: "kind",
             label: "Say you're not frightened",
             style: 3,
-            close: "You should be.\n\n...Don't be, though. Stay like that. It's the only quiet I get.",
+            close:
+              "You should be.\n\n...Don't be, though. Stay like that. It's the only quiet I get.",
           },
           {
             key: "playful",
             label: "Say his worst wasn't much",
             style: 1,
-            close: "That wasn't my worst.\n\n...It was a bit. I've been holding back, which I've never done, and I'm cross about it.",
+            close:
+              "That wasn't my worst.\n\n...It was a bit. I've been holding back, which I've never done, and I'm cross about it.",
           },
           {
             key: "bold",
             label: "Tell him to stop testing",
             style: 4,
-            close: "Can't.\n\n*Then:* Everyone goes eventually. Testing's how I find out when. If I stop testing then it just happens one day and I've not seen it coming.\n\nThat's the whole of it. Don't be soft about it, I'll not know what to do.",
+            close:
+              "Can't.\n\n*Then:* Everyone goes eventually. Testing's how I find out when. If I stop testing then it just happens one day and I've not seen it coming.\n\nThat's the whole of it. Don't be soft about it, I'll not know what to do.",
           },
         ],
       },
@@ -91,19 +97,22 @@ export default {
             key: "kind",
             label: "Give it a name",
             style: 3,
-            close: "*He repeats it twice, flat, testing the shape of it.*\n\n> ...Aye. That'll do.\n\n*Then he leans over sideways until his head is on your shoulder, all his weight, no warning at all, and stays there in the wet until it starts getting light.*",
+            close:
+              "*He repeats it twice, flat, testing the shape of it.*\n\n> ...Aye. That'll do.\n\n*Then he leans over sideways until his head is on your shoulder, all his weight, no warning at all, and stays there in the wet until it starts getting light.*",
           },
           {
             key: "playful",
             label: "Say it's got too many bits",
             style: 1,
-            close: "> It has! It has too many bits!\n\n*He's delighted. It's the loudest you've ever heard him.*\n\n> Mio said that. Mio said it and then wouldn't look at it again. You said it and you're still sat here.",
+            close:
+              "> It has! It has too many bits!\n\n*He's delighted. It's the loudest you've ever heard him.*\n\n> Mio said that. Mio said it and then wouldn't look at it again. You said it and you're still sat here.",
           },
           {
             key: "bold",
             label: "Ask why names mean leaving",
             style: 4,
-            close: "*He doesn't answer for a long time.*\n\n> 'Cause everything I've ever named got taken off me after.\n\n*he says finally, at the box.*\n\n> Pets. People. The lot. You name it, they know it matters, then it's gone. So I stopped.\n\n> Name it anyway. I want to find out if it works different with you.",
+            close:
+              "*He doesn't answer for a long time.*\n\n> 'Cause everything I've ever named got taken off me after.\n\n*he says finally, at the box.*\n\n> Pets. People. The lot. You name it, they know it matters, then it's gone. So I stopped.\n\n> Name it anyway. I want to find out if it works different with you.",
           },
         ],
       },
@@ -126,19 +135,22 @@ export default {
             key: "kind",
             label: "Stay up and talk to him",
             style: 3,
-            close: "*You talk about nothing. He answers about a third of it.*\n\n*At five he sends:* It's getting light.\n\n*Then:* Do that again tomorrow. And the one after. Don't stop doing it. Please.\n\n*That last word is the first time you've seen him use it.*",
+            close:
+              "*You talk about nothing. He answers about a third of it.*\n\n*At five he sends:* It's getting light.\n\n*Then:* Do that again tomorrow. And the one after. Don't stop doing it. Please.\n\n*That last word is the first time you've seen him use it.*",
           },
           {
             key: "playful",
             label: "Threaten him with a lullaby",
             style: 1,
-            close: "That's *my* one. You've stolen my one.\n\n...Sing it, then. Go on. You mightn't ever get me to admit it helped, mind.",
+            close:
+              "That's *my* one. You've stolen my one.\n\n...Sing it, then. Go on. You mightn't ever get me to admit it helped, mind.",
           },
           {
             key: "bold",
             label: "Tell him to tell Mio",
             style: 4,
-            close: "No.\n\n*Flat, immediate, and then nothing for four minutes.*\n\nHe's got enough. Always has. My job was to be the big one and I've never once managed it.\n\nYou're not to tell him either. Say you'll not tell him.\n\n*You say it. He goes quiet, and then:* Right. Good. That's us, then.",
+            close:
+              "No.\n\n*Flat, immediate, and then nothing for four minutes.*\n\nHe's got enough. Always has. My job was to be the big one and I've never once managed it.\n\nYou're not to tell him either. Say you'll not tell him.\n\n*You say it. He goes quiet, and then:* Right. Good. That's us, then.",
           },
         ],
       },
@@ -161,19 +173,22 @@ export default {
             key: "kind",
             label: "Tell him to leave it",
             style: 3,
-            close: "...Right.\n\n*A long pause.*\n\nLeft. It's left. That's it done.\n\n*Then, much later:* Come here after, though. I've been holding it a good while and I've gone all wrong with it.\n\n*He doesn't say a word when you get there. He just puts his forehead against your shoulder and breathes for about twenty minutes.*",
+            close:
+              "...Right.\n\n*A long pause.*\n\nLeft. It's left. That's it done.\n\n*Then, much later:* Come here after, though. I've been holding it a good while and I've gone all wrong with it.\n\n*He doesn't say a word when you get there. He just puts his forehead against your shoulder and breathes for about twenty minutes.*",
           },
           {
             key: "playful",
             label: "Ask about the lovely shape",
             style: 1,
-            close: "You don't want to know.\n\n...You do want to know. That's worse. That's so much worse and I like you so much.\n\nI'll not tell you. Not 'cause of the shape. 'Cause you'd laugh and then I'd do it.",
+            close:
+              "You don't want to know.\n\n...You do want to know. That's worse. That's so much worse and I like you so much.\n\nI'll not tell you. Not 'cause of the shape. 'Cause you'd laugh and then I'd do it.",
           },
           {
             key: "bold",
             label: "Say you'd still look at him",
             style: 4,
-            close: "*There is nothing for a very long time.*\n\nDon't say that.\n\nThat's the only thing keeping the door shut and you've gone and said it. Take it back.\n\n*Then, after another minute:* Don't take it back. Say it again. Say it every time and I'll keep the door shut myself, and that'll be me doing it, not you.",
+            close:
+              "*There is nothing for a very long time.*\n\nDon't say that.\n\nThat's the only thing keeping the door shut and you've gone and said it. Take it back.\n\n*Then, after another minute:* Don't take it back. Say it again. Say it every time and I'll keep the door shut myself, and that'll be me doing it, not you.",
           },
         ],
       },
@@ -197,13 +212,15 @@ export default {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "...Say it again.\n\n*You say it again.*\n\nAgain.\n\n*The fourth time he stops asking. He turns up at your door twenty minutes later soaked through with no coat on and stands there for a moment just looking at you, properly, greedily, the way he looks at things he's decided are his, and then he puts both arms round you and holds on so hard it aches, and says, into your hair, flat as anything:*\n\n> Forever, mind. I did tell you.",
+            close:
+              "...Say it again.\n\n*You say it again.*\n\nAgain.\n\n*The fourth time he stops asking. He turns up at your door twenty minutes later soaked through with no coat on and stands there for a moment just looking at you, properly, greedily, the way he looks at things he's decided are his, and then he puts both arms round you and holds on so hard it aches, and says, into your hair, flat as anything:*\n\n> Forever, mind. I did tell you.",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
-            close: "Aye.\n\n*Nothing else for a bit. Then:*\n\nThat's what the giving-you-the-door was for. Wasn't a trick. Take it.\n\nI'll be at the House. Same as always. And I'll not sulk at you about it, which I want noting, 'cause sulking's most of what I've got.\n\n*He doesn't sulk. He's exactly where he says he'll be, every night, holding the door on the dark. And when you come by he moves over on the wet ground without a word, the way he did the first time.*",
+            close:
+              "Aye.\n\n*Nothing else for a bit. Then:*\n\nThat's what the giving-you-the-door was for. Wasn't a trick. Take it.\n\nI'll be at the House. Same as always. And I'll not sulk at you about it, which I want noting, 'cause sulking's most of what I've got.\n\n*He doesn't sulk. He's exactly where he says he'll be, every night, holding the door on the dark. And when you come by he moves over on the wet ground without a word, the way he did the first time.*",
           },
         ],
       },
@@ -224,19 +241,19 @@ export default {
     ],
     known: [
       "His gaze finds you first now, before anyone else in the room. It stopped being chance a while ago.",
-      '"You\'re still alive, then. I couldn\'t find you anywhere. I\'d half decided I\'d killed you and forgotten."',
+      "\"You're still alive, then. I couldn't find you anywhere. I'd half decided I'd killed you and forgotten.\"",
       "He's stopped trying to startle you. He just studies you instead, which is somehow worse.",
       '"You\'ve gone all quiet. This is boring." A pause. "...Don\'t leave. I\'ll allow talking."',
-      'He\'s resetting a trick in one of the Heebie-Jeebie House\'s back passages: a trapdoor, a cold breath, a sound from nowhere. "People come to have their hearts stopped a moment. I never let them down."',
+      "He's resetting a trick in one of the Heebie-Jeebie House's back passages: a trapdoor, a cold breath, a sound from nowhere. \"People come to have their hearts stopped a moment. I never let them down.\"",
       "Something in the dark corner thinks about coming closer, then doesn't. He watches it decide.",
     ],
     warm: [
       "His attention tilts to you first, before the rest of the room registers at all.",
       "He's been waiting in this exact spot. He'd like you to know he doesn't wait for people.",
-      '"You\'re not frightened of me anymore," he observes, and can\'t work out whether that disappoints him.',
+      "\"You're not frightened of me anymore,\" he observes, and can't work out whether that disappoints him.",
       "Whatever was standing too near you a moment ago has quietly stopped being a problem.",
       '"I\'m thirsty. Go to Elias\'s and bring me that sickly brown stuff." A beat. "...Please."',
-      '"Walk the Heebie-Jeebie House with me tonight. I\'ll frighten the others. You I\'d sooner just watch."',
+      "\"Walk the Heebie-Jeebie House with me tonight. I'll frighten the others. You I'd sooner just watch.\"",
     ],
     spark: [
       "He lets the flat calm slip an inch, just for you, just long enough that you're sure you saw it.",
@@ -264,44 +281,44 @@ export default {
     new: [
       '"What a face. I want to know what put it there."',
       '"Come closer. You\'re still too far away. ...Closer."',
-      '"Don\'t run. Running\'s predictable, and I\'ll only follow."',
-      '"So you\'re still alive. I looked everywhere. I thought maybe I\'d killed you and forgotten about it."',
+      "\"Don't run. Running's predictable, and I'll only follow.\"",
+      "\"So you're still alive. I looked everywhere. I thought maybe I'd killed you and forgotten about it.\"",
       '"You flinched. That\'s honest of you. I appreciate honest."',
       '"You came into the Heebie-Jeebie House on your own. Awful instincts. I\'m delighted."',
     ],
     known: [
-      '"Ah, the one who didn\'t run. I\'ve thought about you since."',
+      "\"Ah, the one who didn't run. I've thought about you since.\"",
       '"You\'re back. Sit where I can see you."',
-      '"You\'ve stopped flinching. I haven\'t decided how I feel about that."',
-      '"Why\'ve you gone all quiet? This is boring. ...Fine. I\'ll find something to do with you."',
-      '"You interest me. That\'s rarely good news for anyone. It\'s true all the same."',
+      "\"You've stopped flinching. I haven't decided how I feel about that.\"",
+      "\"Why've you gone all quiet? This is boring. ...Fine. I'll find something to do with you.\"",
+      "\"You interest me. That's rarely good news for anyone. It's true all the same.\"",
       '"Three faintings in the house this week. I keep the count. It\'s been a good year."',
     ],
     warm: [
       '"You finally came back. I waited here the whole time, you know. Don\'t you feel a bit sorry for me?"',
-      '"They said you\'d stop visiting. They\'re usually wrong."',
+      "\"They said you'd stop visiting. They're usually wrong.\"",
       '"Stay close to me. Nothing in this district would dare come near."',
-      '"You\'re not afraid of me now. That\'s a whole new game."',
-      '"I\'m thirsty. Go to Elias\'s and fetch that sickly brown stuff. ...You will. You like me."',
+      "\"You're not afraid of me now. That's a whole new game.\"",
+      "\"I'm thirsty. Go to Elias's and fetch that sickly brown stuff. ...You will. You like me.\"",
     ],
     spark: [
       '"Let me look at you properly. I\'ve earned that much."',
       '"Your pulse is quick. I do like being the reason."',
       '"Come round the back of the house. The good frights are back there."',
-      '"Say you\'re mine. You needn\'t mean it yet. I\'m patient."',
+      "\"Say you're mine. You needn't mean it yet. I'm patient.\"",
       '"I\'m not in the mood to make you cry today. Come back later for that."',
     ],
     close: [
       '"You\'re mine to look after now. My wife."',
-      '"The world\'s a cruel place. You\'re simply never going to be out in it."',
+      "\"The world's a cruel place. You're simply never going to be out in it.\"",
       '"Look, no front, nothing put on. Do you know what that costs me?"',
       '"Anything that reaches you goes through me first. That isn\'t aimed at you."',
-      '"I\'ve watched a great many things suffer. I won\'t watch you."',
+      "\"I've watched a great many things suffer. I won't watch you.\"",
     ],
     bound: [
       '"Come here. Let me look at what\'s mine."',
-      '"I love you. It\'s an old feeling, and I\'ve carried it too long without saying so."',
-      '"The night\'s the worst of it. Stay till I\'m asleep. ...Stay after."',
+      "\"I love you. It's an old feeling, and I've carried it too long without saying so.\"",
+      "\"The night's the worst of it. Stay till I'm asleep. ...Stay after.\"",
       '"Say you\'re mine. Properly, this time."',
       '"Nothing will ever reach you. I\'ve been very thorough."',
     ],
@@ -403,16 +420,8 @@ export default {
       ],
     },
     neutral: {
-      new: [
-        "Watch him carefully",
-        "Give him nothing to read",
-        "Wait him out",
-      ],
-      spark: [
-        "Say nothing",
-        "Let him have the quiet",
-        "Let the moment pass",
-      ],
+      new: ["Watch him carefully", "Give him nothing to read", "Wait him out"],
+      spark: ["Say nothing", "Let him have the quiet", "Let the moment pass"],
       close: [
         "Let him watch over you",
         "Stay silent beside him",

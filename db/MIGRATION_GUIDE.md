@@ -243,6 +243,29 @@ Go to your Supabase Dashboard:
 - Copy and execute
 - Wait for success ✓
 
+### Migration 17: User House Progress View
+- File: `db/migrations/017_user_house_progress_view.sql`
+- Creates `user_house_progress`, a read-only view that derives current rank,
+  total points and unspent-reset counts per user per house live from the
+  immutable `mission_log`. Every `/house` read path queries this view, never a
+  separate summary table. Adds two `mission_log` indexes to keep the aggregation
+  seek-based, plus a placeholder `calculate_house_rank()`
+- Copy and execute
+- Wait for success ✓
+
+### Migration 18: Drop dead `character_relationships.updated_at`
+- File: `db/migrations/018_drop_character_relationships_updated_at.sql`
+- Drops `character_relationships.updated_at`. It was created in migration 000
+  with `DEFAULT now()` but nothing ever wrote it (no update path sets it, no
+  trigger, no monthly reset for this table), so it always equalled `created_at`
+  and misled anyone reading it as a freshness signal. `last_interaction_at` is
+  the real "last touched" column and keeps its index
+- No-op for running code — no read or write path references the column, and no
+  view needs recreating. No deploy-ordering constraint
+- `character_engagement.updated_at` is left alone — it is genuinely maintained
+- Copy and execute
+- Wait for success ✓
+
 ## Step 3: Verify Migrations
 
 In the Supabase Dashboard, click **Table Editor** and verify:
