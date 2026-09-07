@@ -444,16 +444,16 @@ export default {
     ],
     warm: [
       "{user} calls out, and **{name}** stops walking. He doesn't do that for people.",
-      "**{name}** was going the wrong way again. {user} saying his name fixed it.",
+      "{user} says the name, and **{name}** turns, wiping his hands on a rag out of habit.",
       '**{name}** grunts. {user} has learned to hear "good" in it.',
     ],
     spark: [
       "**{name}** turns at {user}'s voice and takes a second too long to look away.",
       '"You came looking." **{name}** says it flat to {user}, and stays put.',
-      "**{name}** had no idea which block this was. He knew {user}'s voice.",
+      "**{name}** doesn't say anything when {user} reaches him. He tips his head toward the quiet end of the lot and waits.",
     ],
     close: [
-      "**{name}** is lost again. He won't say so. {user} calling out saves him having to.",
+      "**{name}** was already walking {user}'s way before the name finished. He won't admit that either.",
       "{user} calls, and **{name}** puts a hand at their back, steering them out of the crowd.",
       "**{name}** says nothing. He stays where {user} can reach him.",
     ],

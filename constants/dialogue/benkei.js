@@ -254,7 +254,7 @@ export default {
     warm: [
       'He gets a bit red in the face when he sees you, but his smile stays warm and gentle. "You came back! What can I get you?"',
       "He's set something aside for you. He's started doing that most days, just in case.",
-      '"You\'d have made a good student," he says, then looks briefly startled that he said it out loud.',
+      '"You\'d have been one of mine, back in the advising days," he says, then looks briefly startled he said it aloud.',
       "He fusses over whether you're eating enough, then apologizes for fussing.",
       "He remembers exactly what you asked about last time, down to the detail.",
     ],
@@ -440,7 +440,7 @@ export default {
   winnerLines: {
     new: [
       '"Oh! H-hello." **{name}** is carrying far too much and insists to {user} that it\'s no trouble.',
-      '{user} says the name, and **{name}** goes red to the ears. "You... you remembered?"',
+      "**{name}** has a snack pressed into {user}'s hand before he's got through saying hello.",
       'A cat watches with total disdain as **{name}** waves {user} over. "Don\'t mind her," he says. "She\'s the manager."',
     ],
     warm: [
@@ -450,11 +450,11 @@ export default {
     ],
     spark: [
       "**{name}** goes red, apologizes for going red, and stays exactly where {user} can see him.",
-      '"You\'d have made a good student," **{name}** tells {user}, then looks startled he said it aloud.',
+      '"You\'d have been one of mine, in the advising days." **{name}** tells {user} that much, then looks startled he said it aloud.',
       "{user} says the name, and **{name}** forgets the whole afternoon's restocking list.",
     ],
     close: [
-      '"Come here. Let me look at you a moment." **{name}** means it to {user} kindly. Mostly.',
+      '"Ah, there you are. Sit down a moment, you look worn through." **{name}** is in no hurry at all with {user}.',
       "**{name}** hears {user}, and every ache of the day goes somewhere else.",
       "{user} calls, and **{name}** walks the long way round with them, just to have the time.",
     ],
