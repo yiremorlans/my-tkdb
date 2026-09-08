@@ -505,12 +505,12 @@ export default {
     spark: [
       "**{name}** hears his name, and the professional smile becomes a real one for {user}.",
       '"Proposal, schedule, budget... and yet here I am." **{name}** is walking over to {user} regardless.',
-      "{user} got there first, and **{name}** looks caught in the nicest possible way.",
+      "{user} got there first, and **{name}** looks caught.",
     ],
     close: [
       "**{name}** takes the paint off for {user}, right there in the middle of everyone.",
-      '"No. I\'m taking you home." **{name}** says it to {user} the way he never says anything.',
-      "{user} calls, and **{name}**, who is never off the clock, clocks off.",
+      '"No. I\'m taking you home." **{name}** says it to {user}.',
+      "{user} calls, and **{name}** clocks off.",
     ],
     bound: [
       '"No audience," **{name}** murmurs, reaching {user}. "Only you."',

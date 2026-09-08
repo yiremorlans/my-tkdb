@@ -427,14 +427,14 @@ export default {
       new: [
         "Trade deadpan with him",
         "Refuse to be spooked",
-        "Name the joke he hid behind",
+        "Boo him back",
       ],
       spark: [
         "Make him say it again",
         "Out-deadpan him",
         "Play along with the bit",
       ],
-      close: ["Actually make him laugh", "Prank him back", "Steal his hoodie"],
+      close: ["Actually make him laugh", "Prank him back", "Steal his nap spot"],
       bound: [
         "Spook him for once",
         "Hog the whole step",
@@ -498,7 +498,7 @@ export default {
     ],
     close: [
       "**{name}** has stopped keeping it light. {user} calling his name did that.",
-      '"Yeah, yeah. Coming." **{name}** is already up for {user}, which from him is a declaration.',
+      '"Yeah, yeah. Coming." **{name}** is already up for {user}.',
       "{user} calls, and **{name}** leaves the busted fixture exactly where it is.",
     ],
     bound: [

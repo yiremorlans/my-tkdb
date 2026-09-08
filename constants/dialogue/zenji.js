@@ -475,13 +475,13 @@ export default {
     ],
     spark: [
       '"Horsefeathers." **{name}** had absolutely been watching for {user}.',
-      "{user} says the name, and **{name}**, a man of many words, is briefly short of them.",
+      "{user} says the name, and **{name}** finds himself briefly short of words.",
       "**{name}** offers {user} his arm with rather more ceremony than the hour requires.",
     ],
     close: [
       '"The moon is beautiful tonight," **{name}** tells {user}, who knows exactly what he means by it.',
       "**{name}** has stopped writing about longing. {user} is standing right there.",
-      "{user} calls, and **{name}** puts the notebook away, which he never does.",
+      "{user} calls, and **{name}** puts the notebook away.",
     ],
     bound: [
       '"Seventeen syllables can\'t hold this, my dear." **{name}** stops trying and crosses to {user} instead.',

@@ -440,7 +440,7 @@ export default {
   winnerLines: {
     new: [
       '"Partner. Your timing is fortuitous." **{name}** had not, until {user} spoke, been expecting one.',
-      "{user} says the name, and **{name}** notes the exact hour, out of habit.",
+      "{user} says the name, and **{name}** notes the exact hour.",
       '"Consultations are 5,500 yen per half hour." **{name}** waives it for {user}, and mentions that he is waiving it.',
     ],
     warm: [
@@ -456,7 +456,7 @@ export default {
     close: [
       "**{name}** switches the recorder off, sets it down deliberately, and goes to {user}.",
       '"I have no argument for this," **{name}** tells {user}, "and no interest in constructing one."',
-      "{user} calls, and **{name}**, punctual to the second, is late to the **{house}** meeting.",
+      "{user} calls, and **{name}** is late to the **{house}** meeting for the first time.",
     ],
     bound: [
       '"No preamble, no clause, no conditions." **{name}** says it to {user} in front of everyone.',

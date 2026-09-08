@@ -436,18 +436,18 @@ export default {
       "**{name}** offers {user} a candy before he offers a hello.",
     ],
     spark: [
-      '"Keep that up and I\'ll think you like me." **{name}** says it to {user}, unhurried as ever.',
+      '"Keep that up and I\'ll think you like me." **{name}** says it to {user}.',
       "{user} says the name, and **{name}**'s easy smile goes real for a second.",
-      "**{name}** takes his time getting to {user}. He takes his time about everything.",
+      "**{name}** takes his time getting to {user}.",
     ],
     close: [
       '"Can\'t sleep either?" **{name}** falls in beside {user} like the errand never existed.',
-      "**{name}** drops the charm the moment it's {user}, which is the dangerous part.",
+      "**{name}** drops the charm the moment it's {user}.",
       "{user} calls, and **{name}** stops working the room entirely.",
     ],
     bound: [
       '"Spent years being nobody\'s," **{name}** tells {user}, low. "Turns out I\'m yours."',
-      "**{name}** says {user}'s name back, unhurried, and it is genuinely unfair.",
+      "**{name}** says {user}'s name back, unhurried.",
       "{user} says the name, and **{name}** lets the **{house}** errands rot where they stand.",
     ],
   },

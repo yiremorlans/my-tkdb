@@ -466,7 +466,7 @@ export default {
     ],
     warm: [
       '"Honestly." **{name}** was two steps from a clean escape, and {user} caught him anyway.',
-      "{user} calls out, and **{name}** gives them his whole attention. That is rare.",
+      "{user} calls out, and **{name}** gives them his whole attention.",
       "**{name}** checks his pocket watch, then decides {user} is worth being late for.",
     ],
     spark: [
@@ -477,12 +477,12 @@ export default {
     close: [
       '"This conversation never happened," **{name}** murmurs, already steering {user} out of earshot.',
       "**{name}** hears {user}, and the servant's mask comes off between one step and the next.",
-      "{user} calls, and **{name}**, who has never in his life been late, elects to be.",
+      "{user} calls, and the pocket watch goes back in **{name}**'s pocket unchecked.",
     ],
     bound: [
       '"I stopped weighing you up a long while ago," **{name}** tells {user}, taking their hand in the open.',
       "**{name}** hands the **{house}** dispatch to a passing first-year. {user} called; the matter is settled.",
-      "{user} says the name, and **{name}** clears his entire afternoon, which he has never once done.",
+      "{user} says the name, and **{name}** clears his entire afternoon.",
     ],
   },
 };

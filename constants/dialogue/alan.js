@@ -443,8 +443,8 @@ export default {
       '"Careful." **{name}** moves something sharp out of {user}\'s way before he says anything else.',
     ],
     warm: [
-      "{user} calls out, and **{name}** stops walking. He doesn't do that for people.",
-      "{user} says the name, and **{name}** turns, wiping his hands on a rag out of habit.",
+      "{user} calls out, and **{name}** stops walking.",
+      "{user} says the name, and **{name}** turns, wiping his hands on a rag.",
       '**{name}** grunts. {user} has learned to hear "good" in it.',
     ],
     spark: [
@@ -453,14 +453,14 @@ export default {
       "**{name}** doesn't say anything when {user} reaches him. He tips his head toward the quiet end of the lot and waits.",
     ],
     close: [
-      "**{name}** was already walking {user}'s way before the name finished. He won't admit that either.",
+      "**{name}** was already walking {user}'s way before the name finished.",
       "{user} calls, and **{name}** puts a hand at their back, steering them out of the crowd.",
       "**{name}** says nothing. He stays where {user} can reach him.",
     ],
     bound: [
       '"Come here. Don\'t need a reason anymore, do I." **{name}** says it low, only to {user}.',
       "**{name}** hears {user}, and his shoulders finally come down.",
-      "**{name}** has never once known where he is. He always knows where {user} is.",
+      "**{name}** crosses the lot to {user} without once checking which way he's going.",
     ],
   },
 };

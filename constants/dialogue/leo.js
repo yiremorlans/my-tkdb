@@ -451,8 +451,8 @@ export default {
     ],
     warm: [
       "**{name}** raises the camera at {user}, then lowers it. They're not for the feed.",
-      '"Finally," **{name}** drawls at {user}, having very obviously been watching for them.',
-      "{user} calls out, and **{name}** insults them warmly, which is how he says hello now.",
+      '"Finally," **{name}** drawls at {user}, not hiding that he had been watching for them.',
+      "{user} calls out, and **{name}** insults them warmly.",
     ],
     spark: [
       "**{name}** stops the recording. {user} gets the version nobody else does.",
@@ -461,13 +461,13 @@ export default {
     ],
     close: [
       '"Mine," **{name}** says, loud enough for everyone nearby. {user} had only called his name.',
-      "**{name}** is cruel to everyone in earshot and unbearably soft the moment {user} reaches him.",
+      "**{name}** goes unbearably soft the moment {user} reaches him.",
       "{user} calls, and **{name}** puts the phone away. Face down.",
     ],
     bound: [
       "**{name}** takes {user}'s hand in public specifically so that it is seen.",
       '"Do you have any idea what that does to me?" **{name}** mutters, crossing to {user} anyway.',
-      "{user} says the name, and **{name}**, who monetizes everything, keeps this one off the record.",
+      "{user} says the name, and **{name}** keeps this one off the record.",
     ],
   },
 };

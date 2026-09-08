@@ -519,10 +519,10 @@ export default {
     warm: [
       "\"You're here.\" **{name}** catches {user}'s sleeve before they've stopped walking.",
       "{user} calls out, and **{name}** holds out a dandelion without a word.",
-      '"I counted the days." **{name}** tells {user} the number. It is exact.',
+      '"I counted the days." **{name}** tells {user} the exact number.',
     ],
     spark: [
-      "**{name}** starts humming again the moment {user} says his name. He does that for them.",
+      "**{name}** starts humming again the moment {user} says his name.",
       '"Come give me a sorry cuddle," **{name}** says to {user}, who hadn\'t done anything wrong.',
       "{user} got there first, and **{name}** looks at everyone else like they lost.",
     ],

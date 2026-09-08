@@ -426,7 +426,7 @@ export default {
     new: [
       '**{name}** circles wide around {user}, watching. "...You know my name. I don\'t know your scent yet."',
       "{user} says the name, and **{name}** repeats it back quietly, testing the shape of it.",
-      '"Stay there a moment." **{name}** wants to understand {user} first.',
+      '"Stay there a moment." **{name}** takes {user} in slowly, scent and all.',
     ],
     warm: [
       "**{name}** knows the voice before he's found the face, and comes straight to {user}.",
@@ -434,17 +434,17 @@ export default {
       "{user} calls out, and **{name}** falls in at their side, exactly one step behind.",
     ],
     spark: [
-      '"You smell happy." **{name}** tells {user} this as a plain fact, with no idea what it does.',
+      '"You smell happy." **{name}** tells {user} this as a plain fact.',
       "{user} says the name, and **{name}**'s ears do something he has no control over.",
       "**{name}** had practiced a greeting for {user}. It comes out formal and completely sincere.",
     ],
     close: [
       "**{name}** hears {user}, and nothing else on campus is interesting any more.",
-      '"Walk with me? I\'ll keep to your pace." **{name}** always says it to {user} the same way.',
+      '"Walk with me? I\'ll keep to your pace." **{name}** holds still until {user} moves first.',
       "{user} calls, and **{name}** abandons the **{house}** errand without a flicker of guilt.",
     ],
     bound: [
-      '"You smell like mine," **{name}** says to {user}, delighted, with no idea how that lands.',
+      '"You smell like mine," **{name}** says to {user}, delighted.',
       "**{name}** found the word ages ago. He says it to {user} again anyway, and gets it right.",
       "{user} says the name, and **{name}** makes a sound like something finally at rest.",
     ],

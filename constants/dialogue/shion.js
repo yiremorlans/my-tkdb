@@ -447,14 +447,14 @@ export default {
       "{user} says the name, and **{name}** looks pleased in a way that isn't reassuring.",
     ],
     warm: [
-      "**{name}** had been waiting in this exact spot. He'd like {user} to know he doesn't wait for people.",
+      "**{name}** had been waiting in this exact spot for {user}.",
       "\"You came.\" **{name}** doesn't say the rest of it to {user}, but it's all over his face.",
       "{user} calls out, and **{name}** stops frightening whoever he was frightening.",
     ],
     spark: [
       "\"You're not scared of me.\" **{name}** can't decide whether that disappoints him about {user}.",
       "{user} says the name, and **{name}** closes the distance immediately. All of it.",
-      '"Closer." **{name}** has said it to {user} before. It works every time.',
+      '"Closer." **{name}** has said it to {user} before.',
     ],
     close: [
       "**{name}** takes {user}'s hand and does not give it back.",
@@ -463,7 +463,7 @@ export default {
     ],
     bound: [
       '"My wife," **{name}** breathes, and means every letter of it to {user}.',
-      "**{name}** kneels to take {user}'s hand in the open, which from him is something heavier than it looks.",
+      "**{name}** kneels to take {user}'s hand in the open.",
       "{user} says the name, and **{name}** decides, again, that forever is the plan.",
     ],
   },

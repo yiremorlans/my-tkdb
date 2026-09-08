@@ -421,7 +421,7 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      "One earbud comes out. From **{name}**, that's a full greeting for {user}.",
+      "One earbud comes out for {user}. **{name}** leaves the other in.",
       '"Oh. Hey." **{name}** is mildly impressed {user} found him at all.',
       "{user} says the name, and **{name}** pauses the game. Doesn't unpause it, either.",
     ],
@@ -437,8 +437,8 @@ export default {
     ],
     close: [
       '"Don\'t move. Seriously." **{name}** arrives at {user} and stays exactly there.',
-      "**{name}** loses the run because {user} called his name. Worth it, apparently.",
-      "{user} calls, and **{name}** pockets the phone and straightens up, both unprecedented.",
+      "**{name}** loses the run because {user} called his name.",
+      "{user} calls, and **{name}** pockets the phone and straightens up.",
     ],
     bound: [
       '"Love you, Senpai. Yeah, I know I said it this morning." **{name}** says it to {user} again anyway.',

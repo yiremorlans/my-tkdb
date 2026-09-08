@@ -465,13 +465,13 @@ export default {
       '"You know of me. Naturally." **{name}** informs {user} of this at considerable length.',
     ],
     warm: [
-      '"Where on earth have you been, worm?" **{name}** demands of {user}, having clearly counted the days.',
+      '"Where on earth have you been, worm?" **{name}** demands of {user}, then looks annoyed at himself for asking.',
       "{user} calls out, and **{name}** drops a pipette. He denies dropping it.",
       '**{name}** waves {user} over. "You\'re late. Not that I was... never mind." ',
     ],
     spark: [
       '"Wh-Where did you come from!?" **{name}** knows exactly where {user} came from.',
-      "{user} says the name, and **{name}** goes an interesting color. Science cannot explain it.",
+      "{user} says the name, and **{name}** goes an interesting color.",
       "**{name}** re-arms the bravado twice on the way to {user}. Neither attempt survives.",
     ],
     close: [

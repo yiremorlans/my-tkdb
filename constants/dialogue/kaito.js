@@ -483,7 +483,7 @@ export default {
       "{user} calls out, and **{name}** startles, recovers, and pretends he didn't.",
     ],
     warm: [
-      '"There you are!" **{name}** is talking to {user} at twice his usual speed already.',
+      '"There you are!" **{name}** is talking to {user} at top speed already.',
       "{user} says his name, and **{name}** lights up like it's going in his story later.",
       "**{name}** was halfway into a WickHive rant. {user} turning up improved it enormously.",
     ],
@@ -495,7 +495,7 @@ export default {
     close: [
       "**{name}** is through the crowd before {user} finishes the second syllable.",
       "\"Please don't leave again,\" **{name}** says into {user}'s shoulder. Half joking.",
-      "{user} calls, and **{name}** doesn't check who's watching. That's new for him.",
+      "{user} calls, and **{name}** doesn't check who's watching.",
     ],
     bound: [
       "\"I still can't believe it's you,\" **{name}** says, arriving at {user} at a run.",

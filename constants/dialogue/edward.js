@@ -426,7 +426,7 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      "**{name}** bows over {user}'s hand and asks permission afterward, as is his custom.",
+      "**{name}** bows over {user}'s hand and asks permission afterward.",
       '"Oh my. What a lovely lady." **{name}** greets {user} as though they were in a drawing room and not the middle of everything.',
       "{user} says the name, and **{name}** smiles with rather too many implications in it.",
     ],
@@ -436,7 +436,7 @@ export default {
       '"Do come here." **{name}** informs {user} that personal space is a modern invention.',
     ],
     spark: [
-      '"Wicked girl." **{name}** says it to {user} as a compliment, which it is.',
+      '"Wicked girl." **{name}** says it to {user} as a compliment.',
       "{user} says the name, and **{name}** stops performing frailty for the length of one look.",
       '"What were you hoping for? Go on, say it." **{name}** waits on {user}, unhurried.',
     ],
@@ -448,7 +448,7 @@ export default {
     bound: [
       '"Centuries," **{name}** murmurs to {user}, "and not one of them was this."',
       "**{name}** crosses to {user} without the parasol, the cough, or any of the rest of it.",
-      "{user} says the name, and **{name}**, who has been alone a very long time, isn't.",
+      "{user} says the name, and **{name}** stops being alone.",
     ],
   },
 };

@@ -430,18 +430,18 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"HDY say my name so casually." **{name}** snaps at {user}, like anyone else would dare.',
+      '"HDY say my name so casually." **{name}** snaps at {user}.',
       "{user} says the name, and **{name}** is already talking. About three things. At once.",
       '"Perfect timing. I need someone I can trust." **{name}** decides this about {user} instantly.',
     ],
     warm: [
       "**{name}** steps away from the floor to greet {user} properly. Suddenly the operation can wait.",
       '"Sit. The good seat. No, I didn\'t hold it. Shut up." **{name}** absolutely held it for {user}.',
-      "{user} calls out, and **{name}** complains about them loudly to somebody else, as a compliment.",
+      "{user} calls out, and **{name}** loudly tells someone else what a pain {user} is, beaming the whole time.",
     ],
     spark: [
       "\"I'm kind of happy to see you. Don't tell anyone.\" **{name}** says this to {user} at volume.",
-      "{user} says the name, and **{name}** loses his thread entirely, which never happens.",
+      "{user} says the name, and **{name}** loses his thread entirely.",
       "**{name}** yells at three people on his way over to {user}, and none of it was about them.",
     ],
     close: [
@@ -452,7 +452,7 @@ export default {
     bound: [
       '"HDY make me say it out loud. Ugh. I love you." **{name}** tells {user} this in front of everyone in earshot.',
       "**{name}** yells at everyone all day, reaches {user}, and goes completely, quietly undone.",
-      "{user} says the name, and **{name}** claims them out loud, because that is what he does with his people.",
+      "{user} says the name, and **{name}** claims them out loud.",
     ],
   },
 };

@@ -499,13 +499,13 @@ export default {
   winnerLines: {
     new: [
       '"Have we met before?" **{name}** asks {user}, then apologizes for not being sure.',
-      "**{name}** turns to {user} and bows. Automatic, and sincere.",
+      "**{name}** turns to {user} and bows.",
       '{user} says it first, and **{name}** goes a little pink. "Forgive me. I didn\'t expect that."',
     ],
     warm: [
-      "{user} calls out, and the polite smile **{name}** always wears turns into a real one.",
+      "{user} calls out, and **{name}**'s polite smile turns into a real one.",
       "**{name}** sets the teapot down a little too quickly the moment {user}'s voice reaches him.",
-      "**{name}** had been hoping it was {user}. He'd never say so.",
+      "**{name}** had been hoping it was {user}.",
     ],
     spark: [
       "**{name}** hears his name in {user}'s voice and loses his place.",
@@ -518,9 +518,9 @@ export default {
       "{user} calls, and whatever **{name}** was carrying gets set down.",
     ],
     bound: [
-      "**{name}** goes straight to {user}, and for once there's no performance in any of it.",
-      "**{name}** reaches {user} and doesn't check who's watching. That took him a year.",
-      "{user} says the name, and **{name}**, who apologizes for everything, apologizes for none of it.",
+      "**{name}** goes straight to {user} the moment he hears them.",
+      "**{name}** reaches {user} and doesn't check who's watching.",
+      "{user} says the name, and **{name}** doesn't apologize for a single part of it.",
     ],
   },
 };

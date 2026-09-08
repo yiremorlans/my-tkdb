@@ -456,7 +456,7 @@ export default {
     warm: [
       '"Hey, Honor Roll!" **{name}** is filthy to the elbows and beaming at {user}.',
       "{user} calls out, and **{name}** drops the sack he was hauling. It can wait.",
-      '"Grab a bucket." That is how **{name}** tells {user} he\'s glad they came.',
+      '"Grab a bucket." **{name}** is grinning when he says it to {user}.',
     ],
     spark: [
       "**{name}** flirts, lands it, and immediately looks somewhere else. {user} is used to this.",

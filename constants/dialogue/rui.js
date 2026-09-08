@@ -457,7 +457,7 @@ export default {
     ],
     close: [
       '"You\'re not doing all this for me, are you?" **{name}** asks {user}, gloves already on.',
-      "**{name}** puts his sleeve between his hand and {user}'s cheek. He's worked out every way there is.",
+      "**{name}** puts his sleeve between his hand and {user}'s cheek.",
       "{user} calls, and **{name}** leaves the cuttings he was carrying on the nearest bench.",
     ],
     bound: [

@@ -226,7 +226,7 @@ export const SHARED_WINNER_LINES = {
     "{user} barely finished the name before **{name}** was turning, smiling.",
     '"Took you long enough." **{name}** bumps {user}\'s shoulder.',
     "**{name}** drops the debrief face when it's {user} calling.",
-    "**{name}** was watching for {user} the whole time. Not that they'd say so.",
+    "**{name}** was watching for {user} the whole time.",
   ],
 
   bound: [

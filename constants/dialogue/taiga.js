@@ -60,8 +60,7 @@ export default {
             key: "kind",
             label: "Say it isn't a big deal",
             style: 3,
-            close:
-              "it is a big deal.\n\n…keep saying it isn't, though.",
+            close: "it is a big deal.\n\n…keep saying it isn't, though.",
           },
           {
             key: "playful",
@@ -285,7 +284,7 @@ export default {
       "\"Heads or tails, even or odd, on or off... It's all so fucking tedious! ...Oh. You're real. Hey.\"",
     ],
     known: [
-      '"Oh, it\'s the kitten. Sit down before you embarrass yourself standing."',
+      '"Oh, it\'s the kitten. Sit down before you embarrass yourself."',
       '"You know the rules yet? No? Tch. Watch, then."',
       "\"You keep coming back. Either you're broke or you're lonely.\"",
       "\"Don't bet what you can't lose. Free advice. Only one you get.\"",
@@ -445,14 +444,14 @@ export default {
   winnerLines: {
     new: [
       '"Huh." **{name}** looks {user} over. "You got guts, kitten. Stupid ones, but guts."',
-      '{user} says the name, and **{name}** grins around it. "Who\'re you? ...Whatever. C\'mere."',
+      "{user} says the name, and **{name}** grins around it. \"Who're you? ...Whatever. C'mere.\"",
       '"You lost, kitten?" **{name}** asks {user}, shuffling the whole time.',
       '{user} says the name and **{name}** is already up, done with the table. "Yeah, yeah, smooth talker. Ciao!"',
     ],
     warm: [
-      '"Took your damn time." **{name}** had very obviously been waiting on {user}.',
+      '"Took your damn time." **{name}** had been waiting on {user}.',
       "{user} calls out, and **{name}** kicks a chair out in their direction.",
-      "**{name}** calls {user} a dumbass and deals them in. Same thing, from him.",
+      "**{name}** calls {user} a dumbass and deals them in.",
     ],
     spark: [
       '"Kitten." **{name}** says it to {user}, and this time it isn\'t a jab at all.',
@@ -467,7 +466,7 @@ export default {
     bound: [
       '"Love you, kitten," **{name}** growls, daring {user} to make something of it.',
       "**{name}** pulls {user} in right there in the open, and the passers-by pretend not to notice.",
-      "{user} says the name, and **{name}**, who loses whole days, remembers exactly this.",
+      "{user} says the name, and it's the one thing **{name}** doesn't lose track of.",
     ],
   },
 };

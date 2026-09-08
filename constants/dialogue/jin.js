@@ -479,8 +479,8 @@ export default {
     ],
     spark: [
       '"Say it again." **{name}** turns fully to {user} this time.',
-      "{user} named him first, and **{name}** looks far too pleased for a man of his composure.",
-      "**{name}** does not summon {user} over. He simply stops, and waits, which is worse.",
+      "{user} named him first, and **{name}** looks far too pleased.",
+      "**{name}** does not summon {user} over. He simply stops, and waits.",
     ],
     close: [
       "The **{house}** dispatch goes to Tohma. **{name}** goes to {user}.",
@@ -490,7 +490,7 @@ export default {
     bound: [
       '"Mine," **{name}** says, as though {user} calling out had settled an argument he\'d been having alone.',
       "**{name}** hands the **{house}** roster to someone else without looking. {user} called; that ends it.",
-      "{user} says the name, and **{name}**, who has spent a lifetime being denied things, takes what is his.",
+      "{user} says the name, and **{name}** takes what is his.",
     ],
   },
 };

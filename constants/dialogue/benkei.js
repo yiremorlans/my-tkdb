@@ -446,7 +446,7 @@ export default {
     warm: [
       '"You came back!" **{name}** beams at {user} and immediately offers to carry something.',
       "{user} calls out, and **{name}** sets down the crate he'd been managing badly.",
-      "**{name}** had put something aside for {user}. He does that most days now, just in case.",
+      "**{name}** had put something aside for {user}.",
     ],
     spark: [
       "**{name}** goes red, apologizes for going red, and stays exactly where {user} can see him.",

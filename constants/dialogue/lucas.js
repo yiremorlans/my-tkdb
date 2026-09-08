@@ -478,7 +478,7 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      "**{name}** turns and apologizes to {user} for not noticing sooner, which wasn't his fault.",
+      "**{name}** turns and apologizes to {user} for not noticing sooner.",
       '"You have me at a disadvantage." **{name}** inclines his head anyway. {user} had it right.',
       "{user} says the name, and **{name}** steps out of the way first and greets them second.",
     ],
@@ -498,7 +498,7 @@ export default {
       "{user} calls, and **{name}** sets the **{house}** dispatch down without finishing the line.",
     ],
     bound: [
-      '"I\'d burn a great deal down for you," **{name}** says quietly, because {user} called his name in public and he is still not over it.',
+      '"I\'d burn a great deal down for you," **{name}** says quietly, only to {user}.',
       "**{name}** kisses {user}'s knuckles with people going past on both sides, and does not apologize for it.",
       "{user} says the name, and every ounce of **{name}**'s restraint goes somewhere else.",
     ],

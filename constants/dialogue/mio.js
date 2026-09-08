@@ -447,8 +447,8 @@ export default {
       '"Careful, everything I\'m carrying is smaller than it looks." **{name}** tells {user} that first, hello second.',
     ],
     warm: [
-      "**{name}** sets the work aside completely. {user} gets his whole attention, as usual.",
-      '"Perfect timing. I needed an excuse to stop." **{name}** tells {user} that every time.',
+      "**{name}** sets the work aside completely. {user} gets his whole attention.",
+      '"Perfect timing. I needed an excuse for a break.," **{name}** tells {user}.',
       "{user} calls out, and **{name}** has already fixed the thing they mentioned last week.",
     ],
     spark: [
@@ -457,14 +457,14 @@ export default {
       "{user} says the name, and **{name}** loses the thread of what he was building.",
     ],
     close: [
-      '"You undo me," **{name}** says calmly to {user}, which from him is shouting.',
-      "**{name}** hears {user} and leaves a repair half-finished, which he has never once done.",
+      '"You undo me," **{name}** says calmly to {user}.',
+      "**{name}** hears {user} and leaves a repair half-finished.",
       "{user} calls, and **{name}** gets there before Shion can invent an emergency.",
     ],
     bound: [
       '"I love you. I\'ll say it daily to make up the deficit." **{name}** greets {user} with it, deadpan.',
       "**{name}** rests his forehead on {user}'s shoulder for about three seconds, then goes right back to complaining about his day.",
-      "{user} says the name, and **{name}**, who never asks for anything, asks {user} to stay.",
+      "{user} says the name, and **{name}** asks {user} to stay.",
     ],
   },
 };
