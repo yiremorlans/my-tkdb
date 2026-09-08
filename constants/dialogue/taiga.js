@@ -445,8 +445,9 @@ export default {
   winnerLines: {
     new: [
       '"Huh." **{name}** looks {user} over. "You got guts, kitten. Stupid ones, but guts."',
-      '{user} says the name, and **{name}** grins around it. "Do I know you? ...Whatever. C\'mere."',
+      '{user} says the name, and **{name}** grins around it. "Who\'re you? ...Whatever. C\'mere."',
       '"You lost, kitten?" **{name}** asks {user}, shuffling the whole time.',
+      '{user} says the name and **{name}** is already up, done with the table. "Yeah, yeah, smooth talker. Ciao!"',
     ],
     warm: [
       '"Took your damn time." **{name}** had very obviously been waiting on {user}.',
