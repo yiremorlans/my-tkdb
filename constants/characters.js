@@ -352,6 +352,7 @@ export const CHARACTERS = [
   // Hotarubi
   {
     id: "subaru",
+    aliases: ["suba"],
     firstName: "Subaru",
     lastName: "Kagami",
     house: HOUSES.HOTARUBI,

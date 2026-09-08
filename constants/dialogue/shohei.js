@@ -444,7 +444,7 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '**{name}** turns on {user} with a knife still moving and a grin that doesn\'t match the street. "Senpai? You know me?"',
+      '**{name}** glances over, then back at what his hands are doing. "You got my name right. Congrats." {user} had only called out.',
       "{user} says the name, and **{name}** waves them over before deciding anything else.",
       '"Sho. Just Sho." **{name}** corrects {user} cheerfully and hands them something hot.',
     ],

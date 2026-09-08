@@ -495,7 +495,7 @@ export default {
     new: [
       '"A new face." **{name}** looks up from the budget for {user} and doesn\'t look back down.',
       "{user} says the name, and **{name}** turns the charisma on like a stage light.",
-      '"Come on over, cutie." **{name}** greets {user} as though the schedule weren\'t already ruined.',
+      '"Come on over, cutie." **{name}** greets {user} as though their schedule weren\'t already full.',
     ],
     warm: [
       '"You\'re back!" **{name}** forgets whatever he was signing. {user} did that.',

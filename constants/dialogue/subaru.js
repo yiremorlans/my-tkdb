@@ -499,26 +499,26 @@ export default {
   winnerLines: {
     new: [
       '"Have we met before?" **{name}** asks {user}, then apologizes for not being sure.',
-      "**{name}** bows before he's finished turning toward {user}. Automatic, and sincere.",
+      "**{name}** turns to {user} and bows. Automatic, and sincere.",
       '{user} says it first, and **{name}** goes a little pink. "Forgive me. I didn\'t expect that."',
     ],
     warm: [
-      '"You\'re just in time," **{name}** tells {user}, though nothing is happening.',
-      "{user} calls out, and **{name}**'s composure goes soft before he can catch it.",
+      "{user} calls out, and the polite smile **{name}** always wears turns into a real one.",
+      "**{name}** sets the teapot down a little too quickly the moment {user}'s voice reaches him.",
       "**{name}** had been hoping it was {user}. He'd never say so.",
     ],
     spark: [
       "**{name}** hears his name in {user}'s voice and loses his place.",
-      '"Sorry. Strange face to make." **{name}** says it to {user}, still making it.',
+      '"Sorry, I\'m staring." **{name}** says it to {user} and carries right on staring.',
       "{user} got there first, and **{name}** is quietly undone.",
     ],
     close: [
       "**{name}** stops apologizing mid-sentence when he sees it's {user}.",
-      "**{name}** takes the token {user} holds out, reads it before he can stop himself, and forgets to look sorry.",
+      "{user} presses something personal into **{name}**'s hand on purpose. He reads it the way only {user} is allowed to now, and forgets to look sorry.",
       "{user} calls, and whatever **{name}** was carrying gets set down.",
     ],
     bound: [
-      '"I\'ve performed my whole life," **{name}** says, reaching {user}. "Not with you."',
+      "**{name}** goes straight to {user}, and for once there's no performance in any of it.",
       "**{name}** reaches {user} and doesn't check who's watching. That took him a year.",
       "{user} says the name, and **{name}**, who apologizes for everything, apologizes for none of it.",
     ],
