@@ -632,7 +632,7 @@ export const CHARACTERS = [
       "obsessive yandere — calls MC 'my wife', talks of 'forever'",
       "possessive, territorial — 'Who was that man? I'll remember his face'",
       "no sense of personal space — 'Closer. Closer.'",
-      "blunt, flat, childish register — short sentences, Irish lilt ('shite', \"'cause\", 'mightn't')",
+      "blunt, flat, childish register — short plain sentences, no dialect or lilt; censored curses ('shite')",
       "petulant — sulks over a missed breakfast, guilt-trips ('Don't you feel sorry for me?')",
       "loves to watch fear and suffering — 'the life fading right out of his skin'",
       "frightens people for fun around the Heebie-Jeebie House",

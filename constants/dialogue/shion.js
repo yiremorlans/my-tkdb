@@ -1,9 +1,9 @@
 export default {
   // The level-up DMs (docs/bond-scene-dms.md). One of the six volatile
   // characters — see docs/negative-affinity-enemies-to-lovers.md. Shion does not
-  // warm up; he narrows. Short flat sentences, the Irish lilt, gruesome imagery
-  // offered as affection, and "my wife" from the very first message because he
-  // decided a long time before you did.
+  // warm up; he narrows. Short flat sentences, plain and unadorned (no dialect
+  // or Irish lilt), gruesome imagery offered as affection, and "my wife" from
+  // the very first message because he decided a long time before you did.
   //
   // The intimacy here is not softening — it is him letting you say no and
   // staying anyway. Every choice keeps a door open on your side, because a
@@ -13,7 +13,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Found your number.\n\nWasn't going to ask. You'd have said yes anyway so it's the same thing, isn't it.",
-        "You've come by {timesMet} times. I count everything about you.\n\nMio says that's a lot. Mio says a lot of things.\n\nCome to the Heebie-Jeebie House some night. It's dark and it's cold and folk scream in there, which is the best bit. You'd not scream, though. I've watched. Folk go stiff and back off in there. You just walk in.",
+        "You've come by {timesMet} times. I count everything about you.\n\nMio says that's a lot. Mio says a lot of things.\n\nCome to the Heebie-Jeebie House some night. It's dark and it's cold and people scream in there, which is the best bit. You wouldn't scream, though. I've watched. People go stiff and back off in there. You just walk in.",
       ],
       choice: {
         prompt: "Say yes.",
@@ -30,7 +30,7 @@ export default {
             label: "Ask what's in there",
             style: 1,
             close:
-              "Me, mostly.\n\nAnd a thing in the back I've not named yet. It's got too many bits. You'll like it or you'll not, and either's fine, 'cause you'll still be stood next to me.",
+              "Me, mostly.\n\nAnd a thing in the back I haven't named yet. It's got too many bits. You'll like it or you won't, and either's fine, because you'll still be standing next to me.",
           },
           {
             key: "bold",
@@ -50,7 +50,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: You do the same thing every time. You come at me with {favResponse}. Never changes.",
-        "Folk change round me. They go quiet or they go loud or they go away. Three flavors, that's the lot, I've had them all since I was wee.\n\nYou've got a fourth one. You just stay the same. Same voice, same everything, whatever I say to you.\n\nI've been trying to make it stop for weeks now. Said worse and worse things. You've not budged.",
+        "People change round me. They go quiet or they go loud or they go away. Three flavors, that's the lot, I've had them all since I was small.\n\nYou've got a fourth one. You just stay the same. Same voice, same everything, whatever I say to you.\n\nI've been trying to make it stop for weeks now. Said worse and worse things. You haven't budged.",
       ],
       choice: {
         prompt: "Why won't you budge.",
@@ -74,7 +74,7 @@ export default {
             label: "Tell him to stop testing",
             style: 4,
             close:
-              "Can't.\n\n*Then:* Everyone goes eventually. Testing's how I find out when. If I stop testing then it just happens one day and I've not seen it coming.\n\nThat's the whole of it. Don't be soft about it, I'll not know what to do.",
+              "Can't.\n\n*Then:* Everyone goes eventually. Testing's how I find out when. If I stop testing then it just happens one day and I haven't seen it coming.\n\nThat's the whole of it. Don't be soft about it, I won't know what to do.",
           },
         ],
       },
@@ -87,8 +87,8 @@ export default {
     closeFriend: {
       beats: [
         "**{firstName}**: Come out the back of the House. Now. It's not a scary one.",
-        "*It's the back garden, which nobody knows about, and there is a small dreadful creature in a box that he has clearly been keeping alive for some time.*\n\n> That's mine. Been mine two years. Doesn't have a name 'cause names are for things that leave.",
-        "*He sits down on the wet ground next to the box without checking whether you'll follow, and you do, and he goes very still about it.*\n\n> Mio doesn't come out here. Jo doesn't. Elias knows and pretends he doesn't, which is the nicest thing anyone's done for me.\n\n> You're sat in it. In the wet. Didn't even flinch about the wet.\n\n*After a while, without looking over:*\n\n> You can name it. If you want. Then it'll be a thing that stays.",
+        "*It's the back garden, which nobody knows about, and there is a small dreadful creature in a box that he has clearly been keeping alive for some time.*\n\n> That's mine. Been mine two years. Doesn't have a name because names are for things that leave.",
+        "*He sits down on the wet ground next to the box without checking whether you'll follow, and you do, and he goes very still about it.*\n\n> Mio doesn't come out here. Jo doesn't. Elias knows and pretends he doesn't, which is the nicest thing anyone's done for me.\n\n> You're sitting in it. In the wet. Didn't even flinch about the wet.\n\n*After a while, without looking over:*\n\n> You can name it. If you want. Then it'll be a thing that stays.",
       ],
       choice: {
         prompt: "Go on then. Name it.",
@@ -98,21 +98,21 @@ export default {
             label: "Give it a name",
             style: 3,
             close:
-              "*He repeats it twice, flat, testing the shape of it.*\n\n> ...Aye. That'll do.\n\n*Then he leans over sideways until his head is on your shoulder, all his weight, no warning at all, and stays there in the wet until it starts getting light.*",
+              "*He repeats it twice, flat, testing the shape of it.*\n\n> ...Right. That'll do.\n\n*Then he leans over sideways until his head is on your shoulder, all his weight, no warning at all, and stays there in the wet until it starts getting light.*",
           },
           {
             key: "playful",
             label: "Say it's got too many bits",
             style: 1,
             close:
-              "> It has! It has too many bits!\n\n*He's delighted. It's the loudest you've ever heard him.*\n\n> Mio said that. Mio said it and then wouldn't look at it again. You said it and you're still sat here.",
+              "> It has! It has too many bits!\n\n*He's delighted. It's the loudest you've ever heard him.*\n\n> Mio said that. Mio said it and then wouldn't look at it again. You said it and you're still sitting here.",
           },
           {
             key: "bold",
             label: "Ask why names mean leaving",
             style: 4,
             close:
-              "*He doesn't answer for a long time.*\n\n> 'Cause everything I've ever named got taken off me after.\n\n*he says finally, at the box.*\n\n> Pets. People. The lot. You name it, they know it matters, then it's gone. So I stopped.\n\n> Name it anyway. I want to find out if it works different with you.",
+              "*He doesn't answer for a long time.*\n\n> Because everything I've ever named got taken off me after.\n\n*he says finally, at the box.*\n\n> Pets. People. The lot. You name it, they know it matters, then it's gone. So I stopped.\n\n> Name it anyway. I want to find out if it works different with you.",
           },
         ],
       },
@@ -125,7 +125,7 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: Can't sleep. Hate the night. It's hot and it hurts and it's hard to breathe.",
-        "Nobody knows that. They think I like the dark 'cause of the House. I don't. I'm in the House 'cause it's the only place the night's got a door on it and I'm the one holding the door.\n\nMio thinks I'm asleep. I let him think it. He's been carrying me since he was wee and he'd carry that too and I'll not let him.",
+        "Nobody knows that. They think I like the dark because of the House. I don't. I'm in the House because it's the only place the night's got a door on it and I'm the one holding the door.\n\nMio thinks I'm asleep. I let him think it. He's been carrying me since he was little and he'd carry that too and I won't let him.",
         "Blood's a shackle. Family's the ones that stay when they've no cause to. Mio's family. Jo is. Elias is, mostly.\n\nYou didn't have to be. That's the bit I keep chewing on. Everyone else got put next to me. You just kept turning up.\n\nI've been awake since two thinking about that and it's better than thinking about the night, so.",
       ],
       choice: {
@@ -143,14 +143,14 @@ export default {
             label: "Threaten him with a lullaby",
             style: 1,
             close:
-              "That's *my* one. You've stolen my one.\n\n...Sing it, then. Go on. You mightn't ever get me to admit it helped, mind.",
+              "That's *my* one. You've stolen my one.\n\n...Sing it, then. Go on. You might never get me to admit it helped.",
           },
           {
             key: "bold",
             label: "Tell him to tell Mio",
             style: 4,
             close:
-              "No.\n\n*Flat, immediate, and then nothing for four minutes.*\n\nHe's got enough. Always has. My job was to be the big one and I've never once managed it.\n\nYou're not to tell him either. Say you'll not tell him.\n\n*You say it. He goes quiet, and then:* Right. Good. That's us, then.",
+              "No.\n\n*Flat, immediate, and then nothing for four minutes.*\n\nHe's got enough. Always has. My job was to be the big one and I've never once managed it.\n\nYou're not to tell him either. Say you won't tell him.\n\n*You say it. He goes quiet, and then:* Right. Good. That's us, then.",
           },
         ],
       },
@@ -163,8 +163,8 @@ export default {
     devoted: {
       beats: [
         "**{firstName}**: Who was that.\n\nIn the courtyard. The one that touched your arm. Who was that.",
-        "*You tell him. It's nothing. It was nothing.*\n\nAye. Alright.\n\n*Then, four minutes later:*\n\nI'll not forget him, though. I don't forget them. Got a whole lot of them up here and none of them know it.",
-        "Here's the bit I'm meant to not say, so I'm saying it.\n\nI'd do something about it. I want to. I've thought about the exact shape of it, sat here, for about an hour, and it's a lovely shape.\n\nAnd I'm not going to. 'Cause you'd look at me different after and I've worked out that's the one thing I can't take. So you tell me to leave it and I'll leave it, and that's the first time in my life a thing's ever stopped 'cause somebody said.",
+        "*You tell him. It's nothing. It was nothing.*\n\nFine. Alright.\n\n*Then, four minutes later:*\n\nI won't forget him, though. I don't forget them. Got a whole lot of them up here and none of them know it.",
+        "Here's the bit I'm meant to not say, so I'm saying it.\n\nI'd do something about it. I want to. I've thought about the exact shape of it, sitting here, for about an hour, and it's a lovely shape.\n\nAnd I'm not going to. Because you'd look at me different after and I've worked out that's the one thing I can't take. So you tell me to leave it and I'll leave it, and that's the first time in my life a thing's ever stopped because somebody said.",
       ],
       choice: {
         prompt: "Go on. Tell me to leave it.",
@@ -181,7 +181,7 @@ export default {
             label: "Ask about the lovely shape",
             style: 1,
             close:
-              "You don't want to know.\n\n...You do want to know. That's worse. That's so much worse and I like you so much.\n\nI'll not tell you. Not 'cause of the shape. 'Cause you'd laugh and then I'd do it.",
+              "You don't want to know.\n\n...You do want to know. That's worse. That's so much worse and I like you so much.\n\nI won't tell you. Not because of the shape. Because you'd laugh and then I'd do it.",
           },
           {
             key: "bold",
@@ -201,9 +201,9 @@ export default {
     soulbound: {
       beats: [
         "**{firstName}**: I've called you my wife since about the second time I saw you.\n\nEveryone thinks that's a joke. It's never once been a joke.",
-        "{timesMet} times. I've had the number since it was four.\n\nAnd every one of them I've been waiting for the day you'd stop. That's not a sad thing, it's just the shape of it. Folk stop. My mam stopped. It's arithmetic.",
-        "You've not stopped.\n\nSo I've had to learn a whole new thing, which is that I might have to be worth it on purpose instead of just holding on tight enough. That's been horrible. I've hated every minute.\n\nMio says it's good for me. Mio can get in the bin.",
-        "Right. Here's the actual one, and I'll only do it the once, so read it proper.\n\nI love you. Not the way I say things. The other way. The one where I'd let you go if you wanted to go, which I've never been able to say about anything in my whole life and it's taken me a year to be able to say it about you.\n\nYou mightn't ever have to. But you could. That's the thing I'm giving you. It's the only thing I've got that's worth anything.",
+        "{timesMet} times. I've had the number since it was four.\n\nAnd every one of them I've been waiting for the day you'd stop. That's not a sad thing, it's just the shape of it. People stop. My mom stopped. It's arithmetic.",
+        "You haven't stopped.\n\nSo I've had to learn a whole new thing, which is that I might have to be worth it on purpose instead of just holding on tight enough. That's been horrible. I've hated every minute.\n\nMio says it's good for me. Mio can get in the bin.",
+        "Right. Here's the actual one, and I'll only do it the once, so read it proper.\n\nI love you. Not the way I say things. The other way. The one where I'd let you go if you wanted to go, which I've never been able to say about anything in my whole life and it's taken me a year to be able to say it about you.\n\nYou might never have to. But you could. That's the thing I'm giving you. It's the only thing I've got that's worth anything.",
       ],
       choice: {
         prompt: "Now say. Whatever it is. I'll take it.",
@@ -213,14 +213,14 @@ export default {
             label: "Say it back",
             style: 3,
             close:
-              "...Say it again.\n\n*You say it again.*\n\nAgain.\n\n*The fourth time he stops asking. He turns up at your door twenty minutes later soaked through with no coat on and stands there for a moment just looking at you, properly, greedily, the way he looks at things he's decided are his, and then he puts both arms round you and holds on so hard it aches, and says, into your hair, flat as anything:*\n\n> Forever, mind. I did tell you.",
+              "...Say it again.\n\n*You say it again.*\n\nAgain.\n\n*The fourth time he stops asking. He turns up at your door twenty minutes later soaked through with no coat on and stands there for a moment just looking at you, properly, greedily, the way he looks at things he's decided are his, and then he puts both arms round you and holds on so hard it aches, and says, into your hair, flat as anything:*\n\n> Forever. I did tell you.",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
             close:
-              "Aye.\n\n*Nothing else for a bit. Then:*\n\nThat's what the giving-you-the-door was for. Wasn't a trick. Take it.\n\nI'll be at the House. Same as always. And I'll not sulk at you about it, which I want noting, 'cause sulking's most of what I've got.\n\n*He doesn't sulk. He's exactly where he says he'll be, every night, holding the door on the dark. And when you come by he moves over on the wet ground without a word, the way he did the first time.*",
+              "Alright.\n\n*Nothing else for a bit. Then:*\n\nThat's what the giving-you-the-door was for. Wasn't a trick. Take it.\n\nI'll be at the House. Same as always. And I won't sulk at you about it, which I want noting, because sulking's most of what I've got.\n\n*He doesn't sulk. He's exactly where he says he'll be, every night, holding the door on the dark. And when you come by he moves over on the wet ground without a word, the way he did the first time.*",
           },
         ],
       },
@@ -260,7 +260,7 @@ export default {
       "He steps in close behind you and speaks right at your ear, entirely on purpose.",
       '"You stopped being afraid," he murmurs. "Now you\'re something far worse."',
       "He takes your wrist, turns it over, and studies your pulse like it told him something he liked.",
-      '"You\'re getting bold," he says, almost approving. "\'Cause you\'re nearly mine."',
+      '"You\'re getting bold," he says, almost approving. "Because you\'re nearly mine."',
     ],
     close: [
       '"For you," Shion says, and the flatness cracks just enough to let a real smile through.',
