@@ -34,6 +34,9 @@ mock.module('@supabase/supabase-js', {
 
 const posts = [];
 const edits = [];
+// Flip discordFail.edit to make the next editChannelMessage calls throw, the
+// way a Discord 5xx or a deleted post would — the call is still recorded first.
+const discordFail = { edit: false };
 mock.module('../discordRest.js', {
   namedExports: {
     postChannelMessage: async (channelId, body) => {
@@ -42,6 +45,7 @@ mock.module('../discordRest.js', {
     },
     editChannelMessage: async (channelId, messageId, body) => {
       edits.push({ channelId, messageId, body });
+      if (discordFail.edit) throw new Error('Discord API error: 500');
       return {};
     },
     openDmChannel: async () => 'dm-1',
@@ -76,6 +80,7 @@ const {
   handleMissionAssistJoin,
   handleMissionFile,
   handleRiddle,
+  reconcileMissionPosts,
   runGuildMissionPass,
   spawnMission,
   sweepExpiredMissions,
@@ -92,6 +97,7 @@ function reset() {
   fake.tables.character_relationships = [];
   posts.length = 0;
   edits.length = 0;
+  discordFail.edit = false;
   clearRiddleCooldowns();
   clearCommandInvokeThrottle();
 }
@@ -289,6 +295,93 @@ describe('spawning a mission request', () => {
     assert.equal(edits.length, 1);
     assert.deepEqual(edits[0].body.components, [], 'the dead button is removed');
     assert.deepEqual(edits[0].body.attachments, [], 'the image goes with it');
+  });
+});
+
+// --- 2b. reconciling a stranded post --------------------------------------
+// A claim that committed but whose channel-post edit failed in the moment
+// (app.js sets missions.post_reconcile_needed, migration 019). The mission tick
+// retries that edit with the bot token; nothing else covers it.
+describe('reconciling a stranded mission post', () => {
+  beforeEach(reset);
+
+  it('edits the post to a name-free line and strips the button, then clears the flag', async () => {
+    fake.tables.missions.push(
+      missionRow({
+        status: 'accepted',
+        accepted_by: 'user-a',
+        message_id: 'message-1',
+        post_reconcile_needed: true,
+      }),
+    );
+
+    await reconcileMissionPosts();
+
+    assert.equal(edits.length, 1);
+    assert.equal(edits[0].messageId, 'message-1');
+    assert.match(edits[0].body.content, /already been picked up/);
+    assert.deepEqual(edits[0].body.components, [], 'the live Accept button is gone');
+    assert.deepEqual(edits[0].body.embeds, []);
+    assert.equal(
+      fake.tables.missions[0].post_reconcile_needed,
+      false,
+      'the flag is cleared so the next tick skips it',
+    );
+  });
+
+  it('keeps the flag set when the retry edit also fails', async () => {
+    fake.tables.missions.push(
+      missionRow({ status: 'accepted', message_id: 'message-1', post_reconcile_needed: true }),
+    );
+    discordFail.edit = true;
+
+    await reconcileMissionPosts();
+
+    assert.equal(edits.length, 1, 'it tried');
+    assert.equal(
+      fake.tables.missions[0].post_reconcile_needed,
+      true,
+      'still flagged, so a later tick retries',
+    );
+  });
+
+  it('drops the flag without an edit when the row never got a post id', async () => {
+    fake.tables.missions.push(
+      missionRow({ status: 'accepted', message_id: null, post_reconcile_needed: true }),
+    );
+
+    await reconcileMissionPosts();
+
+    assert.equal(edits.length, 0, 'nothing to edit');
+    assert.equal(fake.tables.missions[0].post_reconcile_needed, false);
+  });
+
+  it('leaves un-flagged missions alone', async () => {
+    fake.tables.missions.push(
+      missionRow({ status: 'accepted', accepted_by: 'user-a', message_id: 'message-1' }),
+    );
+
+    await reconcileMissionPosts();
+
+    assert.equal(edits.length, 0);
+  });
+
+  it('runs as part of the expiry sweep', async () => {
+    fake.tables.missions.push(
+      missionRow({
+        id: 2,
+        status: 'accepted',
+        accepted_by: 'user-a',
+        message_id: 'message-9',
+        post_reconcile_needed: true,
+      }),
+    );
+
+    await sweepExpiredMissions(null, new Date());
+
+    assert.equal(edits.length, 1, 'the sweep reconciled the stranded post');
+    assert.equal(edits[0].messageId, 'message-9');
+    assert.equal(fake.tables.missions[0].post_reconcile_needed, false);
   });
 });
 

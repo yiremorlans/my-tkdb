@@ -1914,6 +1914,55 @@ export async function expireMission(id) {
 }
 
 /**
+ * Mark a mission whose public post the bot failed to bring in line with a won
+ * claim — the accept edit in app.js threw (dead interaction token, Discord 5xx,
+ * post deleted). reconcileMissionPosts() on the mission tick retries the edit
+ * with the bot token and clears the flag. See migration 019.
+ *
+ * Best-effort by nature: this is already the error path, so a failure here logs
+ * and is swallowed rather than throwing a second error up over the first.
+ */
+export async function flagMissionPostForReconcile(id) {
+  const { error } = await supabase
+    .from('missions')
+    .update({ post_reconcile_needed: true })
+    .eq('id', id);
+
+  if (error) {
+    console.error('Error flagging mission post for reconcile:', error);
+  }
+}
+
+/** Missions whose public post still needs an edit after a won claim (mig 019). */
+export async function getMissionsNeedingPostReconcile(guildId = null) {
+  let query = supabase
+    .from('missions')
+    .select('*')
+    .eq('post_reconcile_needed', true);
+  if (guildId) query = query.eq('guild_id', guildId);
+
+  const { data, error } = await query;
+  if (error) {
+    console.error('Error fetching missions needing post reconcile:', error);
+    throw error;
+  }
+
+  return data || [];
+}
+
+/** Clear the reconcile flag once the post has been edited into line. */
+export async function clearMissionPostReconcile(id) {
+  const { error } = await supabase
+    .from('missions')
+    .update({ post_reconcile_needed: false })
+    .eq('id', id);
+
+  if (error) {
+    console.error('Error clearing mission post reconcile flag:', error);
+  }
+}
+
+/**
  * One completion row. Written fire-and-forget AFTER the claim RPC has confirmed
  * the mission actually closed, so a lost race can never bank points.
  *

@@ -45,6 +45,7 @@ import {
   claimCommandUse,
 } from './commandLimits.js';
 import {
+  flagMissionPostForReconcile,
   trackUserActivity,
   trackCharacterEngagement,
   trackCommandUsage,
@@ -1042,6 +1043,18 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         return res.status(400).json({ error: 'unknown component interaction' });
       }
 
+      // Ack with a silent deferred-update FIRST, then run the handler. Each of
+      // the three mission RPCs does one or two Supabase round trips before it
+      // can say what the post should become, and a slow database (a Gateway
+      // Timeout spike) easily overruns Discord's 3s interaction window. Missing
+      // that window kills the token: the post rewrite is dropped even though
+      // the RPC already committed — leaving a claimed mission with a live
+      // Accept button no sweep will ever reconcile — and every followup on the
+      // dead token 404s ("Unknown Webhook"). DEFERRED_UPDATE_MESSAGE shows the
+      // clicker no loading state and gives us 15 minutes to resolve the post
+      // over the webhook instead of 3 seconds inline.
+      res.send({ type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE });
+
       let result;
       try {
         result = await handler(req.body, missionId);
@@ -1055,7 +1068,31 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         };
       }
 
-      res.send(result.response);
+      // A win rewrites the shared post (UPDATE_MESSAGE) — apply it as a PATCH
+      // to @original, which for a deferred component interaction edits the very
+      // message the button sits on. Anything else is a refusal ephemeral
+      // (CHANNEL_MESSAGE_WITH_SOURCE, already flagged 64): send it as a new
+      // followup so the clicker still learns why they lost the race, and leave
+      // the post and its live button untouched for the next person.
+      const { response } = result;
+      if (response?.type === InteractionResponseType.UPDATE_MESSAGE) {
+        try {
+          await sendFollowup(req.body.token, response.data, 15000, true);
+        } catch (err) {
+          console.error(`Failed to apply mission:${kind} post update:`, err);
+          // The claim already committed, but the shared post still shows a live
+          // Accept button. Flag the row so the mission tick's reconcile pass
+          // edits the post with the bot token once this dead interaction token
+          // is out of the picture (missions.js reconcileMissionPosts). Only
+          // 'accept' rewrites that shared, still-clickable post — 'file' edits
+          // an ephemeral, 'assist' its own co-op post.
+          if (kind === 'accept') await flagMissionPostForReconcile(missionId);
+        }
+      } else if (response?.data) {
+        await sendFollowup(req.body.token, response.data).catch(err =>
+          console.error(`Failed to send mission:${kind} refusal:`, err),
+        );
+      }
 
       // An ephemeral chaser for the clicker only — the pickup briefing after
       // an Accept. Posted as a new followup (not an edit) so it sits beside

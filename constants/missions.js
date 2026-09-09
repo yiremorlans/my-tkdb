@@ -124,6 +124,15 @@ export const MISSION_WITHDRAWN_LINES = [
   "The briefing room went dark. Opportunity gone.",
 ];
 
+// Edited onto a mission post the bot failed to update in the moment it was
+// claimed (a dead interaction token, a Discord 5xx, the post gone) — the
+// reconciliation backstop in missions.js reconcileMissionPosts(). Deliberately
+// name-free: that sweep runs detached from the interaction that knew who
+// clicked, and getting the live Accept button off an already-taken mission
+// matters more than naming the winner.
+export const MISSION_POST_RECONCILED_LINE =
+  "This request has already been picked up.";
+
 // Edited onto a co-op assist post whose mission lapsed with no partner.
 export const ASSIST_LAPSED_LINES = [
   "Nobody came. The moment passed.",

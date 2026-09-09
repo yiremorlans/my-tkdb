@@ -35,6 +35,7 @@ import {
   MISSION_INSTRUCTIONS,
   MISSION_PICKED_UP,
   MISSION_POST_FAILURE_LIMIT,
+  MISSION_POST_RECONCILED_LINE,
   MISSION_TEASERS,
   MISSION_TYPE_LABEL,
   MISSION_TYPES,
@@ -67,6 +68,7 @@ import {
   claimCoopHelper,
   claimMission,
   clearGuildMissionPostFailures,
+  clearMissionPostReconcile,
   completeMission,
   countCooldownResets,
   createMission,
@@ -79,6 +81,7 @@ import {
   getGuildSettings,
   getMissionById,
   getMissionLogStats,
+  getMissionsNeedingPostReconcile,
   getOpenMission,
   getUserRelationships,
   markMissionSlotFired,
@@ -387,6 +390,61 @@ export async function finalizeLapsedMission(row) {
 }
 
 /**
+ * A mission whose claim committed but whose public post the bot never managed
+ * to update in the moment — app.js's accept edit threw (the interaction token
+ * had expired because a slow claim_mission ate Discord's ack window, a Discord
+ * 5xx, the post deleted, permissions pulled). The row is 'accepted' (or has
+ * since moved to completed/expired) but the post is still showing a live Accept
+ * button that hands every later clicker "someone got there first" forever.
+ *
+ * Nothing else covers this: finalizeWithdrawnMission only edits 'open' rows,
+ * and finalizeLapsedMission deliberately leaves an accepted post alone. app.js
+ * sets missions.post_reconcile_needed on the failed edit (migration 019); this
+ * is the retry, on every mission tick.
+ *
+ * The edit goes out with the bot token — the interaction webhook the original
+ * used is long dead — to a name-free "already taken" line with the button
+ * stripped. Best-effort per row: an edit that still fails keeps its flag for
+ * the next tick.
+ */
+export async function reconcileMissionPosts(guildId = null) {
+  let rows;
+  try {
+    rows = await getMissionsNeedingPostReconcile(guildId);
+  } catch (err) {
+    console.error(
+      "[missions] Could not read posts needing reconcile:",
+      err.message,
+    );
+    return;
+  }
+
+  for (const row of rows) {
+    // Flag set on a row that never got a post id — nothing to edit, so just
+    // drop the flag rather than retrying a no-op every tick.
+    if (!row.message_id) {
+      await clearMissionPostReconcile(row.id);
+      continue;
+    }
+
+    try {
+      await editChannelMessage(row.channel_id, row.message_id, {
+        content: MISSION_POST_RECONCILED_LINE,
+        attachments: [],
+        components: [],
+        embeds: [],
+      });
+      await clearMissionPostReconcile(row.id);
+    } catch (err) {
+      console.error(
+        `[missions] Could not reconcile mission ${row.id} post:`,
+        err.message,
+      );
+    }
+  }
+}
+
+/**
  * Finalize everything past its deadline, for one guild or all of them. Called
  * from the scheduler tick, and the restart-safety net with it: the state this
  * works from is entirely in Postgres.
@@ -396,6 +454,12 @@ export async function sweepExpiredMissions(guildId = null, now = new Date()) {
 
   for (const row of withdrawn) await finalizeWithdrawnMission(row);
   for (const row of lapsed) await finalizeLapsedMission(row);
+
+  // Retry any won-claim post edits that failed in the moment of the click
+  // (app.js). Rides the same sweep because it is the same kind of work — a
+  // stranded post that needs an edit — and the flag is per row, so a disabled
+  // guild's stranded post still gets fixed.
+  await reconcileMissionPosts(guildId);
 
   return { withdrawn, lapsed };
 }
