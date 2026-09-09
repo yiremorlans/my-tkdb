@@ -9,7 +9,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: This is Mio. Dionysia, the toolbox. You already know who I am, so I'll skip the rest.",
-        "We've talked {timesMet} times, and every one of them there's been something to fix. That's not on you. But it means I've only ever turned up here with a toolbox in my hand.\n\nSo, while I'm there, anything you actually want me to look at?\n\nDoesn't have to be broken. If there's something that'd make your week easier, I can probably build it.\n\n...Your desk, though. The light's behind you, so you've been reading in your own shadow every night. I could build you a lamp that clips on and swings clear when you don't need it. Hour, maybe.",
+        "We've talked {timesMet} times, and every one of them has been about something to fix. That's not on you. But it means I've only ever turned up here when something's broken.\n\nSo, while I'm there, anything you actually want me to look at?\n\nDoesn't have to be broken. If there's something that'd make your week easier, I can probably build it.\n\n...Your desk, though. The light's behind you, so you've been reading in your own shadow every night. I could build you a lamp that clips on and swings clear when you don't need it. Hour, maybe.",
       ],
       choice: {
         prompt: "Yes or no on the lamp.",
