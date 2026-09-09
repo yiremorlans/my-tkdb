@@ -197,7 +197,7 @@ export const MISSION_TYPE_LABEL = {
 export const MISSION_NEXT_STEP = {
   [MISSION_TYPES.ERRAND]: "collect its signatures and file it with `/docs`",
   [MISSION_TYPES.RIDDLE]: "solve it with `/riddle`",
-  [MISSION_TYPES.COOP]: "call a partner with `/mission assist:True`",
+  [MISSION_TYPES.COOP]: "call a partner with `/mission assist:true`",
 };
 
 export const CAPPED_LINE = `You've already taken your ${DAILY_LEAD_CAP} missions for today. Anything you're still holding can be finished as normal, and the board is yours again tomorrow.`;
@@ -206,7 +206,7 @@ export function busyLine(type) {
   return `You already have a mission in progress. ${
     MISSION_NEXT_STEP[type]
       ? `Go ${MISSION_NEXT_STEP[type]} first.`
-      : "Wrap it up with `/docs`, `/riddle`, or `/mission assist:True` first."
+      : "Wrap it up with `/docs`, `/riddle`, or `/mission assist:true` first."
   }`;
 }
 
@@ -219,7 +219,7 @@ export const MISSION_INSTRUCTIONS = {
   [MISSION_TYPES.RIDDLE]:
     "Answer with `/riddle <your answer>`. Solve it for one house log, plus a banked cooldown reset: spend it the next time `/roam` or `/meet` tells you to wait, and it clears both.",
   [MISSION_TYPES.COOP]:
-    "Call a partner with `/mission assist:True`. The first inspector to back you up completes it for both of you. One house log each, plus a banked cooldown reset good for one of `/roam` or `/meet`.",
+    "Call a partner with `/mission assist:true`. The first inspector to back you up completes it for both of you. One house log each, plus a banked cooldown reset good for one of `/roam` or `/meet`.",
 };
 
 // --- riddles ----------------------------------------------------------------

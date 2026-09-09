@@ -32,6 +32,9 @@
 //     its own. Everything else moves into `prompt`.
 //   - Spoken words are wrapped in double quotes; stage directions left bare in
 //     *italics*. In-person speech, so normal punctuation.
+//   - Weight the bare *italic* description. These cards carry the scene in
+//     narration and described action; spoken lines stay sparse and short.
+//     Shion shows more than he says.
 // `// setting:` notes preserve what each card's art shows.
 export default {
   Shion: {
@@ -51,28 +54,28 @@ export default {
     ],
     choice: {
       prompt:
-        '*He moves along the glass and you follow. He names the sea anomalies without reading the placards.* "That one\'s got no eyes, doesn\'t need them. That one glows so the small ones swim to it. Every pretty thing in here kills something." *A long pause.* "I could watch them in here all day."',
+        '*He looks down the length of the glass, naming the things in the tanks without reading the placards.* "That one\'s got no eyes, doesn\'t need them. That one glows so the small ones swim to it. Every pretty thing in here kills something."*A long pause* "I could stand here all day."',
       options: [
         {
           key: "kind",
           label: "Say you'd stay all day too",
           style: 3,
           close:
-            '*He doesn\'t look over, but his shoulders come down a little.* "...Would you. People go restless around me inside ten minutes. You just settled in." *A beat at the glass.* "Stay till they put the lights out, then. I\'m not done looking, and I\'d rather you were here for it."',
+            '*He doesn\'t look over. His shoulders come down a little, the way they do when he decides to trust something.* "...People go restless around me inside ten minutes. You settled in." *He taps the glass once, then goes back to watching.* "Stay till they put the lights out, then."',
         },
         {
           key: "playful",
           label: "Say his taste in dates is grim",
           style: 1,
           close:
-            '"Grim." *He weighs the word like he wants to keep it.* "I picked the tank where the light draws them in and thought, she\'ll like that one best." *The flat calm tips younger.* "I was right. Don\'t tell me I wasn\'t. I watched your face when it ate."',
+            '"Grim." *He turns the word over like he wants to keep it. He chose this tank on purpose, the one where the light draws the small ones in, and when it fed he watched your face instead of the glass. The flat calm tips younger, pleased with itself.* "I was right. Don\'t tell me I wasn\'t."',
         },
         {
           key: "bold",
           label: "Call it a date out loud",
           style: 4,
           close:
-            '*He looks at you a moment, flat, the way he looks at things he\'s decided are his.* "A date. Out loud, then. Good." *The small smile comes back, barely there.* "It\'s been one on my side a long while. You\'re only just catching me up."',
+            '*He looks at you a while, flat, the way he looks at things he has already decided are his. The small smile surfaces, barely there.* "A date. Good." *He turns back to the glass, satisfied.* "It\'s been one on my side a long time. You\'re only catching up."',
         },
       ],
     },
@@ -94,28 +97,28 @@ export default {
     ],
     choice: {
       prompt:
-        '"They asked for a magician. I do the other thing, where the room goes up in screams and somebody\'s carried out." *The Ace of Hearts appears out of thin air.* "Sit at the front. It goes better when you\'re the one watching."',
+        '*He works a card in and out of sight while he talks, the Ace of Hearts there and gone against his glove. They booked a magician. He does the other version, the one where the room screams and somebody gets carried out.* "Sit at the front. It goes better when you\'re watching."',
       options: [
         {
           key: "kind",
           label: "Say you'll be watching him",
           style: 3,
           close:
-            '*The card stops between his fingers.* "Watching me. Not the vanish, not the screaming." *He turns the card over, looking at it instead of you.* "Nobody asks for that. They want the fright and they leave before the lights come up." *A beat.* "Sit near the front. I\'ll keep finding your face between the tricks. That part\'s not the act."',
+            '*The Ace settles between his fingers and stays there. He turns it over and looks at it instead of you.* "Watching me. Not the vanish, not the screaming. Nobody asks for that." *A beat. When he looks up he finds your face, and keeps finding it.* "Sit near the front. That part isn\'t the act."',
         },
         {
           key: "playful",
           label: "Bet he can't spook Mio",
           style: 1,
           close:
-            '"Mio doesn\'t spook. He\'s watched every trick I own since we were little, never once flinched." *The look he saves for the stage tips younger.* "He\'s worn out these days, though. Guard drops by midnight." *Almost a smile.* "Help me pick the night. I want you next to me when his face finally goes."',
+            '"Mio doesn\'t spook. He has watched every trick I own since we were small and never once flinched." *The look he saves for the stage tips younger. Mio is worn thin these days, though, and by midnight the guard slips.* "I\'ve thought about this. Help me pick the night. I want you next to me when his face finally goes."',
         },
         {
           key: "bold",
           label: "Straighten his collar",
           style: 4,
           close:
-            '*You step in and set his collar straight. He holds still and watches you.* "...Right." *The flat calm slides back over him like a coat.* "I\'ll go stop a few hearts. Not yours. Yours I\'ve frightened plenty, and I\'ve a use for it yet."',
+            '*You step in and set his collar straight. He holds still for it and watches you do it. When you step back the flat calm slides over him again like a coat pulled on.* "I\'ll go stop a few hearts. Not yours." *At the curtain he pauses.* "Yours I\'ve frightened plenty. I\'ve a use for it yet."',
         },
       ],
     },

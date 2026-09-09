@@ -442,17 +442,17 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      "**{name}** looks up from something tiny and intricate, and has a ready smile for {user}.",
+      "**{name}** looks up from the fine work, smile already there for {user}.",
       '{user} says the name, and **{name}** sets the tweezers down. "Huh. Good eye."',
-      '"Careful, everything I\'m carrying is smaller than it looks." **{name}** tells {user} that first, hello second.',
+      '"Careful, everything I\'m carrying is more fragile than it looks." **{name}** tells {user} that first, hello second.',
     ],
     warm: [
       "**{name}** sets the work aside completely. {user} gets his whole attention.",
-      '"Perfect timing. I needed an excuse for a break.," **{name}** tells {user}.',
+      '"Perfect timing, {user}. I needed an excuse for a break." **{name}** means it.',
       "{user} calls out, and **{name}** has already fixed the thing they mentioned last week.",
     ],
     spark: [
-      "**{name}**'s steady hands are, briefly, not steady. {user} pretends not to notice.",
+      "**{name}**'s hands slip on the work for a second. {user} pretends not to notice.",
       '"Ha ha. Kidding." **{name}** wasn\'t, and {user} is getting good at telling.',
       "{user} says the name, and **{name}** loses the thread of what he was building.",
     ],
@@ -462,8 +462,8 @@ export default {
       "{user} calls, and **{name}** gets there before Shion can invent an emergency.",
     ],
     bound: [
-      '"I love you. I\'ll say it daily to make up the deficit." **{name}** greets {user} with it, deadpan.',
-      "**{name}** rests his forehead on {user}'s shoulder for about three seconds, then goes right back to complaining about his day.",
+      '"I had a speech ready, {user}. You walked up and I lost all of it." **{name}** says.',
+      "**{name}** rests his forehead on {user}'s shoulder, then goes back to complaining about his day.",
       "{user} says the name, and **{name}** asks {user} to stay.",
     ],
   },

@@ -27,6 +27,7 @@ import {
   handleMissionFile,
   handleMissionsAdmin,
   handleRiddle,
+  wantsMissionAssist,
 } from './missions.js';
 import {
   buildBondJournal,
@@ -527,14 +528,14 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       return;
     }
 
-    // /mission assist:True is the one mission command that answers in public and
+    // /mission assist:true is the one mission command that answers in public and
     // without a defer: its output is the call-for-backup post itself, sent
     // straight back as the interaction response. Only one Supabase read sits on
     // that path and there's no channel POST, so the 3s budget is comfortable —
     // and if it ever isn't, "This interaction failed" with no post is a clean
     // no-op the lead just re-runs. The post's id is read back from @original
     // afterwards for `assist_message_id`.
-    if (name === 'mission' && (req.body.data?.options || []).some(o => o.name === 'assist' && o.value)) {
+    if (name === 'mission' && wantsMissionAssist(req.body)) {
       let result;
       try {
         result = await handleMission(req.body);

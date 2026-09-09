@@ -464,7 +464,7 @@ export default {
       "{user} calls, and **{name}** kisses their temple on the way past without thinking about it.",
     ],
     bound: [
-      '"I love you, Senpai. Yeah, I say it a lot now." **{name}** tells {user} he isn\'t sorry.',
+      '"Order\'s already going, Senpai. Started the second I saw you." **{name}** tells {user} he isn\'t sorry about it.',
       "**{name}** was humming. {user} calling his name made it considerably worse.",
       "{user} says the name, and **{name}** decides the **{house}** shift can run itself tonight.",
     ],

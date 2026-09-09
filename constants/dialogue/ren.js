@@ -198,7 +198,7 @@ export default {
         "**{firstName}**: ok. No bit. no link. I'm not sending you a code instead of just saying this.",
         "{timesMet} times. I've got a save file for basically all of them. Every pointless co-op grind, every event, going back to that first invite code. at some point I stopped playing them for the loot and started playing them because you'd be on the other account.\n\nnobody's ever seen that save file. It's the least ironic thing I own.",
         "here's the actual thing. I say massive stuff in the smallest possible voice. I know I do it. I said \"I like you\" once like I was reading the weather and you just went with it, and I've thought about that literally hundreds of times since.\n\nI do it because if I say something flat and it doesn't land, it wasn't really said. That's the whole system. it's a very good system and it's kept me safe basically my whole life.",
-        "so I'm turning it off. once. Right now.\n\nI love you. not deadpan. not as a bit. not with a clip after it.\n\nlove you, senpai. Have done for ages. that's the one I've been saving and it's the only thing I've ever said that I couldn't put a joke on the end of.",
+        "so I'm turning it off. once. Right now.\n\nI love you. not as a bit. not with a clip after it.\n\nlove you, senpai. Have done for ages. that's the one I've been saving and it's the only thing I've ever said that I couldn't put a joke on the end of.",
       ],
       choice: {
         prompt: "take your time. I've got a whole save file to get through.",
@@ -208,7 +208,7 @@ export default {
             label: "Say it back",
             style: 3,
             close:
-              "*The typing indicator goes on and off about six times.*\n\n*Then:* back door's open.\n\n*He's behind the counter when you get there and he doesn't do the deadpan thing once. He comes round the front, takes your jaw in both hands, and kisses you like a man who has been running a very good system for most of his life and has just decided the system was garbage.*\n\n> Yeah, I know I said it already,\n\n*he says afterwards.*\n\n> I'm going to keep saying it.",
+              "*The typing indicator goes on and off about six times.*\n\n*Then:* back door's open.\n\n*He's behind the counter when you get there and he doesn't do the bit once. He comes round the front, takes your jaw in both hands, and kisses you like a man who has been running a very good system for most of his life and has just decided the system was garbage.*\n\n> Yeah, I know I said it already,\n\n*he says afterwards.*\n\n> I'm going to keep saying it.",
           },
           {
             key: "held",
@@ -368,13 +368,13 @@ export default {
     },
     playful: {
       new: [
-        "Trade deadpan with him",
+        "Trade flat lines with him",
         "Tease him about his videos",
         "Challenge him to a round",
       ],
       spark: [
         "Make him say it twice",
-        "Out-deadpan him",
+        "Out-blank him",
         "Pause it to mess with him",
       ],
       close: [
@@ -432,7 +432,7 @@ export default {
     ],
     spark: [
       "\"Second controller's charged.\" **{name}** says it to {user} like it isn't a confession.",
-      "{user} says the name, and **{name}** goes very deliberately deadpan about it.",
+      "{user} says the name, and **{name}** goes very deliberately blank-faced about it.",
       "**{name}** was in the one spot on campus nobody looks. {user} looked.",
     ],
     close: [
@@ -441,7 +441,7 @@ export default {
       "{user} calls, and **{name}** pockets the phone and straightens up.",
     ],
     bound: [
-      '"Love you, Senpai. Yeah, I know I said it this morning." **{name}** says it to {user} again anyway.',
+      '"Found me again. Pretty sure that\'s not luck anymore, Senpai." **{name}** doesn\'t dress it up for {user}.',
       "**{name}** reaches {user} and puts his chin on their shoulder. That was the whole plan.",
       "{user} says the name, and **{name}** decides the **{house}** roster can manage without him.",
     ],

@@ -464,7 +464,7 @@ export default {
       "{user} calls, and **{name}** walks away from a bet he was about to win.",
     ],
     bound: [
-      '"Love you, kitten," **{name}** growls, daring {user} to make something of it.',
+      '"You\'re the one hand I\'d never fold, kitten." **{name}** growls it at {user}, daring them to make something of it.',
       "**{name}** pulls {user} in right there in the open, and the passers-by pretend not to notice.",
       "{user} says the name, and it's the one thing **{name}** doesn't lose track of.",
     ],

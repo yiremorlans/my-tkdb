@@ -50,10 +50,10 @@ export default {
         },
         {
           key: "playful",
-          label: "Steal a skewer off his plate",
+          label: "Steal a fry from him",
           style: 1,
           close:
-            '*His hand shoots out and misses on purpose.* "Gyahaha! Bold move, robbing a guy mid-nap.\n\nThat one\'s yours now. Next one costs you. Sit down and find out the price."',
+            '*His hand shoots out and misses on purpose.* "Gyahaha! Bold move, robbing a guy mid-nap.\n\nThat one\'s yours. Next one costs you."',
         },
         {
           key: "bold",
@@ -75,7 +75,7 @@ export default {
     // turn in the scene is his own mouth supplying a nickname for someone he
     // supposedly doesn't know.
     dialogue: [
-      '"Six. Five. Wrong room, wrong night, and I don\'t know your face. This goes quick."',
+      '"Six... Five. Wrong room, wrong night, and I don\'t know your face. This goes quick."',
     ],
     choice: {
       prompt:

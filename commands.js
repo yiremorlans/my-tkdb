@@ -73,7 +73,12 @@ const HOUSE_COMMAND = {
 // is on /bonds: Discord makes a command with subcommands invocable *only*
 // through them, and bare /mission — the briefing — is the command this feature
 // points people at constantly. So `/mission` alone reads the briefing and
-// `/mission assist:True` posts the co-op call for backup.
+// `/mission assist:true` posts the co-op call for backup.
+//
+// STRING, not BOOLEAN: a boolean option renders on Discord desktop as a
+// mandatory True/False click-picker with no keyboard path, which some clients
+// can't reach at all. A string lets people type the value — `wantsMissionAssist`
+// (missions.js) reads anything but an explicit "false"/"no"/"0"/"off" as yes.
 const MISSION_COMMAND = {
   name: "mission",
   description: "Read the briefing for the mission you're holding",
@@ -83,8 +88,8 @@ const MISSION_COMMAND = {
   options: [
     {
       name: "assist",
-      description: "Co-op missions: post a call for backup in the mission channel",
-      type: 5, // BOOLEAN
+      description: 'Co-op missions: type "true" to post a call for backup in the mission channel',
+      type: 3, // STRING
       required: false,
     },
   ],

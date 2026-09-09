@@ -289,7 +289,7 @@ export default {
       "\"Hi! Hi. Don't shake my hand, long story, but it's great to meet you!\"",
       '"You need directions? Paperwork? A friend? I do all three!"',
       '"Whoa, careful... okay, good, you stopped. Phew. Hi!"',
-      "\"New face! I keep a list. You're on it now,\" he says with a wink.",
+      '"New face! I keep a list. You\'re on it now," he says with a wink.',
     ],
     known: [
       "\"You're back! Okay, that's officially a pattern. I love a pattern.\"",
@@ -461,7 +461,7 @@ export default {
       "{user} calls, and **{name}** leaves the cuttings he was carrying on the nearest bench.",
     ],
     bound: [
-      '"That one doesn\'t need hands," **{name}** says, telling {user} he loves them across two feet of air.',
+      '"Whole curse, and it never stopped me from wanting to be with you." **{name}** says it to {user} across the gap.',
       "**{name}** reaches {user} and stands as close as the curse allows, which is closer than it used to be.",
       "{user} says the name, and **{name}** stops being happy enough for the both of them and is simply happy.",
     ],

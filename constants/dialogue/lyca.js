@@ -445,7 +445,7 @@ export default {
     ],
     bound: [
       '"You smell like mine," **{name}** says to {user}, delighted.',
-      "**{name}** found the word ages ago. He says it to {user} again anyway, and gets it right.",
+      "**{name}** doesn't reach for a new word this time. He just says {user}'s name, slow.",
       "{user} says the name, and **{name}** makes a sound like something finally at rest.",
     ],
   },

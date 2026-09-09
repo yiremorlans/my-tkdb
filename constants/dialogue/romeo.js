@@ -450,7 +450,7 @@ export default {
       "{user} calls, and **{name}** buys out the rest of the night without explaining why.",
     ],
     bound: [
-      '"HDY make me say it out loud. Ugh. I love you." **{name}** tells {user} this in front of everyone in earshot.',
+      '**{name}** yells at everyone around them to be quiet, "You have my attention, {user}."',
       "**{name}** yells at everyone all day, reaches {user}, and goes completely, quietly undone.",
       "{user} says the name, and **{name}** claims them out loud.",
     ],

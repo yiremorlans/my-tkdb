@@ -425,20 +425,20 @@ export default {
     },
     playful: {
       new: [
-        "Trade deadpan with him",
+        "Trade flat lines with him",
         "Refuse to be spooked",
         "Boo him back",
       ],
       spark: [
         "Make him say it again",
-        "Out-deadpan him",
+        "Out-blank him",
         "Play along with the bit",
       ],
       close: ["Actually make him laugh", "Prank him back", "Steal his nap spot"],
       bound: [
         "Spook him for once",
         "Hog the whole step",
-        "Say it back, deadpan",
+        "Say it back, flat",
       ],
     },
     bold: {
@@ -492,7 +492,7 @@ export default {
       "{user} calls out, and **{name}** starts a sentence that was heading somewhere honest.",
     ],
     spark: [
-      "**{name}** hears his name and the deadpan slips for about a second. {user} caught it.",
+      "**{name}** hears his name and the unbothered act slips for about a second. {user} caught it.",
       '"You make it hard to stay unbothered." **{name}** says it to {user} like a complaint.',
       "{user} got there first, and **{name}** stops pretending to be asleep.",
     ],

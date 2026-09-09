@@ -498,7 +498,7 @@ export default {
       "{user} calls, and **{name}** sets the **{house}** dispatch down without finishing the line.",
     ],
     bound: [
-      '"I\'d burn a great deal down for you," **{name}** says quietly, only to {user}.',
+      '"There\'s very little I wouldn\'t set aside for you," **{name}** says quietly, only to {user}.',
       "**{name}** kisses {user}'s knuckles with people going past on both sides, and does not apologize for it.",
       "{user} says the name, and every ounce of **{name}**'s restraint goes somewhere else.",
     ],

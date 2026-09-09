@@ -110,6 +110,19 @@ function userIdOf(body) {
   return body.member?.user?.id || body.user?.id;
 }
 
+// The `assist` option on /mission is a free-typed string (see commands.js).
+// It only ever means "yes, call for backup", so any value counts as yes
+// unless it's an explicit negative — this is what lets `/mission assist:true`,
+// `assist:True`, `assist:yes` all work, while `assist:false` still opts out.
+const ASSIST_NEGATIVES = new Set(["false", "f", "no", "n", "0", "off"]);
+export function wantsMissionAssist(body) {
+  const opt = body.data?.options?.find((o) => o.name === "assist");
+  if (!opt) return false;
+  const value = String(opt.value ?? "").trim().toLowerCase();
+  if (value === "") return false;
+  return !ASSIST_NEGATIVES.has(value);
+}
+
 // The accepter's name for a mission post, rendered **bold**: server nickname
 // first, then the global display name, then the @handle. Plain text (no
 // `<@id>` tag) so the post names them without pinging. The "Someone" fallback
@@ -598,13 +611,11 @@ export async function buildMissionBriefing(userId, mission) {
 
 /**
  * `/mission` — the briefing, or where the next one lands.
- * `/mission assist:True` — the co-op call for backup (§7).
+ * `/mission assist:true` — the co-op call for backup (§7).
  */
 export async function handleMission(body, now = new Date()) {
   const userId = userIdOf(body);
-  const wantsAssist = Boolean(
-    body.data?.options?.find((o) => o.name === "assist")?.value,
-  );
+  const wantsAssist = wantsMissionAssist(body);
 
   const mission = await getAcceptedMission(userId);
 
@@ -705,7 +716,7 @@ async function handleMissionAssist(body, mission) {
   if (invokedChannelId && invokedChannelId !== mission.channel_id) {
     return {
       reply: ephemeral(
-        `Run \`/mission assist:True\` in <#${mission.channel_id}>, where the mission was posted.`,
+        `Run \`/mission assist:true\` in <#${mission.channel_id}>, where the mission was posted.`,
       ),
       afterReply: null,
     };
@@ -964,7 +975,7 @@ function nextStepLine(mission) {
     case MISSION_TYPES.RIDDLE:
       return "Answer it with `/riddle`.";
     case MISSION_TYPES.COOP:
-      return "Call a partner with `/mission assist:True`.";
+      return "Call a partner with `/mission assist:true`.";
     case MISSION_TYPES.ERRAND:
       return "Collect its signatures and file it with `/docs`.";
     default:
