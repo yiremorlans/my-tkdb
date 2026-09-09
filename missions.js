@@ -536,10 +536,13 @@ export async function runGuildMissionPass(guild, now = new Date()) {
 /**
  * `mission:accept:<id>`.
  *
- * The post is only ever mutated on a confirmed win. A lost race or an
- * over-limit click gets an ephemeral and leaves the button live for the next
- * person — which matters, because a button on a shared message cannot be
- * disabled per user, so someone already holding a mission WILL click it.
+ * The post's Accept button is disabled on a confirmed win AND on a 'taken'
+ * result — both mean the mission is claimed, so it should stop taking clicks
+ * (the 'taken' edit is also the fast self-heal for a win-edit that failed).
+ * A 'busy'/'capped' click, where the mission is still open, gets an ephemeral
+ * and leaves the button live for the next person — a shared button cannot be
+ * disabled per user, so someone already holding a mission WILL click it, and
+ * that has to be harmless.
  */
 export async function handleMissionAccept(body, missionId, now = new Date()) {
   const userId = userIdOf(body);
@@ -571,8 +574,23 @@ export async function handleMissionAccept(body, missionId, now = new Date()) {
     return { response: ephemeralResponse(CAPPED_LINE) };
   }
 
+  // 'taken' — someone else already holds it. Unlike 'busy'/'capped' (where the
+  // mission is still open and its button must stay live for the next eligible
+  // clicker), a 'taken' result is proof the mission is claimed, so the shared
+  // post SHOULD be showing a dead button. Re-assert that here, not only on the
+  // win: it's how a post whose win-edit failed (see app.js -> the reconcile
+  // flag) stops taking clicks on the very next click instead of waiting for the
+  // sweep. Only the button is touched — the winner's "X has picked up the
+  // mission" line, if it landed, is left as-is, and the reconcile sweep still
+  // owns fixing the text when the win-edit is what failed.
   if (outcome !== "claimed") {
-    return { response: ephemeralResponse("Someone got there first.") };
+    return {
+      response: {
+        type: InteractionResponseType.UPDATE_MESSAGE,
+        data: { components: acceptRow(missionId, { disabled: true }) },
+      },
+      followup: ephemeral("Someone got there first."),
+    };
   }
 
   // The briefing `/mission` would show, pushed to the accepter now as an

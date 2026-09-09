@@ -413,16 +413,36 @@ describe('the Accept button', () => {
     assert.match(followup.content, /MISSION BRIEFING|\/mission/);
   });
 
-  it('leaves the post and its live button alone when someone loses the race', async () => {
+  it('disables the shared button when someone loses the race, and tells them so', async () => {
     fake.tables.missions.push(missionRow());
 
     await handleMissionAccept(click('user-a'), 1);
-    const { response } = await handleMissionAccept(click('user-b'), 1);
+    const { response, followup } = await handleMissionAccept(click('user-b'), 1);
 
-    assert.equal(response.type, 4); // CHANNEL_MESSAGE_WITH_SOURCE
-    assert.equal(response.data.flags, 64); // EPHEMERAL
-    assert.match(response.data.content, /Someone got there first/);
+    // The mission is already taken — the post must stop taking clicks, so this
+    // re-asserts the dead button rather than leaving it live (only the button
+    // is touched, so a winner's "X picked it up" line is not clobbered).
+    assert.equal(response.type, 7); // UPDATE_MESSAGE
+    assert.equal(response.data.components[0].components[0].disabled, true);
+    assert.equal(response.data.embeds, undefined, 'the winner line is left as-is');
+    assert.equal(followup.flags, 64); // EPHEMERAL
+    assert.match(followup.content, /Someone got there first/);
     assert.equal(fake.tables.missions[0].accepted_by, 'user-a', 'the winner keeps it');
+  });
+
+  it('leaves a still-open request live when the click is refused for busy/cap', async () => {
+    // user-a holds one already; clicking a second, still-open request is 'busy'
+    // and must not disable that request's button for anyone else.
+    fake.tables.missions.push(
+      missionRow({ id: 1, status: 'accepted', accepted_by: 'user-a', mission_type: 'riddle' }),
+    );
+    fake.tables.missions.push(missionRow({ id: 2, status: 'open' }));
+
+    const { response } = await handleMissionAccept(click('user-a'), 2);
+
+    assert.equal(response.type, 4); // CHANNEL_MESSAGE_WITH_SOURCE — a plain ephemeral
+    assert.equal(response.data.flags, 64);
+    assert.equal(fake.tables.missions.find((r) => r.id === 2).status, 'open');
   });
 
   it('turns a player away once they have taken their allowance for the day', async () => {

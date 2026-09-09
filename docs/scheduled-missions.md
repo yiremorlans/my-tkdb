@@ -786,12 +786,21 @@ CREATE POLICY "Block direct access" ON mission_log        FOR SELECT USING (FALS
 
 ## 11. Race conditions — the Accept claim and friends
 
-**Governing rule:** the channel post is mutated (`UPDATE_MESSAGE` to disable the
-button + rewrite text) **only** on a confirmed 1-row win. Every other
-outcome — lost race, over-limit, mission already gone — is an **ephemeral**
-reply that leaves the post and its live button untouched. You cannot per-user
-disable a button on a shared message, so an over-limit user *will* see an
-enabled button and click it; the handling below makes that safe.
+**Governing rule:** the channel post's Accept button is disabled on a confirmed
+1-row win (`UPDATE_MESSAGE`, button + text) **and** on a `taken` result (button
+only) — both mean the mission is claimed, so the post should stop taking clicks,
+and the `taken` edit doubles as the fast self-heal for a win-edit that failed
+(see §11.6). An **over-limit / busy** click, where the mission is still `open`,
+gets an **ephemeral** reply and leaves the post and its live button untouched —
+you cannot per-user disable a button on a shared message, so an over-limit user
+*will* see an enabled button and click it; the handling below makes that safe.
+
+The Accept dispatch is answered with `DEFERRED_UPDATE_MESSAGE` first, then
+resolved over the interaction webhook (PATCH `@original` for the button edit, a
+`flags: 64` followup for the ephemeral). The claim RPC does one or two Supabase
+round trips before it knows the outcome, and a slow database would otherwise
+overrun Discord's 3-second window: a missed window drops the button edit even
+though the RPC committed, and 404s every followup ("Unknown Webhook").
 
 ### 11.1 `claim_mission` — one atomic statement in an RPC
 
@@ -872,15 +881,22 @@ if (outcome?.startsWith('busy')) {
   return ephemeral(busyLine(outcome.split(':')[1]));
 }
 switch (outcome) {
-  case 'claimed':                              // ONLY branch that touches the post
-    return res.send({ type: InteractionResponseType.UPDATE_MESSAGE, data: {
+  case 'claimed':                              // win: rewrite text + disable button
+    return { response: { type: InteractionResponseType.UPDATE_MESSAGE, data: {
       content: `**${displayName}** has picked up the mission.`,
       components: [disabledAcceptRow],
-    }});
-  case 'taken':
-    return ephemeral("Someone got there first.");
+    }}, followup: ephemeral(briefing) };
+  case 'taken':                                // already claimed: disable button only
+    return { response: { type: InteractionResponseType.UPDATE_MESSAGE, data: {
+      components: [disabledAcceptRow],         // no text — a winner's line is not clobbered
+    }}, followup: ephemeral("Someone got there first.") };
 }
 ```
+
+Both `claimed` and `taken` touch the post; only `busy`/`capped` (mission still
+`open`) return an ephemeral and nothing else. The dispatch acks with
+`DEFERRED_UPDATE_MESSAGE` and then PATCHes `@original` — so a slow
+`claim_mission` cannot cost the button edit its 3-second window.
 
 The `busy:unknown` fallback only hits on the rare `23505` path (a truly
 simultaneous double-accept, where the caller never got a type back); it shows
@@ -891,7 +907,7 @@ type and names the single command.
 
 | Race | Outcome |
 |---|---|
-| **Two eligible users, same fresh mission** | Postgres row lock serializes the two `UPDATE`s. First commits (`status='accepted'`); the second re-evaluates its `WHERE` against the updated row, matches 0 rows → `'taken'` → ephemeral, post untouched. Exactly one `UPDATE_MESSAGE`. |
+| **Two eligible users, same fresh mission** | Postgres row lock serializes the two `UPDATE`s. First commits (`status='accepted'`) → win edit (text + disabled button). The second matches 0 rows → `'taken'` → button-only disable edit (idempotent when the win edit already landed) + "Someone got there first." ephemeral. |
 | **Over-limit user clicks first, then user B** | User A's `UPDATE` fails `NOT EXISTS` → 0 rows, mission **stays `open`** → A gets `'busy:<type>'` (ephemeral names the command that finishes A's current mission), post never edited. User B's click a moment later hits an `open` mission → `'claimed'`. B was never blocked. |
 | **One user, two different fresh missions, near-simultaneous** | `NOT EXISTS` may pass for both; the partial unique index rejects the second commit with `23505` → caller maps to `'busy:unknown'` (generic three-command line). User keeps exactly one. |
 | **User completes old mission + accepts new one in the same instant** | Completion first → claim succeeds. Claim first → `NOT EXISTS` still sees the old `accepted` row → `'busy:<type>'`, user retries. Correct either way; the index also naturally frees the slot once the old row is `completed`. |
@@ -952,6 +968,29 @@ $$;
 `FOR UPDATE` row locks serialize the co-op join and the errand file against the
 scheduler's expiry sweep; the winner mutates, the loser returns a terminal
 status. `mission_log` writes are fire-and-forget **after** the RPC confirms.
+
+### 11.6 The post edit can fail on its own — the reconcile backstop
+
+`claim_mission` committing and the `@original` PATCH landing are two separate
+network events. The RPC can win and the edit still fail: an interaction token
+that expired (a slow claim ate the ack window), a transient Discord 5xx on the
+edit, the post deleted, permissions pulled. The row is then `accepted` but the
+post still shows a live Accept button, and neither expiry sweep touches it —
+`finalizeWithdrawnMission` only edits `open` rows, `finalizeLapsedMission`
+deliberately leaves an accepted post alone.
+
+Two things close that gap:
+
+1. **`missions.post_reconcile_needed`** (migration 019). `app.js` sets it when the
+   accept edit throws. `reconcileMissionPosts()` runs on every mission tick (and
+   inside `sweepExpiredMissions`), edits the post with the **bot token** — the
+   interaction webhook is dead by then — to a name-free "already picked up" line
+   with the button stripped, and clears the flag. A still-failing edit keeps its
+   flag for the next tick.
+2. **The `taken` button-disable edit** (§11.3). The next person to click a
+   stranded post gets their click turned into a button-disable `UPDATE_MESSAGE`,
+   so the post stops taking clicks immediately rather than waiting up to a tick
+   for the sweep.
 
 ---
 

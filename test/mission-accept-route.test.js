@@ -206,7 +206,7 @@ test('the winner still gets the ephemeral pickup briefing as a followup', async 
   assert.match(briefing.payload.content, /MISSION BRIEFING|\/mission/);
 });
 
-test('a lost race still tells the clicker why, and leaves the post and its button alone', async () => {
+test('a lost race disables the shared button and tells the clicker why', async () => {
   resetHarness();
   fake.tables.missions.push(openMission('m-race'));
 
@@ -217,9 +217,15 @@ test('a lost race still tells the clicker why, and leaves the post and its butto
   const res = await postInteraction(acceptClick('m-race', 'user-second'));
   assert.equal((await res.json()).type, 6, 'still a deferred ack, even for a refusal');
 
-  await waitFor(() => followups().length > 0);
+  await waitFor(() => originalEdits().length > 0 && followups().length > 0);
 
-  assert.equal(originalEdits().length, 0, 'the shared post is not touched on a lost race');
+  // The mission is already taken, so its post must stop taking clicks — the
+  // button is disabled here too, not only on the win.
+  const edit = originalEdits()[0];
+  assert.equal(edit.method, 'PATCH');
+  assert.match(edit.url, /\/messages\/@original$/);
+  assert.equal(edit.payload.components[0].components[0].disabled, true);
+
   const refusal = followups()[0];
   assert.equal(refusal.method, 'POST');
   assert.equal(refusal.payload.flags, 64);
@@ -229,6 +235,32 @@ test('a lost race still tells the clicker why, and leaves the post and its butto
     fake.tables.missions.find((r) => r.id === 'm-race').accepted_by,
     'user-first',
     'the first clicker keeps it',
+  );
+});
+
+test('a busy/capped refusal leaves the still-open post and its live button alone', async () => {
+  resetHarness();
+  // user-cap already holds a mission — a second click is 'busy', and the board
+  // request stays open for whoever clicks next.
+  fake.tables.missions.push({
+    ...openMission('m-held'),
+    status: 'accepted',
+    accepted_by: 'user-cap',
+    accepted_at: new Date().toISOString(),
+  });
+  fake.tables.missions.push(openMission('m-open'));
+
+  const res = await postInteraction(acceptClick('m-open', 'user-cap'));
+  assert.equal((await res.json()).type, 6);
+
+  await waitFor(() => followups().length > 0);
+
+  assert.equal(originalEdits().length, 0, 'a still-open mission keeps its live button');
+  assert.equal(followups()[0].payload.flags, 64);
+  assert.equal(
+    fake.tables.missions.find((r) => r.id === 'm-open').status,
+    'open',
+    'the request is still on the board',
   );
 });
 
