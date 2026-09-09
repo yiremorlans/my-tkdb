@@ -35,7 +35,7 @@ export default {
     // side dishes still on the grass around him, and dropped straight into a
     // nap. The MC has just woken him.
     dialogue: [
-      '*He doesn\'t bother sitting up.* "You woke me up. Better have a damn good reason attached, kitten."',
+      '"You woke me up. Better have a damn good reason attached, kitten."',
     ],
     choice: {
       prompt:
@@ -75,11 +75,11 @@ export default {
     // turn in the scene is his own mouth supplying a nickname for someone he
     // supposedly doesn't know.
     dialogue: [
-      '"Ten. Nine." *The muzzle doesn\'t waver.* "Wrong room, wrong night, and I don\'t know your face. This goes quick."',
+      '"Six. Five. Wrong room, wrong night, and I don\'t know your face. This goes quick."',
     ],
     choice: {
       prompt:
-        "\"Six. Five. ...'Kitten'? The fuck did that come from. Nothing about you lands but the name.\"",
+        "\"Ten. Nine. Eight...'Kitten'? The fuck did that come from. Nothing about you lands but the name.\"",
       options: [
         {
           key: "kind",
@@ -114,12 +114,10 @@ export default {
     // here. Bloodied knife in his hand, blood up his face, the manic grin
     // stretched too wide, and he has just turned that look on the MC. Whether she
     // is prey is, for a moment, an open question.
-    dialogue: [
-      '*His head tips, slow, weighing you.* "There you are, kitten. I was still hungry."',
-    ],
+    dialogue: ['"There you are, kitten. I was still hungry."'],
     choice: {
       prompt:
-        '"That prick had it coming. You? Haven\'t decided yet, kitten. Run and I chase."',
+        '"That prick had it coming. You? Haven\'t decided yet. Run and I chase."',
       options: [
         {
           key: "kind",

@@ -45,14 +45,82 @@ export default {
     file: "Rui_2.png",
     characters: ["rui"],
     title: "Midsummer Shadow",
-    dialogue: [],
-    choice: { prompt: "", options: [] },
+    approach: "Wait out the heat beside him",
+    // setting: a blazing summer afternoon, outdoors. The MC is dressed for the
+    // weather; Rui, because of the reaper curse, is not and cannot be. He's
+    // overheating and covering it with cheer, chasing a thread of breeze and
+    // keeping his usual measured distance. No contact the whole scene. The
+    // crack under the brightness is the curse, not the temperature.
+    dialogue: [
+      '"Don\'t laugh, cutie. You get to enjoy a day like this. I just get to survive it. Reaper curse, zero summer planning."',
+    ],
+    choice: {
+      prompt:
+        "*He leans into what little breeze there is, keeping the careful arm's length between you.* \"So what's the plan, cutie, do we melt here together?\"",
+      options: [
+        {
+          key: "kind",
+          label: "Offer to find him some shade",
+          style: 3,
+          close:
+            '"You didn\'t have to do that."\n\n*He follows you under the tree anyway, and for once he lets the quiet sit there without filling it.*',
+        },
+        {
+          key: "playful",
+          label: "Fan him with your notebook",
+          style: 1,
+          close:
+            "*You wave it at him. He shuts his eyes and hams it up.* \"Oh, that's the good stuff. Keep going, I'll put you in my will. Prime real estate, right next to the plants.\"",
+        },
+        {
+          key: "bold",
+          label: "Say the curse can wait",
+          style: 4,
+          close:
+            '"Yeah, no. Not with you standing this close."\n\n*A beat, and the grin comes back, dialed down.* "I know you mean it kindly. That\'s exactly why I won\'t."',
+        },
+      ],
+    },
   },
   Rui_3: {
     file: "Rui_3.png",
     characters: ["rui"],
     title: "Sweet Tour",
-    dialogue: [],
-    choice: { prompt: "", options: [] },
+    approach: "Take the cup he holds out",
+    // setting: a night festival, lanterns and stalls. Rui is in a yukata and
+    // knows it. He's been walking the MC down the dessert stalls like a guided
+    // tour; here he's stopped with two cups from the latest one, splitting it
+    // with her. Light throughout. The curse is only texture: no contact, the
+    // cup handed over rather than passed hand to hand.
+    dialogue: [
+      '"Quit staring at the yukata, cutie, I know I pull it off. Now pick a stall, the next one does a black sesame syrup you have to taste to believe."',
+    ],
+    choice: {
+      prompt:
+        '*He holds both dessert cups up, one in each hand, and waits for you to take yours.* "Okay, taste test. Be honest, the whole tour\'s riding on your review."',
+      options: [
+        {
+          key: "kind",
+          label: "Get a pic of the desserts",
+          style: 3,
+          close:
+            '"The desserts, sure."\n\n*He tips his chin down and smiles.* "Fine, take it, cutie. Get the yukata in too, I worked for this look."',
+        },
+        {
+          key: "playful",
+          label: "Score your tour guide",
+          style: 1,
+          close:
+            '"Haha, what? Only? C\'mon, cutie, I\'m an eleven and you know it. Ask anyone at the bar."\n\n*He spins the empty cup on a fingertip and catches it.* "Keep your tip. Just don\'t ditch your guide before the last stall, okay?"',
+        },
+        {
+          key: "bold",
+          label: "Say he's sweeter than dessert",
+          style: 4,
+          close:
+            '"...You can\'t just say that with a straight face, cutie. That\'s not fair."\n\n*He smiles.* "Eat it before it melts. Four stalls to go."',
+        },
+      ],
+    },
   },
 };

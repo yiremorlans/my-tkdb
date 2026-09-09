@@ -111,7 +111,7 @@ export default {
     // him. (Do not invent what the stigma does or why the pills — play only the
     // aftermath the card shows.)
     dialogue: [
-      '*His hands are shaking too hard to grip the bottle.* "Give me a moment. The noise in my head takes a while to settle."',
+      '"Give me a moment. The noise in my head takes a while to settle."',
     ],
     choice: {
       prompt:

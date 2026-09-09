@@ -726,9 +726,10 @@ export async function buildAffinityMessage(userId, characterIds, opts = {}) {
       }
     }
 
-    const formatLevel = (lvl) => (lvl.emoji ? `${lvl.name} ${lvl.emoji}` : lvl.name);
+    // No trailing name emoji here: the heart bar below already carries the
+    // level's designated heart, so repeating it after the name is redundant.
     const bar = renderHeartBar(ratio, level.heart);
-    const parts = [formatLevel(level), bar];
+    const parts = [level.name, bar];
     if (!nextLevel) parts.push('Bond fully forged');
 
     const moments = renderMomentsTogether(character, milestoneCounts[index]);
