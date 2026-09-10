@@ -13,7 +13,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Is this you\n\nThe blond gigolo put your name in the thingy for me. I pressed it four times. Sorry if it went four times",
-        "*A voice note arrives instead of a message. He sounds like he is walking.*\n\n> You smell the same every time. Did you know that? Most people change: angry in the morning, tired at night, scared when the moth-eaten Casanova walks past. All different smells, all day.\n\n> You've come {timesMet} times and it hasn't changed once. Nobody does that.\n\n> I don't know what it means yet. I wanted to say it out loud though.",
+        "*A voice note arrives instead of a message. He sounds like he is walking.*\n\n> You smell the same every time. I didn't know a person could do that.\n\n> Most people go different all day. Cross in the morning, tired by dark, a scared one whenever the moth-eaten Casanova walks past. It never sits still.\n\n> You've come {timesMet} times and it's been the same every time. I keep checking. It doesn't change.\n\n> I don't know what that means yet. I wanted to say it out loud though.",
       ],
       choice: {
         prompt:
@@ -24,27 +24,27 @@ export default {
             label: "Say it's not rude at all",
             style: 3,
             close:
-              "> Good.\n\n*A pause on the recording. Then, quieter:*\n\n> ...I'll say it again then. You smell the same. I like it. That's the whole thing I wanted to say.",
+              "> Good.\n\n*A pause on the recording. Then, quieter:*\n\n> ...I'll say it again then. Your scent stays the same. I like it. That's all I wanted to say.",
           },
           {
             key: "playful",
             label: "Ask what you smell of",
             style: 1,
             close:
-              "> Cold outside and paper and the soap in the west block.\n\n*He says it instantly, with no hesitation whatsoever.*\n\n> ...That was too fast, wasn't it. The blond gigolo says when I know things too fast it makes people go quiet and step back. Did you go quiet?",
+              "> Cold outside and paper and the soap in the west block.\n\n*He says it instantly, with no hesitation whatsoever.*\n\n> ...That was too fast, wasn't it. The blond gigolo says when I know things too fast it makes people go quiet and step back. Sorry.",
           },
           {
             key: "bold",
             label: "Ask him to walk with you",
             style: 4,
             close:
-              "*The recording stops. A new one starts about ten seconds later and he is very obviously somewhere else and moving faster.*\n\n> Yes. Now? Tomorrow. Both. Walking's the best one. You can be next to someone for ages and nobody has to do talking.\n\n> That's my favorite thing. I've never had anyone to do it with.",
+              "*The recording stops. Another starts about ten seconds later. He is already outside and walking.*\n\n> Yes. Now, tomorrow, any day. Whenever you want a walk, tell me and I'll come.\n\n> I'll never be too busy for it.",
           },
         ],
       },
       keepsake: {
-        emoji: "🐾",
-        line: "The first walk anybody ever asked him on.",
+        emoji: "🧼",
+        line: "Cold air, paper, and the west block soap. He had you memorized.",
       },
     },
 
@@ -130,8 +130,7 @@ export default {
         "*There's a rustling, and then he says something he has clearly been building up to.*\n\n> I want to show you my arms after. Not now. After, when it's over.\n\n> They're all bites. All of them are mine. I did all of them. When it gets bad I have to put it somewhere and the somewhere is me, because the other option is a person.\n\n> Nobody's seen them on purpose. The blond gigolo's seen them because he's the one with the key. That's different.",
       ],
       choice: {
-        prompt:
-          "Is that all right? You can say no and I'll never bring it up.",
+        prompt: "Is that all right? You can say no and I'll never bring it up.",
         options: [
           {
             key: "kind",
