@@ -12,33 +12,33 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Hey! Okay, first time texting you, I know, very forward of me. But I've got a reason, promise. I made you a drink ✨ and it's just sitting on my bar getting warm. Kind of a tragedy. You should come rescue it?",
-        "Okay, full disclosure: I make a drink for everyone who comes in. That part's not special. Don't be impressed yet.\n\nThe part that is: I've remade yours four times. You've been in {timesMet} times and I paid attention to every one, what you finish, what you leave. That's where the four came from.\n\nAnyway! Fifth version's in your glass now ✨ Think I finally got it. Feels good to get something right today, ahaha.",
+        "**{firstName}**: Hey, Honor Roll! 🤗 First time texting you, I know, very forward of me. But I've got a reason, promise. I made you a drink ✨ and it's just sitting on my bar getting warm. Kind of a tragedy. Come rescue it?",
+        "Okay, full disclosure: I make a drink for everyone who comes in. That part's not special.\n\nThe part that is: I've remade yours four times. You've been in {timesMet} times and I paid attention to every one, what you finish, what you leave. That's where the four came from.\n\nAnyway! Fifth version's in your glass now ✨ Pretty sure I nailed it this time.",
       ],
       choice: {
         prompt:
-          "So?! Come try it, tell me it's the best thing you've ever tasted. Or don't, and I'll just make a sixth. I've got nothing but time, trust me.",
+          "So?! Come try it, tell me it's the best thing you've ever tasted. Or don't, and I'll just make a sixth. I've got nothing but time, trust me. 😂",
         options: [
           {
             key: "kind",
             label: "Say you'll come right now",
             style: 3,
             close:
-              "Ha! Okay. Great. Amazing.\n\nSo I just wiped the bar down twice for absolutely no reason. Super normal thing to do. Don't read into it.",
+              "Ha. Knew you would.\n\nDrink's poured, seat's got your name on it, and I'm gonna stand here looking smug till you show. Come on, cutie.",
           },
           {
             key: "playful",
-            label: "Demand a sixth on principle",
+            label: "Say you're busy again",
             style: 1,
             close:
-              "Wait, you haven't even tried the fifth one!\n\n...Okay, fine. Sixth it is. Sixth, seventh, whatever you want, cutie, and I'll enjoy every second of it. You knew that though 😂",
+              "Busy. Again. You are always busy 😂\n\nWhat's it going to take?! Drink didn't do it, four remakes didn't do it. Live band? Dessert cart? Name your price and I'll have it set up by the time you walk in.",
           },
           {
             key: "bold",
             label: "Ask what he was watching for",
             style: 4,
             close:
-              "You.\n\n...Sorry, that was quick, wasn't it 😂 It's my whole thing though, I'm not gonna pretend it isn't. Come have the drink, cutie. I'm way better in person and only a little less obvious.",
+              "You. Obviously 😂\n\nWatching you is the best part of my shift, easy.\n\nCome have the drink, cutie. I'm better up close, and barely less obvious about it.",
           },
         ],
       },
