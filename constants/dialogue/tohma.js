@@ -6,12 +6,12 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Well, well. You are awake. I did wonder.\n\nForgive the hour. I keep unsociable ones, and I have found that people I write to at this hour tend to answer honestly.",
-        "I make it a point to know a little about everyone who comes through this house. You will find that unnerving, and you would be right to.\n\nWhat I have on you, after {timesMet} occasions, is remarkably thin. You want nothing from anybody here. Do you know how rare that makes you, in a building full of people who all want the same three things?\n\nSo this is not a file being opened. This is me putting the pen down, which I do rather less often.",
+        "**{firstName}**: Hello. I don't suppose you've got a moment?\n\nForgive the hour. I keep unsociable ones, and I have found that people I write to at this hour tend to answer honestly.",
+        "I make it a point to know a little about everyone who comes through this house. You will find that unnerving, and you would be right to.\n\nWhat I have on you, after {timesMet} occasions, is remarkably thin. You want nothing from anybody here. Do you know how rare that makes you, in a building full of people who all want the same things?\n\nSo this is not a file being opened. This is me putting the pen down, which I do rather less often.",
       ],
       choice: {
         prompt:
-          "Now. Ask me something you would not under typical cirumstances.",
+          "Perhaps you could humor me, and ask me something you would not under typical cirumstances.",
         options: [
           {
             key: "kind",
@@ -25,11 +25,11 @@ export default {
             label: "Ask what's in his file",
             style: 1,
             close:
-              "A great deal, and none of it flattering, and you shall never see a page of it.\n\nWell, perhaps a page. Ask again when I am tired.",
+              "A great deal, and none of it flattering. You shall never see a page of it.\n\nWell, perhaps *a* page. Ask me again when I am less busy.",
           },
           {
             key: "bold",
-            label: "Ask why he really wrote",
+            label: "Ask what he really wrote",
             style: 4,
             close:
               "*The reply is slower than any of the others.*\n\nYou want to know what is written under your name. Naturally you do.\n\nYou will not see it. Not because it is unflattering, it is not, but because it is the one page in that file I did not write for the house. I wrote it for me.\n\nGood night.",
