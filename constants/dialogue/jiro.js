@@ -8,7 +8,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: This is Jiro from Mortkranken. Your number is on the patient list.\n\nYour last examination left one reading I want to take again. Not urgent, but I'm making a follow-up slot for this week. Just reply with your preferred day and time",
-        "I run the health check-ups here. Yuri is too busy to manage scheduling, so I do it.\n\n{timesMet} visits on your file and I have to keep a record of them. I could have flagged this the next time you were in, but this is more efficient.",
+        "I run the health check-ups here. Yuri is too busy to manage scheduling, so I do it.\n\n{timesMet} visits on your file and the record from your last reading requires a conclusive follow-up. I could have flagged this the next time you were in, but this is more efficient.",
       ],
       choice: {
         prompt: "Pick a day and the slot is yours.",
@@ -18,21 +18,21 @@ export default {
             label: "Confirm it, and thank him",
             style: 3,
             close:
-              "Noted. The slot is held.\n\nThe thanks was unnecessary, but I have kept it. I do not have a reply ready. I will deal with that separately from the appointment.",
+              "Noted. The slot is held.\n\nMake sure you arrive 10 minutes early or else I won't have enough time for full examination.",
           },
           {
             key: "playful",
             label: "Ask which reading it was",
             style: 1,
             close:
-              "Resting pulse. High once, which is usually the cuff or the walk over.\n\nI am re-checking it anyway. I have looked at that one line longer than the reading is worth. Draw your own conclusion. I have drawn one and I am keeping it.",
+              "Resting pulse. High once, which is usually the cuff or the walk over.\n\nI am re-checking it anyway.",
           },
           {
             key: "bold",
             label: "Ask why he texted instead",
             style: 4,
             close:
-              "I told you. I have not worked it out.\n\nI can usually name the reason for a thing I have done. This one does not resolve, and asking me plainly does not speed it up. It only means I have said it to you.\n\nThe follow-up is on the day you picked. Still six minutes. Nothing else has changed.",
+              "I told you. It is more efficient than having to request a follow-up appointment during a walk-in.\n\nThe follow-up is on the day you picked. You can wear whatever is convenient for you. You'll be taking it off anyway",
           },
         ],
       },
