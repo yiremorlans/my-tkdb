@@ -37,10 +37,10 @@ export default {
           },
           {
             key: "bold",
-            label: "Tell him to leave the tea",
+            label: "Tell him it isn't too much",
             style: 4,
             close:
-              "Leave it? I... all right. Yes.\n\n*The next message takes a while.*\n\nSorry. You said it and I'd set the pot down before I'd thought. I do that. Give me a moment to choose for myself, and I'll tell you: no. I'd like to finish slowly, with you still there when I do.",
+              "You're right.\n\n*He doesn't answer straight away.*\n\nI won't do that this time, then. Thank you for not letting me trim it down.",
           },
         ],
       },

@@ -1,19 +1,17 @@
 export default {
   // The level-up DMs (docs/bond-scene-dms.md). Lyca is still learning to read
-  // and is not tech-savvy, so his messages are short, phonetically spelled, and
-  // increasingly replaced by voice notes when the words get too hard — which is
-  // itself the intimacy: the harder the feeling, the less he types and the more
-  // he just says. He reads people by scent, so he always knows before you tell
-  // him, and the bite scars on his arms are what he is most afraid of you seeing.
+  // and is not tech-savvy, so his messages are short and phonetically spelled.
+  // He reads people by scent, so he always knows before you tell him, and the
+  // bite scars on his arms are what he is most afraid of you seeing.
   //
   // Per reference.md's "## Bond Scenes" notes he does not type in all-lowercase:
   // sentence starts and "I" get a capital even though the spelling stays rough
-  // ("dont", "im"). The `> ` voice notes are already spoken, so they read clean.
+  // ("dont", "im").
   bondScenes: {
     acquaintance: {
       beats: [
         "**{firstName}**: Is this you\n\nThe blond gigolo put your name in the thingy for me. I pressed it four times. Sorry if it went four times",
-        "*A voice note arrives instead of a message. He sounds like he is walking.*\n\n> You smell the same every time. I didn't know a person could do that.\n\n> Most people go different all day. Cross in the morning, tired by dark, a scared one whenever the moth-eaten Casanova walks past. It never sits still.\n\n> You've come {timesMet} times and it's been the same every time. I keep checking. It doesn't change.\n\n> I don't know what that means yet. I wanted to say it out loud though.",
+        "I don't mind classes. The teachers say cool stuff. Once I learn to read the textbooks and the blackboard it'll be perfect.\n\nYou listen the same way. Like you're really getting it.\n\nSometimes, I can smell something sweet off you. Just for a second. Its different from everyone else\n\nI started sitting where I could see you in class. I told myself it was to hear better. But...\n\nI want to learn about you. Not just what the teachers say. That's what I wanted to tell you",
       ],
       choice: {
         prompt:
@@ -24,34 +22,34 @@ export default {
             label: "Say it's not rude at all",
             style: 3,
             close:
-              "> Good.\n\n*A pause on the recording. Then, quieter:*\n\n> ...I'll say it again then. Your scent stays the same. I like it. That's all I wanted to say.",
+              "Good\n\n...Then I'm gonna keep learning about you. Everything. Is that allowed?",
           },
           {
             key: "playful",
-            label: "Ask what you smell of",
+            label: "Ask what you smell",
             style: 1,
             close:
-              "> Cold outside and paper and the soap in the west block.\n\n*He says it instantly, with no hesitation whatsoever.*\n\n> ...That was too fast, wasn't it. The blond gigolo says when I know things too fast it makes people go quiet and step back. Sorry.",
+              "Strawberry milk. The carton kind, from the cafeteria. That's what you smelled like earlier, right when you got the answer.",
           },
           {
             key: "bold",
-            label: "Ask him to walk with you",
+            label: "Say you want to know him too",
             style: 4,
             close:
-              "*The recording stops. Another starts about ten seconds later. He is already outside and walking.*\n\n> Yes. Now, tomorrow, any day. Whenever you want a walk, tell me and I'll come.\n\n> I'll never be too busy for it.",
+              "...Really?\n\nOkay. Then I don't gotta stop myself from asking stuff about you. That's better. Can we keep doing that?",
           },
         ],
       },
       keepsake: {
-        emoji: "🧼",
-        line: "Cold air, paper, and the west block soap. He had you memorized.",
+        emoji: "📚",
+        line: "Sitting close in class to hear one thing, staying to learn another.",
       },
     },
 
     friend: {
       beats: [
         "**{firstName}**: I have a question. I wrote it down first so I get it right",
-        "> You give me {favResponse} every time. Even when I got the words wrong. Even the time I said the bad thing about the moth-eaten Casanova in front of the blond gigolo.\n\n> People do a thing when I get words wrong. They go slow. Like this: they... talk... like... that. And they smile more. It's supposed to be nice and it smells like sorry.\n\n> You just carry on normal. You've never once gone slow at me.",
+        "You give me {favResponse} every time. Even when I got the words wrong. Even the time I said the bad thing about the moth-eaten Casanova in front of the blond gigolo.\n\nPeople do a thing when I get words wrong. They go slow. Like this: they... talk... like... that. And they smile more. It's supposed to be nice and it smells like sorry.\n\nYou just carry on normal. You've never once gone slow at me.",
       ],
       choice: {
         prompt: "Why don't you go slow? Everyone goes slow.",
