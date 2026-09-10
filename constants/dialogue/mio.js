@@ -45,7 +45,7 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: Made you something. It's small. Don't make it a thing.",
+        "**{firstName}**: Made you something. It's small. Not really a big deal.",
         "*The photo is a brass mechanism about the size of a matchbox, with a fold-out arm.*\n\nIt's a doorstop. Clockwork, because I couldn't help myself. It lets go once the room drops past a set temperature, so your door shuts itself when that corridor gets cold, around three.",
         "You leave it propped open. You've got {favResponse} for everyone, me included. I notice things and then build about them instead of saying them. Jo calls that a personality problem.\n\nAnyway. Doorstop.",
       ],

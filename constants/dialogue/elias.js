@@ -20,7 +20,7 @@ export default {
             label: "Say he's worth knowing",
             style: 3,
             close:
-              "Ah… well.\n\n*A pause, a good deal longer than his replies usually take.*\n\nThat's very kind of you. It isn't quite true. But I'd like it if you kept saying so anyway.\n\n*A second, shorter pause.* And I'd like it if you let me keep walking that path, when you do. Only because it isn't any trouble. Good night.",
+              "Ah… now.\n\n*A pause, a good deal longer than replies usually take.*\n\nThat's very kind of you. It isn't quite true. But I'd like it if you kept saying so anyway.\n\n*A second, shorter pause.* And I'd like it if you let me keep walking that path, when you do. Only because it isn't any trouble. Good night.",
           },
           {
             key: "playful",

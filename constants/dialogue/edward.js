@@ -1,11 +1,22 @@
 export default {
-  // The level-up DMs (docs/bond-scene-dms.md). Edward is four hundred years old
-  // and performs fragility as a hobby; the courtly register never drops, it just
-  // stops being armor. He asks before he bites and he asks before everything
-  // else too, which is the shape of the intimacy here — a predator who has made
-  // consent into a manner. The lost "her" surfaces at Confidant, unnamed and
-  // kept deliberately vague — canon only gives us "you remind me a little of
-  // her," so no name, no dates, no biography beyond what grief needs.
+  // The level-up DMs (docs/bond-scene-dms.md). Edward is a long-lived vampire
+  // who performs fragility as a hobby; the courtly register never drops, it
+  // just stops being armor. He asks before he bites and he asks before
+  // everything else too, which is the shape of the intimacy here.
+  //
+  // Canon (reference.md) is deliberately thin on his past, so these scenes stay
+  // inside it. NO age in years anywhere: reference.md never gives one, only
+  // "long-lived vampire" and "old, old memories", so his age stays vague ("a
+  // very long life", "old beyond telling"). The lost "her" is only ever what
+  // Max Affinity supplies, "you remind me a little of her" plus "old, old
+  // memories": no name, no dates, no place, no death, no biography. He is
+  // written as refusing the details, which is itself in character. Grounded
+  // canon he leans on: the cough act and "ask Rui", the parasol and sunlight,
+  // vitality returning at night, the shady-cabal YouTube channel, "I eked out a
+  // humble existence in Eastern Europe", "the most powerful vampire? ...just
+  // rumors", love-advisor "Rui, or Lyca", "Wicked girl". He says "I'll", never
+  // "I shall" (reference.md).
+  //
   // Texting is the one modern custom Rui never fully broke him of. Per
   // reference.md's "## Bond Scenes" notes he types boomer-style: ornate
   // sentences close on two or more painfully literal emojis in a row, and
@@ -17,34 +28,38 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: You Will Forgive The Hour. I keep no other kind, and I have found that the living are at their most honest when tired. 😴🌙",
-        "I have watched you cross the Obscuary hall {timesMet} times, and every time, you look directly at me.\n\nThat is not nothing. The living look at my collar, my hands, a point six inches beside my head. Four centuries and I can name every place they look instead.\n\nI once performed a cough for you outside the infirmary. Tragic, consumptive, the fruit of centuries. You told me to find Rui. 😷🎭\n\nYou Look Me In The Eye. 👀✨ I have begun arranging my afternoons around it. 🌇🖤",
+        "I have watched you cross the Obscuary hall {timesMet} times, and every time, you look directly at me.\n\nThat is not nothing. The living look at my collar, my hands, a point six inches beside my head. Long enough on this earth, and I can name every place they look instead.\n\nI once performed a cough for you in that hall. Tragic, consumptive, the full performance. You told me to find Rui. 😷🎭\n\nYou Look Me In The Eye. 👀✨ I have begun arranging my evenings around it. 🌇🖤",
       ],
       choice: {
-        prompt: "Now. Say something dreadful to me. It has been an age since anybody dared. 😈🔪",
+        prompt:
+          "Now. Say something dreadful to me. It has been an age since anybody dared. 😈",
         options: [
           {
             key: "kind",
             label: "Say his face is worth it",
             style: 3,
-            close: "...That was not dreadful at all. You have cheated.\n\nDo it again some time when I am braced for it. I was not braced for it. 😤😳",
+            close:
+              "...That was not dreadful at all. You have cheated.\n\nDo it again some time when I am braced for it. I was not braced for it. 😤😳",
           },
           {
             key: "playful",
-            label: "Say he looks tired",
+            label: "Say he looked tired",
             style: 1,
-            close: "I am *four hundred years old*, wicked thing, of course I look tired.\n\nNobody says so. They say *pale*, which is a polite way of saying they have not looked. 😩💀",
+            close:
+              "I am *very old*, wicked girl, of course I look tired.\n\nNobody says so. They say *pale*, which is a polite way of saying they have not looked. 😩💀",
           },
           {
             key: "bold",
             label: "Ask what he's watching for",
             style: 4,
-            close: "*There is a considered silence.*\n\nAn answer I have not had in a very long while, *he says.* Which is not a proper reply, and you will not get a better one tonight. Sleep well, lovely creature. 🌙💤",
+            close:
+              "*There was a long pause.*\n\nAn answer I have not had in a very long while, *he says.* Which is not a proper reply, and you will not get a better one tonight. Sleep well, lovely creature. 🌙💤",
           },
         ],
       },
       keepsake: {
         emoji: "🕯️",
-        line: "The first person in a century to look him in the eye rather than beside it.",
+        line: "The first person in a very long time to look him in the eye rather than beside it.",
       },
     },
 
@@ -55,25 +70,29 @@ export default {
         "That was not the confession. This is.\n\nYou answer me with {favResponse}, every time, without the small recalculation I get from everyone who learns what I am. The living flinch. A quarter-second half-step back, weight onto the back foot. I have never once been wrong about it.\n\nYou Have Not Done It. Not once in {timesMet}. I find the absence more interesting than anything else in this building. 🤔🔍",
       ],
       choice: {
-        prompt: "Well? Am I to be flattered or frightened? I have a fondness for both. 😏🖤",
+        prompt:
+          "Well? Am I to be flattered or frightened? I have a fondness for both. 😏🖤",
         options: [
           {
             key: "kind",
             label: "Say he's not frightening",
             style: 3,
-            close: "How very disappointing.\n\n*A long pause.*\n\n...And how very restful. I had forgotten there was such a thing as being restful at somebody. Do carry on. 😌☺️",
+            close:
+              "How very disappointing.\n\n*A long pause.*\n\n...And how very restful. I had forgotten there was such a thing as being restful at somebody. Do carry on. 😌☺️",
           },
           {
             key: "playful",
             label: "Do the step back on purpose",
             style: 1,
-            close: "You did not.\n\nYou did. You did it deliberately and badly and I have not laughed in some months, 😂😂 so I shall have to allow it.",
+            close:
+              "You did not.\n\nYou did. You did it deliberately and badly and I have not laughed like that in a while, 😂😂 so I will have to allow it.",
           },
           {
             key: "bold",
             label: "Ask what he'd do if you had",
             style: 4,
-            close: "Nothing whatsoever. That is the tragedy of it.\n\nI would have been charming, shown you out, and thought about it for a decade. That is the entire repertoire, lovely thing. Four centuries and no second move. 😔🎭",
+            close:
+              "Nothing whatsoever. That is the tragedy of it.\n\nI would have been charming, shown you out, and thought about it for a very long time. That is the entire repertoire, lovely creature. A long life and no second move. 😔🎭",
           },
         ],
       },
@@ -85,9 +104,9 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: Come up to the tower. I have something to show you and I have decided to be embarrassed about it in advance, so that the moment itself may pass off smoothly. 😳🙈",
-        "*The room is exactly as ancient and theatrical as advertised, and in the middle of it is a laptop on a velvet cushion, playing a two-hour video about the shady cabal of elites secretly governing human society. 🕵️*\n\n> I am aware.\n\n> I have watched eleven hours of this particular gentleman's output. He is *magnificently* wrong, and he is wrong at three in the morning, which is when I want company and have none. 😔",
-        "> Four hundred years, wicked girl. Do you know what four hundred years of nights is? It is not romantic. It is a very great deal of sitting.\n\n> This is what I do with them. Not blood, not brooding, not whatever the Frostheim boys imagine. A man in a shed explaining that the pyramids were a battery.\n\n> You are the first person I have ever admitted that to, and I would take it as a kindness if you sat down. 🙏",
+        "**{firstName}**: Come up to my room. I have something to show you and I have decided to be embarrassed about it in advance, so that the moment itself may pass off smoothly. 😳🙈",
+        "*The room is exactly as ancient and theatrical as advertised, and in the middle of it is a laptop on a velvet cushion, playing a video about the shady cabal of elites secretly governing human society. 🕵️*\n\n> I am aware.\n\n> I have watched a great deal of this particular channel. He is *magnificently* wrong, and he is wrong at three in the morning, which is when I want company and have none. 😔",
+        "> A very long life, wicked girl. Do you know what a life this long is, one night after another? It is not romantic. It is a very great deal of sitting.\n\n> This is what I do with the nights. Not blood, not brooding, not whatever anybody imagines. Somebody in a video, magnificently wrong about the cabal, at length.\n\n> You are the first person I have ever admitted that to, and I would take it as a kindness if you sat down. 🙏",
       ],
       choice: {
         prompt: "Well? Sit, or flee. 🏃🚪 Both are perfectly reasonable.",
@@ -96,95 +115,106 @@ export default {
             key: "kind",
             label: "Sit down and watch it",
             style: 3,
-            close: "*You get through two of them. He talks over the whole of the second, which is clearly the point of the exercise.*\n\n*At some stage you fall asleep against his shoulder, 😴 and he does not move for the rest of it, and in the morning he affects not to have noticed, badly.*",
+            close:
+              "*You get through two of them. He talks over the whole of the second, which is clearly the point of the exercise.*\n\n*At some stage you fall asleep against his shoulder, 😴 and he does not move for the rest of it, and in the morning he affects not to have noticed, badly.*",
           },
           {
             key: "playful",
             label: "Ask who's in the cabal",
             style: 1,
-            close: "> Oh, do not *encourage* it.\n\n*He explains the entire conspiracy for eleven minutes without drawing breath, footnotes and all, entirely delighted, then stops and looks appalled at himself.*\n\n> ...You did that on purpose. Wicked thing. 😅",
+            close:
+              "> Oh, do not *encourage* it.\n\n*He explains the entire conspiracy at length without drawing breath, footnotes and all, entirely delighted, then stops and looks appalled at himself.*\n\n> ...You did that on purpose. Wicked girl. 😅",
           },
           {
             key: "bold",
             label: "Ask why you're the first",
             style: 4,
-            close: "> Because it is undignified, and dignity is very nearly all I have left.\n\n> And because you would not use it. I have known perhaps four people in four centuries of whom that was true, and three of them are some while dead. 💀",
+            close:
+              "> Because it is undignified, and dignity is very nearly all I have left.\n\n> And because you would not use it. I have known perhaps a handful of people in a long life of whom that was true, and most of them are a long time dead now. 💀",
           },
         ],
       },
       keepsake: {
         emoji: "🛋️",
-        line: "Eleven hours of nonsense, admitted to out loud.",
+        line: "The nonsense he watches at three in the morning, admitted to out loud.",
       },
     },
 
     confidant: {
       beats: [
-        "**{firstName}**: I am going to tell you about her, and then I shall not mention her again, and you will please not ask me to. 🥀🕯️",
-        "Her name is not the point and I am not going to give it to you. She was not remarkable in any way that would survive being written down, and I loved her past all sense. 🥀\n\nShe was young when I met her and she was old when she stopped, and I was precisely as I am now for the whole of it, which is the part nobody ever understands.",
-        "I have said for centuries that the living die so quickly. I say it languidly, at parties; people find it chilling and I let them. It is the only sentence I have built that holds the whole fact without making me feel it.\n\nThey also call me the most powerful vampire who ever lived. 🧛🦇 Useful for keeping first-years out of the east wing. I have never confirmed it and I have never denied it; the ambiguity does more work than either answer would.\n\nWhat I will tell you is the dull part. A long, forgettable life in Eastern Europe, quiet as a shut drawer, that nobody repeats because it makes a poor story. You strike me as someone worth being dull with. 🫖📖",
+        "**{firstName}**: I am going to try to tell you about her. I will not manage much, and then I will not mention her again, and you will please not ask me to. 🥀🕯️",
+        "Her name is not the point and I am not going to give it to you. I am not going to give you any of it, in truth. The place, the dates, how it ended. I have found that grief kept vague is grief kept portable. 🥀\n\nYou remind me a little of her. That is the whole of what I can say plainly, and it has taken me until now to say that much.",
+        "I have said for a very long time that the living die so quickly. I say it languidly, at parties; people find it chilling and I let them. It is the only sentence I have built that holds the whole fact without making me feel it.\n\nThey also call me the most powerful vampire who ever lived. 🧛🦇 Rumors, I tell the first-years, and I leave it there. The ambiguity does more work than a straight answer would.\n\nWhat I will tell you is the dull part. A humble, forgettable existence in Eastern Europe, quiet as a shut drawer, that nobody repeats because it makes a poor story. You strike me as someone worth being dull with. 🫖📖",
       ],
       choice: {
-        prompt: "There. You may say something now, and I would very much rather it were not sympathy. 🙏🥀",
+        prompt:
+          "There. You may say something now, and I would very much rather it were not sympathy. 🙏🥀",
         options: [
           {
             key: "kind",
             label: "Ask what she was like",
             style: 3,
-            close: "*The reply takes a very long time.*\n\nDifficult. Funny at the wrong moments. Certain about small things in a way I found exhausting and now miss unbearably.\n\n*And then, unmistakably, a man who has not talked about someone in a hundred years talking about them until it gets light, and at the end of it:* Thank you. Not for the sympathy. For the question. Nobody asks what she was *like*. 🥺💭",
+            close:
+              "*The reply takes a very long time to come.*\n\nNo. I told you I would not, and I find I meant it more than I expected to.\n\n*And then:* But nobody asks what she was *like*. They ask how it ended, or they say they are sorry. You asked the right question, and I still cannot answer it. Thank you for it anyway. 🥺💭",
           },
           {
             key: "playful",
-            label: "Ask if she knew what he was",
+            label: "Change the subject for him",
             style: 1,
-            close: "She worked it out inside the year and stayed regardless. Appalling judgment. I adored her for it.\n\n...I have not smiled about her in some decades. 😊🥲 That is your doing and I have not decided whether to be grateful.",
+            close:
+              "*A pause, then something that might be relief.*\n\nYou noticed I had run out of road and you simply moved us along. Nobody does that. They dig, gently, believing it a kindness.\n\nAsk me about the dreadful videos instead. I can talk about those until it gets light. 😌📺",
           },
           {
             key: "bold",
             label: "Say you'll die quickly too",
             style: 4,
-            close: "*There is nothing at all for several minutes.*\n\nI am aware, *he writes.* Since the first evening. I have gone on arranging my afternoons regardless, which is either courage or the great foolishness of my life.\n\nDo not say it again. Not because it is untrue, but because I have decided to be foolish and should like to manage it uninterrupted. 🙈⏳",
+            close:
+              "*There is nothing at all for several minutes.*\n\nI am aware, *he writes.* Since the first evening. I have gone on arranging my evenings regardless, which is either courage or plain foolishness, and I have stopped being able to tell which.\n\nDo not say it again. Not because it is untrue, but because I have decided to be foolish and should like to manage it uninterrupted. 🙈⏳",
           },
         ],
       },
       keepsake: {
         emoji: "🥀",
-        line: "Someone he loved and outlived, described out loud for the first time in a hundred years.",
+        line: "The old grief he keeps portable, set down for one evening.",
       },
     },
 
     devoted: {
       beats: [
         "**{firstName}**: You are unharmed. I have established that before writing, because I did not trust myself to establish it after. 😮‍💨🖤",
-        "I have spent four centuries being languid at people. It is not an affectation; it is a discipline. What I am, unmanaged, is not something anybody in this academy has ever seen and I have taken a very great deal of care that they should not.\n\nRui saw it tonight. He will not say anything. He went rather white 😨😰 and he will not say anything.",
-        "I will not describe the lower corridor. Only what came after: I stood there some minutes, certain of one thing.\n\nWhatever the sun takes from me by day, the dark gives back with interest, and tonight I was more myself than usual by a wide margin.\n\nI Would Do It Again. Without the discipline, in front of anybody. That is not romantic, lovely creature. It is a warning, from someone fond of you, about someone you should be careful of. ⚠️🩸",
+        "I have spent a very long time being languid at people. It is not an affectation; it is a discipline. What I am, unmanaged, is not something anybody in this academy has ever seen, and I have taken a very great deal of care that they should not.\n\nRui saw it tonight. He will not say anything. He went rather white 😨😰 and he will not say anything.",
+        "I will not describe what happened. Only what came after: I stood there some minutes, certain of one thing.\n\nWhatever the sun takes from me by day, the dark gives back with interest, and tonight I was more myself than usual by a wide margin.\n\nI Would Do It Again. Without the discipline, in front of anybody. That is not romantic, lovely creature. It is a warning, from someone fond of you, about someone you should be careful of. ⚠️🩸",
       ],
       choice: {
-        prompt: "Now you may be frightened. It is quite the correct response and I shall not think less of you. 😰💔",
+        prompt:
+          "Now you may be frightened. It is quite the correct response and I will not think less of you. 😰💔",
         options: [
           {
             key: "kind",
             label: "Say you're not frightened",
             style: 3,
-            close: "You ought to be.\n\n*A long pause.*\n\n...Come up. Not to discuss it. I have been sitting in this chair for two hours being extremely composed and I find I would rather be in a room with you and stop.\n\n*He does stop. He puts his head down on your shoulder, four hundred years old and entirely undone, and does not move for a long while. 🥹🖤*",
+            close:
+              "You ought to be.\n\n*A long pause.*\n\n...Come up. Not to discuss it. I have been sitting in this chair for two hours being extremely composed and I find I would rather be in a room with you and stop.\n\n*He does stop. He puts his head down on your shoulder, old beyond telling and entirely undone, and does not move for a long while. 🥹🖤*",
           },
           {
             key: "playful",
             label: "Ask if the discipline's ruined",
             style: 1,
-            close: "Utterly. Four centuries, and I am back to first principles because of a corridor.\n\nRui has offered me a drink and a conversation about my feelings. I would rather be staked. 😵⚰️ Come up instead and let me be ridiculous at somebody who will not be gentle about it.",
+            close:
+              "Utterly. A whole discipline, and I am back to first principles because of one bad night.\n\nRui has offered me a drink and a conversation about my feelings. I would rather be staked. 😵⚰️ Come up instead and let me be ridiculous at somebody who will not be gentle about it.",
           },
           {
             key: "bold",
             label: "Tell him to bite you",
             style: 4,
-            close: "*The reply is immediate and quite unlike anything he has sent before.*\n\nNo.\n\n*Then, more slowly:* I ask. Always, of everyone, and I have never once wanted an answer as much as I do not want that one from you.\n\nAsk me again some evening when I have not just come out of a corridor. I shall almost certainly say something disgraceful, and I should like to be in my right mind when I do. 🩸🖤",
+            close:
+              "*The reply is immediate and quite unlike anything he has sent before.*\n\nNo.\n\n*Then, more slowly:* I ask. Always, of everyone, and I have never once wanted an answer as much as I do not want that one from you.\n\nAsk me again some evening when I have not just had a night like this one. I will almost certainly say something disgraceful, and I should like to be in my right mind when I do. 🩸🖤",
           },
         ],
       },
       keepsake: {
         emoji: "⛓️",
-        line: "A discipline of four centuries, given up over one corridor.",
+        line: "A discipline of a lifetime, given up in a single night.",
       },
     },
 
@@ -192,23 +222,26 @@ export default {
       beats: [
         "**{firstName}**: I have written this six times. Each attempt was more elegant than the last, and I have discarded all of them for that reason. 📝🗑️",
         "{timesMet} occasions. I Do Not Count Things. Counting is for creatures with a reason to hurry, and I have been very careful never to have one.\n\nI have counted every single one of yours. 🔢🖤",
-        "I told you about her and said I would not mention her again. One more thing, then I close the subject.\n\nI never told her what I felt. All those years of it, and I decided, nobly I thought, that it would be cruel to make her carry the weight of what I am.\n\nShe died not knowing. I have had a hundred years to call that noble. It was not. It was cowardice with excellent manners. 🎭🥀",
-        "So.\n\nI love you. ❤️❤️ Said plainly, no elegant construction anywhere near it, which for me is like standing in a doorway with no clothes on.\n\nYou will die quickly. I know it, you know it, I am saying it anyway. I made that mistake once. A creature who makes it twice deserves the four hundred years he gets. 🖤⏳",
+        "I told you I would try to tell you about her, and then not again. One more thing, and then the subject is closed for good.\n\nThe worst of that grief is not the missing. It is knowing I had every elegant reason ready, and used them, and never once simply said the plain thing while it could still be heard.\n\nI have had a long time to call that restraint. It was not. It was cowardice with excellent manners. 🎭🥀",
+        "So.\n\nI love you. ❤️❤️ Said plainly, no elegant construction anywhere near it, which for me is like standing in a doorway with no clothes on.\n\nYou will die quickly. I know it, you know it, I am saying it anyway. I stayed quiet once and called it kindness. A creature who does that twice deserves every long year he gets. 🖤⏳",
       ],
       choice: {
-        prompt: "Take whatever time you like, wicked thing. I have a certain amount of it. ⏳🖤",
+        prompt:
+          "Take whatever time you like, wicked girl. I have a certain amount of it. ⏳🖤",
         options: [
           {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "Come up.\n\n*He is standing when you arrive, not languid, not draped over anything, simply standing in the middle of the room like a man who has been waiting.*\n\n*He takes your jaw in both cold hands and looks at you for an unreasonably long time.*\n\n> Say it once more.\n\n*he says.*\n\n> I waited an entire mortal lifetime to hear it the last time and it never came. I intend to be quite greedy about hearing it now. 🥰",
+            close:
+              "Come up.\n\n*He is standing when you arrive, not languid, not draped over anything, simply standing in the middle of the room like a man who has been waiting.*\n\n*He takes your jaw in both cold hands and looks at you for an unreasonably long time.*\n\n> Say it once more.\n\n*he says.*\n\n> I have wanted this said to me for longer than you would credit, and the once it would have mattered, I let the moment pass in silence. I intend to be quite greedy about hearing it now. 🥰",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
-            close: "But of course. I have made a specialization of waiting, though not, historically, a successful one.\n\nUnderstand this: the tower is open, the dreadful videos continue at three. None of it was a maneuver. It was the best part of four centuries and I would not give it up for a refusal.\n\nTake your time, lovely creature. I shall be here, ridiculous about the cabal. 🕵️📺",
+            close:
+              "But of course. I have made a specialization of waiting, though not, historically, a successful one.\n\nUnderstand this: my room is open, the dreadful videos continue at three. None of it was a maneuver. It was the best part of a long life and I would not give it up for a refusal.\n\nTake your time, lovely creature. I will be here, ridiculous about the cabal. 🕵️📺",
           },
         ],
       },

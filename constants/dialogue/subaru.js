@@ -33,7 +33,7 @@ export default {
             label: "Tease him about the fuss",
             style: 1,
             close:
-              "You're laughing at me. That's all right, I rather set that up.\n\nI make the tea properly because that's how I was trained. The part where I dawdle so someone stays longer is new. That one's yours.",
+              "You're laughing at me. That's all right, I rather set that up.\n\nI make the tea properly because that's how I was trained. The part where I slow down so someone stays longer is new. That one's yours.",
           },
           {
             key: "bold",

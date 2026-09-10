@@ -14,25 +14,28 @@ export default {
         "You've entered my facility {timesMet} times and walked out on your own feet every occasion. Do you understand the significance!? No. Of course you don't.\n\nEvery other student treats Mortkranken as a place one is carried into. You walk in. Unprompted. Repeatedly.\n\nIt's either bravery or a diagnosable condition, worm, and as your physician I intend to establish which.",
       ],
       choice: {
-        prompt: "Well!? Answer! I haven't got all night. I have, but that's beside the point!",
+        prompt: "Well!? Answer! I haven't got all night. I am a very busy man.",
         options: [
           {
             key: "kind",
             label: "Say the facility's impressive",
             style: 3,
-            close: "It... yes. YES. It is. Thank you. Finally, an eye that sees.\n\n*A pause.*\n\n...You're the first person to say so without being sedated. I shall be recording the date.",
+            close:
+              "It... yes. YES. It is. Thank you. Finally, an eye that sees.\n\n*A pause.*\n\n...You're the first person to say so without being sedated. I shall be recording the date.",
           },
           {
             key: "playful",
             label: "Ask for the diagnosis",
             style: 1,
-            close: "Inconclusive! Which never happens! I am NEVER inconclusive!\n\nI shall require further visits to establish a baseline. Many further visits. It's a clinical necessity and not, as Jiro suggested, anything else.",
+            close:
+              "Inconclusive! Which never happens! I am NEVER inconclusive!\n\nI shall require further visits to establish a baseline. Many further visits. It's a clinical necessity and not, as Jiro suggested, anything else.",
           },
           {
             key: "bold",
             label: "Say you walk in for him",
             style: 4,
-            close: "*There is a full minute of nothing.*\n\nThat's... that is an absurd thing to say to a man of science.\n\nYou won't repeat it. To anyone. Particularly not to Jiro, who has an expression he does.",
+            close:
+              "*There is a full minute of nothing.*\n\nThat's... that is an absurd thing to say to a man of science.\n\nYou won't repeat it. To anyone. Particularly not to Jiro. He will look insufferably vindicated, and I will not be on the receiving end of it.",
           },
         ],
       },
@@ -54,19 +57,22 @@ export default {
             key: "kind",
             label: "Say you enjoy his company",
             style: 3,
-            close: "You... what?\n\n*A long silence, from a man who has never been silent.*\n\nThat's not a valid experimental result. Nobody enjoys... I shall have to re-run the entire... I'm going to bed.\n\n*He doesn't go to bed. The read receipt says so.*",
+            close:
+              "You... what?\n\n*A long silence, from a man who has never been silent.*\n\nThat's not a valid experimental result. Nobody enjoys... I shall have to re-run the entire... I'm going to bed.\n\n*He doesn't go to bed. The read receipt says so.*",
           },
           {
             key: "playful",
             label: "Ask how loud the shout was",
             style: 1,
-            close: "IT WAS NECESSARY. He was three rooms away!\n\n...It was extremely loud. Jiro's hearing has been formally assessed since. Don't bring it up in front of him, he keeps a record.",
+            close:
+              "IT WAS NECESSARY. He was three rooms away!\n\n...It was extremely loud. Jiro's hearing has been formally assessed since. Don't bring it up in front of him, he keeps a record.",
           },
           {
             key: "bold",
             label: "Say the bravado isn't working",
             style: 4,
-            close: "*There is no reply for eight minutes, which from a man who cannot be quiet for eight seconds is its own kind of answer.*\n\nHow dare you.\n\n*Then:* ...How long have you known. Be precise. I need to know exactly how long I've been failing.",
+            close:
+              "*There is no reply for eight minutes, which from a man who cannot be quiet for eight seconds is its own kind of answer.*\n\nHow dare you.\n\n*Then:* ...How long have you known. Be precise. I need to know exactly how long I've been failing.",
           },
         ],
       },
@@ -83,25 +89,29 @@ export default {
         "> I lost everything in the fire. Four years of research, my instruments, my notes, my... everything. This was in my coat pocket and it's the only object I own that predates it.\n\n> Jiro doesn't know. Nobody knows. I've told you because you didn't laugh, and because I've discovered that not being laughed at is a thing I've been rationing since I was seventeen.",
       ],
       choice: {
-        prompt: "Say something. And if it's unkind I shall never recover, so choose carefully.",
+        prompt:
+          "Say something. And if it's unkind I shall never recover, so choose carefully.",
         options: [
           {
             key: "kind",
             label: "Ask him to read some of it",
             style: 3,
-            close: "> Aloud?\n\n*He does it. Badly at first, then with increasing and entirely unembarrassed relish, doing every voice.*\n\n*An hour in he looks up and finds you still sitting on the lab floor listening, and stops mid-sentence and goes very red and cannot get going again for some time.*",
+            close:
+              "> Aloud?\n\n*He does it. Badly at first, then with increasing and entirely unembarrassed relish, doing every voice.*\n\n*An hour in he looks up and finds you still sitting on the lab floor listening, and stops mid-sentence and goes very red and cannot get going again for some time.*",
           },
           {
             key: "playful",
             label: "Ask if the doctor's handsome",
             style: 1,
-            close: "> Devastatingly. Obviously. That's simply accurate characterization.\n\n> ...He's described as having teal hair in the second volume. I've thought about this more than is healthy and I would like you to say nothing at all.",
+            close:
+              "> Devastatingly. Obviously. That's simply accurate characterization.\n\n> ...He's described as having teal hair in the second volume. I've thought about this more than is healthy and I would like you to say nothing at all.",
           },
           {
             key: "bold",
             label: "Ask what else burned",
             style: 4,
-            close: "*The performance drops out of him completely.*\n\n> Everything I had done. Everything I was going to be.\n\n*A pause.*\n\n> I haven't said that sentence without shouting before. It's much worse quietly. Sit down... no. Stay. Don't go. I'd like you to stay while it's quiet.",
+            close:
+              "*The performance drops out of him completely.*\n\n> Everything I had done. Everything I was going to be.\n\n*A pause.*\n\n> I haven't said that sentence without shouting before. It's much worse quietly. Sit down... no. Stay. Don't go. I'd like you to stay while it's quiet.",
           },
         ],
       },
@@ -118,25 +128,29 @@ export default {
         "It doesn't help. It has never once helped. I've said that sentence perhaps nine times since I came here, and I keep saying it as though the tenth might.\n\nEveryone believes I want to be acknowledged. The world's greatest, and so forth. That's true, and it's the smaller half.\n\nThe larger half is that I want nobody to die. Not a single one. Ever. It isn't a research program and it isn't reasonable, and I'm aware it isn't reasonable.",
       ],
       choice: {
-        prompt: "Don't tell me it wasn't my fault. I have that sentence. I have it in four languages.",
+        prompt:
+          "Don't tell me it wasn't my fault. I have that sentence. I have it in four languages.",
         options: [
           {
             key: "kind",
             label: "Ask if he's eaten today",
             style: 3,
-            close: "...That's not the question I was braced for.\n\n*A long pause.*\n\nNo. I haven't. Nobody asks me that. Everyone asks about the patient.\n\nCome to the lab. Bring something. Anything, I don't care what. I simply don't want to be the only person in the building who's awake.",
+            close:
+              "...That's not the question I was braced for.\n\n*A long pause.*\n\nNo. I haven't. Nobody asks me that. Everyone asks about the patient.\n\nCome to the lab. Bring something. Anything, I don't care what. I simply don't want to be the only person in the building who's awake.",
           },
           {
             key: "playful",
             label: "Ask for the four languages",
             style: 1,
-            close: "You're a dreadful person and I'm going to tell you all four.\n\n*He does. It takes a while and by the third one he has stopped sounding like a man reciting and started sounding like one talking, which was rather the point.*",
+            close:
+              "You're a dreadful person and I'm going to tell you all four.\n\n*He does. It takes a while and by the third one he has stopped sounding like a man reciting and started sounding like one talking, which was rather the point.*",
           },
           {
             key: "bold",
             label: "Tell him it isn't his to carry",
             style: 4,
-            close: "IT IS MINE. They are ALL mine. That is what a physician IS.\n\n*Then, immediately, much smaller:*\n\n...I'm aware that isn't what a physician is. I've been told. I was told the week after the fire and I didn't listen and I'm not going to start listening now.\n\nBut you may say it again. Say it again in the morning. I find I want to be argued with by someone who isn't being paid to argue with me.",
+            close:
+              "IT IS MINE. They are ALL mine. That is what a physician IS.\n\n*Then, immediately, much smaller:*\n\n...I'm aware that isn't what a physician is. I've been told. I was told the week after the fire and I didn't listen and I'm not going to start listening now.\n\nBut you may say it again. Say it again in the morning. I find I want to be argued with by someone who isn't being paid to argue with me.",
           },
         ],
       },
@@ -153,25 +167,29 @@ export default {
         "> You belong to me. I say that about my patients and everybody finds it distasteful and I've never cared.\n\n> I find that when I say it about you it means something else entirely, and I've been sitting here for six hours discovering the difference, and it's been the worst night of my life and I wouldn't have spent it anywhere else.",
       ],
       choice: {
-        prompt: "Don't thank me. You're my patient. This is simply what I... don't thank me.",
+        prompt:
+          "Don't thank me. You're my patient. This is simply what I... don't thank me.",
         options: [
           {
             key: "kind",
             label: "Thank him anyway",
             style: 3,
-            close: "> I said not to.\n\n*His voice does something on the second word. He turns away and busies himself with a tray that doesn't require attention for nearly two minutes.*\n\n*When he comes back he sits down on the edge of the bed, which is against every protocol he has ever written, and does not get up again.*",
+            close:
+              "> I said not to.\n\n*His voice does something on the second word. He turns away and busies himself with a tray that doesn't require attention for nearly two minutes.*\n\n*When he comes back he sits down on the edge of the bed, which is against every protocol he has ever written, and does not get up again.*",
           },
           {
             key: "playful",
             label: "Ask about the eleven seconds",
             style: 1,
-            close: "> Twelve. It was twelve. I've been over it.\n\n> Do you know how long twelve seconds is when you're the cleverest man in the building and there's nothing whatsoever you can do!? It's a geological age. I intend to never experience it again.",
+            close:
+              "> Twelve. It was twelve. I've been over it.\n\n> Do you know how long twelve seconds is when you're the cleverest man in the building and there's nothing whatsoever you can do!? It's a geological age. I intend to never experience it again.",
           },
           {
             key: "bold",
             label: "Ask what it means instead",
             style: 4,
-            close: "*He goes red to the ears and stays that way.*\n\n> I'm not... this is neither the time nor the... you're CONCUSSED...\n\n*Then he stops. He takes your hand, which he has done a thousand times to take a pulse, and this time doesn't take the pulse.*\n\n> You know precisely what it means,\n\n*he says, very quietly, for once not shouting at all.*\n\n> Don't make me be the one who says it while you're on a drip.",
+            close:
+              "*He goes red to the ears and stays that way.*\n\n> I'm not... this is neither the time nor the... you're CONCUSSED...\n\n*Then he stops. He takes your hand, which he has done a thousand times to take a pulse, and this time doesn't take the pulse.*\n\n> You know precisely what it means,\n\n*he says, very quietly, for once not shouting at all.*\n\n> Don't make me be the one who says it while you're on a drip.",
           },
         ],
       },
@@ -189,19 +207,22 @@ export default {
         "So.\n\nI love you. There. Said at conversational volume, which cost me more than the fire did.\n\nI'm not going to dress it up. I have no experiment to hide it behind and no diagnosis to file it under. I love you, Yuri Isami loves you, and it's the only claim I've ever made that I have absolutely no evidence for and complete confidence in.",
       ],
       choice: {
-        prompt: "Answer. Or don't. I shall be magnificent about it either way. I shall be *devastated* and magnificent.",
+        prompt:
+          "Answer. Or don't. I shall be magnificent about it either way. I shall be *devastated* and magnificent.",
         options: [
           {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "*There is a crash, some distance away, that is probably a tray.*\n\nDo NOT move. Don't... stay exactly where you are, I'm coming, I'm... JIRO, WHERE ARE MY... no. No, I don't need them. I don't need anything.\n\n*He arrives without his coat, which has never happened, and stops in the doorway looking utterly undone, and then crosses the room and holds onto you and says your name three times as though checking it still works.*",
+            close:
+              "*There is a crash, some distance away, that is probably a tray.*\n\nDo NOT move. Don't... stay exactly where you are, I'm coming, I'm... JIRO, WHERE ARE MY... no. No, I don't need them. I don't need anything.\n\n*He arrives without his coat, which has never happened, and stops in the doorway looking utterly undone, and then crosses the room and holds onto you and says your name three times as though checking it still works.*",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
-            close: "Naturally. Naturally! Take as long as you require. I'm a scientist, I'm *made* of patience, I once waited seven weeks for a culture.\n\n*A pause. Then, without the flourish:*\n\n...That was bravado. You'll have spotted it. Take the time anyway. I mean it, and I won't raise it again, and you'll find me exactly where I always am, being insufferable at Jiro.\n\nAnd you may still walk in. That was never conditional on anything. It's always simply been the best part of my week.",
+            close:
+              "Naturally. Naturally! Take as long as you require. I'm a scientist, I'm *made* of patience, I once waited seven weeks for a culture.\n\n*A pause. Then, without the flourish:*\n\n...That was bravado. You'll have spotted it. Take the time anyway. I mean it, and I won't raise it again, and you'll find me exactly where I always am, being insufferable at Jiro.\n\nAnd you may still walk in. That was never conditional on anything. It's always simply been the best part of my week.",
           },
         ],
       },

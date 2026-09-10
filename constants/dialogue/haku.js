@@ -267,7 +267,7 @@ export default {
       "He takes your hand to steady you over a loose board, and then just... keeps it.",
       '"I had a whole thing I was going to say. You\'ve wrecked it. Again. ...Do that more often."',
       "The joke he'd normally hide behind doesn't come. He lets you watch him mean it.",
-      "\"For what it's worth, I like you. Don't make it a whole thing.\"",
+      '"For what it\'s worth, I like you. You can take it or leave it, whatever you want."',
     ],
     close: [
       '"I keep waiting for you to turn up," he admits, the easy deflection gone for a second. "More than I should."',
@@ -434,12 +434,12 @@ export default {
         "Out-blank him",
         "Play along with the bit",
       ],
-      close: ["Actually make him laugh", "Prank him back", "Steal his nap spot"],
-      bound: [
-        "Spook him for once",
-        "Hog the whole step",
-        "Say it back, flat",
+      close: [
+        "Actually make him laugh",
+        "Prank him back",
+        "Steal his nap spot",
       ],
+      bound: ["Spook him for once", "Hog the whole step", "Say it back, flat"],
     },
     bold: {
       new: [

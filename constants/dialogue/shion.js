@@ -13,7 +13,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Found your number.\n\nWasn't going to ask. You'd have said yes anyway so it's the same thing, isn't it.",
-        "You've come by {timesMet} times. I count everything about you.\n\nMio says that's a lot. Mio says a lot of things.\n\nCome to the Heebie-Jeebie House some night. It's dark and it's cold and people scream in there, which is the best bit. You wouldn't scream, though. I've watched. People go stiff and back off in there. You just walk in.",
+        "You've come by {timesMet} times. I count everything about you.\n\nMio says that's a lot. Mio says a lot of things.\n\nCome to the Heebie-Jeebie House tonight. It's dark and it's cold and people scream in there, which is the best bit. You wouldn't scream, though. I've watched. People go stiff and back off in there. You just walk in.",
       ],
       choice: {
         prompt: "Say yes.",
@@ -23,11 +23,11 @@ export default {
             label: "Say yes",
             style: 3,
             close:
-              "Knew you would.\n\n...Wanted you to say it anyway. That's different from knowing. Didn't know that till just now.",
+              "Knew you would.\n\n...Wanted you to say it anyway. That's different from knowing. Didn't know that till now.",
           },
           {
             key: "playful",
-            label: "Ask what's in there",
+            label: "Ask what else is in there",
             style: 1,
             close:
               "Me, mostly.\n\nAnd a thing in the back I haven't named yet. It's got too many bits. You'll like it or you won't, and either's fine, because you'll still be standing next to me.",
@@ -37,7 +37,7 @@ export default {
             label: "Tell him to ask properly",
             style: 4,
             close:
-              "*A long gap. Longer than he's ever left anything.*\n\n...Will you come.\n\n*Then, immediately after:* That was horrible. Don't make me do it again.\n\n*He makes himself do it again, every time, after that.*",
+              "*A long gap.*\n\n...Will you come.\n\n*Then, immediately after:* Don't make me do it again.\n\n*He makes himself do it again, every time, after that.*",
           },
         ],
       },
