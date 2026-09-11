@@ -41,7 +41,7 @@ export default {
             label: "Ask if it's just the tour",
             style: 4,
             close:
-              "*There's a gap. A real one, from someone who types like he talks.*\n\nHa! Yeah, nah, course it is, it's the tour, it's a great tour, five stars, people rave...\n\n...Bring a jacket. Gets cold by the water and I'm not sharing mine. *He is absolutely going to share his.*",
+              "*There's a gap. A real one, from someone who types like he talks.*\n\nHa! Yeah, nah, course it is, it's a great tour, five stars, people rave...\n\n...Bring a jacket. Gets cold by the water and I'm not sharing mine. *He is absolutely going to share his.*",
           },
         ],
       },
@@ -155,7 +155,7 @@ export default {
             label: "Say you're not going to stop",
             style: 4,
             close:
-              "*No reply for a bit.*\n\n...Yeah, I know. Worked that out a month ago. It's why I'm telling you any of this.\n\n*Then, with the drawl gone out of it:*\n\nOkay. You do the morning rounds with me. Properly, not tagging along. Don't make it weird.\n\n> ...Cheers. For not making it weird.",
+              "*No reply for a bit.*\n\n...Yeah, I know. Worked that out a month ago. It's why I'm telling you any of this.\n\n*Then, with the drawl gone out of it:*\n\nOkay. You do the morning rounds with me. Properly, not tagging along.\n\n> ...Cheers. For not making it weird.",
           },
         ],
       },

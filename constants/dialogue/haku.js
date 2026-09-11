@@ -246,7 +246,7 @@ export default {
     known: [
       '"Oh, it\'s you." He cracks one eye open. "Good timing. I was getting bored."',
       "\"Zenji's got me filming him again. He's wandered off to pick the spot, and it's never the easy one.\"",
-      "\"You keep turning up. I've started counting on it. ...Don't make it weird.\"",
+      '"You keep turning up. I\'ve started counting on it."',
       "\"Mornin'. You've got a sleep mark on your face. ...Good. Means you actually slept.\"",
       '"Made too much tea. You\'ll have to help me with it." He did not make too much tea by accident.',
       '"You were hunting everywhere for those forms. I already handed them in for you. It\'s fine, it was on the way."',

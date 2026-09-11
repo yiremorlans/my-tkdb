@@ -86,7 +86,8 @@ export default {
         "> I've never told anyone about it. Not because it's a secret, just because if people knew it'd become a thing, and then it'd stop being the two hours.\n\n*He slides the plate over without pausing the game.*\n\n> You're in it now. Congratulations. You've halved my only two hours and I'm somehow fine about it, which I'd like a doctor to look at.",
       ],
       choice: {
-        prompt: "Sit down. Controller's already charged, don't make it weird.",
+        prompt:
+          "Sit down. Controller's already charged. You don't have to say anything.",
         options: [
           {
             key: "kind",
@@ -255,7 +256,7 @@ export default {
       '"...I like you," he says, flat as a weather report, and goes back to the show.',
     ],
     close: [
-      "\"Senpai... look, if it comes down to it, I'm on your side. Obviously. Don't make it weird.\" The phone's already face down.",
+      "\"Senpai... look, if it comes down to it, I'm on your side. Obviously.\" The phone's already face down.",
       "He notices you're off before you've said a word, and quietly changes the plan.",
       '"Stay," he says, casual as anything, meaning it more than anything.',
       "He plays badly on purpose so the round lasts longer. He'd never admit that.",
@@ -441,7 +442,7 @@ export default {
       "{user} calls, and **{name}** pockets the phone and straightens up.",
     ],
     bound: [
-      '"Found me again. Pretty sure that\'s not luck anymore, Senpai." **{name}** doesn\'t dress it up for {user}.',
+      "\"Found me again. Pretty sure that's not luck anymore, Senpai.\" **{name}** doesn't dress it up for {user}.",
       "**{name}** reaches {user} and puts his chin on their shoulder. That was the whole plan.",
       "{user} says the name, and **{name}** decides the **{house}** roster can manage without him.",
     ],
