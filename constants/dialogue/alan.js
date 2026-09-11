@@ -55,37 +55,37 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: Noticed something",
-        "You've got {favResponse} for me\n\nEvery time\n\nDoesn't change when I'm in a mood\n\nPeople change when I'm in a mood\n\nWhole house does\n\nBeen like that since I got here and I quit minding it a long time ago\n\nYou don't\n\nJust wanted you to know I see it",
+        "I run missions the same way every time\n\nCount everyone in, check it twice\n\nDone that since I made captain\n\nStopped checking on you a while back\n\nJust count on you and move on\n\nDont know when that started\n\nYou give me {favResponse} every time\n\nQuit bracing for it to change\n\nGuess that's what reliable means to me",
       ],
       choice: {
-        prompt: "Not asking you to explain it, say whatever you want",
+        prompt: "Don't need anything back",
         options: [
           {
             key: "kind",
-            label: "Say you're not scared of him",
+            label: "Say you plan around him too",
             style: 3,
             close:
-              "Know you're not\n\n*A long pause.*\n\nThat's the part I can't figure out\n\nGive me a while with it",
+              "…Yeah\n\n*A long pause.*\n\nGood\n\nWasn't sure it went both ways",
           },
           {
             key: "playful",
-            label: "Say his moods aren't subtle",
+            label: "Ask if you get a vote",
             style: 1,
             close:
-              "They're not\n\n*Then, out of nowhere:* Leo says I run in two gears\n\nAngry and asleep\n\nHe's wrong\n\nThere's a third\n\nYou've seen it",
+              "Didn't think to ask\n\nWant a vote now\n\nStill happening either way",
           },
           {
             key: "bold",
-            label: "Tell him he's not that scary",
+            label: "Ask if just wants you around",
             style: 4,
             close:
-              "I am\n\n*Flat. No argument in it. Just something he's carried a long way.*\n\nNot to you though\n\nDon't know why that's different\n\nNot gonna poke at it in case it stops",
+              "Yeah\n\nThat's it\n\nNo other reason\n\nJust wanted you around",
           },
         ],
       },
       keepsake: {
-        emoji: "🥊",
-        line: "The third gear, that only ever shows up around you.",
+        emoji: "📋",
+        line: "The one name on his roster he stopped double-checking.",
       },
     },
 
@@ -211,7 +211,8 @@ export default {
         "So here it is\n\nOnly doing this once\n\nI love you\n\nBeen true a long time\n\nWasnt going to say it, because saying it makes it yours to carry and I didn't want to put that on you\n\nPutting it on you anyway\n\n…Sorry",
       ],
       choice: {
-        prompt: "Take your time\n\nI'm good at waiting\n\nHad a lot of practice",
+        prompt:
+          "Take your time\n\nI'm good at waiting\n\nHad a lot of practice",
         options: [
           {
             key: "answered",

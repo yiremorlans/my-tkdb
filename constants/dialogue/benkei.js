@@ -17,7 +17,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Ah, hello. It's Benkei, from the shop. I hope you don't mind the message. My manager insisted, and when your manager is a cat, you learn not to argue.",
-        "There's a shelf under the counter with a few things set aside on it. Nothing dramatic. I just noticed you actually read the labels instead of grabbing and going, and I don't get many people who do that.",
+        "There's a shelf under the counter with a few things set aside on it. Nothing dramatic. All {timesMet} times you've been here, I've notice you actually read the labels instead of grabbing and going, and I don't get many people who do that.",
       ],
       choice: {
         prompt:
