@@ -179,15 +179,14 @@ test('claimCommandUse fails CLOSED when the claim errors (unlike checkCommandLim
 
 // --- claimCommandInvoke: the in-memory flood throttle ----------------------
 // A per-user, per-command debounce, checked before anything touches Supabase.
-// Purely a spam guard — never a reward gate. /meet is free, wait 1 minute and
-// /meet again is allowed, wait 2 minutes and the next is allowed, then 3,
-// then 4, and so on (capped at 10m) — specifically to stop "wait out the
-// posted window, peek, repeat" rerolling — see commandLimits.js's comment
-// above claimCommandInvoke.
+// Purely a spam guard — never a reward gate. The first invoke is free, the
+// second needs a 1-minute cooldown, and every one after that needs a flat 5
+// minutes — re-armed on each invoke that goes through, never climbing further
+// — specifically to stop "wait out the posted window, peek, repeat" rerolling
+// — see commandLimits.js's comment above claimCommandInvoke.
 
-const STEP_MS = 60 * 1000;
-const CAP_MS = 10 * 60 * 1000;
-const IDLE_RESET_MS = 30 * 60 * 1000;
+const FIRST_REPEAT_MS = 60 * 1000;
+const STEADY_MS = 5 * 60 * 1000;
 
 test('claimCommandInvoke allows the first invoke and records it', () => {
   clearCommandInvokeThrottle();
@@ -195,12 +194,12 @@ test('claimCommandInvoke allows the first invoke and records it', () => {
   assert.strictEqual(claimCommandInvoke('flood-1', 'roam', t0).allowed, true);
 });
 
-test('claimCommandInvoke blocks a second invoke of the same command inside the first step', () => {
+test('claimCommandInvoke blocks a second invoke of the same command inside the first minute', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
   assert.strictEqual(claimCommandInvoke('flood-2', 'roam', t0).allowed, true);
 
-  const again = claimCommandInvoke('flood-2', 'roam', t0 + STEP_MS - 1);
+  const again = claimCommandInvoke('flood-2', 'roam', t0 + FIRST_REPEAT_MS - 1);
   assert.strictEqual(again.allowed, false);
   assert.match(again.reason, /again in/i);
   assert.match(again.reason, /\/roam/, 'the message names the command that is throttled');
@@ -218,102 +217,64 @@ test('claimCommandInvoke throttles /roam and /meet independently', () => {
   assert.strictEqual(claimCommandInvoke('flood-3', 'meet', t0 + 30_000).allowed, false);
 });
 
-test('claimCommandInvoke lets a first repeat back in after waiting exactly 1 minute', () => {
+test('claimCommandInvoke lets the second invoke back in after waiting exactly 1 minute', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
   assert.strictEqual(claimCommandInvoke('flood-4', 'roam', t0).allowed, true);
-  assert.strictEqual(claimCommandInvoke('flood-4', 'roam', t0 + 1 * STEP_MS).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-4', 'roam', t0 + FIRST_REPEAT_MS).allowed, true);
 });
 
-// Note: a blocked probe counts as a strike too (by design — see the comment
-// above claimCommandInvoke), so it isn't safe to probe "still blocked" one
-// tick before a boundary and then immediately check "allowed" exactly at that
-// same boundary — the probe itself pushes the boundary further out. Each test
-// below checks one thing at a time for that reason.
-
-test('claimCommandInvoke does not let a second repeat back in after just 1 more minute', () => {
+test('claimCommandInvoke does not let a third invoke back in after just 1 more minute', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
-  assert.strictEqual(claimCommandInvoke('flood-5', 'roam', t0).allowed, true); // invoke 1, strikes 0 -> 1
-  const t1 = t0 + 1 * STEP_MS;
-  assert.strictEqual(claimCommandInvoke('flood-5', 'roam', t1).allowed, true); // invoke 2, strikes 1 -> 2
-  // The 3rd invoke needs 2 full minutes since the 2nd, not just 1 more.
-  assert.strictEqual(claimCommandInvoke('flood-5', 'roam', t1 + 1 * STEP_MS).allowed, false);
+  assert.strictEqual(claimCommandInvoke('flood-5', 'roam', t0).allowed, true); // invoke 1, free
+  const t1 = t0 + FIRST_REPEAT_MS;
+  assert.strictEqual(claimCommandInvoke('flood-5', 'roam', t1).allowed, true); // invoke 2, needed 1 minute
+  // From here on it's a flat 5 minutes — 1 more minute isn't enough.
+  assert.strictEqual(claimCommandInvoke('flood-5', 'roam', t1 + FIRST_REPEAT_MS).allowed, false);
 });
 
-test('claimCommandInvoke lets a second repeat back in after waiting 2 minutes', () => {
+test('claimCommandInvoke lets a third invoke back in after waiting the full 5 minutes', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
-  assert.strictEqual(claimCommandInvoke('flood-6', 'roam', t0).allowed, true); // strikes 0 -> 1
-  const t1 = t0 + 1 * STEP_MS;
-  assert.strictEqual(claimCommandInvoke('flood-6', 'roam', t1).allowed, true); // strikes 1 -> 2
-  assert.strictEqual(claimCommandInvoke('flood-6', 'roam', t1 + 2 * STEP_MS).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-6', 'roam', t0).allowed, true); // invoke 1, free
+  const t1 = t0 + FIRST_REPEAT_MS;
+  assert.strictEqual(claimCommandInvoke('flood-6', 'roam', t1).allowed, true); // invoke 2, needed 1 minute
+  assert.strictEqual(claimCommandInvoke('flood-6', 'roam', t1 + STEADY_MS).allowed, true); // invoke 3, needed 5 minutes
 });
 
-test('claimCommandInvoke keeps climbing by one more minute each further repeat', () => {
+test('claimCommandInvoke stays flat at 5 minutes for every further repeat, never climbing', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
   assert.strictEqual(claimCommandInvoke('flood-7', 'roam', t0).allowed, true); // invoke 1, free
-  const t1 = t0 + 1 * STEP_MS; // invoke 2 needs 1 minute
-  assert.strictEqual(claimCommandInvoke('flood-7', 'roam', t1).allowed, true);
-  const t2 = t1 + 2 * STEP_MS; // invoke 3 needs 2 minutes
-  assert.strictEqual(claimCommandInvoke('flood-7', 'roam', t2).allowed, true);
-  const t3 = t2 + 3 * STEP_MS; // invoke 4 needs 3 minutes
-  assert.strictEqual(claimCommandInvoke('flood-7', 'roam', t3).allowed, true);
-  // Confirm invoke 4 actually needed 3 full minutes, not just 1: invoke 5
-  // needs 4 minutes, so 1 more minute from t3 isn't enough.
-  assert.strictEqual(claimCommandInvoke('flood-7', 'roam', t3 + 1 * STEP_MS).allowed, false);
-});
-
-test('claimCommandInvoke caps the escalated window at 10 minutes', () => {
-  clearCommandInvokeThrottle();
-  const t0 = 1_000_000;
-  let t = t0;
-  // Rack up enough invokes to blow well past the cap (10 steps of 1 minute
-  // each reaches it exactly), waiting exactly the currently-required window
-  // each time so every one of these actually lands.
-  const requiredAt = (strikes) => Math.min(strikes * STEP_MS, CAP_MS);
-  for (let strikes = 0; strikes < 14; strikes++) {
-    assert.strictEqual(claimCommandInvoke('flood-8', 'roam', t).allowed, true, `invoke #${strikes + 1}`);
-    t += requiredAt(strikes + 1);
+  let t = t0 + FIRST_REPEAT_MS;
+  assert.strictEqual(claimCommandInvoke('flood-7', 'roam', t).allowed, true); // invoke 2, needed 1 minute
+  // Invokes 3 through 6 each need exactly 5 minutes since the previous one —
+  // not 6, 7, 8 minutes or any other climb.
+  for (let i = 0; i < 4; i++) {
+    t += STEADY_MS;
+    assert.strictEqual(claimCommandInvoke('flood-7', 'roam', t).allowed, true, `invoke #${i + 3}`);
   }
-  // One tick under the cap from the last invoke: still blocked.
-  assert.strictEqual(claimCommandInvoke('flood-8', 'roam', t - 1).allowed, false);
-  // At exactly the cap: allowed — it never grew past 10 minutes despite far
-  // more prior invokes than needed to reach the cap.
-  assert.strictEqual(claimCommandInvoke('flood-8', 'roam', t).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-7', 'roam', t + STEADY_MS - 1).allowed, false);
 });
 
-test('claimCommandInvoke re-blocks after a throttled hit without moving the clock from the hit', () => {
+test('claimCommandInvoke: a blocked attempt is not a use — it moves nothing and costs nothing', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
-  assert.strictEqual(claimCommandInvoke('flood-9', 'roam', t0).allowed, true); // invoke 1, strikes 0 -> 1
-  // A blocked retry inside the first minute still counts as a strike
-  // (strikes 1 -> 2), so the next required wait is now 2 minutes...
-  assert.strictEqual(claimCommandInvoke('flood-9', 'roam', t0 + 40_000).allowed, false);
-  // ...measured from the ORIGINAL invoke at t0, not from the blocked retry at
-  // t0+40s. If the blocked hit had moved the clock, this would still be
-  // blocked (it'd need to wait out 2 minutes starting from t0+40_000).
-  assert.strictEqual(claimCommandInvoke('flood-9', 'roam', t0 + 2 * STEP_MS).allowed, true);
-});
-
-test('claimCommandInvoke resets the escalation after a long enough idle gap', () => {
-  clearCommandInvokeThrottle();
-  const t0 = 1_000_000;
-  assert.strictEqual(claimCommandInvoke('flood-10', 'roam', t0).allowed, true); // strikes 0 -> 1
-  // Walk away for the idle-reset window (30m) without ever invoking again.
-  const t1 = t0 + IDLE_RESET_MS;
-  // Treated as a fresh start: 1 minute is enough again, not an escalated wait.
-  assert.strictEqual(claimCommandInvoke('flood-10', 'roam', t1).allowed, true);
-  assert.strictEqual(claimCommandInvoke('flood-10', 'roam', t1 + 1 * STEP_MS - 1).allowed, false);
+  assert.strictEqual(claimCommandInvoke('flood-8', 'roam', t0).allowed, true); // invoke 1, free
+  // A blocked retry partway through the first minute...
+  assert.strictEqual(claimCommandInvoke('flood-8', 'roam', t0 + 40_000).allowed, false);
+  // ...changes nothing: the second invoke is still allowed right on the
+  // original 1-minute schedule, not pushed out by the blocked attempt.
+  assert.strictEqual(claimCommandInvoke('flood-8', 'roam', t0 + FIRST_REPEAT_MS).allowed, true);
 });
 
 test('claimCommandInvoke is scoped per user — one user flooding does not block another', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
-  assert.strictEqual(claimCommandInvoke('flood-11a', 'roam', t0).allowed, true);
-  assert.strictEqual(claimCommandInvoke('flood-11a', 'roam', t0 + 100).allowed, false);
-  assert.strictEqual(claimCommandInvoke('flood-11b', 'roam', t0 + 100).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-9a', 'roam', t0).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-9a', 'roam', t0 + 100).allowed, false);
+  assert.strictEqual(claimCommandInvoke('flood-9b', 'roam', t0 + 100).allowed, true);
 });
 
 // Regression: a command that claims its invoke slot and then fails (a server
@@ -323,27 +284,26 @@ test('claimCommandInvoke is scoped per user — one user flooding does not block
 test('releaseCommandInvoke frees the slot so a failed command can be retried immediately', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
-  assert.strictEqual(claimCommandInvoke('flood-12', 'meet', t0).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-10', 'meet', t0).allowed, true);
 
   // Without releasing, the very next invoke would still be throttled.
-  releaseCommandInvoke('flood-12', 'meet');
-  assert.strictEqual(claimCommandInvoke('flood-12', 'meet', t0 + 1).allowed, true);
+  releaseCommandInvoke('flood-10', 'meet');
+  assert.strictEqual(claimCommandInvoke('flood-10', 'meet', t0 + 1).allowed, true);
 });
 
-test('releaseCommandInvoke also wipes any escalation built up, not just the last step', () => {
+test('releaseCommandInvoke also wipes the steady 5-minute state, back to a free first invoke', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
-  assert.strictEqual(claimCommandInvoke('flood-13', 'roam', t0).allowed, true); // invoke 1, strikes 0 -> 1
-  const t1 = t0 + 1 * STEP_MS; // invoke 2 needs 1 minute
-  assert.strictEqual(claimCommandInvoke('flood-13', 'roam', t1).allowed, true); // invoke 2, strikes 1 -> 2
+  assert.strictEqual(claimCommandInvoke('flood-11', 'roam', t0).allowed, true); // invoke 1, free
+  const t1 = t0 + FIRST_REPEAT_MS;
+  assert.strictEqual(claimCommandInvoke('flood-11', 'roam', t1).allowed, true); // invoke 2, needed 1 minute
 
-  releaseCommandInvoke('flood-13', 'roam');
+  releaseCommandInvoke('flood-11', 'roam');
 
-  // Without the release, a 3rd invoke this soon after the 2nd would need 2
-  // full minutes, since strikes had reached 2. A real claim (app.js) or a
-  // spent mission reset (missions.js) calls this expecting the command usable
-  // right away instead.
-  assert.strictEqual(claimCommandInvoke('flood-13', 'roam', t1 + 1).allowed, true);
+  // Without the release, a 3rd invoke this soon after the 2nd would need the
+  // full 5 minutes. A real claim (app.js) or a spent mission reset
+  // (missions.js) calls this expecting the command usable right away instead.
+  assert.strictEqual(claimCommandInvoke('flood-11', 'roam', t1 + 1).allowed, true);
 });
 
 test('releaseCommandInvoke only clears the named command, not the user\'s other one', () => {

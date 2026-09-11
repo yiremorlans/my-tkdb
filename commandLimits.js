@@ -76,42 +76,43 @@ export async function devResetCommandLimits(userId, commands = RATE_LIMITED_COMM
 // flat window doesn't touch that; waiting it out exactly is the whole
 // exploit.
 //
-// So the window escalates by one more INVOKE_THROTTLE_STEP_MS per repeat
-// invoke of the *same* command by the same user, capped at
-// INVOKE_THROTTLE_CAP_MS: /meet is free, wait 1 minute and /meet again is
-// allowed, wait 2 minutes and the next is allowed, then 3, then 4, and so on.
-// A blocked (too-early) retry counts toward that escalation too, not just a
-// successful one: mashing through the block makes the next wait longer, not
-// the same. Going /roam then /meet is one of each, which is normal play and
-// stays free — this is keyed per command. Two things bring it back down to
-// the 1-minute floor: a long enough idle gap (INVOKE_STRIKE_IDLE_RESET_MS)
-// with no invoke at all, since an escalation from a session that ended
-// shouldn't hang over someone back for normal play, and actually claiming the
-// command for real — releaseCommandInvoke wipes it, called once
-// claimCommandUse succeeds, so a genuine commit ends the rerolling session it
-// was escalating against.
+// So after the first (free) invoke, the second needs a 1-minute cooldown, and
+// every one after that needs a flat 5 minutes — no further climb, just a
+// constant cooldown once you're past the first repeat, re-armed on every
+// invoke that goes through (claimCommandInvoke stamps `now` each time it
+// allows one, so the 5 minutes always counts from the most recent invoke, not
+// the first). A blocked (too-early) attempt changes nothing — it's a plain
+// read-and-reject, not a use. Going /roam then /meet is one of each, which is
+// normal play and stays free — this is keyed per command. It comes back down
+// to a completely free first invoke only by actually claiming the command for
+// real: releaseCommandInvoke wipes it, called once claimCommandUse succeeds,
+// so a genuine commit ends the rerolling session this throttle is guarding
+// against.
 //
 // It lives in memory: single app instance, the cost of a miss is one extra
 // picker, and a deploy just hands everyone a fresh start. It is NOT a
 // substitute for the DB cooldown, which stays the only thing between a user
 // and a second reward.
-const INVOKE_THROTTLE_STEP_MS = 60 * 1000;
-const INVOKE_THROTTLE_CAP_MS = 10 * 60 * 1000;
-const INVOKE_STRIKE_IDLE_RESET_MS = 30 * 60 * 1000;
+const INVOKE_FIRST_REPEAT_COOLDOWN_MS = 60 * 1000;
+const INVOKE_STEADY_COOLDOWN_MS = 5 * 60 * 1000;
+
+// Purely a memory-hygiene bound, unrelated to the cooldown logic above:
+// nothing about the throttle itself expires an entry early, so this only
+// prunes ones truly abandoned (a user who invoked once and never came back).
+const INVOKE_ENTRY_STALE_MS = 24 * 60 * 60 * 1000;
 
 // "<discord_user_id>:<command>" -> { lastAt: epoch ms of that user's last
-// invoke of that command (blocked or not), strikes: invokes recorded since
-// the last reset }. Keyed by both so /roam and /meet escalate independently.
+// *allowed* invoke of that command, count: allowed invokes recorded since the
+// last reset, capped at 2 since the cooldown is already at its steady value
+// by then }. Keyed by both so /roam and /meet throttle independently.
 const lastInvokeAt = new Map();
 
-// Drop aged-out entries. Amortized-cheap: an entry this stale is already
-// equivalent to no entry at all (see the idle-reset in claimCommandInvoke), so
-// this only walks the map once it has grown past a size normal load never
-// reaches.
+// Drop long-abandoned entries. Amortized-cheap: this only walks the map once
+// it has grown past a size normal load never reaches.
 function sweepInvokeThrottle(now) {
   if (lastInvokeAt.size < 1024) return;
   for (const [key, entry] of lastInvokeAt) {
-    if (now - entry.lastAt >= INVOKE_STRIKE_IDLE_RESET_MS) lastInvokeAt.delete(key);
+    if (now - entry.lastAt >= INVOKE_ENTRY_STALE_MS) lastInvokeAt.delete(key);
   }
 }
 
@@ -119,53 +120,49 @@ function sweepInvokeThrottle(now) {
 // call, like claimCommandUse but in memory and on a minutes scale. Returns
 // { allowed: true } and records the invoke, or { allowed: false, reason }
 // when this user's previous invoke *of this same command* was more recent
-// than the currently required wait (INVOKE_THROTTLE_STEP_MS times how many
-// invokes this streak has recorded so far, capped — see the comment above). A
-// different command is never blocked by this one. Call this first, before the
-// Supabase pre-check, so a flood never reaches the DB or a message build.
+// than the currently required cooldown (free on the very first invoke, 1
+// minute on the second, a flat 5 minutes on every one after that — see the
+// comment above). A different command is never blocked by this one. Call this
+// first, before the Supabase pre-check, so a flood never reaches the DB or a
+// message build.
 export function claimCommandInvoke(userId, command, now = Date.now()) {
   const key = `${userId}:${command}`;
   const entry = lastInvokeAt.get(key);
-  const lastAt = entry ? entry.lastAt : -Infinity;
-  const idleGap = now - lastAt;
 
-  // Long enough since the last invoke (of either kind) that this counts as a
-  // fresh start rather than a continuation of an old streak.
-  const strikes = idleGap >= INVOKE_STRIKE_IDLE_RESET_MS ? 0 : (entry ? entry.strikes : 0);
-  // strikes counts invokes recorded so far this streak — 0 before the very
-  // first (free), 1 after it (next needs 1 step), 2 after that (next needs 2
-  // steps), and so on.
-  const required = Math.min(strikes * INVOKE_THROTTLE_STEP_MS, INVOKE_THROTTLE_CAP_MS);
+  if (!entry) {
+    lastInvokeAt.set(key, { lastAt: now, count: 1 });
+    sweepInvokeThrottle(now);
+    return { allowed: true };
+  }
+
+  const required = entry.count === 1 ? INVOKE_FIRST_REPEAT_COOLDOWN_MS : INVOKE_STEADY_COOLDOWN_MS;
+  const idleGap = now - entry.lastAt;
 
   if (idleGap < required) {
-    // Blocked. The retry still counts toward the next required wait — that's
-    // what stops "wait out the posted window, invoke, repeat" from working
-    // just because each individual wait was honest — but the clock itself
-    // doesn't move from a blocked attempt; a block can't push its own window
-    // out from itself.
-    lastInvokeAt.set(key, { lastAt, strikes: strikes + 1 });
+    // Blocked. Nothing is recorded — a rejected attempt isn't a use, so it
+    // can't itself move the cooldown or the count.
     return {
       allowed: false,
       reason: `One moment — you can use /${command} again in ${formatDuration(required - idleGap)}.`,
     };
   }
 
-  lastInvokeAt.set(key, { lastAt: now, strikes: strikes + 1 });
+  lastInvokeAt.set(key, { lastAt: now, count: Math.min(entry.count + 1, 2) });
   sweepInvokeThrottle(now);
   return { allowed: true };
 }
 
-// Wipe this user's invoke-escalation history for one command, back to a
-// completely free first use. Two callers, two different reasons it's safe:
+// Wipe this user's invoke-throttle state for one command, back to a
+// completely free first invoke. Two callers, two different reasons it's safe:
 //   - The command handler claimed the slot via claimCommandInvoke and then
 //     failed before producing anything (e.g. buildMeetPickMessage or
 //     buildRoamDialogueMessage threw). Without this, a single failed /roam or
-//     /meet still leaves the user facing an escalated wait for a request that
-//     never actually went through.
+//     /meet still leaves the user facing a cooldown for a request that never
+//     actually went through.
 //   - claimCommandUse just succeeded for real (see app.js) — a genuine commit
-//     ends the rerolling session this throttle escalates against, so the next
+//     ends the rerolling session this throttle guards against, so the next
 //     window (three hours off, per the DB cooldown) starts clean rather than
-//     carrying a stale streak forward.
+//     carrying the steady 5-minute state forward.
 // Also reused by the mission cooldown-reset flow (missions.js): spending a
 // banked reset on the 3h DB cooldown is meant to make the command usable
 // again immediately, so it clears this too rather than leaving the flood
