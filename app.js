@@ -803,6 +803,21 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       const [characterId, responseTypeId, origin] = rest;
       const commandName = origin === 'roam' ? 'roam' : 'meet';
 
+      // Ack with a silent deferred-update FIRST, then do the real work. This
+      // step is claimCommandUse (a DB round trip) followed by
+      // buildResponseResultMessage (several more: consuming boosts, recording
+      // the response, checking errand signatures) — easily enough to overrun
+      // Discord's 3s interaction window on a slow database. Missing that
+      // window doesn't undo the claim or the affinity write below; it only
+      // drops the reply, so Discord shows the clicker "This interaction
+      // failed" with the buttons still enabled. The reflexive second click is
+      // a *new* interaction: claimCommandUse correctly refuses it (the slot's
+      // already claimed) and used to overwrite the message with the cooldown
+      // reason — burying the +2 the first click already earned behind a
+      // cooldown notice. Deferring first removes that race (see the identical
+      // fix and rationale on the mission-claim handlers below).
+      res.send({ type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE });
+
       (async () => {
         try {
           // The cooldown gate, at redemption rather than only at command-invoke.
@@ -831,14 +846,14 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
               ...row,
               components: (row.components || []).map(btn => ({ ...btn, disabled: true })),
             }));
-            res.send({
-              type: InteractionResponseType.UPDATE_MESSAGE,
-              data: {
+            try {
+              await sendFollowup(req.body.token, {
                 content: limit.reason,
                 components: collapsed,
-                flags: 64, // EPHEMERAL
-              },
-            });
+              }, 15000, true);
+            } catch (followupErr) {
+              console.error('Failed to send /resp cooldown followup:', followupErr);
+            }
             return;
           }
 
@@ -854,10 +869,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             responseTypeId,
             req.body.message?.components,
           );
-          res.send({
-            type: InteractionResponseType.UPDATE_MESSAGE,
-            data: messageData,
-          });
+          await sendFollowup(req.body.token, messageData, 15000, true);
 
           // The bond scene for a level the user just crossed into
           // (docs/bond-scene-dms.md). Never awaited: the reply above must not
@@ -877,13 +889,13 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           trackCharacterEngagement(userId, characterId).catch(err => console.error('Error tracking character engagement:', err));
         } catch (err) {
           console.error('Error in /resp:', err);
-          res.send({
-            type: InteractionResponseType.UPDATE_MESSAGE,
-            data: {
+          try {
+            await sendFollowup(req.body.token, {
               content: `Error: ${err.message}`,
-              flags: 64,
-            },
-          });
+            }, 15000, true);
+          } catch (followupErr) {
+            console.error('Failed to send /resp error followup:', followupErr);
+          }
         }
       })();
       return;
