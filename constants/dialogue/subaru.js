@@ -46,7 +46,7 @@ export default {
       },
       keepsake: {
         emoji: "🍵",
-        line: "A pot of tea made slowly, because someone had stayed to watch it steep.",
+        line: "A pot of tea made slowly, because someone had stayed for the company.",
       },
     },
 
@@ -247,7 +247,7 @@ export default {
     ],
     known: [
       "He greets you by name now, and looks pleased to have gotten it right.",
-      "He's stopped putting his gloves on before he takes anything from your hands.",
+      "He still braces before he takes anything from your hands. He just doesn't hesitate anymore before offering to.",
       "There's a cup already out. He'll say it was poured for no one in particular.",
       "He doesn't call you a guest anymore. It slipped out once, and he let it.",
       "\"I'm sorry I'm so late. The campus is so crowded I can never manage to walk in a straight line. Silly, isn't it?\"",
@@ -288,11 +288,11 @@ export default {
         new: [
           '"Ah, a guest. Please, come in out of the dark."',
           "He's bringing the outer lanterns in for the night, and waves you in toward the house.",
-          '"The forest changes character after sundown," he says. "Stay close and it stays kind."',
+          '"Here, let me take that for you," he says, already reaching for your bag before catching himself. "Only if you don\'t mind."',
           '"You\'re safe here, even at this hour," he says. "That much I can promise."',
         ],
         known: [
-          "He walks you in the long way, as always, naming the forest's night sounds so none of them startle you.",
+          "He takes your bag without waiting to be asked now, same quiet effort as always. He never lets it look like it costs him anything.",
           '"I do the rounds of the house about now, shutters and lamps. Keep me company while I do?"',
           '"The tea\'s still warm and there\'s no hurry anywhere," he says. "Stay a while."',
         ],
@@ -327,6 +327,7 @@ export default {
       "\"I'm very sorry to have kept you waiting. It's wonderful to see you again.\"",
       '"A visitor? Then let me at least offer you tea."',
       '"You\'re safe here. That much I can promise."',
+      '"Oh, is that heavy? Here, let me... ah, only if you don\'t mind me holding it."',
     ],
     known: [
       '"Welcome back. I hoped that was you at the gate."',
@@ -336,6 +337,7 @@ export default {
       '"You\'ve been kind to this house. I notice these things."',
       '"Lyca and I have lunch on the terrace most days. You\'d be welcome, if you ever wanted the company."',
       "\"You've caught me mid pot, actually. Sit down, it'll be ready in a moment.\"",
+      '"I found your umbrella left behind last week. I only meant to move it in from the rain, truly. ...Sorry, that\'s more than you needed to know."',
     ],
     warm: [
       "\"You're here... I'm very glad.\"",

@@ -294,7 +294,7 @@ export default {
       '"Smile. You\'re on camera. Ah, too late."',
       '"New face. Cute. How long do you think you\'ll last?"',
       '"Say something interesting. I\'m running low on entertainment."',
-      '"Ask for permission if you want to talk to me. ...Nope. Denied."',
+      "\"You need an appointment to talk to me. You don't have one.\"",
       "\"I'm so done with these classes. I'll show up for the tests and skip the rest.\"",
     ],
     known: [
@@ -319,7 +319,7 @@ export default {
       '"No camera. No audience. Just me being awful at you. Lucky."',
       '"Say my name. The way you did last time. Yes, that."',
       "\"You're not intimidated. You're something else. I like that better.\"",
-      '"I can touch you. You can\'t touch me. Those are the rules. I make the rules."',
+      "\"You're staring. Good. Means I'm still worth the trouble.\"",
     ],
     close: [
       "\"You're the only thing sharp enough to match my wit. The only one I'd never want to hurt.\"",

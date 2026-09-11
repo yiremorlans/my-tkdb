@@ -41,7 +41,7 @@ export default {
             label: "Ask if it's just the tour",
             style: 4,
             close:
-              "*There's a gap. A real one, from someone who types like he talks.*\n\nHa! Yeah, nah, course it is, it's the tour, it's a great tour, five stars, people rave...\n\n...Bring a jacket. Gets cold by the water and I'm not sharing mine. I am absolutely going to share mine.",
+              "*There's a gap. A real one, from someone who types like he talks.*\n\nHa! Yeah, nah, course it is, it's the tour, it's a great tour, five stars, people rave...\n\n...Bring a jacket. Gets cold by the water and I'm not sharing mine. *He is absolutely going to share his.*",
           },
         ],
       },

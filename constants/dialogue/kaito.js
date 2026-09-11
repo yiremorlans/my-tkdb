@@ -4,18 +4,27 @@ export default {
   // anyway. Kind is what reaches him, so every choice is really about whether
   // the reassurance he is fishing for actually arrives.
   //
+  // The acquaintance scene opens the bond with him working up to asking
+  // {firstName} to lunch, one-on-one, no Luca along for it. The ask itself
+  // is reference.md's Home Screen "Morning 5" line, nearly verbatim
+  // ("Luca's busy after class, so how about we hit up the diner? It's been
+  // ages!"); the follow-up quotes his own "Default 3" self-own ("I could've
+  // taken MC to lunch with that money! God, why am I such a moron?!"); the
+  // choice prompt echoes "Idle 1" ("Am I being annoying?! I'm sorry!").
+  //
   // Texting voice, per reference.md's "## Bond Scenes" notes: a sob emoji (😭)
   // surfaces when he's overwhelmed, his anxious questions almost always double
   // the "??", and he stretches letters when exasperated ("Urghhhh").
   bondScenes: {
     acquaintance: {
       beats: [
-        "*Nine messages arrive at once, then a tenth that just says: ignore all that.*\n\n**{firstName}**: okay so I got your contact off the house sheet which is probably WEIRD, is that weird?? that's weird\n\nI'm deleting this\n\nI can't delete this you've already seen it",
-        "Okay okay okay. Real reason. *A photo comes through: a tray of something small and burnt on one side.* I made too many. Like, a genuinely stupid amount. And I thought... you've turned up {timesMet} times now and you never once looked at me like I was a waste of a conversation, so.\n\nSo there's some with your name on. Literally. I wrote your name on the paper. That's the part I regret 😭",
+        "*Deleted message*\n\n*Deleted message*\n\n*Deleted message*",
+        "**{firstName}**: Hey, Honor Roll!!\n\nokay, so, guess what, Luca's busy after class. How about we hit up the diner? It's been ages, right?",
+        "Not a group thing, though. Just us. No Luca showing up halfway through to make it a whole thing. 😭\n\nYou've turned up {timesMet} times now and I still hadn't just asked. Could've, ages ago, but I kept blowing money on dumber stuff instead. 'God, why am I such a moron.' Yeah. Story of my life. It's happening now though ",
       ],
       choice: {
         prompt:
-          "...You can say no! Seriously! I'm so normal about being told no!",
+          "...Am I being annoying?? You can say no! Seriously! *Please don't say no.*",
         options: [
           {
             key: "kind",
@@ -26,23 +35,23 @@ export default {
           },
           {
             key: "playful",
-            label: "Ask about the burnt side",
+            label: "Ask if it's a date",
             style: 1,
             close:
-              "THAT'S THE CARAMELIZED SIDE. That's on PURPOSE.\n\nUrghhhh it is not on purpose. I panicked and turned the oven up. Please still come 😭",
+              "IT'S LUNCH. It's just lunch!\n\n...Does it count if I've been staring at the diner's menu for two days deciding what to order in front of you? Asking for a friend. The friend is me 😭",
           },
           {
             key: "bold",
-            label: "Ask if yours came first",
+            label: "Ask why not with Luca",
             style: 4,
             close:
-              "*There is a very long gap.*\n\n...I made the tray for you and then made extra so it'd look like an accident, *he types, all at once, like ripping a Band-Aid off.* OKAY BYE.",
+              "*There is a very long gap.*\n\n...because when it's the three of us you end up talking to him the whole time, and you're not wrong to, everyone does, I just wanted one lunch where I'm the whole conversation instead of the guy standing next to it. OKAY BYE.",
           },
         ],
       },
       keepsake: {
-        emoji: "🍪",
-        line: "A slip of parchment paper with your name written on it in blue ballpoint.",
+        emoji: "🍜",
+        line: "The receipt from the diner, kept because he actually got you there.",
       },
     },
 

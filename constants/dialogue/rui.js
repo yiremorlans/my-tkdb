@@ -13,7 +13,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Hey, Honor Roll! 🤗 First time texting you, I know, very forward of me. But I've got a reason, promise. I made you a drink ✨ and it's just sitting on my bar getting warm. Kind of a tragedy. Come rescue it?",
-        "Okay, full disclosure: I make a drink for everyone who comes in. That part's not special.\n\nThe part that is: I've remade yours four times. You've been in {timesMet} times and I paid attention to every one, what you finish, what you leave. That's where the four came from.\n\nAnyway! Fifth version's in your glass now ✨ Pretty sure I nailed it this time.",
+        "Okay, full disclosure: I make a drink for everyone who comes in. That part's not special.\n\nThe part that is: I've remade yours four times. You've been in {timesMet} times and I paid attention to what you finish, what you leave. That's where the four came from.\n\nAnyway! Fifth version's in your glass now ✨ Pretty sure I nailed it this time.",
       ],
       choice: {
         prompt:

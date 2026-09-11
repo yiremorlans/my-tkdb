@@ -20,19 +20,22 @@ export default {
             key: "kind",
             label: "Say you're glad he wrote",
             style: 3,
-            close: "...Glad. *A long pause.* Ha. Whatever. Be glad, then. Costs me nothing.",
+            close:
+              "...Glad. *A long pause.* Ha. Whatever. Be glad, then. Costs me nothing.",
           },
           {
             key: "playful",
             label: "Ask if that was praise",
             style: 1,
-            close: "Praise? Tsk. That was a fact.\n\n...You don't need praise anyway. You'd just get cocky. Forget I said that.",
+            close:
+              "Praise? Tsk. That was a fact.\n\n...You don't need praise anyway. You'd just get cocky.",
           },
           {
             key: "bold",
             label: "Tell him you'll decide that",
             style: 4,
-            close: "Ha. *It comes back instantly.* *There* it is.\n\nI've got no use for anyone who waits to be told what to think. Go to bed, servant.",
+            close:
+              "Ha. *It comes back instantly.* *There* it is.\n\nI've got no use for anyone who waits to be told what to think. Go to bed, servant.",
           },
         ],
       },
@@ -54,19 +57,22 @@ export default {
             key: "kind",
             label: "Say he's worth honesty",
             style: 3,
-            close: "*The typing indicator comes and goes three separate times.*\n\n...Then keep it up, *he sends eventually. Nothing else. Four words took him two minutes.*",
+            close:
+              "*The typing indicator comes and goes three separate times.*\n\n...Then keep it up, *he sends eventually. Nothing else. Four words took him two minutes.*",
           },
           {
             key: "playful",
             label: "Say it's mostly ignorance",
             style: 1,
-            close: "Ignorance. You're lying, you're bad at it, and I don't care.\n\nStay dumb, then. It suits you better than the alternative.",
+            close:
+              "Ignorance. You're lying, you're bad at it, and I don't care.\n\nStay dumb, then. It suits you better than the alternative.",
           },
           {
             key: "bold",
             label: "Tell him guts, obviously",
             style: 4,
-            close: "Obviously, *he repeats, and the word comes out half a laugh.*\n\nYou know how many people in this house talk to me like that? One. The rest rehearse a soft voice and think I can't hear the seams. That's what's wrong with this place. You're the only part of it I haven't got memorized.",
+            close:
+              "Obviously, *he repeats, and the word comes out half a laugh.*\n\nYou know how many people in this house talk to me like that? One. The rest rehearse a soft voice and think I can't hear the seams. That's what's wrong with this place. You're the only part of it I haven't got memorized.",
           },
         ],
       },
@@ -89,19 +95,22 @@ export default {
             key: "kind",
             label: "Tell him you'll wear it",
             style: 3,
-            close: "Obviously you'll wear it. That's what it's *for*.\n\n*Then, after a moment:* ...Suits you. Wearing my house suits you. I heard how that sounded. I'm not saying it again.",
+            close:
+              "Obviously you'll wear it. That's what it's *for*.\n\n*Then, after a moment:* ...Suits you. Wearing my house suits you. I heard how that sounded. I'm not saying it again.",
           },
           {
             key: "playful",
             label: "Ask what took him so long",
             style: 1,
-            close: "I was *busy*. I wasn't busy. I was a coward about a piece of metal. Don't tell Tohma. He'll be unbearable and he'll be right.",
+            close:
+              "I was *busy*. I wasn't busy. I was a coward about a piece of metal. Don't tell Tohma. He'll be unbearable and he'll be right.",
           },
           {
             key: "bold",
             label: "Ask him to put it on you",
             style: 4,
-            close: "*The reply takes a long time.*\n\nCome up. Now, before I change my mind.\n\n*He does it in the captain's room without turning the lamp on, your hand held flat in both of his, and he takes a hell of a lot longer over it than the job needs. Neither of you mentions that.*",
+            close:
+              "*The reply takes a long time.*\n\nCome up. Now, before I change my mind.\n\n*He does it in the captain's room without turning the lamp on, your hand held flat in both of his, and he takes a hell of a lot longer over it than the job needs. Neither of you mentions that.*",
           },
         ],
       },
@@ -124,19 +133,22 @@ export default {
             key: "kind",
             label: "Refuse to move past it",
             style: 3,
-            close: "*Nothing for a long time.*\n\nNo. You wouldn't, would you. *A pause.* That was the whole risk of telling you.\n\n...Stay put. I'm not done being looked at.",
+            close:
+              "*Nothing for a long time.*\n\nNo. You wouldn't, would you. *A pause.* That was the whole risk of telling you.\n\n...Stay put. I'm not done being looked at.",
           },
           {
             key: "playful",
             label: "Call him extremely pathetic",
             style: 1,
-            close: "Thanks. That's exactly what I asked for and I hate it.\n\nDo it again tomorrow. Apparently I need it.",
+            close:
+              "Thanks. That's exactly what I asked for and I hate it.\n\nDo it again tomorrow. Apparently I need it.",
           },
           {
             key: "bold",
             label: "Tell him you're not leaving",
             style: 4,
-            close: "Nobody gets to promise that, *he writes, fast, almost angry.* People say it and then the math happens anyway.\n\n*Then, much slower:* ...Say it again. I won't believe you. Say it anyway.\n\n*You say it four times before he stops asking. He never once says thank you, and he doesn't put the phone down until it's light.*",
+            close:
+              "Nobody gets to promise that, *he writes, fast, almost angry.* People say it and then the math happens anyway.\n\n*Then, much slower:* ...Say it again. I won't believe you. Say it anyway.\n\n*You say it four times before he stops asking. He never once says thank you, and he doesn't put the phone down until it's light.*",
           },
         ],
       },
@@ -159,19 +171,22 @@ export default {
             key: "kind",
             label: "Tell him you're all right",
             style: 3,
-            close: "I know you're all right. I've known for six minutes.\n\nTurns out knowing and believing aren't the same thing. Say it once more and I'll work on the second one.",
+            close:
+              "I know you're all right. I've known for six minutes.\n\nTurns out knowing and believing aren't the same thing. Say it once more and I'll work on the second one.",
           },
           {
             key: "playful",
             label: "Say you'd pay to see it",
             style: 1,
-            close: "Nobody saw it. I made sure nobody saw it.\n\nTohma saw it. Tohma hasn't said a word, which from him is basically a parade. I'm never living it down.",
+            close:
+              "Nobody saw it. I made sure nobody saw it.\n\nTohma saw it. Tohma hasn't said a word, which from him is basically a parade. I'm never living it down.",
           },
           {
             key: "bold",
             label: "Tell him to come find you",
             style: 4,
-            close: "*No reply at all.*\n\n*Seven minutes later there are footsteps outside, unhurried, because he won't be caught hurrying twice in one night. He doesn't knock. He puts both hands to your jaw, rings cold against it, looks at you far longer than he needs to, and says,*\n\n> There. Accounted for.\n\n*and doesn't let go for a good while after that.*",
+            close:
+              "*No reply at all.*\n\n*Seven minutes later there are footsteps outside, unhurried, because he won't be caught hurrying twice in one night. He doesn't knock. He puts both hands to your jaw, rings cold against it, looks at you far longer than he needs to, and says,*\n\n> There. Accounted for.\n\n*and doesn't let go for a good while after that.*",
           },
         ],
       },
@@ -195,13 +210,15 @@ export default {
             key: "answered",
             label: "Say it back",
             style: 3,
-            close: "*Nothing. Nothing for so long that you check the message sent.*\n\nCome here. Now. I don't care what time it is.\n\n*He meets you at the top of the stairs still in yesterday's shirt, and for a man who has never in his life been at a loss for what to say, he says nothing at all for a very long moment before he kisses you, carefully, the way he does everything, and then not carefully in the least.*",
+            close:
+              "*Nothing. Nothing for so long that you check the message sent.*\n\nCome here. Now. I don't care what time it is.\n\n*He meets you at the top of the stairs still in yesterday's shirt, and for a man who has never in his life been at a loss for what to say, he says nothing at all for a very long moment before he kisses you, carefully, the way he does everything, and then not carefully in the least.*",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
-            close: "Fine. *It comes back without a second's hesitation, and there's nothing wounded in it.*\n\nI've never wanted anything I could just order. Take as long as you need. I'm terrible at waiting. I'll learn.\n\n*And he does. Nothing changes. He's exactly where he always is, insufferable and immovable, holding open the door of a room he has never once made you knock at.*",
+            close:
+              "Fine. *It comes back without a second's hesitation, and there's nothing wounded in it.*\n\nI've never wanted anything I could just order. Take as long as you need. I'm terrible at waiting. I'll learn.\n\n*And he does. Nothing changes. He's exactly where he always is, insufferable and immovable, holding open the door of a room he has never once made you knock at.*",
           },
         ],
       },
@@ -266,7 +283,7 @@ export default {
           '"The cold gets worse after sundown," he says. "You knew that, and came anyway."',
         ],
         known: [
-          '"Late," he observes. He doesn\'t say for what, and doesn\'t tell you to leave either.',
+          "\"Late,\" he observes. He doesn't say for what, and doesn't tell you to leave either.",
           "The cold doesn't reach the spot he's left open beside him. He arranged that before you arrived.",
           '"It\'s late," he says. "Stand somewhere useful and don\'t let the cold in."',
         ],
@@ -438,11 +455,7 @@ export default {
       ],
     },
     neutral: {
-      new: [
-        "Respect his space",
-        "Wait for him to speak",
-        "Say nothing at all",
-      ],
+      new: ["Respect his space", "Wait for him to speak", "Say nothing at all"],
       spark: [
         "Let the moment pass",
         "Look away first",

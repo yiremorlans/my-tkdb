@@ -9,7 +9,7 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Good evening. This message is sent at 23:47, which is outside the hours I have set aside for correspondence. I am noting that at the top so that you understand it was deliberate.",
+        "**{firstName}**: Good evening. This message is outside the hours I have set aside for correspondence, so I will be brief.\n\n I am noting that at the top so that you understand it was deliberate.",
         "I maintain a record of everyone who enters Sinostra on business. It is not surveillance; it is the reason nobody has brought a successful claim against this house since I arrived.\n\nYour entry reads: {timesMet} visits, no petition, no dispute, no request for representation. That column is blank for exactly one person in a document of four hundred and six.\n\nI have checked it three times. I found the blankness irritating and then, on the third check, I found that I did not.",
       ],
       choice: {
@@ -35,7 +35,7 @@ export default {
             label: "Ask what he wants instead",
             style: 4,
             close:
-              "*There is no reply for nearly two minutes, which for a man who is punctual to the second is a great deal of time.*\n\nThat question is outside the scope of this correspondence, *he writes.*\n\nI have not deleted it, however. I want that noted also.",
+              "*There is no reply for nearly two minutes, which for a man who is punctual to the second is a great deal of time.*\n\nThat question is outside the scope of this correspondence.\n\nI have not deleted it, however. I want that noted also.",
           },
         ],
       },
@@ -86,7 +86,7 @@ export default {
       beats: [
         "**{firstName}**: I am proposing a standing arrangement. Tuesdays, 19:00 to 20:30, the small reading room on the second floor. Attendance optional; I will be present regardless.",
         "*You go. He has laid out two chairs, a lamp, tea, and absolutely no paperwork whatsoever, which for Ritsu Shinjo is a room stripped bare.*\n\n> There is no purpose. I want that stated plainly at the outset, because you will look for one and its absence is the entire point.",
-        "> Every hour of my week is allocated. I have kept a schedule since I was twelve. One block on Tuesdays has read \"contingency\" since the start of the year and has never once held a contingency.\n\n> I have been spending it in this room. Alone. Reading things of no professional use to me and telling nobody.\n\n> I am now telling one person. The chair is for you. I bought it in March and have been rehearsing this since roughly then.",
+        '> Every hour of my week is allocated. I have kept a schedule since I was twelve. One block on Tuesdays has read "contingency" since the start of the year and has never once held a contingency.\n\n> I have been spending it in this room. Alone. Reading things of no professional use to me and telling nobody.\n\n> I am now telling one person. The chair is for you. I bought it in March and have been rehearsing this since roughly then.',
       ],
       choice: {
         prompt:
@@ -182,7 +182,7 @@ export default {
             label: "Ask if there's a form for it",
             style: 1,
             close:
-              "There is not.\n\nThere is now. I have drafted one. It is a single page and it is titled \"Matters I Have Elected Not To Record\" and it has one line on it and I am aware that is the most sentimental thing I have ever done.",
+              'There is not.\n\nThere is now. I have drafted one. It is a single page and it is titled "Matters I Have Elected Not To Record" and it has one line on it and I am aware that is the most sentimental thing I have ever done.',
           },
           {
             key: "bold",
@@ -351,7 +351,12 @@ export default {
       "Take the partnership",
       "Tell him you'll stay",
     ],
-    bound: ["Close the file", "Switch the recorder off", "Stay the week", "Come here"],
+    bound: [
+      "Close the file",
+      "Switch the recorder off",
+      "Stay the week",
+      "Come here",
+    ],
   },
   responses: {
     kind: {
