@@ -76,25 +76,26 @@ export async function devResetCommandLimits(userId, commands = RATE_LIMITED_COMM
 // flat window doesn't touch that; waiting it out exactly is the whole
 // exploit.
 //
-// So the window escalates per repeat invoke of the *same* command by the same
-// user — INVOKE_ESCALATION_MS per invoke beyond the first, capped at
-// INVOKE_THROTTLE_CAP_MS — and a blocked (too-early) retry counts toward that
-// escalation too, not just a successful one: mashing through the block makes
-// the next wait longer, not the same. Going /roam then /meet is one of each,
-// which is normal play and stays free — this is keyed per command. Two things
-// bring it back down to the base window: a long enough idle gap
-// (INVOKE_STRIKE_IDLE_RESET_MS) with no invoke at all, since an escalation
-// from a session that ended shouldn't hang over someone back for normal play,
-// and actually claiming the command for real — releaseCommandInvoke wipes it,
-// called once claimCommandUse succeeds, so a genuine commit ends the
-// rerolling session it was escalating against.
+// So the window escalates by one more INVOKE_THROTTLE_STEP_MS per repeat
+// invoke of the *same* command by the same user, capped at
+// INVOKE_THROTTLE_CAP_MS: /meet is free, wait 1 minute and /meet again is
+// allowed, wait 2 minutes and the next is allowed, then 3, then 4, and so on.
+// A blocked (too-early) retry counts toward that escalation too, not just a
+// successful one: mashing through the block makes the next wait longer, not
+// the same. Going /roam then /meet is one of each, which is normal play and
+// stays free — this is keyed per command. Two things bring it back down to
+// the 1-minute floor: a long enough idle gap (INVOKE_STRIKE_IDLE_RESET_MS)
+// with no invoke at all, since an escalation from a session that ended
+// shouldn't hang over someone back for normal play, and actually claiming the
+// command for real — releaseCommandInvoke wipes it, called once
+// claimCommandUse succeeds, so a genuine commit ends the rerolling session it
+// was escalating against.
 //
 // It lives in memory: single app instance, the cost of a miss is one extra
-// picker, and a deploy just hands everyone a fresh base window. It is NOT a
+// picker, and a deploy just hands everyone a fresh start. It is NOT a
 // substitute for the DB cooldown, which stays the only thing between a user
 // and a second reward.
-const INVOKE_THROTTLE_BASE_MS = 60 * 1000;
-const INVOKE_ESCALATION_MS = 2 * 60 * 1000;
+const INVOKE_THROTTLE_STEP_MS = 60 * 1000;
 const INVOKE_THROTTLE_CAP_MS = 10 * 60 * 1000;
 const INVOKE_STRIKE_IDLE_RESET_MS = 30 * 60 * 1000;
 
@@ -115,13 +116,13 @@ function sweepInvokeThrottle(now) {
 }
 
 // Claim this user's invoke slot for one command: decide and stamp in one
-// call, like claimCommandUse but in memory and on a seconds-to-minutes scale.
-// Returns { allowed: true } and records the invoke, or { allowed: false,
-// reason } when this user's previous invoke *of this same command* was more
-// recent than the currently required wait (base window plus 2 minutes per
-// prior invoke this streak, capped — see the comment above). A different
-// command is never blocked by this one. Call this first, before the Supabase
-// pre-check, so a flood never reaches the DB or a message build.
+// call, like claimCommandUse but in memory and on a minutes scale. Returns
+// { allowed: true } and records the invoke, or { allowed: false, reason }
+// when this user's previous invoke *of this same command* was more recent
+// than the currently required wait (INVOKE_THROTTLE_STEP_MS times how many
+// invokes this streak has recorded so far, capped — see the comment above). A
+// different command is never blocked by this one. Call this first, before the
+// Supabase pre-check, so a flood never reaches the DB or a message build.
 export function claimCommandInvoke(userId, command, now = Date.now()) {
   const key = `${userId}:${command}`;
   const entry = lastInvokeAt.get(key);
@@ -131,10 +132,10 @@ export function claimCommandInvoke(userId, command, now = Date.now()) {
   // Long enough since the last invoke (of either kind) that this counts as a
   // fresh start rather than a continuation of an old streak.
   const strikes = idleGap >= INVOKE_STRIKE_IDLE_RESET_MS ? 0 : (entry ? entry.strikes : 0);
-  const required = Math.min(
-    INVOKE_THROTTLE_BASE_MS + strikes * INVOKE_ESCALATION_MS,
-    INVOKE_THROTTLE_CAP_MS,
-  );
+  // strikes counts invokes recorded so far this streak — 0 before the very
+  // first (free), 1 after it (next needs 1 step), 2 after that (next needs 2
+  // steps), and so on.
+  const required = Math.min(strikes * INVOKE_THROTTLE_STEP_MS, INVOKE_THROTTLE_CAP_MS);
 
   if (idleGap < required) {
     // Blocked. The retry still counts toward the next required wait — that's
@@ -154,8 +155,8 @@ export function claimCommandInvoke(userId, command, now = Date.now()) {
   return { allowed: true };
 }
 
-// Wipe this user's invoke-escalation history for one command, back to a clean
-// base window. Two callers, two different reasons it's safe:
+// Wipe this user's invoke-escalation history for one command, back to a
+// completely free first use. Two callers, two different reasons it's safe:
 //   - The command handler claimed the slot via claimCommandInvoke and then
 //     failed before producing anything (e.g. buildMeetPickMessage or
 //     buildRoamDialogueMessage threw). Without this, a single failed /roam or
