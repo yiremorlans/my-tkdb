@@ -2,6 +2,7 @@ import {
   getCommandLimits,
   claimCommandSlot,
   spendCooldownReset,
+  clearCommandLimits,
 } from './db/supabase.js';
 
 // Each command (roam/meet) can be used once every 3 hours, tracked per user.
@@ -50,71 +51,127 @@ export async function redeemCooldownReset(userId, command) {
   }
 }
 
+/**
+ * Owner-only test helper (see /encdev reset). Unlike redeemCooldownReset this
+ * isn't earned — it wipes both the 3h DB cooldown and the in-memory invoke
+ * throttle for one or more commands, for one user, so manual testing doesn't
+ * have to wait out either clock. Defaults to both rate-limited commands.
+ * Throws on a DB error, same as the functions it wraps — this only ever runs
+ * against the owner's own account, so failing loudly beats failing quietly.
+ */
+export async function devResetCommandLimits(userId, commands = RATE_LIMITED_COMMANDS) {
+  await clearCommandLimits(userId, commands);
+  for (const command of commands) releaseCommandInvoke(userId, command);
+}
+
 // ---------------------------------------------------------------------------
 // Invoke-flood throttle (in-memory)
 // ---------------------------------------------------------------------------
 // The 3h cooldown guards the *reward*, claimed at the dialogue-response step.
 // It says nothing about how often the command may be *invoked* — opening a
-// picker and walking away is free by design. That leaves one gap: a user can
-// still hammer /roam or /meet without ever responding, and every invoke costs
-// a Supabase read, a message build (buildRoamDialogueMessage runs affinity
-// lookups; the spawn button after it composes an image), a Discord round trip,
-// and a line of channel noise.
+// picker and walking away is free by design. That leaves a gap beyond plain
+// spam: a user who is off the 3h cooldown can peek at /roam or /meet, not
+// like what comes up, wait out the flat window, and peek again — rerolling
+// the random pick for free since nothing is claimed until they respond. A
+// flat window doesn't touch that; waiting it out exactly is the whole
+// exploit.
 //
-// This is a per-user debounce, and like the 3h reward cooldown it is keyed per
-// command. Repeating the same command is the flood worth stopping; going /roam
-// then /meet is one of each, which is normal play and stays free. It lives in memory: single app instance, the cost
-// of a miss is one extra picker, and a deploy just hands everyone one free
-// invoke. It is NOT a substitute for the DB cooldown, which stays the only
-// thing between a user and a second reward.
-const INVOKE_THROTTLE_MS = 60 * 1000;
+// So the window escalates per repeat invoke of the *same* command by the same
+// user — INVOKE_ESCALATION_MS per invoke beyond the first, capped at
+// INVOKE_THROTTLE_CAP_MS — and a blocked (too-early) retry counts toward that
+// escalation too, not just a successful one: mashing through the block makes
+// the next wait longer, not the same. Going /roam then /meet is one of each,
+// which is normal play and stays free — this is keyed per command. Two things
+// bring it back down to the base window: a long enough idle gap
+// (INVOKE_STRIKE_IDLE_RESET_MS) with no invoke at all, since an escalation
+// from a session that ended shouldn't hang over someone back for normal play,
+// and actually claiming the command for real — releaseCommandInvoke wipes it,
+// called once claimCommandUse succeeds, so a genuine commit ends the
+// rerolling session it was escalating against.
+//
+// It lives in memory: single app instance, the cost of a miss is one extra
+// picker, and a deploy just hands everyone a fresh base window. It is NOT a
+// substitute for the DB cooldown, which stays the only thing between a user
+// and a second reward.
+const INVOKE_THROTTLE_BASE_MS = 60 * 1000;
+const INVOKE_ESCALATION_MS = 2 * 60 * 1000;
+const INVOKE_THROTTLE_CAP_MS = 10 * 60 * 1000;
+const INVOKE_STRIKE_IDLE_RESET_MS = 30 * 60 * 1000;
 
-// "<discord_user_id>:<command>" -> epoch ms of that user's last invoke of that
-// command. Keyed by both so /roam and /meet throttle independently.
+// "<discord_user_id>:<command>" -> { lastAt: epoch ms of that user's last
+// invoke of that command (blocked or not), strikes: invokes recorded since
+// the last reset }. Keyed by both so /roam and /meet escalate independently.
 const lastInvokeAt = new Map();
 
-// Drop aged-out entries. Amortized-cheap: entries expire after
-// INVOKE_THROTTLE_MS, and this only walks the map once it has grown past a
-// size normal load never reaches.
+// Drop aged-out entries. Amortized-cheap: an entry this stale is already
+// equivalent to no entry at all (see the idle-reset in claimCommandInvoke), so
+// this only walks the map once it has grown past a size normal load never
+// reaches.
 function sweepInvokeThrottle(now) {
   if (lastInvokeAt.size < 1024) return;
-  for (const [key, ts] of lastInvokeAt) {
-    if (now - ts >= INVOKE_THROTTLE_MS) lastInvokeAt.delete(key);
+  for (const [key, entry] of lastInvokeAt) {
+    if (now - entry.lastAt >= INVOKE_STRIKE_IDLE_RESET_MS) lastInvokeAt.delete(key);
   }
 }
 
-// Claim this user's invoke slot for one command: decide and stamp in one call,
-// like claimCommandUse but in memory and on a seconds scale. Returns
-// { allowed: true } and records the invoke, or { allowed: false, reason } when
-// this user's previous invoke *of this same command* was under
-// INVOKE_THROTTLE_MS ago. A different command is never blocked by this one.
-// Call this first, before the Supabase pre-check, so a flood never reaches the
-// DB or a message build.
+// Claim this user's invoke slot for one command: decide and stamp in one
+// call, like claimCommandUse but in memory and on a seconds-to-minutes scale.
+// Returns { allowed: true } and records the invoke, or { allowed: false,
+// reason } when this user's previous invoke *of this same command* was more
+// recent than the currently required wait (base window plus 2 minutes per
+// prior invoke this streak, capped — see the comment above). A different
+// command is never blocked by this one. Call this first, before the Supabase
+// pre-check, so a flood never reaches the DB or a message build.
 export function claimCommandInvoke(userId, command, now = Date.now()) {
   const key = `${userId}:${command}`;
-  const last = lastInvokeAt.get(key);
-  if (last !== undefined && now - last < INVOKE_THROTTLE_MS) {
+  const entry = lastInvokeAt.get(key);
+  const lastAt = entry ? entry.lastAt : -Infinity;
+  const idleGap = now - lastAt;
+
+  // Long enough since the last invoke (of either kind) that this counts as a
+  // fresh start rather than a continuation of an old streak.
+  const strikes = idleGap >= INVOKE_STRIKE_IDLE_RESET_MS ? 0 : (entry ? entry.strikes : 0);
+  const required = Math.min(
+    INVOKE_THROTTLE_BASE_MS + strikes * INVOKE_ESCALATION_MS,
+    INVOKE_THROTTLE_CAP_MS,
+  );
+
+  if (idleGap < required) {
+    // Blocked. The retry still counts toward the next required wait — that's
+    // what stops "wait out the posted window, invoke, repeat" from working
+    // just because each individual wait was honest — but the clock itself
+    // doesn't move from a blocked attempt; a block can't push its own window
+    // out from itself.
+    lastInvokeAt.set(key, { lastAt, strikes: strikes + 1 });
     return {
       allowed: false,
-      reason: `One moment — give it a minute before running /${command} again.`,
+      reason: `One moment — you can use /${command} again in ${formatDuration(required - idleGap)}.`,
     };
   }
-  lastInvokeAt.set(key, now);
+
+  lastInvokeAt.set(key, { lastAt: now, strikes: strikes + 1 });
   sweepInvokeThrottle(now);
   return { allowed: true };
 }
 
-// Release this user's invoke-throttle stamp for one command. For when the
-// command handler claimed the slot via claimCommandInvoke and then failed
-// before producing anything — e.g. buildMeetPickMessage or
-// buildRoamDialogueMessage threw. Without this, a single failed /roam or
-// /meet (server error, "something went wrong") still leaves the user unable
-// to retry for up to INVOKE_THROTTLE_MS: the stamp above is written the
-// moment the slot is claimed, before the command has done anything that
-// could fail, and nothing was undoing it on that path. Safe to call broadly:
-// this only ever shortens a throttle window, never the 3h reward cooldown
-// (claimCommandUse/checkCommandLimit), so it can't be used to redeem more
-// than one reward per window.
+// Wipe this user's invoke-escalation history for one command, back to a clean
+// base window. Two callers, two different reasons it's safe:
+//   - The command handler claimed the slot via claimCommandInvoke and then
+//     failed before producing anything (e.g. buildMeetPickMessage or
+//     buildRoamDialogueMessage threw). Without this, a single failed /roam or
+//     /meet still leaves the user facing an escalated wait for a request that
+//     never actually went through.
+//   - claimCommandUse just succeeded for real (see app.js) — a genuine commit
+//     ends the rerolling session this throttle escalates against, so the next
+//     window (three hours off, per the DB cooldown) starts clean rather than
+//     carrying a stale streak forward.
+// Also reused by the mission cooldown-reset flow (missions.js): spending a
+// banked reset on the 3h DB cooldown is meant to make the command usable
+// again immediately, so it clears this too rather than leaving the flood
+// throttle refusing a reward the player just paid for.
+// Safe to call broadly: this only ever shortens the in-memory window, never
+// the 3h reward cooldown (claimCommandUse/checkCommandLimit), so it can't be
+// used to redeem more than one reward per window.
 export function releaseCommandInvoke(userId, command) {
   lastInvokeAt.delete(`${userId}:${command}`);
 }

@@ -34,6 +34,7 @@ import { missionSlotsLine } from './constants/missions.js';
 import { composeSilhouetteEncounter } from './imageComposition.js';
 import { editChannelMessage, postChannelMessage } from './discordRest.js';
 import { deliverBondScene } from './bondScenes.js';
+import { devResetCommandLimits } from './commandLimits.js';
 import {
   bumpGuildPostFailure,
   claimPublicEncounter,
@@ -736,6 +737,7 @@ function isEncounterDevOwner(userId) {
  *   /encdev clear                         expire this guild's live encounter
  *   /encdev missions                      show this guild's mission slot times for today
  *   /encdev bond <character> <level>      fire a bond scene DM directly (docs/bond-scene-dms.md)
+ *   /encdev reset [command]               wipe your own /roam+/meet 3h cooldown and invoke throttle
  *
  * A manual spawn passes `reanchor: false`, so it never writes guild_settings —
  * the real cadence anchor and the post-failure counter are left exactly as they
@@ -795,6 +797,24 @@ export async function handleEncounterDev(body) {
       'post-failed': 'DM channel opened, but the post failed. Check the logs.',
     };
     return { content: reasons[result.reason] || `Not delivered (${result.reason}).` };
+  }
+
+  // `reset` only ever touches the caller's own account (userId, not some
+  // other member) — unrelated to this guild's encounter channel or lock
+  // state, so it answers before either check, same as `bond` and `missions`.
+  if (subcommand === 'reset') {
+    const choice = sub.options?.find((o) => o.name === 'command')?.value || 'both';
+    const commands = choice === 'both' ? ['roam', 'meet'] : [choice];
+
+    try {
+      await devResetCommandLimits(userId, commands);
+    } catch (err) {
+      console.error('[publicEncounters] /encdev reset failed:', err);
+      return { content: 'Reset failed — check the logs.' };
+    }
+
+    const named = commands.map((c) => `/${c}`).join(' and ');
+    return { content: `Cleared the 3h cooldown and invoke throttle for ${named}.` };
   }
 
   // `missions` is a read-only peek at the mission schedule — the one place it's

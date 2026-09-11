@@ -289,6 +289,24 @@ const ENCDEV_COMMAND = {
     },
     {
       type: 1, // SUB_COMMAND
+      name: "reset",
+      description: "Clear your /roam and /meet cooldowns (DB + invoke throttle) for testing",
+      options: [
+        {
+          name: "command",
+          description: "Which command to reset (defaults to both)",
+          type: 3, // STRING
+          required: false,
+          choices: [
+            { name: "roam", value: "roam" },
+            { name: "meet", value: "meet" },
+            { name: "both", value: "both" },
+          ],
+        },
+      ],
+    },
+    {
+      type: 1, // SUB_COMMAND
       name: "missions",
       description: "Show this server's mission slot times for today",
     },

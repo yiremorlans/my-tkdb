@@ -179,7 +179,15 @@ test('claimCommandUse fails CLOSED when the claim errors (unlike checkCommandLim
 
 // --- claimCommandInvoke: the in-memory flood throttle ----------------------
 // A per-user, per-command debounce, checked before anything touches Supabase.
-// Purely a spam guard — never a reward gate.
+// Purely a spam guard — never a reward gate. The window escalates by 2
+// minutes per repeat invoke of the same command (capped at 10m), specifically
+// to stop "wait out the posted window, peek, repeat" rerolling — see
+// commandLimits.js's comment above claimCommandInvoke.
+
+const THROTTLE_MS = 60 * 1000; // base window
+const ESCALATION_MS = 2 * 60 * 1000;
+const CAP_MS = 10 * 60 * 1000;
+const IDLE_RESET_MS = 30 * 60 * 1000;
 
 test('claimCommandInvoke allows the first invoke and records it', () => {
   clearCommandInvokeThrottle();
@@ -187,16 +195,14 @@ test('claimCommandInvoke allows the first invoke and records it', () => {
   assert.strictEqual(claimCommandInvoke('flood-1', 'roam', t0).allowed, true);
 });
 
-const THROTTLE_MS = 60 * 1000;
-
-test('claimCommandInvoke blocks a second invoke of the same command inside the window', () => {
+test('claimCommandInvoke blocks a second invoke of the same command inside the base window', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
   assert.strictEqual(claimCommandInvoke('flood-2', 'roam', t0).allowed, true);
 
   const again = claimCommandInvoke('flood-2', 'roam', t0 + THROTTLE_MS - 1);
   assert.strictEqual(again.allowed, false);
-  assert.match(again.reason, /minute/i);
+  assert.match(again.reason, /again in/i);
   assert.match(again.reason, /\/roam/, 'the message names the command that is throttled');
 });
 
@@ -212,19 +218,94 @@ test('claimCommandInvoke throttles /roam and /meet independently', () => {
   assert.strictEqual(claimCommandInvoke('flood-3', 'meet', t0 + 30_000).allowed, false);
 });
 
-test('claimCommandInvoke lets the user back in once the window fully elapses', () => {
+test('claimCommandInvoke does not let a repeat back in after just the base window', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
+  // The whole point of escalation: after one prior invoke, the *next* repeat
+  // needs base + 1*2min, not just the base window — waiting out exactly the
+  // original 60s no longer works.
   assert.strictEqual(claimCommandInvoke('flood-4', 'roam', t0).allowed, true);
-  assert.strictEqual(claimCommandInvoke('flood-4', 'roam', t0 + THROTTLE_MS).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-4', 'roam', t0 + THROTTLE_MS).allowed, false);
+});
+
+// Note: a blocked probe counts as a strike too (by design — see the comment
+// above claimCommandInvoke), so it isn't safe to probe "still blocked" one
+// tick before a boundary and then immediately check "allowed" exactly at that
+// same boundary — the probe itself pushes the boundary further out. Each test
+// below checks one thing at a time for that reason.
+
+test('claimCommandInvoke lets a repeat back in once its escalated window fully elapses', () => {
+  clearCommandInvokeThrottle();
+  const t0 = 1_000_000;
+  assert.strictEqual(claimCommandInvoke('flood-5', 'roam', t0).allowed, true);
+  const escalated = THROTTLE_MS + ESCALATION_MS; // one prior invoke
+  assert.strictEqual(claimCommandInvoke('flood-5', 'roam', t0 + escalated).allowed, true);
+});
+
+test('claimCommandInvoke keeps escalating on each further repeat', () => {
+  clearCommandInvokeThrottle();
+  const t0 = 1_000_000;
+  assert.strictEqual(claimCommandInvoke('flood-6', 'roam', t0).allowed, true); // strikes: 0 -> 1
+  const t1 = t0 + THROTTLE_MS + ESCALATION_MS; // needs 1 prior invoke's worth
+  assert.strictEqual(claimCommandInvoke('flood-6', 'roam', t1).allowed, true); // strikes: 1 -> 2
+  const t2 = t1 + THROTTLE_MS + 2 * ESCALATION_MS; // needs 2 prior invokes' worth
+  assert.strictEqual(claimCommandInvoke('flood-6', 'roam', t2).allowed, true); // strikes: 2 -> 3
+  // Confirm the third invoke actually needed the escalated gap, not just the
+  // base one: from t2, only the base window has now elapsed, and that's
+  // already short of what three invokes' worth of escalation demands.
+  assert.strictEqual(claimCommandInvoke('flood-6', 'roam', t2 + THROTTLE_MS).allowed, false);
+});
+
+test('claimCommandInvoke caps the escalated window at 10 minutes', () => {
+  clearCommandInvokeThrottle();
+  const t0 = 1_000_000;
+  let t = t0;
+  // Rack up enough strikes to blow well past the cap (10m needs 5 prior
+  // invokes at 2min each), waiting exactly the currently-required window each
+  // time so every one of these actually lands.
+  const requiredAt = (strikes) => Math.min(THROTTLE_MS + strikes * ESCALATION_MS, CAP_MS);
+  for (let strikes = 0; strikes < 8; strikes++) {
+    assert.strictEqual(claimCommandInvoke('flood-7', 'roam', t).allowed, true, `invoke #${strikes + 1}`);
+    t += requiredAt(strikes + 1);
+  }
+  // One tick under the cap from the last invoke: still blocked.
+  assert.strictEqual(claimCommandInvoke('flood-7', 'roam', t - 1).allowed, false);
+  // At exactly the cap: allowed — it never grew past 10 minutes despite 8
+  // prior invokes (which would be 17 minutes uncapped).
+  assert.strictEqual(claimCommandInvoke('flood-7', 'roam', t).allowed, true);
+});
+
+test('claimCommandInvoke re-blocks after a throttled hit without moving the clock from the hit', () => {
+  clearCommandInvokeThrottle();
+  const t0 = 1_000_000;
+  assert.strictEqual(claimCommandInvoke('flood-8', 'roam', t0).allowed, true); // strikes 0 -> 1
+  // A blocked retry mid-window still counts as a strike (strikes 1 -> 2), so
+  // the next required wait is base + 2*2min = 5min...
+  assert.strictEqual(claimCommandInvoke('flood-8', 'roam', t0 + 40_000).allowed, false);
+  const escalated = THROTTLE_MS + 2 * ESCALATION_MS;
+  // ...measured from the ORIGINAL invoke at t0, not from the blocked retry at
+  // t0+40s. If the blocked hit had moved the clock, this would still be
+  // blocked (it'd need to wait out `escalated` starting from t0+40_000).
+  assert.strictEqual(claimCommandInvoke('flood-8', 'roam', t0 + escalated).allowed, true);
+});
+
+test('claimCommandInvoke resets the escalation after a long enough idle gap', () => {
+  clearCommandInvokeThrottle();
+  const t0 = 1_000_000;
+  assert.strictEqual(claimCommandInvoke('flood-9', 'roam', t0).allowed, true); // strikes 0 -> 1
+  // Walk away for the idle-reset window (30m) without ever invoking again.
+  const t1 = t0 + IDLE_RESET_MS;
+  // Treated as a fresh start: the base 60s window applies, not an escalated one.
+  assert.strictEqual(claimCommandInvoke('flood-9', 'roam', t1).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-9', 'roam', t1 + THROTTLE_MS - 1).allowed, false);
 });
 
 test('claimCommandInvoke is scoped per user — one user flooding does not block another', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
-  assert.strictEqual(claimCommandInvoke('flood-5a', 'roam', t0).allowed, true);
-  assert.strictEqual(claimCommandInvoke('flood-5a', 'roam', t0 + 100).allowed, false);
-  assert.strictEqual(claimCommandInvoke('flood-5b', 'roam', t0 + 100).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-10a', 'roam', t0).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-10a', 'roam', t0 + 100).allowed, false);
+  assert.strictEqual(claimCommandInvoke('flood-10b', 'roam', t0 + 100).allowed, true);
 });
 
 // Regression: a command that claims its invoke slot and then fails (a server
@@ -234,29 +315,35 @@ test('claimCommandInvoke is scoped per user — one user flooding does not block
 test('releaseCommandInvoke frees the slot so a failed command can be retried immediately', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
-  assert.strictEqual(claimCommandInvoke('flood-6', 'meet', t0).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-11', 'meet', t0).allowed, true);
 
   // Without releasing, the very next invoke would still be throttled.
-  releaseCommandInvoke('flood-6', 'meet');
-  assert.strictEqual(claimCommandInvoke('flood-6', 'meet', t0 + 1).allowed, true);
+  releaseCommandInvoke('flood-11', 'meet');
+  assert.strictEqual(claimCommandInvoke('flood-11', 'meet', t0 + 1).allowed, true);
+});
+
+test('releaseCommandInvoke also wipes any escalation built up, not just the base window', () => {
+  clearCommandInvokeThrottle();
+  const t0 = 1_000_000;
+  assert.strictEqual(claimCommandInvoke('flood-12', 'roam', t0).allowed, true); // strikes 0 -> 1
+  const t1 = t0 + THROTTLE_MS + ESCALATION_MS;
+  assert.strictEqual(claimCommandInvoke('flood-12', 'roam', t1).allowed, true); // strikes 1 -> 2
+
+  releaseCommandInvoke('flood-12', 'roam');
+
+  // A real claim (app.js) or a spent mission reset (missions.js) calls this
+  // expecting the command to be usable right away — not still facing the 3+
+  // minute wait the accumulated strikes would otherwise demand.
+  assert.strictEqual(claimCommandInvoke('flood-12', 'roam', t1 + 1).allowed, true);
 });
 
 test('releaseCommandInvoke only clears the named command, not the user\'s other one', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
-  assert.strictEqual(claimCommandInvoke('flood-7', 'roam', t0).allowed, true);
-  assert.strictEqual(claimCommandInvoke('flood-7', 'meet', t0).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-13', 'roam', t0).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-13', 'meet', t0).allowed, true);
 
-  releaseCommandInvoke('flood-7', 'meet');
-  assert.strictEqual(claimCommandInvoke('flood-7', 'meet', t0 + 1).allowed, true, 'meet was released');
-  assert.strictEqual(claimCommandInvoke('flood-7', 'roam', t0 + 1).allowed, false, 'roam is untouched');
-});
-
-test('claimCommandInvoke re-blocks after a throttled hit without extending the window from the hit', () => {
-  clearCommandInvokeThrottle();
-  const t0 = 1_000_000;
-  assert.strictEqual(claimCommandInvoke('flood-6', 'roam', t0).allowed, true);
-  // A blocked attempt mid-window must not push the window out from itself.
-  assert.strictEqual(claimCommandInvoke('flood-6', 'roam', t0 + 40_000).allowed, false);
-  assert.strictEqual(claimCommandInvoke('flood-6', 'roam', t0 + THROTTLE_MS).allowed, true);
+  releaseCommandInvoke('flood-13', 'meet');
+  assert.strictEqual(claimCommandInvoke('flood-13', 'meet', t0 + 1).allowed, true, 'meet was released');
+  assert.strictEqual(claimCommandInvoke('flood-13', 'roam', t0 + 1).allowed, false, 'roam is untouched');
 });

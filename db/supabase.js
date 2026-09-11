@@ -597,6 +597,26 @@ export async function claimCommandSlot(userId, commandName, cooldownSeconds) {
 }
 
 /**
+ * Owner-only test helper (see /encdev reset): delete this user's
+ * command_limits rows for the given commands outright, wiping the 3h
+ * cooldown so manual testing doesn't have to wait it out. Nothing atomic is
+ * needed here — unlike claimCommandSlot this never runs against a live
+ * reward race, only against the owner's own account for testing.
+ */
+export async function clearCommandLimits(userId, commandNames) {
+  const { error } = await supabase
+    .from('command_limits')
+    .delete()
+    .eq('discord_user_id', userId)
+    .in('command_name', commandNames);
+
+  if (error) {
+    console.error('Error clearing command limits:', error);
+    throw error;
+  }
+}
+
+/**
  * Get command usage statistics for a time period (anonymized)
  */
 export async function getCommandUsageStats(days = 30) {

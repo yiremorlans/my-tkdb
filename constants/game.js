@@ -55,6 +55,14 @@ export const RESPONSE_OPTION_POOL = {
 // NEUTRAL response), so the level curve is spread out over a long time —
 // meant to be built up over many, many encounters.
 //
+// Thresholds from Friend up are the original curve x1.5 (Acquaintance stays
+// at its original 20 — the early first step is deliberately left alone).
+// Raised 2026-09 after /roam + /meet's independent 3h cooldowns turned out to
+// let a maxed-out player rack up ~16 rewarded encounters/day; at best-case
+// +2/response that reached Soulbound in under two weeks, well short of the
+// "many, many encounters" arc this file describes. Earning stays exactly as
+// generous — this only changes how much of it a level needs.
+//
 // `emoji` trails the level name in text; `heart` is the /affinity progress
 // bar's filled cell; `color` tints the embed's left strip. `heart` and `color`
 // track the level's tone — Stranger has no name emoji but still gets a purple
@@ -62,11 +70,11 @@ export const RESPONSE_OPTION_POOL = {
 export const RELATIONSHIP_LEVELS = [
   { name: 'Stranger', min: 0, emoji: '', heart: '💜', color: 0xa855f7 },
   { name: 'Acquaintance', min: 20, emoji: '🧡', heart: '🧡', color: 0xf4900c },
-  { name: 'Friend', min: 50, emoji: '🩷', heart: '🩷', color: 0xf7a8c4 },
-  { name: 'Close Friend', min: 100, emoji: '💖', heart: '💖', color: 0xff6fb5 },
-  { name: 'Confidant', min: 175, emoji: '💕', heart: '💕', color: 0xff4fa3 },
-  { name: 'Devoted', min: 275, emoji: '❤️', heart: '❤️', color: 0xed4245 },
-  { name: 'Soulbound', min: 400, emoji: '❤️‍🔥', heart: '❤️‍🔥', color: 0xd22730 },
+  { name: 'Friend', min: 75, emoji: '🩷', heart: '🩷', color: 0xf7a8c4 },
+  { name: 'Close Friend', min: 150, emoji: '💖', heart: '💖', color: 0xff6fb5 },
+  { name: 'Confidant', min: 260, emoji: '💕', heart: '💕', color: 0xff4fa3 },
+  { name: 'Devoted', min: 415, emoji: '❤️', heart: '❤️', color: 0xed4245 },
+  { name: 'Soulbound', min: 600, emoji: '❤️‍🔥', heart: '❤️‍🔥', color: 0xd22730 },
 ];
 
 export function getRelationshipLevel(affinity) {

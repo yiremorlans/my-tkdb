@@ -39,7 +39,7 @@ test('characters below 1 affinity point are left out', async () => {
 test('bonds are listed one per line, greatest affinity first', async () => {
   resetTable([
     { discord_user_id: 'user-1', character_id: 'shohei', affinity: 5 },
-    { discord_user_id: 'user-1', character_id: 'ren', affinity: 60 },
+    { discord_user_id: 'user-1', character_id: 'ren', affinity: 80 },
     { discord_user_id: 'user-1', character_id: 'edward', affinity: 25 },
   ]);
   const message = await buildBondsMessage('user-1');

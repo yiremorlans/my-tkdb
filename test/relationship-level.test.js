@@ -27,8 +27,8 @@ test('getRelationshipLevel is inclusive at each level boundary', () => {
 });
 
 test('getRelationshipLevel stays one level below just under a threshold', () => {
-  // Friend starts at 50; one point under must still read Acquaintance, not Friend.
-  assert.strictEqual(getRelationshipLevel(49).name, 'Acquaintance');
+  // Friend starts at 75; one point under must still read Acquaintance, not Friend.
+  assert.strictEqual(getRelationshipLevel(74).name, 'Acquaintance');
 });
 
 test('getRelationshipLevel never regresses below Stranger for negative affinity', () => {
@@ -55,15 +55,15 @@ test('getDialogueTier falls back to "new" for an unrecognized level name', () =>
 });
 
 test('getRelationshipProgress reports the ratio between the current and next level', () => {
-  // Friend is 50, Close Friend is 100 — 75 is exactly halfway.
-  const { level, nextLevel, ratio } = getRelationshipProgress(75);
+  // Friend is 75, Close Friend is 150 — 112.5 is exactly halfway.
+  const { level, nextLevel, ratio } = getRelationshipProgress(112.5);
   assert.strictEqual(level.name, 'Friend');
   assert.strictEqual(nextLevel.name, 'Close Friend');
   assert.strictEqual(ratio, 0.5);
 });
 
 test('getRelationshipProgress clamps to 0 at the bottom of a band and for negative affinity', () => {
-  assert.strictEqual(getRelationshipProgress(50).ratio, 0); // exactly on Friend
+  assert.strictEqual(getRelationshipProgress(75).ratio, 0); // exactly on Friend
   assert.strictEqual(getRelationshipProgress(-100).ratio, 0);
   assert.strictEqual(getRelationshipProgress(-100).level.name, 'Stranger');
 });

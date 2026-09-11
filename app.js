@@ -812,6 +812,12 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           // a prompt and walking away still costs nothing, because nothing is
           // claimed before this point.
           const limit = await claimCommandUse(userId, commandName);
+          if (limit.allowed) {
+            // A genuine commit ends whatever rerolling session the invoke
+            // throttle was escalating against — start the next window clean
+            // rather than carrying a strike streak into the 3h-later reuse.
+            releaseCommandInvoke(userId, commandName);
+          }
           if (!limit.allowed) {
             const collapsed = (req.body.message?.components || []).map(row => ({
               ...row,
