@@ -11,7 +11,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Is this you\n\nThe blond gigolo put your name in the thingy for me. I pressed it four times. Sorry if it went four times",
-        "I don't mind classes. The teachers say cool stuff. Once I learn to read the textbooks and the blackboard it'll be perfect.\n\nYou listen the same way. Like you're really getting it.\n\nSometimes, I can smell something sweet off you. Just for a second. Its different from everyone else\n\nI started sitting where I could see you in class. I told myself it was to hear better. But...\n\nI want to learn about you. Not just what the teachers say. That's what I wanted to tell you",
+        "I don't mind classes. The teachers say cool stuff. Once I learn to read the textbooks and the blackboard it'll be perfect.\n\nYou listen the same way. Like you're really getting it.\n\nSometimes, I can smell something sweet off you. Just for a second. Its different from everyone else\n\nI started sitting where I could see you in class. I told myself it was to hear better. But...\n\nI want to learn about you. Not just what the teachers say. That's what I wanted to tell you {timesMet} classes ago.",
       ],
       choice: {
         prompt:
