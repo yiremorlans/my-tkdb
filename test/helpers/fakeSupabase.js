@@ -456,6 +456,59 @@ export function createFakeSupabase(initialTables = {}) {
       return 'joined';
     },
 
+    // db/migrations/021: insert one mission_log row and bump house_progress in
+    // the same statement block, so a completion can never land in one table
+    // and not the other.
+    record_mission_completion({
+      p_user_id,
+      p_house,
+      p_mission_type,
+      p_mission_id,
+      p_role,
+      p_points,
+    }) {
+      tables.mission_log = tables.mission_log || [];
+      tables.house_progress = tables.house_progress || [];
+
+      const row = {
+        id: nextId('mission_log'),
+        discord_user_id: p_user_id,
+        house: p_house,
+        mission_type: p_mission_type,
+        mission_id: p_mission_id ?? null,
+        role: p_role || 'lead',
+        points: p_points ?? 1,
+        completed_at: rpcNow.toISOString(),
+        // Left unset, not null: reset_spent_at/reset_spent_on are undefined
+        // until spend_cooldown_reset actually sets them, same as a bare
+        // .insert() would leave columns nobody passed a value for. Several
+        // tests assert this with assert.equal from node:assert/strict, which
+        // is strictEqual — null would fail it where undefined does not.
+      };
+      tables.mission_log.push(row);
+
+      const progress = tables.house_progress.find(
+        (r) => r.discord_user_id === p_user_id && r.house === p_house,
+      );
+      if (progress) {
+        progress.points += row.points;
+        progress.completions += 1;
+        progress.last_completion_at = row.completed_at;
+        progress.updated_at = rpcNow.toISOString();
+      } else {
+        tables.house_progress.push({
+          discord_user_id: p_user_id,
+          house: p_house,
+          points: row.points,
+          completions: 1,
+          last_completion_at: row.completed_at,
+          updated_at: rpcNow.toISOString(),
+        });
+      }
+
+      return { ...row };
+    },
+
     // db/migrations/016: spend one banked reset, but only on a command that is
     // genuinely still cooling down. The credit is an unspent mission_log row —
     // there is no separate credits table. The row locks that serialize two

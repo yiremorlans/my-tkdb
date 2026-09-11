@@ -682,7 +682,12 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       (async () => {
         try {
           const messageData = await buildMeetSpawnMessage(userId, characterId);
-          await sendFollowup(req.body.token, messageData);
+          // Longer than sendFollowup's 15s default: this followup carries a
+          // composed PNG attachment, and the multipart upload can outrun 15s
+          // under load without actually failing — a false abort here used to
+          // fire the error branch below and post a bogus error message just
+          // before the real one still landed a moment later.
+          await sendFollowup(req.body.token, messageData, 45000);
           clearTimeout(timeoutHandle);
 
           // Not counted here — the flow is logged once at the response step
@@ -733,7 +738,10 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       (async () => {
         try {
           const messageData = await buildRoamSpawnMessage(encounterId);
-          await sendFollowup(req.body.token, messageData);
+          // See the matching comment in /meet pick: this followup also carries
+          // a composed PNG, so it needs more room than sendFollowup's 15s
+          // default before a slow-but-successful upload is treated as failed.
+          await sendFollowup(req.body.token, messageData, 45000);
           clearTimeout(timeoutHandle);
 
           // Not counted here — the flow is logged once at the response step

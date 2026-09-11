@@ -14,6 +14,7 @@ process.env.SUPABASE_SERVICE_ROLE_KEY ??= 'fake-service-role-key';
 const fake = createFakeSupabase({
   character_relationships: [],
   mission_log: [],
+  house_progress: [],
   missions: [],
 });
 mock.module('@supabase/supabase-js', {
@@ -31,9 +32,41 @@ mock.module('../discordRest.js', {
 
 const { buildDossierMessage } = await import('../missions.js');
 
+// house_progress (db/migrations/021) is what getMissionLogStats actually reads
+// for points/filed/byHouse now — mission_log itself is prunable history. This
+// mirrors that migration's backfill (SUM points, COUNT rows, MAX completed_at
+// per user+house) so tests can go on specifying only the raw log and still
+// exercise the real read path.
+function aggregateHouseProgress(log) {
+  const byKey = new Map();
+  for (const row of log) {
+    const points = row.points ?? 1;
+    const completedAt = row.completed_at ?? null;
+    const key = `${row.discord_user_id}:${row.house}`;
+    const existing = byKey.get(key);
+    if (existing) {
+      existing.points += points;
+      existing.completions += 1;
+      if (completedAt && (!existing.last_completion_at || completedAt > existing.last_completion_at)) {
+        existing.last_completion_at = completedAt;
+      }
+    } else {
+      byKey.set(key, {
+        discord_user_id: row.discord_user_id,
+        house: row.house,
+        points,
+        completions: 1,
+        last_completion_at: completedAt,
+      });
+    }
+  }
+  return [...byKey.values()];
+}
+
 function reset({ relationships = [], log = [], missions = [] } = {}) {
   fake.tables.character_relationships = relationships.map((r) => ({ ...r }));
   fake.tables.mission_log = log.map((r) => ({ ...r }));
+  fake.tables.house_progress = aggregateHouseProgress(log);
   fake.tables.missions = missions.map((r) => ({ ...r }));
 }
 

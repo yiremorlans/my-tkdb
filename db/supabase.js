@@ -1983,8 +1983,11 @@ export async function clearMissionPostReconcile(id) {
 }
 
 /**
- * One completion row. Written fire-and-forget AFTER the claim RPC has confirmed
- * the mission actually closed, so a lost race can never bank points.
+ * One completion row, PLUS the house_progress rollup bump — one RPC
+ * (db/migrations/021_house_progress_aggregate.sql) so neither can happen
+ * without the other. Written fire-and-forget AFTER the claim RPC has
+ * confirmed the mission actually closed, so a lost race can never bank
+ * points.
  *
  * `points` is the whole progression: N for an errand (one per signature), 1 for
  * a riddle or either side of a co-op.
@@ -1997,67 +2000,69 @@ export async function recordMissionCompletion({
   role = 'lead',
   points = 1,
 }) {
-  const { data, error } = await supabase
-    .from('mission_log')
-    .insert([
-      {
-        discord_user_id: userId,
-        house,
-        mission_type: missionType,
-        mission_id: missionId,
-        role,
-        points,
-      },
-    ])
-    .select();
+  const { data, error } = await supabase.rpc('record_mission_completion', {
+    p_user_id: userId,
+    p_house: house,
+    p_mission_type: missionType,
+    p_mission_id: missionId,
+    p_role: role,
+    p_points: points,
+  });
 
   if (error) {
     console.error('Error recording mission completion:', error);
     throw error;
   }
 
-  return data?.[0] || null;
+  return data || null;
 }
 
 /**
- * The dossier's numbers: `points` is SUM(points) and drives the rank, `filed`
- * is the raw row count, `byHouse` is the per-house point tally behind the bars.
- *
- * Summed in JS rather than with a GROUP BY: PostgREST cannot aggregate without
- * a view or an RPC, and a single player's mission_log is a handful of rows on
- * an indexed read.
+ * The dossier's numbers: `points` and `byHouse` come from house_progress — a
+ * rollup kept up to date at write time by recordMissionCompletion, not summed
+ * from mission_log here — so mission_log's raw rows can be pruned (see
+ * migration 021) without moving a single one of these numbers. `banked` is
+ * the one figure that still has to read mission_log directly: an unspent row
+ * IS the credit (migration 016), so it needs the actual rows, not a count
+ * that pruning could invalidate. Unspent rows are never pruned, so this stays
+ * a small, indexed read regardless of how much history has aged out.
  */
 export async function getMissionLogStats(userId) {
-  const { data, error } = await supabase
-    .from('mission_log')
-    .select('*')
-    .eq('discord_user_id', userId);
+  const [{ data: progress, error: progressError }, { data: unspent, error: unspentError }] =
+    await Promise.all([
+      supabase.from('house_progress').select('*').eq('discord_user_id', userId),
+      supabase
+        .from('mission_log')
+        .select('id')
+        .eq('discord_user_id', userId)
+        .is('reset_spent_at', null),
+    ]);
 
-  if (error) {
-    console.error('Error fetching mission log stats:', error);
-    throw error;
+  if (progressError) {
+    console.error('Error fetching house progress stats:', progressError);
+    throw progressError;
+  }
+  if (unspentError) {
+    console.error('Error counting banked cooldown resets:', unspentError);
+    throw unspentError;
   }
 
-  const rows = data || [];
+  const rows = progress || [];
   const byHouse = {};
-  let points = 0;
-  let banked = 0;
   const latestByHouse = {};
+  let points = 0;
+  let filed = 0;
 
   for (const row of rows) {
-    const value = row.points ?? 1;
-    points += value;
-    byHouse[row.house] = (byHouse[row.house] || 0) + value;
-    // The unspent reward balance falls out of the rows the dossier is already
-    // reading, so /house never queries for it separately.
-    if (row.reset_spent_at == null) banked += 1;
-    const at = row.completed_at ? new Date(row.completed_at).getTime() : 0;
-    if (!(row.house in latestByHouse) || at > latestByHouse[row.house]) {
-      latestByHouse[row.house] = at;
-    }
+    points += row.points;
+    filed += row.completions;
+    byHouse[row.house] = row.points;
+    latestByHouse[row.house] = row.last_completion_at
+      ? new Date(row.last_completion_at).getTime()
+      : 0;
   }
 
-  return { points, filed: rows.length, byHouse, latestByHouse, banked };
+  return { points, filed, byHouse, latestByHouse, banked: (unspent || []).length };
 }
 
 /**

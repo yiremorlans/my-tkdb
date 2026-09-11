@@ -25,6 +25,7 @@ const fake = createFakeSupabase({
   guild_settings: [],
   missions: [],
   mission_log: [],
+  house_progress: [],
   command_limits: [],
   character_relationships: [],
 });
