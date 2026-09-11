@@ -79,9 +79,9 @@ $$;
 -- ============================================================
 -- consume_encounter_boosts
 -- ============================================================
--- Spend every pending boost at once and return how many were spent. Two wins
--- with one character are a single reunion, not two, so the next authored
--- response folds in the whole bonus rather than dribbling +1 across two /roams.
+-- Spend whatever's pending for this character at once and return how many
+-- were spent, so the next authored response folds in the whole bonus in one
+-- update rather than a separate nudge per win.
 --
 -- SELECT ... FOR UPDATE takes the row lock; the function body is one
 -- transaction, so the lock is held through the UPDATE and a concurrent
@@ -120,8 +120,9 @@ BEGIN
 END;
 $$;
 
--- To exercise by hand (cap 2 matches ENCOUNTER_BOOST_CAP):
---   SELECT public.grant_encounter_boost('123456789', 'rui', 2);
+-- To exercise by hand (pass whatever ENCOUNTER_BOOST_CAP currently is,
+-- constants/publicEncounters.js — 1 as of 2026-09):
+--   SELECT public.grant_encounter_boost('123456789', 'rui', 1);
 --   SELECT public.consume_encounter_boosts('123456789', 'rui');
 -- To inspect the ledger:
 --   SELECT discord_user_id, character_id, pending_encounter_boost

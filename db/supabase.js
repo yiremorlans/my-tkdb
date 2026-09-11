@@ -1099,7 +1099,7 @@ export async function getUserEncounterWins(userId, { yearMonth = toYearMonth(), 
  * has never met the character, so there is no getOrCreateRelationship call here
  * to race with either.
  */
-export async function grantEncounterBoost(userId, characterId, cap = 2) {
+export async function grantEncounterBoost(userId, characterId, cap = 1) {
   const { data, error } = await supabase.rpc('grant_encounter_boost', {
     p_user_id: userId,
     p_character_id: characterId,
@@ -1116,10 +1116,9 @@ export async function grantEncounterBoost(userId, characterId, cap = 2) {
 
 /**
  * Spend every pending boost for this character at once, returning how many
- * were consumed (0 if none, including when the user has never met them). Two
- * /call wins with the same character are one reunion, not two, so the next
- * authored response picks up their latest moment and folds in the full bonus
- * rather than dribbling +1 across two /roams.
+ * were consumed (0 if none, including when the user has never met them), so
+ * the next authored response folds in the full bonus rather than dribbling it
+ * out across separate /roams.
  *
  * One RPC (db/migrations/014) holding a row lock across the read and the
  * zeroing. The old two-statement version credited the count it had read, so a

@@ -42,13 +42,17 @@ export const ENCOUNTER_WINDOW_MINUTES = 2;
 export const POST_FAILURE_LIMIT = 3;
 
 // A /call win never moves affinity. It grants a pending boost worth this much
-// extra on the winner's next /roam or /meet with that character. Any boosts
-// stacked from multiple wins are all redeemed on that one interaction, not one
-// per /roam — two wins is a single reunion worth +2, not two nudged responses.
+// extra on the winner's next /roam or /meet with that character, capped at
+// ENCOUNTER_BOOST_CAP.
 export const ENCOUNTER_BOOST_GAIN = 1;
 // ...and a user can hold at most this many unspent boosts per character. Wins
 // past the cap still record a milestone; they just don't stack more boost.
-export const ENCOUNTER_BOOST_CAP = 2;
+// Lowered from 2 to 1 (2026-09): a fully-stacked boost was adding up to +2 on
+// top of a best-case base response of 2 — literally doubling a diligent
+// /call-farmer's best single-response gain. Capping at 1 halves that ceiling
+// (+1 max, ~50% bump instead of 100%) without touching how often /call,
+// /roam or /meet can be run — see the encounter-farming-threat-model memory.
+export const ENCOUNTER_BOOST_CAP = 1;
 
 // --- generation -------------------------------------------------------------
 

@@ -98,8 +98,8 @@ Last updated: 2026-09-02
 14. **§16.7's open questions are unchanged**: no boost expiry, either `/roam` or
    `/meet` may spend the boost (whichever comes first), a flat +1 per win rather
    than a themed bonus response, and milestones stack without dedup. The next
-   authored response redeems *every* pending boost for that character at once
-   (see §16.1) — two wins is one reunion, not two `/roam`s each nudged +1.
+   authored response redeems the pending boost for that character in one
+   update (see §16.1), not as a separate nudge split across `/roam`s.
 
 ### Added beyond this spec
 
@@ -1012,7 +1012,7 @@ are **global defaults** only, used when a guild leaves a column NULL:
 | `ENCOUNTER_MAX_MINUTES` | `180` | Default upper bound of the gap between a guild's encounters |
 | `ENCOUNTER_WINDOW_MINUTES` | `2` | Default `/call` window before the moment passes |
 | `ENCOUNTER_BOOST_GAIN` | `1` | Extra affinity per pending boost, all redeemed together on the winner's next authored (`/roam` / `/meet`) response — see §16 |
-| `ENCOUNTER_BOOST_CAP` | `2` | Max unspent boosts a user can hold per character (so the combined redemption tops out at +2) |
+| `ENCOUNTER_BOOST_CAP` | `1` (was `2`, lowered 2026-09 — see §16.1) | Max unspent boosts a user can hold per character (so the combined redemption tops out at +1) |
 | `ENCOUNTER_TICK_SECONDS` | `25` | Scheduler tick interval |
 
 `DISCORD_TOKEN`, `APP_ID`, `SUPABASE_*` are already present. **`BASE_URL`**
@@ -1042,7 +1042,7 @@ post silently (no role ping) in this version.
 | `/call` for the right name after solve/expiry | "no one to call out to right now" / "someone reached them first" |
 | `/call` with a typo or nonsense | "I don't know who that is." — no cooldown, no penalty |
 | Winner never "met" this character before | `grantEncounterBoost` → `getOrCreateRelationship` creates the row (affinity 0, boost 1); milestone recorded at tier `new`; intended |
-| Same user wins in two different guilds | Two separate encounters → boost caps at `ENCOUNTER_BOOST_CAP`; each still records a milestone; the winner's next `/roam` / `/meet` redeems both at once (+2); intended |
+| Same user wins in two different guilds | Two separate encounters → boost caps at `ENCOUNTER_BOOST_CAP` (`1`); the second win still records its own milestone but adds no more boost; the winner's next `/roam` / `/meet` redeems the capped +1; intended |
 | Win, then never runs `/roam` / `/meet` | Boosts sit unspent (no v1 expiry); the milestone tally still grows; no affinity is ever granted |
 | Multiple app instances | Out of scope — would double-fire the tick for every guild; needs a Postgres advisory lock around the tick |
 | `_PM` backgrounds / timezone | Judged against the fixed `America/Chicago` evening cutoff (`EVENING_HOUR` / `EVENING_TIMEZONE` in `constants/backgrounds.js`), same as `/roam` |
@@ -1116,9 +1116,10 @@ post silently (no role ping) in this version.
 7. Winner reward is a **pending boost + a milestone**, not direct affinity
    (§16). The boost adds `ENCOUNTER_BOOST_GAIN` (=1) to the winner's next
    authored response with that character and is capped at `ENCOUNTER_BOOST_CAP`
-   (=2). The reveal embed's `description` is an alternating, relationship-tiered
-   winner line naming the guessing Discord user (mention in `content` so it
-   pings), the revealed character, and the character's house.
+   (=1, lowered from 2 in 2026-09). The reveal embed's `description` is an
+   alternating, relationship-tiered winner line naming the guessing Discord
+   user (mention in `content` so it pings), the revealed character, and the
+   character's house.
 8. `/call` is accepted **only** in the calling guild's own configured encounter
    channel.
 9. Response window is **2 minutes** (per-guild overridable); scheduler tick is
@@ -1142,27 +1143,25 @@ through `/roam` and `/meet` — the authored-dialogue loop, throttled by the sha
 
 **Why.** Public encounters can otherwise become a second, faster affinity stream
 that races users past tiers before they have seen each tier's authored dialogue.
-Under this model wins only *amplify one already-throttled authored interaction*
-by roughly one good response each — and up to the `ENCOUNTER_BOOST_CAP` (=2) of
-them are redeemed together on that single interaction, not one per `/roam` — and
-only if the user actually engages that dialogue, so the public game feeds the
-main loop instead of bypassing it. The milestone log gives `/call` its own
-visible, collectible progression that never touches the relationship curve.
+Under this model a win only *amplifies one already-throttled authored
+interaction*, capped at `ENCOUNTER_BOOST_CAP`, and only if the user actually
+engages that dialogue, so the public game feeds the main loop instead of
+bypassing it. The milestone log gives `/call` its own visible, collectible
+progression that never touches the relationship curve.
 
 ### 16.1 Boost
 
 - New column: `relationships.pending_encounter_boost INT NOT NULL DEFAULT 0`.
 - **On a win:**
   `pending_encounter_boost = LEAST(pending_encounter_boost + 1, ENCOUNTER_BOOST_CAP)`
-  (`ENCOUNTER_BOOST_CAP = 2`). Wins past the cap still record a milestone; they
-  do not stack more boost.
+  (`ENCOUNTER_BOOST_CAP = 1`; lowered from `2` in 2026-09 — see the
+  encounter-farming-threat-model memory). A win while a boost is already
+  pending still records its own milestone; it does not add more boost.
 - **On the next `/roam` / `/meet` with that character**, when a response is
   *completed* (the same point `recordResponse` runs today, `encounters.js:371`)
   and `pending_encounter_boost > 0`: add `pending_encounter_boost ×
-  ENCOUNTER_BOOST_GAIN` (=1 each) to that response's gain, then zero the boost.
-  Every pending boost is redeemed at once — two `/call` wins with one character
-  are a single reunion (+2 on one response), not two `/roam`s each nudged +1.
-  A `NEUTRAL` response (gain 0) **still consumes** the boosts — the warmer
+  ENCOUNTER_BOOST_GAIN` (=1) to that response's gain, then zero the boost.
+  A `NEUTRAL` response (gain 0) **still consumes** the boost — the warmer
   welcome is the reunion, not the pick.
 - No expiry in v1. (If wanted later: a `boost_updated_at` column and a 7-day
   cutoff in `consumeAllEncounterBoosts`.)
@@ -1184,8 +1183,8 @@ its own clause:
 +{gain} — {level.emoji} **{level.name}**  ·  *picking up after {milestone.hint} — a warmer welcome (+{boostsSpent})*
 ```
 
-When more than one boost is redeemed at once the clause still names a single
-moment — the latest milestone — and reports the summed bonus (`+2`).
+`{boostsSpent}` is always `1` at the current cap, so the bonus shown is always
+`+1`.
 
 ### 16.2 Milestones
 
@@ -1351,7 +1350,7 @@ New `db/supabase.js` functions:
 | Var | Default | Purpose |
 |---|---|---|
 | `ENCOUNTER_BOOST_GAIN` | `1` | Extra affinity per pending boost, all spent together on the winner's next authored response with that character |
-| `ENCOUNTER_BOOST_CAP` | `2` | Max unspent boosts per user per character |
+| `ENCOUNTER_BOOST_CAP` | `1` (was `2`, lowered 2026-09 — see §16.1) | Max unspent boosts per user per character |
 
 `ENCOUNTER_AFFINITY_GAIN` is removed — a win grants no direct affinity.
 

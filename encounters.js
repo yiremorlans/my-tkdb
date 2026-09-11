@@ -505,13 +505,12 @@ export async function buildResponseResultMessage(
   const baseGain = getAffinityForResponse(character, responseTypeId);
 
   // A /call win never moves affinity itself — it leaves a pending boost that
-  // the next authored response with that character spends. Multiple wins with
-  // one character are a single reunion, so this claims *all* pending boosts at
-  // once rather than one per /roam. Consumed *before* the write so the bonus
-  // folds into one affinity update: if that update then fails the user is out
-  // those boosts, which is far better than the other ordering, where a failure
-  // would leave spent boosts still claimable. A NEUTRAL response (gain 0) still
-  // consumes them — the warmer welcome is the reunion, not the reply they picked.
+  // the next authored response with that character spends. Consumed *before*
+  // the write so the bonus folds into one affinity update: if that update
+  // then fails the user is out the boost, which is far better than the other
+  // ordering, where a failure would leave a spent boost still claimable. A
+  // NEUTRAL response (gain 0) still consumes it — the warmer welcome is the
+  // reunion, not the reply they picked.
   let boostsSpent = 0;
   try {
     boostsSpent = await consumeAllEncounterBoosts(userId, characterId);
@@ -590,9 +589,7 @@ async function maybeSignErrandTarget(userId, characterId) {
 // picking up from. Only reached when a boost was actually spent, so the extra
 // read costs an ordinary /roam nothing — and it degrades to the generic phrasing
 // rather than failing the response if the lookup errors or the milestone row is
-// missing (a win whose milestone insert failed still granted its boost). When
-// several wins are being redeemed at once the clause still names one moment —
-// the latest — and just reports the summed bonus.
+// missing (a win whose milestone insert failed still granted its boost).
 async function describeBoost(userId, character, boostsSpent) {
   const suffix = `a warmer welcome (+${boostsSpent * ENCOUNTER_BOOST_GAIN})`;
 
