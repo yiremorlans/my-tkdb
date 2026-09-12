@@ -45,7 +45,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: so Haru was looking for me earlier",
-        "you told him I was already at the diner. I wasn't, I was still on the critter rotation with my phone off, which you knew, because I told you that this morning.\n\nhe's got this thing now where if I go quiet too long he decides something's wrong and starts checking every room in the house. He's tracked me down before. Actual GPS tracker. I'm not exaggerating for effect.\n\nso you lying straight to his face for me is. I don't know what that is. thanks, I guess.\n\nI keep waiting for the part where you want something back. People don't just do that. Not for free, not for me. Even Haru's got a reason, he wants the tour numbers up. What's yours.",
+        "you told him I was already at the diner. I wasn't, I was still on the critter rotation with my phone off, which you knew, because I told you that this morning.\n\nhe's got this thing now where if I go quiet too long he decides something's wrong and starts checking every room in the house. He's tracked me down before. Actual GPS tracker. I'm not exaggerating for effect.\n\nso you lying straight to his face for me is. I don't know what that is. thanks, I guess.\n\nyou give me {favResponse} pretty much every time, by the way. I clocked that a while ago. noticing things is basically my whole skill tree.\n\nI keep waiting for the part where you want something back. People don't just do that. Not for free, not for me. Even Haru's got a reason, he wants the tour numbers up. What's yours.",
       ],
       choice: {
         prompt: "so what is it. might as well say it now.",

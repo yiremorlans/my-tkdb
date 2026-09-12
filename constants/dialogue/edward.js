@@ -14,8 +14,11 @@ export default {
   // canon he leans on: the cough act and "ask Rui", the parasol and sunlight,
   // vitality returning at night, the shady-cabal YouTube channel, "I eked out a
   // humble existence in Eastern Europe", "the most powerful vampire? ...just
-  // rumors", love-advisor "Rui, or Lyca", "Wicked girl". He says "I'll", never
-  // "I shall" (reference.md).
+  // rumors", love-advisor "Rui, or Lyca". He says "I'll", never "I shall"
+  // (reference.md). No pet name for MC here: reference.md gives him "wicked
+  // girl" only twice, both barbed, so it's saved for winnerLines rather than
+  // worn smooth as a term of endearment; "lovely creature" was never canon and
+  // has been cut.
   //
   // Texting is the one modern custom Rui never fully broke him of. Per
   // reference.md's "## Bond Scenes" notes he types boomer-style: ornate
@@ -46,14 +49,14 @@ export default {
             label: "Say he looked tired",
             style: 1,
             close:
-              "I am *very old*, wicked girl, of course I look tired.\n\nNobody says so. They say *pale*, which is a polite way of saying they have not looked. 😩💀",
+              "I am *very old*, of course I look tired.\n\nNobody says so. They say *pale*, which is a polite way of saying they have not looked. 😩💀",
           },
           {
             key: "bold",
             label: "Ask what he's watching for",
             style: 4,
             close:
-              "*There was a long pause.*\n\nAn answer I have not had in a very long while, *he says.* Which is not a proper reply, and you will not get a better one tonight. Sleep well, lovely creature. 🌙💤",
+              "*There was a long pause.*\n\nAn answer I have not had in a very long while, *he says.* Which is not a proper reply, and you will not get a better one tonight. Sleep well. 🌙💤",
           },
         ],
       },
@@ -92,7 +95,7 @@ export default {
             label: "Ask what he'd do if you had",
             style: 4,
             close:
-              "Nothing whatsoever. That is the tragedy of it.\n\nI would have been charming, shown you out, and thought about it for a very long time. That is the entire repertoire, lovely creature. A long life and no second move. 😔🎭",
+              "Nothing whatsoever. That is the tragedy of it.\n\nI would have been charming, shown you out, and thought about it for a very long time. That is the entire repertoire. A long life and no second move. 😔🎭",
           },
         ],
       },
@@ -106,7 +109,7 @@ export default {
       beats: [
         "**{firstName}**: Come up to my room. I have something to show you and I have decided to be embarrassed about it in advance, so that the moment itself may pass off smoothly. 😳🙈",
         "*The room is exactly as ancient and theatrical as advertised, and in the middle of it is a laptop on a velvet cushion, playing a video about the shady cabal of elites secretly governing human society. 🕵️*\n\n> I am aware.\n\n> I have watched a great deal of this particular channel. He is *magnificently* wrong, and he is wrong at three in the morning, which is when I want company and have none. 😔",
-        "> A very long life, wicked girl. Do you know what a life this long is, one night after another? It is not romantic. It is a very great deal of sitting.\n\n> This is what I do with the nights. Not blood, not brooding, not whatever anybody imagines. Somebody in a video, magnificently wrong about the cabal, at length.\n\n> You are the first person I have ever admitted that to, and I would take it as a kindness if you sat down. 🙏",
+        "> A very long life. Do you know what a life this long is, one night after another? It is not romantic. It is a very great deal of sitting.\n\n> This is what I do with the nights. Not blood, not brooding, not whatever anybody imagines. Somebody in a video, magnificently wrong about the cabal, at length.\n\n> You are the first person I have ever admitted that to, and I would take it as a kindness if you sat down. 🙏",
       ],
       choice: {
         prompt: "Well? Sit, or flee. 🏃🚪 Both are perfectly reasonable.",
@@ -123,7 +126,7 @@ export default {
             label: "Ask who's in the cabal",
             style: 1,
             close:
-              "> Oh, do not *encourage* it.\n\n*He explains the entire conspiracy at length without drawing breath, footnotes and all, entirely delighted, then stops and looks appalled at himself.*\n\n> ...You did that on purpose. Wicked girl. 😅",
+              "> Oh, do not *encourage* it.\n\n*He explains the entire conspiracy at length without drawing breath, footnotes and all, entirely delighted, then stops and looks appalled at himself.*\n\n> ...You did that on purpose. 😅",
           },
           {
             key: "bold",
@@ -183,7 +186,7 @@ export default {
       beats: [
         "**{firstName}**: You are unharmed. I have established that before writing, because I did not trust myself to establish it after. 😮‍💨🖤",
         "I have spent a very long time being languid at people. It is not an affectation; it is a discipline. What I am, unmanaged, is not something anybody in this academy has ever seen, and I have taken a very great deal of care that they should not.\n\nRui saw it tonight. He will not say anything. He went rather white 😨😰 and he will not say anything.",
-        "I will not describe what happened. Only what came after: I stood there some minutes, certain of one thing.\n\nWhatever the sun takes from me by day, the dark gives back with interest, and tonight I was more myself than usual by a wide margin.\n\nI Would Do It Again. Without the discipline, in front of anybody. That is not romantic, lovely creature. It is a warning, from someone fond of you, about someone you should be careful of. ⚠️🩸",
+        "I will not describe what happened. Only what came after: I stood there some minutes, certain of one thing.\n\nWhatever the sun takes from me by day, the dark gives back with interest, and tonight I was more myself than usual by a wide margin.\n\nI Would Do It Again. Without the discipline, in front of anybody. That is not romantic. It is a warning, from someone fond of you, about someone you should be careful of. ⚠️🩸",
       ],
       choice: {
         prompt:
@@ -227,7 +230,7 @@ export default {
       ],
       choice: {
         prompt:
-          "Take whatever time you like, wicked girl. I have a certain amount of it. ⏳🖤",
+          "Take whatever time you like. I have a certain amount of it. ⏳🖤",
         options: [
           {
             key: "answered",
@@ -241,7 +244,7 @@ export default {
             label: "Ask him to give you time",
             style: 2,
             close:
-              "But of course. I have made a specialization of waiting, though not, historically, a successful one.\n\nUnderstand this: my room is open, the dreadful videos continue at three. None of it was a maneuver. It was the best part of a long life and I would not give it up for a refusal.\n\nTake your time, lovely creature. I will be here, ridiculous about the cabal. 🕵️📺",
+              "But of course. I have made a specialization of waiting, though not, historically, a successful one.\n\nUnderstand this: my room is open, the dreadful videos continue at three. None of it was a maneuver. It was the best part of a long life and I would not give it up for a refusal.\n\nTake your time. I will be here, ridiculous about the cabal. 🕵️📺",
           },
         ],
       },
