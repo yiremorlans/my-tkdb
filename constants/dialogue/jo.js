@@ -45,7 +45,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: Something's been bothering me and I've decided you're going to hear about it.",
-        "I adapt. It's what I do. I read a room and I become the version of me that room needs, and I've been doing it so long I couldn't tell you where the seam is any more. On stage, in the hall, with Shion, with the teachers. Different man every time and all of them mine.\n\nYou come at me with {favResponse} no matter which one you're getting. Same every time. And it's started to feel like being addressed by name in a room where everyone else is calling me by a job.",
+        "I adapt. It's what I do. I read a room and I become the version of me that room needs, and I've been doing it so long I couldn't tell you where the seam is any more. On stage, in the hall, with Shion, with the teachers. Different man...and woman, every time and all of them mine.\n\nYou come at me with {favResponse} no matter which one you're getting. Same every time. And it's started to feel like being addressed by name in a room where everyone else is calling me by a job.",
       ],
       choice: {
         prompt: "So what am I supposed to do with that, cutie?",
@@ -83,11 +83,10 @@ export default {
       beats: [
         "**{firstName}**: Five thirty tomorrow. East gate. Don't ask why yet, just say yes.",
         "I run alone every morning, an hour, before the house is awake enough to have opinions about it. Nobody's ever been invited. It never once occurred to me that anybody should be.",
-        "Here's the part I wasn't going to send: I've known you since {sinceMet}, and you've been running through my head for most of that hour lately, which does nothing good for my splits. So I decided the efficient fix was to stop thinking about you out there and just have you next to me instead.\n\nCall it training. Call it whatever gets you up. I want an hour that isn't a job, isn't a mission, and doesn't end with either of us owing the other one a report.",
+        "Here's the part I wasn't going to send: I've known you since {sinceMet}, and you've been running through my head for most of that hour lately, which does nothing good for my splits. So I decided the efficient fix was to stop thinking about you out there and just have you next to me instead.\n\nCall it training. Call it whatever gets you up. I want an hour that isn't a job, or a mission, and doesn't end with either of us owing the other one a report.",
       ],
       choice: {
-        prompt:
-          "Well? I already set two alarms, cutie. Don't make that a wasted decision.",
+        prompt: "Well? I already set two alarms, cutie. Say you'll join me.",
         options: [
           {
             key: "kind",
