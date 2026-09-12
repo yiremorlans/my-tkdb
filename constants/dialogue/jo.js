@@ -243,6 +243,11 @@ export default {
         '"You look pretty busy. I\'ll get some work done. Holler if you need anything."',
       ],
     },
+    // Pool sizes track the affinity width of the level(s) they cover (see
+    // RELATIONSHIP_LEVELS / DIALOGUE_TIER_BY_LEVEL in constants/game.js) —
+    // roughly 1 line per POOL_POINTS_PER_LINE affinity points, so a wider band
+    // doesn't repeat more often than a narrow one. known=55 wide → 13, warm=75
+    // wide → 18 at the current POOL_POINTS_PER_LINE of 4.
     known: {
       uniform: [
         '"You came back." He sets down the pen like he\'d been looking for an excuse.',
@@ -250,6 +255,14 @@ export default {
         "He works something small you mentioned once into the conversation like it's nothing.",
         '"Have you seen Elias, cutie? Asked him to do something and he\'s still not back..."',
         '"Elias is back, so we\'re stealing a coffee break before I lose the afternoon to that budget. Join us, cutie."',
+        "He clears a stack of paperwork off the second chair before you've even asked to sit.",
+        '"Another fire at the circus tent. Small one. I\'ve told them twice about the flames, so make that three."',
+        "He remembers exactly how you take your snacks after practice now, and sets a plate aside before anyone else gets to it.",
+        "\"The students here don't run on a normal clock. Neither do you, I've noticed. Works out.\"",
+        "\"Shion again. I'll go apologize, it's the dorm captain's job. Not the first time this week.\"",
+        "He's mid-sentence about the program lineup when he notices you and just... stops rushing.",
+        '"Sorry, I was somewhere else for a second there. Nothing serious. Where were we?"',
+        "He's learned your schedule well enough to know when you're free before you do.",
       ],
       casual: [
         '"You came back." She sets down the pen like she\'d been looking for an excuse.',
@@ -257,6 +270,14 @@ export default {
         "She works something small you mentioned once into the conversation like it's nothing.",
         '"Have you seen Elias, cutie? Asked him to do something and he\'s still not back..."',
         '"Elias is back, so we\'re stealing a coffee break before I lose the afternoon to that budget. Join us, cutie."',
+        "She clears a stack of paperwork off the second chair before you've even asked to sit.",
+        '"Another fire at the circus tent. Small one. I\'ve told them twice about the flames, so make that three."',
+        "She remembers exactly how you take your snacks after practice now, and sets a plate aside before anyone else gets to it.",
+        "\"The students here don't run on a normal clock. Neither do you, I've noticed. Works out.\"",
+        "\"Shion again. I'll go apologize, it's the dorm captains's job. Not the first time this week.\"",
+        "She's mid-sentence about the program lineup when she notices you and just... stops rushing.",
+        '"Sorry, I was somewhere else for a second there. Nothing serious. Where were we?"',
+        "She's learned your schedule well enough to know when you're free before you do.",
       ],
     },
     warm: {
@@ -266,6 +287,19 @@ export default {
         '"My people march to the beat of their own drum. You\'ve fit right in with that."',
         '"There\'s just not enough hours in the day." He says it, then makes an hour for you.',
         "\"There's a coffee with your name on it and fifteen minutes I'm refusing to spend on anything else. Sit with me, cutie.\"",
+        '"Botanical garden duty today. Rui knows the equipment better than Mio does, believe it or not. I just carry things."',
+        "He's swapped his coffee order to match yours without a word about it.",
+        '"Come to the school building with me? I\'ve got the house advisor to see, and the company beats the walk alone."',
+        "\"You stayed up last night. Don't lie to me, cutie, I can hear it in your voice. I'll make you some honey tea.\"",
+        "He saves you the seat next to the one with the least paperwork stacked on it. Small mercy, from him.",
+        '"Leadership meeting with Mio again. Between us, I think we take on more than we should. Don\'t tell him I said that."',
+        "The circus troupe listens to him without question. You're the only one who gets to argue back, and he seems to prefer it that way.",
+        '"I finished the budget early just so I\'d have the afternoon free."',
+        "He's stopped pretending the jog is just exercise. You're half the reason he still gets up for it.",
+        '"Gathering research for new costumes. Tedious work, but the result is worth it. Want to see what I\'ve got so far?"',
+        "He notices when you've had a long day before you say a word, and quietly clears an hour for you.",
+        '"You\'re rare, you know that? Never once needed anything from me. I still catch myself waiting for it."',
+        '"Don\'t look so surprised every time I make time for you. I keep doing it on purpose."',
       ],
       casual: [
         "She lights up the moment she sees you, whatever she was signing forgotten.",
@@ -273,6 +307,19 @@ export default {
         '"My people march to the beat of their own drum. You\'ve fit right in with that."',
         '"There\'s just not enough hours in the day." She says it, then makes an hour for you.',
         "\"There's a coffee with your name on it and fifteen minutes I'm refusing to spend on anything else. Sit with me, cutie.\"",
+        '"Botanical garden duty today. Rui knows the equipment better than Mio does, believe it or not. I just carry things."',
+        "She's swapped her coffee order to match yours without a word about it.",
+        '"Come to the school building with me? I\'ve got the house advisor to see, and the company beats the walk alone."',
+        "\"You stayed up last night. Don't lie to me, cutie, I can hear it in your voice. I'll make you some honey tea.\"",
+        "She saves you the seat next to the one with the least paperwork stacked on it. Small mercy, from her.",
+        '"Leadership meeting with Mio again. Between us, I think we take on more than we should. Don\'t tell him I said that."',
+        "The circus troupe listens to her without question. You're the only one who gets to argue back, and she seems to prefer it that way.",
+        '"I finished the budget early just so I\'d have the afternoon free."',
+        "She's stopped pretending the jog is just exercise. You're half the reason she still gets up for it.",
+        '"Gathering research for new costumes. Tedious work, but the result is worth it. Want to see what I\'ve got so far?"',
+        "She notices when you've had a long day before you say a word, and quietly clears an hour for you.",
+        '"You\'re rare, you know that? Never once needed anything from me. I still catch myself waiting for it."',
+        '"Don\'t look so surprised every time I make time for you. I keep doing it on purpose."',
       ],
     },
     spark: {
@@ -326,12 +373,25 @@ export default {
       '"Pull up a chair. I\'ve got a budget to fight with, but I can talk and lose at the same time."',
       '"Oh, you\'ll do nicely. I can always tell."',
     ],
+    // Pool sizes track the affinity width of the level(s) they cover (see
+    // RELATIONSHIP_LEVELS / DIALOGUE_TIER_BY_LEVEL in constants/game.js) —
+    // roughly 1 line per POOL_POINTS_PER_LINE affinity points, so a wider band
+    // doesn't repeat more often than a narrow one. known=55 wide → 13, warm=75
+    // wide → 18 at the current POOL_POINTS_PER_LINE of 4.
     known: [
       '"Twice now, cutie. You\'re becoming a regular around here."',
       '"Sit anywhere. Mind the paperwork... actually, don\'t. It can suffer."',
       '"Tell me honestly what you thought. No, actually honestly."',
       '"You notice things around here. Not many people bother."',
       '"House meeting with Mio soon. Between us, we probably do shoulder too much."',
+      '"Another small fire at the tent. I mean that literally, before you ask."',
+      "\"Elias still isn't back. If you see him, tell him I'm not even mad. I am, a little.\"",
+      "\"You're here again. I'm starting to expect it, which is dangerous for my schedule.\"",
+      "\"Shion won't listen to anyone twice. I've stopped counting how many times I've tried.\"",
+      '"Sit with me a minute. The budget will still be losing when I get back to it."',
+      '"You handle the chaos here better than half my own house does."',
+      '"Ask me anything. I promise the honest version is more interesting than the polished one."',
+      '"I lost track of the time again. You\'re a bad influence on my schedule, cutie."',
     ],
     warm: [
       "\"You're back! I was hoping you'd return.\"",
@@ -339,6 +399,19 @@ export default {
       '"Proposal, schedule, program, budget... and yet here I am, making time for you."',
       '"I looked up from the budget last time and you weren\'t there. I noticed that."',
       '"Stay a while. This is the best part of my day, and it isn\'t close."',
+      "\"Botanical garden run today. Rui's the expert, not me, but don't tell Mio I said that.\"",
+      "\"You stayed up too late again, didn't you. Sit down. I'm making you honey tea whether you ask or not.\"",
+      '"Leadership meeting with Mio in a bit. I think we both take on too much. Don\'t repeat that."',
+      '"I finished early today. On purpose."',
+      "\"The circus troupe listens to everything I say. You're the only one who argues back. I don't mind it.\"",
+      '"Come to the school building with me. The teachers can wait a minute longer than usual."',
+      '"You\'re rare, you know. Never needed a thing from me. I still catch myself waiting for it."',
+      '"Gathering research for new costumes. Want to see what I\'ve found so far?"',
+      '"Don\'t look so surprised when I make time for you. I do it on purpose now."',
+      '"I saved you the good seat. The one without three weeks of paperwork on it."',
+      '"Long day? Sit. I\'ll deal with the rest of this later, for once."',
+      "\"I'm not going to pretend the jog is just exercise anymore. You're half the reason I get up for it.\"",
+      "\"Twice now you've caught me somewhere else in my head. I'll tell you eventually.\"",
     ],
     spark: [
       "\"Stay after everyone's gone home. I'm not done with you, and the budget can wait.\"",
