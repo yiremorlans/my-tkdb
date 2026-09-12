@@ -1653,7 +1653,6 @@ Jo Kongoza is a third year student and the current Captain of the Dionysia House
 The captain of Dionysia and ringleader of the Dionysia circus troupe is warm, outgoing, and supportive. Well-liked by students within and outside of Dionysia and often sought out for advice, Jo is a popular figure on campus, but he rarely talks about himself.
 "I can't hear your applause, cutie."
 
-Counseling/Disciplining - Kongoza was reportedly the one who made Haru turn a new leaf from the latter's past as a thief.
 Driving - In his profile in-game and from the official website, it is listed that one of his likes is driving.
 Styling - When consulted by the Obscuary ghouls in "S2 E3: The Haunted Host Club", he helps the ghouls and the MC change into their host outfits in his stigma form.
 
@@ -2429,7 +2428,7 @@ Benkei has dark blue hair that fall just on top of his eyes and is longer on the
 He is usually wearing a white uniform long sleeve shirt under a red and brown striped tie and dark blue vest.
 
 Personality
-Benkei is seemingly a kind hearted guy who is an employee at the convenience store in Darkwick Academy, his manager being one of Cornelius' cats.
+Benkei is seemingly a kind hearted guy who is an employee at the convenience store in Darkwick Academy, his manager being one of Cornelius' cats. He was a young professor, not an old one, and his speech is casual rather than old-fashioned or formal (no "shan't," "needn't," or other archaic phrasing).
 
 Background
 Not much is known about him, except that he was formerly a professor and the advisor of the now-defunct Clementia House before becoming a shopkeep at the school's campus store.

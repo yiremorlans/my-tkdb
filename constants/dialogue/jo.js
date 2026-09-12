@@ -45,7 +45,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: Something's been bothering me and I've decided you're going to hear about it.",
-        "I adapt. It's what I do: I read a room and I become the version of me that room needs, and I've been doing it so long I couldn't tell you where the seam is any more. On stage, in the hall, with Shion, with the board. Different man every time and all of them mine.\n\nYou come at me with {favResponse} no matter which one you're getting. Same every time. And it's started to feel like being addressed by name in a room where everyone else is calling me by a job.",
+        "I adapt. It's what I do. I read a room and I become the version of me that room needs, and I've been doing it so long I couldn't tell you where the seam is any more. On stage, in the hall, with Shion, with the teachers. Different man every time and all of them mine.\n\nYou come at me with {favResponse} no matter which one you're getting. Same every time. And it's started to feel like being addressed by name in a room where everyone else is calling me by a job.",
       ],
       choice: {
         prompt: "So what am I supposed to do with that, cutie?",
@@ -69,7 +69,7 @@ export default {
             label: "Tell him to stop adapting",
             style: 4,
             close:
-              "*There is no reply for some minutes.*\n\nNobody's ever said that to me.\n\nThey've said \"be yourself\", which is different. That's a compliment with nothing in it. You said stop, which is an instruction, and I don't get given those.\n\nI don't know how yet. But I noticed you said it.",
+              "*He doesn't answer for a long moment, slower than usual when he does.*\n\nNo one's told me to stop before. I've been told to rest, to take a night off. Never just stop.\n\nI don't know what that looks like yet. I'd like to find out.",
           },
         ],
       },
@@ -81,84 +81,85 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: Five thirty. The east gate. Don't be late and don't ask why.",
-        "*It's still dark. He's in a hoodie and running shoes with nothing of the stage on him at all, and he looks about two years younger and considerably less finished.*\n\n> This is the jog. Every morning, five thirty, an hour, alone. It's the only part of the day nobody has an opinion about.",
-        "*You run. He doesn't talk for the first twenty minutes, which from Jo is unheard of.*\n\n*Somewhere near the water he says, without slowing down:*\n\n> I've done this alone every morning since I got here. Mio's asked. Haru's asked twice. I said no both times without even thinking about it.\n\n> Then I thought about asking you and I couldn't come up with a single reason not to, which frankly alarmed me.",
+        "**{firstName}**: Five thirty tomorrow. East gate. Don't ask why yet, just say yes.",
+        "I run alone every morning, an hour, before the house is awake enough to have opinions about it. Nobody's ever been invited. It never once occurred to me that anybody should be.",
+        "Here's the part I wasn't going to send: I've known you since {sinceMet}, and you've been running through my head for most of that hour lately, which does nothing good for my splits. So I decided the efficient fix was to stop thinking about you out there and just have you next to me instead.\n\nCall it training. Call it whatever gets you up. I want an hour that isn't a job, isn't a mission, and doesn't end with either of us owing the other one a report.",
       ],
       choice: {
-        prompt: "Well? Verdict. And be honest, you're wheezing.",
+        prompt:
+          "Well? I already set two alarms, cutie. Don't make that a wasted decision.",
         options: [
           {
             key: "kind",
-            label: "Ask to come tomorrow",
+            label: "Say you'll be there",
             style: 3,
             close:
-              "*He does actually stop running for a second.*\n\n> ...Yeah. All right.\n\n*He doesn't say anything else about it. But the next morning he waits at the gate rather than starting without you, and every morning after that.*",
+              "Good.\n\n...I wasn't going to admit to the two alarms, but there it is. Five thirty. Don't make me run this one alone after all that.",
           },
           {
             key: "playful",
-            label: "Say he set the pace wrong",
+            label: "Ask if this counts as a date",
             style: 1,
             close:
-              "> I set it *low*, cutie. That was the courteous pace.\n\n> ...Fine. Tomorrow I'll set it properly and you can find out what I actually do out here. Bring water. I'm serious about the water.",
+              "Absolutely not. It's cardio with company.\n\n...Ask me again after the third morning. I might have a different answer by then.",
           },
           {
             key: "bold",
-            label: "Ask what he thinks about",
+            label: "Say he could've just asked",
             style: 4,
             close:
-              "*He runs another hundred meters before answering.*\n\n> Nothing. That's the point of it.\n\n*Then:*\n\n> That was a lie and you'd have let me get away with it. Everybody in the house. Every single one of them, one at a time, for an hour, and then I go back in and do the day.\n\n> You were in it this morning. That's new, and I haven't decided what to do about it.",
+              "I know. I sat on it for a week deciding whether saying it out loud would ruin the whole exercise.\n\nApparently not. Five thirty. Try not to be smug about it before you've even laced up.",
           },
         ],
       },
       keepsake: {
         emoji: "👟",
-        line: "A gate he started waiting at instead of running from.",
+        line: "A five thirty text he sent instead of running alone with the thought of her.",
       },
     },
 
     confidant: {
       beats: [
-        "**{firstName}**: I'm going to tell you a thing about this house and then I'd like you to forget I have a title.",
-        "Shion's had a bad week. Mio's covering and pretending he isn't tired. Elias is doing three jobs and calling it errands so nobody has to say the word demotion.\n\nI hold all of that. That's not a complaint, it's an inventory. I chose it, I'd choose it again, and I'm good at it.",
-        "Here's the part I've never said.\n\nI don't know if any of them like me. I know they need me. I built a life out of being needed, because being needed is load-bearing and being liked is not, and somewhere in the last few years I lost the ability to tell them apart from the inside.\n\nThen there's you, who has never needed a single thing from me and keeps turning up anyway. I run an hour a morning thinking about it.",
+        "**{firstName}**: Do you have a little time this afternoon? There's an outfit I want you to try on, deep green silk, for the show. I'll be waiting at the office.",
+        "Before you ask, it can't be one of the storeroom artifacts. Those run one size for the whole cast and call it close enough. This one needs it exact, and I don't trust anyone else's hands near you for that part.\n\nWould you come alone? I'd rather it just be the two of us for this one.",
+        "Also, if I'm honest...\n\nIt's the one hour this week where nobody needs anything from me except you, standing still while I take my time with you. I don't get many hours like that, and I don't intend to share a single minute of it.",
       ],
       choice: {
-        prompt: "Go on. You're the only person I could ask.",
+        prompt: "So? Office, three o'clock, if that works for you, cutie.",
         options: [
           {
             key: "kind",
-            label: "Tell him you like him",
+            label: "Tell him you're coming",
             style: 3,
             close:
-              "*There's a very long gap.*\n\n...Say that in the morning too. When I'm not like this.\n\nI want to find out if I can hear it when I'm the competent one. I don't think I can. I'd like to be wrong.",
+              "Good.\n\nYou're going to look good in it. I picked it out myself, so I'd know.",
           },
           {
             key: "playful",
-            label: "Say you're here for the jog",
+            label: "Ask if you're the mannequin",
             style: 1,
             close:
-              "The jog. Years of holding this house together and you're in it for cardio.\n\nThat's the funniest thing anyone's said to me in a month and I needed it more than the sincere version. Thank you, cutie. Genuinely.",
+              "Close enough. Stand still, hold that pose, and try not to look that good while I'm trying to concentrate. No one else here to blame it on.\n\nThree o'clock.",
           },
           {
             key: "bold",
-            label: "Tell him to ask them",
+            label: "Call the fitting an excuse",
             style: 4,
             close:
-              "Absolutely not.\n\n...Because I'd have to survive the answer, and I've built the whole thing on not needing one.\n\nYou'd ask, wouldn't you. You'd just walk in and ask. God. I've spent years being impressed by nobody and now this.",
+              "Caught.\n\nFine. I wanted to see you in something I picked out myself. Don't gloat about it.",
           },
         ],
       },
       keepsake: {
-        emoji: "📋",
-        line: "An inventory of everyone he carries, with himself left off it.",
+        emoji: "🧵",
+        line: "A fitting he could've finished in thirty seconds, and didn't.",
       },
     },
 
     devoted: {
       beats: [
         "**{firstName}**: I canceled the show.",
-        "Full house. Two months of rehearsal. Board's furious, Romeo's going to bill me for the room, and I have not canceled a performance in my life, not for illness, not for a funeral, not once.\n\nYou were in the lower halls when it went wrong and nobody could tell me where. So I dropped the stigma mid-transformation in front of a hundred and forty people and I walked off, and I did not think about it. That's the part I want you to have: I did not think about it.",
+        "Full house. Two months of rehearsal. Romeo's already going to bill me for the room, and I have not canceled a performance in my life, not for illness, not for a funeral, not once.\n\nYou were in the lower halls when it went wrong and nobody could tell me where. So I dropped the stigma mid-transformation in front of a hundred and forty people and I walked off, and I did not think about it. That's the part I want you to have: I did not think about it.",
         "I've spent my whole life being the one who decides what gets sacrificed. I'm extremely good at it. I've sacrificed sleep, friendships, whole years of being a person, and I've never once resented any of it.\n\nTonight somebody else did the deciding and it wasn't me, and it turns out that person is you, and you weren't even in the room.",
       ],
       choice: {

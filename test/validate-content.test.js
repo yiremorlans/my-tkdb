@@ -100,7 +100,28 @@ test('the keepsake emoji check warns rather than errors, and names both levels',
   } finally {
     scenes.friend.keepsake.emoji = original;
   }
-  assert.deepStrictEqual(validateContent().warnings, [], 'and the catalog is clean again');
+  // Not a blanket "no warnings at all" — the roster is still being caught up to
+  // the {sinceMet} rule (docs/bond-scene-dms.md §5.2/§5.4), which is itself a
+  // warning, not an error. Just confirm the emoji-reuse warning is gone again.
+  const stillWarning = validateContent().warnings.filter((w) => w.includes('reuses the keepsake emoji'));
+  assert.deepStrictEqual(stillWarning, [], 'and the catalog is clean again');
+});
+
+// Close Friend is the one level required to use {sinceMet} going forward
+// (docs/bond-scene-dms.md §5.2) — a rule added after most of the roster was
+// already written, so it warns rather than errors and the existing gap is
+// expected, not a regression. This just pins the shape of that warning and
+// confirms a scene that does use the placeholder doesn't trip it.
+test('a closeFriend scene missing {sinceMet} warns, one that has it does not', () => {
+  const { warnings } = validateContent();
+  assert.ok(
+    warnings.some((w) => /jin bondScenes\.closeFriend is a closeFriend scene but never uses \{sinceMet\}/.test(w)),
+    'an unconverted character should still be flagged',
+  );
+  assert.ok(
+    !warnings.some((w) => w.startsWith('alan bondScenes.closeFriend')),
+    "alan's rewritten scene uses {sinceMet} and should not be flagged",
+  );
 });
 
 test('every bond scene choice button fits the 30-char cap the rest of the game uses', () => {

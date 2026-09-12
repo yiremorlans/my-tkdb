@@ -115,6 +115,15 @@ function humaniseSince(lastInteractionAt, now = new Date()) {
   return 'the better part of a year';
 }
 
+// The month name of a timestamp, for {sinceMet} — deliberately just the month,
+// not a full date: "since March" reads like something a person would actually
+// say, "since March 14th, 2026" reads like a log line.
+function monthName(isoTimestamp, now = new Date()) {
+  const date = isoTimestamp ? new Date(isoTimestamp) : now;
+  if (Number.isNaN(date.getTime())) return now.toLocaleString('en-US', { month: 'long' });
+  return date.toLocaleString('en-US', { month: 'long' });
+}
+
 // The response type this character pays 2 for — the one the player has been
 // leaning on if they've been getting anywhere.
 function favouredResponsePhrase(character) {
@@ -138,6 +147,9 @@ async function resolveSceneVars(userId, character, now = new Date()) {
     // even when there is no milestone to name.
     lastMoment: 'the last time',
     since: 'a while',
+    // Falls back to the current month if the relationship row can't be read —
+    // wrong, but never absent, and nobody but the player will notice.
+    sinceMet: monthName(null, now),
   };
 
   try {
@@ -145,6 +157,7 @@ async function resolveSceneVars(userId, character, now = new Date()) {
     if (relationship) {
       vars.timesMet = String(relationship.times_met || 0);
       vars.since = humaniseSince(relationship.last_interaction_at, now);
+      vars.sinceMet = monthName(relationship.created_at, now);
     }
   } catch (err) {
     console.error('Error reading relationship for bond scene vars:', err);

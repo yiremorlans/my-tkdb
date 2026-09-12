@@ -76,10 +76,9 @@ export default {
           },
           {
             key: "bold",
-            label: "Ask if just wants you around",
+            label: "Ask if he'd notice you gone",
             style: 4,
-            close:
-              "Yeah\n\nThat's it\n\nNo other reason\n\nJust wanted you around",
+            close: "Yeah\n\nEvery time\n\nDont test it",
           },
         ],
       },
@@ -91,39 +90,39 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: Come by the garage\n\nNot urgent\n\nNot a job",
-        "*The car is stripped down across half the floor and he doesn't look up when you come in. He hands you a spanner. That's the greeting.*\n\n*An hour goes by. Neither of you says much. He passes you things before you've asked for them.*",
-        "*Later, hands black, sitting on the floor against the bench, he says it to the wall instead of to you.*\n\n> Don't let people down here. Only room where I'm not the captain and nobody's watching to see what I'll do.\n\n> You've been down here four times. Wasn't an accident.",
+        "**{firstName}**: You good",
+        "Not asking as your captain\n\nAsking as me\n\nThat thing went straight for you back there\n\nDidnt feel like a choice\n\nJust moved\n\nStill thinking about it now though",
+        "Known you since {sinceMet}\n\nNever once done the math on how close that was till today\n\nDidn't like the answer\n\nGlad this is the version where you're fine",
       ],
       choice: {
-        prompt: "...Say something. I'm out of words.",
+        prompt: "Anyway\n\nSay something",
         options: [
           {
             key: "kind",
-            label: "Ask if you can come back",
+            label: "Thank him for the two seconds",
             style: 3,
             close:
-              "*He looks at you properly for the first time all evening.*\n\n> Yeah.\n\n*Then, after a while, quieter:*\n\n> Don't ask next time. Just come.",
+              "…Nothing to thank me for\n\nWasn't gonna stand there and watch\n\n…Still glad you're okay",
           },
           {
             key: "playful",
-            label: "Ask what you're building",
+            label: "Ask if he does that math often",
             style: 1,
             close:
-              "> Passenger seat.\n\n*He says it to the engine. Doesn't explain. Doesn't have to.*\n\n> Been on it a month. Take a guess who for.",
+              "Only when it's you\n\nUsually don't bother counting\n\nGonna start",
           },
           {
             key: "bold",
-            label: "Sit down next to him",
+            label: "Tell him not to scare you",
             style: 4,
             close:
-              "*You sit. Shoulder to shoulder against the bench, in the cold, with the light off over the door.*\n\n*He goes very still. Then, after a long time, he leans a fraction of an inch into you, not enough for anyone else to have seen, and stays there until the heater cuts out.*",
+              "Fair\n\nWasn't planning on it happening again\n\nGonna keep you further back next time\n\nWorking on it",
           },
         ],
       },
       keepsake: {
-        emoji: "🔧",
-        line: "A spanner he handed over without being asked.",
+        emoji: "🛡️",
+        line: "The two seconds he never had to think about, and never once called brave.",
       },
     },
 
@@ -240,23 +239,49 @@ export default {
     new: [
       'Grease-stained and worn, he looks you over once. "Get back. It\'s dangerous."',
       "He doesn't stop working. He just moves the toolbox so you won't trip over it.",
-      "The engine dies under his hand. In the quiet, he finally acknowledges you exist.",
+      "Nobody else in the garage stands this close to him. You haven't learned why yet.",
       '"Don\'t touch that," he says flatly. "It\'s hot." That\'s the whole greeting.',
       "He's holding a campus map the wrong way up and won't admit he's lost. \"...What do you want?\"",
     ],
     known: [
-      "He doesn't warn you about the floor anymore. You've learned it.",
+      "He steers you clear of the loose floor panel before you even notice it's there.",
       "He grunts once in your direction. Two weeks ago he didn't do that.",
-      "The toolbox has already been moved before you arrive.",
+      "The toolbox is already out of your path before you arrive. He still checks.",
       '"Looks like we\'ve got another mission order," he says. "Rest while you can. Next one\'s a long one."',
       "\"Hand me that.\" It's the first thing he's ever asked you for.",
+      "He shoves a rag your way before you've noticed the grease on your hands.",
+      '"You\'re early," he says. Not a complaint.',
+      "He still tells you to stay clear of the bikes while they're up on the lift. Just gentler about it now.",
+      "He's started leaving the garage door unlocked before you even get there.",
+      "He starts leaving the spare gloves out in your size. Never brings it up.",
+      "He doesn't send you on the easy jobs anymore. Figures you can handle harder ones.",
+      "He waves off Leo's teasing about you without looking up from his work.",
+      "He tells you when the weather's about to turn before you've checked. Force of habit, maybe.",
     ],
+    // Pool sizes track the affinity width of the level(s) they cover (see
+    // RELATIONSHIP_LEVELS / DIALOGUE_TIER_BY_LEVEL in constants/game.js) —
+    // roughly 1 line per POOL_POINTS_PER_LINE affinity points, so a wider band
+    // doesn't repeat more often than a narrow one. known=55 wide → 13, warm=75
+    // wide → 18 at the current POOL_POINTS_PER_LINE of 4.
     warm: [
       "He works beside you in steady silence, a quiet understanding growing between you.",
       "He hands you a rag without being asked. Somehow that means something.",
       "He's left the second stool out again. He's never once mentioned it.",
       '"You eat today?" he asks, wiping his hands. It\'s the third time this week.',
       "The garage radio is on. He turned it on because you like it. He won't say so.",
+      "He hands you the mission file before you've even reached for it, like waiting was never the plan.",
+      "He laughs, short and surprised at himself. He doesn't do that often.",
+      "He steps between you and Leo without a word, like it's reflex now.",
+      "He says your name under his breath when a job's going sideways. Doesn't notice he does it.",
+      "He splits his lunch in half before you've said you're hungry.",
+      "He's memorized which drink you always grab from the vending machine.",
+      "He doesn't rush you out of the garage anymore, even when he's closing up.",
+      "He starts fixing whatever's wrong with your things before you mention it, like it's not on purpose.",
+      "He remembers exactly how you take your coffee and just makes it that way now.",
+      "Other housemates have started asking him where you are instead of asking around.",
+      "He tries a joke. It lands badly. He tries again anyway.",
+      "He's stopped correcting people who assume you two are a pair.",
+      "The captain's log has a line in it now that isn't about missions. He never shows you which one.",
     ],
     spark: [
       "He wipes his hands twice before he touches you. He touches you anyway.",
@@ -282,18 +307,26 @@ export default {
   },
   temperamentDialogue: {
     new: [
-      '"This place isn\'t meant for people like you. Stay safe."',
+      '"Get back. Don\'t want to hurt you."',
       '"Watch your step. Half this floor\'s sharp."',
       '"...What do you want?"',
-      '"You wandered into the wrong house. Go back the way you came."',
+      '"Ask anyone. They\'ll tell you to stay clear of me."',
       '"...Hm. You\'re still standing there."',
     ],
     known: [
       '"...You again. Fine."',
       '"Hand me the eight-mil. It\'s the one that looks like the others."',
       "\"You're not in the way. That's rare.\"",
-      '"Slack off once, you\'ll find out how hard it is to get back in the game."',
+      '"Careful. Meant that."',
       "\"Don't stand there. Sit, if you're staying.\"",
+      '"Watch the floor. Not everyone remembers where the oil is."',
+      '"...Still here. Good."',
+      '"Ask, if you\'re gonna hover. Faster than guessing."',
+      '"Door\'s open. Wipe your feet."',
+      '"Got gloves that\'ll fit. Wear them."',
+      '"Leo talks too much. Ignore him."',
+      '"You can handle the harder one."',
+      "\"Storm's coming. Don't just stand there.\"",
     ],
     warm: [
       "\"I'm glad you're here. Really.\"",
@@ -301,6 +334,19 @@ export default {
       '"You came back. Good."',
       "\"Lunch? Huh. I forgot to eat. ...I don't eat in the cafeteria. Portions aren't big enough. That's the only reason.\"",
       '"Long day. Yours or mine, doesn\'t matter. Sit down."',
+      "\"Hungry? Say so. I'll split what I've got.\"",
+      '"Sho give you trouble? Point him out."',
+      '"Didn\'t expect you today. Not complaining."',
+      '"You look tired. Sit."',
+      '"Don\'t mention the lunch thing to Bandana."',
+      '"Stay if you want. Door\'s open either way."',
+      '"...You again. Good, this time."',
+      '"Riding somewhere? I\'ll drop you first."',
+      "\"Coffee's how you like it. Don't make it weird.\"",
+      '"They keep asking where you are. Tell them yourself next time."',
+      '"...That joke landed wrong. Give me another shot."',
+      '"Let them think what they want. Not correcting it."',
+      '"Wrote something in the log today. Not mission stuff. Not telling you which."',
     ],
     spark: [
       '"Come here. Closer than that."',

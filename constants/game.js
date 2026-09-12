@@ -1,4 +1,4 @@
-import { RESPONSE_TYPES } from './characters.js';
+import { RESPONSE_TYPES, RESPONSE_LABEL_TIER } from './characters.js';
 
 // How many characters /meet offers the user to pick from.
 export const MEET_OPTION_COUNT = 4;
@@ -143,6 +143,73 @@ export const DIALOGUE_TIER_BY_LEVEL = {
 
 export function getDialogueTier(levelName) {
   return DIALOGUE_TIER_BY_LEVEL[levelName] || 'new';
+}
+
+// --- ambient dialogue pool sizing --------------------------------------------
+// Baseline line count each character's `dialogue`/`temperamentDialogue` pool
+// (constants/dialogue/<id>.js) should carry per tier, so a wider affinity band
+// doesn't repeat more than a narrow one. One line per POOL_POINTS_PER_LINE
+// affinity points spent in that tier, floored at MIN_DIALOGUE_POOL_SIZE — the
+// 5-line default nearly every character already uses for 'new'.
+//
+// A tier can cover more than one relationship level (see
+// DIALOGUE_TIER_BY_LEVEL) — 'bound' shares Devoted and Soulbound — so its
+// target sums every level mapped to it. The top level has no next level to
+// measure a width against and contributes 0; for 'bound' that just means the
+// target comes from Devoted's width alone, since Soulbound plays the same
+// pool for the rest of the game.
+//
+// This is a shared target, not an enforced minimum — nothing currently reads
+// it to fail a build. Most of the roster (a flat 5 lines per tier) sits well
+// under it; use it when deciding how many lines a tier's rewrite needs, the
+// way constants/dialogue/alan.js's known/warm pools do.
+export const POOL_POINTS_PER_LINE = 4;
+export const MIN_DIALOGUE_POOL_SIZE = 5;
+
+function levelWidth(index) {
+  const level = RELATIONSHIP_LEVELS[index];
+  const next = RELATIONSHIP_LEVELS[index + 1];
+  return next ? next.min - level.min : 0;
+}
+
+export const DIALOGUE_POOL_TARGET_BY_TIER = RELATIONSHIP_LEVELS.reduce(
+  (targets, level, index) => {
+    const tier = getDialogueTier(level.name);
+    targets[tier] = (targets[tier] || 0) + levelWidth(index);
+    return targets;
+  },
+  {},
+);
+for (const tier of Object.keys(DIALOGUE_POOL_TARGET_BY_TIER)) {
+  DIALOGUE_POOL_TARGET_BY_TIER[tier] = Math.max(
+    MIN_DIALOGUE_POOL_SIZE,
+    Math.floor(DIALOGUE_POOL_TARGET_BY_TIER[tier] / POOL_POINTS_PER_LINE),
+  );
+}
+
+// `approach` (the step-forward button) is tiered identically to `dialogue` —
+// same six keys, picked once per encounter — so DIALOGUE_POOL_TARGET_BY_TIER
+// applies to it unchanged; it doesn't get its own table.
+//
+// `responses` (the Kind/Playful/Bold/Neutral choice labels) are different:
+// RESPONSE_LABEL_TIER (constants/characters.js) collapses 'new'/'known'/'warm'
+// into one shared "new" bucket — buttons are authored at fewer tiers than
+// dialogue. That bucket's target has to cover every level folded into it, not
+// just Stranger's, so it needs its own table rather than reusing the one above.
+export const RESPONSE_POOL_TARGET_BY_TIER = RELATIONSHIP_LEVELS.reduce(
+  (targets, level, index) => {
+    const dialogueTier = getDialogueTier(level.name);
+    const labelTier = RESPONSE_LABEL_TIER[dialogueTier] || 'new';
+    targets[labelTier] = (targets[labelTier] || 0) + levelWidth(index);
+    return targets;
+  },
+  {},
+);
+for (const tier of Object.keys(RESPONSE_POOL_TARGET_BY_TIER)) {
+  RESPONSE_POOL_TARGET_BY_TIER[tier] = Math.max(
+    MIN_DIALOGUE_POOL_SIZE,
+    Math.floor(RESPONSE_POOL_TARGET_BY_TIER[tier] / POOL_POINTS_PER_LINE),
+  );
 }
 
 // --- bond scenes -------------------------------------------------------------

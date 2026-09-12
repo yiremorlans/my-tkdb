@@ -1389,7 +1389,7 @@ export function generateCharacterResponses(character, tier = "new", ctx = {}) {
 // dialogue tiers that share a register share a label set: everything up to
 // "warm" reads as an approach, "spark" turns flirtatious, "close" is intimate,
 // "bound" is romantic.
-const RESPONSE_LABEL_TIER = {
+export const RESPONSE_LABEL_TIER = {
   new: "new",
   known: "new",
   warm: "new",

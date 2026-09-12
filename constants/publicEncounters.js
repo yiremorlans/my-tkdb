@@ -142,6 +142,14 @@ export const WINNER_LINE_PLACEHOLDERS = ["user", "name", "firstName", "house"];
 //                  phrase describeBoost uses ("that coffee")
 //   {since}        how long since the last interaction, as a noun phrase
 //                  ("a few days"), so it reads after "It's been ..."
+//   {sinceMet}     the month name of character_relationships.created_at — when
+//                  this player first met the character at all, not their last
+//                  interaction. A bare month ("March"), so it reads after
+//                  "since" ("since March") or "It's been ... since {sinceMet}".
+//                  Required in every character's closeFriend scene going
+//                  forward (validateContent warns if it's missing) — Close
+//                  Friend is the level that reaches back to when this all
+//                  started, not just to the last time they talked.
 export const BOND_SCENE_PLACEHOLDERS = [
   "firstName",
   "house",
@@ -149,6 +157,7 @@ export const BOND_SCENE_PLACEHOLDERS = [
   "favResponse",
   "lastMoment",
   "since",
+  "sinceMet",
 ];
 
 // The fallback /call reveal pool, authored in constants/dialogue/_shared.js

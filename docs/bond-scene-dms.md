@@ -620,9 +620,16 @@ choice and grants a keepsake. `when` is optional.
 
 ### 5.2 Scene vars for `fillTemplate`
 
-`{firstName} {house} {timesMet} {favResponse} {lastMoment} {since}` — resolved
-in `bondScenes.js` at delivery, list frozen in `constants/publicEncounters.js`
-alongside the existing placeholder set so `validateContent` can check them.
+`{firstName} {house} {timesMet} {favResponse} {lastMoment} {since} {sinceMet}`
+— resolved in `bondScenes.js` at delivery, list frozen in
+`constants/publicEncounters.js` alongside the existing placeholder set so
+`validateContent` can check them.
+
+`{sinceMet}` is the month name of `character_relationships.created_at` — when
+this player first met the character at all, distinct from `{since}` (how long
+since their *last* interaction). **Every character's `closeFriend` scene must
+use it going forward** — `validateContent` warns (not yet an error, since the
+existing roster predates the rule) when one doesn't.
 
 ### 5.3 Full coverage, and no content fallback
 
@@ -665,7 +672,11 @@ tier-pool checks:
   with no content fallback (§5.3) that level-up would deliver nothing at all;
 - no beat, closing line or keepsake line is reused anywhere in the game — two
   characters sending the same words at the same level would give away that the
-  moment is not really theirs.
+  moment is not really theirs;
+- a `closeFriend` scene that never uses `{sinceMet}` → **warning** (§5.2) —
+  build-breaking would have failed the 25 characters written before the rule
+  existed, so new and rewritten scenes are held to it and the rest is caught up
+  over time.
 
 ### 5.5 Voice and the intimacy ladder
 
