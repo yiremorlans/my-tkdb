@@ -990,8 +990,8 @@ export const CHARACTERS = [
     // wants", trigger-happy, openly predatory ("Quit squirming around. You that
     // excited to be my next meal?", "I'm getting a taste of you, so close your
     // eyes and shut up") — only someone who does not flinch is in the
-    // conversation. playful (1): the riddles, the "kitty-cat"/"Lulu" nicknames
-    // and the Gyahaha are real, and matching the mischief reaches him. kind (0):
+    // conversation. playful (1): the "kitty-cat"/"Lulu" nicknames and the
+    // Gyahaha are real, and matching the mischief reaches him. kind (0):
     // he "gets bored easily and tends to keep silent in most conversations"
     // ("Stop talking. I don't care"), so softness loses him — Elias's read that
     // "Taiga's a sensitive soul... waiting for someone who truly believes in

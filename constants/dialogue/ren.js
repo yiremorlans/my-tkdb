@@ -44,38 +44,38 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: ok this is going to sound like a normal question and it isn't one",
-        "you come back with {favResponse}. Every time. even the times I've barely said anything back, which is most of them.\n\npeople usually give up. not a complaint, I know what I'm like. I'm the guy with one earbud in, and most people take that as the whole conversation and leave. Correct of them, honestly.\n\nyou never leave. You just sit there until I take the other one out. nobody's ever waited me out before.",
+        "**{firstName}**: so Haru was looking for me earlier",
+        "you told him I was already at the diner. I wasn't, I was still on the critter rotation with my phone off, which you knew, because I told you that this morning.\n\nhe's got this thing now where if I go quiet too long he decides something's wrong and starts checking every room in the house. He's tracked me down before. Actual GPS tracker. I'm not exaggerating for effect.\n\nso you lying straight to his face for me is. I don't know what that is. thanks, I guess.\n\nI keep waiting for the part where you want something back. People don't just do that. Not for free, not for me. Even Haru's got a reason, he wants the tour numbers up. What's yours.",
       ],
       choice: {
-        prompt: "so what's the strategy. There's clearly a strategy.",
+        prompt: "so what is it. might as well say it now.",
         options: [
           {
             key: "kind",
-            label: "Say there's no strategy",
+            label: "Say you don't want anything",
             style: 3,
             close:
-              "there's always a strategy.\n\n...huh. Okay. there isn't, is there.\n\nthat's worse actually. That's so much worse. I'm going to lie down.",
+              "yeah, that's usually what people say right before they want something.\n\n...I believe you, though. Which is new. I don't know what to do with that so I'm just going to say thanks again and hope that covers it.",
           },
           {
             key: "playful",
-            label: "Say you're waiting him out",
+            label: "Threaten to collect later",
             style: 1,
             close:
-              "that's not a strategy, that's a siege.\n\nit's working. I want that on record. It's working and I've fully surrendered and you didn't even bring equipment.",
+              "there it is. knew it.\n\nfine. name it whenever. Within reason. I'm not fighting Haru for you, I've seen what he does to people who skip the tour signup.",
           },
           {
             key: "bold",
-            label: "Tell him to take it out",
+            label: "Ask if he'd rather get caught",
             style: 4,
             close:
-              "*It's a photo, thirty seconds later. Both earbuds, on the table, next to his phone.*\n\nthere. Happy?\n\n*Then:* ...don't answer that. I know the answer. It's annoying that I know the answer.",
+              "no.\n\n*A pause, then a screenshot: the fake location he'd told her to give Haru, saved for next time.*\n\nkeep that on standby. don't ask why I already had it ready. I don't want to talk about how prepared I was for this.",
           },
         ],
       },
       keepsake: {
-        emoji: "🎧",
-        line: "A photo of both earbuds on a table.",
+        emoji: "📍",
+        line: "A fake location, saved and ready in case Haru comes looking again.",
       },
     },
 

@@ -162,7 +162,8 @@ export function getDialogueTier(levelName) {
 // This is a shared target, not an enforced minimum — nothing currently reads
 // it to fail a build. Most of the roster (a flat 5 lines per tier) sits well
 // under it; use it when deciding how many lines a tier's rewrite needs, the
-// way constants/dialogue/alan.js's known/warm pools do.
+// way constants/dialogue/alan.js's known/warm pools do (both `dialogue` and
+// `temperamentDialogue` — see TEMPERAMENT_DIALOGUE_POOL_TARGET_BY_TIER below).
 export const POOL_POINTS_PER_LINE = 4;
 export const MIN_DIALOGUE_POOL_SIZE = 5;
 
@@ -187,10 +188,14 @@ for (const tier of Object.keys(DIALOGUE_POOL_TARGET_BY_TIER)) {
   );
 }
 
-// `approach` (the step-forward button) is tiered identically to `dialogue` —
-// same six keys, picked once per encounter — so DIALOGUE_POOL_TARGET_BY_TIER
-// applies to it unchanged; it doesn't get its own table.
-//
+// `approach` (the step-forward button) and `temperamentDialogue` are both
+// tiered identically to `dialogue` — same six keys, picked once per encounter
+// — so DIALOGUE_POOL_TARGET_BY_TIER applies to them unchanged. `approach`
+// reuses the table directly; `temperamentDialogue` gets its own name below so
+// a rewrite (or a script) can point at "the temperamentDialogue target" without
+// reading the sizing rationale to learn it's the same table as `dialogue`'s.
+export const TEMPERAMENT_DIALOGUE_POOL_TARGET_BY_TIER = DIALOGUE_POOL_TARGET_BY_TIER;
+
 // `responses` (the Kind/Playful/Bold/Neutral choice labels) are different:
 // RESPONSE_LABEL_TIER (constants/characters.js) collapses 'new'/'known'/'warm'
 // into one shared "new" bucket — buttons are authored at fewer tiers than
