@@ -50,8 +50,34 @@ import {
   recordBondScene,
   setBondDmPref,
 } from './db/supabase.js';
+import fs from 'fs';
+import { dirname, join } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 const EPHEMERAL_FLAG = 64;
+
+// Where a beat's `stickers[index]` filename resolves to. See renderBeat: this
+// is the one place a scene can post an image alongside its text, standing in
+// for the pic/sticker a character would actually send rather than describing
+// one in prose.
+const STICKERS_DIR = join(__dirname, 'assets/stickers');
+
+/**
+ * Read a sticker off disk as a Discord attachment, or null if it can't be
+ * read. Never throws: a beat's text is the message, the sticker is a bonus on
+ * top of it, and losing the image must never cost the user the line — same
+ * soft-failure contract as the rest of delivery (see file header).
+ */
+function loadSticker(filename) {
+  try {
+    return { name: filename, attachment: fs.readFileSync(join(STICKERS_DIR, filename)) };
+  } catch (err) {
+    console.error(`[bond] cannot read sticker "${filename}":`, err.message);
+    return null;
+  }
+}
 
 // The statuses that still owe the user something, and therefore hold a
 // character's slot. `queued` is included because a claim that never started is
@@ -249,6 +275,12 @@ function optOutRow(characterId, levelName) {
  * `firstEver` is meaningless for a replay and is never passed for one: nobody
  * needs the "sent you a message" frame or the opt-out button on a scene they
  * have already read once.
+ *
+ * `scene.stickers[index]`, when present, names a file in assets/stickers to
+ * attach alongside the text — the closest a beat comes to a character actually
+ * sending a pic. It rides on the same message, is re-read from disk on every
+ * post (including replays), and a missing/unreadable file drops the image
+ * quietly rather than losing the beat (loadSticker).
  */
 export function renderBeat(scene, index, vars, { characterId, levelName, firstEver = false, replay = false } = {}) {
   const isLast = index === scene.beats.length - 1;
@@ -280,7 +312,13 @@ export function renderBeat(scene, index, vars, { characterId, levelName, firstEv
   ];
   if (index === 0 && firstEver) components.push(optOutRow(characterId, levelName));
 
-  return { content: parts.join('\n\n'), components };
+  const message = { content: parts.join('\n\n'), components };
+  const stickerFile = scene.stickers?.[index];
+  if (stickerFile) {
+    const sticker = loadSticker(stickerFile);
+    if (sticker) message.files = [sticker];
+  }
+  return message;
 }
 
 // The last message of a scene: the character's authored answer to the pick,

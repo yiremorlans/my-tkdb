@@ -38,6 +38,18 @@ import {
   WINNER_LINE_BUCKETS,
   WINNER_LINE_PLACEHOLDERS,
 } from "./publicEncounters.js";
+import fs from "fs";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+// Mirrors bondScenes.js's STICKERS_DIR: a scene's `stickers[index]` names a
+// file here, checked at build time so a typo'd filename fails the build
+// instead of quietly dropping the image at delivery (bondScenes.js's
+// loadSticker is soft-fail by design — that's for a disk problem in
+// production, not for content that was never right).
+const STICKERS_DIR = join(__dirname, "../assets/stickers");
 
 const TIERS = ["new", "known", "warm", "spark", "close", "bound"];
 
@@ -60,6 +72,28 @@ function collectLabels(value) {
     return Object.values(value).flatMap(collectLabels);
   }
   return [];
+}
+
+// A migrated dialogue entry pairs its line with the approach label(s) that
+// belong to it — { line, approach }, approach a string or an array of
+// interchangeable labels for that beat (see getRandomDialogueBeat in
+// characters.js). A tier not yet migrated is still a bare array of strings.
+function isBeat(entry) {
+  return !!entry && typeof entry === "object" && typeof entry.line === "string";
+}
+
+// True once every line in a dialogue tier — across every image variant, if
+// the pool is keyed by one — carries its own approach, so the legacy
+// `approach` pool having nothing at that tier isn't a gap.
+function tierIsFullyPaired(poolData) {
+  if (Array.isArray(poolData)) {
+    return poolData.length > 0 && poolData.every(isBeat);
+  }
+  if (poolData && typeof poolData === "object") {
+    const variants = Object.values(poolData);
+    return variants.length > 0 && variants.every(tierIsFullyPaired);
+  }
+  return false;
 }
 
 // A `when` field is scalar-or-array; return it as a list for checking.
@@ -262,6 +296,32 @@ function validateBondScene(at, scene, errors, warnings, seenLines, levelKey) {
       }
       prose.push([`${at}.beats[${i}]`, beat]);
     });
+  }
+
+  // --- stickers ---
+  // Optional: `stickers[index]` names a file in assets/stickers attached
+  // alongside that beat (bondScenes.js renderBeat). Checked against disk here
+  // so a typo'd filename is a build error, not a sticker that silently never
+  // shows up in someone's DM.
+  if (scene.stickers !== undefined) {
+    if (typeof scene.stickers !== "object" || Array.isArray(scene.stickers)) {
+      errors.push(`${at}.stickers must be an object keyed by beat index`);
+    } else {
+      for (const [key, filename] of Object.entries(scene.stickers)) {
+        const index = Number(key);
+        if (!Array.isArray(beats) || !Number.isInteger(index) || index < 0 || index >= beats.length) {
+          errors.push(`${at}.stickers has key "${key}", which is not a beat index in this scene`);
+          continue;
+        }
+        if (typeof filename !== "string" || filename.trim() === "") {
+          errors.push(`${at}.stickers[${key}] must name a file in assets/stickers`);
+          continue;
+        }
+        if (!fs.existsSync(join(STICKERS_DIR, filename))) {
+          errors.push(`${at}.stickers[${key}] "${filename}" does not exist in assets/stickers`);
+        }
+      }
+    }
   }
 
   // --- choice ---
@@ -503,11 +563,15 @@ export function validateContent() {
 
     // A missing approach set only costs the scene-specific flavor — the /roam
     // button still renders from APPROACH_LABEL_FALLBACK — so warn, don't fail.
-    if (!content.approach) {
+    // A tier that's fully migrated to { line, approach } pairs carries its
+    // label on the dialogue entry itself, so the legacy pool having nothing
+    // there isn't a gap — see tierIsFullyPaired.
+    const allTiersPaired = TIERS.every((tier) => tierIsFullyPaired(content.dialogue?.[tier]));
+    if (!content.approach && !allTiersPaired) {
       warnings.push(`${id} has no approach labels — using the generic fallback`);
-    } else {
+    } else if (content.approach) {
       for (const tier of TIERS) {
-        if (!content.approach[tier]) {
+        if (!content.approach[tier] && !tierIsFullyPaired(content.dialogue?.[tier])) {
           warnings.push(`${id} has no "${tier}" approach label — falls back to "new"`);
         }
       }
@@ -589,6 +653,49 @@ export function validateContent() {
             errors.push(
               `${id} dialogue[${tier}] is empty — random selection would fail`
             );
+          }
+        }
+      }
+    }
+
+    // CRITICAL: a migrated ({ line, approach }) beat must carry both halves —
+    // a blank line, or an approach with nothing usable on it, breaks the
+    // /roam message the same way an empty pool would.
+    if (content.dialogue) {
+      for (const tier of TIERS) {
+        const poolData = content.dialogue[tier];
+        if (!poolData) continue;
+        const collections = Array.isArray(poolData)
+          ? [poolData]
+          : typeof poolData === "object"
+            ? Object.values(poolData)
+            : [];
+        for (const entries of collections) {
+          if (!Array.isArray(entries)) continue;
+          for (const entry of entries) {
+            if (!isBeat(entry)) continue;
+            if (!entry.line.trim()) {
+              errors.push(`${id} dialogue[${tier}] has a beat with an empty line`);
+            }
+            const approachLabels = Array.isArray(entry.approach)
+              ? entry.approach
+              : [entry.approach];
+            if (
+              approachLabels.length === 0 ||
+              approachLabels.some((a) => typeof a !== "string" || !a.trim())
+            ) {
+              errors.push(
+                `${id} dialogue[${tier}] beat has no valid approach label: "${entry.line}"`,
+              );
+              continue;
+            }
+            for (const label of approachLabels) {
+              if (label.length > MAX_BUTTON_LABEL_LENGTH) {
+                errors.push(
+                  `${id} dialogue[${tier}] beat approach is ${label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${label}"`,
+                );
+              }
+            }
           }
         }
       }

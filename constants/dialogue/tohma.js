@@ -275,34 +275,50 @@ export default {
       "He holds you the way he does everything else: deliberately, and completely.",
     ],
   },
+  // Evening block: dialogue and approach paired per beat
+  // (docs/dialogue-approach-pairing.md) instead of two separately-drawn lists.
   dialogueWhen: [
     {
       when: { time: "evening" },
       dialogue: {
         new: [
-          "He checks his watch, then the dark stairwell behind you, and decides not to remark on the hour.",
-          '"You\'re past curfew," he notes. "So am I. We\'ll call it even."',
-          "The balcony's empty except for him. After dark, he says, is the only time it's quiet enough to think.",
-          '"It\'s after curfew. I\'m not going to report you," he says. "Stand where the light reaches, though."',
+          {
+            line: "He checks his watch, then the dark stairwell behind you, and decides not to remark on the hour.",
+            approach: "Slip past curfew with him",
+          },
+          {
+            line: '"You\'re past curfew," he notes. "So am I. We\'ll call it even."',
+            approach: "Slip past curfew with him",
+          },
+          {
+            line: "The balcony's empty except for him. After dark, he says, is the only time it's quiet enough to think.",
+            approach: "Take the empty balcony",
+          },
+          {
+            line: '"It\'s after curfew. I\'m not going to report you," he says. "Stand where the light reaches, though."',
+            approach: "Take the empty balcony",
+          },
         ],
         known: [
-          '"I\'ll sign you back in if anyone asks," he says, already turning a blind eye.',
-          "He's less starched after dark. The clipboard is nowhere in sight.",
-          '"The balcony\'s better at night," he says. "No one to perform for."',
+          {
+            line: '"I\'ll sign you back in if anyone asks," he says, already turning a blind eye.',
+            approach: "Let him sign you in",
+          },
+          {
+            line: "He's less starched after dark. The clipboard is nowhere in sight.",
+            approach: "Let him sign you in",
+          },
+          {
+            line: '"The balcony\'s better at night," he says. "No one to perform for."',
+            approach: "Let him sign you in",
+          },
         ],
         warm: [
-          '"Nobody comes up here this late. That\'s rather the point of it."',
+          {
+            line: '"Nobody comes up here this late. That\'s rather the point of it."',
+            approach: "Keep him company up here",
+          },
         ],
-      },
-    },
-  ],
-  approachWhen: [
-    {
-      when: { time: "evening" },
-      approach: {
-        new: ["Slip past curfew with him", "Take the empty balcony"],
-        known: ["Let him sign you in"],
-        warm: ["Keep him company up here"],
       },
     },
   ],

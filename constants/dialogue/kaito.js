@@ -285,24 +285,56 @@ export default {
       "He's still a little embarrassed by how much he means it. He's never once wanted it to stop.",
     ],
   },
+  // Evening block: new/known/warm dialogue and approach paired per beat
+  // (docs/dialogue-approach-pairing.md) instead of two separately-drawn
+  // lists. spark/close have no approachWhen counterpart to pair with, so
+  // they're left as bare lines — they still draw an approach, just from the
+  // base approach pool for that tier, same as before this existed.
   dialogueWhen: [
     {
       when: { time: "evening" },
       dialogue: {
         new: [
-          "The Frostheim kitchen light is on well after hours. It's him, flour to the elbow, and he jumps when the door goes.",
-          '"Couldn\'t sleep," he says, not looking up from the bowl. "I bake when I can\'t. Don\'t tell Tohma whose sugar this is."',
-          '"You\'re up late too, huh?" He slides a plate of something warm across the counter without being asked.',
-          "\"Careful, the tray's hot... agh, see, told you. Sorry. Here, this one's cooled.\"",
+          {
+            line: "The Frostheim kitchen light is on well after hours. It's him, flour to the elbow, and he jumps when the door goes.",
+            approach: "Come in out of the hall",
+          },
+          {
+            line: '"Couldn\'t sleep," he says, not looking up from the bowl. "I bake when I can\'t. Don\'t tell Tohma whose sugar this is."',
+            approach: "Come in out of the hall",
+          },
+          {
+            line: '"You\'re up late too, huh?" He slides a plate of something warm across the counter without being asked.',
+            approach: "Take the cooled one",
+          },
+          {
+            line: "\"Careful, the tray's hot... agh, see, told you. Sorry. Here, this one's cooled.\"",
+            approach: "Take the cooled one",
+          },
         ],
         known: [
-          '"I always end up in here after curfew. It\'s quiet. Nobody asks me anything."',
-          '"Taste this? Be honest. ...Not that honest."',
-          '"You should be in bed," he says, nudging a stool out for you. "...So should I. One more batch."',
+          {
+            line: '"I always end up in here after curfew. It\'s quiet. Nobody asks me anything."',
+            approach: "Stay past curfew with him",
+          },
+          {
+            line: '"Taste this? Be honest. ...Not that honest."',
+            approach: "Stay past curfew with him",
+          },
+          {
+            line: '"You should be in bed," he says, nudging a stool out for you. "...So should I. One more batch."',
+            approach: "Stay past curfew with him",
+          },
         ],
         warm: [
-          "\"Stay while these bake? It's twelve minutes. I'll put the kettle on.\"",
-          '"I kept hoping you\'d wander in tonight," he admits, scraping the bowl. "Glad I made extra."',
+          {
+            line: "\"Stay while these bake? It's twelve minutes. I'll put the kettle on.\"",
+            approach: "Wait out the twelve minutes",
+          },
+          {
+            line: '"I kept hoping you\'d wander in tonight," he admits, scraping the bowl. "Glad I made extra."',
+            approach: "Wait out the twelve minutes",
+          },
         ],
         spark: [
           "He hands you the spoon to lick without thinking about it, then goes pink when he realizes he did.",
@@ -310,16 +342,6 @@ export default {
         close: [
           '"This is the only place I\'m not bracing for something," he says quietly. "Well, here, and wherever you are."',
         ],
-      },
-    },
-  ],
-  approachWhen: [
-    {
-      when: { time: "evening" },
-      approach: {
-        new: ["Come in out of the hall", "Take the cooled one"],
-        known: ["Stay past curfew with him"],
-        warm: ["Wait out the twelve minutes"],
       },
     },
   ],

@@ -194,6 +194,14 @@ for (const tier of Object.keys(DIALOGUE_POOL_TARGET_BY_TIER)) {
 // reuses the table directly; `temperamentDialogue` gets its own name below so
 // a rewrite (or a script) can point at "the temperamentDialogue target" without
 // reading the sizing rationale to learn it's the same table as `dialogue`'s.
+//
+// Sharing a target does not by itself keep `dialogue` and `approach` in sync
+// — growing one tier's pool without the other still leaves them the same
+// *size* but drawn independently, which is what let mismatched lines and
+// buttons ship together. Pair them instead: write `dialogue[tier]` entries as
+// { line, approach } (getRandomDialogueBeat in characters.js draws both as
+// one beat) rather than expanding `approach[tier]` on its own — see
+// docs/dialogue-approach-pairing.md.
 export const TEMPERAMENT_DIALOGUE_POOL_TARGET_BY_TIER = DIALOGUE_POOL_TARGET_BY_TIER;
 
 // `responses` (the Kind/Playful/Bold/Neutral choice labels) are different:

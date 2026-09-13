@@ -140,6 +140,76 @@ test('every bond scene choice button fits the 30-char cap the rest of the game u
   assert.deepStrictEqual(tooLong, []);
 });
 
+// A migrated dialogue[tier] entry — { line, approach } — puts its button
+// label on the beat itself instead of a separate `approach[tier]` pool, but
+// it's rendered on the exact same Discord button as every other label in the
+// game, so it owes the same MAX_BUTTON_LABEL_LENGTH cap (docs/dialogue-approach-pairing.md).
+test("every dialogue beat's approach label fits the 30-char cap the rest of the game uses", () => {
+  const tooLong = [];
+  const isBeat = (e) => !!e && typeof e === 'object' && typeof e.line === 'string';
+  const checkTier = (at, poolData) => {
+    if (!poolData) return;
+    const collections = Array.isArray(poolData) ? [poolData] : Object.values(poolData);
+    for (const entries of collections) {
+      if (!Array.isArray(entries)) continue;
+      for (const entry of entries) {
+        if (!isBeat(entry)) continue;
+        const labels = Array.isArray(entry.approach) ? entry.approach : [entry.approach];
+        for (const label of labels) {
+          if (label.length > MAX_BUTTON_LABEL_LENGTH) {
+            tooLong.push(`${at}: "${label}" (${label.length})`);
+          }
+        }
+      }
+    }
+  };
+  for (const character of CHARACTERS) {
+    const dialogue = DIALOGUE[character.id]?.dialogue;
+    for (const tier of Object.keys(dialogue || {})) checkTier(`${character.id}.${tier}`, dialogue[tier]);
+  }
+
+  assert.deepStrictEqual(tooLong, []);
+});
+
+// The check above only proves today's catalog is clean — this proves
+// validateContent() would actually catch a violation instead of silently
+// passing one through, the same way the keepsake-emoji test above pins the
+// bondScenes check's own behavior rather than just today's data.
+test('validateContent flags an over-length beat approach — as a single string or inside an array', () => {
+  // validateContent() throws (not returns) once errors is non-empty — see its
+  // own tail — so this has to catch the throw and read its message, unlike
+  // the keepsake-emoji test above, which only ever produces warnings.
+  const beats = DIALOGUE.benkei.dialogue.known;
+  const target = beats.find((b) => b && typeof b === 'object' && typeof b.approach === 'string');
+  assert.ok(target, 'benkei.known should have at least one single-string-approach beat to mutate');
+  const original = target.approach;
+  try {
+    target.approach = 'A'.repeat(MAX_BUTTON_LABEL_LENGTH + 1);
+    assert.throws(
+      () => validateContent(),
+      new RegExp(`benkei dialogue\\[known\\] beat approach is ${MAX_BUTTON_LABEL_LENGTH + 1} chars \\(max ${MAX_BUTTON_LABEL_LENGTH}\\)`),
+    );
+  } finally {
+    target.approach = original;
+  }
+
+  // Same check, but the label lives inside an `approach: [...]` array.
+  const arrayTarget = beats.find((b) => b && typeof b === 'object' && Array.isArray(b.approach));
+  assert.ok(arrayTarget, 'benkei.known should have at least one array-approach beat to mutate');
+  const originalArray = arrayTarget.approach;
+  try {
+    arrayTarget.approach = [originalArray[0], 'B'.repeat(MAX_BUTTON_LABEL_LENGTH + 1)];
+    assert.throws(
+      () => validateContent(),
+      new RegExp(`benkei dialogue\\[known\\] beat approach is ${MAX_BUTTON_LABEL_LENGTH + 1} chars \\(max ${MAX_BUTTON_LABEL_LENGTH}\\)`),
+    );
+  } finally {
+    arrayTarget.approach = originalArray;
+  }
+
+  assert.doesNotThrow(() => validateContent(), 'and the catalog is clean again');
+});
+
 test('every bond scene placeholder is one bondScenes.js can actually resolve', () => {
   const unknown = [];
   const check = (at, pool) => {

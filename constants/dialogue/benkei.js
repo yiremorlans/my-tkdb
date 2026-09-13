@@ -70,17 +70,17 @@ export default {
           },
           {
             key: "playful",
-            label: "Say the cat listens well",
+            label: "Say he beats 'Professor'",
             style: 1,
             close:
-              "She does! Excellent listener. Never once interrupts.\n\n...That was funnier than it had any right to be. You've got to stop doing that, I'm out of practice laughing in an empty shop.",
+              "Lower bar than you'd think. Most people who called me that wanted a signature, not a conversation.\n\nYou're neither, and it took me a while to notice that's rarer than it should be.",
           },
           {
             key: "bold",
             label: "Ask if he misses the title",
             style: 4,
             close:
-              "Sometimes.\n\n*He doesn't dress it up at all, which he usually would.* Not the standing at the front of a room. The being needed for something particular. I've made my peace with it. Mostly.",
+              "Sometimes.\n\nNot the standing at the front of a room. The being needed for something particular. I've made my peace with it. Mostly.",
           },
         ],
       },
@@ -238,52 +238,170 @@ export default {
       },
     },
   },
+  // `new` through `bound` (except `spark`, see its own note) are paired
+  // beats — { line, approach } — so the /roam button always answers the
+  // scene the line just set, rather than being drawn from a separate pool at
+  // random (docs/dialogue-approach-pairing.md). `approach` may be an array
+  // when more than one reaction genuinely fits the same beat.
   dialogue: {
     new: [
-      'He looks up from restocking, a little flustered, and gives you a warm, gentle smile. "Oh! Hello. Can I help you find something?"',
-      '"That\'s my manager," he says, nodding at a cat asleep on the counter, like it explains everything. It somehow does.',
-      "He's carrying far too much and insists it's no trouble at all.",
-      "He starts to say something, thinks better of it, and offers you a snack instead.",
-      "There's a kindness to him that doesn't feel put on for the customers. It's just how he is.",
+      {
+        line: 'He looks up from restocking, a little flustered, and gives you a warm, gentle smile. "Oh! Hello. Can I help you find something?"',
+        approach: "Say hello",
+      },
+      {
+        line: '"That\'s my manager," he says, nodding at a cat asleep on the counter, like it explains everything. It somehow does.',
+        approach: "Say hi to the cat too",
+      },
+      {
+        line: "He's carrying far too much and insists it's no trouble at all.",
+        approach: "Offer to help carry",
+      },
+      {
+        line: "He starts to say something, thinks better of it, and offers you a snack instead.",
+        approach: "Accept the snack",
+      },
+      {
+        line: "There's a kindness to him that doesn't feel put on for the customers. It's just how he is.",
+        approach: "Mind the shelf",
+      },
     ],
     known: [
-      "He knows your name, and says it like he's glad of the chance to.",
-      "He's stopped asking whether you need help. He just starts helping.",
-      "There's something set aside on the counter, like it's been waiting for you specifically.",
-      '"You\'re one of the ones who says thank you," he says. "I notice that."',
-      "Even the cat seems to tolerate you, which he says is rare praise.",
-      'He starts to say "back when I was advising" and catches himself halfway through, looking sheepish about it.',
-      "The cat lets you scratch behind her ears now. He watches like it's the highest honor she's ever handed out.",
-      "He's learned exactly how you take your tea, and has it half made before you've even asked.",
-      '"Here for the usual, or feeling adventurous today?" he asks, already reaching for the shelf.',
-      "He tells you which snacks are actually good and which ones he just orders because they sell.",
-      "He's stopped double-checking the register when you're the one buying. Trusts you with the math.",
-      "He asks how your week's going and actually waits around for the answer.",
-      "There's a chair behind the counter now. He says it's for the cat. The cat has never once sat in it.",
+      {
+        line: "He knows your name, and says it like he's glad of the chance to.",
+        approach: "Say hello back by name",
+      },
+      {
+        line: "He's stopped asking whether you need help. He just starts helping.",
+        approach: ["Let him carry it", "Let him fuss"],
+      },
+      {
+        line: "There's something set aside on the counter, like it's been waiting for you specifically.",
+        approach: "Take what he set aside",
+      },
+      {
+        line: '"You\'re one of the ones who says thank you," he says. "I notice that."',
+        approach: "Say thank you again",
+      },
+      {
+        line: "Even the cat seems to tolerate you, which he says is rare praise.",
+        approach: "Take the rare praise",
+      },
+      {
+        line: 'He starts to say "back when I was advising" and catches himself halfway through, looking sheepish about it.',
+        approach: "Ask what he almost said",
+      },
+      {
+        line: "The cat lets you scratch behind her ears now. He watches like it's the highest honor she's ever handed out.",
+        approach: "Scratch the cat's ears",
+      },
+      {
+        line: "He's learned exactly how you take your tea, and has it half made before you've even asked.",
+        approach: "Take the tea he made you",
+      },
+      {
+        line: '"Here for the usual, or feeling adventurous today?" he asks, already reaching for the shelf.',
+        approach: "Check what's on the shelf",
+      },
+      {
+        line: "He tells you which snacks are actually good and which ones he just orders because they sell.",
+        approach: "Ask which snacks are good",
+      },
+      {
+        line: "He's stopped double-checking the register when you're the one buying. Trusts you with the math.",
+        approach: "Trust you with the till",
+      },
+      {
+        line: "He asks how your week's going and actually waits around for the answer.",
+        approach: "Tell him about your week",
+      },
+      {
+        line: "There's a chair behind the counter now. He says it's for the cat. The cat has never once sat in it.",
+        approach: "Sit in the cat's chair",
+      },
     ],
     // Pool sizes track the affinity width of the level(s) they cover (see
     // DIALOGUE_POOL_TARGET_BY_TIER in constants/game.js) — known=13, warm=18 at
     // the current POOL_POINTS_PER_LINE, same target as alan.js and jo.js.
     warm: [
-      'He gets a bit red in the face when he sees you, but his smile stays warm and gentle. "You came back! What can I get you?"',
-      "He's set something aside for you. He's started doing that most days, just in case.",
-      '"You\'d have been one of mine, back in the advising days," he says, then looks briefly startled he said it aloud.',
-      "He fusses over whether you're eating enough, then apologizes for fussing.",
-      "He remembers exactly what you asked about last time, down to the detail.",
-      "He says your name before you've even said hello, like he's been listening for the door.",
-      "He tells you about a particular student from his advising days, careful not to name them, just glad to have someone to tell it to.",
-      "The cat's taken to curling up near you instead of him. He pretends not to be a little offended.",
-      "He keeps a mental list of things you've mentioned liking, and the shelf under the counter fills up accordingly.",
-      '"Sit a while," he says, sliding a chair your way. "The shop can spare me a few minutes."',
-      "He laughs at something you said hours ago, out of nowhere, and has to explain himself to the cat.",
-      "He's quicker to smile around you than he is with anyone else who walks through that door.",
-      "He asks if you're sleeping enough, then looks embarrassed at how much like a professor that sounded.",
-      "He's started closing up a little later on the nights you usually come by. Never says why.",
-      '"You didn\'t have to bring that," he says, clearly pleased that you did.',
-      "He keeps your favorite snack in stock even though it barely sells to anyone else.",
-      "He tells a joke that doesn't quite land, and looks so pleased with himself that you laugh anyway.",
-      "He's easier around you than he is around anyone else in that shop, cat included.",
+      {
+        line: 'He gets a bit red in the face when he sees you, but his smile stays warm and gentle. "You came back! What can I get you?"',
+        approach: "Ask what's got him flustered",
+      },
+      {
+        line: "He's set something aside for you. He's started doing that most days, just in case.",
+        approach: "Take what he set aside",
+      },
+      {
+        line: '"You\'d have been one of mine, back in the advising days," he says, then looks briefly startled he said it aloud.',
+        approach: "Let it go, easy",
+      },
+      {
+        line: "He fusses over whether you're eating enough, then apologizes for fussing.",
+        approach: ["Wave off his fussing", "Tell him you're eating fine"],
+      },
+      {
+        line: "He remembers exactly what you asked about last time, down to the detail.",
+        approach: "Point out he remembered",
+      },
+      {
+        line: "He says your name before you've even said hello, like he's been listening for the door.",
+        approach: "Ask what he's listening for",
+      },
+      {
+        line: "He tells you about a particular student from his advising days, careful not to name them, just glad to have someone to tell it to.",
+        approach: "Ask about the old student",
+      },
+      {
+        line: "The cat's taken to curling up near you instead of him. He pretends not to be a little offended.",
+        approach: "Let the cat curl up on you",
+      },
+      {
+        line: "He keeps a mental list of things you've mentioned liking, and the shelf under the counter fills up accordingly.",
+        approach: "Bring him something for once",
+      },
+      {
+        line: '"Sit a while," he says, sliding a chair your way. "The shop can spare me a few minutes."',
+        approach: ["Sit with him a while", "Take the chair he offered"],
+      },
+      {
+        line: "He laughs at something you said hours ago, out of nowhere, and has to explain himself to the cat.",
+        approach: "Ask about his day",
+      },
+      {
+        line: "He's quicker to smile around you than he is with anyone else who walks through that door.",
+        approach: "Point out he's smiling more",
+      },
+      {
+        line: "He asks if you're sleeping enough, then looks embarrassed at how much like a professor that sounded.",
+        approach: "Ask if he's sleeping enough",
+      },
+      {
+        line: "He's started closing up a little later on the nights you usually come by. Never says why.",
+        approach: "Ask why he's still open",
+      },
+      {
+        line: '"You didn\'t have to bring that," he says, clearly pleased that you did.',
+        approach: "Let him take the load",
+      },
+      {
+        line: "He keeps your favorite snack in stock even though it barely sells to anyone else.",
+        approach: "Stay past closing",
+      },
+      {
+        line: "He tells a joke that doesn't quite land, and looks so pleased with himself that you laugh anyway.",
+        approach: "Laugh at the joke anyway",
+      },
+      {
+        line: "He's easier around you than he is around anyone else in that shop, cat included.",
+        approach: "Say he's easier to talk to",
+      },
     ],
+    // Not yet paired: `approach.spark` below was expanded to the tier's
+    // pool-size target ahead of the dialogue lines that should have grown
+    // with it, so the two no longer line up (see
+    // docs/dialogue-approach-pairing.md). Draws independently until
+    // dialogue.spark gets its own pass up to the same target.
     spark: [
       "He goes red to the ears and busies himself with something that needed no attention.",
       "He steadies you by the elbow, and takes a long moment letting go.",
@@ -292,18 +410,48 @@ export default {
       "He walks you to the gate and finds three reasons to walk slower.",
     ],
     close: [
-      '"You\'re really important to me," he says softly, a hint of bashfulness in his voice. "I\'m always happy to help you with anything you need."',
-      "He tells you a story from his advising days that he doesn't tell anyone else.",
-      '"Don\'t push yourself so hard," he says gently. "Somebody ought to say it."',
-      "He's quietly made your life easier in three ways this week and mentioned none of them.",
-      "He looks at you the way someone looks at a reason to be glad about where they ended up.",
+      {
+        line: '"You\'re really important to me," he says softly, a hint of bashfulness in his voice. "I\'m always happy to help you with anything you need."',
+        approach: "Tell him he matters",
+      },
+      {
+        line: "He tells you a story from his advising days that he doesn't tell anyone else.",
+        approach: "Ask for the old story",
+      },
+      {
+        line: '"Don\'t push yourself so hard," he says gently. "Somebody ought to say it."',
+        approach: "Take the advice for once",
+      },
+      {
+        line: "He's quietly made your life easier in three ways this week and mentioned none of them.",
+        approach: "Bring it to him first",
+      },
+      {
+        line: "He looks at you the way someone looks at a reason to be glad about where they ended up.",
+        approach: "Go sit with him",
+      },
     ],
     bound: [
-      "He still goes red. He's stopped letting it stop him.",
-      "He kisses your forehead every morning like it's a small ceremony he takes seriously.",
-      '"I\'d made my peace with a quiet life," he admits. "You\'ve ruined that rather thoroughly."',
-      "He holds you carefully, like something he's been trusted with and means to deserve.",
-      "He's earnest about all of it, no games, and it turns out that's rather lovely.",
+      {
+        line: "He still goes red. He's stopped letting it stop him.",
+        approach: "Come here",
+      },
+      {
+        line: "He kisses your forehead every morning like it's a small ceremony he takes seriously.",
+        approach: "Lean into the kiss",
+      },
+      {
+        line: '"I\'d made my peace with a quiet life," he admits. "You\'ve ruined that rather thoroughly."',
+        approach: "Stay a while",
+      },
+      {
+        line: "He holds you carefully, like something he's been trusted with and means to deserve.",
+        approach: "Sit with him",
+      },
+      {
+        line: "He's earnest about all of it, no games, and it turns out that's rather lovely.",
+        approach: "Say it back",
+      },
     ],
   },
   temperamentDialogue: {
@@ -371,46 +519,60 @@ export default {
       '"Sit with me. Just here. That\'s all I want, most days."',
     ],
   },
+  // `new`/`known`/`warm`/`close`/`bound` now live on their `dialogue` beats
+  // above (docs/dialogue-approach-pairing.md) — only `spark` is still an
+  // independent pool, drawn on its own until dialogue.spark is expanded to
+  // pair with it.
   approach: {
-    new: [
-      "Offer to help carry",
-      "Accept the snack",
-      "Say hello",
-      "Mind the shelf",
-    ],
-    known: [
-      "Take what he set aside",
-      "Let him carry it",
-      "Say thank you again",
-      "Let him fuss",
-    ],
-    warm: [
-      "Let him take the load",
-      "Take what he set aside",
-      "Ask about his day",
-      "Sit with him a while",
-    ],
     spark: [
       "Let him walk you back",
       "Wait out his nerve",
       "Take his arm",
       "Walk slower",
+      "Let him steady you",
+      "Ask what he meant to say",
+      "Let it keep, for now",
+      "Wait for the words to come",
+      "Point out he's rehearsed this",
+      "Let him say you look nice",
+      "Take the long way to the gate",
+      "Ask why he's walking so slow",
+      "Let him find a third reason",
+      "Watch him go red to the ears",
+      "Let him recover, say nothing",
+      "Ask what he means to say",
+      "Let his hand rest on your arm",
+      "Hold still for his nerve",
+      "Stay past the usual time",
+      "Let the quiet turn warm",
+      "Ask him to just say it",
+      "Take the long way home",
+      "Match his slower pace",
+      "Let him lose the thread",
+      "Ask if he's this nervous too",
+      "Let him look a moment longer",
+      "Stay until he says it",
     ],
-    close: [
-      "Go sit with him",
-      "Ask for the old story",
-      "Bring it to him first",
-      "Tell him he matters",
-    ],
-    bound: ["Come here", "Stay a while", "Sit with him", "Say it back"],
   },
   responses: {
     kind: {
-      new: ["Take his advice", "Thank him warmly", "Tell him it's no trouble"],
+      new: [
+        "Take his advice",
+        "Thank him warmly",
+        "Tell him it's no trouble",
+        "Say he's no trouble either",
+        "Tell him to sit for once",
+        "Accept the shelf item",
+        "Ask if he's eaten",
+      ],
       spark: [
         "Tell him it came out fine",
         "Take his arm",
         "Let him find his nerve",
+        "Tell him to take his time",
+        "Say the walk was worth it",
+        "Let him know you noticed",
+        "Tell him the nerves are fine",
       ],
       close: [
         "Let him care for you",
@@ -429,24 +591,28 @@ export default {
         "Tease him about fussing",
         "Ask for a second snack",
         "Catch him mid-apology",
+        "Ask if the cat agrees",
+        "Steal the good snack",
+        "Tease the advising slip",
       ],
       spark: [
         "Make him say it again",
         "Slow down to watch him",
         "Tease the blush",
         "Make him lose his nerve",
+        "Ask if he practiced that",
+        "Point out the third reason",
+        "Get him to finish the thought",
       ],
       close: [
         "Match his dry humor",
         "Tease him about the shop",
         "Make him laugh out loud",
-        "Needle him for a rise",
       ],
       bound: [
         "Make him blush again",
         "Call him a soft touch, fondly",
         "Kiss him first",
-        "Steal his last bite",
       ],
     },
     bold: {
@@ -454,11 +620,19 @@ export default {
         "Say just what you're thinking",
         "Take the load from his arms",
         "Ask him straight out",
+        "Call him out on fussing",
+        "Ask if he misses teaching",
+        "Tell him to sit down too",
+        "Say you noticed the shelf",
       ],
       spark: [
         "Say the thing he won't",
         "Take his hand at the gate",
         "Close the distance first",
+        "Tell him to just say it",
+        "Ask him straight, no stalling",
+        "Take the last step yourself",
+        "Say you're staying regardless",
       ],
       close: [
         "Tell him you're staying",
@@ -468,8 +642,24 @@ export default {
       bound: ["Say it first", "Tell him to stop pretending", "Pull him in"],
     },
     neutral: {
-      new: ["Be quiet", "Let him fuss", "Wait while he finishes"],
-      spark: ["Let it keep", "Say goodnight", "Walk on ahead"],
+      new: [
+        "Be quiet",
+        "Let him fuss",
+        "Wait while he finishes",
+        "Let him restock in peace",
+        "Say nothing, just nod",
+        "Watch the cat instead",
+        "Let the moment be quiet",
+      ],
+      spark: [
+        "Let it keep",
+        "Say goodnight",
+        "Walk on ahead",
+        "Let the silence carry you",
+        "Say nothing, let him find it",
+        "Wait without pushing",
+        "Let him take his time",
+      ],
       close: [
         "Rest in the quiet",
         "Sit and say nothing",

@@ -62,14 +62,14 @@ export default {
             label: "Ask which one you're getting",
             style: 1,
             close:
-              "Honestly? The one who's had four hours' sleep and is being charming at you out of sheer muscle memory.\n\nWhich is not the good one. Come back Thursday, the Thursday one is much better company.",
+              "Honestly? The one who's had four hours' sleep and is being charming out of sheer muscle memory.\n\nWhich is not the good one. Come back Thursday, the Thursday one is much better company.",
           },
           {
             key: "bold",
             label: "Tell him to stop adapting",
             style: 4,
             close:
-              "*He doesn't answer for a long moment, slower than usual when he does.*\n\nNo one's told me to stop before. I've been told to rest, to take a night off. Never just stop.\n\nI don't know what that looks like yet. I'd like to find out.",
+              "*He doesn't answer for a long moment*\n\nNo one's told me to stop before. I've been told to rest, to take a night off. Never just stop.\n\nI don't know what that looks like yet. I'd like to find out.",
           },
         ],
       },
@@ -120,7 +120,7 @@ export default {
     confidant: {
       beats: [
         "**{firstName}**: Do you have a little time this afternoon? There's an outfit I want you to try on, deep green silk, for the show. I'll be waiting at the office.",
-        "Before you ask, it can't be one of the storeroom artifacts. Those run one size for the whole cast and call it close enough. This one needs it exact, and I don't trust anyone else's hands near you for that part.\n\nWould you come alone? I'd rather it just be the two of us for this one.",
+        "To save you the question, it can't be one of the storeroom artifacts. Those run one size for the whole cast and call it close enough. This one needs it exact, and I don't trust anyone else's hands near you for that part.\n\nWould you come alone? I'd rather it just be the two of us for this one.",
         "Also, if I'm honest...\n\nIt's the one hour this week where nobody needs anything from me except you, standing still while I take my time with you. I don't get many hours like that, and I don't intend to share a single minute of it.",
       ],
       choice: {
@@ -138,7 +138,7 @@ export default {
             label: "Ask if you're the mannequin",
             style: 1,
             close:
-              "Close enough. Stand still, hold that pose, and try not to look that good while I'm trying to concentrate. No one else here to blame it on.\n\nThree o'clock.",
+              "Close enough. Stand still, hold that pose, and try not to look that good while I'm trying to concentrate. No one else here to blame it on.",
           },
           {
             key: "bold",
@@ -151,7 +151,7 @@ export default {
       },
       keepsake: {
         emoji: "🧵",
-        line: "A fitting he could've finished in thirty seconds, and didn't.",
+        line: "A fitting he could've finished in ten minutes, and didn't.",
       },
     },
 
@@ -227,19 +227,57 @@ export default {
       },
     },
   },
+  // `new`, `known`, `warm`, `close`, and `bound` are paired beats —
+  // { line, approach } — so the /roam button always answers the scene the
+  // line just set, rather than being drawn from a separate pool at random
+  // (docs/dialogue-approach-pairing.md). `approach` may be an array when
+  // more than one reaction genuinely fits the same beat. `spark` is left as
+  // an independent pool, see its own note below.
   dialogue: {
     new: {
       uniform: [
-        "He's buried in paperwork: proposals, schedules, a budget that won't balance. He looks up anyway.",
-        '"Anything troubling you, cutie? If you run into any problems, just come talk to me."',
-        "The charisma lands before he's said a word. Running Dionysia hasn't dulled it.",
-        '"You look pretty busy. I\'ll get some work done. Holler if you need anything."',
+        {
+          line: "He's buried in paperwork: proposals, schedules, a budget that won't balance. He looks up anyway.",
+          approach: "Ask for a minute of his time",
+        },
+        {
+          line: '"Anything troubling you, cutie? If you run into any problems, just come talk to me."',
+          approach: "Ask if he's free",
+        },
+        {
+          line: "The charisma lands before he's said a word. Running Dionysia hasn't dulled it.",
+          approach: "Cut through the charisma",
+        },
+        {
+          line: '"You look pretty busy. I\'ll get some work done. Holler if you need anything."',
+          approach: "Wave him over",
+        },
+        {
+          line: "He glances up mid-signature, and somehow the whole room feels less busy for it.",
+          approach: "Pull up a chair",
+        },
       ],
       casual: [
-        "She's buried in paperwork: proposals, schedules, a budget that won't balance. She looks up anyway.",
-        '"Anything troubling you, cutie? If you run into any problems, just come talk to me."',
-        "The charisma lands before she's said a word. Running Dionysia hasn't dulled it.",
-        '"You look pretty busy. I\'ll get some work done. Holler if you need anything."',
+        {
+          line: "She's buried in paperwork: proposals, schedules, a budget that won't balance. She looks up anyway.",
+          approach: "Ask for a minute of her time",
+        },
+        {
+          line: '"Anything troubling you, cutie? If you run into any problems, just come talk to me."',
+          approach: "Ask if she's free",
+        },
+        {
+          line: "The charisma lands before she's said a word. Running Dionysia hasn't dulled it.",
+          approach: "Cut through the charisma",
+        },
+        {
+          line: '"You look pretty busy. I\'ll get some work done. Holler if you need anything."',
+          approach: "Wave her over",
+        },
+        {
+          line: "She glances up mid-signature, and somehow the whole room feels less busy for it.",
+          approach: "Pull up a chair",
+        },
       ],
     },
     // Pool sizes track the affinity width of the level(s) they cover (see
@@ -249,118 +287,375 @@ export default {
     // wide → 18 at the current POOL_POINTS_PER_LINE of 4.
     known: {
       uniform: [
-        '"You came back." He sets down the pen like he\'d been looking for an excuse.',
-        '"House meeting with Mio in a minute. You think we shoulder too much? It\'s just quicker to handle it ourselves."',
-        "He works something small you mentioned once into the conversation like it's nothing.",
-        '"Have you seen Elias, cutie? Asked him to do something and he\'s still not back..."',
-        '"Elias is back, so we\'re stealing a coffee break before I lose the afternoon to that budget. Join us, cutie."',
-        "He clears a stack of paperwork off the second chair before you've even asked to sit.",
-        '"Another fire at the circus tent. Small one. I\'ve told them twice about the flames, so make that three."',
-        "He remembers exactly how you take your snacks after practice now, and sets a plate aside before anyone else gets to it.",
-        "\"The students here don't run on a normal clock. Neither do you, I've noticed. Works out.\"",
-        "\"Shion again. I'll go apologize, it's the dorm captain's job. Not the first time this week.\"",
-        "He's mid-sentence about the program lineup when he notices you and just... stops rushing.",
-        '"Sorry, I was somewhere else for a second there. Nothing serious. Where were we?"',
-        "He's learned your schedule well enough to know when you're free before you do.",
+        {
+          line: '"You came back." He sets down the pen like he\'d been looking for an excuse.',
+          approach: "Interrupt the paperwork",
+        },
+        {
+          line: '"House meeting with Mio in a minute. You think we shoulder too much? It\'s just quicker to handle it ourselves."',
+          approach: "Sit through the budget talk",
+        },
+        {
+          line: "He works something small you mentioned once into the conversation like it's nothing.",
+          approach: "Give an honest read",
+        },
+        {
+          line: '"Have you seen Elias, cutie? Asked him to do something and he\'s still not back..."',
+          approach: "Offer to help instead",
+        },
+        {
+          line: '"Elias is back, so we\'re stealing a coffee break before I lose the afternoon to that budget. Join us, cutie."',
+          approach: "Join the coffee break",
+        },
+        {
+          line: "He clears a stack of paperwork off the second chair before you've even asked to sit.",
+          approach: "Take the cleared seat",
+        },
+        {
+          line: '"Another fire at the circus tent. Small one. I\'ve told them twice about the flames, so make that three."',
+          approach: "Ask about the fire at the tent",
+        },
+        {
+          line: "He remembers exactly how you take your snacks after practice now, and sets a plate aside before anyone else gets to it.",
+          approach: "Take the plate he set aside",
+        },
+        {
+          line: "\"The students here don't run on a normal clock. Neither do you, I've noticed. Works out.\"",
+          approach: "Answer to 'cutie'",
+        },
+        {
+          line: "\"Shion again. I'll go apologize, it's the dorm captain's job. Not the first time this week.\"",
+          approach: "Say you'll accompany him",
+        },
+        {
+          line: "He's mid-sentence about the program lineup when he notices you and just... stops rushing.",
+          approach: "Point out he stopped rushing",
+        },
+        {
+          line: '"Sorry, I was somewhere else for a second there. Nothing serious. Where were we?"',
+          approach: "Ask where his head went",
+        },
+        {
+          line: "He's learned your schedule well enough to know when you're free before you do.",
+          approach: "Say you've noticed",
+        },
       ],
       casual: [
-        '"You came back." She sets down the pen like she\'d been looking for an excuse.',
-        '"House meeting with Mio in a minute. You think we shoulder too much? It\'s just quicker to handle it ourselves."',
-        "She works something small you mentioned once into the conversation like it's nothing.",
-        '"Have you seen Elias, cutie? Asked him to do something and he\'s still not back..."',
-        '"Elias is back, so we\'re stealing a coffee break before I lose the afternoon to that budget. Join us, cutie."',
-        "She clears a stack of paperwork off the second chair before you've even asked to sit.",
-        '"Another fire at the circus tent. Small one. I\'ve told them twice about the flames, so make that three."',
-        "She remembers exactly how you take your snacks after practice now, and sets a plate aside before anyone else gets to it.",
-        "\"The students here don't run on a normal clock. Neither do you, I've noticed. Works out.\"",
-        "\"Shion again. I'll go apologize, it's the dorm captains's job. Not the first time this week.\"",
-        "She's mid-sentence about the program lineup when she notices you and just... stops rushing.",
-        '"Sorry, I was somewhere else for a second there. Nothing serious. Where were we?"',
-        "She's learned your schedule well enough to know when you're free before you do.",
+        {
+          line: '"You came back." She sets down the pen like she\'d been looking for an excuse.',
+          approach: "Interrupt the paperwork",
+        },
+        {
+          line: '"House meeting with Mio in a minute. You think we shoulder too much? It\'s just quicker to handle it ourselves."',
+          approach: "Sit through the budget talk",
+        },
+        {
+          line: "She works something small you mentioned once into the conversation like it's nothing.",
+          approach: "Give an honest read",
+        },
+        {
+          line: '"Have you seen Elias, cutie? Asked him to do something and he\'s still not back..."',
+          approach: "Offer to help instead",
+        },
+        {
+          line: '"Elias is back, so we\'re stealing a coffee break before I lose the afternoon to that budget. Join us, cutie."',
+          approach: "Join the coffee break",
+        },
+        {
+          line: "She clears a stack of paperwork off the second chair before you've even asked to sit.",
+          approach: "Take the cleared seat",
+        },
+        {
+          line: '"Another fire at the circus tent. Small one. I\'ve told them twice about the flames, so make that three."',
+          approach: "Ask about the fire at the tent",
+        },
+        {
+          line: "She remembers exactly how you take your snacks after practice now, and sets a plate aside before anyone else gets to it.",
+          approach: "Take the plate she set aside",
+        },
+        {
+          line: "\"The students here don't run on a normal clock. Neither do you, I've noticed. Works out.\"",
+          approach: "Answer to 'cutie'",
+        },
+        {
+          line: "\"Shion again. I'll go apologize, it's the dorm captain's job. Not the first time this week.\"",
+          approach: "Say you'll accompany her",
+        },
+        {
+          line: "She's mid-sentence about the program lineup when she notices you and just... stops rushing.",
+          approach: "Point out she stopped rushing",
+        },
+        {
+          line: '"Sorry, I was somewhere else for a second there. Nothing serious. Where were we?"',
+          approach: "Ask where her head went",
+        },
+        {
+          line: "She's learned your schedule well enough to know when you're free before you do.",
+          approach: "Say you've noticed",
+        },
       ],
     },
     warm: {
       uniform: [
-        "He lights up the moment he sees you, whatever he was signing forgotten.",
-        '"I\'m driving the Aqua-line later to catch the sunset. Come with, cutie."',
-        '"My people march to the beat of their own drum. You\'ve fit right in with that."',
-        '"There\'s just not enough hours in the day." He says it, then makes an hour for you.',
-        "\"There's a coffee with your name on it and fifteen minutes I'm refusing to spend on anything else. Sit with me, cutie.\"",
-        '"Botanical garden duty today. Rui knows the equipment better than Mio does, believe it or not. I just carry things."',
-        "He's swapped his coffee order to match yours without a word about it.",
-        '"Come to the school building with me? I\'ve got the house advisor to see, and the company beats the walk alone."',
-        "\"You stayed up last night. Don't lie to me, cutie, I can hear it in your voice. I'll make you some honey tea.\"",
-        "He saves you the seat next to the one with the least paperwork stacked on it. Small mercy, from him.",
-        '"Leadership meeting with Mio again. Between us, I think we take on more than we should. Don\'t tell him I said that."',
-        "The circus troupe listens to him without question. You're the only one who gets to argue back, and he seems to prefer it that way.",
-        '"I finished the budget early just so I\'d have the afternoon free."',
-        "He's stopped pretending the jog is just exercise. You're half the reason he still gets up for it.",
-        '"Gathering research for new costumes. Tedious work, but the result is worth it. Want to see what I\'ve got so far?"',
-        "He notices when you've had a long day before you say a word, and quietly clears an hour for you.",
-        '"You\'re rare, you know that? Never once needed anything from me. I still catch myself waiting for it."',
-        '"Don\'t look so surprised every time I make time for you. I keep doing it on purpose."',
+        {
+          line: "He lights up the moment he sees you, whatever he was signing forgotten.",
+          approach: "Take the saved seat",
+        },
+        {
+          line: '"I\'m driving the Aqua-line later to catch the sunset. Come with, cutie."',
+          approach: "Ride along at sunset",
+        },
+        {
+          line: '"My people march to the beat of their own drum. You\'ve fit right in with that."',
+          approach: "Match the easy charm",
+        },
+        {
+          line: '"There\'s just not enough hours in the day." He says it, then makes an hour for you.',
+          approach: "Insist on a break",
+        },
+        {
+          line: "\"There's a coffee with your name on it and fifteen minutes I'm refusing to spend on anything else. Sit with me, cutie.\"",
+          approach: "Take the coffee with your name",
+        },
+        {
+          line: '"Botanical garden duty today. Rui knows the equipment better than Mio does, believe it or not. I just carry things."',
+          approach: "Help with garden duty",
+        },
+        {
+          line: "He's swapped his coffee order to match yours without a word about it.",
+          approach: "Point out the swapped coffee",
+        },
+        {
+          line: '"Come to the school building with me? I\'ve got the house advisor to see, and the company beats the walk alone."',
+          approach: "Go see the house advisor",
+        },
+        {
+          line: "\"You stayed up last night. Don't lie to me, cutie, I can hear it in your voice. I'll make you some honey tea.\"",
+          approach: "Accept the honey tea",
+        },
+        {
+          line: "He saves you the seat next to the one with the least paperwork stacked on it. Small mercy, from him.",
+          approach: "Sit with the least paperwork",
+        },
+        {
+          line: '"Leadership meeting with Mio again. Between us, I think we take on more than we should. Don\'t tell him I said that."',
+          approach: "Ask about the leadership talk",
+        },
+        {
+          line: "The circus troupe listens to him without question. You're the only one who gets to argue back, and he seems to prefer it that way.",
+          approach: "Ask what he's not saying",
+        },
+        {
+          line: '"I finished the budget early just so I\'d have the afternoon free."',
+          approach: "Ask why the budget's early",
+        },
+        {
+          line: "He's stopped pretending the jog is just exercise. You're half the reason he still gets up for it.",
+          approach: "Join him on the jog",
+        },
+        {
+          line: '"Gathering research for new costumes. Tedious work, but the result is worth it. Want to see what I\'ve got so far?"',
+          approach: "Look at the costume research",
+        },
+        {
+          line: "He notices when you've had a long day before you say a word, and quietly clears an hour for you.",
+          approach: "Let him clear the hour",
+        },
+        {
+          line: '"You\'re rare, you know that? Never once needed anything from me. I still catch myself waiting for it."',
+          approach: "Tell him he's not so rare",
+        },
+        {
+          line: '"Don\'t look so surprised every time I make time for you. I keep doing it on purpose."',
+          approach: "Ask why he keeps making time",
+        },
       ],
       casual: [
-        "She lights up the moment she sees you, whatever she was signing forgotten.",
-        '"I\'m driving the Aqua-line later to catch the sunset. Come with, cutie."',
-        '"My people march to the beat of their own drum. You\'ve fit right in with that."',
-        '"There\'s just not enough hours in the day." She says it, then makes an hour for you.',
-        "\"There's a coffee with your name on it and fifteen minutes I'm refusing to spend on anything else. Sit with me, cutie.\"",
-        '"Botanical garden duty today. Rui knows the equipment better than Mio does, believe it or not. I just carry things."',
-        "She's swapped her coffee order to match yours without a word about it.",
-        '"Come to the school building with me? I\'ve got the house advisor to see, and the company beats the walk alone."',
-        "\"You stayed up last night. Don't lie to me, cutie, I can hear it in your voice. I'll make you some honey tea.\"",
-        "She saves you the seat next to the one with the least paperwork stacked on it. Small mercy, from her.",
-        '"Leadership meeting with Mio again. Between us, I think we take on more than we should. Don\'t tell him I said that."',
-        "The circus troupe listens to her without question. You're the only one who gets to argue back, and she seems to prefer it that way.",
-        '"I finished the budget early just so I\'d have the afternoon free."',
-        "She's stopped pretending the jog is just exercise. You're half the reason she still gets up for it.",
-        '"Gathering research for new costumes. Tedious work, but the result is worth it. Want to see what I\'ve got so far?"',
-        "She notices when you've had a long day before you say a word, and quietly clears an hour for you.",
-        '"You\'re rare, you know that? Never once needed anything from me. I still catch myself waiting for it."',
-        '"Don\'t look so surprised every time I make time for you. I keep doing it on purpose."',
+        {
+          line: "She lights up the moment she sees you, whatever she was signing forgotten.",
+          approach: "Take the saved seat",
+        },
+        {
+          line: '"I\'m driving the Aqua-line later to catch the sunset. Come with, cutie."',
+          approach: "Ride along at sunset",
+        },
+        {
+          line: '"My people march to the beat of their own drum. You\'ve fit right in with that."',
+          approach: "Match the easy charm",
+        },
+        {
+          line: '"There\'s just not enough hours in the day." She says it, then makes an hour for you.',
+          approach: "Insist on a break",
+        },
+        {
+          line: "\"There's a coffee with your name on it and fifteen minutes I'm refusing to spend on anything else. Sit with me, cutie.\"",
+          approach: "Take the coffee with your name",
+        },
+        {
+          line: '"Botanical garden duty today. Rui knows the equipment better than Mio does, believe it or not. I just carry things."',
+          approach: "Help with garden duty",
+        },
+        {
+          line: "She's swapped her coffee order to match yours without a word about it.",
+          approach: "Point out the swapped coffee",
+        },
+        {
+          line: '"Come to the school building with me? I\'ve got the house advisor to see, and the company beats the walk alone."',
+          approach: "Go see the house advisor",
+        },
+        {
+          line: "\"You stayed up last night. Don't lie to me, cutie, I can hear it in your voice. I'll make you some honey tea.\"",
+          approach: "Accept the honey tea",
+        },
+        {
+          line: "She saves you the seat next to the one with the least paperwork stacked on it. Small mercy, from her.",
+          approach: "Sit with the least paperwork",
+        },
+        {
+          line: '"Leadership meeting with Mio again. Between us, I think we take on more than we should. Don\'t tell him I said that."',
+          approach: "Ask about the leadership talk",
+        },
+        {
+          line: "The circus troupe listens to her without question. You're the only one who gets to argue back, and she seems to prefer it that way.",
+          approach: "Ask what he's not saying",
+        },
+        {
+          line: '"I finished the budget early just so I\'d have the afternoon free."',
+          approach: "Ask why the budget's early",
+        },
+        {
+          line: "She's stopped pretending the jog is just exercise. You're half the reason she still gets up for it.",
+          approach: "Join him on the jog",
+        },
+        {
+          line: '"Gathering research for new costumes. Tedious work, but the result is worth it. Want to see what I\'ve got so far?"',
+          approach: "Look at the costume research",
+        },
+        {
+          line: "She notices when you've had a long day before you say a word, and quietly clears an hour for you.",
+          approach: "Let him clear the hour",
+        },
+        {
+          line: '"You\'re rare, you know that? Never once needed anything from me. I still catch myself waiting for it."',
+          approach: "Tell him he's not so rare",
+        },
+        {
+          line: '"Don\'t look so surprised every time I make time for you. I keep doing it on purpose."',
+          approach: "Ask why he keeps making time",
+        },
       ],
     },
+    // Not yet paired: `approach.spark` below was expanded to the tier's
+    // pool-size target (27) ahead of the dialogue lines that should have
+    // grown with it, so the two no longer line up (see
+    // docs/dialogue-approach-pairing.md). Draws independently until
+    // dialogue.spark gets its own expansion pass up to the same target.
     spark: {
       uniform: [
         "The even, easy voice he keeps for everyone else slips. What's under it is only for you.",
         "He was fitting a costume on you. Somewhere in it his hands stopped being a stylist's.",
         '"That look," he says, the schedule forgotten. "Do it again. I want to be sure."',
         '"I thought I was done feeling like this," he admits. "So, what are you going to do about it?"',
+        "He forgets the sentence he was building and just looks at you instead.",
       ],
       casual: [
         "The even, easy voice she keeps for everyone else slips. What's under it is only for you.",
         "She was fitting a costume on you. Somewhere in it her hands stopped being a stylist's.",
         '"That look," she says, the schedule forgotten. "Do it again. I want to be sure."',
         '"I thought I was done feeling like this," she admits. "So, what are you going to do about it?"',
+        "She forgets the sentence she was building and just looks at you instead.",
       ],
     },
     close: {
       uniform: [
-        "For you he'd put down the proposal, the schedule, all of it, and just be a person for an hour.",
-        "The work is finally done for the night. He doesn't reach for more. He stays.",
-        "He's stopped asking which version of him you prefer. You never did have a favorite.",
-        '"No audience tonight," he says softly. "Just you. That\'s better anyway."',
+        {
+          line: "For you he'd put down the proposal, the schedule, all of it, and just be a person for an hour.",
+          approach: "Free them from the work",
+        },
+        {
+          line: "The work is finally done for the night. He doesn't reach for more. He stays.",
+          approach: "Go to them",
+        },
+        {
+          line: "He's stopped asking which version of him you prefer. You never did have a favorite.",
+          approach: "Say it can be handed off",
+        },
+        {
+          line: '"No audience tonight," he says softly. "Just you. That\'s better anyway."',
+          approach: "Stay past the sunset",
+        },
+        {
+          line: "He lets the day end without you having to talk him into it.",
+          approach: "Free them from the work",
+        },
       ],
       casual: [
-        "For you she'd put down the proposal, the schedule, all of it, and just be a person for an hour.",
-        "The work is finally done for the night. She doesn't reach for more. She stays.",
-        "She's stopped asking which version of her you prefer. You never did have a favorite.",
-        '"No audience tonight," she says softly. "Just you. That\'s better anyway."',
+        {
+          line: "For you she'd put down the proposal, the schedule, all of it, and just be a person for an hour.",
+          approach: "Free them from the work",
+        },
+        {
+          line: "The work is finally done for the night. She doesn't reach for more. She stays.",
+          approach: "Go to them",
+        },
+        {
+          line: "She's stopped asking which version of her you prefer. You never did have a favorite.",
+          approach: "Say it can be handed off",
+        },
+        {
+          line: '"No audience tonight," she says softly. "Just you. That\'s better anyway."',
+          approach: "Stay past the sunset",
+        },
+        {
+          line: "She lets the day end without you having to talk her into it.",
+          approach: "Free them from the work",
+        },
       ],
     },
     bound: {
       uniform: [
-        "Nothing is scheduled, nothing is owed. For once he is entirely off the clock, and stays there.",
-        "He takes the paint off and lets you see the tired underneath, and doesn't put it back.",
-        '"No audience," he murmurs against your neck. "Only you. Only ever you."',
-        "He isn't managing anyone or performing anything, which is the most extraordinary thing he's done.",
+        {
+          line: "Nothing is scheduled, nothing is owed. For once he is entirely off the clock, and stays there.",
+          approach: "Leave the work till morning",
+        },
+        {
+          line: "He takes the paint off and lets you see the tired underneath, and doesn't put it back.",
+          approach: "Come to bed",
+        },
+        {
+          line: '"No audience," he murmurs against your neck. "Only you. Only ever you."',
+          approach: "Say it back",
+        },
+        {
+          line: "He isn't managing anyone or performing anything, which is the most extraordinary thing he's done.",
+          approach: "Steal the car keys",
+        },
+        {
+          line: "He falls asleep first for once, and doesn't apologize for it.",
+          approach: "Come to bed",
+        },
       ],
       casual: [
-        "Nothing is scheduled, nothing is owed. For once she is entirely off the clock, and stays there.",
-        "She takes the paint off and lets you see the tired underneath, and doesn't put it back.",
-        '"No audience," she murmurs against your neck. "Only you. Only ever you."',
-        "She isn't managing anyone or performing anything, which is the most extraordinary thing she's done.",
+        {
+          line: "Nothing is scheduled, nothing is owed. For once she is entirely off the clock, and stays there.",
+          approach: "Leave the work till morning",
+        },
+        {
+          line: "She takes the paint off and lets you see the tired underneath, and doesn't put it back.",
+          approach: "Come to bed",
+        },
+        {
+          line: '"No audience," she murmurs against your neck. "Only you. Only ever you."',
+          approach: "Say it back",
+        },
+        {
+          line: "She isn't managing anyone or performing anything, which is the most extraordinary thing she's done.",
+          approach: "Steal the car keys",
+        },
+        {
+          line: "She falls asleep first for once, and doesn't apologize for it.",
+          approach: "Come to bed",
+        },
       ],
     },
   },
@@ -434,42 +729,39 @@ export default {
       '"You\'ve seen me with the paint off. Nobody else gets that. Nobody."',
     ],
   },
+  // `new`, `known`, `warm`, `close`, and `bound` have been folded into
+  // `dialogue` above as paired beats (docs/dialogue-approach-pairing.md) —
+  // only `spark` is still an independent pool, drawn on its own until
+  // dialogue.spark is expanded to pair with it.
   approach: {
-    new: [
-      "Pull up a chair",
-      "Let the paragraph finish",
-      "Cut through the charisma",
-      "Ask what's buried on that desk",
-    ],
-    known: [
-      "Take the cleared seat",
-      "Give an honest read",
-      "Interrupt the paperwork",
-      "Answer to 'cutie'",
-    ],
-    warm: [
-      "Take the saved seat",
-      "Ride along at sunset",
-      "Insist on a break",
-      "Match the easy charm",
-    ],
     spark: [
       "Take the passenger seat",
       "Say what you mean",
       "Let the work wait",
       "Take the offered hand",
-    ],
-    close: [
-      "Go to them",
-      "Free them from the work",
-      "Say it can be handed off",
-      "Stay past the sunset",
-    ],
-    bound: [
-      "Come to bed",
-      "Steal the car keys",
-      "Leave the work till morning",
-      "Say it back",
+      "Ride the Aqua-line with him",
+      "Hold his gaze",
+      "Ask what's under the charm",
+      "Let him drop the act",
+      "Match the look he's giving you",
+      "Ask him to say it again",
+      "Step past the schedule",
+      "Let him forget the sentence",
+      "Ask what he's avoiding",
+      "Wait for the mask to slip",
+      "Let the fitting run long",
+      "Ask if he's sure",
+      "Take the wheel with him",
+      "Let the silence do the work",
+      "Ask about the seam",
+      "Stay after the schedule ends",
+      "Let him look his fill",
+      "Close the space between you",
+      "Ask him to mean it",
+      "Let him set the pen down",
+      "Hold the moment steady",
+      "Ask what he's done about it",
+      "Let the charm drop for you",
     ],
   },
   responses: {
@@ -478,11 +770,19 @@ export default {
         "Admire how they command a room",
         "Thank them for making the time",
         "Say the work can wait",
+        "Tell them to sit too",
+        "Say the hour was worth it",
+        "Ask if they're sleeping enough",
+        "Thank them for the honesty",
       ],
       spark: [
         "Say what you meant by it",
         "Take the hand they offered",
         "Tell them they do too much",
+        "Notice the tired under it",
+        "Tell them to slow down",
+        "Ask if they're all right",
+        "Say the work isn't everything",
       ],
       close: [
         "See the tired under the charm",
@@ -500,11 +800,19 @@ export default {
         "Match the easy charm",
         "Tease them about the paperwork",
         "Say 'cutie' first",
+        "Ask which version you got",
+        "Steal their coffee order",
+        "Tease the budget excuse",
+        "Call them out for adapting",
       ],
       spark: [
         "Steal the car keys",
         "Tease them out of the office",
         "Answer 'cutie' with 'cutie'",
+        "Ask which version this is",
+        "Dare them to keep looking",
+        "Make them lose the thread",
+        "Tease the slipping mask",
       ],
       close: [
         "Drag them from the desk",
@@ -522,11 +830,19 @@ export default {
         "Meet the charisma head-on",
         "Name what you want",
         "Ask them to work less for you",
+        "Ask which one is real",
+        "Call the fitting an excuse",
+        "Tell them to stop adapting",
+        "Say you'd notice the seam",
       ],
       spark: [
         "Get in the passenger seat",
         "Tell them you want this",
         "Take their hand first",
+        "Name the version you want",
+        "Close the distance yourself",
+        "Ask them straight out",
+        "Say you noticed the seam",
       ],
       close: [
         "Tell them it runs itself",
@@ -540,11 +856,19 @@ export default {
         "Simply be present",
         "Let the page get finished",
         "Sit while they work",
+        "Let them decide the pace",
+        "Say nothing, just stay",
+        "Watch them work in quiet",
+        "Let the schedule wait",
       ],
       spark: [
         "Ride along in silence",
         "Let the moment pass",
         "Stay in your seat",
+        "Let him keep the pace",
+        "Say nothing, stay close",
+        "Wait out the quiet",
+        "Let the drive continue",
       ],
       close: [
         "Keep them company at the desk",

@@ -95,11 +95,11 @@ export default {
         "Known you since {sinceMet}\n\nNever once done the math on how close that was till today\n\nDidn't like the answer\n\nGlad this is the version where you're fine",
       ],
       choice: {
-        prompt: "Anyway\n\nSay something",
+        prompt: "Anyway\n\nJust checking in",
         options: [
           {
             key: "kind",
-            label: "Thank him for the two seconds",
+            label: "Thank him for saving you",
             style: 3,
             close:
               "…Nothing to thank me for\n\nWasn't gonna stand there and watch\n\n…Still glad you're okay",
@@ -235,28 +235,87 @@ export default {
       },
     },
   },
+  // `new`/`known`/`warm` are paired beats — { line, approach } — so the
+  // /roam button always answers the scene the line just set, rather than
+  // being drawn from a separate pool at random
+  // (docs/dialogue-approach-pairing.md). `spark`/`close`/`bound` are still
+  // legacy independent pools (drawn against the `approach` block below).
   dialogue: {
     new: [
-      'Grease-stained and worn, he looks you over once. "Get back. It\'s dangerous."',
-      "He doesn't stop working. He just moves the toolbox so you won't trip over it.",
-      "Nobody else in the garage stands this close to him. You haven't learned why yet.",
-      '"Don\'t touch that," he says flatly. "It\'s hot." That\'s the whole greeting.',
-      "He's holding a campus map the wrong way up and won't admit he's lost. \"...What do you want?\"",
+      {
+        line: 'Gloves already on, he looks you over once. "Get back. It\'s dangerous."',
+        approach: "Stay out of his way",
+      },
+      {
+        line: "He doesn't stop working. He just moves the toolbox so you won't trip over it.",
+        approach: "Step over the toolbox",
+      },
+      {
+        line: "Nobody else in the garage stands this close to him. You haven't learned why yet.",
+        approach: "Stay close anyway",
+      },
+      {
+        line: '"Don\'t touch that," he says flatly. "It\'s hot." That\'s the whole greeting.',
+        approach: "Ask what he's building",
+      },
+      {
+        line: "He's holding a campus map the wrong way up and won't admit he's lost. \"...What do you want?\"",
+        approach: "Flip his map around",
+      },
     ],
     known: [
-      "He steers you clear of the loose floor panel before you even notice it's there.",
-      "He grunts once in your direction. Two weeks ago he didn't do that.",
-      "The toolbox is already out of your path before you arrive. He still checks.",
-      '"Looks like we\'ve got another mission order," he says. "Rest while you can. Next one\'s a long one."',
-      "\"Hand me that.\" It's the first thing he's ever asked you for.",
-      "He shoves a rag your way before you've noticed the grease on your hands.",
-      '"You\'re early," he says. Not a complaint.',
-      "He still tells you to stay clear of the bikes while they're up on the lift. Just gentler about it now.",
-      "He's started leaving the garage door unlocked before you even get there.",
-      "He starts leaving the spare gloves out in your size. Never brings it up.",
-      "He doesn't send you on the easy jobs anymore. Figures you can handle harder ones.",
-      "He waves off Leo's teasing about you without looking up from his work.",
-      "He tells you when the weather's about to turn before you've checked. Force of habit, maybe.",
+      {
+        line: "He steers you clear of the loose floor panel before you even notice it's there.",
+        approach: "Let him steady your step",
+      },
+      {
+        line: "He grunts once in your direction. Two weeks ago he didn't do that.",
+        approach: "Ask what's got him quiet",
+      },
+      {
+        line: "The toolbox is already out of your path before you arrive. He still checks.",
+        approach: "Step past the toolbox yourself",
+      },
+      {
+        line: '"Looks like we\'ve got another mission order," he says. "Rest while you can. Next one\'s a long one."',
+        approach: "Ask if the mission's set yet",
+      },
+      {
+        line: "\"Hand me that.\" It's the first thing he's ever asked you for.",
+        approach: "Hand him the spanner",
+      },
+      {
+        line: "He catches your wrist before it brushes the hot engine.",
+        approach: "Let him check you over",
+      },
+      {
+        line: '"You\'re early," he says. Not a complaint.',
+        approach: "Sit, if you're staying",
+      },
+      {
+        line: "He still tells you to stay clear of the bikes while they're up on the lift. Just gentler about it now.",
+        approach: "Ask if he needs a hand",
+      },
+      {
+        line: "He's started leaving the garage door unlocked before you even get there.",
+        approach: "Stay out from underfoot",
+      },
+      {
+        line: "He starts leaving the spare gloves out in your size. Never brings it up.",
+        approach: "Take the gloves he left out",
+      },
+      {
+        line: "He doesn't send you on the easy jobs anymore. Figures you can handle harder ones.",
+        approach: "Ask what it is",
+      },
+      {
+        line: "He waves off Leo's teasing about you without looking up from his work.",
+        approach: "Wait him out",
+      },
+      {
+        line: "He tells you when the weather's about to turn before you've checked. Force of habit, maybe.",
+        approach: "Ask how he knows",
+      },
     ],
     // Pool sizes track the affinity width of the level(s) they cover (see
     // RELATIONSHIP_LEVELS / DIALOGUE_TIER_BY_LEVEL in constants/game.js) —
@@ -264,30 +323,84 @@ export default {
     // doesn't repeat more often than a narrow one. known=55 wide → 13, warm=75
     // wide → 18 at the current POOL_POINTS_PER_LINE of 4.
     warm: [
-      "He works beside you in steady silence, a quiet understanding growing between you.",
-      "He hands you a rag without being asked. Somehow that means something.",
-      "He's left the second stool out again. He's never once mentioned it.",
-      '"You eat today?" he asks, wiping his hands. It\'s the third time this week.',
-      "The garage radio is on. He turned it on because you like it. He won't say so.",
-      "He hands you the mission file before you've even reached for it, like waiting was never the plan.",
-      "He laughs, short and surprised at himself. He doesn't do that often.",
-      "He steps between you and Leo without a word, like it's reflex now.",
-      "He says your name under his breath when a job's going sideways. Doesn't notice he does it.",
-      "He splits his lunch in half before you've said you're hungry.",
-      "He's memorized which drink you always grab from the vending machine.",
-      "He doesn't rush you out of the garage anymore, even when he's closing up.",
-      "He starts fixing whatever's wrong with your things before you mention it, like it's not on purpose.",
-      "He remembers exactly how you take your coffee and just makes it that way now.",
-      "Other housemates have started asking him where you are instead of asking around.",
-      "He tries a joke. It lands badly. He tries again anyway.",
-      "He's stopped correcting people who assume you two are a pair.",
-      "The captain's log has a line in it now that isn't about missions. He never shows you which one.",
+      {
+        line: "He works beside you in steady silence, a quiet understanding growing between you.",
+        approach: "Pick up the spanner",
+      },
+      {
+        line: "He hands you a rag without being asked. Somehow that means something.",
+        approach: "Work beside him",
+      },
+      {
+        line: "He's left the second stool out again. He's never once mentioned it.",
+        approach: "Take the second stool",
+      },
+      {
+        line: '"You eat today?" he asks, wiping his hands. It\'s the third time this week.',
+        approach: "Split his lunch with him",
+      },
+      {
+        line: "The garage radio is on. He turned it on because you like it. He won't say so.",
+        approach: ["Turn the radio up for him", "Let the radio play"],
+      },
+      {
+        line: "He hands you the mission file before you've even reached for it, like waiting was never the plan.",
+        approach: "Take the mission file from him",
+      },
+      {
+        line: "He laughs, short and surprised at himself. He doesn't do that often.",
+        approach: "Point out he's laughing",
+      },
+      {
+        line: "He steps between you and Leo without a word, like it's reflex now.",
+        approach: "Stand where Leo can see you",
+      },
+      {
+        line: "He says your name under his breath when a job's going sideways. Doesn't notice he does it.",
+        approach: "Match his silence a while",
+      },
+      {
+        line: "He splits his lunch in half before you've said you're hungry.",
+        approach: "Take the half he's offering",
+      },
+      {
+        line: "He's memorized which drink you always grab from the vending machine.",
+        approach: "Act surprised he remembered",
+      },
+      {
+        line: "He doesn't rush you out of the garage anymore, even when he's closing up.",
+        approach: "Stay after closing time",
+      },
+      {
+        line: "He starts fixing whatever's wrong with your things before you mention it, like it's not on purpose.",
+        approach: "Let him fix what isn't broken",
+      },
+      {
+        line: "He remembers exactly how you take your coffee and just makes it that way now.",
+        approach: "Take the coffee he made you",
+      },
+      {
+        line: "Other housemates have started asking him where you are instead of asking around.",
+        approach: "Ask what he told them",
+      },
+      {
+        line: "He tries a joke. It lands badly. He tries again anyway.",
+        approach: "Break the quiet",
+      },
+      {
+        line: "He's stopped correcting people who assume you two are a pair.",
+        approach: "Let them assume",
+      },
+      {
+        line: "The captain's log has a line in it now that isn't about missions. He never shows you which one.",
+        approach: "Ask what he wrote in the log",
+      },
     ],
     spark: [
       "He wipes his hands twice before he touches you. He touches you anyway.",
       "He's careful with you in a way he isn't careful with anything else.",
       "The silence between you has stopped being comfortable and started being loaded.",
-      "He tucks your hair back with grease-stained fingers and says nothing about it.",
+      "He tucks your hair back with rough, calloused fingers and says nothing about it.",
       '"...Come here," he says. It takes him a long time to get those two words out.',
     ],
     close: [
@@ -302,7 +415,7 @@ export default {
       "His hands are rough and careful and everywhere, and he still doesn't speak.",
       "He pulls you into his lap in the quiet of the garage like it's nothing. It isn't.",
       '"...Love you," he says into your hair, so quietly it\'s almost deniable.',
-      "He's stopped washing the grease off before he touches you. You told him not to bother.",
+      "He's stopped holding back before he touches you. He used to be so careful. You told him he didn't have to be.",
     ],
   },
   temperamentDialogue: {
@@ -319,7 +432,7 @@ export default {
       "\"You're not in the way. That's rare.\"",
       '"Careful. Meant that."',
       "\"Don't stand there. Sit, if you're staying.\"",
-      '"Watch the floor. Not everyone remembers where the oil is."',
+      '"Watch the floor. Not everyone remembers where the tools land."',
       '"...Still here. Good."',
       '"Ask, if you\'re gonna hover. Faster than guessing."',
       '"Door\'s open. Wipe your feet."',
@@ -351,7 +464,7 @@ export default {
     spark: [
       '"Come here. Closer than that."',
       "\"I'm no good at saying it. You'll have to read it off me.\"",
-      '"Hold still. Got oil on your cheek. ...There. Got it."',
+      '"Hold still. Eyelash on your cheek. ...There. Got it."',
       '"You keep standing that close, I\'m gonna do something about it."',
       "\"Don't go home yet. That's all. That's the whole ask.\"",
     ],
@@ -371,25 +484,35 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Step over the toolbox",
-      "Stay out of his way",
-      "Ask what he's building",
-      "Wait for the engine to stop",
+    spark: [
+      "Come here",
+      "Hold still",
+      "Stay a bit longer",
+      "Read it off him",
+      "Let him wipe his hands first",
+      "Stay still for him",
+      "Hold the loaded silence",
+      "Let him tuck your hair back",
+      "Wait out his long pause",
+      "Stand closer than that",
+      "Let him read you instead",
+      "Hold still for the eyelash",
+      "Don't go home yet",
+      "Let him go slow",
+      "Ask what's under the quiet",
+      "Step into the silence",
+      "Let him close the distance",
+      "Stay exactly where you are",
+      "Let his hand linger",
+      "Say nothing, stay anyway",
+      "Test how close is too close",
+      "Let him find the words",
+      "Wait for him to touch you",
+      "Hold his gaze",
+      "Ask him to finish the thought",
+      "Let the quiet settle",
+      "Stand your ground, closer",
     ],
-    known: [
-      "Hand him the spanner",
-      "Sit, if you're staying",
-      "Stay out from underfoot",
-      "Ask what it is",
-    ],
-    warm: [
-      "Take the second stool",
-      "Pick up the spanner",
-      "Work beside him",
-      "Break the quiet",
-    ],
-    spark: ["Come here", "Hold still", "Stay a bit longer", "Read it off him"],
     close: [
       "Sit down beside him",
       "Take his hands",
@@ -409,11 +532,19 @@ export default {
         "Appreciate his honesty",
         "Thank him for the warning",
         "Ask if he's eaten",
+        "Tell him he did right",
+        "Ask if he's slept",
+        "Say the toolbox helps",
+        "Thank him for waiting",
       ],
       spark: [
         "Let him be careful with you",
         "Read it off him",
         "Cover his hands with yours",
+        "Tell him to stay close",
+        "Let him hold still with you",
+        "Say you're not going anywhere",
+        "Let the quiet be enough",
       ],
       close: [
         "Accept what he's done for you",
@@ -431,16 +562,24 @@ export default {
         "Accept his humor",
         "Touch the thing he said not to",
         "Answer his grunt with a grin",
+        "Point out he's showing off",
+        "Ask if he ever smiles",
+        "Steal his rag",
+        "Tease him about the map",
       ],
       spark: [
-        "Get oil back on him",
+        "Turn the tease back on him",
         "Stand closer on purpose",
         "Make him say it",
+        "Dare him to come closer",
+        "Tease the long pause",
+        "Press a finger to his cheek",
+        "Make him finish the sentence",
       ],
       close: ["Get him laughing", "Steal his jacket", "Talk until he gives in"],
       bound: [
         "Make him repeat it",
-        "Get grease on him deliberately",
+        "Wear his gloves to bed",
         "Steal his jacket again",
       ],
     },
@@ -449,11 +588,19 @@ export default {
         "Stand your ground",
         "Tell him you're staying",
         "Say you can handle it",
+        "Call him out on the staring",
+        "Ask him straight",
+        "Hold his gaze",
+        "Tell him you're not leaving",
       ],
       spark: [
         "Do something about it",
         "Close the distance first",
         "Tell him not to be careful",
+        "Take the first step",
+        "Say you want this",
+        "Hold his gaze first",
+        "Tell him to stop stalling",
       ],
       close: [
         "Trust his protection",
@@ -463,12 +610,28 @@ export default {
       bound: [
         "Climb into his lap",
         "Say it first",
-        "Tell him to leave the grease",
+        "Tell him not to wash up",
       ],
     },
     neutral: {
-      new: ["Be straightforward", "Work in silence", "Let him finish"],
-      spark: ["Let the silence sit", "Step back", "Say nothing, stay anyway"],
+      new: [
+        "Be straightforward",
+        "Work in silence",
+        "Let him finish",
+        "Match his quiet",
+        "Outlast the silence",
+        "Say nothing back",
+        "Let the moment pass",
+      ],
+      spark: [
+        "Let the silence sit",
+        "Step back",
+        "Say nothing, stay anyway",
+        "Match the loaded quiet",
+        "Wait him out",
+        "Let him set the pace",
+        "Stay without a word",
+      ],
       close: [
         "Understand his quiet",
         "Sit through the long pause",

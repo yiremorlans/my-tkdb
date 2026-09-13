@@ -17,7 +17,7 @@ import {
   getCharacterById,
   getFullName,
   getRandomCharacterImageVariant,
-  getRandomApproachLabel,
+  getRandomDialogueBeat,
   getRandomDialogueLine,
   getTemperamentGreeting,
   RESPONSE_TYPES,
@@ -329,7 +329,9 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
     backgroundFile: spot.file,
     event: null, // no event system yet — reserved for `when: { event }` rules
   };
-  const dialogue = getRandomDialogueLine(character, tier, variant, dialogueCtx);
+  // Drawn together, not two independent picks — the approach button always
+  // answers the line the player just read (see getRandomDialogueBeat).
+  const { line: dialogue, approach } = getRandomDialogueBeat(character, tier, variant, dialogueCtx);
   const temperament = getTemperamentGreeting(character, tier);
   console.log('[buildRoamDialogueMessage] Got dialogue:', dialogue);
   console.log('[buildRoamDialogueMessage] Got temperament:', temperament);
@@ -359,7 +361,7 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
           {
             type: MessageComponentTypes.BUTTON,
             style: ButtonStyleTypes.PRIMARY,
-            label: getRandomApproachLabel(character, tier, variant, dialogueCtx),
+            label: approach,
             custom_id: `roam:spawn:${encounterId}`,
           },
         ],

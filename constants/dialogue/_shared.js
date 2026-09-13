@@ -14,6 +14,18 @@
 // just set. A character omitted here falls back to the generic
 // APPROACH_LABEL_FALLBACK in constants/characters.js.
 //
+// PREFERRED: write a tier's `dialogue` entries as { line, approach } pairs
+// instead of a bare string — `approach` a label, or an array of labels when
+// more than one reaction genuinely fits the same beat — and skip that tier in
+// `approach` entirely. getRandomDialogueBeat (constants/characters.js) then
+// draws the line and its button together, so the invitation always answers
+// the scene the player just read. A tier left as bare strings still works —
+// it draws its label independently from `approach`, as every tier used to —
+// but that's how a line and a button end up describing two different
+// moments once the pools grow past a handful of entries each. See
+// docs/dialogue-approach-pairing.md and constants/dialogue/benkei.js (its
+// new/known/warm/close/bound tiers) for a worked example.
+//
 // `responses` holds the button labels offered to the player. Only two tiers are
 // stored: "close" and everything before it. Each slot is a collection, picked
 // from at random like the dialogue, so a character the player sees often does

@@ -284,37 +284,62 @@ export default {
       "The lazy calm is still there. It's just aimed entirely at you now.",
     ],
   },
+  // Evening block: dialogue and approach paired per beat
+  // (docs/dialogue-approach-pairing.md) instead of two separately-drawn lists.
   dialogueWhen: [
     {
       when: { time: "evening" },
       dialogue: {
         new: [
-          "He's sitting out watching the dark come in. \"...Oh. It's you. Sit, if you want.\"",
-          '"You\'re out late. This isn\'t a great place to wander around alone after dark." A beat. "...I\'ll come with you."',
-          '"It\'s been too quiet tonight. Probably nothing." He doesn\'t sound sure. "Stick around a bit."',
-          "\"Watch your feet on the way in. Don't come crying to me if a fox spirit gets you.\" He's mostly joking.",
+          {
+            line: "He's sitting out watching the dark come in. \"...Oh. It's you. Sit, if you want.\"",
+            approach: "Take the step beside him",
+          },
+          {
+            line: '"You\'re out late. This isn\'t a great place to wander around alone after dark." A beat. "...I\'ll come with you."',
+            approach: "Head in out of the dark",
+          },
+          {
+            line: '"It\'s been too quiet tonight. Probably nothing." He doesn\'t sound sure. "Stick around a bit."',
+            approach: "Take the step beside him",
+          },
+          {
+            line: "\"Watch your feet on the way in. Don't come crying to me if a fox spirit gets you.\" He's mostly joking.",
+            approach: "Head in out of the dark",
+          },
         ],
         known: [
-          '"You always turn up right as it gets dark. I\'ve stopped calling it luck."',
-          "\"Walk you back? It's dark, and I'm only half doing it to be nice.\"",
-          "\"There's something I've been meaning to tell you. Not tonight. Walk with me anyway.\"",
-          "\"I'm walking you back. Don't argue. I've decided, and I'm too lazy to decide twice.\"",
+          {
+            line: '"You always turn up right as it gets dark. I\'ve stopped calling it luck."',
+            approach: "Fall into step with him",
+          },
+          {
+            line: "\"Walk you back? It's dark, and I'm only half doing it to be nice.\"",
+            approach: "Fall into step with him",
+          },
+          {
+            line: "\"There's something I've been meaning to tell you. Not tonight. Walk with me anyway.\"",
+            approach: "Fall into step with him",
+          },
+          {
+            line: "\"I'm walking you back. Don't argue. I've decided, and I'm too lazy to decide twice.\"",
+            approach: "Fall into step with him",
+          },
         ],
         warm: [
-          '"Stay a while. It\'s quieter with someone else here."',
-          '"Can\'t sleep? Me neither. Walk with me a bit. It helps, the company."',
-          "\"Too bad I couldn't walk you back. Safety thing. ...Fine, and I wanted to catch you in your pjs. It's allowed to be both.\"",
+          {
+            line: '"Stay a while. It\'s quieter with someone else here."',
+            approach: "Let him walk you back",
+          },
+          {
+            line: '"Can\'t sleep? Me neither. Walk with me a bit. It helps, the company."',
+            approach: "Let him walk you back",
+          },
+          {
+            line: "\"Too bad I couldn't walk you back. Safety thing. ...Fine, and I wanted to catch you in your pjs. It's allowed to be both.\"",
+            approach: "Let him walk you back",
+          },
         ],
-      },
-    },
-  ],
-  approachWhen: [
-    {
-      when: { time: "evening" },
-      approach: {
-        new: ["Head in out of the dark", "Take the step beside him"],
-        known: ["Fall into step with him"],
-        warm: ["Let him walk you back"],
       },
     },
   ],

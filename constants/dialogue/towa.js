@@ -17,6 +17,10 @@ export default {
         "*It arrives after dark, which is the only time he says much at all.*\n\n**{firstName}**: I picked you a dandelion 🌼 It's dead now. I picked it three days ago and kept forgetting.\n\nI'm still going to give it to you 🥀",
         "You've come {timesMet} times. I count the days between. The most was nine 🌙 That was a bad nine.\n\nI can't talk in the daytime. Too loud. At night it's fine.\n\nThis is the night version of me. I'm nicer at night 🎵",
       ],
+      // Beat 0 is his very first message ever, and he "only communicates with
+      // stickers and 1 or 2 emojis" (reference.md) — so the actual opener is
+      // silent, arriving as an attachment before he manages any words.
+      stickers: { 0: "Hi.png" },
       choice: {
         prompt:
           "Do you want the dead one? 🥀 You can say no. You'd be the first.",

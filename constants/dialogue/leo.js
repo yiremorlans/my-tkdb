@@ -28,7 +28,7 @@ export default {
             label: "Thank him sincerely",
             style: 3,
             close:
-              "Ugh\n\nDo it again but sarcastic, I don't know what to do with the other kind, it's making my skin crawl\n\n*He doesn't leave the chat, though.*",
+              "Ugh\n\nDo it again but sarcastic, I don't know what to do with the other kind, it's making my skin crawl",
           },
           {
             key: "playful",
@@ -294,7 +294,7 @@ export default {
       '"Smile. You\'re on camera. Ah, too late."',
       '"New face. Cute. How long do you think you\'ll last?"',
       '"Say something interesting. I\'m running low on entertainment."',
-      "\"You need an appointment to talk to me. You don't have one.\"",
+      '"You need an appointment to talk to me. You don\'t have one."',
       "\"I'm so done with these classes. I'll show up for the tests and skip the rest.\"",
     ],
     known: [

@@ -56,7 +56,7 @@ export default {
             label: "Ask what he's watching for",
             style: 4,
             close:
-              "*There was a long pause.*\n\nAn answer I have not had in a very long while, *he says.* Which is not a proper reply, and you will not get a better one tonight. Sleep well. 🌙💤",
+              "*There was a long pause.*\n\nAn answer I have not had in a very long while. Which is not a proper reply, and you will not get a better one tonight. Sleep well. 🌙💤",
           },
         ],
       },

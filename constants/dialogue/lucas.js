@@ -274,36 +274,58 @@ export default {
       "He touches you like something he has been given and can hardly believe he keeps.",
     ],
   },
+  // Evening block: dialogue and approach paired per beat
+  // (docs/dialogue-approach-pairing.md) instead of two separately-drawn lists.
   dialogueWhen: [
     {
       when: { time: "evening" },
       dialogue: {
         new: [
-          "He's doing a slow circuit of the balcony rail, checking the dark below, and only then turns to you.",
-          "The campus lights have come on behind him. He's clearly been out here a while.",
-          '"You\'re out late," he says, not quite a reproach. "I\'ll walk you back when you\'re ready."',
-          '"You shouldn\'t wander alone," he says quietly. "Not here. Not at this hour."',
+          {
+            line: "He's doing a slow circuit of the balcony rail, checking the dark below, and only then turns to you.",
+            approach: "Fall into step with him",
+          },
+          {
+            line: "The campus lights have come on behind him. He's clearly been out here a while.",
+            approach: "Fall into step with him",
+          },
+          {
+            line: '"You\'re out late," he says, not quite a reproach. "I\'ll walk you back when you\'re ready."',
+            approach: "Let him walk you back",
+          },
+          {
+            line: '"You shouldn\'t wander alone," he says quietly. "Not here. Not at this hour."',
+            approach: "Let him walk you back",
+          },
         ],
         known: [
-          "He falls into step to walk you along the lit path before you can decline the escort.",
-          '"I don\'t like this hour for wandering," he admits. "I like that you came to find me in it."',
-          '"Curfew\'s soon," he says. "Stay a little. I\'ll make sure you\'re not caught."',
+          {
+            line: "He falls into step to walk you along the lit path before you can decline the escort.",
+            approach: "Accept the escort",
+          },
+          {
+            line: '"I don\'t like this hour for wandering," he admits. "I like that you came to find me in it."',
+            approach: "Accept the escort",
+          },
+          {
+            line: '"Curfew\'s soon," he says. "Stay a little. I\'ll make sure you\'re not caught."',
+            approach: "Accept the escort",
+          },
         ],
         warm: [
-          "He's saved you the sheltered corner out of the wind. He'd deny having planned it.",
-          "The dark makes him less careful with what he says. Not much. Enough to notice.",
-          '"The quiet out here is the honest part of my day," he says. "I\'m glad you\'re in it."',
+          {
+            line: "He's saved you the sheltered corner out of the wind. He'd deny having planned it.",
+            approach: "Take the sheltered corner",
+          },
+          {
+            line: "The dark makes him less careful with what he says. Not much. Enough to notice.",
+            approach: "Take the sheltered corner",
+          },
+          {
+            line: '"The quiet out here is the honest part of my day," he says. "I\'m glad you\'re in it."',
+            approach: "Take the sheltered corner",
+          },
         ],
-      },
-    },
-  ],
-  approachWhen: [
-    {
-      when: { time: "evening" },
-      approach: {
-        new: ["Let him walk you back", "Fall into step with him"],
-        known: ["Accept the escort"],
-        warm: ["Take the sheltered corner"],
       },
     },
   ],

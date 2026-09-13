@@ -35,7 +35,7 @@ export default {
             label: "Ask what he wants instead",
             style: 4,
             close:
-              "*There is no reply for nearly two minutes, which for a man who is punctual to the second is a great deal of time.*\n\nThat question is outside the scope of this correspondence.\n\nI have not deleted it, however. I want that noted also.",
+              "*There is no reply for nearly two minutes, which for a man who is punctual to the second is a great deal of time.*\n\nThat question is outside the scope of this correspondence.\n\nI have not deleted it, however. I have noted it for future discussion.",
           },
         ],
       },

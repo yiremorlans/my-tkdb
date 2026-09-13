@@ -14,39 +14,39 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Are you still awake? Nothing's wrong. I wanted to say this while I still had the nerve.",
-        "Every time you come by, I'm mid pot of tea with half the steps still to go, and you just wait. You find somewhere to sit and let me finish. You don't sigh or check the time.\n\nI've spent most of my life being someone people are waiting on. I didn't know it could feel like company instead of a delay.\n\n{timesMet} visits now, and I've wanted to say that on every one.",
+        "**{firstName}**: Hello Honor Roll, is now an alright time?",
+        "You've helped Hotarubi more times than most people would ever bother counting. {timesMet}, by my count, and I don't say that enough.\n\nHaku and I keep a pot of tea going most evenings, nothing formal, and I've wanted to ask you to join us for longer than I'll admit. I just kept finding a reason it wasn't quite the right moment. I know you're busy, and you don't owe us the visit just because you've done so much for the house already. I only wanted you to know I'd like it very much, if you said yes.",
       ],
       choice: {
         prompt:
-          "Sorry. That's a great deal of feeling to hang on a pot of tea. Say something?",
+          "Please don't feel you have to say yes on our account. I mean that.",
         options: [
           {
             key: "kind",
-            label: "Tell him you like the wait",
+            label: "Tell him you'd love to come",
             style: 3,
             close:
-              "*A pause.*\n\nOh.\n\nThen I'll work twice as slowly tomorrow, and you can hold me to it. I just want the evening where you're still there when I straighten up.",
+              "*A pause before he replies.*\n\nThank you. I know I said you didn't have to, but I'm glad you want to. I'll tell Haku, he'll be pleased to have you at the table properly, for once. I'll get the good cups out.",
           },
           {
             key: "playful",
-            label: "Tease him about the fuss",
+            label: "Tease him for the long delay",
             style: 1,
             close:
-              "You're laughing at me. That's all right, I rather set that up.\n\nI make the tea properly because that's how I was trained. The part where I slow down so someone stays longer is new. That one's yours.",
+              "Ha ha, I suppose I earned that. In my defense, I rewrote the first line alone six times.\n\nCome anyway. I promise the company is better than the drafting.",
           },
           {
             key: "bold",
-            label: "Tell him it isn't too much",
+            label: "Tell him you'd been waiting",
             style: 4,
             close:
-              "You're right.\n\n*He doesn't answer straight away.*\n\nI won't do that this time, then. Thank you for not letting me trim it down.",
+              "*A pause before he replies, longer than the last.*\n\nYou were waiting? All this time I was so certain I'd be a bother, and you were only waiting for me to catch up.\n\nCome tonight, then. I promise, I won't leave you waiting again.",
           },
         ],
       },
       keepsake: {
-        emoji: "🍵",
-        line: "A pot of tea made slowly, because someone had stayed for the company.",
+        emoji: "🫖",
+        line: "An invitation it took him weeks to work up the nerve to send.",
       },
     },
 
@@ -281,25 +281,60 @@ export default {
       "The restraint is gone entirely. What replaced it is overwhelming and very quiet.",
     ],
   },
+  // Evening block: new/known/warm dialogue and approach paired per beat
+  // (docs/dialogue-approach-pairing.md) instead of two separately-drawn
+  // lists. spark/close have no approachWhen counterpart to pair with, so
+  // they're left as bare lines — they still draw an approach, just from the
+  // base approach pool for that tier, same as before this existed.
   dialogueWhen: [
     {
       when: { time: "evening" },
       dialogue: {
         new: [
-          '"Ah, a guest. Please, come in out of the dark."',
-          "He's bringing the outer lanterns in for the night, and waves you in toward the house.",
-          '"Here, let me take that for you," he says, already reaching for your bag before catching himself. "Only if you don\'t mind."',
-          '"You\'re safe here, even at this hour," he says. "That much I can promise."',
+          {
+            line: '"Ah, a guest. Please, come in out of the dark."',
+            approach: "Come in out of the dark",
+          },
+          {
+            line: "He's bringing the outer lanterns in for the night, and waves you in toward the house.",
+            approach: "Follow him to the house",
+          },
+          {
+            line: '"Here, let me take that for you," he says, already reaching for your bag before catching himself. "Only if you don\'t mind."',
+            approach: "Come in out of the dark",
+          },
+          {
+            line: '"You\'re safe here, even at this hour," he says. "That much I can promise."',
+            approach: "Follow him to the house",
+          },
         ],
         known: [
-          "He takes your bag without waiting to be asked now, same quiet effort as always. He never lets it look like it costs him anything.",
-          '"I do the rounds of the house about now, shutters and lamps. Keep me company while I do?"',
-          '"The tea\'s still warm and there\'s no hurry anywhere," he says. "Stay a while."',
+          {
+            line: "He takes your bag without waiting to be asked now, same quiet effort as always. He never lets it look like it costs him anything.",
+            approach: "Help him lock up the house",
+          },
+          {
+            line: '"I do the rounds of the house about now, shutters and lamps. Keep me company while I do?"',
+            approach: "Help him lock up the house",
+          },
+          {
+            line: '"The tea\'s still warm and there\'s no hurry anywhere," he says. "Stay a while."',
+            approach: "Help him lock up the house",
+          },
         ],
         warm: [
-          '"I find myself listening for the gate after dark lately. I wonder why."',
-          "There's a cup already poured and a cushion already set on your side of the step.",
-          "\"Don't rush off. Lamp, then kettle, and then I'm not needed anywhere else.\"",
+          {
+            line: '"I find myself listening for the gate after dark lately. I wonder why."',
+            approach: "Take the cushion he set out",
+          },
+          {
+            line: "There's a cup already poured and a cushion already set on your side of the step.",
+            approach: "Take the cushion he set out",
+          },
+          {
+            line: "\"Don't rush off. Lamp, then kettle, and then I'm not needed anywhere else.\"",
+            approach: "Take the cushion he set out",
+          },
         ],
         spark: [
           "He walks you back through the dark and takes the longest possible route.",
@@ -307,16 +342,6 @@ export default {
         close: [
           "\"I was hoping... you'd come by tonight,\" he admits quietly, and doesn't look away afterward the way he usually would.",
         ],
-      },
-    },
-  ],
-  approachWhen: [
-    {
-      when: { time: "evening" },
-      approach: {
-        new: ["Come in out of the dark", "Follow him to the house"],
-        known: ["Help him lock up the house"],
-        warm: ["Take the cushion he set out"],
       },
     },
   ],

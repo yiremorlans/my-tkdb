@@ -14,7 +14,7 @@ export default {
         "You've been underfoot {timesMet} times now. I haven't had you thrown out. Make of that whatever you want. I'm not explaining it.\n\n*The typing indicator starts. Stops. Starts again.*\n\nDon't get ideas. It's not a promotion.",
       ],
       choice: {
-        prompt: "Well? Say something. You've got a mouth, use it.",
+        prompt: "Well? You've got thumbs, use them.",
         options: [
           {
             key: "kind",
@@ -35,7 +35,7 @@ export default {
             label: "Tell him you'll decide that",
             style: 4,
             close:
-              "Ha. *It comes back instantly.* *There* it is.\n\nI've got no use for anyone who waits to be told what to think. Go to bed, servant.",
+              "Ha. *It comes back instantly.* *There* it is.\n\nGood answer. I've got no patience for people who wait to be told what to think. Go to bed, servant.",
           },
         ],
       },
@@ -272,36 +272,58 @@ export default {
       "Frostheim is freezing. His bed is not. He has opinions about you leaving it.",
     ],
   },
+  // Evening block: dialogue and approach paired per beat
+  // (docs/dialogue-approach-pairing.md) instead of two separately-drawn lists.
   dialogueWhen: [
     {
       when: { time: "evening" },
       dialogue: {
         new: [
-          "He hasn't turned on a light. The cold has teeth after dark and he seems to prefer it that way.",
-          '"Frostheim after dark is mine," he says without turning. "You\'re standing in it."',
-          "Frost has crept across the balcony doors behind him. He watches the black campus like he owns the view.",
-          '"The cold gets worse after sundown," he says. "You knew that, and came anyway."',
+          {
+            line: "He hasn't turned on a light. The cold has teeth after dark and he seems to prefer it that way.",
+            approach: "Step onto the dark balcony",
+          },
+          {
+            line: '"Frostheim after dark is mine," he says without turning. "You\'re standing in it."',
+            approach: "Meet him at the rail",
+          },
+          {
+            line: "Frost has crept across the balcony doors behind him. He watches the black campus like he owns the view.",
+            approach: "Step onto the dark balcony",
+          },
+          {
+            line: '"The cold gets worse after sundown," he says. "You knew that, and came anyway."',
+            approach: "Meet him at the rail",
+          },
         ],
         known: [
-          "\"Late,\" he observes. He doesn't say for what, and doesn't tell you to leave either.",
-          "The cold doesn't reach the spot he's left open beside him. He arranged that before you arrived.",
-          '"It\'s late," he says. "Stand somewhere useful and don\'t let the cold in."',
+          {
+            line: "\"Late,\" he observes. He doesn't say for what, and doesn't tell you to leave either.",
+            approach: "Take the cold beside him",
+          },
+          {
+            line: "The cold doesn't reach the spot he's left open beside him. He arranged that before you arrived.",
+            approach: "Take the cold beside him",
+          },
+          {
+            line: '"It\'s late," he says. "Stand somewhere useful and don\'t let the cold in."',
+            approach: "Take the cold beside him",
+          },
         ],
         warm: [
-          '"Stay until the cold drives you in," he says. "Not before."',
-          "He lights a cigarette against the dark and, for once, offers the rail beside him without a word.",
-          '"Past curfew," he notes. "I won\'t report you. Sit down."',
+          {
+            line: '"Stay until the cold drives you in," he says. "Not before."',
+            approach: "Take the offered rail",
+          },
+          {
+            line: "He lights a cigarette against the dark and, for once, offers the rail beside him without a word.",
+            approach: "Take the offered rail",
+          },
+          {
+            line: '"Past curfew," he notes. "I won\'t report you. Sit down."',
+            approach: "Take the offered rail",
+          },
         ],
-      },
-    },
-  ],
-  approachWhen: [
-    {
-      when: { time: "evening" },
-      approach: {
-        new: ["Step onto the dark balcony", "Meet him at the rail"],
-        known: ["Take the cold beside him"],
-        warm: ["Take the offered rail"],
       },
     },
   ],
@@ -497,7 +519,7 @@ export default {
     ],
     close: [
       "The **{house}** dispatch goes to Tohma. **{name}** goes to {user}.",
-      "\"You needn't shout. I hear you before anyone.\" **{name}** is already at {user}'s side.",
+      "\"Don't need to shout. I hear you before anyone.\" **{name}** is already at {user}'s side.",
       "**{name}** drops the court voice the second it's {user} saying his name.",
     ],
     bound: [

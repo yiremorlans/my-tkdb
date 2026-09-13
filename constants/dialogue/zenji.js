@@ -259,34 +259,50 @@ export default {
       "The lanterns burn down and neither of you notices for a very long time.",
     ],
   },
+  // Evening block: dialogue and approach paired per beat
+  // (docs/dialogue-approach-pairing.md) instead of two separately-drawn lists.
   dialogueWhen: [
     {
       when: { time: "evening" },
       dialogue: {
         new: [
-          "He's watching the last light go out of the sky and doesn't seem to mind that it's leaving.",
-          "\"Dusk becomes a genius of the pen, don't you think? Sit, the light's nearly gone, and it's worth watching it go.\"",
-          "The lanterns have come on around the step. He tips his hat and makes room on the lit side.",
-          '"A stranger at dusk, how fortunate," he says. "Sit, and let the evening happen to us."',
+          {
+            line: "He's watching the last light go out of the sky and doesn't seem to mind that it's leaving.",
+            approach: "Watch the last light with him",
+          },
+          {
+            line: "\"Dusk becomes a genius of the pen, don't you think? Sit, the light's nearly gone, and it's worth watching it go.\"",
+            approach: "Watch the last light with him",
+          },
+          {
+            line: "The lanterns have come on around the step. He tips his hat and makes room on the lit side.",
+            approach: "Sit under the lanterns",
+          },
+          {
+            line: '"A stranger at dusk, how fortunate," he says. "Sit, and let the evening happen to us."',
+            approach: "Sit under the lanterns",
+          },
         ],
         known: [
-          '"The wanderer, and at the good hour too. The evening was getting lonely."',
-          "He's saved you the warm end of the step, where the lantern reaches.",
-          '"Sit, the step is warm," he says, "and the evening is doing something worth watching."',
+          {
+            line: '"The wanderer, and at the good hour too. The evening was getting lonely."',
+            approach: "Take the warm end of the step",
+          },
+          {
+            line: "He's saved you the warm end of the step, where the lantern reaches.",
+            approach: "Take the warm end of the step",
+          },
+          {
+            line: '"Sit, the step is warm," he says, "and the evening is doing something worth watching."',
+            approach: "Take the warm end of the step",
+          },
         ],
         warm: [
-          '"You arrive like the evening does: expected, and still a gift."',
+          {
+            line: '"You arrive like the evening does: expected, and still a gift."',
+            approach: "Let the evening happen",
+          },
         ],
-      },
-    },
-  ],
-  approachWhen: [
-    {
-      when: { time: "evening" },
-      approach: {
-        new: ["Sit under the lanterns", "Watch the last light with him"],
-        known: ["Take the warm end of the step"],
-        warm: ["Let the evening happen"],
       },
     },
   ],

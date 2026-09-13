@@ -1273,7 +1273,8 @@ export function getRandomDialogueLine(
   ) {
     const daytime =
       content.daytimeDialogue[tier] || content.daytimeDialogue.new;
-    return Array.isArray(daytime) ? pickRandom(daytime) : daytime;
+    const picked = Array.isArray(daytime) ? pickRandom(daytime) : daytime;
+    return normalizeBeat(picked).line;
   }
 
   // Base pool, plus every conditional block whose `when` matches this scene —
@@ -1288,7 +1289,9 @@ export function getRandomDialogueLine(
   );
 
   if (lines.length === 0) return "...";
-  return pickRandom(lines);
+  // A migrated tier's entries are { line, approach } pairs (see
+  // getRandomDialogueBeat) — this caller only ever wants the line.
+  return normalizeBeat(pickRandom(lines)).line;
 }
 
 // The greeting rendered onto the encounter image. Driven only by the character's
@@ -1300,6 +1303,26 @@ export function getTemperamentGreeting(character, tier) {
   return pickRandom(lines);
 }
 
+// A tier entry is either a bare string (legacy — its approach label is drawn
+// independently, from the character's separate `approach` pool) or a
+// `{ line, approach }` pair (see getRandomDialogueBeat) where `approach` is
+// one label or an array of interchangeable labels for that same beat.
+// Normalizes to { line, approachOptions } — approachOptions is null for a
+// legacy string entry, never an empty array.
+function normalizeBeat(entry) {
+  if (typeof entry === "string") return { line: entry, approachOptions: null };
+  if (entry && typeof entry === "object" && typeof entry.line === "string") {
+    const { approach } = entry;
+    const approachOptions = Array.isArray(approach)
+      ? approach
+      : approach
+        ? [approach]
+        : null;
+    return { line: entry.line, approachOptions };
+  }
+  return { line: "...", approachOptions: null };
+}
+
 // The label on the single button that turns the /roam narration into an actual
 // encounter — the "Step forward" beat. Tiered like the dialogue so the
 // invitation matches the scene the narration just set. `approachWhen` (per
@@ -1307,6 +1330,11 @@ export function getTemperamentGreeting(character, tier) {
 // way `dialogueWhen` adds narration; the pmOnly daytime swap is still a hard
 // replacement, gated on the evening cutoff. `ctx` is the same object
 // getRandomDialogueLine takes.
+//
+// This is the *independent* pick — used directly for a tier a character
+// hasn't paired yet, and as getRandomDialogueBeat's fallback when the beat it
+// drew has no approach of its own. Once every entry in a tier is a
+// { line, approach } pair, nothing calls this for that tier anymore.
 export function getRandomApproachLabel(
   character,
   tier,
@@ -1336,6 +1364,50 @@ export function getRandomApproachLabel(
 
   if (labels.length === 0) return pickRandom(APPROACH_LABEL_FALLBACK);
   return pickRandom(labels);
+}
+
+// Draws the narration line and its approach-button label as one unit, so the
+// /roam button always answers the scene the player just read (see
+// docs/dialogue-approach-pairing.md) rather than the two being pulled from
+// separate pools at random. A tier authored as { line, approach } pairs keeps
+// its label tied to the line every time; a tier still written as two flat
+// arrays (not yet migrated) draws the line here and falls through to
+// getRandomApproachLabel for the button, exactly like before this existed —
+// so nothing breaks for a character mid-migration.
+export function getRandomDialogueBeat(character, tier, variant = null, ctx = {}) {
+  const content = DIALOGUE[character.id];
+  if (!content) {
+    return { line: "...", approach: pickRandom(APPROACH_LABEL_FALLBACK) };
+  }
+
+  let entries;
+  if (
+    character.pmOnly &&
+    content.daytimeDialogue &&
+    timeBucket(ctx.now) === "day"
+  ) {
+    const daytime = content.daytimeDialogue[tier] || content.daytimeDialogue.new;
+    entries = Array.isArray(daytime) ? daytime : [daytime];
+  } else {
+    entries = resolvePoolTier(content.dialogue, tier, variant);
+    entries.push(
+      ...collectConditional(content.dialogueWhen, "dialogue", tier, variant, ctx),
+    );
+    entries.push(
+      ...collectConditional(SHARED_DIALOGUE_WHEN, "dialogue", tier, variant, ctx),
+    );
+  }
+
+  if (entries.length === 0) {
+    return { line: "...", approach: pickRandom(APPROACH_LABEL_FALLBACK) };
+  }
+
+  const { line, approachOptions } = normalizeBeat(pickRandom(entries));
+  const approach = approachOptions
+    ? pickRandom(approachOptions)
+    : getRandomApproachLabel(character, tier, variant, ctx);
+
+  return { line, approach };
 }
 
 // `ctx` (optional, same shape as getRandomDialogueLine's) lets a character's
