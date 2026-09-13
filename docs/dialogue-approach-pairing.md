@@ -11,8 +11,12 @@ already expanded to the tier's target of 27 while `dialogue.spark` stayed at
 conditional block (haku, jin, kaito, lucas, subaru, tohma, zenji — all a
 single "evening" block) are migrated too: each block's `new`/`known`/`warm`
 entries are now `{ line, approach }` pairs and `approachWhen` is deleted;
-kaito's and subaru's extra `spark`/`close` evening lines had no
-`approachWhen` counterpart to pair with, so those two tiers are left as bare
+`taiga.js` is migrated for `new`/`known`/`warm` (`spark`/`close`/`bound`
+still legacy, same reason as alan/jo: `dialogue.spark`/`close`/`bound` are
+still 5 lines each against much larger targets, not padded to match
+`approach`'s 4-line legacy pools there). kaito's and subaru's extra
+`spark`/`close` evening lines had no `approachWhen` counterpart to pair with,
+so those two tiers are left as bare
 strings by design (see §4's "don't force a pairing that isn't there"), same
 as benkei's `spark`. The other 18 characters have no `dialogueWhen` at all.
 Base `dialogue`/`approach` pools for everyone but benkei, alan, and jo are
@@ -151,10 +155,10 @@ updates in place rather than creating a new page).
 
 ## 6. Rolling out to the rest of the roster
 
-Base `dialogue`/`approach` pools unmigrated (23 of 26 — every character
-except benkei, alan, and jo): jin, kaito, lucas, tohma, leo, shohei, subaru,
-zenji, haku, elias, mio, shion, jiro, yuri, ren, haru, towa, edward,
-rui, lyca, taiga, ritsu, romeo.
+Base `dialogue`/`approach` pools unmigrated (22 of 26 — every character
+except benkei, alan, jo, and taiga): jin, kaito, lucas, tohma, leo, shohei,
+subaru, zenji, haku, elias, mio, shion, jiro, yuri, ren, haru, towa, edward,
+rui, lyca, ritsu, romeo.
 
 Conditional `dialogueWhen`/`approachWhen` blocks: all 7 that have one are
 migrated (§ Status). The other 19 have no conditional block at all — nothing

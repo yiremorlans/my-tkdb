@@ -48,38 +48,38 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: I have a question. I wrote it down first so I get it right",
-        "You give me {favResponse} every time. Even when I got the words wrong. Even the time I said the bad thing about the moth-eaten Casanova in front of the blond gigolo.\n\nPeople do a thing when I get words wrong. They go slow. Like this: they... talk... like... that. And they smile more. It's supposed to be nice and it smells like sorry.\n\nYou just carry on normal. You've never once gone slow at me.",
+        "**{firstName}**: Your scents gone squeezy. Somethings wrong",
+        "You always give me {favResponse}. Every time, don't matter what mood I catch you in. Stopped noticing it a while back, it's just how you smell to me now.\n\nToday you still gave me {favResponse}. Same words. But underneath it your scent went all squeezy, like the time you cried and never told me why.\n\nNobody else can smell that on you. I can. That's the one thing I'm really good at, so I'm not gonna pretend I didn't.",
       ],
       choice: {
-        prompt: "Why don't you go slow? Everyone goes slow.",
+        prompt: "So what happened. You don't gotta tell me the whole thing",
         options: [
           {
             key: "kind",
-            label: "Say you don't need to",
+            label: "Say you're fine, just tired",
             style: 3,
             close:
-              "*There's a long pause on the voice note.*\n\n> ...Say that again into the thingy so I can keep it.\n\n*You do. He plays it back eleven times over the next week. He tells you that, too, because it doesn't occur to him not to.*",
+              "...Okay. I'll believe that. For now\n\nBut your scent doesn't lie to me even when you do. So if it goes squeezy again, I'm asking again.",
           },
           {
             key: "playful",
-            label: "Go very slow at him",
+            label: "Ask if he's a detective now",
             style: 1,
             close:
-              "> Stop it. STOP IT.\n\n*He is laughing, which is rare and extremely loud.*\n\n> That's the worst. That's the actual worst. Do it again.",
+              "No. Detectives use their eyes. I use my nose. Mine's better\n\nThat's not a so-shul skill either, before you say it. It's just how noses work.",
           },
           {
             key: "bold",
-            label: "Say his words aren't wrong",
+            label: "Tell him you need a hug",
             style: 4,
             close:
-              "> They are though. I know they are. I can hear it after.\n\n> ...But you never go slow. So maybe they're wrong and it's fine. I hadn't thought about wrong and fine at the same time before. That's new.",
+              "I get that one\n\nI'm coming over. Don't argue, I'm already putting my shoes on\n\nI can stay till you feel better",
           },
         ],
       },
       keepsake: {
-        emoji: "🗒️",
-        line: "A question written down first so he'd get it right.",
+        emoji: "👃",
+        line: "The day your scent went squeezy and he noticed before you said a word.",
       },
     },
 
@@ -232,25 +232,154 @@ export default {
   },
   dialogue: {
     new: [
-      "He keeps his distance, observing you carefully. There's wariness in his posture, but curiosity flickers in his eyes.",
-      "He circles wide around you, watching, deciding. Nothing about it is hostile.",
-      "He repeats a word you used, quietly, testing the shape of it.",
-      'The phone in his pocket buzzes and he flinches hard. "This phone thingy keeps making noises and making me jump... Why do I gotta carry it everywhere?"',
-      "He doesn't come closer, but he doesn't leave either. That's the whole conversation.",
+      {
+        line: "He keeps his distance, observing you carefully. There's wariness in his posture, but curiosity flickers in his eyes.",
+        approach: "Stand still and let him look",
+      },
+      {
+        line: "He circles wide around you, watching, deciding. Nothing about it is hostile.",
+        approach: "Wait for him to decide",
+      },
+      {
+        line: "He repeats a word you used, quietly, testing the shape of it.",
+        approach: "Speak gently",
+      },
+      {
+        line: 'The phone in his pocket buzzes and he flinches hard. "This phone thingy keeps making noises and making me jump... Why do I gotta carry it everywhere?"',
+        approach: "Ask what spooked him",
+      },
+      {
+        line: "He doesn't come closer, but he doesn't leave either. That's the whole conversation.",
+        approach: "Wave at him",
+      },
     ],
     known: [
-      "He's stopped circling. He stands where he can see you, and stays.",
-      "He's learned your name, and repeats it once, quietly, getting it right.",
-      "\"When I find Neros, I wanna prove I've been getting along with humans. Then he'll definitely let me live with him.\"",
-      "He watches what you do with your hands, and copies it half an hour later.",
-      "The wariness has become attention, which is an entirely different thing.",
+      {
+        line: "He's stopped circling. He stands where he can see you, and stays.",
+        approach: "Face towards him",
+      },
+      {
+        line: "He's learned your name, and repeats it once, quietly, getting it right.",
+        approach: "Respond to him",
+      },
+      {
+        line: "\"When I find Neros, I wanna prove I've been getting along with humans. Then he'll definitely let me live with him.\"",
+        approach: "Ask him about Neros",
+      },
+      {
+        line: "He watches what you do with your hands, and copies it half an hour later.",
+        approach: "Show him with your hands",
+      },
+      {
+        line: "The wariness has become attention, which is an entirely different thing.",
+        approach: "Hold his attention",
+      },
+      {
+        line: "He asks you to say something again, then repeats it back until he's got it exactly right.",
+        approach: "Say it again for him",
+      },
+      {
+        line: "\"You don't smell like a stranger anymore,\" he says, like it's a fact he's only just confirmed.",
+        approach: "Ask what changed",
+      },
+      {
+        line: "He's stopped standing at the edge of the group. Now he stands in it, closer to you than anyone.",
+        approach: "Stand closer",
+      },
+      {
+        line: '"The blond gigolo says I\'m getting better at the so-shul stuff. Because of you, he said." He looks almost pleased about it.',
+        approach: "Tell him he's doing fine",
+      },
+      {
+        line: "He falls into step beside you without a word, like it stopped needing an invitation somewhere along the way.",
+        approach: "Let him walk with you",
+      },
+      {
+        line: '"Suba took me to lunch at Sho\'s food truck. I ate too fast and he laughed at me, but I still had a good time."',
+        approach: "Ask what he had for lunch",
+      },
+      {
+        line: "He sniffs the air when you arrive before he even turns around, and relaxes on the spot.",
+        approach: "Let him catch your scent",
+      },
+      {
+        line: "\"You could've left me at Ultio when you found me, but you didn't.\" He still hasn't figured out why.",
+        approach: "Say you wanted to be friends",
+      },
     ],
     warm: [
-      "The guarded distance closes when he recognizes you. A genuine, warm smile breaks through his usual reserve.",
-      "He's practiced something to say to you. It comes out slightly formal and completely sincere.",
-      "He falls in at your side without being asked, and stays exactly a step behind.",
-      "\"Your scent's all squeezy today. You're sad,\" he says. He's rarely wrong about that.",
-      "\"I'm gonna go practice swimming at Haru's place. Can you do other stuff besides doggy paddle?\"",
+      {
+        line: "The guarded distance closes when he recognizes you. A genuine, warm smile breaks through his usual reserve.",
+        approach: "Smile back",
+      },
+      {
+        line: "He's practiced something to say to you. It comes out slightly formal and completely sincere.",
+        approach: "Ask about the new word",
+      },
+      {
+        line: "He falls in at your side without being asked, and stays exactly a step behind.",
+        approach: "Match his pace",
+      },
+      {
+        line: "\"Your scent's all squeezy today. You're sad,\" he says. He's rarely wrong about that.",
+        approach: "Tell him what's wrong",
+      },
+      {
+        line: "\"I'm gonna go practice swimming at Haru's place. Can you do other stuff besides doggy paddle?\"",
+        approach: "Ask him to teach you",
+      },
+      {
+        line: 'He\'s stopped flinching at his own phone. Mostly. "Suba showed me how to turn the noise off."',
+        approach: "Ask how he'll know you texted",
+      },
+      {
+        line: '"That blond gigolo tried to sit between us at lunch. I moved. He can sit somewhere else."',
+        approach: "Ask if he's jealous",
+      },
+      {
+        line: "He offers you half of whatever he's eating before you've asked, like it was always the plan.",
+        approach: "Take the half he's offering",
+      },
+      {
+        line: "\"I read the whole chapter myself last night. Took a while, but I got it.\" He says it like it's nothing, but he's watching for your reaction.",
+        approach: "Tell him that's great",
+      },
+      {
+        line: "He growls, quiet and short, at someone who got too close to you in the hall. Then he looks embarrassed about it.",
+        approach: "Tell him it's okay",
+      },
+      {
+        line: '"You\'re not scared of me. Everyone else still is, a little. I noticed a while back."',
+        approach: "Say you never were",
+      },
+      {
+        line: "He's started saving you a seat without being asked, and glares at anyone who tries to take it.",
+        approach: "Take the seat he saved",
+      },
+      {
+        line: "\"I draw what happened every day so I don't forget it. You're in most of the pages now.\"",
+        approach: "Ask to see the pages",
+      },
+      {
+        line: "He sniffs the air the second you walk in, and his whole posture eases before he even says hello.",
+        approach: "Say hello first",
+      },
+      {
+        line: "\"I asked Suba what 'sarcasm' means. He said you use it a lot. I still don't always catch it.\"",
+        approach: "Explain the joke",
+      },
+      {
+        line: "He tugs your sleeve instead of saying your name now, when he wants your attention.",
+        approach: "Give him your attention",
+      },
+      {
+        line: "\"I'm getting better at the human stuff. The blond gigolo says so, and he'd tell me if I wasn't.\"",
+        approach: "Tell him he's right",
+      },
+      {
+        line: "He waits by the gate most days now, like it stopped being a coincidence a while ago.",
+        approach: "Ask if he's waited long",
+      },
     ],
     spark: [
       "He presses his face into your shoulder and breathes in, and doesn't apologize.",
@@ -319,24 +448,7 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Stand still and let him look",
-      "Hold out your hand",
-      "Speak gently",
-      "Wait for him to decide",
-    ],
-    known: [
-      "Let him ask",
-      "Stand where he can see",
-      "Say your name again",
-      "Come back twice",
-    ],
-    warm: [
-      "Walk with him",
-      "Ask about the new word",
-      "Match his pace",
-      "Tell him what's wrong",
-    ],
+    // new/known/warm are migrated to { line, approach } beats above.
     spark: [
       "Say yes to the other close",
       "Stay still",
