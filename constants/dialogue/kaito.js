@@ -20,32 +20,31 @@ export default {
       beats: [
         "*Deleted message*\n\n*Deleted message*\n\n*Deleted message*",
         "**{firstName}**: Hey, Honor Roll!!\n\nokay, so, guess what, Luca's busy after class. How about we hit up the diner? It's been ages, right?",
-        "Not a group thing, though. Just us. No Luca showing up halfway through to make it a whole thing. 😭\n\nYou've turned up {timesMet} times now and I still hadn't just asked. Could've, ages ago, but I kept blowing money on dumber stuff instead. 'God, why am I such a moron.' Yeah. Story of my life. It's happening now though ",
+        "Not a group thing, though. Just us. No Luca showing up halfway through to make it a whole thing. 😭\n\nYou've joined us {timesMet} times now and it's always been the three of us. Never just you and me. Kind of wanted to see what that's like, for once.",
       ],
       choice: {
-        prompt:
-          "...Am I being annoying?? You can say no! Seriously! *Please don't say no.*",
+        prompt: "Okay. Sent it. Can't unsend it now. *Please don't say no.*",
         options: [
           {
             key: "kind",
-            label: "Say yes before he spirals",
+            label: "Say yes right away",
             style: 3,
             close:
-              "WAIT REALLY??\n\n*Then, immediately:* cool. cool cool cool. that's... yeah. cool.\n\n*The next message is a photo of him grinning so hard his eyes have shut, and then a fourth message that just says: ignore that one.*",
+              "WAIT REALLY??\n\nOkay, cool, cool.\n\n*He sends the diner's hours. Then the address, even though you both already know it. Then just: see you there.*",
           },
           {
             key: "playful",
             label: "Ask if it's a date",
             style: 1,
             close:
-              "IT'S LUNCH. It's just lunch!\n\n...Does it count if I've been staring at the diner's menu for two days deciding what to order in front of you? Asking for a friend. The friend is me 😭",
+              "IT'S— okay, um. If you want to call it a date, I'm not gonna be the one to argue. I just wasn't going to call it one first, I don't think my heart could take it 😭",
           },
           {
             key: "bold",
             label: "Ask why not with Luca",
             style: 4,
             close:
-              "*There is a very long gap.*\n\n...because when it's the three of us you end up talking to him the whole time, and you're not wrong to, everyone does, I just wanted one lunch where I'm the whole conversation instead of the guy standing next to it. OKAY BYE.",
+              "*A long pause.*\n\n...because I wanted just one lunch where you're not looking past me at him. That's it. That's the whole answer.\n\n*Then, immediately:* ...okay that was a lot. Anyway! Ramen's on me. Get the good one, not the one Luca always orders, his taste is genuinely concerning.",
           },
         ],
       },

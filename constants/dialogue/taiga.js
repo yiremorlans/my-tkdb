@@ -234,46 +234,154 @@ export default {
   },
   dialogue: {
     new: [
-      'He eyes you with a challenging smirk, cards deftly shuffled in his hands. "You lost, kitten?"',
-      "The cards keep moving. So does the grin. Neither is friendly, exactly.",
-      '"Huh. You\'ve got guts walking in here. Stupid ones, but guts."',
-      "He kicks a chair out, not toward you, just near you. Interpret it however you like.",
-      '"Who the fuck are you again?" He squints. "...Whatever. Sit down."',
+      {
+        line: 'He eyes you with a challenging smirk, cards deftly shuffled in his hands. "You lost, kitten?"',
+        approach: "Smirk right back",
+      },
+      {
+        line: "The cards keep moving. So does the grin. Neither is friendly, exactly.",
+        approach: "Stand your ground",
+      },
+      {
+        line: '"Huh. You\'ve got guts walking in here. Stupid ones, but guts."',
+        approach: "Own having guts",
+      },
+      {
+        line: "He kicks a chair out, not toward you, just near you. Interpret it however you like.",
+        approach: "Take a seat",
+      },
+      {
+        line: '"Who the fuck are you again?" He squints. "...Whatever. Sit down."',
+        approach: "Sit down anyway",
+      },
     ],
     known: [
-      '"Kitten" has stuck. He\'s stopped bothering to make it sound like an insult.',
-      "He deals you in without asking, and doesn't explain the rules. Figure it out.",
-      "He pulls the chair out with his hand this time, not his boot.",
-      '"Do I know you? ...Right. Kitten. Course I do." The stigma ate a few days again.',
-      "The smirk stays. The edge on it has gone somewhere else.",
-      "Some days he needs half a second to place you. Never longer than that anymore.",
-      '"You again, kitten," he says, like the word\'s just a fact now, not a jab.',
-      "He starts dealing you a hand before you've even sat down.",
-      "The mooks have stopped asking who you are. Taiga made sure of that.",
-      '"Sit," he says. "You standing there\'s bad for my nerves."',
-      "He starts saving you a bite of whatever he's eating, no matter how questionable it looks.",
-      "He runs a side bet on when you'll show up. He's never once lost it.",
-      '"Lulu\'s asking about you," he says. "Told him to mind his own. Don\'t make me start."',
+      {
+        line: '"Kitten" has stuck. He\'s stopped bothering to make it sound like an insult.',
+        approach: "Own the nickname",
+      },
+      {
+        line: "He deals you in without asking, and doesn't explain the rules. Figure it out.",
+        approach: "Play the hand out",
+      },
+      {
+        line: "He pulls the chair out with his hand this time, not his boot.",
+        approach: "Take the offered chair",
+      },
+      {
+        line: '"Do I know you? ...Right. Kitten. Course I do."',
+        approach: "Remind him your name",
+      },
+      {
+        line: "The smirk stays. The edge on it has gone somewhere else.",
+        approach: "Read past the smirk",
+      },
+      {
+        line: "Some days he needs half a second to place you. Never longer than that anymore.",
+        approach: "Give him the half second",
+      },
+      {
+        line: '"You again, kitten," he says, like the word\'s just a fact now, not a jab.',
+        approach: "Answer to kitten now",
+      },
+      {
+        line: "He starts dealing you a hand before you've even sat down.",
+        approach: "Ask for a new hand",
+      },
+      {
+        line: "The mooks have stopped asking who you are. Taiga made sure of that.",
+        approach: "Let him vouch for you",
+      },
+      {
+        line: '"Sit," he says. "You standing there\'s bad for my nerves."',
+        approach: "Sit before he says it twice",
+      },
+      {
+        line: "He starts saving you a bite of whatever he's eating, no matter how questionable it looks.",
+        approach: "Try the questionable bite",
+      },
+      {
+        line: "He runs a side bet on when you'll show up. He's never once lost it.",
+        approach: "Show up on time",
+      },
+      {
+        line: '"Lulu\'s asking about you," he says. "Told him to mind his own. Don\'t make me start."',
+        approach: "Let him handle Lulu",
+      },
     ],
     warm: [
-      "His aggressive posture softens when he sees you're really there. He pulls out a seat beside him without a word.",
-      "He calls you an idiot. He deals you in anyway. Same thing, from him.",
-      '"Took your damn time," he says, having very obviously held the seat.',
-      'He\'s eating something charred off a skewer. "You wanna know what kind of meat this is? Anomaly meat, what else? ...Want some?"',
-      "The whole table gets quieter when he's talking to you. He hasn't noticed.",
-      "He forgets more than he lets on. He never forgets to look for you first.",
-      '"Eat something," he says, shoving half his plate over. Not a suggestion.',
-      "He starts every game with your seat held, whether you're there yet or not.",
-      "Lulu tried to move you to a different table once. Taiga vetoed it before he finished the sentence.",
-      "\"You're late,\" he says, not looking up. He'd clearly been counting the minutes.",
-      "He tells the mooks to knock it off before they've even started needling you.",
-      "He wins a hand and slides half the pot your way like it's nothing.",
-      '"Kitten\'s hungry," he announces to the table, already ordering for two.',
-      "He forgets the day of the week more than once a month. He never forgets what you drink.",
-      "He's put that gun in every mook's face at least once. Never yours, not even as a joke.",
-      '"Don\'t wander off," he says. "Not an order. Just... don\'t."',
-      "He blows an ugly amount of chips buying out every other seat at the table so nobody sits near you.",
-      "He loses a hand on purpose so the night runs longer. He'd never admit that's why.",
+      {
+        line: "His aggressive posture softens when he sees you're really there. He pulls out a seat beside him without a word.",
+        approach: "Take the held seat",
+      },
+      {
+        line: "He calls you an idiot. He deals you in anyway. Same thing, from him.",
+        approach: "Call him a dumbass back",
+      },
+      {
+        line: '"Took your damn time," he says, having very obviously held the seat.',
+        approach: "Ignore the complaint",
+      },
+      {
+        line: 'He\'s eating something charred off a skewer. "You wanna know what kind of meat this is? Anomaly meat, what else? ...Want some?"',
+        approach: "Try the anomaly meat",
+      },
+      {
+        line: "The whole table gets quieter when he's talking to you. He hasn't noticed.",
+        approach: "Let the room go quiet",
+      },
+      {
+        line: "He forgets more than he lets on. He never forgets to look for you first.",
+        approach: "Let him find you first",
+      },
+      {
+        line: '"Eat something," he says, shoving half his plate over. Not a suggestion.',
+        approach: "Eat what he gives you",
+      },
+      {
+        line: "He starts every game with your seat held, whether you're there yet or not.",
+        approach: "Keep him waiting",
+      },
+      {
+        line: "Lulu tried to move you to a different table once. Taiga vetoed it before he finished the sentence.",
+        approach: "Stay at his table",
+      },
+      {
+        line: "\"You're late,\" he says, not looking up. He'd clearly been counting the minutes.",
+        approach: "Shrug off being late",
+      },
+      {
+        line: "He tells the mooks to knock it off before they've even started needling you.",
+        approach: "Let him shut down the mooks",
+      },
+      {
+        line: "He wins a hand and slides half the pot your way like it's nothing.",
+        approach: "Take the pot he slides",
+      },
+      {
+        line: '"Kitten\'s hungry," he announces to the table, already ordering for two.',
+        approach: "Let him order for you",
+      },
+      {
+        line: "He forgets the day of the week more than once a month. He never forgets what you drink.",
+        approach: "Take the drink",
+      },
+      {
+        line: "He's put that gun in every mook's face at least once. Not yours anymore, not even as a joke.",
+        approach: "Don't flinch at the gun",
+      },
+      {
+        line: '"Don\'t wander off," he says. "Not an order. Just... don\'t."',
+        approach: "Don't wander off",
+      },
+      {
+        line: "He blows an ugly amount of chips buying out every other seat at the table so nobody sits near you.",
+        approach: "Let him clear the seats",
+      },
+      {
+        line: "He loses a hand on purpose so the night runs longer. He'd never admit that's why.",
+        approach: "Let the night run long",
+      },
     ],
     spark: [
       "He hooks a finger in your collar to pull you down to his level, grinning.",
@@ -363,24 +471,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Take the kicked-out chair",
-      "Smirk right back",
-      "Ask to be dealt in",
-      "Don't flinch",
-    ],
-    known: [
-      "Sit before he says it twice",
-      "Get dealt in",
-      "Take the free advice",
-      "Watch the hand",
-    ],
-    warm: [
-      "Take the held seat",
-      "Call him a dumbass back",
-      "Take the drink",
-      "Sit down and play",
-    ],
     spark: [
       "Get closer",
       "Sit on his side",

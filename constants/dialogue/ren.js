@@ -44,32 +44,32 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: so Haru mentioned my diner shift tonight",
-        "only I didn't have one. I was still out on the critter rotation with my phone off, which you knew, because I told you that this morning.\n\nturns out he came by looking for me when I went quiet, and you told him I was already at the diner. He's got this thing now where if I go quiet too long he decides something's wrong and starts checking every room in the house. He's tracked me down before. Actual GPS tracker. I'm not exaggerating for effect.\n\nso you lying straight to his face for me is. I don't know what that is. thanks, I guess.\n\nyou give me {favResponse} pretty much every time, by the way. I clocked that a while ago. noticing things is basically my whole skill tree.\n\nI keep waiting for the part where you want something back. People don't just do that. Not for free, not for me. Even Haru's got a reason, he wants the tour numbers up. What's yours.",
+        "**{firstName}**: So Haru mentioned my diner shift tonight",
+        "Only I didn't have one. I was ducking the Jabberwock rounds with my phone dead, which you knew, because I told you that this morning.\n\nTurns out he came by looking for me when I went quiet, and you told him I was already at the diner. He's got this thing where if I go quiet too long he decides something's wrong and starts checking every room in the house. He's tracked me down before. Actual GPS tracker. I'm not exaggerating for effect.\n\nso you lying straight to his face for me. that's... something. thanks, I guess.\n\nYou come back with {favResponse} every time. I clocked that about you a while back, actually, since noticing things is basically my whole skill tree.\n\nI keep waiting for the part where you want something back.",
       ],
       choice: {
-        prompt: "so what is it. might as well say it now.",
+        prompt: "So what is it? might as well say it now.",
         options: [
           {
             key: "kind",
             label: "Say you don't want anything",
             style: 3,
             close:
-              "yeah, that's usually what people say right before they want something.\n\n...I believe you, though. Which is new. I don't know what to do with that so I'm just going to say thanks again and hope that covers it.",
+              "Yeah, that's usually what people say right before they want something.\n\n...I believe you, though. Which is new. I don't know what to do with that so I'm just going to say thanks again and hope that covers it.",
           },
           {
             key: "playful",
             label: "Threaten to collect later",
             style: 1,
             close:
-              "there it is. knew it.\n\nfine. name it whenever. Within reason. I'm not fighting Haru for you, I've seen what he does to people who skip the tour signup.",
+              "There it is. knew it.\n\nFine. name it whenever. Within reason. I'm not fighting Haru for you, I've seen what he does to people who skip the tour signup.",
           },
           {
             key: "bold",
             label: "Ask if he'd rather get caught",
             style: 4,
             close:
-              "no.\n\n*A pause, then a screenshot: the fake location he'd told her to give Haru, saved for next time.*\n\nkeep that on standby. don't ask why I already had it ready. I don't want to talk about how prepared I was for this.",
+              "No.\n\n[screenshot]\n\nthat's the fake location, saved for next time he comes looking again. Don't ask why I already had it ready.",
           },
         ],
       },
@@ -81,40 +81,39 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: diner. After close. I'll leave the back door",
-        "*The place is dark and the chairs are up and he's behind the counter making something that isn't on the menu, with a paused game glowing on the little screen wedged behind the milkshake machine and a second controller charging next to the till for reasons he hasn't explained yet.*\n\n> I do this every Thursday. Have done since I got here. It's the only two hours a week nobody wants anything off me.",
-        "> I've never told anyone about it. Not because it's a secret, just because if people knew it'd become a thing, and then it'd stop being the two hours.\n\n*He slides the plate over without pausing the game.*\n\n> You're in it now. Congratulations. You've halved my only two hours and I'm somehow fine about it, which I'd like a doctor to look at.",
+        "**{firstName}**: You doing anything tonight?",
+        "Not the diner. My room, for once.\n\n...that came out wrong. To play games. Diner's not exactly built for a second player anyway. I've got an actual couch, a second controller, and wifi that won't die on you\n\nKnown you since {sinceMet}, and you've finished basically every game I've put you onto since. Nobody else in this house gets why I like this stuff. Never really tried explaining it to anyone before",
+        "Been meaning to ask you over for actual ages. Whatever, it's cool if you've got plans",
       ],
       choice: {
-        prompt:
-          "Sit down. Controller's already charged. You don't have to say anything.",
+        prompt: "So. that's the ask. yes or no, I'm not typing it twice",
         options: [
           {
             key: "kind",
-            label: "Say you'll keep it quiet",
+            label: "Say you'd love to come over",
             style: 3,
             close:
-              "> ...yeah. Cheers.\n\n*He doesn't say anything else about it. But he unplugs the second controller and just leaves it sitting in front of you, which is the largest gesture he has ever made.*",
+              "Yeah?\n\n...good.\n\nDoor's unlocked. Don't take forever, I already picked the game.",
           },
           {
             key: "playful",
-            label: "Ask how long he's been losing",
+            label: "Tease him for finally asking",
             style: 1,
             close:
-              "> Since round one. I've been losing on purpose so you'd stick around, which is humiliating to say out loud.\n\n> ...I'm still not letting you win the next one, though. There's limits.",
+              "Yeah, laugh it up.\n\nfor the record I had at least three better versions of this text and sent the worst one anyway. bring snacks. I've got a system, don't mess with it.",
           },
           {
             key: "bold",
-            label: "Sit on his side of the counter",
+            label: "Ask if this counts as a date",
             style: 4,
             close:
-              "*He looks at the space you've taken for a second, then just shoves the controller into your hands instead of arguing about it.*\n\n*Somewhere in the second match you fall asleep against his shoulder, and he keeps playing one-handed for two hours rather than wake you up to switch you out.*\n\n*He never mentions it. He starts leaving a cushion on that side of the counter, though.*",
+              "...No.\n\n*A long gap.*\n\nOkay, I wouldn't correct you if you called it that. Doesn't mean I'm saying it first. Just show up.",
           },
         ],
       },
       keepsake: {
         emoji: "🎮",
-        line: "A second controller that was somehow already charged.",
+        line: "A standing invitation to his room that took him embarrassingly long to send.",
       },
     },
 
@@ -228,46 +227,220 @@ export default {
   },
   dialogue: {
     new: [
-      'He\'s scrolling through his phone, barely acknowledging you at first. "Oh. Hey."',
-      "One earbud comes out. That's the entire greeting, and it's more than most people get.",
-      "He's found the one spot in the whole building where nobody looks. You found him anyway.",
-      '"...You need something?" He sounds like he hopes the answer is no.',
-      '"Great, shift change. I was gonna head out... What? Do I really need to be here for that?"',
+      {
+        line: 'He\'s scrolling through his phone, barely acknowledging you at first. "Oh. Hey."',
+        approach: "Say hey back",
+      },
+      {
+        line: "One earbud comes out. That's the entire greeting, and it's more than most people get.",
+        approach: "Take it as a hello",
+      },
+      {
+        line: "He's found the one spot in the whole building where nobody looks. You found him anyway.",
+        approach: "Sit down uninvited",
+      },
+      {
+        line: '"...You need something?" He sounds like he hopes the answer is no.',
+        approach: "Tell him it's nothing",
+      },
+      {
+        line: '"Great, shift change. I was gonna head out... What? Do I really need to be here for that?"',
+        approach: "Tell him he can go",
+      },
     ],
     known: [
-      "Both earbuds come out. That's a significant escalation.",
-      "\"Oh, it's you,\" he says, and doesn't go back to the phone right away.",
-      '"Oh, Senpai... could you open the link I sent you? No, you don\'t have to sign up or anything. Thanks."',
-      "He asks if you've seen the thing. He's asking because he wants to talk about it.",
-      "He remembers what you said about the ending. He'd been thinking about it.",
+      {
+        line: "Both earbuds come out. That's a significant escalation.",
+        approach: "Note the upgrade",
+      },
+      {
+        line: "\"Oh, it's you,\" he says, and doesn't go back to the phone right away.",
+        approach: "Sit without asking",
+      },
+      {
+        line: '"Oh, Senpai... could you open the link I sent you? No, you don\'t have to sign up or anything. Thanks."',
+        approach: "Open the link he sent",
+      },
+      {
+        line: "He asks if you've seen the video. He's asking because he wants to talk about it.",
+        approach: "Say you've seen it",
+      },
+      {
+        line: "He remembers what you said about the ending. He'd been thinking about it.",
+        approach: "Talk about the ending",
+      },
+      {
+        line: "He clears a stack of controllers off the cushion next to him without being asked.",
+        approach: "Take the cleared seat",
+      },
+      {
+        line: "The show hits some big cliffhanger right as you walk in. He glares like a warning shot.",
+        approach: "Don't spoil it",
+      },
+      {
+        line: "He mutes his phone the second you walk in. Small thing. He never used to bother.",
+        approach: "Ask what he muted",
+      },
+      {
+        line: '"You\'re not gonna make this weird, right?" he says, already regretting saying hi first.',
+        approach: "Promise not to make it weird",
+      },
+      {
+        line: "He complains about doing rounds in Jabberwock for a solid minute before noticing you're still standing there.",
+        approach: "Let him finish complaining",
+      },
+      {
+        line: "He asks if the aquatic zone smells as bad from the hallway. It does. He knows it does.",
+        approach: "Tell him it's pretty bad",
+      },
+      {
+        line: "He holds up two horror movie thumbnails and makes you pick, like your opinion actually counts for something now.",
+        approach: "Pick the scarier one",
+      },
+      {
+        line: '"Hey, senpai... you\'re not gonna sign me up for something, right?" He sounds legitimately worried.',
+        approach: "Say it's nothing bad",
+      },
     ],
     warm: [
-      "He actually puts his phone down when you arrive. Doesn't pick it back up, either.",
-      "He shifts over on the couch without looking up. The space is for you.",
-      "\"You're behind on the episodes,\" he says. He's been keeping count for you.",
-      "He hands you the second controller. He's already set your profile up.",
-      "The slouch stays. The attention does not. That's entirely on you now.",
+      {
+        line: "He actually puts his phone down when you arrive. Doesn't pick it back up, either.",
+        approach: "Steal all his attention",
+      },
+      {
+        line: "He shifts over on the couch without looking up. The space is for you.",
+        approach: "Take the empty space",
+      },
+      {
+        line: "\"You're behind on the episodes,\" he says. He's been keeping count for you.",
+        approach: "Ask him to catch you up",
+      },
+      {
+        line: "He hands you the second controller. He's already set your profile up.",
+        approach: "Grab the second controller",
+      },
+      {
+        line: "The slouch stays. The attention does not. That's entirely on you now.",
+        approach: "Let him watch you instead",
+      },
+      {
+        line: "He's got actual snacks stashed for once, and doesn't even pretend they're for anyone but you.",
+        approach: "Steal the good snacks",
+      },
+      {
+        line: '"Don\'t judge the queue," he says, already scrolling to the next episode before you sit down.',
+        approach: "Don't judge the queue",
+      },
+      {
+        line: "He turns the volume down without you asking, so you can actually hear each other over it.",
+        approach: "Acknowledge the gesture",
+      },
+      {
+        line: "The second the diner shift ends, he's already texting you where he's headed next.",
+        approach: "Ask what his plans are",
+      },
+      {
+        line: "He holds up the phone to show you an edit he's proud of before you even sit down.",
+        approach: "Tell him it's good",
+      },
+      {
+        line: '"You can have the good blanket," he says, like it\'s not a big deal. It is a big deal.',
+        approach: "Take the good blanket",
+      },
+      {
+        line: "He complains about his shift the entire walk over, then doesn't leave once he's here.",
+        approach: "Point out he's still here",
+      },
+      {
+        line: "He's already memorized your favorite instant noodles toppings. Never once asked.",
+        approach: "Let him make it for you",
+      },
+      {
+        line: '"Don\'t make it weird," he says, handing you the controller with your name written on a sticky note stuck to it.',
+        approach: "Hold back your grin",
+      },
+      {
+        line: "He pauses the show without complaint the second you start talking. That never used to happen.",
+        approach: "Keep talking",
+      },
+      {
+        line: '"You\'re late," he says, not looking up, already scooted over to make room.',
+        approach: "Apologize for being late",
+      },
+      {
+        line: "He's rewatching something you both already saw, just because you liked it the first time.",
+        approach: "Ask why he's rewatching it",
+      },
+      {
+        line: "The couch cushion's already dented in the shape of two people. He doesn't mention it. Neither do you.",
+        approach: "Sit in the usual spot",
+      },
     ],
     spark: [
-      "You fall asleep against his shoulder. He doesn't move for two hours.",
-      '"You\'re kind of in my space," he says, not moving an inch.',
-      "He looks at you during the quiet part of the episode instead of the screen.",
-      "The controller goes down. He's looking at you like the game stopped mattering.",
-      '"...I like you," he says, flat as a weather report, and goes back to the show.',
+      {
+        line: "You fall asleep against his shoulder. He doesn't move for two hours.",
+        approach: "Don't move",
+      },
+      {
+        line: '"You\'re kind of in my space," he says, not moving an inch.',
+        approach: "Sit closer",
+      },
+      {
+        line: "He looks at you during the quiet part of the episode instead of the screen.",
+        approach: "Look back at him",
+      },
+      {
+        line: "The controller goes down. He's looking at you like the game stopped mattering.",
+        approach: "Make him say it",
+      },
+      {
+        line: '"...I like you," he says, flat as a weather report, and goes back to the show.',
+        approach: "Stay over",
+      },
     ],
     close: [
-      "\"Senpai... look, if it comes down to it, I'm on your side. Obviously.\" The phone's already face down.",
-      "He notices you're off before you've said a word, and quietly changes the plan.",
-      '"Stay," he says, casual as anything, meaning it more than anything.',
-      "He plays badly on purpose so the round lasts longer. He'd never admit that.",
-      "The phone stays face down for the entire conversation. That's not nothing.",
+      {
+        line: "\"Senpai... look, if it comes down to it, I'm on your side. Obviously.\" The phone's already face down.",
+        approach: "Let him have your back",
+      },
+      {
+        line: "He notices you're off before you've said a word, and quietly changes the plan.",
+        approach: "Tell him what's wrong",
+      },
+      {
+        line: '"Stay," he says, casual as anything, meaning it more than anything.',
+        approach: "Stay as long as you want",
+      },
+      {
+        line: "He plays badly on purpose so the round lasts longer. He'd never admit that.",
+        approach: "Flop down next to him",
+      },
+      {
+        line: "The phone stays face down for the entire conversation. That's not nothing.",
+        approach: "Notice the phone stays down",
+      },
     ],
     bound: [
-      "You wake up tangled in him and the show has been on the menu screen for six hours.",
-      '"Don\'t move," he mumbles into your hair. "Seriously. This is perfect."',
-      "He kisses you lazily, halfway through a level, and loses the level entirely.",
-      "He's stopped hiding. He's just quietly, thoroughly yours, and everyone knows it.",
-      'He says "love you" like it\'s punctuation now, flat, constant, absolutely meant.',
+      {
+        line: "You wake up tangled in him and the show has been on the menu screen for six hours.",
+        approach: "Take his side of the couch",
+      },
+      {
+        line: '"Don\'t move," he mumbles into your hair. "Seriously. This is perfect."',
+        approach: "Don't get up",
+      },
+      {
+        line: "He kisses you lazily, halfway through a level, and loses the level entirely.",
+        approach: "Kiss him back",
+      },
+      {
+        line: "He's stopped hiding. He's just quietly, thoroughly yours, and everyone knows it.",
+        approach: "Stop hiding it too",
+      },
+      {
+        line: 'He says "love you" like it\'s punctuation now, flat, constant, absolutely meant.',
+        approach: "Say it back",
+      },
     ],
   },
   temperamentDialogue: {
@@ -312,39 +485,6 @@ export default {
       '"Come back to bed, Senpai. The game\'s not going anywhere."',
       "\"You're on my side of the couch. That's fine. That's ideal, actually.\"",
       "\"I'm not good at big gestures. This is the gesture. You, here. That's it.\"",
-    ],
-  },
-  approach: {
-    new: [
-      "Say hey back",
-      "Sit down uninvited",
-      "Ask what he's watching",
-      "Wait for the earbud",
-    ],
-    known: [
-      "Take the cleared seat",
-      "Talk about the ending",
-      "Don't spoil it",
-      "Sit without asking",
-    ],
-    warm: [
-      "Take the empty space",
-      "Grab the second controller",
-      "Steal the good snacks",
-      "Put your feet up",
-    ],
-    spark: ["Don't move", "Sit closer", "Stay over", "Make him say it"],
-    close: [
-      "Flop down next to him",
-      "Tell him what's wrong",
-      "Stay as long as you want",
-      "Let him have your back",
-    ],
-    bound: [
-      "Don't get up",
-      "Come back to bed",
-      "Take his side of the couch",
-      "Say it back",
     ],
   },
   responses: {

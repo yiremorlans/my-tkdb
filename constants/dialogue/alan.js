@@ -270,7 +270,7 @@ export default {
       },
       {
         line: "He grunts once in your direction. Two weeks ago he didn't do that.",
-        approach: "Ask what's got him quiet",
+        approach: "Ask what he's got to say",
       },
       {
         line: "The toolbox is already out of your path before you arrive. He still checks.",
@@ -278,7 +278,7 @@ export default {
       },
       {
         line: '"Looks like we\'ve got another mission order," he says. "Rest while you can. Next one\'s a long one."',
-        approach: "Ask if the mission's set yet",
+        approach: "Ask if he needs another VC",
       },
       {
         line: "\"Hand me that.\" It's the first thing he's ever asked you for.",
@@ -290,7 +290,7 @@ export default {
       },
       {
         line: '"You\'re early," he says. Not a complaint.',
-        approach: "Sit, if you're staying",
+        approach: "Sit with him",
       },
       {
         line: "He still tells you to stay clear of the bikes while they're up on the lift. Just gentler about it now.",
@@ -298,7 +298,7 @@ export default {
       },
       {
         line: "He's started leaving the garage door unlocked before you even get there.",
-        approach: "Stay out from underfoot",
+        approach: "Let yourself in",
       },
       {
         line: "He starts leaving the spare gloves out in your size. Never brings it up.",
@@ -306,7 +306,7 @@ export default {
       },
       {
         line: "He doesn't send you on the easy jobs anymore. Figures you can handle harder ones.",
-        approach: "Ask what it is",
+        approach: "Ask if he trusts you",
       },
       {
         line: "He waves off Leo's teasing about you without looking up from his work.",
@@ -329,11 +329,11 @@ export default {
       },
       {
         line: "He hands you a rag without being asked. Somehow that means something.",
-        approach: "Work beside him",
+        approach: "Wipe off his sweat",
       },
       {
         line: "He's left the second stool out again. He's never once mentioned it.",
-        approach: "Take the second stool",
+        approach: "Sit with him",
       },
       {
         line: '"You eat today?" he asks, wiping his hands. It\'s the third time this week.',
@@ -353,10 +353,10 @@ export default {
       },
       {
         line: "He steps between you and Leo without a word, like it's reflex now.",
-        approach: "Stand where Leo can see you",
+        approach: "Make a face at Leo",
       },
       {
-        line: "He says your name under his breath when a job's going sideways. Doesn't notice he does it.",
+        line: "He says your name under his breath while he's working, quiet as anything. Doesn't notice he does it.",
         approach: "Match his silence a while",
       },
       {
@@ -372,7 +372,7 @@ export default {
         approach: "Stay after closing time",
       },
       {
-        line: "He starts fixing whatever's wrong with your things before you mention it, like it's not on purpose.",
+        line: "He re-tightens bolts on the shelf that were never loose, just to keep his hands busy near you.",
         approach: "Let him fix what isn't broken",
       },
       {
@@ -380,7 +380,7 @@ export default {
         approach: "Take the coffee he made you",
       },
       {
-        line: "Other housemates have started asking him where you are instead of asking around.",
+        line: "Other students have started asking you where he is, instead of asking around.",
         approach: "Ask what he told them",
       },
       {
@@ -607,11 +607,7 @@ export default {
         "Tell him he isn't alone",
         "Ask him to lean on you",
       ],
-      bound: [
-        "Climb into his lap",
-        "Say it first",
-        "Tell him not to wash up",
-      ],
+      bound: ["Climb into his lap", "Say it first", "Tell him not to wash up"],
     },
     neutral: {
       new: [

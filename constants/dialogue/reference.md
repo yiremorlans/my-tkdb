@@ -1191,6 +1191,8 @@ Although on the surface he seems rude and uncaring, Ren cares and thinks a lot. 
 
 Ren addresses the MC as "senpai" (lowercase when texting, capitalised when spoken).
 
+House style note: beyond "senpai" itself, Ren's texting casing is irregular, not uniformly lowercase — sentence starts are a mixed bag cap/lowercase, but "I"-forms and proper nouns stay capitalized. Spoken lines use normal sentence capitalization.
+
 Character Selection	 That's harassment. Is everyone in this place from the past?
 Opening Cutscene	This is exactly why I didn't want to do this! I knew this was how it was gonna end! What am I even doing here...? This is all your fault...
 Summon	 If anything happens to me, it's your fault.
