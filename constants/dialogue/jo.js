@@ -316,8 +316,8 @@ export default {
           approach: "Ask about the fire at the tent",
         },
         {
-          line: "He remembers exactly how you take your snacks after practice now, and sets a plate aside before anyone else gets to it.",
-          approach: "Take the plate he set aside",
+          line: "He notices you've been running errands all morning, and quietly takes the last one off your list before you can grab it.",
+          approach: "Let him take the last errand",
         },
         {
           line: "\"The students here don't run on a normal clock. Neither do you, I've noticed. Works out.\"",
@@ -370,8 +370,8 @@ export default {
           approach: "Ask about the fire at the tent",
         },
         {
-          line: "She remembers exactly how you take your snacks after practice now, and sets a plate aside before anyone else gets to it.",
-          approach: "Take the plate she set aside",
+          line: "She notices you've been running errands all morning, and quietly takes the last one off your list before you can grab it.",
+          approach: "Let her take the last errand",
         },
         {
           line: "\"The students here don't run on a normal clock. Neither do you, I've noticed. Works out.\"",
@@ -415,7 +415,7 @@ export default {
         },
         {
           line: "\"There's a coffee with your name on it and fifteen minutes I'm refusing to spend on anything else. Sit with me, cutie.\"",
-          approach: "Take the coffee with your name",
+          approach: "Enjoy the coffee break",
         },
         {
           line: '"Botanical garden duty today. Rui knows the equipment better than Mio does, believe it or not. I just carry things."',
@@ -427,7 +427,7 @@ export default {
         },
         {
           line: '"Come to the school building with me? I\'ve got the house advisor to see, and the company beats the walk alone."',
-          approach: "Go see the house advisor",
+          approach: "Go with him",
         },
         {
           line: "\"You stayed up last night. Don't lie to me, cutie, I can hear it in your voice. I'll make you some honey tea.\"",
@@ -435,10 +435,10 @@ export default {
         },
         {
           line: "He saves you the seat next to the one with the least paperwork stacked on it. Small mercy, from him.",
-          approach: "Sit with the least paperwork",
+          approach: "Work through it",
         },
         {
-          line: '"Leadership meeting with Mio again. Between us, I think we take on more than we should. Don\'t tell him I said that."',
+          line: '"Leadership meeting with Mio again. Between us, I think we take on more than we should."',
           approach: "Ask about the leadership talk",
         },
         {
@@ -447,7 +447,7 @@ export default {
         },
         {
           line: '"I finished the budget early just so I\'d have the afternoon free."',
-          approach: "Ask why the budget's early",
+          approach: "Ask why he finished early",
         },
         {
           line: "He's stopped pretending the jog is just exercise. You're half the reason he still gets up for it.",
@@ -463,7 +463,7 @@ export default {
         },
         {
           line: '"You\'re rare, you know that? Never once needed anything from me. I still catch myself waiting for it."',
-          approach: "Tell him he's not so rare",
+          approach: "Tell him he's dependable",
         },
         {
           line: '"Don\'t look so surprised every time I make time for you. I keep doing it on purpose."',
@@ -489,7 +489,7 @@ export default {
         },
         {
           line: "\"There's a coffee with your name on it and fifteen minutes I'm refusing to spend on anything else. Sit with me, cutie.\"",
-          approach: "Take the coffee with your name",
+          approach: "Enjoy the coffee break",
         },
         {
           line: '"Botanical garden duty today. Rui knows the equipment better than Mio does, believe it or not. I just carry things."',
@@ -501,7 +501,7 @@ export default {
         },
         {
           line: '"Come to the school building with me? I\'ve got the house advisor to see, and the company beats the walk alone."',
-          approach: "Go see the house advisor",
+          approach: "Go with her",
         },
         {
           line: "\"You stayed up last night. Don't lie to me, cutie, I can hear it in your voice. I'll make you some honey tea.\"",
@@ -509,23 +509,23 @@ export default {
         },
         {
           line: "She saves you the seat next to the one with the least paperwork stacked on it. Small mercy, from her.",
-          approach: "Sit with the least paperwork",
+          approach: "Work through it",
         },
         {
-          line: '"Leadership meeting with Mio again. Between us, I think we take on more than we should. Don\'t tell him I said that."',
+          line: '"Leadership meeting with Mio again. Between us, I think we take on more than we should."',
           approach: "Ask about the leadership talk",
         },
         {
           line: "The circus troupe listens to her without question. You're the only one who gets to argue back, and she seems to prefer it that way.",
-          approach: "Ask what he's not saying",
+          approach: "Ask what she's not saying",
         },
         {
           line: '"I finished the budget early just so I\'d have the afternoon free."',
-          approach: "Ask why the budget's early",
+          approach: "Ask why she finished early",
         },
         {
           line: "She's stopped pretending the jog is just exercise. You're half the reason she still gets up for it.",
-          approach: "Join him on the jog",
+          approach: "Join her on the jog",
         },
         {
           line: '"Gathering research for new costumes. Tedious work, but the result is worth it. Want to see what I\'ve got so far?"',
@@ -533,15 +533,15 @@ export default {
         },
         {
           line: "She notices when you've had a long day before you say a word, and quietly clears an hour for you.",
-          approach: "Let him clear the hour",
+          approach: "Let her clear the hour",
         },
         {
           line: '"You\'re rare, you know that? Never once needed anything from me. I still catch myself waiting for it."',
-          approach: "Tell him he's not so rare",
+          approach: "Tell her she's dependable",
         },
         {
           line: '"Don\'t look so surprised every time I make time for you. I keep doing it on purpose."',
-          approach: "Ask why he keeps making time",
+          approach: "Ask why she keeps making time",
         },
       ],
     },

@@ -263,7 +263,7 @@ export default {
       },
       {
         line: "There's a kindness to him that doesn't feel put on for the customers. It's just how he is.",
-        approach: "Mind the shelf",
+        approach: "Reciprocate his kindness",
       },
     ],
     known: [
@@ -285,7 +285,7 @@ export default {
       },
       {
         line: "Even the cat seems to tolerate you, which he says is rare praise.",
-        approach: "Take the rare praise",
+        approach: "Glow from the high praise",
       },
       {
         line: 'He starts to say "back when I was advising" and catches himself halfway through, looking sheepish about it.',
@@ -293,7 +293,7 @@ export default {
       },
       {
         line: "The cat lets you scratch behind her ears now. He watches like it's the highest honor she's ever handed out.",
-        approach: "Scratch the cat's ears",
+        approach: "Scratch the the good spot",
       },
       {
         line: "He's learned exactly how you take your tea, and has it half made before you've even asked.",
@@ -305,11 +305,11 @@ export default {
       },
       {
         line: "He tells you which snacks are actually good and which ones he just orders because they sell.",
-        approach: "Ask which snacks are good",
+        approach: "Ask which are his favorites",
       },
       {
-        line: "He's stopped double-checking the register when you're the one buying. Trusts you with the math.",
-        approach: "Trust you with the till",
+        line: "\"This one's on the house,\" he says, already writing it off like it's settled.",
+        approach: "Say you'll owe him one",
       },
       {
         line: "He asks how your week's going and actually waits around for the answer.",
@@ -349,8 +349,8 @@ export default {
         approach: "Ask what he's listening for",
       },
       {
-        line: "He tells you about a particular student from his advising days, careful not to name them, just glad to have someone to tell it to.",
-        approach: "Ask about the old student",
+        line: "He starts humming without noticing, then stops the second he catches himself doing it in front of you.",
+        approach: "Ask what he was humming",
       },
       {
         line: "The cat's taken to curling up near you instead of him. He pretends not to be a little offended.",
@@ -386,7 +386,7 @@ export default {
       },
       {
         line: "He keeps your favorite snack in stock even though it barely sells to anyone else.",
-        approach: "Stay past closing",
+        approach: "Share it with him",
       },
       {
         line: "He tells a joke that doesn't quite land, and looks so pleased with himself that you laugh anyway.",
@@ -484,7 +484,6 @@ export default {
       '"Warm enough? Here, take mine."',
       '"Good to see a friendly face. Been a long day."',
       '"There you are. I was listening for the door, if I\'m honest."',
-      '"I had a student once, back in the advising days. Reminds me a bit of you."',
       '"The cat\'s taken to you more than me lately. I try not to mind."',
       '"I set that aside because you mentioned liking it. Ages ago."',
       '"You look tired. Sit a moment, before you tell me you\'re fine."',

@@ -26,7 +26,7 @@ export default {
             label: "Tell him you'd love to come",
             style: 3,
             close:
-              "*A pause before he replies.*\n\nThank you. I know I said you didn't have to, but I'm glad you want to. I'll tell Haku, he'll be pleased to have you at the table properly, for once. I'll get the good cups out.",
+              "*A short pause*\n\nThank you. I know I said you didn't have to, but I'm glad you want to. I'll tell Haku, he'll be pleased to have you at the table properly, for once. I'll get the good cups out.",
           },
           {
             key: "playful",
