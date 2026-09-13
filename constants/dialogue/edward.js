@@ -300,7 +300,7 @@ export default {
   },
   temperamentDialogue: {
     new: [
-      '"Oh my, what a lovely lady. Welcome to my home."',
+      '"Oh my. Welcome to my home."',
       '"Do come in. I bite, but rarely without permission."',
       '"You mustn\'t wander Obscuary alone. Allow me. I insist."',
       '"How fragile you are. It\'s terribly charming."',
@@ -310,18 +310,18 @@ export default {
       '"Back so soon? How wonderfully poor of your judgment."',
       '"I remember you. I remember everyone, but I remember you pleasantly."',
       "\"Do sit. I've had the chair moved. No, I've no idea why either.\"",
-      "\"You've stopped looking for the exit. That's progress, lovely lady.\"",
+      "\"You've stopped looking for the exit. That's progress.\"",
       "\"I'm more or less confined to this house most days, for various reasons. I'm on my best behavior. But I'll do what I can to support you from the sidelines.\"",
     ],
     warm: [
-      '"Lovely lady, I was hoping you\'d visit. Come closer."',
+      '"I was hoping you\'d visit. Come closer."',
       '"You\'re not afraid of me anymore. How disappointing. How wonderful."',
       '"Sit. No, here, beside me. Personal space is a modern invention."',
       '"I poured this before you arrived. Call it optimism."',
       '"What did I do before Darkwick? I eked out a humble existence in Eastern Europe. Nothing worth the telling."',
     ],
     spark: [
-      '"Come closer, lovely lady. I promise to behave. I make poor promises."',
+      '"Come closer. I promise to behave. I make poor promises."',
       '"You know what I am. You keep standing there anyway. How flattering."',
       '"May I? Only your hand. ...For now."',
       '"I have restrained myself for a very long time. Do say if I needn\'t."',
@@ -330,14 +330,14 @@ export default {
     close: [
       '"You belong right here, next to me. Don\'t ever leave."',
       '"I have outlived a great deal. I would rather not outlive this."',
-      '"No performance tonight, lovely lady. Only me. Is that enough?"',
+      '"No performance tonight. Only me. Is that enough?"',
       '"Stay until dawn. Stay past it. I\'ll manage the curtains."',
       '"Come here. Closer. There, now the room is bearable."',
     ],
     bound: [
       '"May I? ...You always say yes. It undoes me every time."',
       '"I love you. I\'ve had a very long time to be certain of something."',
-      '"Stay past dawn, lovely lady. I\'ll manage the curtains."',
+      '"Stay past dawn. I\'ll manage the curtains."',
       '"Come here. Let me be terribly, terribly improper about you."',
       '"You\'re mine and I am, rather more surprisingly, entirely yours."',
     ],
@@ -463,7 +463,7 @@ export default {
   winnerLines: {
     new: [
       "**{name}** bows over {user}'s hand and asks permission afterward.",
-      '"Oh my. What a lovely lady." **{name}** greets {user} as though they were in a drawing room and not the middle of everything.',
+      '"Oh my. How charming." **{name}** greets {user} as though they were in a drawing room and not the middle of everything.',
       "{user} says the name, and **{name}** smiles with rather too many implications in it.",
     ],
     warm: [
@@ -472,7 +472,7 @@ export default {
       '"Do come here." **{name}** informs {user} that personal space is a modern invention.',
     ],
     spark: [
-      '"Wicked girl." **{name}** says it to {user} as a compliment.',
+      '"You ought to know better than to play with fire," **{name}** tells {user}, sounding delighted about it.',
       "{user} says the name, and **{name}** stops performing frailty for the length of one look.",
       '"What were you hoping for? Go on, say it." **{name}** waits on {user}, unhurried.',
     ],

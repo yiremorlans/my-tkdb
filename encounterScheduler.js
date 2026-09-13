@@ -21,9 +21,17 @@ import { runGuildMissionPass, sweepExpiredMissions } from './missions.js';
 import { getActivePublicEncounter, getEnabledGuilds, getMissionGuilds } from './db/supabase.js';
 
 // How often the loop looks for work. Must stay well under
-// ENCOUNTER_WINDOW_MINUTES (2), or an encounter can outlive its own deadline by
-// most of a tick before anything finalizes it.
-const TICK_INTERVAL_MS = 25 * 1000;
+// ENCOUNTER_WINDOW_MINUTES (2), or an expired encounter's post sits showing a
+// live countdown for most of a tick before the sweep finalizes it — cosmetic
+// only, since getActivePublicEncounter already gates on `expires_at` itself,
+// so a stale post can't be answered late.
+//
+// Raised from 25s (2025-09-12): the project runs on Supabase's free t3.nano
+// tier, and this tick's steady query volume was contributing to sustained
+// Gateway Timeout/502s under that tier's limited compute. 45s keeps a wide
+// margin under the 2-minute window while cutting steady-state request volume
+// by ~44%. Revisit downward if/when compute is upgraded.
+const TICK_INTERVAL_MS = 45 * 1000;
 
 // Minimum wall time between spawn *attempts* for one guild, enforced in memory
 // and independently of the Postgres cadence anchor. Normally dead weight — a

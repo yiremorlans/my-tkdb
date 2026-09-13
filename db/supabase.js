@@ -11,6 +11,33 @@ if (!supabaseUrl || !supabaseServiceKey) {
 
 const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
+// Matches the REST API's own edge/gateway failing to get a timely response
+// from PostgREST — a transient blip, not a real database error (bad filter,
+// RLS, constraint violation, ...). Those come back with a Postgres error
+// `code` and must never be retried; a gateway failure has none.
+const TRANSIENT_GATEWAY_ERROR = /gateway timeout|bad gateway|service unavailable|fetch failed/i;
+
+/**
+ * Retries a Supabase call once, after a short delay, when it fails with a
+ * transient gateway error rather than a real database error. The scheduler
+ * tick (encounterScheduler.js) depends on a handful of these every 25s; one
+ * blip that would otherwise fail the whole pass — and every guild in it —
+ * until the next tick usually clears in one retry. Every query this wraps is
+ * either a plain read or an `.eq(...)`-guarded update, so retrying changes
+ * nothing about which rows match.
+ */
+async function withGatewayRetry(fn, { retries = 1, delayMs = 500 } = {}) {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      return await fn();
+    } catch (err) {
+      const transient = !err?.code && TRANSIENT_GATEWAY_ERROR.test(err?.message ?? '');
+      if (!transient || attempt >= retries) throw err;
+      await new Promise((resolve) => setTimeout(resolve, delayMs));
+    }
+  }
+}
+
 /**
  * True if the two timestamps fall in the same UTC calendar month.
  * Used to lazily roll `commands_this_month` over at month boundaries so the
@@ -656,11 +683,13 @@ export async function getCommandUsageStats(days = 30) {
  * `/encounters channel`.
  */
 export async function getEnabledGuilds() {
-  const { data, error } = await supabase
-    .from('guild_settings')
-    .select('*')
-    .eq('enabled', true)
-    .eq('locked', false);
+  const { data, error } = await withGatewayRetry(() =>
+    supabase
+      .from('guild_settings')
+      .select('*')
+      .eq('enabled', true)
+      .eq('locked', false),
+  );
 
   if (error) {
     console.error('Error fetching enabled guilds:', error);
@@ -1448,11 +1477,13 @@ export async function listResumableBondScenes(userId) {
  * encounters — a locked guild goes quiet on both features at once.
  */
 export async function getMissionGuilds() {
-  const { data, error } = await supabase
-    .from('guild_settings')
-    .select('*')
-    .eq('missions_enabled', true)
-    .eq('locked', false);
+  const { data, error } = await withGatewayRetry(() =>
+    supabase
+      .from('guild_settings')
+      .select('*')
+      .eq('missions_enabled', true)
+      .eq('locked', false),
+  );
 
   if (error) {
     console.error('Error fetching mission guilds:', error);
@@ -1893,7 +1924,7 @@ export async function finalizeExpiredMissions(guildId = null, now = new Date()) 
     .lt('post_expires_at', nowIso);
   if (guildId) openQuery = openQuery.eq('guild_id', guildId);
 
-  const { data: withdrawn, error: openError } = await openQuery.select();
+  const { data: withdrawn, error: openError } = await withGatewayRetry(() => openQuery.select());
   if (openError) {
     console.error('Error withdrawing expired mission posts:', openError);
     throw openError;
@@ -1906,7 +1937,7 @@ export async function finalizeExpiredMissions(guildId = null, now = new Date()) 
     .lt('accept_expires_at', nowIso);
   if (guildId) acceptedQuery = acceptedQuery.eq('guild_id', guildId);
 
-  const { data: lapsed, error: acceptedError } = await acceptedQuery.select();
+  const { data: lapsed, error: acceptedError } = await withGatewayRetry(() => acceptedQuery.select());
   if (acceptedError) {
     console.error('Error lapsing accepted missions:', acceptedError);
     throw acceptedError;
