@@ -243,22 +243,37 @@ export default {
   },
   dialogue: {
     new: [
-      "The truck's hatch is up and something smells incredible. He waves you over before you've decided anything.",
-      "His face lights up when he sees you. There's something genuinely kind in his eyes.",
-      'Behind the truck, something coughs twice before it catches. "Yeah, yeah, I hear you," he mutters at it, then grins over at you like he wasn\'t just talking to his bike.',
-      '"Give me thirty seconds," he calls over the fryer. "You\'re gonna want this hot."',
-      '"Huh? Was that your stomach? You hungry?" He\'s already reaching for a pan. "Sit down."',
+      {
+        line: "The truck's hatch is up and something smells incredible. He waves you over before you've decided anything.",
+        approach: "Let him pick",
+      },
+      {
+        line: "He barely spares you a glance, jaw set, like he's already bored with whatever this is going to be.",
+        approach: "Introduce yourself",
+      },
+      {
+        line: 'Behind the truck, something coughs twice before it catches. "Yeah, yeah, I hear you," he mutters at it, then grins over at you like he wasn\'t just talking to his bike.',
+        approach: "Order something",
+      },
+      {
+        line: "Bonnie growls to a stop right by you, and he swings off in one motion, helmet already coming off.",
+        approach: "Ask about the ride",
+      },
+      {
+        line: 'His knuckles are freshly wrapped, one already bruising. "Don\'t," he says, before you can even ask.',
+        approach: "Ask about The Pit",
+      },
     ],
     known: [
       "Bonnie's parked closer to your usual spot lately. He'd say that's just where there was room.",
       "He remembers you don't like the spicy one. He made the other one.",
-      "There's a portion already boxed, your name scrawled on the lid in marker.",
+      "He's skipped his afternoon class again. \"It's all in the books anyway,\" he says, like that settles it.",
       '"Call me Sho, Senpai. Not Shohei. Nobody calls me Shohei."',
       "The truck is slammed and he still waves you to the front of the line.",
     ],
     warm: [
       "He greets you with a warm smile, already thinking about how to make your day better.",
-      "Your order goes on the moment he spots you coming down the street.",
+      "He catches Leo needling you from across the room and shuts it down with a look before you even notice.",
       "He hands you something hot to hold before he says a single word.",
       "He tosses you the spare helmet without asking if you want a ride. You always do.",
       "\"Pit's on again? I'm done with that already. They're all normies, what's the point? Stay here, eat.\"",
@@ -266,20 +281,20 @@ export default {
     spark: [
       "He feeds you a bite off his own fork and only afterward realizes what he did.",
       "He walks you to Bonnie after close and takes the long way round to keep you a minute longer.",
-      "The hatch is down, the truck is warm, and he's stopped pretending to be busy.",
+      "He's sparring with Mido when you show up, and he cuts the session short without a word of explanation, toweling off on his way over.",
       "He guides your hands on the knife from behind, and neither of you is thinking about onions.",
-      "He goes scarlet to the ears and keeps cooking as though absolutely nothing happened.",
+      "He shrugs off his jacket and drops it over your shoulders, then acts like the cold never bothered him at all.",
     ],
     close: [
       '"You mean so much to me," he says earnestly. "I hope you know that by now."',
       "There's a second helmet that lives at your place now. Nobody decided that. It just happened.",
-      "Your name is on the truck's board as a permanent item. He won't take it down.",
+      "He introduces you to his brother without the usual flinch at the surname, like it doesn't weigh anything when you're there.",
       "He cooks for you last, after everyone's gone, and it's always better than what they got.",
       "The whole rough exterior Vagastrom demands just... isn't there when it's you.",
     ],
     bound: [
       "He makes you breakfast in his shirt and is far too pleased with the whole picture.",
-      "He kisses your shoulder on his way past the stove, every single time, without thinking.",
+      "He's stopped hiding split knuckles from you. Now you're the one who wraps them.",
       "You prep the truck together at dawn now. He hums the entire time.",
       '"Senpai" has become something he says low and private and entirely differently.',
       "He leaves Bonnie right outside your window some nights, just so you'll hear him get in safe.",
@@ -288,7 +303,7 @@ export default {
   temperamentDialogue: {
     new: [
       '"Oh, Senpai. What brings you by?"',
-      '"You hungry? Wrong question. Everyone\'s hungry. Sit down."',
+      '"Don\'t just stand there gawking. You want a ride or not?" He jerks his chin at the bike.',
       "\"First time at the truck? I'm Sho, not Shohei, just Sho. And you don't get to order, I'll pick,\" he says with a smirk.",
       '"What\'re you looking at? ...Crap, that came out rude. You hungry or what?"',
       "\"Don't mind Bonnie, she's just picky about who she likes.\" He looks you over, easy, like he's already decided you're fine. \"She'll come around.\"",
@@ -330,12 +345,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Take a seat at the counter",
-      "Let him pick",
-      "Wait thirty seconds",
-      "Order something",
-    ],
     known: [
       "Take the front of the line",
       "Have three bites",

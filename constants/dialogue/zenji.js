@@ -239,11 +239,26 @@ export default {
   },
   dialogue: {
     new: [
-      'He greets you with a flourish, "Why, hello there, my dear. Suppose we kick off another swanky day here?"',
-      "He's mid-sentence when you arrive: a story, out loud, to no one. He finishes the line before he finishes turning around.",
-      '"Seventeen syllables," he murmurs, "and you\'ve just handed me the last five, my dear."',
-      '"Well, if it isn\'t a new face. Has this inspired man of the quill left you speechless? ...No? A pity. It happens to some."',
-      '"Oh, have you come to see me? This is troubling." He smiles. "I\'m afraid I\'m out of autographs."',
+      {
+        line: 'He greets you with a flourish, "Why, hello there, my dear. Suppose we kick off another swanky day here?"',
+        approach: "Return his bow",
+      },
+      {
+        line: "He's mid-sentence when you arrive: a story, out loud, to no one. He finishes the line before he finishes turning around.",
+        approach: "Listen with him",
+      },
+      {
+        line: '"Seventeen syllables," he murmurs, "and you\'ve just handed me the last five, my dear."',
+        approach: "Give him the last syllables",
+      },
+      {
+        line: '"Well, if it isn\'t a new face. Has this inspired man of the quill left you speechless? ...No? A pity. It happens to some."',
+        approach: "Recover your words",
+      },
+      {
+        line: '"Oh, have you come to see me? This is troubling." He smiles. "I\'m afraid I\'m out of autographs."',
+        approach: "Ask for an autograph anyway",
+      },
     ],
     known: [
       '"The wanderer returns." He looks delighted. "My dear, you\'re becoming a regular fixture."',
@@ -371,12 +386,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Return his bow",
-      "Give him the last syllables",
-      "Sit under the lanterns",
-      "Listen with him",
-    ],
     known: [
       "Take the warm step",
       "Give the line an opinion",

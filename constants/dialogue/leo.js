@@ -240,12 +240,30 @@ export default {
   },
   dialogue: {
     new: [
-      'He smirks dangerously, eyes lit with a hint of amusement. "What brings you to the lion\'s den?"',
-      "His phone is up before he's even looked at you. Everything is content to him.",
-      '"Oh, this is good," he murmurs, to himself, about you. It doesn\'t sound like a compliment.',
-      "He takes you in slowly, head to toe, and grins at whatever conclusion he reaches. You've been filed somewhere.",
-      "\"Who's DMing me? Oh, it's this account. Huh... now that's interesting.\" He glances up at you mid-scroll.",
-      '"Ugh, you\'re loud. Ask permission if you want to talk to me. ...Nope. Denied." He goes back to the phone.',
+      {
+        line: "He smirks dangerously, eyes lit with a hint of amusement.",
+        approach: "Walk into the lion's den",
+      },
+      {
+        line: "His phone is up before he's even looked at you. Everything is content to him.",
+        approach: "Ignore the camera",
+      },
+      {
+        line: '"Oh, this is good," he murmurs, to himself, about you. It doesn\'t sound like a compliment.',
+        approach: "Smirk at him",
+      },
+      {
+        line: "He takes you in slowly, head to toe, and grins at whatever conclusion he reaches. You've been filed somewhere.",
+        approach: "Hold his gaze",
+      },
+      {
+        line: "\"Who's DMing me? Oh, it's this account. Huh... now that's interesting.\" He glances up at you mid-scroll.",
+        approach: "Joke it was you",
+      },
+      {
+        line: '"Ugh, you\'re loud. Ask permission if you want to talk to me. ...Nope. Denied." He goes back to the phone.',
+        approach: "Call out to him",
+      },
     ],
     known: [
       "He's learned your name. He holds it like a weapon he hasn't decided to fire.",
@@ -339,12 +357,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Walk into the lion's den",
-      "Smirk right back",
-      "Ignore the camera",
-      "Ask permission to talk",
-    ],
     known: [
       "Go buy his drink",
       "Refuse to be rattled",

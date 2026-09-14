@@ -232,11 +232,26 @@ export default {
   },
   dialogue: {
     new: [
-      'He\'s barking orders at the staff, managing every angle of the casino floor. "HDY waste my time? Quick, put on this dress and work table seven, we need someone sharp out there."',
-      "He's on two conversations and one phone call. You are somehow now the third conversation.",
-      "\"Come to my private office later, I've got a little proposal I think you'll want to hear. But make sure you come alone.\"",
-      "He looks you up and down, does arithmetic, and apparently likes the result.",
-      "He's got a sheet mask on and a phone to his ear and does not consider either a reason to stop running the floor.",
+      {
+        line: 'He\'s barking orders at the Sinostra students, managing every angle of the casino floor. "HDY waste my time? Quick, put on this dress and work table seven, we need someone sharp out there."',
+        approach: "Make yourself useful",
+      },
+      {
+        line: "He's on two conversations and one phone call. You are somehow now the third conversation.",
+        approach: "Cut into the conversation",
+      },
+      {
+        line: "\"Come to my private office later, I've got a little proposal I think you'll want to hear. But make sure you come alone.\"",
+        approach: "Hear the proposal",
+      },
+      {
+        line: "He looks you up and down, does arithmetic, and apparently likes the result.",
+        approach: "Ask what the job pays",
+      },
+      {
+        line: "He's got a sheet mask on and a phone to his ear and does not consider either a reason to stop running the floor.",
+        approach: "Walk faster",
+      },
     ],
     known: [
       "He's stopped trying to put you to work. Mostly.",
@@ -319,12 +334,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Cut into the conversation",
-      "Make yourself useful",
-      "Walk faster",
-      "Ask what the job pays",
-    ],
     known: [
       "Take the free drink",
       "Sit without an appointment",

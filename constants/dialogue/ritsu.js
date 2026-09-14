@@ -234,11 +234,26 @@ export default {
   },
   dialogue: {
     new: [
-      'He looks up with genuine interest, already assessing your potential. "Partner, your timing is fortuitous. I could use someone sharp."',
-      "He finishes a paragraph, caps the pen, and gives you a précis of his day before you asked.",
-      '"What business do you have with me? Please keep in mind that I charge 5500 yen per half hour for consultations, tax inclusive."',
-      "There are eleven documents on the desk and he knows exactly where each one is.",
-      "He speaks in complete sentences at a speed that suggests he's already ahead of them.",
+      {
+        line: 'He looks up with genuine interest, already assessing your potential. "Your timing is fortuitous, partner. I could use someone sharp."',
+        approach: "State your position",
+      },
+      {
+        line: "He finishes a paragraph, caps the pen, and gives you a précis of his day before you asked.",
+        approach: "Take the briefing",
+      },
+      {
+        line: '"What business do you have with me? Please keep in mind that I charge 5500 yen per half hour for consultations, tax inclusive."',
+        approach: "Take the consultation",
+      },
+      {
+        line: "There are eleven documents on the desk and he knows exactly where each one is.",
+        approach: "Sit across the desk",
+      },
+      {
+        line: "He speaks in complete sentences at a speed that suggests he's already ahead of them.",
+        approach: "Try to keep up",
+      },
     ],
     known: [
       "He's stopped introducing himself. He opens mid-argument now, which is friendlier.",
@@ -321,12 +336,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Take the consultation",
-      "Answer his three questions",
-      "State your position",
-      "Sit across the desk",
-    ],
     known: [
       "Give a second opinion",
       "Read the document",

@@ -237,13 +237,30 @@ export default {
   },
   dialogue: {
     new: [
-      "He looks up from the lantern he's trimming, a quiet warmth in his eyes as he notices you.",
-      "He bows before he speaks. It's automatic, and completely sincere.",
-      '"I\'ve been working since I was four, so people said I was mature for my age," he says. "But the truth is, I still have a lot to learn."',
-      '"Forgive the mannerisms," he says, unprompted. "The stage was my whole childhood. I came out of it a little too formal for ordinary rooms."',
-      "He finishes the note he's leaving for Haku first. Duty, then greeting. Always in that order.",
-      '"You\'ve caught me just before lunch," he says. "Lyca and I usually eat together. I started out teaching him words for things, and stayed for the company."',
-      "He's partway through making a pot of tea when you arrive, and sets out a second cup without being asked.",
+      {
+        line: "He looks up from the lantern he's trimming, a quiet warmth in his eyes as he notices you.",
+        approach: "Step through the gate",
+      },
+      {
+        line: "He bows before he speaks. It's automatic, and completely sincere.",
+        approach: "Return his bow",
+      },
+      {
+        line: '"I\'ve been working since I was four, so people said I was mature for my age," he says. "But the truth is, I still have a lot to learn."',
+        approach: "Wave off the modesty",
+      },
+      {
+        line: "He finishes the note he's leaving for Haku first. Duty, then greeting. Always in that order.",
+        approach: "Wait while he finishes up",
+      },
+      {
+        line: '"You\'ve caught me just before lunch," he says. "Lyca and I usually eat together."',
+        approach: "Ask to join them",
+      },
+      {
+        line: "He's partway through making a pot of tea when you arrive, and sets out a second cup without being asked.",
+        approach: "Accept the tea",
+      },
     ],
     known: [
       "He greets you by name now, and looks pleased to have gotten it right.",
@@ -394,12 +411,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Step through the gate",
-      "Return his bow",
-      "Accept the tea",
-      "Wait while he finishes up",
-    ],
     known: [
       "Take the poured cup",
       "Answer at the gate",

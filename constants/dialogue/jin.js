@@ -230,11 +230,26 @@ export default {
   },
   dialogue: {
     new: [
-      "The frost never bothered him. That you walked into Frostheim uninvited is another matter.",
-      "He doesn't turn to look at you. The cold in the room sharpens anyway.",
-      "Frostheim's captain is holding court with no one at all. He notices you, and says nothing.",
-      "He weighs you the way one weighs a servant he did not hire, quickly, and without much interest.",
-      "Ice creeps along the window frame beside him. He lights a cigarette and waits for you to explain yourself.",
+      {
+        line: "The frost never bothered him. That you walked into Frostheim uninvited is another matter.",
+        approach: "Step into the cold",
+      },
+      {
+        line: "He doesn't turn to look at you. The cold in the room sharpens.",
+        approach: "Speak up",
+      },
+      {
+        line: "He's alone, like always, cigarette burning down in the ashtray, and doesn't look up when the door opens.",
+        approach: "Close the door after you",
+      },
+      {
+        line: "He weighs you the way one weighs a servant he did not hire, quickly, and without much interest.",
+        approach: "Refuse to be dismissed",
+      },
+      {
+        line: "He lights a cigarette and waits for you to explain yourself.",
+        approach: "State your case",
+      },
     ],
     known: [
       "He recognizes you now. He makes a point of not showing it.",
@@ -372,12 +387,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Step into the cold",
-      "Meet his eyes anyway",
-      "Announce yourself",
-      "Refuse to be dismissed",
-    ],
     known: [
       "Let him place you",
       "Stand somewhere useful",

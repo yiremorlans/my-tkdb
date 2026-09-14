@@ -7,32 +7,32 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Good evening. I hope it isn't too late to be writing to you. I checked the hour twice, and then I wrote anyway, because I didn't want to lose my nerve before morning.",
-        "I've been wanting to say this properly for a while, and it turns out I can only manage it in writing. That probably tells you something about me.\n\nYou've been kind to me {timesMet} times now. You won't have been keeping count. I was, quietly, every time. I was raised to believe a kindness is something you pay back, and the trouble is I haven't the first idea how to pay back one this large.",
+        "**{firstName}**: Good evening. I hope it isn't too late to be texting you this. I wanted to say it right, and apparently right takes longer to type out than it would standing in front of you, where I'd likely forget half of what I meant to say.",
+        "You've been kind to me every time we've worked together, {timesMet} times now. I was raised to believe a kindness is something you pay back, and the trouble is I haven't the first idea how to pay back one this large.",
       ],
       choice: {
-        prompt: "So I'm asking rather clumsily. How do I? Repay it, I mean.",
+        prompt: "So I'll just ask outright. How do I repay it?",
         options: [
           {
             key: "kind",
             label: "Tell him he doesn't owe you",
             style: 3,
             close:
-              "That's a very generous thing to say, and I'm not going to accept it.\n\n...I'm going to accept it. Thank you. I'm not used to being let off, and it sits oddly, and rather well.",
+              "That's far too generous, and I've decided to take you up on it anyway. Thank you. I'm not used to being let off this easily, and I rather like it.",
           },
           {
             key: "playful",
             label: "Ask for the whole ledger",
             style: 1,
             close:
-              "There's no ledger. There's absolutely a ledger. It's in the back of my training notebook and I'd rather you didn't see it.\n\n...It's four pages. Good night.",
+              "There's no ledger. There's absolutely a ledger, and it's in the back of my training notebook where you will never find it.\n\n...Fine. It's four pages. Good night.",
           },
           {
             key: "bold",
             label: "Tell him to stop counting",
             style: 4,
             close:
-              "*The reply is slow in coming.*\n\nI don't know how to do that, *he writes, and there's no courtesy left in it at all.* But I'd like to learn, if you'll be patient with a slow student.",
+              "*The reply is slow in coming.*\n\nI don't know how, not yet. But I'd like you to keep reminding me until it sticks.",
           },
         ],
       },
@@ -45,7 +45,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: May I be improper for a moment? I'll keep it short.",
-        "You always answer me with {favResponse}, and I've spent far too long working out why something so kind should unsettle me.\n\nI think it's this. Most people are careful with me, the way you're careful near a thing that might go off. They aren't wrong to be. You never are. And every time you aren't, I feel a little less like something to be handled and a little more like a person, and I've grown quietly greedy for the feeling.",
+        "You always answer me with {favResponse}, and I've spent far too long working out why something so kind should unsettle me.\n\nI think it's this. Most people are careful with me, the way you're careful near a thing that might go off. They aren't wrong to be. You never are. And every time you aren't, I feel a little less like something to be handled and a little more like a person, and I've grown greedy for the feeling, more than I'd like to admit.",
       ],
       choice: {
         prompt:
@@ -232,35 +232,50 @@ export default {
   },
   dialogue: {
     new: [
-      "He studies you for a long moment before offering the faintest nod.",
-      "He steps aside to let you pass, and apologizes for having been in the way at all.",
-      "He's checking his gear over with far more care than the hour warrants. A mission, maybe.",
-      '"Forgive me," he says softly, before you\'ve said anything. "I didn\'t hear you come in."',
-      "Everything about him is quiet. That includes whatever he's decided not to say.",
+      {
+        line: "He catches your eye straightaway and breaks into an easy, ready smile.",
+        approach: "Return his smile",
+      },
+      {
+        line: "He steps aside to let you pass, and apologizes for having been in the way at all.",
+        approach: "Speak softly first",
+      },
+      {
+        line: "He's checking his gear over with far more care than the hour warrants. A mission, maybe.",
+        approach: "Let him notice you",
+      },
+      {
+        line: '"Forgive me," he says softly, before you\'ve said anything. "I didn\'t hear you come in."',
+        approach: "Approach without a word",
+      },
+      {
+        line: "He's already stepped between a first-year and a pack of older students, calm as if it's nothing.",
+        approach: "Back him up",
+      },
     ],
     known: [
       "He remembers you. The little apology comes quicker now, like a habit he's stopped hearing himself say.",
       "He looks up when you enter now, rather than after.",
       "\"You've been well?\" It's the first question he's asked you unprompted.",
-      '"You\'re early," he notes, quietly impressed. "Good. We can go over the details."',
-      "The nod has become a nod and half a smile.",
+      '"You\'re early," he notes, openly impressed. "Good. We can go over the details."',
+      "The easy smile comes quicker now, like he's stopped making himself wait for it.",
     ],
     warm: [
-      "He offers a small, genuine smile now instead of just a nod.",
+      "The easy smile turns private more often now, just for you.",
       "He moves a half-step closer than he used to, and pretends he hasn't.",
       "He's already checking the room for anything that might hurt you. He always does.",
       '"You look tired," he observes gently. He noticed before you did.',
-      "The politeness is still there, but it isn't a wall anymore.",
+      "The breezy courtesy is still there. It's just not the whole of him around you anymore.",
     ],
     spark: [
       "The politeness has thinned. What shows through it is not gentle at all.",
       "He takes your hand to check it for injury, and forgets to give it back.",
       '"Forgive me," he murmurs, standing far closer than forgiveness requires.',
       "He looks at your mouth for exactly a second too long, and knows it.",
-      '"I\'m not always as harmless as I let people believe," he says quietly. "You should know that."',
+      '"I\'m not always as harmless as I let people believe," he says evenly. "You should know that."',
     ],
     close: [
-      '"I don\'t say this to just anyone," he admits quietly, "but I\'m glad you\'re here."',
+      '"I don\'t say this to just anyone," he admits plainly, "but I\'m glad you\'re here."',
       "He reaches for your sleeve, stops himself, and then does it anyway.",
       "There's something less careful in how he looks at you now. Something honest.",
       '"Stay where I can see you," he says. It isn\'t a request, quite.',
@@ -294,7 +309,7 @@ export default {
             approach: "Let him walk you back",
           },
           {
-            line: '"You shouldn\'t wander alone," he says quietly. "Not here. Not at this hour."',
+            line: '"You shouldn\'t wander alone," he says firmly. "Not here. Not at this hour."',
             approach: "Let him walk you back",
           },
         ],
@@ -322,7 +337,7 @@ export default {
             approach: "Take the sheltered corner",
           },
           {
-            line: '"The quiet out here is the honest part of my day," he says. "I\'m glad you\'re in it."',
+            line: '"The stillness out here is the honest part of my day," he says. "I\'m glad you\'re in it."',
             approach: "Take the sheltered corner",
           },
         ],
@@ -373,12 +388,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Approach quietly",
-      "Return his nod",
-      "Speak softly first",
-      "Let him notice you",
-    ],
     known: [
       "Accept the better spot",
       "Answer his question",
@@ -423,7 +432,7 @@ export default {
         "Be soft with the harder part",
       ],
       close: [
-        "Trust his quiet strength",
+        "Trust his steady strength",
         "Tell him he can stop",
         "Let him take care of you",
       ],
@@ -481,13 +490,13 @@ export default {
       new: ["Stay silent", "Let him finish the thought", "Wait beside him"],
       spark: ["Let the moment pass", "Step back gently", "Say nothing at all"],
       close: [
-        "Be quiet with him",
+        "Stay silent with him",
         "Stay through the silence",
         "Let the moment be enough",
       ],
       bound: [
         "Let him sleep",
-        "Stay quiet beside him",
+        "Stay silent beside him",
         "Let the night be still",
       ],
     },
@@ -520,7 +529,7 @@ export default {
       "{user} calls, and **{name}** sets the **{house}** dispatch down without finishing the line.",
     ],
     bound: [
-      '"There\'s very little I wouldn\'t set aside for you," **{name}** says quietly, only to {user}.',
+      "\"There's very little I wouldn't set aside for you,\" **{name}** says, only to {user}.",
       "**{name}** kisses {user}'s knuckles with people going past on both sides, and does not apologize for it.",
       "{user} says the name, and every ounce of **{name}**'s restraint goes somewhere else.",
     ],

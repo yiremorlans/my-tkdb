@@ -237,11 +237,26 @@ export default {
   },
   dialogue: {
     new: [
-      "He lights up, practically bouncing. \"Oh wow, look who showed up! You're a sight for sore eyes!\" The brightness is real. It's also working a little too hard.",
-      "He reaches out to greet you, catches himself an inch away, and turns it into a wave.",
-      "Everything on his desk is labeled, sorted, and immaculate. He is not.",
-      '"Careful, not too close! Sorry. Sorry, that came out weird. Hi!"',
-      'He\'s got Edward slung over one shoulder. "Oof, Ed popped out of nowhere so I accidentally touched him and he died again. Gotta carry him all the way back to the dorm..."',
+      {
+        line: "He lights up, practically bouncing. \"Oh wow, look who showed up! You're a sight for sore eyes!\" The brightness is real. It's also working a little too hard.",
+        approach: "Say hi",
+      },
+      {
+        line: "He reaches out to greet you, catches himself an inch away, and turns it into a wave.",
+        approach: "Wave back",
+      },
+      {
+        line: "Every bottle behind his bar is labeled, sorted, and lined up by height. Strange, for someone who plays at being so carefree.",
+        approach: "Ask about the order",
+      },
+      {
+        line: '"Careful, not too close! Sorry. Sorry, that came out weird. Hi!"',
+        approach: "Keep a careful distance",
+      },
+      {
+        line: 'He\'s got Edward slung over one shoulder. "Oof, Ed popped out of nowhere so I accidentally touched him and he died again. Gotta carry him all the way back to the dorm..."',
+        approach: "Ask if this happens a lot",
+      },
     ],
     known: [
       "He's stopped warning you off. The careful distance is still there. It always will be. He just doesn't say it out loud anymore.",
@@ -332,7 +347,6 @@ export default {
     ],
   },
   approach: {
-    new: ["Wave back", "Stop just short", "Say hi", "Keep a careful distance"],
     known: [
       "Give him the real answer",
       "Keep the careful distance",

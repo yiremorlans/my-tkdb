@@ -256,11 +256,26 @@ export default {
   },
   dialogue: {
     new: [
-      "He greets you with a charming smile, but there's something dangerous beneath the gentleman's facade.",
-      "He takes your hand to bow over it before asking whether he may. He does ask. Afterward.",
-      '"How delicate you look," he murmurs, in a room where he is by far the more dangerous thing.',
-      "He is standing much too close for a first meeting, and entirely unbothered by that.",
-      '"The most powerful vampire? No, those are just rumors." He smiles as if it amuses him.',
+      {
+        line: "He greets you with a charming smile, but there's something dangerous beneath the gentleman's facade.",
+        approach: "Accept the invitation",
+      },
+      {
+        line: "He takes your hand to bow over it before asking whether he may. He does ask. Afterward.",
+        approach: "Let him take your hand",
+      },
+      {
+        line: '"How delicate you look," he murmurs, in a room where he is by far the more dangerous thing.',
+        approach: "Step into the candlelight",
+      },
+      {
+        line: "He is standing much too close for a first meeting, and entirely unbothered by that.",
+        approach: "Make some space",
+      },
+      {
+        line: '"The most powerful vampire? No, those are just rumors." He smiles as if it amuses him.',
+        approach: "Ask if the rumors are true",
+      },
     ],
     known: [
       "The gentleman act is unchanged. The interest behind it is no longer performed.",
@@ -343,12 +358,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Let him take your hand",
-      "Step into the candlelight",
-      "Accept the invitation",
-      "Don't flinch",
-    ],
     known: [
       "Take the moved chair",
       "Stop looking for the exit",

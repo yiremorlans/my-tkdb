@@ -239,11 +239,26 @@ export default {
   },
   dialogue: {
     new: [
-      "He's got a feed bucket in one hand and something small in his sling backpack. \"Don't mind Peekaboo. He's shy.\"",
-      "He looks up from a fence post and grins wide. \"Well, hey there. You after somethin', or just havin' a wander?\"",
-      "\"Phew... that's the last of the feed crops in for the day. Every critter here's only as healthy as what's in the bucket, so you do it right or you don't bother.\"",
-      "He smells like feed and straw and something faintly sulfurous, and seems entirely unbothered by all three.",
-      'Something skitters behind him. "Ah, ignore that," he says cheerfully. "That one\'s supposed to be in a pen."',
+      {
+        line: "He's got a feed bucket in one hand and something small in his sling backpack. \"Don't mind Peekaboo. He's shy.\"",
+        approach: "Say Hi to Peekaboo",
+      },
+      {
+        line: "He looks up from a fence post and grins wide. \"Well, hey there. You after somethin', or just havin' a wander?\"",
+        approach: "Just say you're wandering",
+      },
+      {
+        line: "\"Phew... that's the last of the feed crops in for the day. Every critter here's only as healthy as what's in the bucket, so you do it right or you don't bother.\"",
+        approach: "Hold the bucket",
+      },
+      {
+        line: "He smells like feed and straw and something faintly sulfurous, and seems entirely unbothered by all three.",
+        approach: "Walk into the pens",
+      },
+      {
+        line: 'Something skitters behind him. "Ah, ignore that," he says cheerfully. "That one\'s supposed to be in a pen."',
+        approach: "Don't freak out",
+      },
     ],
     known: [
       "\"Honor Roll, right? That's what everyone's calling you. Suits you.\" He shoulders the feed bucket.",
@@ -326,12 +341,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Don't flinch",
-      "Meet Peekaboo",
-      "Hold the bucket",
-      "Walk into the pens",
-    ],
     known: [
       "Take the feed bucket",
       "Join the rounds",

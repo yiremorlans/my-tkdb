@@ -231,12 +231,30 @@ export default {
   },
   dialogue: {
     new: [
-      "He's winding a string of festival lights around one arm, in no hurry about it. \"Well, now. Haven't seen your face around here.\"",
-      'His careful courtesy arrives a good second before he does. "Aren\'t you a long way from anywhere."',
-      "A lollipop stick shifts from one corner of his mouth to the other. He's leaning where he shouldn't be, doing nothing with real dedication.",
-      '"Oh, I just run the odd errand around here," he says, easy as anything. "Anything you need, you only have to ask."',
-      "The smile comes slow and lands just right, warm, unhurried, and a half-second too practiced.",
-      '"Sweep\'s already done, don\'t mind me." He\'s leaning on the broom rather than using it. "Old habit. Hard to break."',
+      {
+        line: "He's winding a string of festival lights around one arm, in no hurry about it. \"Well, now. Haven't seen your face around here.\"",
+        approach: "Play along",
+      },
+      {
+        line: 'His careful courtesy arrives a good second before he does. "Aren\'t you a long way from anywhere."',
+        approach: "Admit you're lost",
+      },
+      {
+        line: "A lollipop stick shifts from one corner of his mouth to the other. He's leaning where he shouldn't be, doing nothing with real dedication.",
+        approach: "Ask if he could help you",
+      },
+      {
+        line: '"Oh, I just run the odd errand around here," he says, easy as anything. "Anything you need, you only have to ask."',
+        approach: "Ask about the odd jobs",
+      },
+      {
+        line: "The smile comes slow and lands just right, warm, unhurried, and a half-second too practiced.",
+        approach: "See what it'll cost",
+      },
+      {
+        line: '"Sweep\'s already done, don\'t mind me." He\'s leaning on the broom rather than using it. "Old habit. Hard to break."',
+        approach: "Ask why he can't put it down",
+      },
     ],
     known: [
       "\"Still tidying up. I don't have to anymore. Nobody's told my hands that.\"",
@@ -324,12 +342,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Take the free favor",
-      "Play along",
-      "Ask about the odd jobs",
-      "See what it'll cost",
-    ],
     known: [
       "Sit a spell",
       "See through it anyway",

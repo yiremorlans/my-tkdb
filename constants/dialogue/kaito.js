@@ -241,11 +241,26 @@ export default {
   },
   dialogue: {
     new: [
-      "He's pressed into a doorway watching the hall, and startles hard when he clocks you. \"Oh... oh thank god, it's just you.\"",
-      "He's mid-rant about something leaked on WickHive before he's said hello. You've just become the audience.",
-      "\"You're new? Ask me anything you want to know, I'm pretty savvy when it comes to Darkwick.\" It's the one thing he says without a wobble.",
-      'He waves so hard he nearly clips a lamp. "Hey! Over here! Hiya!"',
-      "He offers you half of whatever he's snacking on before he thinks to ask your name.",
+      {
+        line: "He's pressed into a doorway watching the hall, and startles hard when he clocks you. \"Oh...thank god, it's just you.\"",
+        approach: "Say hi before he bolts",
+      },
+      {
+        line: "He's mid-rant about something leaked on WickHive before he's said hello. You've just become the audience.",
+        approach: "Follow the noise",
+      },
+      {
+        line: "\"You're new? Ask me anything you want to know, I'm pretty savvy when it comes to Darkwick.\"",
+        approach: "Ask him something",
+      },
+      {
+        line: 'He waves so hard he nearly clips a lamp. "Hey! Over here! Hiya!"',
+        approach: "Wave back",
+      },
+      {
+        line: "He offers you half of whatever he's snacking on before he thinks to ask your name.",
+        approach: "Take the offered half",
+      },
     ],
     known: [
       "He lights up when he spots you, then immediately checks whether he's bothering you.",
@@ -389,12 +404,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Wave back",
-      "Follow the noise",
-      "Take the offered half",
-      "Say hi before he bolts",
-    ],
     known: [
       "Let him place you",
       "Watch the video again",

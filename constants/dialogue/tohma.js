@@ -231,11 +231,26 @@ export default {
   },
   dialogue: {
     new: [
-      'Calm as still water, he tilts his head. "You\'re new around here."',
-      "He notes your arrival, files it somewhere, and returns to what he was doing.",
-      'He inclines his head, courteous. "Business in Frostheim? I serve the one who runs it."',
-      "He checks the corridor behind you before he looks at you. Habit, not suspicion.",
-      "Nothing about his expression moves. Something behind it is definitely taking notes.",
+      {
+        line: 'Calm as still water, he tilts his head. "You\'re new around here."',
+        approach: "Answer his question",
+      },
+      {
+        line: "He notes your arrival, files it somewhere, and returns to what he was doing.",
+        approach: "Don't interrupt him",
+      },
+      {
+        line: 'He inclines his head, courteous. "Business in Frostheim? I serve the one who runs it."',
+        approach: "State your business",
+      },
+      {
+        line: "He checks the corridor behind you before he looks at you. Habit, not suspicion.",
+        approach: "Step into view",
+      },
+      {
+        line: "Nothing about his expression moves. Something behind it is definitely taking notes.",
+        approach: "Stand where he can see you",
+      },
     ],
     known: [
       "You've moved from unknown to accounted for. From him, that's a promotion.",
@@ -367,12 +382,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "State your business",
-      "Step into view",
-      "Answer his question",
-      "Stand where he can see you",
-    ],
     known: [
       "Proceed",
       "Skip the explanation",

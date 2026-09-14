@@ -234,11 +234,26 @@ export default {
   },
   dialogue: {
     new: [
-      '"What are you dawdling for? Change out of those rags and report to my lab immediately!"',
-      '"Fascinating," he says, about you, in the tone one uses about a specimen.',
-      "He doesn't look up from the slide. \"Don't breathe on that. Or on me.\"",
-      "The lab hums. He's been awake for an unreasonable number of hours and it shows.",
-      '"You should feel honored to be chosen as the test subject of Dr. Yuri Isami, genius and visionary!"',
+      {
+        line: '"What are you dawdling for? Change out of those rags and report to my lab immediately!"',
+        approach: "Enter the lab",
+      },
+      {
+        line: '"Fascinating," he says, about you, in the tone one uses about a specimen.',
+        approach: "Be interesting",
+      },
+      {
+        line: "He doesn't look up from the slide. \"Don't breathe on that. Or on me.\"",
+        approach: "Stand still",
+      },
+      {
+        line: "The lab hums. He's been awake for an unreasonable number of hours and it shows.",
+        approach: "Ask if he's slept",
+      },
+      {
+        line: '"You should feel honored to be chosen as the test subject of Dr. Yuri Isami, genius and visionary!"',
+        approach: "Roll up your sleeve",
+      },
     ],
     known: [
       "He's stopped calling you 'worm.' He hasn't replaced it with anything yet.",
@@ -321,12 +336,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Enter the lab",
-      "Stand still",
-      "Be interesting",
-      "Roll up your sleeve",
-    ],
     known: [
       "Take the second chair",
       "Don't touch anything",

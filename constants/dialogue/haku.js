@@ -235,13 +235,30 @@ export default {
   },
   dialogue: {
     new: [
-      'He\'s found the one quiet corner of the grounds and claimed it. You found him anyway. "Oh. Hey."',
-      '"I wouldn\'t stand there." He waits out your look at the corner. "...No reason. Wanted to see if you\'d jump. You didn\'t. Noted."',
-      '"Don\'t expect too much from me," he says, not getting up. "Ghouls are glorified street magicians, really. Let\'s keep it light."',
-      "A slow nod, half a wave. That's the whole greeting, and it's more than most people get.",
-      "\"What are you doing back here? Don't tell me you've gone and gotten yourself mixed up in something.\"",
-      '"Running off out here never ends well. For either of us." He tips his head at the path. "Walk back with me."',
-      '"You shouldn\'t be out this far alone." He\'s already up. "To the lights, at least. Humor me."',
+      {
+        line: 'He\'s found the one quiet corner of the grounds and claimed it. You found him anyway. "Oh. Hey."',
+        approach: "Say hey back",
+      },
+      {
+        line: '"I wouldn\'t stand there." He waits out your look at the corner. "...No reason. Wanted to see if you\'d jump."',
+        approach: "Look over your shoulder",
+      },
+      {
+        line: '"Don\'t expect too much from me," he says, not getting up. "Ghouls are glorified street magicians, really. Let\'s keep it light."',
+        approach: "Sit on the step with him",
+      },
+      {
+        line: "A slow nod, half a wave. That's the whole greeting, and it's more than most people get.",
+        approach: "Let the quiet sit",
+      },
+      {
+        line: "\"What are you doing back here? Don't tell me you've gone and gotten yourself mixed up in something.\"",
+        approach: "Own up to it",
+      },
+      {
+        line: '"You shouldn\'t be out this far alone." He\'s already up. "To the lights, at least. Humor me."',
+        approach: "Walk with him",
+      },
     ],
     known: [
       '"Oh, it\'s you." He cracks one eye open. "Good timing. I was getting bored."',
@@ -389,13 +406,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Say hey back",
-      "Sit on the step with him",
-      "Ask what he's fixing",
-      "Let the quiet sit",
-      "Walk back with him",
-    ],
     known: [
       "Take the cleared step",
       "Ask about the repairs",

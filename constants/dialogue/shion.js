@@ -232,12 +232,26 @@ export default {
   },
   dialogue: {
     new: [
-      "He doesn't move to greet you. Only his eyes track across, then his head, slow, to follow you.",
-      '"Come closer," he says, flat. "You\'re still too far away. Closer." He isn\'t joking.',
-      '"You flinched. That\'s honest of you." He looks quietly pleased. "Do it again."',
-      "He watches you the way he watches the cat across the yard, patient, unblinking, waiting to see what you'll do.",
-      '"You wandered into the Heebie-Jeebie House on your own," he says. "Terrible instincts. I like them."',
-      "The way he studies your face feels less like interest and more like he's learning it for later.",
+      {
+        line: "He doesn't move to greet you. Only his eyes track across, then his head, slow, to follow you.",
+        approach: "Hold his gaze",
+      },
+      {
+        line: '"Come closer," he says, flat. "You\'re still too far away. Closer." He isn\'t joking.',
+        approach: "Take a step closer",
+      },
+      {
+        line: "He watches you the way he watches the cat across the yard, patient, unblinking, waiting to see what you'll do.",
+        approach: "Avoid eye contact",
+      },
+      {
+        line: '"You wandered into the Heebie-Jeebie House on your own," he says. "Terrible instincts. I like them."',
+        approach: "Step inside",
+      },
+      {
+        line: "The way he studies your face feels less like interest and more like he's learning it for later.",
+        approach: "Hold still",
+      },
     ],
     known: [
       "His gaze finds you first now, before anyone else in the room. It stopped being chance a while ago.",
@@ -324,7 +338,6 @@ export default {
     ],
   },
   approach: {
-    new: ["Step inside", "Hold his gaze", "Don't run", "Take a step closer"],
     known: [
       "Come back again",
       "Stay for talking",

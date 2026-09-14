@@ -231,11 +231,26 @@ export default {
   },
   dialogue: {
     new: [
-      "He looks up from tinkering with something, hands still steady. There's a ready smile for you.",
-      "Tiny gears are laid out in perfect order across the bench. He moves one aside for you to sit.",
-      '"Give me one second," he says, and finishes the movement without a single wasted motion.',
-      "\"Whoa, hold up. You don't wanna run here, trust me. The floor's not level.\"",
-      "He's the calmest thing in a very loud house, and he seems to know it's his job.",
+      {
+        line: "He looks up from tinkering with something, hands still steady. There's a ready smile for you.",
+        approach: "Ask what he's fixing",
+      },
+      {
+        line: "Tiny gears are laid out in perfect order across the bench. He moves one aside for you to sit.",
+        approach: "Take the cleared space",
+      },
+      {
+        line: '"Give me one second," he says, and finishes the movement without a single wasted motion.',
+        approach: "Wait for him to finish",
+      },
+      {
+        line: "\"Whoa, hold up. You don't wanna run here, trust me. The floor's not level.\"",
+        approach: "Watch your step",
+      },
+      {
+        line: "Someone's always asking Mio to fix something. He never once says no.",
+        approach: "Sit at the workbench",
+      },
     ],
     known: [
       "He's learned your name, your order, and roughly when you turn up.",
@@ -318,12 +333,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Sit at the workbench",
-      "Ask what he's fixing",
-      "Take the cleared space",
-      "Wait for him to finish",
-    ],
     known: [
       "Take the pulled-out stool",
       "Hold this a second",

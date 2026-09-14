@@ -243,11 +243,26 @@ export default {
   },
   dialogue: {
     new: [
-      "He's been watching the sky. His eyes drop to you the moment you arrive and stay there, unblinking.",
-      "He's been standing out here long enough for the dark to have settled around him. He doesn't seem to mind it.",
-      "A dandelion turns over and over between his fingers. He hasn't looked away from you once.",
-      '"...Hmphm." He\'s been waiting, and he hates waiting. "Are you done yet? Come play."',
-      "You feel watched before you see him. By then he's already much closer.",
+      {
+        line: "He's been watching the sky. His eyes drop to you the moment you arrive and stay there, unblinking.",
+        approach: "Meet his stare",
+      },
+      {
+        line: "He's been standing out here long enough for the dark to have settled around him. He doesn't seem to mind it.",
+        approach: "Go up to him",
+      },
+      {
+        line: "A dandelion turns over and over between his fingers. He hasn't looked away from you once.",
+        approach: "Hold his gaze",
+      },
+      {
+        line: '"...Hmphm." He\'s been waiting, and he hates waiting. "Are you done yet? Come play."',
+        approach: "Agree to play",
+      },
+      {
+        line: "You feel watched before you see him. By then he's already much closer.",
+        approach: "Let him close the distance",
+      },
     ],
     known: [
       "He knows your footsteps now. He's turned toward you before you're in sight.",
@@ -368,12 +383,6 @@ export default {
     ],
   },
   approach: {
-    new: [
-      "Meet his stare",
-      "Step into the shadow",
-      "Don't look away",
-      "Wait for him to move first",
-    ],
     known: [
       "Take the dandelion",
       "Let him watch",
@@ -469,7 +478,11 @@ export default {
         "Play the counting game back",
         "Hide, and let him find you",
       ],
-      bound: ["Hum until it gets light", "Hide the dandelions", "Make him chase you"],
+      bound: [
+        "Hum until it gets light",
+        "Hide the dandelions",
+        "Make him chase you",
+      ],
     },
     bold: {
       new: [
