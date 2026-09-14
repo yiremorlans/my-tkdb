@@ -734,7 +734,7 @@ CREATE TABLE IF NOT EXISTS missions (
   signatures_required INT,                        -- errand only: random 1..house roster size, frozen at spawn
   teaser              TEXT NOT NULL,              -- the MISSION_TEASERS line used
   created_at          TIMESTAMP WITH TIME ZONE NOT NULL DEFAULT NOW(),
-  post_expires_at     TIMESTAMP WITH TIME ZONE NOT NULL,   -- created_at + POST_TTL_HOURS (6)
+  post_expires_at     TIMESTAMP WITH TIME ZONE NOT NULL,   -- created_at + POST_TTL_HOURS (2)
   accepted_by         TEXT,
   accepted_at         TIMESTAMP WITH TIME ZONE,
   accept_expires_at   TIMESTAMP WITH TIME ZONE,   -- accepted_at + ACCEPT_WINDOW_HOURS (48)
@@ -1098,7 +1098,7 @@ admin-configurable.
 | `WINDOW_START_HOUR` / `WINDOW_END_HOUR` | `5` / `24` | Active window, America/Chicago (05:00–midnight CT) |
 | `MIN_GAP_MS` | `2h` | Minimum spacing between consecutive slots |
 | `STALE_SLOT_MINUTES` | `90` | Skip a slot that comes due more than this late |
-| `POST_TTL_HOURS` | `6` | Unaccepted post → withdrawn |
+| `POST_TTL_HOURS` | `2` | Unaccepted post → withdrawn |
 | `ACCEPT_WINDOW_HOURS` | `48` | Accepted-but-unfinished → expired, slot frees |
 | `RIDDLE_WRONG_COOLDOWN_SECONDS` | `20` | Gap between wrong `/riddle` guesses (in-memory) |
 | `WEIGHT_RIDDLE` / `WEIGHT_ERRAND` / `WEIGHT_COOP` | `50` / `25` / `25` | Type roll at spawn |

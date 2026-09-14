@@ -48,7 +48,7 @@ You can hold **one** mission at a time, and **accept at most two a day** — the
 - `/riddle <answer>` — riddle only. A wrong answer costs a 60-second pause, which is what keeps anyone from typing all 26 names. **ephemeral**
 - `/missions enable|disable|status` — **Manage Server permission required**, re-checked on every invocation. Missions default to the encounters channel, so a server that already ran `/encounters channel` needs no second setup. Unlike `/encounters status`, this one *does* show today's times: knowing when a request lands wins you nothing, because you still have to be first to the button.
 
-**Missions never move affinity either.** They pay **house logs** (`mission_log` rows internally), which is what `/house` ranks you on, plus a banked cooldown reset. An unaccepted request is withdrawn after 6 hours; an accepted one lapses after 48 and frees your slot. Banked resets are deliberately **not** capped — supply already limits them, and a cap would put the most active player back on use-it-or-lose-it. Full design notes are in [`docs/scheduled-missions.md`](docs/scheduled-missions.md).
+**Missions never move affinity either.** They pay **house logs** (`mission_log` rows internally), which is what `/house` ranks you on, plus a banked cooldown reset. An unaccepted request is withdrawn after 2 hours; an accepted one lapses after 48 and frees your slot. Banked resets are deliberately **not** capped — supply already limits them, and a cap would put the most active player back on use-it-or-lose-it. Full design notes are in [`docs/scheduled-missions.md`](docs/scheduled-missions.md).
 
 ## Project structure
 Below is a basic overview of the project structure:

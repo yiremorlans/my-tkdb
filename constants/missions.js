@@ -44,7 +44,7 @@ export const MIN_GAP_MS = 2 * 60 * 60 * 1000;
 export const STALE_SLOT_MINUTES = 90;
 
 // How long an unaccepted request stays on the board before it is withdrawn.
-export const POST_TTL_HOURS = 6;
+export const POST_TTL_HOURS = 2;
 
 // How long an accepted mission has to be finished before it lapses and frees
 // the accepter's slot. Passed into claim_mission rather than hard-coded in the
