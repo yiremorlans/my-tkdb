@@ -4,11 +4,12 @@
 // I/O lives in ../publicEncounters.js and ../encounterScheduler.js.
 
 import {
+  backgroundPool,
   GENERAL_LOCATIONS,
   timeBucket,
-  weightedBackgrounds,
 } from "./backgrounds.js";
 import { CHARACTERS, getFullName } from "./characters.js";
+import { pickRandom } from "./random.js";
 import {
   DIALOGUE,
   SHARED_ENCOUNTER_TEASERS,
@@ -464,9 +465,7 @@ export function clearGuessCooldowns(encounterId = null) {
 
 // --- shared ----------------------------------------------------------------
 
-export function pickRandom(list) {
-  return list[Math.floor(Math.random() * list.length)];
-}
+export { pickRandom };
 
 // Picks the background for a new encounter: a uniform draw over the two public
 // location pools concatenated. weightedBackgrounds (not the bare
@@ -474,12 +473,7 @@ export function pickRandom(list) {
 // exact behaviour — `_PM` files excluded during the day, and repeated
 // EVENING_PM_WEIGHT times in the evening so the pick is biased toward them.
 export function pickEncounterBackground(now = new Date()) {
-  const pool = [];
-  for (const locationKey of ENCOUNTER_LOCATIONS) {
-    for (const file of weightedBackgrounds(locationKey, now)) {
-      pool.push({ locationKey, file });
-    }
-  }
+  const pool = backgroundPool(ENCOUNTER_LOCATIONS, now);
   if (pool.length === 0) return null;
   return pickRandom(pool);
 }

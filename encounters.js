@@ -1,14 +1,14 @@
-import { ButtonStyleTypes, InteractionResponseFlags, MessageComponentTypes } from 'discord-interactions';
+import { ButtonStyleTypes, MessageComponentTypes } from 'discord-interactions';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import { EPHEMERAL as EPHEMERAL_FLAG } from './utils.js';
 import {
-  attributedLocations,
   getRandomBackgroundForCharacter,
   getRandomGeneralBackground,
   getLocationDisplayName,
-  weightedBackgrounds,
-  SPECIAL_BACKGROUNDS,
+  turfSpots,
+  TURF_PROBABILITY,
 } from './constants/backgrounds.js';
 import {
   CHARACTERS,
@@ -23,8 +23,8 @@ import {
   RESPONSE_TYPES,
 } from './constants/characters.js';
 import {
+  CASUAL_IMAGE_PROBABILITY_BY_LEVEL,
   MEET_OPTION_COUNT,
-  RESPONSE_OPTION_POOL,
   RESPONSE_STYLES,
   RESPONSE_TYPE_ORDER,
   getDialogueTier,
@@ -54,17 +54,11 @@ import {
   ENCOUNTER_MILESTONES,
   fillTemplate,
   getMilestone,
+  pickRandom,
 } from './constants/publicEncounters.js';
 import { ERRAND_ROAM_TARGET_BIAS } from './constants/missions.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-const CACHE_FILE = path.join(__dirname, '.roam-cache.json');
-
-const EPHEMERAL_FLAG = InteractionResponseFlags.EPHEMERAL;
-
-function pickRandom(list) {
-  return list[Math.floor(Math.random() * list.length)];
-}
 
 function pickRandomDistinct(list, count) {
   const pool = [...list];
@@ -76,26 +70,12 @@ function pickRandomDistinct(list, count) {
   return picked;
 }
 
-// Determine character image variant based on relationship level.
-// Stranger: always uniform. Higher levels gradually increase casual probability.
 function getImageVariant(character, levelName) {
-  // Probability of showing casual outfit at each level
-  const casualProbability = {
-    Stranger: 0,           // 0% casual
-    Acquaintance: 0.25,    // 25% casual
-    Friend: 0.40,          // 40% casual
-    'Close Friend': 0.55,  // 55% casual
-    Confidant: 0.70,       // 70% casual
-    Devoted: 0.85,         // 85% casual
-    Soulbound: 0.95,       // 95% casual
-  };
-
-  const probability = casualProbability[levelName] || 0;
+  const probability = CASUAL_IMAGE_PROBABILITY_BY_LEVEL[levelName] || 0;
   const useCasual = Math.random() < probability && character.images.casual;
 
   let variant = useCasual ? 'casual' : 'uniform';
 
-  // Fallback to any available variant if chosen one doesn't exist
   if (!character.images[variant]) {
     variant = Object.keys(character.images)[0] || 'uniform';
   }
@@ -103,59 +83,15 @@ function getImageVariant(character, levelName) {
   return variant;
 }
 
-// Signature spots: given an already-chosen character, these backgrounds are
-// this much likelier among the spots available to them.
-//
-// This is the inverse of the LOCATION_CHARACTER_AFFINITIES map it replaces,
-// which boosted a *character* at a location. "Ren haunts the Mystery Diner"
-// reads the same either way, but the direction matters: /roam used to pick the
-// location first, so boosting a character there changed how often that
-// character appeared at all. P(character) came out proportional to how many
-// backgrounds their house had and inversely proportional to how many housemates
-// shared it — 1.73% for Benkei against 6.22% for Edward, a 3.6x spread nobody
-// authored. Weighting a *spot* for a character who has already been drawn
-// expresses the same flavor and cannot touch the character distribution.
-const CHARACTER_SIGNATURE_SPOTS = {
-  ren: { [SPECIAL_BACKGROUNDS.DARKWICK_MYSTERY_DINER]: 2 },
-  shohei: { [SPECIAL_BACKGROUNDS.DARKWICK_FOOD_TRUCK]: 2 },
-  shion: { [SPECIAL_BACKGROUNDS.DARKWICK_DOCKS]: 2 },
-  alan: { [SPECIAL_BACKGROUNDS.VAGASTROM_THE_PIT]: 2 },
-  romeo: {
-    [SPECIAL_BACKGROUNDS.SINOSTRA_VIP_ROOM_ENTRANCE]: 2,
-    [SPECIAL_BACKGROUNDS.OBSCUARY_BAR]: 1,
-  },
-  rui: { [SPECIAL_BACKGROUNDS.OBSCUARY_BAR]: 1.5 },
-  yuri: {
-    [SPECIAL_BACKGROUNDS.MORTKRANKEN_LAB]: 2,
-    [SPECIAL_BACKGROUNDS.MORTKRANKEN_LAB_PM]: 2,
-  },
-};
-
-// Fraction of /roam encounters set on the character's own turf; the rest are
-// general locations (Darkwick, Ultio, Galaxy Express, Clementia).
-//
-// A fixed constant, deliberately NOT derived from how many backgrounds a
-// character's turf happens to hold. Deriving it would give Edward (Obscuary +
-// a three-background private room) a different turf/out-and-about feel than
-// Mio (a crowded Dionysia and no room) for reasons no one chose. It cannot
-// affect who appears — the character is already drawn by the time this is read
-// — only where they are when they do.
-const TURF_PROBABILITY = 0.55;
-
-// Every eligible background on this character's turf, with their signature
-// spots repeated to weight them. Returns [] for a character with no attributed
-// location that has anything eligible right now (Benkei, who has no house).
-function turfSpots(character, now) {
-  const signature = CHARACTER_SIGNATURE_SPOTS[character.id] || {};
-  const pool = [];
-  for (const locationKey of attributedLocations(character)) {
-    for (const file of weightedBackgrounds(locationKey, now)) {
-      for (let i = 0; i < Math.ceil(signature[file] || 1); i++) {
-        pool.push({ locationKey, file });
-      }
-    }
-  }
-  return pool;
+// Affinity → level → dialogue tier → image variant for this user and
+// character, in one shot — the same derivation /roam (buildRoamDialogueMessage)
+// and /meet (buildMeetSpawnMessage) both need before drawing a line.
+async function getCharacterProgress(userId, character) {
+  const affinity = (await readRelationship(userId, character.id))?.affinity || 0;
+  const level = getRelationshipLevel(affinity);
+  const tier = getDialogueTier(level.name);
+  const variant = getImageVariant(character, level.name);
+  return { level, tier, variant };
 }
 
 // Pick where an already-chosen character is found. Their own turf most of the
@@ -235,56 +171,34 @@ function generateEncounterId() {
   return `roam_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
 }
 
-function loadCacheFile() {
-  try {
-    if (fs.existsSync(CACHE_FILE)) {
-      const data = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf8'));
-      const now = Date.now();
-      const valid = {};
-      for (const [id, entry] of Object.entries(data)) {
-        if (entry.expiry > now) {
-          valid[id] = entry;
-        }
-      }
-      return valid;
-    }
-  } catch (err) {
-    console.warn('[roamCache] Error loading cache:', err.message);
-  }
-  return {};
-}
+// In-memory, single-instance (same assumption encounterScheduler.js makes):
+// a /roam pick lives 5 minutes between the "approach" prompt and the click
+// that spawns it, so it never needs to survive a redeploy. Keyed by
+// encounterId; pruned lazily on access rather than on a timer, since nothing
+// here needs to reclaim memory on a schedule.
+const roamCache = new Map();
 
-function saveCacheFile(cache) {
-  try {
-    fs.writeFileSync(CACHE_FILE, JSON.stringify(cache, null, 2));
-  } catch (err) {
-    console.error('[roamCache] Error saving cache:', err.message);
+function pruneExpiredRoamCache(now = Date.now()) {
+  for (const [id, entry] of roamCache) {
+    if (entry.expiry <= now) roamCache.delete(id);
   }
 }
 
 function cacheRoamEncounter(encounterId, data) {
-  const cache = loadCacheFile();
-  cache[encounterId] = {
-    ...data,
-    expiry: Date.now() + 5 * 60 * 1000, // 5 min expiry
-  };
-  saveCacheFile(cache);
+  pruneExpiredRoamCache();
+  roamCache.set(encounterId, { ...data, expiry: Date.now() + 5 * 60 * 1000 });
 }
 
 export function getCachedRoamEncounter(encounterId) {
-  const cache = loadCacheFile();
-  const entry = cache[encounterId];
+  pruneExpiredRoamCache();
+  const entry = roamCache.get(encounterId);
   if (!entry) return null;
 
   const { expiry, ...data } = entry;
   return data;
 }
 
-
 export async function buildRoamDialogueMessage(userId, now = new Date()) {
-  console.log('[buildRoamDialogueMessage] Starting...');
-  const startTime = Date.now();
-
   // Character first, setting second — the same order /meet uses. This used to
   // draw the location first and then pick among whoever was attributed to it,
   // which made P(character) an accident of three unrelated things: how many
@@ -293,7 +207,7 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
   // exactly 1/CHARACTERS.length for everyone, and leaves the setting free to be
   // weighted however the flavor wants (TURF_PROBABILITY, signature spots, the
   // evening _PM bias) without any of it bending who shows up.
-  console.log('[buildRoamDialogueMessage] Picking character...');
+  //
   // Uniform over the whole roster, unless this user is holding an errand — see
   // unsignedErrandTargets. ERRAND_ROAM_TARGET_BIAS of the time the roll is
   // steered to somebody they still need; the rest of the time it is the same
@@ -306,23 +220,13 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
 
   const spot = selectRoamSpot(character, now);
   if (!spot) {
-    console.log('[buildRoamDialogueMessage] No background available');
     return {
       content: 'You wander for a while, but nowhere seems worth stopping at.',
       flags: EPHEMERAL_FLAG,
     };
   }
 
-  console.log(`[buildRoamDialogueMessage] Selected ${getFullName(character)} at ${spot.locationKey}`);
-
-  console.log('[buildRoamDialogueMessage] Fetching relationship from DB...');
-  const relStart = Date.now();
-  const affinity = (await readRelationship(userId, character.id))?.affinity || 0;
-  console.log('[buildRoamDialogueMessage] Got affinity after', Date.now() - relStart, 'ms');
-
-  const level = getRelationshipLevel(affinity);
-  const tier = getDialogueTier(level.name);
-  const variant = getImageVariant(character, level.name);
+  const { tier, variant } = await getCharacterProgress(userId, character);
   const dialogueCtx = {
     now,
     locationKey: spot.locationKey,
@@ -333,24 +237,19 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
   // answers the line the player just read (see getRandomDialogueBeat).
   const { line: dialogue, approach } = getRandomDialogueBeat(character, tier, variant, dialogueCtx);
   const temperament = getTemperamentGreeting(character, tier);
-  console.log('[buildRoamDialogueMessage] Got dialogue:', dialogue);
-  console.log('[buildRoamDialogueMessage] Got temperament:', temperament);
 
   const charFilename = character.images[variant];
 
   const encounterId = generateEncounterId();
-  // `now` is stored as epoch ms — the cache round-trips through JSON, so a Date
-  // would come back a string. buildRoamSpawnMessage rehydrates it.
   cacheRoamEncounter(encounterId, {
     spot,
-    character,
+    characterId: character.id,
     charFilename,
     dialogue,
     temperament,
     tier,
-    ctx: { ...dialogueCtx, now: now ? now.getTime() : null },
+    ctx: dialogueCtx,
   });
-  console.log(`[buildRoamDialogueMessage] Cached encounter ${encounterId}, elapsed: ${Date.now() - startTime}ms`);
 
   return {
     content: `*${dialogue}*`,
@@ -380,19 +279,14 @@ export async function buildRoamSpawnMessage(encounterId) {
     };
   }
 
-  const { spot, character, charFilename, temperament, tier, ctx } = encounter;
-  const dialogueCtx = ctx
-    ? { ...ctx, now: ctx.now != null ? new Date(ctx.now) : null }
-    : {};
-  console.log('[buildRoamSpawnMessage] Starting image composition...');
-  const composeStart = Date.now();
+  const { spot, characterId, charFilename, temperament, tier, ctx } = encounter;
+  const character = getCharacterById(characterId);
   const imageBuffer = await composeEncounter(spot.file, charFilename, temperament);
-  console.log(`[buildRoamSpawnMessage] Image composition took ${Date.now() - composeStart}ms`);
 
   return {
     content: `You wander into **${getLocationDisplayName(spot)}** and run into **${getFullName(character)}**...`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
-    components: responseActionRow(character.id, false, tier, 'roam', dialogueCtx),
+    components: responseActionRow(character.id, false, tier, 'roam', ctx),
     flags: EPHEMERAL_FLAG,
   };
 }
@@ -462,10 +356,7 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
   const spot = getRandomBackgroundForCharacter(character, now);
   const fallbackSpot = spot || getRandomGeneralBackground(now);
 
-  const affinity = (await readRelationship(userId, character.id))?.affinity || 0;
-  const level = getRelationshipLevel(affinity);
-  const tier = getDialogueTier(level.name);
-  const variant = getImageVariant(character, level.name);
+  const { tier, variant } = await getCharacterProgress(userId, character);
   const dialogueCtx = {
     now,
     locationKey: fallbackSpot?.locationKey ?? null,
@@ -533,14 +424,20 @@ export async function buildResponseResultMessage(
   const delta = gain > 0 ? `+${gain}` : `${gain}`;
   let deltaLine = `${delta} — ${level.emoji ? `${level.emoji} ` : ''}**${level.name}**`;
 
-  if (boostsSpent > 0) {
-    deltaLine += `  ·  *${await describeBoost(userId, character, boostsSpent)}*`;
-  }
-
+  // Neither read depends on the other, so they go out together — the boost
+  // suffix only when a boost was actually spent, same as before.
+  //
   // The one point where a "meeting" becomes real is also the point an errand
   // signature is earned (docs/scheduled-missions.md §5). A /roam that happened
   // to surface a target counts exactly as much as a deliberate /meet.
-  const signatureLine = await maybeSignErrandTarget(userId, characterId);
+  const [boostSuffix, signatureLine] = await Promise.all([
+    boostsSpent > 0 ? describeBoost(userId, character, boostsSpent) : null,
+    maybeSignErrandTarget(userId, characterId),
+  ]);
+
+  if (boostSuffix) {
+    deltaLine += `  ·  *${boostSuffix}*`;
+  }
 
   return {
     content: [`${reaction}\n${deltaLine}`, signatureLine].filter(Boolean).join('\n'),
@@ -665,16 +562,16 @@ export async function buildAffinityMessage(userId, characterIds, opts = {}) {
     if (!charId) continue;
 
     const character = getCharacterById(charId);
+    // Dedupe on the resolved character id, not the raw id, so an alias (e.g.
+    // "sho") and the canonical id ("shohei") don't produce two embeds — and a
+    // colliding attachment filename — for the same person.
+    const key = character ? character.id : charId;
+    if (seen.has(key)) continue;
+    seen.add(key);
+
     if (character) {
-      // Dedupe on the resolved character so an alias (e.g. "sho") and the
-      // canonical id ("shohei") don't produce two embeds — and a colliding
-      // attachment filename — for the same person.
-      if (seen.has(character.id)) continue;
-      seen.add(character.id);
       validCharacters.push(character);
     } else {
-      if (seen.has(charId)) continue;
-      seen.add(charId);
       invalidIds.push(rawId.trim());
     }
   }
@@ -689,21 +586,22 @@ export async function buildAffinityMessage(userId, characterIds, opts = {}) {
     };
   }
 
-  const affinities = await Promise.all(
-    validCharacters.map((character) => readRelationship(userId, character.id)),
-  );
-
+  // Neither batch depends on the other, so they go out together.
+  //
   // Public-encounter wins never move affinity, so they'd otherwise leave no
   // trace here — the milestone tally is their whole visible progression.
   // A failed read drops the block rather than the embed.
-  const milestoneCounts = await Promise.all(
-    validCharacters.map((character) =>
-      getEncounterMilestoneCounts(userId, character.id).catch((err) => {
-        console.error(`Error loading milestones for ${character.id}:`, err);
-        return {};
-      }),
+  const [affinities, milestoneCounts] = await Promise.all([
+    Promise.all(validCharacters.map((character) => readRelationship(userId, character.id))),
+    Promise.all(
+      validCharacters.map((character) =>
+        getEncounterMilestoneCounts(userId, character.id).catch((err) => {
+          console.error(`Error loading milestones for ${character.id}:`, err);
+          return {};
+        }),
+      ),
     ),
-  );
+  ]);
 
   // Build each embed alongside its attachment so an avatar that fails to load
   // drops the embed image instead of leaving a broken attachment:// reference.

@@ -1924,12 +1924,6 @@ export async function finalizeExpiredMissions(guildId = null, now = new Date()) 
     .lt('post_expires_at', nowIso);
   if (guildId) openQuery = openQuery.eq('guild_id', guildId);
 
-  const { data: withdrawn, error: openError } = await withGatewayRetry(() => openQuery.select());
-  if (openError) {
-    console.error('Error withdrawing expired mission posts:', openError);
-    throw openError;
-  }
-
   let acceptedQuery = supabase
     .from('missions')
     .update({ status: 'expired' })
@@ -1937,10 +1931,28 @@ export async function finalizeExpiredMissions(guildId = null, now = new Date()) 
     .lt('accept_expires_at', nowIso);
   if (guildId) acceptedQuery = acceptedQuery.eq('guild_id', guildId);
 
-  const { data: lapsed, error: acceptedError } = await withGatewayRetry(() => acceptedQuery.select());
+  // Disjoint statuses, so these never touch the same row — independent writes,
+  // run together rather than one after the other. Both requests hit Postgres
+  // regardless of whether the other one errors; a caller who only cares about
+  // one side still gets rows out of the one that succeeded, but this must not
+  // report success when either query failed, or `/missiondev sweep` reads
+  // back an empty array and prints "0 withdrawn, 0 lapsed" for what was
+  // actually a DB outage.
+  const [
+    { data: withdrawn, error: openError },
+    { data: lapsed, error: acceptedError },
+  ] = await Promise.all([
+    withGatewayRetry(() => openQuery.select()),
+    withGatewayRetry(() => acceptedQuery.select()),
+  ]);
+  if (openError) {
+    console.error('Error withdrawing expired mission posts:', openError);
+  }
   if (acceptedError) {
     console.error('Error lapsing accepted missions:', acceptedError);
-    throw acceptedError;
+  }
+  if (openError || acceptedError) {
+    throw openError || acceptedError;
   }
 
   return { withdrawn: withdrawn || [], lapsed: lapsed || [] };
@@ -2139,7 +2151,7 @@ export async function spendCooldownReset(userId, command, cooldownSeconds) {
 export async function countCooldownResets(userId) {
   const { data, error } = await supabase
     .from('mission_log')
-    .select('*')
+    .select('id')
     .eq('discord_user_id', userId)
     .is('reset_spent_at', null);
 

@@ -80,6 +80,23 @@ export async function editChannelMessage(channelId, messageId, body) {
 }
 
 /**
+ * editChannelMessage for the common "close out a stale post" shape shared by
+ * missions.js and publicEncounters.js: skip when there was never a post to
+ * edit, and log-and-swallow rather than throw on failure, since these callers
+ * run unattended off a scheduler tick and can't do anything about a dead
+ * token or a deleted post except note it and move on. `logLabel` is prefixed
+ * to the console.error line, e.g. "[missions] Could not edit mission 12 post".
+ */
+export async function editChannelMessageSafe(channelId, messageId, body, logLabel) {
+  if (!messageId) return;
+  try {
+    await editChannelMessage(channelId, messageId, body);
+  } catch (err) {
+    console.error(`${logLabel}:`, err.message);
+  }
+}
+
+/**
  * Open (or re-open) the DM channel with a user and return its id.
  *
  * Discord dedupes these server-side — asking twice for the same recipient gives

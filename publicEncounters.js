@@ -3,6 +3,7 @@
 // tick loop that drives spawnEncounter/sweepExpiredEncounters lives in
 // encounterScheduler.js.
 
+import { EPHEMERAL } from './utils.js';
 import {
   buildEncounterContent,
   clearGuessCooldowns,
@@ -32,7 +33,7 @@ import {
 import { bondLevelFromSlug, getDialogueTier, getRelationshipLevel } from './constants/game.js';
 import { missionSlotsLine } from './constants/missions.js';
 import { composeSilhouetteEncounter } from './imageComposition.js';
-import { editChannelMessage, postChannelMessage } from './discordRest.js';
+import { editChannelMessage, editChannelMessageSafe, postChannelMessage } from './discordRest.js';
 import { deliverBondScene } from './bondScenes.js';
 import { devResetCommandLimits } from './commandLimits.js';
 import {
@@ -58,7 +59,19 @@ import {
   trackUserActivity,
 } from './db/supabase.js';
 
-const EPHEMERAL = 64;
+// Composite the silhouette and post it — the shared shape behind a fresh
+// spawn and a moved-channel re-post (spawnEncounter / moveEncounterToChannel).
+// Callers differ only in which channel and which teaser/expiry feed the copy.
+async function postSilhouette(channelId, background, charFilename, teaser, expiresAt) {
+  const image = await composeSilhouetteEncounter(background, charFilename);
+  return postChannelMessage(channelId, {
+    content: buildEncounterContent(teaser, expiresAt),
+    files: [{ attachment: image, name: 'encounter.png' }],
+    // The post names nobody and pings nobody — it's answered with a slash
+    // command, not a reply.
+    allowed_mentions: { parse: [] },
+  });
+}
 
 // Cadence is the same everywhere; what differs per guild is only *when* its
 // clock happens to land, because each rolls its own gap inside the shared
@@ -146,15 +159,13 @@ export async function spawnEncounter(guild, now = new Date(), { characterId, var
   let message;
   try {
     const charFilename = generated.character.images[generated.variant];
-    const image = await composeSilhouetteEncounter(generated.background, charFilename);
-
-    message = await postChannelMessage(guild.encounter_channel_id, {
-      content: buildEncounterContent(generated.teaser, expiresAt),
-      files: [{ attachment: image, name: 'encounter.png' }],
-      // The post names nobody and pings nobody — it's answered with a slash
-      // command, not a reply.
-      allowed_mentions: { parse: [] },
-    });
+    message = await postSilhouette(
+      guild.encounter_channel_id,
+      generated.background,
+      charFilename,
+      generated.teaser,
+      expiresAt,
+    );
   } catch (err) {
     console.error(`[publicEncounters] Post failed for guild ${guild.guild_id}:`, err.message);
 
@@ -241,10 +252,10 @@ export async function spawnEncounter(guild, now = new Date(), { characterId, var
 export async function finalizeEncounter(row) {
   clearGuessCooldowns(row.id);
 
-  if (!row.message_id) return; // the POST never landed — nothing to edit
-
-  try {
-    await editChannelMessage(row.channel_id, row.message_id, {
+  await editChannelMessageSafe(
+    row.channel_id,
+    row.message_id,
+    {
       // Keyed to the hour the window closed, not the hour it opened: a two
       // minute window never straddles the day/evening boundary by enough to
       // matter, and this is the moment the line describes.
@@ -252,10 +263,9 @@ export async function finalizeEncounter(row) {
       attachments: [],
       components: [],
       embeds: [],
-    });
-  } catch (err) {
-    console.error(`[publicEncounters] Could not edit missed encounter ${row.id}:`, err.message);
-  }
+    },
+    `[publicEncounters] Could not edit missed encounter ${row.id}`,
+  );
 }
 
 /**
@@ -280,12 +290,7 @@ export async function moveEncounterToChannel(row, toChannelId) {
     return false;
   }
 
-  const image = await composeSilhouetteEncounter(row.background, charFilename);
-  const message = await postChannelMessage(toChannelId, {
-    content: buildEncounterContent(row.teaser, row.expires_at),
-    files: [{ attachment: image, name: 'encounter.png' }],
-    allowed_mentions: { parse: [] },
-  });
+  const message = await postSilhouette(toChannelId, row.background, charFilename, row.teaser, row.expires_at);
 
   const moved = await setPublicEncounterLocation(row.id, toChannelId, message.id);
   if (!moved) {
@@ -297,16 +302,12 @@ export async function moveEncounterToChannel(row, toChannelId) {
 
   // Leave a pointer where it used to be, minus the silhouette — the encounter
   // is answerable in the new channel now, not this one.
-  if (row.message_id) {
-    await editChannelMessage(row.channel_id, row.message_id, {
-      content: `This encounter moved to <#${toChannelId}>.`,
-      attachments: [],
-      embeds: [],
-      components: [],
-    }).catch((err) =>
-      console.error(`[publicEncounters] Could not annotate the old post for ${row.id}:`, err.message),
-    );
-  }
+  await editChannelMessageSafe(
+    row.channel_id,
+    row.message_id,
+    { content: `This encounter moved to <#${toChannelId}>.`, attachments: [], embeds: [], components: [] },
+    `[publicEncounters] Could not annotate the old post for ${row.id}`,
+  );
 
   return true;
 }
@@ -332,11 +333,13 @@ export async function sweepExpiredEncounters(guildId, now = new Date()) {
 const PERMISSION_ADMINISTRATOR = 1n << 3n; // 0x8
 const PERMISSION_MANAGE_GUILD = 1n << 5n;  // 0x20 — "Manage Server"
 
-// Whether this member may configure encounters. Discord computes ADMINISTRATOR
-// as every bit set, and the guild owner likewise, so both fall out of the
-// Manage Server check; ADMINISTRATOR is tested explicitly anyway rather than
-// relying on that.
-function canManageEncounters(member) {
+// Whether this member may configure encounters (also reused by missions.js
+// for /missions and /missiondev — the "Manage Server" check is the same
+// regardless of which admin-facing feature is asking). Discord computes
+// ADMINISTRATOR as every bit set, and the guild owner likewise, so both fall
+// out of the Manage Server check; ADMINISTRATOR is tested explicitly anyway
+// rather than relying on that.
+export function canManageEncounters(member) {
   let permissions;
   try {
     permissions = BigInt(member?.permissions ?? '0');

@@ -10,6 +10,7 @@
 
 import { CHARACTERS, getCharacterById, getFullName } from "./characters.js";
 import { HOUSES } from "./backgrounds.js";
+import { pickRandom } from "./publicEncounters.js";
 
 // --- scheduling -------------------------------------------------------------
 
@@ -49,6 +50,13 @@ export const POST_TTL_HOURS = 6;
 // the accepter's slot. Passed into claim_mission rather than hard-coded in the
 // SQL, so this constant stays the single source of truth.
 export const ACCEPT_WINDOW_HOURS = 48;
+
+// How many withdrawn/lapsed post edits sweepExpiredMissions fires at once. A
+// long outage can expire missions across many guilds on the same tick, and
+// each edit is its own PATCH to Discord — bounding this keeps a mass-expiry
+// tick from bursting past Discord's rate limit and stranding posts, without
+// giving up the concurrency a small sweep gets from running them together.
+export const SWEEP_EDIT_CONCURRENCY = 8;
 
 // How many requests one player may ACCEPT in a local day, however many they
 // finish. Six a day does nothing for distribution on its own — the board is
@@ -577,10 +585,6 @@ export const RIDDLES = {
 };
 // --- shared -----------------------------------------------------------------
 
-export function pickRandom(list) {
-  return list[Math.floor(Math.random() * list.length)];
-}
-
 function randInt(min, max) {
   return min + Math.floor(Math.random() * (max - min + 1));
 }
@@ -681,21 +685,26 @@ export function rollDailySlots(now = new Date()) {
   return slots.map((ms) => new Date(ms).toISOString());
 }
 
+// Today's slots that haven't fired yet, as `{ index, at }` — the read both
+// dueSlots and nextSlotAt need before they diverge on which side of `now`
+// they're filtering for.
+function unfiredSlots(slotsToday, firedIndices) {
+  const fired = new Set((firedIndices || []).map(Number));
+  return (slotsToday || [])
+    .map((iso, index) => ({ index, at: new Date(iso).getTime() }))
+    .filter(({ index, at }) => !fired.has(index) && Number.isFinite(at));
+}
+
 /**
  * The slots that are due and not yet fired, as `{ index, at }`, oldest first.
  * Anything more than STALE_SLOT_MINUTES late is reported as `stale: true` so
  * the caller can burn it without posting.
  */
 export function dueSlots(slotsToday, firedIndices, now = new Date()) {
-  const fired = new Set((firedIndices || []).map(Number));
   const staleAfterMs = STALE_SLOT_MINUTES * 60 * 1000;
 
-  return (slotsToday || [])
-    .map((iso, index) => ({ index, at: new Date(iso).getTime() }))
-    .filter(
-      ({ index, at }) =>
-        !fired.has(index) && Number.isFinite(at) && at <= now.getTime(),
-    )
+  return unfiredSlots(slotsToday, firedIndices)
+    .filter(({ at }) => at <= now.getTime())
     .map((slot) => ({ ...slot, stale: now.getTime() - slot.at > staleAfterMs }))
     .sort((a, b) => a.at - b.at);
 }
@@ -705,13 +714,8 @@ export function dueSlots(slotsToday, firedIndices, now = new Date()) {
  * is spent. What /mission shows someone with nothing in hand.
  */
 export function nextSlotAt(slotsToday, firedIndices, now = new Date()) {
-  const fired = new Set((firedIndices || []).map(Number));
-  const upcoming = (slotsToday || [])
-    .map((iso, index) => ({ index, at: new Date(iso).getTime() }))
-    .filter(
-      ({ index, at }) =>
-        !fired.has(index) && Number.isFinite(at) && at > now.getTime(),
-    )
+  const upcoming = unfiredSlots(slotsToday, firedIndices)
+    .filter(({ at }) => at > now.getTime())
     .sort((a, b) => a.at - b.at);
 
   return upcoming[0]?.at ?? null;
@@ -796,11 +800,6 @@ export function inspectorRank(points) {
     if (points >= candidate.min) rank = candidate;
   }
   return rank;
-}
-
-/** The next rank up, or null once the ladder is topped out. */
-export function nextInspectorRank(points) {
-  return INSPECTOR_RANKS.find((rank) => rank.min > points) || null;
 }
 
 function nameList(characterIds) {

@@ -34,11 +34,8 @@ async function drawEncounterBase(bgFilename, charFilename, { drawCharacter = tru
 
   console.log('[composeEncounter] Loading images:', bgPath, charPath);
   const loadStart = Date.now();
-  const bgImg = await loadImage(bgPath);
-  console.log('[composeEncounter] BG loaded in', Date.now() - loadStart, 'ms');
-  const charLoadStart = Date.now();
-  const charImg = await loadImage(charPath);
-  console.log('[composeEncounter] Char loaded in', Date.now() - charLoadStart, 'ms');
+  const [bgImg, charImg] = await Promise.all([loadImage(bgPath), loadImage(charPath)]);
+  console.log('[composeEncounter] Images loaded in', Date.now() - loadStart, 'ms');
 
   // Use background dimensions as canvas size.
   console.log('[composeEncounter] Creating canvas:', bgImg.width, 'x', bgImg.height);

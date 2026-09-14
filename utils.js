@@ -1,4 +1,11 @@
 import 'dotenv/config';
+import { InteractionResponseFlags } from 'discord-interactions';
+
+// The ephemeral response flag, in one place: missions.js, encounters.js,
+// publicEncounters.js and bondScenes.js each replied to the same interaction
+// flag under their own locally re-derived alias (one of them as the raw
+// number 64) before this. Import this instead of adding another one.
+export const EPHEMERAL = InteractionResponseFlags.EPHEMERAL;
 
 export async function DiscordRequest(endpoint, options) {
   // append endpoint to root API URL

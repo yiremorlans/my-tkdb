@@ -145,6 +145,19 @@ export function getDialogueTier(levelName) {
   return DIALOGUE_TIER_BY_LEVEL[levelName] || 'new';
 }
 
+// Odds a /roam or /meet spawn shows a character's casual art instead of
+// uniform. Stranger: always uniform. Higher levels gradually increase casual
+// probability, topping out at 95% for Soulbound.
+export const CASUAL_IMAGE_PROBABILITY_BY_LEVEL = {
+  Stranger: 0,
+  Acquaintance: 0.25,
+  Friend: 0.40,
+  'Close Friend': 0.55,
+  Confidant: 0.70,
+  Devoted: 0.85,
+  Soulbound: 0.95,
+};
+
 // --- ambient dialogue pool sizing --------------------------------------------
 // Baseline line count each character's `dialogue`/`temperamentDialogue` pool
 // (constants/dialogue/<id>.js) should carry per tier, so a wider affinity band

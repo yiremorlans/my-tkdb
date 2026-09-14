@@ -16,6 +16,7 @@ import {
   InteractionResponseType,
   MessageComponentTypes,
 } from "discord-interactions";
+import { EPHEMERAL } from "./utils.js";
 
 import {
   ACCEPT_WINDOW_HOURS,
@@ -33,6 +34,7 @@ import {
   localDayKey,
   localDayStart,
   MISSION_INSTRUCTIONS,
+  MISSION_NEXT_STEP,
   MISSION_PICKED_UP,
   MISSION_POST_FAILURE_LIMIT,
   MISSION_POST_RECONCILED_LINE,
@@ -43,7 +45,6 @@ import {
   missionObjectiveLine,
   missionProgressLine,
   nextSlotAt,
-  pickRandom,
   pickRiddle,
   pickSignatureTargets,
   POST_TTL_HOURS,
@@ -56,12 +57,14 @@ import {
   rollMissionType,
   rollSignatureCount,
   startRiddleCooldown,
+  SWEEP_EDIT_CONCURRENCY,
 } from "./constants/missions.js";
-import { matchCharacterGuess } from "./constants/publicEncounters.js";
+import { matchCharacterGuess, pickRandom } from "./constants/publicEncounters.js";
+import { canManageEncounters } from "./publicEncounters.js";
 import { composeFieldReport } from "./imageComposition.js";
 import { getCharacterById, getFullName } from "./constants/characters.js";
 import { HOUSES } from "./constants/backgrounds.js";
-import { editChannelMessage, postChannelMessage } from "./discordRest.js";
+import { editChannelMessage, editChannelMessageSafe, postChannelMessage } from "./discordRest.js";
 import { redeemCooldownReset, releaseCommandInvoke } from "./commandLimits.js";
 import {
   bumpGuildMissionPostFailure,
@@ -95,8 +98,6 @@ import {
 } from "./db/supabase.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
-
-const EPHEMERAL = 64;
 
 function ephemeral(content) {
   return { content, flags: EPHEMERAL };
@@ -342,27 +343,31 @@ function missionEmbed(missionId, description) {
 
 // --- expiry -----------------------------------------------------------------
 
+// Shared by finalizeWithdrawnMission and finalizeLapsedMission: edit one
+// mission's post to its closing line, off editChannelMessageSafe's shared
+// "skip if there's no post, log rather than throw on failure" handling
+// (also used by finalizeEncounter in publicEncounters.js).
+async function finalizeMissionPost(row, messageId, content, extra = {}) {
+  clearRiddleCooldowns(row.id);
+  await editChannelMessageSafe(
+    row.channel_id,
+    messageId,
+    { content, components: [], embeds: [], ...extra },
+    `[missions] Could not edit mission ${row.id} post`,
+  );
+}
+
 /**
  * A request nobody took. Edit the post to a withdrawal line, drop the image and
  * remove the button so a stale click can't reach a dead mission.
  */
 export async function finalizeWithdrawnMission(row) {
-  clearRiddleCooldowns(row.id);
-  if (!row.message_id) return;
-
-  try {
-    await editChannelMessage(row.channel_id, row.message_id, {
-      content: pickRandom(MISSION_WITHDRAWN_LINES),
-      attachments: [],
-      components: [],
-      embeds: [],
-    });
-  } catch (err) {
-    console.error(
-      `[missions] Could not edit withdrawn mission ${row.id}:`,
-      err.message,
-    );
-  }
+  await finalizeMissionPost(
+    row,
+    row.message_id,
+    pickRandom(MISSION_WITHDRAWN_LINES),
+    { attachments: [] },
+  );
 }
 
 /**
@@ -372,21 +377,11 @@ export async function finalizeWithdrawnMission(row) {
  * button that will never pay out.
  */
 export async function finalizeLapsedMission(row) {
-  clearRiddleCooldowns(row.id);
-  if (!row.assist_message_id) return;
-
-  try {
-    await editChannelMessage(row.channel_id, row.assist_message_id, {
-      content: pickRandom(ASSIST_LAPSED_LINES),
-      components: [],
-      embeds: [],
-    });
-  } catch (err) {
-    console.error(
-      `[missions] Could not edit lapsed assist post ${row.id}:`,
-      err.message,
-    );
-  }
+  await finalizeMissionPost(
+    row,
+    row.assist_message_id,
+    pickRandom(ASSIST_LAPSED_LINES),
+  );
 }
 
 /**
@@ -444,6 +439,23 @@ export async function reconcileMissionPosts(guildId = null) {
   }
 }
 
+// Runs `fn` over `items` with at most `limit` in flight at once — a worker
+// pool rather than batch-then-wait, so a fast edit picks up the next item
+// immediately instead of waiting on the slowest one in its batch. Exists so a
+// mass-expiry tick (a long outage clearing many guilds' missions at once)
+// can't fire its Discord edits all in the same instant and burst past the
+// rate limit; below `limit` items this behaves exactly like Promise.all.
+async function mapLimit(items, limit, fn) {
+  let cursor = 0;
+  const workers = Array.from({ length: Math.min(limit, items.length) }, async () => {
+    while (cursor < items.length) {
+      const item = items[cursor++];
+      await fn(item);
+    }
+  });
+  await Promise.all(workers);
+}
+
 /**
  * Finalize everything past its deadline, for one guild or all of them. Called
  * from the scheduler tick, and the restart-safety net with it: the state this
@@ -452,14 +464,24 @@ export async function reconcileMissionPosts(guildId = null) {
 export async function sweepExpiredMissions(guildId = null, now = new Date()) {
   const { withdrawn, lapsed } = await finalizeExpiredMissions(guildId, now);
 
-  for (const row of withdrawn) await finalizeWithdrawnMission(row);
-  for (const row of lapsed) await finalizeLapsedMission(row);
+  // Independent per-row Discord edits — each already catches and logs its own
+  // failure, so running them concurrently costs nothing a sequential loop had
+  // that this doesn't. Capped rather than a bare Promise.all: a long outage
+  // can expire missions across many guilds on the same tick, and firing every
+  // edit at once risks bursting past Discord's rate limit.
+  const edits = [
+    ...withdrawn.map((row) => () => finalizeWithdrawnMission(row)),
+    ...lapsed.map((row) => () => finalizeLapsedMission(row)),
+  ];
 
-  // Retry any won-claim post edits that failed in the moment of the click
-  // (app.js). Rides the same sweep because it is the same kind of work — a
-  // stranded post that needs an edit — and the flag is per row, so a disabled
-  // guild's stranded post still gets fixed.
-  await reconcileMissionPosts(guildId);
+  // reconcileMissionPosts retries a disjoint set of rows (the
+  // post_reconcile_needed flag, left by a won-claim edit that failed in the
+  // moment of the click in app.js) with no data dependency on the withdrawn/
+  // lapsed edits above, so it rides alongside them rather than after them.
+  await Promise.all([
+    mapLimit(edits, SWEEP_EDIT_CONCURRENCY, (edit) => edit()),
+    reconcileMissionPosts(guildId),
+  ]);
 
   return { withdrawn, lapsed };
 }
@@ -477,7 +499,7 @@ export async function sweepExpiredMissions(guildId = null, now = new Date()) {
  */
 export async function runGuildMissionPass(guild, now = new Date()) {
   const channelId = resolveMissionChannel(guild);
-  if (!channelId) return null;
+  if (!channelId) return;
 
   const today = localDayKey(now);
   let slotsToday = guild.mission_slots_today || [];
@@ -497,8 +519,7 @@ export async function runGuildMissionPass(guild, now = new Date()) {
       console.log(
         `[missions] Slot ${slot.index} for guild ${guild.guild_id} came due too late — skipping`,
       );
-      fired = [...fired, slot.index];
-      await markMissionSlotFired(guild.guild_id, slot.index, fired);
+      fired = await fireSlot(guild.guild_id, fired, slot.index);
       continue;
     }
 
@@ -508,27 +529,37 @@ export async function runGuildMissionPass(guild, now = new Date()) {
       console.log(
         `[missions] Guild ${guild.guild_id} still has mission ${open.id} open — spending slot ${slot.index}`,
       );
-      fired = [...fired, slot.index];
-      await markMissionSlotFired(guild.guild_id, slot.index, fired);
+      fired = await fireSlot(guild.guild_id, fired, slot.index);
       continue;
     }
 
-    await spawnMission(guild, channelId, now).catch((err) =>
-      console.error(
-        `[missions] Spawn failed for guild ${guild.guild_id}:`,
-        err.message,
+    // Independent writes — posting the mission and persisting which slot fired
+    // don't depend on each other (a spawn failure is already swallowed by the
+    // .catch below), so they run together rather than one after the other.
+    const [, nextFired] = await Promise.all([
+      spawnMission(guild, channelId, now).catch((err) =>
+        console.error(
+          `[missions] Spawn failed for guild ${guild.guild_id}:`,
+          err.message,
+        ),
       ),
-    );
-
-    fired = [...fired, slot.index];
-    await markMissionSlotFired(guild.guild_id, slot.index, fired);
+      fireSlot(guild.guild_id, fired, slot.index),
+    ]);
+    fired = nextFired;
 
     // One request per tick, at most. Two slots coming due together (a long
     // outage) would otherwise post both at once, back to back in the channel.
     break;
   }
+}
 
-  return { slotsToday, fired };
+// Append `index` to the fired list and persist it — the "spend this slot,
+// whether or not it produced a mission" write, shared by all three ways a due
+// slot ends (stale, board already busy, spawned).
+async function fireSlot(guildId, fired, index) {
+  const next = [...fired, index];
+  await markMissionSlotFired(guildId, index, next);
+  return next;
 }
 
 // --- Accept button ----------------------------------------------------------
@@ -641,6 +672,20 @@ export async function handleMissionAccept(body, missionId, now = new Date()) {
 
 // --- /mission ---------------------------------------------------------------
 
+// An errand's progress, as the {unsigned targets, signed count, required
+// count} that missionObjectiveLine/missionProgressLine each need — computed
+// once per caller instead of filtering the same target list twice for the
+// same two numbers. Shared by the briefing and the dossier.
+function errandProgress(mission) {
+  const targets = errandTargets(mission);
+  const unsigned = targets.filter((t) => !t.signed);
+  return {
+    unsigned,
+    signed: targets.length - unsigned.length,
+    required: targets.length,
+  };
+}
+
 /**
  * The briefing. Ephemeral, always: it names the house, the type and (for an
  * errand) the exact students to chase, none of which the channel ever sees.
@@ -656,14 +701,11 @@ export async function buildMissionBriefing(userId, mission) {
   let progress;
 
   if (mission.mission_type === MISSION_TYPES.ERRAND) {
-    const targets = errandTargets(mission);
+    const { unsigned, signed, required } = errandProgress(mission);
     objective = missionObjectiveLine(mission, {
-      targetIds: targets.filter((t) => !t.signed).map((t) => t.characterId),
+      targetIds: unsigned.map((t) => t.characterId),
     });
-    progress = missionProgressLine(mission, {
-      signed: targets.filter((t) => t.signed).length,
-      required: targets.length,
-    });
+    progress = missionProgressLine(mission, { signed, required });
   } else if (mission.mission_type === MISSION_TYPES.RIDDLE) {
     objective = missionObjectiveLine(mission, {
       riddle: getRiddle(mission.house, mission.riddle_id),
@@ -760,20 +802,12 @@ async function handleMissionAssist(body, mission) {
   const userId = userIdOf(body);
   const guildId = body.guild_id;
 
-  if (!mission) {
-    return {
-      reply: ephemeral("You have no mission to call backup for."),
-      afterReply: null,
-    };
-  }
-  if (mission.mission_type !== MISSION_TYPES.COOP) {
-    return {
-      reply: ephemeral(
-        `Your current mission doesn't need a partner. ${nextStepLine(mission)}`,
-      ),
-      afterReply: null,
-    };
-  }
+  const guardReply = missionTypeGuard(mission, MISSION_TYPES.COOP, {
+    noMission: "You have no mission to call backup for.",
+    wrongType: "Your current mission doesn't need a partner.",
+  });
+  if (guardReply) return { reply: guardReply, afterReply: null };
+
   if (!guildId) {
     return {
       reply: ephemeral(
@@ -1052,37 +1086,36 @@ async function fieldReportFile(mission, targets) {
   }
 }
 
+// Same "what to do next" table busyLine() renders from (constants/missions.js)
+// — one source of truth for the clause, capitalized and punctuated here for
+// its spot in a full sentence.
 function nextStepLine(mission) {
-  switch (mission.mission_type) {
-    case MISSION_TYPES.RIDDLE:
-      return "Answer it with `/riddle`.";
-    case MISSION_TYPES.COOP:
-      return "Call a partner with `/mission assist:true`.";
-    case MISSION_TYPES.ERRAND:
-      return "Collect its signatures and file it with `/docs`.";
-    default:
-      return "Check it with `/mission`.";
+  const step = MISSION_NEXT_STEP[mission.mission_type] || "check it with `/mission`";
+  return `${step[0].toUpperCase()}${step.slice(1)}.`;
+}
+
+// The "you need a mission of this type to run this command" guard shared by
+// /mission assist, /docs and /riddle: no mission in hand, or the wrong kind of
+// mission in hand, both bail with a pointer at the right command. Returns the
+// ephemeral reply to send, or null when `mission` is the right type to
+// proceed with.
+function missionTypeGuard(mission, type, { noMission, wrongType }) {
+  if (!mission) return ephemeral(noMission);
+  if (mission.mission_type !== type) {
+    return ephemeral(`${wrongType} ${nextStepLine(mission)}`);
   }
+  return null;
 }
 
 export async function handleDocs(body) {
   const userId = userIdOf(body);
   const mission = await getAcceptedMission(userId);
 
-  if (!mission) {
-    return {
-      reply: ephemeral("You have no field paperwork right now."),
-      afterReply: null,
-    };
-  }
-  if (mission.mission_type !== MISSION_TYPES.ERRAND) {
-    return {
-      reply: ephemeral(
-        `Your current mission isn't paperwork. ${nextStepLine(mission)}`,
-      ),
-      afterReply: null,
-    };
-  }
+  const guardReply = missionTypeGuard(mission, MISSION_TYPES.ERRAND, {
+    noMission: "You have no field paperwork right now.",
+    wrongType: "Your current mission isn't paperwork.",
+  });
+  if (guardReply) return { reply: guardReply, afterReply: null };
 
   return {
     reply: await buildDocsMessage(mission, errandTargets(mission)),
@@ -1174,20 +1207,11 @@ export async function handleRiddle(body, now = new Date()) {
     body.data?.options?.find((o) => o.name === "answer")?.value ?? "";
 
   const mission = await getAcceptedMission(userId);
-  if (!mission) {
-    return {
-      reply: ephemeral("You have no mission to answer for."),
-      afterReply: null,
-    };
-  }
-  if (mission.mission_type !== MISSION_TYPES.RIDDLE) {
-    return {
-      reply: ephemeral(
-        `Your current mission isn't a riddle. ${nextStepLine(mission)}`,
-      ),
-      afterReply: null,
-    };
-  }
+  const guardReply = missionTypeGuard(mission, MISSION_TYPES.RIDDLE, {
+    noMission: "You have no mission to answer for.",
+    wrongType: "Your current mission isn't a riddle.",
+  });
+  if (guardReply) return { reply: guardReply, afterReply: null };
 
   const riddle = getRiddle(mission.house, mission.riddle_id);
   if (!riddle) {
@@ -1473,11 +1497,8 @@ export async function buildDossierMessage(userId) {
   if (mission) {
     let progress;
     if (mission.mission_type === MISSION_TYPES.ERRAND) {
-      const targets = errandTargets(mission);
-      progress = missionProgressLine(mission, {
-        signed: targets.filter((t) => t.signed).length,
-        required: targets.length,
-      });
+      const { signed, required } = errandProgress(mission);
+      progress = missionProgressLine(mission, { signed, required });
     } else {
       progress = missionProgressLine(mission);
     }
@@ -1500,8 +1521,13 @@ export async function buildDossierMessage(userId) {
   // houses read "1"; recency only settles a tie the bonds leave level. A player
   // with a record but no house points (impossible today, but a cheap guard)
   // falls back to the affinity house.
-  const emblemHouse = pickEmblemHouse(stats, closest.totals, closestHouse);
-  const { embeds, files } = emblemAttachment(emblemHouse);
+  const emblemHouse = pickEmblemHouse(
+    stats.byHouse,
+    closest.totals,
+    stats.latestByHouse,
+    closestHouse,
+  );
+  const { embeds, files } = await emblemAttachment(emblemHouse);
 
   return {
     content: lines.join("\n"),
@@ -1511,15 +1537,23 @@ export async function buildDossierMessage(userId) {
   };
 }
 
-function pickEmblemHouse(stats, affinityByHouse, fallbackHouse) {
+// Ranks houses by points, then affinity, then recency — the emblem's own
+// tie-break rules. Deliberately re-derives from stats.byHouse rather than
+// reusing the dossier's `houseRows` list above: that list is pre-sorted with
+// ties broken alphabetically for a readable display line, and Array#sort is
+// stable, so sorting it further would let a full tie (points, affinity, and
+// recency all equal) silently fall back to alphabetical order instead of
+// stats.byHouse's own order.
+function pickEmblemHouse(byHouse, affinityByHouse, latestByHouse, fallbackHouse) {
   const affinity = affinityByHouse || {};
-  const ranked = Object.entries(stats.byHouse)
+  const latest = latestByHouse || {};
+  const ranked = Object.entries(byHouse || {})
     .filter(([, points]) => points > 0)
     .sort(
       (a, b) =>
         b[1] - a[1] ||
         (affinity[b[0]] || 0) - (affinity[a[0]] || 0) ||
-        (stats.latestByHouse[b[0]] || 0) - (stats.latestByHouse[a[0]] || 0),
+        (latest[b[0]] || 0) - (latest[a[0]] || 0),
     );
   return ranked[0]?.[0] || fallbackHouse || null;
 }
@@ -1544,13 +1578,13 @@ const HOUSE_COMMENDATIONS = {
   [HOUSES.SINOSTRA]: "Sinostra has your account marked in the black. Enjoy it.",
 };
 
-function emblemAttachment(house) {
+async function emblemAttachment(house) {
   if (!house) return { embeds: [], files: [] };
 
   const filename = `${house}.png`;
   let buffer = null;
   try {
-    buffer = fs.readFileSync(
+    buffer = await fs.promises.readFile(
       path.join(__dirname, "assets", "emblem", filename),
     );
   } catch (err) {
@@ -1576,24 +1610,12 @@ function emblemAttachment(house) {
 
 // --- /missions (admin) ------------------------------------------------------
 
-const PERMISSION_ADMINISTRATOR = 1n << 3n;
-const PERMISSION_MANAGE_GUILD = 1n << 5n;
-
 // `default_member_permissions` on the command is only a default — a server
 // admin can grant /missions to any role under Integrations — so the permission
-// is re-checked here against the member's real computed permissions.
-function canManageMissions(member) {
-  let permissions;
-  try {
-    permissions = BigInt(member?.permissions ?? "0");
-  } catch {
-    return false;
-  }
-  return (
-    (permissions & PERMISSION_MANAGE_GUILD) === PERMISSION_MANAGE_GUILD ||
-    (permissions & PERMISSION_ADMINISTRATOR) === PERMISSION_ADMINISTRATOR
-  );
-}
+// is re-checked here against the member's real computed permissions. Same
+// "Manage Server" check /encounters admin uses, imported from there rather
+// than redefined.
+const canManageMissions = canManageEncounters;
 
 export async function handleMissionsAdmin(body) {
   const userId = userIdOf(body);

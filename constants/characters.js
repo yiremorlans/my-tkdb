@@ -20,6 +20,7 @@ import {
   SHARED_APPROACH_WHEN,
   SHARED_DIALOGUE_WHEN,
 } from "./dialogue.js";
+import { pickRandom } from "./random.js";
 
 export const RESPONSE_TYPES = {
   KIND: "kind",
@@ -1179,10 +1180,6 @@ export function getRandomCharacterImageVariant(character) {
 export function getAffinityForResponse(character, responseType) {
   if (responseType === RESPONSE_TYPES.NEUTRAL) return 0;
   return character.affinityByResponse[responseType] ?? 0;
-}
-
-function pickRandom(list) {
-  return list[Math.floor(Math.random() * list.length)];
 }
 
 // Fallback for the /roam narration button when a character has no `approach`

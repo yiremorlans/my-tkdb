@@ -26,6 +26,7 @@ mock.module('../discordRest.js', {
       return { id: `message-${posts.length}` };
     },
     editChannelMessage: async () => ({}),
+    editChannelMessageSafe: async () => {},
     openDmChannel: async () => 'dm-1',
     postChannelTyping: async () => {},
   },

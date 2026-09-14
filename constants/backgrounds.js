@@ -445,26 +445,129 @@ export function attributedLocations(character) {
   ].filter(Boolean);
 }
 
-export function getRandomBackgroundForCharacter(character, now = new Date()) {
+// Every eligible background across a set of location keys, as {locationKey,
+// file} pairs — the shared pool-building step behind every "random background
+// from these locations" picker below (and pickEncounterBackground in
+// constants/publicEncounters.js).
+export function backgroundPool(locationKeys, now) {
   const pool = [];
-  for (const locationKey of attributedLocations(character)) {
+  for (const locationKey of locationKeys) {
     for (const file of weightedBackgrounds(locationKey, now)) {
       pool.push({ locationKey, file });
     }
   }
+  return pool;
+}
+
+export function getRandomBackgroundForCharacter(character, now = new Date()) {
+  const pool = backgroundPool(attributedLocations(character), now);
   if (pool.length === 0) return null;
   return pool[Math.floor(Math.random() * pool.length)];
 }
 
-// Picks a random general-location background (any of Darkwick/Ultio/Galaxy Express/Clementia).
-export function getRandomGeneralBackground(now = new Date()) {
-  const keys = Object.values(GENERAL_LOCATIONS);
-  const pool = [];
-  for (const locationKey of keys) {
-    for (const file of weightedBackgrounds(locationKey, now)) {
+// Signature spots: given an already-chosen character, these backgrounds are
+// this much likelier among the spots available to them.
+//
+// This is the inverse of the LOCATION_CHARACTER_AFFINITIES map it replaces,
+// which boosted a *character* at a location. "Ren haunts the Mystery Diner"
+// reads the same either way, but the direction matters: /roam used to pick the
+// location first, so boosting a character there changed how often that
+// character appeared at all. P(character) came out proportional to how many
+// backgrounds their house had and inversely proportional to how many housemates
+// shared it — 1.73% for Benkei against 6.22% for Edward, a 3.6x spread nobody
+// authored. Weighting a *spot* for a character who has already been drawn
+// expresses the same flavor and cannot touch the character distribution.
+export const CHARACTER_SIGNATURE_SPOTS = {
+  ren: { [SPECIAL_BACKGROUNDS.DARKWICK_MYSTERY_DINER]: 2 },
+  shohei: { [SPECIAL_BACKGROUNDS.DARKWICK_FOOD_TRUCK]: 2 },
+  shion: { [SPECIAL_BACKGROUNDS.DARKWICK_DOCKS]: 2 },
+  alan: { [SPECIAL_BACKGROUNDS.VAGASTROM_THE_PIT]: 2 },
+  romeo: {
+    [SPECIAL_BACKGROUNDS.SINOSTRA_VIP_ROOM_ENTRANCE]: 2,
+    [SPECIAL_BACKGROUNDS.OBSCUARY_BAR]: 1,
+  },
+  rui: { [SPECIAL_BACKGROUNDS.OBSCUARY_BAR]: 1.5 },
+  yuri: {
+    [SPECIAL_BACKGROUNDS.MORTKRANKEN_LAB]: 2,
+    [SPECIAL_BACKGROUNDS.MORTKRANKEN_LAB_PM]: 2,
+  },
+  // "Jin tends to ... spend[] most of his time in the captain's room in
+  // Frostheim" (reference.md) — already his own turf via exclusiveRoom, so
+  // this only needs a weight, no reachability fix.
+  jin: {
+    "Frostheim_Jin_Room.png": 2,
+    "Frostheim_Jin_Room_PM.png": 2,
+  },
+  // "[Edward] always appears indifferent ... just lying in his room and
+  // sleeping" / Lyca: "That moth-eaten Casanova's in his room all day"
+  // (reference.md) — same as Jin, already reachable via exclusiveRoom.
+  edward: {
+    "Obscuary_Edward_Room.png": 2,
+    "Obscuary_Edward_Room_2.png": 2,
+    "Obscuary_Edward_Room_Entrance.png": 2,
+  },
+};
+
+// Fraction of /roam encounters set on the character's own turf; the rest are
+// general locations (Darkwick, Ultio, Galaxy Express, Clementia).
+//
+// A fixed constant, deliberately NOT derived from how many backgrounds a
+// character's turf happens to hold. Deriving it would give Edward (Obscuary +
+// a three-background private room) a different turf/out-and-about feel than
+// Mio (a crowded Dionysia and no room) for reasons no one chose. It cannot
+// affect who appears — the character is already drawn by the time this is read
+// — only where they are when they do.
+export const TURF_PROBABILITY = 0.55;
+
+// All CHARACTER_SIGNATURE_SPOTS weights are multiples of 0.5 (Rui's 1.5x
+// included), so scaling every repeat count by 2 before rounding represents
+// them exactly — no Math.ceil rounding Rui's 1.5x up into an indistinguishable
+// 2x. Applied uniformly (unweighted spots repeat 1*2=2 times too), so it only
+// changes pool size, never the ratios a uniform pick over the pool reflects.
+const SIGNATURE_SPOT_SCALE = 2;
+
+// Reverse of BACKGROUNDS_BY_LOCATION: which location a given file actually
+// belongs to. A signature spot names a file, not a location, and several
+// signature spots (Ren's diner, Sho's food truck, Shion's docks) are Darkwick
+// landmarks, not part of the character's own house — this is what lets
+// turfSpots pin that one file in without pulling in the rest of Darkwick.
+const LOCATION_KEY_BY_FILE = Object.fromEntries(
+  Object.entries(BACKGROUNDS_BY_LOCATION).flatMap(([locationKey, files]) =>
+    files.map((file) => [file, locationKey]),
+  ),
+);
+
+// Every eligible background on this character's turf, with their signature
+// spots repeated to weight them. Returns [] for a character with no attributed
+// location that has anything eligible right now (Benkei, who has no house).
+export function turfSpots(character, now) {
+  const signature = CHARACTER_SIGNATURE_SPOTS[character.id] || {};
+  const turf = attributedLocations(character);
+  const pool = backgroundPool(turf, now);
+
+  // A signature spot outside the character's own turf (Ren's Mystery Diner is
+  // Darkwick, not Jabberwock) doesn't widen where they're found the way adding
+  // a whole location to attributedLocations would — it pins just that one
+  // file into the pool, the same iconic-landmark flavor without the rest of
+  // Darkwick riding along.
+  const turfSet = new Set(turf);
+  for (const file of Object.keys(signature)) {
+    const locationKey = LOCATION_KEY_BY_FILE[file];
+    if (!locationKey || turfSet.has(locationKey)) continue;
+    if (getAvailableBackgrounds(locationKey, now).includes(file)) {
       pool.push({ locationKey, file });
     }
   }
+
+  return pool.flatMap((entry) => {
+    const repeats = Math.round((signature[entry.file] || 1) * SIGNATURE_SPOT_SCALE);
+    return Array(repeats).fill(entry);
+  });
+}
+
+// Picks a random general-location background (any of Darkwick/Ultio/Galaxy Express/Clementia).
+export function getRandomGeneralBackground(now = new Date()) {
+  const pool = backgroundPool(Object.values(GENERAL_LOCATIONS), now);
   if (pool.length === 0) return null;
   return pool[Math.floor(Math.random() * pool.length)];
 }

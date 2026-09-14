@@ -37,6 +37,7 @@ import {
 } from './constants/game.js';
 import { fillTemplate, getMilestone, matchCharacterGuess } from './constants/publicEncounters.js';
 import { openDmChannel, postChannelMessage, postChannelTyping } from './discordRest.js';
+import { EPHEMERAL as EPHEMERAL_FLAG } from './utils.js';
 import {
   advanceBondScene,
   completeBondScene,
@@ -55,8 +56,6 @@ import { dirname, join } from 'path';
 import { fileURLToPath } from 'url';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const EPHEMERAL_FLAG = 64;
 
 // Where a beat's `stickers[index]` filename resolves to. See renderBeat: this
 // is the one place a scene can post an image alongside its text, standing in

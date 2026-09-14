@@ -49,6 +49,12 @@ mock.module('../discordRest.js', {
       if (discordFail.edit) throw new Error('Discord API error: 500');
       return {};
     },
+    // Mirrors the real editChannelMessageSafe: skip with no messageId, record
+    // and swallow a failure rather than throwing.
+    editChannelMessageSafe: async (channelId, messageId, body) => {
+      if (!messageId) return;
+      edits.push({ channelId, messageId, body });
+    },
     openDmChannel: async () => 'dm-1',
     postChannelTyping: async () => {},
   },

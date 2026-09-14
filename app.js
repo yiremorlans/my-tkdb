@@ -53,6 +53,7 @@ import {
 import { RESET_SPENT_LINES } from './constants/missions.js';
 import { validateContent } from './constants/validateContent.js';
 import { startGateway } from './gateway.js';
+import { EPHEMERAL } from './utils.js';
 
 // Time of day drives which backgrounds and dialogue are eligible (the `_PM`
 // evening cutoff — see constants/backgrounds.js). Discord never tells us a
@@ -222,7 +223,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
             content: flood.reason,
-            flags: 64, // EPHEMERAL
+            flags: EPHEMERAL,
           },
         });
       }
@@ -237,7 +238,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       // deadline entirely.
       res.send({
         type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-        data: { flags: 64 }, // EPHEMERAL
+        data: { flags: EPHEMERAL },
       });
 
       (async () => {
@@ -284,7 +285,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
             content: flood.reason,
-            flags: 64, // EPHEMERAL
+            flags: EPHEMERAL,
           },
         });
       }
@@ -299,7 +300,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       // went through. Deferring drops that deadline entirely.
       res.send({
         type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-        data: { flags: 64 }, // EPHEMERAL
+        data: { flags: EPHEMERAL },
       });
 
       (async () => {
@@ -355,7 +356,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
             content: 'Please specify at least one character.',
-            flags: 64, // EPHEMERAL
+            flags: EPHEMERAL,
           },
         });
       }
@@ -366,7 +367,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       // that reposts it to the channel (the `affinity:share` component below).
       res.send({
         type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-        data: { flags: 64 }, // EPHEMERAL
+        data: { flags: EPHEMERAL },
       });
 
       (async () => {
@@ -400,7 +401,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       // which /mission and /docs otherwise keep private to the accepter.
       res.send({
         type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-        data: { flags: 64 }, // EPHEMERAL
+        data: { flags: EPHEMERAL },
       });
 
       (async () => {
@@ -450,7 +451,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           console.error('Error in /bonds character:', err);
           res.send({
             type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-            data: { content: 'Something went wrong looking those up. Try again?', flags: 64 },
+            data: { content: 'Something went wrong looking those up. Try again?', flags: EPHEMERAL },
           });
         }
         return;
@@ -461,7 +462,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         const content = await setBondDmsEnabled(userId, dmsOption.value === 'on');
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: { content, flags: 64 }, // EPHEMERAL
+          data: { content, flags: EPHEMERAL },
         });
       }
 
@@ -481,7 +482,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
             content: 'Something went wrong pulling up your bonds. Try again?',
-            flags: 64, // EPHEMERAL
+            flags: EPHEMERAL,
           },
         });
       }
@@ -499,7 +500,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       // reveal is a channel-message edit inside afterReply and is unaffected.
       res.send({
         type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-        data: { flags: 64 }, // EPHEMERAL
+        data: { flags: EPHEMERAL },
       });
 
       (async () => {
@@ -540,7 +541,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: {
             content: 'Something went wrong there. Try again?',
-            flags: 64, // EPHEMERAL
+            flags: EPHEMERAL,
           },
         });
       }
@@ -567,7 +568,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         result = await handleMission(req.body);
       } catch (err) {
         console.error('Error in /mission assist:', err);
-        result = { reply: { content: 'Something went wrong there. Try again?', flags: 64 } };
+        result = { reply: { content: 'Something went wrong there. Try again?', flags: EPHEMERAL } };
       }
 
       if (result.publicReply) {
@@ -604,7 +605,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     if (name === 'mission' || name === 'docs' || name === 'riddle' || name === 'missions') {
       res.send({
         type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-        data: { flags: 64 }, // EPHEMERAL
+        data: { flags: EPHEMERAL },
       });
 
       (async () => {
@@ -644,7 +645,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       // outcome (or the reason it failed) as the followup.
       res.send({
         type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-        data: { flags: 64 }, // EPHEMERAL
+        data: { flags: EPHEMERAL },
       });
 
       (async () => {
@@ -692,7 +693,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         data: {
           content: req.body.message?.content || 'A few familiar faces catch your eye. Who do you want to meet?',
           components: disabledComponents,
-          flags: 64,
+          flags: EPHEMERAL,
         },
       });
 
@@ -700,7 +701,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         console.error('Meet pick command timed out after 120 seconds');
         sendFollowup(req.body.token, {
           content: '⏱️ This took too long to process. Try again?',
-          flags: 64,
+          flags: EPHEMERAL,
         }).catch(e => console.error('Failed to send timeout error:', e));
       }, 120000);
 
@@ -723,7 +724,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           try {
             await sendFollowup(req.body.token, {
               content: `Error: ${err.message}`,
-              flags: 64,
+              flags: EPHEMERAL,
             });
           } catch (followupErr) {
             console.error('Failed to send error followup:', followupErr);
@@ -748,7 +749,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         data: {
           content: req.body.message?.content || '',
           components: disabledComponents,
-          flags: 64,
+          flags: EPHEMERAL,
         },
       });
 
@@ -756,7 +757,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         console.error('Roam spawn command timed out after 120 seconds');
         sendFollowup(req.body.token, {
           content: '⏱️ This took too long to process. Try again?',
-          flags: 64,
+          flags: EPHEMERAL,
         }).catch(e => console.error('Failed to send timeout error:', e));
       }, 120000);
 
@@ -777,7 +778,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           try {
             await sendFollowup(req.body.token, {
               content: `Error: ${err.message}`,
-              flags: 64,
+              flags: EPHEMERAL,
             });
           } catch (followupErr) {
             console.error('Failed to send error followup:', followupErr);
@@ -812,7 +813,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           try {
             await sendFollowup(req.body.token, {
               content: 'Something went wrong sharing that. Try again?',
-              flags: 64,
+              flags: EPHEMERAL,
             });
           } catch (followupErr) {
             console.error('Failed to send error followup:', followupErr);
@@ -974,7 +975,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         // doesn't.
         res.send({
           type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
-          data: { flags: 64 }, // EPHEMERAL
+          data: { flags: EPHEMERAL },
         });
         handleBondReplayClick(
           userId,
@@ -1035,7 +1036,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           result = {
             refusal: {
               type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-              data: { content: 'Something went wrong there. Try again?', flags: 64 },
+              data: { content: 'Something went wrong there. Try again?', flags: EPHEMERAL },
             },
           };
         }
@@ -1114,7 +1115,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         result = {
           response: {
             type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-            data: { content: 'Something went wrong there. Try again?', flags: 64 },
+            data: { content: 'Something went wrong there. Try again?', flags: EPHEMERAL },
           },
         };
       }
@@ -1176,12 +1177,20 @@ export const server = app.listen(PORT, () => {
   console.log('Listening on port', PORT);
 });
 
-// Open the presence-only gateway session unless we're under `npm test`, where
-// app.js is imported to exercise the HTTP routes and a live Discord connection
-// would just leave the process hanging. No-ops too when DISCORD_TOKEN is unset.
-// The encounter scheduler is held back for the same reason — it would tick
-// against the test's fake Supabase and post to Discord for real.
-if (process.env.npm_lifecycle_event !== 'test') {
+// Open the presence-only gateway session unless we're under the test runner,
+// where app.js is imported to exercise the HTTP routes and a live Discord
+// connection would just leave the process hanging. No-ops too when
+// DISCORD_TOKEN is unset. The encounter scheduler is held back for the same
+// reason — it would tick against the test's fake Supabase and post to
+// Discord for real.
+//
+// Checked two ways: `npm_lifecycle_event` covers `npm test`, but a bare
+// `node --test ...` never sets it, so NODE_TEST_CONTEXT (set by Node itself
+// on every process running under `node --test`, npm-invoked or not) is the
+// belt-and-suspenders check that actually stops the bot from going live by
+// accident.
+const isTestRun = process.env.npm_lifecycle_event === 'test' || !!process.env.NODE_TEST_CONTEXT;
+if (!isTestRun) {
   startGateway();
   startEncounterScheduler();
 }

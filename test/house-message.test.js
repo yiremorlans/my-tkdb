@@ -25,6 +25,7 @@ mock.module('../discordRest.js', {
   namedExports: {
     postChannelMessage: async () => ({ id: 'message-1' }),
     editChannelMessage: async () => ({}),
+    editChannelMessageSafe: async () => {},
     openDmChannel: async () => 'dm-1',
     postChannelTyping: async () => {},
   },
