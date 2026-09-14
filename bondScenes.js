@@ -328,13 +328,24 @@ export function renderBeat(scene, index, vars, { characterId, levelName, firstEv
 //
 // It also carries the one button that gets a player into the replay gallery
 // without typing /bonds character:<name> — see replayStartRow below.
+//
+// `option.sticker`, when present, names a file in assets/stickers to attach
+// alongside the close — same conceit as a beat's sticker (renderBeat), for a
+// character whose answer is a picture rather than more words. A missing or
+// unreadable file drops the image quietly rather than losing the close
+// (loadSticker).
 function renderClosing(option, keepsake, vars, { characterId, levelName }) {
   const close = fillTemplate(option.close, vars);
   const line = fillTemplate(keepsake.line, vars);
-  return {
+  const message = {
     content: `${close}\n\n${keepsake.emoji} *${line}*`,
     components: [replayStartRow(characterId, levelName)],
   };
+  if (option.sticker) {
+    const sticker = loadSticker(option.sticker);
+    if (sticker) message.files = [sticker];
+  }
+  return message;
 }
 
 // Starts a replay of the scene just finished (§4.6): the same beats, the same

@@ -373,6 +373,18 @@ function validateBondScene(at, scene, errors, warnings, seenLines, levelKey) {
         } else {
           prose.push([`${where}.close`, option.close]);
         }
+
+        // Optional: `option.sticker` names a file in assets/stickers attached
+        // alongside the close (bondScenes.js renderClosing) — same mechanism
+        // as a beat's sticker, checked here so a typo'd filename is a build
+        // error rather than an image that never shows up.
+        if (option.sticker !== undefined) {
+          if (typeof option.sticker !== "string" || option.sticker.trim() === "") {
+            errors.push(`${where}.sticker must name a file in assets/stickers`);
+          } else if (!fs.existsSync(join(STICKERS_DIR, option.sticker))) {
+            errors.push(`${where}.sticker "${option.sticker}" does not exist in assets/stickers`);
+          }
+        }
       });
     }
   }

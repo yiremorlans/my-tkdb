@@ -246,7 +246,7 @@ export default {
       },
       {
         line: '"You wandered into the Heebie-Jeebie House on your own," he says. "Terrible instincts. I like them."',
-        approach: "Step inside",
+        approach: "Call it curiosity",
       },
       {
         line: "The way he studies your face feels less like interest and more like he's learning it for later.",

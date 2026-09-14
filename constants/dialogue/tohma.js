@@ -44,39 +44,39 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: An observation, offered without charge.",
-        "You come at me with {favResponse} every time, and you have never once adjusted it for the room. Not for the captain, not for me, not for the fact that I could make your life here considerably easier or considerably otherwise.\n\nI noticed in the first week and have been waiting for it to stop. It has not. So I shall simply tell you that I find it remarkable, which is a thing I do not say.",
+        "**{firstName}**: A word about the last mission, before it becomes an official report.",
+        "On every mission with the captain, the debrief runs the same way. Jin gives the order, I give the details, and you hand the details back to me with {favResponse}. Not to him. To me. I noticed after the second mission and told myself it was nothing. It has happened enough times since that pretending costs more effort than admitting it.\n\nHe has never said a word about it. He would sooner set fire to his own paperwork than say so. But I have served that man long enough to know when something has landed, and this has landed more than once. I am telling you because somebody in that room ought to be honest, and it is evidently not going to be him.",
       ],
       choice: {
         prompt:
-          "Well? I have paid you a compliment. Those are not on the house.",
+          "Well? I have just handed you a good deal more honesty than my position allows. I should like to know what you intend to do with it.",
         options: [
           {
             key: "kind",
-            label: "Thank him properly",
+            label: "Ask if this troubles him",
             style: 3,
             close:
-              "Honestly. Nobody thanks me properly. They thank me the way one thanks a door for opening.\n\n...That was ungracious of me and you did not deserve it. Thank you for the thanks. I shall stop now before I say something with feeling in it.",
+              "*A pause, longer than his usual.*\n\nTroubled is not the word I would use. Aware, perhaps, and uncertain what to do with the awareness. He would not thank me for admitting even that much, so let us agree I did not.\n\nYou look concerned enough for both of us. Do stop, it rather undoes the point of my restraint.",
           },
           {
             key: "playful",
-            label: "Ask what it'll cost you",
+            label: "Tease him about noticing",
             style: 1,
             close:
-              "Oh, very good. *There is genuine delight in it.* You have been paying attention.\n\nNothing. That is the trouble: I have gone and given something away for nothing and now I shall have to think about why.",
+              "Honestly. I file everything, it is rather the job description. I would have noticed this even if I had wanted not to, which, for the record, I did try.\n\nYou have made that considerably harder. I hope you are pleased with yourself.",
           },
           {
             key: "bold",
-            label: "Say you'd never adjust for him",
+            label: "Say you can't help it",
             style: 4,
             close:
-              "*A long pause.*\n\nNo. You would not.\n\nDo you know, I have spent years being spoken to by people calculating what I might do to them. It is a great deal quieter over here. I had not realized how loud it was until you.",
+              "*He goes quiet, the kind of quiet that from him counts as a full confession.*\n\nNo. I don't imagine you can. I find I am not half as troubled by that as I ought to be, given whose favor I appear to be stealing.\n\nI shall have to think about what that means. Do not ask me to think aloud about it tonight.",
           },
         ],
       },
       keepsake: {
-        emoji: "♟️",
-        line: "A chess piece he set down on your side of the board.",
+        emoji: "📋",
+        line: "The line in his report about you that he decided not to file.",
       },
     },
 

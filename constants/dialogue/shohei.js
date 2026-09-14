@@ -60,38 +60,38 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: ok so I noticed something and it's bugging me",
-        "I'm not like this with anybody else, that's the thing I noticed\n\neverybody else in this house I'm either arguing with or waiting for them to leave, it's just my default\n\nLeo says I look like every conversation's about to go bad, he's not wrong\n\nthen u show up and I'm just fine, easy, not bracing for anything\n\nu come at me with {favResponse}, I hand it back, costs me nothing\n\na year here and ur the only one that's true, senpai",
+        "**{firstName}**: yo\n\nu good? that report Alan filed looked rough",
+        "been meaning to say this for a while, just never found the moment\n\nvagastrom missions are not a joke, senpai. alan runs us straight into whatever's worst that week, leo mouths off and doubles the mess, and u eat just as much of it as the rest of us do\n\nand every time, good mission or straight up hell, u still come back and hit me with {favResponse} like none of it touched u\n\nI notice that. don't know how to say it without it turning into a whole thing, so here's me saying it like a whole thing anyway\n\nu don't gotta keep handing me {favResponse} on the bad ones. shoulder's free too, whenever u actually wanna talk instead",
       ],
       choice: {
-        prompt: "so what's that about? because I didn't do it on purpose",
+        prompt: "anyway forget I said that part, unless u actually need it, then don't",
         options: [
           {
             key: "kind",
-            label: "Say you feel it too",
+            label: "Say you'll remember that",
             style: 3,
             close:
-              "…yeah?\n\n*A long pause.*\n\nokay, cool, that's… yeah, that's good actually\n\n*Then, way too fast:* anyway what're u eating tonight",
+              "…yeah?\n\ngood, cuz I meant it, and I don't say stuff like that twice\n\nnow eat something, u look like the mission again",
           },
           {
             key: "playful",
-            label: "Tell him he's gone soft",
+            label: "Ask if the truck counts too",
             style: 1,
             close:
-              "I have NOT gone soft\n\n…okay I made u lunch twice this week and u didn't ask either time\n\nPfft, fine, don't tell Leo, he'll be unbearable about it for a year",
+              "counts as both, free food AND free shoulder, senpai's getting the whole package\n\ndon't tell Leo I said package, he'll make it weird",
           },
           {
             key: "bold",
-            label: "Say he seeks you out",
+            label: "Say he never asks either",
             style: 4,
             close:
-              "I do not seek u out… okay, the diner thing, and the packaging thing, and the boxes\n\nyeah all right, I didn't need help with any of those\n\nu don't gotta make excuses to hang out with me, y'know, goes both ways\n\njust ask, senpai",
+              "…that's different\n\nokay it's not different, shut up\n\nfine, maybe I'll take u up on it too sometime, don't get used to it tho",
           },
         ],
       },
       keepsake: {
-        emoji: "🥢",
-        line: "Two years in, and the first person he never had to brace for.",
+        emoji: "🫂",
+        line: "The shoulder he offered before you ever had to ask for it.",
       },
     },
 

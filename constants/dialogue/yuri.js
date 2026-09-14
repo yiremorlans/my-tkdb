@@ -47,38 +47,40 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: A matter of scientific interest. Don't read anything into the hour at which I'm raising it.",
-        "You address me with {favResponse}. Invariably. I've subjected it to considerable strain: I have been magnificent at you, I have been insufferable at you, I once shouted for Jiro directly into your ear, and the result doesn't change.\n\nHmph. Frostheim's people go stiff. My own house goes quiet. You do neither, worm, which is anomalous, and I'm a man who cannot leave an anomaly alone.",
+        "**{firstName}**: A necessary clarification, sent because apparently I need to keep sending it. I am your physician. Full stop. That is the entirety of what exists between us.",
+        "As Mortkranken's house captain and the physician assigned to your case, I am responsible for you. Your vitals, your treatment schedule, whether you show up when I tell you to. That is a professional obligation, worm, not whatever you seem to think it is. I do not lose patients. That includes you. It's a policy. Not a feeling.",
+        "And yet. Every time I state this, plainly, in writing, you answer with {favResponse}, as though I've said something else entirely. I have not. I want that understood, thoroughly enough that I stop having to send this message, because I have now sent some version of it four times, and I am, for reasons I cannot account for, still not certain you believe me.",
       ],
       choice: {
-        prompt: "Explain yourself! In detail! I intend to write it up!",
+        prompt:
+          "Confirm it. State plainly that this is clinical. I require it in writing.",
         options: [
           {
             key: "kind",
-            label: "Say you enjoy his company",
+            label: "Say he takes good care of you",
             style: 3,
             close:
-              "You... what?\n\n*A long silence, from a man who has never been silent.*\n\nThat's not a valid experimental result. Nobody enjoys... I shall have to re-run the entire... I'm going to bed.\n\n*He doesn't go to bed. The read receipt says so.*",
+              "Good, obviously, I'm an excellent physician, that is not... that is not confirmation of the terms I asked for.\n\n*A pause.*\n\nSay the actual sentence, worm. I need the actual sentence. For the file. Purely for the file.",
           },
           {
             key: "playful",
-            label: "Ask how loud the shout was",
+            label: "Ask what else it could be",
             style: 1,
             close:
-              "IT WAS NECESSARY. He was three rooms away!\n\n...It was extremely loud. Jiro's hearing has been formally assessed since. Don't bring it up in front of him, he keeps a record.",
+              "!! That is not a question you put to a man mid consultation. I refuse to speculate. I will not.\n\n...What do you think it could be.\n\nNo. Don't answer that. I've changed my mind. Retract the question.",
           },
           {
             key: "bold",
-            label: "Say the bravado isn't working",
+            label: "Refuse to confirm anything",
             style: 4,
             close:
-              "*There is no reply for eight minutes, which from a man who cannot be quiet for eight seconds is its own kind of answer.*\n\nHow dare you.\n\n*Then:* ...How long have you known. Be precise. I need to know exactly how long I've been failing.",
+              "You cannot simply decline a clinical clarification, that is not how a consultation works!\n\n...Fine. FINE. Leave it unconfirmed, then. I'll simply have to monitor you more closely to compensate. Strictly for medical reasons. I want that on the record too.",
           },
         ],
       },
       keepsake: {
-        emoji: "📋",
-        line: "An anomaly he wrote up and never found an explanation for.",
+        emoji: "🩺",
+        line: 'The "this is purely clinical" clarification he keeps resending, unprompted, like the case isn\'t closed.',
       },
     },
 

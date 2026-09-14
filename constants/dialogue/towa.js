@@ -13,44 +13,47 @@ export default {
   // and the phrasing is trimmed. Not in the `> ` lines he says out loud.
   bondScenes: {
     acquaintance: {
+      // His very first message ever is the sticker alone — beat 0 carries no
+      // real text, just enough to satisfy the non-empty check, so the sticker
+      // is the whole opener rather than sharing the message with a paragraph.
+      // This scene is pure texting throughout: no stage directions, no
+      // emojis, just what he'd actually type.
       beats: [
-        "*It arrives after dark, which is the only time he says much at all.*\n\n**{firstName}**: I picked you a dandelion 🌼 It's dead now. I picked it three days ago and kept forgetting.\n\nI'm still going to give it to you 🥀",
-        "You've come {timesMet} times. I count the days between. The most was nine 🌙 That was a bad nine.\n\nI can't talk in the daytime. Too loud. At night it's fine.\n\nThis is the night version of me. I'm nicer at night 🎵",
+        "**{firstName}**: ...",
+        "You keep coming back. I notice.\n\nMost things don't. I like that you do.",
+        "You've come {timesMet} times. I count the days between. The most was five. Bad five.\n\nCome more, Dandelion. I want to see you everyday!",
       ],
-      // Beat 0 is his very first message ever, and he "only communicates with
-      // stickers and 1 or 2 emojis" (reference.md) — so the actual opener is
-      // silent, arriving as an attachment before he manages any words.
       stickers: { 0: "Hi.png" },
       choice: {
         prompt:
-          "Do you want the dead one? 🥀 You can say no. You'd be the first.",
+          "Haru's always around doing his rounds. I want it to be you too.",
         options: [
           {
             key: "kind",
-            label: "Say you want it",
+            label: "Say you'll come more often",
             style: 3,
-            close:
-              "...Oh.\n\n*The humming starts up in the background of the next voice note and doesn't stop.*\n\n> Then it's yours. You're the first one who said yes. I'm keeping the day.",
+            close: "...",
+            sticker: "Happy.png",
           },
           {
             key: "playful",
-            label: "Ask if he eats those",
+            label: "Ask if he missed you",
             style: 1,
             close:
-              "Only the yellow bit 🌼 The stem's horrible. Bitter, and it squeaks on your teeth.\n\nDon't eat the one I gave you, though. That one you just keep.",
+              "...Yes.\n\nI missed you. I counted the days you didn't come, so I know it's true.",
           },
           {
             key: "bold",
-            label: "Ask about the bad nine days",
+            label: "Ask why it matters so much",
             style: 4,
             close:
-              "*[a sticker of a small animal sitting alone by a gate]*\n\nI counted twice to make sure.\n\nI sat by the gate on the fourth day. And the sixth.\n\nDon't do nine again. Please 🥀 I don't like what I'm like by the seventh.",
+              "Because I don't have much.\n\nThis is mine. I'd like to keep it.",
           },
         ],
       },
       keepsake: {
         emoji: "🌼",
-        line: "A dandelion picked three days too early and given anyway.",
+        line: "The night he asked you to come by more, and meant it.",
       },
     },
 

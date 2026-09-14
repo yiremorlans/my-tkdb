@@ -68,7 +68,7 @@ export default {
           label: "Say his taste in dates is grim",
           style: 1,
           close:
-            '"Grim." *He turns the word over like he wants to keep it. He chose this tank on purpose, the one where the light draws the small ones in, and when it fed he watched your face instead of the glass. The flat calm tips younger, pleased with itself.* "I was right. Don\'t tell me I wasn\'t."',
+            '"Grim." *He says it back slowly, like a word worth keeping. He brought you to this tank on purpose, steering you past the bright harmless ones, because he wanted to watch your face when the light drew a fish in and it was gone. Whatever your face did, he liked it. The calm tips younger, and he lets it.* "Say it again. I chose this one for you."',
         },
         {
           key: "bold",
@@ -97,14 +97,14 @@ export default {
     ],
     choice: {
       prompt:
-        '*He works a card in and out of sight while he talks, the Ace of Hearts there and gone against his glove. They booked a magician. He does the other version, the one where the room screams and somebody gets carried out.* "Sit at the front. It goes better when you\'re watching."',
+        '*He works the Ace of Hearts in an out of sight, against his glove. They booked a magician. He does the other version, the one where everyone in the room screams and somebody gets carried out.* "Sit at the front. It goes better when you\'re watching."',
       options: [
         {
           key: "kind",
           label: "Say you'll be watching him",
           style: 3,
           close:
-            '*The Ace settles between his fingers and stays there. He turns it over and looks at it instead of you.* "Watching me. Not the vanish, not the screaming. Nobody asks for that." *A beat. When he looks up he finds your face, and keeps finding it.* "Sit near the front. That part isn\'t the act."',
+            '*The card goes still between his fingers. He keeps his eyes on it, not on you.* "Watching me. Not the trick, not the screaming." *He turns the words over like he is checking them for a catch. Nobody stays for that part, they come for the fright and leave before the lights come up. When he looks up he has already found your face, and he stays on it.* "Sit near the front. That part isn\'t the act."',
         },
         {
           key: "playful",

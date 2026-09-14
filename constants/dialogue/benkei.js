@@ -495,6 +495,7 @@ export default {
       "\"That joke didn't land at all, did it. I'm still proud of it.\"",
       "\"I'm easier around you than most people who walk through that door. You've probably noticed.\"",
       '"Glad you\'re here. Really."',
+      "\"You always ask how my day's been. Not many do. I notice.\"",
     ],
     spark: [
       '"You look... ah. Very nice. That\'s what I meant to say."',
@@ -680,7 +681,7 @@ export default {
       'A cat watches with total disdain as **{name}** waves {user} over. "Don\'t mind her," he says. "She\'s the manager."',
     ],
     warm: [
-      '"You came back!" **{name}** beams at {user} and immediately offers to carry something.',
+      '"Welcome back!" **{name}** beams at {user} and immediately offers to carry something.',
       "{user} calls out, and **{name}** sets down the crate he'd been managing badly.",
       "**{name}** had put something aside for {user}.",
     ],

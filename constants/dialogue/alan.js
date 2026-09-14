@@ -438,8 +438,8 @@ export default {
       '"Door\'s open. Wipe your feet."',
       '"Got gloves that\'ll fit. Wear them."',
       '"Leo talks too much. Ignore him."',
-      '"You can handle the harder one."',
-      "\"Storm's coming. Don't just stand there.\"",
+      '"I can trust you to handle tougher missions."',
+      "\"Storm's coming. Let's talk inside.\"",
     ],
     warm: [
       "\"I'm glad you're here. Really.\"",
@@ -448,14 +448,14 @@ export default {
       "\"Lunch? Huh. I forgot to eat. ...I don't eat in the cafeteria. Portions aren't big enough. That's the only reason.\"",
       '"Long day. Yours or mine, doesn\'t matter. Sit down."',
       "\"Hungry? Say so. I'll split what I've got.\"",
-      '"Sho give you trouble? Point him out."',
+      '"Leo give you trouble? Point him out."',
       '"Didn\'t expect you today. Not complaining."',
       '"You look tired. Sit."',
       '"Don\'t mention the lunch thing to Bandana."',
       '"Stay if you want. Door\'s open either way."',
       '"...You again. Good, this time."',
       '"Riding somewhere? I\'ll drop you first."',
-      "\"Coffee's how you like it. Don't make it weird.\"",
+      '"Coffee\'s how you like it."',
       '"They keep asking where you are. Tell them yourself next time."',
       '"...That joke landed wrong. Give me another shot."',
       '"Let them think what they want. Not correcting it."',
@@ -650,13 +650,13 @@ export default {
     ],
     warm: [
       "{user} calls out, and **{name}** stops walking.",
-      "{user} says the name, and **{name}** turns, wiping his hands on a rag.",
+      "{user} says the name, and **{name}** looks up from his lunch, food forgotten.",
       '**{name}** grunts. {user} has learned to hear "good" in it.',
     ],
     spark: [
       "**{name}** turns at {user}'s voice and takes a second too long to look away.",
       '"You came looking." **{name}** says it flat to {user}, and stays put.',
-      "**{name}** doesn't say anything when {user} reaches him. He tips his head toward the quiet end of the lot and waits.",
+      "**{name}** doesn't say anything when {user} reaches him. He tips his head toward the quiet end of the yard and waits.",
     ],
     close: [
       "**{name}** was already walking {user}'s way before the name finished.",
@@ -666,7 +666,7 @@ export default {
     bound: [
       '"Come here. Don\'t need a reason anymore, do I." **{name}** says it low, only to {user}.',
       "**{name}** hears {user}, and his shoulders finally come down.",
-      "**{name}** crosses the lot to {user} without once checking which way he's going.",
+      "**{name}** crosses the yard to {user} without once checking which way he's going.",
     ],
   },
 };

@@ -63,21 +63,13 @@ Below is a basic overview of the project structure:
 │   ├── game.js        -> response options, affinity values, relationship levels
 │   ├── missions.js    -> mission teasers/riddles/ranks, slot + type rolls, riddle cooldown
 │   └── publicEncounters.js -> teasers/winner lines/milestones, name matching, guess cooldown
-├── examples    -> short, feature-specific sample apps from the original template
-│   ├── app.js  -> finished app.js code
-│   ├── button.js
-│   ├── command.js
-│   ├── modal.js
-│   ├── selectMenu.js
-├── data/ -> legacy local per-user data (gitignored; superseded by Supabase)
-│   └── relationships.json -> relationship progress
 ├── db/
 │   └── schema.sql -> Postgres schema for future migration
 ├── .env.sample  -> sample .env file
 ├── app.js       -> main entrypoint for app
 ├── commands.js  -> slash command payloads + helpers
 ├── encounters.js -> builds the slash-command message payloads (/roam, /meet, /affinity, /bonds), handles dialogue responses
-├── storage.js   -> reads/writes data/relationships.json
+├── storage.js   -> Supabase-backed relationship storage (affinity, times met, response type)
 ├── commandLimits.js -> per-command rolling 3-hour cooldown for /roam and /meet (Supabase-backed, anchored to last completed encounter)
 ├── publicEncounters.js -> public call-out encounters: spawn, expiry, /call and /encounters handlers
 ├── missions.js  -> scheduled missions: spawn, expiry, /mission, /docs, /riddle, /house dossier, /missions
@@ -141,8 +133,6 @@ node app.js
 
 > ⚙️ A package [like `nodemon`](https://github.com/remy/nodemon), which watches for local changes and restarts your app, may be helpful while locally developing.
 
-If you aren't following the [getting started guide](https://discord.com/developers/docs/getting-started), you can move the contents of `examples/app.js` (the finished `app.js` file) to the top-level `app.js`.
-
 ### Set up interactivity
 
 The project needs a public endpoint where Discord can send requests. To develop and test locally, you can use something like [`ngrok`](https://ngrok.com/) to tunnel HTTP traffic.
@@ -173,6 +163,5 @@ Click **Save Changes**, and your app should be ready to run 🚀
 
 ## Other resources
 - Read **[the documentation](https://discord.com/developers/docs/intro)** for in-depth information about API features.
-- Browse the `examples/` folder in this project for smaller, feature-specific code examples
 - Join the **[Discord Developers server](https://discord.gg/discord-developers)** to ask questions about the API, attend events hosted by the Discord API team, and interact with other devs.
 - Check out **[community resources](https://discord.com/developers/docs/topics/community-resources#community-resources)** for language-specific tools maintained by community members.
