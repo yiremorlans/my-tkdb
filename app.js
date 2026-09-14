@@ -226,42 +226,54 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           },
         });
       }
-      const limit = await checkCommandLimit(userId, 'roam');
-      if (!limit.allowed) {
-        // The one place a banked mission reward is offered: a button to spend
-        // it, attached only when the user is actually being turned away and
-        // actually has one (docs/scheduled-missions.md §13).
-        return res.send({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: await cooldownReplyWithReset(userId, 'roam', limit.reason),
-        });
-      }
-      // Build and respond immediately (no await). User activity is only counted
-      // once an encounter actually loads (the roam/spawn button below), not for
-      // opening the prompt.
-      try {
-        const messageData = await buildRoamDialogueMessage(userId);
-        res.send({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: messageData,
-        });
-        maybeSurfaceBondScene(userId, req.body.token);
-        return;
-      } catch (err) {
-        console.error('Error in /roam:', err);
-        // The invoke-throttle slot above was claimed before this failure, on
-        // the assumption the command would go on to produce something. It
-        // didn't, so release it — otherwise a server error costs the user a
-        // minute of "give it a minute" on top of the failure itself.
-        releaseCommandInvoke(userId, 'roam');
-        return res.send({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: {
-            content: 'Something went wrong wandering out. Try again?',
-            flags: 64, // EPHEMERAL
-          },
-        });
-      }
+      // Deferred + ephemeral, like /call and /meet: checkCommandLimit and
+      // buildRoamDialogueMessage between them can do several sequential
+      // Supabase round-trips, which on a slow or timing-out connection can
+      // blow Discord's 3s ack budget. The user would see "the application
+      // did not respond" while the invoke-throttle slot above stays claimed
+      // — nothing threw, so the catch below never ran to release it —
+      // leaving them facing a bogus flood-cooldown message on the very next
+      // try for a /roam that never went through. Deferring drops that
+      // deadline entirely.
+      res.send({
+        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+        data: { flags: 64 }, // EPHEMERAL
+      });
+
+      (async () => {
+        try {
+          const limit = await checkCommandLimit(userId, 'roam');
+          if (!limit.allowed) {
+            // The one place a banked mission reward is offered: a button to
+            // spend it, attached only when the user is actually being turned
+            // away and actually has one (docs/scheduled-missions.md §13).
+            const { flags, ...body } = await cooldownReplyWithReset(userId, 'roam', limit.reason);
+            await sendFollowup(req.body.token, body, 15000, true);
+            return;
+          }
+          // User activity is only counted once an encounter actually loads
+          // (the roam/spawn button below), not for opening the prompt.
+          const { flags, ...body } = await buildRoamDialogueMessage(userId);
+          await sendFollowup(req.body.token, body, 15000, true);
+          maybeSurfaceBondScene(userId, req.body.token);
+        } catch (err) {
+          console.error('Error in /roam:', err);
+          // The invoke-throttle slot above was claimed before this failure,
+          // on the assumption the command would go on to produce something.
+          // It didn't, so release it — otherwise a server error (or a
+          // followup that never made it to Discord) costs the user a minute
+          // of "give it a minute" on top of the failure itself.
+          releaseCommandInvoke(userId, 'roam');
+          try {
+            await sendFollowup(req.body.token, {
+              content: 'Something went wrong wandering out. Try again?',
+            }, 15000, true);
+          } catch (followupErr) {
+            console.error('Failed to send /roam followup:', followupErr);
+          }
+        }
+      })();
+      return;
     }
 
     if (name === 'meet') {
@@ -276,42 +288,55 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           },
         });
       }
-      const limit = await checkCommandLimit(userId, 'meet');
-      if (!limit.allowed) {
-        // The one place a banked mission reward is offered: a button to spend
-        // it, attached only when the user is actually being turned away and
-        // actually has one (docs/scheduled-missions.md §13).
-        return res.send({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: await cooldownReplyWithReset(userId, 'meet', limit.reason),
-        });
-      }
-      // User activity is only counted once a character actually loads (the
-      // meet/pick button below), not for opening the picker.
-      try {
-        // userId, because an errand holder's still-unsigned targets take
-        // guaranteed slots in the pick list (docs/scheduled-missions.md §5).
-        const messageData = await buildMeetPickMessage(userId);
-        res.send({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: messageData,
-        });
-        maybeSurfaceBondScene(userId, req.body.token);
-        return;
-      } catch (err) {
-        console.error('Error in /meet:', err);
-        // Same reasoning as /roam's catch: the invoke-throttle slot above was
-        // claimed before this failure, so release it rather than making the
-        // user eat a minute-long throttle on top of a server error.
-        releaseCommandInvoke(userId, 'meet');
-        return res.send({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: {
-            content: 'Something went wrong finding someone to meet. Try again?',
-            flags: 64, // EPHEMERAL
-          },
-        });
-      }
+      // Deferred + ephemeral, like /call: checkCommandLimit and
+      // buildMeetPickMessage between them can do several sequential Supabase
+      // round-trips (active errand, errand boost, unsigned targets), which on
+      // a slow or timing-out connection can blow Discord's 3s ack budget. The
+      // user would see "the application did not respond" while the
+      // invoke-throttle slot above stays claimed — nothing threw, so the
+      // catch below never ran to release it — leaving them facing a bogus
+      // flood-cooldown message on the very next try for a /meet that never
+      // went through. Deferring drops that deadline entirely.
+      res.send({
+        type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
+        data: { flags: 64 }, // EPHEMERAL
+      });
+
+      (async () => {
+        try {
+          const limit = await checkCommandLimit(userId, 'meet');
+          if (!limit.allowed) {
+            // The one place a banked mission reward is offered: a button to
+            // spend it, attached only when the user is actually being turned
+            // away and actually has one (docs/scheduled-missions.md §13).
+            const { flags, ...body } = await cooldownReplyWithReset(userId, 'meet', limit.reason);
+            await sendFollowup(req.body.token, body, 15000, true);
+            return;
+          }
+          // User activity is only counted once a character actually loads
+          // (the meet/pick button below), not for opening the picker.
+          // userId, because an errand holder's still-unsigned targets take
+          // guaranteed slots in the pick list (docs/scheduled-missions.md §5).
+          const { flags, ...body } = await buildMeetPickMessage(userId);
+          await sendFollowup(req.body.token, body, 15000, true);
+          maybeSurfaceBondScene(userId, req.body.token);
+        } catch (err) {
+          console.error('Error in /meet:', err);
+          // Same reasoning as /roam's catch: the invoke-throttle slot above
+          // was claimed before this failure, so release it rather than
+          // making the user eat a minute-long throttle on top of a server
+          // error (or a followup that never made it to Discord).
+          releaseCommandInvoke(userId, 'meet');
+          try {
+            await sendFollowup(req.body.token, {
+              content: 'Something went wrong finding someone to meet. Try again?',
+            }, 15000, true);
+          } catch (followupErr) {
+            console.error('Failed to send /meet followup:', followupErr);
+          }
+        }
+      })();
+      return;
     }
 
     if (name === 'affinity') {
