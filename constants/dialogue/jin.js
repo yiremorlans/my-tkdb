@@ -252,11 +252,58 @@ export default {
       },
     ],
     known: [
-      "He recognizes you now. He makes a point of not showing it.",
-      '"You again," he says, and returns to his cigarette. He doesn\'t call you trash this time.',
-      "Twice this week. He's noticed. He would deny having counted.",
-      "The dismissal comes a beat slower than it used to.",
-      "He looks up, places you, and looks back down. From Jin, that is nearly a greeting.",
+      {
+        line: "He recognizes you now. He makes a point of not showing it.",
+        approach: "Let him place you",
+      },
+      {
+        line: '"You again," he says, and returns to his cigarette. He doesn\'t call you servant this time.',
+        approach: "Ask what he needs",
+      },
+      {
+        line: "Twice this week. He's noticed. He would deny having counted.",
+        approach: "Stand somewhere useful",
+      },
+      {
+        line: "The dismissal comes a beat slower than it used to.",
+        approach: "Speak while allowed",
+      },
+      {
+        line: "He looks up, places you, and looks back down. From Jin, that is nearly a greeting.",
+        approach: "Hold his glance",
+      },
+      {
+        line: "He doesn't order you off this time. He just watches to see if you'll leave on your own.",
+        approach: "Stay without being told to",
+      },
+      {
+        line: '"Servant," he says, out of habit now more than insult, and goes back to his cigarette.',
+        approach: "Answer to the name anyway",
+      },
+      {
+        line: "The room doesn't warm, but he stops performing indifference the second you walk in.",
+        approach: "Take the grudging welcome",
+      },
+      {
+        line: "He asks a question he already knows the answer to, just to hear how you'll answer it.",
+        approach: "Answer him straight",
+      },
+      {
+        line: "\"You're persistent,\" he says, like it's an accusation and a compliment at once.",
+        approach: "Take it as a compliment",
+      },
+      {
+        line: "He doesn't send Tohma to deal with you anymore. That's new, and he knows you've noticed.",
+        approach: "Don't call him out",
+      },
+      {
+        line: "He doesn't ask how you got in this time. He already knows you'll find a way.",
+        approach: "Come back uninvited again",
+      },
+      {
+        line: "He lets a silence sit instead of filling it with a dismissal. From him, that's a kind of patience.",
+        approach: "Let the silence hold",
+      },
     ],
     warm: [
       "He almost looks pleased when he sees you coming. Almost.",
@@ -387,12 +434,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Let him place you",
-      "Stand somewhere useful",
-      "Speak while allowed",
-      "Come back anyway",
-    ],
     warm: [
       "Walk over to him",
       "Take the seat he left open",

@@ -257,12 +257,58 @@ export default {
       },
     ],
     known: [
-      "\"Still tidying up. I don't have to anymore. Nobody's told my hands that.\"",
-      '"You keep turning up," he says. "Most people don\'t."',
-      "The charm's still running, just dialed down to something that costs him less.",
-      'He hands you a soda he bought "for the dorm" and doesn\'t make anything of it.',
-      "He's holding something wrapped in cloth that's the wrong shape for a parcel. \"Shion asked me to mind it. Wouldn't look, if I were you.\"",
-      "He skips his usual hedging and just tells you plainly. Progress, apparently.",
+      {
+        line: "The charm's still running, just dialed down to something that costs him less.",
+        approach: "See through it anyway",
+      },
+      {
+        line: 'He hands you a soda he bought "for the dorm" and doesn\'t make anything of it.',
+        approach: "Take the soda",
+      },
+      {
+        line: "He's holding something wrapped in cloth that's the wrong shape for a parcel. \"Shion asked me to mind it. Wouldn't look, if I were you.\"",
+        approach: "Don't even ask",
+      },
+      {
+        line: "He skips his usual hedging and just tells you plainly. Progress, apparently.",
+        approach: "Take him at his word",
+      },
+      {
+        line: "He nods at the step beside him without looking up from whatever he's reading.",
+        approach: "Sit a spell",
+      },
+      {
+        line: '"Oh no, I\'m nothing special," he says, on reflex, before he can stop himself.',
+        approach: "Disagree with him",
+      },
+      {
+        line: "He's swept the same stretch of hallway twice today, and it has nothing to do with dust.",
+        approach: "Ask why he's really here",
+      },
+      {
+        line: "He offers you the last of his candy without checking what flavor's left.",
+        approach: "Take the last piece",
+      },
+      {
+        line: '"I was lost in thought," he admits, like it costs him something to say it plainly.',
+        approach: "Ask what he was thinking about",
+      },
+      {
+        line: "He's stopped pretending he wasn't waiting for you to walk by.",
+        approach: "Ask how long he's been waiting",
+      },
+      {
+        line: '"Leave that to your imagination," he says, softer than usual, like he half wishes you\'d push.',
+        approach: "Push a little",
+      },
+      {
+        line: "He's found a patch of sun by the courtyard wall, in absolutely no hurry to be anywhere in particular.",
+        approach: "Say Jo is looking for him",
+      },
+      {
+        line: '"I\'m a bit out of practice for missions," he admits, easy as anything. "Wouldn\'t want to be the one who holds everyone back."',
+        approach: "Tell him you'd have his back",
+      },
     ],
     warm: [
       'The easy smile goes real for a second. "Seeing you makes my day. Plain and simple, no angle on it."',
@@ -342,12 +388,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Sit a spell",
-      "See through it anyway",
-      "Pass his little test",
-      "Turn up again",
-    ],
     warm: [
       "Take the offered hand",
       "Sit a while with him",

@@ -278,11 +278,58 @@ export default {
       },
     ],
     known: [
-      "The gentleman act is unchanged. The interest behind it is no longer performed.",
-      '"You\'ve returned," he says, as though it were remarkable. To him it is.',
-      "He's had a chair moved. He'll claim it was always positioned that way.",
-      "\"Ah, there you are. I've a favor to ask of you: come to my room and I'll explain.\"",
-      "The fragility slips for a moment. He lets it, and watches what you do.",
+      {
+        line: "The gentleman act is unchanged. The interest behind it is no longer performed.",
+        approach: "See past the act",
+      },
+      {
+        line: '"You\'ve returned," he says, as though it were remarkable. To him it is.',
+        approach: "Say you'll keep returning",
+      },
+      {
+        line: "\"Ah, there you are. I've a favor to ask of you: come to my room and I'll explain.\"",
+        approach: "Ask what he needs",
+      },
+      {
+        line: "The fragility slips for a moment. He lets it, and watches what you do.",
+        approach: "Take a chance",
+      },
+      {
+        line: "He's noticed you eyeing the door and looks, for once, genuinely disappointed rather than amused.",
+        approach: "Stop looking for the exit",
+      },
+      {
+        line: '"Tell me something dull and human," he says. "I find I\'ve missed it."',
+        approach: "Tell him about your week",
+      },
+      {
+        line: '"I\'m feeling worse than usual today," he says, in the exact tone of a man angling for sympathy.',
+        approach: "Give him the sympathy",
+      },
+      {
+        line: '"Rui worries too much," he says, of the exact thing Rui is right to worry about.',
+        approach: "Ask what Rui's worried about",
+      },
+      {
+        line: "He's stopped pretending he wasn't waiting for you to visit.",
+        approach: "Say you came to see him",
+      },
+      {
+        line: 'He calls you "wicked girl" in a tone that makes it sound like the nicest thing he\'s said all week.',
+        approach: "Ask why he calls you that",
+      },
+      {
+        line: "Rui's left him another list of chores. Edward has read exactly none of it.",
+        approach: "Read him the list",
+      },
+      {
+        line: "He asks, again, whether you like Rui or Lyca better, far too invested in an answer that isn't his to have.",
+        approach: "Refuse to answer",
+      },
+      {
+        line: '"Carry me to bed," he says, not really joking, and not really asking either.',
+        approach: "Go get Rui",
+      },
     ],
     warm: [
       "The fragile act drops for a moment when you're near: you see the predator underneath, and he lets you.",
@@ -358,12 +405,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Take the moved chair",
-      "Stop looking for the exit",
-      "Tell him about your week",
-      "Let the act slip",
-    ],
     warm: [
       "Take his arm",
       "Sit beside him",

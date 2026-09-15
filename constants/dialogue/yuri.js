@@ -258,11 +258,58 @@ export default {
       },
     ],
     known: [
-      "He's stopped calling you 'worm.' He hasn't replaced it with anything yet.",
-      "There's a second chair in the lab. He'll insist it has always been there.",
-      '"Are you injured or ill? Oh dear, how unfortunate. I shall begin the experi... Ahem, the treatment, immediately."',
-      "He notes something about you in the margin, and covers it when you look.",
-      "The insults have gotten more specific, which means he's been paying attention.",
+      {
+        line: "He's stopped calling you 'worm.' He hasn't replaced it with anything yet.",
+        approach: "Ask what he'll call you now",
+      },
+      {
+        line: "There's a second chair in the lab. He'll insist it has always been there.",
+        approach: "Sit in the second chair",
+      },
+      {
+        line: '"Are you injured or ill? Oh dear, how unfortunate. I shall begin the experi... Ahem, the treatment, immediately."',
+        approach: "Let him examine you",
+      },
+      {
+        line: "He notes something about you in the margin, and covers it when you look.",
+        approach: "Ask what he wrote",
+      },
+      {
+        line: "The insults have gotten more specific, which means he's been paying attention.",
+        approach: "Take it as flattery",
+      },
+      {
+        line: "He's shouted Jiro's name down the hall three times now, too busy to go looking himself.",
+        approach: "Tell him you found him",
+      },
+      {
+        line: "\"You're less useless than the last one,\" he announces, like it's the nicest thing he's ever said. It is.",
+        approach: "Be less useless",
+      },
+      {
+        line: "He's cleared a space on the bench beside him without being asked, mid-rant, like it's obvious you'd sit there.",
+        approach: "Sit without asking",
+      },
+      {
+        line: '"Obviously, I solved it first," he says, already unrolling a diagram no one asked to see.',
+        approach: "Ask to see it anyway",
+      },
+      {
+        line: "He's humming classical music under his breath and doesn't stop when he notices you noticing.",
+        approach: "Let him keep humming",
+      },
+      {
+        line: "He's muttering about Professor Nicholas's methodology like it's a personal insult, entirely unprompted.",
+        approach: "Take his side",
+      },
+      {
+        line: "He's hidden the isekai novel under a stack of medical journals, badly, the spine sticking out.",
+        approach: "Don't mention the book",
+      },
+      {
+        line: '"You should feel honored," he says, of something small and ordinary he just did for you.',
+        approach: "Feel honored anyway",
+      },
     ],
     warm: [
       "His cold demeanor cracks slightly: there's obsession in his eyes now, the drive to save you consuming him.",
@@ -338,12 +385,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Take the second chair",
-      "Don't touch anything",
-      "Be less useless",
-      "Sit without asking",
-    ],
     warm: [
       "Take the offered bottle",
       "Sit down as told",
