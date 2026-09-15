@@ -234,7 +234,7 @@ export default {
     new: [
       {
         line: "He doesn't move to greet you. Only his eyes track across, then his head, slow, to follow you.",
-        approach: "Hold his gaze",
+        approach: "Avert your gaze",
       },
       {
         line: '"Come closer," he says, flat. "You\'re still too far away. Closer." He isn\'t joking.',
@@ -254,12 +254,58 @@ export default {
       },
     ],
     known: [
-      "His gaze finds you first now, before anyone else in the room. It stopped being chance a while ago.",
-      "\"You're still alive, then. I couldn't find you anywhere. I'd half decided I'd killed you and forgotten.\"",
-      "He's stopped trying to startle you. He just studies you instead, which is somehow worse.",
-      '"You\'ve gone all quiet. This is boring." A pause. "...Don\'t leave. I\'ll allow talking."',
-      "He's resetting a trick in one of the Heebie-Jeebie House's back passages: a trapdoor, a cold breath, a sound from nowhere. \"People come to have their hearts stopped a moment. I never let them down.\"",
-      "Something in the dark corner thinks about coming closer, then doesn't. He watches it decide.",
+      {
+        line: "His gaze finds you first now, before anyone else in the room. It stopped being chance a while ago.",
+        approach: "Hold his gaze",
+      },
+      {
+        line: "\"You're still alive, then. I couldn't find you anywhere. I'd half decided I'd killed you and forgotten.\"",
+        approach: "Ask if he missed you",
+      },
+      {
+        line: "He's stopped trying to startle you. He just studies you instead, which is somehow worse.",
+        approach: "Let him study you",
+      },
+      {
+        line: "You catch him smiling at you, unguarded, a half second before he notices and wipes it off his face.",
+        approach: "Say you saw it",
+      },
+      {
+        line: "He's resetting the trapdoor trick again. It catches him off guard this time and he goes down with it, and comes back up looking delighted about it.",
+        approach: "Ask if he's okay",
+      },
+      {
+        line: "He makes a card vanish between two fingers, then says, flat, that he's gotten better at making people disappear too.",
+        approach: "Ask who else vanished",
+      },
+      {
+        line: "He's left something dead and small on your front doorstep again, a gift he clearly expects you to appreciate.",
+        approach: "Say thank you",
+      },
+      {
+        line: '"*Vepar*," he says, and your books are gone, swapped for one of the Heebie-Jeebie House\'s bloody head props.',
+        approach: "Don't even blink",
+      },
+      {
+        line: "He's soaking wet and doesn't explain why. He never does.",
+        approach: "Don't ask why he's wet",
+      },
+      {
+        line: '"Mio says you asked about me," he says, and it\'s not clear yet if that pleases him or not.',
+        approach: "Say you were curious",
+      },
+      {
+        line: "He's picked a fight with another student, on your behalf, apparently.",
+        approach: "Ask what they said about you",
+      },
+      {
+        line: "\"Don't tell Jo,\" he says, holding something he clearly isn't supposed to have.",
+        approach: "Keep his secret",
+      },
+      {
+        line: '"Get me that sickly brown stuff from Elias\'s," he says, already holding out an empty cup.',
+        approach: "Fetch the sweet tea",
+      },
     ],
     warm: [
       "His attention tilts to you first, before the rest of the room registers at all.",
@@ -338,12 +384,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Come back again",
-      "Stay for talking",
-      "Follow where he stands",
-      "Refuse to flinch",
-    ],
     warm: [
       "Take his arm",
       "Stand where he can see you",
