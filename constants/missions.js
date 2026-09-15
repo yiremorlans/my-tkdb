@@ -81,14 +81,15 @@ export const MISSION_TYPES = {
   COOP: "coop",
 };
 
-// Riddle is the common case because it is the one type that can be finished in
-// a single sitting, with no cooldown and no second player. The other two both
-// make the player wait on something outside their control — a shared 3h
-// cooldown for an errand's N meetings, another inspector for a co-op — so they
-// carry equal weight behind it.
-export const WEIGHT_RIDDLE = 50;
-export const WEIGHT_ERRAND = 25;
-export const WEIGHT_COOP = 25;
+// Riddle and errand are the two types a player can always finish on their
+// own, so they carry equal weight. Co-op is the one type that depends on
+// someone else being online to call `/mission assist:true`, which made it the
+// type most likely to strand a player holding a mission nobody could help
+// clear — cut to a 10-floor (2026-09) rather than 0 so the co-op path still
+// sees occasional live use. Riddle and errand split the other 90 evenly.
+export const WEIGHT_RIDDLE = 45;
+export const WEIGHT_ERRAND = 45;
+export const WEIGHT_COOP = 10;
 
 // Chance a /roam by someone holding an errand is steered to a still-unsigned
 // target instead of rolling uniformly over the roster. Without this, chasing
@@ -187,18 +188,19 @@ export const RIDDLE_WRONG_LINES = [
 //
 // Paced against RELATIONSHIP_LEVELS (constants/game.js), not chosen bare: an
 // average player earns ~0.36 house logs/day (docs/scheduled-missions.md's own
-// "one lead every 3-4 days" at the current type weights, leads only). At that
-// rate these clear in ~41 / ~110 / ~250 / ~440 days — the same order of
-// magnitude as maxing affinity on one favorite character by always picking
-// their best response (~67 days to Soulbound at 400). The old thresholds
-// (3/10/25/50) cleared in 8-138 days — the early ranks fell in a week or two,
-// nothing like the weeks of consistent play affinity's early tiers ask for.
+// "one lead every 3-4 days" at the current type weights, leads only).
+//
+// Doubled 2026-09 to match RELATIONSHIP_LEVELS' own raise (constants/game.js
+// — Friend and up went x1.5 there after /roam + /meet's independent 3h
+// cooldowns let a maxed player outpace the "many, many encounters" arc). The
+// 0 floor stays at 0, same as Acquaintance staying at 20 there. At the same
+// ~0.36 logs/day these now clear in ~83 / ~222 / ~500 / ~889 days.
 export const INSPECTOR_RANKS = [
   { min: 0, name: "Novice Inspector" },
-  { min: 15, name: "Field Inspector" },
-  { min: 40, name: "Senior Inspector" },
-  { min: 90, name: "Special Inspector" },
-  { min: 160, name: "Chancellor's Right Hand" },
+  { min: 30, name: "Field Inspector" },
+  { min: 80, name: "Senior Inspector" },
+  { min: 180, name: "Special Inspector" },
+  { min: 320, name: "Chancellor's Right Hand" },
 ];
 
 export const MISSION_TYPE_LABEL = {

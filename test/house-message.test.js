@@ -90,20 +90,20 @@ test('the old closest-house-by-affinity answer survives even with an empty recor
 });
 
 test('rank comes from summed points, not the number of missions filed', async () => {
-  // Three rows, forty-five house logs: Senior Inspector starts at 40, so
-  // counting missions (3) instead of summed points would leave this player at
-  // Novice — nowhere near ranked up.
+  // Three rows, ninety house logs: Senior Inspector starts at 80, so counting
+  // missions (3) instead of summed points would leave this player at Novice —
+  // nowhere near ranked up.
   reset({
     log: [
-      { discord_user_id: 'user-1', house: HOUSES.FROSTHEIM, mission_type: 'errand', points: 20, role: 'lead' },
-      { discord_user_id: 'user-1', house: HOUSES.FROSTHEIM, mission_type: 'errand', points: 20, role: 'lead' },
-      { discord_user_id: 'user-1', house: HOUSES.SINOSTRA, mission_type: 'riddle', points: 5, role: 'lead' },
+      { discord_user_id: 'user-1', house: HOUSES.FROSTHEIM, mission_type: 'errand', points: 40, role: 'lead' },
+      { discord_user_id: 'user-1', house: HOUSES.FROSTHEIM, mission_type: 'errand', points: 40, role: 'lead' },
+      { discord_user_id: 'user-1', house: HOUSES.SINOSTRA, mission_type: 'riddle', points: 10, role: 'lead' },
     ],
   });
 
   const message = await buildDossierMessage('user-1');
   assert.match(message.content, /Rank: \*\*Senior Inspector\*\*/);
-  assert.match(message.content, /45 house logs · 3 missions filed/);
+  assert.match(message.content, /90 house logs · 3 missions filed/);
 });
 
 test('the dossier never advertises the next inspector rank', async () => {
