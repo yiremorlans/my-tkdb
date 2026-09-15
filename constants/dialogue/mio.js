@@ -236,8 +236,8 @@ export default {
         approach: "Ask what he's fixing",
       },
       {
-        line: "Tiny gears are laid out in perfect order across the bench. He moves one aside for you to sit.",
-        approach: "Take the cleared space",
+        line: "He looks like he hasn't slept. \"I'm a natural short sleeper,\" he says, like that settles it.",
+        approach: "Don't buy the excuse",
       },
       {
         line: '"Give me one second," he says, and finishes the movement without a single wasted motion.',
@@ -253,11 +253,58 @@ export default {
       },
     ],
     known: [
-      "He's learned your name, your order, and roughly when you turn up.",
-      "The stool is already pulled out. He'd say it always is. It isn't.",
-      '"Back again? Good. Hold this." You\'re being included, in his way.',
-      "He asks about the thing you mentioned last week, and wants the actual answer.",
-      '"Hey, Honor Roll. One more day. Let\'s power through."',
+      {
+        line: "He's learned your name and roughly when you turn up, like it's worth remembering.",
+        approach: "Say that counts",
+      },
+      {
+        line: "A little pile of spare parts sits apart from the rest of the bin. He won't say what they're for.",
+        approach: "Ask what he's building",
+      },
+      {
+        line: '"Back again? Good. Hold this." You\'re being included, in his way.',
+        approach: "Hold it a second",
+      },
+      {
+        line: '"The lamp. Still swinging clear when you don\'t need it, or did the hinge stick again?" He wants the actual answer.',
+        approach: "Say it's working great",
+      },
+      {
+        line: '"Hey, Honor Roll. One more day. Let\'s power through."',
+        approach: "Cheer him on",
+      },
+      {
+        line: "Jo pokes their head in to tell him to quit for the night. He waves them off, and doesn't ask you to leave either.",
+        approach: "Stay anyway",
+      },
+      {
+        line: "He's got a running list of small things you've mentioned. He swears it doesn't mean anything.",
+        approach: "Ask what's on the list",
+      },
+      {
+        line: '"Shion\'s not answering his phone. Come with me to check on him?"',
+        approach: "Go with him to check",
+      },
+      {
+        line: "He's fixed something of yours without mentioning it, and you only notice because it finally works right.",
+        approach: "Ask when he fixed it",
+      },
+      {
+        line: "A half-finished stage prop for the next Dionysia show takes up half the bench. He needs an extra pair of hands.",
+        approach: "Lend him a hand",
+      },
+      {
+        line: '"Well, now," Elias drawls, passing through. "Somebody\'s in a good mood." Mio just shrugs and keeps working.',
+        approach: "Smile at the thought",
+      },
+      {
+        line: "He offers to walk partway to class with you, like it's a coincidence and not a habit forming.",
+        approach: "Walk with him",
+      },
+      {
+        line: '"You should take a break sometimes," he says, in the exact tone he never uses on himself.',
+        approach: "Turn it back on him",
+      },
     ],
     warm: [
       "He sets his work aside immediately, fully present for you, reliable as always.",
@@ -333,12 +380,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Take the pulled-out stool",
-      "Hold this a second",
-      "Answer about last week",
-      "Stay a while",
-    ],
     warm: [
       "Pull up a stool",
       "Hold the small gear",

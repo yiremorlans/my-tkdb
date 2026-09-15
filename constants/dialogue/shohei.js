@@ -64,7 +64,8 @@ export default {
         "been meaning to say this for a while, just never found the moment\n\nvagastrom missions are not a joke, senpai. alan runs us straight into whatever's worst that week, leo mouths off and doubles the mess, and u eat just as much of it as the rest of us do\n\nand every time, good mission or straight up hell, u still come back and hit me with {favResponse} like none of it touched u\n\nI notice that. don't know how to say it without it turning into a whole thing, so here's me saying it like a whole thing anyway\n\nu don't gotta keep handing me {favResponse} on the bad ones. shoulder's free too, whenever u actually wanna talk instead",
       ],
       choice: {
-        prompt: "anyway forget I said that part, unless u actually need it, then don't",
+        prompt:
+          "anyway forget I said that part, unless u actually need it, then don't",
         options: [
           {
             key: "kind",
@@ -265,11 +266,58 @@ export default {
       },
     ],
     known: [
-      "Bonnie's parked closer to your usual spot lately. He'd say that's just where there was room.",
-      "He remembers you don't like the spicy one. He made the other one.",
-      "He's skipped his afternoon class again. \"It's all in the books anyway,\" he says, like that settles it.",
-      '"Call me Sho, Senpai. Not Shohei. Nobody calls me Shohei."',
-      "The truck is slammed and he still waves you to the front of the line.",
+      {
+        line: "Bonnie's parked closer to where you always wait for your order now. He'd say that's just where there was room.",
+        approach: "Tease him about it",
+      },
+      {
+        line: "He drops back to walk beside you as the mission wraps up, not saying why, just there.",
+        approach: "Ask why he stuck around",
+      },
+      {
+        line: "He's skipped his afternoon class again. \"It's all in the books anyway,\" he says, like that settles it.",
+        approach: "Call him out on skipping",
+      },
+      {
+        line: 'He spots something across the lot and swears under his breath, then waves it off like he didn\'t just see a masked stranger again. "Nothing, Senpai. Forget it."',
+        approach: "Ask what he saw",
+      },
+      {
+        line: "The truck is slammed and he still waves you to the front of the line.",
+        approach: "Take the front of the line",
+      },
+      {
+        line: "He glances at your textbook upside-down and gives you the right answer before you've even finished reading the question, then shrugs it off.",
+        approach: "Ask how he knew that",
+      },
+      {
+        line: "He's testing a new sauce and won't serve it to anyone else until you've said it's good.",
+        approach: "Be the taste tester",
+      },
+      {
+        line: "He's boxed up food for you to go, even though you never asked.",
+        approach: "Take the boxed portion",
+      },
+      {
+        line: '"You\'re late, Senpai," he says, not really annoyed, just keeping score.',
+        approach: "Apologize for being late",
+      },
+      {
+        line: "He steps between you and Leo mid-jab, not even breaking his own conversation to do it.",
+        approach: "Let him run interference",
+      },
+      {
+        line: "He's icing his knuckles after sparring with Mido and shrugs off the wince like you didn't just see it.",
+        approach: "Ask if he's okay",
+      },
+      {
+        line: "He clocks you before you've said a word and starts making your order without asking.",
+        approach: "Let him guess your order",
+      },
+      {
+        line: "He's already going off about something Leo did the second he spots you, like he's been saving it up just to tell you.",
+        approach: "Let him vent about Leo",
+      },
     ],
     warm: [
       "He greets you with a warm smile, already thinking about how to make your day better.",
@@ -345,12 +393,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Take the front of the line",
-      "Have three bites",
-      "Be the taste test",
-      "Take the boxed portion",
-    ],
     warm: [
       "Sit, eat, complain",
       "Stay till close",

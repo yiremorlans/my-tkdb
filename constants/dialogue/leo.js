@@ -266,12 +266,58 @@ export default {
       },
     ],
     known: [
-      "He's learned your name. He holds it like a weapon he hasn't decided to fire.",
-      '"Oh. It\'s you," he says, in a tone that could mean anything at all.',
-      "\"Have you seen Cap? Bet he's lurching around lost again.\" He doesn't wait for an answer.",
-      '"You\'re up. Go buy me a drink." A beat. "What kind? Take a guess." He\'s already looking back down.',
-      '"That video got ten thousand interacts? You\'re all so basic." He mutes something with his thumb.',
-      "He remembers exactly what rattled you last time. He's saving it.",
+      {
+        line: "He's learned your name. He holds it like a weapon he hasn't decided to fire.",
+        approach: "Say his name back",
+      },
+      {
+        line: '"Oh. It\'s you," he says, in a tone that could mean anything at all.',
+        approach: "Wait him out",
+      },
+      {
+        line: "\"Have you seen Cap? Bet he's lurching around lost again.\" He doesn't wait for an answer.",
+        approach: "Guess where Alan went",
+      },
+      {
+        line: '"You\'re up. Go buy me a drink." A beat. "What kind? Take a guess." He\'s already looking back down.',
+        approach: "Go buy his drink",
+      },
+      {
+        line: '"That video got ten thousand interacts? You\'re all so basic." He mutes something with his thumb.',
+        approach: "Ask what would impress him",
+      },
+      {
+        line: "He remembers exactly what rattled you last time. He's saving it.",
+        approach: "Refuse to be rattled",
+      },
+      {
+        line: "\"Honor Roll,\" he says, testing how you'll react to the nickname now that it's stuck.",
+        approach: "Own the nickname",
+      },
+      {
+        line: "He holds his phone up without asking, films you anyway, and dares you to object.",
+        approach: "Let him film you",
+      },
+      {
+        line: '"You\'re not as boring as I thought," he says, like it pains him to admit it.',
+        approach: "Take it as a compliment",
+      },
+      {
+        line: '"Nobody invited you," he mutters, but he\'s already shifted his stuff over to make room.',
+        approach: "Sit down",
+      },
+      {
+        line: '"Your playlist is genuinely embarrassing," he says, and adds three songs off it to his own anyway.',
+        approach: "Catch him copying you",
+      },
+      {
+        line: "He shows you something on his phone before he posts it, like your opinion actually counts for something.",
+        approach: "Give him your honest opinion",
+      },
+      {
+        line: "\"You're still here,\" he says, not a complaint, just a fact he's cataloguing.",
+        approach: "Stay anyway",
+      },
     ],
     warm: [
       "He insults you the way other people say hello, and it means the same thing now.",
@@ -357,12 +403,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Go buy his drink",
-      "Refuse to be rattled",
-      "Say his name back",
-      "Give him filming material",
-    ],
     warm: [
       "Take the spot beside him",
       "Insult him back",
