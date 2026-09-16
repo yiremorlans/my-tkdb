@@ -261,11 +261,58 @@ export default {
       },
     ],
     known: [
-      "\"Honor Roll, right? That's what everyone's calling you. Suits you.\" He shoulders the feed bucket.",
-      "Peekaboo peers at you over the edge of his sling and immediately ducks back down.",
-      "He hands you the feed bucket without asking. You've been drafted into the rounds.",
-      '"You remembered which one bites," he says, delighted. "That\'s more than most of my house manages."',
-      '"Folks are going wild over the Anomalous Animal Back To Nature Tour, your chance to experience it at a discount rate! C\'mon, help me hand out these fliers."',
+      {
+        line: 'He shoulders the feed bucket without breaking stride. "Didn\'t figure you for someone who sits still either."',
+        approach: "Offer to help",
+      },
+      {
+        line: "Peekaboo peers at you over the edge of his sling and immediately ducks back down.",
+        approach: "Say hello to Peekaboo",
+      },
+      {
+        line: "He hands you the feed bucket without asking. You've been drafted into the rounds.",
+        approach: "Take the feed bucket",
+      },
+      {
+        line: '"You remembered which one bites," he says, delighted. "That\'s more than most of my house manages."',
+        approach: "Say you're a fast learner",
+      },
+      {
+        line: '"Folks are going wild over the Anomalous Animal Back To Nature Tour, your chance to experience it at a discount rate! C\'mon, help me hand out these fliers."',
+        approach: "Help hand out fliers",
+      },
+      {
+        line: "He waves you over the second he spots you, already listing off what needs doing today.",
+        approach: "Join the rounds",
+      },
+      {
+        line: "\"You'll be alright, you got this!\" he says, to you, about something you hadn't even realized you were worried about.",
+        approach: "Ask how he knew",
+      },
+      {
+        line: "He's penciled you into tomorrow's rounds already, cheerfully, like it was never up for discussion.",
+        approach: "Go along with it",
+      },
+      {
+        line: "\"Gahaha! Reckon that's a new record,\" he says, of something small you just did, like it's an achievement.",
+        approach: "Take the compliment",
+      },
+      {
+        line: '"Oi, you seen Ren about?" He\'s already scanning the treeline. "He\'s dodging rounds again. Good thing I fitted him with a tracker."',
+        approach: "Ask why",
+      },
+      {
+        line: "You catch him staring, and he grins like he wasn't. \"What? I'm allowed to admire good work ethic.\"",
+        approach: "Call him out",
+      },
+      {
+        line: '"Mates\' rates, just for you," he says, and it is not, in fact, a discount anyone else gets.',
+        approach: "Take the mates' rates",
+      },
+      {
+        line: "He's noticed you've started coming by even on days there's nothing to feed or fix.",
+        approach: "Say you like it here",
+      },
     ],
     warm: [
       "His whole face lights up when he sees you: genuine delight, the kind that makes his warmth impossible to resist.",
@@ -341,12 +388,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Take the feed bucket",
-      "Join the rounds",
-      "Say hello to Peekaboo",
-      "Answer to Honor Roll",
-    ],
     warm: [
       "Grab a bucket",
       "Stay for the night feed",

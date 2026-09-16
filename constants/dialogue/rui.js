@@ -259,13 +259,58 @@ export default {
       },
     ],
     known: [
-      "He's stopped warning you off. The careful distance is still there. It always will be. He just doesn't say it out loud anymore.",
-      "He beams. \"Oh hey, it's Honor Roll! Can't believe I ran into you here, so random! Guess we've gotta go on a date now, huh?\"",
-      '"You look wiped, Honor Roll. Come by the bar later? I\'ll make you something easy and you can just... not be anywhere else for a bit."',
-      "He asks how you are and then actually waits, which not everyone does.",
-      "He wipes down the same spot on the bar twice. \"Harurin hasn't been in. He's been swamped with the animals again. I keep a stool open for him, just in case.\"",
-      "He's in the anomaly garden, gloves on, snipping the dead heads off a rose bush that's wilting anyway. \"They don't do great near me. I keep planting them anyway.\"",
-      "The brightness dims for half a second, and he covers it faster than before.",
+      {
+        line: "He's stopped warning you off. The careful distance is still there. He just doesn't say it out loud anymore.",
+        approach: "Keep the careful distance",
+      },
+      {
+        line: "He beams. \"Oh hey, it's Honor Roll! Can't believe I ran into you here, so random! Guess we've gotta go on a date now, huh?\" Then throws in a wink for good measure.",
+        approach: "Make it a pattern",
+      },
+      {
+        line: '"You look wiped, Honor Roll. Come by the bar later? I\'ll make you something easygoing and you can zone out for a bit."',
+        approach: "Take him up on it",
+      },
+      {
+        line: "He remembers something you mentioned once in passing, weeks ago, and brings it up like it's nothing.",
+        approach: "Ask how he remembered that",
+      },
+      {
+        line: "He wipes down the same spot on the bar twice. \"Harurin hasn't been in. He's been swamped with the animals again. I keep a stool open for him, just in case.\"",
+        approach: "Ask about Haru",
+      },
+      {
+        line: "He's in the anomaly garden, gloves on, coaxing something rare and half-feral into blooming for him. \"This one's fussy. Doesn't do that for just anyone.\"",
+        approach: "Ask what it is",
+      },
+      {
+        line: "For a second he looks like he's turning the same old question over again, then the smile clicks back into place like a switch.",
+        approach: "Notice it anyway",
+      },
+      {
+        line: "He's left a small handwritten note tucked in your bag, something dumb and encouraging, unsigned like you wouldn't know it was him.",
+        approach: "Ask about the note",
+      },
+      {
+        line: '"We could hang out later, if you\'re free. Ahaha, no pressure though," he says, already bracing for you to say no.',
+        approach: "Say yes",
+      },
+      {
+        line: "He's already got your drink order memorized, down to how much ice you actually want versus what you ask for.",
+        approach: "Order the usual",
+      },
+      {
+        line: "\"Aw, don't worry about me,\" he deflects, fast, before you've even finished the sentence.",
+        approach: "Worry about him anyway",
+      },
+      {
+        line: "He's fending off Edward on your behalf again, with a little more bite than usual.",
+        approach: "Thank him for the cover",
+      },
+      {
+        line: "\"You're not doing all this for me, are you?\" he asks, light, like the answer doesn't actually matter to him.",
+        approach: "Tell him the truth",
+      },
     ],
     warm: [
       "His grin is real when he sees you. You also catch the half-second where it slips, like you're the only thing standing between him and a very long night.",
@@ -347,12 +392,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Give him the real answer",
-      "Keep the careful distance",
-      "Make it a pattern",
-      "Ask about the note",
-    ],
     warm: [
       "Take the good seat",
       "Tell him about your day",
