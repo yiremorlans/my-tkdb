@@ -21,14 +21,14 @@ export default {
             label: "Say you don't want anything",
             style: 3,
             close:
-              "That is not a category the record has.\n\n*A pause of some length.*\n\nI will create one. It will contain a single entry. Good night.",
+              "That is not a category the record has.\n\n*A pause of some length.*\n\nI will create one. Good night.",
           },
           {
             key: "playful",
             label: "Offer to file a petition",
             style: 1,
             close:
-              "Do not. The forms are extensive and I would have to process it.\n\n...I would process it immediately. I would be at my desk within four minutes. Please do not test that; I am aware of how it would look.",
+              "Do not. The forms are extensive, and processing it ahead of the existing queue would not be defensible on paper.\n\n...I've already drafted it. That is all I intend to say on the matter.",
           },
           {
             key: "bold",
@@ -163,12 +163,12 @@ export default {
     devoted: {
       beats: [
         "**{firstName}**: Your name has been removed from the Sinostra register. Every entry. Retroactively.",
-        "This was not an oversight and it was not a courtesy. It was a decision I made at 02:00 and executed personally, and it required me to alter a document I have described to this house as inviolable.\n\nThe reason is that a man came to my office asking who in the register had been visiting the captain, and I gave him a complete and accurate answer that did not contain you.",
+        "This was not an oversight and it was not a courtesy. It was a decision I made at 02:00 and executed personally, and it required me to alter a document I have described to this house as inviolable.\n\nThe reason is that a man found me in the records room asking who in the register had been visiting the captain, and I gave him a complete and accurate answer that did not contain you.",
         "I have never lied on a record. Not once, under any pressure, including from Romeo, including twice from the captain.\n\nI have now. Deliberately, cleanly, with a fabricated audit trail that will withstand review.\n\nUnderstand exactly what I have handed you. If it is ever found, my practice is finished and I am finished with it. It is in your keeping now, and I put it there on purpose.",
       ],
       choice: {
         prompt:
-          "Say something. I have been at this desk since two and I would like to stop being at it.",
+          "Say something. I have been at this since two and I would like to stop.",
         options: [
           {
             key: "kind",
@@ -247,8 +247,8 @@ export default {
         approach: "Take the consultation",
       },
       {
-        line: "There are eleven documents on the desk and he knows exactly where each one is.",
-        approach: "Sit across the desk",
+        line: "There are eleven documents spread out in front of him and he knows exactly where each one is.",
+        approach: "Sit across from him",
       },
       {
         line: "He speaks in complete sentences at a speed that suggests he's already ahead of them.",
@@ -256,11 +256,58 @@ export default {
       },
     ],
     known: [
-      "He's stopped introducing himself. He opens mid-argument now, which is friendlier.",
-      '"Partner," he says, and this time it\'s a name rather than a proposition.',
-      "He hands you a document unprompted. He wants your read on it.",
-      '"Have you seen Taiga Hoshibami? Strange... According to my behavioral model, he should be in the casino at this time."',
-      '"I have been assigned to Sinostra, so I will not allow them to stand trial, no matter how villainous their actions. That is the Shinjo family policy."',
+      {
+        line: '"For the record," he says, "I am correct. You may attempt to argue otherwise, if you wish."',
+        approach: "Counter his argument",
+      },
+      {
+        line: '"Partner," he says, and this time it\'s a name rather than a proposition.',
+        approach: "Accept the title",
+      },
+      {
+        line: "He hands you a document unprompted. He wants your read on it.",
+        approach: "Read the document",
+      },
+      {
+        line: '"Have you seen Taiga Hoshibami? Strange... According to my behavioral model, he should be in the casino at this time."',
+        approach: "Help him look for Taiga",
+      },
+      {
+        line: '"I have been assigned to Sinostra, so I will not allow them to stand trial, no matter how villainous their actions. That is the Shinjo family policy."',
+        approach: "Ask about the Shinjo policy",
+      },
+      {
+        line: "He asks for your honest assessment of his argument, and looks faintly betrayed when you actually give it.",
+        approach: "Give a second opinion",
+      },
+      {
+        line: '"You disagree?" He looks personally offended, then visibly recalibrates. "...Go on, then. Convince me."',
+        approach: "Explain your position",
+      },
+      {
+        line: "Before you've said a word, he's already pulled out a second chair, angled precisely toward himself.",
+        approach: "Take the offered seat",
+      },
+      {
+        line: "He repeats something you said days ago, word for word, and looks almost annoyed that he remembered it.",
+        approach: "Ask how he remembered",
+      },
+      {
+        line: "He's filed you under a new heading in his notebook, one he doesn't let you read.",
+        approach: "Ask what heading",
+      },
+      {
+        line: '"I charge 5500 yen per half hour," he says, then, after a beat, "...This one is free."',
+        approach: "Thank him for the discount",
+      },
+      {
+        line: "He recites a statute at you that sounds suspiciously specific to whatever you're currently doing.",
+        approach: "Ask if that's a real law",
+      },
+      {
+        line: "He's brought you the same takeout coffee he buys himself, though you never told him what you drink.",
+        approach: "Take the coffee",
+      },
     ],
     warm: [
       "His eyes light up when he sees you. He's eager now, ready to collaborate and strategize together.",
@@ -336,12 +383,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Give a second opinion",
-      "Read the document",
-      "Disagree with him",
-      "Take the offered seat",
-    ],
     warm: [
       "Take the reserved hour",
       "Argue the other side",
@@ -440,9 +481,9 @@ export default {
       close: [
         "Understand his logic",
         "Sit through the long argument",
-        "Let the office go quiet",
+        "Let the room go quiet",
       ],
-      bound: ["Let him work", "Sit in the quiet office", "Say nothing"],
+      bound: ["Let him work", "Sit in the quiet room", "Say nothing"],
     },
   },
   // The /call reveal lines for this character, keyed by the register in
@@ -458,7 +499,7 @@ export default {
       '"Consultations are 5,500 yen per half hour." **{name}** waives it for {user}, and mentions that he is waiving it.',
     ],
     warm: [
-      '"Partner. Excellent." **{name}** had a thought and no one worth telling it to until {user} turned up.',
+      '"Excellent." **{name}** had a thought and no one worth telling it to until {user} turned up.',
       "{user} calls out, and **{name}** caps the pen mid-clause.",
       "**{name}** has drafted something with {user}'s name on it. He drafted it optimistically.",
     ],

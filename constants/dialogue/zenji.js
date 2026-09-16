@@ -261,11 +261,58 @@ export default {
       },
     ],
     known: [
-      '"The wanderer returns." He looks delighted. "My dear, you\'re becoming a regular fixture."',
-      "He lifts the instrument across his knee. \"What's this? Well, it's a biwa, of course. It's a biwa just as you are yourself.\"",
-      "He offers your name back to you like a good line he's been holding.",
-      "\"Heh. There's no doubt about it. Zenji Kotodama is once again the most styling man on campus. These glad rags are the cat's pajamas.\"",
-      "He asks nothing at all. He simply makes room on the step beside him.",
+      {
+        line: '"The wanderer returns." He looks delighted. "My dear, you\'re becoming a regular fixture."',
+        approach: "Say you'll keep returning",
+      },
+      {
+        line: "He lifts the instrument across his knee. \"What's this? Well, it's a biwa, of course. It's a biwa just as you are yourself.\"",
+        approach: "Listen a while",
+      },
+      {
+        line: "He says your name like it's the best line he's been saving all week.",
+        approach: "Take the compliment",
+      },
+      {
+        line: "\"Heh. There's no doubt about it. Zenji Kotodama is once again the most styling man on campus. These glad rags are the cat's pajamas.\"",
+        approach: "Compliment his style",
+      },
+      {
+        line: "He asks nothing at all. He's just been narrating the evening, step by step, and leaves the last line open for you to fill in.",
+        approach: "Finish his sentence",
+      },
+      {
+        line: "You ask about his brother. His smile doesn't slip, not quite, but something behind it does, and he steers the conversation back to poetry before you can ask anything real.",
+        approach: "Let it go, for now",
+      },
+      {
+        line: 'He calls you "my dear" now without the theatrical pause that used to come before it.',
+        approach: "Let the nickname stick",
+      },
+      {
+        line: '"Zenji Kotodama, a wonderful name, don\'t you think?" he asks, then actually waits to hear what you think.',
+        approach: "Tell him what you think",
+      },
+      {
+        line: "He's woven you into one of his stories as a character, and seems nervous about how you'll take it.",
+        approach: "Ask which one you are",
+      },
+      {
+        line: '"Haku filmed these at my behest," he says of an old video, "but I can\'t imagine these old things will capture anyone\'s heart." He seems to hope you disagree.',
+        approach: "Say you liked it",
+      },
+      {
+        line: "He asks after your day with an attention that makes the question feel like the whole point of the conversation.",
+        approach: "Tell him about your day",
+      },
+      {
+        line: '"A burst of inspiration has taken hold of me," he announces, then admits it was really just you walking by.',
+        approach: "Ask what inspired him",
+      },
+      {
+        line: "He's stopped introducing you as a fan and started calling you a friend.",
+        approach: "Say you're glad to know him",
+      },
     ],
     warm: [
       "His expression brightens with genuine pleasure, all formal distance melting away. \"My dear. I'm glad you're here.\"",
@@ -312,7 +359,7 @@ export default {
             approach: "Watch the last light with him",
           },
           {
-            line: "The lanterns have come on around the step. He tips his hat and makes room on the lit side.",
+            line: "The lanterns have come on around the step. He's already there on the lit side, like he's had the seat picked out all evening.",
             approach: "Sit under the lanterns",
           },
           {
@@ -386,12 +433,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Take the warm step",
-      "Give the line an opinion",
-      "Accept the tea",
-      "Listen a while",
-    ],
     warm: [
       "Accept the tea",
       "Ask about the verse",
