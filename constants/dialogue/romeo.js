@@ -254,11 +254,58 @@ export default {
       },
     ],
     known: [
-      "He's stopped trying to put you to work. Mostly.",
-      '"Oh, it\'s YOU," at a volume that carries across the entire floor.',
-      "He complains about something to you specifically, which is a form of trust.",
-      '"Have you seen Shinjo anywhere? I just asked him to organize some documents and he ran off to make copies!"',
-      'He pushes a glass of something green across the desk. "Noni juice. Drink it. Your skin cell turnover is suboptimal and it shows."',
+      {
+        line: "He's stopped trying to put you to work. Mostly.",
+        approach: "Point out the exception",
+      },
+      {
+        line: '"Oh, it\'s YOU," at a volume that carries across the entire floor.',
+        approach: "Interrupt the yelling",
+      },
+      {
+        line: "He complains about something to you specifically, which is a form of trust.",
+        approach: "Let him complain",
+      },
+      {
+        line: '"Have you seen Shinjo anywhere? I just asked him to organize some documents and he ran off to make copies!"',
+        approach: "Help him find Ritsu",
+      },
+      {
+        line: 'He pushes a glass of something green across the desk. "Noni juice. Drink it. Your skin cell turnover is suboptimal and it shows."',
+        approach: "Take the free drink",
+      },
+      {
+        line: "He's scrawling out a check Taiga has no business asking for. \"Sit. This'll only take a second.\"",
+        approach: "Sit without an appointment",
+      },
+      {
+        line: '"Spit it out, I don\'t have all day," he snaps, then actually stops to listen.',
+        approach: "Say what you want, quickly",
+      },
+      {
+        line: '"That color actually works on you. Don\'t let it go to your head."',
+        approach: "Take the compliment",
+      },
+      {
+        line: "He's sizing up your outfit with the exact focus he gives a bad hand of cards.",
+        approach: "Brace for the critique",
+      },
+      {
+        line: '"Don\'t think this means anything," he says, of the seat he just pulled out for you. It means something.',
+        approach: "Take the seat anyway",
+      },
+      {
+        line: '"That\'s going to cost you," he says, already doing the math on how much.',
+        approach: "Haggle with him",
+      },
+      {
+        line: '"You have an eye for quality," he says, surprised, like he didn\'t expect to mean it as a compliment.',
+        approach: "Take it as a compliment",
+      },
+      {
+        line: "He snaps at one of his guys for bumping into you, louder than the bump warranted.",
+        approach: "Let him defend you",
+      },
     ],
     warm: [
       "He pauses mid-command when he spots you, actually stepping away from the action to greet you properly. Suddenly you matter more than the operation.",
@@ -334,12 +381,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Take the free drink",
-      "Sit without an appointment",
-      "Interrupt the yelling",
-      "Say what you want, quickly",
-    ],
     warm: [
       "Take the good seat",
       "Interrupt him anyway",

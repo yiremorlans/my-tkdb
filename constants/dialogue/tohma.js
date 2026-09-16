@@ -233,7 +233,7 @@ export default {
     new: [
       {
         line: 'Calm as still water, he tilts his head. "You\'re new around here."',
-        approach: "Answer his question",
+        approach: "Confirm it",
       },
       {
         line: "He notes your arrival, files it somewhere, and returns to what he was doing.",
@@ -245,7 +245,7 @@ export default {
       },
       {
         line: "He checks the corridor behind you before he looks at you. Habit, not suspicion.",
-        approach: "Step into view",
+        approach: "Let him finish",
       },
       {
         line: "Nothing about his expression moves. Something behind it is definitely taking notes.",
@@ -253,11 +253,58 @@ export default {
       },
     ],
     known: [
-      "You've moved from unknown to accounted for. From him, that's a promotion.",
-      "He doesn't ask your name. He had it the first time and kept it.",
-      '"Twelve days since last time," he notes. "Yes, I keep track. It\'s rather the job."',
-      "The once-over is shorter now. He reached his conclusion about you some time ago.",
-      "He nods once as you pass. It isn't nothing.",
+      {
+        line: "You've moved from unknown to accounted for. From him, that's a promotion.",
+        approach: "Proceed",
+      },
+      {
+        line: "He doesn't ask your name. He had it the first time and kept it.",
+        approach: "Skip the explanation",
+      },
+      {
+        line: '"Four days since last time," he notes. "Yes, I keep track. It\'s rather the job."',
+        approach: "Ask why he keeps track",
+      },
+      {
+        line: "The once-over is shorter now. He reached his conclusion about you some time ago.",
+        approach: "Ask what he decided",
+      },
+      {
+        line: "He nods once as you pass. It isn't nothing.",
+        approach: "Return the nod",
+      },
+      {
+        line: "He walks you through Frostheim's schedule like you'll actually need to know it now.",
+        approach: "Learn the layout",
+      },
+      {
+        line: '"Honestly," he murmurs, in the tone he reserves for people he has stopped needing to warn off.',
+        approach: "Ask what that means",
+      },
+      {
+        line: "He pours a second cup without being asked, then pretends the extra cup was already there.",
+        approach: "Take the second cup",
+      },
+      {
+        line: '"Well, well," he says, and there is nothing sly left in it, only something close to fondness.',
+        approach: "Ask what's changed",
+      },
+      {
+        line: "He always seems to know when your classes let out. He calls it scheduling. It isn't.",
+        approach: "Call it what it is",
+      },
+      {
+        line: "\"I assure you, it's not poisoned,\" he says, and this time he means it as a joke you're in on.",
+        approach: "Drink it anyway",
+      },
+      {
+        line: "A report sits unread on his desk. He'd rather talk to you than finish it.",
+        approach: "Ask what's in it",
+      },
+      {
+        line: "\"Don't repeat that,\" he says, already knowing you won't.",
+        approach: "Note he didn't need to ask",
+      },
     ],
     warm: [
       "His usual calm softens into something warmer whenever you're near.",
@@ -382,12 +429,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Proceed",
-      "Skip the explanation",
-      "Learn the layout",
-      "Return the nod",
-    ],
     warm: [
       "Check in with him",
       "Walk up to him",

@@ -263,12 +263,58 @@ export default {
       },
     ],
     known: [
-      "He greets you by name now, and looks pleased to have gotten it right.",
-      "He still braces before he takes anything from your hands. He just doesn't hesitate anymore before offering to.",
-      "There's a cup already out. He'll say it was poured for no one in particular.",
-      "He doesn't call you a guest anymore. It slipped out once, and he let it.",
-      "\"I'm sorry I'm so late. The campus is so crowded I can never manage to walk in a straight line. Silly, isn't it?\"",
-      '"Lyca used a word today that I only taught him last week, and used it perfectly," he says, quietly delighted. "Sorry. Small thing. It rather made my afternoon."',
+      {
+        line: "He greets you by name now, and looks pleased to have gotten it right.",
+        approach: "Return the bow",
+      },
+      {
+        line: "He still braces before he takes anything from your hands. He just doesn't hesitate anymore before offering to.",
+        approach: "Let him take it",
+      },
+      {
+        line: "There's a cup already out. He'll say it was poured for no one in particular.",
+        approach: "Take the tea",
+      },
+      {
+        line: "He hands you his umbrella without the half-second hesitation he still gives everyone else.",
+        approach: "Thank him",
+      },
+      {
+        line: "\"I'm sorry I'm so late. The campus is so crowded I can never manage to walk in a straight line. Silly, isn't it?\"",
+        approach: "Tell him it's not silly",
+      },
+      {
+        line: '"Lyca used a word today that I only taught him last week, and used it perfectly," he says, quietly delighted. "Sorry. Small thing. It rather made my afternoon."',
+        approach: "Celebrate together",
+      },
+      {
+        line: "He's stopped apologizing for taking up your time before he's even finished the sentence.",
+        approach: "Smile at the change",
+      },
+      {
+        line: "\"You think I'm always smiling? Ha ha,\" he says, and for once doesn't deflect the question after.",
+        approach: "Ask what makes him happy",
+      },
+      {
+        line: '"I read something off this," he admits, turning an object over in his hands, "but it isn\'t mine to tell."',
+        approach: "Don't press him",
+      },
+      {
+        line: '"Would you come with me to Sho\'s truck?" he asks. "I\'ve stood in front of that menu twice now and couldn\'t decide."',
+        approach: "Say yes to the truck",
+      },
+      {
+        line: "He catches himself mid-bow when you wave instead, and laughs at his own reflex.",
+        approach: "Laugh with him",
+      },
+      {
+        line: "He asks how your day went before you can ask about his. For once, he gets there first.",
+        approach: "Tell him about your day",
+      },
+      {
+        line: "He waits until you and Haku are both there before he starts the mission briefing.",
+        approach: "Take a seat",
+      },
     ],
     warm: [
       "His usual composure softens immediately: there's genuine gladness in his expression when he sees you.",
@@ -411,12 +457,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Take the poured cup",
-      "Answer at the gate",
-      "Spend his moment",
-      "Return the bow",
-    ],
     warm: [
       "Take the second cup",
       "Sit with him",
