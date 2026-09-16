@@ -261,14 +261,58 @@ export default {
       },
     ],
     known: [
-      '"Oh, it\'s you." He cracks one eye open. "Good timing. I was getting bored."',
-      "\"Zenji's got me filming him again. He's wandered off to pick the spot, and it's never the easy one.\"",
-      '"You keep turning up. I\'ve started counting on it."',
-      "\"Mornin'. You've got a sleep mark on your face. ...Good. Means you actually slept.\"",
-      '"Made too much tea. You\'ll have to help me with it." He did not make too much tea by accident.',
-      '"You were hunting everywhere for those forms. I already handed them in for you. It\'s fine, it was on the way."',
-      "\"Hang on, I'll walk you. I don't love the idea of you crossing the grounds alone in the dark.\"",
-      "\"Anyway. I'll try not to keep you out this late from now on. ...No promises. Come on, I'll see you back.\"",
+      {
+        line: '"Oh, it\'s you." He cracks one eye open. "Good timing. I was getting bored."',
+        approach: "Ask if he was waiting for you",
+      },
+      {
+        line: "\"Zenji's got me filming him again. He's wandered off to pick the spot, and it's never the easy one.\"",
+        approach: "Offer to help film",
+      },
+      {
+        line: '"You keep turning up. I\'ve started counting on it."',
+        approach: "Say you'll keep turning up",
+      },
+      {
+        line: "\"Mornin'. You've got a sleep mark on your face. ...Good. Means you actually slept.\"",
+        approach: "Rub at the sleep mark",
+      },
+      {
+        line: '"Made too much tea. You\'ll have to help me with it." He did not make too much tea by accident.',
+        approach: "Help him with the tea",
+      },
+      {
+        line: '"You were hunting everywhere for those forms. I already handed them in for you. It\'s fine, it was on the way."',
+        approach: "Thank him for handling it",
+      },
+      {
+        line: "\"Hang on, I'll walk you. I don't love the idea of you crossing the campus alone in the dark.\"",
+        approach: "Let him walk you",
+      },
+      {
+        line: "\"Anyway. I'll try not to keep you out this late from now on. ...No promises. Come on, I'll see you back.\"",
+        approach: "Hold him to it",
+      },
+      {
+        line: "\"Subaru's doing paperwork in the common room. I'm keeping him company.You should join.\"",
+        approach: "Join the common room",
+      },
+      {
+        line: '"That old thing?" He tucks the charm back out of sight. "Something I grabbed on my way out. Never got around to throwing it away."',
+        approach: "Ask about the charm",
+      },
+      {
+        line: '"I\'ve been keeping tabs on you." He doesn\'t bother denying it. "Somebody\'s got to get to the bottom of that curse of yours."',
+        approach: "Ask if that's really why",
+      },
+      {
+        line: "He's the one still up when you can't sleep, like he timed it that way.",
+        approach: "Wait him out",
+      },
+      {
+        line: '"Devilish charm," Zenji calls it. Haku just shrugs like the label\'s not his problem.',
+        approach: "Ask if it's true",
+      },
     ],
     warm: [
       '"Careful, princess. Sit that close and people start talking." He doesn\'t move away.',
@@ -406,12 +450,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Take the cleared step",
-      "Ask about the repairs",
-      "Wait him out",
-      "Bring up your curse",
-    ],
     warm: [
       "Take the space beside him",
       "Call his bluff",
