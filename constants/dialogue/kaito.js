@@ -44,7 +44,7 @@ export default {
             label: "Ask why not with Luca",
             style: 4,
             close:
-              "*A long pause.*\n\n...because I wanted just one lunch where you're not looking past me at him. That's it. That's the whole answer.\n\n*Then, immediately:* ...okay that was a lot. Anyway! Ramen's on me. Get the good one, not the one Luca always orders, his taste is genuinely concerning.",
+              "*A long pause.*\n\n...because I wanted just one lunch where you're not looking past me at him. That's it.\n\n*Then, immediately:* ...okay that was a lot. Anyway! Ramen's on me. Get the good one, not the one Luca always orders, his taste is genuinely concerning.",
           },
         ],
       },
@@ -263,11 +263,58 @@ export default {
       },
     ],
     known: [
-      "He lights up when he spots you, then immediately checks whether he's bothering you.",
-      '"Hey, you! From the... yeah! You!" He\'s thrilled to have placed you and not embarrassed he needed a second.',
-      "He shows you the same TikTok he showed you yesterday. You let him.",
-      "He's ducking around a corner. \"Shit, it's Luca, he's off to train, I gotta... oh. Just you. Phew.\"",
-      "You've been upgraded from stranger to person Kaito waves at across the whole courtyard.",
+      {
+        line: "He lights up when he spots you, then immediately checks whether he's bothering you.",
+        approach: "Tell him he isn't a bother",
+      },
+      {
+        line: 'He shows up with a tin of something lopsided and vaguely cookie-shaped. "I made these! Don\'t ask how many batches it took."',
+        approach: "Try what he baked",
+      },
+      {
+        line: "He shows you the same WickChat video he showed you yesterday. You let him.",
+        approach: "Watch the video again",
+      },
+      {
+        line: "He's ducking around a corner. \"Shit, it's Luca, he's off to train, I gotta... oh. Just you. Phew.\"",
+        approach: "Ask what he's hiding from",
+      },
+      {
+        line: "You've been upgraded from stranger to person Kaito waves at across the whole courtyard.",
+        approach: "Wave across the courtyard",
+      },
+      {
+        line: "He's bracing himself for a summons that hasn't come yet, and somehow you're his moral support now.",
+        approach: "Go with him to Tohma",
+      },
+      {
+        line: "He fumbles his phone trying to show you something and drops it twice before he just tells you instead.",
+        approach: "Let him just tell you",
+      },
+      {
+        line: "He's saved you a seat before you even got there, then acts like it was an accident.",
+        approach: "Take the seat he saved",
+      },
+      {
+        line: '"You actually remembered that?" He looks stupidly pleased you kept track of something he said in passing.',
+        approach: "Say you remembered",
+      },
+      {
+        line: "He's mid-apology for something that wasn't his fault before you've even asked what happened.",
+        approach: "Tell him it's okay",
+      },
+      {
+        line: '"Okay but don\'t laugh," he says, already laughing at himself first.',
+        approach: "Promise not to laugh",
+      },
+      {
+        line: "He checks his phone for a message from you more than he'd ever admit to.",
+        approach: "Say you were thinking of him",
+      },
+      {
+        line: 'He\'s gotten brave enough to save your contact under something other than just "Honor Roll."',
+        approach: "Ask what he calls you",
+      },
     ],
     warm: [
       "He's saved you a seat at the diner and is very obviously proud of himself for thinking of it.",
@@ -404,12 +451,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Let him place you",
-      "Watch the video again",
-      "Wave across the courtyard",
-      "Go with him to Tohma",
-    ],
     warm: [
       "Take the saved seat",
       "Let him treat you",
@@ -517,8 +558,8 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '**{name}** jumps a foot. "AH... oh. Oh, it\'s just you." {user} had only said his name.',
-      '"Wait, you know my name? Mine?" **{name}** looks at {user} like it\'s a prize.',
+      '**{name}** jumps a foot. "AH... Oh, it\'s just you." {user} had only said his name.',
+      '"Wait, you know my name?" **{name}** looks at {user} like it\'s a prize.',
       "{user} calls out, and **{name}** startles, recovers, and pretends he didn't.",
     ],
     warm: [

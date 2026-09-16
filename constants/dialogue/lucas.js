@@ -237,16 +237,16 @@ export default {
         approach: "Return his smile",
       },
       {
-        line: "He steps aside to let you pass, and apologizes for having been in the way at all.",
-        approach: "Speak softly first",
+        line: "He holds the door without a word, like it's simply the natural thing to do.",
+        approach: "Thank him as you pass",
       },
       {
         line: "He's checking his gear over with far more care than the hour warrants. A mission, maybe.",
         approach: "Let him notice you",
       },
       {
-        line: '"Forgive me," he says softly, before you\'ve said anything. "I didn\'t hear you come in."',
-        approach: "Approach without a word",
+        line: '"Careful," he says, catching your arm before you trip over the loose flagstone.',
+        approach: "Steady yourself on him",
       },
       {
         line: "He's already stepped between a first-year and a pack of older students, calm as if it's nothing.",
@@ -254,11 +254,58 @@ export default {
       },
     ],
     known: [
-      "He remembers you. The little apology comes quicker now, like a habit he's stopped hearing himself say.",
-      "He looks up when you enter now, rather than after.",
-      "\"You've been well?\" It's the first question he's asked you unprompted.",
-      '"You\'re early," he notes, openly impressed. "Good. We can go over the details."',
-      "The easy smile comes quicker now, like he's stopped making himself wait for it.",
+      {
+        line: "He spots you across the courtyard and starts walking before he's finished raising a hand in greeting.",
+        approach: "Meet him halfway",
+      },
+      {
+        line: "He's watching Kaito from across the room, some private worry crossing his face before he catches you looking.",
+        approach: "Ask what's wrong",
+      },
+      {
+        line: '"You\'re early," he notes, openly impressed. "Good. We can go over the details."',
+        approach: "Say you wanted to be on time",
+      },
+      {
+        line: "He's moved to the seat with the worse view so you can have the better one.",
+        approach: "Accept the better spot",
+      },
+      {
+        line: '"You\'re stronger than you were a month ago," he tells Kaito, steady and certain. "That\'s not nothing." Then he catches your eye, like you\'re in on it.',
+        approach: "Nod in agreement",
+      },
+      {
+        line: "He's drilling forms alone in the training yard, sweat-soaked and relentless, until he looks up and finds you watching.",
+        approach: "Hold his gaze",
+      },
+      {
+        line: '"Allow me," he says, and has your bag before you can protest.',
+        approach: "Let him carry it",
+      },
+      {
+        line: "He asks if you've eaten today in a tone that expects the honest answer, not the polite one.",
+        approach: "Tell him the truth",
+      },
+      {
+        line: "He's brought an extra biscuit. He doesn't say who for.",
+        approach: "Take the extra biscuit",
+      },
+      {
+        line: '"I do think it\'s important to think carefully," he says, then admits he came looking for you anyway.',
+        approach: "Ask what changed his mind",
+      },
+      {
+        line: "He's pacing outside the captain's room, rehearsing under his breath how he'll ask Jin for the assignment.",
+        approach: "Offer to go in with him",
+      },
+      {
+        line: "He's still hunched over demon subjugation texts well past the library's closing time, chasing something he keeps to himself.",
+        approach: "Ask what he's looking for",
+      },
+      {
+        line: "He notices you swaying on your feet before you do, and shifts closer so his shoulder's there before you ask.",
+        approach: "Rest against him",
+      },
     ],
     warm: [
       "The easy smile turns private more often now, just for you.",
@@ -346,17 +393,17 @@ export default {
   ],
   temperamentDialogue: {
     new: [
-      "\"Oh, hello. It's not often I see a new face out here. Take care as you go, won't you?\"",
-      '"Ah, my apologies. Did you need something? I\'m happy to help."',
-      "\"I'm sorry, I don't believe we've met properly. Lucas. A pleasure.\"",
+      "\"Oh, hello. I'm still finding my own way round here, if I'm honest. Are you lost too?\"",
+      "\"Need a hand with something? I don't know much yet, but I'll help however I can.\"",
+      "\"We haven't been introduced properly. Lucas Errant. Pleasure's mine.\"",
       "\"You're here 10 minutes early. I'm impressed. Let's check the details for today's mission.\"",
     ],
     known: [
       "\"Ah, it's you. Good. I'd hoped it would be.\"",
-      "\"You've been coming by more often. That's... that's good.\"",
+      '"You\'ve been coming by more often. I like that."',
       '"Do I find it tough training every day? Those with strength have a duty to use it for others. I\'m perfectly all right."',
-      '"I invited Kaito to train with me, but he turned me down. I\'m worried about his lack of strength..."',
-      '"I remembered your name. I hope that isn\'t strange."',
+      '"I invited Kaito to train with me. He turned me down, but I mean to keep asking. He\'s stronger than he thinks."',
+      '"I remembered your name. Of course I did."',
     ],
     warm: [
       "\"I'm glad you're safe. How have you been?\"",
@@ -388,12 +435,6 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Accept the better spot",
-      "Answer his question",
-      "Return the half-smile",
-      "Say his name",
-    ],
     warm: [
       "Walk up to him",
       "Ask him how he's been",

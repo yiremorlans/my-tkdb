@@ -534,7 +534,7 @@ export default {
   winnerLines: {
     new: [
       '"A test subject, wandering in of its own accord." **{name}** looks {user} over, delighted.',
-      '{user} says the name, and **{name}** draws himself up. "You should feel honored to have recognized me."',
+      '{user} says the name, and **{name}** draws himself up. "You should feel honored to have some of my attention."',
       '"You know of me. Naturally." **{name}** informs {user} of this at considerable length.',
     ],
     warm: [
