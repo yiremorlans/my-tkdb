@@ -721,6 +721,14 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         } catch (err) {
           console.error('Error in /meet pick:', err);
           clearTimeout(timeoutHandle);
+          // The /meet invoke-throttle slot was claimed on the original command
+          // and was never going to be released here on success (that only
+          // happens once /resp completes) — but a failure at this step means
+          // the flow is dead and /resp will never run, so release it here too.
+          // Otherwise a slow-but-failed followup (e.g. an aborted image
+          // upload) leaves the user facing a bogus "wait a minute" on their
+          // very next /meet, on top of the failure they just hit.
+          releaseCommandInvoke(userId, 'meet');
           try {
             await sendFollowup(req.body.token, {
               content: `Error: ${err.message}`,
@@ -775,6 +783,13 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         } catch (err) {
           console.error('Error in /roam spawn:', err);
           clearTimeout(timeoutHandle);
+          // See the matching comment in /meet pick: the /roam invoke-throttle
+          // slot was claimed on the original command and only gets released
+          // once /resp completes. A failure here means /resp never happens,
+          // so release it now too — otherwise a slow-but-failed followup
+          // (e.g. an aborted image upload) leaves the user facing a bogus
+          // "wait a minute" cooldown on their very next /roam.
+          releaseCommandInvoke(userId, 'roam');
           try {
             await sendFollowup(req.body.token, {
               content: `Error: ${err.message}`,
