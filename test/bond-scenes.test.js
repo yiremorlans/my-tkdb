@@ -270,6 +270,37 @@ test('the closing choice posts its authored line, records the pick, and grants t
   assert.strictEqual(fake.tables.bond_keepsakes[0].emoji, scene.keepsake.emoji);
 });
 
+test('a closing option with a sticker sends it ahead of the keepsake, in its own message', async () => {
+  // Towa's Acquaintance "kind" pick is the one authored option that carries a
+  // sticker (Happy.png) on its close — the keepsake must still read last.
+  await deliverBondScene(USER, 'towa', 'Acquaintance');
+
+  const scene = getBondScene('towa', 'Acquaintance');
+  const option = scene.choice.options.find((o) => o.key === 'kind');
+  assert.ok(option.sticker, 'fixture assumption: this option carries a sticker');
+
+  const result = await handleBondClick(USER, {
+    kind: 'choice', characterId: 'towa', levelKey: 'acq', arg: option.key,
+  });
+
+  assert.strictEqual(result.acted, true);
+  assert.strictEqual(discord.posts.length, 3, 'beat 0 plus the split sticker + keepsake close');
+
+  const stickerMessage = discord.posts.at(-2);
+  const keepsakeMessage = discord.posts.at(-1);
+
+  // option.close here is just "..." — too short for assertBeatPosted's
+  // literal-stretch matching, so compare directly.
+  assert.strictEqual(stickerMessage.content, option.close);
+  assert.ok(stickerMessage.files?.some((f) => f.name === option.sticker), 'sticker rides its own message');
+  assert.ok(!stickerMessage.content.includes(scene.keepsake.emoji), 'the keepsake has not appeared yet');
+
+  assert.ok(keepsakeMessage.content.includes(scene.keepsake.emoji), 'the keepsake reads last, on its own message');
+  assert.ok(!keepsakeMessage.files, 'the sticker does not also ride the keepsake message');
+  const ids = (keepsakeMessage.components || []).flatMap((r) => r.components).map((b) => b.custom_id);
+  assert.deepStrictEqual(ids, ['bond:replaystart:towa:acq:x'], 'the replay button sits on the final message');
+});
+
 test('a second choice click grants no second keepsake and posts nothing', async () => {
   await deliverBondScene(USER, CHAR, 'Friend');
   await handleBondClick(USER, { kind: 'next', characterId: CHAR, levelKey: 'fri', arg: '1' });

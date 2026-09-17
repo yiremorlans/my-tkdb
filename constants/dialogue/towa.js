@@ -268,11 +268,58 @@ export default {
       },
     ],
     known: [
-      "He knows your footsteps now. He's turned toward you before you're in sight.",
-      '"Haru\'s off patrolling again." He says it flatly. "I don\'t get it. They\'re all going to die someday anyway."',
-      "The dandelion is already in his hand. He's been holding it a while.",
-      'He\'s eating a flower, petal by petal. He offers you the last one. "...You have this bit."',
-      "He doesn't hide when you arrive anymore. He waits out in the open instead.",
+      {
+        line: "He's already leaning into you when you sit down, warm and pleased, humming the same three notes over and over.",
+        approach: "Let him lean on you",
+      },
+      {
+        line: '"Haru\'s off patrolling again." He says it flatly. "I don\'t get it. They\'re all going to die someday anyway."',
+        approach: "Let the comment go",
+      },
+      {
+        line: "The dandelion is already in his hand. He's been holding it a while.",
+        approach: "Take it from him",
+      },
+      {
+        line: 'He\'s eating a flower, petal by petal. He offers you the last one. "...You have this bit."',
+        approach: "Eat it from his hand",
+      },
+      {
+        line: '"Haru takes care of everyone here. I don\'t." He looks right at you. "I just take care of you."',
+        approach: "Ask why that is",
+      },
+      {
+        line: '"Dandelion," he says, testing whether you\'ll answer to it yet. You do.',
+        approach: "Answer to Dandelion",
+      },
+      {
+        line: "He's plucked petals off a flower nearby, methodically, and seems to be counting something with each one.",
+        approach: "Ask what he's counting",
+      },
+      {
+        line: '"You cut your hair," he says, before you\'ve even sat down. "I notice everything about you."',
+        approach: "Ask what else he's noticed",
+      },
+      {
+        line: "He's spinning slowly in circles to see how dizzy he can get, and grins wide when he wobbles straight into you.",
+        approach: "Steady him",
+      },
+      {
+        line: '"That one," he says, pointing at a cloud, "looks like you." He seems very pleased with this.',
+        approach: "Ask what shape you are",
+      },
+      {
+        line: "He wraps both arms around you before you've said a word, tight enough that you feel it in your ribs.",
+        approach: "Hug him back",
+      },
+      {
+        line: "The sky goes a shade grayer the moment someone speaks badly of Haru nearby. He doesn't seem to notice he did that.",
+        approach: "Change the subject",
+      },
+      {
+        line: "He suddenly goes still, head tilted, listening to something you can't hear at all.",
+        approach: "Ask what he hears",
+      },
     ],
     warm: [
       '"You\'re here." He catches your sleeve before you\'ve stopped walking. "Where were you? Come give me a sorry cuddle."',
@@ -386,14 +433,8 @@ export default {
     ],
   },
   approach: {
-    known: [
-      "Take the dandelion",
-      "Let him watch",
-      "Stay where he can see",
-      "Answer to Dandelion",
-    ],
     warm: [
-      "Take the dandelion",
+      "Accept the flower",
       "Step into the light with him",
       "Say his name",
       "Let him fall into step",

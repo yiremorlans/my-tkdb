@@ -320,31 +320,36 @@ export function renderBeat(scene, index, vars, { characterId, levelName, firstEv
   return message;
 }
 
-// The last message of a scene: the character's authored answer to the pick,
-// with the keepsake named underneath it. Showing the keepsake here is the whole
-// point of granting one — /bonds is where you go back to it, not where you find
-// out it exists.
+// The last message(s) of a scene: the character's authored answer to the
+// pick, with the keepsake named after it. Showing the keepsake here is the
+// whole point of granting one — /bonds is where you go back to it, not where
+// you find out it exists — and it must always read last. Discord renders an
+// attachment below a message's text no matter what order the fields are sent
+// in, so a sticker sharing the keepsake's message would show above it; that's
+// why a closing with a sticker goes out as two messages instead of one.
 //
 // It also carries the one button that gets a player into the replay gallery
 // without typing /bonds character:<name> — see replayStartRow below.
 //
-// `option.sticker`, when present, names a file in assets/stickers to attach
-// alongside the close — same conceit as a beat's sticker (renderBeat), for a
-// character whose answer is a picture rather than more words. A missing or
-// unreadable file drops the image quietly rather than losing the close
-// (loadSticker).
+// `option.sticker`, when present, names a file in assets/stickers — same
+// conceit as a beat's sticker (renderBeat), for a character whose answer is a
+// picture rather than more words. A missing or unreadable file drops the
+// image quietly rather than losing the close (loadSticker).
 function renderClosing(option, keepsake, vars, { characterId, levelName }) {
   const close = fillTemplate(option.close, vars);
   const line = fillTemplate(keepsake.line, vars);
-  const message = {
-    content: `${close}\n\n${keepsake.emoji} *${line}*`,
-    components: [replayStartRow(characterId, levelName)],
-  };
-  if (option.sticker) {
-    const sticker = loadSticker(option.sticker);
-    if (sticker) message.files = [sticker];
+  const replayRow = [replayStartRow(characterId, levelName)];
+  const keepsakeContent = `${keepsake.emoji} *${line}*`;
+  const sticker = option.sticker ? loadSticker(option.sticker) : null;
+
+  if (!sticker) {
+    return { content: `${close}\n\n${keepsakeContent}`, components: replayRow };
   }
-  return message;
+
+  return [
+    { content: close, files: [sticker] },
+    { content: keepsakeContent, components: replayRow },
+  ];
 }
 
 // Starts a replay of the scene just finished (§4.6): the same beats, the same
@@ -641,21 +646,27 @@ export async function handleBondClick(userId, { kind, characterId, levelKey, arg
   return { acted: false, reason: 'unknown-kind' };
 }
 
-// Post one message of a scene into the DM it lives in. Returns whether it
-// landed; every caller that advances state checks it first, because a beat that
-// did not arrive must not move the row past it.
+// Post a scene message — or, when order matters (a closing split across a
+// sticker and a keepsake), several in sequence. Returns whether it all
+// landed; every caller that advances state checks it first, because a beat
+// that did not arrive must not move the row past it.
 //
 // A scene has exactly one home. There is no ephemeral rendering to fall back to
 // — see §2.4 — so a failure here is recorded as `pending_dm` by the caller and
 // picked up by the resume button on the user's next command.
 async function post(row, message) {
   if (!row.dm_channel_id) return false;
+  const messages = Array.isArray(message) ? message : [message];
   try {
     // Same shared helper the public-encounter scheduler uses, but
     // `dm_channel_id` is only ever written from openDmChannel, so this cannot
     // reach a guild channel.
     postChannelTyping(row.dm_channel_id).catch(() => {});
-    await postChannelMessage(row.dm_channel_id, message);
+    for (const one of messages) {
+      // Awaited in sequence rather than Promise.all: order is the entire point
+      // when a closing splits into sticker-then-keepsake.
+      await postChannelMessage(row.dm_channel_id, one);
+    }
     return true;
   } catch (err) {
     console.error('Error posting bond scene message:', err);
