@@ -792,17 +792,17 @@ export default {
     warm: [
       '"You arrive like a season, my dear." **{name}** is delighted with {user}.',
       "{user} calls out, and **{name}** abandons a perfectly good line mid-composition.",
-      "**{name}** had been saving the last of the tea. He tells {user} so, at length.",
+      "**{name}** had a story saved for {user}. He tells it at length, with gestures.",
     ],
     spark: [
       '"Horsefeathers." **{name}** had absolutely been watching for {user}.',
       "{user} says the name, and **{name}** finds himself briefly short of words.",
-      "**{name}** offers {user} his arm with rather more ceremony than the hour requires.",
+      "**{name}** bows to {user} with rather more ceremony than the moment requires.",
     ],
     close: [
-      '"The moon is beautiful tonight," **{name}** tells {user}, who knows exactly what he means by it.',
-      "**{name}** has stopped writing about longing. {user} is standing right there.",
-      "{user} calls, and **{name}** puts the notebook away.",
+      '"The moon is beautiful, isn\'t it?" **{name}** asks {user}, whatever the hour, and they know exactly what he means by it.',
+      "**{name}** has stopped composing verses about longing. {user} is standing right there.",
+      '"Can you see me? Phew..." **{name}** is so relieved it\'s {user} that he forgets to be dashing.',
     ],
     bound: [
       '"Seventeen syllables can\'t hold this, my dear." **{name}** stops trying and crosses to {user} instead.',

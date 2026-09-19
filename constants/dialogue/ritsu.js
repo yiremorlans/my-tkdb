@@ -753,7 +753,7 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"Partner. Your timing is fortuitous." **{name}** had not, until {user} spoke, been expecting one.',
+      '"Four seconds. Acceptable." **{name}** had been timing how long it took {user} to place him.',
       "{user} says the name, and **{name}** notes the exact hour.",
       '"Consultations are 5,500 yen per half hour." **{name}** waives it for {user}, and mentions that he is waiving it.',
     ],

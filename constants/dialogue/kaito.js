@@ -441,7 +441,7 @@ export default {
         line: "He checks his phone for a message from you more than he'd ever admit to.",
         approach: "Say you were thinking of him",
         greeting:
-          '"Oh! It\'s you! I wasn\'t checking my phone. Why would I be checking my phone."',
+          "\"Oh! It's you! I wasn't checking my phone. Why would I be checking my phone.\"",
         responses: {
           kind: ["Send him something small", "Say you thought of him too"],
           playful: [
@@ -456,7 +456,7 @@ export default {
         line: 'He\'s gotten brave enough to save your contact under something other than just "Honor Roll."',
         approach: "Ask what he calls you",
         greeting:
-          '"What? No, you can\'t see it. It\'s not weird, okay? It\'s just not \'Honor Roll\' anymore."',
+          "\"What? No, you can't see it. It's not weird, okay? It's just not 'Honor Roll' anymore.\"",
         responses: {
           kind: [
             "Ask what he called you sweetly",
@@ -802,7 +802,7 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '**{name}** jumps a foot. "AH... Oh, it\'s just you." {user} had only said his name.',
+      '**{name}** jumps a foot. "Eeeek?! Oh, it\'s just you." {user} had only said his name.',
       '"Wait, you know my name?" **{name}** looks at {user} like it\'s a prize.',
       "{user} calls out, and **{name}** startles, recovers, and pretends he didn't.",
     ],
@@ -813,7 +813,7 @@ export default {
     ],
     spark: [
       "**{name}** goes red before he's finished turning around. {user} does that to him now.",
-      '"You... you called ME." **{name}** will be replaying this at {user} for a week.',
+      '"You... you called ME." **{name}** is going to bring this up to {user} for a week.',
       "{user} got there first, and **{name}** forgot every word of what he was saying.",
     ],
     close: [

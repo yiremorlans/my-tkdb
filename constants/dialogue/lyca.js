@@ -823,7 +823,7 @@ export default {
   winnerLines: {
     new: [
       '**{name}** circles wide around {user}, watching. "...You know my name. I don\'t know your scent yet."',
-      "{user} says the name, and **{name}** repeats it back quietly, testing the shape of it.",
+      '{user} says the name, and **{name}**\'s nose twitches. "...How come you know that?"',
       '"Stay there a moment." **{name}** takes {user} in slowly, scent and all.',
     ],
     warm: [
@@ -837,8 +837,8 @@ export default {
       "**{name}** had practiced a greeting for {user}. It comes out formal and completely sincere.",
     ],
     close: [
-      "**{name}** hears {user}, and nothing else on campus is interesting any more.",
-      '"Walk with me? I\'ll keep to your pace." **{name}** holds still until {user} moves first.',
+      "**{name}** hears {user}, and nothing else on campus is interesting anymore.",
+      '"Let\'s go for a walk. I\'ll go slow, \'cause you\'re a human." **{name}** waits for {user} to move first.',
       "{user} calls, and **{name}** abandons the **{house}** errand without a flicker of guilt.",
     ],
     bound: [

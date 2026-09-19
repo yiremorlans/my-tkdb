@@ -862,10 +862,10 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"Huh." **{name}** looks {user} over. "You got guts, kitten. Stupid ones, but guts."',
+      '"Huh." **{name}** looks {user} over. "You got guts. Stupid ones, but guts."',
       "{user} says the name, and **{name}** grins around it. \"Who're you? ...Whatever. C'mere.\"",
-      '"You lost, kitten?" **{name}** asks {user}, shuffling the whole time.',
-      '{user} says the name and **{name}** is already up, done with the table. "Yeah, yeah, smooth talker. Ciao!"',
+      '"You lost or somethin\'?" **{name}** asks {user}, shuffling the whole time.',
+      '{user} says the name, and **{name}** squints. "Didn\'t we meet yesterday? ...Nah. Don\'t remember." He sticks around anyway.',
     ],
     warm: [
       '"Took your damn time." **{name}** had been waiting on {user}.',

@@ -1180,7 +1180,7 @@ export default {
     close: [
       '"Ah, there you are. Sit down a moment, you look worn through." **{name}** is in no hurry at all with {user}.',
       "**{name}** hears {user}, and every ache of the day goes somewhere else.",
-      "{user} calls, and **{name}** walks the long way round with them, just to have the time.",
+      "{user} calls, and **{name}** walks the long way around with them, just to have the time.",
     ],
     bound: [
       '"I\'d made my peace with a quiet life," **{name}** tells {user}. "You\'ve ruined that rather thoroughly."',

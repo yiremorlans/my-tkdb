@@ -30,6 +30,7 @@
 // already takes `character`, so no call site changes.
 
 import { RESPONSE_TYPES, getFullName } from "./characters.js";
+import { pickRandom } from "./random.js";
 
 // Six dialogue tiers → three reaction registers. Kept coarser than the dialogue
 // tiers on purpose: the reaction only needs to know "still circling / getting
@@ -163,6 +164,5 @@ function outcomeFor(responseTypeId, gain) {
 export function getReactionLine(character, tier, responseTypeId, gain) {
   const register = REACTION_LINES[REGISTER_BY_TIER[tier] || "early"];
   const pool = register[outcomeFor(responseTypeId, gain)];
-  const line = pool[Math.floor(Math.random() * pool.length)];
-  return line.replace(/\{name\}/g, getFullName(character));
+  return pickRandom(pool).replace(/\{name\}/g, getFullName(character));
 }

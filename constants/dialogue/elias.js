@@ -802,22 +802,22 @@ export default {
       "**{name}** had been leaning where he shouldn't be. He straightens up for {user}, slowly.",
     ],
     warm: [
-      '"Seeing you makes my day. No angle on it." **{name}** means it, and {user} can tell.',
+      '"Seeing you makes my day. I mean that." **{name}** says it simply, and {user} can tell.',
       "{user} calls out, and **{name}** puts down whatever errand Jo sent him on.",
       "**{name}** offers {user} a candy before he offers a hello.",
     ],
     spark: [
-      '"Keep that up and I\'ll think you like me." **{name}** says it to {user}.',
+      '"Keep that up and I\'ll start to think you like me." **{name}** smiles at {user} like it\'s a secret.',
       "{user} says the name, and **{name}**'s easy smile goes real for a second.",
       "**{name}** takes his time getting to {user}.",
     ],
     close: [
-      '"Can\'t sleep either?" **{name}** falls in beside {user} like the errand never existed.',
+      '"Oh, it\'s you… Walk with me a while?" **{name}** falls in beside {user} like the errand never existed.',
       "**{name}** drops the charm the moment it's {user}.",
       "{user} calls, and **{name}** stops working the room entirely.",
     ],
     bound: [
-      '"Spent years being nobody\'s," **{name}** tells {user}, low. "Turns out I\'m yours."',
+      '"I\'d gotten used to belonging to no one…" **{name}** tells {user}, low. "It seems I\'m yours now."',
       "**{name}** says {user}'s name back, unhurried.",
       "{user} says the name, and **{name}** lets the **{house}** errands rot where they stand.",
     ],

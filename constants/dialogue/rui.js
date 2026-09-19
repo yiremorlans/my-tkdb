@@ -766,11 +766,11 @@ export default {
     ],
     spark: [
       "**{name}** forgets the careful distance {user} is owed. Then remembers. Then regrets remembering.",
-      "\"It's illegal to take your eyes off me,\" **{name}** informs {user}, who wasn't going to.",
+      "\"It's illegal to take your eyes off me, cutie.\" **{name}** throws {user} a wink, and they weren't going to.",
       "{user} says the name, and the crack under **{name}**'s cheer shows, briefly.",
     ],
     close: [
-      '"You\'re not doing all this for me, are you?" **{name}** asks {user}, gloves already on.',
+      '"You\'re not doing all this for me, are you?" **{name}** asks {user}, laughing like it\'s a joke. It isn\'t, quite.',
       "**{name}** puts his sleeve between his hand and {user}'s cheek.",
       "{user} calls, and **{name}** leaves the cuttings he was carrying on the nearest bench.",
     ],

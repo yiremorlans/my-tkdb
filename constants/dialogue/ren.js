@@ -871,13 +871,13 @@ export default {
   winnerLines: {
     new: [
       "One earbud comes out for {user}. **{name}** leaves the other in.",
-      '"Oh. Hey." **{name}** is mildly impressed {user} found him at all.',
+      '"If this is about work, that\'s harassment." **{name}** stays put for {user} anyway, mildly impressed they found him at all.',
       "{user} says the name, and **{name}** pauses the game. Doesn't unpause it, either.",
     ],
     warm: [
       "**{name}** puts the phone down for {user}, and doesn't pick it back up.",
       "\"You're behind on the episodes,\" **{name}** tells {user}, who didn't know he'd been counting.",
-      "{user} calls out, and **{name}** shifts over. The space is for them.",
+      '"It\'s not like I was waiting for you or anything." **{name}** says it to {user} a little too fast.',
     ],
     spark: [
       "\"Second controller's charged.\" **{name}** says it to {user} like it isn't a confession.",

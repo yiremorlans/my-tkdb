@@ -11,6 +11,7 @@
 import {
   CHARACTERS,
   DIALOGUE_WHEN_DIMENSIONS,
+  RESPONSE_LABEL_TIER,
   RESPONSE_TYPES,
 } from "./characters.js";
 import {
@@ -94,6 +95,19 @@ function tierIsFullyPaired(poolData) {
     return variants.length > 0 && variants.every(tierIsFullyPaired);
   }
   return false;
+}
+
+// True when every line in a dialogue tier carries its own `responses[type]`,
+// so /roam never reaches the top-level pool (or the archetype default behind
+// it) for that button. A bare-string line has no beat to override from.
+function tierCoversResponse(poolData, type) {
+  if (Array.isArray(poolData)) {
+    return poolData.every((entry) => isBeat(entry) && !!entry.responses?.[type]);
+  }
+  if (poolData && typeof poolData === "object") {
+    return Object.values(poolData).every((v) => tierCoversResponse(v, type));
+  }
+  return true;
 }
 
 // A `when` field is scalar-or-array; return it as a list for checking.
@@ -189,11 +203,6 @@ function validateWhenList(list, label, poolKey, errors, warnings, opts = {}) {
   });
 }
 
-// /call reveal lines, per character or the shared fallback pool. For a
-// character, absent or partial is legal — SHARED_WINNER_LINES fronts whatever
-// is missing — but for the shared pool itself a missing register has nothing
-// left to fall back to, so `required` promotes those to errors. A line that
-// can't name the winner or the character is a broken public message either way.
 function validateWinnerLines(at, winnerLines, errors, warnings, opts = {}) {
   const { required = false, extraBuckets = [] } = opts;
   if (winnerLines === undefined) {
@@ -744,33 +753,32 @@ export function validateContent() {
       }
     }
 
-    // CRITICAL: Check for mismatched tiers between dialogue and responses
-    const dialogueTiers = content.dialogue ? Object.keys(content.dialogue).filter(k => TIERS.includes(k)) : [];
-    const responseTiers = content.responses ?
-      new Set(Object.values(content.responses).flatMap(r => Object.keys(r).filter(k => RESPONSE_TIERS.includes(k)))) :
-      new Set();
-
-    // Response tiers should map to dialogue tiers (with RESPONSE_LABEL_TIER mapping)
-    const requiredDialogueTiers = new Set();
-    for (const rTier of responseTiers) {
-      if (rTier === 'new') requiredDialogueTiers.add('new', 'known', 'warm');
-      if (rTier === 'spark') requiredDialogueTiers.add('spark');
-      if (rTier === 'close') requiredDialogueTiers.add('close');
-      if (rTier === 'bound') requiredDialogueTiers.add('bound');
-    }
-
     // A missing response entry is legal (archetype defaults cover it) but is
-    // almost always an oversight, so name it.
+    // almost always an oversight, so name it. Beat-level `responses` count as
+    // coverage: a dialogue tier whose every beat carries its own label never
+    // reaches the top-level pool, so its absence there isn't a gap.
     const seen = new Map();
     for (const type of Object.values(RESPONSE_TYPES)) {
       const entry = content.responses?.[type];
+      const gaps = TIERS.filter(
+        (tier) =>
+          content.dialogue?.[tier] !== undefined &&
+          !tierCoversResponse(content.dialogue[tier], type),
+      );
+      const gapLabelTiers = new Set(gaps.map((t) => RESPONSE_LABEL_TIER[t]));
       if (!entry) {
-        warnings.push(`${id} has no "${type}" label — using archetype default`);
+        if (gaps.length) {
+          warnings.push(
+            `${id} has no "${type}" label at ${gaps.join("/")} — using archetype default`,
+          );
+        }
         continue;
       }
       for (const tier of RESPONSE_TIERS) {
         if (!entry[tier]) {
-          warnings.push(`${id} has no "${type}" label at "${tier}"`);
+          if (gapLabelTiers.has(tier)) {
+            warnings.push(`${id} has no "${type}" label at "${tier}"`);
+          }
           continue;
         }
         const labels = collectLabels(entry[tier]);

@@ -756,7 +756,7 @@ export default {
       "{user} says the name, and **{name}**'s grin goes about ten percent honest.",
     ],
     close: [
-      '"C\'mere, Honor Roll. No joke this time." **{name}** means it at {user}, for once.',
+      '"C\'mere, Honor Roll. No joke this time." **{name}** says it to {user} and, for once, means it.',
       "**{name}** goes to kiss {user} mid-sentence, clocks the audience, and grins his way out of it instead.",
       "{user} calls, and **{name}** leaves the rounds to Ren without a second thought.",
     ],

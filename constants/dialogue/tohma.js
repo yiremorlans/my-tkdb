@@ -796,12 +796,12 @@ export default {
     new: [
       '"Well, well." **{name}** turns to {user} with a courtesy that gives away nothing.',
       '{user} names him, and **{name}** files it somewhere, smiling. "How resourceful."',
-      '**{name}** inclines his head. "You have the advantage of me. For now." {user} had it right.',
+      '"Perhaps I can be of some assistance?" **{name}** asks {user}, as though he hadn\'t already overheard they were looking for him.',
     ],
     warm: [
       '"Honestly." **{name}** was two steps from a clean escape, and {user} caught him anyway.',
       "{user} calls out, and **{name}** gives them his whole attention.",
-      "**{name}** checks his pocket watch, then decides {user} is worth being late for.",
+      "**{name}** adjusts his monocle, then decides {user} is worth being late for.",
     ],
     spark: [
       '"Shouting my name across half the campus. You\'ve certainly got guts." **{name}** looks delighted with {user}.',
@@ -811,12 +811,12 @@ export default {
     close: [
       '"This conversation never happened," **{name}** murmurs, already steering {user} out of earshot.',
       "**{name}** hears {user}, and the servant's mask comes off between one step and the next.",
-      "{user} calls, and the pocket watch goes back in **{name}**'s pocket unchecked.",
+      "{user} calls, and **{name}**'s next appointment quietly stops mattering.",
     ],
     bound: [
       '"I stopped weighing you up a long while ago," **{name}** tells {user}, taking their hand in the open.',
       "**{name}** hands the **{house}** dispatch to a passing first-year. {user} called; the matter is settled.",
-      "{user} says the name, and **{name}** clears his entire afternoon.",
+      "{user} says the name, and **{name}** clears his entire schedule.",
     ],
   },
 };

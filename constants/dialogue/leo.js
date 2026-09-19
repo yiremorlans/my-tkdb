@@ -785,7 +785,7 @@ export default {
       "{user} says the name, and **{name}** grins like he's already framing the shot.",
     ],
     warm: [
-      "**{name}** raises the camera at {user}, then lowers it. They're not for the feed.",
+      "**{name}** raises his phone at {user}, then lowers it. They're not for the feed.",
       '"Finally," **{name}** drawls at {user}, not hiding that he had been watching for them.',
       "{user} calls out, and **{name}** insults them warmly.",
     ],
@@ -795,7 +795,7 @@ export default {
       "{user} got there first, and **{name}** looks entirely too pleased to be caught.",
     ],
     close: [
-      '"Mine," **{name}** says, loud enough for everyone nearby. {user} had only called his name.',
+      '"Wow, you wanted me that bad?" **{name}** says it loud enough for everyone nearby. {user} had only called his name.',
       "**{name}** goes unbearably soft the moment {user} reaches him.",
       "{user} calls, and **{name}** puts the phone away. Face down.",
     ],

@@ -741,8 +741,8 @@ export default {
     ],
     warm: [
       '"Where on earth have you been, worm?" **{name}** demands of {user}, then looks annoyed at himself for asking.',
-      "{user} calls out, and **{name}** drops a pipette. He denies dropping it.",
-      '**{name}** waves {user} over. "You\'re late. Not that I was... never mind." ',
+      "{user} calls out, and **{name}** drops his notes. He denies dropping them.",
+      '**{name}** waves {user} over. "You\'re late. Not that I was waiting... N-never mind!"',
     ],
     spark: [
       '"Wh-Where did you come from!?" **{name}** knows exactly where {user} came from.',

@@ -745,18 +745,18 @@ export default {
     ],
     spark: [
       "**{name}**'s hands slip on the work for a second. {user} pretends not to notice.",
-      '"Ha ha. Kidding." **{name}** wasn\'t, and {user} is getting good at telling.',
+      '"Hm? Looks like there\'s a bug on your head… Nope, my mistake." **{name}** just wanted a closer look at {user}.',
       "{user} says the name, and **{name}** loses the thread of what he was building.",
     ],
     close: [
-      '"You undo me," **{name}** says calmly to {user}.',
+      '"Why do I always get sleepy around you?" **{name}** asks {user}, and doesn\'t wait for an answer.',
       "**{name}** hears {user} and leaves a repair half-finished.",
       "{user} calls, and **{name}** gets there before Shion can invent an emergency.",
     ],
     bound: [
-      '"I had a speech ready, {user}. You walked up and I lost all of it." **{name}** says.',
+      '"I had a whole speech ready. You walked up and I lost all of it." **{name}** shrugs at {user}, a little red.',
       "**{name}** rests his forehead on {user}'s shoulder, then goes back to complaining about his day.",
-      "{user} says the name, and **{name}** asks {user} to stay.",
+      "{user} says the name, and **{name}** asks them to stay.",
     ],
   },
 };

@@ -780,9 +780,9 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      "**{name}** turns and apologizes to {user} for not noticing sooner.",
+      '**{name}** turns to {user} with a smile already on. "Hello there! Have we met?"',
       '"You have me at a disadvantage." **{name}** inclines his head anyway. {user} had it right.',
-      "{user} says the name, and **{name}** steps out of the way first and greets them second.",
+      "**{name}** holds the door for {user} without a word.",
     ],
     warm: [
       '"I\'d hoped that was you." **{name}** takes whatever {user} is carrying without asking.',
@@ -796,7 +796,7 @@ export default {
     ],
     close: [
       "**{name}** doesn't ask whether {user} needs anything. He simply stays.",
-      '"Please don\'t make that face." **{name}** is smiling. {user} caught him mid-training again.',
+      '"Have you eaten? Honestly, now." **{name}** already has a biscuit out for {user}.',
       "{user} calls, and **{name}** sets the **{house}** dispatch down without finishing the line.",
     ],
     bound: [

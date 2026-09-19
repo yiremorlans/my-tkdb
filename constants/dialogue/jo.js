@@ -1192,8 +1192,8 @@ export default {
     ],
     warm: [
       '"You\'re back!" **{name}** forgets whatever he was signing. {user} did that.',
-      "{user} calls out, and **{name}** puts the pen down mid-signature.",
-      "\"I'm driving the Aqua-line later, cutie. Come with.\" **{name}** isn't really asking {user}.",
+      "{user} calls out, and **{name}** folds the schedule away mid-revision.",
+      "\"I'm heading out for a drive later. Want to come along, cutie?\" **{name}** asks {user} like the seat's already saved.",
     ],
     spark: [
       "**{name}** hears his name, and the professional smile becomes a real one for {user}.",
@@ -1201,9 +1201,9 @@ export default {
       "{user} got there first, and **{name}** looks caught.",
     ],
     close: [
-      "**{name}** takes the paint off for {user}, right there in the middle of everyone.",
-      '"No. I\'m taking you home." **{name}** says it to {user}.',
-      "{user} calls, and **{name}** clocks off.",
+      "**{name}** drops the stage presence for {user}, right there in the middle of everyone.",
+      '"The rest can wait till tomorrow. You\'re with me." **{name}** says it to {user}, quietly firm.',
+      "{user} calls, and **{name}** clocks out.",
     ],
     bound: [
       '"No audience," **{name}** murmurs, reaching {user}. "Only you."',

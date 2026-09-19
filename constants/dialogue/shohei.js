@@ -745,17 +745,17 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '**{name}** glances over, then back at what his hands are doing. "You got my name right. Congrats." {user} had only called out.',
+      '{user} flags **{name}** down on his way back to the dorm. He slows, barely. "Yeah, that\'s me. You need something or what?"',
       "{user} says the name, and **{name}** waves them over before deciding anything else.",
-      '"Sho. Just Sho." **{name}** corrects {user} cheerfully and hands them something hot.',
+      '{user} catches **{name}** swinging off his motorcycle. He tugs his helmet off. "What\'re you looking at?"',
     ],
     warm: [
       "\"Senpai!\" **{name}** has {user}'s order on before they've finished crossing the road.",
-      "{user} calls out, and **{name}**'s whole face does the thing it does.",
+      '"What\'re you yelling for, Senpai? I\'m right here." **{name}** doesn\'t bother hiding the grin from {user}.',
       "**{name}** was closing up. He is now, somehow, cooking for {user}.",
     ],
     spark: [
-      '"Say it again, Senpai." **{name}** is grinning at {user} like he won something.',
+      '"What\'re you looking at, Senpai?" **{name}** is grinning at {user} like he won something.',
       "{user} says the name, and **{name}** forgets the pan entirely.",
       "**{name}** wipes his hands twice on the way to {user}. He wanted them clean.",
     ],
@@ -767,7 +767,7 @@ export default {
     bound: [
       "\"Order's already going, Senpai. Started the second I saw you.\" **{name}** tells {user} he isn't sorry about it.",
       "**{name}** was humming. {user} calling his name made it considerably worse.",
-      "{user} says the name, and **{name}** decides the **{house}** shift can run itself tonight.",
+      "{user} says the name, and **{name}** decides the **{house}** shift can run itself.",
     ],
   },
 };

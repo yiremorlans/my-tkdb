@@ -933,7 +933,7 @@ export default {
     ],
     bound: [
       '"That\'s the diagnosis," **{name}** tells {user}. "Treatment is ongoing."',
-      "**{name}** kisses {user} right there in the open.",
+      '**{name}** smiles at {user}, on purpose this time. "You told me to practice."',
       "{user} says the name, and **{name}** lets Yuri shout for him. Let him shout.",
     ],
   },

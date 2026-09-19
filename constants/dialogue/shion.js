@@ -729,11 +729,11 @@ export default {
     close: [
       "**{name}** takes {user}'s hand and does not give it back.",
       '"Who else was out here?" **{name}** asks {user}, already deciding to remember their faces.',
-      "{user} calls, and **{name}** leaves the dark he likes for the lit part of campus he doesn't.",
+      '"Where are you going? ...Hmm. Then I\'ll come with you." **{name}** doesn\'t give {user} a vote.',
     ],
     bound: [
       '"My wife," **{name}** breathes, and means every letter of it to {user}.',
-      "**{name}** kneels to take {user}'s hand in the open.",
+      "**{name}** tucks {user} under the jacket draped over his shoulders, like he's hiding them from everyone else.",
       "{user} says the name, and **{name}** decides, again, that forever is the plan.",
     ],
   },

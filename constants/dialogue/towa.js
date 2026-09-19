@@ -996,13 +996,13 @@ export default {
       "{user} got there first, and **{name}** looks at everyone else like they lost.",
     ],
     close: [
-      "\"Closer.\" **{name}** has {user}'s sleeve and isn't giving it back.",
+      "\"Where are you going, Dandelion? Take me with you!\" **{name}** has {user}'s sleeve and isn't giving it back.",
       "**{name}** had been watching the dark. It stopped mattering when {user} called.",
       "{user} calls, and **{name}** tucks another dandelion into their pocket. There are several now.",
     ],
     bound: [
-      '"Mine," **{name}** hums into {user}\'s shoulder, like a lullaby he wrote himself.',
-      "**{name}** reaches {user} and breathes out like someone finally safe.",
+      '"Do you like me, Dandelion? Because I love you!" **{name}** hums it into {user}\'s shoulder.',
+      "**{name}** reaches {user} and tips his head, listening to their heartbeat like it's his favorite song.",
       "{user} says the name, and **{name}** decides never to let them out of sight again.",
     ],
   },

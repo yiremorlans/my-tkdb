@@ -765,12 +765,12 @@ export default {
   winnerLines: {
     new: [
       '"Have we met before?" **{name}** asks {user}, then apologizes for not being sure.',
-      "**{name}** turns to {user} and bows.",
+      "**{name}** turns to {user} and bows, a little too gracefully for the middle of a crowd.",
       '{user} says it first, and **{name}** goes a little pink. "Forgive me. I didn\'t expect that."',
     ],
     warm: [
       "{user} calls out, and **{name}**'s polite smile turns into a real one.",
-      "**{name}** sets the teapot down a little too quickly the moment {user}'s voice reaches him.",
+      "**{name}** tries to cross the crowd to {user} in a straight line, and fails, and keeps trying.",
       "**{name}** had been hoping it was {user}.",
     ],
     spark: [
@@ -785,7 +785,7 @@ export default {
     ],
     bound: [
       "**{name}** goes straight to {user} the moment he hears them.",
-      "**{name}** reaches {user} and doesn't check who's watching.",
+      "**{name}** reaches {user} with the soft smile everyone gets, then a different one nobody else does.",
       "{user} says the name, and **{name}** doesn't apologize for a single part of it.",
     ],
   },

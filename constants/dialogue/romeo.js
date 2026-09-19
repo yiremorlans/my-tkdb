@@ -686,12 +686,12 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"HDY say my name so casually." **{name}** snaps at {user}.',
+      '"HDY! How Dare You, obviously, say my name that casually." **{name}** snaps at {user}.',
       "{user} says the name, and **{name}** is already talking. About three things. At once.",
       '"Perfect timing. I need someone I can trust." **{name}** decides this about {user} instantly.',
     ],
     warm: [
-      "**{name}** steps away from the floor to greet {user} properly. Suddenly the operation can wait.",
+      "**{name}** hangs up on a call mid-sentence to greet {user} properly. Suddenly the operation can wait.",
       '"Sit. The good seat. No, I didn\'t hold it. Shut up." **{name}** absolutely held it for {user}.',
       "{user} calls out, and **{name}** loudly tells someone else what a pain {user} is, beaming the whole time.",
     ],
@@ -703,10 +703,10 @@ export default {
     close: [
       '"Somebody put that look on your face? Give me a name." **{name}** is already rolling his sleeves for {user}.',
       "**{name}** hears {user}, and whatever he was collecting on becomes somebody else's job.",
-      "{user} calls, and **{name}** buys out the rest of the night without explaining why.",
+      '"Stand up straight. I only walk with quality." **{name}** fixes {user}\'s collar himself.',
     ],
     bound: [
-      '**{name}** yells at everyone around them to be quiet, "You have my attention, {user}."',
+      '**{name}** yells at everyone around them to shut up. Then, to {user}: "Now. You have my attention."',
       "**{name}** yells at everyone all day, reaches {user}, and goes completely, quietly undone.",
       "{user} says the name, and **{name}** claims them out loud.",
     ],
