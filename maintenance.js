@@ -35,6 +35,18 @@ export async function isMaintenanceModeActive(now = Date.now()) {
   }
 }
 
+/**
+ * True for the bot owner (OWNER_DISCORD_ID), who passes the maintenance gate
+ * so /roam, /meet and their buttons can be tested live while everyone else is
+ * locked out. userId comes from a signature-verified interaction, so it can't
+ * be spoofed; unset OWNER_DISCORD_ID means nobody bypasses. Same single-
+ * operator trust as the /encdev and /missiondev gates.
+ */
+export function isMaintenanceBypassUser(userId) {
+  const owner = process.env.OWNER_DISCORD_ID;
+  return Boolean(owner) && userId === owner;
+}
+
 // Test hook: force the next call to re-read instead of serving a cached
 // value from an earlier test.
 export function clearMaintenanceCache() {

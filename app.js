@@ -38,7 +38,11 @@ import {
   surfaceBondSceneResume,
 } from './bondScenes.js';
 import { startEncounterScheduler } from './encounterScheduler.js';
-import { isMaintenanceModeActive, MAINTENANCE_MESSAGE } from './maintenance.js';
+import {
+  isMaintenanceModeActive,
+  isMaintenanceBypassUser,
+  MAINTENANCE_MESSAGE,
+} from './maintenance.js';
 import {
   claimCommandInvoke,
   releaseCommandInvoke,
@@ -214,9 +218,12 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
   // own handlers already, so exempting them by name here only ever grants
   // access to the bot owner, never to a guild admin.
   if (await isMaintenanceModeActive()) {
+    // The owner also passes for everything else (commands and buttons), so
+    // /roam and /meet can be tested while maintenance is on.
     const exempt =
-      type === InteractionType.APPLICATION_COMMAND &&
-      ['encdev', 'missiondev'].includes(data?.name);
+      isMaintenanceBypassUser(userId) ||
+      (type === InteractionType.APPLICATION_COMMAND &&
+        ['encdev', 'missiondev'].includes(data?.name));
     if (!exempt) {
       return res.send({
         type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,

@@ -119,6 +119,21 @@ test('/encdev stays reachable for the owner while maintenance is on', async () =
   assert.strictEqual(body.type, 5); // DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE
 });
 
+test('the owner can run /meet and use its buttons while maintenance is on', async () => {
+  setMaintenance(true);
+  const cmd = await (await postInteraction(command('meet', 'the-owner'))).json();
+  assert.strictEqual(cmd.type, 5); // /meet's normal deferred ack, not the refusal
+
+  const btn = await (await postInteraction(component('meet:pick:kaito', 'the-owner'))).json();
+  assert.notStrictEqual(btn.data?.content, 'App under maintenance, please try again later.');
+});
+
+test('the owner bypass does not extend to other users', async () => {
+  setMaintenance(true);
+  const body = await (await postInteraction(command('roam', 'not-the-owner'))).json();
+  assert.strictEqual(body.data.content, 'App under maintenance, please try again later.');
+});
+
 test('commands work normally once maintenance is off', async () => {
   setMaintenance(false);
   const res = await postInteraction(command('meet', 'user-c'));
