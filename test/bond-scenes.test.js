@@ -204,7 +204,9 @@ test('the final beat carries the choice row rather than another Continue', async
   await deliverBondScene(USER, CHAR, 'Friend');
   const scene = getBondScene(CHAR, 'Friend');
 
-  await handleBondClick(USER, { kind: 'next', characterId: CHAR, levelKey: 'fri', arg: '1' });
+  for (let i = 1; i < scene.beats.length; i++) {
+    await handleBondClick(USER, { kind: 'next', characterId: CHAR, levelKey: 'fri', arg: String(i) });
+  }
 
   const ids = lastButtons();
   assert.strictEqual(ids.length, scene.choice.options.length);
@@ -684,10 +686,17 @@ test('a replay is the original interaction again: real beats, real buttons, post
   assert.deepStrictEqual(lastButtons(), [`bond:rnext:${CHAR}:fri:1`], 'a real Continue button, not a preview page');
   assert.match(followups[0].content, /Sent/, 'the journal entry point confirms it landed');
 
-  // Continue, via rnext — no sendFollowup needed for this one, same as a live beat.
-  const next = await handleBondReplayClick(USER, { kind: 'rnext', characterId: CHAR, levelKey: 'fri', arg: '1' });
-  assert.strictEqual(next.posted, true);
-  assertBeatPosted(discord.posts.at(-1).content, scene.beats[1]);
+  // Continue through every remaining beat, via rnext — no sendFollowup needed
+  // for these, same as a live beat. Only the last one carries the choice row.
+  const last = scene.beats.length - 1;
+  for (let i = 1; i <= last; i++) {
+    const next = await handleBondReplayClick(USER, { kind: 'rnext', characterId: CHAR, levelKey: 'fri', arg: String(i) });
+    assert.strictEqual(next.posted, true);
+    assertBeatPosted(discord.posts.at(-1).content, scene.beats[i]);
+    if (i < last) {
+      assert.deepStrictEqual(lastButtons(), [`bond:rnext:${CHAR}:fri:${i + 1}`], 'a middle beat just offers Continue');
+    }
+  }
   assert.deepStrictEqual(
     lastButtons(),
     scene.choice.options.map((o) => `bond:rchoice:${CHAR}:fri:${o.key}`),

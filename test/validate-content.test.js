@@ -230,53 +230,24 @@ test('validateContent flags an over-length beat approach — as a single string 
 // response label on the beat itself, not just the (now-unused, for a fully
 // paired character) top-level `responses` pool.
 test('validateContent flags an over-length beat response — as a single string or inside an array', () => {
-  // Single-string response: locate any beat in the catalog that still carries
-  // a plain string for a response type. Characters migrate to array-valued
-  // responses over time, so don't pin this to one character/tier.
-  let stringHit = null;
-  for (const [charId, data] of Object.entries(DIALOGUE)) {
-    for (const [tier, beats] of Object.entries(data.dialogue || {})) {
-      if (!Array.isArray(beats)) continue;
-      for (const beat of beats) {
-        if (!beat || typeof beat !== 'object' || !beat.responses) continue;
-        const type = Object.keys(beat.responses).find((k) => typeof beat.responses[k] === 'string');
-        if (type) {
-          stringHit = { charId, tier, beat, type };
-          break;
-        }
-      }
-      if (stringHit) break;
-    }
-    if (stringHit) break;
-  }
-  assert.ok(stringHit, 'the catalog should have at least one string-valued beat response to mutate');
-  const { charId: stringChar, tier: stringTier, beat: stringBeat, type: stringType } = stringHit;
-  const originalString = stringBeat.responses[stringType];
+  // Inject the responses rather than hunting the catalog for a beat of the
+  // right shape: which beats carry `responses`, and whether as strings or
+  // arrays, changes as characters migrate, and the validator has to handle
+  // both shapes regardless.
+  const beat = DIALOGUE.benkei.dialogue.known.find((b) => b && typeof b === 'object');
+  assert.ok(beat, 'benkei.known should have at least one object beat to mutate');
+  const hadResponses = Object.prototype.hasOwnProperty.call(beat, 'responses');
+  const original = beat.responses;
+  const tooLong = new RegExp(`benkei dialogue\\[known\\] beat playful response is ${MAX_BUTTON_LABEL_LENGTH + 1} chars \\(max ${MAX_BUTTON_LABEL_LENGTH}\\)`);
   try {
-    stringBeat.responses[stringType] = 'A'.repeat(MAX_BUTTON_LABEL_LENGTH + 1);
-    assert.throws(
-      () => validateContent(),
-      new RegExp(`${stringChar} dialogue\\[${stringTier}\\] beat ${stringType} response is ${MAX_BUTTON_LABEL_LENGTH + 1} chars \\(max ${MAX_BUTTON_LABEL_LENGTH}\\)`),
-    );
-  } finally {
-    stringBeat.responses[stringType] = originalString;
-  }
+    beat.responses = { ...original, playful: 'A'.repeat(MAX_BUTTON_LABEL_LENGTH + 1) };
+    assert.throws(() => validateContent(), tooLong);
 
-  // Array-valued response: yuri.known's beats carry `responses[type]` as an
-  // array of interchangeable labels.
-  const arrayBeat = DIALOGUE.yuri.dialogue.known.find(
-    (b) => b && typeof b === 'object' && Array.isArray(b.responses?.playful),
-  );
-  assert.ok(arrayBeat, 'yuri.known should have at least one array-valued response to mutate');
-  const originalArray = arrayBeat.responses.playful;
-  try {
-    arrayBeat.responses.playful = [originalArray[0], 'B'.repeat(MAX_BUTTON_LABEL_LENGTH + 1)];
-    assert.throws(
-      () => validateContent(),
-      new RegExp(`yuri dialogue\\[known\\] beat playful response is ${MAX_BUTTON_LABEL_LENGTH + 1} chars \\(max ${MAX_BUTTON_LABEL_LENGTH}\\)`),
-    );
+    beat.responses = { ...original, playful: ['Fine', 'B'.repeat(MAX_BUTTON_LABEL_LENGTH + 1)] };
+    assert.throws(() => validateContent(), tooLong);
   } finally {
-    arrayBeat.responses.playful = originalArray;
+    if (hadResponses) beat.responses = original;
+    else delete beat.responses;
   }
 
   assert.doesNotThrow(() => validateContent(), 'and the catalog is clean again');
