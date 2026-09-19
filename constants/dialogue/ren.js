@@ -246,7 +246,7 @@ export default {
           "\"I'm not doing extra shifts. Unless you're covering my break. Then, maybe.\"",
         responses: {
           kind: ["Say you're not here for that", "Offer to cover his break"],
-          playful: ["Ask what maybe means", "Ask how long his break is"],
+          playful: ["Match the energy", "Ask how long his break is"],
           bold: ["Say deal, he owes you", "Tell him maybe isn't a no"],
           neutral: ["Nod, say nothing", "Shrug and let it go"],
         },

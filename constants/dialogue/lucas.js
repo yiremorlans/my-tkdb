@@ -9,7 +9,7 @@ export default {
       beats: [
         "**{firstName}**: Evening! Lucas here. Kaito gave me your number, then made me promise to tell you he said hello first. So: Kaito says hello.",
         "About today in the east corridor. Two Frostheim third-years were trying to intimidate a first-year, and I was on my way over. You got there first, and you'd calmed the whole thing down before I'd even reached you. No raised voices, nobody made a fool of, and everyone walked away.\n\nI'm usually the one stepping in. Watching you settle it like that was genuinely impressive.",
-        "So here's my proposal. I train in the yard at six every morning. We've crossed paths {timesMet} times now, and you've turned up early to every one of them.\n\nI keep a training log, and the partners column has been empty since Emrys. I'd like to put a name in it.",
+        "So here's my proposal. I train in the yard at six every morning. We've crossed paths {timesMet} times now, purely by chance.\n\nI keep a training log, and the partners column has been empty since Emrys. I'd like to put a name in it.",
       ],
       choice: {
         prompt: "Six sharp. I'll bring biscuits. Is that a yes?",
