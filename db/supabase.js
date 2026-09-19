@@ -718,6 +718,26 @@ export async function getGuildSettings(guildId) {
 }
 
 /**
+ * The global maintenance kill switch (app_settings, db/migrations/024). A
+ * plain read — callers go through maintenance.js's isMaintenanceModeActive,
+ * which caches this so it isn't a Supabase round trip on every interaction.
+ */
+export async function getMaintenanceMode() {
+  const { data, error } = await supabase
+    .from('app_settings')
+    .select('maintenance_mode')
+    .eq('id', 1)
+    .single();
+
+  if (error) {
+    console.error('Error fetching maintenance mode:', error);
+    throw error;
+  }
+
+  return data?.maintenance_mode ?? false;
+}
+
+/**
  * `/encounters channel` — point the feature at a channel and turn it on.
  * post_failures resets so a guild that auto-disabled after three bad posts is
  * given a clean slate by reconfiguring.

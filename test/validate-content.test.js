@@ -100,28 +100,8 @@ test('the keepsake emoji check warns rather than errors, and names both levels',
   } finally {
     scenes.friend.keepsake.emoji = original;
   }
-  // Not a blanket "no warnings at all" — the roster is still being caught up to
-  // the {sinceMet} rule (docs/bond-scene-dms.md §5.2/§5.4), which is itself a
-  // warning, not an error. Just confirm the emoji-reuse warning is gone again.
   const stillWarning = validateContent().warnings.filter((w) => w.includes('reuses the keepsake emoji'));
   assert.deepStrictEqual(stillWarning, [], 'and the catalog is clean again');
-});
-
-// Close Friend is the one level required to use {sinceMet} going forward
-// (docs/bond-scene-dms.md §5.2) — a rule added after most of the roster was
-// already written, so it warns rather than errors and the existing gap is
-// expected, not a regression. This just pins the shape of that warning and
-// confirms a scene that does use the placeholder doesn't trip it.
-test('a closeFriend scene missing {sinceMet} warns, one that has it does not', () => {
-  const { warnings } = validateContent();
-  assert.ok(
-    warnings.some((w) => /jin bondScenes\.closeFriend is a closeFriend scene but never uses \{sinceMet\}/.test(w)),
-    'an unconverted character should still be flagged',
-  );
-  assert.ok(
-    !warnings.some((w) => w.startsWith('alan bondScenes.closeFriend')),
-    "alan's rewritten scene uses {sinceMet} and should not be flagged",
-  );
 });
 
 test('every bond scene choice button fits the 30-char cap the rest of the game uses', () => {
@@ -171,6 +151,41 @@ test("every dialogue beat's approach label fits the 30-char cap the rest of the 
   assert.deepStrictEqual(tooLong, []);
 });
 
+// Same cap, but for a migrated beat's `responses` — the button labels a
+// player picks in reply to the beat. These used to live in a character-level
+// `responses` pool (still checked further down in validateContent.js for any
+// character that hasn't migrated); a fully paired character like Yuri has no
+// such pool anymore, so the only place left to check the cap is here, on the
+// beat itself (constants/dialogue/yuri.js).
+test("every dialogue beat's response labels fit the 30-char cap the rest of the game uses", () => {
+  const tooLong = [];
+  const isBeat = (e) => !!e && typeof e === 'object' && typeof e.line === 'string';
+  const checkTier = (at, poolData) => {
+    if (!poolData) return;
+    const collections = Array.isArray(poolData) ? [poolData] : Object.values(poolData);
+    for (const entries of collections) {
+      if (!Array.isArray(entries)) continue;
+      for (const entry of entries) {
+        if (!isBeat(entry)) continue;
+        for (const [type, value] of Object.entries(entry.responses || {})) {
+          const labels = Array.isArray(value) ? value : [value];
+          for (const label of labels) {
+            if (label.length > MAX_BUTTON_LABEL_LENGTH) {
+              tooLong.push(`${at} ${type}: "${label}" (${label.length})`);
+            }
+          }
+        }
+      }
+    }
+  };
+  for (const character of CHARACTERS) {
+    const dialogue = DIALOGUE[character.id]?.dialogue;
+    for (const tier of Object.keys(dialogue || {})) checkTier(`${character.id}.${tier}`, dialogue[tier]);
+  }
+
+  assert.deepStrictEqual(tooLong, []);
+});
+
 // The check above only proves today's catalog is clean — this proves
 // validateContent() would actually catch a violation instead of silently
 // passing one through, the same way the keepsake-emoji test above pins the
@@ -205,6 +220,63 @@ test('validateContent flags an over-length beat approach — as a single string 
     );
   } finally {
     arrayTarget.approach = originalArray;
+  }
+
+  assert.doesNotThrow(() => validateContent(), 'and the catalog is clean again');
+});
+
+// Same as the approach-throws test above, but for a migrated beat's
+// `responses` — proving validateContent() actually catches an over-length
+// response label on the beat itself, not just the (now-unused, for a fully
+// paired character) top-level `responses` pool.
+test('validateContent flags an over-length beat response — as a single string or inside an array', () => {
+  // Single-string response: locate any beat in the catalog that still carries
+  // a plain string for a response type. Characters migrate to array-valued
+  // responses over time, so don't pin this to one character/tier.
+  let stringHit = null;
+  for (const [charId, data] of Object.entries(DIALOGUE)) {
+    for (const [tier, beats] of Object.entries(data.dialogue || {})) {
+      if (!Array.isArray(beats)) continue;
+      for (const beat of beats) {
+        if (!beat || typeof beat !== 'object' || !beat.responses) continue;
+        const type = Object.keys(beat.responses).find((k) => typeof beat.responses[k] === 'string');
+        if (type) {
+          stringHit = { charId, tier, beat, type };
+          break;
+        }
+      }
+      if (stringHit) break;
+    }
+    if (stringHit) break;
+  }
+  assert.ok(stringHit, 'the catalog should have at least one string-valued beat response to mutate');
+  const { charId: stringChar, tier: stringTier, beat: stringBeat, type: stringType } = stringHit;
+  const originalString = stringBeat.responses[stringType];
+  try {
+    stringBeat.responses[stringType] = 'A'.repeat(MAX_BUTTON_LABEL_LENGTH + 1);
+    assert.throws(
+      () => validateContent(),
+      new RegExp(`${stringChar} dialogue\\[${stringTier}\\] beat ${stringType} response is ${MAX_BUTTON_LABEL_LENGTH + 1} chars \\(max ${MAX_BUTTON_LABEL_LENGTH}\\)`),
+    );
+  } finally {
+    stringBeat.responses[stringType] = originalString;
+  }
+
+  // Array-valued response: yuri.known's beats carry `responses[type]` as an
+  // array of interchangeable labels.
+  const arrayBeat = DIALOGUE.yuri.dialogue.known.find(
+    (b) => b && typeof b === 'object' && Array.isArray(b.responses?.playful),
+  );
+  assert.ok(arrayBeat, 'yuri.known should have at least one array-valued response to mutate');
+  const originalArray = arrayBeat.responses.playful;
+  try {
+    arrayBeat.responses.playful = [originalArray[0], 'B'.repeat(MAX_BUTTON_LABEL_LENGTH + 1)];
+    assert.throws(
+      () => validateContent(),
+      new RegExp(`yuri dialogue\\[known\\] beat playful response is ${MAX_BUTTON_LABEL_LENGTH + 1} chars \\(max ${MAX_BUTTON_LABEL_LENGTH}\\)`),
+    );
+  } finally {
+    arrayBeat.responses.playful = originalArray;
   }
 
   assert.doesNotThrow(() => validateContent(), 'and the catalog is clean again');

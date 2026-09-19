@@ -18,7 +18,7 @@ import {
   getFullName,
   getRandomCharacterImageVariant,
   getRandomDialogueBeat,
-  getRandomDialogueLine,
+  getRandomDialogueEntry,
   getTemperamentGreeting,
   RESPONSE_TYPES,
 } from './constants/characters.js';
@@ -108,9 +108,15 @@ function selectRoamSpot(character, now) {
 // `origin` ('meet' | 'roam') rides along in the custom_id so the response
 // click can be logged against the command that started the flow — the flow is
 // only counted once, at the response step (see the 'resp' handler in app.js).
-function responseActionRow(characterId, disabled = false, tier = 'new', origin = 'meet', ctx = {}) {
+// `beatResponses` (optional) is the { kind, playful, bold, neutral } override
+// off the specific /roam beat that was drawn — see getRandomDialogueBeat and
+// buildRoamDialogueMessage. /meet never passes one; it stays on the plain
+// per-tier draw.
+function responseActionRow(characterId, disabled = false, tier = 'new', origin = 'meet', ctx = {}, beatResponses = null) {
   const character = getCharacterById(characterId);
-  const characterResponses = character ? generateCharacterResponses(character, tier, ctx) : {};
+  const characterResponses = character
+    ? generateCharacterResponses(character, tier, ctx, beatResponses)
+    : {};
 
   return RESPONSE_TYPE_ORDER.map((responseType) => {
     const option = characterResponses[responseType] || { label: 'Respond' };
@@ -233,10 +239,21 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
     backgroundFile: spot.file,
     event: null, // no event system yet — reserved for `when: { event }` rules
   };
-  // Drawn together, not two independent picks — the approach button always
-  // answers the line the player just read (see getRandomDialogueBeat).
-  const { line: dialogue, approach } = getRandomDialogueBeat(character, tier, variant, dialogueCtx);
-  const temperament = getTemperamentGreeting(character, tier);
+  // Drawn together, not independent picks — the approach button, the payoff
+  // caption, and the four response buttons all answer the same line the
+  // player just read (see getRandomDialogueBeat). The payoff image's caption
+  // prefers the beat's own `greeting`, falling back to the old independent
+  // temperamentDialogue draw when the beat has none (see
+  // docs/dialogue-greeting-pairing.md). `responses` likewise overrides
+  // whichever response types the beat pairs, leaving the rest on the normal
+  // per-tier pool.
+  const {
+    line: dialogue,
+    approach,
+    greeting,
+    responses: beatResponses,
+  } = getRandomDialogueBeat(character, tier, variant, dialogueCtx);
+  const payoffGreeting = greeting ?? getTemperamentGreeting(character, tier);
 
   const charFilename = character.images[variant];
 
@@ -246,7 +263,8 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
     characterId: character.id,
     charFilename,
     dialogue,
-    temperament,
+    greeting: payoffGreeting,
+    beatResponses,
     tier,
     ctx: dialogueCtx,
   });
@@ -279,14 +297,14 @@ export async function buildRoamSpawnMessage(encounterId) {
     };
   }
 
-  const { spot, characterId, charFilename, temperament, tier, ctx } = encounter;
+  const { spot, characterId, charFilename, greeting, beatResponses, tier, ctx } = encounter;
   const character = getCharacterById(characterId);
-  const imageBuffer = await composeEncounter(spot.file, charFilename, temperament);
+  const imageBuffer = await composeEncounter(spot.file, charFilename, greeting);
 
   return {
     content: `You wander into **${getLocationDisplayName(spot)}** and run into **${getFullName(character)}**...`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
-    components: responseActionRow(character.id, false, tier, 'roam', ctx),
+    components: responseActionRow(character.id, false, tier, 'roam', ctx, beatResponses),
     flags: EPHEMERAL_FLAG,
   };
 }
@@ -363,7 +381,16 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
     backgroundFile: fallbackSpot?.file ?? null,
     event: null,
   };
-  const dialogue = getRandomDialogueLine(character, tier, variant, dialogueCtx);
+  // Same single pick as /roam's getRandomDialogueBeat, minus the
+  // approach/greeting resolution /meet doesn't render — `line` and
+  // `responses` come from the one drawn beat, never two independent draws
+  // (see getRandomDialogueEntry, docs/dialogue-greeting-pairing.md).
+  const { line: dialogue, responses: beatResponses } = getRandomDialogueEntry(
+    character,
+    tier,
+    variant,
+    dialogueCtx,
+  );
 
   const charFilename = character.images[variant];
 
@@ -374,7 +401,7 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
   return {
     content: `${getFullName(character)} agrees to meet you${locationText}`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
-    components: responseActionRow(character.id, false, tier, 'meet', dialogueCtx),
+    components: responseActionRow(character.id, false, tier, 'meet', dialogueCtx, beatResponses),
     flags: EPHEMERAL_FLAG,
   };
 }

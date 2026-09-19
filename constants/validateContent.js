@@ -269,7 +269,7 @@ function validateWinnerLines(at, winnerLines, errors, warnings, opts = {}) {
 // keepsake line has to be unique across the whole game: two characters sending
 // the same words at the same level would give away that the moment is not
 // really theirs, which is the one thing a private scene cannot survive.
-function validateBondScene(at, scene, errors, warnings, seenLines, levelKey) {
+function validateBondScene(at, scene, errors, warnings, seenLines) {
   if (!scene || typeof scene !== "object" || Array.isArray(scene)) {
     errors.push(`${at} must be an object with beats, choice and keepsake`);
     return;
@@ -404,7 +404,6 @@ function validateBondScene(at, scene, errors, warnings, seenLines, levelKey) {
     }
   }
 
-  let usesSinceMet = false;
   for (const [where, text] of prose) {
     // fillTemplate resolves an unknown placeholder to '', so a typo ships as a
     // hole in the middle of a sentence rather than throwing.
@@ -412,7 +411,6 @@ function validateBondScene(at, scene, errors, warnings, seenLines, levelKey) {
       if (!BOND_SCENE_PLACEHOLDERS.includes(match[1])) {
         errors.push(`${where} uses unknown placeholder "{${match[1]}}"`);
       }
-      if (match[1] === "sinceMet") usesSinceMet = true;
     }
 
     const key = text.trim();
@@ -422,15 +420,6 @@ function validateBondScene(at, scene, errors, warnings, seenLines, levelKey) {
     } else {
       seenLines.set(key, where);
     }
-  }
-
-  // Close Friend is the level that reaches back to when this all started, not
-  // just to the last time they talked — every character's scene at this level
-  // is required to use {sinceMet} going forward. A warning, not an error: the
-  // rest of the roster predates this rule and gets caught up character by
-  // character rather than all at once.
-  if (levelKey === "closeFriend" && !usesSinceMet) {
-    warnings.push(`${at} is a closeFriend scene but never uses {sinceMet}`);
   }
 }
 
@@ -461,7 +450,7 @@ function validateBondScenes(at, pool, errors, warnings, seenLines) {
       errors.push(`${at} has no "${key}" bond scene — that level-up would deliver nothing`);
       continue;
     }
-    validateBondScene(`${at} bondScenes.${key}`, pool[key], errors, warnings, seenLines, key);
+    validateBondScene(`${at} bondScenes.${key}`, pool[key], errors, warnings, seenLines);
   }
 
   // Keepsake emojis are checked for reuse within one character, not across the
@@ -596,12 +585,12 @@ export function validateContent() {
       }
     }
 
-    if (character.pmOnly && !content.daytimeApproach) {
+    if (
+      character.pmOnly &&
+      !content.daytimeApproach &&
+      !Object.values(content.daytimeDialogue || {}).every(tierIsFullyPaired)
+    ) {
       warnings.push(`${id} is pmOnly but has no daytimeApproach — reuses the evening labels`);
-    }
-
-    if (!content.temperamentDialogue) {
-      warnings.push(`${id} has no temperamentDialogue — greets with "..."`);
     }
 
     validateWinnerLines(id, content.winnerLines, errors, warnings);
@@ -706,6 +695,19 @@ export function validateContent() {
                 errors.push(
                   `${id} dialogue[${tier}] beat approach is ${label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${label}"`,
                 );
+              }
+            }
+            // A migrated beat's `responses` is the same button-label cap,
+            // just keyed by RESPONSE_TYPES on the beat instead of the old
+            // top-level `responses` pool (which the check further below still
+            // covers for characters that haven't migrated).
+            for (const [type, value] of Object.entries(entry.responses || {})) {
+              for (const label of collectLabels(value)) {
+                if (label.length > MAX_BUTTON_LABEL_LENGTH) {
+                  errors.push(
+                    `${id} dialogue[${tier}] beat ${type} response is ${label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${label}"`,
+                  );
+                }
               }
             }
           }

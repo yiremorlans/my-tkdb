@@ -28,10 +28,16 @@ mock.module('../constants/dialogue.js', {
         approach: { new: ['Legacy approach 1', 'Legacy approach 2'] },
       },
       // New shape: every line is a beat, no separate `approach` pool at all.
+      // A carries its own `responses` override; B carries none, so it must
+      // fall through to null rather than borrow A's.
       [PAIRED_ID]: {
         dialogue: {
           new: [
-            { line: 'Paired line A', approach: 'Approach for A' },
+            {
+              line: 'Paired line A',
+              approach: 'Approach for A',
+              responses: { kind: 'Kind response for A' },
+            },
             { line: 'Paired line B', approach: 'Approach for B' },
           ],
         },
@@ -71,7 +77,7 @@ mock.module('../constants/dialogue.js', {
   },
 });
 
-const { getRandomDialogueBeat, getRandomDialogueLine } = await import('../constants/characters.js');
+const { getRandomDialogueBeat, getRandomDialogueEntry } = await import('../constants/characters.js');
 
 function times(n, fn) {
   return Array.from({ length: n }, fn);
@@ -151,11 +157,23 @@ test('migrating one character to beats does not change what an unrelated, still-
   }
 });
 
-test('getRandomDialogueLine (used by /meet, which has no approach button) unwraps a migrated beat to its line — never "[object Object]"', () => {
+test('getRandomDialogueEntry (used by /meet, which has no approach button) unwraps a migrated beat to its line — never "[object Object]"', () => {
   const character = { id: PAIRED_ID };
-  for (const line of times(20, () => getRandomDialogueLine(character, 'new'))) {
+  for (const { line } of times(20, () => getRandomDialogueEntry(character, 'new'))) {
     assert.strictEqual(typeof line, 'string');
     assert.ok(['Paired line A', 'Paired line B'].includes(line));
+  }
+});
+
+test('getRandomDialogueEntry returns `responses` from the exact same pick as `line` — never a second, independent draw', () => {
+  const character = { id: PAIRED_ID };
+  for (const { line, responses } of times(40, () => getRandomDialogueEntry(character, 'new'))) {
+    if (line === 'Paired line A') {
+      assert.deepStrictEqual(responses, { kind: 'Kind response for A' });
+    } else {
+      assert.strictEqual(line, 'Paired line B');
+      assert.strictEqual(responses, null);
+    }
   }
 });
 

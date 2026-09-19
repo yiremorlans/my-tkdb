@@ -38,6 +38,7 @@ import {
   surfaceBondSceneResume,
 } from './bondScenes.js';
 import { startEncounterScheduler } from './encounterScheduler.js';
+import { isMaintenanceModeActive, MAINTENANCE_MESSAGE } from './maintenance.js';
 import {
   claimCommandInvoke,
   releaseCommandInvoke,
@@ -204,6 +205,24 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
    */
   if (type === InteractionType.PING) {
     return res.send({ type: InteractionResponseType.PONG });
+  }
+
+  // Global kill switch (app_settings.maintenance_mode, db/migrations/024, and
+  // see maintenance.js). Checked before any command or component branch runs,
+  // so a caller who is mid-maintenance never reaches Supabase. /encdev and
+  // /missiondev are exempt: both hard-gate on OWNER_DISCORD_ID inside their
+  // own handlers already, so exempting them by name here only ever grants
+  // access to the bot owner, never to a guild admin.
+  if (await isMaintenanceModeActive()) {
+    const exempt =
+      type === InteractionType.APPLICATION_COMMAND &&
+      ['encdev', 'missiondev'].includes(data?.name);
+    if (!exempt) {
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: { content: MAINTENANCE_MESSAGE, flags: EPHEMERAL },
+      });
+    }
   }
 
   /**

@@ -4,9 +4,10 @@
 // which is close to static by comparison.
 //
 // Each tier is a collection; one line is picked at random per encounter (see
-// getRandomDialogueLine). `dialogue` tiers are normally string arrays, but may
-// instead be keyed by image variant where a character's lines differ by outfit
-// (Jo's pronouns change between uniform and casual).
+// getRandomDialogueBeat / getRandomDialogueEntry). `dialogue` tiers are
+// normally string arrays, but may instead be keyed by image variant where a
+// character's lines differ by outfit (Jo's pronouns change between uniform
+// and casual — see withPronounVariants below).
 //
 // `approach` holds the label for the single button on the /roam narration
 // message — the "Step forward" beat before the character is actually drawn. It
@@ -74,12 +75,76 @@
 // (roster-wide event greetings, generic scene flavor). There is no shared
 // responses layer — a bespoke choice is always character-specific.
 
+// Authoring helper for a character whose dialogue pool is keyed by image
+// variant purely because the pronouns change (currently just Jo: `he/him/his
+// /himself` in `uniform`, `she/her/her/herself` in `casual`). Write the pool
+// ONCE, in the `uniform` voice, with the pronoun wrapped in braces —
+// `"{He}'s buried in paperwork"`, `"Ask if {he}'s free"` — and this expands it
+// into the `{ uniform: [...], casual: [...] }` shape resolvePoolTier expects,
+// swapping in the casual pronoun and preserving the token's original case
+// (`{He}` → "He"/"She", `{he}` → "he"/"she"). Runs once at module load, not
+// per-request, so there's no runtime cost. Covers `line`, `approach`
+// (string or array), `greeting`, and every value in `responses` — the only
+// fields a dialogue entry carries.
+const PRONOUN_VARIANTS = {
+  uniform: { he: "he", him: "him", his: "his", himself: "himself" },
+  casual: { he: "she", him: "her", his: "her", himself: "herself" },
+};
+
+function applyPronouns(text, variant) {
+  if (typeof text !== "string") return text;
+  const map = PRONOUN_VARIANTS[variant];
+  return text.replace(/\{(he|him|his|himself)\}/gi, (_, word) => {
+    const replacement = map[word.toLowerCase()];
+    return word[0] === word[0].toUpperCase()
+      ? replacement.charAt(0).toUpperCase() + replacement.slice(1)
+      : replacement;
+  });
+}
+
+function expandPronounField(value, variant) {
+  if (Array.isArray(value)) return value.map((v) => applyPronouns(v, variant));
+  return applyPronouns(value, variant);
+}
+
+function expandPronounEntry(entry, variant) {
+  const expanded = { ...entry };
+  if (expanded.line !== undefined) {
+    expanded.line = expandPronounField(expanded.line, variant);
+  }
+  if (expanded.approach !== undefined) {
+    expanded.approach = expandPronounField(expanded.approach, variant);
+  }
+  if (expanded.greeting !== undefined) {
+    expanded.greeting = expandPronounField(expanded.greeting, variant);
+  }
+  if (expanded.responses) {
+    expanded.responses = Object.fromEntries(
+      Object.entries(expanded.responses).map(([key, val]) => [
+        key,
+        expandPronounField(val, variant),
+      ]),
+    );
+  }
+  return expanded;
+}
+
+export function withPronounVariants(entries) {
+  return {
+    uniform: entries.map((entry) => expandPronounEntry(entry, "uniform")),
+    casual: entries.map((entry) => expandPronounEntry(entry, "casual")),
+  };
+}
+
 export const SHARED_DIALOGUE_WHEN = [
   // Whole-roster evening flavor for the general-location PM scenes, where an
   // encounter can be with anyone and most characters have no evening lines of
   // their own. Character-specific `dialogueWhen` blocks stack on top of this.
   {
-    when: { time: "evening", location: ["Darkwick", "Galaxy Express", "Clementia"] },
+    when: {
+      time: "evening",
+      location: ["Darkwick", "Galaxy Express", "Clementia"],
+    },
     dialogue: {
       new: [
         "The path lamps have come on. Whoever's still out here, it's just the two of you now.",
@@ -96,7 +161,10 @@ export const SHARED_DIALOGUE_WHEN = [
 
 export const SHARED_APPROACH_WHEN = [
   {
-    when: { time: "evening", location: ["Darkwick", "Galaxy Express", "Clementia"] },
+    when: {
+      time: "evening",
+      location: ["Darkwick", "Galaxy Express", "Clementia"],
+    },
     approach: {
       new: ["Head in out of the dark", "Fall into step with them"],
     },

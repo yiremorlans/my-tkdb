@@ -19,12 +19,15 @@ import { clearRiddleCooldowns } from './constants/missions.js';
 import { isSpawnDue, spawnEncounter, sweepExpiredEncounters } from './publicEncounters.js';
 import { runGuildMissionPass, sweepExpiredMissions } from './missions.js';
 import { getActivePublicEncounter, getEnabledGuilds, getMissionGuilds } from './db/supabase.js';
+import { isMaintenanceModeActive } from './maintenance.js';
 
 // How often the loop looks for work. Must stay well under
-// ENCOUNTER_WINDOW_MINUTES (2), or an expired encounter's post sits showing a
-// live countdown for most of a tick before the sweep finalizes it — cosmetic
-// only, since getActivePublicEncounter already gates on `expires_at` itself,
-// so a stale post can't be answered late.
+// ENCOUNTER_WINDOW_MINUTES (2). A freshly spawned encounter is finalized on
+// the dot by its own one-shot timer (armExpirySweep in publicEncounters.js);
+// this sweep is the backstop for encounters that outlived a restart, whose
+// post can then show a spent countdown for up to a tick. Cosmetic only, since
+// getActivePublicEncounter already gates on `expires_at` itself, so a stale
+// post can't be answered late.
 //
 // Raised from 25s (2025-09-12): the project runs on Supabase's free t3.nano
 // tier, and this tick's steady query volume was contributing to sustained
@@ -54,11 +57,35 @@ export function clearSpawnAttemptFence() {
   spawnAttemptAt.clear();
 }
 
+// Logged only on the transition into/out of a maintenance-skipped tick, not
+// on every tick — maintenance can run for hours at 45s/tick, and a steady
+// "skipping" line every tick would just be noise.
+let loggedMaintenanceSkip = false;
+
 /**
  * One pass over every enabled guild. Exported so a test — or a future external
  * `/tick` endpoint for a host that sleeps — can drive it directly.
+ *
+ * The maintenance kill switch (app_settings.maintenance_mode, db/
+ * migrations/024) is checked first and skips the whole pass, sweeps
+ * included: both passes are built to tolerate a gap (isSpawnDue and the
+ * mission slot cadence are elapsed-time based, and a sweep that's late by a
+ * few hours is still correct once it runs), the same way they already
+ * tolerate the process being down. This is what stops new public-encounter
+ * spawns and mission-slot posts from going out while /interactions is
+ * refusing everyone in app.js — without this, that gate alone would leave
+ * the scheduler posting on its own timer regardless.
  */
 export async function runTick(now = new Date()) {
+  if (await isMaintenanceModeActive()) {
+    if (!loggedMaintenanceSkip) {
+      console.log('[encounterScheduler] Maintenance mode is on — skipping ticks until it clears');
+      loggedMaintenanceSkip = true;
+    }
+    return;
+  }
+  loggedMaintenanceSkip = false;
+
   await runEncounterPass(now);
   await runMissionPass(now);
 }

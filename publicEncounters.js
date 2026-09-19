@@ -36,6 +36,7 @@ import { composeSilhouetteEncounter } from './imageComposition.js';
 import { editChannelMessage, editChannelMessageSafe, postChannelMessage } from './discordRest.js';
 import { deliverBondScene } from './bondScenes.js';
 import { devResetCommandLimits } from './commandLimits.js';
+import { isMaintenanceModeActive } from './maintenance.js';
 import {
   bumpGuildPostFailure,
   claimPublicEncounter,
@@ -236,6 +237,8 @@ export async function spawnEncounter(guild, now = new Date(), { characterId, var
     );
   }
 
+  armExpirySweep(guild.guild_id, expiresAt);
+
   console.log(
     `[publicEncounters] Spawned ${generated.characterId} in guild ${guild.guild_id} (encounter ${row.id})`,
   );
@@ -243,6 +246,39 @@ export async function spawnEncounter(guild, now = new Date(), { characterId, var
 }
 
 // --- expiry -----------------------------------------------------------------
+
+// Slack past expires_at before the one-shot sweep fires, so the finalize
+// query's strict `expires_at < now` has definitely flipped by then.
+const EXPIRY_SWEEP_GRACE_MS = 1000;
+
+/**
+ * Finalize this guild's encounter the moment its window closes, instead of
+ * waiting up to a full scheduler tick (45s) for the sweep. Without this the
+ * post's `<t:…:R>` countdown sits reading "you have until 30 seconds ago"
+ * until the next tick gets to it.
+ *
+ * Purely a latency fix: the tick sweep is still the source of truth (and the
+ * only thing that catches encounters left live across a restart, since this
+ * timer lives in memory). finalizeExpiredEncounters is conditional on
+ * resolved_at, so this racing the tick, a win, or /encdev clear is harmless.
+ * A window that is already past arms nothing; the tick has it.
+ */
+function armExpirySweep(guildId, expiresAt) {
+  const delay = new Date(expiresAt).getTime() - Date.now();
+  if (delay <= 0) return;
+
+  const timer = setTimeout(async () => {
+    try {
+      // Same gate as the tick: maintenance skips sweeps, and the first tick
+      // after it clears finalizes anything that ran out meanwhile.
+      if (await isMaintenanceModeActive()) return;
+      await sweepExpiredEncounters(guildId);
+    } catch (err) {
+      console.error(`[publicEncounters] Expiry sweep failed for guild ${guildId}:`, err.message);
+    }
+  }, delay + EXPIRY_SWEEP_GRACE_MS);
+  timer.unref?.();
+}
 
 /**
  * Edit a finalized-unsolved encounter's post to a "moment has passed" line and

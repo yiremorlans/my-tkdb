@@ -1250,19 +1250,24 @@ function collectConditional(entries, poolKey, tier, variant, ctx) {
 // `ctx` carries the encounter context: { now, locationKey, backgroundFile,
 // event }. All fields optional — an absent field just means `when` rules that
 // constrain it won't match.
-export function getRandomDialogueLine(
-  character,
-  tier,
-  variant = null,
-  ctx = {},
-) {
+//
+// Shared by getRandomDialogueBeat (/roam) and getRandomDialogueEntry (/meet):
+// the pmOnly daytime swap, the dialogue/dialogueWhen/SHARED_DIALOGUE_WHEN pool
+// walk, and the random pick, normalized to { line, approachOptions,
+// greetingOptions, responses }, or null if the character has no dialogue
+// content at all. Neither caller repeats this resolution, so /meet's line and
+// its response-button overrides always come from the exact same pick as
+// /roam's beat would — never two independent draws that could disagree about
+// which beat was shown (see docs/dialogue-greeting-pairing.md).
+function pickDialogueEntry(character, tier, variant, ctx) {
   const content = DIALOGUE[character.id];
-  if (!content) return "...";
+  if (!content) return null;
 
   // A pmOnly character (Towa) only truly speaks in the evening; the rest of the
   // day it hard-swaps to a wordless replacement pool. Gated by the same evening
   // cutoff as `_PM` backgrounds (timeBucket, off ctx.now) — not a separate
   // threshold. Separate from the additive `when` system below.
+  let entries;
   if (
     character.pmOnly &&
     content.daytimeDialogue &&
@@ -1270,25 +1275,39 @@ export function getRandomDialogueLine(
   ) {
     const daytime =
       content.daytimeDialogue[tier] || content.daytimeDialogue.new;
-    const picked = Array.isArray(daytime) ? pickRandom(daytime) : daytime;
-    return normalizeBeat(picked).line;
+    entries = Array.isArray(daytime) ? daytime : [daytime];
+  } else {
+    // Base pool, plus every conditional block whose `when` matches this scene —
+    // the character's own `dialogueWhen` and the shared roster-wide pool.
+    // Additive: a matched scene adds its flavor without ever emptying a tier.
+    entries = resolvePoolTier(content.dialogue, tier, variant);
+    entries.push(
+      ...collectConditional(content.dialogueWhen, "dialogue", tier, variant, ctx),
+    );
+    entries.push(
+      ...collectConditional(SHARED_DIALOGUE_WHEN, "dialogue", tier, variant, ctx),
+    );
   }
 
-  // Base pool, plus every conditional block whose `when` matches this scene —
-  // the character's own `dialogueWhen` and the shared roster-wide pool. Additive:
-  // a matched scene adds its flavor without ever emptying a tier.
-  const lines = resolvePoolTier(content.dialogue, tier, variant);
-  lines.push(
-    ...collectConditional(content.dialogueWhen, "dialogue", tier, variant, ctx),
-  );
-  lines.push(
-    ...collectConditional(SHARED_DIALOGUE_WHEN, "dialogue", tier, variant, ctx),
-  );
+  if (entries.length === 0) return null;
+  return normalizeBeat(pickRandom(entries));
+}
 
-  if (lines.length === 0) return "...";
-  // A migrated tier's entries are { line, approach } pairs (see
-  // getRandomDialogueBeat) — this caller only ever wants the line.
-  return normalizeBeat(pickRandom(lines)).line;
+// /meet's draw — the same single pick getRandomDialogueBeat makes for /roam,
+// minus the approach/greeting resolution /meet never renders (it has no
+// "step forward" stage; see buildMeetSpawnMessage). `responses` is the drawn
+// beat's own { kind, playful, bold, neutral } overrides, or null if it has
+// none — always from the same pick as `line`, so the caption and the
+// response buttons can never end up answering different beats.
+export function getRandomDialogueEntry(
+  character,
+  tier,
+  variant = null,
+  ctx = {},
+) {
+  const entry = pickDialogueEntry(character, tier, variant, ctx);
+  if (!entry) return { line: "...", responses: null };
+  return { line: entry.line, responses: entry.responses };
 }
 
 // The greeting rendered onto the encounter image. Driven only by the character's
@@ -1306,18 +1325,37 @@ export function getTemperamentGreeting(character, tier) {
 // one label or an array of interchangeable labels for that same beat.
 // Normalizes to { line, approachOptions } — approachOptions is null for a
 // legacy string entry, never an empty array.
+//
+// A field authored as a single value or an array of interchangeable options,
+// normalized to an array (or null if absent) — shared by approach, greeting,
+// and (in responseLabel below) a beat's response-label override.
+function toOptions(value) {
+  if (Array.isArray(value)) return value;
+  return value ? [value] : null;
+}
+
+const NORMALIZED_BEAT_DEFAULT = {
+  line: "...",
+  approachOptions: null,
+  greetingOptions: null,
+  responses: null,
+};
+
 function normalizeBeat(entry) {
-  if (typeof entry === "string") return { line: entry, approachOptions: null };
-  if (entry && typeof entry === "object" && typeof entry.line === "string") {
-    const { approach } = entry;
-    const approachOptions = Array.isArray(approach)
-      ? approach
-      : approach
-        ? [approach]
-        : null;
-    return { line: entry.line, approachOptions };
+  if (typeof entry === "string") {
+    return { ...NORMALIZED_BEAT_DEFAULT, line: entry };
   }
-  return { line: "...", approachOptions: null };
+  if (entry && typeof entry === "object" && typeof entry.line === "string") {
+    const { approach, greeting, responses } = entry;
+    return {
+      ...NORMALIZED_BEAT_DEFAULT,
+      line: entry.line,
+      approachOptions: toOptions(approach),
+      greetingOptions: toOptions(greeting),
+      responses: responses || null,
+    };
+  }
+  return { ...NORMALIZED_BEAT_DEFAULT };
 }
 
 // The label on the single button that turns the /roam narration into an actual
@@ -1326,7 +1364,7 @@ function normalizeBeat(entry) {
 // character) and SHARED_APPROACH_WHEN add scene/time-specific labels the same
 // way `dialogueWhen` adds narration; the pmOnly daytime swap is still a hard
 // replacement, gated on the evening cutoff. `ctx` is the same object
-// getRandomDialogueLine takes.
+// getRandomDialogueEntry takes.
 //
 // This is the *independent* pick — used directly for a tier a character
 // hasn't paired yet, and as getRandomDialogueBeat's fallback when the beat it
@@ -1363,93 +1401,74 @@ export function getRandomApproachLabel(
   return pickRandom(labels);
 }
 
-// Draws the narration line and its approach-button label as one unit, so the
-// /roam button always answers the scene the player just read (see
-// docs/dialogue-approach-pairing.md) rather than the two being pulled from
-// separate pools at random. A tier authored as { line, approach } pairs keeps
-// its label tied to the line every time; a tier still written as two flat
-// arrays (not yet migrated) draws the line here and falls through to
+// Draws the narration line, its approach-button label, and (optionally) its
+// payoff greeting and response-button overrides as one unit, so the /roam
+// button, payoff image caption, and the four response buttons all answer the
+// scene the player just read (see docs/dialogue-approach-pairing.md and
+// docs/dialogue-greeting-pairing.md) rather than being pulled from separate
+// pools at random. A tier authored as { line, approach } pairs keeps its
+// label tied to the line every time; a tier still written as two flat arrays
+// (not yet migrated) draws the line here and falls through to
 // getRandomApproachLabel for the button, exactly like before this existed —
-// so nothing breaks for a character mid-migration.
+// so nothing breaks for a character mid-migration. `greeting` is null unless
+// the drawn beat has one — callers that want a payoff caption fall back to
+// their own independent draw (e.g. getTemperamentGreeting) when it's null.
+// `responses` is the beat's own { kind, playful, bold, neutral } label
+// overrides (each optional; a string or an array of interchangeable
+// options), or null — callers fall back to the character's per-tier response
+// pool for whichever types the beat didn't override.
 export function getRandomDialogueBeat(character, tier, variant = null, ctx = {}) {
-  const content = DIALOGUE[character.id];
-  if (!content) {
-    return { line: "...", approach: pickRandom(APPROACH_LABEL_FALLBACK) };
+  const entry = pickDialogueEntry(character, tier, variant, ctx);
+  if (!entry) {
+    return {
+      line: "...",
+      approach: pickRandom(APPROACH_LABEL_FALLBACK),
+      greeting: null,
+      responses: null,
+    };
   }
 
-  let entries;
-  if (
-    character.pmOnly &&
-    content.daytimeDialogue &&
-    timeBucket(ctx.now) === "day"
-  ) {
-    const daytime = content.daytimeDialogue[tier] || content.daytimeDialogue.new;
-    entries = Array.isArray(daytime) ? daytime : [daytime];
-  } else {
-    entries = resolvePoolTier(content.dialogue, tier, variant);
-    entries.push(
-      ...collectConditional(content.dialogueWhen, "dialogue", tier, variant, ctx),
-    );
-    entries.push(
-      ...collectConditional(SHARED_DIALOGUE_WHEN, "dialogue", tier, variant, ctx),
-    );
-  }
-
-  if (entries.length === 0) {
-    return { line: "...", approach: pickRandom(APPROACH_LABEL_FALLBACK) };
-  }
-
-  const { line, approachOptions } = normalizeBeat(pickRandom(entries));
+  const { line, approachOptions, greetingOptions, responses } = entry;
   const approach = approachOptions
     ? pickRandom(approachOptions)
     : getRandomApproachLabel(character, tier, variant, ctx);
+  const greeting = greetingOptions ? pickRandom(greetingOptions) : null;
 
-  return { line, approach };
+  return { line, approach, greeting, responses };
 }
 
-// `ctx` (optional, same shape as getRandomDialogueLine's) lets a character's
+// `ctx` (optional, same shape as getRandomDialogueEntry's) lets a character's
 // `responsesWhen` blocks add scene/time-specific button labels. No shared layer
 // for responses — a bespoke choice ("Stay till the lanterns are out") is always
 // character-specific.
-export function generateCharacterResponses(character, tier = "new", ctx = {}) {
-  const archetypes = character.archetype || [];
-  const keywords = character.keywords || [];
+//
+// `beatResponses` (optional) is the { kind, playful, bold, neutral } override
+// object off the specific beat getRandomDialogueBeat just drew (see its doc
+// comment) — /roam's way of keeping the four response buttons answering the
+// same scene as the line/approach/greeting instead of an independent per-tier
+// draw. Each type falls back to the normal pool when the beat didn't override
+// it.
+export function generateCharacterResponses(
+  character,
+  tier = "new",
+  ctx = {},
+  beatResponses = null,
+) {
+  const archetypeSet = new Set(
+    (character.archetype || []).map((a) => a.toLowerCase()),
+  );
 
-  const archetypeSet = new Set(archetypes.map((a) => a.toLowerCase()));
-  const keywordSet = new Set(keywords.map((k) => k.toLowerCase()));
-
-  // Define response options based on archetype + keywords combinations + relationship tier
-  const responses = {
-    [RESPONSE_TYPES.KIND]: generateKindResponse(
-      character,
-      archetypeSet,
-      keywordSet,
+  const responses = {};
+  for (const type of Object.values(RESPONSE_TYPES)) {
+    const label = responseLabel(
+      character.id,
+      type,
       tier,
       ctx,
-    ),
-    [RESPONSE_TYPES.PLAYFUL]: generatePlayfulResponse(
-      character,
-      archetypeSet,
-      keywordSet,
-      tier,
-      ctx,
-    ),
-    [RESPONSE_TYPES.BOLD]: generateBoldResponse(
-      character,
-      archetypeSet,
-      keywordSet,
-      tier,
-      ctx,
-    ),
-    [RESPONSE_TYPES.NEUTRAL]: generateNeutralResponse(
-      character,
-      archetypeSet,
-      keywordSet,
-      tier,
-      ctx,
-    ),
-  };
-
+      beatResponses?.[type],
+    );
+    responses[type] = label ? { label } : RESPONSE_FALLBACK[type](archetypeSet);
+  }
   return responses;
 }
 
@@ -1468,11 +1487,16 @@ export const RESPONSE_LABEL_TIER = {
 };
 
 // Each slot is a collection, picked from at random so a character the player
-// sees often doesn't always get the same four buttons. Base labels come from
-// `responses`; any `responsesWhen` block whose `when` matches `ctx` adds its
-// labels on top. A character with nothing here falls through to the archetype
-// defaults below.
-function responseLabel(characterId, responseType, tier, ctx = {}) {
+// sees often doesn't always get the same four buttons. `beatOverride` (the
+// specific beat's own responses[type], if any — see getRandomDialogueBeat)
+// wins first, since it's tied to the exact scene just shown. Otherwise base
+// labels come from `responses`; any `responsesWhen` block whose `when`
+// matches `ctx` adds its labels on top. A character with nothing here falls
+// through to the archetype defaults below.
+function responseLabel(characterId, responseType, tier, ctx = {}, beatOverride = null) {
+  const beatOptions = toOptions(beatOverride);
+  if (beatOptions) return pickRandom(beatOptions);
+
   const content = DIALOGUE[characterId];
   const labelTier = RESPONSE_LABEL_TIER[tier] || "new";
   const labels = resolvePoolTier(
@@ -1491,10 +1515,13 @@ function responseLabel(characterId, responseType, tier, ctx = {}) {
   return pickRandom(labels);
 }
 
-function generateKindResponse(character, archetypeSet, keywordSet, tier, ctx) {
-  const label = responseLabel(character.id, RESPONSE_TYPES.KIND, tier, ctx);
-  if (label) return { label };
-
+// Archetype-only fallbacks for when neither a beat override nor the
+// character's authored `responses` pool has a label (see responseLabel
+// above, which already resolved both before generateCharacterResponses ever
+// reaches these). Pure functions of `archetypeSet` — no character id, tier,
+// ctx, or beat data, since a fallback by definition has none of that to work
+// with.
+function kindFallback(archetypeSet) {
   if (
     archetypeSet.has("kuudere") ||
     archetypeSet.has("tsundere") ||
@@ -1518,16 +1545,7 @@ function generateKindResponse(character, archetypeSet, keywordSet, tier, ctx) {
   return { label: "Offer kind words" };
 }
 
-function generatePlayfulResponse(
-  character,
-  archetypeSet,
-  keywordSet,
-  tier,
-  ctx,
-) {
-  const label = responseLabel(character.id, RESPONSE_TYPES.PLAYFUL, tier, ctx);
-  if (label) return { label };
-
+function playfulFallback(archetypeSet) {
   if (archetypeSet.has("teasedere")) return { label: "Tease them back" };
   if (archetypeSet.has("sadodere")) return { label: "Make them laugh" };
   if (archetypeSet.has("deredere") || archetypeSet.has("bakadere"))
@@ -1538,10 +1556,7 @@ function generatePlayfulResponse(
   return { label: "Crack a joke" };
 }
 
-function generateBoldResponse(character, archetypeSet, keywordSet, tier, ctx) {
-  const label = responseLabel(character.id, RESPONSE_TYPES.BOLD, tier, ctx);
-  if (label) return { label };
-
+function boldFallback(archetypeSet) {
   if (archetypeSet.has("yandere")) return { label: "Match their intensity" };
   if (archetypeSet.has("sadodere")) return { label: "Challenge them directly" };
   if (archetypeSet.has("tsundere") || archetypeSet.has("thugdere"))
@@ -1555,16 +1570,7 @@ function generateBoldResponse(character, archetypeSet, keywordSet, tier, ctx) {
   return { label: "Flirt boldly" };
 }
 
-function generateNeutralResponse(
-  character,
-  archetypeSet,
-  keywordSet,
-  tier,
-  ctx,
-) {
-  const label = responseLabel(character.id, RESPONSE_TYPES.NEUTRAL, tier, ctx);
-  if (label) return { label };
-
+function neutralFallback(archetypeSet) {
   if (archetypeSet.has("kuudere") || archetypeSet.has("dandere"))
     return { label: "Stay quiet" };
   if (archetypeSet.has("yandere")) return { label: "Observe them carefully" };
@@ -1574,3 +1580,10 @@ function generateNeutralResponse(
 
   return { label: "Stay silent" };
 }
+
+const RESPONSE_FALLBACK = {
+  [RESPONSE_TYPES.KIND]: kindFallback,
+  [RESPONSE_TYPES.PLAYFUL]: playfulFallback,
+  [RESPONSE_TYPES.BOLD]: boldFallback,
+  [RESPONSE_TYPES.NEUTRAL]: neutralFallback,
+};
