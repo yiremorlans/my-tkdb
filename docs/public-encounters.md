@@ -820,8 +820,7 @@ reveal embed's winner line is the **only** place either of them is named —
 Tier comes from the winner's stored affinity with that character (global, not
 per-guild): `getRelationshipLevel(affinity).name` → `getDialogueTier(...)`.
 `WINNER_LINE_TIER` collapses the six dialogue tiers onto the five registers the
-lines are authored at (`known` folds into `new`), mirroring `RESPONSE_LABEL_TIER`
-in `constants/characters.js`.
+lines are authored at (`known` folds into `new`).
 
 Lines are **per character**, authored beside that character's other content in
 `constants/dialogue/<id>.js` and keyed by register:

@@ -2,10 +2,9 @@
 /**
  * response-pairing-report — snapshots how many of each dialogue[tier] beat's
  * four response types (kind/playful/bold/neutral) carry their own bespoke
- * `responses` override, instead of falling through to the generic per-tier
- * pool (docs/dialogue-greeting-pairing.md §2a — "Path A" of the response
- * pairing work, as distinct from "Path B", rescoping RESPONSE_LABEL_TIER
- * itself).
+ * `responses` labels, instead of falling through to the archetype default.
+ * The character-level per-tier pool this used to measure against is gone;
+ * the archetype default is what an uncovered slot lands on now.
  *
  * Only counts entries that are already { line, approach } beats — a tier
  * still written as bare strings (not yet migrated by the

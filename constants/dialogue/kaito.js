@@ -728,9 +728,9 @@ export default {
   },
   // Evening block: new/known/warm dialogue and approach paired per beat
   // (docs/dialogue-approach-pairing.md) instead of two separately-drawn
-  // lists. spark/close have no approachWhen counterpart to pair with, so
-  // they're left as bare lines — they still draw an approach, just from the
-  // base approach pool for that tier, same as before this existed.
+  // lists. spark/close have no approach counterpart to pair with, so
+  // they're left as bare lines — they still draw an approach, just from
+  // SHARED_APPROACH_WHEN / the generic fallback (see getFallbackApproachLabel).
   dialogueWhen: [
     {
       when: { time: "evening" },
@@ -787,13 +787,11 @@ export default {
     },
   ],
   // No temperamentDialogue pool: every leftover line was placed onto a
-  // dialogue beat's `greeting` (docs/dialogue-greeting-pairing.md).
-  // No top-level `responses` pool: every dialogue[tier] beat (new/known/warm/
-  // spark/close/bound) now carries bespoke responses for all four types (see
-  // dialogue above), making the old per-tier pools fully unreachable — same
-  // end state as yuri.js/benkei.js/jin.js. Three `new`-tier labels had no
-  // genuine beat match ("Wave off the burden question", "Bet him he won't",
-  // "Push him to commit") and were dropped rather than force-placed.
+  // dialogue beat's `greeting`.
+  // When the old per-tier `responses` pool was folded onto the beats above,
+  // three `new`-tier labels had no genuine beat match ("Wave off the burden
+  // question", "Bet him he won't", "Push him to commit") and were dropped
+  // rather than force-placed.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

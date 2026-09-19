@@ -27,12 +27,13 @@
 // docs/dialogue-approach-pairing.md and constants/dialogue/benkei.js (its
 // new/known/warm/close/bound tiers) for a worked example.
 //
-// `responses` holds the button labels offered to the player. Only two tiers are
-// stored: "close" and everything before it. Each slot is a collection, picked
-// from at random like the dialogue, so a character the player sees often does
-// not always get the same four buttons. A character omitted here, or missing
-// a response type, falls back to archetype defaults in constants/characters.js —
-// constants/validateContent.js reports any such gap at startup.
+// `responses` holds the four button labels offered to the player, and lives on
+// the beat itself — `{ line, approach, greeting, responses: { kind, playful,
+// bold, neutral } }`, each value one label or an array of interchangeable ones.
+// There is no character-level pool behind it: a beat missing a response type
+// falls straight to the archetype defaults in constants/characters.js, which
+// know nothing about the scene just shown. constants/validateContent.js reports
+// any such gap at startup.
 //
 // `winnerLines` holds the public /call reveal lines, keyed by the registers in
 // WINNER_LINE_BUCKETS (constants/publicEncounters.js) — the six dialogue tiers
@@ -62,18 +63,17 @@
 // work portable: what they set down or walk away from can travel, the room it
 // belongs in cannot.
 //
-// Conditional pools (all optional, all per character):
+// Conditional pools (optional, per character):
 //   `dialogueWhen`   → adds narration lines   (merged into `dialogue`)
-//   `approachWhen`   → adds step-forward labels (merged into `approach`)
-//   `responsesWhen`  → adds response-button labels (merged into `responses`,
-//                      so its inner shape is { kind|playful|bold|neutral: { tier: [...] } })
-// Each is a list of `{ when, <pool> }` blocks. Every field in `when` (time /
+// A list of `{ when, <pool> }` blocks; each line is a { line, approach, ... }
+// beat carrying its own step-forward label. Every field in `when` (time /
 // location / background / event — see DIALOGUE_WHEN_DIMENSIONS in characters.js)
 // is optional and ANDed; scalar or array. A matching block's lines are *added*
-// to the base pool for that pick — never replace it. `SHARED_DIALOGUE_WHEN` and
-// `SHARED_APPROACH_WHEN` are the same shape but apply to every character
-// (roster-wide event greetings, generic scene flavor). There is no shared
-// responses layer — a bespoke choice is always character-specific.
+// to the base pool for that pick — never replace it. `SHARED_DIALOGUE_WHEN` is
+// the same shape but applies to every character (roster-wide event greetings,
+// generic scene flavor); its bare-string lines have no `approach` of their own,
+// so `SHARED_APPROACH_WHEN` supplies their button label. Response buttons have no
+// conditional layer — they belong to the beat, which already answers the scene.
 
 // Authoring helper for a character whose dialogue pool is keyed by image
 // variant purely because the pronouns change (currently just Jo: `he/him/his

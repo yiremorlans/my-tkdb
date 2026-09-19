@@ -108,14 +108,15 @@ function selectRoamSpot(character, now) {
 // `origin` ('meet' | 'roam') rides along in the custom_id so the response
 // click can be logged against the command that started the flow — the flow is
 // only counted once, at the response step (see the 'resp' handler in app.js).
-// `beatResponses` (optional) is the { kind, playful, bold, neutral } override
-// off the specific /roam beat that was drawn — see getRandomDialogueBeat and
-// buildRoamDialogueMessage. /meet never passes one; it stays on the plain
-// per-tier draw.
-function responseActionRow(characterId, disabled = false, tier = 'new', origin = 'meet', ctx = {}, beatResponses = null) {
+// `beatResponses` is the { kind, playful, bold, neutral } labels off the
+// specific beat that was drawn — see getRandomDialogueBeat (/roam) and
+// getRandomDialogueEntry (/meet). It is the only source of character-specific
+// labels; without one every button falls to its archetype default, which is
+// what the disabled re-render at the result step does.
+function responseActionRow(characterId, disabled = false, origin = 'meet', beatResponses = null) {
   const character = getCharacterById(characterId);
   const characterResponses = character
-    ? generateCharacterResponses(character, tier, ctx, beatResponses)
+    ? generateCharacterResponses(character, beatResponses)
     : {};
 
   return RESPONSE_TYPE_ORDER.map((responseType) => {
@@ -243,10 +244,8 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
   // caption, and the four response buttons all answer the same line the
   // player just read (see getRandomDialogueBeat). The payoff image's caption
   // prefers the beat's own `greeting`, falling back to the old independent
-  // temperamentDialogue draw when the beat has none (see
-  // docs/dialogue-greeting-pairing.md). `responses` likewise overrides
-  // whichever response types the beat pairs, leaving the rest on the normal
-  // per-tier pool.
+  // temperamentDialogue draw when the beat has none. `responses` carries the beat's four
+  // button labels; a type the beat leaves out drops to the archetype default.
   const {
     line: dialogue,
     approach,
@@ -265,8 +264,6 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
     dialogue,
     greeting: payoffGreeting,
     beatResponses,
-    tier,
-    ctx: dialogueCtx,
   });
 
   return {
@@ -297,14 +294,14 @@ export async function buildRoamSpawnMessage(encounterId) {
     };
   }
 
-  const { spot, characterId, charFilename, greeting, beatResponses, tier, ctx } = encounter;
+  const { spot, characterId, charFilename, greeting, beatResponses } = encounter;
   const character = getCharacterById(characterId);
   const imageBuffer = await composeEncounter(spot.file, charFilename, greeting);
 
   return {
     content: `You wander into **${getLocationDisplayName(spot)}** and run into **${getFullName(character)}**...`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
-    components: responseActionRow(character.id, false, tier, 'roam', ctx, beatResponses),
+    components: responseActionRow(character.id, false, 'roam', beatResponses),
     flags: EPHEMERAL_FLAG,
   };
 }
@@ -384,7 +381,7 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
   // Same single pick as /roam's getRandomDialogueBeat, minus the
   // approach/greeting resolution /meet doesn't render — `line` and
   // `responses` come from the one drawn beat, never two independent draws
-  // (see getRandomDialogueEntry, docs/dialogue-greeting-pairing.md).
+  // (see getRandomDialogueEntry).
   const { line: dialogue, responses: beatResponses } = getRandomDialogueEntry(
     character,
     tier,
@@ -401,7 +398,7 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
   return {
     content: `${getFullName(character)} agrees to meet you${locationText}`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
-    components: responseActionRow(character.id, false, tier, 'meet', dialogueCtx, beatResponses),
+    components: responseActionRow(character.id, false, 'meet', beatResponses),
     flags: EPHEMERAL_FLAG,
   };
 }

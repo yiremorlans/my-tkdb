@@ -151,12 +151,9 @@ test("every dialogue beat's approach label fits the 30-char cap the rest of the 
   assert.deepStrictEqual(tooLong, []);
 });
 
-// Same cap, but for a migrated beat's `responses` — the button labels a
-// player picks in reply to the beat. These used to live in a character-level
-// `responses` pool (still checked further down in validateContent.js for any
-// character that hasn't migrated); a fully paired character like Yuri has no
-// such pool anymore, so the only place left to check the cap is here, on the
-// beat itself (constants/dialogue/yuri.js).
+// Same cap, but for a beat's `responses` — the button labels a player picks in
+// reply to the beat. These used to live in a character-level `responses` pool;
+// that pool is gone, so the beat is the only place the cap can be checked.
 test("every dialogue beat's response labels fit the 30-char cap the rest of the game uses", () => {
   const tooLong = [];
   const isBeat = (e) => !!e && typeof e === 'object' && typeof e.line === 'string';
@@ -225,10 +222,9 @@ test('validateContent flags an over-length beat approach — as a single string 
   assert.doesNotThrow(() => validateContent(), 'and the catalog is clean again');
 });
 
-// Same as the approach-throws test above, but for a migrated beat's
-// `responses` — proving validateContent() actually catches an over-length
-// response label on the beat itself, not just the (now-unused, for a fully
-// paired character) top-level `responses` pool.
+// Same as the approach-throws test above, but for a beat's `responses` —
+// proving validateContent() actually catches an over-length response label on
+// the beat itself, which is the only place response labels live.
 test('validateContent flags an over-length beat response — as a single string or inside an array', () => {
   // Inject the responses rather than hunting the catalog for a beat of the
   // right shape: which beats carry `responses`, and whether as strings or

@@ -1182,8 +1182,9 @@ export function getAffinityForResponse(character, responseType) {
   return character.affinityByResponse[responseType] ?? 0;
 }
 
-// Fallback for the /roam narration button when a character has no `approach`
-// entry in dialogue.js. Deliberately generic, since it has to front any scene.
+// Last-resort label for the /roam narration button, when a drawn line has no
+// `approach` of its own and no SHARED_APPROACH_WHEN block matches the scene.
+// Deliberately generic, since it has to front any scene.
 const APPROACH_LABEL_FALLBACK = [
   "Step forward",
   "Close the distance",
@@ -1258,7 +1259,7 @@ function collectConditional(entries, poolKey, tier, variant, ctx) {
 // content at all. Neither caller repeats this resolution, so /meet's line and
 // its response-button overrides always come from the exact same pick as
 // /roam's beat would — never two independent draws that could disagree about
-// which beat was shown (see docs/dialogue-greeting-pairing.md).
+// which beat was shown.
 function pickDialogueEntry(character, tier, variant, ctx) {
   const content = DIALOGUE[character.id];
   if (!content) return null;
@@ -1328,7 +1329,7 @@ export function getTemperamentGreeting(character, tier) {
 //
 // A field authored as a single value or an array of interchangeable options,
 // normalized to an array (or null if absent) — shared by approach, greeting,
-// and (in responseLabel below) a beat's response-label override.
+// and (in generateCharacterResponses below) a beat's response labels.
 function toOptions(value) {
   if (Array.isArray(value)) return value;
   return value ? [value] : null;
@@ -1359,64 +1360,36 @@ function normalizeBeat(entry) {
 }
 
 // The label on the single button that turns the /roam narration into an actual
-// encounter — the "Step forward" beat. Tiered like the dialogue so the
-// invitation matches the scene the narration just set. `approachWhen` (per
-// character) and SHARED_APPROACH_WHEN add scene/time-specific labels the same
-// way `dialogueWhen` adds narration; the pmOnly daytime swap is still a hard
-// replacement, gated on the evening cutoff. `ctx` is the same object
-// getRandomDialogueEntry takes.
-//
-// This is the *independent* pick — used directly for a tier a character
-// hasn't paired yet, and as getRandomDialogueBeat's fallback when the beat it
-// drew has no approach of its own. Once every entry in a tier is a
-// { line, approach } pair, nothing calls this for that tier anymore.
-export function getRandomApproachLabel(
-  character,
-  tier,
-  variant = null,
-  ctx = {},
-) {
-  const content = DIALOGUE[character.id];
-  if (!content) return pickRandom(APPROACH_LABEL_FALLBACK);
-
-  if (
-    character.pmOnly &&
-    content.daytimeApproach &&
-    timeBucket(ctx.now) === "day"
-  ) {
-    const daytime =
-      content.daytimeApproach[tier] || content.daytimeApproach.new;
-    return Array.isArray(daytime) ? pickRandom(daytime) : daytime;
-  }
-
-  const labels = resolvePoolTier(content.approach, tier, variant);
-  labels.push(
-    ...collectConditional(content.approachWhen, "approach", tier, variant, ctx),
+// encounter — the "Step forward" beat. Every dialogue beat carries its own
+// `approach` (see getRandomDialogueBeat), so this is only the fallback for a
+// beat that doesn't: a bare-string line, e.g. one of SHARED_DIALOGUE_WHEN's.
+// It draws from SHARED_APPROACH_WHEN's scene/time-specific labels (same
+// `when` matching as SHARED_DIALOGUE_WHEN; `ctx` is the object
+// getRandomDialogueEntry takes), then APPROACH_LABEL_FALLBACK.
+function getFallbackApproachLabel(tier, variant = null, ctx = {}) {
+  const labels = collectConditional(
+    SHARED_APPROACH_WHEN,
+    "approach",
+    tier,
+    variant,
+    ctx,
   );
-  labels.push(
-    ...collectConditional(SHARED_APPROACH_WHEN, "approach", tier, variant, ctx),
-  );
-
-  if (labels.length === 0) return pickRandom(APPROACH_LABEL_FALLBACK);
-  return pickRandom(labels);
+  return pickRandom(labels.length > 0 ? labels : APPROACH_LABEL_FALLBACK);
 }
 
 // Draws the narration line, its approach-button label, and (optionally) its
 // payoff greeting and response-button overrides as one unit, so the /roam
 // button, payoff image caption, and the four response buttons all answer the
-// scene the player just read (see docs/dialogue-approach-pairing.md and
-// docs/dialogue-greeting-pairing.md) rather than being pulled from separate
-// pools at random. A tier authored as { line, approach } pairs keeps its
-// label tied to the line every time; a tier still written as two flat arrays
-// (not yet migrated) draws the line here and falls through to
-// getRandomApproachLabel for the button, exactly like before this existed —
-// so nothing breaks for a character mid-migration. `greeting` is null unless
+// scene the player just read (see docs/dialogue-approach-pairing.md) rather than being pulled from separate
+// pools at random. The beat's own `approach` is always the first choice, tied
+// to the line every time; only a beat without one (a bare-string line) falls
+// through to getFallbackApproachLabel. `greeting` is null unless
 // the drawn beat has one — callers that want a payoff caption fall back to
 // their own independent draw (e.g. getTemperamentGreeting) when it's null.
-// `responses` is the beat's own { kind, playful, bold, neutral } label
-// overrides (each optional; a string or an array of interchangeable
-// options), or null — callers fall back to the character's per-tier response
-// pool for whichever types the beat didn't override.
+// `responses` is the beat's own { kind, playful, bold, neutral } labels
+// (each optional; a string or an array of interchangeable options), or null.
+// A type the beat doesn't carry has nothing character-specific behind it —
+// generateCharacterResponses drops straight to the archetype default.
 export function getRandomDialogueBeat(character, tier, variant = null, ctx = {}) {
   const entry = pickDialogueEntry(character, tier, variant, ctx);
   if (!entry) {
@@ -1431,96 +1404,41 @@ export function getRandomDialogueBeat(character, tier, variant = null, ctx = {})
   const { line, approachOptions, greetingOptions, responses } = entry;
   const approach = approachOptions
     ? pickRandom(approachOptions)
-    : getRandomApproachLabel(character, tier, variant, ctx);
+    : getFallbackApproachLabel(tier, variant, ctx);
   const greeting = greetingOptions ? pickRandom(greetingOptions) : null;
 
   return { line, approach, greeting, responses };
 }
 
-// `ctx` (optional, same shape as getRandomDialogueEntry's) lets a character's
-// `responsesWhen` blocks add scene/time-specific button labels. No shared layer
-// for responses — a bespoke choice ("Stay till the lanterns are out") is always
-// character-specific.
+// `beatResponses` is the { kind, playful, bold, neutral } label object off the
+// specific beat getRandomDialogueBeat just drew (see its doc comment) — the
+// only source of character-specific button labels there is. Each value is one
+// label or an array of interchangeable ones; a type the beat leaves out falls
+// through to the archetype default below, which knows nothing about the scene.
 //
-// `beatResponses` (optional) is the { kind, playful, bold, neutral } override
-// object off the specific beat getRandomDialogueBeat just drew (see its doc
-// comment) — /roam's way of keeping the four response buttons answering the
-// same scene as the line/approach/greeting instead of an independent per-tier
-// draw. Each type falls back to the normal pool when the beat didn't override
-// it.
-export function generateCharacterResponses(
-  character,
-  tier = "new",
-  ctx = {},
-  beatResponses = null,
-) {
+// Labels used to come from a character-level `responses` pool drawn per tier,
+// independently of the line — that's what beat-level responses replaced, and
+// the pool is gone.
+export function generateCharacterResponses(character, beatResponses = null) {
   const archetypeSet = new Set(
     (character.archetype || []).map((a) => a.toLowerCase()),
   );
 
   const responses = {};
   for (const type of Object.values(RESPONSE_TYPES)) {
-    const label = responseLabel(
-      character.id,
-      type,
-      tier,
-      ctx,
-      beatResponses?.[type],
-    );
-    responses[type] = label ? { label } : RESPONSE_FALLBACK[type](archetypeSet);
+    const options = toOptions(beatResponses?.[type]);
+    responses[type] = options
+      ? { label: pickRandom(options) }
+      : RESPONSE_FALLBACK[type](archetypeSet);
   }
   return responses;
 }
 
-// Button labels live in constants/dialogue.js, authored at three tiers rather
-// than all six — the buttons only need to change where the register does. The
-// dialogue tiers that share a register share a label set: everything up to
-// "warm" reads as an approach, "spark" turns flirtatious, "close" is intimate,
-// "bound" is romantic.
-export const RESPONSE_LABEL_TIER = {
-  new: "new",
-  known: "new",
-  warm: "new",
-  spark: "spark",
-  close: "close",
-  bound: "bound",
-};
-
-// Each slot is a collection, picked from at random so a character the player
-// sees often doesn't always get the same four buttons. `beatOverride` (the
-// specific beat's own responses[type], if any — see getRandomDialogueBeat)
-// wins first, since it's tied to the exact scene just shown. Otherwise base
-// labels come from `responses`; any `responsesWhen` block whose `when`
-// matches `ctx` adds its labels on top. A character with nothing here falls
-// through to the archetype defaults below.
-function responseLabel(characterId, responseType, tier, ctx = {}, beatOverride = null) {
-  const beatOptions = toOptions(beatOverride);
-  if (beatOptions) return pickRandom(beatOptions);
-
-  const content = DIALOGUE[characterId];
-  const labelTier = RESPONSE_LABEL_TIER[tier] || "new";
-  const labels = resolvePoolTier(
-    content?.responses?.[responseType],
-    labelTier,
-    null,
-  );
-  for (const entry of content?.responsesWhen || []) {
-    if (matchesWhen(entry.when, ctx)) {
-      labels.push(
-        ...resolvePoolTier(entry.responses?.[responseType], labelTier, null),
-      );
-    }
-  }
-  if (labels.length === 0) return null;
-  return pickRandom(labels);
-}
-
-// Archetype-only fallbacks for when neither a beat override nor the
-// character's authored `responses` pool has a label (see responseLabel
-// above, which already resolved both before generateCharacterResponses ever
-// reaches these). Pure functions of `archetypeSet` — no character id, tier,
-// ctx, or beat data, since a fallback by definition has none of that to work
-// with.
+// Archetype-only fallbacks for when the drawn beat carries no label of its own
+// for a response type (see generateCharacterResponses above, which resolves
+// the beat before it reaches these). Pure functions of `archetypeSet` — no
+// character id, tier, ctx, or beat data, since a fallback by definition has
+// none of that to work with.
 function kindFallback(archetypeSet) {
   if (
     archetypeSet.has("kuudere") ||

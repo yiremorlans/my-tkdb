@@ -728,12 +728,9 @@ export default {
     ],
   },
   // No temperamentDialogue pool: every leftover line was placed onto a
-  // dialogue beat's `greeting` (docs/dialogue-greeting-pairing.md).
-  // No top-level `responses` pool: every dialogue[tier] beat (new/known/warm/
-  // spark/close/bound) now carries bespoke responses for all four types (see
-  // dialogue above), making the old per-tier pools fully unreachable — same
-  // end state as yuri.js/benkei.js/jin.js/kaito.js/lucas.js/tohma.js/leo.js.
-  // Six labels had no genuine beat match ("Tell him it's delicious", "Ask for
+  // dialogue beat's `greeting`.
+  // When the old per-tier `responses` pool was folded onto the beats above,
+  // six labels had no genuine beat match ("Tell him it's delicious", "Ask for
   // seconds shamelessly", "Tease him about the apron", "Eat in comfortable
   // quiet" from `new`; "Rename the special" from `close`; "Let the food burn"
   // from `bound`) and were dropped rather than force-placed.

@@ -100,8 +100,8 @@ export function pickMissedLine(now = new Date()) {
 // --- winner lines -----------------------------------------------------------
 
 // Collapses the six dialogue tiers onto the five registers the winner lines are
-// authored at — "known" folds into "new" and the rest map straight through,
-// mirroring RESPONSE_LABEL_TIER in characters.js. Add a bucket here, in
+// authored at — "known" folds into "new" and the rest map straight through.
+// Add a bucket here, in
 // WINNER_LINE_BUCKETS and in WINNER_LINES together.
 const WINNER_LINE_TIER = {
   new: "new",

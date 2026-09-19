@@ -370,7 +370,13 @@ from the shared roster `REACTION_LINES`:
 
 ### 8d. Validation — `constants/validateContent.js`
 
-Extend `TIERS` / `RESPONSE_TIERS` **for volatile characters only** (non-volatile
+> **Note (post-spec):** `RESPONSE_TIERS` and the character-level `responses`
+> pool it tiered have since been removed — response labels live on the beat.
+> A Cold label is therefore a
+> fifth key on a beat's `responses`, not a fifth pool tier, and
+> `generateColdResponse` backs it with an archetype default as below.
+
+Extend `TIERS` **for volatile characters only** (non-volatile
 must not be required to have `friction` etc., and must not carry a `cold` pool).
 Run the `MAX_BUTTON_LABEL_LENGTH` (30) check over every new Cold / approach /
 response / fork-button label — same hard-fail as today.

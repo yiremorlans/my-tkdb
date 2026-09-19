@@ -855,13 +855,10 @@ export default {
   // forwardness rather than meeting it (0), so those moves read as the player
   // pushing and Ren not biting.
   //
-  // No top-level `responses` pool: every dialogue[tier] beat (new/known/warm/
-  // spark/close/bound) now carries bespoke responses for all four types (see
-  // dialogue above), making the old per-tier pools fully unreachable — same
-  // end state as yuri.js/benkei.js/jin.js/kaito.js/lucas.js/tohma.js/leo.js/
-  // shohei.js/subaru.js/zenji.js/haku.js/elias.js/mio.js/shion.js/jiro.js.
-  // Two labels had no genuine beat match ("Tell him he's off the clock" from
-  // kind, "Say it first" from bold) and were dropped rather than force-placed.
+  // When the old per-tier `responses` pool was folded onto the beats above,
+  // two labels had no genuine beat match ("Tell him he's off the clock" from
+  // kind, "Say it first" from bold) and were dropped rather than force-
+  // placed.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

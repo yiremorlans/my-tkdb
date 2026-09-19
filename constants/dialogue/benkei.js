@@ -242,7 +242,7 @@ export default {
   // beats — { line, approach, greeting, responses } — so the /roam button,
   // the payoff caption, and the four response buttons all answer the scene
   // the line just set, rather than being drawn from separate pools at random
-  // (docs/dialogue-approach-pairing.md, docs/dialogue-greeting-pairing.md).
+  // (docs/dialogue-approach-pairing.md).
   // `approach`/`greeting` may be an array when more than one reaction
   // genuinely fits the same beat. A beat with no `greeting` had no genuine
   // match left in temperamentDialogue and falls through to an independent
@@ -490,10 +490,10 @@ export default {
           "\"Flustered? Me? It's warm in here, that's all. Sit anywhere.\"",
         ],
         responses: {
-          kind: "Ask what he'd recommend today",
-          playful: "Tease him about the blush",
-          bold: "Push him to admit it",
-          neutral: "Let him recover, say nothing",
+          kind: ["Ask what he'd recommend today", "Say you're glad to be back"],
+          playful: ["Tease him about the blush", "Blame the heat too"],
+          bold: ["Push him to admit it", "Tell him the blush suits him"],
+          neutral: ["Let him recover, say nothing", "Just order something"],
         },
       },
       {
@@ -502,10 +502,10 @@ export default {
         greeting:
           "\"Wasn't sure you'd come. Glad you did. ...It's nothing much, really.\"",
         responses: {
-          kind: "Appreciate it, every time",
-          playful: "Guess what he saved this time",
-          bold: "Ask why he keeps doing it",
-          neutral: "Take it without remark",
+          kind: ["Appreciate it, every time", "Tell him he didn't have to"],
+          playful: ["Guess what he saved this time", "Guess before you look"],
+          bold: ["Ask why he keeps doing it", "Ask if it's only for you"],
+          neutral: ["Take it without remark", "Put it in your bag"],
         },
       },
       {
@@ -513,10 +513,10 @@ export default {
         approach: "Let it go, easy",
         greeting: '"Glad you\'re here. Really."',
         responses: {
-          kind: "Say you'd have liked that",
-          playful: "Ask what kind of student",
-          bold: "Ask if he means it",
-          neutral: "Let the comment pass",
+          kind: ["Say you'd have liked that", "Ask about Clementia House"],
+          playful: ["Ask what kind of student", "Ask if you'd have passed"],
+          bold: ["Ask if he means it", "Ask why he stopped advising"],
+          neutral: ["Let the comment pass", "Change the subject"],
         },
       },
       {
@@ -524,25 +524,25 @@ export default {
         approach: ["Wave off his fussing", "Tell him you're eating fine"],
         greeting: '"Set that down, I\'ll take it. No arguing."',
         responses: {
-          kind: "Reassure him gently",
-          playful: "Let him fuss a little longer",
-          bold: "Tell him to stop apologizing",
-          neutral: "Wave off his fussing",
+          kind: ["Reassure him gently", "Promise to eat properly"],
+          playful: ["Let him fuss a little longer", "Ask what he'd feed you"],
+          bold: ["Tell him to stop apologizing", "Ask when he last ate"],
+          neutral: ["Wave off his fussing", "Say you're fine"],
         },
       },
       {
         line: "He remembers exactly what you asked about last time, down to the detail.",
         approach: "Point out he remembered",
-        // No genuine match — every temperamentDialogue.warm line found a
-        // home elsewhere, this beat just doesn't have one of its own. Falls
-        // through to getTemperamentGreeting's "..." default (empty pool).
         greeting:
           '"Course I remembered. You asked like it mattered, so it stuck."',
         responses: {
-          kind: "Tell him that means a lot",
-          playful: "Act surprised he remembered",
-          bold: "Ask how he keeps track",
-          neutral: "Let it go unremarked",
+          kind: ["Tell him that means a lot", "Thank him for remembering"],
+          playful: [
+            "Act surprised he remembered",
+            "Test him with another detail",
+          ],
+          bold: ["Ask how he keeps track", "Ask what else he remembers"],
+          neutral: ["Let it go unremarked", "Pick up where you left off"],
         },
       },
       {
@@ -551,10 +551,13 @@ export default {
         greeting:
           "\"You, mostly. The hinge squeaks a certain way when it's you. ...I'd rather not have said that.\"",
         responses: {
-          kind: "Tell him you're glad too",
-          playful: "Ask how long he's listened",
-          bold: "Call out the door-watching",
-          neutral: "Say nothing, let it be",
+          kind: ["Tell him you're glad too", "Say you listen for him too"],
+          playful: [
+            "Ask how long he's listened",
+            "Squeak the hinge on purpose",
+          ],
+          bold: ["Call out the door-watching", "Tell him to keep listening"],
+          neutral: ["Say nothing, let it be", "Head for the shelf"],
         },
       },
       {
@@ -563,10 +566,10 @@ export default {
         greeting:
           '"...Sorry. Something you said earlier just caught up with me."',
         responses: {
-          kind: "Ask him to keep humming",
-          playful: "Hum it back at him",
-          bold: "Call out the humming",
-          neutral: "Pretend you didn't notice",
+          kind: ["Ask him to keep humming", "Say you liked the tune"],
+          playful: ["Hum it back at him", "Guess the song wrong"],
+          bold: ["Call out the humming", "Ask him to hum it louder"],
+          neutral: ["Pretend you didn't notice", "Let the quiet come back"],
         },
       },
       {
@@ -575,10 +578,10 @@ export default {
         greeting:
           "\"Look at that. She won't do that for me and I'm the one who feeds her. ...Traitor.\"",
         responses: {
-          kind: "Reassure him it's not personal",
-          playful: "Rub it in a little",
-          bold: "Ask if he's actually jealous",
-          neutral: "Let the cat choose",
+          kind: ["Reassure him it's not personal", "Pet the cat, praise her"],
+          playful: ["Rub it in a little", "Call yourself the new manager"],
+          bold: ["Ask if he's actually jealous", "Tell him to come sit closer"],
+          neutral: ["Let the cat choose", "Scratch the cat's ears"],
         },
       },
       {
@@ -587,10 +590,13 @@ export default {
         greeting:
           '"I set that aside because you mentioned liking it. Ages ago."',
         responses: {
-          kind: "Say it means a lot to you",
-          playful: "Ask what else is on the list",
-          bold: "Ask why he keeps track",
-          neutral: "Take it, say nothing",
+          kind: ["Say it means a lot to you", "Bring him something back"],
+          playful: [
+            "Ask what else is on the list",
+            "Add something to the list",
+          ],
+          bold: ["Ask why he keeps track", "Ask to see the whole shelf"],
+          neutral: ["Take it, say nothing", "Pay for it anyway"],
         },
       },
       {
@@ -599,10 +605,13 @@ export default {
         greeting:
           '"You look tired. Sit a moment, before you tell me you\'re fine."',
         responses: {
-          kind: "Take the chair gladly",
-          playful: "Ask if he'll sit still too",
-          bold: "Pull him down to sit too",
-          neutral: "Sit quietly beside him",
+          kind: ["Take the chair gladly", "Ask how his day's been"],
+          playful: [
+            "Ask if he'll sit still too",
+            "Steal his side of the counter",
+          ],
+          bold: ["Pull him down to sit too", "Tell him the shop can wait"],
+          neutral: ["Sit quietly beside him", "Stay a few minutes"],
         },
       },
       {
@@ -610,10 +619,13 @@ export default {
         approach: "Ask about his day",
         greeting: '"You always ask how my day\'s been. Not many do. I notice."',
         responses: {
-          kind: "Ask him to share the joke",
-          playful: "Tease him for telling the cat",
-          bold: "Demand to hear it too",
-          neutral: "Let him laugh alone",
+          kind: ["Ask him to share the joke", "Say you're glad it stuck"],
+          playful: [
+            "Tease him for telling the cat",
+            "Ask the cat for her verdict",
+          ],
+          bold: ["Demand to hear it too", "Make him say it out loud"],
+          neutral: ["Let him laugh alone", "Wait for him to finish"],
         },
       },
       {
@@ -621,10 +633,10 @@ export default {
         approach: "Point out he's smiling more",
         greeting: '"Good to see a friendly face. Been a long day."',
         responses: {
-          kind: "Say his smile suits him",
-          playful: "Point out the smiling",
-          bold: "Ask why he smiles more here",
-          neutral: "Not mention it",
+          kind: ["Say his smile suits him", "Smile back at him"],
+          playful: ["Point out the smiling", "Count the smiles out loud"],
+          bold: ["Ask why he smiles more here", "Tell him to keep it up"],
+          neutral: ["Not mention it", "Let him smile in peace"],
         },
       },
       {
@@ -632,10 +644,10 @@ export default {
         approach: "Ask if he's sleeping enough",
         greeting: '"You\'re sleeping alright? Ah, sorry, old habits."',
         responses: {
-          kind: "Say the concern is sweet",
-          playful: "Tease the professor tone",
-          bold: "Ask if he's sleeping either",
-          neutral: "Brush the question off",
+          kind: ["Say the concern is sweet", "Answer him honestly"],
+          playful: ["Tease the professor tone", "Call him Professor"],
+          bold: ["Ask if he's sleeping either", "Tell him to worry less"],
+          neutral: ["Brush the question off", "Say you sleep fine"],
         },
       },
       {
@@ -644,10 +656,10 @@ export default {
         greeting:
           '"I\'ve been staying open a bit later these days. No particular reason."',
         responses: {
-          kind: "Let him keep his reason",
-          playful: "Guess at the real reason",
-          bold: "Ask him straight out why",
-          neutral: "Don't ask why",
+          kind: ["Let him keep his reason", "Tell him not to wait up"],
+          playful: ["Guess at the real reason", "Guess wrong on purpose"],
+          bold: ["Ask him straight out why", "Tell him you noticed"],
+          neutral: ["Don't ask why", "Buy something and go"],
         },
       },
       {
@@ -655,10 +667,10 @@ export default {
         approach: "Let him take the load",
         greeting: '"Here, hand it over. ...Thank you. I mean it."',
         responses: {
-          kind: "Say you wanted to",
-          playful: "Grin like it's nothing",
-          bold: "Tell him to get used to it",
-          neutral: "Shrug it off",
+          kind: ["Say you wanted to", "Hand it over carefully"],
+          playful: ["Grin like it's nothing", "Pretend it was for the cat"],
+          bold: ["Tell him to get used to it", "Say you'll do it again"],
+          neutral: ["Shrug it off", "Set it on the counter"],
         },
       },
       {
@@ -666,10 +678,10 @@ export default {
         approach: "Share it with him",
         greeting: '"Warm enough? Here, take mine."',
         responses: {
-          kind: "Say you're glad he keeps it",
-          playful: "Ask if it's just for you",
-          bold: "Ask why he bothers stocking it",
-          neutral: "Take it, unbothered",
+          kind: ["Say you're glad he keeps it", "Split it with him"],
+          playful: ["Ask if it's just for you", "Offer him the bigger half"],
+          bold: ["Ask why he bothers stocking it", "Buy the whole shelf of it"],
+          neutral: ["Take it, unbothered", "Eat it at the counter"],
         },
       },
       {
@@ -678,10 +690,10 @@ export default {
         greeting:
           "\"That joke didn't land at all, did it. I'm still proud of it.\"",
         responses: {
-          kind: "Laugh for his sake",
-          playful: "Tell him it was terrible",
-          bold: "Demand a better joke",
-          neutral: "Let it land quietly",
+          kind: ["Laugh for his sake", "Tell him it was worth it"],
+          playful: ["Tell him it was terrible", "Groan, then laugh anyway"],
+          bold: ["Demand a better joke", "Tell one back, worse"],
+          neutral: ["Let it land quietly", "Smile and move on"],
         },
       },
       {
@@ -690,10 +702,13 @@ export default {
         greeting:
           "\"You noticed? I thought that was just me. I'm glad it isn't.\"",
         responses: {
-          kind: "Say you feel it too",
-          playful: "Tease him about the cat, too",
-          bold: "Ask what makes it different",
-          neutral: "Let the ease speak for itself",
+          kind: ["Say you feel it too", "Tell him it's mutual"],
+          playful: [
+            "Tease him about the cat, too",
+            "Ask the cat to confirm it",
+          ],
+          bold: ["Ask what makes it different", "Say you like him this way"],
+          neutral: ["Let the ease speak for itself", "Stay a little longer"],
         },
       },
     ],
@@ -1149,12 +1164,13 @@ export default {
   // (including spark, migrated 2026-09-17 to close its size gap) is fully
   // paired, so every `dialogue[tier]` beat above carries its own `approach`,
   // `greeting`, and `responses` and there's nothing left for
-  // getTemperamentGreeting/getRandomApproachLabel/responseLabel to fall
-  // back to (docs/dialogue-approach-pairing.md,
-  // docs/dialogue-greeting-pairing.md). The one exception is
-  // dialogue.warm[4] ("He remembers exactly what you asked about last
-  // time..."), which has no `greeting` of its own and no leftover pool to
-  // fall back to either — getTemperamentGreeting just returns "..." for it.
+  // getTemperamentGreeting/getFallbackApproachLabel/the archetype defaults to
+  // fall back to (docs/dialogue-approach-pairing.md). The last hole — dialogue.warm[4]
+  // ("He remembers exactly what you asked about last time...") having no
+  // `greeting` and no pool to fall back to — is closed; every beat has one.
+  //
+  // `responses` for the warm tier carry two labels per kind, as `new` and
+  // `known` already did. The remaining tiers are still one label per kind.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

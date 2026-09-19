@@ -1,4 +1,4 @@
-import { RESPONSE_TYPES, RESPONSE_LABEL_TIER } from './characters.js';
+import { RESPONSE_TYPES } from './characters.js';
 
 // How many characters /meet offers the user to pick from.
 export const MEET_OPTION_COUNT = 4;
@@ -217,26 +217,9 @@ for (const tier of Object.keys(DIALOGUE_POOL_TARGET_BY_TIER)) {
 // docs/dialogue-approach-pairing.md.
 export const TEMPERAMENT_DIALOGUE_POOL_TARGET_BY_TIER = DIALOGUE_POOL_TARGET_BY_TIER;
 
-// `responses` (the Kind/Playful/Bold/Neutral choice labels) are different:
-// RESPONSE_LABEL_TIER (constants/characters.js) collapses 'new'/'known'/'warm'
-// into one shared "new" bucket — buttons are authored at fewer tiers than
-// dialogue. That bucket's target has to cover every level folded into it, not
-// just Stranger's, so it needs its own table rather than reusing the one above.
-export const RESPONSE_POOL_TARGET_BY_TIER = RELATIONSHIP_LEVELS.reduce(
-  (targets, level, index) => {
-    const dialogueTier = getDialogueTier(level.name);
-    const labelTier = RESPONSE_LABEL_TIER[dialogueTier] || 'new';
-    targets[labelTier] = (targets[labelTier] || 0) + levelWidth(index);
-    return targets;
-  },
-  {},
-);
-for (const tier of Object.keys(RESPONSE_POOL_TARGET_BY_TIER)) {
-  RESPONSE_POOL_TARGET_BY_TIER[tier] = Math.max(
-    MIN_DIALOGUE_POOL_SIZE,
-    Math.floor(RESPONSE_POOL_TARGET_BY_TIER[tier] / POOL_POINTS_PER_LINE),
-  );
-}
+// `responses` (the Kind/Playful/Bold/Neutral choice labels) have no pool target
+// of their own: they are authored on the beat, so a tier that hits the dialogue
+// target above already has one set of labels per line.
 
 // --- bond scenes -------------------------------------------------------------
 // The level-up DM sequences (docs/bond-scene-dms.md). Stranger is the starting

@@ -17,8 +17,8 @@
 //   /roam needs:  line + approach + greeting + responses with all four kinds
 //
 // A missing piece doesn't crash anything at runtime — it silently degrades
-// (the "..." greeting, or a per-tier/archetype response label that no longer
-// answers the beat). That's exactly why it has to fail here instead.
+// (the "..." greeting, or an archetype response label that knows nothing about
+// the beat). That's exactly why it has to fail here instead.
 import { test } from 'node:test';
 import assert from 'node:assert';
 import {

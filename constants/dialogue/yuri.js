@@ -471,7 +471,7 @@ export default {
     // greeting, responses } beats, same as new/known — even though none of
     // these four tiers are anywhere near DIALOGUE_POOL_TARGET_BY_TIER yet (5
     // lines each vs. targets of 18/27/38/46). Pairing doesn't wait on pool
-    // growth; it's a separate axis (see docs/dialogue-greeting-pairing.md).
+    // growth; it's a separate axis.
     warm: [
       {
         line: "His cold demeanor cracks slightly: there's obsession in his eyes now, the drive to cure your curse is consuming him.",
@@ -724,7 +724,7 @@ export default {
   // No top-level `approach` pool: every dialogue[tier] beat, at every tier,
   // now carries its own `approach` (see dialogue above) — the independent
   // pool this used to be is fully unreachable, so it's removed rather than
-  // left as dead weight (see getRandomApproachLabel's fallback chain for
+  // left as dead weight (see getFallbackApproachLabel's fallback chain for
   // what a beat without one would use instead: SHARED_APPROACH_WHEN, then
   // APPROACH_LABEL_FALLBACK).
   // The /call reveal lines for this character, keyed by the register in

@@ -1169,8 +1169,7 @@ export default {
   },
   // No temperamentDialogue or responses pools left — every tier is fully
   // paired, so every `dialogue[tier]` beat above carries its own `approach`,
-  // `greeting`, and `responses` (docs/dialogue-approach-pairing.md,
-  // docs/dialogue-greeting-pairing.md). The last leftovers were migrated
+  // `greeting`, and `responses` (docs/dialogue-approach-pairing.md). The last leftovers were migrated
   // 2026-09-18: each remaining temperamentDialogue line was moved onto the
   // beat it answers best (trimmed where it only restated that beat's own
   // `line`), and each remaining close/bound `responses` label went onto a

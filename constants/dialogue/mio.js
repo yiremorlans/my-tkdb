@@ -246,7 +246,8 @@ export default {
       {
         line: "He looks like he hasn't slept. \"I'm a natural short sleeper,\" he says, like that settles it.",
         approach: "Don't buy the excuse",
-        greeting: '"Yeah, yeah. I know how it looks. I\'m fine, really. Yaaawn..."',
+        greeting:
+          '"Yeah, yeah. I know how it looks. I\'m fine, really. Yaaawn..."',
         responses: {
           kind: ["Tell him to actually rest", "Offer to cover a job for him"],
           playful: ["Tease the 'natural' excuse", "Count his yawns out loud"],
@@ -273,7 +274,10 @@ export default {
           "\"There you go. It's been tilted since before I got here. Nobody's fixed it. Yet.\"",
         responses: {
           kind: ["Thank him for the warning", "Walk slowly, like he said"],
-          playful: ["Lean with the slope on purpose", "Ask if the tilt's a feature"],
+          playful: [
+            "Lean with the slope on purpose",
+            "Ask if the tilt's a feature",
+          ],
           bold: ["Run anyway, on purpose", "Ask why nobody's fixed it"],
           neutral: ["Watch your step, say nothing", "Walk carefully past"],
         },
@@ -362,7 +366,7 @@ export default {
         line: "Jo pokes their head in to tell him to quit for the night. He waves them off, and doesn't ask you to leave either.",
         approach: "Stay anyway",
         greeting:
-          '"Jo worries. It\'s nice, but I\'ve got one more thing to finish. You can stay, though."',
+          "\"Jo worries. It's nice, but I've got one more thing to finish. You can stay, though.\"",
         responses: {
           kind: ["Say you don't mind staying", "Offer to help him finish"],
           playful: [
@@ -423,10 +427,10 @@ export default {
         },
       },
       {
-        line: '"Well, now," Elias drawls, passing through. "Somebody\'s in a good mood." Mio just shrugs and keeps working.',
+        line: '"Oh, somebody\'s in a good mood" Elias says softly, passing through. Mio just shrugs and keeps working.',
         approach: "Smile at the thought",
         greeting:
-          '"Don\'t you start too. Something finally worked on the first try, that\'s all. ...Okay, and you\'re here."',
+          "\"Don't you start too. Something finally worked on the first try, that's all. ...Okay, and you're here.\"",
         responses: {
           kind: ["Say the good mood suits him", "Smile back warmly"],
           playful: ["Ask what put him in a mood", "Tease him for smiling"],
@@ -438,7 +442,7 @@ export default {
         line: "He offers to walk partway to class with you, like it's a coincidence and not a habit forming.",
         approach: "Walk with him",
         greeting:
-          '"Morning. You\'re heading to class now, right? I\'ve got the same class, I think... Let\'s go together."',
+          "\"Morning. You're heading to class now, right? I've got the same class, I think... Let's go together.\"",
         responses: {
           kind: ["Walk with him gladly", "Say you don't mind the company"],
           playful: ["Call it a habit outright", "Tease the coincidence"],
@@ -707,7 +711,7 @@ export default {
     ],
   },
   // No temperamentDialogue pool: every leftover line was placed onto a
-  // dialogue beat's `greeting` (docs/dialogue-greeting-pairing.md).
+  // dialogue beat's `greeting`.
   // kind is Mio's channel (affinityByResponse.kind = 2): he pours care outward
   // and waves off anything coming back ("Make sure you give yourself a break",
   // "I don't need much sleep", "bit of spit and it'll heal"), so noticing him,
@@ -719,13 +723,9 @@ export default {
   // turns heavy, so a blunt push reads as the player pressing and Mio easing
   // back rather than meeting it.
   //
-  // No top-level `responses` pool: every dialogue[tier] beat (new/known/warm/
-  // spark/close/bound) now carries bespoke responses for all four types (see
-  // dialogue above), making the old per-tier pools fully unreachable — same
-  // end state as yuri.js/benkei.js/jin.js/kaito.js/lucas.js/tohma.js/leo.js/
-  // shohei.js/subaru.js/zenji.js/haku.js/elias.js. One neutral label had no
-  // genuine beat match ("Let the phone ring") and was dropped rather than
-  // force-placed.
+  // When the old per-tier `responses` pool was folded onto the beats above,
+  // one neutral label had no genuine beat match ("Let the phone ring") and
+  // was dropped rather than force-placed.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

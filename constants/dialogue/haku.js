@@ -815,7 +815,7 @@ export default {
     },
   ],
   // No temperamentDialogue pool: every leftover line was placed onto a
-  // dialogue beat's `greeting` (docs/dialogue-greeting-pairing.md).
+  // dialogue beat's `greeting`.
   // kind is Haku's channel — low-key, unsentimental care he doesn't have to
   // perform anything back for (affinityByResponse.kind = 2). playful reaches
   // him too: deadpan and playing along when he spooks you is his default
@@ -824,12 +824,9 @@ export default {
   // light and undercutting himself, so those moves read as the player pushing
   // and Haku stepping back rather than meeting it.
   //
-  // No top-level `responses` pool: every dialogue[tier] beat (new/known/warm/
-  // spark/close/bound) now carries bespoke responses for all four types (see
-  // dialogue above), making the old per-tier pools fully unreachable — same
-  // end state as yuri.js/benkei.js/jin.js/kaito.js/lucas.js/tohma.js/leo.js/
-  // shohei.js/subaru.js/zenji.js. One neutral label had no genuine beat match
-  // ("Pretend you dozed off") and was dropped rather than force-placed.
+  // When the old per-tier `responses` pool was folded onto the beats above,
+  // one neutral label had no genuine beat match ("Pretend you dozed off") and
+  // was dropped rather than force-placed.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

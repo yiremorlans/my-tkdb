@@ -670,14 +670,8 @@ export default {
     ],
   },
   // temperamentDialogue removed: every line was moved onto a dialogue beat's
-  // `greeting` (docs/dialogue-greeting-pairing.md) — every tier's pool
-  // matched onto a beat exactly, nothing left over.
-  // No top-level `responses` pool: every dialogue[tier] beat (new/known/warm/
-  // spark/close/bound) now carries bespoke responses for all four types (see
-  // dialogue above), making the old per-tier pools fully unreachable — same
-  // end state as yuri.js/benkei.js/jin.js/kaito.js/lucas.js/tohma.js/leo.js/
-  // shohei.js/subaru.js/zenji.js/haku.js/elias.js/mio.js/shion.js/jiro.js/
-  // ren.js/haru.js/towa.js/edward.js/rui.js/lyca.js/taiga.js/ritsu.js.
+  // `greeting` — every tier's pool matched onto a beat exactly, nothing left
+  // over.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

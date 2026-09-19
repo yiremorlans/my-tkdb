@@ -753,7 +753,7 @@ export default {
     },
   ],
   // No temperamentDialogue pool: every leftover line was placed onto a
-  // dialogue beat's `greeting` (docs/dialogue-greeting-pairing.md).
+  // dialogue beat's `greeting`.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

@@ -9,9 +9,9 @@ before and after. Kept below as the record of what was done and why.
 ## 1. Why
 
 `constants/dialogue.js` is ~5.8k lines: 26 self-contained character blocks plus
-two shared lists. Each character now carries up to six pools —
-`dialogue`, `dialogueWhen`, `approachWhen`, `responsesWhen`,
-`temperamentDialogue`, `approach`, `responses` — and the conditional-dialogue
+two shared lists. Each character now carries several pools — `dialogue` (whose beats hold the
+line, its approach label, its greeting and its four response labels),
+`dialogueWhen`, `approachWhen` and `approach` — and the conditional-dialogue
 work will keep growing them.
 
 This is not a runtime problem (one module, imported twice, no measurable cost).

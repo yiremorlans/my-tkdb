@@ -765,13 +765,11 @@ export default {
     },
   ],
   // No temperamentDialogue pool: every leftover line was placed onto a
-  // dialogue beat's `greeting` (docs/dialogue-greeting-pairing.md).
-  // No top-level `responses` pool: every dialogue[tier] beat (new/known/warm/
-  // spark/close/bound) now carries bespoke responses for all four types (see
-  // dialogue above), making the old per-tier pools fully unreachable — same
-  // end state as yuri.js/benkei.js/jin.js/kaito.js. Two labels had no genuine
-  // beat match ("Let him finish the thought", "Refuse to let him take the
-  // hit") and were dropped rather than force-placed.
+  // dialogue beat's `greeting`.
+  // When the old per-tier `responses` pool was folded onto the beats above,
+  // two labels had no genuine beat match ("Let him finish the thought",
+  // "Refuse to let him take the hit") and were dropped rather than force-
+  // placed.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

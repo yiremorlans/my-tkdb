@@ -238,8 +238,7 @@ export default {
   // `new`/`known`/`warm`/`close`/`bound` are paired beats — { line, approach,
   // greeting, responses } — so the /roam button, payoff caption, and response
   // labels all answer the scene the line just set, rather than being drawn
-  // from separate pools at random (docs/dialogue-approach-pairing.md,
-  // docs/dialogue-greeting-pairing.md). `new`/`known` responses carry at
+  // from separate pools at random (docs/dialogue-approach-pairing.md). `new`/`known` responses carry at
   // least 2 options per type, matching yuri.js; `warm`/`close`/`bound` carry
   // one, same as yuri.js. `spark` beats carry the same
   // pairing, though `dialogue.spark` is still 5 lines against the 27-line
@@ -895,11 +894,10 @@ export default {
       },
     ],
   },
-  // No top-level `responses` pool: every dialogue[tier] beat (new/known/warm/
-  // spark/close/bound) carries bespoke responses for all four types, so the
-  // old per-tier pools are fully unreachable. The 28 `spark` labels that were
-  // left were each placed on the beat they fit. One bound playful label, "Wear
-  // his gloves to bed", had no genuine beat match and was dropped.
+  // When the old per-tier `responses` pool was folded onto the beats above,
+  // the 28 `spark` labels that were left were each placed on the beat they
+  // fit. One bound playful label, "Wear his gloves to bed", had no genuine
+  // beat match and was dropped.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

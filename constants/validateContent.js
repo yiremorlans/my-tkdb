@@ -11,7 +11,6 @@
 import {
   CHARACTERS,
   DIALOGUE_WHEN_DIMENSIONS,
-  RESPONSE_LABEL_TIER,
   RESPONSE_TYPES,
 } from "./characters.js";
 import {
@@ -54,10 +53,6 @@ const STICKERS_DIR = join(__dirname, "../assets/stickers");
 
 const TIERS = ["new", "known", "warm", "spark", "close", "bound"];
 
-// Buttons are authored at fewer tiers than the dialogue — see
-// RESPONSE_LABEL_TIER in constants/characters.js.
-const RESPONSE_TIERS = ["new", "spark", "close", "bound"];
-
 const KNOWN_LOCATIONS = new Set(Object.values(LOCATION_KEYS));
 const KNOWN_BACKGROUNDS = new Set([
   ...Object.values(BACKGROUNDS_BY_LOCATION).flat(),
@@ -84,8 +79,8 @@ function isBeat(entry) {
 }
 
 // True once every line in a dialogue tier — across every image variant, if
-// the pool is keyed by one — carries its own approach, so the legacy
-// `approach` pool having nothing at that tier isn't a gap.
+// the pool is keyed by one — carries its own approach, so no button in that
+// tier ever needs the generic fallback label.
 function tierIsFullyPaired(poolData) {
   if (Array.isArray(poolData)) {
     return poolData.length > 0 && poolData.every(isBeat);
@@ -167,12 +162,11 @@ function checkTierPool(pool, at, tiers, maxLabel, errors, warnings) {
   }
 }
 
-// Validate a `{ when, <poolKey> }` list — `dialogueWhen`, `approachWhen`, the
-// shared variants, or (with nested: true) `responsesWhen`, whose pool is keyed
-// by response type before tier.
+// Validate a `{ when, <poolKey> }` list — `dialogueWhen` or the shared
+// `SHARED_DIALOGUE_WHEN` / `SHARED_APPROACH_WHEN`.
 function validateWhenList(list, label, poolKey, errors, warnings, opts = {}) {
   if (list === undefined) return;
-  const { tiers = TIERS, maxLabel = null, nested = false } = opts;
+  const { tiers = TIERS, maxLabel = null } = opts;
   if (!Array.isArray(list)) {
     errors.push(`${label} must be an array of { when, ${poolKey} } blocks`);
     return;
@@ -189,17 +183,7 @@ function validateWhenList(list, label, poolKey, errors, warnings, opts = {}) {
       errors.push(`${at} has no ${poolKey} pool`);
       return;
     }
-    if (nested) {
-      for (const type of Object.keys(pool)) {
-        if (!Object.values(RESPONSE_TYPES).includes(type)) {
-          warnings.push(`${at}.${poolKey} has unknown response type "${type}" — never used`);
-          continue;
-        }
-        checkTierPool(pool[type], `${at}.${poolKey}.${type}`, tiers, maxLabel, errors, warnings);
-      }
-    } else {
-      checkTierPool(pool, `${at}.${poolKey}`, tiers, maxLabel, errors, warnings);
-    }
+    checkTierPool(pool, `${at}.${poolKey}`, tiers, maxLabel, errors, warnings);
   });
 }
 
@@ -571,35 +555,27 @@ export function validateContent() {
       errors.push(`${id} is pmOnly but has no daytimeDialogue`);
     }
 
-    // A missing approach set only costs the scene-specific flavor — the /roam
-    // button still renders from APPROACH_LABEL_FALLBACK — so warn, don't fail.
-    // A tier that's fully migrated to { line, approach } pairs carries its
-    // label on the dialogue entry itself, so the legacy pool having nothing
-    // there isn't a gap — see tierIsFullyPaired.
-    const allTiersPaired = TIERS.every((tier) => tierIsFullyPaired(content.dialogue?.[tier]));
-    if (!content.approach && !allTiersPaired) {
-      warnings.push(`${id} has no approach labels — using the generic fallback`);
-    } else if (content.approach) {
-      for (const tier of TIERS) {
-        if (!content.approach[tier] && !tierIsFullyPaired(content.dialogue?.[tier])) {
-          warnings.push(`${id} has no "${tier}" approach label — falls back to "new"`);
-        }
-      }
-      for (const label of collectLabels(content.approach)) {
-        if (label.length > MAX_BUTTON_LABEL_LENGTH) {
-          errors.push(
-            `${id} approach label is ${label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${label}"`,
-          );
-        }
-      }
+    // Every beat carries its own `approach`; a bare-string line has none, so
+    // its button drops to SHARED_APPROACH_WHEN / APPROACH_LABEL_FALLBACK in
+    // constants/characters.js. Legal, but it knows nothing about the scene
+    // just shown, so name the tiers where it can happen. (The label length
+    // cap is checked per beat below.)
+    const unpairedTiers = TIERS.filter(
+      (tier) =>
+        content.dialogue?.[tier] !== undefined &&
+        !tierIsFullyPaired(content.dialogue[tier]),
+    );
+    if (unpairedTiers.length) {
+      warnings.push(
+        `${id} has lines with no approach at ${unpairedTiers.join("/")} — using the generic label`,
+      );
     }
 
     if (
       character.pmOnly &&
-      !content.daytimeApproach &&
       !Object.values(content.daytimeDialogue || {}).every(tierIsFullyPaired)
     ) {
-      warnings.push(`${id} is pmOnly but has no daytimeApproach — reuses the evening labels`);
+      warnings.push(`${id} is pmOnly but has daytimeDialogue lines with no approach — using the generic label`);
     }
 
     validateWinnerLines(id, content.winnerLines, errors, warnings);
@@ -610,14 +586,6 @@ export function validateContent() {
     // well-formed and its `when` must reference real dimensions/values or it is
     // dead content.
     validateWhenList(content.dialogueWhen, `${id} dialogueWhen`, "dialogue", errors, warnings);
-    validateWhenList(content.approachWhen, `${id} approachWhen`, "approach", errors, warnings, {
-      maxLabel: MAX_BUTTON_LABEL_LENGTH,
-    });
-    validateWhenList(content.responsesWhen, `${id} responsesWhen`, "responses", errors, warnings, {
-      tiers: RESPONSE_TIERS,
-      maxLabel: MAX_BUTTON_LABEL_LENGTH,
-      nested: true,
-    });
 
     // CRITICAL: Check for empty dialogue pools (breaks random selection)
     if (content.dialogue) {
@@ -706,10 +674,10 @@ export function validateContent() {
                 );
               }
             }
-            // A migrated beat's `responses` is the same button-label cap,
-            // just keyed by RESPONSE_TYPES on the beat instead of the old
-            // top-level `responses` pool (which the check further below still
-            // covers for characters that haven't migrated).
+            // A beat's `responses` carries the same button-label cap as its
+            // approach, keyed by RESPONSE_TYPES. The beat is the only place
+            // response labels live, so this is the only place to check them.
+            const seenLabels = new Map();
             for (const [type, value] of Object.entries(entry.responses || {})) {
               for (const label of collectLabels(value)) {
                 if (label.length > MAX_BUTTON_LABEL_LENGTH) {
@@ -717,6 +685,16 @@ export function validateContent() {
                     `${id} dialogue[${tier}] beat ${type} response is ${label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${label}"`,
                   );
                 }
+                // The four buttons are rendered side by side off this one
+                // beat, so two of them worded identically while paying
+                // different affinity reads as a bug even though nothing throws.
+                const seenAt = seenLabels.get(label);
+                if (seenAt && seenAt !== type) {
+                  warnings.push(
+                    `${id} dialogue[${tier}] beat reuses "${label}" for both ${seenAt} and ${type}: "${entry.line}"`,
+                  );
+                }
+                seenLabels.set(label, type);
               }
             }
           }
@@ -724,91 +702,22 @@ export function validateContent() {
       }
     }
 
-    // CRITICAL: Check for empty approach pools (breaks /roam button)
-    if (content.approach) {
-      for (const tier of TIERS) {
-        const poolData = content.approach[tier];
-        if (!poolData) continue;
-
-        // Same variant consistency check for approach
-        if (typeof poolData === 'object' && !Array.isArray(poolData)) {
-          const variants = Object.keys(poolData);
-          if (variants.length > 0) {
-            for (const variant of variants) {
-              const variantPool = poolData[variant];
-              if (!Array.isArray(variantPool) || variantPool.length === 0) {
-                errors.push(
-                  `${id} approach[${tier}].${variant} is empty — step-forward button would fail`
-                );
-              }
-            }
-          }
-        } else if (Array.isArray(poolData)) {
-          if (poolData.length === 0) {
-            errors.push(
-              `${id} approach[${tier}] is empty — step-forward button would fail`
-            );
-          }
-        }
-      }
-    }
-
-    // A missing response entry is legal (archetype defaults cover it) but is
-    // almost always an oversight, so name it. Beat-level `responses` count as
-    // coverage: a dialogue tier whose every beat carries its own label never
-    // reaches the top-level pool, so its absence there isn't a gap.
-    const seen = new Map();
+    // Every beat should carry its own label for all four response types. A
+    // type the beat leaves out drops to the archetype default (RESPONSE_FALLBACK
+    // in constants/characters.js), which knows nothing about the scene just
+    // shown — legal, but almost always an oversight, so name it. There is no
+    // character-level pool behind the beat any more, so this is the last stop
+    // before the archetype default.
     for (const type of Object.values(RESPONSE_TYPES)) {
-      const entry = content.responses?.[type];
       const gaps = TIERS.filter(
         (tier) =>
           content.dialogue?.[tier] !== undefined &&
           !tierCoversResponse(content.dialogue[tier], type),
       );
-      const gapLabelTiers = new Set(gaps.map((t) => RESPONSE_LABEL_TIER[t]));
-      if (!entry) {
-        if (gaps.length) {
-          warnings.push(
-            `${id} has no "${type}" label at ${gaps.join("/")} — using archetype default`,
-          );
-        }
-        continue;
-      }
-      for (const tier of RESPONSE_TIERS) {
-        if (!entry[tier]) {
-          if (gapLabelTiers.has(tier)) {
-            warnings.push(`${id} has no "${type}" label at "${tier}"`);
-          }
-          continue;
-        }
-        const labels = collectLabels(entry[tier]);
-
-        // CRITICAL: Check for empty response label arrays
-        if (labels.length === 0) {
-          errors.push(
-            `${id} ${type} labels at "${tier}" is empty — button selection would fail`
-          );
-        }
-
-        if (new Set(labels).size !== labels.length) {
-          warnings.push(`${id} repeats a "${type}" label at "${tier}"`);
-        }
-        for (const label of labels) {
-          if (label.length > MAX_BUTTON_LABEL_LENGTH) {
-            errors.push(
-              `${id} ${type} label is ${label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${label}"`,
-            );
-          }
-          // Two identically worded buttons paying different affinity reads as a
-          // bug to the player even though nothing throws.
-          const seenAt = seen.get(`${tier}:${label}`);
-          if (seenAt && seenAt !== type) {
-            warnings.push(
-              `${id} reuses "${label}" for both ${seenAt} and ${type} at "${tier}"`,
-            );
-          }
-          seen.set(`${tier}:${label}`, type);
-        }
+      if (gaps.length) {
+        warnings.push(
+          `${id} has no "${type}" label at ${gaps.join("/")} — using archetype default`,
+        );
       }
     }
   }

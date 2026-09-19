@@ -1,9 +1,8 @@
 // getRandomDialogueBeat (docs/dialogue-approach-pairing.md): draws a
 // `dialogue[tier]` line and its `approach` button as one unit instead of two
-// independent pools. This is the guarantee the whole migration rests on, and
-// the one thing that makes migrating characters one at a time — some fully
-// paired, some still legacy, some mixed within a single tier — safe: nothing
-// here is keyed by anything other than the one character/tier being drawn.
+// independent pools. This is the guarantee the whole design rests on: a beat's own approach is always
+// the first choice, and only a bare-string line falls through to the shared
+// (SHARED_APPROACH_WHEN) or generic label.
 //
 // Mocks dialogue.js with synthetic characters covering every shape the
 // picker has to handle, independent of any real character's content drifting
@@ -21,11 +20,10 @@ const EMPTY_ID = '__test_empty__';
 mock.module('../constants/dialogue.js', {
   namedExports: {
     DIALOGUE: {
-      // Old shape: two independent flat pools, same as every unmigrated
-      // character today. Must behave exactly as it did before beats existed.
+      // Bare-string lines, no beats at all: nothing to carry an approach, so
+      // the button comes from the shared/generic fallback.
       [LEGACY_ID]: {
         dialogue: { new: ['Legacy line A', 'Legacy line B'] },
-        approach: { new: ['Legacy approach 1', 'Legacy approach 2'] },
       },
       // New shape: every line is a beat, no separate `approach` pool at all.
       // A carries its own `responses` override; B carries none, so it must
@@ -48,8 +46,8 @@ mock.module('../constants/dialogue.js', {
           new: [{ line: 'Only line', approach: ['Option 1', 'Option 2'] }],
         },
       },
-      // One tier, mid-migration: one beat next to one still-bare string. The
-      // bare string has to fall through to the legacy `approach` pool.
+      // One tier with a beat next to a bare string (like a SHARED_DIALOGUE_WHEN
+      // line). The bare string has to fall through to the shared/generic label.
       [MIXED_ID]: {
         dialogue: {
           new: [
@@ -57,10 +55,9 @@ mock.module('../constants/dialogue.js', {
             'Unmigrated line',
           ],
         },
-        approach: { new: ['Fallback approach'] },
       },
       // Variant-keyed pool (Jo's uniform/casual): each variant resolved
-      // independently, so one can be paired while the other still isn't.
+      // independently, so one can be paired while the other isn't.
       [VARIANT_ID]: {
         dialogue: {
           new: {
@@ -68,11 +65,12 @@ mock.module('../constants/dialogue.js', {
             casual: ['Casual line'],
           },
         },
-        approach: { new: ['Casual fallback approach'] },
       },
       [EMPTY_ID]: {},
     },
-    SHARED_APPROACH_WHEN: [],
+    SHARED_APPROACH_WHEN: [
+      { when: { location: 'Nowhere' }, approach: { new: ['Shared scene approach'] } },
+    ],
     SHARED_DIALOGUE_WHEN: [],
   },
 });
@@ -83,19 +81,21 @@ function times(n, fn) {
   return Array.from({ length: n }, fn);
 }
 
-test('a legacy (unmigrated) tier draws line and approach independently, exactly as before beats existed', () => {
+test('a bare-string line has no approach of its own, so it draws a non-empty generic label', () => {
   const character = { id: LEGACY_ID };
-  const draws = times(40, () => getRandomDialogueBeat(character, 'new'));
-  for (const { line, approach } of draws) {
+  for (const { line, approach } of times(40, () => getRandomDialogueBeat(character, 'new'))) {
     assert.ok(['Legacy line A', 'Legacy line B'].includes(line));
-    assert.ok(['Legacy approach 1', 'Legacy approach 2'].includes(approach));
+    assert.strictEqual(typeof approach, 'string');
+    assert.ok(approach.length > 0);
+    assert.notStrictEqual(approach, 'Shared scene approach', 'a scene-specific label needs a matching ctx');
   }
-  // Independent picks: given enough draws, every line should eventually
-  // appear with more than one approach (never artificially pinned).
-  const approachesForA = new Set(
-    draws.filter((d) => d.line === 'Legacy line A').map((d) => d.approach),
-  );
-  assert.ok(approachesForA.size > 1, 'a legacy line is not tied to one approach');
+});
+
+test('a bare-string line draws SHARED_APPROACH_WHEN labels when the scene matches', () => {
+  const character = { id: LEGACY_ID };
+  for (const { approach } of times(20, () => getRandomDialogueBeat(character, 'new', null, { locationKey: 'Nowhere' }))) {
+    assert.strictEqual(approach, 'Shared scene approach');
+  }
 });
 
 test('a migrated tier never mismatches a line with another beat\'s approach', () => {
@@ -122,17 +122,20 @@ test('a beat\'s approach may be an array of interchangeable labels, and only tho
   assert.ok(seen.size > 1, 'both listed options should surface over enough draws');
 });
 
-test('a tier mid-migration: the paired entry always keeps its own approach, the unmigrated entry falls back to the legacy pool', () => {
+test('a beat always keeps its own approach, even in a tier with bare-string lines, even when a shared label matches the scene', () => {
   const character = { id: MIXED_ID };
-  const draws = times(40, () => getRandomDialogueBeat(character, 'new'));
-  for (const { line, approach } of draws) {
-    if (line === 'Migrated line') assert.strictEqual(approach, 'Migrated approach');
-    else if (line === 'Unmigrated line') assert.strictEqual(approach, 'Fallback approach');
-    else assert.fail(`unexpected line: ${line}`);
+  for (const ctx of [{}, { locationKey: 'Nowhere' }]) {
+    const draws = times(40, () => getRandomDialogueBeat(character, 'new', null, ctx));
+    for (const { line, approach } of draws) {
+      if (line === 'Migrated line') assert.strictEqual(approach, 'Migrated approach');
+      else if (line === 'Unmigrated line') assert.ok(approach.length > 0);
+      else assert.fail(`unexpected line: ${line}`);
+    }
+    assert.ok(draws.some((d) => d.line === 'Migrated line'));
   }
 });
 
-test('a variant-keyed tier resolves each variant on its own — one variant can be paired while the other is still legacy', () => {
+test('a variant-keyed tier resolves each variant on its own — one variant can be paired while the other has bare-string lines', () => {
   const character = { id: VARIANT_ID };
   const uniformDraws = times(20, () => getRandomDialogueBeat(character, 'new', 'uniform'));
   for (const { line, approach } of uniformDraws) {
@@ -142,18 +145,8 @@ test('a variant-keyed tier resolves each variant on its own — one variant can 
   const casualDraws = times(20, () => getRandomDialogueBeat(character, 'new', 'casual'));
   for (const { line, approach } of casualDraws) {
     assert.strictEqual(line, 'Casual line');
-    assert.strictEqual(approach, 'Casual fallback approach');
-  }
-});
-
-test('migrating one character to beats does not change what an unrelated, still-legacy character draws', () => {
-  // Same assertions as the legacy test above, run after the paired/mixed/
-  // variant characters have already been drawn from in this same process —
-  // nothing is cached or shared across characters.
-  const character = { id: LEGACY_ID };
-  for (const { line, approach } of times(20, () => getRandomDialogueBeat(character, 'new'))) {
-    assert.ok(['Legacy line A', 'Legacy line B'].includes(line));
-    assert.ok(['Legacy approach 1', 'Legacy approach 2'].includes(approach));
+    assert.ok(approach.length > 0);
+    assert.notStrictEqual(approach, 'Uniform approach');
   }
 });
 

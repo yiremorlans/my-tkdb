@@ -1,5 +1,15 @@
 # Pairing `dialogue` lines with their `approach` label
 
+> **Current state (2026-09-19):** the migration described below is finished
+> and the legacy pools are gone. No character has a top-level `approach`,
+> `approachWhen` or `daytimeApproach`, and `getRandomApproachLabel` was
+> replaced by the private `getFallbackApproachLabel` in
+> `constants/characters.js`. A beat's own `approach` is always the first
+> choice; only a bare-string line (e.g. `SHARED_DIALOGUE_WHEN`'s evening
+> lines, or kaito's/subaru's spark/close evening lines) falls through to
+> `SHARED_APPROACH_WHEN`, then `APPROACH_LABEL_FALLBACK`. The status and
+> sections below are kept as history and describe the transitional design.
+
 **Status:** mechanism shipped. `benkei.js` migrated as the pilot
 (`new`/`known`/`warm`/`close`/`bound`; `spark` deliberately left legacy — see
 §4). `alan.js` is migrated for `new`/`known`/`warm` (`spark`/`close`/`bound`
