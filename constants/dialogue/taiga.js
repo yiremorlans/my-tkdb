@@ -4,7 +4,9 @@ export default {
   // gets nice; he gets specific. The engine of the whole ladder is the
   // time-slipping stigma: he loses people and places, and the intimacy is the
   // increasingly desperate machinery he builds to keep hold of one person.
-  // "Kitten" and "dumbass" stay in to the last line.
+  // "Kitten" and "dumbass" stay in to the last line. Canon: he never forgets
+  // anyone he's nicknamed, so what slips is her *name*, never her; "kitten"
+  // is the part that sticks.
   //
   // Texting voice, per reference.md's "## Bond Scenes" notes: lowercase, one
   // short sentence per line (no paragraphs), and "u"/"ur", "k", "yea", "lol".
@@ -237,337 +239,621 @@ export default {
       {
         line: 'He eyes you with a challenging smirk, cards deftly shuffled in his hands. "You lost, kitten?"',
         approach: "Smirk right back",
+        greeting: '"Hah! Look at this one. You gonna cry?"',
+        responses: {
+          kind: ["Be kind despite his bark", "Answer with a small smile"],
+          playful: ["Call him kitten back", "Call his bet"],
+          bold: ["Meet his challenge head-on", "Hold his gaze, unblinking"],
+          neutral: ["Play your hand quietly", "Watch the cards, not him"],
+        },
       },
       {
         line: "The cards keep moving. So does the grin. Neither is friendly, exactly.",
         approach: "Stand your ground",
+        greeting:
+          "\"Heads or tails, even or odd, on or off... It's all so fucking tedious! ...Oh. You're real. Hey.\"",
+        responses: {
+          kind: ["Ignore the insult entirely", "Compliment his card work"],
+          playful: ["Ask to be dealt in", "Pick a card, any card"],
+          bold: ["Raise the stakes", "Call his bluff"],
+          neutral: ["Let him posture", "Wait for the grin to fade"],
+        },
       },
       {
         line: '"Huh. You\'ve got guts walking in here. Stupid ones, but guts."',
         approach: "Own having guts",
+        greeting:
+          '"You got money? No? Then you got nothin\' I want. Probably."',
+        responses: {
+          kind: ["Say you're just curious", "Thank him for the warning"],
+          playful: ["Trade insults with him", "Ask what stupid ones cost"],
+          bold: ["Sit without being invited", "Tell him you're staying"],
+          neutral: ["Shrug at the insult", "Let the remark hang"],
+        },
       },
       {
         line: "He kicks a chair out, not toward you, just near you. Interpret it however you like.",
         approach: "Take a seat",
+        greeting: '"Sit or scram. I don\'t care which, just pick."',
+        responses: {
+          kind: ["Sit without a fuss", "Smile and sit down"],
+          playful: ["Kick the chair back at him", "Ask if the game's rigged"],
+          bold: [
+            "Take the seat like it's owed",
+            "Pull the chair closer to him",
+          ],
+          neutral: ["Sit, say nothing", "Sit and watch the cards"],
+        },
       },
       {
         line: '"Who the fuck are you again?" He squints. "...Whatever. Sit down."',
         approach: "Sit down anyway",
+        greeting: "\"Who're you? Don't pop up out of nowhere like that.\"",
+        responses: {
+          kind: ["Remind him gently who you are", "Give your name, no fuss"],
+          playful: ["Refuse to remind him", "Tell him to guess"],
+          bold: ["Say you're not going anywhere", "Dare him to figure it out"],
+          neutral: ["Say nothing and stay", "Let him squint"],
+        },
       },
     ],
     known: [
       {
         line: '"Kitten" has stuck. He\'s stopped bothering to make it sound like an insult.',
         approach: "Own the nickname",
+        greeting: '"You still answer to it. Guess that\'s something."',
+        responses: {
+          kind: ["Say the name suits you", "Accept the nickname warmly"],
+          playful: ["Ask if it's a promotion", "Demand a nickname for him"],
+          bold: ["Claim the nickname outright", "Say you like it"],
+          neutral: ["Let the name stand", "Shrug at it"],
+        },
       },
       {
         line: "He deals you in without asking, and doesn't explain the rules. Figure it out.",
         approach: "Play the hand out",
+        greeting: '"You know the rules yet? No? Tch. Watch, then."',
+        responses: {
+          kind: ["Ask him to explain the rules", "Play along, figure it out"],
+          playful: ["Make up your own rules", "Bluff before you know anything"],
+          bold: [
+            "Play without asking questions",
+            "Bet big and see what happens",
+          ],
+          neutral: ["Watch and learn quietly", "Play it out, say nothing"],
+        },
       },
       {
         line: "He pulls the chair out with his hand this time, not his boot.",
         approach: "Take the offered chair",
+        greeting:
+          '"Playing with these morons is exhausting... Lulu gets all mad if I win too much. Sit. You\'re better company."',
+        responses: {
+          kind: ["Sit down gladly", "Thank him for the seat"],
+          playful: ["Ask if the boot retired", "Tease the upgrade"],
+          bold: ["Sit like it was always yours", "Drag the chair next to his"],
+          neutral: ["Sit, say nothing", "Take the seat quietly"],
+        },
       },
       {
         line: '"Do I know you? ...Right. Kitten. Course I do."',
         approach: "Remind him your name",
+        greeting: "\"Don't tell me your name again. I'll get it. Eventually.\"",
+        responses: {
+          kind: ["Remind him gently", "Say it's fine either way"],
+          playful: ["Make him guess again", "Give a fake name to test him"],
+          bold: ["Say of course he knows", "Demand he remember for real"],
+          neutral: ["Let it go unremarked", "Shrug, say nothing"],
+        },
       },
       {
         line: "The smirk stays. The edge on it has gone somewhere else.",
         approach: "Read past the smirk",
+        greeting:
+          "\"Don't bet what you can't lose. Free advice. Only one you get.\"",
+        responses: {
+          kind: ["Take the advice kindly", "Thank him for the warning"],
+          playful: ["Bet against his advice", "Ask if he ever follows it"],
+          bold: ["Ignore the advice outright", "Bet everything anyway"],
+          neutral: ["Nod, say nothing", "Take it in stride"],
+        },
       },
       {
         line: "Some days he needs half a second to place you. Never longer than that anymore.",
         approach: "Give him the half second",
+        greeting:
+          '"Gyahaha! You actually bluffed me. Rookie luck. I\'ll allow it, once."',
+        responses: {
+          kind: ["Say he took it well", "Admit it was mostly luck"],
+          playful: ["Ask for that in writing", "Take a very smug bow"],
+          bold: ["Say it wasn't luck", "Demand a rematch"],
+          neutral: ["Accept the once, say nothing", "Nod and take the win"],
+        },
       },
       {
         line: '"You again, kitten," he says, like the word\'s just a fact now, not a jab.',
         approach: "Answer to kitten now",
+        greeting:
+          '"Last time I fired one off indoors, everyone bolted for the door. You ordered food."',
+        responses: {
+          kind: ["Say you felt safe with him", "Admit you were a bit scared"],
+          playful: ["Blame low blood sugar", "Say you had a reservation"],
+          bold: ["Say you're not scared of him", "Dare him to fire another"],
+          neutral: ["Say nothing, keep eating", "Shrug and stay seated"],
+        },
       },
       {
         line: "He starts dealing you a hand before you've even sat down.",
         approach: "Ask for a new hand",
+        greeting: '"Deal you in? Fine. Don\'t cry when you lose."',
+        responses: {
+          kind: ["Take the hand gladly", "Appreciate him dealing you in"],
+          playful: ["Demand better cards", "Bet you'll win this time"],
+          bold: ["Take the hand, no complaints", "Raise before looking"],
+          neutral: ["Take the hand, say nothing", "Play, unbothered"],
+        },
       },
       {
         line: "The mooks have stopped asking who you are. Taiga made sure of that.",
         approach: "Let him vouch for you",
+        greeting: '"The mooks like you. Weird. They don\'t like anybody."',
+        responses: {
+          kind: ["Say that means a lot", "Credit him for vouching"],
+          playful: ["Ask what he told them", "Tease him for the reputation"],
+          bold: ["Say they'd be fools not to", "Tell him he likes you too"],
+          neutral: ["Shrug, say nothing", "Let it go unremarked"],
+        },
       },
       {
-        line: '"Sit," he says. "You standing there\'s bad for my nerves."',
-        approach: "Sit before he says it twice",
+        line: "He opens his door, sees who it is, and stalls with a hand on the frame. Not a no. Not yet a yes.",
+        approach: "Ask if you can come in",
+        greeting:
+          '"Tch. ...Fine. Get in before I forget why I opened the door."',
+        responses: {
+          kind: ["Say you won't stay long", "Ask if he wants company"],
+          playful: ["Duck under his arm", "Ask what the room's buy-in is"],
+          bold: [
+            "Walk in like it's your room",
+            "Say you'd have come in anyway",
+          ],
+          neutral: ["Step inside, say nothing", "Close the door behind you"],
+        },
       },
       {
         line: "He starts saving you a bite of whatever he's eating, no matter how questionable it looks.",
         approach: "Try the questionable bite",
+        greeting: '"Hungry? There\'s some anomaly meat left. Probably safe."',
+        responses: {
+          kind: ["Try it, thank him", "Take the bite gladly"],
+          playful: ["Ask what's actually in it", "Dare him to eat it first"],
+          bold: ["Eat it without asking", "Say you're not scared of it"],
+          neutral: ["Eat it, say nothing", "Take the bite quietly"],
+        },
       },
       {
         line: "He runs a side bet on when you'll show up. He's never once lost it.",
         approach: "Show up on time",
+        greeting:
+          "\"You keep coming back. Either you're broke or you're lonely.\"",
+        responses: {
+          kind: ["Show up, ignore the bet", "Be glad he noticed"],
+          playful: ["Ask what the odds were", "Bet against yourself"],
+          bold: ["Say of course you showed up", "Demand a cut of it"],
+          neutral: ["Show up, say nothing", "Let the bet stand"],
+        },
       },
       {
         line: '"Lulu\'s asking about you," he says. "Told him to mind his own. Don\'t make me start."',
         approach: "Let him handle Lulu",
+        greeting:
+          '"Good. Stay out of it. Lulu learns fastest when he hears it from me."',
+        responses: {
+          kind: ["Say Lulu means well", "Thank him for handling it"],
+          playful: ["Ask what Lulu really wanted", "Tease the protectiveness"],
+          bold: ["Say you can handle Lulu fine", "Ask why he bothers"],
+          neutral: ["Shrug, say nothing", "Let it go unremarked"],
+        },
       },
     ],
     warm: [
       {
         line: "His aggressive posture softens when he sees you're really there. He pulls out a seat beside him without a word.",
         approach: "Take the held seat",
+        greeting: '"...So you came back, kitten?"',
+        responses: {
+          kind: "Take the seat gladly",
+          playful: "Ask if he saved it on purpose",
+          bold: "Sit like it's expected",
+          neutral: "Sit, say nothing",
+        },
       },
       {
         line: "He calls you an idiot. He deals you in anyway. Same thing, from him.",
         approach: "Call him a dumbass back",
+        greeting: '"Sit down, dumbass. Seat\'s already out."',
+        responses: {
+          kind: "Call him a dumbass fondly",
+          playful: "Insult him right back",
+          bold: "Take the hand, no argument",
+          neutral: "Play, say nothing",
+        },
       },
       {
         line: '"Took your damn time," he says, having very obviously held the seat.',
         approach: "Ignore the complaint",
+        greeting: '"You\'re late. Not that I was waiting. Shut up."',
+        responses: {
+          kind: "Apologize a little",
+          playful: "Deny you took your time",
+          bold: "Say he was clearly waiting",
+          neutral: "Sit down, say nothing",
+        },
       },
       {
         line: 'He\'s eating something charred off a skewer. "You wanna know what kind of meat this is? Anomaly meat, what else? ...Want some?"',
         approach: "Try the anomaly meat",
+        greeting: [
+          "\"You're still hungry? Course you are. Sit, I'll get you something.\"",
+          "\"This is boring. I'm outta here. ...Something smells amazing. C'mon, we're getting food. Ciao, losers.\"",
+        ],
+        responses: {
+          kind: "Try it, thank him",
+          playful: "Ask what's actually in it",
+          bold: "Eat it without asking",
+          neutral: "Take a bite, say nothing",
+        },
       },
       {
         line: "The whole table gets quieter when he's talking to you. He hasn't noticed.",
         approach: "Let the room go quiet",
+        greeting:
+          '"Gyahaha! Easier to laugh with you around. Don\'t read into it."',
+        responses: {
+          kind: "Let the room have its quiet",
+          playful: "Point out the quiet table",
+          bold: "Say you like the effect",
+          neutral: "Ignore it, say nothing",
+        },
       },
       {
         line: "He forgets more than he lets on. He never forgets to look for you first.",
         approach: "Let him find you first",
+        greeting:
+          '"Forgot what day it is. Didn\'t forget you were coming, though."',
+        responses: {
+          kind: "Say that means a lot",
+          playful: "Test what else he remembers",
+          bold: "Say of course he looks first",
+          neutral: "Shrug, say nothing",
+        },
       },
       {
         line: '"Eat something," he says, shoving half his plate over. Not a suggestion.',
         approach: "Eat what he gives you",
+        greeting: "\"Eat. I don't care if you're not hungry. Eat anyway.\"",
+        responses: {
+          kind: "Eat it, thank him",
+          playful: "Push the plate back, teasing",
+          bold: "Eat without arguing",
+          neutral: "Eat, say nothing",
+        },
       },
       {
         line: "He starts every game with your seat held, whether you're there yet or not.",
         approach: "Keep him waiting",
+        greeting:
+          "\"Tipping my chair back. Only do that when you're around. Don't make it a thing.\"",
+        responses: {
+          kind: "Take the seat, thank him",
+          playful: "Make him wait even longer",
+          bold: "Sit down immediately",
+          neutral: "Sit, say nothing",
+        },
       },
       {
         line: "Lulu tried to move you to a different table once. Taiga vetoed it before he finished the sentence.",
         approach: "Stay at his table",
+        greeting: '"Sit. Eat. That seat\'s yours, and everyone here knows it."',
+        responses: {
+          kind: "Thank him for the veto",
+          playful: "Ask what he said to Lulu",
+          bold: "Say of course you're staying",
+          neutral: "Shrug, say nothing",
+        },
       },
       {
         line: "\"You're late,\" he says, not looking up. He'd clearly been counting the minutes.",
         approach: "Shrug off being late",
+        greeting:
+          '"Oh, it\'s the kitten. Sit down before you embarrass yourself."',
+        responses: {
+          kind: "Apologize, mean it a little",
+          playful: "Deny he was counting",
+          bold: "Say he was clearly counting",
+          neutral: "Sit down, say nothing",
+        },
       },
       {
         line: "He tells the mooks to knock it off before they've even started needling you.",
         approach: "Let him shut down the mooks",
+        greeting: '"Keep walking. They\'ve got the message. Miracle."',
+        responses: {
+          kind: "Thank him for the save",
+          playful: "Ask what the mooks said",
+          bold: "Say you can handle the mooks",
+          neutral: "Shrug, say nothing",
+        },
       },
       {
         line: "He wins a hand and slides half the pot your way like it's nothing.",
         approach: "Take the pot he slides",
+        greeting: "\"Won the hand. Here, it's yours. Don't make it weird.\"",
+        responses: {
+          kind: "Thank him for the pot",
+          playful: "Ask if that's how he flirts",
+          bold: "Take the pot, no thanks needed",
+          neutral: "Take it, say nothing",
+        },
       },
       {
         line: '"Kitten\'s hungry," he announces to the table, already ordering for two.',
         approach: "Let him order for you",
+        greeting:
+          "\"Kitten's the only good bet at this table. Don't tell the others.\"",
+        responses: {
+          kind: "Let him order, gladly",
+          playful: "Order something ridiculous",
+          bold: "Order for yourself instead",
+          neutral: "Let him order, say nothing",
+        },
       },
       {
         line: "He forgets the day of the week more than once a month. He never forgets what you drink.",
         approach: "Take the drink",
+        greeting: '"Here. Drink it. Don\'t make a thing out of it."',
+        responses: {
+          kind: "Thank him for remembering",
+          playful: "Test if he really remembers",
+          bold: "Say of course he remembers",
+          neutral: "Take the drink, say nothing",
+        },
       },
       {
         line: "He's put that gun in every mook's face at least once. Not yours anymore, not even as a joke.",
         approach: "Don't flinch at the gun",
+        greeting:
+          '"Keep the gun away from you? Nah. Just means I keep it pointed everywhere else."',
+        responses: {
+          kind: "Notice, say nothing kind",
+          playful: "Ask if this counts as special",
+          bold: "Say of course it's not you",
+          neutral: "Shrug, say nothing",
+        },
       },
       {
         line: '"Don\'t wander off," he says. "Not an order. Just... don\'t."',
         approach: "Don't wander off",
+        greeting: '"...Good. Stay where I can see you."',
+        responses: {
+          kind: "Promise not to wander",
+          playful: "Wander a little anyway",
+          bold: "Say you'll go where you want",
+          neutral: "Stay put, say nothing",
+        },
       },
       {
         line: "He blows an ugly amount of chips buying out every other seat at the table so nobody sits near you.",
         approach: "Let him clear the seats",
+        greeting:
+          "\"Sit closer. Table's crowded. ...Fine, it's not. Sit closer anyway.\"",
+        responses: {
+          kind: "Thank him for the space",
+          playful: "Ask how much that cost",
+          bold: "Say you're worth the chips",
+          neutral: "Sit, say nothing",
+        },
       },
       {
         line: "He loses a hand on purpose so the night runs longer. He'd never admit that's why.",
         approach: "Let the night run long",
+        greeting:
+          "\"Folded a winning hand 'cause you looked tired. Don't get used to it.\"",
+        responses: {
+          kind: "Let the night run long, gladly",
+          playful: "Call out the deliberate loss",
+          bold: "Say he lost on purpose",
+          neutral: "Stay, say nothing",
+        },
       },
     ],
     spark: [
-      "He hooks a finger in your collar to pull you down to his level, grinning.",
-      '"Kitten," he says, and this time it isn\'t a jab at all.',
-      "He wins the hand, sweeps the pot, and puts his arm across the back of your chair.",
-      "He gets close enough to make a point and then forgets what the point was.",
-      "The insults have gone soft around the edges. He'd fight you for saying so.",
+      {
+        line: "He hooks a finger in your collar to pull you down to his level, grinning.",
+        approach: "Let him pull you down",
+        greeting: "\"C'mere. Closer. I'm not gonna bite. Probably.\"",
+        responses: {
+          kind: "Tell him he's already won",
+          playful: "Cheat where he can see",
+          bold: "Pull him down instead",
+          neutral: "Stay on your side",
+        },
+      },
+      {
+        line: '"Kitten," he says, and this time it isn\'t a jab at all.',
+        approach: "Catch the shift",
+        greeting:
+          "\"I'd bet the whole damn house on you. Don't make me say it sober.\"",
+        responses: {
+          kind: "Say kitten back",
+          playful: "Call the bluff",
+          bold: "Make something happen",
+          neutral: "Play the hand out",
+        },
+      },
+      {
+        line: "He wins the hand, sweeps the pot, and puts his arm across the back of your chair.",
+        approach: "Sit on his side",
+        greeting: '"Sit on my side of the table. I don\'t care how it looks."',
+        responses: {
+          kind: "Let him keep his arm there",
+          playful: "Steal a chip while he's close",
+          bold: "Sit on his side",
+          neutral: "Sit, say nothing",
+        },
+      },
+      {
+        line: "He gets close enough to make a point and then forgets what the point was.",
+        approach: "Get closer",
+        greeting: "\"Hah! You're blushing. Good. Now we're even.\"",
+        responses: {
+          kind: "Let him forget the point",
+          playful: "Make him blush first",
+          bold: "Close the last bit yourself",
+          neutral: "Hold still, say nothing",
+        },
+      },
+      {
+        line: "The insults have gone soft around the edges. He'd fight you for saying so.",
+        approach: "Look at him like that",
+        greeting:
+          '"You keep looking at me like that, kitten, something\'s gonna happen."',
+        responses: {
+          kind: "Let the softness show",
+          playful: "Tease the softness out more",
+          bold: "Name the softness outright",
+          neutral: "Let it go unremarked",
+        },
+      },
     ],
     close: [
-      '"You\'re the only one I\'d ever go all-in for," he says roughly, pulling you close. "Don\'t make me regret it."',
-      "He puts his hand on the back of your chair. Just there. It stays.",
-      '"Don\'t do anything stupid," he growls, which is his entire vocabulary for worry.',
-      "He folds a winning hand because you looked tired and he wanted to leave.",
-      "The bravado is completely transparent now, and he's stopped trying to fix that.",
+      {
+        line: '"You\'re the only one I\'d ever go all-in for," he says roughly, pulling you close. "Don\'t make me regret it."',
+        approach: "Go all-in",
+        greeting:
+          "\"Hah. Didn't even blink. Don't let it go to your head, kitten.\"",
+        responses: {
+          kind: "Take the bet off his shoulders",
+          playful: "Laugh in his face fondly",
+          bold: "Go all-in with him",
+          neutral: "Keep him company in silence",
+        },
+      },
+      {
+        line: "He puts his hand on the back of your chair. Just there. It stays.",
+        approach: "Let him pull you close",
+        greeting:
+          '"Anybody touches you, they answer to me. That\'s the deal. Always was."',
+        responses: {
+          kind: "See past the snarl",
+          playful: "Be the one who can rile him",
+          bold: "Grab his collar first",
+          neutral: "Let his hand stay, say nothing",
+        },
+      },
+      {
+        line: '"Don\'t do anything stupid," he growls, which is his entire vocabulary for worry.',
+        approach: "Get over there",
+        greeting:
+          "\"Don't you dare go getting hurt. That's MY job to protect you. Gyahaha!\"",
+        responses: {
+          kind: "Tell him you worry too",
+          playful: "Tease the worry out of him",
+          bold: "Tell him you're his bet",
+          neutral: "Let him worry, say nothing",
+        },
+      },
+      {
+        line: "He folds a winning hand because you looked tired and he wanted to leave.",
+        approach: "Tell him to fold",
+        greeting:
+          "\"You look tired. We're leaving. No, I don't care about the hand.\"",
+        responses: {
+          kind: "Thank him for folding",
+          playful: "Beat him at his own table",
+          bold: "Say the hand never mattered",
+          neutral: "Sit through the losing hand",
+        },
+      },
+      {
+        line: "The bravado is completely transparent now, and he's stopped trying to fix that.",
+        approach: "See through the bravado",
+        greeting: '"Get over here. Closer. I\'m not asking twice."',
+        responses: {
+          kind: "Let him drop the act, gently",
+          playful: "Point out the bravado's gone",
+          bold: "Say you see right through him",
+          neutral: "Let the bravado run out",
+        },
+      },
     ],
     bound: [
-      "He's rough with everyone and unspeakably careful with you, and hates being caught at it.",
-      "He pulls you into his lap mid-hand and the whole table pretends not to notice.",
-      '"Love you, kitten," he growls, daring you to make something of it.',
-      "He falls asleep with an arm across you like a bar across a door.",
-      '"Kitten" has become the softest word in his entire vocabulary and he knows it.',
+      {
+        line: "He's rough with everyone and unspeakably careful with you, and hates being caught at it.",
+        approach: "Get over there",
+        greeting: "\"You're the only bet I'd never hedge. Ever.\"",
+        responses: {
+          kind: "Let him be careful",
+          playful: "Ruin his hand",
+          bold: "Tell him he's your bet too",
+          neutral: "Play the hand out",
+        },
+      },
+      {
+        line: "He pulls you into his lap mid-hand and the whole table pretends not to notice.",
+        approach: "Sit in his lap",
+        greeting: "\"Get over here. On my lap. I don't care who's watching.\"",
+        responses: {
+          kind: "Call him kitten too",
+          playful: "Say it in front of the table",
+          bold: "Climb into his lap",
+          neutral: "Settle in, say nothing",
+        },
+      },
+      {
+        line: '"Love you, kitten," he growls, daring you to make something of it.',
+        approach: "Make something of it",
+        greeting: '"Love you. Yeah. Said it. What\'re you gonna do about it?"',
+        responses: {
+          kind: "Say it back, soft",
+          playful: "Make something of it",
+          bold: "Say it first",
+          neutral: "Let him growl",
+        },
+      },
+      {
+        line: "He falls asleep with an arm across you like a bar across a door.",
+        approach: "Stay the night",
+        greeting:
+          '"Stay the night. Whole night. Don\'t make me ask twice, kitten."',
+        responses: {
+          kind: "Say it back",
+          playful: "Test how tight the arm is",
+          bold: "Hold on just as tight",
+          neutral: "Stay still, let him sleep",
+        },
+      },
+      {
+        line: '"Kitten" has become the softest word in his entire vocabulary and he knows it.',
+        approach: "Notice the softest word",
+        greeting:
+          '"Come back to bed. The game\'ll still be rigged in the morning."',
+        responses: {
+          kind: "Say the word suits him",
+          playful: "Tease him for the softness",
+          bold: "Claim the word as yours too",
+          neutral: "Say nothing",
+        },
+      },
     ],
   },
-  temperamentDialogue: {
-    new: [
-      "\"Who're you? Don't pop up out of nowhere like that.\"",
-      '"Hah! Look at this one. You gonna cry, kitten?"',
-      '"Sit or scram. I don\'t care which, just pick."',
-      '"You got money? No? Then you got nothin\' I want. Probably."',
-      "\"Heads or tails, even or odd, on or off... It's all so fucking tedious! ...Oh. You're real. Hey.\"",
-    ],
-    known: [
-      '"Oh, it\'s the kitten. Sit down before you embarrass yourself."',
-      '"You know the rules yet? No? Tch. Watch, then."',
-      "\"You keep coming back. Either you're broke or you're lonely.\"",
-      "\"Don't bet what you can't lose. Free advice. Only one you get.\"",
-      '"Playing with these morons is exhausting... Lulu gets all mad if I win too much. Sit. You\'re better company."',
-      "\"Don't tell me your name again. I'll get it. Eventually.\"",
-      '"Deal you in? Fine. Don\'t cry when you lose."',
-      '"The mooks like you. Weird. They don\'t like anybody."',
-      "\"You're still here. Guess that's something.\"",
-      '"Hungry? There\'s some anomaly meat left. Probably safe."',
-      '"Lulu asked about you. Told him to mind his business."',
-      '"Gyahaha! You actually bluffed me. Rookie luck. I\'ll allow it, once."',
-      '"Last time I fired one off indoors, everyone bolted for the door. You ordered food."',
-    ],
-    warm: [
-      '"...So you came back, kitten?"',
-      '"Sit down, dumbass. Seat\'s already out."',
-      '"You\'re late. Not that I was waiting. Shut up."',
-      '"Here. Drink it. Don\'t make a thing out of it."',
-      "\"This is boring. I'm outta here. ...Something smells amazing. C'mon, we're getting food. Ciao, losers.\"",
-      "\"Eat. I don't care if you're not hungry. Eat anyway.\"",
-      '"Told the mooks to back off you. They listened. Miracle."',
-      '"Forgot what day it is. Didn\'t forget you were coming, though."',
-      '"Lulu tried to bench you from my table. Didn\'t happen."',
-      "\"Sit closer. Table's crowded. ...Fine, it's not. Sit closer anyway.\"",
-      "\"Won the hand. Here, it's yours. Don't make it weird.\"",
-      '"Gyahaha! Easier to laugh with you around. Don\'t read into it."',
-      "\"Don't wander off. That's not me asking.\"",
-      '"Keep the gun away from you? Nah. Just means I keep it pointed everywhere else."',
-      "\"You're still hungry? Course you are. Sit, I'll get you something.\"",
-      "\"Tipping my chair back. Only do that when you're around. Don't make it a thing.\"",
-      "\"Folded a winning hand 'cause you looked tired. Don't get used to it.\"",
-      "\"Kitten's the only good bet at this table. Don't tell the others.\"",
-    ],
-    spark: [
-      "\"C'mere. Closer. I'm not gonna bite. Probably.\"",
-      '"You keep looking at me like that, kitten, something\'s gonna happen."',
-      '"Sit on my side of the table. I don\'t care how it looks."',
-      "\"Hah! You're blushing. Good. Now we're even.\"",
-      "\"I'd bet the whole damn house on you. Don't make me say it sober.\"",
-    ],
-    close: [
-      "\"Don't you dare go getting hurt. That's MY job to protect you. Gyahaha!\"",
-      '"Get over here. Closer. I\'m not asking twice."',
-      "\"I'd bet everything on you, kitten. Everything. Don't let it go to your head.\"",
-      "\"You look tired. We're leaving. No, I don't care about the hand.\"",
-      '"Anybody touches you, they answer to me. That\'s the deal. Always was."',
-    ],
-    bound: [
-      "\"Get over here. On my lap. I don't care who's watching.\"",
-      '"Love you. Yeah. Said it. What\'re you gonna do about it?"',
-      '"Stay the night. Whole night. Don\'t make me ask twice, kitten."',
-      "\"You're the only bet I'd never hedge. Ever.\"",
-      '"Come back to bed. The game\'ll still be rigged in the morning."',
-    ],
-  },
-  approach: {
-    spark: [
-      "Get closer",
-      "Sit on his side",
-      "Look at him like that",
-      "Let him pull you down",
-    ],
-    close: [
-      "Get over there",
-      "Go all-in",
-      "Let him pull you close",
-      "Tell him to fold",
-    ],
-    bound: [
-      "Get over there",
-      "Sit in his lap",
-      "Stay the night",
-      "Make something of it",
-    ],
-  },
-  responses: {
-    kind: {
-      new: [
-        "Be kind despite his bark",
-        "Thank him for the seat",
-        "Ignore the insult entirely",
-      ],
-      spark: [
-        "Let the softness show",
-        "Say kitten back",
-        "Tell him he's already won",
-      ],
-      close: [
-        "See past the snarl",
-        "Tell him you worry too",
-        "Take the bet off his shoulders",
-      ],
-      bound: ["Say it back", "Let him be careful", "Call him kitten too"],
-    },
-    playful: {
-      new: [
-        "Trade insults with him",
-        "Call him kitten back",
-        "Cheat, badly, on purpose",
-      ],
-      spark: [
-        "Make him blush first",
-        "Cheat where he can see",
-        "Call the bluff",
-      ],
-      close: [
-        "Be the one who can rile him",
-        "Beat him at his own table",
-        "Laugh in his face fondly",
-      ],
-      bound: [
-        "Make something of it",
-        "Ruin his hand",
-        "Say it in front of the table",
-      ],
-    },
-    bold: {
-      new: [
-        "Meet his challenge head-on",
-        "Raise the stakes",
-        "Sit without being invited",
-      ],
-      spark: [
-        "Sit on his side",
-        "Pull him down instead",
-        "Make something happen",
-      ],
-      close: [
-        "Go all-in with him",
-        "Tell him you're his bet",
-        "Grab his collar first",
-      ],
-      bound: [
-        "Climb into his lap",
-        "Say it first",
-        "Tell him he's your bet too",
-      ],
-    },
-    neutral: {
-      new: [
-        "Let him posture",
-        "Play your hand quietly",
-        "Say nothing and stay",
-      ],
-      spark: ["Play the hand out", "Stay on your side", "Let him posture"],
-      close: [
-        "Let the bravado run out",
-        "Sit through the losing hand",
-        "Keep him company in silence",
-      ],
-      bound: ["Play the hand out", "Let him growl", "Say nothing"],
-    },
-  },
+  // No temperamentDialogue pool: every leftover line was placed onto a
+  // dialogue beat's `greeting` (docs/dialogue-greeting-pairing.md).
+  // No top-level `responses` pool: every dialogue[tier] beat (new/known/warm/
+  // spark/close/bound) now carries bespoke responses for all four types (see
+  // dialogue above), making the old per-tier pools fully unreachable — same
+  // end state as yuri.js/benkei.js/jin.js/kaito.js/lucas.js/tohma.js/leo.js/
+  // shohei.js/subaru.js/zenji.js/haku.js/elias.js/mio.js/shion.js/jiro.js/
+  // ren.js/haru.js/towa.js/edward.js/rui.js/lyca.js.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

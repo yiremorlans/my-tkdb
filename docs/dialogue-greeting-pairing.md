@@ -1,9 +1,73 @@
 # Pairing a beat's payoff `greeting` to its `line`/`approach`
 
-**Status:** proposed, not started. No code in this doc has shipped yet — this
-is the plan to follow when the work begins. Nothing here is required to ship
-other content; `temperamentDialogue` and `getTemperamentGreeting` keep working
-exactly as they do today until a tier is actually migrated.
+**Status:** mechanism shipped (2026-09-17), diverging from §2 in one
+deliberate way — see the note there. Yuri was the pilot, not Benkei
+(contrary to §4's suggestion) — all six tiers, including `spark`, both
+`greeting` and the `responses` override from §2a. Benkei followed the same
+day: `new`/`known`/`warm`/`close`/`bound` migrated first, with `spark`
+initially left legacy for the same reason `dialogue`/`approach` pairing
+skipped it (`approach.spark` was already expanded past `dialogue.spark`, no
+clean bijection) — a later pass the same day closed that gap by expanding
+`dialogue.spark` itself to the full 27-line target and pairing it too, so
+Benkei ended up with every tier fully migrated and its `temperamentDialogue`,
+`approach`, and `responses` pools removed entirely (nothing left over).
+
+Jo migrated next (same day), in two passes like Benkei: pass 1 did
+`new`/`known`/`warm`/`close`/`bound`, initially leaving `spark` legacy — same
+`approach.spark` (27) vs. `dialogue.spark` (5) gap Benkei had before its own
+follow-up pass. Jo's `dialogue` pools are variant-keyed (`uniform`/`casual`,
+his two illustrated genders) — `greeting` and `responses` were authored once
+per beat index and applied identically to both variants, since
+`temperamentDialogue` and `responses` are shared, pronoun-neutral pools not
+split by variant. Much of `temperamentDialogue.warm` turned out to duplicate
+`dialogue.warm` almost line-for-line at the same index (both pools were
+independently expanded to the same 18-line target covering the same scenes),
+so only 7 of 18 found a non-redundant payoff pairing; the other 11 were left
+as fallback rather than forced. `known`/`warm` had no pre-existing
+`responses[type][tier]` pool to draw from at all (Jo's old `responses` object
+only ever had `new`/`spark`/`close`/`bound` keys), so every `known`/`warm`
+beat's `responses` is freshly authored rather than moved.
+
+Pass 2 (user-directed, matching Benkei's precedent): `spark` was closed too,
+same method — every one of the 27 existing `approach.spark` labels, all 5
+existing `temperamentDialogue.spark` lines, and all 28 existing
+`responses.*.spark` labels were placed onto a beat (temperament placed by fit
+first, per the user's explicit instruction, before anything new was
+authored) before the remaining ~17 beats and their greetings/responses were
+authored net-new. `approach`, `temperamentDialogue.spark`, and the `spark`
+key under every `responses` type are now gone from `jo.js` — nothing was left
+over. `temperamentDialogue` and `getTemperamentGreeting` still work exactly
+as before for any beat that hasn't been paired (other characters entirely) —
+migration remains per-beat, not a mechanical sweep.
+
+Pass 3 (user-directed, 2026-09-18): Jo's residual `temperamentDialogue`
+(new 2, known 2, warm 11, bound 1) and the leftover `responses.*.close/bound`
+labels (8) were placed onto beats and both objects deleted, so `jo.js` now
+ends in the same state as `benkei.js`/`yuri.js` — every one of the 15 beats
+per variant that lacked a `greeting` has one. Because the `warm` pool had
+duplicated `dialogue.warm` line-for-line, most lines were trimmed to their
+non-restating half or cross-placed onto a different beat that they answer
+better; `temperamentDialogue.new`'s two lines were verbatim copies of
+`dialogue.new` beat lines and were not placed as greetings.
+
+Pass 4 (user-directed, 2026-09-18): the same residual-placement sweep for the
+19 characters still carrying a `temperamentDialogue` object — alan, elias,
+haku, haru, jin, jiro, kaito, leo, lucas, lyca, mio, ritsu, rui, shion,
+shohei, subaru, taiga, tohma, zenji — done one character at a time. Every
+leftover line was placed onto the beat it best answers (preferring a beat
+with no `greeting` yet; otherwise as a second array option next to an
+existing one), and the object was deleted from each file. No
+`temperamentDialogue` object exists in any character file now, so
+`getTemperamentGreeting` only ever serves the `"..."` default for a beat that
+has no `greeting`. Two calls worth knowing: (a) `shion`'s one `new` leftover
+("So you're still alive...") restated `dialogue.known[1]` almost verbatim, so
+it was dropped rather than placed; (b) `alan.spark` had to gain paired
+`approach` labels to carry a `greeting` at all (`validateContent` requires
+every object-form beat to have an `approach`), so all 27 legacy
+`approach.spark` labels were distributed across the 5 spark beats as
+interchangeable options and the top-level `approach` object was removed —
+`alan.spark` still has no per-beat `responses` and is still 5 lines against
+the 27-line target.
 
 ---
 
@@ -75,67 +139,87 @@ today for `/roam`, an independent draw from whatever's left in
 untouched. Migration is per-beat and can happen one character (or one tier)
 at a time.
 
-### `/meet` gets the same benefit, with no pool of its own
+### `/meet` gets the response-pairing benefit, deliberately NOT the caption one
 
-`/meet` (`buildMeetSpawnMessage`, `encounters.js:449-489`) currently calls
-`getRandomDialogueLine`, which does the same pool resolution as
+**Shipped, diverging from the plan above by explicit decision:** `/meet`
+keeps rendering `dialogue.line` as its caption — never `greeting`. That was a
+deliberate call, not an oversight: `/meet` is the "just show me who's there"
+command with no pre-message step to build anticipation for, and `.line` is
+already written to work as a self-contained caption, where a `greeting` line
+is written to answer a `line`/`approach` the player already read in `/roam`'s
+two-step reveal. Showing a beat's `greeting` on `/meet` — with no prior line
+to answer — would read like a non sequitur half the time. `/meet` still
+avoided the *other* bug this doc exists to fix, though: previously it drew
+`.line` and its four response-button labels from two independent pools (the
+same disjointedness `greeting` fixes for `/roam`'s caption). That part is
+fixed.
+
+`/meet` (`buildMeetSpawnMessage`, `encounters.js`) used to call
+`getRandomDialogueLine`, which did the same pool resolution as
 `getRandomDialogueBeat` (same `pmOnly`/`dialogueWhen`/variant handling) but
-keeps only `.line`, discarding everything else. It should draw the whole beat
-and prefer `greeting` — but not via `getRandomDialogueBeat` itself, since
-that always resolves an `approach` too (falling through to
-`getRandomApproachLabel`'s own pool walk for an unmigrated tier) that `/meet`
-never renders. Instead, factor the shared entry-pick out of
-`getRandomDialogueBeat` into a private `pickDialogueEntry(character, tier,
-variant, ctx)` — the pool resolution, `pmOnly`/`dialogueWhen` handling, and
-`pickRandom`, with no opinion on approach or greeting — and give `/meet` its
-own thin wrapper over it:
+kept only `.line`, discarding everything else — including, once beats gained
+a `responses` field (see §2a below), whichever response-button overrides the
+drawn beat carried. That function is gone. In its place, the shared
+entry-pick was factored out of `getRandomDialogueBeat` into a private
+`pickDialogueEntry(character, tier, variant, ctx)` — the pool resolution,
+`pmOnly`/`dialogueWhen` handling, and `pickRandom`, with no opinion on
+approach, greeting, or responses — and `/meet` got its own thin wrapper over
+it, `getRandomDialogueEntry`, returning `{ line, responses }` from that same
+single pick (never a second, independent draw — the reason this was worth
+doing at all, not any meaningful performance concern):
 
 ```js
 // getRandomDialogueBeat, unchanged in shape, now delegates entry-picking:
 export function getRandomDialogueBeat(character, tier, variant = null, ctx = {}) {
   const entry = pickDialogueEntry(character, tier, variant, ctx);
-  if (!entry) return { line: "...", approach: pickRandom(APPROACH_LABEL_FALLBACK), greeting: null };
-  const { line, approachOptions, greetingOptions } = entry;
+  if (!entry) return { line: "...", approach: pickRandom(APPROACH_LABEL_FALLBACK), greeting: null, responses: null };
+  const { line, approachOptions, greetingOptions, responses } = entry;
   const approach = approachOptions
     ? pickRandom(approachOptions)
     : getRandomApproachLabel(character, tier, variant, ctx); // only /roam pays for this
   const greeting = greetingOptions ? pickRandom(greetingOptions) : null;
-  return { line, approach, greeting };
+  return { line, approach, greeting, responses };
 }
 
-// /meet's draw: same beat, minus the approach resolution it never renders.
-export function getRandomDialogueGreeting(character, tier, variant = null, ctx = {}) {
+// /meet's draw: same beat, minus the approach/greeting resolution it never
+// renders — its caption stays `.line`, on purpose (see above).
+export function getRandomDialogueEntry(character, tier, variant = null, ctx = {}) {
   const entry = pickDialogueEntry(character, tier, variant, ctx);
-  if (!entry) return "...";
-  return entry.greetingOptions ? pickRandom(entry.greetingOptions) : entry.line;
+  if (!entry) return { line: "...", responses: null };
+  return { line: entry.line, responses: entry.responses };
 }
 ```
 
-`/meet` calls `getRandomDialogueGreeting`. Its fallback is the beat's own
-`line` — never an independent `getTemperamentGreeting` draw — so `/meet`
-never reads `temperamentDialogue` at all, before or after migration; that
-pool stays reserved for `/roam`'s transitional fallback. Because the fallback
-value is exactly what `getRandomDialogueLine` was already extracting, this
-ships as a zero-visible-diff no-op for every unmigrated beat: `/meet`'s
-caption doesn't change until the beat it draws actually has a `greeting`.
+`test/dialogue-beat-pairing.test.js` covers `getRandomDialogueEntry`
+directly, including a fixture case asserting `responses` always matches
+whichever beat's `line` came back in the same call — the guarantee the whole
+refactor exists for.
 
-**This makes `getRandomDialogueLine` dead code.** It was only ever called
-from `/meet` (`encounters.js:475`) — `getRandomDialogueGreeting` replaces
-that call outright. `test/dialogue-beat-pairing.test.js` calls it directly to
-assert a migrated beat unwraps to its `.line` and never renders
-`[object Object]`; that assertion should move onto
-`getRandomDialogueGreeting` (same guarantee, plus the `greeting` case) rather
-than keep exercising a function nothing calls anymore. Remove
-`getRandomDialogueLine` once that test is migrated — don't leave it exported
-with no callers.
-
-**This only changes the caption's source, nothing else about `/meet`.**
-`/meet` still renders its four response choices exactly as today —
-`responseActionRow(character.id, false, tier, 'meet', dialogueCtx)`
-(`encounters.js:486`) is untouched. "`/meet` never renders a button" above
+**This only changes where response-button labels come from, nothing else
+about `/meet`.** `responseActionRow` still renders the same four buttons —
+it now also accepts an optional `beatResponses` argument (`/roam` and `/meet`
+both pass their drawn beat's `responses`; `null` falls through to the normal
+per-tier pool, unchanged from before). "`/meet` never renders a button" above
 refers only to the `/roam`-exclusive **approach** button (the "step forward"
 button on `/roam`'s pre-message, which `/meet` has no equivalent step for) —
-not to the response buttons, which both commands show identically.
+not to the response buttons, which both commands show identically, and which
+now both prefer the drawn beat's own labels first.
+
+### 2a. Response-button pairing: `responses` on the beat
+
+The same disjointedness `greeting` fixes for the payoff caption also affects
+the four response buttons (kind/playful/bold/neutral): they were drawn from
+a flat per-tier pool, independent of which beat was shown, so a button could
+reference a prop or theme from a completely different beat. A beat may now
+carry an optional `responses: { kind, playful, bold, neutral }` field
+(each optional; a string or an array of interchangeable options), consulted
+by `generateCharacterResponses`/`responseLabel` before the normal per-tier
+pool for whichever types it doesn't override. Same "move, don't copy, don't
+force" authoring rule as `greeting` (§3 below) — and the same hard
+constraint the greeting migration didn't have to worry about:
+`validateContent.js` throws if a `responses[type][tier]` array is ever fully
+emptied, so at least one generic fallback must stay behind per type/tier even
+if every remaining beat gets a bespoke label eventually.
 
 ## 3. What "migrate a character" means
 
@@ -176,6 +260,48 @@ already exist in the `{ line, approach }` shape and only need `greeting`
 added — no separate beat-authoring pass first. Confirm `benkei.js`'s
 `temperamentDialogue` tiers are populated at or near target before starting
 (check the pairing tracker's raw counts, not just that the key exists).
+
+**Done (2026-09-17):** migrated on the same day as Yuri, after the fact, in
+two passes. First pass: `new`/`known`/`warm`/`close`/`bound` all carry
+`greeting` and `responses` on every beat (20/20, 52/52, 72/72, 20/20, 20/20
+via `node scripts/response-pairing-report.js`). `new`/`close`/`bound` paired
+1:1 against `temperamentDialogue`, fully depleting those tiers. `known`/`warm`
+initially left a small residual pool (1 and 4 lines) where nothing had a
+genuine match — on user request, those were force-placed onto the
+next-best-fit beat instead (some as a second `greeting` array option
+alongside an already-good match, e.g. `known[1]`'s "let me carry it" beat
+carrying both temperament lines about him insisting on carrying things).
+
+Second pass, also on request: `spark` was NOT left legacy after all — its
+pre-existing size gap (`approach.spark` already at the 27-line target,
+`dialogue.spark` still 5) was closed by authoring 22 new `dialogue.spark`
+lines, each paired to one of the 22 previously-unpaired `approach.spark`
+labels (all 27 original approach labels now live on a beat), reusing the
+existing 5 dialogue lines against the 27 approach pool and the 5
+`temperamentDialogue.spark` lines for `greeting`, then authoring 22 new
+greetings for the rest. `responses.spark`'s existing 28 labels (7 per type)
+were redistributed across the 27 beats' best-fit slots, with ~80 new labels
+authored for the remainder. Confirmed via `dialogue-pairing-report.js`
+(benkei.spark now 27/27, hitting `DIALOGUE_POOL_TARGET_BY_TIER` for the
+first time) and `response-pairing-report.js` (benkei.spark 108/108).
+
+With every tier fully paired, `temperamentDialogue`, the top-level `approach`
+object, and the top-level `responses` object are all gone from `benkei.js`
+entirely (same end state as `yuri.js`) — nothing left for
+`getTemperamentGreeting`/`getRandomApproachLabel`/`responseLabel` to fall
+back to, except `dialogue.warm[4]` ("remembers exactly what you asked..."),
+which genuinely has no `greeting` match and now falls through to
+`getTemperamentGreeting`'s `"..."` default on an empty pool — a real (tiny)
+UX gap worth another look, not a bug in the migration.
+
+`validateContent()` and `npm test` both pass (316/316); benkei's warnings are
+now the exact same shape yuri.js's are post-migration ("no temperamentDialogue
+— greets with '...'", "no kind/playful/bold/neutral label — using archetype
+default") — a known gap in `validateContent.js` (see §5) rather than a
+defect. Caught and fixed 5 over-30-char `responses` labels by hand (ad hoc
+Node script, since `validateContent.js` doesn't check beat-level `responses`
+yet) before they'd have shipped silently — do this check by hand for the next
+character too.
 
 ## 5. Validation (not yet written)
 

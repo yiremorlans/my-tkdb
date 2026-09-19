@@ -242,105 +242,485 @@ export default {
       {
         line: 'He greets you with a flourish, "Why, hello there, my dear. Suppose we kick off another swanky day here?"',
         approach: "Return his bow",
+        greeting:
+          '"Splendid manners. I do so enjoy a visitor who bows back, my dear."',
+        responses: {
+          kind: ["Thank him for the welcome", "Say it's lovely to meet him"],
+          playful: ["Appreciate his warmth", "Bow even lower, grandly"],
+          bold: ["Be sincere and true", "Ask what makes it swanky"],
+          neutral: ["Bow back without a word", "Nod and smile"],
+        },
       },
       {
         line: "He's mid-sentence when you arrive: a story, out loud, to no one. He finishes the line before he finishes turning around.",
         approach: "Listen with him",
+        greeting:
+          '"...And they lived happily ever after. Ah! An audience. Did you catch the ending, my dear?"',
+        responses: {
+          kind: ["Honor his gentle spirit", "Say you caught the ending"],
+          playful: ["Ask who he was talking to", "Ask for the beginning too"],
+          bold: ["Say the unpoetic truth", "Admit you only heard the end"],
+          neutral: ["Let the verse finish", "Listen, say nothing"],
+        },
       },
       {
         line: '"Seventeen syllables," he murmurs, "and you\'ve just handed me the last five, my dear."',
         approach: "Give him the last syllables",
+        greeting:
+          '"Why, that\'s the bee\'s knees! Half this verse is yours now, my dear. I\'ll have to give you credit."',
+        responses: {
+          kind: ["Praise the verse honestly", "Say the credit is all his"],
+          playful: ["Rhyme back at him", "Demand top billing"],
+          bold: ["Finish the verse yourself", "Ask to hear the whole thing"],
+          neutral: ["Listen to the wind with him", "Let him keep the verse"],
+        },
       },
       {
         line: '"Well, if it isn\'t a new face. Has this inspired man of the quill left you speechless? ...No? A pity. It happens to some."',
         approach: "Recover your words",
+        greeting: '"Something brought you here. Let\'s not rush to name what."',
+        responses: {
+          kind: ["Reassure him gently", "Say it's nice to meet him"],
+          playful: ["Refuse to explain why you came", "Pretend to be speechless"],
+          bold: ["Ask what he's not writing", "Say you came on purpose"],
+          neutral: ["Respect his mystery", "Let the question sit"],
+        },
       },
       {
         line: '"Oh, have you come to see me? This is troubling." He smiles. "I\'m afraid I\'m out of autographs."',
         approach: "Ask for an autograph anyway",
+        greeting:
+          '"Well, since you asked so nicely... Zenji Kotodama, signed in the air, with a flourish. Treasure it, my dear."',
+        responses: {
+          kind: ["Say you came for him", "Thank him for the autograph"],
+          playful: ["Attempt a terrible haiku", "Ask him to sign it twice"],
+          bold: ["Demand a real one anyway", "Ask for a dedication too"],
+          neutral: ["Watch the flourish quietly", "Accept it with a nod"],
+        },
       },
     ],
     known: [
       {
         line: '"The wanderer returns." He looks delighted. "My dear, you\'re becoming a regular fixture."',
         approach: "Say you'll keep returning",
+        greeting: [
+          '"Ha! Splendid. The other spirits will be positively green about it, I\'d wager."',
+          '"Ah, twice in one week. Fate does love a repeat verse."',
+        ],
+        responses: {
+          kind: ["Say you're happy to return", "Thank him for the welcome"],
+          playful: ["Ask if you're a regular now", "Tease him about 'fixture'"],
+          bold: ["Say you'll keep coming back", "Claim the title outright"],
+          neutral: ["Nod, keep walking", "Take the compliment quietly"],
+        },
       },
       {
         line: "He lifts the instrument across his knee. \"What's this? Well, it's a biwa, of course. It's a biwa just as you are yourself.\"",
         approach: "Listen a while",
+        greeting:
+          '"Come, sit a spell. The biwa\'s been dreadfully lonely for an audience."',
+        responses: {
+          kind: ["Ask to hear it played", "Say the biwa suits him"],
+          playful: ["Ask what instrument you'd be", "Tease the comparison"],
+          bold: ["Ask him to play it now", "Ask him to explain it"],
+          neutral: ["Sit and listen quietly", "Let the biwa rest"],
+        },
       },
       {
         line: "He says your name like it's the best line he's been saving all week.",
         approach: "Take the compliment",
+        greeting:
+          '"Ah, there you are, my dear. I\'ve had your name on the tip of my tongue all week."',
+        responses: {
+          kind: [
+            "Say his voice makes it special",
+            "Thank him for saying it well",
+          ],
+          playful: ["Ask for an even better line", "Demand he say it again"],
+          bold: ["Say you know it's a good line", "Ask him to top it"],
+          neutral: ["Take it in stride", "Let the line pass"],
+        },
       },
       {
         line: "\"Heh. There's no doubt about it. Zenji Kotodama is once again the most styling man on campus. These glad rags are the cat's pajamas.\"",
         approach: "Compliment his style",
+        greeting:
+          '"Aw, you\'re a real pal. You\'ve got a keen eye, my dear, and a kind one besides."',
+        responses: {
+          kind: ["Say the outfit works", "Compliment him sincerely"],
+          playful: ["Ask where he shops", "Tease the cat's pajamas line"],
+          bold: ["Say he's not wrong", "Challenge him to prove it"],
+          neutral: ["Nod at the outfit", "Say nothing, let him preen"],
+        },
       },
       {
         line: "He asks nothing at all. He's just been narrating the evening, step by step, and leaves the last line open for you to fill in.",
         approach: "Finish his sentence",
+        greeting: '"I\'ve saved a line for you. It wanted your opinion."',
+        responses: {
+          kind: ["Fill in something gentle", "Thank him for the line"],
+          playful: ["Fill in something silly", "Steal the ending for yourself"],
+          bold: ["Finish it better than he would", "Take over the whole story"],
+          neutral: ["Fill it in plainly", "Say the line, move on"],
+        },
       },
       {
         line: "You ask about his brother. His smile doesn't slip, not quite, but something behind it does, and he steers the conversation back to poetry before you can ask anything real.",
         approach: "Let it go, for now",
+        greeting:
+          '"Now then! Where was I? Ah, yes. Romanticism. A much more cheerful subject."',
+        responses: {
+          kind: [
+            "Let the subject change gently",
+            "Say he doesn't have to explain",
+          ],
+          playful: ["Tease him for dodging", "Guess at the real story"],
+          bold: ["Ask about the brother anyway", "Push past the poetry"],
+          neutral: ["Let it drop entirely", "Follow him back to poetry"],
+        },
       },
       {
         line: 'He calls you "my dear" now without the theatrical pause that used to come before it.',
         approach: "Let the nickname stick",
+        greeting:
+          '"Twice is coincidence. Three times is a season. Welcome back."',
+        responses: {
+          kind: ["Say the name suits you now", "Thank him for the nickname"],
+          playful: ["Ask when it became official", "Tease the missing pause"],
+          bold: ["Claim the nickname as yours", "Say you noticed the change"],
+          neutral: ["Let the nickname stand", "Not remark on it"],
+        },
       },
       {
         line: '"Zenji Kotodama, a wonderful name, don\'t you think?" he asks, then actually waits to hear what you think.',
         approach: "Tell him what you think",
+        greeting:
+          '"A sensational name befitting of my sensational sensibilities, wouldn\'t you say? ...Well? Go on."',
+        responses: {
+          kind: ["Say it's a wonderful name", "Agree, kindly"],
+          playful: ["Suggest a sillier name", "Ask for the lecture anyway"],
+          bold: ["Say the name is a bit much", "Demand the short version"],
+          neutral: ["Shrug, say it's fine", "Give a plain opinion"],
+        },
       },
       {
         line: "He's woven you into one of his stories as a character, and seems nervous about how you'll take it.",
         approach: "Ask which one you are",
+        greeting:
+          "\"I wrote you into today's stanza. Don't fret, I changed your name. Slightly.\"",
+        responses: {
+          kind: [
+            "Reassure him you're flattered",
+            "Say the character suits you",
+          ],
+          playful: ["Guess which one you are", "Demand a bigger role"],
+          bold: [
+            "Ask to read the whole stanza",
+            "Say you don't need it changed",
+          ],
+          neutral: ["Let him have his story", "Don't remark on the character"],
+        },
       },
       {
         line: '"Haku filmed these at my behest," he says of an old video, "but I can\'t imagine these old things will capture anyone\'s heart." He seems to hope you disagree.',
         approach: "Say you liked it",
+        greeting: '"Be honest, my dear. ...No, be kind. Then honest."',
+        responses: {
+          kind: ["Say you genuinely liked it", "Thank him for showing you"],
+          playful: ["Tease the old footage", "Ask Haku for outtakes"],
+          bold: ["Say it's better than he thinks", "Tell him to post more"],
+          neutral: ["Give a plain nod", "Watch without much comment"],
+        },
       },
       {
         line: "He asks after your day with an attention that makes the question feel like the whole point of the conversation.",
         approach: "Tell him about your day",
+        greeting:
+          '"Tell me something true, my dear. I\'ve grown tired of my own inventions today."',
+        responses: {
+          kind: ["Tell him something true", "Thank him for really asking"],
+          playful: [
+            "Make up something absurd",
+            "Test if he's really listening",
+          ],
+          bold: ["Tell him something surprising", "Ask why he's so invested"],
+          neutral: ["Answer plainly", "Give a short answer"],
+        },
       },
       {
         line: '"A burst of inspiration has taken hold of me," he announces, then admits it was really just you walking by.',
         approach: "Ask what inspired him",
+        greeting:
+          '"The ghost of artistry visits me most when you\'re near. Coincidence? I think not."',
+        responses: {
+          kind: [
+            "Say you're glad to inspire him",
+            "Take the compliment sweetly",
+          ],
+          playful: ["Ask if that happens often", "Tease him for the excuse"],
+          bold: ["Say of course it was you", "Claim credit outright"],
+          neutral: ["Shrug it off", "Don't remark on it"],
+        },
       },
       {
         line: "He's stopped introducing you as a fan and started calling you a friend.",
         approach: "Say you're glad to know him",
+        greeting:
+          '"You\'ve a good ear for nonsense, my dear. I mean that as the highest compliment."',
+        responses: {
+          kind: ["Say you're glad to be a friend", "Thank him for the shift"],
+          playful: ["Ask when he decided that", "Tease him about the upgrade"],
+          bold: ["Say friend was always accurate", "Say it fits better anyway"],
+          neutral: ["Accept the change quietly", "Let the word settle"],
+        },
       },
     ],
     warm: [
-      "His expression brightens with genuine pleasure, all formal distance melting away. \"My dear. I'm glad you're here.\"",
-      "He's saved the last of the tea. He'd been saving it for a while.",
-      '"You arrive like a season, my dear," he says, delighted. "Expected, and still a gift."',
-      "He shows you the pages he's been working on. He shows almost no one.",
-      "The brush pauses. He'd rather talk to you than finish the line.",
+      {
+        line: "His expression brightens with genuine pleasure, all formal distance melting away. \"My dear. I'm glad you're here.\"",
+        approach: "Sit beside him",
+        greeting: '"The lanterns lean toward you. So, apparently, do I."',
+        responses: {
+          kind: "Say you're glad too",
+          playful: "Ask what drew you in",
+          bold: "Sit closer than invited",
+          neutral: "Sit beside him quietly",
+        },
+      },
+      {
+        line: "He's saved the last of the tea. He'd been saving it for a while.",
+        approach: "Accept the tea",
+        greeting:
+          '"Go on, drink up. Watching you enjoy it is enough food for my soul."',
+        responses: {
+          kind: "Thank him for saving it",
+          playful: "Ask how long he saved it",
+          bold: "Drink it before he explains",
+          neutral: "Take the tea, say nothing",
+        },
+      },
+      {
+        line: '"You arrive like a season, my dear," he says, delighted. "Expected, and still a gift."',
+        approach: "Arrive like clockwork",
+        greeting: '"You return like seasons turning. My heart is at ease."',
+        responses: {
+          kind: "Say the same about him",
+          playful: "Ask which season he means",
+          bold: "Say you're the gift then",
+          neutral: "Arrive, say little",
+        },
+      },
+      {
+        line: "He shows you the pages he's been working on. He shows almost no one.",
+        approach: "Ask about the verse",
+        greeting: [
+          '"I was writing about rain. You\'ve made it about something warmer."',
+          '"My ideal summer vacation? To lay down my burdens in the springs of Yugawara and pursue my wordsmithery in peace, as so many greats have done before me."',
+        ],
+        responses: {
+          kind: "Thank him for showing you",
+          playful: "Demand to see even more",
+          bold: "Read it before he stops you",
+          neutral: "Read quietly, say nothing",
+        },
+      },
+      {
+        line: "The brush pauses. He'd rather talk to you than finish the line.",
+        approach: "Tell him a small thing",
+        greeting:
+          '"Tell me one small thing about your day. Small things are the good ones."',
+        responses: {
+          kind: "Tell him something warm",
+          playful: "Make the small thing absurd",
+          bold: "Say you're worth the pause",
+          neutral: "Tell him something plain",
+        },
+      },
     ],
     spark: [
-      "The story he's writing has quietly stopped being about anyone but you.",
-      "A flower turns up tucked behind your ear. You never quite catch him doing it.",
-      '"I\'ve written this one badly on purpose," he admits. "I wanted an excuse to read it to you."',
-      "He sits closer than the step requires, and doesn't pretend otherwise.",
-      '"Some things," he says softly, "are better in seventeen syllables. Others aren\'t."',
+      {
+        line: "The story he's writing has quietly stopped being about anyone but you.",
+        approach: "Let him show you",
+        greeting:
+          '"You are the only subject I cannot get right. I keep trying."',
+        responses: {
+          kind: "Tell him the verse landed",
+          playful: "Steal his brush",
+          bold: "Ask him to show you",
+          neutral: "Let the verse stand",
+        },
+      },
+      {
+        line: "A flower turns up tucked behind your ear. You never quite catch him doing it.",
+        approach: "Wear the flower",
+        greeting:
+          "\"There's a word for this in the old poems. I'd rather just show you.\"",
+        responses: {
+          kind: "Let his hand stay",
+          playful: "Ask what rhymes with you",
+          bold: "Catch his hand this time",
+          neutral: "Wear it, say nothing",
+        },
+      },
+      {
+        line: '"I\'ve written this one badly on purpose," he admits. "I wanted an excuse to read it to you."',
+        approach: "Hear the poem",
+        greeting:
+          '"Shall I read it to you? Fair warning: it isn\'t about the moon."',
+        responses: {
+          kind: "Ask him to read it",
+          playful: "Write him a terrible one back",
+          bold: "Tell him to skip the poem",
+          neutral: "Leave it in haiku",
+        },
+      },
+      {
+        line: "He sits closer than the step requires, and doesn't pretend otherwise.",
+        approach: "Come closer",
+        greeting:
+          '"Come closer. The poem requires it. That\'s a lie, but come closer."',
+        responses: {
+          kind: "Let him stay close",
+          playful: "Point out the cheating",
+          bold: "Close the space on the step",
+          neutral: "Don't move away",
+        },
+      },
+      {
+        line: '"Some things," he says softly, "are better in seventeen syllables. Others aren\'t."',
+        approach: "Stay past the last lantern",
+        greeting:
+          '"Stay through the last lantern. I\'d like the night to be longer."',
+        responses: {
+          kind: "Ask him to say the rest",
+          playful: "Guess which 'others' he means",
+          bold: "Say it plainly instead",
+          neutral: "Watch the lanterns",
+        },
+      },
     ],
     close: [
-      '"With you," he says, "the world behaves as though a story were being told well. I hadn\'t expected to feel that again."',
-      "He doesn't reach for a metaphor this time. He just says he's happy.",
-      '"I\'ve written you badly a hundred times," he laughs. "You deserve better than my words."',
-      "He says your name the way he'd read the last line of something he didn't want to end.",
-      "The world quiets around him when you're near. He's noticed. He's grateful.",
+      {
+        line: '"With you," he says, "the world behaves as though a story were being told well. I hadn\'t expected to feel that again."',
+        approach: "Finish the poem together",
+        greeting: '"With you, the world feels right. Like poetry made real."',
+        responses: {
+          kind: "Accept all of what he is",
+          playful: "Make him laugh mid-verse",
+          bold: "Tell him plainly you love this",
+          neutral: "Share the quiet syllables",
+        },
+      },
+      {
+        line: "He doesn't reach for a metaphor this time. He just says he's happy.",
+        approach: "Say nothing, and stay",
+        greeting:
+          "\"You needn't say anything. I've grown fluent in your silences.\"",
+        responses: {
+          kind: "Say happy suits him",
+          playful: "Bring him gentle joy",
+          bold: "Say it plainly back",
+          neutral: "Accept his silence",
+        },
+      },
+      {
+        line: '"I\'ve written you badly a hundred times," he laughs. "You deserve better than my words."',
+        approach: "Tell him the words are enough",
+        greeting:
+          "\"I've stopped writing about longing. There's nothing left to long for.\"",
+        responses: {
+          kind: "Say he needn't write you well",
+          playful: "Ask for the worst one",
+          bold: "Give him the ending yourself",
+          neutral: "Say the words are enough",
+        },
+      },
+      {
+        line: "He says your name the way he'd read the last line of something he didn't want to end.",
+        approach: "Go to him",
+        greeting:
+          '"Every verse I finish lately has your shape in it somewhere."',
+        responses: {
+          kind: "Say you don't want it to end",
+          playful: "Steal the last line",
+          bold: "Bold as poetry",
+          neutral: "Watch the lanterns together",
+        },
+      },
+      {
+        line: "The world quiets around him when you're near. He's noticed. He's grateful.",
+        approach: "Watch the moon with him",
+        greeting:
+          '"Stay. The moon is doing something worth witnessing together."',
+        responses: {
+          kind: "Tell him his words reached you",
+          playful: "Ask what he's grateful for",
+          bold: "Say you feel it too",
+          neutral: "Let the quiet stay",
+        },
+      },
     ],
     bound: [
-      "He's stopped writing about longing. The new poems are far less publishable.",
-      "He reads you the old folktale badly, on purpose, so it takes all night.",
-      '"Seventeen syllables can\'t hold this," he murmurs. "I\'ve stopped trying."',
-      "He hums something low against the back of your neck. It's a poem. You'll never read it.",
-      "The lanterns burn down and neither of you notices for a very long time.",
+      {
+        line: "He's stopped writing about longing. The new poems are far less publishable.",
+        approach: "Ask what he's writing now",
+        greeting:
+          "\"You've made a very poor poet of me. I've never been happier about anything.\"",
+        responses: {
+          kind: "Let the night run long",
+          playful: "Rhyme something filthy",
+          bold: "Say it without metaphor",
+          neutral: "Let the poem finish",
+        },
+      },
+      {
+        line: "He reads you the old folktale badly, on purpose, so it takes all night.",
+        approach: "Stay until morning",
+        greeting:
+          '"Stay until morning. The night has been generous; let\'s not insult it."',
+        responses: {
+          kind: "Stay until morning",
+          playful: "Blow out the lantern",
+          bold: "Kiss him mid-sentence",
+          neutral: "Stay quiet with him",
+        },
+      },
+      {
+        line: '"Seventeen syllables can\'t hold this," he murmurs. "I\'ve stopped trying."',
+        approach: "Hear the plain version",
+        greeting:
+          '"I love you. There. No metaphor. I\'ve been saving the plain version."',
+        responses: {
+          kind: "Say the plain version back",
+          playful: "Tease him for trying at all",
+          bold: "Tell him to stop writing",
+          neutral: "Let the plain version stand",
+        },
+      },
+      {
+        line: "He hums something low against the back of your neck. It's a poem. You'll never read it.",
+        approach: "Come here",
+        greeting:
+          '"Come here. I want to memorize something and it isn\'t a poem."',
+        responses: {
+          kind: "Let him hum a while longer",
+          playful: "Hum it back at him, badly",
+          bold: "Ask him to say it instead",
+          neutral: "Stay still, let him hum",
+        },
+      },
+      {
+        line: "The lanterns burn down and neither of you notices for a very long time.",
+        approach: "Stay till the last lantern",
+        greeting:
+          '"Stay till the last lantern\'s out. I never did get enough night, less of it now."',
+        responses: {
+          kind: "Let the night keep going",
+          playful: "Blame him for losing track",
+          bold: "Say you didn't notice either",
+          neutral: "Watch the lanterns burn down",
+        },
+      },
     ],
   },
   // Evening block: dialogue and approach paired per beat
@@ -390,160 +770,13 @@ export default {
       },
     },
   ],
-  temperamentDialogue: {
-    new: [
-      'Summer heat shimmers off the stones. "Why, hello there, my dear."',
-      "\"You walk quietly, my dear. That's rarer than you'd think.\"",
-      "\"Names come later. First, tea. That's the proper order, and I'm a stickler for the proper order.\"",
-      '"Something brought you here. Let\'s not rush to name what."',
-    ],
-    known: [
-      '"Twice is coincidence. Three times is a season. Welcome back."',
-      '"I\'ve saved a line for you. It wanted your opinion."',
-      '"You listen well. That\'s not a small thing to notice about someone."',
-      '"You want to know the meaning of my words? I see. I\'ll have to give you a lecture on romanticism."',
-    ],
-    warm: [
-      '"You return like seasons turning. My heart is at ease."',
-      '"I was writing about rain. You\'ve made it about something warmer."',
-      '"My ideal summer vacation? To lay down my burdens in the springs of Yugawara and pursue my wordsmithery in peace, as so many greats have done before me."',
-      '"Tell me one small thing about your day. Small things are the good ones."',
-      '"The lanterns lean toward you. So, apparently, do I."',
-    ],
-    spark: [
-      '"Shall I read it to you? Fair warning: it isn\'t about the moon."',
-      '"Come closer. The poem requires it. That\'s a lie, but come closer."',
-      '"You are the only subject I cannot get right. I keep trying."',
-      '"Stay through the last lantern. I\'d like the night to be longer."',
-      "\"There's a word for this in the old poems. I'd rather just show you.\"",
-    ],
-    close: [
-      '"With you, the world feels right. Like poetry made real."',
-      "\"I've stopped writing about longing. There's nothing left to long for.\"",
-      '"Stay. The moon is doing something worth witnessing together."',
-      '"Every verse I finish lately has your shape in it somewhere."',
-      "\"You needn't say anything. I've grown fluent in your silences.\"",
-    ],
-    bound: [
-      '"Stay until morning. The night has been generous; let\'s not insult it."',
-      '"I love you. There. No metaphor. I\'ve been saving the plain version."',
-      '"Stay till the last lantern\'s out. I never did get enough night, less of it now."',
-      '"Come here. I want to memorize something and it isn\'t a poem."',
-      "\"You've made a very poor poet of me. I've never been happier about anything.\"",
-    ],
-  },
-  approach: {
-    warm: [
-      "Accept the tea",
-      "Ask about the verse",
-      "Sit beside him",
-      "Tell him a small thing",
-    ],
-    spark: [
-      "Hear the poem",
-      "Come closer",
-      "Stay past the last lantern",
-      "Let him show you",
-    ],
-    close: [
-      "Go to him",
-      "Finish the poem together",
-      "Watch the moon with him",
-      "Say nothing, and stay",
-    ],
-    bound: [
-      "Stay until morning",
-      "Stay till the last lantern",
-      "Come here",
-      "Hear the plain version",
-    ],
-  },
-  responses: {
-    kind: {
-      new: [
-        "Honor his gentle spirit",
-        "Thank him for the welcome",
-        "Praise the verse honestly",
-      ],
-      spark: [
-        "Ask him to read it",
-        "Let his hand stay",
-        "Tell him the verse landed",
-      ],
-      close: [
-        "Accept all of what he is",
-        "Tell him his words reached you",
-        "Say he needn't write you well",
-      ],
-      bound: [
-        "Say the plain version back",
-        "Let the night run long",
-        "Stay until morning",
-      ],
-    },
-    playful: {
-      new: [
-        "Appreciate his warmth",
-        "Attempt a terrible haiku",
-        "Rhyme back at him",
-      ],
-      spark: [
-        "Steal his brush",
-        "Write him a terrible one back",
-        "Ask what rhymes with you",
-      ],
-      close: [
-        "Bring him gentle joy",
-        "Steal the last line",
-        "Make him laugh mid-verse",
-      ],
-      bound: [
-        "Hum it back at him, badly",
-        "Rhyme something filthy",
-        "Blow out the lantern",
-      ],
-    },
-    bold: {
-      new: [
-        "Be sincere and true",
-        "Say the unpoetic truth",
-        "Ask what he's not writing",
-      ],
-      spark: [
-        "Tell him to skip the poem",
-        "Close the space on the step",
-        "Ask him to show you",
-      ],
-      close: [
-        "Bold as poetry",
-        "Tell him plainly you love this",
-        "Give him the ending yourself",
-      ],
-      bound: [
-        "Tell him to stop writing",
-        "Kiss him mid-sentence",
-        "Say it without metaphor",
-      ],
-    },
-    neutral: {
-      new: [
-        "Respect his mystery",
-        "Listen to the wind with him",
-        "Let the verse finish",
-      ],
-      spark: ["Let the verse stand", "Watch the lanterns", "Leave it in haiku"],
-      close: [
-        "Accept his silence",
-        "Share the quiet syllables",
-        "Watch the lanterns together",
-      ],
-      bound: [
-        "Let the poem finish",
-        "Watch the lanterns burn down",
-        "Stay quiet with him",
-      ],
-    },
-  },
+  // No temperamentDialogue pool: every leftover line was placed onto a
+  // dialogue beat's `greeting` (docs/dialogue-greeting-pairing.md).
+  // No top-level `responses` pool: every dialogue[tier] beat (new/known/warm/
+  // spark/close/bound) now carries bespoke responses for all four types (see
+  // dialogue above), making the old per-tier pools fully unreachable — same
+  // end state as yuri.js/benkei.js/jin.js/kaito.js/lucas.js/tohma.js/leo.js/
+  // shohei.js/subaru.js.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

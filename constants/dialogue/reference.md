@@ -1456,6 +1456,8 @@ Due to being cursed, Rui can't get tired and admits that it's annoying he can't 
 
 Rui also often reprimands Edward whenever he gets a chance to flirt with the MC, resulting in Rui calling Edward a creep or telling him to stay away. At some point, he even suggests to the MC to get a restraining order on Edward.
 
+Rui has a nickname for Haru: "Harurin".
+
 Rui also seems to care deeply about MC and people in general. This is especially evident when he takes care of Lyca or Edward, and he even worries about MC's health. In "Episode 23: Our Last Goodbye act I” when he fails to kill Kyklos, he feels a sense of guilt and despair when he realizes that he was unable to destroy the source of MC's curse and that because of this MC was destined to die. From that episode on, Rui locked himself in his room refusing to come out (he didn't even leave his room to cook meals for Lyca and Edward) and searched for a way to break MC's curse, even going so far as to use black magic.
 
 His guilt and embarrassment were so strong that when he met MC at the ceremony in "Episode 24: Our Last Goodbye Act II" he couldn't even say a word to her.
@@ -2449,3 +2451,36 @@ Haku - shortens words like "prob", for "No prob", says "tbh". Writes in normal s
 Rui - likes to use some emojis like crying laughing emoji, sparkle. eager with "?!" on questions 
 Edward - uses LOTS of emojis, atleast 2 in a row at the end of sentence. Speaks in camel case "I've Become Rather Forgetful" not very verbose, but more direct
 Lyca - doesn't use only lowercase
+
+Canon guardrails from the 2026-09 acquaintance/friend bond scene review (each one was a real mistake; don't repeat it):
+Subaru - has worked/performed since he was FOUR. Never give a different age for when the stage (or his accommodating) started.
+Mio - built Haru's arm and Romeo's prosthetic limb. Romeo's limb is unspecified: say "prosthetic", never "leg" or "arm".
+Ritsu - reveres his father and the Shinjo family policy ("I was unworthy to be your son"). Never write his home as unsafe or abusive; the "morally bankrupt lawyer" is only a rumor. His behavioral model comes from his studies and notebook, not trauma. He tracks "Taiga Hoshibami" (full name) and his whereabouts; don't invent an illness or "condition" for Taiga.
+Taiga - forgets names, not people he's nicknamed. With MC he can lose her *name*, but never *her*; "kitten" is the part that sticks.
+Leo - His menace is social: people "take the bait", he treats them as "content". Don't write people flinching from him in fear.
+Elias - plain, soft, polite register with trailing "…". The New Orleans roots show in content (his mother, jambalaya, imported sweets), never in dialect words: no "reckon" (that's Haru's canon word), "folks", "y'all", or "sure" as an intensifier. No British register either: no "rather", "ought", or "if I may".
+Ren - calls Haru "that clown" in his own voice, never "Haru". Narration and keepsakes may use the name.
+Rui - calls Edward "Ed". His imagery is the bar, the kitchen, and the garden, not walls and doors.
+Romeo - his worth is money and looks, never usefulness (that's Subaru's or Kaito's insecurity). He prices things and coins acronyms he spells out ("WMOO. Wasted Month Of Opportunities, obviously").
+Tohma - learns things by "happening to overhear". Debriefs with Jin happen in Jin's room; Jin doesn't go on missions. Don't give him Edward's late-hour, "people are honest at this hour" conceit.
+Jin - swears for real (shit, hell, idiot), not just "as hell". His bond scenes are texts, so keepsakes shouldn't hinge on his handwriting.
+Towa - no long introspection. He reads people by his canon sharp hearing (heartbeats, from across the park), and watches openly. Don't borrow Shion's "testing is how I know when you'll leave".
+Haku - his spooking has a real edge: he's a genuine medium, so "I'm kidding" isn't always true. Don't give him door or deflection metaphors (those are Elias's).
+Jo - he's the one everyone brings problems to. Build his beats on being handed something instead of a problem, not on MC "never needing anything".
+Lucas - the acquaintance and friend bond scenes are off-voice and need a rewrite with a new scenario. His `new`/`known` dialogue in lucas.js is the current voice reference. In that dialogue he is socially confident and warm, not hesitant. He smiles first, holds doors without a word, steps between a first-year and older bullies "calm as if it's nothing", takes your bag ("Allow me"), brings an extra biscuit, asks whether you've eaten and expects the honest answer, turns up ten minutes early, drills alone in the training yard, worries about Kaito, rehearses asking Jin for an assignment, and stays late over demon texts.
+  What the old scenes got wrong: (1) Acquaintance has him fumbling ("I'd likely forget half of what I meant to say") and asking MC how to repay a kindness, with a hidden four-page ledger. That's passive, and debt/ledger framing is Romeo's and Ritsu's transactional motif. (2) Friend has people treating him "like a thing that might go off", which contradicts canon: people find him approachable and trust him easily. (3) "The first joke since I got here" makes him humorless. He's friendly and at ease, especially with Kaito and MC. (4) "Not always as well mannered as I look" reads as menace. The "out of sorts, like I'm not myself" thread is canon (LVL 24), but it belongs to later tiers, and he frames it as something to train through, not a threat.
+  Canon material for new scenarios: stepping in to defend someone; early training invites ("An early training session will warm you up"); being ten minutes early; biscuits on hand; Kaito's ramen, pajama parties, and the Kaito + MC trio; Emrys vs. Darkwick discrepancies; UK folklore (the Sandman); fetching mission documents from Tohma; asking Jin for assignments; morning vs. night (his twin Nox preferred night); he struggles to keep secrets, so a friend-tier beat can be him telling MC something he'd meant to keep; "If you're ever in trouble, you can always come to me."
+Keepsakes - must describe something that actually happens in the scene. A character can't reuse a keepsake emoji across their own six levels (npm test enforces it).
+Invented specifics - don't invent ages, childhood events, or body parts that reference.md doesn't state. If a detail isn't in canon, leave it vague.
+
+Motif ownership: one character per motif. Don't hand these to anyone else.
+"Ask what it cost him" / pricing a favor - Romeo
+"You never want anything from me" - Romeo and Ritsu (transactional canon). Ren and Benkei have their own variants; don't add more characters.
+Stepping back / the flinch of prey - Edward
+The literal flinch (from a gun) - Taiga
+Testing people to find out when they'll leave - Shion
+Heartbeats / listening - Towa
+Deflection the MC waits out, and the door held shut - Elias
+Jokes that aren't jokes - Haku
+"Eleven minutes" of silence - Alan
+Friend-tier template - every friend scene is "you always answer me with {favResponse}; everyone else does X; you don't". X must come from that character's own canon, never a premise another character already uses.

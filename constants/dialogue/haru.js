@@ -53,39 +53,39 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: Righto, got a question, and I've been sitting on it a couple weeks now like a coward.",
-        "You come at me with {favResponse} every time and you never once use it as an exit.\n\nHere's the thing. I say something a bit much, and people either laugh it off to give me an out, or they go quiet and I crack a bigger joke to patch it. Two options my whole life.\n\nYou just... take it. Straight. Like I meant it. Which is a nightmare, hey, because turns out I do mean it, and the whole thing falls apart if nobody hands me the out.",
+        "**{firstName}**: Hey. Went back and forth on whether I should message you at all, so if this is weird just ignore it (^_^;)",
+        "One of the critters isn't doing great. Nothing dramatic, she's stable. But it's a two-person job and I've only got the one of me.\n\nCould rope in Ren or Towa, sure. But yeah, nah. Not for this one.",
+        "You, though! You're a real good sport, hey. Doesn't matter what mess I drag you into, you come back with {favResponse} and roll with it. Gahaha!\n\nSo I'm chancing it. Last minute, I know (^_^;) Reckon you could come lend us a hand? You'd be a real lifesaver.",
       ],
       choice: {
-        prompt:
-          "So can you stop? Or, you know. Don't. Either's... yeah. Either.",
+        prompt: "No pressure. Well. A bit of pressure. Can you come?",
         options: [
           {
             key: "kind",
-            label: "Say you'll keep taking it",
+            label: "Say you're on your way",
             style: 3,
             close:
-              "Oh, cool. Cool cool cool.\n\nThat's the worst possible answer and I'm rapt about it (^_^;) I'm gonna go stand in the aviary for a bit.",
+              "...Yeah? All right! Cheers.\n\nGate's already propped open, come straight through. Knew you would, btw (^_^)",
           },
           {
             key: "playful",
-            label: "Offer him one out a week",
+            label: "Ask if there's a tour discount",
             style: 1,
             close:
-              "One a WEEK? That's rationing! That's cruel and unusual!\n\n...Fine. One a week. I'm saving it for something big, don't waste it on me being weird about the weather.",
+              "Mates' rates, obviously. Free, in fact. This one's on the house (^_^;)\n\n...Cheers for making me laugh. Needed that. Gate's open.",
           },
           {
             key: "bold",
-            label: "Tell him to mean it out loud",
+            label: "Say he should've asked sooner",
             style: 4,
             close:
-              "*There's a very long silence, and then a voice note that is four seconds of him going* \"...\" *and then hanging up.*\n\n*Then:* couldn't do it. sorry (;_;) gave it a red hot go and everything.\n\nAsk me again in a bit though. Don't let me off.",
+              "Yeah, nah, don't go saying that. I'll get used to it.\n\n...Maybe I should've, though. Noted. Now get over here (^_^;)",
           },
         ],
       },
       keepsake: {
-        emoji: "🗺️",
-        line: "The out he asked for and then hoped you wouldn't give him.",
+        emoji: "🚪",
+        line: "The gate he'd already left open, because he knew you'd come.",
       },
     },
 
@@ -220,7 +220,7 @@ export default {
             label: "Say it back",
             style: 3,
             close:
-              "...Say that again, I've gone and dropped my phone in the mud.\n\n*He's already running by the time you've typed it. He arrives at the side gate absolutely filthy and completely undone, and for once in his life he does not bolt and he does not joke.*\n\n*He kisses you against the gate with the enclosure lights off and the old girl watching, and afterwards he laughs (properly, wrecked, delighted) and says,*\n\n> Right. Yeah. Beauty.",
+              "...Say that again, I've gone and dropped my phone in the mud.\n\n*He's already running by the time you've typed it. He arrives at the side gate absolutely filthy and completely undone, and for once in his life he does not bolt and he does not joke.*\n\n*He kisses you against the gate with the enclosure lights off and the old girl watching, and afterwards he laughs (properly, wrecked, delighted) and says,*\n\n> Gahaha... yeah. All right.",
           },
           {
             key: "held",
@@ -242,255 +242,497 @@ export default {
       {
         line: "He's got a feed bucket in one hand and something small in his sling backpack. \"Don't mind Peekaboo. He's shy.\"",
         approach: "Say Hi to Peekaboo",
+        greeting:
+          "\"Rule one: don't feed anything unless I say so. Rule two: Peekaboo doesn't count.\"",
+        responses: {
+          kind: ["Ask what Peekaboo likes", "Promise to follow the rules"],
+          playful: ["Sneak Peekaboo a snack", "Ask what rule three is"],
+          bold: ["Offer Peekaboo your hand", "Ask to meet the scary ones"],
+          neutral: ["Nod along to the rules", "Keep your hands to yourself"],
+        },
       },
       {
         line: "He looks up from a fence post and grins wide. \"Well, hey there. You after somethin', or just havin' a wander?\"",
         approach: "Just say you're wandering",
+        greeting: '"Gahaha! Someone interesting wandered in!"',
+        responses: {
+          kind: ["Thank him for the welcome", "Smile back at him"],
+          playful: [
+            "Say you got lost on purpose",
+            "Say you're after free snacks",
+          ],
+          bold: ["Ask for the full tour", "Say you want to stick around"],
+          neutral: ["Wave and look around", "Let him keep working"],
+        },
       },
       {
         line: "\"Phew... that's the last of the feed crops in for the day. Every critter here's only as healthy as what's in the bucket, so you do it right or you don't bother.\"",
         approach: "Hold the bucket",
+        greeting:
+          "\"Hold this. No, it's friendly. Mostly friendly. It's fine!\"",
+        responses: {
+          kind: ["Say the critters are lucky", "Ask how you can help"],
+          playful: ["Ask what's on the menu", "Sniff the bucket, regret it"],
+          bold: ["Offer to do the next round", "Ask to mix the feed yourself"],
+          neutral: ["Hold it steady and listen", "Watch how he measures it"],
+        },
       },
       {
         line: "He smells like feed and straw and something faintly sulfurous, and seems entirely unbothered by all three.",
         approach: "Walk into the pens",
+        greeting:
+          '"Gahaha! You didn\'t even bat an eye. All right, I like you already."',
+        responses: {
+          kind: ["Thank him for the compliment", "Say the animals seem happy"],
+          playful: ["Pretend you smell nothing", "Hold your nose, grinning"],
+          bold: ["Ask to see the worst pen", "Say it takes more than that"],
+          neutral: ["Shrug it off", "Just take it all in"],
+        },
       },
       {
         line: 'Something skitters behind him. "Ah, ignore that," he says cheerfully. "That one\'s supposed to be in a pen."',
         approach: "Don't freak out",
+        greeting:
+          '"Careful where you step, half of what\'s on this floor is alive and the other half bites."',
+        responses: {
+          kind: ["Step where he steps", "Ask if the loose one is okay"],
+          playful: ["Ask which half you're on", "Tiptoe dramatically"],
+          bold: ["Offer to catch the runaway", "Walk in anyway"],
+          neutral: ["Watch the floor", "Follow close behind him"],
+        },
       },
     ],
     known: [
       {
         line: 'He shoulders the feed bucket without breaking stride. "Didn\'t figure you for someone who sits still either."',
         approach: "Offer to help",
+        greeting:
+          "\"You keep turnin' up right when I need an extra pair of hands. I'm not complainin'.\"",
+        responses: {
+          kind: ["Offer a real hand", "Say you don't mind helping"],
+          playful: ["Ask if you're on payroll now", "Demand hazard pay"],
+          bold: ["Take the bucket from him", "Say you're basically staff"],
+          neutral: ["Help without comment", "Take a task quietly"],
+        },
       },
       {
         line: "Peekaboo peers at you over the edge of his sling and immediately ducks back down.",
         approach: "Say hello to Peekaboo",
+        greeting:
+          '"You sure are fond of Honor Roll, aren\'t you, Peekaboo? You did nothing but bite me for the first three days after we met."',
+        responses: {
+          kind: ["Greet Peekaboo gently", "Let him warm up slowly"],
+          playful: [
+            "Ask what changed his mind",
+            "Take the credit for Peekaboo",
+          ],
+          bold: ["Say Peekaboo has good taste", "Pet him with confidence"],
+          neutral: ["Nod at Peekaboo, say nothing", "Let him hide, unbothered"],
+        },
       },
       {
         line: "He hands you the feed bucket without asking. You've been drafted into the rounds.",
         approach: "Take the feed bucket",
+        greeting:
+          '"What a coinkydink, you keep turnin\' up wherever I am. Not that I mind. Grab a bucket."',
+        responses: {
+          kind: ["Take the bucket gladly", "Say you don't mind the draft"],
+          playful: ["Ask what the pay is", "Demand a title for the job"],
+          bold: [
+            "Take the bucket like it's owed",
+            "Start before he assigns you",
+          ],
+          neutral: ["Take the bucket, say nothing", "Get to work quietly"],
+        },
       },
       {
         line: '"You remembered which one bites," he says, delighted. "That\'s more than most of my house manages."',
         approach: "Say you're a fast learner",
+        greeting:
+          "\"Careful of that one, he's decided you're furniture. Just go with it.\"",
+        responses: {
+          kind: ["Say you were paying attention", "Thank him for the warning"],
+          playful: ["Ask to join Jabberwock", "Offer to tutor his house"],
+          bold: ["Say you remember everything", "Challenge him to test you"],
+          neutral: ["Shrug, say nothing", "Take the praise plainly"],
+        },
       },
       {
         line: '"Folks are going wild over the Anomalous Animal Back To Nature Tour, your chance to experience it at a discount rate! C\'mon, help me hand out these fliers."',
         approach: "Help hand out fliers",
+        greeting:
+          "\"Stick around for feeding time, it's chaos but it's the good kind.\"",
+        responses: {
+          kind: ["Help hand them out gladly", "Say the tour sounds great"],
+          playful: [
+            "Improvise a pitch of your own",
+            "Heckle the flier wording",
+          ],
+          bold: ["Hand out more than your share", "Take over the pitch"],
+          neutral: ["Hand them out quietly", "Help without comment"],
+        },
       },
       {
         line: "He waves you over the second he spots you, already listing off what needs doing today.",
         approach: "Join the rounds",
+        greeting:
+          "\"Perfect timing. I'm on the evening rounds. You're comin' with me, hey? C'mon, let's get this show on the road.\"",
+        responses: {
+          kind: ["Join gladly", "Say you're happy to help"],
+          playful: ["Ask what disaster's first", "Demand the easy jobs"],
+          bold: ["Take the hardest job first", "Jump in before he assigns you"],
+          neutral: ["Join without a word", "Get to it quietly"],
+        },
       },
       {
         line: "\"You'll be alright, you got this!\" he says, to you, about something you hadn't even realized you were worried about.",
         approach: "Ask how he knew",
+        greeting:
+          '"Everyone stuffs up sometimes. Don\'t let it get to you, just think of it as a funny story you can pull out later and laugh at! Gahaha!"',
+        responses: {
+          kind: ["Thank him for noticing", "Say that helped, gently"],
+          playful: ["Ask how he always knows", "Guess what tipped him off"],
+          bold: [
+            "Say you weren't worried at all",
+            "Ask him to explain the read",
+          ],
+          neutral: ["Shrug, say nothing", "Take it in stride"],
+        },
       },
       {
         line: "He's penciled you into tomorrow's rounds already, cheerfully, like it was never up for discussion.",
         approach: "Go along with it",
+        greeting:
+          '"Oi, Honor Roll! Grab a bucket, we\'re short-staffed again."',
+        responses: {
+          kind: ["Go along cheerfully", "Say you don't mind it"],
+          playful: ["Demand a say in the schedule", "Ask what the pay's like"],
+          bold: ["Rewrite the schedule yourself", "Say you'd have come anyway"],
+          neutral: ["Go along, say nothing", "Show up, unbothered"],
+        },
       },
       {
         line: "\"Gahaha! Reckon that's a new record,\" he says, of something small you just did, like it's an achievement.",
         approach: "Take the compliment",
+        greeting:
+          "\"You're doin' better than half my volunteers, and they've been here longer. Gahaha!\"",
+        responses: {
+          kind: ["Take the compliment warmly", "Say that means a lot"],
+          playful: [
+            "Demand a bigger celebration",
+            "Ask what the record replaced",
+          ],
+          bold: ["Say you expected nothing less", "Claim the record proudly"],
+          neutral: ["Shrug at the compliment", "Take it plainly"],
+        },
       },
       {
         line: '"Oi, you seen Ren about?" He\'s already scanning the treeline. "He\'s dodging rounds again. Good thing I fitted him with a tracker."',
         approach: "Ask why",
+        greeting:
+          "\"Ren'd never leave his room if I didn't drag him out. Someone's gotta!\"",
+        responses: {
+          kind: ["Say you hope Ren's okay", "Offer to help find him"],
+          playful: ["Guess where Ren's hiding", "Ask about the tracker"],
+          bold: ["Say Ren's obviously dodging", "Volunteer to drag Ren back"],
+          neutral: ["Shrug, say nothing", "Let it go unremarked"],
+        },
       },
       {
         line: "You catch him staring, and he grins like he wasn't. \"What? I'm allowed to admire good work ethic.\"",
         approach: "Call him out",
+        greeting:
+          '"Peekaboo let you pet him without biting. You\'re his best friend now. Took me days of bites to get there!"',
+        responses: {
+          kind: ["Say Peekaboo's a sweetheart", "Promise to be a good friend"],
+          playful: ["Ask if he's jealous", "Ask if you outrank him now"],
+          bold: ["Claim Peekaboo for yourself", "Pet Peekaboo again"],
+          neutral: ["Keep petting Peekaboo", "Smile and say nothing"],
+        },
       },
       {
         line: '"Mates\' rates, just for you," he says, and it is not, in fact, a discount anyone else gets.',
         approach: "Take the mates' rates",
+        greeting:
+          "\"Gahaha! Mates' rates means no excuse not to come by every day, hey. Just don't go telling the tour group what you paid.\"",
+        responses: {
+          kind: ["Promise to come every day", "Thank him for the deal"],
+          playful: [
+            "Ask if everyone gets this rate",
+            "Demand an even bigger discount",
+          ],
+          bold: ["Say you'd come without it", "Ask why you get special rates"],
+          neutral: ["Take the deal, say nothing", "Nod, say you'll be around"],
+        },
       },
       {
         line: "He's noticed you've started coming by even on days there's nothing to feed or fix.",
         approach: "Say you like it here",
+        greeting:
+          '"So is it Towa you keep coming back for? Just curious. No reason. Gahaha!"',
+        responses: {
+          kind: ["Say it's not just Towa", "Admit you like the company"],
+          playful: ["Say it's all for Peekaboo", "Say Towa's great company"],
+          bold: ["Say you come for him", "Ask who he hopes it is"],
+          neutral: ["Shrug, say nothing", "Say you like it here"],
+        },
       },
     ],
     warm: [
-      "His whole face lights up when he sees you: genuine delight, the kind that makes his warmth impossible to resist.",
-      '"You reckon I work hard? Nah, this is nothing to write home about." He\'s filthy to the elbows and beaming.',
-      '"Hey, nice work out there today! Let\'s knock a few more jobs off the list then take a break, hey?"',
-      "Peekaboo comes out when you arrive now. Haru says that has never once happened before.",
-      '"Honor Roll!" he calls, over the noise of about nine different critters.',
+      {
+        line: "His whole face lights up when he sees you: genuine delight, the kind that makes his warmth impossible to resist.",
+        approach: "Stay for the night feed",
+        greeting:
+          "\"Stay for the night feed. It's the good shift. Everything's sleepy.\"",
+        responses: {
+          kind: "Say you're happy to stay",
+          playful: "Ask what makes the shift good",
+          bold: "Say his warmth got you",
+          neutral: "Stay, say nothing",
+        },
+      },
+      {
+        line: '"You reckon I work hard? Nah, this is nothing to write home about." He\'s filthy to the elbows and beaming.',
+        approach: "Learn the feeding order",
+        greeting:
+          "\"You've got a way with the mean ones. That's a genuine skill, you know.\"",
+        responses: {
+          kind: "Say the hard work shows",
+          playful: "Tease the modesty",
+          bold: "Say he's clearly proud of it",
+          neutral: "Learn quietly, say nothing",
+        },
+      },
+      {
+        line: '"Hey, nice work out there today! Let\'s knock a few more jobs off the list then take a break, hey?"',
+        approach: "Grab a bucket",
+        greeting:
+          "\"Grab a bucket, we're flat out today. I'll make it fun, I promise.\"",
+        responses: {
+          kind: "Take the compliment gladly",
+          playful: "Demand the fun part now",
+          bold: "Say you'll hold him to 'fun'",
+          neutral: "Grab a bucket, say nothing",
+        },
+      },
+      {
+        line: "Peekaboo comes out when you arrive now. Haru says that has never once happened before.",
+        approach: "Coax Peekaboo out",
+        greeting:
+          "\"Peekaboo, look who's here, no, don't hide. Don't... okay. He'll come around.\"",
+        responses: {
+          kind: "Coax him out gently",
+          playful: "Take credit for the moment",
+          bold: "Say Peekaboo trusts you now",
+          neutral: "Wait quietly for Peekaboo",
+        },
+      },
+      {
+        line: '"Honor Roll!" he calls, over the noise of about nine different critters.',
+        approach: "Call back over the noise",
+        greeting: '"Hey, Honor Roll! Miss me?"',
+        responses: {
+          kind: "Call back warmly",
+          playful: "Tease him for asking",
+          bold: "Say of course you missed him",
+          neutral: "Wave back, say nothing",
+        },
+      },
     ],
     spark: [
-      "The teasing lands differently now. He's noticed. He's doing it more.",
-      "He wipes something off your cheek with his thumb and takes his time putting his hand back.",
-      "He's gentle with every creature in this place. With you he's gentle differently.",
-      "Peekaboo watches the pair of you from a rafter with what can only be described as judgment.",
-      "He catches your wrist mid-laugh and the laugh stops for both of you.",
+      {
+        line: "The teasing lands differently now. He's noticed. He's doing it more.",
+        approach: "Notice the shift",
+        greeting:
+          '"I tease everybody, sure. But with you I mean it. That\'s the honest difference, Honor Roll."',
+        responses: {
+          kind: "Tell him you knew",
+          playful: "Out-flirt him",
+          bold: "Tell him to stop joking",
+          neutral: "Laugh it off",
+        },
+      },
+      {
+        line: "He wipes something off your cheek with his thumb and takes his time putting his hand back.",
+        approach: "Let him take his time",
+        greeting:
+          '"C\'mon, sit with me a minute. Animals can wait. ...Did I just say that? Huh."',
+        responses: {
+          kind: "Let his hand stay",
+          playful: "Put the straw back in his hair",
+          bold: "Close the inch",
+          neutral: "Let the moment go",
+        },
+      },
+      {
+        line: "He's gentle with every creature in this place. With you he's gentle differently.",
+        approach: "Stay for the night rounds",
+        greeting:
+          "\"Stay for the night rounds. Everything's asleep. Nobody's watching but Peekaboo.\"",
+        responses: {
+          kind: "Say the critters adore him",
+          playful: "Ask if you're a critter too",
+          bold: "Ask why you're different",
+          neutral: "Let him be gentle, say nothing",
+        },
+      },
+      {
+        line: "Peekaboo watches the pair of you from a rafter with what can only be described as judgment.",
+        approach: "Ignore the judgment",
+        greeting:
+          "\"You've got straw in your hair. No, leave it. It's working for you.\"",
+        responses: {
+          kind: "Take his hand properly",
+          playful: "Make him move first",
+          bold: "Stare Peekaboo down",
+          neutral: "Watch Peekaboo instead",
+        },
+      },
+      {
+        line: "He catches your wrist mid-laugh and the laugh stops for both of you.",
+        approach: "Move first",
+        greeting:
+          "\"You're gonna have to move first. I've used up all my nerve getting this close.\"",
+        responses: {
+          kind: "Let him have the nerve",
+          playful: "Tease him for running out",
+          bold: "Move first",
+          neutral: "Hold still, wait him out",
+        },
+      },
     ],
     close: [
-      '"You make every day feel like an adventure," he says, taking your hand. "Like... like home. That\'s the honest truth."',
-      "He's trusted you with the west pens alone. He has never trusted anyone with the west pens.",
-      "The mischief goes quiet for once, and what's left is unguarded and warm.",
-      "He introduces you to a new arrival by name: yours first, then the anomaly's.",
-      "Peekaboo rides on your shoulder out of preference now. Haru pretends not to be jealous.",
+      {
+        line: '"You make every day feel like an adventure," he says, taking your hand. "Like... like home. That\'s the honest truth."',
+        approach: "Say it back",
+        greeting:
+          '"Everywhere\'s better with you in it. ...Not a line. I meant every word."',
+        responses: {
+          kind: "Show him home is with you",
+          playful: "Match his mischief",
+          bold: "Match his boldness",
+          neutral: "Rest with him",
+        },
+      },
+      {
+        line: "He's trusted you with the west pens alone. He has never trusted anyone with the west pens.",
+        approach: "Take the west pens",
+        greeting:
+          '"Go on. They already like you better than me. I\'m not even jealous. Much."',
+        responses: {
+          kind: "Take the west pens",
+          playful: "Ask what earned the trust",
+          bold: "Take the pens, no hesitation",
+          neutral: "Finish the rounds in silence",
+        },
+      },
+      {
+        line: "The mischief goes quiet for once, and what's left is unguarded and warm.",
+        approach: "See him unguarded",
+        greeting: '"Come here. No punchline. I just want you closer."',
+        responses: {
+          kind: "Say it wasn't a joke either",
+          playful: "Get into trouble with him",
+          bold: "Take his hand first",
+          neutral: "Sit close and say nothing",
+        },
+      },
+      {
+        line: "He introduces you to a new arrival by name: yours first, then the anomaly's.",
+        approach: "Go to him",
+        greeting:
+          "\"You feed them like they matter to you. That's... yeah. That's the thing that got me.\"",
+        responses: {
+          kind: "Say your name matters too",
+          playful: "Ask what the anomaly thinks",
+          bold: "Tell him you'd follow anywhere",
+          neutral: "Let the introduction stand",
+        },
+      },
+      {
+        line: "Peekaboo rides on your shoulder out of preference now. Haru pretends not to be jealous.",
+        approach: "Let Peekaboo settle",
+        greeting:
+          '"I really like seeing you smile. Can I be honest about that?"',
+        responses: {
+          kind: "Reassure Haru he's still first",
+          playful: "Let Peekaboo choose you",
+          bold: "Claim Peekaboo's loyalty too",
+          neutral: "Let Peekaboo have his choice",
+        },
+      },
     ],
     bound: [
-      "He kisses you in doorways, in stairwells, mid-sentence, constantly, without warning.",
-      "You do the night rounds together now. Neither of you calls it a routine. It is.",
-      '"Home," he says, meaning you, with his forehead against yours.',
-      "He wakes you at 2am because something's hatching and he refuses to see it without you.",
-      "Peekaboo sleeps at the foot of the bed. Haru insists this was entirely your idea.",
+      {
+        line: "He kisses you in doorways, in stairwells, mid-sentence, constantly, without warning.",
+        approach: "Kiss him back",
+        greeting:
+          '"C\'mere, Honor Roll. No joke this time. Not even a small one."',
+        responses: {
+          kind: "Kiss him back gently",
+          playful: "Kiss him mid-sentence first",
+          bold: "Pull him into the stairwell",
+          neutral: "Let him kiss you, say nothing",
+        },
+      },
+      {
+        line: "You do the night rounds together now. Neither of you calls it a routine. It is.",
+        approach: "Do the rounds together",
+        greeting:
+          '"Ren and Towa can hold down the fort. Come do the night rounds with me, then come back to bed."',
+        responses: {
+          kind: "Tell him he's home too",
+          playful: "Make him wait for it",
+          bold: "Say it first",
+          neutral: "Do the rounds quietly",
+        },
+      },
+      {
+        line: '"Home," he says, meaning you, with his forehead against yours.',
+        approach: "Say it back",
+        greeting:
+          "\"You're it for me. That's the whole thing. That's all I've got.\"",
+        responses: {
+          kind: "Say it back",
+          playful: "Ask what home smells like",
+          bold: "Tell him he's it for you",
+          neutral: "Hold his hand and say nothing",
+        },
+      },
+      {
+        line: "He wakes you at 2am because something's hatching and he refuses to see it without you.",
+        approach: "Go see what's hatching",
+        greeting:
+          '"I love you. Told you I\'d say it eventually. Took me long enough, huh?"',
+        responses: {
+          kind: "Let him wake you at 2am",
+          playful: "Complain about the hour",
+          bold: "Race him to see it",
+          neutral: "Let the night run",
+        },
+      },
+      {
+        line: "Peekaboo sleeps at the foot of the bed. Haru insists this was entirely your idea.",
+        approach: "Come back to bed",
+        greeting:
+          "\"Peekaboo picked you before I'd admit it myself. He's real smug about that, too. Gahaha.\"",
+        responses: {
+          kind: "Let Peekaboo stay",
+          playful: "Blame Peekaboo",
+          bold: "Deny it was your idea, boldly",
+          neutral: "Let them both sleep",
+        },
+      },
     ],
   },
-  temperamentDialogue: {
-    new: [
-      '"Gahaha! Someone interesting wandered in!"',
-      '"Careful where you step, half of what\'s on this floor is alive and the other half bites."',
-      "\"Rule one: don't feed anything unless I say so. Rule two: Peekaboo doesn't count.\"",
-      "\"Hold this. No, it's friendly. Mostly friendly. It's fine!\"",
-      '"Gahaha! You didn\'t even flinch. All right, I like you already."',
-    ],
-    known: [
-      '"Hey, Honor Roll! That\'s the name that stuck, huh? Fair enough."',
-      "\"Perfect timing. I'm on the evening rounds. You're comin' with me, hey? C'mon, let's get this show on the road.\"",
-      '"You sure are fond of Honor Roll, aren\'t you, Peekaboo? You did nothing but bite me for the first three days after we met."',
-      '"What a coinkydink, you keep turnin\' up wherever I am. Not that I mind. Grab a bucket."',
-      '"Everyone stuffs up sometimes. Don\'t let it get to you, just think of it as a funny story you can pull out later and laugh at! Gahaha!"',
-    ],
-    warm: [
-      '"Hey, Honor Roll! Miss me?"',
-      "\"Grab a bucket, we're flat out today. I'll make it fun, I promise.\"",
-      "\"Peekaboo, look who's here, no, don't hide. Don't... okay. He'll come around.\"",
-      "\"You've got a way with the mean ones. That's a genuine skill, you know.\"",
-      "\"Stay for the night feed. It's the good shift. Everything's sleepy.\"",
-    ],
-    spark: [
-      '"C\'mon, sit with me a minute. Animals can wait. ...Did I just say that? Huh."',
-      '"I tease everybody, sure. But with you I mean it. That\'s the honest difference, Honor Roll."',
-      "\"Stay for the night rounds. Everything's asleep. Nobody's watching but Peekaboo.\"",
-      "\"You've got straw in your hair. No, leave it. It's working for you.\"",
-      "\"You're gonna have to move first. I've used up all my nerve getting this close.\"",
-    ],
-    close: [
-      '"I really like seeing you smile. Can I be honest about that?"',
-      "\"Everywhere's better with you in it. That's the honest truth, not a line.\"",
-      "\"You feed them like they matter to you. That's... yeah. That's the thing that got me.\"",
-      '"Take the west pens tonight. I trust you with them. I don\'t say that."',
-      '"Come here. No punchline. I just want you closer."',
-    ],
-    bound: [
-      '"C\'mere, Honor Roll. No joke this time. Not even a small one."',
-      '"I love you. Told you I\'d say it eventually. Took me long enough, huh?"',
-      '"Ren and Towa can hold down the fort. Come do the night rounds with me, then come back to bed."',
-      "\"You're it for me. That's the whole thing. That's all I've got.\"",
-      "\"Peekaboo picked you before I'd admit it myself. He's real smug about that, too. Gahaha.\"",
-    ],
-  },
-  approach: {
-    warm: [
-      "Grab a bucket",
-      "Stay for the night feed",
-      "Coax Peekaboo out",
-      "Learn the feeding order",
-    ],
-    spark: [
-      "Move first",
-      "Stay for the night rounds",
-      "Leave the straw in",
-      "Let him take his time",
-    ],
-    close: [
-      "Go to him",
-      "Take the west pens",
-      "Let Peekaboo settle",
-      "Say it back",
-    ],
-    bound: [
-      "Do the rounds together",
-      "Come back to bed",
-      "Go see what's hatching",
-      "Say it back",
-    ],
-  },
-  responses: {
-    kind: {
-      new: [
-        "Appreciate his warmth",
-        "Ask about Peekaboo",
-        "Take his bad advice kindly",
-      ],
-      spark: [
-        "Tell him you knew",
-        "Say the critters adore him",
-        "Take his hand properly",
-      ],
-      close: [
-        "Show him home is with you",
-        "Take the west pens",
-        "Say it wasn't a joke either",
-      ],
-      bound: [
-        "Say it back",
-        "Tell him he's home too",
-        "Let him wake you at 2am",
-      ],
-    },
-    playful: {
-      new: [
-        "Call it a coinkydink",
-        "Feed something you shouldn't",
-        "Tease him before he teases you",
-      ],
-      spark: [
-        "Make him move first",
-        "Put the straw back in his hair",
-        "Out-flirt him",
-      ],
-      close: [
-        "Match his mischief",
-        "Let Peekaboo choose you",
-        "Get into trouble with him",
-      ],
-      bound: [
-        "Make him wait for it",
-        "Blame Peekaboo",
-        "Kiss him mid-sentence first",
-      ],
-    },
-    bold: {
-      new: [
-        "Be daring with him",
-        "Hold whatever he offers",
-        "Walk into the pens",
-      ],
-      spark: ["Move first", "Close the inch", "Tell him to stop joking"],
-      close: [
-        "Match his boldness",
-        "Take his hand first",
-        "Tell him you'd follow anywhere",
-      ],
-      bound: [
-        "Say it first",
-        "Pull him into the stairwell",
-        "Tell him he's it for you",
-      ],
-    },
-    neutral: {
-      new: ["Be present", "Watch him work", "Let him finish the rounds"],
-      spark: ["Laugh it off", "Watch Peekaboo instead", "Let the moment go"],
-      close: [
-        "Rest with him",
-        "Finish the rounds in silence",
-        "Sit close and say nothing",
-      ],
-      bound: [
-        "Hold his hand and say nothing",
-        "Do the rounds quietly",
-        "Let the night run",
-      ],
-    },
-  },
+  // No temperamentDialogue pool: every leftover line was placed onto a
+  // dialogue beat's `greeting` (docs/dialogue-greeting-pairing.md).
+  // No top-level `responses` pool: every dialogue[tier] beat (new/known/warm/
+  // spark/close/bound) now carries bespoke responses for all four types (see
+  // dialogue above), making the old per-tier pools fully unreachable — same
+  // end state as yuri.js/benkei.js/jin.js/kaito.js/lucas.js/tohma.js/leo.js/
+  // shohei.js/subaru.js/zenji.js/haku.js/elias.js/mio.js/shion.js/jiro.js/
+  // ren.js.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

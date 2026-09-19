@@ -173,13 +173,13 @@ test('the first bond DM a user ever gets carries the frame line and the opt-out 
   assert.ok(lastButtons().some((id) => id.startsWith('bond:optout:')));
 });
 
-test('a later scene with another character is not treated as a first contact', async () => {
+test('a later scene with another character keeps the frame line but drops the opt-out button', async () => {
   await deliverBondScene(USER, CHAR, 'Friend');
   discord.posts = [];
 
   await deliverBondScene(USER, 'haru', 'Acquaintance');
 
-  assert.doesNotMatch(discord.posts[0].content, /sent you a message/);
+  assert.match(discord.posts[0].content, /sent you a message/);
   assert.ok(!lastButtons().some((id) => id.startsWith('bond:optout:')));
 });
 

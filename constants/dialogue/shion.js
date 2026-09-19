@@ -235,258 +235,475 @@ export default {
       {
         line: "He doesn't move to greet you. Only his eyes track across, then his head, slow, to follow you.",
         approach: "Avert your gaze",
+        greeting: "\"Don't run. Running's predictable, and I'll only follow.\"",
+        responses: {
+          kind: ["Answer him gently", "Say you weren't going to run"],
+          playful: ["Flinch on purpose, grinning", "Pretend to run, then don't"],
+          bold: ["Tell him to try you", "Walk toward him instead"],
+          neutral: ["Watch him carefully", "Stay exactly where you are"],
+        },
       },
       {
         line: '"Come closer," he says, flat. "You\'re still too far away. Closer." He isn\'t joking.',
         approach: "Take a step closer",
+        greeting: '"Better. Stay there. I want a proper look at you."',
+        responses: {
+          kind: ["Step closer gently", "Ask if this is close enough"],
+          playful: ["Take your time closing the gap", "Take a tiny, tiny step"],
+          bold: ["Step closer, not back", "Make him come to you"],
+          neutral: ["Wait him out", "Let him look, say nothing"],
+        },
       },
       {
         line: "He watches you the way he watches the cat across the yard, patient, unblinking, waiting to see what you'll do.",
         approach: "Avoid eye contact",
+        greeting: '"Hehehe... you flinched. Do it again."',
+        responses: {
+          kind: ["Meet his gaze softly", "Say you're not scared of him"],
+          playful: ["Give him a better face", "Flinch again, dramatically"],
+          bold: ["Stare right back", "Refuse to flinch twice"],
+          neutral: ["Give him nothing to read", "Look at the cat instead"],
+        },
       },
       {
         line: '"You wandered into the Heebie-Jeebie House on your own," he says. "Terrible instincts. I like them."',
         approach: "Call it curiosity",
+        greeting:
+          '"Curiosity. Fine. Sit down and be curious where I can see you."',
+        responses: {
+          kind: ["Say it wasn't really brave", "Sit where he can see you"],
+          playful: ["Don't take him seriously", "Ask for a tour of the house"],
+          bold: ["Own the bad instincts", "Sit wherever you like"],
+          neutral: ["Shrug at the label", "Sit down without a word"],
+        },
       },
       {
         line: "The way he studies your face feels less like interest and more like he's learning it for later.",
         approach: "Hold still",
+        greeting: '"That face is nice. I wonder what it looks like when you cry."',
+        responses: {
+          kind: ["Say you're not afraid", "Say you don't cry easily"],
+          playful: ["Ask what he's really learning", "Make a silly face instead"],
+          bold: ["Ask what's under the front", "Tell him he'll never see it"],
+          neutral: ["Hold still, give nothing", "Keep your face blank"],
+        },
       },
     ],
     known: [
       {
         line: "His gaze finds you first now, before anyone else in the room. It stopped being chance a while ago.",
         approach: "Hold his gaze",
+        greeting: '"What. I can look at you if I want."',
+        responses: {
+          kind: ["Hold his gaze warmly", "Let him have the attention"],
+          playful: ["Ask since when", "Call out the staring"],
+          bold: ["Hold his gaze right back", "Say you noticed too"],
+          neutral: ["Meet his gaze, say nothing", "Look away first"],
+        },
       },
       {
         line: "\"You're still alive, then. I couldn't find you anywhere. I'd half decided I'd killed you and forgotten.\"",
         approach: "Ask if he missed you",
+        greeting: '"You came back. Wasn\'t sure you would. Good."',
+        responses: {
+          kind: ["Say you're glad to be found", "Reassure him you're fine"],
+          playful: ["Ask if he really looked", "Tease the murder joke"],
+          bold: ["Say you'd have found him too", "Call the worry out"],
+          neutral: ["Shrug, say nothing", "Let the comment pass"],
+        },
       },
       {
         line: "He's stopped trying to startle you. He just studies you instead, which is somehow worse.",
         approach: "Let him study you",
+        greeting:
+          "\"You've stopped flinching. I haven't decided how I feel about that.\"",
+        responses: {
+          kind: ["Let him study you", "Stay still for him"],
+          playful: [
+            "Make a face for him to study",
+            "Ask what he's found so far",
+          ],
+          bold: ["Study him right back", "Ask what he's really doing"],
+          neutral: ["Hold still, unreadable", "Give him nothing"],
+        },
       },
       {
         line: "You catch him smiling at you, unguarded, a half second before he notices and wipes it off his face.",
         approach: "Say you saw it",
+        greeting: '"Stop looking at me like that. ...No. Keep doing it."',
+        responses: {
+          kind: ["Let him keep smiling", "Say the smile suits him"],
+          playful: ["Tease the wiped-off smile", "Demand he smile again"],
+          bold: ["Call out the smile directly", "Refuse to let him hide it"],
+          neutral: ["Pretend you didn't see it", "Say nothing, let it go"],
+        },
       },
       {
         line: "He's resetting the trapdoor trick again. It catches him off guard this time and he goes down with it, and comes back up looking delighted about it.",
         approach: "Ask if he's okay",
+        greeting: '"Hehehe... Did you see that? It works. It really works."',
+        responses: {
+          kind: ["Ask gently if he's hurt", "Help him up"],
+          playful: ["Laugh at the fall with him", "Ask if the trapdoor won"],
+          bold: ["Tell him to be careful", "Say the trick's getting old"],
+          neutral: ["Watch without reacting", "Say nothing about the fall"],
+        },
       },
       {
         line: "He makes a card vanish between two fingers, then says, flat, that he's gotten better at making people disappear too.",
         approach: "Ask who else vanished",
+        greeting:
+          '"Three faintings in the house this week. I keep the count. It\'s been a good year."',
+        responses: {
+          kind: ["Ask him to stop counting", "Say that's not funny, gently"],
+          playful: ["Ask if you're on the list", "Demand to see the count"],
+          bold: ["Tell him that's not a game", "Call out the count directly"],
+          neutral: ["Let the count go unremarked", "Say nothing about it"],
+        },
       },
       {
         line: "He's left something dead and small on your front doorstep again, a gift he clearly expects you to appreciate.",
         approach: "Say thank you",
+        greeting:
+          '"It\'s a present. You\'re happy, right? Your face says you\'re happy."',
+        responses: {
+          kind: ["Thank him, mean it", "Accept the gift kindly"],
+          playful: ["Ask what it is exactly", "Name the poor creature"],
+          bold: ["Take it without flinching", "Say it's a strange gift"],
+          neutral: ["Take it, say nothing", "Leave it where it is"],
+        },
       },
       {
         line: '"*Vepar*," he says, and your books are gone, swapped for one of the Heebie-Jeebie House\'s bloody head props.',
         approach: "Don't even blink",
+        greeting:
+          "\"Why've you gone all quiet? This is boring. ...Fine. I'll find something to do with you.\"",
+        responses: {
+          kind: ["Let him have his trick", "Play along kindly"],
+          playful: ["Demand your books back", "Ask what else he can vanish"],
+          bold: ["Take the prop and toss it back", "Call out the theft"],
+          neutral: ["Don't react at all", "Let the books stay gone"],
+        },
       },
       {
         line: "He's soaking wet and doesn't explain why. He never does.",
         approach: "Don't ask why he's wet",
+        greeting: '"Don\'t ask. ...You weren\'t going to? Good."',
+        responses: {
+          kind: ["Offer him a towel, no fuss", "Let him stay wet"],
+          playful: ["Guess where he's been", "Ask if he went swimming"],
+          bold: ["Demand to know why", "Push for the real story"],
+          neutral: ["Don't ask, let it be", "Ignore the wet clothes"],
+        },
       },
       {
         line: '"Mio says you asked about me," he says, and it\'s not clear yet if that pleases him or not.',
         approach: "Say you were curious",
+        greeting:
+          '"Mio thinks you\'re good for me. Mio thinks a lot of stupid things."',
+        responses: {
+          kind: ["Say you just wondered", "Admit you were curious, gently"],
+          playful: ["Ask what else Mio says", "Tease him about caring"],
+          bold: ["Say you asked on purpose", "Own the curiosity outright"],
+          neutral: ["Shrug, say nothing", "Let it go unremarked"],
+        },
       },
       {
         line: "He's picked a fight with another student, on your behalf, apparently.",
         approach: "Ask what they said about you",
+        greeting: '"That guy? Doesn\'t matter. I\'ll remember his face."',
+        responses: {
+          kind: [
+            "Ask him not to fight for you",
+            "Say you can handle it yourself",
+          ],
+          playful: ["Ask what they said, gleefully", "Demand the details"],
+          bold: ["Tell him to leave it alone", "Say you don't need defending"],
+          neutral: ["Let it go unremarked", "Say nothing about the fight"],
+        },
       },
       {
         line: "\"Don't tell Jo,\" he says, holding something he clearly isn't supposed to have.",
         approach: "Keep his secret",
+        greeting: '"If Jo finds out, I\'ll know it was you. Hehehe..."',
+        responses: {
+          kind: ["Keep the secret gladly", "Say you won't tell Jo"],
+          playful: ["Ask what he's hiding", "Threaten to tell Jo anyway"],
+          bold: ["Demand to see it", "Say secrets don't work on you"],
+          neutral: ["Don't ask, don't tell", "Let it go unremarked"],
+        },
       },
       {
         line: '"Get me that sickly brown stuff from Elias\'s," he says, already holding out an empty cup.',
         approach: "Fetch the sweet tea",
+        greeting: '"You\'re back. Sit where I can see you."',
+        responses: {
+          kind: ["Fetch it without complaint", "Bring it back warm"],
+          playful: ["Bring the wrong thing, smugly", "Demand a please first"],
+          bold: ["Refuse until he says please", "Make him get it himself"],
+          neutral: ["Fetch it, say nothing", "Hand it over quietly"],
+        },
       },
     ],
     warm: [
-      "His attention tilts to you first, before the rest of the room registers at all.",
-      "He's been waiting in this exact spot. He'd like you to know he doesn't wait for people.",
-      "\"You're not frightened of me anymore,\" he observes, and can't work out whether that disappoints him.",
-      "Whatever was standing too near you a moment ago has quietly stopped being a problem.",
-      '"I\'m thirsty. Go to Elias\'s and bring me that sickly brown stuff." A beat. "...Please."',
-      "\"Walk the Heebie-Jeebie House with me tonight. I'll frighten the others. You I'd sooner just watch.\"",
+      {
+        line: "His attention tilts to you first, before the rest of the room registers at all.",
+        approach: "Stand where he can see you",
+        greeting: "\"They said you'd stop visiting. They're usually wrong.\"",
+        responses: {
+          kind: "Stand where he can see you",
+          playful: "Ask since when he watches",
+          bold: "Make him find you faster",
+          neutral: "Stand there, say nothing",
+        },
+      },
+      {
+        line: "He's been waiting in this exact spot. He'd like you to know he doesn't wait for people.",
+        approach: "Greet him first",
+        greeting:
+          '"You finally came back. I waited here the whole time, you know. Don\'t you feel a bit sorry for me?"',
+        responses: {
+          kind: "Say you're glad he waited",
+          playful: "Ask how long he waited",
+          bold: "Say he clearly does wait",
+          neutral: "Shrug at the wait",
+        },
+      },
+      {
+        line: "\"You're not frightened of me anymore,\" he observes, and can't work out whether that disappoints him.",
+        approach: "Hold steady",
+        greeting: "\"You're not afraid of me now. That's a whole new game.\"",
+        responses: {
+          kind: "Say it's not disappointing",
+          playful: "Ask which he'd prefer",
+          bold: "Say fear was never the point",
+          neutral: "Let him decide, say nothing",
+        },
+      },
+      {
+        line: "Whatever was standing too near you a moment ago has quietly stopped being a problem.",
+        approach: "Notice what he did",
+        greeting:
+          '"Stay close to me. Nothing in this district would dare come near."',
+        responses: {
+          kind: "Thank him quietly",
+          playful: "Ask what he did to it",
+          bold: "Say you noticed",
+          neutral: "Let it go unremarked",
+        },
+      },
+      {
+        line: '"I\'m thirsty. Go to Elias\'s and bring me that sickly brown stuff." A beat. "...Please."',
+        approach: "Fetch what he asked",
+        greeting:
+          '"You actually went. ...You like me. Don\'t bother denying it."',
+        responses: {
+          kind: "Fetch it gladly",
+          playful: "Make him ask nicer",
+          bold: "Say of course you like him",
+          neutral: "Fetch it without a word",
+        },
+      },
+      {
+        line: "\"Walk the Heebie-Jeebie House with me tonight. I'll frighten the others. You I'd sooner just watch.\"",
+        approach: "Take his arm",
+        greeting:
+          '"Good. Hold on tight. If you let go, I\'ll have to come find you. ...I always do."',
+        responses: {
+          kind: "Take his arm gladly",
+          playful: "Ask who he'll scare first",
+          bold: "Say frights don't scare you",
+          neutral: "Take his arm, say nothing",
+        },
+      },
     ],
     spark: [
-      "He lets the flat calm slip an inch, just for you, just long enough that you're sure you saw it.",
-      "He steps in close behind you and speaks right at your ear, entirely on purpose.",
-      '"You stopped being afraid," he murmurs. "Now you\'re something far worse."',
-      "He takes your wrist, turns it over, and studies your pulse like it told him something he liked.",
-      '"You\'re getting bold," he says, almost approving. "Because you\'re nearly mine."',
+      {
+        line: "He lets the flat calm slip an inch, just for you, just long enough that you're sure you saw it.",
+        approach: "Let him look properly",
+        greeting: '"Let me look at you properly. I\'ve earned that much."',
+        responses: {
+          kind: "Let him look, softly",
+          playful: "Steal his next line",
+          bold: "Hold his gaze right back",
+          neutral: "Say nothing",
+        },
+      },
+      {
+        line: "He steps in close behind you and speaks right at your ear, entirely on purpose.",
+        approach: "Go round the back",
+        greeting:
+          '"Come round the back of the house. The good frights are back there."',
+        responses: {
+          kind: "Reach for him gently",
+          playful: "Play the dangerous thing",
+          bold: "Go round the back with him",
+          neutral: "Let him have the quiet",
+        },
+      },
+      {
+        line: '"You stopped being afraid," he murmurs. "Now you\'re something far worse."',
+        approach: "Ask what's worse",
+        greeting:
+          '"I\'m not in the mood to make you cry today. Come back later for that."',
+        responses: {
+          kind: "Tell him you're not afraid",
+          playful: "Ask what's worse, teasingly",
+          bold: "Say you like being worse",
+          neutral: "Let the moment pass",
+        },
+      },
+      {
+        line: "He takes your wrist, turns it over, and studies your pulse like it told him something he liked.",
+        approach: "Let him take your wrist",
+        greeting: '"Your pulse is quick. I do like being the reason."',
+        responses: {
+          kind: "Let him hold your wrist",
+          playful: "Make his pulse quick instead",
+          bold: "Turn his wrist over instead",
+          neutral: "Let him study it, say nothing",
+        },
+      },
+      {
+        line: '"You\'re getting bold," he says, almost approving. "Because you\'re nearly mine."',
+        approach: "Say it",
+        greeting: "\"Say you're mine. You needn't mean it yet. I'm patient.\"",
+        responses: {
+          kind: "Say you're getting there",
+          playful: "Tease the word 'nearly'",
+          bold: "Say you're his",
+          neutral: "Let the claim sit unanswered",
+        },
+      },
     ],
     close: [
-      '"For you," Shion says, and the flatness cracks just enough to let a real smile through.',
-      "He puts himself between you and the room without seeming to have decided to.",
-      '"Nothing in here touches you," he says, mild about it. "It\'s mine. I\'ve made arrangements."',
-      "The blank calm falls away, and what's underneath is startlingly gentle.",
-      "He drops every last piece of the front. Only you get that. Only ever you.",
+      {
+        line: '"For you," Shion says, and the flatness cracks just enough to let a real smile through.',
+        approach: "Go to him",
+        greeting: '"You\'re mine to look after now. My wife."',
+        responses: {
+          kind: "Let him look after you",
+          playful: "Make the villain laugh",
+          bold: "Claim him right back",
+          neutral: "Take it in, say nothing",
+        },
+      },
+      {
+        line: "He puts himself between you and the room without seeming to have decided to.",
+        approach: "Stand behind him",
+        greeting:
+          "\"The world's a cruel place. You're simply never going to be out in it.\"",
+        responses: {
+          kind: "Let him stand there",
+          playful: "Play along with him",
+          bold: "Step out from behind him",
+          neutral: "Let him watch over you",
+        },
+      },
+      {
+        line: '"Nothing in here touches you," he says, mild about it. "It\'s mine. I\'ve made arrangements."',
+        approach: "Trust his arrangements",
+        greeting:
+          '"Anything that reaches you goes through me first. That isn\'t aimed at you."',
+        responses: {
+          kind: "Trust the arrangements",
+          playful: "Prank him back",
+          bold: "Tell him you're not fragile",
+          neutral: "Let the room go quiet",
+        },
+      },
+      {
+        line: "The blank calm falls away, and what's underneath is startlingly gentle.",
+        approach: "Let him take your hand",
+        greeting:
+          "\"I've watched a great many things suffer. I won't watch you.\"",
+        responses: {
+          kind: "Thank him for the truth",
+          playful: "Tease the softness out",
+          bold: "Dare him to be thorough",
+          neutral: "Stay silent beside him",
+        },
+      },
+      {
+        line: "He drops every last piece of the front. Only you get that. Only ever you.",
+        approach: "Let the front drop",
+        greeting:
+          '"Look, no front, nothing put on. Do you know what that costs me?"',
+        responses: {
+          kind: "Tell him he isn't a monster",
+          playful: "Tease him for dropping the act",
+          bold: "Say you see all of him now",
+          neutral: "Let him have the quiet",
+        },
+      },
     ],
     bound: [
-      "The front is off and stays off, and what's under it adores you past all reason.",
-      "He kneels to take your hand, which from him isn't submission but something heavier.",
-      '"My wife," he breathes, and means every letter of it.',
-      "He traces your pulse with his mouth and takes a very long time about it.",
-      "He'd end the world for you. He mentions it the way other people mention the weather.",
+      {
+        line: "The front is off and stays off, and what's under it adores you past all reason.",
+        approach: "Come here",
+        greeting: '"Come here. Let me look at what\'s mine."',
+        responses: {
+          kind: "Hold his face",
+          playful: "Upstage him for once",
+          bold: "Pull him up by the collar",
+          neutral: "Let him watch you",
+        },
+      },
+      {
+        line: "He kneels to take your hand, which from him isn't submission but something heavier.",
+        approach: "Let him kneel",
+        greeting: '"Nothing will ever reach you. I\'ve been very thorough."',
+        responses: {
+          kind: "Let him kneel",
+          playful: "Make him wait for it",
+          bold: "Pull him back to his feet",
+          neutral: "Let him kneel, say nothing",
+        },
+      },
+      {
+        line: '"My wife," he breathes, and means every letter of it.',
+        approach: "Say it properly",
+        greeting: '"Say you\'re mine. Properly, this time."',
+        responses: {
+          kind: "Say it back",
+          playful: "Refuse to say it properly",
+          bold: "Say it back louder",
+          neutral: "Let the moment stretch",
+        },
+      },
+      {
+        line: "He traces your pulse with his mouth and takes a very long time about it.",
+        approach: "Stay till he sleeps",
+        greeting:
+          "\"The night's the worst of it. Stay till I'm asleep. ...Stay after.\"",
+        responses: {
+          kind: "Let him take his time",
+          playful: "Count how long he takes",
+          bold: "Tell him to be thorough",
+          neutral: "Stay silent in the dark",
+        },
+      },
+      {
+        line: "He'd end the world for you. He mentions it the way other people mention the weather.",
+        approach: "Let him mean it",
+        greeting:
+          "\"I love you. It's an old feeling, and I've carried it too long without saying so.\"",
+        responses: {
+          kind: "Say you'd do the same",
+          playful: "Ask for a smaller gesture",
+          bold: "Say you're his",
+          neutral: "Let him mean it quietly",
+        },
+      },
     ],
   },
-  temperamentDialogue: {
-    new: [
-      '"What a face. I want to know what put it there."',
-      '"Come closer. You\'re still too far away. ...Closer."',
-      "\"Don't run. Running's predictable, and I'll only follow.\"",
-      "\"So you're still alive. I looked everywhere. I thought maybe I'd killed you and forgotten about it.\"",
-      '"You flinched. That\'s honest of you. I appreciate honest."',
-      '"You came into the Heebie-Jeebie House on your own. Awful instincts. I\'m delighted."',
-    ],
-    known: [
-      "\"Ah, the one who didn't run. I've thought about you since.\"",
-      '"You\'re back. Sit where I can see you."',
-      "\"You've stopped flinching. I haven't decided how I feel about that.\"",
-      "\"Why've you gone all quiet? This is boring. ...Fine. I'll find something to do with you.\"",
-      "\"You interest me. That's rarely good news for anyone. It's true all the same.\"",
-      '"Three faintings in the house this week. I keep the count. It\'s been a good year."',
-    ],
-    warm: [
-      '"You finally came back. I waited here the whole time, you know. Don\'t you feel a bit sorry for me?"',
-      "\"They said you'd stop visiting. They're usually wrong.\"",
-      '"Stay close to me. Nothing in this district would dare come near."',
-      "\"You're not afraid of me now. That's a whole new game.\"",
-      "\"I'm thirsty. Go to Elias's and fetch that sickly brown stuff. ...You will. You like me.\"",
-    ],
-    spark: [
-      '"Let me look at you properly. I\'ve earned that much."',
-      '"Your pulse is quick. I do like being the reason."',
-      '"Come round the back of the house. The good frights are back there."',
-      "\"Say you're mine. You needn't mean it yet. I'm patient.\"",
-      '"I\'m not in the mood to make you cry today. Come back later for that."',
-    ],
-    close: [
-      '"You\'re mine to look after now. My wife."',
-      "\"The world's a cruel place. You're simply never going to be out in it.\"",
-      '"Look, no front, nothing put on. Do you know what that costs me?"',
-      '"Anything that reaches you goes through me first. That isn\'t aimed at you."',
-      "\"I've watched a great many things suffer. I won't watch you.\"",
-    ],
-    bound: [
-      '"Come here. Let me look at what\'s mine."',
-      "\"I love you. It's an old feeling, and I've carried it too long without saying so.\"",
-      "\"The night's the worst of it. Stay till I'm asleep. ...Stay after.\"",
-      '"Say you\'re mine. Properly, this time."',
-      '"Nothing will ever reach you. I\'ve been very thorough."',
-    ],
-  },
-  approach: {
-    warm: [
-      "Take his arm",
-      "Stand where he can see you",
-      "Greet him first",
-      "Fetch what he asked",
-    ],
-    spark: [
-      "Go round the back",
-      "Let him take your wrist",
-      "Let him look properly",
-      "Say it",
-    ],
-    close: [
-      "Go to him",
-      "Let the front drop",
-      "Let him take your hand",
-      "Stand behind him",
-    ],
-    bound: [
-      "Come here",
-      "Say it properly",
-      "Stay till he sleeps",
-      "Let him kneel",
-    ],
-  },
-  responses: {
-    kind: {
-      new: [
-        "Answer him gently",
-        "Say you're not afraid",
-        "Ask if he's alright",
-      ],
-      spark: [
-        "Reach for him gently",
-        "Tell him you're not afraid",
-        "Let him look, softly",
-      ],
-      close: [
-        "Let him look after you",
-        "Tell him he isn't a monster",
-        "Thank him for the truth",
-      ],
-      bound: ["Hold his face", "Say it back", "Let him kneel"],
-    },
-    playful: {
-      new: [
-        "Don't take him seriously",
-        "Flinch on purpose, grinning",
-        "Give him a better face",
-      ],
-      spark: [
-        "Make his pulse quick instead",
-        "Steal his next line",
-        "Play the dangerous thing",
-      ],
-      close: [
-        "Play along with him",
-        "Prank him back",
-        "Make the villain laugh",
-      ],
-      bound: [
-        "Make him wait for it",
-        "Refuse to say it properly",
-        "Upstage him for once",
-      ],
-    },
-    bold: {
-      new: [
-        "Step closer, not back",
-        "Ask what's under the front",
-        "Tell him to try you",
-      ],
-      spark: [
-        "Say you're his",
-        "Go round the back with him",
-        "Turn his wrist over instead",
-      ],
-      close: [
-        "Claim him right back",
-        "Tell him you're not fragile",
-        "Dare him to be thorough",
-      ],
-      bound: [
-        "Say you're his",
-        "Pull him up by the collar",
-        "Tell him to be thorough",
-      ],
-    },
-    neutral: {
-      new: ["Watch him carefully", "Give him nothing to read", "Wait him out"],
-      spark: ["Say nothing", "Let him have the quiet", "Let the moment pass"],
-      close: [
-        "Let him watch over you",
-        "Stay silent beside him",
-        "Let the room go quiet",
-      ],
-      bound: [
-        "Let him watch you",
-        "Stay silent in the dark",
-        "Let the moment stretch",
-      ],
-    },
-  },
+  // No temperamentDialogue pool: every leftover line was placed onto a
+  // dialogue beat's `greeting` (docs/dialogue-greeting-pairing.md).
+  // No top-level `responses` pool: every dialogue[tier] beat (new/known/warm/
+  // spark/close/bound) now carries bespoke responses for all four types (see
+  // dialogue above), making the old per-tier pools fully unreachable — same
+  // end state as yuri.js/benkei.js/jin.js/kaito.js/lucas.js/tohma.js/leo.js/
+  // shohei.js/subaru.js/zenji.js/haku.js/elias.js/mio.js.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

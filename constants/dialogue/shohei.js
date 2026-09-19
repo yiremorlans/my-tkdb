@@ -247,246 +247,496 @@ export default {
       {
         line: "The truck's hatch is up and something smells incredible. He waves you over before you've decided anything.",
         approach: "Let him pick",
+        greeting:
+          "\"First time? Don't bother with the menu, I'll pick,\" he says with a smirk.",
+        responses: {
+          kind: ["Trust him to pick", "Thank him for the welcome"],
+          playful: ["Give it right back", "Ask what he'd pick for you"],
+          bold: ["Order the spicy one anyway", "Read the menu out loud"],
+          neutral: ["Let him cook", "Wait for whatever comes"],
+        },
       },
       {
         line: "He barely spares you a glance, jaw set, like he's already bored with whatever this is going to be.",
         approach: "Introduce yourself",
+        greeting: '"What\'re you looking at? ...You hungry or what?"',
+        responses: {
+          kind: ["Say you'd love some food", "Thank him properly"],
+          playful: ["Ask if he's always this tense", "Say you're starving, actually"],
+          bold: ["Hold your ground calmly", "Ask what his problem is"],
+          neutral: ["Simply be there", "Nod at the menu"],
+        },
       },
       {
         line: 'Behind the truck, something coughs twice before it catches. "Yeah, yeah, I hear you," he mutters at it, then grins over at you like he wasn\'t just talking to his bike.',
         approach: "Order something",
+        greeting:
+          "\"Don't mind Bonnie, she's just picky about who she likes.\" He looks you over, easy, like he's already decided you're fine. \"She'll come around.\"",
+        responses: {
+          kind: ["Say hi to Bonnie too", "Say you'll win her over"],
+          playful: ["Tease him about the bike talk", "Ask what Bonnie likes"],
+          bold: ["Pet the bike anyway", "Say Bonnie likes you already"],
+          neutral: ["Let him have his moment", "Order and wait"],
+        },
       },
       {
         line: "Bonnie growls to a stop right by you, and he swings off in one motion, helmet already coming off.",
         approach: "Ask about the ride",
+        greeting:
+          '"Don\'t just stand there gawking. You want a ride or not?" He jerks his chin at the bike.',
+        responses: {
+          kind: ["Thank him for the offer", "Say you'd like that"],
+          playful: ["Ask if Bonnie has road rage", "Ask if he's a safe driver"],
+          bold: ["Hop on the bike with him", "Ask to drive"],
+          neutral: ["Hop on without a word", "Decline, stay on foot"],
+        },
       },
       {
         line: 'His knuckles are freshly wrapped, one already bruising. "Don\'t," he says, before you can even ask.',
-        approach: "Ask about The Pit",
+        approach: "Ask about the knuckles",
+        greeting: '"It\'s nothing. ...I said don\'t, Senpai. Want food or not?"',
+        responses: {
+          kind: ["Ask gently if he's hurt", "Offer to grab some ice"],
+          playful: ["Tease him about the bruise", "Ask who won"],
+          bold: ["Hold his gaze", "Ask anyway"],
+          neutral: ["Let it go unasked", "Order food, say nothing"],
+        },
       },
     ],
     known: [
       {
         line: "Bonnie's parked closer to where you always wait for your order now. He'd say that's just where there was room.",
         approach: "Tease him about it",
+        greeting: [
+          "\"Bonnie's warming up to you faster than she did to Leo. That's not a compliment to him.\"",
+          '"Bonnie likes you. Don\'t ask me how I know that, I just know."',
+        ],
+        responses: {
+          kind: ["Say you like the spot", "Thank him for the parking"],
+          playful: ["Tease him about 'just room'", "Claim the spot as yours"],
+          bold: ["Call it favoritism outright", "Say Bonnie has good taste"],
+          neutral: ["Note it, say nothing", "Let the parking go unremarked"],
+        },
       },
       {
         line: "He drops back to walk beside you as the mission wraps up, not saying why, just there.",
         approach: "Ask why he stuck around",
+        greeting: '"What? Leo bailed. Somebody\'s gotta make sure you get back."',
+        responses: {
+          kind: ["Say you're glad he did", "Thank him for walking with you"],
+          playful: ["Guess his real reason", "Tease him for not saying why"],
+          bold: ["Ask him outright why", "Call out the silence"],
+          neutral: [
+            "Walk with him, say nothing",
+            "Let the reason stay unknown",
+          ],
+        },
       },
       {
         line: "He's skipped his afternoon class again. \"It's all in the books anyway,\" he says, like that settles it.",
         approach: "Call him out on skipping",
+        greeting: '"Pfft. You gonna tattle, Senpai? Go ahead. I\'ll still ace it."',
+        responses: {
+          kind: ["Offer to catch him up", "Say the books can wait"],
+          playful: ["Ask what's in those books", "Threaten to tell on him"],
+          bold: ["Call the excuse lazy", "Tell him to go to class"],
+          neutral: ["Shrug, it's his choice", "Let him skip in peace"],
+        },
       },
       {
         line: 'He spots something across the lot and swears under his breath, then waves it off like he didn\'t just see a masked stranger again. "Nothing, Senpai. Forget it."',
         approach: "Ask what he saw",
+        greeting:
+          '"I said it\'s nothing, Senpai. ...Just stick close on the walk back, yeah?"',
+        responses: {
+          kind: ["Ask if he's really okay", "Offer to walk him back"],
+          playful: [
+            "Press him for the real story",
+            "Guess who the stranger was",
+          ],
+          bold: ["Demand to know what he saw", "Refuse to let it go"],
+          neutral: ["Let him wave it off", "Drop the question"],
+        },
       },
       {
         line: "The truck is slammed and he still waves you to the front of the line.",
         approach: "Take the front of the line",
+        greeting:
+          "\"You again, Senpai? Guess I'll feed you. Don't get used to it.\"",
+        responses: {
+          kind: ["Thank him for the priority", "Say you don't want to cut"],
+          playful: [
+            "Milk the special treatment",
+            "Ask if you're his favorite now",
+          ],
+          bold: ["Take the spot, no argument", "Expect it every time now"],
+          neutral: ["Take the spot, say nothing", "Move up without comment"],
+        },
       },
       {
         line: "He glances at your textbook upside-down and gives you the right answer before you've even finished reading the question, then shrugs it off.",
         approach: "Ask how he knew that",
+        greeting:
+          '"What? It\'s all in the book. I read it once. Pfft, don\'t look at me like that."',
+        responses: {
+          kind: ["Thank him for the help", "Say he's good at this"],
+          playful: ["Ask if he's secretly smart", "Demand he do your homework"],
+          bold: ["Say you'd have gotten there", "Ask how he really knew"],
+          neutral: ["Take the answer, move on", "Not question the help"],
+        },
       },
       {
         line: "He's testing a new sauce and won't serve it to anyone else until you've said it's good.",
         approach: "Be the taste tester",
+        greeting: '"Made extra. Wasn\'t for you. ...Fine, it was for you."',
+        responses: {
+          kind: ["Give an honest, kind review", "Say it's his best yet"],
+          playful: ["Milk the taste test forever", "Demand a bigger portion"],
+          bold: ["Give blunt, honest feedback", "Tell him to trust himself"],
+          neutral: ["Taste it, say little", "Give a flat verdict"],
+        },
       },
       {
         line: "He's boxed up food for you to go, even though you never asked.",
         approach: "Take the boxed portion",
+        greeting: '"Sit. Eat. You look like you forgot lunch again."',
+        responses: {
+          kind: ["Thank him for the food", "Say he didn't have to"],
+          playful: [
+            "Ask if everyone gets this",
+            "Tease him for the extra care",
+          ],
+          bold: ["Take the box, no thanks needed", "Say you expected it"],
+          neutral: ["Take it, say nothing", "Eat it without comment"],
+        },
       },
       {
         line: '"You\'re late, Senpai," he says, not really annoyed, just keeping score.',
         approach: "Apologize for being late",
+        greeting: '"Three minutes, Senpai. Your food\'s getting cold."',
+        responses: {
+          kind: ["Apologize, mean it", "Promise to do better"],
+          playful: ["Ask what the score even is", "Blame the traffic, poorly"],
+          bold: ["Say the scorekeeping's petty", "Tell him to stop counting"],
+          neutral: ["Shrug at being late", "Let the score stand"],
+        },
       },
       {
         line: "He steps between you and Leo mid-jab, not even breaking his own conversation to do it.",
         approach: "Let him run interference",
+        greeting: '"Knock it off, Leo. ...Ignore him, Senpai. He\'s bored."',
+        responses: {
+          kind: ["Thank him for stepping in", "Say Leo means no real harm"],
+          playful: [
+            "Ask what Leo said this time",
+            "Tease him for defending you",
+          ],
+          bold: ["Say you can handle Leo", "Ask why he bothers"],
+          neutral: ["Let it go, say nothing", "Move on from the jab"],
+        },
       },
       {
         line: "He's icing his knuckles after sparring with Mido and shrugs off the wince like you didn't just see it.",
         approach: "Ask if he's okay",
+        greeting:
+          '"Five sets of fifteen rounds. Mido\'s insane. ...I\'m fine, Senpai."',
+        responses: {
+          kind: ["Ask if he's really fine", "Offer to wrap the knuckles"],
+          playful: ["Tease him about losing", "Ask if Mido won this round"],
+          bold: ["Demand he ice it properly", "Call out the tough act"],
+          neutral: ["Let him shrug it off", "Say nothing about the wince"],
+        },
       },
       {
         line: "He clocks you before you've said a word and starts making your order without asking.",
         approach: "Let him guess your order",
+        greeting: '"Not the spicy one, right? See, I remembered."',
+        responses: {
+          kind: ["Thank him for remembering", "Say that means a lot"],
+          playful: [
+            "Test if he really remembers",
+            "Ask what else he's tracking",
+          ],
+          bold: ["Say of course he remembered", "Demand he admit he cares"],
+          neutral: [
+            "Take the order, say nothing",
+            "Let him guess without comment",
+          ],
+        },
       },
       {
         line: "He's already going off about something Leo did the second he spots you, like he's been saving it up just to tell you.",
         approach: "Let him vent about Leo",
+        greeting:
+          "\"Don't tell Leo I said this, but you're all right, Senpai.\"",
+        responses: {
+          kind: ["Let him vent it all out", "Take Leo's side gently"],
+          playful: ["Egg the rant on", "Ask for the juicy details"],
+          bold: ["Tell him to let it go", "Argue Leo's side to rile him"],
+          neutral: ["Half-listen, say nothing", "Let the rant run its course"],
+        },
       },
     ],
     warm: [
-      "He greets you with a warm smile, already thinking about how to make your day better.",
-      "He catches Leo needling you from across the room and shuts it down with a look before you even notice.",
-      "He hands you something hot to hold before he says a single word.",
-      "He tosses you the spare helmet without asking if you want a ride. You always do.",
-      "\"Pit's on again? I'm done with that already. They're all normies, what's the point? Stay here, eat.\"",
+      {
+        line: "He greets you with a warm smile, already thinking about how to make your day better.",
+        approach: "Stay till close",
+        greeting: '"Senpai, I\'m always happy to see you around."',
+        responses: {
+          kind: "Say you're happy too",
+          playful: "Ask what he's planning",
+          bold: "Demand to know the plan",
+          neutral: "Smile back, say nothing",
+        },
+      },
+      {
+        line: "He catches Leo needling you from across the room and shuts it down with a look before you even notice.",
+        approach: "Let him handle Leo",
+        greeting:
+          '"Tch. He knows better. Nobody gets to talk to you like that. Not even him."',
+        responses: {
+          kind: "Thank him for stepping in",
+          playful: "Ask what the look said",
+          bold: "Say you saw everything",
+          neutral: "Let it go unremarked",
+        },
+      },
+      {
+        line: "He hands you something hot to hold before he says a single word.",
+        approach: "Try the new recipe",
+        greeting: [
+          "\"Stay till close, Senpai? I'll feed you twice. That's the deal.\"",
+          '"I named it after you. The dish, I mean. Don\'t make it weird, Senpai."',
+        ],
+        responses: {
+          kind: "Take it gratefully",
+          playful: "Ask what's the occasion",
+          bold: "Eat it before he explains",
+          neutral: "Take it, say nothing",
+        },
+      },
+      {
+        line: "He tosses you the spare helmet without asking if you want a ride. You always do.",
+        approach: "Take the spare helmet",
+        greeting:
+          "\"Took Bonnie out this morning. She's got a mind of her own, runs sweet when it's cool like this.\"",
+        responses: {
+          kind: "Thank him for the helmet",
+          playful: "Act surprised you're going",
+          bold: "Climb on before he finishes",
+          neutral: "Take the helmet, no fuss",
+        },
+      },
+      {
+        line: "\"Pit's on again? I'm done with that already. They're all normies, what's the point? Stay here, eat.\"",
+        approach: "Sit, eat, complain",
+        greeting:
+          '"Good. Now tell me who ruined your day and I\'ll have opinions about them."',
+        responses: {
+          kind: "Let him vent, stay and eat",
+          playful: "Egg on the complaining",
+          bold: "Argue that Pit's not so bad",
+          neutral: "Eat, let him talk",
+        },
+      },
     ],
     spark: [
-      "He feeds you a bite off his own fork and only afterward realizes what he did.",
-      "He walks you to Bonnie after close and takes the long way round to keep you a minute longer.",
-      "He's sparring with Mido when you show up, and he cuts the session short without a word of explanation, toweling off on his way over.",
-      "He guides your hands on the knife from behind, and neither of you is thinking about onions.",
-      "He shrugs off his jacket and drops it over your shoulders, then acts like the cold never bothered him at all.",
+      {
+        line: "He feeds you a bite off his own fork and only afterward realizes what he did.",
+        approach: "Open",
+        greeting:
+          '"Here. Open, Senpai. ...Good, right? Wait, why are you looking at me like that?"',
+        responses: {
+          kind: "Say his cooking means care",
+          playful: "Feed him a bite back",
+          bold: "Steal another bite boldly",
+          neutral: "Let him panic",
+        },
+      },
+      {
+        line: "He walks you to Bonnie after close and takes the long way round to keep you a minute longer.",
+        approach: "Notice he closed early",
+        greeting:
+          '"I closed early. First time ever. Do the math on that one, Senpai."',
+        responses: {
+          kind: "Thank him for the long way",
+          playful: "Make him say it twice",
+          bold: "Say it first",
+          neutral: "Change the subject",
+        },
+      },
+      {
+        line: "He's sparring with Mido when you show up, and he cuts the session short without a word of explanation, toweling off on his way over.",
+        approach: "Wait through the sparring",
+        greeting: '"Hop on. No, don\'t ask where, just hop on."',
+        responses: {
+          kind: "Ask if he's alright",
+          playful: "Tease him about ditching Mido",
+          bold: "Ask why he cut it short",
+          neutral: "Wait for him quietly",
+        },
+      },
+      {
+        line: "He guides your hands on the knife from behind, and neither of you is thinking about onions.",
+        approach: "Let him guide your hands",
+        greeting:
+          "\"I think about you when I'm cooking. That's most of the day, so.\"",
+        responses: {
+          kind: "Let him guide you closer",
+          playful: "Rate his knife skills",
+          bold: "Kiss the flour off his cheek",
+          neutral: "Keep chopping",
+        },
+      },
+      {
+        line: "He shrugs off his jacket and drops it over your shoulders, then acts like the cold never bothered him at all.",
+        approach: "Wear his jacket",
+        greeting:
+          '"Senpai, I... okay, I\'m just gonna say it. I like you. A lot. A LOT."',
+        responses: {
+          kind: "Tell him you like him too",
+          playful: "Ask him to say it a third time",
+          bold: "Pull him in by the apron",
+          neutral: "Let the moment sit quietly",
+        },
+      },
     ],
     close: [
-      '"You mean so much to me," he says earnestly. "I hope you know that by now."',
-      "There's a second helmet that lives at your place now. Nobody decided that. It just happened.",
-      "He introduces you to his brother without the usual flinch at the surname, like it doesn't weigh anything when you're there.",
-      "He cooks for you last, after everyone's gone, and it's always better than what they got.",
-      "The whole rough exterior Vagastrom demands just... isn't there when it's you.",
+      {
+        line: '"You mean so much to me," he says earnestly. "I hope you know that by now."',
+        approach: "Go straight to him",
+        greeting:
+          "\"Senpai... you came right over. Don't tease me, I'm being sincere here.\"",
+        responses: {
+          kind: "Tell him to eat something too",
+          playful: "Turn it into a joke",
+          bold: "Tell him you'd stay till dawn",
+          neutral: "Be present for him",
+        },
+      },
+      {
+        line: "There's a second helmet that lives at your place now. Nobody decided that. It just happened.",
+        approach: "Read the board",
+        greeting: [
+          "\"You're on the board. Permanently. I'm not discussing it.\"",
+          '"I\'ll drop you home. Not up for discussion, Senpai, just get on."',
+        ],
+        responses: {
+          kind: "Thank him for the board",
+          playful: "Decorate the helmet yourself",
+          bold: "Ask to ride with him at night",
+          neutral: "Accept the board, say nothing",
+        },
+      },
+      {
+        line: "He introduces you to his brother without the usual flinch at the surname, like it doesn't weigh anything when you're there.",
+        approach: "Meet his brother",
+        greeting:
+          '"Senpai... I\'m really glad you\'re here. You know that, right?"',
+        responses: {
+          kind: "Say the surname doesn't matter",
+          playful: "Tease the brother resemblance",
+          bold: "Say his brother'd be proud",
+          neutral: "Let the moment pass gently",
+        },
+      },
+      {
+        line: "He cooks for you last, after everyone's gone, and it's always better than what they got.",
+        approach: "Eat what he saved",
+        greeting:
+          '"Everyone gets fed. You get fed properly, Senpai. There\'s a difference."',
+        responses: {
+          kind: "Thank him for saving the best",
+          playful: "Demand a new dish",
+          bold: "Ask him to close early",
+          neutral: "Keep him company",
+        },
+      },
+      {
+        line: "The whole rough exterior Vagastrom demands just... isn't there when it's you.",
+        approach: "Stay till closing",
+        greeting:
+          '"If anything happens, come find me. Any hour, Senpai. I mean it."',
+        responses: {
+          kind: "Tell him you see past the act",
+          playful: "Tease him about going soft",
+          bold: "Say you like this version best",
+          neutral: "Stay through the cleanup",
+        },
+      },
     ],
     bound: [
-      "He makes you breakfast in his shirt and is far too pleased with the whole picture.",
-      "He's stopped hiding split knuckles from you. Now you're the one who wraps them.",
-      "You prep the truck together at dawn now. He hums the entire time.",
-      '"Senpai" has become something he says low and private and entirely differently.',
-      "He leaves Bonnie right outside your window some nights, just so you'll hear him get in safe.",
+      {
+        line: "He makes you breakfast in his shirt and is far too pleased with the whole picture.",
+        approach: "Wear his shirt",
+        greeting:
+          "\"You're wearing my shirt, Senpai. I'm... okay, I need a second. That's really working for me.\"",
+        responses: {
+          kind: "Let him bring you breakfast",
+          playful: "Wear his shirt on purpose",
+          bold: "Pull him away from the stove",
+          neutral: "Let him cook",
+        },
+      },
+      {
+        line: "He's stopped hiding split knuckles from you. Now you're the one who wraps them.",
+        approach: "Don't get up",
+        greeting:
+          '"Morning, Senpai. I already warmed Bonnie up. We\'re not going anywhere, I just like doing it for you."',
+        responses: {
+          kind: "Kiss his shoulder in passing",
+          playful: "Tease him about being clumsy",
+          bold: "Kiss him quiet",
+          neutral: "Wrap them, say nothing",
+        },
+      },
+      {
+        line: "You prep the truck together at dawn now. He hums the entire time.",
+        approach: "Come prep at dawn",
+        greeting:
+          '"Come prep with me, Senpai. Dawn shift. It\'s freezing and I want you there anyway."',
+        responses: {
+          kind: "Enjoy the quiet dawn with him",
+          playful: "Hum along off-key",
+          bold: "Take over a task yourself",
+          neutral: "Prep in easy silence",
+        },
+      },
+      {
+        line: '"Senpai" has become something he says low and private and entirely differently.',
+        approach: "Make him say it again",
+        greeting:
+          '"I love you, Senpai. Sorry, I say it a lot now. I\'m not actually sorry."',
+        responses: {
+          kind: "Say it back",
+          playful: "Ask him to say it again",
+          bold: "Say his name back just as low",
+          neutral: "Stay curled up",
+        },
+      },
+      {
+        line: "He leaves Bonnie right outside your window some nights, just so you'll hear him get in safe.",
+        approach: "Guess why",
+        greeting: '"Truck\'s closed tomorrow. I closed it. Guess why."',
+        responses: {
+          kind: "Say you always hear him",
+          playful: "Guess wrong on purpose",
+          bold: "Climb on the bike behind him",
+          neutral: "Let him keep doing it",
+        },
+      },
     ],
   },
-  temperamentDialogue: {
-    new: [
-      '"Oh, Senpai. What brings you by?"',
-      '"Don\'t just stand there gawking. You want a ride or not?" He jerks his chin at the bike.',
-      "\"First time at the truck? I'm Sho, not Shohei, just Sho. And you don't get to order, I'll pick,\" he says with a smirk.",
-      '"What\'re you looking at? ...Crap, that came out rude. You hungry or what?"',
-      "\"Don't mind Bonnie, she's just picky about who she likes.\" He looks you over, easy, like he's already decided you're fine. \"She'll come around.\"",
-    ],
-    known: [
-      '"Oh, hey, Senpai! I was wondering if you\'d come by today."',
-      '"Not the spicy one, right? See, I remembered."',
-      '"Bonnie likes you. Don\'t ask me how I know that, I just know."',
-      '"You always look like you skipped lunch, Senpai. Sit down."',
-      "\"What's Mido texting me for? 'Come to the pit,' spelled three ways, none right. Pfft. What the hell is this, some kinda secret code?\"",
-    ],
-    warm: [
-      '"Senpai, I\'m always happy to see you around."',
-      "\"Pit's on again? I'm done with that, bunch of normies. Sit. Eat. Complain about your day.\"",
-      '"I named it after you. The dish, I mean. Don\'t make it weird, Senpai."',
-      "\"Took Bonnie out this morning. She's got a mind of her own, runs sweet when it's cool like this.\"",
-      "\"Stay till close, Senpai? I'll feed you twice. That's the deal.\"",
-    ],
-    spark: [
-      '"Here. Open, Senpai. ...Good, right? Wait, why are you looking at me like that?"',
-      '"Senpai, I... okay, I\'m just gonna say it. I like you. A lot. A LOT."',
-      '"Hop on. No, don\'t ask where, just hop on."',
-      '"I closed early. First time ever. Do the math on that one, Senpai."',
-      "\"I think about you when I'm cooking. That's most of the day, so.\"",
-    ],
-    close: [
-      "\"Senpai... I'm really glad you're here. You know that, right?\"",
-      "\"You're on the board. Permanently. I'm not discussing it.\"",
-      '"Everyone gets fed. You get fed properly, Senpai. There\'s a difference."',
-      '"If anything happens, come find me. Any hour, Senpai. I mean it."',
-      '"I\'ll drop you home. Not up for discussion, Senpai, just get on."',
-    ],
-    bound: [
-      '"Morning, Senpai. I already warmed Bonnie up. We\'re not going anywhere, I just like doing it for you."',
-      "\"You're wearing my shirt, Senpai. I'm... okay, I need a second. That's really working for me.\"",
-      '"I love you, Senpai. Sorry, I say it a lot now. I\'m not actually sorry."',
-      '"Come prep with me, Senpai. Dawn shift. It\'s freezing and I want you there anyway."',
-      '"Truck\'s closed tomorrow. I closed it. Guess why."',
-    ],
-  },
-  approach: {
-    warm: [
-      "Sit, eat, complain",
-      "Stay till close",
-      "Try the new recipe",
-      "Take it off the heat",
-    ],
-    spark: [
-      "Let him guide your hands",
-      "Open",
-      "Notice he closed early",
-      "Let him tie the apron",
-    ],
-    close: [
-      "Stay till closing",
-      "Eat what he saved",
-      "Read the board",
-      "Go straight to him",
-    ],
-    bound: ["Don't get up", "Come prep at dawn", "Wear his shirt", "Guess why"],
-  },
-  responses: {
-    kind: {
-      new: [
-        "Thank him properly",
-        "Call him Sho, not Shohei",
-        "Tell him it's delicious",
-      ],
-      spark: [
-        "Tell him you like him too",
-        "Say his cooking means care",
-        "Let him tie the apron",
-      ],
-      close: [
-        "Tell him you see past the act",
-        "Thank him for the board",
-        "Tell him to eat something too",
-      ],
-      bound: [
-        "Say it back",
-        "Let him bring you breakfast",
-        "Kiss his shoulder in passing",
-      ],
-    },
-    playful: {
-      new: [
-        "Give it right back",
-        "Ask for seconds shamelessly",
-        "Tease him about the apron",
-      ],
-      spark: [
-        "Feed him a bite back",
-        "Make him say it twice",
-        "Rate his knife skills",
-      ],
-      close: ["Turn it into a joke", "Demand a new dish", "Rename the special"],
-      bound: [
-        "Wear his shirt on purpose",
-        "Let the food burn",
-        "Guess wrong on purpose",
-      ],
-    },
-    bold: {
-      new: [
-        "Order the spicy one anyway",
-        "Hold his gaze",
-        "Hop on the bike with him",
-      ],
-      spark: [
-        "Kiss the flour off his cheek",
-        "Pull him in by the apron",
-        "Say it first",
-      ],
-      close: [
-        "Ask to ride with him at night",
-        "Ask him to close early",
-        "Tell him you'd stay till dawn",
-      ],
-      bound: [
-        "Pull him away from the stove",
-        "Kiss him quiet",
-        "Climb on the bike behind him",
-      ],
-    },
-    neutral: {
-      new: ["Simply be there", "Eat in comfortable quiet", "Let him cook"],
-      spark: ["Let him panic", "Keep chopping", "Change the subject"],
-      close: [
-        "Be present for him",
-        "Stay through the cleanup",
-        "Keep him company",
-      ],
-      bound: ["Let him cook", "Prep in easy silence", "Stay curled up"],
-    },
-  },
+  // No temperamentDialogue pool: every leftover line was placed onto a
+  // dialogue beat's `greeting` (docs/dialogue-greeting-pairing.md).
+  // No top-level `responses` pool: every dialogue[tier] beat (new/known/warm/
+  // spark/close/bound) now carries bespoke responses for all four types (see
+  // dialogue above), making the old per-tier pools fully unreachable — same
+  // end state as yuri.js/benkei.js/jin.js/kaito.js/lucas.js/tohma.js/leo.js.
+  // Six labels had no genuine beat match ("Tell him it's delicious", "Ask for
+  // seconds shamelessly", "Tease him about the apron", "Eat in comfortable
+  // quiet" from `new`; "Rename the special" from `close`; "Let the food burn"
+  // from `bound`) and were dropped rather than force-placed.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

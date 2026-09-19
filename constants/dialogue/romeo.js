@@ -8,7 +8,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Tch. Before you say anything, no, you're not in trouble, and no, this isn't a bill. Yet.",
-        "Somebody put your name on the floor list as a mark. Standard stuff, happens to everyone who comes through more than twice. Not personal, just Sinostra.\n\nI took it off. Personally. Cost me a conversation I did not enjoy having at nine in the morning.\n\n{timesMet} visits and you've never once tried to get anything out of this house. You know how rare that is? That's a rounding error. That's ONE person.",
+        "Somebody put your name on the floor list as a mark. Standard stuff, happens to everyone who comes through more than twice. Not personal, just Sinostra.\n\nI took it off. Personally. Cost me a conversation I did not enjoy having at nine in the morning.\n\n{timesMet} visits and you've never once lost a yen at the tables. Marks lose. You don't even play. You know how rare that is? That's a rounding error. That's ONE person.",
       ],
       choice: {
         prompt: "So don't make me regret it.",
@@ -45,7 +45,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: Right. Something's been irritating me for a MONTH and I've finally worked out what it is.",
-        "You do {favResponse} with me every single time and you have NEVER ONCE ASKED ME FOR ANYTHING.\n\nEverybody wants something. That's not me being bleak, it's the operating model of this entire academy. People suck up, then comes the ask. I've priced that in since I was eleven and honestly it's fine, being useful is the only currency I've got that doesn't depreciate.\n\nYou've had a month of opportunities. Nothing. It's INSULTING.",
+        "You do {favResponse} with me every single time and you have NEVER ONCE ASKED ME FOR ANYTHING.\n\nEverybody wants something. That's not me being bleak, it's the operating model of this entire academy. People suck up, then comes the ask. I price it in. Honestly it's fine, the ask is where the margin is.\n\nYou've had a month of opportunities. Nothing. You're a WMOO. Wasted Month Of Opportunities, obviously. It's INSULTING.",
       ],
       choice: {
         prompt:
@@ -235,243 +235,449 @@ export default {
       {
         line: 'He\'s barking orders at the Sinostra students, managing every angle of the casino floor. "HDY waste my time? Quick, put on this dress and work table seven, we need someone sharp out there."',
         approach: "Make yourself useful",
+        greeting: '"Well? Table seven isn\'t going to deal itself. Move!"',
+        responses: {
+          kind: ["Do it without complaint", "Thank him and mean it"],
+          playful: ["Trade sass back", "Ask what the dress code is"],
+          bold: ["Take the table without asking", "Bet on yourself"],
+          neutral: ["Nod and get on with it", "Stay quiet"],
+        },
       },
       {
         line: "He's on two conversations and one phone call. You are somehow now the third conversation.",
         approach: "Cut into the conversation",
+        greeting: '"Hold on. ...No, not you. ...Yes, you. What do you want?"',
+        responses: {
+          kind: ["Wait for a natural pause", "Let him finish his call"],
+          playful: ["Interrupt with an absurd claim", "Use his own acronym"],
+          bold: ["Cut in and demand attention", "Refuse to wait your turn"],
+          neutral: ["Let him run the floor", "Wait for him to notice you"],
+        },
       },
       {
         line: "\"Come to my private office later, I've got a little proposal I think you'll want to hear. But make sure you come alone.\"",
         approach: "Hear the proposal",
+        greeting:
+          '"Perfect timing. I need someone I can trust to manage the VIP section. You in?"',
+        responses: {
+          kind: ["Hear him out patiently", "Thank him for trusting you"],
+          playful: ["Guess the proposal first", "Tease him about secrecy"],
+          bold: ["Take the VIP section", "Accept without haggling"],
+          neutral: ["Take the offer at face value", "Wait to hear the terms"],
+        },
       },
       {
         line: "He looks you up and down, does arithmetic, and apparently likes the result.",
         approach: "Ask what the job pays",
+        greeting: '"Pays? Tch. Depends how you work. With that skin, I\'d start low."',
+        responses: {
+          kind: ["Accept whatever's fair", "Say you'll earn a raise"],
+          playful: ["Fish for a bigger number", "Joke about your own price"],
+          bold: ["Name your price", "Ask for hazard pay"],
+          neutral: ["Ask, then wait quietly", "Take the number at face value"],
+        },
       },
       {
         line: "He's got a sheet mask on and a phone to his ear and does not consider either a reason to stop running the floor.",
         approach: "Walk faster",
+        greeting: "\"You're new. Rule one: don't touch the chips. Rule two: see rule one.\"",
+        responses: {
+          kind: ["Keep pace without complaint", "Help him multitask"],
+          playful: ["Touch the chips", "Dare him to stop you"],
+          bold: ["Keep pace and outdo him", "Take over a task yourself"],
+          neutral: ["Walk faster in silence", "Keep up without a word"],
+        },
       },
     ],
     known: [
       {
         line: "He's stopped trying to put you to work. Mostly.",
         approach: "Point out the exception",
+        greeting: '"Don\'t touch the... okay, fine, you know not to. Fine."',
+        responses: {
+          kind: ["Say you don't mind helping", "Thank him for easing up"],
+          playful: ["Point out the exception loudly", "Ask if you're special now"],
+          bold: ["Call yourself the exception", "Demand he admit it"],
+          neutral: ["Note it, say nothing", "Let the exception stand"],
+        },
       },
       {
         line: '"Oh, it\'s YOU," at a volume that carries across the entire floor.',
         approach: "Interrupt the yelling",
+        greeting: '"I\'m not saying I remembered your name. I\'m saying I said it. Different thing."',
+        responses: {
+          kind: ["Wave, let him finish yelling", "Wait for him to notice you"],
+          playful: ["Yell back just as loud", "Ask who else heard that"],
+          bold: ["Cut the yelling off outright", "Match his volume exactly"],
+          neutral: ["Let the yelling pass", "Stay quiet through it"],
+        },
       },
       {
         line: "He complains about something to you specifically, which is a form of trust.",
         approach: "Let him complain",
+        greeting:
+          "\"You're not on the payroll and you're still working harder than half of it. Infuriating.\"",
+        responses: {
+          kind: ["Listen to the whole complaint", "Let him vent it all out"],
+          playful: ["Add your own complaint too", "Egg the complaining on"],
+          bold: ["Tell him to stop complaining", "Solve the complaint yourself"],
+          neutral: ["Nod along, say nothing", "Let him complain in peace"],
+        },
       },
       {
         line: '"Have you seen Shinjo anywhere? I just asked him to organize some documents and he ran off to make copies!"',
         approach: "Help him find Ritsu",
+        greeting:
+          '"Just go! I cannot deal with this WTWUT! Wall-To-Wall Useless Trash, obviously! ...Not you. You can stay."',
+        responses: {
+          kind: ["Help him track Ritsu down", "Reassure him it's fine"],
+          playful: ["Guess Ritsu's hiding spot", "Tease the new acronym"],
+          bold: ["Go drag Ritsu back yourself", "Tell him to calm down"],
+          neutral: ["Check the usual room first", "Search without comment"],
+        },
       },
       {
         line: 'He pushes a glass of something green across the desk. "Noni juice. Drink it. Your skin cell turnover is suboptimal and it shows."',
         approach: "Take the free drink",
+        greeting: '"Drink\'s on the house. Don\'t tell the house."',
+        responses: {
+          kind: ["Thank him for the drink", "Drink it, mean the thanks"],
+          playful: ["Ask what's really in it", "Tease the diagnosis"],
+          bold: ["Drink it without question", "Demand a better flavor"],
+          neutral: ["Drink it, say nothing", "Take the glass quietly"],
+        },
       },
       {
         line: "He's scrawling out a check Taiga has no business asking for. \"Sit. This'll only take a second.\"",
         approach: "Sit without an appointment",
+        greeting: '"You again! HDY keep showing up without an appointment. Sit down."',
+        responses: {
+          kind: ["Sit, thank him for the time", "Wait patiently for the check"],
+          playful: ["Sit like you own the chair", "Ask what Taiga did this time"],
+          bold: ["Sit without waiting to be told", "Demand your own check too"],
+          neutral: ["Sit, say nothing", "Wait for him to finish"],
+        },
       },
       {
         line: '"Spit it out, I don\'t have all day," he snaps, then actually stops to listen.',
         approach: "Say what you want, quickly",
+        greeting: '"...Well? I stopped. I\'m listening. Don\'t make me regret it."',
+        responses: {
+          kind: ["Ask gently, take your time", "Thank him for listening"],
+          playful: ["Drag it out just to annoy him", "Watch him try to rush you"],
+          bold: ["Say it fast and plainly", "Cut straight to the point"],
+          neutral: ["State it, then wait", "Ask plainly, no preamble"],
+        },
       },
       {
         line: '"That color actually works on you. Don\'t let it go to your head."',
         approach: "Take the compliment",
+        greeting: '"What? I said it once. I\'m not saying it again."',
+        responses: {
+          kind: ["Thank him for noticing", "Take the compliment warmly"],
+          playful: ["Fish for a bigger compliment", "Tease him for noticing"],
+          bold: ["Own the compliment outright", "Say you already knew"],
+          neutral: ["Take it without comment", "Nod, say nothing"],
+        },
       },
       {
         line: "He's sizing up your outfit with the exact focus he gives a bad hand of cards.",
         approach: "Brace for the critique",
+        greeting: '"Do you even know anything about brands? Stand still. Turn. ...Hm."',
+        responses: {
+          kind: ["Take the critique gracefully", "Thank him for the honesty"],
+          playful: ["Ask for the full review", "Model it, badly, on purpose"],
+          bold: ["Cut off the critique first", "Say the outfit's fine as is"],
+          neutral: ["Stand still, say nothing", "Let him finish looking"],
+        },
       },
       {
         line: '"Don\'t think this means anything," he says, of the seat he just pulled out for you. It means something.',
         approach: "Take the seat anyway",
+        greeting: '"Sit there. That chair\'s reserved. It\'s reserved for you, obviously, keep up."',
+        responses: {
+          kind: ["Take the seat and thank him", "Sit, let it mean something"],
+          playful: ["Ask what it means, out loud", "Point out it means something"],
+          bold: ["Take the seat like it's yours", "Call the gesture what it is"],
+          neutral: ["Take the seat, say nothing", "Sit without asking why"],
+        },
       },
       {
         line: '"That\'s going to cost you," he says, already doing the math on how much.',
         approach: "Haggle with him",
+        greeting: '"Nothing\'s free, you know. Well. Almost nothing. Don\'t push it."',
+        responses: {
+          kind: ["Pay whatever he asks", "Thank him for the math"],
+          playful: ["Haggle him down for fun", "Argue the price on principle"],
+          bold: ["Refuse to pay at all", "Name your own price back"],
+          neutral: ["Pay without comment", "Wait for the final number"],
+        },
       },
       {
         line: '"You have an eye for quality," he says, surprised, like he didn\'t expect to mean it as a compliment.',
         approach: "Take it as a compliment",
+        greeting: '"You\'ve got taste. Somebody around here finally does."',
+        responses: {
+          kind: ["Thank him for the compliment", "Say that means a lot"],
+          playful: ["Act surprised he meant it", "Tease him for the surprise"],
+          bold: ["Say you knew you had taste", "Claim the compliment outright"],
+          neutral: ["Take it without comment", "Nod, say nothing"],
+        },
       },
       {
         line: "He snaps at one of his guys for bumping into you, louder than the bump warranted.",
         approach: "Let him defend you",
+        greeting: '"Tch. Watch where you\'re going! ...You. You\'re fine? Good."',
+        responses: {
+          kind: ["Thank him for stepping in", "Let him handle it kindly"],
+          playful: ["Watch him deal with it", "Egg on the confrontation"],
+          bold: ["Handle it yourself instead", "Step in front of him"],
+          neutral: ["Stay out of it, say nothing", "Let him deal with it"],
+        },
       },
     ],
     warm: [
-      "He pauses mid-command when he spots you, actually stepping away from the action to greet you properly. Suddenly you matter more than the operation.",
-      '"You show up unannounced, no appointment. Sit down. I\'ll get you something. Ugh. Fine. I want to."',
-      "He complains about you at length to someone else, loudly, entirely as a compliment.",
-      "He's had the good seat held all night. He will absolutely deny that.",
-      "The yelling drops a full register when he turns to you. Everyone notices. He doesn't.",
+      {
+        line: "He pauses mid-command when he spots you, actually stepping away from the action to greet you properly. Suddenly you matter more than the operation.",
+        approach: "Interrupt him anyway",
+        greeting: "\"Oh, you're back! Actually... I'm kind of happy to see you. Don't tell anyone.\"",
+        responses: {
+          kind: "Wait for him to finish first",
+          playful: "Interrupt him right back",
+          bold: "Demand his full attention",
+          neutral: "Stand by, say nothing",
+        },
+      },
+      {
+        line: '"You show up unannounced, no appointment. Sit down. I\'ll get you something. Ugh. Fine. I want to."',
+        approach: "Let him order for you",
+        greeting: '"You eaten? Don\'t answer, I already ordered."',
+        responses: {
+          kind: "Thank him for ordering",
+          playful: "Guess what he ordered",
+          bold: "Order something else instead",
+          neutral: "Take the food, say nothing",
+        },
+      },
+      {
+        line: "He complains about you at length to someone else, loudly, entirely as a compliment.",
+        approach: "Complain right back",
+        greeting:
+          '"You had me worried all evening. Somebody put that look on your face. Give me a name. I\'ll have a word. ...A thorough one."',
+        responses: {
+          kind: "Let the compliment stand",
+          playful: "Complain right back at him",
+          bold: "Call out the backhanded praise",
+          neutral: "Let him complain, say nothing",
+        },
+      },
+      {
+        line: "He's had the good seat held all night. He will absolutely deny that.",
+        approach: "Take the good seat",
+        greeting: '"Sit. Don\'t read into it. It was just open. All night. For no reason."',
+        responses: {
+          kind: "Thank him for the seat",
+          playful: "Call out the obvious lie",
+          bold: "Take the seat like it's owed",
+          neutral: "Take the seat, say nothing",
+        },
+      },
+      {
+        line: "The yelling drops a full register when he turns to you. Everyone notices. He doesn't.",
+        approach: "Notice the register drop",
+        greeting: '"You\'re not staff and you\'re not a guest. You\'re... whatever. You\'re welcome here."',
+        responses: {
+          kind: "Let the softness go unremarked",
+          playful: "Point out the register drop",
+          bold: "Call out the change directly",
+          neutral: "Let the moment pass quietly",
+        },
+      },
     ],
     spark: [
-      "He clears the whole VIP room. For a conversation. That he then can't start.",
-      '"HDY look like that in MY casino," he snaps, meaning something entirely different.',
-      "He fixes your collar, aggressively, and doesn't step back afterward.",
-      "The yelling stops. The silence that replaces it is much louder.",
-      "He buys you something absurd and refuses to explain why, badly.",
+      {
+        line: "He clears the whole VIP room. For a conversation. That he then can't start.",
+        approach: "Stay when the room clears",
+        greeting: '"Everybody out. Not you. Obviously not you."',
+        responses: {
+          kind: "Tell him he's not business",
+          playful: "Ask what he's building up to",
+          bold: "Stay when the room clears",
+          neutral: "Let him find the words",
+        },
+      },
+      {
+        line: '"HDY look like that in MY casino," he snaps, meaning something entirely different.',
+        approach: "Give him a second",
+        greeting:
+          '"You\'ve cost me something I can\'t put a number on. Do you have ANY idea how much that irritates me?"',
+        responses: {
+          kind: "Reassure him it's fine",
+          playful: "Ask what it cost",
+          bold: "Tell him what he's worth",
+          neutral: "Wait for him to explain",
+        },
+      },
+      {
+        line: "He fixes your collar, aggressively, and doesn't step back afterward.",
+        approach: "Let him fix your collar",
+        greeting:
+          '"You\'re the only thing in this building that isn\'t for sale. That\'s the problem."',
+        responses: {
+          kind: "Let him fix it, say thanks",
+          playful: "Tease him for staying close",
+          bold: "Fix his collar back",
+          neutral: "Let him finish fixing it",
+        },
+      },
+      {
+        line: "The yelling stops. The silence that replaces it is much louder.",
+        approach: "Let the yelling stop",
+        greeting: "\"I'm not good at quiet. Give me a second. I'm trying.\"",
+        responses: {
+          kind: "Give him the second",
+          playful: "Out-yell him",
+          bold: "Fill the silence yourself",
+          neutral: "Say nothing",
+        },
+      },
+      {
+        line: "He buys you something absurd and refuses to explain why, badly.",
+        approach: "Wear it",
+        greeting: '"Wear it. I bought it. Don\'t argue, just... just wear it for me."',
+        responses: {
+          kind: "Wear it for him",
+          playful: "Refuse to wear it",
+          bold: "Wear it and own the moment",
+          neutral: "Leave with the room",
+        },
+      },
     ],
     close: [
-      '"You\'re not just money or status to me," he admits, voice uncharacteristically sincere. "You\'re everything."',
-      "He hands the floor to someone else, the floor, because you looked like you needed a minute.",
-      "\"Don't tell me what it cost. It's yours. That's the end of the conversation.\"",
-      "The performance of not caring finally collapses, and he's not even embarrassed about it.",
-      "\"I like you. This much. It's ridiculous,\" he mutters, and doesn't let go of your hand.",
+      {
+        line: '"You\'re not just money or status to me," he admits, voice uncharacteristically sincere. "You\'re everything."',
+        approach: "Go straight to him",
+        greeting:
+          "\"I'd spend all my money on you if you asked. Not that I'd ever admit that normally.\"",
+        responses: {
+          kind: "Know his worth is you",
+          playful: "Match his wit",
+          bold: "Know you're worth his money",
+          neutral: "Let the moment sit quietly",
+        },
+      },
+      {
+        line: "He hands the floor to someone else, the floor, because you looked like you needed a minute.",
+        approach: "Tell him to hand off the floor",
+        greeting: '"Everything on this floor, I can price. Then there\'s you. It\'s infuriating."',
+        responses: {
+          kind: "Say the money was never it",
+          playful: "Tease him about delegating",
+          bold: "Take the floor duty yourself",
+          neutral: "Let him have this moment",
+        },
+      },
+      {
+        line: "\"Don't tell me what it cost. It's yours. That's the end of the conversation.\"",
+        approach: "Accept the gift",
+        greeting: '"Take it. Don\'t look at the price. I said don\'t look."',
+        responses: {
+          kind: "Tell him to stop buying things",
+          playful: "Spend his money on him",
+          bold: "Accept it and raise the stakes",
+          neutral: "Sit through the closing count",
+        },
+      },
+      {
+        line: "The performance of not caring finally collapses, and he's not even embarrassed about it.",
+        approach: "Stay till close",
+        greeting: '"Stay till close. I\'ll be insufferable the whole time. You like that."',
+        responses: {
+          kind: "Stay, let him drop the act",
+          playful: "Out-yell him affectionately",
+          bold: "Tell him to say it plainly",
+          neutral: "Wait out the rant",
+        },
+      },
+      {
+        line: "\"I like you. This much. It's ridiculous,\" he mutters, and doesn't let go of your hand.",
+        approach: "Take his hand",
+        greeting: '"I\'ve got people for everything. I don\'t have anyone for you. That\'s the point."',
+        responses: {
+          kind: "Say it back, just as plainly",
+          playful: "Tease him for holding on",
+          bold: "Take his hand openly",
+          neutral: "Let him hold on in silence",
+        },
+      },
     ],
     bound: [
-      "He's bought out the floor for the night. For you. He'll never explain it properly.",
-      '"Look what you\'ve done to me," he mutters, with his face in your neck.',
-      "He yells at everyone all day and comes home and is completely, quietly undone.",
-      "He drapes something absurdly expensive over your shoulders and refuses all thanks.",
-      "The money means nothing. He's finally, loudly, stopped pretending otherwise.",
+      {
+        line: "He's bought out the floor for the night. For you. He'll never explain it properly.",
+        approach: "Let him cancel everything",
+        greeting: "\"You're the only thing I've ever wanted that I couldn't just buy.\"",
+        responses: {
+          kind: "Tell him he's more than money",
+          playful: "Ask how much the floor cost",
+          bold: "Tell him he couldn't buy you",
+          neutral: "Let him have the gesture",
+        },
+      },
+      {
+        line: '"Look what you\'ve done to me," he mutters, with his face in your neck.',
+        approach: "Come here already",
+        greeting: '"Floor\'s closed. Everyone\'s gone. It\'s just us, so... come here already."',
+        responses: {
+          kind: "Come here, say nothing else",
+          playful: "Make him say it louder",
+          bold: "Say it first",
+          neutral: "Come closer without a word",
+        },
+      },
+      {
+        line: "He yells at everyone all day and comes home and is completely, quietly undone.",
+        approach: "Stay",
+        greeting: "\"Stay. I'll cancel everything. I've already canceled everything.\"",
+        responses: {
+          kind: "Hold him, say nothing more",
+          playful: "Ask what it cost",
+          bold: "Close the floor yourself",
+          neutral: "Sit in the empty room",
+        },
+      },
+      {
+        line: "He drapes something absurdly expensive over your shoulders and refuses all thanks.",
+        approach: "Wear it to bed",
+        greeting: "\"Wear it to bed. I don't care that it's expensive, that's the POINT.\"",
+        responses: {
+          kind: "Wear it for him",
+          playful: "Refuse the gift twice",
+          bold: "Wear it, thank him anyway",
+          neutral: "Let him rant",
+        },
+      },
+      {
+        line: "The money means nothing. He's finally, loudly, stopped pretending otherwise.",
+        approach: "Let him admit it",
+        greeting: '"I love you. HDY make me say it out loud. Ugh. I love you."',
+        responses: {
+          kind: "Say it back",
+          playful: "Make him say it twice",
+          bold: "Say it back just as loud",
+          neutral: "Say nothing",
+        },
+      },
     ],
   },
-  temperamentDialogue: {
-    new: [
-      '"Perfect timing. I need someone I can trust to manage the VIP section. You in?"',
-      '"HDY come in here with your skin like that and no routine. Sit. We are fixing this."',
-      "\"Tch... If you don't have any business for me, I'm leaving! You're wasting my precious time!\"",
-      '"Fuji-kun... Come out, come out, wherever you are... Tch, where did he go? Why is running away the only thing he\'s good at?!"',
-      "\"You're new. Rule one: don't touch the chips. Rule two: see rule one.\"",
-    ],
-    known: [
-      '"You again! HDY keep showing up without an appointment. Sit down."',
-      '"Don\'t touch the... okay, fine, you know not to. Fine."',
-      '"Just go! I cannot deal with this WTWUT! Wall-To-Wall Useless Trash, obviously! ...Not you. You can stay."',
-      "\"I'm not saying I remembered your name. I'm saying I said it. Different thing.\"",
-      "\"Drink's on the house. Don't tell the house.\"",
-    ],
-    warm: [
-      "\"Oh, you're back! Actually... I'm kind of happy to see you. Don't tell anyone.\"",
-      '"Sit. The good seat. No, I didn\'t hold it. Shut up."',
-      '"You had me worried all evening. Somebody put that look on your face. Give me a name. I\'ll have a word. ...A thorough one."',
-      '"You eaten? Don\'t answer, I already ordered."',
-      "\"You're not staff and you're not a guest. You're... whatever. You're welcome here.\"",
-    ],
-    spark: [
-      '"Everybody out. Not you. Obviously not you."',
-      "\"You've cost me something I can't put a number on. Do you have ANY idea how much that irritates me?\"",
-      '"Wear it. I bought it. Don\'t argue, just... just wear it for me."',
-      "\"I'm not good at quiet. Give me a second. I'm trying.\"",
-      "\"You're the only thing in this building that isn't for sale. That's the problem.\"",
-    ],
-    close: [
-      "\"I'd spend all my money on you if you asked. Not that I'd ever admit that normally.\"",
-      "\"Take it. Don't look at the price. I said don't look.\"",
-      "\"Everything on this floor, I can price. Then there's you. It's infuriating.\"",
-      "\"I've got people for everything. I don't have anyone for you. That's the point.\"",
-      '"Stay till close. I\'ll be insufferable the whole time. You like that."',
-    ],
-    bound: [
-      "\"Floor's closed. Everyone's gone. It's just us, so... come here already.\"",
-      '"I love you. HDY make me say it out loud. Ugh. I love you."',
-      "\"Wear it to bed. I don't care that it's expensive, that's the POINT.\"",
-      "\"Stay. I'll cancel everything. I've already canceled everything.\"",
-      "\"You're the only thing I've ever wanted that I couldn't just buy.\"",
-    ],
-  },
-  approach: {
-    warm: [
-      "Take the good seat",
-      "Interrupt him anyway",
-      "Complain right back",
-      "Let him order for you",
-    ],
-    spark: [
-      "Stay when the room clears",
-      "Wear it",
-      "Give him a second",
-      "Let the yelling stop",
-    ],
-    close: [
-      "Go straight to him",
-      "Take his hand",
-      "Stay till close",
-      "Tell him to hand off the floor",
-    ],
-    bound: [
-      "Come here already",
-      "Wear it to bed",
-      "Stay",
-      "Let him cancel everything",
-    ],
-  },
-  responses: {
-    kind: {
-      new: [
-        "Let him fuss over you",
-        "Take the work seriously",
-        "Thank him and mean it",
-      ],
-      spark: [
-        "Give him the second",
-        "Wear it for him",
-        "Tell him he's not business",
-      ],
-      close: [
-        "Know his worth is you",
-        "Tell him to stop buying things",
-        "Say the money was never it",
-      ],
-      bound: [
-        "Say it back",
-        "Wear it for him",
-        "Tell him he's more than money",
-      ],
-    },
-    playful: {
-      new: ["Trade sass back", "Use his own acronym", "Touch the chips"],
-      spark: ["Ask what it cost", "Out-yell him", "Refuse to wear it"],
-      close: [
-        "Match his wit",
-        "Out-yell him affectionately",
-        "Spend his money on him",
-      ],
-      bound: [
-        "Make him say it louder",
-        "Ask what it cost",
-        "Refuse the gift twice",
-      ],
-    },
-    bold: {
-      new: ["Bet on yourself", "Name your price", "Take the VIP section"],
-      spark: [
-        "Stay when the room clears",
-        "Fix his collar back",
-        "Tell him what he's worth",
-      ],
-      close: [
-        "Know you're worth his money",
-        "Tell him to say it plainly",
-        "Take his hand openly",
-      ],
-      bound: [
-        "Close the floor yourself",
-        "Say it first",
-        "Tell him he couldn't buy you",
-      ],
-    },
-    neutral: {
-      new: ["Stay quiet", "Let him run the floor", "Nod and get on with it"],
-      spark: ["Let him find the words", "Leave with the room", "Say nothing"],
-      close: [
-        "Let him have this moment",
-        "Wait out the rant",
-        "Sit through the closing count",
-      ],
-      bound: ["Let him rant", "Sit in the empty room", "Say nothing"],
-    },
-  },
+  // temperamentDialogue removed: every line was moved onto a dialogue beat's
+  // `greeting` (docs/dialogue-greeting-pairing.md) — every tier's pool
+  // matched onto a beat exactly, nothing left over.
+  // No top-level `responses` pool: every dialogue[tier] beat (new/known/warm/
+  // spark/close/bound) now carries bespoke responses for all four types (see
+  // dialogue above), making the old per-tier pools fully unreachable — same
+  // end state as yuri.js/benkei.js/jin.js/kaito.js/lucas.js/tohma.js/leo.js/
+  // shohei.js/subaru.js/zenji.js/haku.js/elias.js/mio.js/shion.js/jiro.js/
+  // ren.js/haru.js/towa.js/edward.js/rui.js/lyca.js/taiga.js/ritsu.js.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

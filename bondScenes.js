@@ -271,9 +271,11 @@ function optOutRow(characterId, levelName) {
  * `replay: true` renders the identical beat with `rnext`/`rchoice` buttons
  * instead of `next`/`choice` (§4.6) — everything else about it, including the
  * pacing and the choice prompt, is the same as the original delivery.
- * `firstEver` is meaningless for a replay and is never passed for one: nobody
- * needs the "sent you a message" frame or the opt-out button on a scene they
- * have already read once.
+ * The "sent you a message" frame opens every live scene's first beat, so an
+ * unheralded DM from a bot always reads as the game; a replay skips it, since
+ * nobody needs it on a scene they have already read once. `firstEver` is
+ * meaningless for a replay and is never passed for one: it only adds the
+ * opt-out button and its warning, and only on a user's very first bond DM.
  *
  * `scene.stickers[index]`, when present, names a file in assets/stickers to
  * attach alongside the text — the closest a beat comes to a character actually
@@ -285,9 +287,9 @@ export function renderBeat(scene, index, vars, { characterId, levelName, firstEv
   const isLast = index === scene.beats.length - 1;
   const parts = [fillTemplate(scene.beats[index], vars)];
 
-  // A frame line on a user's very first bond DM, so an unheralded message from
-  // a bot reads as the game rather than as a stranger.
-  if (index === 0 && firstEver) {
+  // A frame line on every scene's opening beat, so a message from a bot reads
+  // as the game rather than as a stranger.
+  if (index === 0 && !replay) {
     parts.unshift(`*${vars.firstName} sent you a message.*`);
   }
   if (isLast && scene.choice?.prompt) {

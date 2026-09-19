@@ -565,8 +565,9 @@ there, specified there, not here.
 
 ### 4.9 Consent & first-contact
 
-The **first bond DM a user ever gets** opens with a one-line frame — *"{firstName}
-sent you a message."* — and the first beat carries, alongside `Continue`, a
+**Every bond DM** opens with a one-line frame — *"{firstName} sent you a
+message."* (replays skip it). The **first bond DM a user ever gets** also
+carries, alongside `Continue` on its first beat, a
 **[Don't message me like this]** button that sets `bond_dms_enabled = false`
 (§6). Re-enable via a `/bonds dms on|off` subcommand. This is both etiquette and
 a Discord-ToS-safe posture: bot DMs must be wanted.
@@ -627,9 +628,8 @@ choice and grants a keepsake. `when` is optional.
 
 `{sinceMet}` is the month name of `character_relationships.created_at` — when
 this player first met the character at all, distinct from `{since}` (how long
-since their *last* interaction). **Every character's `closeFriend` scene must
-use it going forward** — `validateContent` warns (not yet an error, since the
-existing roster predates the rule) when one doesn't.
+since their *last* interaction). Available at any level; nothing requires a
+scene to use it.
 
 ### 5.3 Full coverage, and no content fallback
 
@@ -672,11 +672,7 @@ tier-pool checks:
   with no content fallback (§5.3) that level-up would deliver nothing at all;
 - no beat, closing line or keepsake line is reused anywhere in the game — two
   characters sending the same words at the same level would give away that the
-  moment is not really theirs;
-- a `closeFriend` scene that never uses `{sinceMet}` → **warning** (§5.2) —
-  build-breaking would have failed the 25 characters written before the rule
-  existed, so new and rewritten scenes are held to it and the rest is caught up
-  over time.
+  moment is not really theirs.
 
 ### 5.5 Voice and the intimacy ladder
 

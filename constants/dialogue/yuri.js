@@ -47,40 +47,40 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: A necessary clarification, sent because apparently I need to keep sending it. I am your physician. Full stop. That is the entirety of what exists between us.",
-        "As Mortkranken's house captain and the physician assigned to your case, I am responsible for you. Your vitals, your treatment schedule, whether you show up when I tell you to. That is a professional obligation, worm, not whatever you seem to think it is. I do not lose patients. That includes you. It's a policy. Not a feeling.",
-        "And yet. Every time I state this, plainly, in writing, you answer with {favResponse}, as though I've said something else entirely. I have not. I want that understood, thoroughly enough that I stop having to send this message, because I have now sent some version of it four times, and I am, for reasons I cannot account for, still not certain you believe me.",
+        "**{firstName}**: You were GONE. No notice, no note, nothing filed. I learned it from Jiro, who learned it from someone else, which is an intolerable chain of custody for information about my own patient!",
+        "EVERY patient under my care is required to inform me of any absence! Treatment schedules depend on it. Vitals depend on it. I'm the physician assigned to your case, worm, and I was left to work out your whereabouts by inference, like a COMMON DETECTIVE!\n\nI want to be perfectly clear that I was NOT worried! And do not think you can smooth this over with {favResponse}, as you always do! It has no bearing on the matter!",
+        "This is a professional matter, and it is not up for debate! You will report to my lab immediately so I can examine you myself!",
       ],
       choice: {
         prompt:
-          "Confirm it. State plainly that this is clinical. I require it in writing.",
+          "Have you nothing to say for yourself!? Next time, you inform me in advance. Is that understood!?",
         options: [
           {
             key: "kind",
-            label: "Say he takes good care of you",
+            label: "Apologize for not telling him",
             style: 3,
             close:
-              "Good, obviously, I'm an excellent physician, that is not... that is not confirmation of the terms I asked for.\n\n*A pause.*\n\nSay the actual sentence, worm. I need the actual sentence. For the file. Purely for the file.",
+              "Hmph. As well you should.\n\n*A pause.*\n\nYou're back, and in one piece, which is... adequate. Don't do it again, worm.",
           },
           {
             key: "playful",
-            label: "Ask what else it could be",
+            label: "Ask if he was worried",
             style: 1,
             close:
-              "!! That is not a question you put to a man mid consultation. I refuse to speculate. I will not.\n\n...What do you think it could be.\n\nNo. Don't answer that. I've changed my mind. Retract the question.",
+              "Worried!? That is not the operative word! I was INCONVENIENCED! Professionally!\n\n...I drafted a contingency protocol for your absence. Any competent physician would have done the same!",
           },
           {
             key: "bold",
-            label: "Refuse to confirm anything",
+            label: "Tell him to come and get you",
             style: 4,
             close:
-              "You cannot simply decline a clinical clarification, that is not how a consultation works!\n\n...Fine. FINE. Leave it unconfirmed, then. I'll simply have to monitor you more closely to compensate. Strictly for medical reasons. I want that on the record too.",
+              "Come and GET you!? I am the captain of Mortkranken! I do not fetch patients like a common orderly!\n\nI shall send Jiro. He will drag you here by the collar, and he will not care whether you are ready for it or not.",
           },
         ],
       },
       keepsake: {
         emoji: "🩺",
-        line: 'The "this is purely clinical" clarification he keeps resending, unprompted, like the case isn\'t closed.',
+        line: "An appointment card with 'notify your physician of all absences' written on the back, underlined twice.",
       },
     },
 
@@ -239,292 +239,494 @@ export default {
       {
         line: '"What are you dawdling for? Change out of those rags and report to my lab immediately!"',
         approach: "Enter the lab",
+        greeting: '"Are you here to be useful, or to be a variable?"',
+        responses: {
+          kind: ["Offer to help without fuss", "Get to work without complaint"],
+          playful: ["Be a deliberate variable", "Dawdle on purpose"],
+          bold: ["Talk back to the genius", "Question the urgency"],
+          neutral: ["Don't answer either way", "Skip the argument, go"],
+        },
       },
       {
         line: '"Fascinating," he says, about you, in the tone one uses about a specimen.',
         approach: "Be interesting",
+        greeting:
+          "\"I am a very busy man, so if you don't require examination, then we're done here.\"",
+        responses: {
+          kind: ["Take it as a compliment", "Wish him a good day"],
+          playful: [
+            "Ask if he's taking notes",
+            "Offer to be his prize specimen",
+          ],
+          bold: ["Refuse to be his specimen", "Turn the observation around"],
+          neutral: ["Don't react to the label", "Let him look, say nothing"],
+        },
       },
       {
         line: "He doesn't look up from the slide. \"Don't breathe on that. Or on me.\"",
         approach: "Stand still",
+        greeting:
+          '"Good. You can be still after all. Try to remember it next time."',
+        responses: {
+          kind: ["Ask if you're in his way", "Stay perfectly still for him"],
+          playful: ["Breathe on him anyway", "Lean in a little closer"],
+          bold: ["Tell him to ask nicely", "Move closer to the slide"],
+          neutral: ["Give him space, unbothered", "Step back and wait"],
+        },
       },
       {
         line: "The lab hums. He's been awake for an unreasonable number of hours and it shows.",
         approach: "Ask if he's slept",
+        greeting: '"Hm. Poor posture, poor sleep, poor decisions. Textbook."',
+        responses: {
+          kind: ["Tell him to get some sleep", "Offer to sit with him a while"],
+          playful: [
+            "Point out he looks exhausted",
+            "Guess how long he's been awake",
+          ],
+          bold: ["Call out the overworking", "Demand he go home"],
+          neutral: ["Let him work", "Say nothing about it"],
+        },
       },
       {
         line: '"You should feel honored to be chosen as the test subject of Dr. Yuri Isami, genius and visionary!"',
         approach: "Roll up your sleeve",
+        greeting: '"Still. This is a privilege, not a conversation."',
+        responses: {
+          kind: ["Let your guard down", "Trust the process quietly"],
+          playful: ["Touch what he said not to", "Ask if it'll hurt"],
+          bold: ["Refuse to be impressed", "Demand to know the point"],
+          neutral: [
+            "Hold out your arm, indifferent",
+            "Wait without asking questions",
+          ],
+        },
       },
     ],
     known: [
       {
         line: "He's stopped calling you 'worm.' He hasn't replaced it with anything yet.",
         approach: "Ask what he'll call you now",
+        greeting: '"You\'ve returned. I permit it, provisionally."',
+        responses: {
+          kind: ["Say you don't mind waiting", "Let him take his time"],
+          playful: [
+            "Offer terrible suggestions",
+            "Guess wildly at what's next",
+          ],
+          bold: ["Push him to just say it", "Tell him stalling won't work"],
+          neutral: ["Shrug and let it go", "Don't chase an answer"],
+        },
       },
       {
-        line: "There's a second chair in the lab. He'll insist it has always been there.",
-        approach: "Sit in the second chair",
+        line: "He hasn't eaten since yesterday. There's proof, if you look for the wrappers he pretends aren't there.",
+        approach: "Bring him something to eat",
+        greeting:
+          '"I don\'t require sustenance. I require silence and a working centrifuge. ...What is that."',
+        responses: {
+          kind: ["Insist he eat something", "Set it down without a word"],
+          playful: ["Wave it under his nose", "Dare him to ignore it"],
+          bold: ["Put the meal in his hands", "Tell him to eat or else"],
+          neutral: ["Leave it on his desk", "Say nothing, just walk away"],
+        },
       },
       {
         line: '"Are you injured or ill? Oh dear, how unfortunate. I shall begin the experi... Ahem, the treatment, immediately."',
         approach: "Let him examine you",
+        greeting:
+          '"Do try not to bleed on anything. I only just cleaned the equipment."',
+        responses: {
+          kind: ["Reassure him you trust him", "Stay calm for his sake"],
+          playful: ["Call him out on 'experi-'", "Ask if you're lab rat #1"],
+          bold: ["Demand a real diagnosis", "Push past the deflection"],
+          neutral: ["Let him work without a word", "Watch him work in silence"],
+        },
       },
       {
         line: "He notes something about you in the margin, and covers it when you look.",
         approach: "Ask what he wrote",
+        greeting:
+          '"I catalogued your visit. Purely for scientific record-keeping."',
+        responses: {
+          kind: ["Let him keep his secret", "Don't make him explain"],
+          playful: ["Read his margin notes aloud", "Peek over his shoulder"],
+          bold: ["Demand to read what he wrote", "Take the notebook from him"],
+          neutral: ["Let him finish his notes", "Say nothing about the it"],
+        },
       },
       {
         line: "The insults have gotten more specific, which means he's been paying attention.",
         approach: "Take it as flattery",
+        greeting:
+          '"My observations got sharper. That\'s not the same as caring."',
+        responses: {
+          kind: ["Say the attention is sweet", "Let it warm you anyway"],
+          playful: ["Return an insult of your own", "Keep count of them"],
+          bold: ["Call his bluff on the insults", "Ask what he really means"],
+          neutral: ["Let the insults roll past", "Take none of it personally"],
+        },
       },
       {
         line: "He's shouted Jiro's name down the hall three times now, too busy to go looking himself.",
         approach: "Tell him you found him",
+        greeting:
+          '"Jiro!! Jiro!!! What on earth are you... ah. It\'s you. Sit."',
+        responses: {
+          kind: ["Offer to go look for him", "Wait for him patiently"],
+          playful: ["Ask if you look like Jiro", "Answer to Jiro's name"],
+          bold: ["Point out he's stalling", "Tell him to look himself"],
+          neutral: ["Don't announce yourself", "Stay quiet in the doorway"],
+        },
       },
       {
-        line: "\"You're less useless than the last one,\" he announces, like it's the nicest thing he's ever said. It is.",
+        line: "\"You're less useless than the last one,\" he announces, like it's the nicest thing he's ever said.",
         approach: "Be less useless",
+        greeting: '"That was observation, not praise. Don\'t confuse the two."',
+        responses: {
+          kind: ["Take the compliment kindly", "Smile and take it to heart"],
+          playful: ["Ask who the last one was", "Demand a real compliment"],
+          bold: ["Call it a compliment anyway", "Tell him to just say it"],
+          neutral: ["Take none of it seriously", "Not worth a reaction"],
+        },
       },
       {
         line: "He's cleared a space on the bench beside him without being asked, mid-rant, like it's obvious you'd sit there.",
         approach: "Sit without asking",
+        greeting: '"...Sit, then. I already made room, don\'t act shocked."',
+        responses: {
+          kind: ["Say you're glad he made room", "Sit gently, no fuss"],
+          playful: ["Ask if he saved it for you", "Act surprised by the space"],
+          bold: ["Take the seat like you own it", "Sit before he can protest"],
+          neutral: ["Sit like it's nothing", "Take the space, unbothered"],
+        },
       },
       {
         line: '"Obviously, I solved it first," he says, already unrolling a diagram no one asked to see.',
         approach: "Ask to see it anyway",
+        greeting:
+          '"Hmph. You noticed the new equipment. The research grant committee finally saw sense. About time."',
+        responses: {
+          kind: [
+            "Admire the diagram sincerely",
+            "Ask him to walk you through it",
+          ],
+          playful: ["Pretend to already know it", "Act unimpressed on purpose"],
+          bold: ["Call the boast overblown", "Ask what took so long"],
+          neutral: ["Glance at it and say nothing", "Look away, uninterested"],
+        },
       },
       {
         line: "He's humming classical music under his breath and doesn't stop when he notices you noticing.",
         approach: "Let him keep humming",
+        greeting:
+          '"Yes, I\'m aware. I have talents beyond medicine. Try not to be too astonished."',
+        responses: {
+          kind: ["Hum along quietly", "Let him have the moment"],
+          playful: ["Hum off-key on purpose", "Guess the composer wrong"],
+          bold: ["Ask him to stop performing", "Say it's not that impressive"],
+          neutral: ["Tune it out", "Not notice the humming at all"],
+        },
       },
       {
         line: "He's muttering about Professor Nicholas's methodology like it's a personal insult, entirely unprompted.",
         approach: "Take his side",
+        greeting:
+          '"His entire thesis is amateur guesswork dressed up in Latin."',
+        responses: {
+          kind: ["Back him up completely", "Let him vent"],
+          playful: ["Egg on the rant a little", "Ask for more details"],
+          bold: ["Argue the other side", "Tell him to let it go"],
+          neutral: ["Half-listen, say nothing", "Tune out the rant"],
+        },
       },
       {
         line: "He's hidden the isekai novel under a stack of medical journals, badly, the spine sticking out.",
         approach: "Don't mention the book",
+        greeting:
+          '"...You didn\'t see anything. Not a word, or I revoke your visiting privileges."',
+        responses: {
+          kind: ["Smile to yourself, say nothing", "Keep his secret safe"],
+          playful: [
+            "Ask what counts as 'lowbrow'",
+            "Quote the title back at him",
+          ],
+          bold: ["Call him out for hiding it", "Pull it out into the open"],
+          neutral: ["Pretend you didn't see it", "Look away, say nothing"],
+        },
       },
       {
         line: '"You should feel honored," he says, of something small and ordinary he just did for you.',
         approach: "Feel honored anyway",
+        greeting:
+          '"You walk in with zero notice, now I have to rearrange my schedule. Try to appreciate that."',
+        responses: {
+          kind: ["Tell him it means a lot", "Let yourself feel honored"],
+          playful: ["Play along with the bit", "Demand a parade next time"],
+          bold: ["Ask what he actually did", "Refuse the vague praise"],
+          neutral: ["Accept it, ask nothing", "Nod and move on"],
+        },
       },
     ],
+    // warm/spark/close/bound below are migrated to full { line, approach,
+    // greeting, responses } beats, same as new/known — even though none of
+    // these four tiers are anywhere near DIALOGUE_POOL_TARGET_BY_TIER yet (5
+    // lines each vs. targets of 18/27/38/46). Pairing doesn't wait on pool
+    // growth; it's a separate axis (see docs/dialogue-greeting-pairing.md).
     warm: [
-      "His cold demeanor cracks slightly: there's obsession in his eyes now, the drive to save you consuming him.",
-      "He has a new set of notes. Every page of them is about you.",
-      '"Where on earth have you been, worm?" he snaps. "Next time you take a leave of absence, you inform me in advance."',
-      "He shoves a bottle at you without a word. It's the good painkiller. He'd deny caring.",
-      "He turns bright red mid-sentence and blames the lab lighting.",
+      {
+        line: "His cold demeanor cracks slightly: there's obsession in his eyes now, the drive to cure your curse is consuming him.",
+        approach: "Notice the obsession",
+        greeting:
+          '"I do this for the future of humanity. And... fine. For you specifically. Don\'t repeat that."',
+        responses: {
+          kind: [
+            "Let him fuss over your pulse",
+            "Say it means something to you",
+          ],
+          playful: ["Repeat 'for you' back at him", "Ask him to say it again"],
+          bold: ["Name the savior complex", "Tell him to slow down"],
+          neutral: ["Stay professional about it", "Let him work, say nothing"],
+        },
+      },
+      {
+        line: "He has a new set of notes. Every page of them is about you.",
+        approach: "Ask what he's working on",
+        greeting:
+          '"I\'ve read your file eleven times. Purely academic interest, obviously."',
+        responses: {
+          kind: ["Ask to see the notes", "Say you're flattered"],
+          playful: ["Ask what page you're on", "Tease him about the notes"],
+          bold: ["Demand to see the file", "Call the interest suspicious"],
+          neutral: ["Don't name it", "Let it go unremarked"],
+        },
+      },
+      {
+        line: '"Where on earth have you been, worm?" he snaps. "Next time you take a leave of absence, you inform me in advance."',
+        approach: "Sit down as told",
+        greeting: '"You\'re late. Not that I was... never mind. Sit."',
+        responses: {
+          kind: ["Reassure him you're back", "Apologize, mean it"],
+          playful: ["Show up late on purpose", "Blame the traffic, poorly"],
+          bold: ["Say he was clearly waiting", "Call out the near-slip"],
+          neutral: ["Sit in the lab quietly", "Take the seat, say nothing"],
+        },
+      },
+      {
+        line: "He shoves a bottle at you without a word. It's the good painkiller. He'd deny caring.",
+        approach: "Take the offered bottle",
+        greeting:
+          "\"Take this. It's for the headache you've been pretending not to have.\"",
+        responses: {
+          kind: ["Take the painkiller", "Murmur that you're grateful"],
+          playful: ["Ask if he's worried about you", "Ask how he even noticed"],
+          bold: ["Call it what it is: caring", "Ask since when he cares"],
+          neutral: ["Take it without a word", "Pocket it, say nothing"],
+        },
+      },
+      {
+        line: "He turns bright red mid-sentence and blames the lab lighting.",
+        approach: "Ask what he was saying",
+        greeting: '"You again? ...I suppose I don\'t mind."',
+        responses: {
+          kind: ["Let him recover quietly", "Give him a moment"],
+          playful: ["Blame the lab lighting", "Ask what he was really saying"],
+          bold: ["Match his volume", "Push him to finish the thought"],
+          neutral: ["Say nothing, let him recover", "Wait it out, unbothered"],
+        },
+      },
     ],
     spark: [
-      "He takes your pulse for the fourth time today. It's fine. It's always fine.",
-      "He's gone red to the tips of his ears and has not taken his hand back.",
-      '"Purely clinical," he mutters, with his hand still on your face.',
-      "The insults have gone quiet. What replaced them is much harder for him.",
-      "He leans in to examine something, and forgets to invent a reason.",
+      {
+        line: "He takes your pulse for the fourth time today. It's fine. It's always fine.",
+        approach: "Hold still",
+        greeting:
+          '"Hold still. I\'m... this is a medical assessment. Stop smiling."',
+        responses: {
+          kind: "Let it run its course",
+          playful: "Call it clinical too",
+          bold: "Ask what he's checking for",
+          neutral: "Let it stay clinical",
+        },
+      },
+      {
+        line: "He's gone red to the tips of his ears and has not taken his hand back.",
+        approach: "Don't move",
+        greeting:
+          '"Your proximity is affecting my concentration. Don\'t you dare move."',
+        responses: {
+          kind: "Be gentle about the blush",
+          playful: "Take his pulse instead",
+          bold: "Say what he won't",
+          neutral: "Move away first",
+        },
+      },
+      {
+        line: '"Purely clinical," he mutters, with his hand still on your face.',
+        approach: "Lean into his hand",
+        greeting:
+          "\"I've catalogued every symptom you have. This one's mine. Shut up.\"",
+        responses: {
+          kind: "Let him keep pretending",
+          playful: "Ask what symptom this is",
+          bold: "Call the excuse thin",
+          neutral: "Let the silence hold",
+        },
+      },
+      {
+        line: "The insults have gone quiet. What replaced them is much harder for him.",
+        approach: "Ask what changed",
+        greeting:
+          '"If you laugh I will never speak to you again. ...Fine. Laugh."',
+        responses: {
+          kind: "Let him know it's shared",
+          playful: "Grin and let it show",
+          bold: "Ask what replaced the insults",
+          neutral: "Let it go unnamed",
+        },
+      },
+      {
+        line: "He leans in to examine something, and forgets to invent a reason.",
+        approach: "Come here",
+        greeting:
+          '"I don\'t want anything from you. Except... no. Never mind. Come here."',
+        responses: {
+          kind: "Stay close, let him look",
+          playful: "Ask what he's really examining",
+          bold: "Close the distance yourself",
+          neutral: "Let the quiet hold",
+        },
+      },
     ],
     close: [
-      '"I\'ll find your cure," he says with absolute conviction, "because I\'m the only one capable enough. And you\'re mine to save."',
-      "He's asleep at the bench over your file. He'd rather die than let you say so.",
-      '"Don\'t you dare thank me," he warns, ears scarlet. "I\'m not doing it for gratitude."',
-      "He's stopped flinching when you reach for your coat. He hadn't noticed he was doing it until it stopped.",
-      "He grips your wrist a moment too long, checking a pulse he already knows is fine.",
+      {
+        line: '"I\'ll find your cure," he says with absolute conviction, "because I\'m the only one capable enough. And you\'re mine to save."',
+        approach: "Insist you don't need saving",
+        greeting: '"I will solve this. You don\'t get to give up before I do."',
+        responses: {
+          kind: "Say the next one won't fail",
+          playful: "Ask if you get a discount",
+          bold: "Say you're his to save",
+          neutral: "Let him have the conviction",
+        },
+      },
+      {
+        line: "He's asleep at the bench over your file. He'd rather die than let you say so.",
+        approach: "Wake him from the bench",
+        greeting:
+          '"Don\'t go worrying me like that. I have better things to do than panic over you."',
+        responses: {
+          kind: "Let him rest, no argument",
+          playful: "Read his notes out loud",
+          bold: "Take the file away from him",
+          neutral: "Sit quietly in the lab",
+        },
+      },
+      {
+        line: '"Don\'t you dare thank me," he warns, ears scarlet. "I\'m not doing it for gratitude."',
+        approach: "Ignore the warning",
+        greeting:
+          '"If anything happens to you I\'ll be extremely inconvenienced. Emotionally. Shut up."',
+        responses: {
+          kind: "Say the thanks he forbade",
+          playful: "Fluster him on purpose",
+          bold: "Refuse to take it back",
+          neutral: "Let him deflect, say nothing",
+        },
+      },
+      {
+        line: "He's stopped flinching when you reach for your coat. He hadn't noticed he was doing it until it stopped.",
+        approach: "Go to him",
+        greeting:
+          '"I always preserve the lives of my patients. I cannot make guarantees for any other parts of them, however. ...You, I keep whole."',
+        responses: {
+          kind: "Reach for his hand instead",
+          playful: "Reach for his coat pointedly",
+          bold: "Ask when he stopped flinching",
+          neutral: "Let him pretend it's nothing",
+        },
+      },
+      {
+        line: "He grips your wrist a moment too long, checking a pulse he already knows is fine.",
+        approach: "Let him take your pulse",
+        greeting:
+          '"I said sit down. Please. ...There. Was that so hard for either of us?"',
+        responses: {
+          kind: "Let him hold on longer",
+          playful: "Ask how long he'll pretend",
+          bold: "Match his intensity",
+          neutral: "Let the moment stretch quietly",
+        },
+      },
     ],
     bound: [
-      "He is furious about how much he loves you and expresses it almost entirely with his hands.",
-      '"Don\'t look at me like that," he snaps, already crossing the lab toward you.',
-      "He falls asleep on your chest mid-argument and would deny it under oath.",
-      "He kisses you like it's a problem he intends to solve thoroughly and repeatedly.",
-      '"Stay," is all he says now, where he used to build a whole excuse around the word.',
+      {
+        line: "He is furious about how much he loves you and expresses it almost entirely with his hands.",
+        approach: "Get over there",
+        greeting:
+          '"You belong to me. I won\'t hand you to another researcher..." He stops cold. "N-No. You\'ve misunderstood. I merely..."',
+        responses: {
+          kind: "Tell him he's allowed",
+          playful: "Tease him about the hands",
+          bold: "Ask what he's so furious about",
+          neutral: "Let his hands do the talking",
+        },
+      },
+      {
+        line: '"Don\'t look at me like that," he snaps, already crossing the lab toward you.',
+        approach: "Smile at him like that",
+        greeting:
+          '"Stop. You know exactly what that does to my concentration. ...Come here."',
+        responses: {
+          kind: "Let him cross the distance",
+          playful: "Smile at him deliberately",
+          bold: "Cross the lab first",
+          neutral: "Hold his gaze, say nothing",
+        },
+      },
+      {
+        line: "He falls asleep on your chest mid-argument and would deny it under oath.",
+        approach: "Let him rest against you",
+        greeting:
+          "\"You're impossible and I've stopped wanting you to be anything else.\"",
+        responses: {
+          kind: "Let him fall asleep on you",
+          playful: "Argue on without him",
+          bold: "Kiss him mid-argument",
+          neutral: "Let him sleep",
+        },
+      },
+      {
+        line: "He kisses you like it's a problem he intends to solve thoroughly and repeatedly.",
+        approach: "Stay the night",
+        greeting:
+          "\"Stay the night. The lab's cold. That's the reason. That's the only reason.\"",
+        responses: {
+          kind: "Melt into it quietly",
+          playful: "Ask if he's solved it yet",
+          bold: "Demand he show his work",
+          neutral: "Let it happen, unhurried",
+        },
+      },
+      {
+        line: '"Stay," is all he says now, where he used to build a whole excuse around the word.',
+        approach: "Just stay",
+        greeting:
+          '"I love you. There. I said it. Never bring it up again. ...Bring it up again."',
+        responses: {
+          kind: "Stay, no questions asked",
+          playful: "Bring it up again",
+          bold: "Beat him to the word",
+          neutral: "Stay without a word",
+        },
+      },
     ],
   },
-  temperamentDialogue: {
-    new: [
-      '"A test subject wanders in of its own accord. How convenient."',
-      '"Don\'t touch that. Or that. Honestly, just stand still."',
-      '"Are you here to be useful, or to be a variable?"',
-      '"Hm. Poor posture, poor sleep, poor decisions. Textbook."',
-      "\"I am a very busy man, so if you don't require examination, then we're done here.\"",
-    ],
-    known: [
-      "\"Oh. It's you. Don't touch anything, but... you may sit.\"",
-      "\"You're less useless than average. Don't celebrate.\"",
-      '"Jiro!! Jiro!!! What on earth are you... ah. It\'s you. Sit."',
-      "\"That's the wrong chair. ...Fine. That's your chair now, apparently.\"",
-      "\"You're sleeping badly. It's written all over you. Do something about it.\"",
-    ],
-    warm: [
-      '"You again? ...I suppose I don\'t mind."',
-      '"You\'re late. Not that I was... never mind. Sit."',
-      "\"Take this. It's for the headache you've been pretending not to have.\"",
-      '"I\'ve read your file eleven times. Purely academic interest, obviously."',
-      '"I do this for the future of humanity. And... fine. For you specifically. Don\'t repeat that."',
-    ],
-    spark: [
-      '"Hold still. I\'m... this is a medical assessment. Stop smiling."',
-      '"Your proximity is affecting my concentration. Don\'t you dare move."',
-      "\"I've catalogued every symptom you have. This one's mine. Shut up.\"",
-      '"If you laugh I will never speak to you again. ...Fine. Laugh."',
-      '"I don\'t want anything from you. Except... no. Never mind. Come here."',
-    ],
-    close: [
-      '"Don\'t go worrying me like that. I have better things to do than panic over you."',
-      '"I always preserve the lives of my patients. I cannot make guarantees for any other parts of them, however. ...You, I keep whole."',
-      '"I said sit down. Please. ...There. Was that so hard for either of us?"',
-      '"If anything happens to you I\'ll be extremely inconvenienced. Emotionally. Shut up."',
-      '"I will solve this. You don\'t get to give up before I do."',
-    ],
-    bound: [
-      '"You belong to me. I won\'t hand you to another researcher..." He stops cold. "N-No. You\'ve misunderstood. I merely..."',
-      '"I love you. There. I said it. Never bring it up again. ...Bring it up again."',
-      "\"You're impossible and I've stopped wanting you to be anything else.\"",
-      "\"Stay the night. The lab's cold. That's the reason. That's the only reason.\"",
-      '"Stop smiling at me like that or I\'ll never get anything done."',
-    ],
-  },
-  approach: {
-    warm: [
-      "Take the offered bottle",
-      "Sit down as told",
-      "Ask what he's working on",
-      "Be late on purpose",
-    ],
-    spark: ["Hold still", "Don't move", "Come here", "Laugh anyway"],
-    close: [
-      "Go to him",
-      "Wake him from the bench",
-      "Let him take your pulse",
-      "Refuse to be a burden",
-    ],
-    bound: [
-      "Get over there",
-      "Smile at him like that",
-      "Stay the night",
-      "Bring it up again",
-    ],
-  },
-  responses: {
-    // kind is Yuri's real channel (affinityByResponse.kind = 2): steady,
-    // unsentimental care he never has to perform anything back for — telling
-    // him to sleep, letting "worm" slide, not laughing at the novel he hides,
-    // being gentle with the fear of failure under the bravado. playful reaches
-    // him too (1): he flusters more easily than anyone in the script, so
-    // teasing lands and is half the fun — it just makes him sputter and re-arm
-    // rather than open up. bold glances off (0): a blunt challenge to his
-    // genius or a refusal to be his specimen hits the one nerve he can't
-    // defend and makes him bombastic instead of honest — not dislike, just the
-    // move that doesn't get through.
-    kind: {
-      new: [
-        "Let the 'worm' slide",
-        "Thank him anyway",
-        "Tell him to get some sleep",
-      ],
-      known: [
-        "Take the second chair",
-        "Don't laugh at the novel",
-        "Say the research can wait",
-      ],
-      warm: [
-        "Take the painkiller",
-        "Sleep, doctor's orders",
-        "Let him fuss over your pulse",
-      ],
-      spark: [
-        "Let him keep pretending",
-        "Tell him it's mutual",
-        "Be gentle about the blush",
-      ],
-      close: [
-        "Say the next one won't fail",
-        "Tell him to sleep",
-        "Say the thanks he forbade",
-      ],
-      bound: [
-        "Say it back",
-        "Let him fall asleep on you",
-        "Tell him he's allowed",
-      ],
-    },
-    playful: {
-      new: [
-        "Tease him carefully",
-        "Touch what he said not to",
-        "Be a deliberate variable",
-      ],
-      known: [
-        "Read his margin notes aloud",
-        "Claim the second chair",
-        "Ask what counts as 'lowbrow'",
-      ],
-      warm: [
-        "Blame the lab lighting",
-        "Show up late on purpose",
-        "Quote his novel back at him",
-      ],
-      spark: ["Laugh anyway", "Take his pulse instead", "Call it clinical too"],
-      close: [
-        "Make him laugh despite himself",
-        "Fluster him on purpose",
-        "Read his notes out loud",
-      ],
-      bound: [
-        "Bring it up again",
-        "Smile at him deliberately",
-        "Call him impossible back",
-      ],
-    },
-    bold: {
-      new: [
-        "Talk back to the genius",
-        "Poke a hole in his logic",
-        "Refuse to be his specimen",
-      ],
-      known: [
-        "Say the bravado's showing",
-        "Demand he say what he means",
-        "Push past the lab-coat act",
-      ],
-      warm: [
-        "Say he was clearly waiting",
-        "Name the savior complex",
-        "Match his volume",
-      ],
-      spark: [
-        "Close the distance yourself",
-        "Say what he won't",
-        "Take his hand off the chart",
-      ],
-      close: [
-        "Match his intensity",
-        "Tell him you won't give up",
-        "Say you're his to save",
-      ],
-      bound: [
-        "Cross the lab first",
-        "Say it before he can",
-        "Kiss him mid-argument",
-      ],
-    },
-    neutral: {
-      new: ["Give him space", "Let him work", "Answer only what's asked"],
-      known: [
-        "Take the chair quietly",
-        "Let him finish his notes",
-        "Say nothing",
-      ],
-      warm: ["Let it stay clinical", "Sit in the lab quietly", "Don't name it"],
-      spark: ["Let it stay clinical", "Move away first", "Say nothing at all"],
-      close: [
-        "Understand his withdrawal",
-        "Sit quietly in the lab",
-        "Let him pretend it's nothing",
-      ],
-      bound: ["Let him blame the cold", "Say nothing", "Let him sleep"],
-    },
-  },
+  // No top-level `approach` pool: every dialogue[tier] beat, at every tier,
+  // now carries its own `approach` (see dialogue above) — the independent
+  // pool this used to be is fully unreachable, so it's removed rather than
+  // left as dead weight (see getRandomApproachLabel's fallback chain for
+  // what a beat without one would use instead: SHARED_APPROACH_WHEN, then
+  // APPROACH_LABEL_FALLBACK).
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

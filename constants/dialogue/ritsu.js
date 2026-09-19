@@ -48,7 +48,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: A matter I have modeled at some length and been unable to resolve. I am therefore asking, which is a method I resort to rarely and dislike.",
-        "Your conduct toward me is {favResponse} without variance. I have run it against every input available: Romeo shouting, the captain's condition, the hour, whether I have been of any use to you. It does not move.\n\nPeople are transactional. That is not cynicism, it is observed data, and I have built a practice on it: I predict what a person will do from what they are owed and what they want.\n\nI cannot predict you. That is the first time the model has failed since I built it, and I have been unable to enjoy anything since I noticed.",
+        "Your conduct toward me is {favResponse} without variance. I have run it against every input available: Romeo shouting, Taiga Hoshibami's whereabouts, the hour, whether I have been of any use to you. It does not move.\n\nPeople are transactional. That is not cynicism, it is observed data, and I have built a practice on it: I predict what a person will do from what they are owed and what they want.\n\nI cannot predict you. That is the first time the model has failed since I built it, and I have been unable to enjoy anything since I noticed.",
       ],
       choice: {
         prompt: "Explain the discrepancy. I would like the model repaired.",
@@ -72,7 +72,7 @@ export default {
             label: "Tell him to scrap the model",
             style: 4,
             close:
-              "I built this model at fourteen, in a house where knowing what everybody wanted was the only reliable safety available to me. It has not failed once since. I am aware of how that sounds, and I have never written it down before.\n\nI am not going to discard it. I am prepared to make one exception in it. That is a larger concession than it appears.",
+              "I have refined this model since my studies began. Every person I have encountered is in it, and it has not failed once. It is the reason I am never caught unprepared, in court or out of it. I am aware of how that sounds.\n\nI am not going to discard it. I am prepared to make one exception in it. That is a larger concession than it appears.",
           },
         ],
       },
@@ -237,255 +237,514 @@ export default {
       {
         line: 'He looks up with genuine interest, already assessing your potential. "Your timing is fortuitous, partner. I could use someone sharp."',
         approach: "State your position",
+        greeting:
+          "\"State your position and I'll tell you whether it's defensible.\"",
+        responses: {
+          kind: [
+            "Tell him you trust his read",
+            "Say you're glad for the offer",
+          ],
+          playful: ["Test how sharp he can be", "Undersell your own skills"],
+          bold: ["State your position plainly", "Name your price up front"],
+          neutral: [
+            "Answer without embellishment",
+            "Give him the short version",
+          ],
+        },
       },
       {
         line: "He finishes a paragraph, caps the pen, and gives you a précis of his day before you asked.",
         approach: "Take the briefing",
+        greeting:
+          '"Ah, my new partner. Perfect timing. Let\'s work through this together."',
+        responses: {
+          kind: ["Thank him for the briefing", "Say you appreciate the prep"],
+          playful: ["Ask if that was timed", "Guess the ending yourself"],
+          bold: [
+            "Cut him off before he finishes",
+            "Skip to your own questions",
+          ],
+          neutral: ["Let him finish the clause", "Wait for the full briefing"],
+        },
       },
       {
         line: '"What business do you have with me? Please keep in mind that I charge 5500 yen per half hour for consultations, tax inclusive."',
         approach: "Take the consultation",
+        greeting:
+          '"Good. State your business. The clock started when you sat down."',
+        responses: {
+          kind: ["Pay the fee without complaint", "Say the rate seems fair"],
+          playful: ["Object on principle", "Ask for a student discount"],
+          bold: ["Refuse to pay the fee", "Negotiate the rate down"],
+          neutral: ["Note the rate, say nothing", "Accept the terms as given"],
+        },
       },
       {
         line: "There are eleven documents spread out in front of him and he knows exactly where each one is.",
         approach: "Sit across from him",
+        greeting:
+          '"Before you commit to anything in this house, read it. All of it. I\'ll wait."',
+        responses: {
+          kind: ["Thank him for the caution", "Take the reading seriously"],
+          playful: [
+            "Skim it and bluff your way",
+            "Ask him to summarize instead",
+          ],
+          bold: ["Sign without reading a word", "Say you trust the house"],
+          neutral: ["Read before you answer", "Take your time with the pages"],
+        },
       },
       {
         line: "He speaks in complete sentences at a speed that suggests he's already ahead of them.",
         approach: "Try to keep up",
+        greeting:
+          '"You have a good face for negotiation. That\'s a compliment, incidentally."',
+        responses: {
+          kind: ["Ask him to slow down kindly", "Thank him for the compliment"],
+          playful: ["Match his pace, badly", "Call the compliment out"],
+          bold: ["Be straightforward", "Meet his pace head-on"],
+          neutral: ["Keep up in silence", "Follow along quietly"],
+        },
       },
     ],
     known: [
       {
         line: '"For the record," he says, "I am correct. You may attempt to argue otherwise, if you wish."',
         approach: "Counter his argument",
+        greeting:
+          "\"According to my notes, you've disagreed with me four times now. I'm choosing not to find that concerning.\"",
+        responses: {
+          kind: ["Let him have this one", "Agree, just to see his face"],
+          playful: ["Argue back for the fun of it", "Poke a hole in his logic"],
+          bold: ["Argue back and win", "Tell him he's wrong outright"],
+          neutral: ["Consider his point fairly", "Concede if he's right"],
+        },
       },
       {
         line: '"Partner," he says, and this time it\'s a name rather than a proposition.',
         approach: "Accept the title",
+        greeting:
+          '"Partner. Good. I need a second opinion, and yours is becoming reliable."',
+        responses: {
+          kind: ["Say the title suits you", "Thank him for the promotion"],
+          playful: ["Ask what the raise is", "Demand a proper contract"],
+          bold: ["Claim the title outright", "Say you earned it"],
+          neutral: ["Accept it without comment", "Nod, take the title"],
+        },
       },
       {
         line: "He hands you a document unprompted. He wants your read on it.",
         approach: "Read the document",
+        greeting: '"Read this. Tell me what\'s wrong with it. Something is."',
+        responses: {
+          kind: ["Read it carefully for him", "Thank him for the trust"],
+          playful: [
+            "Find the error on purpose",
+            "Guess the flaw before reading",
+          ],
+          bold: ["Point out the flaw bluntly", "Tell him it's fine, unread"],
+          neutral: ["Read it in silence", "Give a plain assessment"],
+        },
       },
       {
         line: '"Have you seen Taiga Hoshibami? Strange... According to my behavioral model, he should be in the casino at this time."',
         approach: "Help him look for Taiga",
+        greeting:
+          '"By my model, there is a 29% chance he is at the baccarat table. We will begin there."',
+        responses: {
+          kind: ["Help him track Taiga down", "Reassure him it's fine"],
+          playful: ["Guess where Taiga's hiding", "Bet on the casino odds"],
+          bold: ["Drag Taiga back yourself", "Tell him to relax the model"],
+          neutral: ["Check the casino first", "Search without comment"],
+        },
       },
       {
         line: '"I have been assigned to Sinostra, so I will not allow them to stand trial, no matter how villainous their actions. That is the Shinjo family policy."',
         approach: "Ask about the Shinjo policy",
+        greeting:
+          '"Every client receives a defense. Whether they deserve one is not a question my family has ever been paid to answer."',
+        responses: {
+          kind: ["Say the policy sounds fair", "Ask gently why it matters"],
+          playful: ["Ask if it's ever backfired", "Tease the family motto"],
+          bold: ["Challenge the policy outright", "Ask what he'd do instead"],
+          neutral: ["Note the policy, say nothing", "Take it at face value"],
+        },
       },
       {
         line: "He asks for your honest assessment of his argument, and looks faintly betrayed when you actually give it.",
         approach: "Give a second opinion",
+        greeting:
+          '"You disagreed with me last time. You were half right. That\'s remarkable."',
+        responses: {
+          kind: ["Soften the honest opinion", "Praise the parts that work"],
+          playful: ["Point out he was half right", "Rub in being right"],
+          bold: ["Give the blunt opinion", "Tell him exactly what's wrong"],
+          neutral: ["State the opinion plainly", "Give a measured answer"],
+        },
       },
       {
         line: '"You disagree?" He looks personally offended, then visibly recalibrates. "...Go on, then. Convince me."',
         approach: "Explain your position",
+        greeting: '"I am listening. Please be concise. I will be taking notes."',
+        responses: {
+          kind: [
+            "Explain gently, point by point",
+            "Reassure him it's not personal",
+          ],
+          playful: [
+            "Make him work to be convinced",
+            "Enjoy watching him recalibrate",
+          ],
+          bold: ["Convince him outright", "Refuse to back down"],
+          neutral: [
+            "Lay out the position plainly",
+            "State it without argument",
+          ],
+        },
       },
       {
         line: "Before you've said a word, he's already pulled out a second chair, angled precisely toward himself.",
         approach: "Take the offered seat",
+        greeting: [
+          '"I\'ve stopped explaining the basics to you. Take that as the compliment it is."',
+          "\"Don't apologize for interrupting. I've started leaving room for it.\"",
+        ],
+        responses: {
+          kind: ["Take the seat, thank him", "Settle in gladly"],
+          playful: ["Sit somewhere else instead", "Make him ask properly"],
+          bold: ["Take the seat like it's yours", "Sit before the offer lands"],
+          neutral: ["Take the seat quietly", "Sit without comment"],
+        },
       },
       {
         line: "He repeats something you said days ago, word for word, and looks almost annoyed that he remembered it.",
         approach: "Ask how he remembered",
+        greeting:
+          '"I recorded that. Not for evidence. I just wanted to remember you said it."',
+        responses: {
+          kind: ["Say it means a lot he did", "Thank him for remembering"],
+          playful: [
+            "Tease him for keeping track",
+            "Ask what else he's recorded",
+          ],
+          bold: ["Ask why he really remembers", "Call it out directly"],
+          neutral: ["Note it, say nothing", "Let the moment pass quietly"],
+        },
       },
       {
         line: "He's filed you under a new heading in his notebook, one he doesn't let you read.",
         approach: "Ask what heading",
+        greeting:
+          "\"I've begun a file on you. Don't look so alarmed, it's a compliment. I only file people worth tracking.\"",
+        responses: {
+          kind: ["Say you don't mind the file", "Thank him for tracking you"],
+          playful: ["Guess the heading yourself", "Demand to read the file"],
+          bold: [
+            "Demand he tell you the heading",
+            "Insist on reading the file",
+          ],
+          neutral: ["Let the file stay closed", "Shrug, don't ask again"],
+        },
       },
       {
         line: '"I charge 5500 yen per half hour," he says, then, after a beat, "...This one is free."',
         approach: "Thank him for the discount",
+        greeting:
+          '"We are business partners. I will make an exception. Please do not mention it to anyone."',
+        responses: {
+          kind: ["Thank him sincerely", "Say that means something"],
+          playful: [
+            "Ask if it's a special rate",
+            "Tease him about the freebie",
+          ],
+          bold: ["Say you'd have paid anyway", "Call it out as a favor"],
+          neutral: ["Accept it without comment", "Take the discount quietly"],
+        },
       },
       {
         line: "He recites a statute at you that sounds suspiciously specific to whatever you're currently doing.",
         approach: "Ask if that's a real law",
+        greeting:
+          '"It is entirely real. I can cite the article and subsection, if you like. You would not like."',
+        responses: {
+          kind: ["Take his word for it", "Trust the citation"],
+          playful: [
+            "Call his bluff on the statute",
+            "Ask him to prove it's real",
+          ],
+          bold: ["Say the law sounds made up", "Demand he cite the source"],
+          neutral: ["Let the statute stand", "Move on without checking"],
+        },
       },
       {
         line: "He's brought you the same takeout coffee he buys himself, though you never told him what you drink.",
         approach: "Take the coffee",
+        greeting: '"I brought two coffees today. That was not an accident."',
+        responses: {
+          kind: ["Take the coffee, thank him", "Say it was thoughtful"],
+          playful: ["Ask how he knew your order", "Tease him about noticing"],
+          bold: ["Say you noticed the gesture", "Call it out as deliberate"],
+          neutral: ["Take the coffee quietly", "Drink it without comment"],
+        },
       },
     ],
     warm: [
-      "His eyes light up when he sees you. He's eager now, ready to collaborate and strategize together.",
-      "He's drafted something with your name on it. He drafted it optimistically.",
-      '"Partner. Excellent. I\'ve had a thought and no one worth telling it to."',
-      "The verbosity slows down around you. He's actually listening, which is the tell.",
-      "He argues the opposite side just to hear you dismantle it. He enjoys losing to you.",
+      {
+        line: "His eyes light up when he sees you. He's eager now, ready to collaborate and strategize together.",
+        approach: "Pull up a chair",
+        greeting:
+          "\"Sit. I've got a problem and you've got the better instincts.\"",
+        responses: {
+          kind: "Take the offered chair",
+          playful: "Make him wait for it",
+          bold: "Sit down like you own it",
+          neutral: "Sit, hear the problem",
+        },
+      },
+      {
+        line: "He's drafted something with your name on it. He drafted it optimistically.",
+        approach: "Take the reserved hour",
+        greeting: '"I\'ve reserved this hour. Coincidence, obviously."',
+        responses: {
+          kind: "Thank him for the hour",
+          playful: "Call the coincidence out",
+          bold: "Take the hour like it's yours",
+          neutral: "Take the hour, say nothing",
+        },
+      },
+      {
+        line: '"Partner. Excellent. I\'ve had a thought and no one worth telling it to."',
+        approach: "Hear out the thought",
+        greeting:
+          "\"I was hoping you'd come by. We make a good team, don't we?\"",
+        responses: {
+          kind: "Listen closely to the thought",
+          playful: "Guess the thought first",
+          bold: "Demand he say it plainly",
+          neutral: "Hear him out in silence",
+        },
+      },
+      {
+        line: "The verbosity slows down around you. He's actually listening, which is the tell.",
+        approach: "Notice him listening",
+        greeting:
+          '"Your reasoning has improved. So has my mood. Related, I suspect."',
+        responses: {
+          kind: "Say you noticed him listening",
+          playful: "Test how closely he listens",
+          bold: "Call out the improved mood",
+          neutral: "Let him keep listening quietly",
+        },
+      },
+      {
+        line: "He argues the opposite side just to hear you dismantle it. He enjoys losing to you.",
+        approach: "Argue the other side",
+        greeting:
+          '"Argue the other side for me. You\'re the only one who does it properly."',
+        responses: {
+          kind: "Argue gently, let him win",
+          playful: "Argue just to rile him up",
+          bold: "Dismantle his argument fully",
+          neutral: "Argue the other side plainly",
+        },
+      },
     ],
     spark: [
-      "He sets down the file and gives you a look with nothing legal in it.",
-      '"I\'d like to renegotiate the terms of this partnership," he says carefully.',
-      "He's rehearsed this. He's a very good speaker. It isn't helping.",
-      "He switches off the recorder, which for him is practically undressing.",
-      '"There is no precedent for what I want to say. So I\'ll simply say it."',
+      {
+        line: "He sets down the file and gives you a look with nothing legal in it.",
+        approach: "Say yes",
+        greeting:
+          "\"Say no and I'll never raise it again. Say yes and I'll not let it rest.\"",
+        responses: {
+          kind: "Say yes gently",
+          playful: "Make him wait for an answer",
+          bold: "Say yes",
+          neutral: "Take a moment before answering",
+        },
+      },
+      {
+        line: '"I\'d like to renegotiate the terms of this partnership," he says carefully.',
+        approach: "Hear the amendment",
+        greeting:
+          '"Clause one: closer. Clause two: also closer. I haven\'t drafted the rest."',
+        responses: {
+          kind: "Hear him out kindly",
+          playful: "Make him argue for it",
+          bold: "Amend the clause yourself",
+          neutral: "Table the motion",
+        },
+      },
+      {
+        line: "He's rehearsed this. He's a very good speaker. It isn't helping.",
+        approach: "Let him skip to the conclusion",
+        greeting:
+          "\"I've prepared an argument. It's excellent. May I skip to the conclusion?\"",
+        responses: {
+          kind: "Let him skip to the conclusion",
+          playful: "Make him say the whole thing",
+          bold: "Finish the argument for him",
+          neutral: "Reserve judgment",
+        },
+      },
+      {
+        line: "He switches off the recorder, which for him is practically undressing.",
+        approach: "Notice what he's doing",
+        greeting:
+          "\"Everything I've calculated says this is unwise. I'm proceeding regardless.\"",
+        responses: {
+          kind: "Let him have the moment",
+          playful: "Tease the dramatic gesture",
+          bold: "Switch the recorder off",
+          neutral: "Watch without saying anything",
+        },
+      },
+      {
+        line: '"There is no precedent for what I want to say. So I\'ll simply say it."',
+        approach: "Overrule the objection",
+        greeting:
+          "\"Objection. You're distracting. Sustained. I'm not asking you to stop.\"",
+        responses: {
+          kind: "Tell him there's precedent",
+          playful: "Cross-examine him",
+          bold: "Overrule the objection",
+          neutral: "Let the file stay open",
+        },
+      },
     ],
     close: [
-      '"You\'ve become my partner in more ways than just business," he says warmly, stepping closer. "I wouldn\'t trust the calculation to anyone but you."',
-      "He sets the file down mid-clause. That has never once happened for anyone else.",
-      '"There\'s no clause for this," he admits. "I\'ve looked. Extensively."',
-      "He explains the whole risk, honestly, and then asks you to decide.",
-      "The lawyer goes quiet, and the person behind him is much less careful with words.",
+      {
+        line: '"You\'ve become my partner in more ways than just business," he says warmly, stepping closer. "I wouldn\'t trust the calculation to anyone but you."',
+        approach: "Take the partnership",
+        greeting:
+          '"You\'re the only person I trust completely. We can accomplish anything with you by my side."',
+        responses: {
+          kind: "Show him friendship is real",
+          playful: "Make him smile despite logic",
+          bold: "Take the partnership boldly",
+          neutral: "Understand his logic",
+        },
+      },
+      {
+        line: "He sets the file down mid-clause. That has never once happened for anyone else.",
+        approach: "Set the file aside",
+        greeting:
+          '"Set the file aside. I\'d rather talk to you than about anything else."',
+        responses: {
+          kind: "Say the calculation can wait",
+          playful: "Tease the mid-clause pause",
+          bold: "Close the deal yourself",
+          neutral: "Let him set the file aside",
+        },
+      },
+      {
+        line: '"There\'s no clause for this," he admits. "I\'ve looked. Extensively."',
+        approach: "Ask what he looked for",
+        greeting:
+          "\"I could argue anything. I can't argue myself out of this. I've stopped trying.\"",
+        responses: {
+          kind: "Ask gently what he found",
+          playful: "Cross-examine him instead",
+          bold: "Tell him he's more than that",
+          neutral: "Let him finish looking",
+        },
+      },
+      {
+        line: "He explains the whole risk, honestly, and then asks you to decide.",
+        approach: "Tell him you'll stay",
+        greeting:
+          '"No contract, no terms. Just tell me you\'ll stay a partner."',
+        responses: {
+          kind: "Tell him no contract is needed",
+          playful: "Make light of the whole risk",
+          bold: "Make a bold choice about him",
+          neutral: "Sit through the long argument",
+        },
+      },
+      {
+        line: "The lawyer goes quiet, and the person behind him is much less careful with words.",
+        approach: "Go sit beside him",
+        greeting:
+          "\"I've calculated every outcome. They're all better with you in them.\"",
+        responses: {
+          kind: "Let the quiet stay kind",
+          playful: "Win the argument on purpose",
+          bold: "Say what the lawyer cannot",
+          neutral: "Let the room go quiet",
+        },
+      },
     ],
     bound: [
-      "The files stay shut. He's stopped pretending anything else has priority.",
-      '"I have no argument for this," he says, "and no interest in constructing one."',
-      "He switches the recorder off, sets it down deliberately, and stops talking entirely.",
-      "He's verbose about everything except this, where he's suddenly and completely direct.",
-      "He holds you like the one thing in his life he never had to negotiate for.",
+      {
+        line: "The files stay shut. He's stopped pretending anything else has priority.",
+        approach: "Close the file",
+        greeting: '"Close the file. Close it. There, now come here."',
+        responses: {
+          kind: "Close the file for him",
+          playful: "Make him say it out loud",
+          bold: "Tell him he's not getting out",
+          neutral: "Sit in the quiet room",
+        },
+      },
+      {
+        line: '"I have no argument for this," he says, "and no interest in constructing one."',
+        approach: "Accept there's no argument",
+        greeting:
+          "\"I've argued my way out of everything. Not this. I don't want out.\"",
+        responses: {
+          kind: "Tell him he needn't argue",
+          playful: "Object one last time",
+          bold: "Clear his docket yourself",
+          neutral: "Let him work",
+        },
+      },
+      {
+        line: "He switches the recorder off, sets it down deliberately, and stops talking entirely.",
+        approach: "Switch the recorder off",
+        greeting:
+          '"Off the record. ...I find I have very little to say. I just wanted you here."',
+        responses: {
+          kind: "Thank him for the silence",
+          playful: "Kill the recording",
+          bold: "Take the silence as answer",
+          neutral: "Say nothing",
+        },
+      },
+      {
+        line: "He's verbose about everything except this, where he's suddenly and completely direct.",
+        approach: "Stay the week",
+        greeting:
+          "\"Stay. I'll clear the docket. I'll clear the entire week if you ask.\"",
+        responses: {
+          kind: "Take him up on the week",
+          playful: "Hold him to the whole week",
+          bold: "Say it first",
+          neutral: "Let him clear the week quietly",
+        },
+      },
+      {
+        line: "He holds you like the one thing in his life he never had to negotiate for.",
+        approach: "Come here",
+        greeting:
+          '"I love you. No preamble, no clause, no conditions. It\'s rather freeing."',
+        responses: {
+          kind: "Say it back without clauses",
+          playful: "Tease him about negotiating",
+          bold: "Hold him back just as hard",
+          neutral: "Stay in the quiet held moment",
+        },
+      },
     ],
   },
-  temperamentDialogue: {
-    new: [
-      '"Ah, my new partner. Perfect timing. Let\'s work through this together."',
-      '"Before you commit to anything in this house, read it. All of it. I\'ll wait."',
-      '"You have a good face for negotiation. That\'s a compliment, incidentally."',
-      "\"State your position and I'll tell you whether it's defensible.\"",
-      '"Keep in mind: I charge 5500 yen per half hour for consultations. Tax inclusive."',
-    ],
-    known: [
-      '"Partner. Good. I need a second opinion, and yours is becoming reliable."',
-      '"Read this. Tell me what\'s wrong with it. Something is."',
-      '"I\'ve stopped explaining the basics to you. Take that as the compliment it is."',
-      '"You disagreed with me last time. You were half right. That\'s remarkable."',
-      "\"Any self-respecting inspector would stay comfortably ahead of schedule. I suggest you get into the habit. Let's go. There's no time to waste.\"",
-    ],
-    warm: [
-      "\"I was hoping you'd come by. We make a good team, don't we?\"",
-      "\"Sit. I've got a problem and you've got the better instincts.\"",
-      '"Argue the other side for me. You\'re the only one who does it properly."',
-      '"I\'ve reserved this hour. Coincidence, obviously."',
-      '"Your reasoning has improved. So has my mood. Related, I suspect."',
-    ],
-    spark: [
-      '"I move to amend our arrangement. Clause one: I\'d like to be closer."',
-      "\"I've prepared an argument. It's excellent. May I skip to the conclusion?\"",
-      "\"Objection. You're distracting. Sustained. I'm not asking you to stop.\"",
-      "\"Everything I've calculated says this is unwise. I'm proceeding regardless.\"",
-      "\"Say no and I'll never raise it again. Say yes and I'll not let it rest.\"",
-    ],
-    close: [
-      '"You\'re the only person I trust completely. We can accomplish anything with you by my side."',
-      '"Set the file aside. I\'d rather talk to you than about anything else."',
-      "\"I've calculated every outcome. They're all better with you in them.\"",
-      '"No contract, no terms. Just tell me you\'ll stay a partner."',
-      "\"I could argue anything. I can't argue myself out of this. I've stopped trying.\"",
-    ],
-    bound: [
-      '"Close the file. Close it. There, now come here."',
-      '"I love you. No preamble, no clause, no conditions. It\'s rather freeing."',
-      "\"Stay. I'll clear the docket. I'll clear the entire week if you ask.\"",
-      "\"I've argued my way out of everything. Not this. I don't want out.\"",
-      '"Switch off the recorder. I won\'t be needing it."',
-    ],
-  },
-  approach: {
-    warm: [
-      "Take the reserved hour",
-      "Argue the other side",
-      "Pull up a chair",
-      "Hear out the thought",
-    ],
-    spark: [
-      "Hear the amendment",
-      "Let him skip to the conclusion",
-      "Say yes",
-      "Overrule the objection",
-    ],
-    close: [
-      "Set the file aside",
-      "Go sit beside him",
-      "Take the partnership",
-      "Tell him you'll stay",
-    ],
-    bound: [
-      "Close the file",
-      "Switch the recorder off",
-      "Stay the week",
-      "Come here",
-    ],
-  },
-  responses: {
-    kind: {
-      new: [
-        "Tell him you trust his read",
-        "Take the advice seriously",
-        "Thank him for the free hour",
-      ],
-      spark: [
-        "Let him skip to the conclusion",
-        "Tell him there's precedent",
-        "Say yes gently",
-      ],
-      close: [
-        "Show him friendship is real",
-        "Tell him no contract is needed",
-        "Say the calculation can wait",
-      ],
-      bound: [
-        "Say it back without clauses",
-        "Close the file for him",
-        "Tell him he needn't argue",
-      ],
-    },
-    playful: {
-      new: [
-        "Engage his mind playfully",
-        "Object on principle",
-        "Argue an absurd position",
-      ],
-      spark: [
-        "Object on principle",
-        "Cross-examine him",
-        "Make him argue for it",
-      ],
-      close: [
-        "Make him smile despite logic",
-        "Win the argument on purpose",
-        "Cross-examine him instead",
-      ],
-      bound: [
-        "Object one last time",
-        "Kill the recording",
-        "Make him say it out loud",
-      ],
-    },
-    bold: {
-      new: ["Be straightforward", "Name your terms", "Refuse the fine print"],
-      spark: [
-        "Say yes",
-        "Amend the clause yourself",
-        "Switch the recorder off",
-      ],
-      close: [
-        "Make a bold choice about him",
-        "Tell him he's more than that",
-        "Close the deal yourself",
-      ],
-      bound: [
-        "Clear his docket yourself",
-        "Say it first",
-        "Tell him he's not getting out",
-      ],
-    },
-    neutral: {
-      new: [
-        "Be logical",
-        "Read before you answer",
-        "Let him finish the clause",
-      ],
-      spark: ["Table the motion", "Let the file stay open", "Reserve judgment"],
-      close: [
-        "Understand his logic",
-        "Sit through the long argument",
-        "Let the room go quiet",
-      ],
-      bound: ["Let him work", "Sit in the quiet room", "Say nothing"],
-    },
-  },
+  // No temperamentDialogue pool: every leftover line was placed onto a
+  // dialogue beat's `greeting` (docs/dialogue-greeting-pairing.md).
+  // No top-level `responses` pool: every dialogue[tier] beat (new/known/warm/
+  // spark/close/bound) now carries bespoke responses for all four types (see
+  // dialogue above), making the old per-tier pools fully unreachable — same
+  // end state as yuri.js/benkei.js/jin.js/kaito.js/lucas.js/tohma.js/leo.js/
+  // shohei.js/subaru.js/zenji.js/haku.js/elias.js/mio.js/shion.js/jiro.js/
+  // ren.js/haru.js/towa.js/edward.js/rui.js/lyca.js/taiga.js. The `new`-tier
+  // kind/playful/bold/neutral pool entries had no genuine same-beat fit, so
+  // they were dropped rather than force-placed.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full
