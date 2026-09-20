@@ -4,6 +4,16 @@
 `Object.keys(DIALOGUE)` order and every pool byte-identical, `npm test` green
 before and after. Kept below as the record of what was done and why.
 
+> **Pool list is out of date (2026-09-19).** Everything below describes the
+> file layout at the time of the split, and the split itself still holds — one
+> module per character, `_shared.js`, `index.js`, the `constants/dialogue.js`
+> façade. But the pools have changed since: `temperamentDialogue`, `approach`,
+> `approachWhen`, `dialogueWhen`, `SHARED_DIALOGUE_WHEN` and
+> `SHARED_APPROACH_WHEN` are all gone. A character file now exports
+> `{ dialogue, daytimeDialogue?, bondScenes, winnerLines }`, where every
+> `dialogue` entry is a beat: `{ line, approach, greeting, responses }`. Read
+> the export lists below as history, not as the current shape.
+
 ---
 
 ## 1. Why
@@ -136,7 +146,7 @@ to keep it separate from feature work.
 - `Object.keys(DIALOGUE)` order is unchanged (some pickers don't care, but keep
   it stable for reviewable diffs and any future ordered iteration).
 - A spot check: for a few `(character, tier)` pairs, the set of possible
-  `getRandomDialogueLine` / `getTemperamentGreeting` / `getRandomApproachLabel`
+  `getRandomDialogueBeat` / `getRandomDialogueEntry`
   outputs is identical to a pre-split run (seed or enumerate the pools).
 - `git grep -n "eveningDialogue\|eveningTemperament"` still returns nothing
   (those were removed in the conditional-dialogue refactor).

@@ -542,12 +542,12 @@ export default {
           kind: ["Ask gently what's wrong", "Say you'll stay a while"],
           playful: ["Ask what everyone else did", "Ask how rude he was"],
           bold: ["Say he's not fine either", "Tell him to apologize to them"],
-          neutral: ["Let it go unremarked", "Sit and keep it restful"],
+          neutral: ["Leave the subject alone", "Sit and keep it restful"],
         },
       },
       {
         line: '"Does it actually hurt, or are you being stoic for my benefit," he asks. "Answer honestly. I can tell."',
-        approach: "Answer him honestly",
+        approach: "Stop being stoic",
         greeting:
           "\"Thank you. I'll give you something mild. You don't have to be brave in here. It doesn't help the reading.\"",
         responses: {
@@ -623,7 +623,7 @@ export default {
         greeting:
           '"Your blood type. Your resting pulse. That you hum on the stairs. Some of it isn\'t medical."',
         responses: {
-          kind: ["Say that means a lot", "Say you're glad he noticed"],
+          kind: ["Say that means a lot", "Thank him for remembering"],
           playful: ["Test what else he remembers", "Hum for him right now"],
           bold: ["Say of course he remembers", "Ask what else isn't medical"],
           neutral: ["Shrug, say nothing", "Let the list stand"],
@@ -669,13 +669,13 @@ export default {
       },
       {
         line: "He's stopped writing down your visits as check-ups in the log. He hasn't told you what he writes instead.",
-        approach: "Ask him what he wrote",
+        approach: "Ask what the log says now",
         greeting: "\"'Visit.' Just visit. There wasn't a better category.\"",
         responses: {
-          kind: ["Let him keep the log private", "Say 'visit' sounds right"],
+          kind: ["Don't make him explain", "Say 'visit' sounds right"],
           playful: ["Guess what he calls it now", "Suggest a better category"],
           bold: ["Demand to see the log", "Ask what it should say"],
-          neutral: ["Let it go unremarked", "Accept the category"],
+          neutral: ["Leave the log alone", "Accept the category"],
         },
       },
       {
@@ -687,7 +687,7 @@ export default {
           kind: ["Promise to eat properly", "Promise, and mean it"],
           playful: ["Point out the double standard", "Offer to eat for two"],
           bold: ["Say he should eat too", "Say you'll watch him eat too"],
-          neutral: ["Nod, say nothing", "Agree without argument"],
+          neutral: ["Nod and take the order", "Agree without argument"],
         },
       },
       {

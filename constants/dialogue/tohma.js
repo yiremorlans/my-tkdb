@@ -473,10 +473,10 @@ export default {
         approach: "Check in with him",
         greeting: '"Well, well. You again. I find I don\'t mind it."',
         responses: {
-          kind: "Say you don't mind either",
-          playful: "Ask what softened him",
-          bold: "Name the softening outright",
-          neutral: "Check in, say little",
+          kind: ["Say you don't mind either", "Tell him you look for him"],
+          playful: ["Ask what softened him", "Repeat 'well, well' at him"],
+          bold: ["Name the softening outright", "Say he's glad you're here"],
+          neutral: ["Check in, say little", "Ask after his day only"],
         },
       },
       {
@@ -484,10 +484,10 @@ export default {
         approach: "Interrupt him anyway",
         greeting: '"There are worse interruptions than you."',
         responses: {
-          kind: "Thank him for the attention",
-          playful: "Interrupt him again",
-          bold: "Say you're worth it",
-          neutral: "Interrupt, then go quiet",
+          kind: ["Thank him for listening", "Apologize for cutting in"],
+          playful: ["Interrupt him again", "Ask who the worse ones are"],
+          bold: ["Say you're worth it", "Tell him to drop the work"],
+          neutral: ["Interrupt, then go quiet", "Wait until he's finished"],
         },
       },
       {
@@ -495,10 +495,13 @@ export default {
         approach: "Arrive on time",
         greeting: '"You\'re consistent. I respect consistency."',
         responses: {
-          kind: "Say you tried to be on time",
-          playful: "Act smug about the compliment",
-          bold: "Ask for the real compliment",
-          neutral: "Take the compliment plainly",
+          kind: [
+            "Say you tried to be on time",
+            "Say he's worth being early for",
+          ],
+          playful: ["Act smug about the compliment", "Ask if he timed you"],
+          bold: ["Ask for the real compliment", "Tell him to say it properly"],
+          neutral: ["Take the compliment plainly", "Take it and sit down"],
         },
       },
       {
@@ -506,10 +509,13 @@ export default {
         approach: "Walk up to him",
         greeting: '"Well, then. How have you been? And the truth, this time."',
         responses: {
-          kind: "Thank him for the room",
-          playful: "Ask if he planned the space",
-          bold: "Give him the honest answer",
-          neutral: "Take the space, say nothing",
+          kind: ["Thank him for the room", "Sit close and tell him"],
+          playful: [
+            "Ask if he planned the space",
+            "Give a very polished answer",
+          ],
+          bold: ["Give him the honest answer", "Ask for his truth in return"],
+          neutral: ["Take the space, say nothing", "Sit down, answer briefly"],
         },
       },
       {
@@ -517,22 +523,34 @@ export default {
         approach: "Ask what he's working on",
         greeting: "\"I've adjusted my schedule. Don't read into it.\"",
         responses: {
-          kind: "Ask if the report can wait",
-          playful: "Tease him about the schedule",
-          bold: "Say you're the reason, plainly",
-          neutral: "Let the report stay closed",
+          kind: [
+            "Ask if the report can wait",
+            "Say you'll wait while he works",
+          ],
+          playful: ["Tease him about the schedule", "Read into it out loud"],
+          bold: ["Say you're the reason, plainly", "Close the report for him"],
+          neutral: [
+            "Let the report stay closed",
+            "Ask about the report anyway",
+          ],
         },
       },
       {
         line: "He pours a second cup of tea without asking whether you wanted one. You did.",
-        approach: "Take the second cup",
+        approach: "Accept the poured cup",
         greeting:
           '"I can tell at a glance when you\'re in need of a cup. Drink it while it\'s hot."',
         responses: {
-          kind: "Thank him for the tea",
-          playful: "Ask if he always assumes right",
-          bold: "Take the cup, no thanks needed",
-          neutral: "Take the cup without a word",
+          kind: ["Thank him for the timing", "Say the tea is perfect"],
+          playful: [
+            "Ask if he always assumes right",
+            "Ask what else he can tell",
+          ],
+          bold: [
+            "Drink it without thanking him",
+            "Ask him to sit and drink too",
+          ],
+          neutral: ["Take the cup without a word", "Drink it while it's hot"],
         },
       },
       {
@@ -541,10 +559,10 @@ export default {
         greeting:
           '"Excellent. I\'ll show you how to win. Against opponents other than myself, of course."',
         responses: {
-          kind: "Sit down for the game",
-          playful: "Warn him not to go easy",
-          bold: "Demand he play for real",
-          neutral: "Sit, say nothing, play",
+          kind: ["Sit down for the game", "Thank him for the lesson"],
+          playful: ["Warn him not to go easy", "Threaten to win this time"],
+          bold: ["Demand he play for real", "Move first without asking"],
+          neutral: ["Sit, say nothing, play", "Take the white pieces"],
         },
       },
     ],
@@ -733,53 +751,6 @@ export default {
       },
     ],
   },
-  // Evening block: dialogue and approach paired per beat
-  // (docs/dialogue-approach-pairing.md) instead of two separately-drawn lists.
-  dialogueWhen: [
-    {
-      when: { time: "evening" },
-      dialogue: {
-        new: [
-          {
-            line: "He checks his watch, then the dark stairwell behind you, and decides not to remark on the hour.",
-            approach: "Slip past curfew with him",
-          },
-          {
-            line: '"You\'re past curfew," he notes. "So am I. We\'ll call it even."',
-            approach: "Slip past curfew with him",
-          },
-          {
-            line: "The balcony's empty except for him. After dark, he says, is the only time it's quiet enough to think.",
-            approach: "Take the empty balcony",
-          },
-          {
-            line: '"It\'s after curfew. I\'m not going to report you," he says. "Stand where the light reaches, though."',
-            approach: "Take the empty balcony",
-          },
-        ],
-        known: [
-          {
-            line: '"I\'ll sign you back in if anyone asks," he says, already turning a blind eye.',
-            approach: "Let him sign you in",
-          },
-          {
-            line: "He's less starched after dark. The clipboard is nowhere in sight.",
-            approach: "Let him sign you in",
-          },
-          {
-            line: '"The balcony\'s better at night," he says. "No one to perform for."',
-            approach: "Let him sign you in",
-          },
-        ],
-        warm: [
-          {
-            line: '"Nobody comes up here this late. That\'s rather the point of it."',
-            approach: "Keep him company up here",
-          },
-        ],
-      },
-    },
-  ],
   // No temperamentDialogue pool: every leftover line was placed onto a
   // dialogue beat's `greeting`.
   // The /call reveal lines for this character, keyed by the register in

@@ -164,7 +164,7 @@ export default {
       beats: [
         "**{firstName}**: Who was that.\n\nIn the courtyard. The one that touched your arm. Who was that.",
         "*You tell him. It's nothing. It was nothing.*\n\nFine. Alright.\n\n*Then, four minutes later:*\n\nI won't forget him, though. I don't forget them. Got a whole lot of them up here and none of them know it.",
-        "Here's the bit I'm meant to not say, so I'm saying it.\n\nI'd do something about it. I want to. I've thought about the exact shape of it, sitting here, for about an hour, and it's a lovely shape.\n\nAnd I'm not going to. Because you'd look at me different after and I've worked out that's the one thing I can't take. So you tell me to leave it and I'll leave it, and that's the first time in my life a thing's ever stopped because somebody said.",
+        "Here's the part I'm not supposed to say, so I'm saying it.\n\nI'd do something about it. I want to. I've thought about the exact shape of it, sitting here, for about an hour, and it's a good shape.\n\nAnd I'm not going to. Because you'd look at me different after and I've figured out that's the one thing I can't take. So you tell me to leave it and I'll leave it, and that's the first time in my life a thing's ever stopped because somebody said.",
       ],
       choice: {
         prompt: "Go on. Tell me to leave it.",
@@ -174,7 +174,7 @@ export default {
             label: "Tell him to leave it",
             style: 3,
             close:
-              "...Right.\n\n*A long pause.*\n\nLeft. It's left. That's it done.\n\n*Then, much later:* Come here after, though. I've been holding it a good while and I've gone all wrong with it.\n\n*He doesn't say a word when you get there. He just puts his forehead against your shoulder and breathes for about twenty minutes.*",
+              "...Right.\n\n*A long pause.*\n\nLeft. It's left. Done.\n\n*Then, much later:* Come here after, though. I've been holding it too long and it's gone wrong in me.\n\n*He doesn't say a word when you get there. He just puts his forehead against your shoulder and breathes for about twenty minutes.*",
           },
           {
             key: "playful",
@@ -202,8 +202,8 @@ export default {
       beats: [
         "**{firstName}**: I've called you my wife since about the second time I saw you.\n\nEveryone thinks that's a joke. It's never once been a joke.",
         "{timesMet} times. I've had the number since it was four.\n\nAnd every one of them I've been waiting for the day you'd stop. That's not a sad thing, it's just the shape of it. People stop. My mom stopped. It's arithmetic.",
-        "You haven't stopped.\n\nSo I've had to learn a whole new thing, which is that I might have to be worth it on purpose instead of just holding on tight enough. That's been horrible. I've hated every minute.\n\nMio says it's good for me. Mio can get in the bin.",
-        "Right. Here's the actual one, and I'll only do it the once, so read it proper.\n\nI love you. Not the way I say things. The other way. The one where I'd let you go if you wanted to go, which I've never been able to say about anything in my whole life and it's taken me a year to be able to say it about you.\n\nYou might never have to. But you could. That's the thing I'm giving you. It's the only thing I've got that's worth anything.",
+        "You haven't stopped.\n\nSo I've had to learn a whole new thing, which is that I might have to be worth it on purpose instead of just holding on tight enough. That's been horrible. I've hated every minute.\n\nMio says it's good for me. Mio can shut up.",
+        "Right. Here's the actual one, and I'm only doing it once, so read it properly.\n\nI love you. Not the way I say things. The other way. The one where I'd let you go if you wanted to go, which I've never been able to say about anything in my whole life and it's taken me a year to be able to say it about you.\n\nYou might never have to. But you could. That's the thing I'm giving you. It's the only thing I've got that's worth anything.",
       ],
       choice: {
         prompt: "Now say. Whatever it is. I'll take it.",
@@ -246,7 +246,7 @@ export default {
       {
         line: '"Come closer," he says, flat. "You\'re still too far away. Closer." He isn\'t joking.',
         approach: "Take a step closer",
-        greeting: '"Better. Stay there. I want a proper look at you."',
+        greeting: '"Better. Stay there. Let me look at you."',
         responses: {
           kind: ["Step closer gently", "Ask if this is close enough"],
           playful: ["Take your time closing the gap", "Take a tiny, tiny step"],
@@ -259,7 +259,7 @@ export default {
         approach: "Avoid eye contact",
         greeting: '"Hehehe... you flinched. Do it again."',
         responses: {
-          kind: ["Meet his gaze softly", "Say you're not scared of him"],
+          kind: ["Meet his gaze softly", "Ask him to go easy"],
           playful: ["Give him a better face", "Flinch again, dramatically"],
           bold: ["Stare right back", "Refuse to flinch twice"],
           neutral: ["Give him nothing to read", "Look at the cat instead"],
@@ -282,9 +282,9 @@ export default {
         approach: "Hold still",
         greeting: '"That face is nice. I wonder what it looks like when you cry."',
         responses: {
-          kind: ["Say you're not afraid", "Say you don't cry easily"],
+          kind: ["Say his face is nice too", "Tell him gently he won't"],
           playful: ["Ask what he's really learning", "Make a silly face instead"],
-          bold: ["Ask what's under the front", "Tell him he'll never see it"],
+          bold: ["Say you're not afraid", "Tell him he'll never see it"],
           neutral: ["Hold still, give nothing", "Keep your face blank"],
         },
       },
@@ -350,8 +350,8 @@ export default {
         },
       },
       {
-        line: "He makes a card vanish between two fingers, then says, flat, that he's gotten better at making people disappear too.",
-        approach: "Ask who else vanished",
+        line: "He's been working his way through the house all week, and he wants you to know he's gotten better at making people drop.",
+        approach: "Ask how many so far",
         greeting:
           '"Three faintings in the house this week. I keep the count. It\'s been a good year."',
         responses: {
@@ -374,10 +374,10 @@ export default {
         },
       },
       {
-        line: '"*Vepar*," he says, and your books are gone, swapped for one of the Heebie-Jeebie House\'s bloody head props.',
+        line: "Your books are gone. In their place is one of the Heebie-Jeebie House's bloody head props, and he doesn't pretend it wasn't him.",
         approach: "Don't even blink",
         greeting:
-          "\"Why've you gone all quiet? This is boring. ...Fine. I'll find something to do with you.\"",
+          "\"Why are you so quiet? This is boring. ...Fine. I'll find something to do with you.\"",
         responses: {
           kind: ["Let him have his trick", "Play along kindly"],
           playful: ["Demand your books back", "Ask what else he can vanish"],
@@ -448,13 +448,13 @@ export default {
     warm: [
       {
         line: "His attention tilts to you first, before the rest of the room registers at all.",
-        approach: "Stand where he can see you",
+        approach: "Step into his eyeline",
         greeting: "\"They said you'd stop visiting. They're usually wrong.\"",
         responses: {
-          kind: "Stand where he can see you",
-          playful: "Ask since when he watches",
-          bold: "Make him find you faster",
-          neutral: "Stand there, say nothing",
+          kind: ["Say you're not going anywhere", "Say you'd have come anyway"],
+          playful: ["Ask when that started", "Ask who 'they' are"],
+          bold: ["Make him find you faster", "Tell him they're wrong"],
+          neutral: ["Stand there, say nothing", "Wait to be noticed"],
         },
       },
       {
@@ -463,10 +463,10 @@ export default {
         greeting:
           '"You finally came back. I waited here the whole time, you know. Don\'t you feel a bit sorry for me?"',
         responses: {
-          kind: "Say you're glad he waited",
-          playful: "Ask how long he waited",
-          bold: "Say he clearly does wait",
-          neutral: "Shrug at the wait",
+          kind: ["Say you're glad he waited", "Say you feel a bit sorry"],
+          playful: ["Ask how long he waited", "Refuse to feel sorry"],
+          bold: ["Say he clearly does wait", "Say he waited for you"],
+          neutral: ["Shrug at the wait", "Let the waiting go"],
         },
       },
       {
@@ -474,10 +474,10 @@ export default {
         approach: "Hold steady",
         greeting: "\"You're not afraid of me now. That's a whole new game.\"",
         responses: {
-          kind: "Say it's not disappointing",
-          playful: "Ask which he'd prefer",
-          bold: "Say fear was never the point",
-          neutral: "Let him decide, say nothing",
+          kind: ["Say it's not disappointing", "Say he's not frightening"],
+          playful: ["Ask which he'd prefer", "Ask about the new game"],
+          bold: ["Say fear was never the point", "Say you like the danger"],
+          neutral: ["Let him decide, say nothing", "Hold steady, say nothing"],
         },
       },
       {
@@ -486,10 +486,10 @@ export default {
         greeting:
           '"Stay close to me. Nothing in this district would dare come near."',
         responses: {
-          kind: "Thank him quietly",
-          playful: "Ask what he did to it",
-          bold: "Say you noticed",
-          neutral: "Let it go unremarked",
+          kind: ["Thank him quietly", "Say you feel safer near him"],
+          playful: ["Ask what he did to it", "Ask if it's still breathing"],
+          bold: ["Ask him to admit it", "Say you don't need the help"],
+          neutral: ["Move on, unbothered", "Stay close, ask nothing"],
         },
       },
       {
@@ -498,10 +498,10 @@ export default {
         greeting:
           '"You actually went. ...You like me. Don\'t bother denying it."',
         responses: {
-          kind: "Fetch it gladly",
-          playful: "Make him ask nicer",
-          bold: "Say of course you like him",
-          neutral: "Fetch it without a word",
+          kind: ["Fetch it gladly", "Bring it without complaint"],
+          playful: ["Make him ask nicer", "Bring back the wrong drink"],
+          bold: ["Say of course you like him", "Deny nothing"],
+          neutral: ["Fetch it without a word", "Hand it over, say nothing"],
         },
       },
       {
@@ -510,10 +510,10 @@ export default {
         greeting:
           '"Good. Hold on tight. If you let go, I\'ll have to come find you. ...I always do."',
         responses: {
-          kind: "Take his arm gladly",
-          playful: "Ask who he'll scare first",
-          bold: "Say frights don't scare you",
-          neutral: "Take his arm, say nothing",
+          kind: ["Take his arm gladly", "Say you'll hold on tight"],
+          playful: ["Ask who he'll scare first", "Threaten to let go"],
+          bold: ["Say frights don't scare you", "Dare him to find you"],
+          neutral: ["Take his arm, say nothing", "Walk in beside him"],
         },
       },
     ],
@@ -567,7 +567,7 @@ export default {
       {
         line: '"You\'re getting bold," he says, almost approving. "Because you\'re nearly mine."',
         approach: "Say it",
-        greeting: "\"Say you're mine. You needn't mean it yet. I'm patient.\"",
+        greeting: "\"Say you're mine. You don't have to mean it yet. I'm patient.\"",
         responses: {
           kind: "Say you're getting there",
           playful: "Tease the word 'nearly'",

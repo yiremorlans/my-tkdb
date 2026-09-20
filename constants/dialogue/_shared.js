@@ -9,21 +9,21 @@
 // character's lines differ by outfit (Jo's pronouns change between uniform
 // and casual — see withPronounVariants below).
 //
-// `approach` holds the label for the single button on the /roam narration
-// message — the "Step forward" beat before the character is actually drawn. It
-// is tiered like the dialogue so the invitation matches the scene the narration
-// just set. A character omitted here falls back to the generic
-// APPROACH_LABEL_FALLBACK in constants/characters.js.
+// `approach` is the label for the single button on the /roam narration message
+// — the "Step forward" beat before the character is actually drawn. It is not a
+// pool of its own any more: it lives on the beat, next to the line it invites,
+// and every drawable beat carries one. The separate tiered `approach` pools,
+// `approachWhen`, and SHARED_APPROACH_WHEN are all gone.
 //
-// PREFERRED: write a tier's `dialogue` entries as { line, approach } pairs
-// instead of a bare string — `approach` a label, or an array of labels when
-// more than one reaction genuinely fits the same beat — and skip that tier in
-// `approach` entirely. getRandomDialogueBeat (constants/characters.js) then
-// draws the line and its button together, so the invitation always answers
-// the scene the player just read. A tier left as bare strings still works —
-// it draws its label independently from `approach`, as every tier used to —
-// but that's how a line and a button end up describing two different
-// moments once the pools grow past a handful of entries each. See
+// REQUIRED: write every `dialogue` entry as a { line, approach } pair, never a
+// bare string — `approach` a label, or an array of labels when more than one
+// reaction genuinely fits the same beat. getRandomDialogueBeat
+// (constants/characters.js) draws the line and its button together, so the
+// invitation always answers the scene the player just read. A bare string has
+// nothing left to fall back to: the independent `approach` pools that used to
+// label one are deleted, and it would render APPROACH_LABEL_FALLBACK's generic
+// "Step forward", which is the bug this shape exists to prevent — that's how a
+// line and a button end up describing two different moments. See
 // docs/dialogue-approach-pairing.md and constants/dialogue/benkei.js (its
 // new/known/warm/close/bound tiers) for a worked example.
 //
@@ -63,17 +63,28 @@
 // work portable: what they set down or walk away from can travel, the room it
 // belongs in cannot.
 //
-// Conditional pools (optional, per character):
-//   `dialogueWhen`   → adds narration lines   (merged into `dialogue`)
-// A list of `{ when, <pool> }` blocks; each line is a { line, approach, ... }
-// beat carrying its own step-forward label. Every field in `when` (time /
-// location / background / event — see DIALOGUE_WHEN_DIMENSIONS in characters.js)
-// is optional and ANDed; scalar or array. A matching block's lines are *added*
-// to the base pool for that pick — never replace it. `SHARED_DIALOGUE_WHEN` is
-// the same shape but applies to every character (roster-wide event greetings,
-// generic scene flavor); its bare-string lines have no `approach` of their own,
-// so `SHARED_APPROACH_WHEN` supplies their button label. Response buttons have no
-// conditional layer — they belong to the beat, which already answers the scene.
+// THE CONDITIONAL `when` LAYER IS REMOVED (2026-09-19). There is no
+// `dialogueWhen`, no `SHARED_DIALOGUE_WHEN`, no `approachWhen`, no
+// `SHARED_APPROACH_WHEN`, and no `matchesWhen`/`DIALOGUE_WHEN_DIMENSIONS`
+// behind them — data and machinery both, deleted. validateContent errors if a
+// `dialogueWhen` key reappears on a character, and test/beat-completeness
+// checks the same thing, because a block added back would be authored,
+// reviewed, and never shown.
+//
+// It was an older format than the beat: its entries were bare lines with no
+// `greeting` and no `responses`. Merged on top of the base pool for a matching
+// scene, they meant an evening draw could land on one, caption the payoff image
+// "..." and drop all four buttons to archetype defaults that knew nothing about
+// the scene. SHARED_DIALOGUE_WHEN applied to all 26 characters, so it hit the
+// whole roster, including the 19 who never had a block of their own.
+//
+// One format now: the beat, { line, approach, greeting, responses }.
+// Time-of-day flavor goes on a character's own `dialogue` beats, where it is a
+// complete beat like every other. A line that only works after dark has to be
+// written so it also reads at noon, or it doesn't go in — a base beat carries
+// no time gate. The single exception is `daytimeDialogue`, the whole-pool hard
+// swap a pmOnly character (Towa) gets for the daytime; its entries are beats
+// too, held to exactly the same completeness.
 
 // Authoring helper for a character whose dialogue pool is keyed by image
 // variant purely because the pronouns change (currently just Jo: `he/him/his
@@ -135,41 +146,6 @@ export function withPronounVariants(entries) {
     casual: entries.map((entry) => expandPronounEntry(entry, "casual")),
   };
 }
-
-export const SHARED_DIALOGUE_WHEN = [
-  // Whole-roster evening flavor for the general-location PM scenes, where an
-  // encounter can be with anyone and most characters have no evening lines of
-  // their own. Character-specific `dialogueWhen` blocks stack on top of this.
-  {
-    when: {
-      time: "evening",
-      location: ["Darkwick", "Galaxy Express", "Clementia"],
-    },
-    dialogue: {
-      new: [
-        "The path lamps have come on. Whoever's still out here, it's just the two of you now.",
-        "Campus has gone quiet and low-lit. Footsteps carry further than they did at noon.",
-      ],
-      known: [
-        "You fall into step together without discussing it. The lamps mark the way back.",
-      ],
-    },
-  },
-  // Event blocks (e.g. `when: { event: "star_festival" }`) slot in here once an
-  // event system sets `ctx.event`. `Star_Festival` already works as a `location`.
-];
-
-export const SHARED_APPROACH_WHEN = [
-  {
-    when: {
-      time: "evening",
-      location: ["Darkwick", "Galaxy Express", "Clementia"],
-    },
-    approach: {
-      new: ["Head in out of the dark", "Fall into step with them"],
-    },
-  },
-];
 
 // --- public encounters (docs/public-encounters.md) --------------------------
 //

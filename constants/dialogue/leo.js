@@ -485,10 +485,10 @@ export default {
         approach: "Insult him back",
         greeting: '"You\'re my favorite kind of trouble, you know that?"',
         responses: {
-          kind: "Insult him back gently",
-          playful: "Out-insult him",
-          bold: "Match his energy exactly",
-          neutral: "Take the insult in stride",
+          kind: ["Insult him back gently", "Take it as affection"],
+          playful: ["Out-insult him", "Rate his insult out of ten"],
+          bold: ["Match his energy exactly", "Say trouble suits you fine"],
+          neutral: ["Take the insult in stride", "Say hello like normal"],
         },
       },
       {
@@ -497,10 +497,10 @@ export default {
         greeting:
           '"I\'ve got something on half the people in this room. Not you. Yet."',
         responses: {
-          kind: "Thank him for the privacy",
-          playful: "Ask why you're not content",
-          bold: "Demand to know the criteria",
-          neutral: "Let the camera stay down",
+          kind: ["Thank him for the privacy", "Say you trust him with it"],
+          playful: ["Ask why you're not content", "Ask for a better angle"],
+          bold: ["Demand to know the criteria", "Ask what he has on you"],
+          neutral: ["Let the camera stay down", "Ignore the phone entirely"],
         },
       },
       {
@@ -508,10 +508,10 @@ export default {
         approach: "Admit you're late",
         greeting: '"Finally came back, huh? I was getting bored without you."',
         responses: {
-          kind: "Apologize, mean it a little",
-          playful: "Ask how long he checked",
-          bold: "Say he was clearly waiting",
-          neutral: "Shrug off being late",
+          kind: ["Apologize, mean it a little", "Say you hurried over"],
+          playful: ["Ask how long he checked", "Say boredom suits him"],
+          bold: ["Say he was clearly waiting", "Say he missed you, plainly"],
+          neutral: ["Shrug off being late", "Say nothing about it"],
         },
       },
       {
@@ -520,10 +520,10 @@ export default {
         greeting:
           '"Don\'t get comfortable. ...Fine. Get a little comfortable."',
         responses: {
-          kind: "Say you're glad he stayed",
-          playful: "Tease him about the Pit",
-          bold: "Stand closer on purpose",
-          neutral: "Stay beside him quietly",
+          kind: ["Say you're glad he stayed", "Say the Pit can wait"],
+          playful: ["Tease him about the Pit", "Ask who he's avoiding"],
+          bold: ["Stand closer on purpose", "Tell him to stay put"],
+          neutral: ["Stay beside him quietly", "Get comfortable anyway"],
         },
       },
       {
@@ -532,10 +532,10 @@ export default {
         greeting:
           '"Everyone\'s so loud. Headphones are going on. ...Tap here if you need me. Only you."',
         responses: {
-          kind: "Thank him for listening",
-          playful: "Tap the headphone again",
-          bold: "Say you're the exception",
-          neutral: "Talk, then let him refocus",
+          kind: ["Thank him for listening", "Say two minutes, tops"],
+          playful: ["Tap the headphone again", "Tap it for no reason"],
+          bold: ["Say you're the exception", "Take the other headphone"],
+          neutral: ["Talk, then let him refocus", "Say your piece and stop"],
         },
       },
       {
@@ -544,10 +544,13 @@ export default {
         greeting:
           '"It\'s mine. Get your own. ...Or just stand closer. Whatever."',
         responses: {
-          kind: "Say it suits him",
-          playful: "Ask if he tested other scents",
-          bold: "Say you noticed already",
-          neutral: "Shrug, unbothered either way",
+          kind: ["Say it suits him", "Say he smells expensive"],
+          playful: [
+            "Ask if he tested other scents",
+            "Threaten to steal a spray",
+          ],
+          bold: ["Say you noticed already", "Stand closer, like he said"],
+          neutral: ["Shrug, unbothered either way", "Let the topic drop"],
         },
       },
     ],

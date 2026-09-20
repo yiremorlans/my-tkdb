@@ -485,7 +485,7 @@ export default {
           ],
           playful: ["Repeat 'for you' back at him", "Ask him to say it again"],
           bold: ["Name the savior complex", "Tell him to slow down"],
-          neutral: ["Stay professional about it", "Let him work, say nothing"],
+          neutral: ["Stay professional about it", "Stay out of his way"],
         },
       },
       {
@@ -722,11 +722,10 @@ export default {
     ],
   },
   // No top-level `approach` pool: every dialogue[tier] beat, at every tier,
-  // now carries its own `approach` (see dialogue above) — the independent
-  // pool this used to be is fully unreachable, so it's removed rather than
-  // left as dead weight (see getFallbackApproachLabel's fallback chain for
-  // what a beat without one would use instead: SHARED_APPROACH_WHEN, then
-  // APPROACH_LABEL_FALLBACK).
+  // carries its own `approach` (see dialogue above) — the independent pool
+  // this used to be is fully unreachable, so it's removed rather than left as
+  // dead weight. Nothing sits under a beat's own label any more except
+  // APPROACH_LABEL_FALLBACK's generic string, which no authored line reaches.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

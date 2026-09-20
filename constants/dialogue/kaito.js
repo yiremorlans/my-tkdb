@@ -248,8 +248,8 @@ export default {
         responses: {
           kind: ["Tell him he's doing fine", "Reassure him you're friendly"],
           playful: ["Laugh at the jump scare", "Ask if he always does that"],
-          bold: ["Ask what he's hiding from", "Ask why he's on edge"],
-          neutral: ["Nod along", "Let him catch his breath"],
+          bold: ["Ask why he's on edge", "Step into his hiding spot"],
+          neutral: ["Nod along", "Give him a second"],
         },
       },
       {
@@ -260,19 +260,19 @@ export default {
         responses: {
           kind: ["Let him finish the story", "Listen with real interest"],
           playful: ["Out-shout him", "Egg the rant on further"],
-          bold: ["Cut straight to it", "Ask him to get to the point"],
+          bold: ["Ask him to get to the point", "Talk over the rant"],
           neutral: ["Let him run out of steam", "Half-listen, say nothing"],
         },
       },
       {
-        line: "\"You're new? Ask me anything you want to know, I'm pretty savvy when it comes to Darkwick.\"",
+        line: "He straightens up when you ask. Being the guy who knows things about Darkwick is a role he'd very much like to have.",
         approach: "Ask him something",
         greeting:
           "\"You're new, right? I'm Kaito. That's... that's the whole intro, sorry.\"",
         responses: {
           kind: ["Let him show off for once", "Ask something easy first"],
           playful: ["Ask a trick question", "Test how savvy he really is"],
-          bold: ["Call his bluff", "Try to stump him"],
+          bold: ["Call his bluff", "Ask why he's in Frostheim"],
           neutral: ["Just listen", "Take the intro at face value"],
         },
       },
@@ -283,7 +283,7 @@ export default {
         responses: {
           kind: ["Wave back warmly", "Say the lamp is fine"],
           playful: ["Get swept up in his energy", "Wave even harder back"],
-          bold: ["Wave back just as big", "Meet his energy head-on"],
+          bold: ["Tell him to calm down", "Ask why he's so loud"],
           neutral: ["Give a small wave back", "Nod instead of waving"],
         },
       },
@@ -291,12 +291,12 @@ export default {
         line: "He offers you half of whatever he's snacking on before he thinks to ask your name.",
         approach: "Take the offered half",
         greeting:
-          '"Don\'t let the whole Frostheim thing scare you off. Half of us are fine."',
+          '"Here, take half. Nobody really shares around here. I noticed pretty fast."',
         responses: {
           kind: ["Accept the offered half", "Thank him for sharing"],
           playful: ["Steal more than your half", "Ask what's in it first"],
-          bold: ["Ask his name outright", "Take the whole thing"],
-          neutral: ["Take the food, stay quiet", "Eat it without comment"],
+          bold: ["Take the whole thing", "Make him ask your name"],
+          neutral: ["Take the food, stay quiet", "Start eating, say nothing"],
         },
       },
     ],
@@ -325,7 +325,7 @@ export default {
         },
       },
       {
-        line: "He shows you the same WickChat video he showed you yesterday. You let him.",
+        line: "He shows you the same WickHive video he showed you yesterday. You let him.",
         approach: "Watch the video again",
         greeting:
           "\"Have you been on WickHive? Someone leaked next month's cafeteria menu. ...Oh. I already told you that, didn't I.\"",
@@ -338,13 +338,13 @@ export default {
       },
       {
         line: "He's ducking around a corner. \"Shit, it's Luca, he's off to train, I gotta... oh. Just you. Phew.\"",
-        approach: "Ask what he's hiding from",
+        approach: "Tell him the coast is clear",
         greeting:
-          '"Ugh, Luca trained for like three hours today. Meanwhile I napped. We are not the same person."',
+          '"If he spots me he\'ll make me run laps with him. I can\'t. I would actually die."',
         responses: {
-          kind: ["Ask if everything's okay", "Reassure him it's just you"],
-          playful: ["Tease him for hiding", "Ask what Luca would say"],
-          bold: ["Ask what he's really hiding", "Call out the excuse"],
+          kind: ["Say he doesn't have to go", "Reassure him it's just you"],
+          playful: ["Tease him for hiding", "Offer to run laps instead"],
+          bold: ["Tell him to just go train", "Call out the excuse"],
           neutral: ["Let him explain in his time", "Wait for him to relax"],
         },
       },
@@ -388,14 +388,14 @@ export default {
         line: "He's saved you a seat before you even got there, then acts like it was an accident.",
         approach: "Take the seat he saved",
         greeting:
-          "\"You never bail on me, even when I mess up. That's... actually kind of nice. Don't make it weird.\"",
+          "\"Oh, that seat? It was just open. I wasn't saving it. ...Okay, I was saving it.\"",
         responses: {
           kind: ["Thank him for the seat", "Sit down gratefully"],
           playful: [
             "Call out the fake accident",
             "Ask if he saved it on purpose",
           ],
-          bold: ["Take the seat, say nothing", "Sit like it's expected"],
+          bold: ["Sit like it's expected", "Say you'd have found a seat"],
           neutral: ["Sit without remarking on it", "Take the seat quietly"],
         },
       },
@@ -407,7 +407,7 @@ export default {
         responses: {
           kind: ["Say it mattered to you too", "Smile and say of course"],
           playful: ["Act smug about remembering", "Ask what else you remember"],
-          bold: ["Say you remember everything", "Ask why that surprises him"],
+          bold: ["Ask why that surprises him", "Ask if he expected less"],
           neutral: ["Shrug, say it's nothing", "Let the moment pass"],
         },
       },
@@ -471,13 +471,13 @@ export default {
     warm: [
       {
         line: "He's saved you a seat at the diner and is very obviously proud of himself for thinking of it.",
-        approach: "Take the saved seat",
+        approach: "Slide into the booth",
         greeting: "\"You free? Say you're free. Please say you're free.\"",
         responses: {
-          kind: "Thank him for the seat",
-          playful: "Ask if he hoped you'd come",
-          bold: "Take the seat like you own it",
-          neutral: "Sit down without a word",
+          kind: ["Tell him it was thoughtful", "Say you're free, all evening"],
+          playful: ["Ask if he hoped you'd come", "Make him sweat a second"],
+          bold: ["Take the seat like you own it", "Say yes before he finishes"],
+          neutral: ["Sit down without a word", "Take the seat, no fuss"],
         },
       },
       {
@@ -486,10 +486,10 @@ export default {
         greeting:
           '"Hi! I was just... okay, this\'ll sound weird... I was just thinking about you."',
         responses: {
-          kind: "Admit he crossed your mind",
-          playful: "Ask what he was thinking",
-          bold: "Say it fits you well",
-          neutral: "Greet him back plainly",
+          kind: ["Admit he crossed your mind", "Say that's not weird at all"],
+          playful: ["Ask what he was thinking", "Ask if it was flattering"],
+          bold: ["Say it fits you well", "Ask what else he thinks"],
+          neutral: ["Greet him back plainly", "Say hello, nothing more"],
         },
       },
       {
@@ -498,10 +498,10 @@ export default {
         greeting:
           "\"They want me on another mission. It's not like me being there helps anyone. ...You showing up, though. That part's good.\"",
         responses: {
-          kind: "Listen through the rush",
-          playful: "Point out he's speeding up",
-          bold: "Say you make him nervous",
-          neutral: "Match his energy quietly",
+          kind: ["Listen through the rush", "Say he does help, truly"],
+          playful: ["Point out he's speeding up", "Time how fast he's talking"],
+          bold: ["Say you make him nervous", "Tell him to slow down"],
+          neutral: ["Match his energy quietly", "Let him talk it out"],
         },
       },
       {
@@ -510,10 +510,10 @@ export default {
         greeting:
           '"Got a bit of spare cash this month, don\'t ask, so lunch is on me. Get whatever."',
         responses: {
-          kind: "Thank him, offer to split it",
-          playful: "Order the most expensive thing",
-          bold: "Ask where the cash came from",
-          neutral: "Take the offer, say nothing",
+          kind: ["Thank him, offer to split it", "Say he didn't have to"],
+          playful: ["Order the most expensive thing", "Order dessert first"],
+          bold: ["Ask where the cash came from", "Ask what he bet on"],
+          neutral: ["Take the offer, say nothing", "Order something small"],
         },
       },
       {
@@ -522,10 +522,10 @@ export default {
         greeting:
           "\"Am I being annoying? Tell me if I'm being annoying. You're probably busy.\"",
         responses: {
-          kind: "Reassure him it sounded fine",
-          playful: "Repeat his greeting back",
-          bold: "Tell him to say it to you",
-          neutral: "Pretend you didn't hear it",
+          kind: ["Reassure him it sounded fine", "Say he's never annoying"],
+          playful: ["Repeat his greeting back", "Give it a score out of ten"],
+          bold: ["Ask for the real greeting", "Tell him to try it again"],
+          neutral: ["Pretend you didn't hear it", "Let him recover first"],
         },
       },
     ],
@@ -726,66 +726,6 @@ export default {
       },
     ],
   },
-  // Evening block: new/known/warm dialogue and approach paired per beat
-  // (docs/dialogue-approach-pairing.md) instead of two separately-drawn
-  // lists. spark/close have no approach counterpart to pair with, so
-  // they're left as bare lines — they still draw an approach, just from
-  // SHARED_APPROACH_WHEN / the generic fallback (see getFallbackApproachLabel).
-  dialogueWhen: [
-    {
-      when: { time: "evening" },
-      dialogue: {
-        new: [
-          {
-            line: "The Frostheim kitchen light is on well after hours. It's him, flour to the elbow, and he jumps when the door goes.",
-            approach: "Come in out of the hall",
-          },
-          {
-            line: '"Couldn\'t sleep," he says, not looking up from the bowl. "I bake when I can\'t. Don\'t tell Tohma whose sugar this is."',
-            approach: "Come in out of the hall",
-          },
-          {
-            line: '"You\'re up late too, huh?" He slides a plate of something warm across the counter without being asked.',
-            approach: "Take the cooled one",
-          },
-          {
-            line: "\"Careful, the tray's hot... agh, see, told you. Sorry. Here, this one's cooled.\"",
-            approach: "Take the cooled one",
-          },
-        ],
-        known: [
-          {
-            line: '"I always end up in here after curfew. It\'s quiet. Nobody asks me anything."',
-            approach: "Stay past curfew with him",
-          },
-          {
-            line: '"Taste this? Be honest. ...Not that honest."',
-            approach: "Stay past curfew with him",
-          },
-          {
-            line: '"You should be in bed," he says, nudging a stool out for you. "...So should I. One more batch."',
-            approach: "Stay past curfew with him",
-          },
-        ],
-        warm: [
-          {
-            line: "\"Stay while these bake? It's twelve minutes. I'll put the kettle on.\"",
-            approach: "Wait out the twelve minutes",
-          },
-          {
-            line: '"I kept hoping you\'d wander in tonight," he admits, scraping the bowl. "Glad I made extra."',
-            approach: "Wait out the twelve minutes",
-          },
-        ],
-        spark: [
-          "He hands you the spoon to lick without thinking about it, then goes pink when he realizes he did.",
-        ],
-        close: [
-          '"This is the only place I\'m not bracing for something," he says quietly. "Well, here, and wherever you are."',
-        ],
-      },
-    },
-  ],
   // No temperamentDialogue pool: every leftover line was placed onto a
   // dialogue beat's `greeting`.
   // When the old per-tier `responses` pool was folded onto the beats above,

@@ -481,10 +481,10 @@ export default {
         approach: "Sit beside him",
         greeting: '"The lanterns lean toward you. So, apparently, do I."',
         responses: {
-          kind: "Say you're glad too",
-          playful: "Ask what drew you in",
-          bold: "Sit closer than invited",
-          neutral: "Sit beside him quietly",
+          kind: ["Say you're glad too", "Say the lanterns agree"],
+          playful: ["Ask what drew you in", "Ask the lanterns' opinion"],
+          bold: ["Sit closer than invited", "Say you leaned first"],
+          neutral: ["Sit beside him quietly", "Settle in by the lanterns"],
         },
       },
       {
@@ -493,10 +493,10 @@ export default {
         greeting:
           '"Go on, drink up. Watching you enjoy it is enough food for my soul."',
         responses: {
-          kind: "Thank him for saving it",
-          playful: "Ask how long he saved it",
-          bold: "Drink it before he explains",
-          neutral: "Take the tea, say nothing",
+          kind: ["Thank him for saving it", "Drink it slowly for him"],
+          playful: ["Ask how long he saved it", "Ask what vintage this is"],
+          bold: ["Drink it before he explains", "Ask what he gave up for it"],
+          neutral: ["Take the tea, say nothing", "Sip it, let him watch"],
         },
       },
       {
@@ -504,10 +504,10 @@ export default {
         approach: "Arrive like clockwork",
         greeting: '"You return like seasons turning. My heart is at ease."',
         responses: {
-          kind: "Say the same about him",
-          playful: "Ask which season he means",
-          bold: "Say you're the gift then",
-          neutral: "Arrive, say little",
+          kind: ["Say the same about him", "Thank him for the verse"],
+          playful: ["Ask which season he means", "Ask to be a better season"],
+          bold: ["Say you're the gift then", "Say he's the expected one"],
+          neutral: ["Arrive, say little", "Accept the verse, move on"],
         },
       },
       {
@@ -518,10 +518,10 @@ export default {
           '"My ideal summer vacation? To lay down my burdens in the springs of Yugawara and pursue my wordsmithery in peace, as so many greats have done before me."',
         ],
         responses: {
-          kind: "Thank him for showing you",
-          playful: "Demand to see even more",
-          bold: "Read it before he stops you",
-          neutral: "Read quietly, say nothing",
+          kind: ["Tell him it's beautiful", "Ask what the rain became"],
+          playful: ["Demand to see even more", "Offer a terrible rhyme"],
+          bold: ["Read it before he stops you", "Ask to keep a page"],
+          neutral: ["Read quietly, say nothing", "Hand the pages back"],
         },
       },
       {
@@ -530,10 +530,10 @@ export default {
         greeting:
           '"Tell me one small thing about your day. Small things are the good ones."',
         responses: {
-          kind: "Tell him something warm",
-          playful: "Make the small thing absurd",
-          bold: "Say you're worth the pause",
-          neutral: "Tell him something plain",
+          kind: ["Tell him something warm", "Say the line can wait"],
+          playful: ["Make the small thing absurd", "Invent a scandal for him"],
+          bold: ["Say you're worth the pause", "Ask for the line instead"],
+          neutral: ["Tell him something plain", "Keep it short, let him write"],
         },
       },
     ],
@@ -723,53 +723,6 @@ export default {
       },
     ],
   },
-  // Evening block: dialogue and approach paired per beat
-  // (docs/dialogue-approach-pairing.md) instead of two separately-drawn lists.
-  dialogueWhen: [
-    {
-      when: { time: "evening" },
-      dialogue: {
-        new: [
-          {
-            line: "He's watching the last light go out of the sky and doesn't seem to mind that it's leaving.",
-            approach: "Watch the last light with him",
-          },
-          {
-            line: "\"Dusk becomes a genius of the pen, don't you think? Sit, the light's nearly gone, and it's worth watching it go.\"",
-            approach: "Watch the last light with him",
-          },
-          {
-            line: "The lanterns have come on around the step. He's already there on the lit side, like he's had the seat picked out all evening.",
-            approach: "Sit under the lanterns",
-          },
-          {
-            line: '"A stranger at dusk, how fortunate," he says. "Sit, and let the evening happen to us."',
-            approach: "Sit under the lanterns",
-          },
-        ],
-        known: [
-          {
-            line: '"The wanderer, and at the good hour too. The evening was getting lonely."',
-            approach: "Take the warm end of the step",
-          },
-          {
-            line: "He's saved you the warm end of the step, where the lantern reaches.",
-            approach: "Take the warm end of the step",
-          },
-          {
-            line: '"Sit, the step is warm," he says, "and the evening is doing something worth watching."',
-            approach: "Take the warm end of the step",
-          },
-        ],
-        warm: [
-          {
-            line: '"You arrive like the evening does: expected, and still a gift."',
-            approach: "Let the evening happen",
-          },
-        ],
-      },
-    },
-  ],
   // No temperamentDialogue pool: every leftover line was placed onto a
   // dialogue beat's `greeting`.
   // The /call reveal lines for this character, keyed by the register in

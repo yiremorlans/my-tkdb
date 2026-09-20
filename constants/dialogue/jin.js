@@ -470,10 +470,10 @@ export default {
         approach: "Greet him properly",
         greeting: '"Your presence is... tolerable."',
         responses: {
-          kind: "Greet him just as warmly",
-          playful: "Point out the almost-smile",
-          bold: "Call him pleased outright",
-          neutral: "Greet him plainly",
+          kind: ["Greet him just as warmly", "Take 'tolerable' as praise"],
+          playful: ["Point out the almost-smile", "Ask what 'tolerable' means"],
+          bold: ["Call him pleased outright", "Say he missed you"],
+          neutral: ["Greet him plainly", "Nod and come in"],
         },
       },
       {
@@ -482,10 +482,13 @@ export default {
         greeting:
           "\"Don't stand in the doorway. You're letting the cold out.\"",
         responses: {
-          kind: "Walk in like you're welcome",
-          playful: "Ask if the door's for you",
-          bold: "Walk straight up to him",
-          neutral: "Step through without a word",
+          kind: ["Walk in like you're welcome", "Shut the cold out for him"],
+          playful: ["Ask if the door's for you", "Ask who else gets the door"],
+          bold: ["Walk straight up to him", "Interrupt whoever's talking"],
+          neutral: [
+            "Step through without a word",
+            "Wait for the room to clear",
+          ],
         },
       },
       {
@@ -493,21 +496,21 @@ export default {
         approach: "Take the seat he left open",
         greeting: '"You again. Sit, if you must. Don\'t touch anything."',
         responses: {
-          kind: "Thank him for the seat",
-          playful: "Ask if he saved it for you",
-          bold: "Take the seat like it's yours",
-          neutral: "Sit without remarking on it",
+          kind: ["Thank him for the seat", "Thank him for the warm spot"],
+          playful: ["Ask if he saved it for you", "Ask who warmed the chair"],
+          bold: ["Take the seat like it's yours", "Touch something on purpose"],
+          neutral: ["Sit without remarking on it", "Sit, hands to yourself"],
         },
       },
       {
         line: "He's already turned toward the sound of your footsteps by the time you round the corner.",
-        approach: "Break the silence first",
+        approach: "Step into his line of sight",
         greeting: '"Hmph. At least you had the sense to come to me directly."',
         responses: {
-          kind: "Say you're glad he noticed",
-          playful: "Ask how he always knows",
-          bold: "Break the silence yourself",
-          neutral: "Say nothing, just approach",
+          kind: ["Say you knew he'd hear you", "Say you came straight here"],
+          playful: ["Ask how he always knows", "Tease him for listening out"],
+          bold: ["Speak before he does", "Tell him he was waiting"],
+          neutral: ["Say nothing, just approach", "Close the gap, quietly"],
         },
       },
       {
@@ -515,10 +518,10 @@ export default {
         approach: "Own the long way",
         greeting: '"I didn\'t summon you. But you can stay."',
         responses: {
-          kind: "Say you didn't mean to worry",
-          playful: "Ask if he was counting",
-          bold: "Own the long way outright",
-          neutral: "Shrug and say nothing",
+          kind: ["Say you didn't mean to worry", "Promise to be quicker"],
+          playful: ["Ask if he was counting", "Ask if he missed you yet"],
+          bold: ["Own the long way outright", "Say you came uninvited"],
+          neutral: ["Offer no explanation", "Stay, since he allows it"],
         },
       },
     ],
@@ -697,61 +700,6 @@ export default {
       },
     ],
   },
-  // Evening block: dialogue and approach paired per beat
-  // (docs/dialogue-approach-pairing.md) instead of two separately-drawn lists.
-  dialogueWhen: [
-    {
-      when: { time: "evening" },
-      dialogue: {
-        new: [
-          {
-            line: "He hasn't turned on a light. The cold has teeth after dark and he seems to prefer it that way.",
-            approach: "Step onto the dark balcony",
-          },
-          {
-            line: '"Frostheim after dark is mine," he says without turning. "You\'re standing in it."',
-            approach: "Meet him at the rail",
-          },
-          {
-            line: "Frost has crept across the balcony doors behind him. He watches the black campus like he owns the view.",
-            approach: "Step onto the dark balcony",
-          },
-          {
-            line: '"The cold gets worse after sundown," he says. "You knew that, and came anyway."',
-            approach: "Meet him at the rail",
-          },
-        ],
-        known: [
-          {
-            line: "\"Late,\" he observes. He doesn't say for what, and doesn't tell you to leave either.",
-            approach: "Take the cold beside him",
-          },
-          {
-            line: "The cold doesn't reach the spot he's left open beside him. He arranged that before you arrived.",
-            approach: "Take the cold beside him",
-          },
-          {
-            line: '"It\'s late," he says. "Stand somewhere useful and don\'t let the cold in."',
-            approach: "Take the cold beside him",
-          },
-        ],
-        warm: [
-          {
-            line: '"Stay until the cold drives you in," he says. "Not before."',
-            approach: "Take the offered rail",
-          },
-          {
-            line: "He lights a cigarette against the dark and, for once, offers the rail beside him without a word.",
-            approach: "Take the offered rail",
-          },
-          {
-            line: '"Past curfew," he notes. "I won\'t report you. Sit down."',
-            approach: "Take the offered rail",
-          },
-        ],
-      },
-    },
-  ],
   // No temperamentDialogue pool: every leftover line was placed onto a
   // dialogue beat's `greeting`.
   // The /call reveal lines for this character, keyed by the register in

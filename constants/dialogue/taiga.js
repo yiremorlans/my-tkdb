@@ -461,10 +461,13 @@ export default {
         approach: "Take the held seat",
         greeting: '"...So you came back, kitten?"',
         responses: {
-          kind: "Take the seat gladly",
-          playful: "Ask if he saved it on purpose",
-          bold: "Sit like it's expected",
-          neutral: "Sit, say nothing",
+          kind: ["Take the seat gladly", "Sit close, say thanks"],
+          playful: [
+            "Ask if he saved it on purpose",
+            "Ask if he watched the door",
+          ],
+          bold: ["Sit like it's expected", "Sit without being told"],
+          neutral: ["Drop into the seat", "Take the seat, no comment"],
         },
       },
       {
@@ -472,10 +475,10 @@ export default {
         approach: "Call him a dumbass back",
         greeting: '"Sit down, dumbass. Seat\'s already out."',
         responses: {
-          kind: "Call him a dumbass fondly",
-          playful: "Insult him right back",
-          bold: "Take the hand, no argument",
-          neutral: "Play, say nothing",
+          kind: ["Call him a dumbass fondly", "Take the insult as welcome"],
+          playful: ["Insult him right back", "Ask for better cards"],
+          bold: ["Take the hand, no argument", "Raise before he's ready"],
+          neutral: ["Play, say nothing", "Pick up your hand"],
         },
       },
       {
@@ -483,10 +486,10 @@ export default {
         approach: "Ignore the complaint",
         greeting: '"You\'re late. Not that I was waiting. Shut up."',
         responses: {
-          kind: "Apologize a little",
-          playful: "Deny you took your time",
-          bold: "Say he was clearly waiting",
-          neutral: "Sit down, say nothing",
+          kind: ["Apologize a little", "Say the seat was worth it"],
+          playful: ["Deny you took your time", "Ask how long he held it"],
+          bold: ["Say he was clearly waiting", "Tell him to say he waited"],
+          neutral: ["Sit, let it slide", "Take the seat, move on"],
         },
       },
       {
@@ -497,10 +500,10 @@ export default {
           "\"This is boring. I'm outta here. ...Something smells amazing. C'mon, we're getting food. Ciao, losers.\"",
         ],
         responses: {
-          kind: "Try it, thank him",
-          playful: "Ask what's actually in it",
-          bold: "Eat it without asking",
-          neutral: "Take a bite, say nothing",
+          kind: ["Thank him for the share", "Eat it, no questions"],
+          playful: ["Ask if it bites back", "Ask where he found it"],
+          bold: ["Finish the whole skewer", "Ask for the bigger piece"],
+          neutral: ["Take a bite, say nothing", "Chew, don't think about it"],
         },
       },
       {
@@ -509,10 +512,10 @@ export default {
         greeting:
           '"Gyahaha! Easier to laugh with you around. Don\'t read into it."',
         responses: {
-          kind: "Let the room have its quiet",
-          playful: "Point out the quiet table",
-          bold: "Say you like the effect",
-          neutral: "Ignore it, say nothing",
+          kind: ["Let the room have its quiet", "Keep talking to him"],
+          playful: ["Point out the quiet table", "Say the table's listening"],
+          bold: ["Say you like the effect", "Let them all hear you"],
+          neutral: ["Ignore it, say nothing", "Talk like nobody's there"],
         },
       },
       {
@@ -521,10 +524,13 @@ export default {
         greeting:
           '"Forgot what day it is. Didn\'t forget you were coming, though."',
         responses: {
-          kind: "Say that means a lot",
-          playful: "Test what else he remembers",
-          bold: "Say of course he looks first",
-          neutral: "Shrug, say nothing",
+          kind: ["Tell him that stuck with you", "Tell him the day yourself"],
+          playful: [
+            "Test what else he remembers",
+            "Ask what day he thinks it is",
+          ],
+          bold: ["Say of course he looks first", "Say he looks every time"],
+          neutral: ["Shrug it off", "Remind him, move on"],
         },
       },
       {
@@ -532,10 +538,10 @@ export default {
         approach: "Eat what he gives you",
         greeting: "\"Eat. I don't care if you're not hungry. Eat anyway.\"",
         responses: {
-          kind: "Eat it, thank him",
-          playful: "Push the plate back, teasing",
-          bold: "Eat without arguing",
-          neutral: "Eat, say nothing",
+          kind: ["Eat it, thank him", "Eat, ask if he ate"],
+          playful: ["Push the plate back, teasing", "Trade him the worse half"],
+          bold: ["Eat without arguing", "Take the rest of the plate"],
+          neutral: ["Clear the plate", "Eat what's in front of you"],
         },
       },
       {
@@ -544,10 +550,10 @@ export default {
         greeting:
           "\"Tipping my chair back. Only do that when you're around. Don't make it a thing.\"",
         responses: {
-          kind: "Take the seat, thank him",
-          playful: "Make him wait even longer",
-          bold: "Sit down immediately",
-          neutral: "Sit, say nothing",
+          kind: ["Take the seat, thank him", "Say you like the habit"],
+          playful: ["Make him wait even longer", "Tip his chair back for him"],
+          bold: ["Sit down immediately", "Sit and deal yourself in"],
+          neutral: ["Sit without ceremony", "Take the seat, start playing"],
         },
       },
       {
@@ -555,10 +561,10 @@ export default {
         approach: "Stay at his table",
         greeting: '"Sit. Eat. That seat\'s yours, and everyone here knows it."',
         responses: {
-          kind: "Thank him for the veto",
-          playful: "Ask what he said to Lulu",
-          bold: "Say of course you're staying",
-          neutral: "Shrug, say nothing",
+          kind: ["Thank him for the veto", "Say you'd have stayed anyway"],
+          playful: ["Ask what he said to Lulu", "Ask if Lulu's still sulking"],
+          bold: ["Say of course you're staying", "Say the seat was yours"],
+          neutral: ["Stay where you are", "Settle in at his table"],
         },
       },
       {
@@ -567,10 +573,10 @@ export default {
         greeting:
           '"Oh, it\'s the kitten. Sit down before you embarrass yourself."',
         responses: {
-          kind: "Apologize, mean it a little",
-          playful: "Deny he was counting",
-          bold: "Say he was clearly counting",
-          neutral: "Sit down, say nothing",
+          kind: ["Apologize, mean it a little", "Say the walk ran long"],
+          playful: ["Deny he was counting", "Ask for the exact number"],
+          bold: ["Say he was clearly counting", "Say he counted every one"],
+          neutral: ["Sit, offer no excuse", "Sit before he says more"],
         },
       },
       {
@@ -578,10 +584,10 @@ export default {
         approach: "Let him shut down the mooks",
         greeting: '"Keep walking. They\'ve got the message. Miracle."',
         responses: {
-          kind: "Thank him for the save",
-          playful: "Ask what the mooks said",
-          bold: "Say you can handle the mooks",
-          neutral: "Shrug, say nothing",
+          kind: ["Thank him for the save", "Say the quiet is nice"],
+          playful: ["Ask what the mooks said", "Ask what they nearly said"],
+          bold: ["Say you can handle the mooks", "Tell the mooks yourself"],
+          neutral: ["Keep walking", "Walk past them"],
         },
       },
       {
@@ -589,10 +595,13 @@ export default {
         approach: "Take the pot he slides",
         greeting: "\"Won the hand. Here, it's yours. Don't make it weird.\"",
         responses: {
-          kind: "Thank him for the pot",
-          playful: "Ask if that's how he flirts",
-          bold: "Take the pot, no thanks needed",
-          neutral: "Take it, say nothing",
+          kind: ["Thank him for the pot", "Say he should keep it"],
+          playful: ["Ask if that's how he flirts", "Bet it all next hand"],
+          bold: [
+            "Take the pot, no thanks needed",
+            "Take it, play it back at him",
+          ],
+          neutral: ["Take it, say nothing", "Pocket the chips"],
         },
       },
       {
@@ -601,10 +610,10 @@ export default {
         greeting:
           "\"Kitten's the only good bet at this table. Don't tell the others.\"",
         responses: {
-          kind: "Let him order, gladly",
-          playful: "Order something ridiculous",
-          bold: "Order for yourself instead",
-          neutral: "Let him order, say nothing",
+          kind: ["Let him order, gladly", "Say he knows your order"],
+          playful: ["Order something ridiculous", "Meow at him"],
+          bold: ["Order for yourself instead", "Add to the order yourself"],
+          neutral: ["Let him order, say nothing", "Wait for the food"],
         },
       },
       {
@@ -612,10 +621,13 @@ export default {
         approach: "Take the drink",
         greeting: '"Here. Drink it. Don\'t make a thing out of it."',
         responses: {
-          kind: "Thank him for remembering",
-          playful: "Test if he really remembers",
-          bold: "Say of course he remembers",
-          neutral: "Take the drink, say nothing",
+          kind: ["Thank him for remembering", "Say that counts for something"],
+          playful: [
+            "Test if he really remembers",
+            "Name a drink he'd never get",
+          ],
+          bold: ["Say of course he remembers", "Ask what he drinks"],
+          neutral: ["Take the drink, say nothing", "Drink it, say nothing"],
         },
       },
       {
@@ -624,10 +636,13 @@ export default {
         greeting:
           '"Keep the gun away from you? Nah. Just means I keep it pointed everywhere else."',
         responses: {
-          kind: "Notice, say nothing kind",
-          playful: "Ask if this counts as special",
-          bold: "Say of course it's not you",
-          neutral: "Shrug, say nothing",
+          kind: ["Notice, say nothing kind", "Say you never thought he would"],
+          playful: [
+            "Ask if this counts as special",
+            "Ask what changed his aim",
+          ],
+          bold: ["Say of course it's not you", "Tell him to put it away"],
+          neutral: ["Don't react at all", "Let the gun be"],
         },
       },
       {
@@ -635,10 +650,10 @@ export default {
         approach: "Don't wander off",
         greeting: '"...Good. Stay where I can see you."',
         responses: {
-          kind: "Promise not to wander",
-          playful: "Wander a little anyway",
-          bold: "Say you'll go where you want",
-          neutral: "Stay put, say nothing",
+          kind: ["Promise not to wander", "Say you'd rather stay close"],
+          playful: ["Wander a little anyway", "Ask if that's an order"],
+          bold: ["Say you'll go where you want", "Tell him to keep up then"],
+          neutral: ["Stay put, say nothing", "Stay in sight"],
         },
       },
       {
@@ -647,10 +662,10 @@ export default {
         greeting:
           "\"Sit closer. Table's crowded. ...Fine, it's not. Sit closer anyway.\"",
         responses: {
-          kind: "Thank him for the space",
-          playful: "Ask how much that cost",
-          bold: "Say you're worth the chips",
-          neutral: "Sit, say nothing",
+          kind: ["Thank him for the space", "Sit as close as he wants"],
+          playful: ["Ask how much that cost", "Ask for a refund on one"],
+          bold: ["Say you're worth the chips", "Pull your chair closer"],
+          neutral: ["Sit closer, no comment", "Take the nearest seat"],
         },
       },
       {
@@ -659,10 +674,10 @@ export default {
         greeting:
           "\"Folded a winning hand 'cause you looked tired. Don't get used to it.\"",
         responses: {
-          kind: "Let the night run long, gladly",
-          playful: "Call out the deliberate loss",
-          bold: "Say he lost on purpose",
-          neutral: "Stay, say nothing",
+          kind: ["Let the night run long, gladly", "Say you're not that tired"],
+          playful: ["Call out the deliberate loss", "Offer to fold next"],
+          bold: ["Say he lost on purpose", "Tell him to play properly"],
+          neutral: ["Stay for another hand", "Deal the next hand"],
         },
       },
     ],

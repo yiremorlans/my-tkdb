@@ -19,7 +19,6 @@ import {
   getRandomCharacterImageVariant,
   getRandomDialogueBeat,
   getRandomDialogueEntry,
-  getTemperamentGreeting,
   RESPONSE_TYPES,
 } from './constants/characters.js';
 import {
@@ -243,8 +242,8 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
   // Drawn together, not independent picks — the approach button, the payoff
   // caption, and the four response buttons all answer the same line the
   // player just read (see getRandomDialogueBeat). The payoff image's caption
-  // prefers the beat's own `greeting`, falling back to the old independent
-  // temperamentDialogue draw when the beat has none. `responses` carries the beat's four
+  // is the beat's own `greeting`, with no second draw behind it: every
+  // drawable beat carries one. `responses` carries the beat's four
   // button labels; a type the beat leaves out drops to the archetype default.
   const {
     line: dialogue,
@@ -252,7 +251,6 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
     greeting,
     responses: beatResponses,
   } = getRandomDialogueBeat(character, tier, variant, dialogueCtx);
-  const payoffGreeting = greeting ?? getTemperamentGreeting(character, tier);
 
   const charFilename = character.images[variant];
 
@@ -262,7 +260,7 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
     characterId: character.id,
     charFilename,
     dialogue,
-    greeting: payoffGreeting,
+    greeting,
     beatResponses,
   });
 

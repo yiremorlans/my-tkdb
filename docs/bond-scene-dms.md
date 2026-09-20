@@ -441,20 +441,20 @@ grants something.
 
 ### 4.3 Remembered choices → dialogue callbacks
 
+> **Stale (2026-09-19):** this section was written against the conditional
+> `dialogueWhen` system, which has since been removed entirely — data, matcher,
+> `DIALOGUE_WHEN_DIMENSIONS` and all. Its entries predated the beat and carried
+> no `greeting`/`responses`, so a draw that landed on one shipped a `"..."`
+> caption. **Do not build 4.3 as written.** The idea still stands; the mechanism
+> has to be redesigned around the beat, which is now the only dialogue format.
+
 The §4.1 choice writes a small flag: `bond_scene_progress.choice_key`. Later
-`/roam` / `/meet` dialogue can react to it by adding a `when` dimension to the
-existing conditional-dialogue system:
-
-```js
-dialogueWhen: [
-  { when: { bondChoice: 'friend:stayed' },
-    dialogue: { warm: ["\"You said you wanted to stay, that time. I think about that.\""] } },
-]
-```
-
-`DIALOGUE_WHEN_DIMENSIONS` in `constants/characters.js` gains `bondChoice`; the
-matcher gains a lookup of the user's `choice_key`s for that character. Low
-volume, high payoff — the relationship visibly *remembers*.
+`/roam` / `/meet` dialogue could react to it — but there is no longer a
+conditional layer to hang that on, and reintroducing one would have to carry a
+full beat (`{ line, approach, greeting, responses }`) per entry rather than the
+bare lines the old `when` blocks held. Low volume, high payoff if it's built —
+the relationship visibly *remembers* — but it is a design task, not a matter of
+adding one dimension to an existing matcher.
 
 ### 4.4 Scenes that reference real history
 
@@ -471,9 +471,11 @@ grounded in that player's run:
 
 ### 4.5 Time-of-day variant
 
-Reuse the `dialogueWhen` `time` bucket infra: a scene can carry an `evening`
-variant so a late-night level-up reads differently. Same `TIME_BUCKETS`, same
-`TZ` env var the encounter dialogue already uses. Optional per scene — most
+A scene can carry an `evening` variant so a late-night level-up reads
+differently. `TIME_BUCKETS` and the `TZ` env var are still there and still used
+(by `timeBucket`, the pmOnly daytime swap, and the /call teaser pools), but the
+`dialogueWhen` blocks that once consumed them are gone — this would need its own
+bucket lookup rather than reusing that infra. Optional per scene — most
 won't need it; the romantic tiers (`Confidant`+) benefit most.
 
 ### 4.6 `/bonds character:<name>` — the journal and the replay gallery
@@ -605,7 +607,7 @@ bondScenes: {
       ],
     },
     keepsake: { emoji: "🧣", line: "The scarf he lent you and never asked back." },
-    when: [ /* optional time-bucket variants, same shape as dialogueWhen */ ],
+    when: [ /* optional time-bucket variants — §4.5; needs its own shape now */ ],
   },
   friend:        { … },
   closeFriend:   { … },
@@ -883,7 +885,7 @@ record of what the player has seen and earned, not analytics. Nothing to add to
 | `constants/dialogue/<id>.js` | `bondScenes` pool (beats + `choice` + `keepsake`) — 26 files, all six levels each |
 | `constants/publicEncounters.js` | freeze the §5.2 placeholder list |
 | `constants/validateContent.js` | `bondScenes` validation pass (§5.4) |
-| `constants/characters.js` | `bondChoice` in `DIALOGUE_WHEN_DIMENSIONS` (§4.3, only with that feature) |
+| `constants/characters.js` | — (§4.3's `DIALOGUE_WHEN_DIMENSIONS` hook is gone with the `when` layer; see the note there) |
 | `test/` | `bond-scenes.test.js` (delivery, idempotency, beat walk, resume/recovery), `validate-content.test.js` extension |
 
 No dependency changes. No intent changes.

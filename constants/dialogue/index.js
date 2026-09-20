@@ -26,8 +26,6 @@ import romeo from "./romeo.js";
 import benkei from "./benkei.js";
 
 export {
-  SHARED_DIALOGUE_WHEN,
-  SHARED_APPROACH_WHEN,
   SHARED_ENCOUNTER_TEASERS,
   SHARED_MISSED_LINES,
   SHARED_WRONG_GUESS_LINES,

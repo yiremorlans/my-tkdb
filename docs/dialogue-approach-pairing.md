@@ -2,13 +2,34 @@
 
 > **Current state (2026-09-19):** the migration described below is finished
 > and the legacy pools are gone. No character has a top-level `approach`,
-> `approachWhen` or `daytimeApproach`, and `getRandomApproachLabel` was
-> replaced by the private `getFallbackApproachLabel` in
-> `constants/characters.js`. A beat's own `approach` is always the first
-> choice; only a bare-string line (e.g. `SHARED_DIALOGUE_WHEN`'s evening
-> lines, or kaito's/subaru's spark/close evening lines) falls through to
-> `SHARED_APPROACH_WHEN`, then `APPROACH_LABEL_FALLBACK`. The status and
+> `approachWhen` or `daytimeApproach`. A beat's own `approach` is now the only
+> source of its label: `getRandomApproachLabel`, its successor
+> `getFallbackApproachLabel`, and `SHARED_APPROACH_WHEN` are all deleted, and
+> all that remains under a beat is `APPROACH_LABEL_FALLBACK`, a generic string
+> no authored line reaches — verified across all 1239 drawable beats, and
+> `validateContent` now errors (not warns) on an unpaired line. The status and
 > sections below are kept as history and describe the transitional design.
+>
+> **The conditional `when` layer is removed (2026-09-19).** Not just severed
+> from the draw — deleted. `dialogueWhen` (all 7 blocks, 70 lines),
+> `SHARED_DIALOGUE_WHEN`, `approachWhen`, `SHARED_APPROACH_WHEN`, `matchesWhen`,
+> `DIALOGUE_WHEN_DIMENSIONS` and the `validateWhenList` pass behind them are all
+> gone. The lines are recoverable from git history.
+>
+> It was an older format than the beat: bare lines with no `greeting` and no
+> `responses`, merged on top of the base pool for a matching scene. An evening
+> draw landing on one captioned the payoff image `"..."` and dropped all four
+> buttons to archetype defaults — for every character, since
+> `SHARED_DIALOGUE_WHEN` applied roster-wide. `getTemperamentGreeting`, the
+> independent caption draw that masked this until `temperamentDialogue` was
+> deleted, is gone too.
+>
+> **One dialogue format now: the beat, `{ line, approach, greeting, responses }`.**
+> Time-of-day flavor goes on a character's own `dialogue` beats, written to read
+> at any hour, since a base beat carries no time gate. `validateContent` errors
+> if a `dialogueWhen` key reappears, and `test/beat-completeness.test.js` checks
+> the same — its beat walk now covers `dialogue` and `daytimeDialogue` with
+> nothing exempt.
 
 **Status:** mechanism shipped. `benkei.js` migrated as the pilot
 (`new`/`known`/`warm`/`close`/`bound`; `spark` deliberately left legacy — see
@@ -97,10 +118,11 @@ renders `[object Object]` for a migrated character. This means migration is
 per-tier and can happen one character (or even one tier) at a time — nothing
 elsewhere breaks while most of the roster is still unmigrated.
 
-`dialogueWhen` / `SHARED_DIALOGUE_WHEN` conditional blocks work unchanged —
-their entries may also be beats, and mix freely with a tier's base pool.
-`approachWhen` / `SHARED_APPROACH_WHEN` are untouched; they still feed the
-legacy independent-pick fallback.
+`dialogueWhen` / `SHARED_DIALOGUE_WHEN` conditional blocks worked unchanged at
+the time — their entries could also be beats, and mixed freely with a tier's
+base pool. (That merge is severed as of 2026-09-19; see the banner above.)
+`approachWhen` / `SHARED_APPROACH_WHEN` were untouched at the time and still
+fed the legacy independent-pick fallback; both are deleted now.
 
 ## 3. Validation
 
@@ -141,7 +163,8 @@ pool it already has.
 
 `scripts/dialogue-pairing-report.js` snapshots, per character and tier: the
 raw `dialogue`/`approach` counts, how many `dialogue` entries are paired
-beats, and the `dialogueWhen` paired/total split. `--json` emits that as data.
+beats. (It used to carry a `dialogueWhen` paired/total column; that layer is
+deleted, so the column went with it.) `--json` emits the table as data.
 A published artifact, **Dialogue Pairing Tracker**
 (https://claude.ai/code/artifact/76bbb275-91b1-4684-99aa-ea7e1ec2ee0a), reads
 a snapshot of that data to show per-character/per-tier status at a glance,
@@ -171,10 +194,9 @@ subaru, zenji, haku, elias, mio, shion, jiro, yuri, ren, haru, towa, edward,
 rui, lyca, ritsu, romeo.
 
 Conditional `dialogueWhen`/`approachWhen` blocks: all 7 that have one are
-migrated (§ Status). The other 19 have no conditional block at all — nothing
-to migrate there; a `dialogueWhen` block added for one of them going forward
-should be authored as beats from the start rather than as a parallel
-`approachWhen`.
+migrated (§ Status). The other 19 have no conditional block at all. Moot now —
+the layer is severed and no new block should be added for anyone; see the
+banner above.
 
 Do the base-pool rollout incrementally, character by character (or tier by
 tier for a character whose pools are uneven like benkei's `spark`), reviewing

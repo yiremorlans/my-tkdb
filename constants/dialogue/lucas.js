@@ -478,10 +478,10 @@ export default {
         approach: "Return the small smile",
         greeting: '"You came back. I... was hoping you would."',
         responses: {
-          kind: "Say you're glad to be back",
-          playful: "Ask what earned the smile",
-          bold: "Smile back just as private",
-          neutral: "Return the smile quietly",
+          kind: ["Say you're glad to be back", "Tell him you missed this"],
+          playful: ["Ask what earned the smile", "Ask if that one's private"],
+          bold: ["Smile back just as private", "Hold the look a beat longer"],
+          neutral: ["Return the smile quietly", "Smile, say nothing"],
         },
       },
       {
@@ -490,10 +490,13 @@ export default {
         greeting:
           '"I kept thinking I heard you in the hall. I was wrong, until now."',
         responses: {
-          kind: "Fall into step gladly",
-          playful: "Ask what he thought he heard",
-          bold: "Close the half-step yourself",
-          neutral: "Walk beside him, say nothing",
+          kind: ["Fall into step gladly", "Say you like him near"],
+          playful: [
+            "Ask what he thought he heard",
+            "Ask if he's been listening",
+          ],
+          bold: ["Close the half-step yourself", "Name the half-step"],
+          neutral: ["Walk beside him, say nothing", "Keep to his pace"],
         },
       },
       {
@@ -501,10 +504,10 @@ export default {
         approach: "Walk up to him",
         greeting: "\"I'm glad you're safe. How have you been?\"",
         responses: {
-          kind: "Thank him for the care",
-          playful: "Ask what could get past him",
-          bold: "Say you watch your own back",
-          neutral: "Let him check, say nothing",
+          kind: ["Thank him for the care", "Tell him he can relax"],
+          playful: ["Ask what could get past him", "Ask for a threat report"],
+          bold: ["Say you watch your own back", "Say the room can wait"],
+          neutral: ["Let him check, say nothing", "Wait for the all clear"],
         },
       },
       {
@@ -513,10 +516,10 @@ export default {
         greeting:
           '"Sit, please. You look like you\'ve been on your feet all day."',
         responses: {
-          kind: "Admit you're a little tired",
-          playful: "Ask if he's checking on you",
-          bold: "Say he looks tired too",
-          neutral: "Sit, say nothing",
+          kind: ["Admit you're a little tired", "Ask him to sit with you"],
+          playful: ["Ask how he spotted it", "Ask if you look that bad"],
+          bold: ["Say he looks tired too", "Make him take his own advice"],
+          neutral: ["Sit, say nothing", "Take the seat offered"],
         },
       },
       {
@@ -524,10 +527,13 @@ export default {
         approach: "See past the courtesy",
         greeting: '"May I walk with you? Only if you\'d like."',
         responses: {
-          kind: "Walk with him gladly",
-          playful: "Ask what's under the courtesy",
-          bold: "Say you see past it already",
-          neutral: "Walk with him quietly",
+          kind: ["Walk with him gladly", "Say you'd like that"],
+          playful: [
+            "Ask what's under the courtesy",
+            "Ask why he always asks first",
+          ],
+          bold: ["Say you see past it already", "Say he doesn't have to ask"],
+          neutral: ["Walk with him quietly", "Walk on without talking"],
         },
       },
     ],
@@ -709,61 +715,6 @@ export default {
       },
     ],
   },
-  // Evening block: dialogue and approach paired per beat
-  // (docs/dialogue-approach-pairing.md) instead of two separately-drawn lists.
-  dialogueWhen: [
-    {
-      when: { time: "evening" },
-      dialogue: {
-        new: [
-          {
-            line: "He's doing a slow circuit of the balcony rail, checking the dark below, and only then turns to you.",
-            approach: "Fall into step with him",
-          },
-          {
-            line: "The campus lights have come on behind him. He's clearly been out here a while.",
-            approach: "Fall into step with him",
-          },
-          {
-            line: '"You\'re out late," he says, not quite a reproach. "I\'ll walk you back when you\'re ready."',
-            approach: "Let him walk you back",
-          },
-          {
-            line: '"You shouldn\'t wander alone," he says firmly. "Not here. Not at this hour."',
-            approach: "Let him walk you back",
-          },
-        ],
-        known: [
-          {
-            line: "He falls into step to walk you along the lit path before you can decline the escort.",
-            approach: "Accept the escort",
-          },
-          {
-            line: '"I don\'t like this hour for wandering," he admits. "I like that you came to find me in it."',
-            approach: "Accept the escort",
-          },
-          {
-            line: '"Curfew\'s soon," he says. "Stay a little. I\'ll make sure you\'re not caught."',
-            approach: "Accept the escort",
-          },
-        ],
-        warm: [
-          {
-            line: "He's saved you the sheltered corner out of the wind. He'd deny having planned it.",
-            approach: "Take the sheltered corner",
-          },
-          {
-            line: "The dark makes him less careful with what he says. Not much. Enough to notice.",
-            approach: "Take the sheltered corner",
-          },
-          {
-            line: '"The stillness out here is the honest part of my day," he says. "I\'m glad you\'re in it."',
-            approach: "Take the sheltered corner",
-          },
-        ],
-      },
-    },
-  ],
   // No temperamentDialogue pool: every leftover line was placed onto a
   // dialogue beat's `greeting`.
   // When the old per-tier `responses` pool was folded onto the beats above,

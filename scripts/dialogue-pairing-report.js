@@ -8,8 +8,6 @@
  *     already { line, approach } beats vs. still bare strings
  *   - DIALOGUE_POOL_TARGET_BY_TIER for that tier, so you can see whether a
  *     count that looks "done" actually hits the target
- * ...and separately, the `dialogueWhen` conditional block(s), if any: total
- * lines vs. how many are paired.
  *
  * A tier only counts as meeting its target when its PAIRED count reaches the
  * target; bare-string lines have no approach of their own and draw the
@@ -63,24 +61,6 @@ function analyzeTierValue(value) {
   return { count: 1, pairedCount: 0, variantNote: null, exists: true };
 }
 
-function analyzeDialogueWhen(dialogueWhen) {
-  if (!dialogueWhen) return null;
-  let total = 0;
-  let paired = 0;
-  const tierBreak = {};
-  for (const block of dialogueWhen) {
-    for (const tier of Object.keys(block.dialogue || {})) {
-      const arr = block.dialogue[tier];
-      if (!Array.isArray(arr)) continue;
-      const p = arr.filter(isBeat).length;
-      total += arr.length;
-      paired += p;
-      tierBreak[tier] = { count: arr.length, pairedCount: p };
-    }
-  }
-  return { total, paired, tierBreak };
-}
-
 const nameById = Object.fromEntries(CHARACTERS.map((c) => [c.id, c.firstName || c.id]));
 const order = Object.keys(DIALOGUE);
 
@@ -94,7 +74,6 @@ const rows = order.map((id) => {
     id,
     name: nameById[id] || id,
     dialogueTiers,
-    dialogueWhen: analyzeDialogueWhen(content.dialogueWhen),
   };
 });
 
@@ -113,13 +92,12 @@ if (jsonMode) {
 // --- human-readable summary ---
 console.log(`Targets: ${TIERS.map((t) => `${t}=${DIALOGUE_POOL_TARGET_BY_TIER[t]}`).join(", ")}\n`);
 
-const header = ["character", ...TIERS.flatMap((t) => [`${t} d/p`]), "dW"].join("\t");
+const header = ["character", ...TIERS.flatMap((t) => [`${t} d/p`])].join("\t");
 console.log(header);
 for (const row of rows) {
   const cells = TIERS.map((t) => {
     const d = row.dialogueTiers[t];
     return `${d.count}/${d.pairedCount}`;
   });
-  const dw = row.dialogueWhen ? `${row.dialogueWhen.paired}/${row.dialogueWhen.total}` : "-";
-  console.log([row.id, ...cells, dw].join("\t"));
+  console.log([row.id, ...cells].join("\t"));
 }

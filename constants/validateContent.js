@@ -8,26 +8,15 @@
 //
 // So: anything that leaves a character mute is an error, and anything that
 // silently downgrades them is a warning.
-import {
-  CHARACTERS,
-  DIALOGUE_WHEN_DIMENSIONS,
-  RESPONSE_TYPES,
-} from "./characters.js";
+import { CHARACTERS, RESPONSE_TYPES } from "./characters.js";
 import {
   DIALOGUE,
-  SHARED_APPROACH_WHEN,
-  SHARED_DIALOGUE_WHEN,
   SHARED_ENCOUNTER_TEASERS,
   SHARED_MISSED_LINES,
   SHARED_WINNER_LINES,
   SHARED_WRONG_GUESS_LINES,
 } from "./dialogue.js";
-import {
-  BACKGROUNDS_BY_LOCATION,
-  LOCATION_KEYS,
-  SPECIAL_BACKGROUNDS,
-  TIME_BUCKETS,
-} from "./backgrounds.js";
+import { TIME_BUCKETS } from "./backgrounds.js";
 import {
   BOND_SCENE_KEYS,
   BOND_SCENE_MAX_BEATS,
@@ -53,11 +42,6 @@ const STICKERS_DIR = join(__dirname, "../assets/stickers");
 
 const TIERS = ["new", "known", "warm", "spark", "close", "bound"];
 
-const KNOWN_LOCATIONS = new Set(Object.values(LOCATION_KEYS));
-const KNOWN_BACKGROUNDS = new Set([
-  ...Object.values(BACKGROUNDS_BY_LOCATION).flat(),
-  ...Object.values(SPECIAL_BACKGROUNDS),
-]);
 
 // Response and approach slots may be a single string, a collection, or (for a
 // character whose lines differ by outfit) a map of variant -> collection.
@@ -103,88 +87,6 @@ function tierCoversResponse(poolData, type) {
     return Object.values(poolData).every((v) => tierCoversResponse(v, type));
   }
   return true;
-}
-
-// A `when` field is scalar-or-array; return it as a list for checking.
-function asList(v) {
-  return v === undefined ? [] : Array.isArray(v) ? v : [v];
-}
-
-function validateWhenClause(when, at, errors, warnings) {
-  if (when === undefined) return;
-  if (typeof when !== "object" || when === null || Array.isArray(when)) {
-    errors.push(`${at}.when must be an object`);
-    return;
-  }
-  for (const key of Object.keys(when)) {
-    if (!DIALOGUE_WHEN_DIMENSIONS.includes(key)) {
-      errors.push(
-        `${at}.when has unknown dimension "${key}" — matchesWhen ignores it, so the rule fires wider than written`,
-      );
-    }
-  }
-  for (const t of asList(when.time)) {
-    if (!TIME_BUCKETS.includes(t)) {
-      warnings.push(`${at}.when.time "${t}" is not a known bucket — never matches`);
-    }
-  }
-  for (const loc of asList(when.location)) {
-    if (!KNOWN_LOCATIONS.has(loc)) {
-      warnings.push(`${at}.when.location "${loc}" is not a known location — never matches`);
-    }
-  }
-  for (const bg of asList(when.background)) {
-    if (!KNOWN_BACKGROUNDS.has(bg)) {
-      warnings.push(`${at}.when.background "${bg}" is not a known background — never matches`);
-    }
-  }
-  // `event` values are not checked — there is no event registry yet, and an
-  // unmatched event rule is harmless (never fires) rather than dead-wrong.
-}
-
-function checkTierPool(pool, at, tiers, maxLabel, errors, warnings) {
-  for (const tier of Object.keys(pool)) {
-    if (!tiers.includes(tier)) {
-      warnings.push(`${at} has unknown tier "${tier}" — never picked`);
-      continue;
-    }
-    const labels = collectLabels(pool[tier]);
-    if (labels.length === 0) {
-      warnings.push(`${at}.${tier} is empty`);
-    }
-    if (maxLabel) {
-      for (const label of labels) {
-        if (label.length > maxLabel) {
-          errors.push(`${at}.${tier} label is ${label.length} chars (max ${maxLabel}): "${label}"`);
-        }
-      }
-    }
-  }
-}
-
-// Validate a `{ when, <poolKey> }` list — `dialogueWhen` or the shared
-// `SHARED_DIALOGUE_WHEN` / `SHARED_APPROACH_WHEN`.
-function validateWhenList(list, label, poolKey, errors, warnings, opts = {}) {
-  if (list === undefined) return;
-  const { tiers = TIERS, maxLabel = null } = opts;
-  if (!Array.isArray(list)) {
-    errors.push(`${label} must be an array of { when, ${poolKey} } blocks`);
-    return;
-  }
-  list.forEach((entry, i) => {
-    const at = `${label}[${i}]`;
-    if (!entry || typeof entry !== "object") {
-      errors.push(`${at} is not an object`);
-      return;
-    }
-    validateWhenClause(entry.when, at, errors, warnings);
-    const pool = entry[poolKey];
-    if (!pool || typeof pool !== "object") {
-      errors.push(`${at} has no ${poolKey} pool`);
-      return;
-    }
-    checkTierPool(pool, `${at}.${poolKey}`, tiers, maxLabel, errors, warnings);
-  });
 }
 
 function validateWinnerLines(at, winnerLines, errors, warnings, opts = {}) {
@@ -527,11 +429,6 @@ export function validateContent() {
     extraBuckets: ["any"],
   });
 
-  validateWhenList(SHARED_DIALOGUE_WHEN, "SHARED_DIALOGUE_WHEN", "dialogue", errors, warnings);
-  validateWhenList(SHARED_APPROACH_WHEN, "SHARED_APPROACH_WHEN", "approach", errors, warnings, {
-    maxLabel: MAX_BUTTON_LABEL_LENGTH,
-  });
-
   for (const character of CHARACTERS) {
     const { id } = character;
     const content = DIALOGUE[id];
@@ -555,19 +452,20 @@ export function validateContent() {
       errors.push(`${id} is pmOnly but has no daytimeDialogue`);
     }
 
-    // Every beat carries its own `approach`; a bare-string line has none, so
-    // its button drops to SHARED_APPROACH_WHEN / APPROACH_LABEL_FALLBACK in
-    // constants/characters.js. Legal, but it knows nothing about the scene
-    // just shown, so name the tiers where it can happen. (The label length
-    // cap is checked per beat below.)
+    // Every beat must carry its own `approach`. This was a warning while the
+    // roster was mid-migration and a bare string could still draw a label from
+    // the separate `approach` pools / SHARED_APPROACH_WHEN. Those are deleted,
+    // so an unpaired line now renders APPROACH_LABEL_FALLBACK's generic "Step
+    // forward" against a scene it knows nothing about — a defect, not a style
+    // note. (The label length cap is checked per beat below.)
     const unpairedTiers = TIERS.filter(
       (tier) =>
         content.dialogue?.[tier] !== undefined &&
         !tierIsFullyPaired(content.dialogue[tier]),
     );
     if (unpairedTiers.length) {
-      warnings.push(
-        `${id} has lines with no approach at ${unpairedTiers.join("/")} — using the generic label`,
+      errors.push(
+        `${id} has lines with no approach at ${unpairedTiers.join("/")} — nothing left to label them`,
       );
     }
 
@@ -575,17 +473,23 @@ export function validateContent() {
       character.pmOnly &&
       !Object.values(content.daytimeDialogue || {}).every(tierIsFullyPaired)
     ) {
-      warnings.push(`${id} is pmOnly but has daytimeDialogue lines with no approach — using the generic label`);
+      errors.push(`${id} is pmOnly but has daytimeDialogue lines with no approach — nothing left to label them`);
     }
 
     validateWinnerLines(id, content.winnerLines, errors, warnings);
 
     validateBondScenes(id, content.bondScenes, errors, warnings, bondSceneLines);
 
-    // Conditional pools are optional; when present, every block must be
-    // well-formed and its `when` must reference real dimensions/values or it is
-    // dead content.
-    validateWhenList(content.dialogueWhen, `${id} dialogueWhen`, "dialogue", errors, warnings);
+    // The conditional `when` layer is removed — data, matcher and validator.
+    // Its entries predated the beat and carried no greeting or responses, so a
+    // draw that landed on one shipped a "..." caption. Nothing reads this key
+    // any more, so a block reintroduced here would be silently dead content
+    // rather than a working feature: fail instead, and point at the one format.
+    if (content.dialogueWhen !== undefined) {
+      errors.push(
+        `${id} has a dialogueWhen block — that format is removed; write the lines as ${"`"}dialogue${"`"} beats { line, approach, greeting, responses } instead`,
+      );
+    }
 
     // CRITICAL: Check for empty dialogue pools (breaks random selection)
     if (content.dialogue) {
@@ -639,9 +543,19 @@ export function validateContent() {
     // CRITICAL: a migrated ({ line, approach }) beat must carry both halves —
     // a blank line, or an approach with nothing usable on it, breaks the
     // /roam message the same way an empty pool would.
-    if (content.dialogue) {
+    //
+    // Both drawable pools, not just `dialogue`. A pmOnly character's
+    // `daytimeDialogue` is the hard swap pickDialogueEntry draws instead of the
+    // base pool for the whole daytime (Towa), so its beats render the same
+    // Discord buttons and owe the same caps — it was simply never added to this
+    // walk when response labels moved onto the beat.
+    for (const [poolName, pool] of [
+      ["dialogue", content.dialogue],
+      ["daytimeDialogue", content.daytimeDialogue],
+    ]) {
+      if (!pool) continue;
       for (const tier of TIERS) {
-        const poolData = content.dialogue[tier];
+        const poolData = pool[tier];
         if (!poolData) continue;
         const collections = Array.isArray(poolData)
           ? [poolData]
@@ -653,7 +567,7 @@ export function validateContent() {
           for (const entry of entries) {
             if (!isBeat(entry)) continue;
             if (!entry.line.trim()) {
-              errors.push(`${id} dialogue[${tier}] has a beat with an empty line`);
+              errors.push(`${id} ${poolName}[${tier}] has a beat with an empty line`);
             }
             const approachLabels = Array.isArray(entry.approach)
               ? entry.approach
@@ -663,14 +577,14 @@ export function validateContent() {
               approachLabels.some((a) => typeof a !== "string" || !a.trim())
             ) {
               errors.push(
-                `${id} dialogue[${tier}] beat has no valid approach label: "${entry.line}"`,
+                `${id} ${poolName}[${tier}] beat has no valid approach label: "${entry.line}"`,
               );
               continue;
             }
             for (const label of approachLabels) {
               if (label.length > MAX_BUTTON_LABEL_LENGTH) {
                 errors.push(
-                  `${id} dialogue[${tier}] beat approach is ${label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${label}"`,
+                  `${id} ${poolName}[${tier}] beat approach is ${label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${label}"`,
                 );
               }
             }
@@ -682,7 +596,7 @@ export function validateContent() {
               for (const label of collectLabels(value)) {
                 if (label.length > MAX_BUTTON_LABEL_LENGTH) {
                   errors.push(
-                    `${id} dialogue[${tier}] beat ${type} response is ${label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${label}"`,
+                    `${id} ${poolName}[${tier}] beat ${type} response is ${label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${label}"`,
                   );
                 }
                 // The four buttons are rendered side by side off this one
@@ -691,7 +605,7 @@ export function validateContent() {
                 const seenAt = seenLabels.get(label);
                 if (seenAt && seenAt !== type) {
                   warnings.push(
-                    `${id} dialogue[${tier}] beat reuses "${label}" for both ${seenAt} and ${type}: "${entry.line}"`,
+                    `${id} ${poolName}[${tier}] beat reuses "${label}" for both ${seenAt} and ${type}: "${entry.line}"`,
                   );
                 }
                 seenLabels.set(label, type);

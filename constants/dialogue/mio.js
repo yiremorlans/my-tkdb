@@ -259,7 +259,7 @@ export default {
         line: '"Give me one second," he says, and finishes the movement without a single wasted motion.',
         approach: "Wait for him to finish",
         greeting:
-          '"Mind the bench, everything on it is smaller than it looks."',
+          '"Mind the bench, everything on it is more fragile than it looks."',
         responses: {
           kind: ["Notice how much he does", "Wait patiently for him"],
           playful: ["Pretend to poke the bench", "Time how long 'one sec' is"],
@@ -283,7 +283,7 @@ export default {
         },
       },
       {
-        line: "Someone's always asking Mio to fix something. He never once says no.",
+        line: "There's always someone asking him to fix something. He never once says no.",
         approach: "Sit at the workbench",
         greeting:
           "\"Sit anywhere. I'll clear a space. I'm always clearing a space.\"",
@@ -335,9 +335,10 @@ export default {
         },
       },
       {
-        line: '"The lamp. Still swinging clear when you don\'t need it, or did the hinge stick again?" He wants the actual answer.',
+        line: '"How\'d that thing turn out? The one from last week." He wants the actual answer.',
         approach: "Say it's working great",
-        greeting: '"How\'d that thing turn out? The one from last week."',
+        greeting:
+          '"The lamp. Still swinging clear when you don\'t need it, or did the hinge stick again?"',
         responses: {
           kind: ["Say it's working perfectly", "Thank him again for the lamp"],
           playful: ["Report a fake malfunction", "Ask for an upgrade"],
@@ -363,7 +364,7 @@ export default {
         },
       },
       {
-        line: "Jo pokes their head in to tell him to quit for the night. He waves them off, and doesn't ask you to leave either.",
+        line: "Jo leans in to tell him to quit for the night. He waves Jo off, and doesn't ask you to leave either.",
         approach: "Stay anyway",
         greeting:
           "\"Jo worries. It's nice, but I've got one more thing to finish. You can stay, though.\"",
@@ -392,10 +393,11 @@ export default {
       {
         line: '"Shion\'s not answering his phone. Come with me to check on him?"',
         approach: "Go with him to check",
-        greeting: "\"Shion says hi. He doesn't, but I'm saying it anyway.\"",
+        greeting:
+          '"He does this. Turns the phone off, then acts surprised anyone came looking."',
         responses: {
           kind: ["Go with him gladly", "Say you're glad to help check"],
-          playful: ["Guess what Shion broke", "Tease the fake hello"],
+          playful: ["Guess what Shion broke", "Bet he's just asleep"],
           bold: ["Say you'll handle Shion", "March over there immediately"],
           neutral: ["Go along quietly", "Follow without comment"],
         },
@@ -427,7 +429,7 @@ export default {
         },
       },
       {
-        line: '"Oh, somebody\'s in a good mood" Elias says softly, passing through. Mio just shrugs and keeps working.',
+        line: '"Oh, somebody\'s in a good mood," Elias says softly, passing through. He just shrugs and keeps working.',
         approach: "Smile at the thought",
         greeting:
           "\"Don't you start too. Something finally worked on the first try, that's all. ...Okay, and you're here.\"",
@@ -472,10 +474,13 @@ export default {
         approach: "Ask him to stop working",
         greeting: '"Perfect timing. I needed an excuse to stop."',
         responses: {
-          kind: "Thank him for stopping",
-          playful: "Ask if you're the excuse",
-          bold: "Say you're worth stopping for",
-          neutral: "Sit, say nothing",
+          kind: ["Thank him for stopping", "Ask what he was building"],
+          playful: ["Ask if you're the excuse", "Offer a better excuse"],
+          bold: [
+            "Say you're worth stopping for",
+            "Take the tool out of his hand",
+          ],
+          neutral: ["Sit, say nothing", "Pull up a seat"],
         },
       },
       {
@@ -484,10 +489,10 @@ export default {
         greeting:
           "\"Hold this a sec? It's small, easy to lose. And no, before you ask, it wasn't any trouble.\"",
         responses: {
-          kind: "Thank him for fixing it",
-          playful: "Call out the secret fix",
-          bold: "Say you noticed immediately",
-          neutral: "Hold the gear, say nothing",
+          kind: ["Thank him for noticing", "Say it was trouble, though"],
+          playful: ["Call out the secret fix", "Mention three more things"],
+          bold: ["Say you noticed immediately", "Ask what else he fixed"],
+          neutral: ["Hold the gear, say nothing", "Hold it, wait for the rest"],
         },
       },
       {
@@ -496,10 +501,10 @@ export default {
         greeting:
           '"How\'s it going? And I mean actually, not the polite version."',
         responses: {
-          kind: "Take him up on it gladly",
-          playful: "Complain about something silly",
-          bold: "Demand he fix your mood too",
-          neutral: "Sit quietly instead",
+          kind: ["Take him up on it gladly", "Ask about his day first"],
+          playful: ["Complain about something silly", "Complain about him"],
+          bold: ["Demand he fix your mood too", "Give the unpolite version"],
+          neutral: ["Sit quietly instead", "Say there's nothing to tell"],
         },
       },
       {
@@ -507,10 +512,10 @@ export default {
         approach: "Walk to the store with him",
         greeting: '"Sit. Hold this. There, now you\'re helping."',
         responses: {
-          kind: "Walk with him gladly",
-          playful: "Guess what Shion broke",
-          bold: "Say Shion owes him one",
-          neutral: "Walk along, hold what's handed",
+          kind: ["Say you'd love to come", "Offer to carry the parts"],
+          playful: ["Ask what Shion did this time", "Guess the repair bill"],
+          bold: ["Say Shion owes him one", "Say Shion should pay"],
+          neutral: ["Walk along, hold what's handed", "Follow him out"],
         },
       },
       {
@@ -519,10 +524,10 @@ export default {
         greeting:
           "\"It's nice seeing you. You know you're always welcome here.\"",
         responses: {
-          kind: "Say you're glad you helped",
-          playful: "Ask what the fight was about",
-          bold: "Take credit for the calm",
-          neutral: "Sit down, say nothing",
+          kind: ["Say you're glad you helped", "Say the shop feels calm"],
+          playful: ["Ask what the fight was about", "Ask who was winning"],
+          bold: ["Take credit for the calm", "Say he did the calming"],
+          neutral: ["Sit down, say nothing", "Take the stool, settle in"],
         },
       },
     ],

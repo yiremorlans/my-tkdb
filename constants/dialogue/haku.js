@@ -263,7 +263,7 @@ export default {
         line: '"Don\'t expect too much from me," he says, not getting up. "Ghouls are glorified street magicians, really. Let\'s keep it light."',
         approach: "Sit on the step with him",
         greeting:
-          '"Haha, look at you. Most people keep their distance by now. Pull up some step, there\'s plenty."',
+          '"Haha. Most people take that as a hint and wander off. Pull up some step, there\'s plenty."',
         responses: {
           kind: ["Let him keep it light", "Say he's selling himself short"],
           playful: ["Ask for a magic trick", "Call him a street magician"],
@@ -299,7 +299,7 @@ export default {
         line: '"You shouldn\'t be out this far alone." He\'s already up. "To the lights, at least. Humor me."',
         approach: "Walk with him",
         greeting:
-          '"Watch your step out there. You shouldn\'t wander around with your guard down."',
+          '"Stay where I can see you. It\'s not far. ...And don\'t look at the treeline."',
         responses: {
           kind: ["Thank him for walking you", "Say you'll humor him"],
           playful: ["Ask if he's being dramatic", "Ask if a fox spirit's out"],
@@ -333,7 +333,7 @@ export default {
         },
       },
       {
-        line: '"You keep turning up. I\'ve started counting on it."',
+        line: '"You again." He doesn\'t sound put out about it. "Third time this week. Not that I\'m counting."',
         approach: "Say you'll keep turning up",
         greeting:
           "\"You're around enough now that I've stopped keeping count. That's rare, for me.\"",
@@ -360,7 +360,7 @@ export default {
         line: '"Made too much tea. You\'ll have to help me with it." He did not make too much tea by accident.',
         approach: "Help him with the tea",
         greeting:
-          '"You keep turning up right when things get quiet around here. I don\'t mind the company."',
+          '"Grab a cup, then. I\'d have drunk all of it myself and regretted it around midnight."',
         responses: {
           kind: ["Help without complaint", "Say you don't mind the tea"],
           playful: ["Call out the excuse", "Ask who the tea's really for"],
@@ -443,10 +443,10 @@ export default {
         },
       },
       {
-        line: '"I\'ve been keeping tabs on you." He doesn\'t bother denying it. "Somebody\'s got to get to the bottom of that curse of yours."',
+        line: '"I\'ve been keeping tabs on you." He says it like it\'s nothing. "Somebody\'s got to get to the bottom of that curse of yours."',
         approach: "Ask if that's really why",
         greeting:
-          "\"How's the search for clues about your curse going? Don't try to carry the whole thing yourself. I've got time. Point me at whatever's next.\"",
+          "\"How's the search for clues going? Don't try to carry the whole thing yourself. ...I'm not volunteering for anything. I just get bored.\"",
         responses: {
           kind: ["Thank him for the help", "Say you appreciate it"],
           playful: ["Call it stalking, lightly", "Tease him for keeping tabs"],
@@ -472,7 +472,7 @@ export default {
         line: '"Devilish charm," Zenji calls it. Haku just shrugs like the label\'s not his problem.',
         approach: "Ask if it's true",
         greeting:
-          '"Zenji says hi, by the way. Well, he said something longer, but that was the gist."',
+          '"Devilish? Ha ha. That\'s Zenji being Zenji. He needs everything to have a title."',
         responses: {
           kind: ["Say the charm suits him", "Defend him kindly"],
           playful: [
@@ -491,10 +491,10 @@ export default {
         greeting:
           '"You make it hard to stay unbothered. Take that as a compliment."',
         responses: {
-          kind: "Stay close, unbothered",
-          playful: "Let them talk",
-          bold: "Sit even closer",
-          neutral: "Stay put, say nothing",
+          kind: ["Stay close, unbothered", "Say gossip doesn't scare you"],
+          playful: ["Let them talk", "Ask what they'd say"],
+          bold: ["Sit even closer", "Dare him to move away"],
+          neutral: ["Stay put, say nothing", "Sit at a normal distance"],
         },
       },
       {
@@ -502,10 +502,10 @@ export default {
         approach: "Stay the minute",
         greeting: "\"I'd say I wasn't waiting for you. ...Nah. I was.\"",
         responses: {
-          kind: "Stay the minute gladly",
-          playful: "Ask what he meant",
-          bold: "Call out what he said",
-          neutral: "Stay, say nothing",
+          kind: ["Stay the minute gladly", "Say the minute's his"],
+          playful: ["Ask what he meant", "Refuse to ignore that"],
+          bold: ["Call out what he said", "Ask him to say it again"],
+          neutral: ["Stay put, no comment", "Stay, pretend you missed it"],
         },
       },
       {
@@ -514,10 +514,10 @@ export default {
         greeting:
           '"There you are. If you ever want to talk, the curse or anything else, I\'ll listen."',
         responses: {
-          kind: "Let the rumor be true",
-          playful: "Ask what tipped Zenji off",
-          bold: "Say Zenji's right",
-          neutral: "Shrug at the rumor",
+          kind: ["Let the rumor be true", "Promise not to tell Zenji"],
+          playful: ["Ask what tipped Zenji off", "Threaten to tell Zenji"],
+          bold: ["Say Zenji's right", "Ask if he's got a thing"],
+          neutral: ["Shrug at the rumor", "Let the rumor sit"],
         },
       },
       {
@@ -526,10 +526,10 @@ export default {
         greeting:
           '"Tch. Guess I need a new excuse. Give me a sec, I\'ll think of one."',
         responses: {
-          kind: "Say the boo still works",
-          playful: "Boo him back",
-          bold: "Grab his arm first",
-          neutral: "Stay unbothered",
+          kind: ["Say the boo still works", "Let him catch your arm"],
+          playful: ["Boo him back", "Offer a fake flinch"],
+          bold: ["Grab his arm first", "Tell him to try harder"],
+          neutral: ["Stay unbothered", "Keep walking, unfazed"],
         },
       },
       {
@@ -538,10 +538,10 @@ export default {
         greeting:
           '"...Huh. Okay. Then I\'m not taking it back. Your call how that goes."',
         responses: {
-          kind: "Let the comment stand",
-          playful: "Ask what else he noticed",
-          bold: "Say he can keep looking",
-          neutral: "Let it go unremarked",
+          kind: ["Let the comment stand", "Tell him it's all right"],
+          playful: ["Ask what else he noticed", "See how it does"],
+          bold: ["Say he can keep looking", "Say he missed his chance"],
+          neutral: ["Leave it where he left it", "Move past it"],
         },
       },
       {
@@ -549,10 +549,13 @@ export default {
         approach: "Smile at him on purpose",
         greeting: "\"Hey, you're smiling at me. That's cheating.\"",
         responses: {
-          kind: "Smile at him again",
-          playful: "Call it cheating right back",
-          bold: "Smile wider on purpose",
-          neutral: "Sit down, say nothing",
+          kind: ["Smile at him again", "Take the step he patted"],
+          playful: [
+            "Call it cheating right back",
+            "Say he's barely interesting",
+          ],
+          bold: ["Smile wider on purpose", "Tell him to cancel the nap"],
+          neutral: ["Sit down, say nothing", "Take the step, quiet"],
         },
       },
       {
@@ -561,10 +564,13 @@ export default {
         greeting:
           "\"Walk with me a bit. It's been too quiet tonight, and I'd rather not be the only one who notices.\"",
         responses: {
-          kind: "Thank him for walking you",
-          playful: "Call it his favorite chore",
-          bold: "Say he likes the excuse",
-          neutral: "Walk with him quietly",
+          kind: ["Say you like the company", "Say the walk is nice"],
+          playful: [
+            "Call it his favorite chore",
+            "Ask for door-to-door service",
+          ],
+          bold: ["Say he likes the excuse", "Take his arm on the way"],
+          neutral: ["Walk on in silence", "Let him see you home"],
         },
       },
     ],
@@ -755,65 +761,6 @@ export default {
       },
     ],
   },
-  // Evening block: dialogue and approach paired per beat
-  // (docs/dialogue-approach-pairing.md) instead of two separately-drawn lists.
-  dialogueWhen: [
-    {
-      when: { time: "evening" },
-      dialogue: {
-        new: [
-          {
-            line: "He's sitting out watching the dark come in. \"...Oh. It's you. Sit, if you want.\"",
-            approach: "Take the step beside him",
-          },
-          {
-            line: '"You\'re out late. This isn\'t a great place to wander around alone after dark." A beat. "...I\'ll come with you."',
-            approach: "Head in out of the dark",
-          },
-          {
-            line: '"It\'s been too quiet tonight. Probably nothing." He doesn\'t sound sure. "Stick around a bit."',
-            approach: "Take the step beside him",
-          },
-          {
-            line: "\"Watch your feet on the way in. Don't come crying to me if a fox spirit gets you.\" He's mostly joking.",
-            approach: "Head in out of the dark",
-          },
-        ],
-        known: [
-          {
-            line: '"You always turn up right as it gets dark. I\'ve stopped calling it luck."',
-            approach: "Fall into step with him",
-          },
-          {
-            line: "\"Walk you back? It's dark, and I'm only half doing it to be nice.\"",
-            approach: "Fall into step with him",
-          },
-          {
-            line: "\"There's something I've been meaning to tell you. Not tonight. Walk with me anyway.\"",
-            approach: "Fall into step with him",
-          },
-          {
-            line: "\"I'm walking you back. Don't argue. I've decided, and I'm too lazy to decide twice.\"",
-            approach: "Fall into step with him",
-          },
-        ],
-        warm: [
-          {
-            line: '"Stay a while. It\'s quieter with someone else here."',
-            approach: "Let him walk you back",
-          },
-          {
-            line: '"Can\'t sleep? Me neither. Walk with me a bit. It helps, the company."',
-            approach: "Let him walk you back",
-          },
-          {
-            line: "\"Too bad I couldn't walk you back. Safety thing. ...Fine, and I wanted to catch you in your pjs. It's allowed to be both.\"",
-            approach: "Let him walk you back",
-          },
-        ],
-      },
-    },
-  ],
   // No temperamentDialogue pool: every leftover line was placed onto a
   // dialogue beat's `greeting`.
   // kind is Haku's channel — low-key, unsentimental care he doesn't have to

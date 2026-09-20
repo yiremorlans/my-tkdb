@@ -120,6 +120,12 @@ test('every bond scene choice button fits the 30-char cap the rest of the game u
   assert.deepStrictEqual(tooLong, []);
 });
 
+// Both pools pickDialogueEntry can draw from. `daytimeDialogue` is the hard
+// swap a pmOnly character (Towa) gets for the whole daytime instead of the base
+// pool — its beats render the same Discord buttons, so they owe the same caps.
+// It was missing from the two sweeps below until 2026-09-19.
+const DRAWABLE_POOLS = ['dialogue', 'daytimeDialogue'];
+
 // A migrated dialogue[tier] entry — { line, approach } — puts its button
 // label on the beat itself instead of a separate `approach[tier]` pool, but
 // it's rendered on the exact same Discord button as every other label in the
@@ -144,8 +150,12 @@ test("every dialogue beat's approach label fits the 30-char cap the rest of the 
     }
   };
   for (const character of CHARACTERS) {
-    const dialogue = DIALOGUE[character.id]?.dialogue;
-    for (const tier of Object.keys(dialogue || {})) checkTier(`${character.id}.${tier}`, dialogue[tier]);
+    for (const pool of DRAWABLE_POOLS) {
+      const tiers = DIALOGUE[character.id]?.[pool];
+      for (const tier of Object.keys(tiers || {})) {
+        checkTier(`${character.id}.${pool}.${tier}`, tiers[tier]);
+      }
+    }
   }
 
   assert.deepStrictEqual(tooLong, []);
@@ -176,8 +186,12 @@ test("every dialogue beat's response labels fit the 30-char cap the rest of the 
     }
   };
   for (const character of CHARACTERS) {
-    const dialogue = DIALOGUE[character.id]?.dialogue;
-    for (const tier of Object.keys(dialogue || {})) checkTier(`${character.id}.${tier}`, dialogue[tier]);
+    for (const pool of DRAWABLE_POOLS) {
+      const tiers = DIALOGUE[character.id]?.[pool];
+      for (const tier of Object.keys(tiers || {})) {
+        checkTier(`${character.id}.${pool}.${tier}`, tiers[tier]);
+      }
+    }
   }
 
   assert.deepStrictEqual(tooLong, []);

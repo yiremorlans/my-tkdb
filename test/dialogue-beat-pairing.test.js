@@ -1,8 +1,12 @@
 // getRandomDialogueBeat (docs/dialogue-approach-pairing.md): draws a
 // `dialogue[tier]` line and its `approach` button as one unit instead of two
-// independent pools. This is the guarantee the whole design rests on: a beat's own approach is always
-// the first choice, and only a bare-string line falls through to the shared
-// (SHARED_APPROACH_WHEN) or generic label.
+// independent pools. This is the guarantee the whole design rests on: a beat's
+// own approach is the only source of its label. The layers that used to sit
+// under it — the separate `approach` pools, `approachWhen`,
+// SHARED_APPROACH_WHEN — are deleted, so all a bare string can reach now is
+// APPROACH_LABEL_FALLBACK's generic label. No authored line is bare (see
+// validateContent, which errors on one), but the picker still has to survive
+// meeting one, which is what the bare-string cases below cover.
 //
 // Mocks dialogue.js with synthetic characters covering every shape the
 // picker has to handle, independent of any real character's content drifting
@@ -21,7 +25,7 @@ mock.module('../constants/dialogue.js', {
   namedExports: {
     DIALOGUE: {
       // Bare-string lines, no beats at all: nothing to carry an approach, so
-      // the button comes from the shared/generic fallback.
+      // the button comes from the generic fallback.
       [LEGACY_ID]: {
         dialogue: { new: ['Legacy line A', 'Legacy line B'] },
       },
@@ -46,8 +50,8 @@ mock.module('../constants/dialogue.js', {
           new: [{ line: 'Only line', approach: ['Option 1', 'Option 2'] }],
         },
       },
-      // One tier with a beat next to a bare string (like a SHARED_DIALOGUE_WHEN
-      // line). The bare string has to fall through to the shared/generic label.
+      // One tier with a beat next to a bare string. The bare string has to
+      // fall through to the generic label without disturbing its neighbor.
       [MIXED_ID]: {
         dialogue: {
           new: [
@@ -68,10 +72,6 @@ mock.module('../constants/dialogue.js', {
       },
       [EMPTY_ID]: {},
     },
-    SHARED_APPROACH_WHEN: [
-      { when: { location: 'Nowhere' }, approach: { new: ['Shared scene approach'] } },
-    ],
-    SHARED_DIALOGUE_WHEN: [],
   },
 });
 
@@ -83,18 +83,12 @@ function times(n, fn) {
 
 test('a bare-string line has no approach of its own, so it draws a non-empty generic label', () => {
   const character = { id: LEGACY_ID };
-  for (const { line, approach } of times(40, () => getRandomDialogueBeat(character, 'new'))) {
-    assert.ok(['Legacy line A', 'Legacy line B'].includes(line));
-    assert.strictEqual(typeof approach, 'string');
-    assert.ok(approach.length > 0);
-    assert.notStrictEqual(approach, 'Shared scene approach', 'a scene-specific label needs a matching ctx');
-  }
-});
-
-test('a bare-string line draws SHARED_APPROACH_WHEN labels when the scene matches', () => {
-  const character = { id: LEGACY_ID };
-  for (const { approach } of times(20, () => getRandomDialogueBeat(character, 'new', null, { locationKey: 'Nowhere' }))) {
-    assert.strictEqual(approach, 'Shared scene approach');
+  for (const ctx of [{}, { locationKey: 'Nowhere' }, { now: new Date('2026-01-01T20:00:00') }]) {
+    for (const { line, approach } of times(40, () => getRandomDialogueBeat(character, 'new', null, ctx))) {
+      assert.ok(['Legacy line A', 'Legacy line B'].includes(line));
+      assert.strictEqual(typeof approach, 'string');
+      assert.ok(approach.length > 0);
+    }
   }
 });
 
@@ -122,7 +116,7 @@ test('a beat\'s approach may be an array of interchangeable labels, and only tho
   assert.ok(seen.size > 1, 'both listed options should surface over enough draws');
 });
 
-test('a beat always keeps its own approach, even in a tier with bare-string lines, even when a shared label matches the scene', () => {
+test('a beat always keeps its own approach, even in a tier with bare-string lines', () => {
   const character = { id: MIXED_ID };
   for (const ctx of [{}, { locationKey: 'Nowhere' }]) {
     const draws = times(40, () => getRandomDialogueBeat(character, 'new', null, ctx));

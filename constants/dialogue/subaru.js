@@ -244,7 +244,7 @@ export default {
           '"Welcome. Forgive the state of the path. I meant to sweep it this morning and lost track of the hour."',
         responses: {
           kind: ["Thank him for the welcome", "Offer to help sweep"],
-          playful: ["See his softer side", "Say the path looks fine"],
+          playful: ["Inspect the path, gravely", "Say the path looks fine"],
           bold: ["Be direct with him", "Say the path doesn't matter"],
           neutral: ["Sit quietly while he works", "Step through, say little"],
         },
@@ -257,7 +257,7 @@ export default {
           kind: ["Acknowledge his effort", "Thank him for the promise"],
           playful: ["Catch him off script", "Bow deeper than he did"],
           bold: ["Say what you came to say", "Ask what he's promising"],
-          neutral: ["Be gentle", "Nod and take it in"],
+          neutral: ["Take him at his word", "Nod and take it in"],
         },
       },
       {
@@ -297,7 +297,7 @@ export default {
         },
       },
       {
-        line: "He's partway through making a pot of tea when you arrive, and sets out a second cup without being asked.",
+        line: "He's partway through making a pot of tea when you arrive. He reaches for a second cup the moment he sees you.",
         approach: "Accept the tea",
         greeting: '"A visitor? Then let me at least offer you tea."',
         responses: {
@@ -310,9 +310,9 @@ export default {
     ],
     known: [
       {
-        line: "He greets you by name now, and looks pleased to have gotten it right.",
+        line: "He uses your name now, without the small pause he used to leave in front of it.",
         approach: "Return the bow",
-        greeting: '"Welcome back. I hoped that was you at the gate."',
+        greeting: '"Welcome back, Honor Roll. I hoped that was you at the gate."',
         responses: {
           kind: ["Say it's nice to be remembered", "Thank him for the welcome"],
           playful: ["Ask if he practiced that", "Tease him for getting it right"],
@@ -335,7 +335,7 @@ export default {
       {
         line: "There's a cup already out. He'll say it was poured for no one in particular.",
         approach: "Take the tea",
-        greeting: "\"You've caught me mid pot, actually. Sit down, it'll be ready in a moment.\"",
+        greeting: "\"Oh, good, it's still hot. Please, sit, before it isn't.\"",
         responses: {
           kind: ["Thank him for the tea", "Say he didn't have to"],
           playful: ["Ask who the cup was really for", "Claim the extra cup"],
@@ -381,7 +381,7 @@ export default {
       {
         line: "He's stopped apologizing for taking up your time before he's even finished the sentence.",
         approach: "Smile at the change",
-        greeting: "\"Forgive me, I've only a moment. But I'd rather spend it here.\"",
+        greeting: "\"I've only a moment. But I'd rather spend it here.\"",
         responses: {
           kind: ["Say you don't mind the time", "Thank him for choosing you"],
           playful: ["Notice the change in him", "Tease him about the change"],
@@ -392,7 +392,7 @@ export default {
       {
         line: "\"You think I'm always smiling? Ha ha,\" he says, and for once doesn't deflect the question after.",
         approach: "Ask what makes him happy",
-        greeting: "\"I never thought I'd get the chance to enjoy the lifestyle of a student until I came to Darkwick. Every day truly is fulfilling here.\"",
+        greeting: "\"No one's ever asked me why. ...I think it's that here, no one needs anything from me. Is that a strange answer?\"",
         responses: {
           kind: ["Ask gently what he needs", "Listen without pushing"],
           playful: ["Guess what makes him happy", "Tease him for smiling so much"],
@@ -466,10 +466,10 @@ export default {
         approach: "Ask how he's holding up",
         greeting: '"You\'re here... I\'m very glad."',
         responses: {
-          kind: "Ask gently how he's doing",
-          playful: "Tease the sudden gladness",
-          bold: "Say you're glad too, plainly",
-          neutral: "Sit with him quietly",
+          kind: ["Ask gently how he's doing", "Ask if he's been resting"],
+          playful: ["Tease the sudden gladness", "Ask what he's so glad about"],
+          bold: ["Say you're glad too, plainly", "Tell him to say more"],
+          neutral: ["Sit with him quietly", "Settle in across from him"],
         },
       },
       {
@@ -477,10 +477,13 @@ export default {
         approach: "Join him on the veranda",
         greeting: '"I find myself listening for the gate lately. I wonder why."',
         responses: {
-          kind: "Ask to hear all three things",
-          playful: "Guess the bigger secret",
-          bold: "Demand the important one first",
-          neutral: "Let him tell it his way",
+          kind: ["Ask to hear all three things", "Ask about the smallest one"],
+          playful: ["Guess the bigger secret", "Rank them as he tells you"],
+          bold: [
+            "Demand the important one first",
+            "Ask what he's saving for last",
+          ],
+          neutral: ["Let him tell it his way", "Listen without prompting"],
         },
       },
       {
@@ -488,10 +491,16 @@ export default {
         approach: "Take the second cup",
         greeting: '"You always come at the right hour. How do you manage that?"',
         responses: {
-          kind: "Say you're glad to be on time",
-          playful: "Ask what's actually happening",
-          bold: "Call out the odd phrasing",
-          neutral: "Take the cup, say nothing",
+          kind: [
+            "Say you're glad to be on time",
+            "Say the phrasing was lovely",
+          ],
+          playful: [
+            "Ask what's actually happening",
+            "Pretend something is happening",
+          ],
+          bold: ["Call out the odd phrasing", "Say you'd come either way"],
+          neutral: ["Take it and drink", "Say nothing was strange"],
         },
       },
       {
@@ -499,10 +508,13 @@ export default {
         approach: "Sit with him",
         greeting: '"Sit with me a moment? Haku has the house tonight."',
         responses: {
-          kind: "Sit down and thank him",
-          playful: "Tease him for the exception",
-          bold: "Say you're worth the exception",
-          neutral: "Sit in comfortable quiet",
+          kind: ["Sit down and thank him", "Ask if the work can wait"],
+          playful: [
+            "Tease him for the exception",
+            "Ask who's minding the rules",
+          ],
+          bold: ["Say you're worth the exception", "Move the papers yourself"],
+          neutral: ["Sit in comfortable quiet", "Sit, let him decide"],
         },
       },
       {
@@ -511,10 +523,10 @@ export default {
         greeting:
           "\"You think I'm always smiling? Ha ha, I hear that a lot. It just happens when I'm around all of you.\"",
         responses: {
-          kind: "Say you feel lucky too",
-          playful: "Ask if that's why he smiles",
-          bold: "Say he should hear it more",
-          neutral: "Let him have the thought",
+          kind: ["Say you feel lucky too", "Tell him he's kind too"],
+          playful: ["Ask if that's why he smiles", "Add yourself to the list"],
+          bold: ["Say he should hear it more", "Tell him to say it out loud"],
+          neutral: ["Let him have the thought", "Nod, leave it there"],
         },
       },
     ],
@@ -684,70 +696,6 @@ export default {
       },
     ],
   },
-  // Evening block: new/known/warm dialogue and approach paired per beat
-  // (docs/dialogue-approach-pairing.md) instead of two separately-drawn
-  // lists. spark/close have no approach counterpart to pair with, so
-  // they're left as bare lines — they still draw an approach, just from
-  // SHARED_APPROACH_WHEN / the generic fallback (see getFallbackApproachLabel).
-  dialogueWhen: [
-    {
-      when: { time: "evening" },
-      dialogue: {
-        new: [
-          {
-            line: '"Ah, a guest. Please, come in out of the dark."',
-            approach: "Come in out of the dark",
-          },
-          {
-            line: "He's bringing the outer lanterns in for the night, and waves you in toward the house.",
-            approach: "Follow him to the house",
-          },
-          {
-            line: '"Here, let me take that for you," he says, already reaching for your bag before catching himself. "Only if you don\'t mind."',
-            approach: "Come in out of the dark",
-          },
-          {
-            line: '"You\'re safe here, even at this hour," he says. "That much I can promise."',
-            approach: "Follow him to the house",
-          },
-        ],
-        known: [
-          {
-            line: "He takes your bag without waiting to be asked now, same quiet effort as always. He never lets it look like it costs him anything.",
-            approach: "Help him lock up the house",
-          },
-          {
-            line: '"I do the rounds of the house about now, shutters and lamps. Keep me company while I do?"',
-            approach: "Help him lock up the house",
-          },
-          {
-            line: '"The tea\'s still warm and there\'s no hurry anywhere," he says. "Stay a while."',
-            approach: "Help him lock up the house",
-          },
-        ],
-        warm: [
-          {
-            line: '"I find myself listening for the gate after dark lately. I wonder why."',
-            approach: "Take the cushion he set out",
-          },
-          {
-            line: "There's a cup already poured and a cushion already set on your side of the step.",
-            approach: "Take the cushion he set out",
-          },
-          {
-            line: "\"Don't rush off. Lamp, then kettle, and then I'm not needed anywhere else.\"",
-            approach: "Take the cushion he set out",
-          },
-        ],
-        spark: [
-          "He walks you back through the dark and takes the longest possible route.",
-        ],
-        close: [
-          "\"I was hoping... you'd come by tonight,\" he admits quietly, and doesn't look away afterward the way he usually would.",
-        ],
-      },
-    },
-  ],
   // No temperamentDialogue pool: every leftover line was placed onto a
   // dialogue beat's `greeting`.
   // When the old per-tier `responses` pool was folded onto the beats above,

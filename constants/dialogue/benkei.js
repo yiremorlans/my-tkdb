@@ -1162,9 +1162,8 @@ export default {
   // No temperamentDialogue, approach, or responses pools left — every tier
   // (including spark, migrated 2026-09-17 to close its size gap) is fully
   // paired, so every `dialogue[tier]` beat above carries its own `approach`,
-  // `greeting`, and `responses` and there's nothing left for
-  // getTemperamentGreeting/getFallbackApproachLabel/the archetype defaults to
-  // fall back to (docs/dialogue-approach-pairing.md). The last hole — dialogue.warm[4]
+  // `greeting`, and `responses`, and there is no independent pool behind any of
+  // the three left to fall back to (docs/dialogue-approach-pairing.md). The last hole — dialogue.warm[4]
   // ("He remembers exactly what you asked about last time...") having no
   // `greeting` and no pool to fall back to — is closed; every beat has one.
   //

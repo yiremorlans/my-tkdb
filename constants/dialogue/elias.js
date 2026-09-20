@@ -504,10 +504,10 @@ export default {
         approach: "Take the offered hand",
         greeting: '"Well, hello there. Mind if I hold onto this a while?"',
         responses: {
-          kind: "Take his hand gladly",
-          playful: "Ask what made it real",
-          bold: "Say you see it too",
-          neutral: "Take the hand, say nothing",
+          kind: ["Take his hand gladly", "Say the same back to him"],
+          playful: ["Ask what made it real", "Ask how long 'a while' is"],
+          bold: ["Say you see it too", "Keep hold of his hand"],
+          neutral: ["Take the hand, say nothing", "Let him hold on"],
         },
       },
       {
@@ -516,10 +516,13 @@ export default {
         greeting:
           '"Ahh, that\'s better. Now tell me one thing that went right for you today."',
         responses: {
-          kind: "Sit with him gladly",
-          playful: "Ask what Jo has him doing",
-          bold: "Tell him to take a real break",
-          neutral: "Sit quietly beside him",
+          kind: ["Take him up on it gladly", "Ask what went right for him"],
+          playful: [
+            "Ask what Jo has him doing",
+            "Ask if he's earned it really",
+          ],
+          bold: ["Tell him to take a real break", "Say Jo works him too hard"],
+          neutral: ["Settle in without a word", "Share one good thing"],
         },
       },
       {
@@ -527,10 +530,13 @@ export default {
         approach: "Watch him set up",
         greeting: '"Sit down. I\'ll behave. Mostly."',
         responses: {
-          kind: "Offer to help set up",
-          playful: "Promise not to hold him to it",
-          bold: "Say he never behaves",
-          neutral: "Watch quietly",
+          kind: ["Offer to help set up", "Say slow work suits you"],
+          playful: [
+            "Promise not to hold him to it",
+            "Ask what 'mostly' covers",
+          ],
+          bold: ["Say he never behaves", "Take the other end of it"],
+          neutral: ["Watch quietly", "Sit where he's working"],
         },
       },
       {
@@ -539,10 +545,13 @@ export default {
         greeting:
           "\"Everyone's in good spirits today. Here's hoping this quiet holds a good long while.\"",
         responses: {
-          kind: "Ask gently how he's doing",
-          playful: "Tease him about the candy",
-          bold: "Say the tired shows",
-          neutral: "Let him set it aside quietly",
+          kind: ["Ask gently how he's doing", "Say he can rest a minute"],
+          playful: ["Tease him about the candy", "Offer him your own candy"],
+          bold: ["Say the tired shows", "Ask what's wearing him out"],
+          neutral: [
+            "Let him set it aside quietly",
+            "Stay nearby, ask nothing",
+          ],
         },
       },
       {
@@ -550,10 +559,10 @@ export default {
         approach: "Call the charm out",
         greeting: '"Back for more? Keep it up and I\'ll think you like me."',
         responses: {
-          kind: "Say you don't mean to be hard",
-          playful: "Ask if that's a compliment",
-          bold: "Say he likes it, admit it",
-          neutral: "Shrug at the charm",
+          kind: ["Say you don't mean to be hard", "Say he's worth the work"],
+          playful: ["Ask if that's a compliment", "Promise to get worse"],
+          bold: ["Say he likes it, admit it", "Say he already likes you"],
+          neutral: ["Shrug at the charm", "Take it as it came"],
         },
       },
       {
@@ -562,10 +571,10 @@ export default {
         greeting:
           '"Pull up a crate. Jo cooks for twice the dorm, and I\'d rather you had a bowl than the leftovers."',
         responses: {
-          kind: "Accept the invitation gladly",
-          playful: "Ask what's in the jambalaya",
-          bold: "Invite yourself before he asks",
-          neutral: "Join without comment",
+          kind: ["Accept the invitation gladly", "Ask if Jo needs a hand"],
+          playful: ["Ask what's in the jambalaya", "Ask for the biggest bowl"],
+          bold: ["Invite yourself before he asks", "Head for the tent first"],
+          neutral: ["Join without comment", "Pull up a crate"],
         },
       },
     ],

@@ -473,10 +473,10 @@ export default {
         greeting:
           "\"You're back! You know it's genuinely brighter in here when you're around? Like, measurably. Kind of amazing.\"",
         responses: {
-          kind: "Say you're glad to be back",
-          playful: "Ask what's making it brighter",
-          bold: "Say you noticed the slip",
-          neutral: "Match him, say little",
+          kind: ["Say you're glad to be back", "Ask about the long night"],
+          playful: ["Ask what's making it brighter", "Ask for measurements"],
+          bold: ["Say you noticed the slip", "Say the grin can drop"],
+          neutral: ["Match him, say little", "Brighten up a little"],
         },
       },
       {
@@ -485,10 +485,13 @@ export default {
         greeting:
           '"Hey, hey hey! We finally get to spend some time together, it\'s illegal to take your eyes off me!"',
         responses: {
-          kind: "Take the seat gladly",
-          playful: "Follow the gestures teasingly",
-          bold: "Say his whole body agrees",
-          neutral: "Take the seat, say nothing",
+          kind: ["Take the seat gladly", "Say you'd never look away"],
+          playful: [
+            "Follow the gestures teasingly",
+            "Follow the rules, eyes on him",
+          ],
+          bold: ["Say his whole body agrees", "Catch a gesture mid-air"],
+          neutral: ["Take the seat, say nothing", "Sit and watch him talk"],
         },
       },
       {
@@ -497,10 +500,10 @@ export default {
         greeting:
           "\"My eyes? Ha. Onions. I was prepping the appetizers for the bar, that's all. ...Anyway! You're here.\"",
         responses: {
-          kind: "Try it and be honest",
-          playful: "Ask what 'mostly' means",
-          bold: "Try it without hesitation",
-          neutral: "Try it, say nothing",
+          kind: ["Try it and be honest", "Let the onion story pass"],
+          playful: ["Ask what 'mostly' means", "Demand the full ingredients"],
+          bold: ["Try it without hesitation", "Drink the whole thing"],
+          neutral: ["Try it, say nothing", "Pocket it for later"],
         },
       },
       {
@@ -509,10 +512,10 @@ export default {
         greeting:
           '"Come by the bar after, I\'ll mix you something and you can just unwind. No pressure, no plans. Just us."',
         responses: {
-          kind: "Say the closeness is enough",
-          playful: "Lean in just as close",
-          bold: "Wish he could be closer too",
-          neutral: "Stay close, say nothing",
+          kind: ["Say the closeness is enough", "Say this is your best part"],
+          playful: ["Lean in just as close", "Promise not to tell"],
+          bold: ["Wish he could be closer too", "Ask him to stay there"],
+          neutral: ["Stay close, say nothing", "Take the drink, listen"],
         },
       },
       {
@@ -521,10 +524,13 @@ export default {
         greeting:
           '"Tell me about your day. All of it. I\'ve got nowhere better to be."',
         responses: {
-          kind: "Tell him everything gladly",
-          playful: "Save the boring parts anyway",
-          bold: "Tell him the good parts first",
-          neutral: "Give a short version",
+          kind: ["Tell him everything gladly", "Ask about his day too"],
+          playful: [
+            "Save the boring parts anyway",
+            "Start with the dullest part",
+          ],
+          bold: ["Tell him the good parts first", "Ask what he wants to hear"],
+          neutral: ["Give a short version", "Tell him the main points"],
         },
       },
       {
@@ -533,10 +539,10 @@ export default {
         greeting:
           "\"Hands to myself, promise. Doesn't mean I'm not thrilled you're here, cutie.\"",
         responses: {
-          kind: "Let him linger gladly",
-          playful: "Tease him for hovering",
-          bold: "Say you don't mind him close",
-          neutral: "Let him stay, say nothing",
+          kind: ["Let him linger gladly", "Say the promise isn't needed"],
+          playful: ["Tease him for hovering", "Call him 'cutie' back"],
+          bold: ["Say you don't mind him close", "Stand closer than he does"],
+          neutral: ["Let him stay, say nothing", "Let him hover, keep talking"],
         },
       },
     ],

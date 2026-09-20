@@ -1,16 +1,18 @@
 // Every beat /meet or /roam can draw must be fully authored.
 //
 // /meet and /roam draw from the very same pool (pickDialogueEntry in
-// characters.js: the tier's `dialogue`, plus every `dialogueWhen` block and
-// SHARED_DIALOGUE_WHEN block whose `when` matches, or `daytimeDialogue` for a
-// pmOnly character in the daytime). So instead of sampling random draws and
+// characters.js: the tier's `dialogue`, or `daytimeDialogue` for a pmOnly
+// character in the daytime). So instead of sampling random draws and
 // hoping to hit the one incomplete beat, this walks the whole catalog and
 // checks every beat that any draw could return.
 //
-// Not enforced: the conditional pools (a character's `dialogueWhen` and
-// SHARED_DIALOGUE_WHEN). They're scene flavor added on top of the base pool
-// and aren't held to full beat completeness; the walk skips them, and the
-// draw checks below ignore any draw that landed on one of their lines.
+// That walk is exhaustive. The conditional `when` layer — a character's
+// `dialogueWhen` and a roster-wide SHARED_DIALOGUE_WHEN — used to be merged in
+// on top of the base pool and was exempt from these checks, which is precisely
+// how an evening encounter shipped a "..." caption. It is deleted, data and
+// machinery both, so nothing the checks below skip can reach a draw: whatever
+// comes back, at any hour, had to pass them. There is one dialogue format now,
+// the beat.
 //
 //   /meet needs:  line + responses with all four kinds (it captions the image
 //                 with the `line`, never the `greeting`)
@@ -27,7 +29,7 @@ import {
   getRandomDialogueBeat,
   getRandomDialogueEntry,
 } from '../constants/characters.js';
-import { DIALOGUE, SHARED_DIALOGUE_WHEN } from '../constants/dialogue.js';
+import { DIALOGUE } from '../constants/dialogue.js';
 
 const TIERS = ['new', 'known', 'warm', 'spark', 'close', 'bound'];
 const RESPONSE_KINDS = Object.values(RESPONSE_TYPES);
@@ -72,20 +74,6 @@ function drawableBeats() {
   return out;
 }
 
-// Every line in a conditional pool, so the draw checks can skip draws that
-// landed on one.
-function conditionalLines() {
-  const blocks = [
-    ...CHARACTERS.flatMap((c) => DIALOGUE[c.id]?.dialogueWhen || []),
-    ...SHARED_DIALOGUE_WHEN,
-  ];
-  return new Set(
-    blocks
-      .flatMap((block) => poolEntries('', block.dialogue))
-      .map(({ entry }) => (typeof entry === 'string' ? entry : entry?.line)),
-  );
-}
-
 const isBeat = (e) => !!e && typeof e === 'object' && typeof e.line === 'string';
 
 function missingGreeting({ at, entry }) {
@@ -117,7 +105,6 @@ function problemsIn(beats, ...checks) {
 }
 
 const BEATS = drawableBeats();
-const CONDITIONAL_LINES = conditionalLines();
 
 test('the beat walk actually finds beats for the whole roster (guards the checks below against passing on nothing)', () => {
   const characters = new Set(BEATS.map((b) => b.at.split('.')[0]));
@@ -158,7 +145,9 @@ test('/roam: every drawable beat has responses for all four kinds', () => {
 // The data checks above prove every beat is complete; these prove the draw
 // functions hand that completeness through instead of dropping it (a beat
 // that loses its greeting or responses between the pool and the caller would
-// pass the checks above and still ship a "..." caption).
+// pass the checks above and still ship a "..." caption). They draw at both
+// EVENING and DAYTIME and exempt nothing, so a conditional pool reconnected to
+// pickDialogueEntry fails here on its first uncaptioned line.
 
 const DRAWS_PER_COMBO = 20;
 const EVENING = new Date('2026-01-01T20:00:00');
@@ -184,11 +173,10 @@ test('/roam: getRandomDialogueBeat always returns line, approach, greeting and a
   for (const { character, tier, variant, ctx } of combos()) {
     for (let i = 0; i < DRAWS_PER_COMBO; i++) {
       const beat = getRandomDialogueBeat(character, tier, variant, ctx);
-      if (CONDITIONAL_LINES.has(beat.line)) continue;
       const gaps = [];
       if (!hasText(beat.line) || beat.line === '...') gaps.push('line');
       if (!hasText(beat.approach)) gaps.push('approach');
-      if (!hasText(beat.greeting)) gaps.push('greeting');
+      if (!hasText(beat.greeting) || beat.greeting === '...') gaps.push('greeting');
       const missing = RESPONSE_KINDS.filter((k) => !hasText(beat.responses?.[k]));
       if (missing.length) gaps.push(`responses.${missing.join('/')}`);
       if (gaps.length) failures.add(`${character.id}.${tier}.${variant}: ${gaps.join(', ')}`);
@@ -202,7 +190,6 @@ test('/meet: getRandomDialogueEntry always returns a real line and all four resp
   for (const { character, tier, variant, ctx } of combos()) {
     for (let i = 0; i < DRAWS_PER_COMBO; i++) {
       const entry = getRandomDialogueEntry(character, tier, variant, ctx);
-      if (CONDITIONAL_LINES.has(entry.line)) continue;
       const gaps = [];
       if (!hasText(entry.line) || entry.line === '...') gaps.push('line');
       const missing = RESPONSE_KINDS.filter((k) => !hasText(entry.responses?.[k]));
@@ -211,4 +198,31 @@ test('/meet: getRandomDialogueEntry always returns a real line and all four resp
     }
   }
   assert.deepStrictEqual([...failures], []);
+});
+
+// --- one dialogue format ---------------------------------------------------
+//
+// The `when` layer is gone from the draw, so a `dialogueWhen` block added back
+// to a dialogue file would be silently dead content — authored, reviewed, never
+// shown. validateContent errors on one; this is the same guard in the suite, so
+// it fails whether or not the validator is run.
+test('no character carries a dialogueWhen block', () => {
+  const offenders = CHARACTERS.filter((c) => DIALOGUE[c.id]?.dialogueWhen !== undefined).map(
+    (c) => c.id,
+  );
+  assert.deepStrictEqual(offenders, []);
+});
+
+// Nothing outside a beat can supply a line, so the pool walk above is the whole
+// catalog. Guards the walk against a new pool key appearing beside `dialogue`
+// and going unchecked, the way `daytimeDialogue` did.
+test('a character carries no dialogue pool the beat walk does not cover', () => {
+  const KNOWN = new Set(['dialogue', 'daytimeDialogue', 'bondScenes', 'winnerLines']);
+  const unknown = new Set();
+  for (const character of CHARACTERS) {
+    for (const key of Object.keys(DIALOGUE[character.id] || {})) {
+      if (!KNOWN.has(key)) unknown.add(`${character.id}.${key}`);
+    }
+  }
+  assert.deepStrictEqual([...unknown], []);
 });

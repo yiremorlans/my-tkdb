@@ -233,7 +233,7 @@ export default {
   dialogue: {
     new: [
       {
-        line: 'He\'s barking orders at the Sinostra students, managing every angle of the casino floor. "HDY waste my time? Quick, put on this dress and work table seven, we need someone sharp out there."',
+        line: 'He\'s barking orders at the Sinostra students, managing every angle of the casino floor. "HDY waste my time? How Dare You, obviously. Quick, put on this dress and work table seven, we need someone sharp out there."',
         approach: "Make yourself useful",
         greeting: '"Well? Table seven isn\'t going to deal itself. Move!"',
         responses: {
@@ -258,11 +258,11 @@ export default {
         line: "\"Come to my private office later, I've got a little proposal I think you'll want to hear. But make sure you come alone.\"",
         approach: "Hear the proposal",
         greeting:
-          '"Perfect timing. I need someone I can trust to manage the VIP section. You in?"',
+          '"Perfect timing. The VIP section needs a face at the door, and yours will do. There\'s money in it."',
         responses: {
-          kind: ["Hear him out patiently", "Thank him for trusting you"],
+          kind: ["Hear him out patiently", "Thank him for the offer"],
           playful: ["Guess the proposal first", "Tease him about secrecy"],
-          bold: ["Take the VIP section", "Accept without haggling"],
+          bold: ["Take the VIP section", "Ask what your cut is"],
           neutral: ["Take the offer at face value", "Wait to hear the terms"],
         },
       },
@@ -293,7 +293,7 @@ export default {
       {
         line: "He's stopped trying to put you to work. Mostly.",
         approach: "Point out the exception",
-        greeting: '"Don\'t touch the... okay, fine, you know not to. Fine."',
+        greeting: '"Table seven. ...No. Not you. Tch. Force of habit. Sit somewhere."',
         responses: {
           kind: ["Say you don't mind helping", "Thank him for easing up"],
           playful: ["Point out the exception loudly", "Ask if you're special now"],
@@ -304,7 +304,8 @@ export default {
       {
         line: '"Oh, it\'s YOU," at a volume that carries across the entire floor.',
         approach: "Interrupt the yelling",
-        greeting: '"I\'m not saying I remembered your name. I\'m saying I said it. Different thing."',
+        greeting:
+          '"Tch. I wasn\'t looking for you. I looked up, you were there, and I said so. Loudly. It happens."',
         responses: {
           kind: ["Wave, let him finish yelling", "Wait for him to notice you"],
           playful: ["Yell back just as loud", "Ask who else heard that"],
@@ -338,8 +339,8 @@ export default {
       },
       {
         line: 'He pushes a glass of something green across the desk. "Noni juice. Drink it. Your skin cell turnover is suboptimal and it shows."',
-        approach: "Take the free drink",
-        greeting: '"Drink\'s on the house. Don\'t tell the house."',
+        approach: "Drink the green stuff",
+        greeting: '"Don\'t make that face. That glass costs more than your shoes. Drink."',
         responses: {
           kind: ["Thank him for the drink", "Drink it, mean the thanks"],
           playful: ["Ask what's really in it", "Tease the diagnosis"],
@@ -348,9 +349,9 @@ export default {
         },
       },
       {
-        line: "He's scrawling out a check Taiga has no business asking for. \"Sit. This'll only take a second.\"",
+        line: "He's scrawling out a check Taiga has no business asking for, muttering a number with too many zeros in it.",
         approach: "Sit without an appointment",
-        greeting: '"You again! HDY keep showing up without an appointment. Sit down."',
+        greeting: '"You again! HDY walk into my office like it\'s a hallway. Sit down, I\'m nearly finished."',
         responses: {
           kind: ["Sit, thank him for the time", "Wait patiently for the check"],
           playful: ["Sit like you own the chair", "Ask what Taiga did this time"],
@@ -442,10 +443,10 @@ export default {
         approach: "Interrupt him anyway",
         greeting: "\"Oh, you're back! Actually... I'm kind of happy to see you. Don't tell anyone.\"",
         responses: {
-          kind: "Wait for him to finish first",
-          playful: "Interrupt him right back",
-          bold: "Demand his full attention",
-          neutral: "Stand by, say nothing",
+          kind: ["Hold back until he's done", "Say the operation matters"],
+          playful: ["Interrupt him right back", "Threaten to tell everyone"],
+          bold: ["Demand his full attention", "Step into the middle of it"],
+          neutral: ["Stand by, say nothing", "Wait for him to come over"],
         },
       },
       {
@@ -453,10 +454,10 @@ export default {
         approach: "Let him order for you",
         greeting: '"You eaten? Don\'t answer, I already ordered."',
         responses: {
-          kind: "Thank him for ordering",
-          playful: "Guess what he ordered",
-          bold: "Order something else instead",
-          neutral: "Take the food, say nothing",
+          kind: ["Thank him for ordering", "Say you'll eat whatever"],
+          playful: ["Guess what he ordered", "Ask for an appointment slot"],
+          bold: ["Order something else instead", "Say you knew he'd want to"],
+          neutral: ["Take the food, say nothing", "Sit down and eat"],
         },
       },
       {
@@ -465,10 +466,10 @@ export default {
         greeting:
           '"You had me worried all evening. Somebody put that look on your face. Give me a name. I\'ll have a word. ...A thorough one."',
         responses: {
-          kind: "Let the compliment stand",
-          playful: "Complain right back at him",
-          bold: "Call out the backhanded praise",
-          neutral: "Let him complain, say nothing",
+          kind: ["Let the compliment stand", "Say he can keep complaining"],
+          playful: ["Complain right back at him", "Complain louder than him"],
+          bold: ["Call out the backhanded praise", "Give him no name"],
+          neutral: ["Ride out the praise", "Let the audience listen"],
         },
       },
       {
@@ -476,10 +477,10 @@ export default {
         approach: "Take the good seat",
         greeting: '"Sit. Don\'t read into it. It was just open. All night. For no reason."',
         responses: {
-          kind: "Thank him for the seat",
-          playful: "Call out the obvious lie",
-          bold: "Take the seat like it's owed",
-          neutral: "Take the seat, say nothing",
+          kind: ["Thank him for the seat", "Say the seat is perfect"],
+          playful: ["Call out the obvious lie", "Ask who held it all night"],
+          bold: ["Claim it without thanking him", "Say he saved it on purpose"],
+          neutral: ["Sit down, no comment", "Take it, read nothing in"],
         },
       },
       {
@@ -487,10 +488,16 @@ export default {
         approach: "Notice the register drop",
         greeting: '"You\'re not staff and you\'re not a guest. You\'re... whatever. You\'re welcome here."',
         responses: {
-          kind: "Let the softness go unremarked",
-          playful: "Point out the register drop",
-          bold: "Call out the change directly",
-          neutral: "Let the moment pass quietly",
+          kind: [
+            "Let the softness go unremarked",
+            "Say you like being welcome",
+          ],
+          playful: [
+            "Point out the register drop",
+            "Ask him to yell at you too",
+          ],
+          bold: ["Call out the change directly", "Say everyone noticed"],
+          neutral: ["Let the moment pass quietly", "Take the welcome as given"],
         },
       },
     ],

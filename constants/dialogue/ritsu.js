@@ -495,10 +495,10 @@ export default {
         greeting:
           "\"Sit. I've got a problem and you've got the better instincts.\"",
         responses: {
-          kind: "Take the offered chair",
-          playful: "Make him wait for it",
-          bold: "Sit down like you own it",
-          neutral: "Sit, hear the problem",
+          kind: ["Take the offered chair", "Ask what the problem is"],
+          playful: ["Make him wait for it", "Ask what's in it for you"],
+          bold: ["Sit down like you own it", "Solve it before he finishes"],
+          neutral: ["Sit, hear the problem", "Sit, wait for details"],
         },
       },
       {
@@ -506,10 +506,10 @@ export default {
         approach: "Take the reserved hour",
         greeting: '"I\'ve reserved this hour. Coincidence, obviously."',
         responses: {
-          kind: "Thank him for the hour",
-          playful: "Call the coincidence out",
-          bold: "Take the hour like it's yours",
-          neutral: "Take the hour, say nothing",
+          kind: ["Thank him for the hour", "Say the hour is well spent"],
+          playful: ["Call the coincidence out", "Call it a lucky accident"],
+          bold: ["Book him for the next one", "Ask for a standing slot"],
+          neutral: ["Take the hour, say nothing", "Use the hour as planned"],
         },
       },
       {
@@ -518,10 +518,10 @@ export default {
         greeting:
           "\"I was hoping you'd come by. We make a good team, don't we?\"",
         responses: {
-          kind: "Listen closely to the thought",
-          playful: "Guess the thought first",
-          bold: "Demand he say it plainly",
-          neutral: "Hear him out in silence",
+          kind: ["Listen closely to the thought", "Say you're worth telling"],
+          playful: ["Guess the thought first", "Make him work for it"],
+          bold: ["Demand he say it plainly", "Tell him to get to it"],
+          neutral: ["Hear him out in silence", "Wait for the thought"],
         },
       },
       {
@@ -530,10 +530,10 @@ export default {
         greeting:
           '"Your reasoning has improved. So has my mood. Related, I suspect."',
         responses: {
-          kind: "Say you noticed him listening",
-          playful: "Test how closely he listens",
-          bold: "Call out the improved mood",
-          neutral: "Let him keep listening quietly",
+          kind: ["Say you noticed him listening", "Say you like being heard"],
+          playful: ["Test how closely he listens", "Quiz him on what you said"],
+          bold: ["Call out the improved mood", "Say his mood is your doing"],
+          neutral: ["Let him keep listening quietly", "Carry on as normal"],
         },
       },
       {
@@ -542,10 +542,10 @@ export default {
         greeting:
           '"Argue the other side for me. You\'re the only one who does it properly."',
         responses: {
-          kind: "Argue gently, let him win",
-          playful: "Argue just to rile him up",
-          bold: "Dismantle his argument fully",
-          neutral: "Argue the other side plainly",
+          kind: ["Argue gently, let him win", "Concede one point to him"],
+          playful: ["Argue just to rile him up", "Switch sides mid-argument"],
+          bold: ["Dismantle his argument fully", "Take the harder position"],
+          neutral: ["Argue the other side plainly", "Argue until he stops"],
         },
       },
     ],

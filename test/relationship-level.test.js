@@ -115,8 +115,8 @@ test('renderHeartBar never shows a full row of fill hearts before the next level
 
 // Pins the actual numbers one line per 4 affinity points, floored at
 // MIN_DIALOGUE_POOL_SIZE, resolves to for each tier today. Covers both a
-// character's `dialogue` and `temperamentDialogue` pools (and `approach`) —
-// DIALOGUE_POOL_TARGET_BY_TIER applies unchanged to all three, they don't get
+// character's `dialogue` pool and its `approach` labels —
+// DIALOGUE_POOL_TARGET_BY_TIER applies unchanged to both, they don't get
 // separate tables. Nothing else in the suite reads this constant, so a change
 // to POOL_POINTS_PER_LINE, a level's width, or which levels share a tier
 // would otherwise drift the content targets silently instead of failing here.

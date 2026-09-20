@@ -159,7 +159,7 @@ export const CASUAL_IMAGE_PROBABILITY_BY_LEVEL = {
 };
 
 // --- ambient dialogue pool sizing --------------------------------------------
-// Baseline line count each character's `dialogue`/`temperamentDialogue` pool
+// Baseline line count each character's `dialogue` pool
 // (constants/dialogue/<id>.js) should carry per tier, so a wider affinity band
 // doesn't repeat more than a narrow one. One line per POOL_POINTS_PER_LINE
 // affinity points spent in that tier, floored at MIN_DIALOGUE_POOL_SIZE — the
@@ -175,8 +175,7 @@ export const CASUAL_IMAGE_PROBABILITY_BY_LEVEL = {
 // This is a shared target, not an enforced minimum — nothing currently reads
 // it to fail a build. Most of the roster (a flat 5 lines per tier) sits well
 // under it; use it when deciding how many lines a tier's rewrite needs, the
-// way constants/dialogue/alan.js's known/warm pools do (both `dialogue` and
-// `temperamentDialogue` — see TEMPERAMENT_DIALOGUE_POOL_TARGET_BY_TIER below).
+// way constants/dialogue/alan.js's known/warm pools do.
 export const POOL_POINTS_PER_LINE = 4;
 export const MIN_DIALOGUE_POOL_SIZE = 5;
 
@@ -201,12 +200,9 @@ for (const tier of Object.keys(DIALOGUE_POOL_TARGET_BY_TIER)) {
   );
 }
 
-// `approach` (the step-forward button) and `temperamentDialogue` are both
-// tiered identically to `dialogue` — same six keys, picked once per encounter
-// — so DIALOGUE_POOL_TARGET_BY_TIER applies to them unchanged. `approach`
-// reuses the table directly; `temperamentDialogue` gets its own name below so
-// a rewrite (or a script) can point at "the temperamentDialogue target" without
-// reading the sizing rationale to learn it's the same table as `dialogue`'s.
+// `approach` (the step-forward button) is tiered identically to `dialogue` —
+// same six keys, picked once per encounter — so DIALOGUE_POOL_TARGET_BY_TIER
+// applies to it unchanged, and it reuses the table directly.
 //
 // Sharing a target does not by itself keep `dialogue` and `approach` in sync
 // — growing one tier's pool without the other still leaves them the same
@@ -215,8 +211,6 @@ for (const tier of Object.keys(DIALOGUE_POOL_TARGET_BY_TIER)) {
 // { line, approach } (getRandomDialogueBeat in characters.js draws both as
 // one beat) rather than expanding `approach[tier]` on its own — see
 // docs/dialogue-approach-pairing.md.
-export const TEMPERAMENT_DIALOGUE_POOL_TARGET_BY_TIER = DIALOGUE_POOL_TARGET_BY_TIER;
-
 // `responses` (the Kind/Playful/Bold/Neutral choice labels) have no pool target
 // of their own: they are authored on the beat, so a tier that hits the dialogue
 // target above already has one set of labels per line.

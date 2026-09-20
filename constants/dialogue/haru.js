@@ -376,7 +376,7 @@ export default {
         line: "He waves you over the second he spots you, already listing off what needs doing today.",
         approach: "Join the rounds",
         greeting:
-          "\"Perfect timing. I'm on the evening rounds. You're comin' with me, hey? C'mon, let's get this show on the road.\"",
+          "\"Perfect timing. I'm on the evening rounds. You're comin' with me, hey? C'mon, let's get this show on the road!\"",
         responses: {
           kind: ["Join gladly", "Say you're happy to help"],
           playful: ["Ask what disaster's first", "Demand the easy jobs"],
@@ -485,10 +485,13 @@ export default {
         greeting:
           "\"Stay for the night feed. It's the good shift. Everything's sleepy.\"",
         responses: {
-          kind: "Say you're happy to stay",
-          playful: "Ask what makes the shift good",
-          bold: "Say his warmth got you",
-          neutral: "Stay, say nothing",
+          kind: ["Say that sounds perfect", "Say yes to the night shift"],
+          playful: [
+            "Ask what makes the shift good",
+            "Ask if the animals snore",
+          ],
+          bold: ["Say his warmth got you", "Ask him to show you around"],
+          neutral: ["Stay, say nothing", "Stay for the shift"],
         },
       },
       {
@@ -497,10 +500,10 @@ export default {
         greeting:
           "\"You've got a way with the mean ones. That's a genuine skill, you know.\"",
         responses: {
-          kind: "Say the hard work shows",
-          playful: "Tease the modesty",
-          bold: "Say he's clearly proud of it",
-          neutral: "Learn quietly, say nothing",
+          kind: ["Say the hard work shows", "Say the mean ones like him"],
+          playful: ["Tease the modesty", "Write home about it anyway"],
+          bold: ["Say he's clearly proud of it", "Tell him to take the credit"],
+          neutral: ["Learn quietly, say nothing", "Follow the feeding order"],
         },
       },
       {
@@ -509,10 +512,10 @@ export default {
         greeting:
           "\"Grab a bucket, we're flat out today. I'll make it fun, I promise.\"",
         responses: {
-          kind: "Take the compliment gladly",
-          playful: "Demand the fun part now",
-          bold: "Say you'll hold him to 'fun'",
-          neutral: "Grab a bucket, say nothing",
+          kind: ["Beam at the compliment", "Say the work looks good"],
+          playful: ["Demand the fun part now", "Ask what counts as fun"],
+          bold: ["Say you'll hold him to 'fun'", "Take two buckets at once"],
+          neutral: ["Grab a bucket, say nothing", "Start on the list"],
         },
       },
       {
@@ -521,10 +524,13 @@ export default {
         greeting:
           "\"Peekaboo, look who's here, no, don't hide. Don't... okay. He'll come around.\"",
         responses: {
-          kind: "Coax him out gently",
-          playful: "Take credit for the moment",
-          bold: "Say Peekaboo trusts you now",
-          neutral: "Wait quietly for Peekaboo",
+          kind: ["Coax him out gently", "Say Peekaboo's brave today"],
+          playful: [
+            "Take credit for the moment",
+            "Tell Peekaboo he's a show-off",
+          ],
+          bold: ["Say Peekaboo trusts you now", "Hold your hand out first"],
+          neutral: ["Wait quietly for Peekaboo", "Let Peekaboo decide"],
         },
       },
       {
@@ -532,10 +538,10 @@ export default {
         approach: "Call back over the noise",
         greeting: '"Hey, Honor Roll! Miss me?"',
         responses: {
-          kind: "Call back warmly",
-          playful: "Tease him for asking",
-          bold: "Say of course you missed him",
-          neutral: "Wave back, say nothing",
+          kind: ["Call back warmly", "Say you missed the noise too"],
+          playful: ["Tease him for asking", "Shout back louder"],
+          bold: ["Say of course you missed him", "Say he'd have called anyway"],
+          neutral: ["Wave back, say nothing", "Head over to him"],
         },
       },
     ],

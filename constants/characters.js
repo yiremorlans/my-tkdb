@@ -15,11 +15,7 @@
 // entry changes where a character appears and nothing else — not their house,
 // not their affinity, not how often they show up.
 import { HOUSES, CHARACTER_ROOMS, timeBucket } from "./backgrounds.js";
-import {
-  DIALOGUE,
-  SHARED_APPROACH_WHEN,
-  SHARED_DIALOGUE_WHEN,
-} from "./dialogue.js";
+import { DIALOGUE } from "./dialogue.js";
 import { pickRandom } from "./random.js";
 
 export const RESPONSE_TYPES = {
@@ -1182,9 +1178,12 @@ export function getAffinityForResponse(character, responseType) {
   return character.affinityByResponse[responseType] ?? 0;
 }
 
-// Last-resort label for the /roam narration button, when a drawn line has no
-// `approach` of its own and no SHARED_APPROACH_WHEN block matches the scene.
-// Deliberately generic, since it has to front any scene.
+// Last-resort label for the /roam narration button. Unreachable by authored
+// content — every one of the 1239 drawable beats carries its own `approach`,
+// and test/beat-completeness.test.js fails if one stops doing so. This exists
+// only so a character with no dialogue at all, or a malformed entry, renders a
+// button instead of crashing on a null pick. Deliberately generic: if it ever
+// shows up in the game, something is wrong and it has to front any scene.
 const APPROACH_LABEL_FALLBACK = [
   "Step forward",
   "Close the distance",
@@ -1207,55 +1206,15 @@ function resolvePoolTier(pool, tier, variant) {
   return [];
 }
 
-// The dimensions a conditional-dialogue `when` block can constrain. Each field
-// is optional (absent = "don't care") and accepts a scalar or an array; every
-// present field must match for the block to apply. Adding a genuinely new
-// dimension means one key here, one line in matchesWhen, and one key on the
-// `ctx` that encounters.js builds — nothing else.
-export const DIALOGUE_WHEN_DIMENSIONS = [
-  "time",
-  "location",
-  "background",
-  "event",
-];
-
-function fieldMatches(rule, value) {
-  if (rule === undefined) return true;
-  return Array.isArray(rule) ? rule.includes(value) : rule === value;
-}
-
-// Evaluate a declarative `when` block against the encounter context.
-export function matchesWhen(when, ctx = {}) {
-  if (!when) return true;
-  return (
-    fieldMatches(when.time, timeBucket(ctx.now)) &&
-    fieldMatches(when.location, ctx.locationKey) &&
-    fieldMatches(when.background, ctx.backgroundFile) &&
-    fieldMatches(when.event, ctx.event ?? null)
-  );
-}
-
-// Flatten every matching conditional entry's tier into one list. `poolKey` is
-// the field on each `{ when, <poolKey> }` block that holds the tiered lines —
-// "dialogue" for narration, "approach" for the step-forward button.
-function collectConditional(entries, poolKey, tier, variant, ctx) {
-  const out = [];
-  for (const entry of entries || []) {
-    if (matchesWhen(entry.when, ctx)) {
-      out.push(...resolvePoolTier(entry[poolKey], tier, variant));
-    }
-  }
-  return out;
-}
-
-// `ctx` carries the encounter context: { now, locationKey, backgroundFile,
-// event }. All fields optional — an absent field just means `when` rules that
-// constrain it won't match.
+// `ctx` carries the encounter context. Only `now` is read, and only by the
+// pmOnly daytime swap; the conditional `when` layer that used `locationKey`,
+// `backgroundFile` and `event` is gone (see below), so callers may pass those
+// or not.
 //
 // Shared by getRandomDialogueBeat (/roam) and getRandomDialogueEntry (/meet):
-// the pmOnly daytime swap, the dialogue/dialogueWhen/SHARED_DIALOGUE_WHEN pool
-// walk, and the random pick, normalized to { line, approachOptions,
-// greetingOptions, responses }, or null if the character has no dialogue
+// the pmOnly daytime swap and the random pick from the character's own
+// `dialogue` pool, normalized to { line, approachOptions, greetingOptions,
+// responses }, or null if the character has no dialogue
 // content at all. Neither caller repeats this resolution, so /meet's line and
 // its response-button overrides always come from the exact same pick as
 // /roam's beat would — never two independent draws that could disagree about
@@ -1267,7 +1226,7 @@ function pickDialogueEntry(character, tier, variant, ctx) {
   // A pmOnly character (Towa) only truly speaks in the evening; the rest of the
   // day it hard-swaps to a wordless replacement pool. Gated by the same evening
   // cutoff as `_PM` backgrounds (timeBucket, off ctx.now) — not a separate
-  // threshold. Separate from the additive `when` system below.
+  // threshold. The only time-of-day branch left in the draw.
   let entries;
   if (
     character.pmOnly &&
@@ -1278,16 +1237,20 @@ function pickDialogueEntry(character, tier, variant, ctx) {
       content.daytimeDialogue[tier] || content.daytimeDialogue.new;
     entries = Array.isArray(daytime) ? daytime : [daytime];
   } else {
-    // Base pool, plus every conditional block whose `when` matches this scene —
-    // the character's own `dialogueWhen` and the shared roster-wide pool.
-    // Additive: a matched scene adds its flavor without ever emptying a tier.
+    // The character's own beats, and nothing else. There is exactly one
+    // dialogue format now: the beat, { line, approach, greeting, responses }.
+    //
+    // The conditional `when` layer this used to merge on top — a character's
+    // `dialogueWhen` plus a roster-wide SHARED_DIALOGUE_WHEN — is deleted, data
+    // and machinery both. Its entries predated the beat: bare lines carrying no
+    // `greeting` and no `responses`, so an evening draw that landed on one
+    // captioned the payoff image "..." and dropped all four buttons to
+    // archetype defaults that knew nothing about the scene.
+    //
+    // Time-of-day flavor belongs on a character's own beats, written to read at
+    // any hour. test/beat-completeness.test.js checks every beat any draw can
+    // return, with nothing exempt.
     entries = resolvePoolTier(content.dialogue, tier, variant);
-    entries.push(
-      ...collectConditional(content.dialogueWhen, "dialogue", tier, variant, ctx),
-    );
-    entries.push(
-      ...collectConditional(SHARED_DIALOGUE_WHEN, "dialogue", tier, variant, ctx),
-    );
   }
 
   if (entries.length === 0) return null;
@@ -1309,15 +1272,6 @@ export function getRandomDialogueEntry(
   const entry = pickDialogueEntry(character, tier, variant, ctx);
   if (!entry) return { line: "...", responses: null };
   return { line: entry.line, responses: entry.responses };
-}
-
-// The greeting rendered onto the encounter image. Driven only by the character's
-// temperament tier — never by time, location, or event.
-export function getTemperamentGreeting(character, tier) {
-  const content = DIALOGUE[character.id] || {};
-  const lines = resolvePoolTier(content.temperamentDialogue, tier, null);
-  if (lines.length === 0) return "...";
-  return pickRandom(lines);
 }
 
 // A tier entry is either a bare string (legacy — its approach label is drawn
@@ -1359,33 +1313,17 @@ function normalizeBeat(entry) {
   return { ...NORMALIZED_BEAT_DEFAULT };
 }
 
-// The label on the single button that turns the /roam narration into an actual
-// encounter — the "Step forward" beat. Every dialogue beat carries its own
-// `approach` (see getRandomDialogueBeat), so this is only the fallback for a
-// beat that doesn't: a bare-string line, e.g. one of SHARED_DIALOGUE_WHEN's.
-// It draws from SHARED_APPROACH_WHEN's scene/time-specific labels (same
-// `when` matching as SHARED_DIALOGUE_WHEN; `ctx` is the object
-// getRandomDialogueEntry takes), then APPROACH_LABEL_FALLBACK.
-function getFallbackApproachLabel(tier, variant = null, ctx = {}) {
-  const labels = collectConditional(
-    SHARED_APPROACH_WHEN,
-    "approach",
-    tier,
-    variant,
-    ctx,
-  );
-  return pickRandom(labels.length > 0 ? labels : APPROACH_LABEL_FALLBACK);
-}
-
 // Draws the narration line, its approach-button label, and (optionally) its
 // payoff greeting and response-button overrides as one unit, so the /roam
 // button, payoff image caption, and the four response buttons all answer the
 // scene the player just read (see docs/dialogue-approach-pairing.md) rather than being pulled from separate
-// pools at random. The beat's own `approach` is always the first choice, tied
-// to the line every time; only a beat without one (a bare-string line) falls
-// through to getFallbackApproachLabel. `greeting` is null unless
-// the drawn beat has one — callers that want a payoff caption fall back to
-// their own independent draw (e.g. getTemperamentGreeting) when it's null.
+// pools at random. The beat's own `approach` is the only source there is now:
+// the scene-matched SHARED_APPROACH_WHEN layer that used to sit under it is
+// gone, along with the bare-string lines it existed to label.
+// `greeting` is the beat's own payoff
+// caption — every drawable beat carries one now that the conditional pools
+// are severed from pickDialogueEntry, so callers render it directly instead of
+// making a second, independent draw when it comes back null.
 // `responses` is the beat's own { kind, playful, bold, neutral } labels
 // (each optional; a string or an array of interchangeable options), or null.
 // A type the beat doesn't carry has nothing character-specific behind it —
@@ -1404,7 +1342,7 @@ export function getRandomDialogueBeat(character, tier, variant = null, ctx = {})
   const { line, approachOptions, greetingOptions, responses } = entry;
   const approach = approachOptions
     ? pickRandom(approachOptions)
-    : getFallbackApproachLabel(tier, variant, ctx);
+    : pickRandom(APPROACH_LABEL_FALLBACK);
   const greeting = greetingOptions ? pickRandom(greetingOptions) : null;
 
   return { line, approach, greeting, responses };
