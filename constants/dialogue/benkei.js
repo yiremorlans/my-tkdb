@@ -483,28 +483,27 @@ export default {
     // the current POOL_POINTS_PER_LINE, same target as alan.js and jo.js.
     warm: [
       {
-        line: 'He gets a bit red in the face when he sees you, but his smile stays warm and gentle. "You came back! What can I get you?"',
+        line: 'The tips of his ears blush when he sees you, but his smile stays warm and gentle. "You\'re back. What can I get you?"',
         approach: "Ask what's got him flustered",
         greeting: [
-          "\"You're back! I'm glad. What can I do for you?\"",
           "\"Flustered? Me? It's warm in here, that's all. Sit anywhere.\"",
         ],
         responses: {
-          kind: ["Ask what he'd recommend today", "Say you're glad to be back"],
+          kind: ["Ask him to pick for you", "Say you're glad to be back"],
           playful: ["Tease him about the blush", "Blame the heat too"],
-          bold: ["Push him to admit it", "Tell him the blush suits him"],
+          bold: ["Push him to admit it", "Tell him the color suits him"],
           neutral: ["Let him recover, say nothing", "Just order something"],
         },
       },
       {
         line: "He's set something aside for you. He's started doing that most days, just in case.",
-        approach: "Take what he set aside",
+        approach: "Take the thing he saved",
         greeting:
           "\"Wasn't sure you'd come. Glad you did. ...It's nothing much, really.\"",
         responses: {
           kind: ["Appreciate it, every time", "Tell him he didn't have to"],
           playful: ["Guess what he saved this time", "Guess before you look"],
-          bold: ["Ask why he keeps doing it", "Ask if it's only for you"],
+          bold: ["Ask why he keeps doing it", "Ask who else gets one"],
           neutral: ["Take it without remark", "Put it in your bag"],
         },
       },
@@ -516,7 +515,7 @@ export default {
           kind: ["Say you'd have liked that", "Ask about Clementia House"],
           playful: ["Ask what kind of student", "Ask if you'd have passed"],
           bold: ["Ask if he means it", "Ask why he stopped advising"],
-          neutral: ["Let the comment pass", "Change the subject"],
+          neutral: ["Let the comment pass", "Order and move on"],
         },
       },
       {
@@ -658,7 +657,7 @@ export default {
         responses: {
           kind: ["Let him keep his reason", "Tell him not to wait up"],
           playful: ["Guess at the real reason", "Guess wrong on purpose"],
-          bold: ["Ask him straight out why", "Tell him you noticed"],
+          bold: ["Make him give a reason", "Tell him you noticed"],
           neutral: ["Don't ask why", "Buy something and go"],
         },
       },
@@ -679,7 +678,7 @@ export default {
         greeting: '"Warm enough? Here, take mine."',
         responses: {
           kind: ["Say you're glad he keeps it", "Split it with him"],
-          playful: ["Ask if it's just for you", "Offer him the bigger half"],
+          playful: ["Ask if anyone else buys it", "Offer him the bigger half"],
           bold: ["Ask why he bothers stocking it", "Buy the whole shelf of it"],
           neutral: ["Take it, unbothered", "Eat it at the counter"],
         },
