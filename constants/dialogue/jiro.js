@@ -512,7 +512,7 @@ export default {
         greeting:
           '"If you want. It\'s only a tear. Yuri will complain the whole time he sutures it."',
         responses: {
-          kind: ["Offer to walk him back", "Offer your arm for support"],
+          kind: ["Ask if it hurts much", "Offer your arm for support"],
           playful: [
             "Tease him about the sutures",
             "Promise to out-complain Yuri",
@@ -602,7 +602,7 @@ export default {
           kind: ["Let him take his time", "Thank him for the care"],
           playful: ["Ask if that's still medical", "Ask for a third count"],
           bold: ["Call out the long reading", "Ask why he counted twice"],
-          neutral: ["Let the reading run long", "Keep your wrist still"],
+          neutral: ["Say nothing about the count", "Keep your wrist still"],
         },
       },
       {
@@ -651,7 +651,7 @@ export default {
             "Ask what's actually in it",
             "Promise not to tell Frostheim",
           ],
-          bold: ["Drink it without asking", "Finish it in one go"],
+          bold: ["Ask for a second mug", "Finish it in one go"],
           neutral: ["Drink it, say nothing", "Sip it slowly"],
         },
       },
@@ -684,7 +684,7 @@ export default {
         greeting:
           "\"Good. I'll know if you don't. I can barely eat, so I notice when other people skip it.\"",
         responses: {
-          kind: ["Promise to eat properly", "Promise, and mean it"],
+          kind: ["Say you'll bring lunch here", "Promise, and mean it"],
           playful: ["Point out the double standard", "Offer to eat for two"],
           bold: ["Say he should eat too", "Say you'll watch him eat too"],
           neutral: ["Nod and take the order", "Agree without argument"],
@@ -692,11 +692,11 @@ export default {
       },
       {
         line: "He's quieter than usual today, and lets you notice, which from him is the whole confession.",
-        approach: "Ask what's wrong",
+        approach: "Notice the quiet",
         greeting:
           "\"Nothing is wrong. I didn't sleep. I usually don't, but today I noticed.\"",
         responses: {
-          kind: ["Ask gently what's wrong", "Offer to sit with him"],
+          kind: ["Ask if he slept at all", "Offer to sit with him"],
           playful: [
             "Guess what's bothering him",
             "Offer a very boring lecture",

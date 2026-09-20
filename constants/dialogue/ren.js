@@ -580,7 +580,7 @@ export default {
           kind: ["Admit it's a big deal to you", "Share the blanket with him"],
           playful: ["Ask what's the catch", "Ask what makes it the good one"],
           bold: ["Take it like it's owed", "Take the whole blanket"],
-          neutral: ["Take it, say nothing", "Pull it over, watch on"],
+          neutral: ["Take it, no big deal", "Pull it over, watch on"],
         },
       },
       {

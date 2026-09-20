@@ -252,11 +252,12 @@ export default {
       {
         line: "He bows before he speaks. It's automatic, and completely sincere.",
         approach: "Return his bow",
-        greeting: '"You\'re safe here. That much I can promise."',
+        greeting:
+          '"Welcome. Hotarubi can seem a little quiet at first. I hope it doesn\'t feel unwelcoming. It isn\'t meant to."',
         responses: {
-          kind: ["Acknowledge his effort", "Thank him for the promise"],
+          kind: ["Acknowledge his effort", "Say it doesn't feel that way"],
           playful: ["Catch him off script", "Bow deeper than he did"],
-          bold: ["Say what you came to say", "Ask what he's promising"],
+          bold: ["Say what you came to say", "Ask why it's so quiet"],
           neutral: ["Take him at his word", "Nod and take it in"],
         },
       },
@@ -285,15 +286,15 @@ export default {
         },
       },
       {
-        line: '"You\'ve caught me just before lunch," he says. "Lyca and I usually eat together."',
+        line: '"You\'ve caught me just before lunch," he says. "Lyca and I eat on the terrace now and then."',
         approach: "Ask to join them",
         greeting:
-          '"Oh! Would you? I\'m sure Lyca would be glad. He\'s been so busy lately."',
+          '"Oh. I\'d have to ask him first, if you don\'t mind. He\'s still getting used to new people."',
         responses: {
-          kind: ["Say lunch sounds nice", "Offer to bring something"],
-          playful: ["Invite yourself to lunch", "Ask what Lyca eats"],
-          bold: ["Ask to join them outright", "Say you're coming, decided"],
-          neutral: ["Wait to be invited", "Let them have their lunch"],
+          kind: ["Say of course, ask him first", "Tell him to take his time"],
+          playful: ["Ask if Lyca will vet you", "Ask what Lyca eats"],
+          bold: ["Say he doesn't need to ask", "Say you'll ask Lyca yourself"],
+          neutral: ["Nod and leave it there", "Leave them to it"],
         },
       },
       {
@@ -321,13 +322,13 @@ export default {
         },
       },
       {
-        line: "He still braces before he takes anything from your hands. He just doesn't hesitate anymore before offering to.",
+        line: "He takes the bag by the strap rather than the handle, the way he takes everything.",
         approach: "Let him take it",
         greeting:
-          '"Here, let me. ...It\'s all right. With you, I don\'t mind what I might read."',
+          '"Here, let me. ...Sorry. I\'ll be careful with it, I promise."',
         responses: {
           kind: ["Reassure him it's fine", "Thank him for offering"],
-          playful: ["Hand him something heavier", "Tease him about the bracing"],
+          playful: ["Ask why not the handle", "Tease him about the care"],
           bold: ["Hand it over without asking", "Say he can just take it"],
           neutral: ["Let him take it, say nothing", "Hand it over quietly"],
         },
@@ -462,6 +463,18 @@ export default {
     ],
     warm: [
       {
+        line: "He still braces before he takes anything from your hands. He just doesn't hesitate anymore before offering to.",
+        approach: "Hand it to him yourself",
+        greeting:
+          '"Here, let me. ...It\'s all right. With you, I don\'t mind what I might read."',
+        responses: {
+          kind: ["Tell him you trust him", "Say you don't mind either"],
+          playful: ["Ask what it says about you", "Ask for a reading"],
+          bold: ["Say you wanted him to read it", "Say there's nothing to hide"],
+          neutral: ["Hand it over, say nothing", "Let him read what he reads"],
+        },
+      },
+      {
         line: "His usual composure softens immediately: there's genuine gladness in his expression when he sees you.",
         approach: "Ask how he's holding up",
         greeting: '"You\'re here... I\'m very glad."',
@@ -523,7 +536,7 @@ export default {
         greeting:
           "\"You think I'm always smiling? Ha ha, I hear that a lot. It just happens when I'm around all of you.\"",
         responses: {
-          kind: ["Say you feel lucky too", "Tell him he's kind too"],
+          kind: ["Say the feeling's mutual", "Tell him he's kind too"],
           playful: ["Ask if that's why he smiles", "Add yourself to the list"],
           bold: ["Say he should hear it more", "Tell him to say it out loud"],
           neutral: ["Let him have the thought", "Nod, leave it there"],
@@ -550,7 +563,7 @@ export default {
           '"You make it very difficult to be dutiful. I\'ve stopped minding."',
         ],
         responses: {
-          kind: "Let him be selfish",
+          kind: "Give him the hour",
           playful: "Fluster him properly",
           bold: "Stay the night talking",
           neutral: "Let the evening be quiet",
@@ -642,7 +655,7 @@ export default {
         approach: "Hold him",
         greeting: '"Let me put my head here. Just for a moment. ...Thank you."',
         responses: {
-          kind: "Tell him to stop apologizing",
+          kind: "Tell him he's earned this",
           playful: "Tease him about apologizing",
           bold: "Pull him closer instead",
           neutral: "Let the house go quiet",
@@ -667,7 +680,7 @@ export default {
         responses: {
           kind: "Say it back",
           playful: "Call it an early night",
-          bold: "Take him to bed",
+          bold: "Tell him you're not leaving",
           neutral: "Sit with him in the dark",
         },
       },

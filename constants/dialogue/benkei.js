@@ -526,7 +526,7 @@ export default {
           kind: ["Reassure him gently", "Promise to eat properly"],
           playful: ["Let him fuss a little longer", "Ask what he'd feed you"],
           bold: ["Tell him to stop apologizing", "Ask when he last ate"],
-          neutral: ["Wave off his fussing", "Say you're fine"],
+          neutral: ["Let the fussing go", "Say you're fine"],
         },
       },
       {
