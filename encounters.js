@@ -1,4 +1,8 @@
-import { ButtonStyleTypes, MessageComponentTypes } from 'discord-interactions';
+import {
+  ButtonStyleTypes,
+  InteractionResponseFlags,
+  MessageComponentTypes,
+} from 'discord-interactions';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -32,7 +36,8 @@ import {
   renderHeartBar,
 } from './constants/game.js';
 import { getReactionLine } from './constants/reactions.js';
-import { composeEncounter } from './imageComposition.js';
+import { WARDING_CARDS, wardingCardWritten } from './constants/warding/index.js';
+import { composeEncounter, composeWardingCard } from './imageComposition.js';
 import { recordResponse } from './storage.js';
 // readRelationship is the non-creating read. A character being shown —
 // via /affinity, /house, a /roam encounter, or a /meet pick — is only a
@@ -301,6 +306,246 @@ export async function buildRoamSpawnMessage(encounterId) {
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
     components: responseActionRow(character.id, false, 'roam', beatResponses),
     flags: EPHEMERAL_FLAG,
+  };
+}
+
+// --- warding cards ---------------------------------------------------------
+//
+// PHASE 1 ONLY (as of 2026-09-20): these builders render a warding card, and
+// nothing in /roam or /meet calls them. The only caller is the owner-only
+// /encdev warding preview (publicEncounters.js). Phase 2 — rolling
+// WARDING_CHANCE for every player during /roam and /meet, and the pity counter
+// behind it — is deferred and unbuilt; see docs/warding-cards.md §9. Until it
+// lands, no player can encounter one of these, nothing here grants affinity,
+// and no pity counter exists to move.
+//
+// The rare outcome /roam and /meet can land on (docs/warding-cards.md). These
+// three builders are the roam builders with a different base image and a
+// different message format, and they read a card exactly the way the roam
+// builders read a dialogue beat: `line` is the step-1 text, `approach` labels
+// the button that reveals it, `greeting` is painted into the art, and the
+// picked response's `close` replaces the buttons.
+//
+// COMPONENTS V2. Unlike every other message this app sends, a warding message
+// is built with Discord's V2 component tree (IS_COMPONENTS_V2, 1 << 15) rather
+// than `content` + `embeds`. The reason is the accent bar: V1 gives a custom
+// colour only to an embed, and an embed cannot hold the buttons, so a colour
+// and a button row can't be framed together. A V2 Container can — art, text
+// and buttons all sit inside one bordered block with WARDING_ACCENT_COLOR down
+// its edge. That bar plus the sparkle on the approach button is the whole
+// "this one is rare" signal, and it costs the player nothing to read: the
+// encounter still plays exactly like a /roam.
+//
+// Two V2 rules the builders below have to respect:
+//   - A V2 message must NOT carry `content` or `embeds`. Every string is a
+//     TEXT_DISPLAY component instead, and the image is a MEDIA_GALLERY item
+//     pointing at the attachment. Discord rejects the message otherwise.
+//   - The flag is fixed at creation and an edit cannot drop it, so every step
+//     of the flow — reveal and result — has to stay V2 once step 1 is.
+
+// EPHEMERAL, plus the opt-in to the V2 component tree. Every warding message
+// carries this; nothing else in the app does.
+export const WARDING_MESSAGE_FLAGS =
+  EPHEMERAL_FLAG | InteractionResponseFlags.IS_COMPONENTS_V2;
+
+// The Container's accent bar. Gold, against the blue of a mission embed and
+// the purples and pinks the relationship levels use (constants/game.js), so a
+// warding message is not mistakable for either at a glance.
+const WARDING_ACCENT_COLOR = 0xf5c542;
+
+// The approach button. Deliberately NOT the PRIMARY blurple a /roam approach
+// button uses — the step-1 message is otherwise identical in shape to a normal
+// encounter, so the colour swap plus the sparkle is what tells the player this
+// one is different before any art has loaded. SUCCESS is the pick because the
+// other three styles are all spoken for on the response row that follows
+// (kind/playful/bold/neutral -> RESPONSE_STYLES), and green is the only one
+// that never reads as a warning.
+const WARDING_APPROACH_STYLE = ButtonStyleTypes.SUCCESS;
+
+// Unicode, not a guild emoji: this app is dual-install and a custom emoji
+// would render as a broken box for anyone using it outside the home server.
+// It sits on the button's `emoji` field rather than inside `label`, so it
+// costs none of the 30 characters a label is allowed.
+const WARDING_SPARKLE = { name: '✨' };
+
+const WARDING_IMAGE_NAME = 'warding.png';
+
+// kind / playful / bold in the order RESPONSE_TYPE_ORDER shows them, minus the
+// NEUTRAL a warding card never offers. Derived rather than hardcoded so the
+// three warding buttons can never drift out of order with a normal response
+// row; index.js already guarantees a written card has exactly these keys.
+const WARDING_RESPONSE_ORDER = RESPONSE_TYPE_ORDER.filter(
+  (type) => type !== RESPONSE_TYPES.NEUTRAL,
+);
+
+// Grey out every button in a V2 component tree, wherever it sits. The V1
+// helper above walks a flat list of action rows; a warding message nests its
+// rows inside a Container, so the walk has to recurse. Used for the ack that
+// disables the approach button the moment it is clicked — which, on a V2
+// message, has to re-send the whole tree rather than a `content` + rows pair.
+export function disableWardingButtons(components) {
+  return (components || []).map((component) => {
+    if (component.type === MessageComponentTypes.BUTTON) {
+      return { ...component, disabled: true };
+    }
+    if (Array.isArray(component.components)) {
+      return { ...component, components: disableWardingButtons(component.components) };
+    }
+    return component;
+  });
+}
+
+// One Container wrapping the whole message, so the accent bar runs down
+// everything in it rather than just a text block.
+function wardingContainer(components) {
+  return [
+    {
+      type: MessageComponentTypes.CONTAINER,
+      accent_color: WARDING_ACCENT_COLOR,
+      components,
+    },
+  ];
+}
+
+// The three response buttons, kind / playful / bold. Colours come from
+// RESPONSE_STYLES exactly as a normal encounter's do — a warding pick means
+// the same thing a normal pick means, so it should not be recoloured — and
+// there is no NEUTRAL fourth (docs/warding-cards.md §3).
+function wardingResponseRows(cardKey, responses, disabled = false) {
+  return WARDING_RESPONSE_ORDER.filter((key) => responses[key]).map((key) => ({
+    type: MessageComponentTypes.ACTION_ROW,
+    components: [
+      {
+        type: MessageComponentTypes.BUTTON,
+        style: RESPONSE_STYLES[key],
+        label: responses[key].label,
+        custom_id: `ward:resp:${cardKey}:${key}`,
+        disabled,
+      },
+    ],
+  }));
+}
+
+/**
+ * Step 1: the card's `line` as text, plus the single sparkle button that
+ * reveals it. Parallel to buildRoamDialogueMessage's return, but V2.
+ *
+ * `card` is a WARDING_CARDS entry carrying its own `key` (what
+ * pickWardingCardForCharacter returns).
+ *
+ * RETURNS NULL if the card cannot be rendered, and the caller MUST fall back
+ * to the normal encounter when it does — the player is owed the encounter
+ * they invoked, and a warding card that was never shown has to count as a
+ * miss in every respect, including pity (docs/warding-cards.md §4). Returning
+ * a "nothing here" message instead would be the worst of both: the player
+ * loses the encounter AND the caller, which by this point has already decided
+ * the roll was a hit, goes on to treat it as a card shown.
+ *
+ * This is also why nothing here writes pity. The refill belongs to the write
+ * that records the player's response (§9), which only a rendered card can
+ * ever reach; deciding a hit moves nothing on its own.
+ */
+export function buildWardingDialogueMessage(card) {
+  // An unwritten stub has no line, no approach label and no responses, so it
+  // would render as an empty text block over a label-less button — which
+  // Discord rejects outright. The draw cannot produce one (eligibleWardingCards
+  // filters stubs out, which is the soft-rollout gate), so reaching here with
+  // one is a bug in the caller: loud in the log, invisible to the player, who
+  // just gets the ordinary encounter.
+  if (!wardingCardWritten(card)) {
+    console.error(
+      `[warding] refusing to render unwritten card "${card?.key ?? '(no key)'}" — ` +
+        'falling back to a normal encounter',
+    );
+    return null;
+  }
+
+  const encounterId = generateEncounterId();
+  cacheRoamEncounter(encounterId, { wardingCardKey: card.key });
+
+  return {
+    flags: WARDING_MESSAGE_FLAGS,
+    components: wardingContainer([
+      { type: MessageComponentTypes.TEXT_DISPLAY, content: card.line },
+      {
+        type: MessageComponentTypes.ACTION_ROW,
+        components: [
+          {
+            type: MessageComponentTypes.BUTTON,
+            style: WARDING_APPROACH_STYLE,
+            label: card.approach,
+            emoji: WARDING_SPARKLE,
+            custom_id: `ward:spawn:${encounterId}`,
+          },
+        ],
+      },
+    ]),
+  };
+}
+
+/**
+ * Step 2: the art, with `greeting` painted into its dialogue box, plus the
+ * three response buttons. Parallel to buildRoamSpawnMessage.
+ *
+ * No location line and no "you run into X" header: a warding card is not a
+ * place on the map, and naming the character would duplicate what the art
+ * already says.
+ */
+export async function buildWardingSpawnMessage(encounterId) {
+  const encounter = getCachedRoamEncounter(encounterId);
+  const card = encounter?.wardingCardKey
+    ? WARDING_CARDS[encounter.wardingCardKey]
+    : null;
+  if (!card) {
+    return { content: 'The moment has passed.', flags: EPHEMERAL_FLAG };
+  }
+
+  const imageBuffer = await composeWardingCard(card.file, card.greeting);
+
+  return {
+    files: [{ attachment: imageBuffer, name: WARDING_IMAGE_NAME }],
+    flags: WARDING_MESSAGE_FLAGS,
+    components: wardingContainer([
+      {
+        type: MessageComponentTypes.MEDIA_GALLERY,
+        items: [{ media: { url: `attachment://${WARDING_IMAGE_NAME}` } }],
+      },
+      ...wardingResponseRows(encounter.wardingCardKey, card.responses),
+    ]),
+  };
+}
+
+/**
+ * Step 3: the picked response's `close`, revealed as text under the card where
+ * the buttons were. The art stays — `attachments` is left alone so the edit
+ * keeps the image the reveal uploaded — and the buttons are re-rendered
+ * disabled rather than dropped, so the player can still see which one they
+ * picked.
+ *
+ * Pure rendering: the affinity grant, the pity refill and the errand signature
+ * all belong to the caller (docs/warding-cards.md §9), which passes whatever
+ * it wrote in as `deltaLine` — the same "+2 — 💖 Close Friend" line a normal
+ * encounter puts under its reaction.
+ */
+export function buildWardingResultMessage(cardKey, responseKey, deltaLine = null) {
+  const card = WARDING_CARDS[cardKey];
+  const response = card?.responses?.[responseKey];
+  if (!response) {
+    return { content: 'The moment has passed.', flags: EPHEMERAL_FLAG };
+  }
+
+  const text = [response.close, deltaLine].filter(Boolean).join('\n\n');
+
+  return {
+    flags: WARDING_MESSAGE_FLAGS,
+    components: wardingContainer([
+      {
+        type: MessageComponentTypes.MEDIA_GALLERY,
+        items: [{ media: { url: `attachment://${WARDING_IMAGE_NAME}` } }],
+      },
+      { type: MessageComponentTypes.TEXT_DISPLAY, content: text },
+      ...wardingResponseRows(cardKey, card.responses, true),
+    ]),
   };
 }
 

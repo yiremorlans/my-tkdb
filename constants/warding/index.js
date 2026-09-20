@@ -1,6 +1,25 @@
 // Warding cards: a rare outcome shared by /roam and /meet. See
 // docs/warding-cards.md for the full spec, the probability analysis, and the
-// pity system. The command flow is unchanged up to the point the character is
+// pity system.
+//
+// --- PHASE 2 IS NOT BUILT (as of 2026-09-20) ---------------------------------
+// Everything in this file that concerns the DRAW is spec, not behaviour. No
+// warding card can reach a player today: /roam and /meet never call
+// eligibleWardingCards or pickWardingCardForCharacter, nothing rolls
+// WARDING_CHANCE, nothing stores or reads a pity counter, and nothing grants
+// WARDING_AFFINITY_GAIN. Those three constants have no consumers.
+//
+// What IS built (phase 1) is the content and the render: the cards below, the
+// compositor (composeWardingCard), the Components V2 builders in encounters.js
+// and the owner-only /encdev warding preview that reaches them. The preview
+// grants nothing and touches no state.
+//
+// Phase 2 — the pull rates and the pity system, applied to every player during
+// /roam and /meet — is deliberately deferred, and is the task list in
+// docs/warding-cards.md §9. The flow below describes what it will do.
+// -----------------------------------------------------------------------------
+//
+// The command flow is unchanged up to the point the character is
 // fixed (/roam draws one; /meet's player picks one):
 //   1. The character is fixed exactly as it is today.
 //   2. If that character has a non-empty eligible pool, roll WARDING_CHANCE
@@ -10,27 +29,31 @@
 //   3. On a hit, pick one warding card at random from that character's ELIGIBLE
 //      pool — every card whose `characters` array includes the fixed character
 //      (solo and shared alike, so a Ren draw can land on a Ren+Haru card), whose
-//      `choice.options` is written (soft rollout — see eligibleWardingCards),
+//      `responses` are written (soft rollout — see eligibleWardingCards),
 //      AND whose `minLevel` gate, if any, the player's relationship with that
 //      character clears. The pick is uniform across that pool. Showing a card
 //      refills the pity counter to WARDING_PITY. See pickWardingCardForCharacter.
-//   4. Show the card. It keeps the two-message shape every /roam uses: the
-//      command replies instantly with the card's `dialogue` hook as text plus
-//      one button labelled with the card's `approach` line; clicking it does
-//      the image composition and edits the message to the art + `choice`. The
-//      button is what gets past Discord's 3s ack and triggers the render, same
-//      as a normal encounter's "Step forward" — but `approach` is authored per
-//      card so the label hints at that specific moment.
-//   5. The `choice` offers exactly three buttons — kind / playful / bold, no
+//   4. Show the card. It keeps the two-message shape every /roam uses, and it
+//      fills the same three render slots a dialogue beat fills: the command
+//      replies instantly with the card's `line` as text plus one button
+//      labelled `approach`; clicking it does the image composition and edits
+//      the message to the art (with `greeting` painted into its dialogue box)
+//      plus the response buttons. The button is what gets past Discord's 3s
+//      ack and triggers the render, same as a normal encounter's "Step
+//      forward" — but `approach` is authored per card so the label hints at
+//      that specific moment.
+//   5. `responses` offers exactly three buttons — kind / playful / bold, no
 //      NEUTRAL fourth — and every one of them grants a flat WARDING_AFFINITY_GAIN
-//      (+2). The pick only changes the `close` line, never the reward.
+//      (+2). The pick only changes the `close` line, never the reward. The
+//      `close` is shown as text under the card where the buttons were, taking
+//      the slot a normal encounter gives getReactionLine.
 // A character with no eligible card just never reaches step 3 — the command
 // falls back to a normal encounter, exactly as for a character with no cards at
 // all, and Benkei (no warding art, ./benkei.js exports {}) never counts toward
 // pity.
 //
 // A warding card still goes through image composition like a /roam scene — its
-// `dialogue` line is drawn onto the image in the same dialogue box
+// `greeting` is drawn onto the image in the same dialogue box
 // (imageComposition.js) and the result is sent as a Discord attachment. The
 // only difference from a normal encounter is the base layer: there is no
 // background + character composite, the art in assets/warding/ IS the whole
@@ -51,21 +74,44 @@
 //                not matter (the /roam lookup tests membership, not position).
 //                Source of truth for the lookup; nothing parses the filename.
 //                A solo file's cards all list just that id.
-//   title      - short context line, filled by hand; grounds dialogue + choice
+//   title      - short context line, filled by hand; grounds the beat below
+//
+// The rest of the entry is ONE dialogue beat, inlined. A card uses the same
+// four field names a constants/dialogue beat uses — `line`, `approach`,
+// `greeting`, `responses` — and they land in the same render slots, so the
+// warding builders are the normal /roam builders with a different base image.
+// The difference is that a beat is a pool member drawn from a tier, while a
+// card is a single authored moment bolted to one piece of art: no tiers, no
+// variants, no arrays, and the fields sit flat on the card.
+//   line       - the step-1 reply, shown as plain text while nothing is
+//                rendered yet (the beat's `line`). ONE string. Nothing in the
+//                card marks it as rare: the tell is the sparkle on the
+//                approach button, which encounters.js adds at render.
 //   approach   - the label on the step-1 button that reveals the card (the
-//                warding equivalent of constants/dialogue/*.js `approach`). One
-//                authored string per card, <= 30 chars, second-person, hinting
-//                at this scene without pre-empting a `choice` option. No tiers,
-//                no random pool — a rare card gets one deliberate label.
-//   dialogue   - the card's own lines, shown before the choice (array of strings)
-//   choice     - { prompt, options: [{ key, label, style, close }] }
-//                same shape as a bondScenes choice (constants/dialogue/*.js):
-//                `style` is a Discord button style (1 primary, 2 secondary,
-//                3 success, 4 danger); `close` is the line shown after that
-//                pick. Leave options: [] until written. When written it is
-//                EXACTLY three options, keyed "kind", "playful" and "bold" (no
-//                NEUTRAL fourth) — validated at load. Every pick grants the
-//                same flat WARDING_AFFINITY_GAIN; only the `close` differs.
+//                beat's `approach`). One authored string per card, <= 30
+//                chars, second-person, hinting at this scene without
+//                pre-empting a `responses` label. No tiers, no random pool —
+//                a rare card gets one deliberate label.
+//   greeting   - painted into the card art's dialogue box by
+//                imageComposition.js when the player clicks through, exactly
+//                as a beat's `greeting` is painted onto a /roam composite.
+//                This is the line that carries the scene; `line` only hooks.
+//                It is plain text on a canvas, so Discord markdown does
+//                nothing (emphasis asterisks are stripped at the paint) and
+//                the dialogue font has no emoji glyphs — an emoji there
+//                renders as an empty box. Write it plain, as /roam greetings
+//                are written.
+//   responses  - { kind: { label, close }, playful: {...}, bold: {...} }
+//                the three buttons shown under the art, in that order. EXACTLY
+//                those three keys (no NEUTRAL fourth) — validated at load.
+//                Leave `responses: {}` until written; that empty object is the
+//                soft-rollout gate. `label` is the button text; `close` is the
+//                line revealed as text under the card once it is clicked,
+//                where the buttons were. There is no per-option `style`: the
+//                row uses RESPONSE_STYLES (constants/game.js) like every other
+//                response row, so kind/playful/bold stay green/blurple/red
+//                everywhere. Every pick grants the same flat
+//                WARDING_AFFINITY_GAIN; only the `close` differs.
 //   minLevel   - OPTIONAL. A RELATIONSHIP_LEVELS name (game.js): "Stranger",
 //                "Acquaintance", "Friend", "Close Friend", "Confidant",
 //                "Devoted", "Soulbound". The card only enters the pool once the
@@ -203,23 +249,32 @@ function buildWardingCards() {
           `${RELATIONSHIP_LEVELS.map((l) => l.name).join(", ")}.`,
       );
     }
-    // A card is either an unwritten stub (options: []) or fully authored with
+    // A card is either an unwritten stub (responses: {}) or fully authored with
     // EXACTLY the three keys kind/playful/bold — no NEUTRAL fourth. The reward
     // is flat (WARDING_AFFINITY_GAIN) so there is nothing to gain from a wider
     // set; the three keys just pick which `close` line shows.
-    const optionKeys = (card.choice?.options ?? []).map((o) => o.key);
-    if (optionKeys.length !== 0) {
+    const responseKeys = Object.keys(card.responses ?? {});
+    if (responseKeys.length !== 0) {
       const want = ["kind", "playful", "bold"];
       const ok =
-        optionKeys.length === want.length &&
-        want.every((k) => optionKeys.includes(k));
+        responseKeys.length === want.length &&
+        want.every((k) => responseKeys.includes(k));
       if (!ok) {
         throw new Error(
-          `Warding card "${key}" (${origin}) has choice options ` +
-            `${JSON.stringify(optionKeys)}. A written warding choice is exactly ` +
-            `["kind","playful","bold"] (order free); leave options: [] until ` +
+          `Warding card "${key}" (${origin}) has responses ` +
+            `${JSON.stringify(responseKeys)}. A written warding card has exactly ` +
+            `["kind","playful","bold"] (order free); leave responses: {} until ` +
             `written.`,
         );
+      }
+      for (const k of responseKeys) {
+        const { label, close } = card.responses[k];
+        if (!label || !close) {
+          throw new Error(
+            `Warding card "${key}" (${origin}) response "${k}" is missing a ` +
+              `${!label ? "label" : "close"}. A written response carries both.`,
+          );
+        }
       }
     }
     merged[key] = card;
@@ -255,14 +310,14 @@ function buildWardingCards() {
 
 export const WARDING_CARDS = buildWardingCards();
 
-// A card the player can actually be shown: its `choice` is written. Unwritten
-// stubs (options: []) are in WARDING_CARDS so `node` can see coverage, but they
-// never enter a live pool — this is the soft-rollout gate (docs/warding-cards.md
-// §rollout). Both the WARDING_CHANCE roll and the pity "is this character
-// warding-capable" check run off eligibleWardingCards, so an in-progress
-// character behaves exactly like one with no cards at all.
-function wardingCardWritten(card) {
-  return (card.choice?.options?.length ?? 0) > 0;
+// A card the player can actually be shown: its `responses` are written.
+// Unwritten stubs (responses: {}) are in WARDING_CARDS so `node` can see
+// coverage, but they never enter a live pool — this is the soft-rollout gate
+// (docs/warding-cards.md §rollout). Both the WARDING_CHANCE roll and the pity
+// "is this character warding-capable" check run off eligibleWardingCards, so an
+// in-progress character behaves exactly like one with no cards at all.
+export function wardingCardWritten(card) {
+  return Object.keys(card?.responses ?? {}).length > 0;
 }
 
 // Coverage at load, so a deploy log shows how far the rollout has come.

@@ -33,6 +33,12 @@ import {
 import { bondLevelFromSlug, getDialogueTier, getRelationshipLevel } from './constants/game.js';
 import { missionSlotsLine } from './constants/missions.js';
 import { composeSilhouetteEncounter } from './imageComposition.js';
+import { buildWardingDialogueMessage } from './encounters.js';
+import {
+  WARDING_CARDS,
+  pickWardingCardForCharacter,
+  wardingCardWritten,
+} from './constants/warding/index.js';
 import { editChannelMessage, editChannelMessageSafe, postChannelMessage } from './discordRest.js';
 import { deliverBondScene } from './bondScenes.js';
 import { devResetCommandLimits } from './commandLimits.js';
@@ -836,6 +842,59 @@ export async function handleEncounterDev(body) {
       'post-failed': 'DM channel opened, but the post failed. Check the logs.',
     };
     return { content: reasons[result.reason] || `Not delivered (${result.reason}).` };
+  }
+
+  // `warding` renders a warding card (docs/warding-cards.md) straight to the
+  // caller, ephemerally: the feature is not wired into /roam or /meet yet, and
+  // this is how the art, the painted greeting and the Components V2 framing
+  // get looked at before any of that exists. It grants nothing, writes
+  // nothing, touches no cooldown and ignores pity — a preview of the render
+  // only. Like `bond` and `reset`, it is about the caller rather than this
+  // guild's encounter state, so it answers before either check.
+  if (subcommand === 'warding') {
+    const rawCard = sub.options?.find((o) => o.name === 'card')?.value;
+    const rawCharacter = sub.options?.find((o) => o.name === 'character')?.value;
+
+    let card = null;
+
+    if (rawCard) {
+      const entry = WARDING_CARDS[rawCard];
+      if (!entry) return { content: `No warding card keyed "${rawCard}".` };
+      // An exact key reaches stubs the draw never can — every unwritten card
+      // is in WARDING_CARDS for coverage, and there is nothing to render.
+      if (!wardingCardWritten(entry)) {
+        return {
+          content: `**${rawCard}** is an unwritten stub — art is in \`assets/warding/\`, but its \`line\`, \`greeting\` and \`responses\` are still empty.`,
+        };
+      }
+      card = { key: rawCard, ...entry };
+    } else if (rawCharacter) {
+      const characterId = matchCharacterGuess(rawCharacter);
+      if (!characterId) return { content: `I don't know who "${rawCharacter}" is.` };
+      // Soulbound so a minLevel gate never hides a card from a preview; the
+      // written gate still applies, since an unwritten stub has nothing to show.
+      card = pickWardingCardForCharacter(characterId, 'Soulbound');
+      if (!card) {
+        return {
+          content: `${getFullName(getCharacterById(characterId))} has no written warding card yet.`,
+        };
+      }
+    } else {
+      const written = Object.entries(WARDING_CARDS)
+        .filter(([, entry]) => wardingCardWritten(entry))
+        .map(([key, entry]) => ({ key, ...entry }));
+      if (!written.length) return { content: 'No warding cards are written yet.' };
+      card = written[Math.floor(Math.random() * written.length)];
+    }
+
+    // Null means the card could not be rendered. In /roam that is a silent
+    // fall back to the normal encounter; here it is a bug worth naming, since
+    // the branch above already rejected the one case that causes it.
+    return (
+      buildWardingDialogueMessage(card) || {
+        content: `**${card.key}** could not be rendered — check the logs.`,
+      }
+    );
   }
 
   // `reset` only ever touches the caller's own account (userId, not some

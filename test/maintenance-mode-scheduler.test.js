@@ -56,6 +56,7 @@ mock.module('../imageComposition.js', {
   namedExports: {
     composeEncounter: async () => Buffer.from('png'),
     composeSilhouetteEncounter: async () => Buffer.from('silhouette-png'),
+    composeWardingCard: async () => Buffer.from('warding-png'),
     composeFieldReport: async () => Buffer.from('report-png'),
   },
 });

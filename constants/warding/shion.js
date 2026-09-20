@@ -22,14 +22,22 @@
 // (he wants to be met, not soothed), playful matches the cruel-childish mischief
 // he opens himself, kind lands softest — gentleness gives softness no purchase,
 // so on a kind pick his guard lowers a fraction rather than him accepting being
-// coddled. Options are listed kind / playful / bold like every other card; the
-// scoring is on `key`, not position. The Heebie-Jeebie House is the only name
+// coddled. `responses` is written kind / playful / bold like every other card;
+// the scoring is on the response key, not its position. The Heebie-Jeebie
+// House is the only name
 // for his hangout; Mio is "Mio".
 //
 // These render like a /roam encounter, not a bond-scene DM:
-//   - `dialogue` is ONE greeting-weight line (<= ~120 chars), painted into the
-//     image dialogue box like a temperamentDialogue line, so it has to hook on
-//     its own. Everything else moves into `prompt`.
+//   - `line` is ONE greeting-weight hook (<= ~120 chars), shown as plain text
+//     before the art appears, so it has to land on its own. `greeting` is
+//     what gets painted into the image dialogue box, so that is where the
+//     scene is carried; it can run long, the box grows to fit. Nothing in the
+//     card marks it as rare — that is the sparkle on the approach button, and
+//     it is added at render, not authored here.
+//   - A painted `greeting` is plain text on a canvas, exactly as a /roam
+//     greeting is: Discord markdown does nothing there (asterisks are stripped
+//     at the paint) and the canvas font has no emoji glyphs, so an emoji would
+//     render as an empty box. Write it plain.
 //   - Spoken words are wrapped in double quotes; stage directions left bare in
 //     *italics*. In-person speech, so normal punctuation.
 //   - Weight the bare *italic* description. These cards carry the scene in
@@ -49,35 +57,26 @@ export default {
     // water and half at home in front of it without either of them naming why.
     // The three choices meet the date-ness of it differently: kind mirrors the
     // feeling back, playful teases his idea of an outing, bold names it outright.
-    dialogue: [
+    line:
       '"Come here. Closer, up to the glass with me. Watch that one. It lures the small ones in with a light, then eats them."',
-    ],
-    choice: {
-      prompt:
-        '*He looks down the length of the glass, naming the things in the tanks without reading the placards.* "That one\'s got no eyes, doesn\'t need them. That one glows so the small ones swim to it. Every pretty thing in here kills something." *A long pause.* "I could stand here all day."',
-      options: [
-        {
-          key: "kind",
-          label: "Say you'd stay all day too",
-          style: 3,
-          close:
-            '*He doesn\'t look over. His shoulders come down a little, the way they do when he decides to trust something.* "...People go restless around me inside ten minutes. You settled in." *He taps the glass once, then goes back to watching.* "Stay till they put the lights out, then."',
-        },
-        {
-          key: "playful",
-          label: "Say his taste in dates is grim",
-          style: 1,
-          close:
-            '"Grim." *He says it back slowly, like a word worth keeping. He brought you to this tank on purpose, steering you past the bright harmless ones, because he wanted to watch your face when the light drew a fish in and it was gone. Whatever your face did, he liked it. The calm tips younger, and he lets it.* "Say it again. I chose this one for you."',
-        },
-        {
-          key: "bold",
-          label: "Call it a date out loud",
-          style: 4,
-          close:
-            '*He looks at you a while, flat, the way he looks at things he has already decided are his. The small smile surfaces, barely there.* "A date. Good." *He turns back to the glass, satisfied.* "It\'s been one on my side a long time. You\'re only catching up."',
-        },
-      ],
+    greeting:
+      '*He looks down the length of the glass, naming the things in the tanks without reading the placards.* "That one\'s got no eyes, doesn\'t need them. That one glows so the small ones swim to it. Every pretty thing in here kills something." *A long pause.* "I could stand here all day."',
+    responses: {
+      kind: {
+        label: "Say you'd stay all day too",
+        close:
+          '*He doesn\'t look over. His shoulders come down a little, the way they do when he decides to trust something.* "...People go restless around me inside ten minutes. You settled in." *He taps the glass once, then goes back to watching.* "Stay till they put the lights out, then."',
+      },
+      playful: {
+        label: "Say his taste in dates is grim",
+        close:
+          '"Grim." *He says it back slowly, like a word worth keeping. He brought you to this tank on purpose, steering you past the bright harmless ones, because he wanted to watch your face when the light drew a fish in and it was gone. Whatever your face did, he liked it. The calm tips younger, and he lets it.* "Say it again. I chose this one for you."',
+      },
+      bold: {
+        label: "Call it a date out loud",
+        close:
+          '*He looks at you a while, flat, the way he looks at things he has already decided are his. The small smile surfaces, barely there.* "A date. Good." *He turns back to the glass, satisfied.* "It\'s been one on my side a long time. You\'re only catching up."',
+      },
     },
   },
   Shion_2: {
@@ -92,35 +91,26 @@ export default {
     // and producing again.
     // He treats the stage the way he treats the Heebie-Jeebie House: somewhere
     // to stop people's hearts a moment, not somewhere to be liked.
-    dialogue: [
+    line:
       '"Mio checked the box twice. Nothing in it bites. Nothing he found, anyway."',
-    ],
-    choice: {
-      prompt:
-        '*He works the Ace of Hearts in and out of sight, against his glove. They booked a magician. He does the other version, the one where everyone in the room screams and somebody gets carried out.* "Sit at the front. It goes better when you\'re watching."',
-      options: [
-        {
-          key: "kind",
-          label: "Say you'll be watching him",
-          style: 3,
-          close:
-            '*The card goes still between his fingers. He keeps his eyes on it, not on you.* "Watching me. Not the trick, not the screaming." *He turns the words over like he is checking them for a catch. Nobody stays for that part, they come for the fright and leave before the lights come up. When he looks up he has already found your face, and he stays on it.* "Sit near the front. That part isn\'t the act."',
-        },
-        {
-          key: "playful",
-          label: "Bet he can't spook Mio",
-          style: 1,
-          close:
-            '"Mio doesn\'t spook. He has watched every trick I own and never once flinched." *The look he saves for the stage tips younger. Mio is worn thin these days, though, and by midnight the guard slips.* "I\'ve thought about this. Help me pick the night. I want you next to me when his face finally goes."',
-        },
-        {
-          key: "bold",
-          label: "Straighten his collar",
-          style: 4,
-          close:
-            '*You step in and set his collar straight. He holds still for it and watches you do it. When you step back the flat calm slides over him again like a coat pulled on.* "I\'ll go stop a few hearts. Not yours." *At the curtain he pauses.* "Yours I\'ve frightened plenty. I\'ve a use for it yet."',
-        },
-      ],
+    greeting:
+      '*He works the Ace of Hearts in and out of sight, against his glove. They booked a magician. He does the other version, the one where everyone in the room screams and somebody gets carried out.* "Sit at the front. It goes better when you\'re watching."',
+    responses: {
+      kind: {
+        label: "Say you'll be watching him",
+        close:
+          '*The card goes still between his fingers. He keeps his eyes on it, not on you.* "Watching me. Not the trick, not the screaming." *He turns the words over like he is checking them for a catch. Nobody stays for that part, they come for the fright and leave before the lights come up. When he looks up he has already found your face, and he stays on it.* "Sit near the front. That part isn\'t the act."',
+      },
+      playful: {
+        label: "Bet he can't spook Mio",
+        close:
+          '"Mio doesn\'t spook. He has watched every trick I own and never once flinched." *The look he saves for the stage tips younger. Mio is worn thin these days, though, and by midnight the guard slips.* "I\'ve thought about this. Help me pick the night. I want you next to me when his face finally goes."',
+      },
+      bold: {
+        label: "Straighten his collar",
+        close:
+          '*You step in and set his collar straight. He holds still for it and watches you do it. When you step back the flat calm slides over him again like a coat pulled on.* "I\'ll go stop a few hearts. Not yours." *At the curtain he pauses.* "Yours I\'ve frightened plenty. I\'ve a use for it yet."',
+      },
     },
   },
 };

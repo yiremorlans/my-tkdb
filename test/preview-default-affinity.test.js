@@ -29,7 +29,11 @@ mock.module('@supabase/supabase-js', {
 // Skip real canvas rendering — irrelevant to the affinity-default behavior
 // under test, and slow/fragile to depend on here.
 mock.module('../imageComposition.js', {
-  namedExports: { composeEncounter: async () => Buffer.from('fake-png') },
+  namedExports: {
+    composeEncounter: async () => Buffer.from('fake-png'),
+    // encounters.js imports this statically for the warding builders.
+    composeWardingCard: async () => Buffer.from('fake-warding-png'),
+  },
 });
 
 const { buildRoamDialogueMessage, buildMeetSpawnMessage } = await import('../encounters.js');

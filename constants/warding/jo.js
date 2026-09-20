@@ -7,7 +7,8 @@ export default {
     file: "Jo.png",
     characters: ["jo"],
     title: "Mysterious Ringmaster",
-    dialogue: [],
-    choice: { prompt: "", options: [] },
+    line: "",
+    greeting: "",
+    responses: {},
   },
 };

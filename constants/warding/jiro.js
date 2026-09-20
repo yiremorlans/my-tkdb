@@ -7,7 +7,8 @@ export default {
     file: "Jiro.png",
     characters: ["jiro"],
     title: "Unchanging Expression",
-    dialogue: [],
-    choice: { prompt: "", options: [] },
+    line: "",
+    greeting: "",
+    responses: {},
   },
 };

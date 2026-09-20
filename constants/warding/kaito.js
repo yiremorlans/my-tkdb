@@ -5,7 +5,8 @@ export default {
     file: "Kaito.png",
     characters: ["kaito"],
     title: "December Smile",
-    dialogue: [],
-    choice: { prompt: "", options: [] },
+    line: "",
+    greeting: "",
+    responses: {},
   },
 };

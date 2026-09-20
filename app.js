@@ -13,6 +13,10 @@ import {
   buildResponseResultMessage,
   buildRoamDialogueMessage,
   buildRoamSpawnMessage,
+  buildWardingResultMessage,
+  buildWardingSpawnMessage,
+  disableWardingButtons,
+  WARDING_MESSAGE_FLAGS,
 } from './encounters.js';
 import { handleCall, handleEncountersAdmin, handleEncounterDev } from './publicEncounters.js';
 import {
@@ -765,6 +769,79 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           }
         }
       })();
+      return;
+    }
+
+    // ward:spawn:<encounterId>  — reveal the card art
+    // ward:resp:<cardKey>:<key>  — pick kind / playful / bold
+    //
+    // A warding card (docs/warding-cards.md) is the only message this app
+    // sends with Components V2, so both branches differ from their /roam
+    // equivalents in one way that matters: a V2 message cannot carry
+    // `content`, and an edit cannot drop the flag, so every response here
+    // re-sends a component tree and never a content string.
+    //
+    // PREVIEW ONLY for now. Nothing below grants affinity, refills pity,
+    // claims a cooldown or signs an errand — /encdev warding is the only
+    // thing that reaches it. Wiring it into /roam and /meet for real is
+    // docs/warding-cards.md §9, and that work belongs in this handler: the
+    // grant and the pity write go where buildWardingResultMessage's
+    // `deltaLine` is filled in.
+    if (action === 'ward' && rest[0] === 'spawn') {
+      const encounterId = rest[1];
+
+      // Same idea as the /roam ack below — disable the approach button so it
+      // can't be clicked twice while the card composes — but the tree is
+      // nested inside a Container, so it takes the recursive disabler.
+      res.send({
+        type: InteractionResponseType.UPDATE_MESSAGE,
+        data: {
+          components: disableWardingButtons(req.body.message?.components),
+          flags: WARDING_MESSAGE_FLAGS,
+        },
+      });
+
+      const timeoutHandle = setTimeout(() => {
+        console.error('Warding spawn timed out after 120 seconds');
+        sendFollowup(req.body.token, {
+          content: '⏱️ This took too long to process. Try again?',
+          flags: EPHEMERAL,
+        }).catch(e => console.error('Failed to send timeout error:', e));
+      }, 120000);
+
+      (async () => {
+        try {
+          // Carries a composed PNG, so it gets the same 45s room the /roam and
+          // /meet image followups get.
+          const messageData = await buildWardingSpawnMessage(encounterId);
+          await sendFollowup(req.body.token, messageData, 45000);
+          clearTimeout(timeoutHandle);
+        } catch (err) {
+          console.error('Error in warding spawn:', err);
+          clearTimeout(timeoutHandle);
+          try {
+            await sendFollowup(req.body.token, {
+              content: `Error: ${err.message}`,
+              flags: EPHEMERAL,
+            });
+          } catch (followupErr) {
+            console.error('Failed to send warding spawn error followup:', followupErr);
+          }
+        }
+      })();
+      return;
+    }
+
+    if (action === 'ward' && rest[0] === 'resp') {
+      const [, cardKey, responseKey] = rest;
+
+      // Straight UPDATE_MESSAGE, no followup: the close is text and disabled
+      // buttons, nothing to compose. `attachments` is left out so the card
+      // image the reveal uploaded stays on the message.
+      res.send({
+        type: InteractionResponseType.UPDATE_MESSAGE,
+        data: buildWardingResultMessage(cardKey, responseKey),
+      });
       return;
     }
 

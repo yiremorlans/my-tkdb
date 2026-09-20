@@ -14,9 +14,16 @@
 // delinquent front dropping and the care showing under the mouth, not banter.
 //
 // These render like a /roam encounter, not a bond-scene DM:
-//   - `dialogue` is ONE greeting-weight line (<= ~120 chars), painted into the
-//     image dialogue box like a temperamentDialogue line, so it has to hook on
-//     its own. Everything else moves into `prompt`.
+//   - `line` is ONE greeting-weight hook (<= ~120 chars), shown as plain text
+//     before the art appears, so it has to land on its own. `greeting` is
+//     what gets painted into the image dialogue box, so that is where the
+//     scene is carried; it can run long, the box grows to fit. Nothing in the
+//     card marks it as rare — that is the sparkle on the approach button, and
+//     it is added at render, not authored here.
+//   - A painted `greeting` is plain text on a canvas, exactly as a /roam
+//     greeting is: Discord markdown does nothing there (asterisks are stripped
+//     at the paint) and the canvas font has no emoji glyphs, so an emoji would
+//     render as an empty box. Write it plain.
 //   - Spoken words are wrapped in double quotes; stage directions left bare.
 //     In-person speech, so normal punctuation, and "Senpai" is capitalised.
 //   - kind reaches him (nobody checks on the one who cooks), playful meets the
@@ -34,35 +41,26 @@ export default {
     // finished a pickup basketball game with some guys when she arrived, so he's
     // in a tank top and activewear with a towel round his neck, sweaty and not
     // cleaned up. A casual morning hangout, coffee and breakfast. Keep it light.
-    dialogue: [
+    line:
       '"You got here first, huh. Sit down, ignore the mess. Give me a couple minutes and I\'ll make you some breakfast, Senpai."',
-    ],
-    choice: {
-      prompt:
-        '"Ran some pickup before you got here, lost the last one, don\'t ask. Got some fresh coffee waiting for ya."',
-      options: [
-        {
-          key: "kind",
-          label: "Say a slow morning is perfect",
-          style: 3,
-          close:
-            "*He huffs, sets a mug down in front of you.* \"...Yeah. That's what I figured. Nobody plans these. You just get one, and it's a good one.\"\n\n*He knocks his mug against yours before he drinks.*",
-        },
-        {
-          key: "playful",
-          label: "Tease him about the sweat",
-          style: 1,
-          close:
-            '*He pulls the towel off his neck and lobs it at the couch, missing you on purpose.* "Up before you, and still the one making you breakfast. Little respect, Senpai."\n\n*A grin.*',
-        },
-        {
-          key: "bold",
-          label: "Say you like him like this",
-          style: 4,
-          close:
-            "\"Pfft... it's way too early for you to trust whatever's coming outta your mouth.\" *He turns back to the burner, ears blushing.*",
-        },
-      ],
+    greeting:
+      '"Ran some pickup before you got here, lost the last one, don\'t ask. Got some fresh coffee waiting for ya."',
+    responses: {
+      kind: {
+        label: "Say a slow morning is perfect",
+        close:
+          "*He huffs, sets a mug down in front of you.* \"...Yeah. That's what I figured. Nobody plans these. You just get one, and it's a good one.\"\n\n*He knocks his mug against yours before he drinks.*",
+      },
+      playful: {
+        label: "Tease him about the sweat",
+        close:
+          '*He pulls the towel off his neck and lobs it at the couch, missing you on purpose.* "Up before you, and still the one making you breakfast. Little respect, Senpai."\n\n*A grin.*',
+      },
+      bold: {
+        label: "Say you like him like this",
+        close:
+          "\"Pfft... it's way too early for you to trust whatever's coming outta your mouth.\" *He turns back to the burner, ears blushing.*",
+      },
     },
   },
 };

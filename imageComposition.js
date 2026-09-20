@@ -3,6 +3,8 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import fs from 'fs';
 
+import { WARDING_ASSET_DIR } from './constants/warding/index.js';
+
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
 // Railway's container ships no system fonts and no fontconfig config, so
@@ -55,62 +57,104 @@ async function drawEncounterBase(bgFilename, charFilename, { drawCharacter = tru
   return { canvas, ctx, charImg, charX, charY };
 }
 
+// The dialogue box: word-wrapped white text on a translucent black band across
+// the bottom of the canvas, sized to however many lines the text wraps to.
+// Shared by every compositor that paints a line onto art — /roam's background +
+// character composite (composeEncounter) and a warding card's own art
+// (composeWardingCard) — so the two can never drift apart. `label` only names
+// the caller in the log line.
+function drawDialogueBox(canvas, ctx, text, label = 'composeEncounter') {
+  console.log(`[${label}] Drawing dialogue box`);
+  const padding = 24;
+  const fontSize = 30;
+  const lineHeight = 40;
+
+  // White text.
+  ctx.fillStyle = '#ffffff';
+  ctx.font = `${fontSize}px "${DIALOGUE_FONT_FAMILY}"`;
+  ctx.textBaseline = 'top';
+
+  // Discord markdown means nothing inside a PNG: an *italic* stage direction
+  // painted as-is shows the player literal asterisks. Emphasis markers are
+  // stripped here, at the paint, rather than in the data — the same string may
+  // still be sent as message text elsewhere, where the markdown does render.
+  // /roam greetings carry none of these; warding greetings do, because they
+  // were authored back when they were shown as message text.
+  const plain = text.replace(/\*+/g, '');
+
+  // Wrap text and calculate required height.
+  const maxWidth = canvas.width - 2 * padding;
+  const words = plain.split(' ');
+  let line = '';
+  const lines = [];
+
+  for (const word of words) {
+    const testLine = line + (line ? ' ' : '') + word;
+    const metrics = ctx.measureText(testLine);
+
+    if (metrics.width > maxWidth && line) {
+      lines.push(line);
+      line = word;
+    } else {
+      line = testLine;
+    }
+  }
+  if (line) lines.push(line);
+
+  // Calculate box height based on number of lines.
+  const boxHeight = lines.length * lineHeight + 2 * padding;
+
+  // Semi-transparent black box at the bottom.
+  ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+  ctx.fillRect(0, canvas.height - boxHeight, canvas.width, boxHeight);
+
+  // Draw text lines.
+  ctx.fillStyle = '#ffffff';
+  let y = canvas.height - boxHeight + padding;
+  for (const lineText of lines) {
+    ctx.fillText(lineText, padding, y);
+    y += lineHeight;
+  }
+}
+
 // Composite a background and character image on canvas, optionally with dialogue.
 // Returns a buffer containing the PNG-encoded composite image.
 export async function composeEncounter(bgFilename, charFilename, dialogue = null) {
   const { canvas, ctx } = await drawEncounterBase(bgFilename, charFilename);
 
-  // Draw dialogue box if provided.
-  if (dialogue) {
-    console.log('[composeEncounter] Drawing dialogue box');
-    const padding = 24;
-    const fontSize = 30;
-    const lineHeight = 40;
-
-    // White text.
-    ctx.fillStyle = '#ffffff';
-    ctx.font = `${fontSize}px "${DIALOGUE_FONT_FAMILY}"`;
-    ctx.textBaseline = 'top';
-
-    // Wrap text and calculate required height.
-    const maxWidth = canvas.width - 2 * padding;
-    const words = dialogue.split(' ');
-    let line = '';
-    const lines = [];
-
-    for (const word of words) {
-      const testLine = line + (line ? ' ' : '') + word;
-      const metrics = ctx.measureText(testLine);
-
-      if (metrics.width > maxWidth && line) {
-        lines.push(line);
-        line = word;
-      } else {
-        line = testLine;
-      }
-    }
-    if (line) lines.push(line);
-
-    // Calculate box height based on number of lines.
-    const boxHeight = lines.length * lineHeight + 2 * padding;
-
-    // Semi-transparent black box at the bottom.
-    ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
-    ctx.fillRect(0, canvas.height - boxHeight, canvas.width, boxHeight);
-
-    // Draw text lines.
-    ctx.fillStyle = '#ffffff';
-    let y = canvas.height - boxHeight + padding;
-    for (const lineText of lines) {
-      ctx.fillText(lineText, padding, y);
-      y += lineHeight;
-    }
-  }
+  if (dialogue) drawDialogueBox(canvas, ctx, dialogue);
 
   console.log('[composeEncounter] Converting to PNG buffer');
   const bufferStart = Date.now();
   const buffer = canvas.toBuffer('image/png');
   console.log('[composeEncounter] Buffer created in', Date.now() - bufferStart, 'ms, size:', buffer.length);
+  return buffer;
+}
+
+// A warding card (docs/warding-cards.md): the art in assets/warding/ IS the
+// whole image — no background layer, no character layer, nothing composited
+// under it — and the card's `greeting` is painted into the same dialogue box a
+// /roam scene uses. The canvas is sized to the card, which is portrait and much
+// taller than a background, so a long greeting costs proportionally less of the
+// frame than the same text would over a /roam composite.
+export async function composeWardingCard(cardFilename, greeting = null) {
+  const cardPath = join(__dirname, `${WARDING_ASSET_DIR}/${cardFilename}`);
+
+  console.log('[composeWardingCard] Loading card:', cardPath);
+  const loadStart = Date.now();
+  const cardImg = await loadImage(cardPath);
+  console.log('[composeWardingCard] Card loaded in', Date.now() - loadStart, 'ms');
+
+  const canvas = createCanvas(cardImg.width, cardImg.height);
+  const ctx = canvas.getContext('2d');
+  ctx.drawImage(cardImg, 0, 0);
+
+  if (greeting) drawDialogueBox(canvas, ctx, greeting, 'composeWardingCard');
+
+  console.log('[composeWardingCard] Converting to PNG buffer');
+  const bufferStart = Date.now();
+  const buffer = canvas.toBuffer('image/png');
+  console.log('[composeWardingCard] Buffer created in', Date.now() - bufferStart, 'ms, size:', buffer.length);
   return buffer;
 }
 

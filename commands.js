@@ -337,6 +337,25 @@ const ENCDEV_COMMAND = {
         },
       ],
     },
+    {
+      type: 1, // SUB_COMMAND
+      name: "warding",
+      description: "Preview a warding card render (grants nothing, writes nothing)",
+      options: [
+        {
+          name: "character",
+          description: "Draw from this character's written cards; random if omitted",
+          type: 3, // STRING
+          required: false,
+        },
+        {
+          name: "card",
+          description: "An exact card key, e.g. Rui_2 — wins over `character`",
+          type: 3, // STRING
+          required: false,
+        },
+      ],
+    },
   ],
 };
 

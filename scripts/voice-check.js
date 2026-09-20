@@ -19,6 +19,7 @@
  *   node scripts/voice-check.js                       # working tree vs HEAD
  *   node scripts/voice-check.js --base main           # vs another git ref
  *   node scripts/voice-check.js --char leo,shion      # limit to characters
+ *   node scripts/voice-check.js --warding             # every written warding card
  *   node scripts/voice-check.js --all                 # every line, every file (costly)
  *   node scripts/voice-check.js --json                # machine-readable to stdout
  *   node scripts/voice-check.js --dry-run             # plan + token estimate, no API call
@@ -41,14 +42,14 @@ import { CHARACTERS } from "../constants/characters.js";
 const HERE = path.dirname(fileURLToPath(import.meta.url));
 const REPO = path.resolve(HERE, "..");
 const DIALOGUE_DIR = path.join(REPO, "constants", "dialogue");
+const WARDING_DIR = path.join(REPO, "constants", "warding");
 const REFERENCE = path.join(DIALOGUE_DIR, "reference.md");
 
 // ---------------------------------------------------------------------------
 // House style rules — the project canon a reviewer has to hold in mind. Kept
-// in sync with the auto-memory in .claude (dialogue-reference-source-of-truth,
-// no-em-dashes-in-dialogue, american-spelling-only, honor-roll-capitalized,
-// heebie-jeebie-house-canon, sho-teases-never-insults-mc, leo-intimidating-
-// not-scary, elias-no-pet-names, negative-affinity-feature).
+// in sync with the dialogue auto-memories in .claude. Keep this list and
+// MEMORY.md moving together: a rule that lands in memory but not here is a rule
+// the validator cannot enforce.
 // ---------------------------------------------------------------------------
 const HOUSE_RULES = `- constants/dialogue/reference.md is the source of truth for voice and traits.
   Never accept a line that invents a trait, backstory, age, or relationship the
@@ -69,7 +70,57 @@ const HOUSE_RULES = `- constants/dialogue/reference.md is the source of truth fo
   the drawl and the courtesy, not endearments.
 - Leo, Shion, Taiga, Romeo, Yuri, and Ritsu are volatile / enemies-to-lovers
   types. Thorny, sardonic, prickly registers are in character for them, not a
-  defect.`;
+  defect.
+- Never the word "deadpan" in dialogue, narration, or choice labels. Use
+  "flatly", "blank-faced", "the bit". (Code comments are exempt.)
+- Ren's texting casing is irregular/mixed, never uniformly lowercase; "I" and
+  proper nouns stay capitalized. His spoken lines capitalize normally.
+- Rui calls the MC "cutie" — in character, use sometimes. Elias is the opposite:
+  no pet names at all, and no dialect words ("reckon", "folks", "y'all",
+  "ought"). Elias's "Oh," always takes a comma, never "Oh...".
+- Elias is unreliable: he invites and hedges, never escorts, promises, or does
+  standing favors.
+- Never invent how Haru lost his arm. Mio built the prosthetic; Haru is not
+  secretive about it.
+- Jin is a loner who stays in his room. Never write him flanked by subordinates
+  or seniors, and no kisses or public affection in encounter lines.
+- Zenji is a ghost: no casual physical contact (pouring tea, moving to make
+  room). Real contact is rare and costs him.
+- Towa watches and tracks the MC openly, animalistic not furtive. Never write
+  him as having hidden or concealed himself. No long introspection.
+- Bubbles are dangerous, never whimsical or safe — including for Towa.
+- Benkei is a young former professor with a casual register. No "shan't",
+  "needn't", or old-man framing.
+- Lucas is assertive, socially confident and chivalrous, not quiet or hesitant.
+- The campus is never packed. No "crush of the crowd" crowding.
+- Shion's warding cards carry the scene in narration and described action;
+  his spoken lines stay sparse and short.`;
+
+// ---------------------------------------------------------------------------
+// What a warding card is. Without this the reviewer reads second-person button
+// labels ("Steady his hands and stay") as the character's own speech and fails
+// them for being off-voice.
+// ---------------------------------------------------------------------------
+const WARDING_FORMAT = `WARDING CARD FORMAT — these lines come from constants/warding/, not the normal
+dialogue pool. A warding card is a rare reward at the end of a /roam or /meet
+encounter: one piece of dedicated art, a short scene, and a three-way choice.
+Fields, as they appear in the location label:
+- approach: the button that reveals the card. Second person, <= 30 chars. It is
+  what the PLAYER does, not something the character says.
+- line: the hook shown as plain text before the art is revealed. It has to land
+  on its own.
+- greeting: the character still talking, painted into the dialogue box drawn
+  onto the revealed art. This is the line that carries the scene.
+- responses.<key>.label: a choice button (kind, playful or bold). Second person,
+  <= 30 chars, again the PLAYER's action, not the character's voice.
+- responses.<key>.close: the character's reply after that pick.
+All three picks grant the same flat reward, so every close should read warm —
+even the character's least-resonant option. Spoken words are in double quotes;
+bare or *italic* text is stage direction and narration. Both are intentional.
+Judge approach and label lines only on whether the action fits the scene and the
+character's dynamic — never on whether they "sound like" the character speaking.
+Judge line, greeting and close lines on voice and canon as usual, including the
+narration in them.`;
 
 // ---------------------------------------------------------------------------
 // CLI
@@ -82,6 +133,7 @@ function parseCli() {
         base: { type: "string", default: "HEAD" },
         char: { type: "string", multiple: true },
         all: { type: "boolean", default: false },
+        warding: { type: "boolean", default: false },
         json: { type: "boolean", default: false },
         model: { type: "string", default: "claude-opus-5" },
         concurrency: { type: "string", default: "4" },
@@ -95,7 +147,7 @@ function parseCli() {
   if (values.help) {
     const doc = readFileSync(fileURLToPath(import.meta.url), "utf8")
       .split("\n")
-      .slice(2, 26) // between /** and */
+      .slice(2, 27) // between /** and */
       .map((l) => l.replace(/^ \* ?/, ""));
     console.log(doc.join("\n").trim());
     process.exit(0);
@@ -297,6 +349,84 @@ function fromFullScan(only) {
 }
 
 // ---------------------------------------------------------------------------
+// Warding cards (constants/warding/). Unlike the dialogue pool these are read
+// structurally rather than scraped, so every line arrives labelled with the
+// card key and field it came from ("Tohma_2 / close / kind"). Cards list their
+// own `characters`, so a shared card is reviewed once per character on it.
+// Unwritten stubs (responses: {}) are skipped — there is nothing to judge.
+// ---------------------------------------------------------------------------
+function wardingLineIndex(file) {
+  // text -> 1-based line number, by re-scanning the source with the same
+  // literal scanner. Card strings are one-per-line, so this is exact.
+  const idx = new Map();
+  let src;
+  try {
+    src = readFileSync(file, "utf8").split("\n");
+  } catch {
+    return idx;
+  }
+  src.forEach((ln, i) => {
+    for (const lit of stringLiterals(ln)) {
+      const t = lit.trim();
+      if (t && !idx.has(t)) idx.set(t, i + 1);
+    }
+  });
+  return idx;
+}
+
+async function fromWardingScan(only) {
+  let mod;
+  try {
+    mod = await import(path.join(WARDING_DIR, "index.js"));
+  } catch (err) {
+    fail(2, `could not load constants/warding/index.js: ${err.message}`);
+  }
+  const items = [];
+  const indexCache = new Map();
+  const lineFor = (file, text) => {
+    if (!indexCache.has(file)) indexCache.set(file, wardingLineIndex(file));
+    return indexCache.get(file).get(text.trim()) ?? 0;
+  };
+
+  for (const [key, card] of Object.entries(mod.WARDING_CARDS)) {
+    const responses = card.responses ?? {};
+    if (Object.keys(responses).length === 0) continue; // unwritten stub
+    const ids = (card.characters ?? []).filter(
+      (id) => !only.length || only.includes(id),
+    );
+    if (ids.length === 0) continue;
+
+    const shared = (card.characters ?? []).length > 1;
+    const fields = [];
+    if (card.approach) fields.push(["approach", card.approach]);
+    if (card.line) fields.push(["line", card.line]);
+    if (card.greeting) fields.push(["greeting", card.greeting]);
+    for (const [key, r] of Object.entries(responses)) {
+      fields.push([`label / ${key}`, r.label]);
+      fields.push([`close / ${key}`, r.close]);
+    }
+
+    for (const id of ids) {
+      const base = shared ? "shared.js" : `${id}.js`;
+      const file = `constants/warding/${base}`;
+      const abs = path.join(WARDING_DIR, base);
+      for (const [field, text] of fields) {
+        if (!text || !isProse(text)) continue;
+        items.push({
+          id,
+          file,
+          line: lineFor(abs, text),
+          location: `${key} / ${field}`,
+          text: String(text).trim(),
+          warding: true,
+        });
+      }
+    }
+  }
+  return items;
+}
+
+// ---------------------------------------------------------------------------
 // Prompt assembly + review call
 // ---------------------------------------------------------------------------
 const Result = z.object({
@@ -310,7 +440,7 @@ const Result = z.object({
   ),
 });
 
-function systemPrompt(char, refSection, bondSection, needsBond) {
+function systemPrompt(char, refSection, bondSection, needsBond, warding) {
   const kw = (char.keywords ?? []).map((k) => `  - ${k}`).join("\n");
   return [
     `You review dialogue for a Discord dating-sim. For each CHANGED LINE, decide whether it sounds like ${char.firstName} and stays inside canon.`,
@@ -331,6 +461,7 @@ function systemPrompt(char, refSection, bondSection, needsBond) {
     "HOUSE STYLE RULES — a violation is at least a WARN, usually a FAIL:",
     HOUSE_RULES,
     "",
+    ...(warding ? [WARDING_FORMAT, ""] : []),
     "VERDICTS:",
     "- pass: sounds like the character, no canon problem. Leave reason and suggested_fix as empty strings.",
     "- warn: understandable but slightly off — register drift, soft canon tension, a word choice the character would not pick. Give a reason and a suggested_fix.",
@@ -350,8 +481,17 @@ function userPrompt(char, lines) {
 }
 
 async function review(client, model, char, refSection, bondSection, lines) {
-  const needsBond = lines.some((l) => /bond/i.test(l.location));
-  const system = systemPrompt(char, refSection, bondSection, needsBond);
+  const warding = lines.some((l) => l.warding);
+  // Warding cards always get the shared notes: the motif-ownership and canon
+  // guardrail blocks at the end of reference.md live in that section.
+  const needsBond = warding || lines.some((l) => /bond/i.test(l.location));
+  const system = systemPrompt(
+    char,
+    refSection,
+    bondSection,
+    needsBond,
+    warding,
+  );
   const user = userPrompt(char, lines);
 
   const res = await client.messages.parse({
@@ -427,8 +567,14 @@ function printHuman(groups, summary, base, mode) {
     `${summary.warn} warn`,
     `${summary.pass} pass`,
   ];
+  const label =
+    mode === "warding"
+      ? "warding cards"
+      : mode === "all"
+        ? "full scan"
+        : `vs ${base}`;
   console.log(
-    `\n${mode === "all" ? "full scan" : `vs ${base}`} — ${parts.join(", ")} across ${groups.length} file(s)`,
+    `\n${label} — ${parts.join(", ")} across ${groups.length} character(s)`,
   );
 }
 
@@ -448,9 +594,11 @@ async function main() {
   const charById = new Map(CHARACTERS.map((c) => [c.id, c]));
   const sections = loadReferenceSections(charById);
 
-  const items = opts.all
-    ? fromFullScan(opts.only)
-    : fromGitDiff(opts.base, opts.only);
+  const items = opts.warding
+    ? await fromWardingScan(opts.only)
+    : opts.all
+      ? fromFullScan(opts.only)
+      : fromGitDiff(opts.base, opts.only);
   const unknown = [...new Set(items.map((i) => i.id))].filter(
     (id) => !charById.has(id),
   );
@@ -467,9 +615,11 @@ async function main() {
   }
 
   if (byChar.size === 0) {
-    const where = opts.all
-      ? "in constants/dialogue/"
-      : `changed vs ${opts.base}`;
+    const where = opts.warding
+      ? "in written warding cards"
+      : opts.all
+        ? "in constants/dialogue/"
+        : `changed vs ${opts.base}`;
     if (opts.json)
       console.log(
         JSON.stringify(
@@ -497,6 +647,7 @@ async function main() {
       sections.get(id) ?? "",
       sections.get("__bond__") ?? "",
       true,
+      lines.some((l) => l.warding),
     );
     const usr = userPrompt(char, lines);
     return {
@@ -507,10 +658,13 @@ async function main() {
   });
   const estTokens = plan.reduce((a, p) => a + p.tokens, 0);
   if (!opts.json) {
-    console.error(
-      `voice-check · ${opts.all ? "full scan" : `working tree vs ${opts.base}`}`,
-    );
-    for (const p of plan) console.error(`  ${p.id}.js  ${p.count} line(s)`);
+    const scope = opts.warding
+      ? "warding cards"
+      : opts.all
+        ? "full scan"
+        : `working tree vs ${opts.base}`;
+    console.error(`voice-check · ${scope}`);
+    for (const p of plan) console.error(`  ${p.id}  ${p.count} line(s)`);
     console.error(
       `${plan.length} character(s) · ${plan.length} request(s) to ${opts.model} · ~${estTokens.toLocaleString()} input tokens (est.)`,
     );
@@ -577,7 +731,7 @@ async function main() {
       JSON.stringify(
         {
           base: opts.all ? null : opts.base,
-          mode: opts.all ? "full-scan" : "diff",
+          mode: opts.warding ? "warding" : opts.all ? "full-scan" : "diff",
           generatedAt: new Date().toISOString(),
           model: opts.model,
           files: groups.map((g) => ({
@@ -599,7 +753,12 @@ async function main() {
       ),
     );
   } else {
-    printHuman(groups, summary, opts.base, opts.all ? "all" : "diff");
+    printHuman(
+      groups,
+      summary,
+      opts.base,
+      opts.warding ? "warding" : opts.all ? "all" : "diff",
+    );
   }
 
   process.exit(summary.fail > 0 ? 1 : 0);

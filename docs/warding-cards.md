@@ -1,12 +1,24 @@
 # Spec: Warding cards
 
-Status: **planned** (scaffolding in `constants/warding/`, not wired into any command)
-Last updated: 2026-09-08
+Status: **phase 1 shipped, phase 2 deferred** (as of 2026-09-20)
+
+- **Phase 1 — content and rendering. Done.** The cards themselves
+  (`constants/warding/`), the compositor (`composeWardingCard`), the three
+  Components V2 builders (`encounters.js`), the `ward:` click routing
+  (`app.js`) and the owner-only `/encdev warding` preview all exist and work.
+- **Phase 2 — the pity system and the pull rates, deferred.** Nothing rolls
+  for a warding card during `/roam` or `/meet`, and no pity counter is stored
+  or read anywhere. A player cannot encounter a warding card today; the
+  preview is the only way to see one. §9 is that phase's task list.
+
+Last updated: 2026-09-20
 
 Warding cards are a rare reward that can surface at the end of a `/roam` or
 `/meet` encounter: instead of the normal background + character composite, the
 player is shown a piece of dedicated warding art for that character, with its
 own short scene and a three-way choice that always grants a flat affinity bump.
+The content is one inlined dialogue beat (`line` / `approach` / `greeting` /
+`responses`) — see §3.
 
 The card content and pool logic already live in `constants/warding/` (one file
 per character for solo cards, `shared.js` for multi-character cards, merged by
@@ -33,7 +45,7 @@ After the character is fixed:
    - **Miss** otherwise → normal encounter, and the pity counter ticks down by 1.
 3. On a hit: `pickWardingCardForCharacter` returns one card, uniform over the
    eligible pool. Showing it **refills pity to `WARDING_PITY`**.
-4. Render the card as a two-message exchange (§3).
+4. Render the card as the three-step exchange in §3.
 
 `/meet` and `/roam` share a single 3-hour cooldown (`commandLimits.js`), so a
 player completes at most 8 encounters/day, realistically 2–5.
@@ -58,26 +70,74 @@ Helpers in `constants/warding/index.js`:
 
 ---
 
-## 3. Rendering: two messages, three buttons, flat +2
+## 3. Rendering: the dialogue beat, on card art
 
-Same two-message shape every `/roam` uses, so it clears Discord's 3s ack:
+A warding card carries **one inlined dialogue beat** and fills the same render
+slots `/roam` fills, with the same four field names a `constants/dialogue` beat
+uses. A beat is a pool member drawn from a tier; a card is a single authored
+moment bolted to one piece of art, so there are no tiers, no variants and no
+arrays — the fields sit flat on the card:
 
-1. **Reply** — the card's `dialogue` hook as text, plus **one button** labelled
-   with the card's `approach` line.
-2. **On click** — image composition runs (`imageComposition.js` draws the
-   dialogue box straight onto `assets/warding/<file>`; there is no background or
-   character layer), and the message is edited to the art plus the `choice`.
+```js
+Rui: {
+  file: "Rui.png",
+  characters: ["rui"],
+  title: "Just a Moment More",
+  line: "\"...I've watched you leave it sitting there for an hour.\"",
+  approach: "Hold his eyes across the bar",
+  greeting: "*He leans on the bar...* \"Stay till close?...\"",
+  responses: {
+    kind:    { label: "Say you're staying till close", close: "..." },
+    playful: { label: "Hold his gaze on purpose",      close: "..." },
+    bold:    { label: "Say looking isn't enough",      close: "..." },
+  },
+}
+```
 
-The `choice` block mirrors a `bondScenes` choice, with two deliberate
-differences from a normal encounter response row:
+Same three-step shape every `/roam` uses, so it clears Discord's 3s ack:
+
+1. **Reply** — the card's `line` as plain text, plus **one button** labelled
+   with the card's `approach`.
+2. **On click** — image composition runs (`imageComposition.js` paints the
+   card's `greeting` into a dialogue box drawn straight onto
+   `assets/warding/<file>`; there is no background or character layer), and the
+   message is edited to the art plus the three `responses` buttons.
+3. **On a pick** — the message is edited again: the art stays, the buttons go,
+   and that response's `close` is revealed as text underneath, in the slot a
+   normal encounter gives `getReactionLine`.
+
+| Render slot | `/roam` beat | warding card |
+|---|---|---|
+| step-1 reply text | `line` | `line` |
+| step-1 button | `approach` | `approach` |
+| painted into the image | `greeting` | `greeting` |
+| response buttons | `responses[type]` | `responses[key].label` |
+| text under the image | `getReactionLine()` | `responses[key].close` |
+
+Two deliberate differences from a normal encounter response row:
 
 - **Exactly three buttons — `kind`, `playful`, `bold`.** No `NEUTRAL` fourth
-  button. `index.js` validates this at load: `choice.options` is either `[]`
-  (unwritten stub) or exactly those three keys.
+  button. `index.js` validates this at load: `responses` is either `{}`
+  (unwritten stub) or exactly those three keys, each with a `label` and a
+  `close`. There is no per-response `style`: the row uses `RESPONSE_STYLES`
+  (`constants/game.js`) like every other response row.
 - **The reward is flat.** Every one of the three grants `WARDING_AFFINITY_GAIN`
   (+2), regardless of the character or the pick. Only the `close` line differs.
   Normal encounters still vary the gain via `character.affinityByResponse`;
   warding does not, because a rare card is a reward, not a stat check.
+
+**The rare-encounter tell.** Nothing in the card data marks it. The tell is
+added at render, on the step-1 approach button: a ✨ on the button's `emoji`
+field plus a button colour no other approach button uses (§3a). It rides on
+`emoji` rather than inside `label` so it costs none of the 30 characters a
+label is allowed — `Subaru_2`'s label is already 30.
+
+It cannot go on the painted `greeting`: the dialogue box is drawn with
+DejaVu Sans on a canvas, which has no emoji glyphs, so a ✨ there renders as an
+empty box. The same goes for Discord markdown — `*italics*` paint as literal
+asterisks, so `composeWardingCard` strips emphasis markers before wrapping the
+text. Warding `greeting`s should be written plain, exactly as `/roam`
+greetings already are.
 
 Constants (`constants/warding/index.js`):
 
@@ -86,6 +146,66 @@ WARDING_CHANCE         = 0.10   // hit chance once the character has a live pool
 WARDING_AFFINITY_GAIN  = 2      // flat, any of the three choices
 WARDING_PITY           = 25     // pity counter start / refill value
 ```
+
+---
+
+## 3a. Components V2
+
+A warding message is the only thing this app sends with Discord's V2 component
+tree (`IS_COMPONENTS_V2`, `1 << 15`); everything else is `content` + `embeds`.
+
+**Why.** The rare-encounter signal has to sit on the message itself, and V1
+gives a custom colour only to an embed — which cannot hold buttons. So under V1
+a coloured block and a button row can never be the same block. A V2
+`CONTAINER` can: art, text and buttons all sit inside one bordered block with
+`WARDING_ACCENT_COLOR` (gold, `0xf5c542`) down its edge, distinct from the blue
+of a mission embed and the purples and pinks of the relationship levels.
+
+**The rules that come with it**, both pinned by
+`test/warding-card-render.test.js`:
+
+- A V2 message must carry **no `content` and no `embeds`**. Text is a
+  `TEXT_DISPLAY` component, the card art is a `MEDIA_GALLERY` item pointing at
+  `attachment://warding.png`, and the attachment rides along in `files` as
+  usual. Discord rejects the message otherwise.
+- The flag is fixed at creation and **an edit cannot drop it**, so every step
+  of the flow stays V2 once step 1 is — including the ack that disables the
+  approach button, which re-sends the whole tree rather than a `content` +
+  rows pair. `disableWardingButtons` recurses for exactly that reason: the
+  rows are nested inside the Container, so the flat V1 disabler misses them.
+
+**The tell, in full:**
+
+| | normal `/roam` | warding |
+|---|---|---|
+| step-1 button colour | `PRIMARY` (blurple) | `SUCCESS` (green) |
+| step-1 button emoji | none | ✨ |
+| message frame | none | gold-accented Container |
+| response button colours | `RESPONSE_STYLES` | `RESPONSE_STYLES` (unchanged) |
+
+The response buttons keep the normal colours on purpose: a warding pick means
+the same thing a normal pick means. `SUCCESS` is the approach button's colour
+because the other three styles are all spoken for on the response row that
+follows, and green is the only one left that does not read as a warning.
+
+**Builders** (`encounters.js`), parallel to the `/roam` three:
+
+| Builder | Step |
+|---|---|
+| `buildWardingDialogueMessage(card)` | `line` + sparkle approach button — **returns `null`** if the card cannot be rendered; the caller falls back to the normal encounter and counts the roll as a miss (§4) |
+| `buildWardingSpawnMessage(encounterId)` | art + three response buttons |
+| `buildWardingResultMessage(cardKey, responseKey, deltaLine)` | `close` + disabled buttons |
+
+`buildWardingResultMessage` is pure rendering: the affinity grant, the pity
+refill and the errand signature belong to the caller, which passes what it
+wrote as `deltaLine`. It sends no `attachments` key at all, so the edit leaves
+the uploaded card image on the message.
+
+**Previewing it.** `/encdev warding` (owner only) renders a card straight to
+the caller — `character:` draws from that character's written cards, `card:`
+takes an exact key like `Rui_2`, neither draws at random. It grants nothing,
+writes nothing, claims no cooldown and ignores pity; it exists so the render
+can be looked at before the feature is wired into `/roam` and `/meet`.
 
 ---
 
@@ -101,6 +221,19 @@ character — see §7.
 | Encounter featuring a character with no live pool (Benkei; any not-yet-authored character) | no change |
 | Command invoked but not completed (picker opened, walked away) | no change |
 | Counter at 0, next encounter with a live-pool character | **force a card**, then refill to 25 |
+| Roll said hit, but the card could not be rendered | treated as a miss: `-1`, and the player gets the normal encounter |
+
+**Nothing moves the counter until the encounter is completed and written.**
+Deciding a hit does not refill it; rendering a card does not refill it. The
+refill rides on the same write that records the player's response (§9.1),
+which only a card the player actually saw and answered can reach. That is what
+makes the last row safe rather than a hole: a hit that cannot be rendered
+never reaches the write, so it cannot refill pity for a card nobody saw, and
+the player is not charged an encounter for it either.
+
+The case is not hypothetical — it is what `buildWardingDialogueMessage`
+returning `null` means (§3a). Any caller that treats a decided hit as
+"card shown" before the render succeeds reintroduces the hole.
 
 No explicit "carry" flag is needed: the forced-hit check is gated on the
 character having a live pool, so a counter sitting at 0 simply waits through any
@@ -144,7 +277,7 @@ pool → normal encounter) is already the designed behaviour for an uncovered
 character, so partial coverage is a supported state.
 
 **The gate is per card, not per character:** `eligibleWardingCards` filters out
-any card whose `choice.options` is still `[]`. The stub *is* the "not ready"
+any card whose `responses` is still `{}`. The stub *is* the "not ready"
 signal — no extra flag. As cards get authored they enter pools automatically,
 more encounters start counting toward pity, and the rate climbs toward 10% on
 its own. **No retuning of `WARDING_PITY` is ever needed.**
@@ -152,11 +285,12 @@ its own. **No retuning of `WARDING_PITY` is ever needed.**
 `index.js` logs coverage at load:
 
 ```
-[warding] 23/72 cards written, 9 character(s) with a live pool
+[warding] 30/72 cards written, 13 character(s) with a live pool
 ```
 
-As of this writing: 9 characters live (rui, shion, shohei, subaru, taiga,
-tohma, towa, yuri, zenji), all 16 `shared.js` cards still stubs.
+As of this writing: 13 characters live (edward, leo, mio, ren, rui, shion,
+shohei, subaru, taiga, tohma, towa, yuri, zenji), all 16 `shared.js` cards
+still stubs.
 
 **Hold the public announcement** until every house has at least one covered
 character — until then it's a stealth surprise, which fits its "rare
@@ -205,9 +339,19 @@ code change.
 
 ---
 
-## 9. Open implementation tasks
+## 9. Phase 2: pity and pull rates (deferred, not started)
 
-Nothing below is built yet.
+**This is the whole of what is left, and none of it is built.** Phase 1 gave
+warding cards content and a render; phase 2 is what makes them *happen* to a
+player — the roll during `/roam` and `/meet`, the pity counter behind it, and
+the affinity it pays out. Until it lands, `/roam` and `/meet` are untouched by
+any of this, and a warding card is reachable only through `/encdev warding`.
+
+Deliberately deferred on 2026-09-20 rather than left half-wired: the roll and
+the counter are the part that touches every player's encounters and the
+database, so it is its own piece of work rather than a tail on the rendering.
+Phase 1 is safe to sit in production in the meantime, because nothing in the
+player-facing commands reaches it.
 
 1. **DB:** one integer per player for the pity counter — a `warding_pity`
    column on the existing per-user relationship/limits table (or its own tiny
@@ -218,11 +362,16 @@ Nothing below is built yet.
    `eligibleWardingCards`; if non-empty, read pity, decide hit/miss/forced,
    and on a hit branch to a warding message builder instead of the normal
    dialogue message. Cache the drawn card with the encounter like the normal
-   spot/character payload.
+   spot/character payload. **If `buildWardingDialogueMessage` returns `null`,
+   carry on and build the normal encounter** — the hit is spent as a miss, and
+   since pity only moves at the response write (§4) nothing else needs undoing.
 3. **`/meet` (`buildMeetSpawnMessage`):** same decision after the player picks.
-4. **Warding message builders:** `buildWardingDialogueMessage` (reply +
-   `approach` button) and `buildWardingSpawnMessage` (composite + `choice`
-   row), paralleling `buildRoamDialogueMessage` / `buildRoamSpawnMessage`.
+4. ~~**Warding message builders.**~~ **Done** — see §3a. The three builders,
+   `composeWardingCard`, the `ward:` click routing in `app.js` and the
+   `/encdev warding` preview all exist. What is NOT done is everything that
+   touches state: the routing grants no affinity, refills no pity, claims no
+   cooldown and signs no errand. That work lands in the `ward:resp` branch,
+   where `buildWardingResultMessage`'s `deltaLine` is filled in.
 5. **Response handler:** a `custom_id` namespace for the warding choice (e.g.
    `ward:<characterId>:<key>`), granting `WARDING_AFFINITY_GAIN` flat, refilling
    pity, and going through `claimCommandUse` on the same `roam`/`meet` cooldown
