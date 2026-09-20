@@ -42,7 +42,7 @@ export default {
             label: "Say you didn't ask him to",
             style: 4,
             close:
-              "No, u didn't, that's the entire point honor roll\n\nanyone can do a favor they got asked for\n\n*Then, faster, like he's covering:* anyway don't read into it, reading into it is so embarrassing for u",
+              "No, u didn't, that's the entire point Honor Roll\n\nanyone can do a favor they got asked for\n\n*Then, faster, like he's covering:* anyway don't read into it, reading into it is so embarrassing for u",
           },
         ],
       },

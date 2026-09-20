@@ -40,7 +40,7 @@ export default {
     // effect. Studied and careless at once. Everything below is the DM thread
     // it arrived in.
     dialogue: [
-      "I can see the little dots from ur response, Honor roll. Admit it, it's the best thing that's happened to you all week",
+      "I can see the little dots from ur response, Honor Roll. Admit it, it's the best thing that's happened to you all week",
     ],
     choice: {
       prompt:

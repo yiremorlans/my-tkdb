@@ -104,7 +104,7 @@ export default {
           label: "Tell him to just say it",
           style: 4,
           close:
-            "*He starts to soften it into a maybe, then stops himself.*\n\n\"...All right. No hedging. Could this be a regular thing? You, me, an afternoon like this one, often. I'd like that very much.",
+            "*He starts to soften it into a maybe, then stops himself.*\n\n\"...All right. No hedging. Could this be a regular thing? You, me, an afternoon like this one, often. I'd like that very much.\"",
         },
       ],
     },

@@ -54,7 +54,7 @@ export default {
     ],
     choice: {
       prompt:
-        '*He looks down the length of the glass, naming the things in the tanks without reading the placards.* "That one\'s got no eyes, doesn\'t need them. That one glows so the small ones swim to it. Every pretty thing in here kills something."*A long pause* "I could stand here all day."',
+        '*He looks down the length of the glass, naming the things in the tanks without reading the placards.* "That one\'s got no eyes, doesn\'t need them. That one glows so the small ones swim to it. Every pretty thing in here kills something." *A long pause.* "I could stand here all day."',
       options: [
         {
           key: "kind",
@@ -97,7 +97,7 @@ export default {
     ],
     choice: {
       prompt:
-        '*He works the Ace of Hearts in an out of sight, against his glove. They booked a magician. He does the other version, the one where everyone in the room screams and somebody gets carried out.* "Sit at the front. It goes better when you\'re watching."',
+        '*He works the Ace of Hearts in and out of sight, against his glove. They booked a magician. He does the other version, the one where everyone in the room screams and somebody gets carried out.* "Sit at the front. It goes better when you\'re watching."',
       options: [
         {
           key: "kind",
@@ -111,7 +111,7 @@ export default {
           label: "Bet he can't spook Mio",
           style: 1,
           close:
-            '"Mio doesn\'t spook. He has watched every trick I own since we were small and never once flinched." *The look he saves for the stage tips younger. Mio is worn thin these days, though, and by midnight the guard slips.* "I\'ve thought about this. Help me pick the night. I want you next to me when his face finally goes."',
+            '"Mio doesn\'t spook. He has watched every trick I own and never once flinched." *The look he saves for the stage tips younger. Mio is worn thin these days, though, and by midnight the guard slips.* "I\'ve thought about this. Help me pick the night. I want you next to me when his face finally goes."',
         },
         {
           key: "bold",
