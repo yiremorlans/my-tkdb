@@ -146,7 +146,7 @@ export async function composeEncounter(bgFilename, charFilename, dialogue = null
 // size a /roam composite gets. Cards are 944x2048 portraits, and Discord draws
 // them height-capped, so they show far smaller on screen than a 1000px-wide
 // /roam scene; the same relative text size came out unreadable.
-const WARDING_TEXT_SCALE = 2;
+const WARDING_TEXT_SCALE = 1.5;
 
 // The width warding cards are composed at, and the one dimension the message
 // gives us: the gallery is top-level, outside the Container, so nothing insets

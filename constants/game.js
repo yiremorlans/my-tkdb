@@ -3,6 +3,21 @@ import { RESPONSE_TYPES } from './characters.js';
 // How many characters /meet offers the user to pick from.
 export const MEET_OPTION_COUNT = 4;
 
+// Opening line above the /meet picker; one is drawn per invocation. Every
+// line has to hold for any four characters at any tier, so nothing singular
+// about a crowd and nothing that says a specific character is interested.
+// The first entry is also the fallback when a click arrives without the
+// original message content.
+export const MEET_PICK_LINES = [
+  'A few familiar faces catch your eye. Who do you want to meet?',
+  "Someone's gaze lingers a beat too long.",
+  'A few familiar faces catch your eye, and your heart skips.',
+  "Some faces you've been hoping to see are nearby.",
+  "You've been thinking about someone all day.",
+  "A few familiar faces, and one you've been meaning to see.",
+  'Familiar faces, and a little flutter in your chest.',
+];
+
 // Maximum length for button labels (response and approach labels).
 // Discord's native limit is 80 chars, but mobile clients truncate at ~30 chars
 // for readability. Keep all labels at or under this to ensure they display

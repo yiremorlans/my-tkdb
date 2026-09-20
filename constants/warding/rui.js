@@ -10,8 +10,7 @@ export default {
     // and in no hurry to leave; her drink is barely touched. No contact the
     // whole scene, per the reaper curse. The intimacy is all in the look he
     // holds across the measured foot of air he keeps.
-    line:
-      "\"You look at me, then at the drink like it'll help. It won't, cutie. I've watched you leave it sitting there for an hour.\"",
+    line: "\"You look at me, then at the drink like it'll help. It won't, cutie. I've watched you leave it sitting there for an hour.\"",
     greeting:
       "*He leans on the bar, as close as the curse lets him get, and doesn't look away.* \"Stay till close? It's twenty minutes. Just a moment more, cutie. I've got nothing but moments.\"",
     responses: {
@@ -42,10 +41,9 @@ export default {
     // overheating and covering it with cheer, chasing a thread of breeze and
     // keeping his usual measured distance. No contact the whole scene. The
     // crack under the brightness is the curse, not the temperature.
-    line:
-      '"Don\'t laugh, cutie. You get to enjoy a day like this. I just get to survive it. Reaper curse, zero summer planning."',
+    line: '"Don\'t laugh, cutie. You get to enjoy a day like this. I just get to survive it. Reaper curse, zero summer planning."',
     greeting:
-      "*He leans into what little breeze there is, keeping the careful arm's length between you.* \"So what's the plan, cutie, do we melt here together?\"",
+      "*He leans into what little breeze there is, keeping the careful arm's length between you.* \"So what's the plan, do we melt here together?\"",
     responses: {
       kind: {
         label: "Offer to find him some shade",
@@ -74,8 +72,7 @@ export default {
     // tour; here he's stopped with two cups from the latest one, splitting it
     // with her. Light throughout. The curse is only texture: no contact, the
     // cup handed over rather than passed hand to hand.
-    line:
-      '"Quit staring at the yukata, cutie, I know I pull it off. Now pick a stall, the next one does a black sesame syrup you have to taste to believe."',
+    line: '"Quit staring at the yukata, cutie, I know I pull it off. Now pick a stall, the next one does a black sesame syrup you have to taste to believe."',
     greeting:
       '*He holds both dessert cups up, one in each hand, and waits for you to take yours.* "Okay, taste test. Be honest, the whole tour\'s riding on your review."',
     responses: {

@@ -13,12 +13,12 @@ import {
   buildResponseResultMessage,
   buildRoamDialogueMessage,
   buildRoamSpawnMessage,
-  buildWardingResultMessage,
   buildWardingSpawnMessage,
   buildWardingPickedUpdate,
   disableWardingButtons,
   WARDING_MESSAGE_FLAGS,
 } from './encounters.js';
+import { MEET_PICK_LINES } from './constants/game.js';
 import { handleCall, handleEncountersAdmin, handleEncounterDev } from './publicEncounters.js';
 import {
   buildDossierMessage,
@@ -722,7 +722,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       res.send({
         type: InteractionResponseType.UPDATE_MESSAGE,
         data: {
-          content: req.body.message?.content || 'A few familiar faces catch your eye. Who do you want to meet?',
+          content: req.body.message?.content || MEET_PICK_LINES[0],
           components: disabledComponents,
           flags: EPHEMERAL,
         },
@@ -777,16 +777,16 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     // ward:resp:<cardKey>:<key>  — pick kind / playful / bold
     //
     // A warding card (docs/warding-cards.md) is the only thing this app sends
-    // with Components V2, and only its two text messages: step 1 (the line) and
-    // step 3 (the close). A V2 message cannot carry `content` and an edit cannot
-    // drop the flag, so the art (step 2) is its own plain V1 followup, and the
-    // close goes out as a new V2 followup rather than an edit of it.
+    // with Components V2, and only its step-1 text message (the line). A V2
+    // message cannot carry `content` and an edit cannot drop the flag, so the
+    // art (step 2) is its own plain V1 followup, and the close is written into
+    // that art message's `content` on the pick.
     //
     // PREVIEW ONLY for now. Nothing below grants affinity, refills pity,
     // claims a cooldown or signs an errand — /encdev warding is the only
     // thing that reaches it. Wiring it into /roam and /meet for real is
     // docs/warding-cards.md §9, and that work belongs in this handler: the
-    // grant and the pity write go where buildWardingResultMessage's
+    // grant and the pity write go where buildWardingPickedUpdate's
     // `deltaLine` is filled in.
     if (action === 'ward' && rest[0] === 'spawn') {
       const encounterId = rest[1];
@@ -836,24 +836,13 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     if (action === 'ward' && rest[0] === 'resp') {
       const [, cardKey, responseKey] = rest;
 
-      // Ack by stripping the buttons off the art message (a plain V1 edit, so
-      // the art never picks up V2), then send the close as its own V2 message
-      // under it. Nothing to compose, so no long timeout.
+      // One edit does it all: the buttons come off the art message and the
+      // close goes into its `content` (plain V1, so the art never picks up V2).
+      // Nothing to compose, so no followup and no long timeout.
       res.send({
         type: InteractionResponseType.UPDATE_MESSAGE,
-        data: buildWardingPickedUpdate(),
+        data: buildWardingPickedUpdate(cardKey, responseKey),
       });
-
-      (async () => {
-        try {
-          await sendFollowup(
-            req.body.token,
-            buildWardingResultMessage(cardKey, responseKey),
-          );
-        } catch (err) {
-          console.error('Error in warding response:', err);
-        }
-      })();
       return;
     }
 
