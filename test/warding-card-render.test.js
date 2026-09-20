@@ -146,23 +146,16 @@ test('step 2 is a plain V1 message: the art plus exactly three response buttons'
   }
 });
 
-test('step 3 is the close in a gold-trimmed V2 container, no art, no buttons', () => {
+test('step 3 is the close as its own plain V1 message, no art, no buttons', () => {
   const message = buildWardingResultMessage(sample.key, 'playful', '+2 — **Devoted**');
 
-  assert.equal(message.content, undefined);
-  assert.equal(message.flags, WARDING_MESSAGE_FLAGS);
+  assert.ok(message.content.startsWith(sample.responses.playful.close));
+  assert.ok(message.content.includes('+2'));
+  assert.equal(message.components, undefined);
   assert.equal(message.files, undefined);
-
-  assert.equal(message.components.length, 1);
-  const [container] = message.components;
-  assert.equal(container.type, CONTAINER);
-  assert.equal(container.accent_color, 0xffd700);
-  assert.equal(container.components.length, 1);
-  const [text] = container.components;
-  assert.equal(text.type, TEXT_DISPLAY);
-  assert.ok(text.content.startsWith(sample.responses.playful.close));
-  assert.ok(text.content.includes('+2'));
-  assert.equal(buttonsIn(message.components).length, 0);
+  // V2 text renders smaller than `content`, so the close must stay V1.
+  assert.ok(!(message.flags & 32768));
+  assert.ok(message.flags & 64, 'not ephemeral');
 });
 
 test('the pick edits the art message down to just the art', () => {

@@ -57,10 +57,9 @@ export default {
     // water and half at home in front of it without either of them naming why.
     // The three choices meet the date-ness of it differently: kind mirrors the
     // feeling back, playful teases his idea of an outing, bold names it outright.
-    line:
-      '"Come here. Closer, up to the glass with me. Watch that one. It lures the small ones in with a light, then eats them."',
+    line: '"Come here. Closer, up to the glass with me. Watch that one. It lures the small ones in with a light, then eats them."',
     greeting:
-      '*He looks down the length of the glass, naming the things in the tanks without reading the placards.* "That one\'s got no eyes, doesn\'t need them. That one glows so the small ones swim to it. Every pretty thing in here kills something." *A long pause.* "I could stand here all day."',
+      '"That one\'s got no eyes, doesn\'t need them. That one glows so the small ones swim to it. Every pretty thing in here kills something. ...I could stand here all day."',
     responses: {
       kind: {
         label: "Say you'd stay all day too",
@@ -91,10 +90,9 @@ export default {
     // and producing again.
     // He treats the stage the way he treats the Heebie-Jeebie House: somewhere
     // to stop people's hearts a moment, not somewhere to be liked.
-    line:
-      '"Mio checked the box twice. Nothing in it bites. Nothing he found, anyway."',
+    line: '"Mio checked the box twice. Nothing in it bites. Nothing he found, anyway."',
     greeting:
-      '*He works the Ace of Hearts in and out of sight, against his glove. They booked a magician. He does the other version, the one where everyone in the room screams and somebody gets carried out.* "Sit at the front. It goes better when you\'re watching."',
+      '"They booked a magician. I do the other version. The one where everyone screams and somebody gets carried out. ...Sit at the front. It goes better when you\'re watching."',
     responses: {
       kind: {
         label: "Say you'll be watching him",

@@ -778,11 +778,11 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     // ward:resp:<cardKey>:<key>  — pick kind / playful / bold
     //
     // A warding card (docs/warding-cards.md) is the only thing this app sends
-    // with Components V2, and only its two text messages: step 1 (the line) and
-    // step 3 (the close, in a gold-trimmed container). A V2 message cannot carry
-    // `content` and an edit cannot drop the flag, so the art (step 2) is its own
-    // plain V1 followup, and the close goes out as a new V2 followup rather than
-    // an edit of it (V1 `content` would sit above the image).
+    // with Components V2, and only its step-1 text message (the line). A V2
+    // message cannot carry `content` and an edit cannot drop the flag, so the
+    // art (step 2) is its own plain V1 followup. The close (step 3) is a plain
+    // V1 followup too, not an edit of the art: `content` on the art message
+    // would sit above the image, and V2 text renders smaller.
     //
     // PREVIEW ONLY for now. Nothing below grants affinity, refills pity,
     // claims a cooldown or signs an errand — /encdev warding is the only
@@ -839,7 +839,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       const [, cardKey, responseKey] = rest;
 
       // Ack by stripping the buttons off the art message (a plain V1 edit, so
-      // the art never picks up V2), then send the close as its own V2 message
+      // the art never picks up V2), then send the close as its own V1 message
       // under it. Nothing to compose, so no long timeout.
       res.send({
         type: InteractionResponseType.UPDATE_MESSAGE,

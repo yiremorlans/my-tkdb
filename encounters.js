@@ -327,25 +327,23 @@ export async function buildRoamSpawnMessage(encounterId) {
 // the button that reveals it, `greeting` is painted into the art, and the
 // picked response's `close` replaces the buttons.
 //
-// COMPONENTS V2, ON THE TEXT MESSAGES ONLY. Unlike every other message this
-// app sends, the two warding text messages — step 1 (`line` + approach button)
-// and step 3 (`close`, in a gold-trimmed container) — are built with Discord's
-// V2 component tree (IS_COMPONENTS_V2, 1 << 15) rather than `content` +
-// `embeds`. The art message between them (step 2) is a plain V1 message: the
-// composed PNG as an attachment with the response buttons under it, exactly
-// like a /roam reveal. The flag is fixed at creation and an edit cannot drop
-// it, and V1 `content` renders above the image, so each step is its own
+// COMPONENTS V2, ON THE STEP-1 TEXT MESSAGE ONLY. Unlike every other message
+// this app sends, step 1 (`line` + approach button) is built with Discord's V2
+// component tree (IS_COMPONENTS_V2, 1 << 15) rather than `content` + `embeds`.
+// The art message (step 2) and the close (step 3) are plain V1 messages: the
+// art is the composed PNG as an attachment with the response buttons under it,
+// exactly like a /roam reveal. The flag is fixed at creation and an edit cannot
+// drop it, and V1 `content` renders above the image, so each step is its own
 // message: step 2 is a followup to the step-1 click, and step 3's `close` is a
 // followup to the response click while the step-2 message is edited to remove
 // its buttons. The green approach button plus its sparkle is the "this one is rare" signal, and it costs the
 // player nothing to read: the encounter still plays exactly like a /roam.
 //
-// The V2 rule the two text builders have to respect: a V2 message must NOT
-// carry `content` or `embeds`. Every string is a TEXT_DISPLAY component
-// instead. Discord rejects the message otherwise.
+// The V2 rule the step-1 builder has to respect: a V2 message must NOT carry
+// `content` or `embeds`. Every string is a TEXT_DISPLAY component instead. Discord rejects the message otherwise.
 
-// EPHEMERAL, plus the opt-in to the V2 component tree. Only the step-1 and
-// step-3 text messages carry this; the art message is plain EPHEMERAL_FLAG.
+// EPHEMERAL, plus the opt-in to the V2 component tree. Only the step-1 text
+// message carries this; the art message is plain EPHEMERAL_FLAG.
 export const WARDING_MESSAGE_FLAGS =
   EPHEMERAL_FLAG | InteractionResponseFlags.IS_COMPONENTS_V2;
 
@@ -366,12 +364,6 @@ const WARDING_SPARKLE = { name: '✨' };
 
 const WARDING_IMAGE_NAME = 'warding.png';
 
-// The gold trim on the step-3 close: a V2 CONTAINER's accent_color draws the
-// bar down its left edge. Only the close gets one — the step-1 line stays a
-// bare text block. Literal 17 because the installed discord-interactions enum
-// predates CONTAINER.
-const WARDING_CONTAINER_TYPE = 17;
-const WARDING_GOLD = 0xffd700;
 
 // kind / playful / bold in the order RESPONSE_TYPE_ORDER shows them, minus the
 // NEUTRAL a warding card never offers. Derived rather than hardcoded so the
@@ -509,11 +501,11 @@ export function buildWardingPickedUpdate() {
 }
 
 /**
- * Step 3: the picked response's `close`, as its own V2 text message sent under
- * the art, wrapped in a gold-trimmed container. The art message itself is not
- * touched here — buildWardingPickedUpdate strips its buttons — so no V2 flag
- * ever lands on the image. (V1 `content` would render ABOVE the image, which
- * is why the close is its own message.)
+ * Step 3: the picked response's `close`, as its own plain V1 message sent under
+ * the art. The art message itself is not touched here — buildWardingPickedUpdate
+ * strips its buttons. It is its own message because V1 `content` on the art
+ * message would render ABOVE the image, and it is V1 rather than V2 because V2
+ * text displays render smaller than `content`.
  *
  * Pure rendering: the affinity grant, the pity refill and the errand signature
  * all belong to the caller (docs/warding-cards.md §9), which passes whatever
@@ -527,17 +519,9 @@ export function buildWardingResultMessage(cardKey, responseKey, deltaLine = null
     return { content: 'The moment has passed.', flags: EPHEMERAL_FLAG };
   }
 
-  const text = [response.close, deltaLine].filter(Boolean).join('\n\n');
-
   return {
-    flags: WARDING_MESSAGE_FLAGS,
-    components: [
-      {
-        type: WARDING_CONTAINER_TYPE,
-        accent_color: WARDING_GOLD,
-        components: [{ type: MessageComponentTypes.TEXT_DISPLAY, content: text }],
-      },
-    ],
+    content: [response.close, deltaLine].filter(Boolean).join('\n\n'),
+    flags: EPHEMERAL_FLAG,
   };
 }
 

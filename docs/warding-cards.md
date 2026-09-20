@@ -104,10 +104,10 @@ Same three-step shape every `/roam` uses, so it clears Discord's 3s ack:
    art plus the three `responses` buttons are sent as a new plain (non-V2)
    message. The step-1 message stays, with its button disabled, as in `/roam`.
 3. **On a pick** — the art message is edited to drop its buttons (the art
-   stays), and that response's `close` is sent as a new V2 text message under
-   it, in a gold-trimmed container, in the slot a normal encounter gives
-   `getReactionLine`. It is its own message because V1 `content` renders above
-   the image, not below it.
+   stays), and that response's `close` is sent as a new plain V1 message under
+   it, in the slot a normal encounter gives `getReactionLine`. It is its own
+   message because V1 `content` on the art message renders above the image, and
+   it is V1 rather than V2 because V2 text renders smaller.
 
 | Render slot | `/roam` beat | warding card |
 |---|---|---|
@@ -154,19 +154,19 @@ WARDING_PITY           = 25     // pity counter start / refill value
 
 ## 3a. Components V2
 
-Only two warding messages use Discord's V2 component tree (`IS_COMPONENTS_V2`,
-`1 << 15`): step 1 (the `line` and the approach button) and step 3 (the
-`close`). The art message between them is plain V1 — the composed PNG as an
-attachment with the response buttons under it. Everything else in the app is
-`content` + `embeds`. The one `CONTAINER` is the step-3 close, with a gold (`0xFFD700`) `accent_color`
-bar; step 1 is a bare text block.
+Only one warding message uses Discord's V2 component tree (`IS_COMPONENTS_V2`,
+`1 << 15`): step 1 (the `line` and the approach button). The art message is
+plain V1 — the composed PNG as an attachment with the response buttons under
+it — and so is the step-3 `close`, because V2 text renders smaller than
+`content`. Everything else in the app is
+`content` + `embeds`. There is no `CONTAINER` and no accent bar anywhere.
 
 **Why separate messages.** The flag is fixed at creation and **an edit cannot
 drop it**, so V2 can only be kept off the art by never putting the art in a V2
 message, and V1 `content` renders above an image, so the close cannot go
 under the art any other way. Each step is therefore its own message: step 2 is
-a followup to the step-1 click, and step 3's `close` is a followup to the
-response click, while the step-2 message is edited only to remove its buttons
+a followup to the step-1 click, and step 3's `close` is a plain V1 followup to
+the response click, while the step-2 message is edited only to remove its buttons
 (`buildWardingPickedUpdate`).
 
 **The rule that comes with V2**, pinned by `test/warding-card-render.test.js`:
@@ -195,7 +195,7 @@ follows, and green is the only one left that does not read as a warning.
 | `buildWardingDialogueMessage(card)` | `line` + sparkle approach button — **returns `null`** if the card cannot be rendered; the caller falls back to the normal encounter and counts the roll as a miss (§4) |
 | `buildWardingSpawnMessage(encounterId)` | art + three response buttons — plain V1 |
 | `buildWardingPickedUpdate()` | the edit that removes the buttons from the art message |
-| `buildWardingResultMessage(cardKey, responseKey, deltaLine)` | `close` as its own gold-trimmed V2 message |
+| `buildWardingResultMessage(cardKey, responseKey, deltaLine)` | `close` as its own plain V1 message |
 
 `buildWardingResultMessage` is pure rendering: the affinity grant, the pity
 refill and the errand signature belong to the caller, which passes what it
