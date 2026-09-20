@@ -15,6 +15,7 @@ import {
   buildRoamSpawnMessage,
   buildWardingResultMessage,
   buildWardingSpawnMessage,
+  buildWardingPickedUpdate,
   disableWardingButtons,
   WARDING_MESSAGE_FLAGS,
 } from './encounters.js';
@@ -775,11 +776,11 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     // ward:spawn:<encounterId>  — reveal the card art
     // ward:resp:<cardKey>:<key>  — pick kind / playful / bold
     //
-    // A warding card (docs/warding-cards.md) is the only message this app
-    // sends with Components V2, so both branches differ from their /roam
-    // equivalents in one way that matters: a V2 message cannot carry
-    // `content`, and an edit cannot drop the flag, so every response here
-    // re-sends a component tree and never a content string.
+    // A warding card (docs/warding-cards.md) is the only thing this app sends
+    // with Components V2, and only its two text messages: step 1 (the line) and
+    // step 3 (the close). A V2 message cannot carry `content` and an edit cannot
+    // drop the flag, so the art (step 2) is its own plain V1 followup, and the
+    // close goes out as a new V2 followup rather than an edit of it.
     //
     // PREVIEW ONLY for now. Nothing below grants affinity, refills pity,
     // claims a cooldown or signs an errand — /encdev warding is the only
@@ -791,8 +792,8 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       const encounterId = rest[1];
 
       // Same idea as the /roam ack below — disable the approach button so it
-      // can't be clicked twice while the card composes — but the tree is
-      // nested inside a Container, so it takes the recursive disabler.
+      // can't be clicked twice while the card composes — but a V2 tree takes
+      // its own disabler.
       res.send({
         type: InteractionResponseType.UPDATE_MESSAGE,
         data: {
@@ -835,13 +836,24 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     if (action === 'ward' && rest[0] === 'resp') {
       const [, cardKey, responseKey] = rest;
 
-      // Straight UPDATE_MESSAGE, no followup: the close is text and disabled
-      // buttons, nothing to compose. `attachments` is left out so the card
-      // image the reveal uploaded stays on the message.
+      // Ack by stripping the buttons off the art message (a plain V1 edit, so
+      // the art never picks up V2), then send the close as its own V2 message
+      // under it. Nothing to compose, so no long timeout.
       res.send({
         type: InteractionResponseType.UPDATE_MESSAGE,
-        data: buildWardingResultMessage(cardKey, responseKey),
+        data: buildWardingPickedUpdate(),
       });
+
+      (async () => {
+        try {
+          await sendFollowup(
+            req.body.token,
+            buildWardingResultMessage(cardKey, responseKey),
+          );
+        } catch (err) {
+          console.error('Error in warding response:', err);
+        }
+      })();
       return;
     }
 

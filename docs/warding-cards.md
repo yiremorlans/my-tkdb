@@ -101,10 +101,11 @@ Same three-step shape every `/roam` uses, so it clears Discord's 3s ack:
 2. **On click** — image composition runs (`imageComposition.js` paints the
    card's `greeting` into a dialogue box drawn straight onto
    `assets/warding/<file>`; there is no background or character layer), and the
-   message is edited to the art plus the three `responses` buttons.
-3. **On a pick** — the message is edited again: the art stays, the buttons go,
-   and that response's `close` is revealed as text underneath, in the slot a
-   normal encounter gives `getReactionLine`.
+   art plus the three `responses` buttons are sent as a new plain (non-V2)
+   message. The step-1 message stays, with its button disabled, as in `/roam`.
+3. **On a pick** — the art message is edited to drop its buttons (the art
+   stays), and that response's `close` is sent as a new V2 text message under
+   it, in the slot a normal encounter gives `getReactionLine`.
 
 | Render slot | `/roam` beat | warding card |
 |---|---|---|
@@ -151,34 +152,24 @@ WARDING_PITY           = 25     // pity counter start / refill value
 
 ## 3a. Components V2
 
-A warding message is the only thing this app sends with Discord's V2 component
-tree (`IS_COMPONENTS_V2`, `1 << 15`); everything else is `content` + `embeds`.
+Only two warding messages use Discord's V2 component tree (`IS_COMPONENTS_V2`,
+`1 << 15`): step 1 (the `line` and the approach button) and step 3 (the
+`close`). The art message between them is plain V1 — the composed PNG as an
+attachment with the response buttons under it. Everything else in the app is
+`content` + `embeds`. There is no `CONTAINER` and no accent bar anywhere.
 
-**Why.** The rare-encounter signal has to sit on the message itself, and V1
-gives a custom colour only to an embed — which cannot hold buttons. So under V1
-a coloured block and a button row can never be the same block. A V2
-`CONTAINER` can: text and buttons sit inside one bordered block with
-`WARDING_ACCENT_COLOR` (gold, `0xf5c542`) down its edge, distinct from the blue
-of a mission embed and the purples and pinks of the relationship levels.
+**Why separate messages.** The flag is fixed at creation and **an edit cannot
+drop it**, so V2 can only be kept off the art by never putting the art in a V2
+message. Each step is therefore its own message: step 2 is a followup to the
+step-1 click, and step 3's `close` is a followup to the response click, while
+the step-2 message is edited only to remove its buttons
+(`buildWardingPickedUpdate`).
 
-**The art stays out of the Container.** A Container insets what it holds, and
-the card art is portrait (944x2048) — already scaled down hard by Discord's
-height cap — so nesting it renders a narrow strip. The `MEDIA_GALLERY` is a
-top-level component above the Container (`wardingGallery` in `encounters.js`);
-only the `line`, the `close` and the buttons need the accent bar.
-
-**The rules that come with it**, both pinned by
-`test/warding-card-render.test.js`:
-
-- A V2 message must carry **no `content` and no `embeds`**. Text is a
-  `TEXT_DISPLAY` component, the card art is a top-level `MEDIA_GALLERY` item
-  pointing at `attachment://warding.png`, and the attachment rides along in
-  `files` as usual. Discord rejects the message otherwise.
-- The flag is fixed at creation and **an edit cannot drop it**, so every step
-  of the flow stays V2 once step 1 is — including the ack that disables the
-  approach button, which re-sends the whole tree rather than a `content` +
-  rows pair. `disableWardingButtons` recurses for exactly that reason: the
-  rows are nested inside the Container, so the flat V1 disabler misses them.
+**The rule that comes with V2**, pinned by `test/warding-card-render.test.js`:
+a V2 message must carry **no `content` and no `embeds`**. Text is a
+`TEXT_DISPLAY` component. Discord rejects the message otherwise. The step-1
+ack that disables the approach button re-sends the whole V2 tree rather than a
+`content` + rows pair (`disableWardingButtons`).
 
 **The tell, in full:**
 
@@ -186,7 +177,6 @@ only the `line`, the `close` and the buttons need the accent bar.
 |---|---|---|
 | step-1 button colour | `PRIMARY` (blurple) | `SUCCESS` (green) |
 | step-1 button emoji | none | ✨ |
-| message frame | none | gold-accented Container under the art |
 | response button colours | `RESPONSE_STYLES` | `RESPONSE_STYLES` (unchanged) |
 
 The response buttons keep the normal colours on purpose: a warding pick means
@@ -199,13 +189,14 @@ follows, and green is the only one left that does not read as a warning.
 | Builder | Step |
 |---|---|
 | `buildWardingDialogueMessage(card)` | `line` + sparkle approach button — **returns `null`** if the card cannot be rendered; the caller falls back to the normal encounter and counts the roll as a miss (§4) |
-| `buildWardingSpawnMessage(encounterId)` | art + three response buttons |
-| `buildWardingResultMessage(cardKey, responseKey, deltaLine)` | `close` + disabled buttons |
+| `buildWardingSpawnMessage(encounterId)` | art + three response buttons — plain V1 |
+| `buildWardingPickedUpdate()` | the edit that removes the buttons from the art message |
+| `buildWardingResultMessage(cardKey, responseKey, deltaLine)` | `close` as its own V2 text message |
 
 `buildWardingResultMessage` is pure rendering: the affinity grant, the pity
 refill and the errand signature belong to the caller, which passes what it
-wrote as `deltaLine`. It sends no `attachments` key at all, so the edit leaves
-the uploaded card image on the message.
+wrote as `deltaLine`. `buildWardingPickedUpdate` sends no `attachments` key at
+all, so the edit leaves the uploaded card image on the message.
 
 **Previewing it.** `/encdev warding` (owner only) renders a card straight to
 the caller — `character:` draws from that character's written cards, `card:`

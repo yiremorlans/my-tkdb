@@ -22,6 +22,7 @@ mock.module('../imageComposition.js', {
 
 const {
   buildWardingDialogueMessage,
+  buildWardingPickedUpdate,
   buildWardingResultMessage,
   buildWardingSpawnMessage,
   disableWardingButtons,
@@ -32,7 +33,7 @@ const { RESPONSE_STYLES } = await import('../constants/game.js');
 
 const CONTAINER = 17;
 const TEXT_DISPLAY = 10;
-const MEDIA_GALLERY = 12;
+const ACTION_ROW = 1;
 const BUTTON = 2;
 
 const writtenCards = Object.entries(WARDING_CARDS)
@@ -87,7 +88,7 @@ test('a painted greeting carries nothing the canvas cannot draw', () => {
   }
 });
 
-test('step 1 is a V2 container with the sparkle approach button', () => {
+test('step 1 is V2 text with the sparkle approach button', () => {
   const message = buildWardingDialogueMessage(sample);
 
   // A V2 message must not carry content or embeds — Discord rejects it.
@@ -97,11 +98,12 @@ test('step 1 is a V2 container with the sparkle approach button', () => {
   assert.ok(message.flags & 32768, 'IS_COMPONENTS_V2 not set');
   assert.ok(message.flags & 64, 'not ephemeral');
 
-  const [container] = message.components;
-  assert.equal(container.type, CONTAINER);
-  assert.ok(container.accent_color, 'no accent colour on the container');
+  assert.ok(
+    !message.components.some((c) => c.type === CONTAINER),
+    'buttons are wrapped in a container',
+  );
 
-  const [text] = container.components;
+  const [text] = message.components;
   assert.equal(text.type, TEXT_DISPLAY);
   assert.equal(text.content, sample.line);
 
@@ -113,27 +115,21 @@ test('step 1 is a V2 container with the sparkle approach button', () => {
   assert.match(button.custom_id, /^ward:spawn:/);
 });
 
-test('step 2 reveals the art with exactly three response buttons', async () => {
+test('step 2 is a plain V1 message: the art plus exactly three response buttons', async () => {
   const step1 = buildWardingDialogueMessage(sample);
   const encounterId = buttonsIn(step1.components)[0].custom_id.split(':')[2];
 
   const message = await buildWardingSpawnMessage(encounterId);
 
-  assert.equal(message.content, undefined);
-  assert.equal(message.flags, WARDING_MESSAGE_FLAGS);
+  // The art message is NOT V2 — the flag can't be dropped once set, so the
+  // image lives in a message that never carries it. Ephemeral, art as an
+  // attachment, buttons directly under it, no V2 components anywhere.
+  assert.ok(!(message.flags & 32768), 'IS_COMPONENTS_V2 set on the art message');
+  assert.ok(message.flags & 64, 'not ephemeral');
   assert.equal(message.files.length, 1);
-
-  // The art sits at the TOP of the tree, not inside the Container: a
-  // Container insets what it holds, and the card art is portrait enough that
-  // the inset render is visibly small. Only the buttons are framed.
-  const [gallery, container] = message.components;
-  assert.equal(gallery.type, MEDIA_GALLERY);
-  assert.equal(gallery.items[0].media.url, `attachment://${message.files[0].name}`);
-  assert.equal(container.type, CONTAINER);
-  assert.ok(container.accent_color, 'no accent colour on the container');
   assert.ok(
-    !container.components.some((c) => c.type === MEDIA_GALLERY),
-    'card art is back inside the container',
+    message.components.every((c) => c.type === ACTION_ROW),
+    'a non-row component is on the art message',
   );
 
   const buttons = buttonsIn(message.components);
@@ -146,35 +142,33 @@ test('step 2 reveals the art with exactly three response buttons', async () => {
     const key = button.custom_id.split(':')[3];
     assert.equal(button.label, sample.responses[key].label);
     assert.equal(button.style, RESPONSE_STYLES[key]);
-    assert.equal(button.disabled, false);
+    assert.ok(!button.disabled);
   }
 });
 
-test('step 3 reveals the close where the buttons were, art intact', () => {
+test('step 3 is the close as its own V2 text message, no art, no buttons', () => {
   const message = buildWardingResultMessage(sample.key, 'playful', '+2 — **Devoted**');
 
   assert.equal(message.content, undefined);
   assert.equal(message.flags, WARDING_MESSAGE_FLAGS);
-  // No `attachments` key at all: the edit must leave the uploaded card image
-  // on the message rather than clearing it.
-  assert.equal(message.attachments, undefined);
+  assert.equal(message.files, undefined);
 
-  const [gallery, container] = message.components;
-  assert.equal(gallery.type, MEDIA_GALLERY);
-  assert.equal(container.type, CONTAINER);
-  assert.ok(
-    !container.components.some((c) => c.type === MEDIA_GALLERY),
-    'card art is back inside the container',
-  );
-
-  const text = container.components[0];
+  assert.equal(message.components.length, 1);
+  const [text] = message.components;
   assert.equal(text.type, TEXT_DISPLAY);
   assert.ok(text.content.startsWith(sample.responses.playful.close));
   assert.ok(text.content.includes('+2'));
+  assert.equal(buttonsIn(message.components).length, 0);
+});
 
-  const buttons = buttonsIn(message.components);
-  assert.equal(buttons.length, 3);
-  assert.ok(buttons.every((b) => b.disabled), 'buttons still clickable');
+test('the pick edits the art message down to just the art', () => {
+  const update = buildWardingPickedUpdate();
+
+  assert.deepEqual(update.components, []);
+  // Left out so the uploaded card image stays, and not V2 so the art message
+  // never picks the flag up.
+  assert.equal(update.attachments, undefined);
+  assert.ok(!(update.flags & 32768));
 });
 
 test('an unwritten stub is never drawn, and never rendered if asked for', async () => {
@@ -218,7 +212,7 @@ test('an expired or unknown card falls back instead of throwing', async () => {
   assert.equal(unknown.content, 'The moment has passed.');
 });
 
-test('disableWardingButtons reaches buttons nested in a container', () => {
+test('disableWardingButtons disables every button', () => {
   const message = buildWardingDialogueMessage(sample);
   const disabled = disableWardingButtons(message.components);
 
@@ -226,7 +220,4 @@ test('disableWardingButtons reaches buttons nested in a container', () => {
   // Non-destructive: the tree it was handed is untouched, since the ack and
   // the cached original are the same objects.
   assert.ok(!buttonsIn(message.components)[0].disabled);
-  // The container survives the walk — dropping it would drop the accent bar.
-  assert.equal(disabled[0].type, CONTAINER);
-  assert.equal(disabled[0].accent_color, message.components[0].accent_color);
 });

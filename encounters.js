@@ -326,32 +326,27 @@ export async function buildRoamSpawnMessage(encounterId) {
 // the button that reveals it, `greeting` is painted into the art, and the
 // picked response's `close` replaces the buttons.
 //
-// COMPONENTS V2. Unlike every other message this app sends, a warding message
-// is built with Discord's V2 component tree (IS_COMPONENTS_V2, 1 << 15) rather
-// than `content` + `embeds`. The reason is the accent bar: V1 gives a custom
-// colour only to an embed, and an embed cannot hold the buttons, so a colour
-// and a button row can't be framed together. A V2 Container can — art, text
-// and buttons all sit inside one bordered block with WARDING_ACCENT_COLOR down
-// its edge. That bar plus the sparkle on the approach button is the whole
-// "this one is rare" signal, and it costs the player nothing to read: the
-// encounter still plays exactly like a /roam.
+// COMPONENTS V2, ON THE TEXT MESSAGES ONLY. Unlike every other message this
+// app sends, the two warding text messages — step 1 (`line` + approach button)
+// and step 3 (`close`) — are built with Discord's V2 component tree
+// (IS_COMPONENTS_V2, 1 << 15) rather than `content` + `embeds`. The art message
+// between them (step 2) is a plain V1 message: the composed PNG as an
+// attachment with the response buttons under it, exactly like a /roam reveal.
+// The flag is fixed at creation and an edit cannot drop it, so V2 is kept off
+// the art by making each step its own message: step 2 is a followup to the
+// step-1 click, and step 3's `close` is a followup to the response click while
+// the step-2 message is edited to remove its buttons. The green approach
+// button plus its sparkle is the "this one is rare" signal, and it costs the
+// player nothing to read: the encounter still plays exactly like a /roam.
 //
-// Two V2 rules the builders below have to respect:
-//   - A V2 message must NOT carry `content` or `embeds`. Every string is a
-//     TEXT_DISPLAY component instead, and the image is a MEDIA_GALLERY item
-//     pointing at the attachment. Discord rejects the message otherwise.
-//   - The flag is fixed at creation and an edit cannot drop it, so every step
-//     of the flow — reveal and result — has to stay V2 once step 1 is.
+// The V2 rule the two text builders have to respect: a V2 message must NOT
+// carry `content` or `embeds`. Every string is a TEXT_DISPLAY component
+// instead. Discord rejects the message otherwise.
 
-// EPHEMERAL, plus the opt-in to the V2 component tree. Every warding message
-// carries this; nothing else in the app does.
+// EPHEMERAL, plus the opt-in to the V2 component tree. Only the step-1 and
+// step-3 text messages carry this; the art message is plain EPHEMERAL_FLAG.
 export const WARDING_MESSAGE_FLAGS =
   EPHEMERAL_FLAG | InteractionResponseFlags.IS_COMPONENTS_V2;
-
-// The Container's accent bar. Gold, against the blue of a mission embed and
-// the purples and pinks the relationship levels use (constants/game.js), so a
-// warding message is not mistakable for either at a glance.
-const WARDING_ACCENT_COLOR = 0xf5c542;
 
 // The approach button. Deliberately NOT the PRIMARY blurple a /roam approach
 // button uses — the step-1 message is otherwise identical in shape to a normal
@@ -378,11 +373,9 @@ const WARDING_RESPONSE_ORDER = RESPONSE_TYPE_ORDER.filter(
   (type) => type !== RESPONSE_TYPES.NEUTRAL,
 );
 
-// Grey out every button in a V2 component tree, wherever it sits. The V1
-// helper above walks a flat list of action rows; a warding message nests its
-// rows inside a Container, so the walk has to recurse. Used for the ack that
-// disables the approach button the moment it is clicked — which, on a V2
-// message, has to re-send the whole tree rather than a `content` + rows pair.
+// Grey out every button in a V2 component tree. Used for the ack that disables
+// the approach button the moment it is clicked — which, on a V2 message, has to
+// re-send the whole tree rather than a `content` + rows pair.
 export function disableWardingButtons(components) {
   return (components || []).map((component) => {
     if (component.type === MessageComponentTypes.BUTTON) {
@@ -395,36 +388,11 @@ export function disableWardingButtons(components) {
   });
 }
 
-// The card art, as a top-level media gallery — deliberately NOT inside the
-// Container. A Container insets what it holds, so an image nested in one
-// renders noticeably smaller than the same attachment at the top of the tree,
-// and the card art is portrait (944x2048), which Discord already scales down
-// hard to fit its height cap. Only the text and the buttons need the accent
-// bar; the art is better off full width above it.
-function wardingGallery() {
-  return {
-    type: MessageComponentTypes.MEDIA_GALLERY,
-    items: [{ media: { url: `attachment://${WARDING_IMAGE_NAME}` } }],
-  };
-}
-
-// One Container wrapping the message's text and buttons, so the accent bar
-// runs down all of them rather than just a text block.
-function wardingContainer(components) {
-  return [
-    {
-      type: MessageComponentTypes.CONTAINER,
-      accent_color: WARDING_ACCENT_COLOR,
-      components,
-    },
-  ];
-}
-
 // The three response buttons, kind / playful / bold. Colours come from
 // RESPONSE_STYLES exactly as a normal encounter's do — a warding pick means
 // the same thing a normal pick means, so it should not be recoloured — and
 // there is no NEUTRAL fourth (docs/warding-cards.md §3).
-function wardingResponseRows(cardKey, responses, disabled = false) {
+function wardingResponseRows(cardKey, responses) {
   return WARDING_RESPONSE_ORDER.filter((key) => responses[key]).map((key) => ({
     type: MessageComponentTypes.ACTION_ROW,
     components: [
@@ -433,7 +401,6 @@ function wardingResponseRows(cardKey, responses, disabled = false) {
         style: RESPONSE_STYLES[key],
         label: responses[key].label,
         custom_id: `ward:resp:${cardKey}:${key}`,
-        disabled,
       },
     ],
   }));
@@ -478,7 +445,7 @@ export function buildWardingDialogueMessage(card) {
 
   return {
     flags: WARDING_MESSAGE_FLAGS,
-    components: wardingContainer([
+    components: [
       { type: MessageComponentTypes.TEXT_DISPLAY, content: card.line },
       {
         type: MessageComponentTypes.ACTION_ROW,
@@ -492,7 +459,7 @@ export function buildWardingDialogueMessage(card) {
           },
         ],
       },
-    ]),
+    ],
   };
 }
 
@@ -517,20 +484,26 @@ export async function buildWardingSpawnMessage(encounterId) {
 
   return {
     files: [{ attachment: imageBuffer, name: WARDING_IMAGE_NAME }],
-    flags: WARDING_MESSAGE_FLAGS,
-    components: [
-      wardingGallery(),
-      ...wardingContainer(wardingResponseRows(encounter.wardingCardKey, card.responses)),
-    ],
+    // Plain V1: the attachment is the art, with nothing but the buttons under
+    // it. Deliberately not V2 (see the header above).
+    flags: EPHEMERAL_FLAG,
+    components: wardingResponseRows(encounter.wardingCardKey, card.responses),
   };
 }
 
 /**
- * Step 3: the picked response's `close`, revealed as text under the card where
- * the buttons were. The art stays — `attachments` is left alone so the edit
- * keeps the image the reveal uploaded — and the buttons are re-rendered
- * disabled rather than dropped, so the player can still see which one they
- * picked.
+ * The edit that ends step 2: the response buttons come off the art message and
+ * nothing else changes. `attachments` is left out so the uploaded card image
+ * stays on the message.
+ */
+export function buildWardingPickedUpdate() {
+  return { components: [], flags: EPHEMERAL_FLAG };
+}
+
+/**
+ * Step 3: the picked response's `close`, as its own V2 text message sent under
+ * the art. The art message itself is not touched here — buildWardingPickedUpdate
+ * strips its buttons — so no V2 flag ever lands on the image.
  *
  * Pure rendering: the affinity grant, the pity refill and the errand signature
  * all belong to the caller (docs/warding-cards.md §9), which passes whatever
@@ -548,13 +521,7 @@ export function buildWardingResultMessage(cardKey, responseKey, deltaLine = null
 
   return {
     flags: WARDING_MESSAGE_FLAGS,
-    components: [
-      wardingGallery(),
-      ...wardingContainer([
-        { type: MessageComponentTypes.TEXT_DISPLAY, content: text },
-        ...wardingResponseRows(cardKey, card.responses, true),
-      ]),
-    ],
+    components: [{ type: MessageComponentTypes.TEXT_DISPLAY, content: text }],
   };
 }
 
