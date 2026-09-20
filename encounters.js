@@ -395,8 +395,21 @@ export function disableWardingButtons(components) {
   });
 }
 
-// One Container wrapping the whole message, so the accent bar runs down
-// everything in it rather than just a text block.
+// The card art, as a top-level media gallery — deliberately NOT inside the
+// Container. A Container insets what it holds, so an image nested in one
+// renders noticeably smaller than the same attachment at the top of the tree,
+// and the card art is portrait (944x2048), which Discord already scales down
+// hard to fit its height cap. Only the text and the buttons need the accent
+// bar; the art is better off full width above it.
+function wardingGallery() {
+  return {
+    type: MessageComponentTypes.MEDIA_GALLERY,
+    items: [{ media: { url: `attachment://${WARDING_IMAGE_NAME}` } }],
+  };
+}
+
+// One Container wrapping the message's text and buttons, so the accent bar
+// runs down all of them rather than just a text block.
 function wardingContainer(components) {
   return [
     {
@@ -505,13 +518,10 @@ export async function buildWardingSpawnMessage(encounterId) {
   return {
     files: [{ attachment: imageBuffer, name: WARDING_IMAGE_NAME }],
     flags: WARDING_MESSAGE_FLAGS,
-    components: wardingContainer([
-      {
-        type: MessageComponentTypes.MEDIA_GALLERY,
-        items: [{ media: { url: `attachment://${WARDING_IMAGE_NAME}` } }],
-      },
-      ...wardingResponseRows(encounter.wardingCardKey, card.responses),
-    ]),
+    components: [
+      wardingGallery(),
+      ...wardingContainer(wardingResponseRows(encounter.wardingCardKey, card.responses)),
+    ],
   };
 }
 
@@ -538,14 +548,13 @@ export function buildWardingResultMessage(cardKey, responseKey, deltaLine = null
 
   return {
     flags: WARDING_MESSAGE_FLAGS,
-    components: wardingContainer([
-      {
-        type: MessageComponentTypes.MEDIA_GALLERY,
-        items: [{ media: { url: `attachment://${WARDING_IMAGE_NAME}` } }],
-      },
-      { type: MessageComponentTypes.TEXT_DISPLAY, content: text },
-      ...wardingResponseRows(cardKey, card.responses, true),
-    ]),
+    components: [
+      wardingGallery(),
+      ...wardingContainer([
+        { type: MessageComponentTypes.TEXT_DISPLAY, content: text },
+        ...wardingResponseRows(cardKey, card.responses, true),
+      ]),
+    ],
   };
 }
 

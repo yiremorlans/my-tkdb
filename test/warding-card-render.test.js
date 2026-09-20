@@ -123,10 +123,18 @@ test('step 2 reveals the art with exactly three response buttons', async () => {
   assert.equal(message.flags, WARDING_MESSAGE_FLAGS);
   assert.equal(message.files.length, 1);
 
-  const [container] = message.components;
-  const [gallery] = container.components;
+  // The art sits at the TOP of the tree, not inside the Container: a
+  // Container insets what it holds, and the card art is portrait enough that
+  // the inset render is visibly small. Only the buttons are framed.
+  const [gallery, container] = message.components;
   assert.equal(gallery.type, MEDIA_GALLERY);
   assert.equal(gallery.items[0].media.url, `attachment://${message.files[0].name}`);
+  assert.equal(container.type, CONTAINER);
+  assert.ok(container.accent_color, 'no accent colour on the container');
+  assert.ok(
+    !container.components.some((c) => c.type === MEDIA_GALLERY),
+    'card art is back inside the container',
+  );
 
   const buttons = buttonsIn(message.components);
   assert.equal(buttons.length, 3, 'a warding card offers exactly three picks');
@@ -151,10 +159,15 @@ test('step 3 reveals the close where the buttons were, art intact', () => {
   // on the message rather than clearing it.
   assert.equal(message.attachments, undefined);
 
-  const [container] = message.components;
-  assert.equal(container.components[0].type, MEDIA_GALLERY);
+  const [gallery, container] = message.components;
+  assert.equal(gallery.type, MEDIA_GALLERY);
+  assert.equal(container.type, CONTAINER);
+  assert.ok(
+    !container.components.some((c) => c.type === MEDIA_GALLERY),
+    'card art is back inside the container',
+  );
 
-  const text = container.components[1];
+  const text = container.components[0];
   assert.equal(text.type, TEXT_DISPLAY);
   assert.ok(text.content.startsWith(sample.responses.playful.close));
   assert.ok(text.content.includes('+2'));

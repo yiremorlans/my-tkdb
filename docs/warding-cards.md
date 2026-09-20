@@ -157,17 +157,23 @@ tree (`IS_COMPONENTS_V2`, `1 << 15`); everything else is `content` + `embeds`.
 **Why.** The rare-encounter signal has to sit on the message itself, and V1
 gives a custom colour only to an embed — which cannot hold buttons. So under V1
 a coloured block and a button row can never be the same block. A V2
-`CONTAINER` can: art, text and buttons all sit inside one bordered block with
+`CONTAINER` can: text and buttons sit inside one bordered block with
 `WARDING_ACCENT_COLOR` (gold, `0xf5c542`) down its edge, distinct from the blue
 of a mission embed and the purples and pinks of the relationship levels.
+
+**The art stays out of the Container.** A Container insets what it holds, and
+the card art is portrait (944x2048) — already scaled down hard by Discord's
+height cap — so nesting it renders a narrow strip. The `MEDIA_GALLERY` is a
+top-level component above the Container (`wardingGallery` in `encounters.js`);
+only the `line`, the `close` and the buttons need the accent bar.
 
 **The rules that come with it**, both pinned by
 `test/warding-card-render.test.js`:
 
 - A V2 message must carry **no `content` and no `embeds`**. Text is a
-  `TEXT_DISPLAY` component, the card art is a `MEDIA_GALLERY` item pointing at
-  `attachment://warding.png`, and the attachment rides along in `files` as
-  usual. Discord rejects the message otherwise.
+  `TEXT_DISPLAY` component, the card art is a top-level `MEDIA_GALLERY` item
+  pointing at `attachment://warding.png`, and the attachment rides along in
+  `files` as usual. Discord rejects the message otherwise.
 - The flag is fixed at creation and **an edit cannot drop it**, so every step
   of the flow stays V2 once step 1 is — including the ack that disables the
   approach button, which re-sends the whole tree rather than a `content` +
@@ -180,7 +186,7 @@ of a mission embed and the purples and pinks of the relationship levels.
 |---|---|---|
 | step-1 button colour | `PRIMARY` (blurple) | `SUCCESS` (green) |
 | step-1 button emoji | none | ✨ |
-| message frame | none | gold-accented Container |
+| message frame | none | gold-accented Container under the art |
 | response button colours | `RESPONSE_STYLES` | `RESPONSE_STYLES` (unchanged) |
 
 The response buttons keep the normal colours on purpose: a warding pick means

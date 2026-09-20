@@ -12,6 +12,11 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 // our own face and registering it here gives canvas something to draw with
 // regardless of what the host provides. Must run before any context is created.
 const DIALOGUE_FONT_FAMILY = 'DejaVu Sans';
+
+// The canvas width the dialogue box's padding, font size and line height are
+// authored for: a /roam composite is 1000x1000 (assets/bg). drawDialogueBox
+// scales them off this, so widths other than 1000 keep the same proportions.
+const DIALOGUE_REFERENCE_WIDTH = 1000;
 const DIALOGUE_FONT_PATH = join(__dirname, 'assets/fonts/DejaVuSans.ttf');
 
 if (!fs.existsSync(DIALOGUE_FONT_PATH)) {
@@ -65,9 +70,15 @@ async function drawEncounterBase(bgFilename, charFilename, { drawCharacter = tru
 // the caller in the log line.
 function drawDialogueBox(canvas, ctx, text, label = 'composeEncounter') {
   console.log(`[${label}] Drawing dialogue box`);
-  const padding = 24;
-  const fontSize = 30;
-  const lineHeight = 40;
+  // The metrics are authored against a 1000px-wide canvas — a /roam composite,
+  // which is exactly that — and scale with the canvas from there, so a card
+  // rendered at a different width gets text of the same *relative* size rather
+  // than a band that shrinks as the frame grows. At 1000 wide the scale is 1
+  // and the numbers are the originals.
+  const scale = canvas.width / DIALOGUE_REFERENCE_WIDTH;
+  const padding = Math.round(24 * scale);
+  const fontSize = Math.round(30 * scale);
+  const lineHeight = Math.round(40 * scale);
 
   // White text.
   ctx.fillStyle = '#ffffff';
@@ -131,12 +142,29 @@ export async function composeEncounter(bgFilename, charFilename, dialogue = null
   return buffer;
 }
 
+// The width warding cards are composed at, and the one dimension the message
+// gives us: the gallery is top-level, outside the Container, so nothing insets
+// it. Discord hands that item the full width of the message content area —
+// roughly 550 CSS px on desktop — so this is that at 2x, for HiDPI screens.
+// Wider art is scaled down to it (by width, aspect ratio preserved); narrower
+// art is left alone rather than upscaled. This is the only place the card's
+// pixel size is decided.
+//
+// Height is NOT capped here: the card keeps its source aspect ratio. Note that
+// Discord also caps how tall it will draw an image, so a very tall portrait is
+// scaled down by the client to fit that cap and ends up narrower than this
+// width on screen. Cropping the art toward a squarer aspect is the only lever
+// that changes that; the width below is the ceiling, not a guarantee.
+export const WARDING_RENDER_WIDTH = 1100;
+
 // A warding card (docs/warding-cards.md): the art in assets/warding/ IS the
 // whole image — no background layer, no character layer, nothing composited
 // under it — and the card's `greeting` is painted into the same dialogue box a
-// /roam scene uses. The canvas is sized to the card, which is portrait and much
-// taller than a background, so a long greeting costs proportionally less of the
-// frame than the same text would over a /roam composite.
+// /roam scene uses. The canvas is at most WARDING_RENDER_WIDTH wide with the
+// height following the source aspect ratio, so no card is ever wider than the
+// message can show. Cards are portrait and much taller than a background, so a
+// long greeting costs proportionally less of the frame than the same text
+// would over a /roam composite.
 export async function composeWardingCard(cardFilename, greeting = null) {
   const cardPath = join(__dirname, `${WARDING_ASSET_DIR}/${cardFilename}`);
 
@@ -145,9 +173,23 @@ export async function composeWardingCard(cardFilename, greeting = null) {
   const cardImg = await loadImage(cardPath);
   console.log('[composeWardingCard] Card loaded in', Date.now() - loadStart, 'ms');
 
-  const canvas = createCanvas(cardImg.width, cardImg.height);
+  // Scaled BY WIDTH, height following the source aspect ratio — width is the
+  // dimension the message gives us. Never upscaled, though: blowing 944px of
+  // art up to 1100 buys no on-screen detail (the client shows it at ~550 CSS
+  // px either way) and costs sharpness and a much heavier PNG, so art narrower
+  // than the target is composed as authored.
+  const width = Math.min(WARDING_RENDER_WIDTH, cardImg.width);
+  const height = Math.round(cardImg.height * (width / cardImg.width));
+
+  console.log(
+    '[composeWardingCard] Scaling',
+    `${cardImg.width}x${cardImg.height}`,
+    '->',
+    `${width}x${height}`,
+  );
+  const canvas = createCanvas(width, height);
   const ctx = canvas.getContext('2d');
-  ctx.drawImage(cardImg, 0, 0);
+  ctx.drawImage(cardImg, 0, 0, width, height);
 
   if (greeting) drawDialogueBox(canvas, ctx, greeting, 'composeWardingCard');
 
