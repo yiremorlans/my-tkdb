@@ -321,30 +321,31 @@ export async function buildRoamSpawnMessage(encounterId) {
 // and no pity counter exists to move.
 //
 // The rare outcome /roam and /meet can land on (docs/warding-cards.md). These
-// builders are the roam builders with a different base image and a
+// three builders are the roam builders with a different base image and a
 // different message format, and they read a card exactly the way the roam
 // builders read a dialogue beat: `line` is the step-1 text, `approach` labels
 // the button that reveals it, `greeting` is painted into the art, and the
-// picked response's `close` replaces the buttons on
-//  the art message.
+// picked response's `close` replaces the buttons.
 //
-// COMPONENTS V2, ON THE STEP-1 TEXT MESSAGE ONLY. Unlike every other message
-// this app sends, step 1 (`line` + approach button) is built with Discord's V2
-// component tree (IS_COMPONENTS_V2, 1 << 15) rather than `content` + `embeds`.
-// The art message (step 2) is a plain V1 message: the composed PNG as an
-// attachment with the response buttons under it, exactly like a /roam reveal.
-// The flag is fixed at creation and an edit cannot drop it, so V2 is kept off
-// the art by making step 2 its own followup to the step-1 click. Step 3 is not
-// a message at all: the response click edits the art message, dropping the
-// buttons and putting `close` in its `content`. The green approach
-// button plus its sparkle is the "this one is rare" signal, and it costs the
+// COMPONENTS V2, ON THE TEXT MESSAGES ONLY. Unlike every other message this
+// app sends, the two warding text messages — step 1 (`line` + approach button)
+// and step 3 (`close`, in a gold-trimmed container) — are built with Discord's
+// V2 component tree (IS_COMPONENTS_V2, 1 << 15) rather than `content` +
+// `embeds`. The art message between them (step 2) is a plain V1 message: the
+// composed PNG as an attachment with the response buttons under it, exactly
+// like a /roam reveal. The flag is fixed at creation and an edit cannot drop
+// it, and V1 `content` renders above the image, so each step is its own
+// message: step 2 is a followup to the step-1 click, and step 3's `close` is a
+// followup to the response click while the step-2 message is edited to remove
+// its buttons. The green approach button plus its sparkle is the "this one is rare" signal, and it costs the
 // player nothing to read: the encounter still plays exactly like a /roam.
 //
-// The V2 rule the step-1 builder has to respect: a V2 message must NOT carry
-// `content` or `embeds`. Every string is a TEXT_DISPLAY component instead. Discord rejects the message otherwise.
+// The V2 rule the two text builders have to respect: a V2 message must NOT
+// carry `content` or `embeds`. Every string is a TEXT_DISPLAY component
+// instead. Discord rejects the message otherwise.
 
-// EPHEMERAL, plus the opt-in to the V2 component tree. Only the step-1 text
-// message carries this; the art message is plain EPHEMERAL_FLAG.
+// EPHEMERAL, plus the opt-in to the V2 component tree. Only the step-1 and
+// step-3 text messages carry this; the art message is plain EPHEMERAL_FLAG.
 export const WARDING_MESSAGE_FLAGS =
   EPHEMERAL_FLAG | InteractionResponseFlags.IS_COMPONENTS_V2;
 
@@ -364,6 +365,13 @@ const WARDING_APPROACH_STYLE = ButtonStyleTypes.SUCCESS;
 const WARDING_SPARKLE = { name: '✨' };
 
 const WARDING_IMAGE_NAME = 'warding.png';
+
+// The gold trim on the step-3 close: a V2 CONTAINER's accent_color draws the
+// bar down its left edge. Only the close gets one — the step-1 line stays a
+// bare text block. Literal 17 because the installed discord-interactions enum
+// predates CONTAINER.
+const WARDING_CONTAINER_TYPE = 17;
+const WARDING_GOLD = 0xffd700;
 
 // kind / playful / bold in the order RESPONSE_TYPE_ORDER shows them, minus the
 // NEUTRAL a warding card never offers. Derived rather than hardcoded so the
@@ -492,27 +500,44 @@ export async function buildWardingSpawnMessage(encounterId) {
 }
 
 /**
- * Step 3, and the edit that ends step 2: the response buttons come off the art
- * message and the picked response's `close` goes into its `content`, in the
- * slot a normal encounter gives `getReactionLine`. `attachments` is left out so
- * the uploaded card image stays on the message.
- *
- * The art message is plain V1, so it can carry `content` — no V2 involved, and
- * no second message. Pure rendering: the affinity grant, the pity refill and
- * the errand signature all belong to the caller (docs/warding-cards.md §9),
- * which passes whatever it wrote in as `deltaLine` — the same
- * "+2 — 💖 Close Friend" line a normal encounter puts under its reaction.
+ * The edit that ends step 2: the response buttons come off the art message and
+ * nothing else changes. `attachments` is left out so the uploaded card image
+ * stays on the message.
  */
-export function buildWardingPickedUpdate(cardKey, responseKey, deltaLine = null) {
-  const response = WARDING_CARDS[cardKey]?.responses?.[responseKey];
+export function buildWardingPickedUpdate() {
+  return { components: [], flags: EPHEMERAL_FLAG };
+}
+
+/**
+ * Step 3: the picked response's `close`, as its own V2 text message sent under
+ * the art, wrapped in a gold-trimmed container. The art message itself is not
+ * touched here — buildWardingPickedUpdate strips its buttons — so no V2 flag
+ * ever lands on the image. (V1 `content` would render ABOVE the image, which
+ * is why the close is its own message.)
+ *
+ * Pure rendering: the affinity grant, the pity refill and the errand signature
+ * all belong to the caller (docs/warding-cards.md §9), which passes whatever
+ * it wrote in as `deltaLine` — the same "+2 — 💖 Close Friend" line a normal
+ * encounter puts under its reaction.
+ */
+export function buildWardingResultMessage(cardKey, responseKey, deltaLine = null) {
+  const card = WARDING_CARDS[cardKey];
+  const response = card?.responses?.[responseKey];
   if (!response) {
-    return { content: 'The moment has passed.', components: [], flags: EPHEMERAL_FLAG };
+    return { content: 'The moment has passed.', flags: EPHEMERAL_FLAG };
   }
 
+  const text = [response.close, deltaLine].filter(Boolean).join('\n\n');
+
   return {
-    content: [response.close, deltaLine].filter(Boolean).join('\n\n'),
-    components: [],
-    flags: EPHEMERAL_FLAG,
+    flags: WARDING_MESSAGE_FLAGS,
+    components: [
+      {
+        type: WARDING_CONTAINER_TYPE,
+        accent_color: WARDING_GOLD,
+        components: [{ type: MessageComponentTypes.TEXT_DISPLAY, content: text }],
+      },
+    ],
   };
 }
 

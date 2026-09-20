@@ -103,9 +103,11 @@ Same three-step shape every `/roam` uses, so it clears Discord's 3s ack:
    `assets/warding/<file>`; there is no background or character layer), and the
    art plus the three `responses` buttons are sent as a new plain (non-V2)
    message. The step-1 message stays, with its button disabled, as in `/roam`.
-3. **On a pick** — the art message is edited: its buttons drop, the art stays,
-   and that response's `close` goes into its `content` (above the image), in the
-   slot a normal encounter gives `getReactionLine`. No new message is sent.
+3. **On a pick** — the art message is edited to drop its buttons (the art
+   stays), and that response's `close` is sent as a new V2 text message under
+   it, in a gold-trimmed container, in the slot a normal encounter gives
+   `getReactionLine`. It is its own message because V1 `content` renders above
+   the image, not below it.
 
 | Render slot | `/roam` beat | warding card |
 |---|---|---|
@@ -152,17 +154,20 @@ WARDING_PITY           = 25     // pity counter start / refill value
 
 ## 3a. Components V2
 
-Only one warding message uses Discord's V2 component tree (`IS_COMPONENTS_V2`,
-`1 << 15`): step 1 (the `line` and the approach button). The art message is
-plain V1 — the composed PNG as an attachment with the response buttons under
-it, and later the `close` as its `content`. Everything else in the app is
-`content` + `embeds`. There is no `CONTAINER` and no accent bar anywhere.
+Only two warding messages use Discord's V2 component tree (`IS_COMPONENTS_V2`,
+`1 << 15`): step 1 (the `line` and the approach button) and step 3 (the
+`close`). The art message between them is plain V1 — the composed PNG as an
+attachment with the response buttons under it. Everything else in the app is
+`content` + `embeds`. The one `CONTAINER` is the step-3 close, with a gold (`0xFFD700`) `accent_color`
+bar; step 1 is a bare text block.
 
 **Why separate messages.** The flag is fixed at creation and **an edit cannot
 drop it**, so V2 can only be kept off the art by never putting the art in a V2
-message. Step 2 is therefore its own followup to the step-1 click, and the
-response click edits it (`buildWardingPickedUpdate`) to remove the buttons and
-add the `close` as `content`.
+message, and V1 `content` renders above an image, so the close cannot go
+under the art any other way. Each step is therefore its own message: step 2 is
+a followup to the step-1 click, and step 3's `close` is a followup to the
+response click, while the step-2 message is edited only to remove its buttons
+(`buildWardingPickedUpdate`).
 
 **The rule that comes with V2**, pinned by `test/warding-card-render.test.js`:
 a V2 message must carry **no `content` and no `embeds`**. Text is a
@@ -189,12 +194,13 @@ follows, and green is the only one left that does not read as a warning.
 |---|---|
 | `buildWardingDialogueMessage(card)` | `line` + sparkle approach button — **returns `null`** if the card cannot be rendered; the caller falls back to the normal encounter and counts the roll as a miss (§4) |
 | `buildWardingSpawnMessage(encounterId)` | art + three response buttons — plain V1 |
-| `buildWardingPickedUpdate(cardKey, responseKey, deltaLine)` | the edit that removes the buttons from the art message and writes `close` into its `content` |
+| `buildWardingPickedUpdate()` | the edit that removes the buttons from the art message |
+| `buildWardingResultMessage(cardKey, responseKey, deltaLine)` | `close` as its own gold-trimmed V2 message |
 
-`buildWardingPickedUpdate` is pure rendering: the affinity grant, the pity
+`buildWardingResultMessage` is pure rendering: the affinity grant, the pity
 refill and the errand signature belong to the caller, which passes what it
-wrote as `deltaLine`. It sends no `attachments` key at all, so the edit leaves
-the uploaded card image on the message.
+wrote as `deltaLine`. `buildWardingPickedUpdate` sends no `attachments` key at
+all, so the edit leaves the uploaded card image on the message.
 
 **Previewing it.** `/encdev warding` (owner only) renders a card straight to
 the caller — `character:` draws from that character's written cards, `card:`
@@ -366,7 +372,7 @@ player-facing commands reaches it.
    `/encdev warding` preview all exist. What is NOT done is everything that
    touches state: the routing grants no affinity, refills no pity, claims no
    cooldown and signs no errand. That work lands in the `ward:resp` branch,
-   where `buildWardingPickedUpdate`'s `deltaLine` is filled in.
+   where `buildWardingResultMessage`'s `deltaLine` is filled in.
 5. **Response handler:** a `custom_id` namespace for the warding choice (e.g.
    `ward:<characterId>:<key>`), granting `WARDING_AFFINITY_GAIN` flat, refilling
    pity, and going through `claimCommandUse` on the same `roam`/`meet` cooldown

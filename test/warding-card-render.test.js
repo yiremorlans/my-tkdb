@@ -23,6 +23,7 @@ mock.module('../imageComposition.js', {
 const {
   buildWardingDialogueMessage,
   buildWardingPickedUpdate,
+  buildWardingResultMessage,
   buildWardingSpawnMessage,
   disableWardingButtons,
   WARDING_MESSAGE_FLAGS,
@@ -145,14 +146,31 @@ test('step 2 is a plain V1 message: the art plus exactly three response buttons'
   }
 });
 
-test('the pick edits the art message: close in content, buttons gone, image kept', () => {
-  const update = buildWardingPickedUpdate(sample.key, 'playful', '+2 — **Devoted**');
+test('step 3 is the close in a gold-trimmed V2 container, no art, no buttons', () => {
+  const message = buildWardingResultMessage(sample.key, 'playful', '+2 — **Devoted**');
 
-  assert.ok(update.content.startsWith(sample.responses.playful.close));
-  assert.ok(update.content.includes('+2'));
+  assert.equal(message.content, undefined);
+  assert.equal(message.flags, WARDING_MESSAGE_FLAGS);
+  assert.equal(message.files, undefined);
+
+  assert.equal(message.components.length, 1);
+  const [container] = message.components;
+  assert.equal(container.type, CONTAINER);
+  assert.equal(container.accent_color, 0xffd700);
+  assert.equal(container.components.length, 1);
+  const [text] = container.components;
+  assert.equal(text.type, TEXT_DISPLAY);
+  assert.ok(text.content.startsWith(sample.responses.playful.close));
+  assert.ok(text.content.includes('+2'));
+  assert.equal(buttonsIn(message.components).length, 0);
+});
+
+test('the pick edits the art message down to just the art', () => {
+  const update = buildWardingPickedUpdate();
+
   assert.deepEqual(update.components, []);
   // Left out so the uploaded card image stays, and not V2 so the art message
-  // never picks the flag up (V2 would also forbid the `content` above).
+  // never picks the flag up.
   assert.equal(update.attachments, undefined);
   assert.ok(!(update.flags & 32768));
 });
@@ -194,7 +212,7 @@ test('an expired or unknown card falls back instead of throwing', async () => {
   // The fallback is a plain V1 message, so it must NOT claim to be V2.
   assert.ok(!(gone.flags & 32768));
 
-  const unknown = buildWardingPickedUpdate('NotACard', 'kind');
+  const unknown = buildWardingResultMessage('NotACard', 'kind');
   assert.equal(unknown.content, 'The moment has passed.');
 });
 
