@@ -55,6 +55,7 @@ mock.module('../discordRest.js', {
     // mock has to provide them or the whole module graph fails to load.
     openDmChannel: async () => 'dm-channel-1',
     postChannelTyping: async () => {},
+    getGuildRoles: async () => [],
   },
 });
 

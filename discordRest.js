@@ -135,3 +135,16 @@ export async function postChannelTyping(channelId) {
 
   if (!res.ok) throw await readError(res);
 }
+
+/**
+ * Every role in a guild. Used to find the opt-in ping role by name (utils.js
+ * pingRole), so it needs no permission beyond the bot being a member.
+ */
+export async function getGuildRoles(guildId) {
+  const res = await fetch(`${API_BASE}/guilds/${guildId}/roles`, {
+    headers: authHeaders(),
+  });
+
+  if (!res.ok) throw await readError(res);
+  return res.json();
+}

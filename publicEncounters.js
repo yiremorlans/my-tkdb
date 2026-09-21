@@ -3,7 +3,7 @@
 // tick loop that drives spawnEncounter/sweepExpiredEncounters lives in
 // encounterScheduler.js.
 
-import { EPHEMERAL } from './utils.js';
+import { EPHEMERAL, pingRole } from './utils.js';
 import {
   buildEncounterContent,
   clearGuessCooldowns,
@@ -68,15 +68,20 @@ import {
 
 // Composite the silhouette and post it — the shared shape behind a fresh
 // spawn and a moved-channel re-post (spawnEncounter / moveEncounterToChannel).
-// Callers differ only in which channel and which teaser/expiry feed the copy.
-async function postSilhouette(channelId, background, charFilename, teaser, expiresAt) {
+// Callers differ only in which channel and which teaser/expiry feed the copy,
+// and whether it pings: only a fresh scheduled spawn does. A moved re-post
+// would ping twice for one encounter, and an /encdev test spawn shouldn't
+// ping at all.
+async function postSilhouette(channelId, background, charFilename, teaser, expiresAt, { pingGuildId = null } = {}) {
   const image = await composeSilhouetteEncounter(background, charFilename);
+  // Otherwise the post names nobody and pings nobody — it's answered with a
+  // slash command, not a reply. The opt-in role is the one exception.
+  const { mention, allowed_mentions } = await pingRole(pingGuildId);
+  const content = buildEncounterContent(teaser, expiresAt);
   return postChannelMessage(channelId, {
-    content: buildEncounterContent(teaser, expiresAt),
+    content: mention ? `${mention}\n${content}` : content,
     files: [{ attachment: image, name: 'encounter.png' }],
-    // The post names nobody and pings nobody — it's answered with a slash
-    // command, not a reply.
-    allowed_mentions: { parse: [] },
+    allowed_mentions,
   });
 }
 
@@ -172,6 +177,7 @@ export async function spawnEncounter(guild, now = new Date(), { characterId, var
       charFilename,
       generated.teaser,
       expiresAt,
+      { pingGuildId: reanchor ? guild.guild_id : null },
     );
   } catch (err) {
     console.error(`[publicEncounters] Post failed for guild ${guild.guild_id}:`, err.message);

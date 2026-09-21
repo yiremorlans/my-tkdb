@@ -57,6 +57,7 @@ mock.module('../discordRest.js', {
     },
     openDmChannel: async () => 'dm-1',
     postChannelTyping: async () => {},
+    getGuildRoles: async () => [],
   },
 });
 

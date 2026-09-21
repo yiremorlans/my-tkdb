@@ -52,6 +52,7 @@ mock.module('../discordRest.js', {
     postChannelTyping: async (channelId) => {
       discord.typing.push(channelId);
     },
+    getGuildRoles: async () => [],
   },
 });
 

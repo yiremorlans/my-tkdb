@@ -16,7 +16,7 @@ import {
   InteractionResponseType,
   MessageComponentTypes,
 } from "discord-interactions";
-import { EPHEMERAL } from "./utils.js";
+import { EPHEMERAL, pingRole } from "./utils.js";
 
 import {
   ACCEPT_WINDOW_HOURS,
@@ -175,7 +175,9 @@ function acceptRow(missionId, { disabled = false } = {}) {
  *
  * `overrides` is only ever passed by the owner-only /missiondev test command:
  * `{ house, missionType }` pin what the rollers would otherwise decide. The
- * normal scheduler path passes nothing and everything is rolled.
+ * normal scheduler path passes nothing and everything is rolled. Only that
+ * normal path pings the guild's opt-in role; a /missiondev test post stays
+ * silent.
  */
 export async function spawnMission(
   guild,
@@ -226,13 +228,19 @@ export async function spawnMission(
     postExpiresAt: new Date(now.getTime() + POST_TTL_HOURS * 60 * 60 * 1000),
   });
 
+  // The request names nobody and pings nobody, except the opt-in role.
+  const { mention, allowed_mentions } = await pingRole(
+    guild.guild_id,
+    Object.keys(overrides).length === 0,
+  );
+
   let message;
   try {
     message = await postChannelMessage(channelId, {
+      content: mention || undefined,
       embeds: [missionEmbed(row.id, teaser)],
       components: acceptRow(row.id),
-      // The request names nobody and pings nobody.
-      allowed_mentions: { parse: [] },
+      allowed_mentions,
     });
   } catch (err) {
     console.error(
