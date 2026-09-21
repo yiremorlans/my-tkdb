@@ -632,7 +632,7 @@ export default {
         responses: {
           kind: ["Say you'll stay till he's done", "Offer to help tidy up"],
           playful: ["Ask if he just likes company", "Ask if he's stalling too"],
-          bold: ["Stay as long as you want", "Say you'll stay till he's done"],
+          bold: ["Stay as long as you want", "Tell him he's stuck with you"],
           neutral: ["Stay a while, say nothing", "Wait by the door"],
         },
       },

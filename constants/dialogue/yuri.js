@@ -64,10 +64,10 @@ export default {
           },
           {
             key: "playful",
-            label: "Ask if he was worried",
+            label: "Ask if he missed you",
             style: 1,
             close:
-              "Worried!? That is not the operative word! I was INCONVENIENCED! Professionally!\n\n...I drafted a contingency protocol for your absence. Any competent physician would have done the same!",
+              "Missed you!? Missing is not a clinical metric! I noted a DISCREPANCY! Professionally!\n\n...I drafted a contingency protocol for your absence. Any competent physician would have done the same!",
           },
           {
             key: "bold",
