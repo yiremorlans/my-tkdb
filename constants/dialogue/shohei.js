@@ -321,7 +321,7 @@ export default {
         greeting:
           '"What? Leo bailed. Somebody\'s gotta make sure you get back."',
         responses: {
-          kind: ["Say you're glad he did", "Thank him for waiting"],
+          kind: ["Say you're glad he did", "Walk back with him"],
           playful: ["Guess his real reason", "Tease him for not saying why"],
           bold: ["Ask him outright why", "Call out the silence"],
           neutral: [
@@ -390,7 +390,7 @@ export default {
         greeting:
           "\"Subaru. Get the rice bowl, it's mild and it'll fill you up. You'll like it. ...What about you, Senpai?\"",
         responses: {
-          kind: ["Thank him for helping Subaru", "Trust his pick for you too"],
+          kind: ["Say it's a good pick", "Trust his pick for you too"],
           playful: ["Order the same as Subaru", "Ask what he'd pick for you"],
           bold: ["Order before Subaru can", "Tell him to make it two"],
           neutral: ["Let Subaru take his time", "Wait at the counter"],
@@ -415,7 +415,7 @@ export default {
         approach: "Apologize for being late",
         greeting: '"Three minutes, Senpai. Your food\'s getting cold."',
         responses: {
-          kind: ["Thank him for waiting", "Eat it before it goes cold"],
+          kind: ["Thank him for keeping it warm", "Eat it before it goes cold"],
           playful: ["Ask if he timed you", "Blame Leo, obviously"],
           bold: ["Say three minutes is nothing", "Tell him to reheat it"],
           neutral: ["Shrug at being late", "Sit without a word"],
@@ -697,7 +697,7 @@ export default {
         greeting:
           '"Stick with me out there, Senpai. Whatever it throws at us, I\'ve got your back."',
         responses: {
-          kind: ["Say you've got his too", "Thank him for the backup"],
+          kind: ["Say you've got his too", "Thank him for backup"],
           playful: ["Ask who's got his back", "Say you'll try not to need it"],
           bold: ["Say you'll take point", "Tell him to try and keep up"],
           neutral: ["Nod, stay beside him", "Listen to the briefing"],

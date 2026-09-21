@@ -551,7 +551,7 @@ export default {
         greeting:
           '"It\'s a standing appointment. Scheduling you piecemeal was inefficient."',
         responses: {
-          kind: ["Say you'll be there", "Thank him for the slot"],
+          kind: ["Say you'll be there", "Promise never to miss it"],
           playful: ["Ask who you outranked", "Ask for a better time"],
           bold: ["Ask why you get a slot", "Call it what it is"],
           neutral: ["Note the time, say nothing", "Accept the appointment"],
@@ -590,7 +590,7 @@ export default {
         greeting:
           '"Jiro exaggerates. I merely had a gap. A large one. Deliberately."',
         responses: {
-          kind: ["Say the time means a lot", "Thank him for the afternoon"],
+          kind: ["Say the time means a lot", "Say you appreciate it"],
           playful: ["Ask Jiro for more details", "Ask how large the gap was"],
           bold: ["Ask why he cleared it", "Say you know he cleared it"],
           neutral: ["Let the two of them argue", "Let the excuse stand"],
@@ -662,7 +662,7 @@ export default {
         greeting:
           '"I replied promptly because the question was urgent. That is the only reason."',
         responses: {
-          kind: ["Thank him for the answer", "Say the answer helped"],
+          kind: ["Say you're glad you asked", "Say the answer helped"],
           playful: ["Ask a much longer question", "Time his next reply"],
           bold: ["Ask why he replied so fast", "Point out he wasn't busy"],
           neutral: ["Read it and move on", "Send back a short thanks"],

@@ -256,7 +256,7 @@ export default {
         approach: "Just say you're wandering",
         greeting: '"Gahaha! Someone interesting wandered in!"',
         responses: {
-          kind: ["Thank him for the welcome", "Smile back at him"],
+          kind: ["Say you're just wandering", "Smile back at him"],
           playful: [
             "Say you got lost on purpose",
             "Say you're after free snacks",
@@ -283,7 +283,7 @@ export default {
         greeting:
           '"Gahaha! You didn\'t even bat an eye. All right, I like you already."',
         responses: {
-          kind: ["Thank him for the compliment", "Say the animals seem happy"],
+          kind: ["Say you like him too", "Say the animals seem happy"],
           playful: ["Pretend you smell nothing", "Hold your nose, grinning"],
           bold: ["Ask to see the worst pen", "Say it takes more than that"],
           neutral: ["Shrug it off", "Just take it all in"],
@@ -390,7 +390,7 @@ export default {
         greeting:
           '"Everyone stuffs up sometimes. Don\'t let it get to you, just think of it as a funny story you can pull out later and laugh at! Gahaha!"',
         responses: {
-          kind: ["Thank him for noticing", "Say that helped, gently"],
+          kind: ["Laugh along with him", "Say that helped"],
           playful: ["Ask how he always knows", "Guess what tipped him off"],
           bold: [
             "Say you weren't worried at all",
@@ -610,7 +610,7 @@ export default {
         greeting:
           '"The Sinostra folks are causing a kerfuffle again. You take care not to get dragged into their mess too, you hear?"',
         responses: {
-          kind: ["Say you'll be careful", "Thank him for worrying"],
+          kind: ["Say you'll be careful", "Tell him not to worry"],
           playful: ["Ask if he's worried", "Offer to take him along"],
           bold: ["Say you can handle Sinostra", "Say they don't scare you"],
           neutral: ["Nod, say nothing", "Let the warning land"],

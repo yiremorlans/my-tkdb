@@ -243,7 +243,7 @@ export default {
         greeting:
           '"Welcome. Forgive the state of the path. I meant to sweep it this morning and lost track of the hour."',
         responses: {
-          kind: ["Thank him for the welcome", "Offer to help sweep"],
+          kind: ["Tell him the path looks fine", "Offer to help sweep"],
           playful: ["Inspect the path, gravely", "Say the path looks fine"],
           bold: ["Be direct with him", "Say the path doesn't matter"],
           neutral: ["Sit quietly while he works", "Step through, say little"],
@@ -315,7 +315,7 @@ export default {
         approach: "Return the bow",
         greeting: '"Welcome back, Honor Roll. I hoped that was you at the gate."',
         responses: {
-          kind: ["Say it's nice to be remembered", "Thank him for the welcome"],
+          kind: ["Say it's nice to be remembered", "Say you hoped it was him too"],
           playful: ["Ask if he practiced that", "Tease him for getting it right"],
           bold: ["Say of course he got it right", "Expect to be remembered now"],
           neutral: ["Return the bow, say nothing", "Nod and move on"],
@@ -327,7 +327,7 @@ export default {
         greeting:
           '"Here, let me. ...Sorry. I\'ll be careful with it, I promise."',
         responses: {
-          kind: ["Reassure him it's fine", "Thank him for offering"],
+          kind: ["Reassure him it's fine", "Hand him the bag"],
           playful: ["Ask why not the handle", "Tease him about the care"],
           bold: ["Hand it over without asking", "Say he can just take it"],
           neutral: ["Let him take it, say nothing", "Hand it over quietly"],
@@ -338,7 +338,7 @@ export default {
         approach: "Take the tea",
         greeting: "\"Oh, good, it's still hot. Please, sit, before it isn't.\"",
         responses: {
-          kind: ["Thank him for the tea", "Say he didn't have to"],
+          kind: ["Sit down while it's hot", "Say he didn't have to"],
           playful: ["Ask who the cup was really for", "Claim the extra cup"],
           bold: ["Take the cup, no argument", "Say it was obviously for you"],
           neutral: ["Take the cup, say nothing", "Sit and wait quietly"],
@@ -384,7 +384,7 @@ export default {
         approach: "Smile at the change",
         greeting: "\"I've only a moment. But I'd rather spend it here.\"",
         responses: {
-          kind: ["Say you don't mind the time", "Thank him for choosing you"],
+          kind: ["Say you don't mind the time", "Say you'd rather be here too"],
           playful: ["Notice the change in him", "Tease him about the change"],
           bold: ["Say no apology's needed", "Ask him to stay longer"],
           neutral: ["Let the moment pass quietly", "Say nothing about it"],
@@ -442,7 +442,7 @@ export default {
         approach: "Tell him about your day",
         greeting: '"I hope I\'m not being presumptuous, but I\'m glad you\'re here."',
         responses: {
-          kind: ["Thank him for asking first", "Tell him about your day gladly"],
+          kind: ["Say you're glad too", "Tell him about your day gladly"],
           playful: ["Act surprised he beat you", "Tease him for going first"],
           bold: ["Ask about his day right back", "Insist on his day first"],
           neutral: ["Answer plainly, move on", "Give a short answer"],

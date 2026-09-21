@@ -265,7 +265,7 @@ export default {
         greeting:
           '"You got money? No? Then you got nothin\' I want. Probably."',
         responses: {
-          kind: ["Say you're just curious", "Thank him for the warning"],
+          kind: ["Say you're just curious", "Take the guts as praise"],
           playful: ["Trade insults with him", "Ask what stupid ones cost"],
           bold: ["Sit without being invited", "Tell him you're staying"],
           neutral: ["Shrug at the insult", "Let the remark hang"],
@@ -329,7 +329,7 @@ export default {
         greeting:
           '"Playing with these morons is exhausting... Lulu gets all mad if I win too much. Sit. You\'re better company."',
         responses: {
-          kind: ["Sit down gladly", "Thank him for the seat"],
+          kind: ["Sit down gladly", "Say he's good company too"],
           playful: ["Ask if the boot retired", "Tease the upgrade"],
           bold: ["Sit like it was always yours", "Drag the chair next to his"],
           neutral: ["Sit, say nothing", "Take the seat quietly"],
@@ -387,7 +387,7 @@ export default {
         approach: "Ask for a new hand",
         greeting: '"Deal you in? Fine. Don\'t cry when you lose."',
         responses: {
-          kind: ["Thank him for the hand", "Ask him to go easy"],
+          kind: ["Pick up your cards", "Ask him to go easy"],
           playful: ["Demand better cards", "Bet you'll win this time"],
           bold: ["Raise before looking", "Push your whole stack in"],
           neutral: ["Check your cards", "Play, unbothered"],
@@ -471,7 +471,7 @@ export default {
         greeting:
           '"You blink when you bluff. Whole table knows, kitten. Gyahaha!"',
         responses: {
-          kind: ["Thank him for the tip", "Ask what else he sees"],
+          kind: ["Promise to work on it", "Ask what else he sees"],
           playful: ["Deny you have a tell", "Name his tell back"],
           bold: ["Bluff him on purpose", "Say he was watching you"],
           neutral: ["Fix your face", "Play the next hand"],
@@ -553,7 +553,7 @@ export default {
         approach: "Stay at his table",
         greeting: '"Lulu wanted you moved. He didn\'t get far. Sit down."',
         responses: {
-          kind: ["Thank him for the veto", "Say you'd have stayed anyway"],
+          kind: ["Sit down, feeling honored", "Say you'd have stayed anyway"],
           playful: ["Ask what he said to Lulu", "Ask if Lulu's still sulking"],
           bold: ["Say the table's yours now", "Say the seat was yours"],
           neutral: ["Stay where you are", "Settle in at his table"],
@@ -587,7 +587,7 @@ export default {
         approach: "Take the pot he slides",
         greeting: "\"Won the hand. Here, it's yours. Don't make it weird.\"",
         responses: {
-          kind: ["Thank him for the pot", "Say he should keep it"],
+          kind: ["Say you'll spend it well", "Say he should keep it"],
           playful: ["Ask if that's how he flirts", "Bet it all next hand"],
           bold: ["Ask for the other half too", "Take it, play it back at him"],
           neutral: ["Take it, say nothing", "Pocket the chips"],
@@ -599,7 +599,7 @@ export default {
         greeting:
           "\"Kitten's the only good bet at this table. Don't tell the others.\"",
         responses: {
-          kind: ["Thank him for the stake", "Say you'll play it safe"],
+          kind: ["Say you'll earn his bet", "Say you'll play it safe"],
           playful: ["Ask what odds he gave you", "Meow at him"],
           bold: ["Raise against the table", "Play it your own way"],
           neutral: ["Take the chips and play", "Play the stake quietly"],
@@ -610,7 +610,7 @@ export default {
         approach: "Take the drink",
         greeting: '"Here. Drink it. Don\'t make a thing out of it."',
         responses: {
-          kind: ["Thank him for remembering", "Say that counts for something"],
+          kind: ["Drink it, no fuss", "Say that counts for something"],
           playful: [
             "Test if he really remembers",
             "Name a drink he'd never get",

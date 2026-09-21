@@ -262,7 +262,7 @@ export default {
         approach: "Step over the toolbox",
         greeting: '"Watch your step. Half this floor\'s sharp."',
         responses: {
-          kind: ["Say the toolbox helps", "Thank him for the warning"],
+          kind: ["Thank him for the warning", "Watch your step"],
           playful: ["Ask if he moved it for you", "Tease him about the mess"],
           bold: ["Step over it without looking", "Ignore the warning"],
           neutral: ["Let him finish", "Watch your step, unbothered"],
@@ -315,7 +315,7 @@ export default {
         greeting:
           '"Watch the floor. Not everyone remembers where the tools land."',
         responses: {
-          kind: ["Thank him for catching it", "Let him steer you clear"],
+          kind: ["Say you'd have missed it", "Let him steer you clear"],
           playful: ["Ask if he's always watching", "Pretend you meant to trip"],
           bold: ["Insist you had it handled", "Walk it without looking"],
           neutral: ["Step over without a word", "Take the correction quietly"],
@@ -337,7 +337,7 @@ export default {
         approach: "Step past the toolbox yourself",
         greeting: '"Careful. Meant that."',
         responses: {
-          kind: ["Say you noticed the care", "Thank him for checking"],
+          kind: ["Say you noticed the care", "Say you'll be careful"],
           playful: [
             "Ask if he's always this tidy",
             "Tease him about checking twice",
@@ -351,8 +351,8 @@ export default {
         approach: "Ask what the mission is",
         greeting: '"You\'ll get the details when I do. Sleep first."',
         responses: {
-          kind: ["Promise to rest up", "Thank him for the warning"],
-          playful: ["Ask if he'll rest too", "Joke that he never rests"],
+          kind: ["Promise to rest up", "Tell him to rest too"],
+          playful: ["Ask if he'll take own advice", "Joke that he never rests"],
           bold: ["Say you don't need the rest", "Ask what makes it long"],
           neutral: ["Nod and say nothing", "Take the warning in stride"],
         },
@@ -416,7 +416,7 @@ export default {
         approach: "Let yourself in",
         greeting: '"Left it open. Figured you\'d be by."',
         responses: {
-          kind: ["Thank him for trusting you", "Say you'll always come by"],
+          kind: ["Say it feels like a welcome", "Say you'll always come by"],
           playful: ["Ask if the door's just for you", "Let yourself in loudly"],
           bold: ["Walk in like you own it", "Say you'd have picked the lock"],
           neutral: ["Let yourself in quietly", "Come in, say nothing"],
@@ -427,7 +427,7 @@ export default {
         approach: "Take the gloves he left out",
         greeting: '"Got gloves that\'ll fit. Wear them."',
         responses: {
-          kind: ["Thank him for the gloves", "Wear them without a fuss"],
+          kind: ["Say they fit perfectly", "Wear them without a fuss"],
           playful: ["Ask when he measured you", "Model the gloves for him"],
           bold: ["Call it out as thoughtful", "Ask why he never mentions it"],
           neutral: ["Put them on, say nothing", "Take them without comment"],
@@ -438,7 +438,7 @@ export default {
         approach: "Ask what that part does",
         greeting: '"...Carburetor. That\'s what that is."',
         responses: {
-          kind: ["Thank him for explaining", "Listen like it matters"],
+          kind: ["Ask him to show you more", "Listen like it matters"],
           playful: ["Ask for the long version", "Name the next part wrong"],
           bold: ["Ask him to show you", "Ask what else he's fixed"],
           neutral: ["Nod and file it away", "Watch him work, quiet"],
@@ -463,7 +463,7 @@ export default {
         approach: "Ask how he knows",
         greeting: "\"Storm's coming. Let's talk inside.\"",
         responses: {
-          kind: ["Thank him for the warning", "Trust his read on the sky"],
+          kind: ["Follow him inside", "Trust his read on the sky"],
           playful: ["Ask how he always knows", "Guess wrong on purpose"],
           bold: ["Doubt the forecast out loud", "Bet against the weather"],
           neutral: ["Head inside, say nothing", "Take shelter without asking"],
@@ -538,7 +538,7 @@ export default {
         greeting:
           '"...Figured you\'d want it on. Garage is too quiet otherwise."',
         responses: {
-          kind: ["Thank him for the radio", "Say the garage sounds right"],
+          kind: ["Hum along to the radio", "Say the garage sounds right"],
           playful: [
             "Sing along badly on purpose",
             "Ask what station he picked",
@@ -641,7 +641,7 @@ export default {
         approach: "Look over the plan",
         greeting: '"Put you with me. Unless you want a different spot."',
         responses: {
-          kind: ["Say you'll be right there", "Thank him for asking first"],
+          kind: ["Say you'll be right there", "Say you'd pick that spot too"],
           playful: ["Ask who got stuck with Leo", "Critique his handwriting"],
           bold: ["Ask for the front line", "Suggest a better plan"],
           neutral: ["Study the plan quietly", "Nod, hand it back"],
@@ -688,7 +688,7 @@ export default {
         approach: "Take the compliment",
         greeting: '"Not saying it twice. You heard me."',
         responses: {
-          kind: ["Thank him, and mean it", "Say it helps, hearing it"],
+          kind: ["Stand a little taller", "Say it helps, hearing it"],
           playful: ["Ask him to say it twice", "Stand up extra straight"],
           bold: ["Say you know you did", "Ask what he'd change"],
           neutral: ["Nod and head out", "Hold your head up, quietly"],

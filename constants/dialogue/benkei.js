@@ -127,8 +127,8 @@ export default {
         ],
       },
       keepsake: {
-        emoji: "🌙",
-        line: "The good years inside two houses that don't exist anymore, told after closing to somebody Darkwick would rather he hadn't.",
+        emoji: "📷",
+        line: "A photograph of Ultio and Clementia students in one frame, from the years nobody talks about.",
       },
     },
 
@@ -463,7 +463,7 @@ export default {
         greeting:
           "\"You're not keeping me. The count takes as long as it takes, and it's nicer with company.\"",
         responses: {
-          kind: ["Say you'll be quick", "Thank him for waiting"],
+          kind: ["Say you'll be quick", "Offer to keep him company"],
           playful: ["Offer to count with him", "Ask if he's ever off by one"],
           bold: ["Ask when he actually closes", "Ask if he's rushing you out"],
           neutral: ["Grab one thing and go", "Keep it short"],
