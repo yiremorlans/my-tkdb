@@ -1,6 +1,6 @@
-import 'dotenv/config';
-import { InteractionResponseFlags } from 'discord-interactions';
-import { getGuildRoles } from './discordRest.js';
+import "dotenv/config";
+import { InteractionResponseFlags } from "discord-interactions";
+import { getGuildRoles } from "./discordRest.js";
 
 // The ephemeral response flag, in one place: missions.js, encounters.js,
 // publicEncounters.js and bondScenes.js each replied to the same interaction
@@ -16,7 +16,7 @@ export const EPHEMERAL = InteractionResponseFlags.EPHEMERAL;
 // configure. Results, misses included, are cached for PING_ROLE_TTL_MS so a
 // busy tick isn't a roles fetch per post, while a role created or renamed
 // later is still picked up within minutes.
-export const PING_ROLE_NAME = 'my-tkdb';
+export const PING_ROLE_NAME = "tkdb-inspectors";
 const PING_ROLE_TTL_MS = 10 * 60 * 1000;
 const pingRoleCache = new Map(); // guildId -> { roleId, at }
 
@@ -37,34 +37,41 @@ async function findPingRoleId(guildId) {
 // role, or a failed lookup all mean no ping: a notification must never cost
 // the post itself.
 export async function pingRole(guildId, enabled = true) {
-  const none = { mention: '', allowed_mentions: { parse: [] } };
+  const none = { mention: "", allowed_mentions: { parse: [] } };
   if (!enabled || !guildId) return none;
 
   let roleId;
   try {
     roleId = await findPingRoleId(guildId);
   } catch (err) {
-    console.error(`[pingRole] Role lookup failed for guild ${guildId}:`, err.message);
+    console.error(
+      `[pingRole] Role lookup failed for guild ${guildId}:`,
+      err.message,
+    );
     return none;
   }
 
   if (!roleId) return none;
-  return { mention: `<@&${roleId}>`, allowed_mentions: { parse: [], roles: [roleId] } };
+  return {
+    mention: `<@&${roleId}>`,
+    allowed_mentions: { parse: [], roles: [roleId] },
+  };
 }
 
 export async function DiscordRequest(endpoint, options) {
   // append endpoint to root API URL
-  const url = 'https://discord.com/api/v10/' + endpoint;
+  const url = "https://discord.com/api/v10/" + endpoint;
   // Stringify payloads
   if (options.body) options.body = JSON.stringify(options.body);
   // Use fetch to make requests
   const res = await fetch(url, {
     headers: {
       Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
-      'Content-Type': 'application/json; charset=UTF-8',
-      'User-Agent': 'DiscordBot (https://github.com/discord/discord-example-app, 1.0.0)',
+      "Content-Type": "application/json; charset=UTF-8",
+      "User-Agent":
+        "DiscordBot (https://github.com/discord/discord-example-app, 1.0.0)",
     },
-    ...options
+    ...options,
   });
   // throw API errors
   if (!res.ok) {
@@ -82,7 +89,10 @@ export async function InstallGlobalCommands(appId, commands) {
 
   try {
     // This is calling the bulk overwrite endpoint: https://discord.com/developers/docs/interactions/application-commands#bulk-overwrite-global-application-commands
-    const response = await DiscordRequest(endpoint, { method: 'PUT', body: commands });
+    const response = await DiscordRequest(endpoint, {
+      method: "PUT",
+      body: commands,
+    });
     console.log(`✅ Successfully registered ${commands.length} commands`);
   } catch (err) {
     console.error(err);

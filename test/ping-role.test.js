@@ -16,13 +16,13 @@ mock.module('../discordRest.js', {
   },
 });
 
-const { pingRole } = await import('../utils.js');
+const { pingRole, PING_ROLE_NAME } = await import('../utils.js');
 
 const NONE = { mention: '', allowed_mentions: { parse: [] } };
 
 describe('pingRole', () => {
-  it('mentions the role named my-tkdb, case-insensitively, and allows only it', async () => {
-    roles['g-1'] = [{ id: 'r-other', name: 'Mods' }, { id: 'r-1', name: 'My-TKDB' }];
+  it('mentions the role named PING_ROLE_NAME, case-insensitively, and allows only it', async () => {
+    roles['g-1'] = [{ id: 'r-other', name: 'Mods' }, { id: 'r-1', name: PING_ROLE_NAME.toUpperCase() }];
     assert.deepEqual(await pingRole('g-1'), {
       mention: '<@&r-1>',
       allowed_mentions: { parse: [], roles: ['r-1'] },
