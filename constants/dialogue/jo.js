@@ -277,7 +277,7 @@ export default {
         greeting:
           '"Pull up a chair. I\'ve got a budget to fight with, but I can talk and lose at the same time."',
         responses: {
-          kind: ["Thank {him} for the honesty", "Appreciate the effort"],
+          kind: ["Thank {him} for making time", "Appreciate the effort"],
           playful: ["Match the easy charm", "Call out the charm offensive"],
           bold: ["Meet the charisma head-on", "Refuse to be charmed"],
           neutral: ["Simply be present", "Let the charm pass by"],

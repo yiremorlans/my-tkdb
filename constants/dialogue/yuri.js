@@ -48,8 +48,8 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: You were GONE. No notice, no note, nothing filed. I learned it from Jiro, who learned it from someone else, which is an intolerable chain of custody for information about my own patient!",
-        "EVERY patient under my care is required to inform me of any absence! Treatment schedules depend on it. Vitals depend on it. I'm the physician assigned to your case, worm, and I was left to work out your whereabouts by inference, like a COMMON DETECTIVE!\n\nI want to be perfectly clear that I was NOT worried! And do not think you can smooth this over with {favResponse}, as you always do! It has no bearing on the matter!",
-        "This is a professional matter, and it is not up for debate! You will report to my lab immediately so I can examine you myself!",
+        "EVERY patient under my care is required to inform me of any absence! Treatment schedules depend on it. Vitals depend on it. I'm the physician assigned to your case, worm, and I was left to work out your whereabouts by inference, like some common detective!\n\nI want to be perfectly clear that I was NOT worried! And do not think you can smooth this over with {favResponse}, as you always do! It has no bearing on the matter!",
+        "This is a professional matter, and it is not up for debate. You will report to my lab immediately so I can examine you myself.",
       ],
       choice: {
         prompt:
@@ -74,7 +74,7 @@ export default {
             label: "Tell him to come and get you",
             style: 4,
             close:
-              "Come and GET you!? I am the captain of Mortkranken! I do not fetch patients like a common orderly!\n\nI shall send Jiro. He will drag you here by the collar, and he will not care whether you are ready for it or not.",
+              "Come and GET you!? I am the captain of Mortkranken! I do not fetch patients like a common orderly!\n\nI shall send Jiro. He will drag you here by the collar, and he will not care whether you're in the middle of something important.",
           },
         ],
       },
@@ -480,10 +480,7 @@ export default {
         greeting:
           '"I do this for the future of humanity. And for yo... for the specimen. Your case is unusually stubborn, that\'s all."',
         responses: {
-          kind: [
-            "Let him fuss over your pulse",
-            "Say the effort means a lot",
-          ],
+          kind: ["Let him fuss over your pulse", "Say the effort means a lot"],
           playful: ["Repeat 'specimen' back at him", "Ask what he almost said"],
           bold: ["Name the savior complex", "Tell him to slow down"],
           neutral: ["Stay professional about it", "Stay out of his way"],
@@ -567,7 +564,10 @@ export default {
           '"Jiro scheduled you. Without consulting me. He does not do that. For anyone. Explain it."',
         responses: {
           kind: ["Say Jiro was being thorough", "Let him work it out himself"],
-          playful: ["Ask if he's jealous of Jiro", "Say Jiro is very attentive"],
+          playful: [
+            "Ask if he's jealous of Jiro",
+            "Say Jiro is very attentive",
+          ],
           bold: ["Name what's bothering him", "Tell him to go ask Jiro"],
           neutral: ["Let the ledger go", "Say nothing about it"],
         },
