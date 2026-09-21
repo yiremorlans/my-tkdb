@@ -41,7 +41,7 @@ export default {
     // effect. Studied and careless at once. Everything below is the DM thread
     // it arrived in.
     line:
-      "\"I can see the little dots from ur response, Honor Roll. Admit it, it's the best thing that's happened to you all week"\",
+      "\"I can see the little dots from ur response, Honor Roll. Admit it, it's the best thing that's happened to you all week\"",
     greeting:
       '"This one\'s not going on the feed. just for u. Mostly so u know exactly what ur missing" ...say something. the longer u take the more I win here',
     responses: {

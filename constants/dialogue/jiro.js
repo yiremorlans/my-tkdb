@@ -524,8 +524,7 @@ export default {
       {
         line: "You jump at a noise from the specimen room, and he laughs. It's short, and he doesn't seem to know he did it.",
         approach: "Ask what's so funny",
-        greeting:
-          "\"It was the ventilation. You thought it was a ghost. That's funny, isn't it?\"",
+        greeting: "\"It was just the ventilation. That's funny, isn't it?\"",
         responses: {
           kind: ["Enjoy the laugh with him", "Laugh along with him"],
           playful: ["Insist it was a ghost", "Say the ghost laughed too"],
@@ -541,7 +540,7 @@ export default {
         responses: {
           kind: ["Ask gently what's wrong", "Say you'll stay a while"],
           playful: ["Ask what everyone else did", "Ask how rude he was"],
-          bold: ["Say he's not fine either", "Tell him to apologize to them"],
+          bold: ["Say he can tell you", "Ask what would actually help"],
           neutral: ["Leave the subject alone", "Sit and keep it restful"],
         },
       },
@@ -549,7 +548,7 @@ export default {
         line: '"Does it actually hurt, or are you being stoic for my benefit," he asks. "Answer honestly. I can tell."',
         approach: "Stop being stoic",
         greeting:
-          "\"Thank you. I'll give you something mild. You don't have to be brave in here. It doesn't help the reading.\"",
+          "\"I'll give you something mild. You don't have to be brave in here. It doesn't help the reading.\"",
         responses: {
           kind: ["Answer honestly, gently", "Tell him where it hurts"],
           playful: ["Try to hide it anyway", "Ask for the strong stuff"],
@@ -632,7 +631,8 @@ export default {
       {
         line: '"You didn\'t flinch that time," he notes, of the needle. "I\'m recording that as progress."',
         approach: "Take the credit anyway",
-        greeting: "\"That's fine. It's your arm. I only held the needle.\"",
+        greeting:
+          '"Then take it. It\'s your arm. I only held the needle steady."',
         responses: {
           kind: ["Take the progress kindly", "Thank him for a gentle hand"],
           playful: ["Take way too much credit", "Ask for a sticker anyway"],
@@ -644,13 +644,10 @@ export default {
         line: "He's left a mug of herbal tea by your usual seat, unasked. It smells bitter.",
         approach: "Drink it without asking",
         greeting:
-          '"I brewed it. It tastes better than Frostheim\'s, so please drink all of it."',
+          '"I brewed it. Tea is most of what I can keep down, so I\'ve had the practice. Please drink all of it."',
         responses: {
           kind: ["Drink it, thank him", "Say it's the best tea"],
-          playful: [
-            "Ask what's actually in it",
-            "Promise not to tell Frostheim",
-          ],
+          playful: ["Ask what's actually in it", "Wince at the first sip"],
           bold: ["Ask for a second mug", "Finish it in one go"],
           neutral: ["Drink it, say nothing", "Sip it slowly"],
         },
@@ -691,18 +688,18 @@ export default {
         },
       },
       {
-        line: "He's quieter than usual today, and lets you notice, which from him is the whole confession.",
-        approach: "Notice the quiet",
+        line: "Yuri is asleep at his desk. Jiro moves around him without a sound and doesn't wake him.",
+        approach: "Ask why he lets him sleep",
         greeting:
-          "\"Nothing is wrong. I didn't sleep. I usually don't, but today I noticed.\"",
+          "\"His hands shake when he's short on sleep, and I need them steady. He won't rest if I ask him to, so I've stopped asking.\"",
         responses: {
-          kind: ["Ask if he slept at all", "Offer to sit with him"],
-          playful: [
-            "Guess what's bothering him",
-            "Offer a very boring lecture",
+          kind: [
+            "Say Yuri's lucky to have him",
+            "Say he takes care of him too",
           ],
-          bold: ["Push him to say it outright", "Tell him to rest now"],
-          neutral: ["Sit quietly with him", "Keep him quiet company"],
+          playful: ["Call him Yuri's babysitter", "Ask who looks after him"],
+          bold: ["Say he'd do it regardless", "Ask what Yuri is to him"],
+          neutral: ["Let the reason stand", "Work around Yuri too"],
         },
       },
     ],
@@ -850,7 +847,7 @@ export default {
         line: "He pins your chart to the board, then pins you to the door. Efficient, as ever.",
         approach: "Lock the door",
         greeting:
-          "\"Thank you. If Yuri calls for me, I'm not answering. It's annoying when I do.\"",
+          "\"If Yuri calls for me, I'm not answering. It's annoying when I do.\"",
         responses: {
           kind: ["Let him lock it", "Tell him Yuri can wait"],
           playful: ["Steal the clipboard", "Cover his ears for him"],

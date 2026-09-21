@@ -47,7 +47,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: Something's been bothering me and I've decided you're going to hear about it.",
-        "I adapt. It's what I do. I read a room and I become the version of me that room needs, and I've been doing it so long I couldn't tell you where the seam is any more. On stage, in the hall, with Shion, with the advisors. Different man...and woman, every time and all of them mine.\n\nYou come to me with {favResponse} no matter which one you're getting. Same every time. And it's started to feel like being addressed by name in a room where everyone else is calling me by a job.",
+        "I adapt. It's what I do. I read a room and I become the version of me that room needs, and I've been doing it so long I couldn't tell you where the seam is anymore. On stage, in the hall, with Shion, with the advisors. Different man...and woman, every time and all of them mine.\n\nYou come to me with {favResponse} no matter which one you're getting. Same every time. And it's started to feel like being addressed by name in a room where everyone else is calling me by a job.",
       ],
       choice: {
         prompt: "So what am I supposed to do with that, cutie?",

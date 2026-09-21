@@ -544,6 +544,162 @@ export default {
           neutral: ["Wave back, say nothing", "Head over to him"],
         },
       },
+      {
+        line: "He stops halfway through a sentence about feed schedules, like he's caught himself doing all the talking again.",
+        approach: "Tell him about yourself",
+        greeting:
+          "\"Hang on. I've talked your ear off about critters all week and I still don't know the first thing about you. Your turn, Honor Roll.\"",
+        responses: {
+          kind: ["Tell him something true", "Say you like listening"],
+          playful: ["Make him guess", "Trade a fact for a fact"],
+          bold: ["Ask what he wants to know", "Say he could just ask"],
+          neutral: ["Give the short version", "Shrug, keep it brief"],
+        },
+      },
+      {
+        line: "He's on his second energy drink and the sun isn't properly up yet. He looks genuinely thrilled about both facts.",
+        approach: "Ask if he ever sleeps",
+        greeting:
+          "\"Don't feel like the day's started till I've had one of these. Pwaaah! Right, what are we doing first?\"",
+        responses: {
+          kind: ["Tell him to sleep more", "Say you'll take a shift"],
+          playful: ["Ask for a sip", "Count the empty cans"],
+          bold: ["Take the can off him", "Say he's running on fumes"],
+          neutral: ["Let him have his drink", "Start the day with him"],
+        },
+      },
+      {
+        line: "You find him asleep sitting up against a feed sack, still holding the clipboard.",
+        approach: "Put a blanket on him",
+        greeting:
+          '"...Crap, I fell asleep. Did you put this blanket on me? Cheers. Maybe I\'ll grab a few more minutes."',
+        responses: {
+          kind: ["Tell him to sleep longer", "Say he earned the nap"],
+          playful: ["Deny the blanket entirely", "Ask what he was dreaming"],
+          bold: ["Take the clipboard off him", "Finish his list for him"],
+          neutral: ["Leave him to it", "Sit nearby and wait"],
+        },
+      },
+      {
+        line: "He stops mid-sentence, head tilted at a sound you can't hear yet.",
+        approach: "Watch Peekaboo for him",
+        greeting:
+          '"That sounded like the Capybus. I\'m gonna go check on her. Watch Peekaboo for me, hey?"',
+        responses: {
+          kind: ["Take Peekaboo carefully", "Say you've got Peekaboo"],
+          playful: ["Ask what a Capybus is", "Salute and take the post"],
+          bold: ["Say you're coming too", "Go check on her yourself"],
+          neutral: ["Take Peekaboo, say nothing", "Hold the sling and wait"],
+        },
+      },
+      {
+        line: "Towa's gone off to that hill of his again, which means Haru isn't going anywhere tonight.",
+        approach: "Keep him company",
+        greeting:
+          "\"Towa's off to that hill again, so I'm holding the fort. Stay a bit? It gets quiet out here.\"",
+        responses: {
+          kind: ["Stay and keep him company", "Say you don't mind the quiet"],
+          playful: ["Ask what's on that hill", "Offer to fetch Towa back"],
+          bold: ["Say you'd stay regardless", "Take the fort for him"],
+          neutral: ["Stay, say nothing", "Settle in for the evening"],
+        },
+      },
+      {
+        line: "He hears which way you walked back last night, and the grin goes down a notch.",
+        approach: "Promise to be careful",
+        greeting:
+          '"The Sinostra folks are causing a kerfuffle again. You take care not to get dragged into their mess too, you hear?"',
+        responses: {
+          kind: ["Say you'll be careful", "Thank him for worrying"],
+          playful: ["Ask if he's worried", "Offer to take him along"],
+          bold: ["Say you can handle Sinostra", "Say they don't scare you"],
+          neutral: ["Nod, say nothing", "Let the warning land"],
+        },
+      },
+      {
+        line: "He's already grabbing his jacket. Ren's shift at that whacky restaurant finished ten minutes ago and nobody's seen him since.",
+        approach: "Go collect Ren with him",
+        greeting:
+          "\"C'mon, come pick Ren up with me. He complains way less when there's a witness. Gahaha!\"",
+        responses: {
+          kind: ["Go along to help", "Say Ren works hard too"],
+          playful: ["Bet on Ren escaping", "Ask what Ren's uniform is"],
+          bold: ["Say you'll haul Ren back", "Lead the way yourself"],
+          neutral: ["Go along quietly", "Follow him out"],
+        },
+      },
+      {
+        line: "The list in his hand has the feed order, the washing, the shopping, and three things he's crossed out twice.",
+        approach: "Split the list with him",
+        greeting:
+          '"Gotta take in the washing, gotta get the shopping done... argh, there\'s not enough hours in the day!"',
+        responses: {
+          kind: ["Take half the list", "Say you'll do the shopping"],
+          playful: ["Add a nap to the list", "Cross one off for him"],
+          bold: ["Take the list off him", "Start the washing unasked"],
+          neutral: ["Take a task, say nothing", "Get on with the washing"],
+        },
+      },
+      {
+        line: "He crosses the pen along the top rail of the fence, balanced and unbothered, like it's a shortcut anyone could take.",
+        approach: "Ask where he learned that",
+        greeting:
+          '"Old habit from my Dionysia days. You reckon I still look like an acrobat? Gahaha!"',
+        responses: {
+          kind: ["Say it suits him", "Say that was impressive"],
+          playful: ["Ask him to teach you", "Dare him to do it again"],
+          bold: ["Climb up after him", "Say you could do that too"],
+          neutral: ["Watch him cross", "Take the gate instead"],
+        },
+      },
+      {
+        line: "Towa has come to stand exactly where the two of you are working, close enough to be in the way, and he says nothing at all.",
+        approach: "Look over at Towa",
+        greeting:
+          "\"He does this when we're both busy with something that isn't him. Wants you looking at him as much as me, I reckon. Sky goes gray, critters go skittish, the works.\"",
+        responses: {
+          kind: ["Go give Towa attention", "Say you'll make time for him"],
+          playful: ["Wave Towa over to help", "Ask what Towa wants first"],
+          bold: ["Say Towa can wait his turn", "Put Towa to work with you"],
+          neutral: ["Glance over, say nothing", "Keep working, unbothered"],
+        },
+      },
+      {
+        line: "He drops onto an upturned crate in the shade at noon and thumps the one beside it twice.",
+        approach: "Take the crate beside him",
+        greeting:
+          '"Twenty minutes, that\'s the rule. Nobody works through lunch on my watch and that includes you, Honor Roll."',
+        responses: {
+          kind: ["Sit down and eat with him", "Say the rule suits you"],
+          playful: ["Ask who enforces the rule", "Time him at twenty minutes"],
+          bold: ["Say he never takes breaks", "Make him eat first"],
+          neutral: ["Sit and eat, say nothing", "Eat in the shade with him"],
+        },
+      },
+      {
+        line: "The light's gone and he's still got two pens to close up. He keeps glancing at the path back to the dorms.",
+        approach: "Say you'll be fine",
+        greeting:
+          "\"Thanks for helping out again today, you're a real lifesaver. Sorry I can't walk you back...\"",
+        responses: {
+          kind: ["Say you'll be fine alone", "Tell him to finish up"],
+          playful: ["Ask for an escort anyway", "Say he owes you a walk"],
+          bold: ["Stay till he's finished", "Close the last pen for him"],
+          neutral: ["Head back, say nothing", "Wave and go"],
+        },
+      },
+      {
+        line: "He watches you haul feed in your own clothes and frowns at the unfairness of it.",
+        approach: "Ask about a uniform",
+        greeting:
+          "\"Really learned the ropes here, haven't you? Once we've got a bit of cash spare, I'm getting you your own Jabberwock uniform.\"",
+        responses: {
+          kind: ["Say that means a lot", "Say you'd wear it proudly"],
+          playful: ["Ask for a name tag too", "Negotiate for a hat"],
+          bold: ["Say you've earned one", "Ask for the captain's one"],
+          neutral: ["Nod, say nothing", "Keep hauling the feed"],
+        },
+      },
     ],
     spark: [
       {
@@ -756,7 +912,7 @@ export default {
       "{user} says the name, and **{name}**'s grin goes about ten percent honest.",
     ],
     close: [
-      '"C\'mere, Honor Roll. No joke this time." **{name}** says it to {user} and, for once, means it.',
+      '"There you are, Honor Roll." **{name}** reaches {user} and, for once, doesn\'t make a joke of it.',
       "**{name}** goes to kiss {user} mid-sentence, clocks the audience, and grins his way out of it instead.",
       "{user} calls, and **{name}** leaves the rounds to Ren without a second thought.",
     ],

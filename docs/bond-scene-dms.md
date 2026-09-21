@@ -621,17 +621,39 @@ Level key = camelCase of the `RELATIONSHIP_LEVELS` name. **`beats` (1–4
 strings), `choice`, and `keepsake` are all required** — every scene ends on a
 choice and grants a keepsake. `when` is optional.
 
-### 5.2 Scene vars for `fillTemplate`
+### 5.2 Scene vars, and the per-level history anchor
 
 `{firstName} {house} {timesMet} {favResponse} {lastMoment} {since} {sinceMet}`
 — resolved in `bondScenes.js` at delivery, list frozen in
 `constants/publicEncounters.js` alongside the existing placeholder set so
 `validateContent` can check them.
 
-`{sinceMet}` is the month name of `character_relationships.created_at` — when
-this player first met the character at all, distinct from `{since}` (how long
-since their *last* interaction). Available at any level; nothing requires a
-scene to use it.
+**Every level has one required anchor.** A scene has to reach into the player's
+own record with this character, and *which* part of the record it reaches for
+is fixed by the level, because that is the one thing the six scenes share. The
+prose around it is the character's entirely (§5.5) — the anchor says what the
+scene is measured against, never what it is about.
+
+| Level | Anchor | What it reaches for |
+|---|---|---|
+| Acquaintance | `{timesMet}` | The bare count. You are a number they have, and the number is the reason they can write at all. |
+| Friend | `{favResponse}` | A pattern in *you*, which they could only have by watching. The tier's whole brief, in one variable. |
+| Close Friend | `{sinceMet}` | The month it started. The first level that reaches past the recent past. |
+| Confidant | `{lastMoment}` | One particular thing that happened between the two of you, named. Not a statistic: an event only you two were at. |
+| Devoted | `{house}` | Everyone else. The only anchor that measures the world rather than the pair, because Devoted is where the private thing becomes visible and costs something in front of the people whose regard they usually protect. |
+| Soulbound | `{timesMet}` | The Acquaintance number again, carrying the opposite weight. The loop closing is the point; do not swap it for a fresh variable. |
+
+`{timesMet}` deliberately appears twice. `{house}` and the others stay available
+at any level as ordinary colour — the anchor is a floor, not a ceiling, and a
+scene may use as many of the rest as it earns.
+
+**`{since}` is not an anchor and should not be used in a scene.** It resolves
+from `character_relationships.last_interaction_at`, and a scene is delivered by
+the interaction that just caused the level-up, so `humaniseSince` takes the
+`days < 1` branch every time and it renders "no time at all" in every scene ever
+written. It stays in the frozen list because the list is shared, not because a
+scene has a use for it.
+
 
 ### 5.3 Full coverage, and no content fallback
 
@@ -678,59 +700,64 @@ tier-pool checks:
 
 ### 5.5 Voice and the intimacy ladder
 
-**The intimacy ladder** — the rule every scene in the game is written to, and
-the reason these live in a DM rather than in `/roam`. Nobody else is in the
-room, nothing here is ever posted to a channel, and the player reached this
-level by climbing to it, so a scene is allowed to be closer than anything the
-public commands will ever show — and it should be. A scene that reads like it
-could have been said in a corridor has wasted the DM.
+**The intimacy ladder** — the rule every scene is written to, and the reason
+these live in a DM rather than in `/roam`. Nobody else is in the room, nothing
+here is ever posted to a channel, and the player reached this level by climbing
+to it, so a scene is allowed to be closer than anything the public commands will
+ever show, and it should be. A scene that reads like it could have been said in
+a corridor has wasted the DM.
 
-The closeness escalates with the level, and each step has to be past the last:
+The table below is **the depth each level reaches, not the scene each level
+contains.** It fixes how far into someone the player has got and nothing else.
+What that depth looks like is the character's: their angle, their props, their
+love language, the particular thing they find hard to hand over. Two characters
+at the same level are the same distance from the player and should have almost
+nothing else in common — see §5.4, where identical beats at the same level are
+what gives away that the moment is not really theirs.
 
-| Level | What the scene is |
+| Level | How far in the player has got |
 |---|---|
-| Acquaintance | Being messaged at all is the intimacy. Nobody has this number. They found a reason; the reason is thin. |
-| Friend | An admission of having paid attention — they know something about you they had to have been watching to know. |
-| Close Friend | Something private handed over: an object, a photo, a habit nobody else gets told about. First real physical closeness. |
-| Confidant | The thing they don't tell people, at an hour they wouldn't tell it at. Sent because you are the one who gets to know. |
-| Devoted | Touch, proximity, being kept. They act rather than hint, and the near-confession is right under it. |
-| Soulbound | Said outright, and answered. Four beats and a real fork — both endings authored in full, neither one the wrong one. |
+| Acquaintance | You are someone they would contact directly, unprompted. That is the whole of it. The pretext can be thin, and probably should be. |
+| Friend | They have been paying attention to you while having no particular reason to, and they let you know it. |
+| Close Friend | You are let inside something the rest of their life does not get. What that something is, is theirs. |
+| Confidant | You get the part they manage everyone else away from. Reached for on purpose, and not at a time that suits them. |
+| Devoted | They act on it at a cost, and the cost shows. It stops being deniable as anything else. |
+| Soulbound | Said plainly, and answered. Four beats and a real fork — both endings authored in full, neither one the wrong one. |
 
-What that is **not**: explicit. The heat is in restraint — a hand not let go of,
-someone crossing campus at three in the morning — never in anything graphic.
-Keep it at the register of the game's own romance (longing, closeness, being
-chosen) and let the reader fill in the rest.
+**A level can be reached on any axis.** Closeness is not only confession. It is
+also what they let you see, what they let you do, what they stop performing,
+how near they let you stand, what they hand over without explaining, and what
+they quietly stop protecting themselves from. A character whose ladder climbs
+almost entirely on one axis is fine, and usually better than one that ticks
+every box — Jo's runs mostly on proximity (an hour running beside him, then his
+hands on her at a fitting, then an embrace, then her face in his hands), while
+a character who touches nobody has to climb on something else entirely. Read
+the table as distance closed, never as a checklist of props: a scene with no
+object handed over and no physical contact anywhere in it is still a Close
+Friend scene if it gets that far in.
+
+**Distance and prickliness are register, not level.** How affectionate a scene
+sounds is a fact about the character, not about the tier. A Devoted scene from
+**Leo, Shion, Taiga, Romeo, Yuri** or **Ritsu** may contain no kind words at
+all and still be a Devoted scene, because the measure is what it costs them and
+what it lets the player reach, not how warm it reads; their `Cold` 4th slot in
+`negative-affinity` is the tone reference, and the warmth belongs in what they
+*do*, not in what they admit. The reverse holds too: a character who is
+effusive by nature has not written a Confidant scene merely by being effusive
+at Acquaintance. Take the tier off the distance closed, not the temperature.
+
+What that is **not**: explicit. The heat is in restraint — a hand not let go
+of, someone crossing campus at three in the morning — never in anything
+graphic. Keep it at the register of the game's own romance (longing, closeness,
+being chosen) and let the reader fill in the rest.
 
 **Voice.**
 
 Every scene is written from `constants/dialogue/reference.md` — the same source
-of truth the encounter dialogue uses. **Leo, Shion, Taiga, Romeo, Yuri, Ritsu**
-get scenes that stay thorny even while warming (their `Cold` 4th slot in
-`negative-affinity` is the tone reference); the warmth is in what they *do*, not
-what they admit. `Heebie-Jeebie House` is Shion's hangout — never the
-"Exciting/Waku-Waku House" translation variant.
+of truth the encounter dialogue uses, and the only place a trait, a backstory
+or a relationship may come from. `Heebie-Jeebie House` is Shion's hangout,
+never the "Exciting/Waku-Waku House" translation variant.
 
-**The intimacy ladder** — the rule every scene is written to. A bond scene is a
-private message. Nobody else is in the room, nothing here is ever posted to a
-channel, and the player reached this level by climbing to it, so these are
-allowed to be closer than anything `/roam` or `/meet` will ever show, and they
-should be. A scene that reads like it could have been said in a corridor has
-wasted the DM. The closeness escalates with the level, and each one has to be a
-step past the last:
-
-| Level | What the scene is |
-|---|---|
-| Acquaintance | Being messaged at all is the intimacy. Nobody has this number. They found a reason; the reason is thin. |
-| Friend | An admission of having paid attention — they know something about you they had to have been watching to know. |
-| Close Friend | Something private handed over: an object, a photo, a habit nobody else gets told about. First real physical closeness, remembered rather than happening. |
-| Confidant | The thing they don't tell people, at an hour they wouldn't tell it at. Sent because you are the one who gets to know. |
-| Devoted | Touch, proximity, being kept. They act rather than hint, and the near-confession is right there under it. |
-| Soulbound | Said outright, and answered. Four beats and a real fork. |
-
-What that is not: explicit. The heat is in restraint, in a hand not let go of,
-in someone crossing a campus at 3am rather than in anything graphic. Keep it at
-the register of the game's own romance — longing, closeness, being chosen — and
-let the reader fill the rest in.
 
 ---
 
