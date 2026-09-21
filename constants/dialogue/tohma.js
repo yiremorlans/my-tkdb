@@ -234,7 +234,8 @@ export default {
       {
         line: 'Calm as still water, he tilts his head. "You\'re new around here."',
         approach: "Confirm it",
-        greeting: '"Well, well. Lost, are we? Perhaps I can be of some assistance."',
+        greeting:
+          '"Well, well. Lost, are we? Perhaps I can be of some assistance."',
         responses: {
           kind: ["Accept his help gladly", "Admit you're a little lost"],
           playful: ["Answer far too casually", "Say you're lost on purpose"],
@@ -258,11 +259,14 @@ export default {
         line: 'He inclines his head, courteous. "Business in Frostheim? I serve the one who runs it."',
         approach: "State your business",
         greeting:
-          '"Well, well. Frostheim is ruled by a king, you see. I\'m no more than a servant."',
+          '"Frostheim is ruled by a king, you see. I\'m no more than a servant."',
         responses: {
           kind: ["Respect his discipline", "Ask to meet the king politely"],
           playful: ["Tease the servant framing", "Ask if the king is in"],
-          bold: ["Call him more than a servant", "Say you'd rather talk to him"],
+          bold: [
+            "Call him more than a servant",
+            "Say you'd rather talk to him",
+          ],
           neutral: ["Say only what's needed", "State your business, briefly"],
         },
       },
@@ -297,7 +301,10 @@ export default {
         approach: "Proceed",
         greeting: '"Ah. You again. Proceed, by all means."',
         responses: {
-          kind: ["Say you're glad to be known", "Thank him for keeping track"],
+          kind: [
+            "Say you're glad to be known",
+            "Say you'll stay accounted for",
+          ],
           playful: ["Ask what the promotion pays", "Act pleased with yourself"],
           bold: ["Say you earned it", "Walk past like it's nothing"],
           neutral: ["Proceed without comment", "Nod and move on"],
@@ -308,7 +315,7 @@ export default {
         approach: "Skip the explanation",
         greeting: '"No need to explain yourself this time."',
         responses: {
-          kind: ["Say that means something", "Thank him for remembering"],
+          kind: ["Say that means something", "Proceed without explaining"],
           playful: ["Ask what else he's kept", "Tease him for filing you"],
           bold: ["Say you noticed him notice", "Call it memory, not habit"],
           neutral: ["Skip the explanation", "Let it go unremarked"],
@@ -320,7 +327,7 @@ export default {
         greeting:
           '"An orderly schedule is the key to good health. Yours, I\'m afraid, is not orderly."',
         responses: {
-          kind: ["Say you didn't realize", "Thank him for the attention"],
+          kind: ["Say you didn't realize", "Promise to be more orderly"],
           playful: ["Ask if he has a spreadsheet", "Tease him about counting"],
           bold: ["Ask why he really tracks it", "Call the job excuse thin"],
           neutral: [
@@ -389,7 +396,7 @@ export default {
         greeting:
           '"Well, well. It seems I poured one too many. How fortunate that you arrived."',
         responses: {
-          kind: ["Thank him for the tea", "Accept the cup gladly"],
+          kind: ["Say how fortunate indeed", "Accept the cup gladly"],
           playful: ["Call out the pretending", "Ask who the extra cup was for"],
           bold: ["Take the cup, no thanks needed", "Point out the obvious lie"],
           neutral: ["Take the cup, say nothing", "Drink it without comment"],
@@ -413,7 +420,7 @@ export default {
         greeting:
           '"I\'ve started setting aside the schedule changes that concern you specifically. Draw no conclusions from that."',
         responses: {
-          kind: ["Say you like being tracked", "Thank him for the thought"],
+          kind: ["Say you had noticed", "Promise to draw no conclusions"],
           playful: [
             "Call it what it really is",
             "Tease him about the scheduling",
@@ -484,7 +491,7 @@ export default {
         approach: "Interrupt him anyway",
         greeting: '"There are worse interruptions than you."',
         responses: {
-          kind: ["Thank him for listening", "Apologize for cutting in"],
+          kind: ["Tell him what's on your mind", "Apologize for cutting in"],
           playful: ["Interrupt him again", "Ask who the worse ones are"],
           bold: ["Say you're worth it", "Tell him to drop the work"],
           neutral: ["Interrupt, then go quiet", "Wait until he's finished"],
@@ -509,7 +516,7 @@ export default {
         approach: "Walk up to him",
         greeting: '"Well, then. How have you been? And the truth, this time."',
         responses: {
-          kind: ["Thank him for the room", "Sit close and tell him"],
+          kind: ["Say you've been well, truly", "Sit close and tell him"],
           playful: [
             "Ask if he planned the space",
             "Give a very polished answer",
@@ -539,9 +546,9 @@ export default {
         line: "He pours a second cup of tea without asking whether you wanted one. You did.",
         approach: "Accept the poured cup",
         greeting:
-          '"I can tell at a glance when you\'re in need of a cup. Drink it while it\'s hot."',
+          "\"I can tell at a glance when you're in need of a cup. Drink it while it's hot.\"",
         responses: {
-          kind: ["Thank him for the timing", "Say the tea is perfect"],
+          kind: ["Thank him for noticing", "Say the tea is perfect"],
           playful: [
             "Ask if he always assumes right",
             "Ask what else he can tell",

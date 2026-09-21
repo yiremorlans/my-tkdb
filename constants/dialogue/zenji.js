@@ -267,7 +267,7 @@ export default {
         line: '"Seventeen syllables," he murmurs, "and you\'ve just handed me the last five, my dear."',
         approach: "Give him the last syllables",
         greeting:
-          '"Why, that\'s the bee\'s knees! Half this verse is yours now, my dear. I\'ll have to give you credit."',
+          "\"Why, that's the bee's knees! Half this verse is yours now, my dear. I'll have to give you credit.\"",
         responses: {
           kind: ["Praise the verse honestly", "Say the credit is all his"],
           playful: ["Rhyme back at him", "Demand top billing"],
@@ -281,7 +281,10 @@ export default {
         greeting: '"Something brought you here. Let\'s not rush to name what."',
         responses: {
           kind: ["Reassure him gently", "Say it's nice to meet him"],
-          playful: ["Refuse to explain why you came", "Pretend to be speechless"],
+          playful: [
+            "Refuse to explain why you came",
+            "Pretend to be speechless",
+          ],
           bold: ["Ask what he's not writing", "Say you came on purpose"],
           neutral: ["Respect his mystery", "Let the question sit"],
         },
@@ -308,7 +311,7 @@ export default {
           '"Ah, twice in one week. Fate does love a repeat verse."',
         ],
         responses: {
-          kind: ["Say you're happy to return", "Thank him for the welcome"],
+          kind: ["Say you're happy to return", "Say it's your favorite stop"],
           playful: ["Ask if you're a regular now", "Tease him about 'fixture'"],
           bold: ["Say you'll keep coming back", "Claim the title outright"],
           neutral: ["Nod, keep walking", "Take the compliment quietly"],
@@ -332,10 +335,7 @@ export default {
         greeting:
           '"Ah, there you are, my dear. I\'ve had your name on the tip of my tongue all week."',
         responses: {
-          kind: [
-            "Say his voice makes it special",
-            "Thank him for saying it well",
-          ],
+          kind: ["Say his voice makes it special", "Say his name the same way"],
           playful: ["Ask for an even better line", "Demand he say it again"],
           bold: ["Say you know it's a good line", "Ask him to top it"],
           neutral: ["Take it in stride", "Let the line pass"],
@@ -345,7 +345,7 @@ export default {
         line: "\"Heh. There's no doubt about it. Zenji Kotodama is once again the most styling man on campus. These glad rags are the cat's pajamas.\"",
         approach: "Compliment his style",
         greeting:
-          '"Aw, you\'re a real pal. You\'ve got a keen eye, my dear, and a kind one besides."',
+          "\"Aw, you're a real pal. You've got a keen eye, my dear, and a kind one besides.\"",
         responses: {
           kind: ["Say the outfit works", "Compliment him sincerely"],
           playful: ["Ask where he shops", "Tease the cat's pajamas line"],
@@ -385,7 +385,7 @@ export default {
         greeting:
           '"Twice is coincidence. Three times is a season. Welcome back."',
         responses: {
-          kind: ["Say the name suits you now", "Thank him for the nickname"],
+          kind: ["Say the name suits you now", "Say you'll keep coming back"],
           playful: ["Ask when it became official", "Tease the missing pause"],
           bold: ["Claim the nickname as yours", "Say you noticed the change"],
           neutral: ["Let the nickname stand", "Not remark on it"],
@@ -426,7 +426,7 @@ export default {
         approach: "Say you liked it",
         greeting: '"Be honest, my dear. ...No, be kind. Then honest."',
         responses: {
-          kind: ["Say you genuinely liked it", "Thank him for showing you"],
+          kind: ["Say you genuinely liked it", "Ask to see another one"],
           playful: ["Tease the old footage", "Ask Haku for outtakes"],
           bold: ["Say it's better than he thinks", "Tell him to post more"],
           neutral: ["Give a plain nod", "Watch without much comment"],
@@ -468,7 +468,10 @@ export default {
         greeting:
           '"You\'ve a good ear for nonsense, my dear. I mean that as the highest compliment."',
         responses: {
-          kind: ["Say you're glad to be a friend", "Thank him for the shift"],
+          kind: [
+            "Say you're glad to be a friend",
+            "Call him a friend right back",
+          ],
           playful: ["Ask when he decided that", "Tease him about the upgrade"],
           bold: ["Say friend was always accurate", "Say it fits better anyway"],
           neutral: ["Accept the change quietly", "Let the word settle"],
@@ -493,7 +496,7 @@ export default {
         greeting:
           '"Go on, drink up. Watching you enjoy it is enough food for my soul."',
         responses: {
-          kind: ["Thank him for saving it", "Drink it slowly for him"],
+          kind: ["Say it's the best cup yet", "Enjoy it throughly"],
           playful: ["Ask how long he saved it", "Ask what vintage this is"],
           bold: ["Drink it before he explains", "Ask what he gave up for it"],
           neutral: ["Take the tea, say nothing", "Sip it, let him watch"],
