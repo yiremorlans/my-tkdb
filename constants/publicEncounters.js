@@ -147,10 +147,11 @@ export const WINNER_LINE_PLACEHOLDERS = ["user", "name", "firstName", "house"];
 //                  this player first met the character at all, not their last
 //                  interaction. A bare month ("March"), so it reads after
 //                  "since" ("since March") or "It's been ... since {sinceMet}".
-//                  Required in every character's closeFriend scene going
-//                  forward (validateContent warns if it's missing) — Close
-//                  Friend is the level that reaches back to when this all
-//                  started, not just to the last time they talked.
+//                  The Close Friend anchor (docs/bond-scene-dms.md §5.2):
+//                  the level that reaches back to when this all started, not
+//                  just to the last time they talked. Not yet enforced —
+//                  validateContent checks that a placeholder is *known*, not
+//                  that a level carries its anchor.
 export const BOND_SCENE_PLACEHOLDERS = [
   "firstName",
   "house",

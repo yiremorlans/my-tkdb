@@ -307,7 +307,8 @@ export default {
       {
         line: "He's stopped calling you 'worm.' He hasn't replaced it with anything yet.",
         approach: "Ask what he'll call you now",
-        greeting: '"You\'ve returned. I permit it, provisionally."',
+        greeting:
+          "\"I'll call you what I like, when I've settled on it. These things require precision.\"",
         responses: {
           kind: ["Say you don't mind waiting", "Let him take his time"],
           playful: [
@@ -401,18 +402,18 @@ export default {
         },
       },
       {
-        line: '"Obviously, I solved it first," he says, already unrolling a diagram no one asked to see.',
-        approach: "Ask to see it anyway",
+        line: "The research budget came through at last. He has found four separate excuses to mention it in ten minutes.",
+        approach: "Ask about the new equipment",
         greeting:
           '"Hmph. You noticed the new equipment. The research grant committee finally saw sense. About time."',
         responses: {
-          kind: [
-            "Admire the diagram sincerely",
-            "Ask him to walk you through it",
-          ],
-          playful: ["Pretend to already know it", "Act unimpressed on purpose"],
+          kind: ["Admire the new equipment", "Ask him to show it off"],
+          playful: ["Ask what it all cost", "Act unimpressed on purpose"],
           bold: ["Call the boast overblown", "Ask what took so long"],
-          neutral: ["Glance at it and say nothing", "Look away, uninterested"],
+          neutral: [
+            "Glance at it and say nothing",
+            "Let him talk, say nothing",
+          ],
         },
       },
       {
@@ -468,22 +469,22 @@ export default {
       },
     ],
     // warm/spark/close/bound below are migrated to full { line, approach,
-    // greeting, responses } beats, same as new/known — even though none of
-    // these four tiers are anywhere near DIALOGUE_POOL_TARGET_BY_TIER yet (5
-    // lines each vs. targets of 18/27/38/46). Pairing doesn't wait on pool
-    // growth; it's a separate axis.
+    // greeting, responses } beats, same as new/known. warm is now grown out to
+    // its DIALOGUE_POOL_TARGET_BY_TIER size (18); spark/close/bound are still
+    // at 5 against targets of 27/38/46. Pairing doesn't wait on pool growth;
+    // it's a separate axis.
     warm: [
       {
         line: "His cold demeanor cracks slightly: there's obsession in his eyes now, the drive to cure your curse is consuming him.",
         approach: "Notice the obsession",
         greeting:
-          '"I do this for the future of humanity. And... fine. For you specifically. Don\'t repeat that."',
+          '"I do this for the future of humanity. And for yo... for the specimen. Your case is unusually stubborn, that\'s all."',
         responses: {
           kind: [
             "Let him fuss over your pulse",
-            "Say it means something to you",
+            "Say the effort means a lot",
           ],
-          playful: ["Repeat 'for you' back at him", "Ask him to say it again"],
+          playful: ["Repeat 'specimen' back at him", "Ask what he almost said"],
           bold: ["Name the savior complex", "Tell him to slow down"],
           neutral: ["Stay professional about it", "Stay out of his way"],
         },
@@ -526,12 +527,169 @@ export default {
       {
         line: "He turns bright red mid-sentence and blames the lab lighting.",
         approach: "Ask what he was saying",
-        greeting: '"You again? ...I suppose I don\'t mind."',
+        greeting:
+          '"I was saying... it was nothing of consequence. The lighting in here is atrocious, that\'s the whole of it."',
         responses: {
           kind: ["Let him recover quietly", "Give him a moment"],
           playful: ["Blame the lab lighting", "Ask what he was really saying"],
           bold: ["Match his volume", "Push him to finish the thought"],
           neutral: ["Say nothing, let him recover", "Wait it out, unbothered"],
+        },
+      },
+      {
+        line: "He's marching you across Mortkranken to see a recent finding. Three corridors in, he still hasn't admitted he's lost.",
+        approach: "Take over the navigating",
+        greeting:
+          '"I know precisely where we are. The building was renovated, that\'s all."',
+        responses: {
+          kind: ["Let him lead anyway", "Say you're in no hurry"],
+          playful: ["Ask if he's lost", "Offer him a map"],
+          bold: ["Tell him he's lost", "Point the right way"],
+          neutral: ["Follow without comment", "Walk on, say nothing"],
+        },
+      },
+      {
+        line: "Your name is on the lab whiteboard now, in his handwriting, in a slot nobody else gets.",
+        approach: "Ask about the slot",
+        greeting:
+          '"It\'s a standing appointment. Scheduling you piecemeal was inefficient."',
+        responses: {
+          kind: ["Say you'll be there", "Thank him for the slot"],
+          playful: ["Ask who you outranked", "Ask for a better time"],
+          bold: ["Ask why you get a slot", "Call it what it is"],
+          neutral: ["Note the time, say nothing", "Accept the appointment"],
+        },
+      },
+      {
+        line: "Jiro booked your next check-up before you thought to ask. Yuri has now read that line in the ledger four times.",
+        approach: "Ask about the check-up",
+        greeting:
+          '"Jiro scheduled you. Without consulting me. He does not do that. For anyone. Explain it."',
+        responses: {
+          kind: ["Say Jiro was being thorough", "Let him work it out himself"],
+          playful: ["Ask if he's jealous of Jiro", "Say Jiro is very attentive"],
+          bold: ["Name what's bothering him", "Tell him to go ask Jiro"],
+          neutral: ["Let the ledger go", "Say nothing about it"],
+        },
+      },
+      {
+        line: "The space heater has migrated across the lab to the spot where he always examines you.",
+        approach: "Sit where it's warm",
+        greeting:
+          '"The heater is positioned for equipment calibration. Sit down before you catch something."',
+        responses: {
+          kind: ["Sit down where it's warm", "Say you noticed the warmth"],
+          playful: ["Ask which equipment", "Move the heater back"],
+          bold: ["Say the heater's for you", "Ask who really moved it"],
+          neutral: ["Sit down, say nothing", "Sit without asking"],
+        },
+      },
+      {
+        line: "Jiro mentions, without inflection, that the whole afternoon was cleared for you. Yuri hears him do it.",
+        approach: "Thank him for the time",
+        greeting:
+          '"Jiro exaggerates. I merely had a gap. A large one. Deliberately."',
+        responses: {
+          kind: ["Say the time means a lot", "Thank him for the afternoon"],
+          playful: ["Ask Jiro for more details", "Ask how large the gap was"],
+          bold: ["Ask why he cleared it", "Say you know he cleared it"],
+          neutral: ["Let the two of them argue", "Let the excuse stand"],
+        },
+      },
+      {
+        line: "Someone called his research a hobby this morning. He's been sharpening the same pencil for five minutes.",
+        approach: "Take the pencil away",
+        greeting:
+          '"They are not worth discussing. Their methodology is the hobby, if anything."',
+        responses: {
+          kind: ["Say his work matters", "Tell him they were wrong"],
+          playful: ["Offer a fresh pencil", "Insult them creatively"],
+          bold: ["Ask who said it", "Tell him to forget them"],
+          neutral: ["Let him sharpen it", "Wait until he stops"],
+        },
+      },
+      {
+        line: '"Don\'t touch that." A pause. "...That one, you may touch. Carefully."',
+        approach: "Handle the equipment",
+        greeting:
+          '"Carefully. That cost more than your tuition and I\'m trusting you with it anyway."',
+        responses: {
+          kind: ["Handle it carefully", "Say you're honored"],
+          playful: ["Reach for the wrong one", "Ask what else you may touch"],
+          bold: ["Pick it up without asking", "Ask what changed"],
+          neutral: ["Touch it, say nothing", "Set it down again"],
+        },
+      },
+      {
+        line: "There's a flask on the shelf with your name on the label, written far more carefully than the others.",
+        approach: "Ask about the flask",
+        greeting:
+          '"That one is yours. Formulated for you specifically. Legible labeling is basic laboratory protocol."',
+        responses: {
+          kind: ["Say you'll take it daily", "Thank him for making it"],
+          playful: ["Read into the handwriting", "Ask if it tastes awful"],
+          bold: ["Ask what's really in it", "Ask why yours is neater"],
+          neutral: ["Take the flask, say nothing", "Pocket it and move on"],
+        },
+      },
+      {
+        line: "He's humming over your chart, the same eight bars on a loop, and doesn't seem to know he's doing it.",
+        approach: "Listen without stopping him",
+        greeting:
+          '"What? I wasn\'t aware I was... The piece is stuck in my head. It aids concentration. That is all."',
+        responses: {
+          kind: ["Let him hum, say nothing", "Listen until he finishes"],
+          playful: ["Ask what piece it is", "Hum the next bars for him"],
+          bold: ["Say he hums when he's happy", "Ask what put him in a mood"],
+          neutral: ["Get on with the work", "Let it play out"],
+        },
+      },
+      {
+        line: "You dozed off at the bench. His coat is over your shoulders when you wake, and he is across the room being loudly busy.",
+        approach: "Give the coat back",
+        greeting:
+          '"Keep the coat. Hypothermia in my own lab would set the research back considerably."',
+        responses: {
+          kind: ["Keep the coat on", "Thank him for the coat"],
+          playful: ["Model the coat for him", "Ask to keep it"],
+          bold: ["Ask when he put it there", "Say you know it was him"],
+          neutral: ["Fold the coat, say nothing", "Hand it back, no comment"],
+        },
+      },
+      {
+        line: "You sent him one question. Four paragraphs came back inside a minute, from a very busy man.",
+        approach: "Ask a follow-up question",
+        greeting:
+          '"I replied promptly because the question was urgent. That is the only reason."',
+        responses: {
+          kind: ["Thank him for the answer", "Say the answer helped"],
+          playful: ["Ask a much longer question", "Time his next reply"],
+          bold: ["Ask why he replied so fast", "Point out he wasn't busy"],
+          neutral: ["Read it and move on", "Send back a short thanks"],
+        },
+      },
+      {
+        line: 'A visiting researcher asks who you are. "This is my..." He stops dead. "...patient. A patient of mine."',
+        approach: "Let him finish that",
+        greeting:
+          '"Patient is the correct term. It is a precise term. Stop looking at me like that."',
+        responses: {
+          kind: ["Play along as the patient", "Let him off the hook"],
+          playful: ["Ask what he nearly said", "Introduce yourself better"],
+          bold: ["Finish the sentence for him", "Ask what you are to him"],
+          neutral: ["Shake the visitor's hand", "Say nothing, let it pass"],
+        },
+      },
+      {
+        line: "He takes the coffee out of your hand mid-sentence and replaces it with something that smells medicinal.",
+        approach: "Drink whatever that is",
+        greeting:
+          '"Lack of sleep is the root of all illness. Drink that, then go to bed."',
+        responses: {
+          kind: ["Drink it without arguing", "Promise to sleep tonight"],
+          playful: ["Ask what's in it", "Bargain for the coffee back"],
+          bold: ["Take the coffee back", "Ask who made him your doctor"],
+          neutral: ["Drink it, say nothing", "Set the cup down"],
         },
       },
     ],
@@ -749,7 +907,7 @@ export default {
       "**{name}** re-arms the bravado twice on the way to {user}. Neither attempt survives.",
     ],
     close: [
-      '"You belong to..." **{name}** stops. "...You\'ve misunderstood." {user} hasn\'t.',
+      '"You\'re mine to save," **{name}** informs {user}, loudly, as though that settles the matter.',
       "**{name}** abandons whatever he was striding off to do, mid-stride, because {user} called his name.",
       "{user} calls, and **{name}** shouts for Jiro to cover the **{house}** ward. Jiro already was.",
     ],

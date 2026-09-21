@@ -871,19 +871,30 @@ describe('banked cooldown resets', () => {
 
   const HOURS_3 = 3 * 60 * 60 * 1000;
 
+  // Every timestamp here is relative to this instant, and so is the rpc's own
+  // clock. The "already clear" case below sits 1s past a 3h cooldown, and on
+  // the wall clock that margin is whatever drift the suite has accumulated
+  // since the fake was built — it tipped under load. Pinned, the margin is
+  // exactly the 1s the test is written around.
+  const NOW = new Date('2026-06-15T12:00:00Z');
+
+  beforeEach(() => {
+    fake.setRpcNow(NOW);
+  });
+
   function onCooldown(userId, commands = ['roam', 'meet'], ago = 60_000) {
     for (const command of commands) {
       fake.tables.command_limits.push({
         discord_user_id: userId,
         command_name: command,
-        last_used_at: new Date(Date.now() - ago).toISOString(),
+        last_used_at: new Date(NOW.getTime() - ago).toISOString(),
       });
     }
   }
 
   // A banked reset is just an unspent mission_log row. 'coop' clears one
   // command, anything else clears both — the scope is the mission type.
-  function bank(userId, type = 'riddle', completedAt = new Date()) {
+  function bank(userId, type = 'riddle', completedAt = NOW) {
     fake.tables.mission_log.push({
       discord_user_id: userId,
       house: 'Frostheim',
@@ -944,7 +955,7 @@ describe('banked cooldown resets', () => {
 
   it('spends the cheapest sufficient reset first, keeping the better one banked', async () => {
     onCooldown('user-a');
-    bank('user-a', 'riddle', new Date(Date.now() - 10_000)); // older, but worth more
+    bank('user-a', 'riddle', new Date(NOW.getTime() - 10_000)); // older, but worth more
     bank('user-a', 'coop');
 
     await handleCooldownReset(click('user-a'), 'roam');
