@@ -808,8 +808,8 @@ export const CHARACTERS = [
       uniform: "Towa_Otonashi_Uniform.png",
       casual: "Towa_Otonashi_Casual.png",
     },
-    // Verified against his voiceline script, which is largely wordless by day
-    // (see pmOnly). The profile is unusually direct: he is "capable of reading
+    // Verified against his voiceline script, which is wordless by day: canon
+    // has him unable to speak until evening (see pmOnly). The profile is unusually direct: he is "capable of reading
     // people well, understanding who is kind-hearted and who is more hostile".
     // kind (2) is literally the axis he sorts people on, and he "immediately
     // appears friendly with the MC" for having a "pleasant" presence. bold (0):

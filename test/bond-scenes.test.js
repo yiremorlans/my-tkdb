@@ -292,8 +292,8 @@ test('a closing option with a sticker sends it ahead of the keepsake, in its own
   const stickerMessage = discord.posts.at(-2);
   const keepsakeMessage = discord.posts.at(-1);
 
-  // option.close here is just "..." — too short for assertBeatPosted's
-  // literal-stretch matching, so compare directly.
+  // option.close here is empty (the sticker is the whole reply), so compare
+  // directly rather than through assertBeatPosted's literal-stretch matching.
   assert.strictEqual(stickerMessage.content, option.close);
   assert.ok(stickerMessage.files?.some((f) => f.name === option.sticker), 'sticker rides its own message');
   assert.ok(!stickerMessage.content.includes(scene.keepsake.emoji), 'the keepsake has not appeared yet');

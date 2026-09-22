@@ -31,6 +31,7 @@ import {
   getFullName,
 } from './constants/characters.js';
 import { bondLevelFromSlug, getDialogueTier, getRelationshipLevel } from './constants/game.js';
+import { timeBucket } from './constants/backgrounds.js';
 import { missionSlotsLine } from './constants/missions.js';
 import { composeSilhouetteEncounter } from './imageComposition.js';
 import { buildWardingDialogueMessage } from './encounters.js';
@@ -722,7 +723,14 @@ export async function handleCall(body, now = new Date()) {
     // pool only fronts a character with no authored lines for that register)
     // and then the milestone's "what happened after" beat, the same
     // afterline whose `label` shows under /affinity's Moments together.
-    const revealLines = [pickWinnerLine(tier, vars, encounter.character_id)];
+    //
+    // Day or evening is judged at the spawn (the hour that picked the
+    // silhouette's background and teaser), not the claim, so a reveal just past
+    // the cutoff still matches the scene the channel saw. Only changes anything
+    // for a pmOnly character (Towa can't speak by day).
+    const spawnedAt = encounter.created_at ? new Date(encounter.created_at) : now;
+    const daytime = timeBucket(spawnedAt) === 'day';
+    const revealLines = [pickWinnerLine(tier, vars, encounter.character_id, { daytime })];
     if (milestone) revealLines.push(fillTemplate(milestone.afterline, vars));
 
     // Discord rejects the whole edit (400 URL_TYPE_INVALID_URL) if the thumbnail

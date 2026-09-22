@@ -13,6 +13,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
 import {
+  DIALOGUE,
   SHARED_ENCOUNTER_TEASERS,
   SHARED_MISSED_LINES,
   SHARED_WINNER_LINES,
@@ -125,5 +126,27 @@ test('teasers and missed lines draw something at any hour, and split day from ev
     const shared = pools.any.filter((line) => evening.has(line));
     assert.deepStrictEqual(shared, [], 'an evening line is also in the any pool');
     assert.ok(pools.day.length > 0 && pools.evening.length > 0);
+  }
+});
+
+// Towa (pmOnly) can't speak by day, so a daytime reveal must draw his wordless
+// pool at every register, never his spoken `winnerLines` or the shared pool,
+// and nothing in it may be a quoted line. Everyone else is unaffected.
+test('a pmOnly character reveals wordlessly by day, and speaks by night', () => {
+  for (const character of CHARACTERS) {
+    const content = DIALOGUE[character.id];
+    for (const bucket of WINNER_LINE_BUCKETS) {
+      const day = winnerLinePool(bucket, character.id, { daytime: true });
+      const night = winnerLinePool(bucket, character.id);
+      if (!character.pmOnly) {
+        assert.deepStrictEqual(day, night, `${character.id}.${bucket} changed by day`);
+        continue;
+      }
+      assert.deepStrictEqual(day, content.daytimeWinnerLines[bucket], `${character.id}.${bucket}`);
+      assert.deepStrictEqual(night, content.winnerLines[bucket], `${character.id}.${bucket}`);
+      for (const line of day) {
+        assert.ok(!line.includes('"'), `${character.id}.${bucket} speaks by day: "${line}"`);
+      }
+    }
   }
 });

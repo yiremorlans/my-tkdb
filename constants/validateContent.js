@@ -185,6 +185,10 @@ function validateBondScene(at, scene, errors, warnings, seenLines) {
       );
     }
     beats.forEach((beat, i) => {
+      // A beat that carries a sticker may be empty: the sticker is the whole
+      // message (Discord posts an attachment with no text), which is how Towa
+      // texts. Without one, an empty beat would post a blank message.
+      if (typeof beat === "string" && beat.trim() === "" && scene.stickers?.[i]) return;
       if (typeof beat !== "string" || beat.trim() === "") {
         errors.push(`${at}.beats[${i}] is empty — that click would post a blank message`);
         return;
@@ -263,7 +267,12 @@ function validateBondScene(at, scene, errors, warnings, seenLines) {
           errors.push(`${where}.style must be a Discord button style (1-4), got ${option.style}`);
         }
 
-        if (typeof option.close !== "string" || option.close.trim() === "") {
+        // A close that carries a sticker may be empty: the sticker is the
+        // whole reply (Discord posts an attachment with no text), which is how
+        // Towa texts. Without one, an empty close would end on silence.
+        if (typeof option.close === "string" && option.close.trim() === "" && option.sticker) {
+          // sticker-only close
+        } else if (typeof option.close !== "string" || option.close.trim() === "") {
           errors.push(`${where}.close is empty — picking it would end the scene on silence`);
         } else {
           prose.push([`${where}.close`, option.close]);
@@ -477,6 +486,18 @@ export function validateContent() {
     }
 
     validateWinnerLines(id, content.winnerLines, errors, warnings);
+
+    // The /call reveal's version of the daytime swap: a pmOnly character can't
+    // speak by day, so his daytime reveals need a wordless pool at every
+    // register. Required in full, because a missing register would fall back
+    // to the shared pool rather than to anything he'd do. Nobody else draws it.
+    if (character.pmOnly) {
+      validateWinnerLines(`${id} daytime`, content.daytimeWinnerLines, errors, warnings, {
+        required: true,
+      });
+    } else if (content.daytimeWinnerLines !== undefined) {
+      warnings.push(`${id} has daytimeWinnerLines but isn't pmOnly — never picked`);
+    }
 
     validateBondScenes(id, content.bondScenes, errors, warnings, bondSceneLines);
 

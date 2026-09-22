@@ -217,7 +217,13 @@ test('no character carries a dialogueWhen block', () => {
 // catalog. Guards the walk against a new pool key appearing beside `dialogue`
 // and going unchecked, the way `daytimeDialogue` did.
 test('a character carries no dialogue pool the beat walk does not cover', () => {
-  const KNOWN = new Set(['dialogue', 'daytimeDialogue', 'bondScenes', 'winnerLines']);
+  const KNOWN = new Set([
+    'dialogue',
+    'daytimeDialogue',
+    'bondScenes',
+    'winnerLines',
+    'daytimeWinnerLines',
+  ]);
   const unknown = new Set();
   for (const character of CHARACTERS) {
     for (const key of Object.keys(DIALOGUE[character.id] || {})) {

@@ -1,5 +1,5 @@
 export default {
-  // The level-up DMs (docs/bond-scene-dms.md). Towa barely speaks in daylight,
+  // The level-up DMs (docs/bond-scene-dms.md). Towa can't speak in daylight,
   // so every one of these lands after dark — which makes the DM the natural home
   // for him in a way it isn't for anyone else. He hums, he eats flowers, he is
   // casually morbid about things nobody else would be casual about, and the
@@ -13,26 +13,27 @@ export default {
   // and the phrasing is trimmed. Not in the `> ` lines he says out loud.
   bondScenes: {
     acquaintance: {
-      // His very first message ever is the sticker alone — beat 0 carries no
-      // real text, just enough to satisfy the non-empty check, so the sticker
-      // is the whole opener rather than sharing the message with a paragraph.
-      // This scene is pure texting throughout: no stage directions, no
-      // emojis, just what he'd actually type.
+      // He barely types. Stickers do most of his talking, and a beat or close
+      // that carries one is the sticker alone, with empty text (validateContent
+      // allows that only when a sticker is attached). His name leads the first
+      // beat he types, so it's clear who's texting. What he does type is a
+      // few short, bright words at a time. Being mute by day is about
+      // speaking, not texting, so the hour is never his reason to write.
       beats: [
-        "**{firstName}**: ...",
-        "You keep coming back. I notice.\n\nMost things don't. I like that you do.",
-        "You've come {timesMet} times. I count the days between. The most was five. Bad five.\n\nCome more, Dandelion. I want to see you everyday!",
+        "",
+        "**{firstName}**: You keep coming back 🌼\n\nMost things don't. I like that you do!",
+        "{timesMet} times. I count the days in between\n\nMost was five. Bad five\n\nCome more, Dandelion. Every day!",
       ],
       stickers: { 0: "Hi.png" },
       choice: {
         prompt:
-          "Haru's always around doing his rounds. I want it to be you too.",
+          "Haru's always around doing his rounds\n\nI want you around too",
         options: [
           {
             key: "kind",
             label: "Say you'll come more often",
             style: 3,
-            close: "...",
+            close: "",
             sticker: "Happy.png",
           },
           {
@@ -40,57 +41,63 @@ export default {
             label: "Ask if he missed you",
             style: 1,
             close:
-              "...Yes.\n\nI missed you. I counted the days you didn't come, so I know it's true.",
+              "Yes! I missed you\n\nI counted the days you didn't come. So it's true",
           },
           {
             key: "bold",
             label: "Ask why it matters so much",
             style: 4,
             close:
-              "Because I don't have much.\n\nThis is mine. I'd like to keep it.",
+              "Because I don't have much\n\nThis is mine. I want to keep it",
           },
         ],
       },
       keepsake: {
         emoji: "🌼",
-        line: "The night he asked you to come by more, and meant it.",
+        line: "When he asked you to come by more, and meant it.",
       },
     },
 
     friend: {
+      // Same texting rules as acquaintance: sticker beats and closes are the
+      // sticker alone, and his name leads the first beat he types. He's been
+      // keeping track of how you answer him ({favResponse}), and what he wants
+      // for it is a love story. He believes in love, simply and completely;
+      // the soulmate "struck by lightning" line waits for a later tier.
       beats: [
-        "**{firstName}**: Ren says asking people why they're nice to me makes them go away.\n\nI'm asking anyway. It's night 🌙 I'm allowed things at night.",
-        "You've got {favResponse} for me every time. Even when I say something wrong, and I do that a lot. I hear it a second too late, when it's already out.\n\nEveryone's heart goes fast after. Just a little. They don't know it does. I can hear it from across the park 🌷\n\nYours doesn't. Not once. I've been listening.",
+        "",
+        "**{firstName}**: You always give me {favResponse} 🌷\n\nEvery single time. I noticed",
+        "So I want a love story from you next\n\nA real one",
       ],
+      stickers: { 0: "Question.png" },
       choice: {
-        prompt: "So why don't you? Ren says don't ask. I'm asking.",
+        prompt: "Do you believe in love, Dandelion? I do!",
         options: [
           {
             key: "kind",
-            label: "Say nothing he says is wrong",
+            label: "Say you believe in it too",
             style: 3,
-            close:
-              "That's not true. I said a really bad one to Haru in March.\n\nBut keep saying it. I'd like you to. I'll pretend it's true when it's dark 🌙",
+            close: "",
+            sticker: "Smug.png",
           },
           {
             key: "playful",
-            label: "Say you've stepped closer",
+            label: "Ask what makes a good one",
             style: 1,
-            close:
-              "...Closer?\n\n*The humming stops completely, which is more alarming than it starting.*\n\nDo it again. The closer thing. Do it tomorrow where I can see it.",
+            close: "Someone keeps coming back\n\nThat's all it needs ♪",
           },
           {
             key: "bold",
-            label: "Tell him to stop listening",
+            label: "Say love isn't real",
             style: 4,
-            close:
-              "No.\n\nHaru listens to the park. I listen to you. That's fair.\n\n...I'll hum, so you always know where I am 🎶",
+            close: "",
+            sticker: "No.png",
           },
         ],
       },
       keepsake: {
         emoji: "🌷",
-        line: "The heartbeat that stayed steady when he said the wrong thing.",
+        line: "When he asked if you believe in love, and told you he does.",
       },
     },
 
@@ -175,7 +182,7 @@ export default {
     devoted: {
       beats: [
         "**{firstName}**: The one standing near you today. In the courtyard.\n\nI know his name, where he sleeps, when he eats. Eleven minutes, it took me.\n\nI'm telling you that I found it out.",
-        "I'm not going to do anything. I want you to know that.\n\nBut I sat with it all afternoon. Ren asked what was wrong and I said nothing. First time I've ever lied to him.",
+        "I'm not going to do anything. I want you to know that.\n\nBut I sat with it all afternoon. Ren asked what was wrong tonight and I said nothing. First time I've ever lied to him.",
         "So instead I went to the field and pulled up about a hundred of them. Then I felt awful, they hadn't done anything, and I sat there putting the seed heads back even though that doesn't work.\n\nThat's where it went. Into the flowers 💐 It has to go somewhere. I'd rather there than anywhere with a name.",
       ],
       choice: {
@@ -247,79 +254,96 @@ export default {
   dialogue: {
     new: [
       {
-        line: "He's been watching the sky. His eyes drop to you the moment you arrive and stay there, unblinking.",
-        approach: "Meet his stare",
-        greeting: '"...Stay a little longer. Just a little."',
+        line: "He's crouched by the flower beds, eating a dandelion head in two bites. He looks up at you, still chewing, and beams.",
+        approach: "Say hello",
+        greeting: '"Hi! ...You\'re a nice one. I can tell. ♪"',
         responses: {
-          kind: ["Meet him at his pace", "Say you'll stay a while"],
-          playful: ["Make him smile", "Blink at him slowly"],
-          bold: ["Stare right back at him", "Sit down right beside him"],
-          neutral: ["Stand still and let him look", "Look up at the sky too"],
+          kind: ["Thank him, smiling", "Smile back at him"],
+          playful: ["Ask how the flower tastes", "Ask how he can tell"],
+          bold: ["Crouch down beside him", "Say he's a nice one too"],
+          neutral: ["Smile, say nothing", "Let him finish the flower"],
         },
       },
       {
-        line: "He's been standing out here long enough for the dark to have settled around him. He doesn't seem to mind it.",
-        approach: "Go up to him",
-        greeting: '"You smell like outside. ...I like it."',
+        line: '"Huh? Where did Haru go?" He turns a full circle on the path, looking, and stops when he finds you instead.',
+        approach: "Say you haven't seen him",
+        greeting:
+          '"He was right here! ...Wait with me? Waiting is boring by myself."',
         responses: {
-          kind: ["Speak softly to him", "Ask if he's cold"],
-          playful: ["Ask what he's doing out here", "Sniff your own sleeve"],
-          bold: ["Step closer without asking", "Ask what outside smells like"],
-          neutral: ["Wait him out", "Stand in the dark with him"],
+          kind: ["Wait with him gladly", "Help him look for Haru"],
+          playful: ["Guess where Haru went", "Say Haru's hiding from him"],
+          bold: ["Say you're better company", "Tell him to forget Haru"],
+          neutral: ["Wait beside him quietly", "Look down the path too"],
         },
       },
       {
-        line: "A dandelion turns over and over between his fingers. He hasn't looked away from you once.",
-        approach: "Hold his gaze",
-        greeting: "\"Don't move yet. I'm looking.\"",
+        line: "He's drinking straight from the outdoor tap, head tipped under the spout. He comes up dripping and grinning.",
+        approach: "Wait for him to finish",
+        greeting: '"Want some? It\'s cold! ~~ ♪"',
         responses: {
-          kind: ["Take the flower gently", "Hold still for him"],
-          playful: ["Ask what he's thinking", "Wiggle, just a little"],
-          bold: ["Take the dandelion from him", "Look right back at him"],
-          neutral: ["Observe him carefully", "Stay still, say nothing"],
+          kind: ["Offer him a handkerchief", "Politely say no thanks"],
+          playful: ["Take a turn at the tap", "Flick the water back at him"],
+          bold: ["Drink from the tap too", "Wipe his chin for him"],
+          neutral: [
+            "Shake your head, say nothing",
+            "Watch him shake off the water",
+          ],
         },
       },
       {
-        line: '"...Hmphm." He\'s been waiting, and he hates waiting. "Are you done yet? Come play."',
+        line: "He drops onto the bench beside you like he's known you for years, knees pulled up, humming.",
+        approach: "Stay on the bench",
+        greeting: '"Do you know any love stories? Tell me lots of them, okay?"',
+        responses: {
+          kind: ["Tell him a short one", "Promise him a story later"],
+          playful: ["Ask what kind he likes", "Make one up on the spot"],
+          bold: ["Ask him to tell one first", "Say you'll tell the best one"],
+          neutral: ["Let him hum beside you", "Stay put, say nothing"],
+        },
+      },
+      {
+        line: '"...Hmphm." He\'s been waiting, and he hates waiting. "Are you done yet? Come play with me!"',
         approach: "Agree to play",
-        greeting: "\"Finally! Okay, you're it. I'll give you a head start. ...A small one.\"",
+        greeting:
+          "\"Finally! Okay, you're it. I'll give you a head start. ...A small one.\"",
         responses: {
-          kind: ["Agree gently to play", "Give him a big head start"],
+          kind: ["Promise to go easy on him", "Give him a big head start"],
           playful: ["Make him wait a little longer", "Tag him right away"],
           bold: ["Ask what he wants", "Say you'll catch him easily"],
           neutral: ["Shrug, agree quietly", "Start counting, say nothing"],
         },
       },
-      {
-        line: "You feel watched before you see him. By then he's already much closer.",
-        approach: "Let him close the distance",
-        greeting: '"...Dandelion?"',
-        responses: {
-          kind: ["Let him come closer gently", "Answer to the name softly"],
-          playful: ["Turn around and surprise him", "Ask who Dandelion is"],
-          bold: ["Close the distance yourself", "Say hello first"],
-          neutral: ["Stay still, let him arrive", "Wait to see what he does"],
-        },
-      },
     ],
     known: [
       {
-        line: "He's already leaning into you when you sit down, warm and pleased, humming the same three notes over and over.",
-        approach: "Let him lean on you",
-        greeting: '"...Stay a little longer. I\'m not ready for you to go yet."',
+        line: "He spots you from across the courtyard and comes straight over, no detour, like you were the thing he was out looking for.",
+        approach: "Wait for him",
+        greeting: '"Ah! Dandelion, I found you!"',
         responses: {
-          kind: ["Let him lean, gladly", "Hum along with him softly"],
-          playful: ["Guess the three notes", "Hum something different back"],
-          bold: ["Lean into him first", "Say you like the humming"],
-          neutral: ["Let him lean, say nothing", "Sit still beside him"],
+          kind: ["Wave him over warmly", "Say you're glad he found you"],
+          playful: ["Ask if you were lost", "Ask who Dandelion is"],
+          bold: ["Meet him halfway", "Say you found him first"],
+          neutral: ["Stay put, let him arrive", "Wait to see what he does"],
         },
       },
       {
-        line: '"Haru\'s off patrolling again." He says it flatly. "I don\'t get it. They\'re all going to die someday anyway."',
-        approach: "Let the comment go",
-        greeting: '"...You came back. I thought you might not."',
+        line: "He's already leaning into you when you sit down, warm and pleased, humming the same three notes over and over.",
+        approach: "Let him lean on you",
+        greeting: "\"~~ ♪ ...Don't get up yet. I'm comfy.\"",
         responses: {
-          kind: ["Say that's not true, gently", "Let the comment go kindly"],
+          kind: ["Say you'll stay put", "Hum along with him softly"],
+          playful: ["Guess the three notes", "Hum something different back"],
+          bold: ["Lean into him first", "Say you like the humming"],
+          neutral: ["Stay seated, say nothing", "Sit still beside him"],
+        },
+      },
+      {
+        line: '"Haru\'s going patrolling again." He says it lightly. "I don\'t get it. They\'re all going to die someday anyway."',
+        approach: "Let the comment go",
+        greeting:
+          '"You\'re not going patrolling, are you? Good. Stay here with me."',
+        responses: {
+          kind: ["Say that's not true, gently", "Say you'll stay with him"],
           playful: ["Tease him for being morbid", "Ask if he includes himself"],
           bold: ["Push back on the comment", "Call the comment bleak"],
           neutral: ["Let it go unremarked", "Say nothing about it"],
@@ -328,7 +352,8 @@ export default {
       {
         line: "There's a clover in his hand already. He's been holding it a while.",
         approach: "Take it from him",
-        greeting: '"I picked this for you. It\'s a clover! Look look, it has five leaves!"',
+        greeting:
+          '"I picked this for you. It\'s a clover! Look look, it has five leaves!"',
         responses: {
           kind: ["Take it gently, thank him", "Accept the clover warmly"],
           playful: ["Ask how long he held it", "Wear it somewhere silly"],
@@ -341,73 +366,28 @@ export default {
         approach: "Eat it from his hand",
         greeting: '"It\'s the sweetest bit. I saved it. ...Eat it, Dandelion."',
         responses: {
-          kind: ["Eat it gently from his hand", "Thank him for sharing"],
+          kind: ["Say it's sweet, like he said", "Thank him for sharing"],
           playful: ["Feed him one back", "Ask if it tastes different"],
           bold: ["Take the whole flower instead", "Eat it without hesitation"],
           neutral: ["Eat it, say nothing", "Take the petal quietly"],
         },
       },
       {
-        line: '"Haru takes care of everyone here. I don\'t." He looks right at you. "I just take care of you."',
-        approach: "Ask why that is",
-        greeting: '"Sit here. Not there. Here, where I can watch you."',
-        responses: {
-          kind: ["Say that means a lot", "Accept the care gladly"],
-          playful: ["Ask if that's a compliment", "Demand equal treatment"],
-          bold: ["Say of course he does", "Ask why only you"],
-          neutral: ["Shrug, say nothing", "Let it go unremarked"],
-        },
-      },
-      {
-        line: '"Dandelion," he says, testing whether you\'ll answer to it yet. You do.',
-        approach: "Answer to Dandelion",
-        greeting: '"...Dandelion! You answered. So that\'s your name now."',
-        responses: {
-          kind: ["Answer to it warmly", "Say the name suits you"],
-          playful: ["Ask when he decided that", "Give him a nickname back"],
-          bold: ["Claim the name outright", "Say you like it, plainly"],
-          neutral: ["Answer without comment", "Let the name stand"],
-        },
-      },
-      {
-        line: "He's plucked petals off a flower nearby, methodically, and seems to be counting something with each one.",
+        line: "He's plucking petals off a flower one at a time, lips moving, counting something with each one.",
         approach: "Ask what he's counting",
         greeting:
           '"...Loves me. Loves me not. Loves me. ...It\'s a love story. Tell me one after."',
         responses: {
-          kind: ["Ask gently what he's counting", "Let him keep counting"],
-          playful: ["Guess the number", "Count along with him"],
-          bold: ["Demand to know the count", "Take the flower from him"],
+          kind: ["Promise him a love story", "Let him keep counting"],
+          playful: ["Guess how it ends", "Count along with him"],
+          bold: ["Ask who the flower's about", "Take the flower from him"],
           neutral: ["Let him count in peace", "Say nothing, watch him count"],
-        },
-      },
-      {
-        line: '"You cut your hair," he says, before you\'ve even sat down. "I notice everything about you."',
-        approach: "Ask what else he's noticed",
-        greeting:
-          '"The birds go quiet when you walk by. Your left shoe squeaks when it\'s damp. Ask me more."',
-        responses: {
-          kind: ["Say he notices a lot", "Thank him for noticing"],
-          playful: ["Ask what else he's tracking", "Test what he's noticed"],
-          bold: ["Say of course he notices", "Ask why he watches so closely"],
-          neutral: ["Shrug, say nothing", "Take the comment plainly"],
-        },
-      },
-      {
-        line: "He's spinning slowly in circles to see how dizzy he can get, and grins wide when he wobbles straight into you.",
-        approach: "Steady him",
-        greeting: '"Heh heh ♪ Caught you. Or you caught me. Again!"',
-        responses: {
-          kind: ["Steady him gently", "Catch him kindly"],
-          playful: ["Spin him back the other way", "Tease him for the dizziness"],
-          bold: ["Catch him and hold on", "Say he did that on purpose"],
-          neutral: ["Steady him, say nothing", "Catch him without comment"],
         },
       },
       {
         line: '"That one," he says, pointing at a cloud, "looks like you." He seems very pleased with this.',
         approach: "Ask what shape you are",
-        greeting: '"Look look! It\'s you. See? Fluffy on top."',
+        greeting: '"Look look! It\'s you. See? Heh heh ♪"',
         responses: {
           kind: ["Say the cloud got it right", "Take the compliment kindly"],
           playful: ["Pick a shape for him too", "Argue the cloud is wrong"],
@@ -416,37 +396,77 @@ export default {
         },
       },
       {
-        line: "He wraps both arms around you before you've said a word, tight enough that you feel it in your ribs.",
-        approach: "Hug him back",
-        greeting:
-          '"Where were you? I\'ve been waiting all this time. That\'s a sorry cuddle."',
+        line: "He's spinning slowly in circles to see how dizzy he can get, and grins wide when he wobbles straight into you.",
+        approach: "Steady him",
+        greeting: '"Heh heh ♪ Caught you. Or you caught me. Again!"',
         responses: {
-          kind: ["Hug him back gently", "Let the hug happen kindly"],
-          playful: ["Hug him back extra tight", "Ask what brought this on"],
-          bold: ["Hold on just as tight", "Hug him first next time"],
-          neutral: ["Let him hug you, say nothing", "Stand still through the hug"],
+          kind: ["Laugh, ask if he's okay", "Tell him to sit a minute"],
+          playful: [
+            "Spin him back the other way",
+            "Tease him for the dizziness",
+          ],
+          bold: ["Catch him and hold on", "Say he did that on purpose"],
+          neutral: ["Let go once he's steady", "Wait for him to stop wobbling"],
         },
       },
       {
-        line: "The sky goes a shade grayer the moment someone speaks badly of Haru nearby. He doesn't seem to notice he did that.",
-        approach: "Change the subject",
-        greeting: '"...Hm? Oh. Nothing. It\'s going to rain, I think."',
+        line: "He's sitting in the tree over the path in plain view, legs swinging. You only look up when he drops down in front of you.",
+        approach: "Catch your breath",
+        greeting: '"Boo! Heh heh. Were you scared?"',
         responses: {
-          kind: ["Change the subject gently", "Say something kind about Haru"],
-          playful: ["Ask why the sky did that", "Tease him about the mood swing"],
+          kind: ["Laugh, say a little", "Admit he got you"],
+          playful: ["Say boo right back", "Pretend you saw him coming"],
+          bold: ["Say it takes more than that", "Dare him to do it again"],
+          neutral: ["Give him a look", "Shake it off, say nothing"],
+        },
+      },
+      {
+        line: "Something with too many teeth watches you both from the tree line. Towa doesn't even turn around.",
+        approach: "Stay close to him",
+        greeting:
+          "\"Hm? Are you afraid of that carnivore? Don't worry. I'm the boss around here.\"",
+        responses: {
+          kind: ["Thank him for looking out", "Say you feel safer now"],
+          playful: ["Ask what makes him boss", "Ask if it takes orders"],
+          bold: ["Say you're not afraid", "Ask him to prove it"],
+          neutral: ["Watch the tree line", "Stay quiet beside him"],
+        },
+      },
+      {
+        line: "Someone across the path says something ugly about Haru. Towa stops smiling, his eyes go thin, and the sky goes gray with him.",
+        approach: "Say his name",
+        greeting: '"...Hm? Oh! Dandelion. It\'s going to rain, I think. ♪"',
+        responses: {
+          kind: ["Say something kind about Haru", "Change the subject gently"],
+          playful: [
+            "Ask why the sky did that",
+            "Tease him about the mood swing",
+          ],
           bold: ["Ask him what just happened", "Call out the reaction"],
           neutral: ["Let it go unremarked", "Change the subject quietly"],
         },
       },
       {
-        line: "He suddenly goes still, head tilted, listening to something you can't hear at all.",
-        approach: "Ask what he hears",
-        greeting: '"The tree on the hill. It\'s crying again. Can you hear it?"',
+        line: 'He has his face tipped up, sniffing the air. "It\'s going to rain again tomorrow."',
+        approach: "Ask how he knows",
+        greeting: '"I just know! I have to go tell Haru. ...Come with me?"',
         responses: {
-          kind: ["Ask gently what he hears", "Wait quietly with him"],
-          playful: ["Guess what he's listening to", "Make a noise to test him"],
-          bold: ["Demand to know what he hears", "Ask him to explain, now"],
-          neutral: ["Let him listen, say nothing", "Stay quiet while he listens"],
+          kind: ["Walk with him to find Haru", "Say Haru will be glad"],
+          playful: ["Bet him it stays dry", "Ask if he's ever wrong"],
+          bold: ["Race him to Haru", "Say you'll tell Haru yourself"],
+          neutral: ["Fall in beside him", "Follow without a word"],
+        },
+      },
+      {
+        line: '"Haru always goes off somewhere by himself around this time," he tells you, very seriously. "He calls it Grown-up R&R."',
+        approach: "Ask what that means",
+        greeting:
+          "\"I don't know! He won't tell me. So you keep me company instead. ♪\"",
+        responses: {
+          kind: ["Keep him company gladly", "Say you'd love to"],
+          playful: ["Guess what Haru's up to", "Call this Towa R&R instead"],
+          bold: ["Say Haru's missing out", "Claim the evening for you two"],
+          neutral: ["Nod, say nothing", "Sit with him quietly"],
         },
       },
     ],
@@ -454,7 +474,7 @@ export default {
       {
         line: '"You\'re here." He catches your sleeve before you\'ve stopped walking. "Where were you? Come give me a sorry cuddle."',
         approach: "Let him fall into step",
-        greeting: '"Dandelion. You\'re here. That\'s all that matters."',
+        greeting: "\"Dandelion. You're here. That's all that matters.\"",
         responses: {
           kind: ["Fall into step gladly", "Give him the cuddle"],
           playful: ["Ask for the sorry cuddle", "Ask what he's sorry for"],
@@ -511,7 +531,7 @@ export default {
       {
         line: "He's stopped holding your sleeve. He's holding your hand now.",
         approach: "Take his hand",
-        greeting: '"...Dandelion. Say it\'s me. Say it\'s only me."',
+        greeting: "\"...Dandelion. Say it's me. Say it's only me.\"",
         responses: {
           kind: "Tell him it's only him",
           playful: "Squeeze his hand playfully",
@@ -522,7 +542,7 @@ export default {
       {
         line: "He rests his forehead against yours and breathes out, slowly, like relief.",
         approach: "Let him closer",
-        greeting: "\"I dream about this. Being this close. It's better awake.\"",
+        greeting: '"I dream about this. Being this close. It\'s better awake."',
         responses: {
           kind: "Let him stay close",
           playful: "Tease him for the sigh",
@@ -533,7 +553,8 @@ export default {
       {
         line: '"Come here. Closer. ...There. Now stay like this. One minute. Just one."',
         approach: "Stay just like this",
-        greeting: '"Don\'t talk. I just want to be near you for a minute. One minute."',
+        greeting:
+          '"Don\'t talk. I just want to be near you for a minute. One minute."',
         responses: {
           kind: "Stay as long as he needs",
           playful: "Hum it back against him",
@@ -601,7 +622,8 @@ export default {
       {
         line: "He's tucked a fresh dandelion somewhere on you before you noticed him move.",
         approach: "Go to him",
-        greeting: '"If you disappear, I\'ll find you. That\'s not a threat, Dandelion."',
+        greeting:
+          "\"If you disappear, I'll find you. That's not a threat, Dandelion.\"",
         responses: {
           kind: "Thank him for the flower",
           playful: "Hide, and let him find you",
@@ -658,7 +680,8 @@ export default {
       {
         line: '"You\'re tired?" He smiles into your hair. "You\'re so weak. ...It\'s cute."',
         approach: "Let him tease you",
-        greeting: '"Everything is quiet with you. Everything. I didn\'t know it could be."',
+        greeting:
+          '"Everything is quiet with you. Everything. I didn\'t know it could be."',
         responses: {
           kind: "Let him tease you gently",
           playful: "Hide the dandelions",
@@ -694,10 +717,10 @@ export default {
         approach: "Follow the humming",
         greeting: "~ ~ ~ ♪ (he stops, and turns to look at you)",
         responses: {
-          kind: "Listen to him gently",
-          playful: "Hum a wrong note on purpose",
-          bold: "Walk right up to him",
-          neutral: "Follow along at a distance",
+          kind: ["Listen to him gently", "Smile when he turns"],
+          playful: ["Hum a wrong note on purpose", "Tiptoe after the tune"],
+          bold: ["Walk right up to him", "Wave until he looks"],
+          neutral: ["Follow along at a distance", "Stop when he stops"],
         },
       },
       {
@@ -705,10 +728,10 @@ export default {
         approach: "Hum back",
         greeting: "~ ~ ~ . . . ♪ (he tilts his head, pleased)",
         responses: {
-          kind: "Hum it back softly",
-          playful: "Hum it back off-key",
-          bold: "Hum louder than he does",
-          neutral: "Hum it back, nothing more",
+          kind: ["Smile back at him", "Tilt your head too"],
+          playful: ["Tilt your head the other way", "Hum him a new question"],
+          bold: ["Step closer, pleased too", "Hum the next line yourself"],
+          neutral: ["Hold still, say nothing", "Nod along instead"],
         },
       },
       {
@@ -716,10 +739,10 @@ export default {
         approach: "Listen closely",
         greeting: "~ ~ ~ ♪ (he hums the same notes again, slower)",
         responses: {
-          kind: "Wait as long as he needs",
-          playful: "Guess the song out loud",
-          bold: "Ask him what it means",
-          neutral: "Keep listening",
+          kind: ["Wait as long as he needs", "Nod so he keeps going"],
+          playful: ["Guess the song out loud", "Clap along off the beat"],
+          bold: ["Step in close to listen", "Hum the next note for him"],
+          neutral: ["Keep listening", "Wait, say nothing"],
         },
       },
       {
@@ -727,10 +750,10 @@ export default {
         approach: "Answer without words",
         greeting: "~ ~ ~ ♫ (he lights up like you said something)",
         responses: {
-          kind: "Smile and nod at him",
-          playful: "Answer with a silly noise",
-          bold: "Point at him, then yourself",
-          neutral: "Nod once",
+          kind: ["Smile and nod at him", "Give him a small wave"],
+          playful: ["Answer with a silly noise", "Whistle back at him"],
+          bold: ["Point at him, then yourself", "Hold out your hand to him"],
+          neutral: ["Nod once", "Hold his gaze a moment"],
         },
       },
     ],
@@ -740,10 +763,10 @@ export default {
         approach: "Wait for the second note",
         greeting: "~ ~ ~ ♪ (he finishes the phrase, satisfied)",
         responses: {
-          kind: "Hold still for him",
-          playful: "Hum the second note early",
-          bold: "Ask him to hum it again",
-          neutral: "Wait for the rest",
+          kind: ["Hold still for him", "Nod him on gently"],
+          playful: ["Hum the phrase back wrong", "Hum a different ending"],
+          bold: ["Ask him to hum it again", "Hum the whole phrase back"],
+          neutral: ["Let the phrase settle", "Listen, say nothing"],
         },
       },
       {
@@ -751,10 +774,10 @@ export default {
         approach: "Hum back",
         greeting: "~ ~ ~ ♪ (he hums the third note, decided you're staying)",
         responses: {
-          kind: "Stay right where you are",
-          playful: "Pretend to leave, then stay",
-          bold: "Sit down next to him",
-          neutral: "Stay put",
+          kind: ["Stay right where you are", "Nod that you're staying"],
+          playful: ["Pretend to leave, then stay", "Hum the third note first"],
+          bold: ["Sit down next to him", "Take his sleeve and stay"],
+          neutral: ["Stay put", "Wait with him quietly"],
         },
       },
       {
@@ -762,10 +785,10 @@ export default {
         approach: "Take what he's holding",
         greeting: "~ ~ ~ ♫ (he presses the stem into your palm)",
         responses: {
-          kind: "Accept it carefully",
-          playful: "Sniff it like it's fancy",
-          bold: "Take it, and his hand too",
-          neutral: "Take it without a word",
+          kind: ["Accept it carefully", "Thank him with a smile"],
+          playful: ["Sniff it like it's fancy", "Tuck it behind your ear"],
+          bold: ["Take it, and his hand too", "Pick one back for him"],
+          neutral: ["Take it without a word", "Hold it, say nothing"],
         },
       },
       {
@@ -773,10 +796,10 @@ export default {
         approach: "Stay for the tune",
         greeting: "~ ~ ~ ♫ (he sways a little, and keeps going)",
         responses: {
-          kind: "Sway along with him",
-          playful: "Conduct him with a finger",
-          bold: "Sit down in front of him",
-          neutral: "Let the tune run",
+          kind: ["Sway along with him", "Stay until the last note"],
+          playful: ["Conduct him with a finger", "Tap out the rhythm"],
+          bold: ["Sit down in front of him", "Hum along, loudly"],
+          neutral: ["Let the tune run", "Listen from where you are"],
         },
       },
     ],
@@ -784,7 +807,7 @@ export default {
       {
         line: "~ ~ ~! ♫",
         approach: "Hum the tune with him",
-        greeting: "~ ~ ~ ♫ (he bounces on his heels as you join in)",
+        greeting: "~ ~ ~ ♫ (he bounces on his tip toes as you join in)",
         responses: {
           kind: "Hum in harmony with him",
           playful: "Add a little dance",
@@ -966,9 +989,10 @@ export default {
     ],
   },
   // When the old per-tier `responses` pool was folded onto the beats above,
-  // three labels had no genuine beat match ("Hum the tune back", "Tuck it
-  // behind your ear" from playful.new; "Let him count in peace" from
-  // neutral.close) and were dropped rather than force-placed.
+  // two labels had no genuine beat match ("Hum the tune back" from
+  // playful.new; "Let him count in peace" from neutral.close) and were dropped
+  // rather than force-placed. "Tuck it behind your ear" later found a home on
+  // the daytime dandelion beat.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full
@@ -1000,6 +1024,37 @@ export default {
       '"Do you like me, Dandelion? Because I love you!" **{name}** hums it into {user}\'s shoulder.',
       "**{name}** reaches {user} and tips his head, listening to their heartbeat like it's his favorite song.",
       "{user} says the name, and **{name}** decides never to let them out of sight again.",
+    ],
+  },
+  // The /call reveal lines for a daytime spawn. Towa can't speak until
+  // evening, so these swap in for `winnerLines` whenever the encounter was
+  // posted by day (pickWinnerLine's `daytime`). Same registers and
+  // placeholders; not one word out of him, only humming and what he does.
+  daytimeWinnerLines: {
+    new: [
+      "{user} calls his name, and **{name}** stops humming, turns, and tilts his head at them. ...?",
+      "**{name}** answers {user} with three bright notes and a wave. ~ ~ ~ ♪",
+      "{user} calls out, and **{name}** looks them over, head tilted, and then beams. ~ ~ ~!",
+    ],
+    warm: [
+      "**{name}** starts humming the moment {user} calls, and catches their sleeve. ~ ~ ~ ♫",
+      "{user} calls, and **{name}** holds out a five-leaf clover, bouncing on his toes until they take it.",
+      "**{name}** comes straight to {user}, humming, like he'd been waiting all day for them to call.",
+    ],
+    spark: [
+      "{user} calls, and **{name}** hums the same three notes back at them, over and over.",
+      "{user} got there first, and **{name}** looks at everyone else like they lost. ~ ~ ~ ♪",
+      "**{name}** tugs {user}'s sleeve toward somewhere quieter, humming. Whatever he wants to say will have to wait until dark.",
+    ],
+    close: [
+      "**{name}** has {user}'s sleeve before they've finished calling, and isn't giving it back. ~ ~ ~?",
+      "{user} calls, and **{name}** hums a tune only they know by now, and waits for them to finish it.",
+      "**{name}** reaches {user} and hums low, his eyes going thin at everyone still watching.",
+    ],
+    bound: [
+      "**{name}** reaches {user} and tips his head to their chest, listening to their heartbeat like it's his favorite song.",
+      "{user} calls, and **{name}** hums the same three notes into their shoulder, all he can say until dark.",
+      "**{name}** pulls {user} close and doesn't let go, humming. The words can keep until night.",
     ],
   },
 };

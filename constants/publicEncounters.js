@@ -180,17 +180,36 @@ export function fillTemplate(raw, vars = {}) {
 // sounds like them rather than like the house-mission boilerplate. A character
 // missing the register (or missing winnerLines entirely) falls back, which is
 // why an unauthored roster addition still reveals correctly.
-export function winnerLinePool(bucket, characterId) {
-  const authored = DIALOGUE[characterId]?.winnerLines?.[bucket];
+//
+// `daytime` is the same hard swap pickDialogueEntry makes for a pmOnly
+// character (Towa): he can't speak until evening, so a daytime reveal draws
+// from his wordless `daytimeWinnerLines` instead. validateContent requires that
+// pool at every register for a pmOnly character, so the swap never falls
+// through to his spoken lines.
+export function winnerLinePool(bucket, characterId, { daytime = false } = {}) {
+  const content = DIALOGUE[characterId];
+  const lines =
+    daytime && content?.daytimeWinnerLines
+      ? content.daytimeWinnerLines
+      : content?.winnerLines;
+  const authored = lines?.[bucket];
   if (Array.isArray(authored) && authored.length > 0) return authored;
   return [...WINNER_LINES.any, ...(WINNER_LINES[bucket] || WINNER_LINES.new)];
 }
 
 // `dialogueTier` is the winner's real tier (getDialogueTier). Returns the
 // filled line for the reveal embed's description. `characterId` selects that
-// character's authored pool; omitting it is the generic pool.
-export function pickWinnerLine(dialogueTier, vars = {}, characterId = null) {
-  const pool = winnerLinePool(winnerLineBucket(dialogueTier), characterId);
+// character's authored pool; omitting it is the generic pool. `daytime` picks
+// a pmOnly character's wordless pool (see winnerLinePool).
+export function pickWinnerLine(
+  dialogueTier,
+  vars = {},
+  characterId = null,
+  { daytime = false } = {},
+) {
+  const pool = winnerLinePool(winnerLineBucket(dialogueTier), characterId, {
+    daytime,
+  });
   return fillTemplate(pickRandom(pool), vars);
 }
 

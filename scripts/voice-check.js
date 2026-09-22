@@ -71,6 +71,9 @@ const HOUSE_RULES = `- constants/dialogue/reference.md is the source of truth fo
 - Leo, Shion, Taiga, Romeo, Yuri, and Ritsu are volatile / enemies-to-lovers
   types. Thorny, sardonic, prickly registers are in character for them, not a
   defect.
+- Bond scenes are text messages. No *italic narration* or stage directions
+  (*A long pause.*, *Then:*, *You tell him.*) in any beat, close, or prompt;
+  the character's own texts carry everything. Flag any new narration.
 - Never the word "deadpan" in dialogue, narration, or choice labels. Use
   "flatly", "blank-faced", "the bit". (Code comments are exempt.)
 - Ren's texting casing is irregular/mixed, never uniformly lowercase; "I" and

@@ -2,8 +2,9 @@ export default {
   // The level-up DMs (docs/bond-scene-dms.md). One of the six volatile
   // characters — see docs/negative-affinity-enemies-to-lovers.md. Shion does not
   // warm up; he narrows. Short flat sentences, plain and unadorned (no dialect
-  // or Irish lilt), gruesome imagery offered as affection, and "my wife" from
-  // the very first message because he decided a long time before you did.
+  // or Irish lilt), gruesome imagery offered as affection. He decided on you a
+  // long time before you did, and "my wife" is out loud from the known tier on.
+  // Everyone else takes it as a joke; soulbound is where he says it never was.
   //
   // The intimacy here is not softening — it is him letting you say no and
   // staying anyway. Every choice keeps a door open on your side, because a
@@ -30,14 +31,14 @@ export default {
             label: "Ask what else is in there",
             style: 1,
             close:
-              "Me, mostly.\n\nAnd a thing in the back I haven't named yet. It's got too many bits. You'll like it or you won't, and either's fine, because you'll still be standing next to me.",
+              "Me, mostly.\n\nAnd whoever wanders in after dark. You can watch their faces with me. You'll like it or you won't, and either's fine, because you'll still be standing next to me.",
           },
           {
             key: "bold",
             label: "Tell him to ask properly",
             style: 4,
             close:
-              "*A long gap.*\n\n...Will you come.\n\n*Then, immediately after:* Don't make me do it again.\n\n*He makes himself do it again, every time, after that.*",
+              "*A long gap.*\n\n...Will you come.\n\n*Then, immediately after:* Don't make me do it again.",
           },
         ],
       },
@@ -49,38 +50,39 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: You do the same thing every time. You come at me with {favResponse}. Never changes.",
-        "People change round me. They go quiet or they go loud or they go away. Three flavors, that's the lot, I've had them all since I was small.\n\nYou've got a fourth one. You just stay the same. Same voice, same everything, whatever I say to you.\n\nI've been trying to make it stop for weeks now. Said worse and worse things. You haven't budged.",
+        "**{firstName}**: That guy earlier. Outside the library. Who was he.",
+        "A classmate. Talking about a lecture.\n\n...I see.\n\nI watched the whole thing. You were nice to him. Nodding. Laughing at the bit that wasn't funny.",
+        "You don't do that with me. With me it's {favResponse}, every time. Straight in, like you want to see what I'll do.\n\nI like that one. That one's mine.\n\nDon't go giving it to him.",
       ],
       choice: {
-        prompt: "Why won't you budge.",
+        prompt: "Say you won't.",
         options: [
           {
             key: "kind",
-            label: "Say you're not frightened",
+            label: "Say he was just a classmate",
             style: 3,
             close:
-              "You should be.\n\n...Don't be, though. Stay like that. It's the only quiet I get.",
+              "I know. You said.\n\nThat's not what I asked, though. I asked you to say you won't.\n\nHow you are with me stays with me. Keep it there.",
           },
           {
             key: "playful",
-            label: "Say his worst wasn't much",
+            label: "Ask if he's jealous",
             style: 1,
             close:
-              "That wasn't my worst.\n\n...It was a bit. I've been holding back, which I've never done, and I'm cross about it.",
+              "No.\n\nMaybe. Don't know what it's called. I just didn't like him. You were looking at him and he had a boring face.",
           },
           {
             key: "bold",
-            label: "Tell him to stop testing",
+            label: "Say only he gets that side",
             style: 4,
             close:
-              "Can't.\n\n*Then:* Everyone goes eventually. Testing's how I find out when. If I stop testing then it just happens one day and I haven't seen it coming.\n\nThat's the whole of it. Don't be soft about it, I won't know what to do.",
+              "Yeah. Only me.\n\nSaved that. You can't take it back now.\n\nMine, then. Not anybody's. You bring it to me and nobody else gets any.",
           },
         ],
       },
       keepsake: {
-        emoji: "🕸️",
-        line: "The fourth thing people do, that only you do.",
+        emoji: "🐚",
+        line: "The side of you he's decided nobody else gets.",
       },
     },
 
@@ -234,7 +236,7 @@ export default {
     new: [
       {
         line: "He doesn't move to greet you. Only his eyes track across, then his head, slow, to follow you.",
-        approach: "Avert your gaze",
+        approach: "Back away slowly",
         greeting: "\"Don't run. Running's predictable, and I'll only follow.\"",
         responses: {
           kind: ["Answer him gently", "Say you weren't going to run"],
@@ -251,7 +253,7 @@ export default {
         approach: "Take a step closer",
         greeting: '"Better. Stay there. Let me look at you."',
         responses: {
-          kind: ["Step closer gently", "Ask if this is close enough"],
+          kind: ["Try to look at him", "Ask if this is close enough"],
           playful: ["Take your time closing the gap", "Take a tiny, tiny step"],
           bold: ["Step closer, not back", "Make him come to you"],
           neutral: ["Wait him out", "Let him look, say nothing"],
@@ -260,11 +262,11 @@ export default {
       {
         line: "He watches you the way he watches the cat across the yard, patient, unblinking, waiting to see what you'll do.",
         approach: "Avoid eye contact",
-        greeting: '"Hehe... you flinched. Do it again."',
+        greeting: '"Looking away won\'t help. The cat tried that too."',
         responses: {
           kind: ["Meet his gaze softly", "Ask him to go easy"],
-          playful: ["Give him a better face", "Flinch again, dramatically"],
-          bold: ["Stare right back", "Refuse to flinch twice"],
+          playful: ["Give him a better face", "Ask what happened to the cat"],
+          bold: ["Stare right back", "Tell him you're not the cat"],
           neutral: ["Give him nothing to read", "Look at the cat instead"],
         },
       },
@@ -274,7 +276,7 @@ export default {
         greeting:
           '"Curiosity. Fine. Sit down and be curious where I can see you."',
         responses: {
-          kind: ["Say it wasn't really brave", "Sit where he can see you"],
+          kind: ["Say you meant no harm", "Sit where he can see you"],
           playful: ["Don't take him seriously", "Ask for a tour of the house"],
           bold: ["Own the bad instincts", "Sit wherever you like"],
           neutral: ["Shrug at the label", "Sit down without a word"],
@@ -286,7 +288,7 @@ export default {
         greeting:
           '"That face is nice. I wonder what it looks like when you cry."',
         responses: {
-          kind: ["Say his face is nice too", "Tell him gently he won't"],
+          kind: ["Say his face is nice too", "Ask why he studies you"],
           playful: [
             "Ask what he's really learning",
             "Make a silly face instead",
@@ -311,7 +313,7 @@ export default {
       {
         line: "\"You're still alive, then. I couldn't find you anywhere. I figured I'd killed you and forgotten about it.\"",
         approach: "Ask if he missed you",
-        greeting: '"You came back. Wasn\'t sure you would. Good."',
+        greeting: '"Missed you? No. I just looked everywhere."',
         responses: {
           kind: ["Say you're glad to be found", "Reassure him you're fine"],
           playful: ["Ask if he really looked", "Tease the murder joke"],
@@ -332,14 +334,14 @@ export default {
         },
       },
       {
-        line: "He notices you looking at him and goes very still, deciding whether he's going to allow it.",
-        approach: "Say you saw it",
-        greeting: '"Stop looking at me like that. ...No. Keep doing it."',
+        line: "He's eating a piece of Jo's bread, slowly, and making sure you can see every bite.",
+        approach: "Eye the bread",
+        greeting: '"You want some too? ...Never giving you any."',
         responses: {
-          kind: ["Keep looking, gently", "Smile at him"],
-          playful: ["Look even harder", "Ask if he minds"],
-          bold: ["Don't look away", "Tell him you like looking"],
-          neutral: ["Look away first", "Say nothing, keep looking"],
+          kind: ["Tell him to enjoy it", "Say Jo bakes well"],
+          playful: ["Look tragically hungry", "Steal a bite anyway"],
+          bold: ["Hold your hand out for some", "Take a piece yourself"],
+          neutral: ["Watch him eat, say nothing", "Let him have the bread"],
         },
       },
       {
@@ -358,7 +360,7 @@ export default {
         line: "Someone bolts past you in the corridor, white-faced. He's strolling up from the direction they came.",
         approach: "Ask what he did",
         greeting:
-          '"They fainted. Went straight down, like a dropped coat. That\'s three now. Good week."',
+          '"They were so happy they fainted. That\'s three now. Good week."',
         responses: {
           kind: ["Ask if they're all right", "Say that's not funny, gently"],
           playful: ["Ask how he managed it", "Ask if you're next"],
@@ -370,12 +372,12 @@ export default {
         line: "He holds something small and dead out to you on his palm, and waits for your face to do something.",
         approach: "Say thank you",
         greeting:
-          "\"It's a present. You're happy, right? Your face says you're happy.\"",
+          "\"Thank you? People usually scream. That's how I know they're happy.\"",
         responses: {
-          kind: ["Thank him, mean it", "Accept the gift kindly"],
-          playful: ["Ask what it is exactly", "Name the poor creature"],
-          bold: ["Take it without flinching", "Say it's a strange gift"],
-          neutral: ["Take it, say nothing", "Leave it where it is"],
+          kind: ["Say you are happy, truly", "Keep the gift safe"],
+          playful: ["Ask what it is exactly", "Ask where he found it"],
+          bold: ["Tell him screaming isn't happy", "Ask for a bigger one"],
+          neutral: ["Take it, say nothing", "Leave it on his palm"],
         },
       },
       {
@@ -393,7 +395,7 @@ export default {
       {
         line: "He's soaking wet, and offers no explanation for it.",
         approach: "Don't ask why he's wet",
-        greeting: "\"Don't ask. ...You weren't going to? Good.\"",
+        greeting: '"Not even curious? ...Fine. Now I\'m not telling you."',
         responses: {
           kind: ["Offer him a towel, no fuss", "Let him stay wet"],
           playful: ["Guess where he's been", "Ask if he went swimming"],
@@ -405,10 +407,10 @@ export default {
         line: '"Mio says you asked about me," he says, and it\'s not clear yet if that pleases him or not.',
         approach: "Say you were curious",
         greeting:
-          '"Next time, ask me. I\'ll tell you worse things than Mio will."',
+          '"Next time, ask me, not Mio. He laughs when I call you my wife."',
         responses: {
-          kind: ["Say you just wondered", "Admit you were curious, gently"],
-          playful: ["Ask what else Mio says", "Ask for the worse things"],
+          kind: ["Say you just wondered", "Admit you were curious"],
+          playful: ["Ask what else Mio says", "Ask since when you're his wife"],
           bold: ["Say you asked on purpose", "Own the curiosity outright"],
           neutral: ["Shrug, say nothing", "Let it go unremarked"],
         },
@@ -438,8 +440,7 @@ export default {
       {
         line: "He's put something in your bag while you weren't looking, and now he's watching your hand go in after it.",
         approach: "Reach in anyway",
-        greeting:
-          "\"... Nothing? No scream? That's no fun. I'll try harder next time.\"",
+        greeting: "\"...Nothing? That's no fun. I'll try harder next time.\"",
         responses: {
           kind: ["Reach in without fuss", "Hand it back gently"],
           playful: ["Scream for his benefit", "Guess before you look"],
@@ -489,14 +490,14 @@ export default {
         greeting:
           '"Stay close to me. Nothing in this district would dare come near."',
         responses: {
-          kind: ["Thank him quietly", "Say you feel safer near him"],
+          kind: ["Stay close to him", "Say you feel safer near him"],
           playful: ["Ask what he did to it", "Ask if it's still breathing"],
           bold: ["Ask him to admit it", "Say you don't need the help"],
           neutral: ["Move on, unbothered", "Stay close, ask nothing"],
         },
       },
       {
-        line: '"I\'m thirsty. Go to Elias\'s and bring me that sickly brown stuff." A beat. "...Please."',
+        line: "\"I'm thirsty. Go to Elias's and bring me that sickly brown stuff.\" He doesn't say please.",
         approach: "Fetch what he asked",
         greeting:
           '"You actually went. ...You like me. Don\'t bother denying it."',

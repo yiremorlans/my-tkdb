@@ -248,10 +248,7 @@ export default {
         greeting:
           '"Symptoms first, please. Pleasantries slow the diagnosis down."',
         responses: {
-          kind: [
-            "Thank him and leave him to it",
-            "List your symptoms politely",
-          ],
+          kind: ["Wait until he's free", "List your symptoms politely"],
           playful: ["Crack a joke mid-exam", "Say your symptom is boredom"],
           bold: ["Give it to him straight", "Skip straight to the point"],
           neutral: ["Say only the facts", "Hand over your chart"],
@@ -300,7 +297,7 @@ export default {
         approach: "Let him use your name",
         greeting: '"Your color\'s better than last week."',
         responses: {
-          kind: ["Say it's nice to be known", "Thank him for noticing"],
+          kind: ["Say it's nice to be known", "Say you feel better, too"],
           playful: [
             "Ask what else is on the chart",
             "Tease the chart-heading tone",
@@ -360,7 +357,7 @@ export default {
         greeting:
           '"I know. I took your pulse before I asked. People seem to prefer being asked."',
         responses: {
-          kind: ["Thank him for checking", "Say you feel rested now"],
+          kind: ["Say you're very much alive", "Say you feel rested now"],
           playful: ["Pretend to still be dead", "Ask if he was worried"],
           bold: ["Ask what your pulse was", "Say he can check anytime"],
           neutral: ["Nod, still half-asleep", "Stretch, say nothing"],
@@ -398,7 +395,7 @@ export default {
         responses: {
           kind: [
             "Say you don't mind either way",
-            "Thank him for the efficiency",
+            "Promise to keep arriving first",
           ],
           playful: [
             "Call it exactly what it is",
@@ -474,7 +471,7 @@ export default {
         greeting:
           "\"...That one I didn't see coming. I don't have an answer yet. Give me a moment. I'd like to get it right.\"",
         responses: {
-          kind: ["Thank him for saying so", "Say you're glad he noticed"],
+          kind: ["Wait while he thinks it over", "Say you're glad he noticed"],
           playful: ["Time him while he thinks", "Look far too pleased"],
           bold: ["Say his questions are good", "Say you meant to stump him"],
           neutral: ["Take the comment plainly", "Shrug, move on"],
@@ -598,7 +595,7 @@ export default {
         greeting:
           '"Seventy-two. I counted twice. The second count wasn\'t necessary."',
         responses: {
-          kind: ["Let him take his time", "Thank him for the care"],
+          kind: ["Let him take his time", "Say it's nice to be counted"],
           playful: ["Ask if that's still medical", "Ask for a third count"],
           bold: ["Call out the long reading", "Ask why he counted twice"],
           neutral: ["Say nothing about the count", "Keep your wrist still"],
@@ -610,7 +607,7 @@ export default {
         greeting:
           "\"It also means Yuri isn't there to shout. That's a secondary benefit.\"",
         responses: {
-          kind: ["Thank him for the earlier slot", "Say you'll never be late"],
+          kind: ["Say it works for you too", "Say you'll never be late"],
           playful: ["Ask if Yuri knows", "Ask how loud Yuri gets"],
           bold: ["Say it's obviously for you", "Say that's not the only one"],
           neutral: ["Take the slot, say nothing", "Nod at the new time"],
@@ -622,7 +619,7 @@ export default {
         greeting:
           '"Your blood type. Your resting pulse. That you hum on the stairs. Some of it isn\'t medical."',
         responses: {
-          kind: ["Say that means a lot", "Thank him for remembering"],
+          kind: ["Say that means a lot", "Say you'll keep humming"],
           playful: ["Test what else he remembers", "Hum for him right now"],
           bold: ["Say of course he remembers", "Ask what else isn't medical"],
           neutral: ["Shrug, say nothing", "Let the list stand"],

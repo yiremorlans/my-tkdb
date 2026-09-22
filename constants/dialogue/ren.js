@@ -498,7 +498,7 @@ export default {
         approach: "Grab the second controller",
         greeting: '"Second controller\'s charged. No reason. Shut up."',
         responses: {
-          kind: ["Grin, glad he set it up", "Thank him for the profile"],
+          kind: ["Grin, glad he set it up", "Pick up the controller"],
           playful: ["Ask when he set it up", "Ask what your stats look like"],
           bold: ["Say of course he did", "Pick player one"],
           neutral: ["Take it, say nothing", "Load up the game"],
@@ -546,7 +546,7 @@ export default {
         greeting:
           "\"It's a rewatch, I'm not missing anything. ...Don't make it a whole thing.\"",
         responses: {
-          kind: ["Admit you needed that", "Thank him for the quiet"],
+          kind: ["Admit you needed that", "Don't make it a whole thing"],
           playful: ["Ask if that was on purpose", "Talk louder than the TV"],
           bold: ["Say he clearly cares", "Turn it down further"],
           neutral: ["Say nothing, keep watching", "Talk over the show"],
@@ -655,7 +655,7 @@ export default {
         greeting:
           "\"Kitchen gets slammed at six. I put it in early so I wouldn't be stuck waiting on it later. ...That's the only reason.\"",
         responses: {
-          kind: ["Thank him for thinking ahead", "Say you were craving it"],
+          kind: ["Sit down and dig in", "Say you were craving it"],
           playful: ["Ask what else he predicts", "Order something else, too"],
           bold: ["Say he watched for you", "Say the excuse is thin"],
           neutral: ["Sit down and start eating", "Take it without comment"],

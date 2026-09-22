@@ -292,6 +292,9 @@ export function renderBeat(scene, index, vars, { characterId, levelName, firstEv
   if (index === 0 && !replay) {
     parts.unshift(`*${vars.firstName} sent you a message.*`);
   }
+  // A sticker-only beat has no text of its own; drop it rather than leave a
+  // blank paragraph between the frame line and whatever follows.
+  if (!parts.at(-1).trim()) parts.pop();
   if (isLast && scene.choice?.prompt) {
     parts.push(fillTemplate(scene.choice.prompt, vars));
   }

@@ -53,6 +53,8 @@ test('no bond scene line is reused anywhere in the game', () => {
       ];
       for (const line of lines) {
         const text = line.trim();
+        // A sticker-only beat or close has no words to repeat.
+        if (!text) continue;
         if (seen.has(text)) duplicates.push(`${at}.${key} repeats ${seen.get(text)}`);
         else seen.set(text, `${at}.${key}`);
       }
