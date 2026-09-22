@@ -11,7 +11,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Is this you\n\nThe blond gigolo put your name in the thingy for me. I pressed it four times. Sorry if it went four times",
-        "I don't mind classes. The teachers say cool stuff. Once I learn to read the textbooks and the blackboard it'll be perfect.\n\nYou listen the same way. Like you're really getting it.\n\nSometimes, I can smell something sweet off you. Just for a second. Its different from everyone else\n\nI started sitting where I could see you in class. I told myself it was to hear better. But...\n\nI want to learn about you. Not just what the teachers say. That's what I wanted to tell you {timesMet} classes ago.",
+        "I don't mind classes. The teachers say cool stuff. Once I learn to read the textbooks and the blackboard it'll be perfect.\n\nYou listen the same way. Like you're really getting it.\n\nSometimes I smell somethin' sweet off you. Just for a second. Its different from everyone else\n\nI started sitting where I could see you in class. It was s'posed to be so I could hear better. But...\n\nI want to learn about you. Not just what the teachers say. That's what I wanted to tell you {timesMet} classes ago.",
       ],
       choice: {
         prompt:
@@ -26,7 +26,7 @@ export default {
           },
           {
             key: "playful",
-            label: "Ask what you smell",
+            label: "Ask what you smell like",
             style: 1,
             close:
               "Strawberry milk. The carton kind, from the cafeteria. That's what you smelled like earlier, right when you got the answer.",
@@ -42,14 +42,14 @@ export default {
       },
       keepsake: {
         emoji: "📚",
-        line: "Sitting close in class to hear one thing, staying to learn another.",
+        line: "Sitting where he could see you in class, to hear one thing and learn another.",
       },
     },
 
     friend: {
       beats: [
         "**{firstName}**: Your scents gone squeezy. Somethings wrong",
-        "You always give me {favResponse}. Every time, don't matter what mood I catch you in. Stopped noticing it a while back, it's just how you smell to me now.\n\nToday you still gave me {favResponse}. Same words. But underneath it your scent went all squeezy, like the time you cried and never told me why.\n\nNobody else can smell that on you. I can. That's the one thing I'm really good at, so I'm not gonna pretend I didn't.",
+        "Every time you come around I get your scent first, then {favResponse}. Don't matter what mood I catch you in. I stopped noticing it a while back. It's just you now.\n\nToday you still gave me {favResponse}. Same words. But underneath it your scent went all squeezy, like the time you cried and never told me why.\n\nNobody else can smell that on you. I can. My nose is better than anybody's, so I'm not gonna pretend I didn't.",
       ],
       choice: {
         prompt: "So what happened. You don't gotta tell me the whole thing",
@@ -73,12 +73,12 @@ export default {
             label: "Tell him you need a hug",
             style: 4,
             close:
-              "I get that one\n\nI'm coming over. Don't argue, I'm already putting my shoes on\n\nI can stay till you feel better",
+              "I get that one\n\nTen seconds. That's how long I can do. But I'm coming over, don't argue, I'm already putting my shoes on\n\nI can stay till you feel better",
           },
         ],
       },
       keepsake: {
-        emoji: "👃",
+        emoji: "🐺",
         line: "The day your scent went squeezy and he noticed before you said a word.",
       },
     },
@@ -244,23 +244,23 @@ export default {
         },
       },
       {
-        line: "He circles wide around you, watching, deciding. Nothing about it is hostile.",
+        line: "He keeps to the far side of the room, watching you, deciding. Nothing about it is hostile.",
         approach: "Wait for him to decide",
         greeting: '"...You smell weird. Not bad weird. Just weird."',
         responses: {
           kind: ["Let him take his time", "Say he can look all he wants"],
-          playful: ["Circle back at him", "Ask what 'weird' smells like"],
+          playful: ["Say he smells weird too", "Ask what 'weird' smells like"],
           bold: ["Reach out anyway", "Ask him to decide already"],
-          neutral: ["Let him circle", "Stay where you are"],
+          neutral: ["Let him keep his distance", "Stay where you are"],
         },
       },
       {
-        line: "He's stopped circling. He stands where he can see you, and stays.",
+        line: "He's come in from the edge of the room. He stands where he can see you, and stays.",
         approach: "Face toward him",
         greeting: '"...You again. You don\'t run. Good."',
         responses: {
           kind: ["Say you're glad he stays", "Stand where he can see you"],
-          playful: ["Ask what took him so long", "Tease the stopped circling"],
+          playful: ["Ask what took him so long", "Tease him for coming closer"],
           bold: ["Say of course you noticed", "Step even closer"],
           neutral: ["Stand still, say nothing", "Let him watch, unbothered"],
         },
@@ -294,10 +294,10 @@ export default {
         approach: "Speak gently",
         greeting: "\"That's a word, right? ...What's it mean? Say it plain.\"",
         responses: {
-          kind: ["Say the word again, gently", "Explain it plainly for him"],
+          kind: ["Use it in an easy example", "Explain it plainly for him"],
           playful: ["Give him a new word", "Trade him a word for a word"],
           bold: ["Ask what he's testing", "Make him use it in a sentence"],
-          neutral: ["Say nothing and wait", "Give him a plain definition"],
+          neutral: ["Say nothing and wait", "Answer in one word"],
         },
       },
       {
@@ -306,7 +306,7 @@ export default {
         greeting:
           "\"Got it right that time, didn't I? Don't say no. I know I did.\"",
         responses: {
-          kind: ["Tell him he nailed it", "Thank him for getting it right"],
+          kind: ["Tell him he nailed it", "Say it sounds nice from him"],
           playful: ["Ask him to say it again", "Test if he'll say it twice"],
           bold: ["Say of course he got it right", "Demand he use it more"],
           neutral: ["Nod, say nothing", "Let it go unremarked"],
@@ -340,7 +340,7 @@ export default {
         approach: "Hold his attention",
         greeting: '"How come you do stuff like that? Humans are weird."',
         responses: {
-          kind: ["Explain gently", "Be patient with his questions"],
+          kind: ["Tell him why you do it", "Be patient with his questions"],
           playful: [
             "Make a game of explaining",
             "Ask what he's confused about",
@@ -389,20 +389,20 @@ export default {
         },
       },
       {
-        line: '"The blond gigolo says I\'m getting better at the so-shul stuff. Because of you, he said." He looks almost pleased about it.',
-        approach: "Tell him he's doing fine",
-        greeting: "\"He said it's 'cause of you. So... that's good, right?\"",
+        line: "\"What's a 'so-shul skill'? That blond gigolo was talking about them. He said I don't have any. Is that a good thing?\"",
+        approach: "Explain social skills",
+        greeting: "\"...So it's a bad thing. Okay. Then I'm gonna get some.\"",
         responses: {
-          kind: ["Say he's doing great", "Say you agree with Rui"],
-          playful: ["Ask what 'so-shul' means", "Tease the phrase back"],
-          bold: ["Say he's better than fine", "Claim credit for the change"],
-          neutral: ["Shrug, say nothing", "Let it go unremarked"],
+          kind: ["Say he'll pick them up", "Offer to help him practice"],
+          playful: ["Say Rui has too many", "Tease the way he says it"],
+          bold: ["Say Rui's wrong about him", "Tell him to prove Rui wrong"],
+          neutral: ["Nod, say nothing", "Let it go unremarked"],
         },
       },
       {
-        line: "He falls into step beside you without a word, like it stopped needing an invitation somewhere along the way.",
-        approach: "Let him walk with you",
-        greeting: '"Can we walk again? I liked the last one. A lot."',
+        line: "He hovers near you at the end of class, clearly working up to asking something.",
+        approach: "Ask what he wants",
+        greeting: '"...Can we walk again? I liked the last one."',
         responses: {
           kind: ["Say you're glad he's there", "Let him walk with you gladly"],
           playful: ["Race him instead", "Take the long way on purpose"],
@@ -426,14 +426,14 @@ export default {
         },
       },
       {
-        line: "He sniffs the air when you arrive before he even turns around, and relaxes on the spot.",
-        approach: "Let him catch your scent",
+        line: "He goes still while you're halfway across the yard, and doesn't turn around until you're right behind him.",
+        approach: "Walk up behind him",
         greeting: '"I learned your footsteps. I know it\'s you before I look."',
         responses: {
-          kind: ["Say his name so he's sure", "Say you're glad he knows it"],
-          playful: ["Ask what you smell like today", "Tease his nose again"],
-          bold: ["Say of course he'd know", "Stand closer so he can tell"],
-          neutral: ["Let him sniff, say nothing", "Stand still, unbothered"],
+          kind: ["Say his name so he's sure", "Say you're glad he knows you"],
+          playful: ["Ask if he's been waiting", "Tease that he's showing off"],
+          bold: ["Say of course he'd know", "Say you'd know him anywhere"],
+          neutral: ["Let him turn, say nothing", "Stand still, unbothered"],
         },
       },
       {
@@ -442,7 +442,7 @@ export default {
         greeting:
           '"...How come, though? You didn\'t know me. I coulda been anything."',
         responses: {
-          kind: ["Say you wanted to help", "Reassure him gently"],
+          kind: ["Say you wanted to help", "Say he wasn't just anything"],
           playful: [
             "Tease that you liked him fast",
             "Ask what he expected instead",
@@ -458,64 +458,70 @@ export default {
         approach: "Smile back",
         greeting: "\"You're back. I'm... really happy about that.\"",
         responses: {
-          kind: ["Smile back warmly", "Say you missed that smile"],
+          kind: ["Say you're glad to be back", "Say you missed that smile"],
           playful: ["Ask what made him smile", "Ask for another one"],
           bold: ["Say you're happy too", "Tell him to smile more"],
-          neutral: ["Smile, say nothing", "Nod, walk over"],
+          neutral: ["Take the spot beside him", "Nod, walk over"],
         },
       },
       {
-        line: "He's practiced something to say to you. It comes out slightly formal and completely sincere.",
+        line: "He's practiced something to say to you. It comes out a little stiff and completely sincere.",
         approach: "Ask about the new word",
         greeting: '"I learned a new word today. I was saving it for you."',
         responses: {
-          kind: ["Thank him for saving it", "Say you'd like to hear it"],
-          playful: ["Guess the word first", "Offer him a harder word"],
-          bold: ["Demand he say it now", "Ask where he learned it"],
-          neutral: ["Wait to hear it", "Listen for the word"],
+          kind: ["Praise him for it", "Say he used it just right"],
+          playful: ["Ask him to use it again", "Offer him a harder word"],
+          bold: ["Say it suits him", "Ask where he learned it"],
+          neutral: ["Nod, say nothing", "Let the word sit"],
         },
       },
       {
-        line: "He falls in at your side without being asked, and stays exactly a step behind.",
-        approach: "Let him fall in beside you",
-        greeting: '"Walk with me? I\'ll keep to your pace."',
+        line: '"The teacher asked us to name an anomalous plant you can eat, but when I did he said humans can\'t eat it. So what? I can."',
+        approach: "Say he wasn't wrong",
+        greeting: '"See? You get it. I knew you would. The teacher didn\'t."',
         responses: {
-          kind: ["Thank him for keeping close", "Say he can walk level"],
-          playful: ["Slow down on purpose", "Ask why he stays behind"],
-          bold: ["Walk right beside him", "Pull him up level"],
-          neutral: ["Walk along, say nothing", "Keep to a steady pace"],
+          kind: ["Say he answered honestly", "Say you'd have marked it right"],
+          playful: ["Ask what it tastes like", "Ask him to name another"],
+          bold: [
+            "Say the question was unfair",
+            "Tell him to argue it next time",
+          ],
+          neutral: ["Nod along", "Let him vent"],
         },
       },
       {
         line: "\"Your scent's all squeezy today. You're sad,\" he says. He's rarely wrong about that.",
-        approach: "Tell him what's wrong",
+        approach: "Ask how he knew",
         greeting:
-          "\"Something's wrong. I can tell. You don't have to say what.\"",
+          '"Your scent told me before your face did. You don\'t gotta say what."',
         responses: {
-          kind: ["Tell him gently what's wrong", "Say you'll tell him later"],
-          playful: ["Ask how he can tell", "Ask what happy smells like"],
+          kind: ["Thank him for not pushing", "Say you'll tell him later"],
+          playful: [
+            "Call his nose a lie detector",
+            "Ask what happy smells like",
+          ],
           bold: ["Say he's right, plainly", "Say the whole thing"],
           neutral: ["Let him notice, say nothing", "Say it's nothing much"],
         },
       },
       {
         line: "\"I'm gonna go practice swimming at Haru's place. Can you do other stuff besides doggy paddle?\"",
-        approach: "Ask him to teach you",
+        approach: "Say you know a few strokes",
         greeting:
-          "\"I'd rather be here than anywhere else. That's new. I like it.\"",
+          '"Really? Show me. I\'m faster than anyone at doggy paddle, but the human ways look cool."',
         responses: {
-          kind: ["Offer to swim with him", "Say you'd like to learn"],
+          kind: ["Offer to swim with him", "Ask to see his doggy paddle"],
           playful: ["Tease the doggy paddle", "Challenge him to a race"],
-          bold: ["Say you'll teach him properly", "Say you're better at it"],
+          bold: ["Say he'll outswim you soon", "Say you're better at it"],
           neutral: ["Agree without a word", "Meet him at the water"],
         },
       },
       {
         line: 'He\'s stopped flinching at his own phone. Mostly. "Suba showed me how to turn the noise off."',
         approach: "Ask how he'll know you texted",
-        greeting: "\"You're tired. I can smell it. Sit. I'll be quiet.\"",
+        greeting: "\"...Oh. I didn't think about that. I'll check it. A lot.\"",
         responses: {
-          kind: ["Thank him for trying", "Say you'll text anyway"],
+          kind: ["Say you're proud of him", "Say you'll text anyway"],
           playful: ["Ask what noise he picked", "Send a text right now"],
           bold: ["Say he'll figure it out", "Turn the noise back on"],
           neutral: ["Take it in stride", "Sit while he's quiet"],
@@ -525,45 +531,46 @@ export default {
         line: '"That blond gigolo tried to sit between us at lunch. I moved. He can sit somewhere else."',
         approach: "Ask if he's jealous",
         greeting:
-          '"You make the wary feeling go away. I didn\'t think anything could."',
+          "\"What's jealous? ...Doesn't matter. He was too close. That's all.\"",
         responses: {
           kind: ["Say you'd rather sit with him", "Say you'd have moved too"],
-          playful: ["Ask if that was jealousy", "Ask where Leo ended up"],
+          playful: ["Say that's exactly jealous", "Ask where Rui ended up"],
           bold: ["Say you saw him do it", "Say he can sit closer"],
           neutral: ["Shrug it off", "Eat, let it go"],
         },
       },
       {
-        line: "He offers you half of whatever he's eating before you've asked, like it was always the plan.",
-        approach: "Take the half he's offering",
-        greeting: "\"I don't share food. I share with you. That's different.\"",
+        line: "He's eating Sho's chicken over rice with his hands again. Without looking up, he pushes the container over to you.",
+        approach: "Take a bite",
+        greeting: '"...Good, huh? Nobody else gets any of my food. Just you."',
         responses: {
-          kind: ["Take the half, thank him", "Say you'll share yours too"],
-          playful: ["Ask for more than half", "Take the bigger half"],
-          bold: ["Take it like it's expected", "Ask why you're different"],
-          neutral: ["Take it, say nothing", "Eat beside him"],
+          kind: ["Thank him for sharing", "Say you'll share yours too"],
+          playful: ["Ask for a fork, at least", "Eat with your hands too"],
+          bold: ["Ask why only you", "Say you'll hold him to that"],
+          neutral: ["Eat beside him", "Nod, keep eating"],
         },
       },
       {
         line: "\"I read the whole chapter myself last night. Took a while, but I got it.\" He says it like it's nothing, but he's watching for your reaction.",
         approach: "Tell him that's great",
         greeting:
-          "\"I brought you something. It's small. I hope that's okay.\"",
+          '"Suba helped with two words. Only two. The rest was all me."',
         responses: {
           kind: ["Say that's amazing", "Say he worked hard for it"],
           playful: ["Quiz him on the chapter", "Ask for a summary"],
           bold: ["Say you knew he could", "Tell him to read you some"],
-          neutral: ["Accept it as normal", "Take the gift he brought"],
+          neutral: ["Accept it as normal", "Nod like you expected it"],
         },
       },
       {
         line: "He growls, quiet and short, at someone who got too close to you in the hall. Then he looks embarrassed about it.",
         approach: "Tell him it's okay",
-        greeting: '"I want to protect this. Us, I mean. Whatever this is."',
+        greeting:
+          "\"It just came out. I'm not s'posed to growl at people. I really try not to.\"",
         responses: {
           kind: ["Say it's okay to protect you", "Say you weren't bothered"],
           playful: ["Tease the embarrassed growl", "Growl back at him"],
-          bold: ["Say he did the right thing", "Tell him to do it again"],
+          bold: ["Say he did the right thing", "Say one growl isn't much"],
           neutral: ["Let it go, unbothered", "Keep walking, no comment"],
         },
       },
@@ -571,7 +578,7 @@ export default {
         line: '"You\'re not scared of me. Everyone else still is, a little. I noticed a while back."',
         approach: "Say you never were",
         greeting:
-          '"I don\'t get scared much anymore. Not since you started staying close."',
+          '"Not even the first time? ...Okay. I believe you. Your scent didn\'t lie."',
         responses: {
           kind: ["Say you never were scared", "Say there's nothing to fear"],
           playful: [
@@ -587,7 +594,7 @@ export default {
         approach: "Take the seat he saved",
         greeting: '"I made room next to me. It\'s yours, if you want it."',
         responses: {
-          kind: ["Thank him for the seat", "Tell him you'd have found it"],
+          kind: ["Take the seat beside him", "Tell him you'd have found it"],
           playful: ["Ask who he glared at", "Ask if the glare works"],
           bold: ["Take the seat like it's yours", "Sit before anyone else can"],
           neutral: ["Sit, say nothing", "Take it, settle in"],
@@ -597,7 +604,7 @@ export default {
         line: "\"I draw what happened every day so I don't forget it. You're in most of the pages now.\"",
         approach: "Ask to see the pages",
         greeting:
-          "\"I learned a new word for how I feel around you. I'll tell you when I'm sure.\"",
+          '"You can look. Don\'t laugh at how I drew your face. Faces are hard."',
         responses: {
           kind: ["Ask kindly to see the pages", "Say you'd love to see them"],
           playful: ["Demand to see every page", "Ask to be drawn better"],
@@ -606,25 +613,30 @@ export default {
         },
       },
       {
-        line: "He sniffs the air the second you walk in, and his whole posture eases before he even says hello.",
-        approach: "Say hello first",
-        greeting: '"Your scent is my favorite one. I checked. It still is."',
+        line: "It's been a few days. He's in front of you the second you turn up, not quite scowling.",
+        approach: "Say sorry you were gone",
+        greeting:
+          '"Do you hate me? ...No? Okay. Then don\'t do it again. It made my heart all squeezy."',
         responses: {
-          kind: ["Say hello warmly back", "Say hello, glad to be there"],
-          playful: ["Ask what eased him", "Ask if the check is daily"],
-          bold: ["Say of course it's you", "Say you checked too"],
-          neutral: ["Say hello, unbothered", "Greet him and sit"],
+          kind: ["Promise you'll come back", "Say you missed him too"],
+          playful: [
+            "Ask what squeezy feels like",
+            "Ask if he counted the days",
+          ],
+          bold: ["Say you could never hate him", "Say you won't do it again"],
+          neutral: ["Stay put and let him look", "Nod, say nothing"],
         },
       },
       {
-        line: "\"I asked Suba what 'sarcasm' means. He said you use it a lot. I still don't always catch it.\"",
-        approach: "Explain the joke",
-        greeting: '"I like it when you\'re here. Is that all right to say?"',
+        line: "\"I asked Suba what 'sarcasm' means. He said it's saying the opposite on purpose. How am I s'posed to tell?\"",
+        approach: "Tell him to listen for tone",
+        greeting:
+          '"So you say the opposite and do a voice? ...That\'s just lying, but nicer."',
         responses: {
-          kind: ["Explain patiently", "Promise to be clearer"],
-          playful: ["Make the joke worse on purpose", "Use sarcasm on purpose"],
+          kind: ["Say it's not really lying", "Promise to be clearer"],
+          playful: ["Agree, sarcastically", "Call him a natural at this"],
           bold: ["Say he'll catch on", "Say he catches plenty"],
-          neutral: ["Let it go unexplained", "Move on from the word"],
+          neutral: ["Let him think it over", "Move on from the word"],
         },
       },
       {
@@ -633,36 +645,35 @@ export default {
         greeting:
           '"Stay a little. I like the quiet better when you\'re in it."',
         responses: {
-          kind: ["Give him your attention gladly", "Turn to him gently"],
-          playful: ["Pretend not to notice the tug", "Tug his sleeve back"],
-          bold: ["Turn to him immediately", "Answer the tug at once"],
+          kind: ["Say you'll stay a while", "Say you like it too"],
+          playful: ["Pretend to leave, then stay", "Tug his sleeve back"],
+          bold: ["Stay until he says go", "Sit closer in the quiet"],
           neutral: ["Give him a nod", "Stay in the quiet"],
         },
       },
       {
-        line: "\"I'm getting better at the human stuff. The blond gigolo says so, and he'd tell me if I wasn't.\"",
+        line: "\"The blond gigolo says I got so-shul skills now. Some. He'd tell me if I didn't.\"",
         approach: "Tell him he's right",
-        greeting:
-          "\"You're the human I hoped to find. I didn't say that part before.\"",
+        greeting: '"Yeah? ...Then I\'m gonna tell Neros. When I find him."',
         responses: {
           kind: ["Say he's come a long way", "Say the change shows"],
           playful: [
             "Ask what human stuff he means",
-            "Ask for Leo's exact words",
+            "Ask for Rui's exact words",
           ],
           bold: ["Say he never needed fixing", "Say he's doing it his way"],
           neutral: ["Just nod at that", "Take his word for it"],
         },
       },
       {
-        line: "He waits by the gate most days now, like it stopped being a coincidence a while ago.",
+        line: "He's outside your classroom when the bell goes, most days now. It stopped being a coincidence a while ago.",
         approach: "Ask if he's waited long",
         greeting: '"Not long. ...Okay, a little long. Worth it."',
         responses: {
-          kind: ["Say it was worth it too", "Say you'll come sooner"],
-          playful: ["Ask how long he's waited", "Ask what 'a little' means"],
-          bold: ["Say of course you'd come", "Tell him not to wait outside"],
-          neutral: ["Head inside together", "Walk in with him"],
+          kind: ["Say it was worth it too", "Say you'll get out sooner"],
+          playful: ["Say he's a bad liar", "Ask what 'a little' means"],
+          bold: ["Say of course you'd come", "Say he can wait inside"],
+          neutral: ["Head off together", "Walk on with him"],
         },
       },
     ],
@@ -826,7 +837,7 @@ export default {
         greeting:
           '"Can I... yes? Good. I\'ll never stop asking, I like the yes."',
         responses: {
-          kind: "Kiss him back gently",
+          kind: "Say you like the yes too",
           playful: "Teach him a better kiss",
           bold: "Take the lead this time",
           neutral: "Let him keep trying, silent",
@@ -856,19 +867,19 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '**{name}** circles wide around {user}, watching. "...You know my name. I don\'t know your scent yet."',
-      '{user} says the name, and **{name}**\'s nose twitches. "...How come you know that?"',
+      '**{name}** stops a few steps short of {user} and sniffs once. "...What do you want me to do? Say it."',
+      "{user} says the name, and **{name}**'s nose twitches before he turns around. \"...Yeah. That's me.\"",
       '"Stay there a moment." **{name}** takes {user} in slowly, scent and all.',
     ],
     warm: [
       "**{name}** knows the voice before he's found the face, and comes straight to {user}.",
-      '"I learned a new word today." **{name}** had been saving it for {user}.',
+      '"...You again. Where\'re we going today?" **{name}** is already walking toward {user}.',
       "{user} calls out, and **{name}** falls in at their side, exactly one step behind.",
     ],
     spark: [
       '"You smell happy." **{name}** tells {user} this as a plain fact.',
       "{user} says the name, and **{name}**'s ears do something he has no control over.",
-      "**{name}** had practiced a greeting for {user}. It comes out formal and completely sincere.",
+      "**{name}** had practiced a greeting for {user}. It comes out stiff and completely sincere.",
     ],
     close: [
       "**{name}** hears {user}, and nothing else on campus is interesting anymore.",
