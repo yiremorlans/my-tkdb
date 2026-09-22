@@ -296,7 +296,7 @@ export default {
         approach: "Ask about the knuckles",
         greeting: "\"It's nothing. ...I said don't.\"",
         responses: {
-          kind: ["Ask gently if he's hurt", "Offer to grab some ice"],
+          kind: ["Ask if he's hurt", "Offer to grab some ice"],
           playful: ["Tease him about the bruise", "Ask who won"],
           bold: ["Hold his gaze", "Ask anyway"],
           neutral: ["Let it go unasked", "Say nothing"],
@@ -813,7 +813,7 @@ export default {
           kind: "Say the surname doesn't matter",
           playful: "Tease the brother resemblance",
           bold: "Say his brother'd be proud",
-          neutral: "Let the moment pass gently",
+          neutral: "Let the moment pass",
         },
       },
       {

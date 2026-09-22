@@ -281,7 +281,7 @@ export default {
         approach: "Wait for him to finish",
         greeting: '"Want some? It\'s cold! ~~ ♪"',
         responses: {
-          kind: ["Offer him a handkerchief", "Politely say no thanks"],
+          kind: ["Offer him a handkerchief", "Cup your hands for a sip"],
           playful: ["Take a turn at the tap", "Flick the water back at him"],
           bold: ["Drink from the tap too", "Wipe his chin for him"],
           neutral: [
@@ -343,7 +343,7 @@ export default {
         greeting:
           '"You\'re not going patrolling, are you? Good. Stay here with me."',
         responses: {
-          kind: ["Say that's not true, gently", "Say you'll stay with him"],
+          kind: ["Say that's not true", "Say you'll stay with him"],
           playful: ["Tease him for being morbid", "Ask if he includes himself"],
           bold: ["Push back on the comment", "Call the comment bleak"],
           neutral: ["Let it go unremarked", "Say nothing about it"],
@@ -355,7 +355,7 @@ export default {
         greeting:
           '"I picked this for you. It\'s a clover! Look look, it has five leaves!"',
         responses: {
-          kind: ["Take it gently, thank him", "Accept the clover warmly"],
+          kind: ["Take it and thank him", "Accept the clover warmly"],
           playful: ["Ask how long he held it", "Wear it somewhere silly"],
           bold: ["Take it without asking", "Say he waited long enough"],
           neutral: ["Take it, say nothing", "Accept it quietly"],
@@ -437,7 +437,7 @@ export default {
         approach: "Say his name",
         greeting: '"...Hm? Oh! Dandelion. It\'s going to rain, I think. ♪"',
         responses: {
-          kind: ["Say something kind about Haru", "Change the subject gently"],
+          kind: ["Say something kind about Haru", "Change the subject"],
           playful: [
             "Ask why the sky did that",
             "Tease him about the mood swing",
@@ -683,7 +683,7 @@ export default {
         greeting:
           '"Everything is quiet with you. Everything. I didn\'t know it could be."',
         responses: {
-          kind: "Let him tease you gently",
+          kind: "Lean into him, yawning",
           playful: "Hide the dandelions",
           bold: "Say he's the weak one",
           neutral: "Let the teasing pass",
@@ -717,7 +717,7 @@ export default {
         approach: "Follow the humming",
         greeting: "~ ~ ~ ♪ (he stops, and turns to look at you)",
         responses: {
-          kind: ["Listen to him gently", "Smile when he turns"],
+          kind: ["Keep listening", "Smile when he turns"],
           playful: ["Hum a wrong note on purpose", "Tiptoe after the tune"],
           bold: ["Walk right up to him", "Wave until he looks"],
           neutral: ["Follow along at a distance", "Stop when he stops"],
@@ -763,7 +763,7 @@ export default {
         approach: "Wait for the second note",
         greeting: "~ ~ ~ ♪ (he finishes the phrase, satisfied)",
         responses: {
-          kind: ["Hold still for him", "Nod him on gently"],
+          kind: ["Hold still for him", "Nod him on"],
           playful: ["Hum the phrase back wrong", "Hum a different ending"],
           bold: ["Ask him to hum it again", "Hum the whole phrase back"],
           neutral: ["Let the phrase settle", "Listen, say nothing"],
@@ -901,7 +901,7 @@ export default {
         approach: "Finish the melody",
         greeting: "~ ~ ~ ♫ (he holds the last note out for you)",
         responses: {
-          kind: "Finish it gently for him",
+          kind: "Hum the last note back",
           playful: "Finish it with a flourish",
           bold: "Sing the ending loudly",
           neutral: "Finish it and stop",
@@ -934,7 +934,7 @@ export default {
         approach: "Take his hand and listen",
         greeting: "~ ~ ~ ♪ (he laces his fingers through yours, still humming)",
         responses: {
-          kind: "Squeeze his hand gently",
+          kind: "Squeeze his hand",
           playful: "Tap his sleeve back twice",
           bold: "Pull him a little closer",
           neutral: "Listen without a word",

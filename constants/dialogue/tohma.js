@@ -384,7 +384,7 @@ export default {
         greeting:
           '"Honestly. You\'ve made yourself rather difficult to overlook."',
         responses: {
-          kind: ["Ask gently what he means", "Say you don't mind the tone"],
+          kind: ["Ask what he means", "Say you don't mind the tone"],
           playful: ["Ask if that's a compliment", "Mimic the murmur back"],
           bold: ["Ask him to say it plainly", "Call out the reserved tone"],
           neutral: ["Let the murmur pass", "Say nothing, let it stand"],

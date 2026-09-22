@@ -395,7 +395,7 @@ export default {
         approach: "Sit without asking",
         greeting: '"...Sit, then. I already made room, don\'t act shocked."',
         responses: {
-          kind: ["Say you're glad he made room", "Sit gently, no fuss"],
+          kind: ["Say you're glad he made room", "Sit down, no fuss"],
           playful: ["Ask if he saved it for you", "Act surprised by the space"],
           bold: ["Take the seat like you own it", "Sit before he can protest"],
           neutral: ["Sit like it's nothing", "Take the space, unbothered"],

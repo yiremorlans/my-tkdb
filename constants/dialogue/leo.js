@@ -316,7 +316,7 @@ export default {
         approach: "Say his name back",
         greeting: '"I remember you. Don\'t get excited, I remember everyone."',
         responses: {
-          kind: ["Say it's nice to be known", "Thank him for remembering"],
+          kind: ["Say it's nice to be known", "Say you remember him too"],
           playful: ["Dare him to use it", "Ask when he'll fire it"],
           bold: ["Say his name back first", "Tell him to use it already"],
           neutral: ["Say your name back plainly", "Let him hold onto it"],
@@ -432,7 +432,7 @@ export default {
         approach: "Sit down",
         greeting: '"Fine, sit. Just don\'t touch my phone."',
         responses: {
-          kind: ["Thank him for the room", "Sit down gratefully"],
+          kind: ["Promise not to touch it", "Sit down gratefully"],
           playful: ["Point out he made room anyway", "Sit closer than invited"],
           bold: ["Sit like you were invited", "Take the space regardless"],
           neutral: ["Sit without a word", "Take the seat quietly"],
@@ -485,7 +485,7 @@ export default {
         approach: "Insult him back",
         greeting: '"You\'re my favorite kind of trouble, you know that?"',
         responses: {
-          kind: ["Insult him back gently", "Take it as affection"],
+          kind: ["Call him trouble right back", "Take it as affection"],
           playful: ["Out-insult him", "Rate his insult out of ten"],
           bold: ["Match his energy exactly", "Say trouble suits you fine"],
           neutral: ["Take the insult in stride", "Say hello like normal"],
@@ -532,7 +532,7 @@ export default {
         greeting:
           '"Everyone\'s so loud. Headphones are going on. ...Tap here if you need me. Only you."',
         responses: {
-          kind: ["Thank him for listening", "Say two minutes, tops"],
+          kind: ["Keep your voice low for him", "Say two minutes, tops"],
           playful: ["Tap the headphone again", "Tap it for no reason"],
           bold: ["Say you're the exception", "Take the other headphone"],
           neutral: ["Talk, then let him refocus", "Say your piece and stop"],
@@ -572,7 +572,7 @@ export default {
         approach: "Say his name",
         greeting: '"Say my name. The way you did last time. Yes, that."',
         responses: {
-          kind: "Say his name gently",
+          kind: "Say it the same way",
           playful: "Make him work for it",
           bold: "Close the distance instead",
           neutral: "Let the moment sit quietly",

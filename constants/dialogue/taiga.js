@@ -290,7 +290,7 @@ export default {
         approach: "Sit down anyway",
         greeting: "\"Who're you? Don't pop up out of nowhere like that.\"",
         responses: {
-          kind: ["Remind him gently who you are", "Give your name, no fuss"],
+          kind: ["Remind him who you are", "Give your name, no fuss"],
           playful: ["Refuse to remind him", "Tell him to guess"],
           bold: ["Say you're not going anywhere", "Dare him to figure it out"],
           neutral: ["Say nothing and stay", "Let him squint"],
@@ -340,7 +340,7 @@ export default {
         approach: "Remind him your name",
         greeting: "\"Don't tell me your name again. I'll get it. Eventually.\"",
         responses: {
-          kind: ["Remind him gently", "Say it's fine either way"],
+          kind: ["Give him a hint", "Say it's fine either way"],
           playful: ["Make him guess again", "Give a fake name to test him"],
           bold: ["Say of course he knows", "Demand he remember for real"],
           neutral: ["Let it go unremarked", "Shrug, say nothing"],
@@ -778,7 +778,7 @@ export default {
         approach: "See through the bravado",
         greeting: '"Get over here. Closer. I\'m not asking twice."',
         responses: {
-          kind: "Let him drop the act, gently",
+          kind: "Go closer, no teasing",
           playful: "Point out the bravado's gone",
           bold: "Say you see right through him",
           neutral: "Let the bravado run out",

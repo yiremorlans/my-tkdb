@@ -852,7 +852,7 @@ export default {
         greeting:
           "There. That's the one. Keep looking at me like that and see what happens.",
         responses: {
-          kind: "Give the look back, gently",
+          kind: "Give the look back",
           playful: "Ask which version this is",
           bold: "Hold the look, don't look away",
           neutral: "Give it back, unhurried",
@@ -1003,7 +1003,7 @@ export default {
         greeting:
           "\"Come here. Closer. I've spent all day being reasonable and I'm done with it.\"",
         responses: {
-          kind: "Close the distance gently",
+          kind: "Take the last step",
           playful: "Make {him} close it first",
           bold: "Close the distance yourself",
           neutral: "Let the distance close itself",

@@ -239,7 +239,7 @@ export default {
         approach: "Back away slowly",
         greeting: "\"Don't run. Running's predictable, and I'll only follow.\"",
         responses: {
-          kind: ["Answer him gently", "Say you weren't going to run"],
+          kind: ["Say you're not scared", "Say you weren't going to run"],
           playful: [
             "Flinch on purpose, grinning",
             "Pretend to run, then don't",
@@ -350,7 +350,7 @@ export default {
         greeting:
           '"Did you see that? Straight down... wait till someone else finds it."',
         responses: {
-          kind: ["Ask gently if he's hurt", "Help him up"],
+          kind: ["Ask if he's hurt", "Help him up"],
           playful: ["Laugh at the fall with him", "Ask if the trapdoor won"],
           bold: ["Tell him to be careful", "Say the trick's getting old"],
           neutral: ["Watch without reacting", "Say nothing about the fall"],
@@ -362,7 +362,7 @@ export default {
         greeting:
           '"They were so happy they fainted. That\'s three now. Good week."',
         responses: {
-          kind: ["Ask if they're all right", "Say that's not funny, gently"],
+          kind: ["Ask if they're all right", "Say that's not funny"],
           playful: ["Ask how he managed it", "Ask if you're next"],
           bold: ["Tell him that's not a game", "Say you wouldn't drop"],
           neutral: ["Let it pass unremarked", "Say nothing about it"],
@@ -442,7 +442,7 @@ export default {
         approach: "Reach in anyway",
         greeting: "\"...Nothing? That's no fun. I'll try harder next time.\"",
         responses: {
-          kind: ["Reach in without fuss", "Hand it back gently"],
+          kind: ["Reach in without fuss", "Hand it back to him"],
           playful: ["Scream for his benefit", "Guess before you look"],
           bold: ["Reach in without looking", "Empty the bag on him"],
           neutral: ["Look, say nothing", "Leave it in there"],
@@ -539,7 +539,7 @@ export default {
         greeting:
           '"Come round the back of the house. The good frights are back there."',
         responses: {
-          kind: "Reach for him gently",
+          kind: "Reach for his hand",
           playful: "Play the dangerous thing",
           bold: "Go round the back with him",
           neutral: "Let him have the quiet",

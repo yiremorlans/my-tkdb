@@ -524,7 +524,7 @@ export default {
         greeting:
           "\"Peekaboo, look who's here, no, don't hide. Don't... okay. He'll come around.\"",
         responses: {
-          kind: ["Coax him out gently", "Say Peekaboo's brave today"],
+          kind: ["Hold out a hand to him", "Say Peekaboo's brave today"],
           playful: [
             "Take credit for the moment",
             "Tell Peekaboo he's a show-off",
@@ -831,7 +831,7 @@ export default {
         greeting:
           '"C\'mere, Honor Roll. No joke this time. Not even a small one."',
         responses: {
-          kind: "Kiss him back gently",
+          kind: "Take his face in your hands",
           playful: "Kiss him mid-sentence first",
           bold: "Pull him into the stairwell",
           neutral: "Let him kiss you, say nothing",

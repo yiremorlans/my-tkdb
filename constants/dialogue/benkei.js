@@ -903,7 +903,7 @@ export default {
         greeting:
           '"I thought I\'d be over this kind of nervous by now, and here we are."',
         responses: {
-          kind: "Let the blush be, gently",
+          kind: "Pretend not to notice",
           playful: "Point out the red ears",
           bold: "Ask what's really going on",
           neutral: "Watch without a word",
@@ -950,7 +950,7 @@ export default {
         approach: "Hold still for his nerve",
         greeting: '"Hold still, your collar\'s... may I? Thank you."',
         responses: {
-          kind: "Let him fix it, gently",
+          kind: "Let him fix it",
           playful: "Ask if he's nervous, teasing",
           bold: "Say yes before he asks",
           neutral: "Hold still, say nothing",
@@ -975,7 +975,7 @@ export default {
           "\"I don't often let a silence sit this long. I don't mind this one.\"",
         responses: {
           kind: "Let the quiet stay warm",
-          playful: "Break it gently, smiling",
+          playful: "Break it with a smile",
           bold: "Close the quiet distance",
           neutral: "Let quiet be enough",
         },

@@ -912,7 +912,7 @@ export default {
         approach: "Meet him without holding back",
         greeting: '"Come here. Don\'t need a reason anymore, do I."',
         responses: {
-          kind: "Meet him just as gently",
+          kind: "Go to him, no reason needed",
           playful: "Steal his jacket again",
           bold: "Tell him not to wash up",
           neutral: "Meet him, say nothing",

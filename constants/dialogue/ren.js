@@ -571,7 +571,7 @@ export default {
           '"Finally, someone watches the whole thing instead of scrolling past. ...The cut at the end took me two hours."',
         responses: {
           kind: ["Praise the edit sincerely", "Say the end cut landed"],
-          playful: ["Point out a flaw, gently", "Demand a director's cut"],
+          playful: ["Point out one flaw", "Demand a director's cut"],
           bold: ["Say it's his best yet", "Tell him to post it"],
           neutral: ["Nod, say it's fine", "Watch it twice"],
         },
@@ -629,7 +629,7 @@ export default {
         approach: "Keep talking",
         greeting: '"It\'s paused. Keep going, I was listening anyway."',
         responses: {
-          kind: ["Keep talking gently", "Say the show can wait"],
+          kind: ["Pick up where you left off", "Say the show can wait"],
           playful: [
             "Milk the pause for attention",
             "Talk through the best part",
@@ -705,7 +705,7 @@ export default {
         greeting:
           '"You keep falling asleep on me. I keep letting you. Draw your own conclusions."',
         responses: {
-          kind: "Look back gently",
+          kind: "Fall asleep on him again",
           playful: "Pause it to mess with him",
           bold: "Say it first",
           neutral: "Let the episode run",

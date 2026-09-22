@@ -442,7 +442,7 @@ export default {
         greeting:
           "\"I don't sleep much anyway. You tend to come by after dark. That's all it is.\"",
         responses: {
-          kind: ["Ask gently why it's on late", "Say you don't need an answer"],
+          kind: ["Ask why it's on so late", "Say you don't need an answer"],
           playful: [
             "Guess the real answer yourself",
             "Tease him about dodging Yuri",
@@ -535,7 +535,7 @@ export default {
         greeting:
           "\"Nothing. People keep telling me I was rude today. You haven't. That's restful.\"",
         responses: {
-          kind: ["Ask gently what's wrong", "Say you'll stay a while"],
+          kind: ["Ask what they said he did", "Say you'll stay a while"],
           playful: ["Ask what everyone else did", "Ask how rude he was"],
           bold: ["Say he can tell you", "Ask what would actually help"],
           neutral: ["Leave the subject alone", "Sit and keep it restful"],
@@ -547,7 +547,7 @@ export default {
         greeting:
           "\"I'll give you something mild. You don't have to be brave in here. It doesn't help the reading.\"",
         responses: {
-          kind: ["Answer honestly, gently", "Tell him where it hurts"],
+          kind: ["Answer him honestly", "Tell him where it hurts"],
           playful: ["Try to hide it anyway", "Ask for the strong stuff"],
           bold: ["Say yes, plainly", "Say you're not being brave"],
           neutral: ["Give a flat answer", "Point to the sore spot"],
@@ -743,7 +743,7 @@ export default {
         greeting:
           '"Tell me if you want me to stop. I\'d rather have the data than guess."',
         responses: {
-          kind: ["Let him continue gently", "Say you don't want him to"],
+          kind: ["Nod for him to go on", "Say you don't want him to"],
           playful: ["Dare him to keep going", "Say you'll let him know"],
           bold: ["Close the last inch", "Tell him not to stop"],
           neutral: ["Say nothing", "Answer with a nod"],
@@ -755,7 +755,7 @@ export default {
         greeting:
           "\"I don't know what to do with my hands when I'm not examining you. That's new.\"",
         responses: {
-          kind: ["Tell him it's alright", "Guide his hand gently"],
+          kind: ["Tell him it's alright", "Guide his hand"],
           playful: ["Offer him your wrist", "Suggest he examine you"],
           bold: ["Take his hands in yours", "Put his hand on your cheek"],
           neutral: ["Let the silence answer", "Stay close, say nothing"],
@@ -793,7 +793,7 @@ export default {
         greeting:
           "\"I can't prescribe anything for that. I'll stay instead. That's the treatment.\"",
         responses: {
-          kind: ["Tell him gently", "Thank him for staying"],
+          kind: ["Say it hurts less now", "Thank him for staying"],
           playful: [
             "Deflect with a joke first",
             "Ask how long treatment lasts",
