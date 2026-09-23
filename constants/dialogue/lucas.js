@@ -254,7 +254,7 @@ export default {
         greeting:
           "\"Need a hand with something? I don't know much yet, but I'll help however I can.\"",
         responses: {
-          kind: ["Thank him for the door", "Say you're fine, but thanks"],
+          kind: ["Smile and step through", "Say you're fine, but thanks"],
           playful: ["Curtsy on the way through", "Ask if he holds every door"],
           bold: [
             "Say you'll get the next one",
@@ -296,7 +296,7 @@ export default {
         greeting:
           '"Thank you. They\'ll think twice now there are two of us. Stay close, though."',
         responses: {
-          kind: ["Thank him for stepping in", "Check on the first-year"],
+          kind: ["Stay close, like he asks", "Check on the first-year"],
           playful: ["Peek around him at the pack", "Ask if he does this daily"],
           bold: ["Step in front of him", "Stand shoulder to shoulder"],
           neutral: ["Stay behind him quietly", "Stay close, like he asked"],
@@ -336,7 +336,10 @@ export default {
         greeting:
           "\"Right, then. Kaito's running late, as ever, so it's just us for now.\"",
         responses: {
-          kind: ["Say punctuality matters to you", "Thank him for noticing"],
+          kind: [
+            "Say punctuality matters to you",
+            "Say you wanted time with him",
+          ],
           playful: ["Act smug about being early", "Ask if he timed you"],
           bold: ["Say you're always this good", "Challenge him to keep up"],
           neutral: ["Get straight to the details", "Nod and move to business"],
@@ -348,7 +351,7 @@ export default {
         greeting:
           "\"You've grown easier to talk to than I expected. I hope the feeling's mutual.\"",
         responses: {
-          kind: ["Thank him for the seat", "Offer to switch back"],
+          kind: ["Say he's easy to talk to too", "Offer to switch back"],
           playful: ["Tease him for the chivalry", "Ask if he planned it"],
           bold: ["Take the seat like it's owed", "Insist on switching back"],
           neutral: ["Take the seat, say nothing", "Sit without comment"],
@@ -384,7 +387,7 @@ export default {
         greeting:
           "\"There. It's no trouble at all, honestly. You've enough to carry as it is.\"",
         responses: {
-          kind: ["Let him carry it gladly", "Thank him for the help"],
+          kind: ["Let him carry it gladly", "Say you'll carry his next"],
           playful: ["Make him carry more", "Ask if chivalry ever rests"],
           bold: ["Take the bag back yourself", "Say you don't need saving"],
           neutral: ["Let him carry it, say nothing", "Walk on without comment"],
@@ -396,7 +399,7 @@ export default {
         greeting:
           '"Breakfast. Did you actually have any? You lose muscle mass on an empty stomach, you know."',
         responses: {
-          kind: ["Answer him honestly", "Thank him for asking"],
+          kind: ["Answer him honestly", "Promise to eat something"],
           playful: [
             "Try to dodge the question",
             "Ask if he's checking up on you",
@@ -423,7 +426,7 @@ export default {
         greeting:
           "\"You've a habit of turning up right when I need the company. I don't mind it one bit.\"",
         responses: {
-          kind: ["Say you're glad he came", "Thank him for looking"],
+          kind: ["Say you're glad he came", "Say you'd hoped he would"],
           playful: [
             "Point out the contradiction",
             "Tease him about overthinking",
@@ -450,7 +453,7 @@ export default {
         greeting:
           '"Any record of demons I can find. Someone I care about may depend on it."',
         responses: {
-          kind: ["Ask gently what he's chasing", "Offer to help him search"],
+          kind: ["Ask what he's chasing", "Offer to help him search"],
           playful: ["Tease him for staying so late", "Guess what he's hiding"],
           bold: ["Ask him outright what it is", "Push him to explain"],
           neutral: ["Let him keep his research", "Leave him to it quietly"],
@@ -462,7 +465,7 @@ export default {
         greeting:
           "\"I'll walk you back, if you'll allow it. Just until the path's better lit.\"",
         responses: {
-          kind: ["Lean into the offered support", "Thank him for noticing"],
+          kind: ["Lean into the offered support", "Let him walk you back"],
           playful: [
             "Tease him for hovering again",
             "Ask if he's always watching",
@@ -504,7 +507,7 @@ export default {
         approach: "Walk up to him",
         greeting: "\"I'm glad you're safe. How have you been?\"",
         responses: {
-          kind: ["Thank him for the care", "Tell him he can relax"],
+          kind: ["Say you're safe with him", "Tell him he can relax"],
           playful: ["Ask what could get past him", "Ask for a threat report"],
           bold: ["Say you watch your own back", "Say the room can wait"],
           neutral: ["Let him check, say nothing", "Wait for the all clear"],
@@ -558,7 +561,7 @@ export default {
           kind: "Let him keep your hand",
           playful: "Ask what he's thinking",
           bold: "Turn your hand into his",
-          neutral: "Step back gently",
+          neutral: "Take your hand back",
         },
       },
       {

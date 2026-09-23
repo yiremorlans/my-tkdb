@@ -237,7 +237,7 @@ export default {
         approach: "Make yourself useful",
         greeting: '"Well? Table seven isn\'t going to deal itself. Move!"',
         responses: {
-          kind: ["Do it without complaint", "Thank him and mean it"],
+          kind: ["Do it without complaint", "Say you'll do your best"],
           playful: ["Trade sass back", "Ask what the dress code is"],
           bold: ["Take the table without asking", "Bet on yourself"],
           neutral: ["Nod and get on with it", "Stay quiet"],
@@ -260,7 +260,7 @@ export default {
         greeting:
           '"Perfect timing. The VIP section needs a face at the door, and yours will do. There\'s money in it."',
         responses: {
-          kind: ["Hear him out patiently", "Thank him for the offer"],
+          kind: ["Hear him out patiently", "Say you'll come alone"],
           playful: ["Guess the proposal first", "Tease him about secrecy"],
           bold: ["Take the VIP section", "Ask what your cut is"],
           neutral: ["Take the offer at face value", "Wait to hear the terms"],
@@ -295,7 +295,7 @@ export default {
         approach: "Point out the exception",
         greeting: '"Table seven. ...No. Not you. Tch. Force of habit. Sit somewhere."',
         responses: {
-          kind: ["Say you don't mind helping", "Thank him for easing up"],
+          kind: ["Say you don't mind helping", "Take a seat, as told"],
           playful: ["Point out the exception loudly", "Ask if you're special now"],
           bold: ["Call yourself the exception", "Demand he admit it"],
           neutral: ["Note it, say nothing", "Let the exception stand"],
@@ -342,7 +342,7 @@ export default {
         approach: "Drink the green stuff",
         greeting: '"Don\'t make that face. That glass costs more than your shoes. Drink."',
         responses: {
-          kind: ["Thank him for the drink", "Drink it, mean the thanks"],
+          kind: ["Say you'll try anything once", "Drink it, mean the thanks"],
           playful: ["Ask what's really in it", "Tease the diagnosis"],
           bold: ["Drink it without question", "Demand a better flavor"],
           neutral: ["Drink it, say nothing", "Take the glass quietly"],
@@ -364,7 +364,7 @@ export default {
         approach: "Say what you want, quickly",
         greeting: '"...Well? I stopped. I\'m listening. Don\'t make me regret it."',
         responses: {
-          kind: ["Ask gently, take your time", "Thank him for listening"],
+          kind: ["Take your time anyway", "Thank him for listening"],
           playful: ["Drag it out just to annoy him", "Watch him try to rush you"],
           bold: ["Say it fast and plainly", "Cut straight to the point"],
           neutral: ["State it, then wait", "Ask plainly, no preamble"],
@@ -375,7 +375,7 @@ export default {
         approach: "Take the compliment",
         greeting: '"What? I said it once. I\'m not saying it again."',
         responses: {
-          kind: ["Thank him for noticing", "Take the compliment warmly"],
+          kind: ["Say you'll wear it more", "Take the compliment warmly"],
           playful: ["Fish for a bigger compliment", "Tease him for noticing"],
           bold: ["Own the compliment outright", "Say you already knew"],
           neutral: ["Take it without comment", "Nod, say nothing"],
@@ -386,7 +386,7 @@ export default {
         approach: "Brace for the critique",
         greeting: '"Do you even know anything about brands? Stand still. Turn. ...Hm."',
         responses: {
-          kind: ["Take the critique gracefully", "Thank him for the honesty"],
+          kind: ["Take the critique gracefully", "Stand still and turn"],
           playful: ["Ask for the full review", "Model it, badly, on purpose"],
           bold: ["Cut off the critique first", "Say the outfit's fine as is"],
           neutral: ["Stand still, say nothing", "Let him finish looking"],
@@ -408,7 +408,7 @@ export default {
         approach: "Haggle with him",
         greeting: '"Nothing\'s free, you know. Well. Almost nothing. Don\'t push it."',
         responses: {
-          kind: ["Pay whatever he asks", "Thank him for the math"],
+          kind: ["Pay whatever he asks", "Ask what he'd call fair"],
           playful: ["Haggle him down for fun", "Argue the price on principle"],
           bold: ["Refuse to pay at all", "Name your own price back"],
           neutral: ["Pay without comment", "Wait for the final number"],
@@ -419,7 +419,7 @@ export default {
         approach: "Take it as a compliment",
         greeting: '"You\'ve got taste. Somebody around here finally does."',
         responses: {
-          kind: ["Thank him for the compliment", "Say that means a lot"],
+          kind: ["Say his taste rubs off", "Say that means a lot"],
           playful: ["Act surprised he meant it", "Tease him for the surprise"],
           bold: ["Say you knew you had taste", "Claim the compliment outright"],
           neutral: ["Take it without comment", "Nod, say nothing"],
@@ -430,7 +430,7 @@ export default {
         approach: "Let him defend you",
         greeting: '"Tch. Watch where you\'re going! ...You. You\'re fine? Good."',
         responses: {
-          kind: ["Thank him for stepping in", "Let him handle it kindly"],
+          kind: ["Tell him you're fine", "Let him handle it kindly"],
           playful: ["Watch him deal with it", "Egg on the confrontation"],
           bold: ["Handle it yourself instead", "Step in front of him"],
           neutral: ["Stay out of it, say nothing", "Let him deal with it"],
@@ -477,7 +477,7 @@ export default {
         approach: "Take the good seat",
         greeting: '"Sit. Don\'t read into it. It was just open. All night. For no reason."',
         responses: {
-          kind: ["Thank him for the seat", "Say the seat is perfect"],
+          kind: ["Sit, reading nothing into it", "Say the seat is perfect"],
           playful: ["Call out the obvious lie", "Ask who held it all night"],
           bold: ["Claim it without thanking him", "Say he saved it on purpose"],
           neutral: ["Sit down, no comment", "Take it, read nothing in"],

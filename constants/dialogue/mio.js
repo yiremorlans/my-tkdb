@@ -45,39 +45,39 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: Made you something. It's small. Not really a big deal.",
-        "*The photo is a brass mechanism about the size of a matchbox, with a fold-out arm.*\n\nIt's a doorstop. Clockwork, because I couldn't help myself. It lets go once the room drops past a set temperature, so your door shuts itself when that corridor gets cold, around three.",
-        "You leave it propped open. You've got {favResponse} for everyone, me included. I notice things and then build about them instead of saying them. Jo calls that a personality problem.\n\nAnyway. Doorstop.",
+        "**{firstName}**: Jo baked. Shion's already on his third slice, so I moved fast.",
+        "I saved you one. It's in a tin, but a lock wouldn't do anything against Shion. Remember my toolbox full of worms?\n\nSo I'm not letting it out of my sight until you get here.",
+        "It's good cake. You'll like it.\n\nYou always have {favResponse} for me, even when I'm running between three jobs. Cake's the least I can do.\n\nTake a break when you get here. I'll keep Shion off you for it.",
       ],
       choice: {
-        prompt: "That's the message. You don't have to answer it.",
+        prompt: "So. You coming?",
         options: [
           {
             key: "kind",
-            label: "Say nobody's done that",
+            label: "Say he needs the break more",
             style: 3,
             close:
-              "...Oh.\n\n*A few minutes later:* I build things for people all the time. Haru's arm, Romeo's prosthetic. People just start using them, which is the job and that's fine.\n\nNobody's put it the way you did. Give me a minute.",
+              "...That's not how this works. I saved the cake, you take the break.\n\nFine. Ten minutes. Both of us. Don't tell Jo I agreed that fast.",
           },
           {
             key: "playful",
-            label: "Ask what it does at three",
+            label: "Ask if Shion's tried yet",
             style: 1,
             close:
-              "Nothing. It's a doorstop.\n\n...It chimes. Very quietly. I can take that out. Don't, actually. I like it.",
+              "He's been staring at the tin for ten minutes. Jo's watching him and laughing.\n\nCome quick. If you open it and there's a worm inside, that's not on me.",
           },
           {
             key: "bold",
-            label: "Ask him to fit it himself",
+            label: "Ask him to split it with you",
             style: 4,
             close:
-              "*He's at your door with the toolbox before you've put your phone down, and it takes him four times as long as it should because his hands won't settle.*\n\n*He tells the doorframe, not you:*\n\n> I'll come check it. Regularly.\n\n*It will not need checking.*",
+              "...Half? Sure. I skipped lunch anyway.\n\nCome by the office. I'll put the kettle on.",
           },
         ],
       },
       keepsake: {
-        emoji: "⚙️",
-        line: "A clockwork doorstop that chimes at three and won't say why.",
+        emoji: "🍰",
+        line: "A slice of Jo's cake in a tin, kept safe from Shion until you came for it.",
       },
     },
 
@@ -200,7 +200,7 @@ export default {
       beats: [
         "**{firstName}**: I built a thing. I'm going to describe it, then say the actual sentence, because a thing on its own still has to be guessed at and you've done enough of that.",
         "*The photo is a small brass box with two dials. One shows a number. The other is blank.*\n\nFirst dial is {timesMet}. It climbs on its own. I wired it to the door sensor, which took a month and is completely absurd.\n\nSecond dial doesn't do anything yet. I couldn't work out what it was for. That's been the problem for about eight months.",
-        "I've made you a doorstop, a latch, a lamp, the thing that chimes at three, and forty other objects. Every one of them stood in for something I hadn't said.\n\nMy dad gave me a wind-up music box when I was small. No words on it, and I still knew. That's probably where all of this started.\n\nYou kept every piece. I noticed that too.",
+        "I've made you a lamp, fixed your latch, guarded a slice of cake from Shion, and done forty other things. Every one of them stood in for something I hadn't said.\n\nMy dad gave me a wind-up music box when I was small. No words on it, and I still knew. That's probably where all of this started.\n\nYou kept every piece. I noticed that too.",
         "So. The second dial.\n\nI love you. Since roughly the hinge. I built around it for a year because that's how I say things. The blank dial was always where the sentence went. I just hadn't put it there.\n\nThere it is, in words. Sending it before I take the dial off the box.",
       ],
       choice: {

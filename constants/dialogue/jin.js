@@ -249,7 +249,7 @@ export default {
         approach: "Speak up",
         greeting: '"Speak quickly. I don\'t like to wait."',
         responses: {
-          kind: ["Thank him for his time", "Answer without hesitation"],
+          kind: ["Keep it short for him", "Answer without hesitation"],
           playful: ["Refuse to be impressed", "Take your time regardless"],
           bold: ["Refuse to look away", "Speak before he asks twice"],
           neutral: ["Wait for him to speak", "Match the cold with silence"],
@@ -299,7 +299,7 @@ export default {
         greeting:
           "\"I've stopped bothering to remember most names. Yours stuck. Don't ask why.\"",
         responses: {
-          kind: ["Say you're glad he remembers", "Thank him for noticing"],
+          kind: ["Say you're glad he remembers", "Say his name stuck with you"],
           playful: ["Ask why your name stuck", "Tease him about noticing"],
           bold: ["Call out his pretending", "Say you noticed him notice"],
           neutral: ["Let him have the denial", "Say nothing, let it stand"],
@@ -332,7 +332,7 @@ export default {
         approach: "Speak while allowed",
         greeting: '"Don\'t mistake familiarity for permission."',
         responses: {
-          kind: ["Take the warning gently", "Say you understand the line"],
+          kind: ["Take the warning in stride", "Say you understand the line"],
           playful: ["Ask what permission looks like", "Push the line a little"],
           bold: ["Test the line anyway", "Refuse to shrink back"],
           neutral: ["Accept the boundary quietly", "Let the warning sit"],
@@ -387,7 +387,7 @@ export default {
         greeting:
           "\"You're late. You've got some nerve making me wait, servant.\"",
         responses: {
-          kind: ["Notice him softening quietly", "Let him drop the act gently"],
+          kind: ["Notice him softening quietly", "Let him drop the act"],
           playful: ["Call out the dropped act", "Tease him for softening"],
           bold: ["Name what you just saw", "Call him out on the warmth"],
           neutral: ["Say nothing, just notice", "Let the moment go unremarked"],
@@ -415,7 +415,7 @@ export default {
         approach: "Take it as a compliment",
         greeting: "\"You're persistent. I'll give you that much.\"",
         responses: {
-          kind: ["Thank him, plainly", "Take it as sincere, not snide"],
+          kind: ["Say he's worth the effort", "Take it as sincere, not snide"],
           playful: ["Agree you're relentless", "Ask which one he meant"],
           bold: ["Own the persistence proudly", "Tell him it's not stopping"],
           neutral: ["Shrug at the label", "Let the comment go unanswered"],
@@ -428,7 +428,7 @@ export default {
         responses: {
           kind: [
             "Say you're glad he noticed",
-            "Thank him for trusting you now",
+            "Promise not to read into it",
           ],
           playful: [
             "Point out you outlasted Tohma",
@@ -496,7 +496,7 @@ export default {
         approach: "Take the seat he left open",
         greeting: '"You again. Sit, if you must. Don\'t touch anything."',
         responses: {
-          kind: ["Thank him for the seat", "Thank him for the warm spot"],
+          kind: ["Sit, and touch nothing", "Thank him for the warm spot"],
           playful: ["Ask if he saved it for you", "Ask who warmed the chair"],
           bold: ["Take the seat like it's yours", "Touch something on purpose"],
           neutral: ["Sit without remarking on it", "Sit, hands to yourself"],
@@ -624,7 +624,7 @@ export default {
         greeting: '"Say what you came to say. I\'ll listen. Only for you."',
         responses: {
           kind: "See his pain without judgment",
-          playful: "Poke at his pride, gently",
+          playful: "Poke at his pride",
           bold: "Take his hand first",
           neutral: "Stay and let him speak",
         },

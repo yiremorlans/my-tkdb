@@ -280,7 +280,7 @@ export default {
         approach: "Recover your words",
         greeting: '"Something brought you here. Let\'s not rush to name what."',
         responses: {
-          kind: ["Reassure him gently", "Say it's nice to meet him"],
+          kind: ["Find your words again", "Say it's nice to meet him"],
           playful: [
             "Refuse to explain why you came",
             "Pretend to be speechless",
@@ -371,7 +371,7 @@ export default {
           '"Now then! Where was I? Ah, yes. Romanticism. A much more cheerful subject."',
         responses: {
           kind: [
-            "Let the subject change gently",
+            "Let the subject change",
             "Say he doesn't have to explain",
           ],
           playful: ["Tease him for dodging", "Guess at the real story"],

@@ -13,7 +13,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Hey, it's Haku. Got your number the boring way, before you ask.\n\nI do actually have a reason for this. I also just wanted an excuse to text you. The reason came first. Barely.",
-        "Okay, real reason. There's something in the middle of the Hotarubi hall floor, been there for years. Everyone walks straight through it and blames the headache on the weather.\n\nExcept you. {timesMet} times here, and you're the only one I've watched go round it instead of through. Could be nothing. I've been curious ever since tbh, so I'm asking.",
+        "Okay, real reason. There's something in the middle of the Hotarubi hall floor, been there for years. Everyone walks straight through it and blames the headache on the weather.\n\nExcept you. {timesMet} times here, and you're the only one I've watched go around it instead of through. Could be nothing. I've been curious ever since tbh, so I'm asking.",
       ],
       choice: {
         prompt: "Well? Was that just a coincidence?",
@@ -43,7 +43,7 @@ export default {
       },
       keepsake: {
         emoji: "🕯️",
-        line: "The thing on the hall floor that you stepped round without knowing.",
+        line: "The thing on the hall floor that you stepped around without knowing.",
       },
     },
 
@@ -204,7 +204,7 @@ export default {
       beats: [
         "**{firstName}**: I'm going to say this badly and I'm not going to make a joke at the end of it, which is going to take everything I've got.",
         "{timesMet} times. And I've had the deflection ready every single one of them: the door, the bit, the thing behind you. It's automatic. It's been automatic since I was nine.\n\nIt stopped working on you somewhere around the middle and I've been running it anyway, out of pure cowardice, which you've very kindly pretended not to notice.",
-        "Here's the thing about being the only one who sees. Everyone thinks it's frightening. It's not frightening, it's lonely: you're in a room full of people and there's a whole other room and you're the only one in it.\n\nYou came into the other room. You didn't even make a thing of it. You just started stepping round stuff on the floor and sitting on a freezing veranda with a kid you can't see.",
+        "Here's the thing about being the only one who sees. Everyone thinks it's frightening. It's not frightening, it's lonely: you're in a room full of people and there's a whole other room and you're the only one in it.\n\nYou came into the other room. You didn't even make a thing of it. You just started stepping around stuff on the floor and sitting on a freezing veranda with a kid you can't see.",
         "So: I love you.\n\nNo bit. No door. I've loved you since the veranda, probably before it, and I've spent every conversation since half-assing it, because half-assing it is the only way I know how to survive meaning something.\n\nI keep going back over what I let slide. Walking you home and cracking a joke at your door instead of saying this. The morning you answered half asleep in your pajamas and I decided I wasn't allowed to notice. C'mon. Stupid things to miss. I miss them anyway.\n\nThat's the whole message. God, this is awful.",
       ],
       choice: {
@@ -301,7 +301,7 @@ export default {
         greeting:
           '"Stay where I can see you. It\'s not far. ...And don\'t look at the treeline."',
         responses: {
-          kind: ["Thank him for walking you", "Say you'll humor him"],
+          kind: ["Stay where he can see you", "Say you'll humor him"],
           playful: ["Ask if he's being dramatic", "Ask if a fox spirit's out"],
           bold: ["Walk off on your own", "Say you can handle the dark"],
           neutral: ["Let him walk, say nothing", "Fall into step quietly"],
@@ -324,7 +324,7 @@ export default {
         line: "\"Zenji's got me filming him again. He's wandered off to pick the spot, and it's never the easy one.\"",
         approach: "Offer to help film",
         greeting:
-          '"Hold the reflector, then. If he asks you to play a corpse, say no. He\'ll ask."',
+          '"Hold the reflector, then. If he starts saying nobody wants his old stories, tell him you do. He\'ll believe it from you."',
         responses: {
           kind: ["Offer to help him film", "Say you don't mind waiting"],
           playful: ["Guess the worst possible spot", "Tease Zenji's pickiness"],
@@ -336,9 +336,9 @@ export default {
         line: '"You again." He doesn\'t sound put out about it. "Third time this week. Not that I\'m counting."',
         approach: "Say you'll keep turning up",
         greeting:
-          "\"You're around enough now that I've stopped keeping count. That's rare, for me.\"",
+          '"Don\'t look so pleased," he says with a smirk.',
         responses: {
-          kind: ["Say you like being counted on", "Thank him for noticing"],
+          kind: ["Say you like being counted on", "Say you've kept count too"],
           playful: ["Ask what the count is", "Tease him for keeping count"],
           bold: ["Say you show up now", "Claim the count as yours"],
           neutral: ["Shrug at being counted", "Let it go unremarked"],
@@ -350,7 +350,7 @@ export default {
         greeting:
           '"Left cheek. No, your other left. ...Ha ha. Still there, actually."',
         responses: {
-          kind: ["Admit you actually slept", "Thank him for noticing"],
+          kind: ["Admit you actually slept", "Laugh and wipe it off"],
           playful: ["Deny the sleep mark", "Blame the pillow"],
           bold: ["Say he's staring", "Ask why he's checking"],
           neutral: ["Wipe it off, say nothing", "Ignore the comment"],
@@ -391,25 +391,21 @@ export default {
         approach: "Let him walk you",
         greeting: '"Walk you back? Purely practical. ...Mostly."',
         responses: {
-          kind: ["Accept the company gladly", "Thank him for walking with you"],
+          kind: ["Say you'll take practical", "Fall into step beside him"],
           playful: ["Ask what 'mostly' means", "Call out the practical excuse"],
           bold: ["Say he wants to walk with you", "Refuse the excuse entirely"],
           neutral: ["Walk along, say nothing", "Let him walk without comment"],
         },
       },
       {
-        line: "\"Anyway. I'll try not to keep you out this late from now on. ...No promises. Come on, I'll see you back.\"",
-        approach: "Hold him to it",
-        greeting:
-          '"Don\'t look at me like that. I said I\'d try. Trying counts."',
+        line: "In the Hotarubi hall he steps around the same patch of floor you do, and gives you a look like you're both in on something.",
+        approach: "Step around it with him",
+        greeting: '"Still going around it, huh. Good. Keep doing that."',
         responses: {
-          kind: ["Say you don't mind either way", "Thank him for the thought"],
-          playful: ["Hold him to the no-promises", "Bet he'll do it again"],
-          bold: ["Call out the empty promise", "Demand he actually try"],
-          neutral: [
-            "Let the promise go unremarked",
-            "Say nothing, keep walking",
-          ],
+          kind: ["Say you'll keep going around", "Share the look with him"],
+          playful: ["Hop over it instead", "Ask what happens if you don't"],
+          bold: ["Ask what it actually is", "Step closer to it, testing"],
+          neutral: ["Go around it, say nothing", "Keep walking past"],
         },
       },
       {
@@ -418,7 +414,7 @@ export default {
         greeting:
           '"Subaru asked if you\'re doing okay. I told him you seem tougher than you look. Was I right?"',
         responses: {
-          kind: ["Join them both gladly", "Say you're glad to help"],
+          kind: ["Thank Subaru for asking", "Say you're glad to help"],
           playful: [
             "Ask what Subaru really thinks",
             "Tease him for keeping tabs",
@@ -448,7 +444,7 @@ export default {
         greeting:
           "\"How's the search for clues going? Don't try to carry the whole thing yourself. ...I'm not volunteering for anything. I just get bored.\"",
         responses: {
-          kind: ["Thank him for the help", "Say you appreciate it"],
+          kind: ["Say you won't go it alone", "Say you appreciate it"],
           playful: ["Call it stalking, lightly", "Tease him for keeping tabs"],
           bold: ["Ask what he's really after", "Demand the real reason"],
           neutral: ["Accept the help, say little", "Let him keep helping"],
@@ -459,7 +455,7 @@ export default {
         approach: "Wait him out",
         greeting: [
           '"Oh hey. Didn\'t peg you as a regular around here, but here you are again."',
-          '"You never scream anymore when I sneak up on you. Kind of took the fun out of it, honestly."',
+          "\"Can't sleep either? Pull up a chair. I'm not great company this late, but I'm here.\"",
         ],
         responses: {
           kind: ["Say you're glad he's up too", "Sit with him a while"],
@@ -502,22 +498,22 @@ export default {
         approach: "Stay the minute",
         greeting: "\"I'd say I wasn't waiting for you. ...Nah. I was.\"",
         responses: {
-          kind: ["Stay the minute gladly", "Say the minute's his"],
+          kind: ["Say you're glad he waited", "Say the minute's his"],
           playful: ["Ask what he meant", "Refuse to ignore that"],
           bold: ["Call out what he said", "Ask him to say it again"],
           neutral: ["Stay put, no comment", "Stay, pretend you missed it"],
         },
       },
       {
-        line: "\"You know Zenji's decided I've got a thing for you?\" A beat. \"He's not wrong. Don't tell him.\"",
-        approach: "Call his bluff",
+        line: "\"You know Zenji's got a whole theory about you and me?\" He doesn't say whether Zenji's wrong. He just lets it sit.",
+        approach: "Ask if Zenji's wrong",
         greeting:
-          '"There you are. If you ever want to talk, the curse or anything else, I\'ll listen."',
+          "\"Ha ha. Nice try. I'm not grading Zenji's homework for him.\"",
         responses: {
-          kind: ["Let the rumor be true", "Promise not to tell Zenji"],
-          playful: ["Ask what tipped Zenji off", "Threaten to tell Zenji"],
-          bold: ["Say Zenji's right", "Ask if he's got a thing"],
-          neutral: ["Shrug at the rumor", "Let the rumor sit"],
+          kind: ["Let him keep his answer", "Promise not to ask Zenji"],
+          playful: ["Ask what tipped Zenji off", "Threaten to ask Zenji"],
+          bold: ["Say Zenji might be right", "Ask for a straight answer"],
+          neutral: ["Shrug at the theory", "Let the theory sit"],
         },
       },
       {
@@ -533,15 +529,14 @@ export default {
         },
       },
       {
-        line: "\"Wish I hadn't missed you in your pajamas this morning. ...I'm going to leave that there and see how it does.\"",
-        approach: "Don't let him take it back",
-        greeting:
-          '"...Huh. Okay. Then I\'m not taking it back. Your call how that goes."',
+        line: '"Be careful with your right leg today. Especially in the main building." He isn\'t smiling. "...Go on. Ask which half this is."',
+        approach: "Ask which half this is",
+        greeting: '"Not kidding. Take the other staircase today. Humor me."',
         responses: {
-          kind: ["Let the comment stand", "Tell him it's all right"],
-          playful: ["Ask what else he noticed", "See how it does"],
-          bold: ["Say he can keep looking", "Say he missed his chance"],
-          neutral: ["Leave it where he left it", "Move past it"],
+          kind: ["Say you'll take the other way", "Thank him for the warning"],
+          playful: ["Ask about your left leg", "Promise to hop everywhere"],
+          bold: ["Ask what he saw", "Ask why the right leg"],
+          neutral: ["Nod, take the other stairs", "Say nothing, heed it"],
         },
       },
       {
@@ -560,7 +555,7 @@ export default {
       },
       {
         line: "\"Up you get. I'm seeing you to your door tonight. ...It's the one chore I've never minded.\"",
-        approach: "Walk you to your door",
+        approach: "Let him walk you to your door",
         greeting:
           "\"Walk with me a bit. It's been too quiet tonight, and I'd rather not be the only one who notices.\"",
         responses: {
@@ -571,6 +566,138 @@ export default {
           ],
           bold: ["Say he likes the excuse", "Take his arm on the way"],
           neutral: ["Walk on in silence", "Let him see you home"],
+        },
+      },
+      {
+        line: "You're lingering at the edge of the mission briefing when he falls in beside you. \"Cold feet? Good. Means you're a normal human being.\"",
+        approach: "Admit you're nervous",
+        greeting:
+          "\"We're the crazy ones, not you. If you want to talk it through after, I'll listen.\"",
+        responses: {
+          kind: ["Say that helps, actually", "Ask him to check in after"],
+          playful: ["Ask how crazy he is", "Say he's not that crazy"],
+          bold: ["Say you're going anyway", "Ask if he's ever nervous"],
+          neutral: ["Take a breath, say nothing", "Stand with him a while"],
+        },
+      },
+      {
+        line: '"Hey there, stranger." He\'s up before you\'ve made it across the room. "Everyone\'s missed you, you know."',
+        approach: "Say you're back",
+        greeting:
+          '"...Even I was starting to get a little worried. Don\'t make a thing of it."',
+        responses: {
+          kind: ["Say you missed him too", "Apologize for disappearing"],
+          playful: ["Make a thing of it", "Ask how worried, exactly"],
+          bold: ["Say you knew he'd worry", "Say he was your first stop"],
+          neutral: ["Let it go unremarked", "Just say hi back"],
+        },
+      },
+      {
+        line: '"Your parents ever tell you ghosts get the ones who don\'t go to bed?" He looks at the clock, pointedly. "Just asking."',
+        approach: "Say you're not tired",
+        greeting:
+          '"Weird. Zenji\'s the only one who ever gets spooked by that one. ...Bed. Go on."',
+        responses: {
+          kind: ["Say you'll go in a minute", "Tell him to sleep too"],
+          playful: ["Ask if he's the ghost", "Say Zenji's got a point"],
+          bold: ["Say you'll stay up anyway", "Stay up just to prove it"],
+          neutral: ["Head off to bed", "Say goodnight quietly"],
+        },
+      },
+      {
+        line: '"Clementia, then Frostheim, now here." He knocks on the wall beside him. "Third house. First one I\'ve bothered learning which boards creak."',
+        approach: "Ask why this one stuck",
+        greeting:
+          "\"Ha ha. Long story, and I'm lazy. Short version: this one's got better company.\"",
+        responses: {
+          kind: ["Say you're glad it stuck", "Say Hotarubi suits him"],
+          playful: ["Ask which boards creak", "Ask who the company is"],
+          bold: ["Ask for the long version", "Say you're the company"],
+          neutral: ["Let him keep the story", "Listen to the boards creak"],
+        },
+      },
+      {
+        line: "Someone's had you cornered with questions about your curse for twenty minutes. Haku wanders over, says about three words, and they leave.",
+        approach: "Ask what he said to them",
+        greeting:
+          '"Told them you were needed at Hotarubi. Technically true. Nobody else was going to get you out of there."',
+        responses: {
+          kind: ["Play along with his story", "Say that was kind of him"],
+          playful: ["Ask who needed you", "Call it a daring rescue"],
+          bold: ["Say you had it handled", "Ask if he was watching"],
+          neutral: ["Walk off with him quietly", "Let it pass without comment"],
+        },
+      },
+      {
+        line: "He slides your notes out from under your hand. \"Don't put so much pressure on yourself. It's okay to half-ass stuff, you know.\"",
+        approach: "Let him take the notes",
+        greeting:
+          '"I\'m a professional. Step one, put it down. Step two, there is no step two."',
+        responses: {
+          kind: ["Say you'll take a break", "Let him take the notes"],
+          playful: ["Ask for his professional tips", "Try to snatch them back"],
+          bold: ["Say you can't half-ass this", "Make him take a break too"],
+          neutral: ["Put the pen down", "Sit back, say nothing"],
+        },
+      },
+      {
+        line: "He nods at an empty chair on the way past, polite, the way you'd nod at a neighbor. \"Don't mind him. He only sits there on Thursdays.\"",
+        approach: "Nod at the chair too",
+        greeting:
+          '"Ha ha. You nodded. He\'s going to be insufferable about that."',
+        responses: {
+          kind: ["Say hello to the chair", "Ask if he's friendly"],
+          playful: ["Ask what he's like", "Ask if it's Thursday"],
+          bold: ["Ask if he's really there", "Sit in the chair"],
+          neutral: ["Keep walking", "Leave the chair alone"],
+        },
+      },
+      {
+        line: "He's halfway up a ladder under a busted light fixture. \"Oh, good. Hold that. The ladder, not the fixture. The fixture's got opinions.\"",
+        approach: "Hold the ladder steady",
+        greeting:
+          "\"This dorm's seen better days. Somebody's got to keep it standing, and it's never the geniuses.\"",
+        responses: {
+          kind: ["Ask if he needs a hand", "Say you'll stay till he's done"],
+          playful: ["Ask about the opinions", "Threaten to let go"],
+          bold: ["Climb up and help", "Ask why it's always him"],
+          neutral: ["Keep the ladder steady", "Watch him work"],
+        },
+      },
+      {
+        line: "He said today didn't really work for him. He turns up anyway, with a very weak excuse already loaded.",
+        approach: "Ask for the weak excuse",
+        greeting:
+          '"The excuse is I finished early. I did not finish early. I left early. Subaru\'s covering, he was very nice about it."',
+        responses: {
+          kind: ["Say you're glad he came", "Say he didn't need one"],
+          playful: ["Rate the excuse out of ten", "Ask what he's skipping"],
+          bold: ["Say he came to see you", "Ask why he really came"],
+          neutral: ["Just make room for him", "Let the excuse stand"],
+        },
+      },
+      {
+        line: '"All these geniuses and their lectures are giving me heartburn." He drops onto the bench beside you. "Complain to me about something. Anything normal."',
+        approach: "Complain about your day",
+        greeting:
+          '"Yes. Perfect. Nobody invented anything or summoned anything. Keep going."',
+        responses: {
+          kind: ["Tell him the whole thing", "Ask about his day instead"],
+          playful: ["Complain about him", "Invent a worse problem"],
+          bold: ["Make him go first", "Say he needs it more than you"],
+          neutral: ["Keep it short", "Grumble, then go quiet"],
+        },
+      },
+      {
+        line: '"Everyone in Hotarubi\'s got one thing they pour their whole heart into. I lose interest way too easily." He glances at you. "...Mostly."',
+        approach: "Ask what the exception is",
+        greeting:
+          '"Ha ha. No. I\'m not answering that one. Try me again in a week."',
+        responses: {
+          kind: ["Let him keep the answer", "Say you don't bore easily"],
+          playful: ["Guess the exception", "Ask if it's his naps"],
+          bold: ["Say it's you, then", "Ask why he said mostly"],
+          neutral: ['Let the "mostly" sit', "Leave it there"],
         },
       },
     ],
@@ -658,7 +785,7 @@ export default {
           "\"My whole life I've half-assed anything that mattered, so it couldn't hurt when it broke. Then you turned up.\"",
         responses: {
           kind: "Say the repairs can wait",
-          playful: "Tease him gently about it",
+          playful: "Tease him about it",
           bold: "Push him to stop hiding",
           neutral: "Let the night settle",
         },
@@ -682,7 +809,7 @@ export default {
           '"Stop looking at me like that. ...No. Don\'t. Keep doing that."',
         responses: {
           kind: "Stay honest with him too",
-          playful: "Tease him lightly, gently",
+          playful: "Tease him, but lightly",
           bold: "Keep looking, don't look away",
           neutral: "Be quiet with him",
         },
@@ -783,28 +910,28 @@ export default {
   winnerLines: {
     new: [
       '"Oh. Hey." **{name}** doesn\'t get up. {user} still got it right.',
-      '{user} says the name, and **{name}** glances at something over their shoulder. "...Ignore that."',
-      '"Don\'t expect much from me," **{name}** warns {user}, not moving from the step.',
+      '{user} says the name, and **{name}** glances at something just over their shoulder. "...Ignore that."',
+      '**{name}** lifts a hand at {user} without opening his eyes. "Yep. That\'s me. Good guess."',
     ],
     warm: [
       "**{name}** shifts over on the step. The space is for {user}.",
-      '"I\'d say I wasn\'t waiting." **{name}** looks at {user}. "...Nah. I was."',
-      "{user} calls out, and **{name}** starts a sentence that was heading somewhere honest.",
+      '"There you are." **{name}** has already saved {user} the good end of the bench. "...It was free anyway."',
+      '{user} calls it, and **{name}** points at them. "See? Somebody around here pays attention."',
     ],
     spark: [
       "**{name}** hears his name and the unbothered act slips for about a second. {user} caught it.",
-      '"You make it hard to stay unbothered." **{name}** says it to {user} like a complaint.',
+      '"Took you long enough, princess." **{name}** says it just loud enough for {user} to hear.',
       "{user} got there first, and **{name}** stops pretending to be asleep.",
     ],
     close: [
-      "**{name}** has stopped keeping it light. {user} calling his name did that.",
       '"Yeah, yeah. Coming." **{name}** is already up for {user}.',
       "{user} calls, and **{name}** leaves the busted fixture exactly where it is.",
+      "**{name}** starts a joke on reflex, looks at {user}, and lets it go unfinished.",
     ],
     bound: [
-      '"I keep meaning to play this cool," **{name}** tells {user}. "Going badly."',
-      "**{name}** crosses to {user} like a man who quit arguing with himself months ago.",
       "{user} says the name, and **{name}** doesn't deflect it. Not even a little.",
+      "**{name}** is lazy about everything except getting to {user}.",
+      '"Of course it\'s you." **{name}** moves over six inches for {user} without being asked.',
     ],
   },
 };

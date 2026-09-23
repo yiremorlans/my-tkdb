@@ -293,7 +293,7 @@ export default {
         greeting:
           '"Here, take half. Nobody really shares around here. I noticed pretty fast."',
         responses: {
-          kind: ["Accept the offered half", "Thank him for sharing"],
+          kind: ["Accept the offered half", "Share something back"],
           playful: ["Steal more than your half", "Ask what's in it first"],
           bold: ["Take the whole thing", "Make him ask your name"],
           neutral: ["Take the food, stay quiet", "Start eating, say nothing"],
@@ -390,7 +390,7 @@ export default {
         greeting:
           "\"Oh, that seat? It was just open. I wasn't saving it. ...Okay, I was saving it.\"",
         responses: {
-          kind: ["Thank him for the seat", "Sit down gratefully"],
+          kind: ["Say you'd have saved his too", "Sit down gratefully"],
           playful: [
             "Call out the fake accident",
             "Ask if he saved it on purpose",
@@ -510,7 +510,7 @@ export default {
         greeting:
           '"Got a bit of spare cash this month, don\'t ask, so lunch is on me. Get whatever."',
         responses: {
-          kind: ["Thank him, offer to split it", "Say he didn't have to"],
+          kind: ["Say next lunch is on you", "Say he didn't have to"],
           playful: ["Order the most expensive thing", "Order dessert first"],
           bold: ["Ask where the cash came from", "Ask what he bet on"],
           neutral: ["Take the offer, say nothing", "Order something small"],
@@ -560,7 +560,7 @@ export default {
         greeting:
           "\"Okay so, don't laugh, I think about you kind of a lot. That's the thing. That's all of it.\"",
         responses: {
-          kind: "Ask gently about the pendant",
+          kind: "Ask about the pendant",
           playful: "Tease him for fidgeting",
           bold: "Ask him to tell you the story",
           neutral: "Let him decide what to share",
@@ -596,7 +596,7 @@ export default {
         greeting:
           '"Can I... is it okay if I hold your hand? Cool. Cool cool cool."',
         responses: {
-          kind: "Let him hold on gently",
+          kind: "Lace your fingers with his",
           playful: "Refuse to let go of his hand",
           bold: "Pull him in by the collar",
           neutral: "Let go first",
@@ -671,7 +671,7 @@ export default {
         approach: "Kiss him back",
         greeting: '"C\'mere. No reason. Okay, one reason. Come HERE."',
         responses: {
-          kind: "Kiss him back gently",
+          kind: "Kiss him first this time",
           playful: "Ask what he forgot",
           bold: "Kiss him first",
           neutral: "Let the kiss speak instead",

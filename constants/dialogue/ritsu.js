@@ -258,7 +258,7 @@ export default {
         greeting:
           '"Ah, my new partner. Perfect timing. Let\'s work through this together."',
         responses: {
-          kind: ["Thank him for the briefing", "Say you appreciate the prep"],
+          kind: ["Say you're ready to work", "Say you appreciate the prep"],
           playful: ["Ask if that was timed", "Guess the ending yourself"],
           bold: [
             "Cut him off before he finishes",
@@ -285,7 +285,7 @@ export default {
         greeting:
           '"Before you commit to anything in this house, read it. All of it. I\'ll wait."',
         responses: {
-          kind: ["Thank him for the caution", "Take the reading seriously"],
+          kind: ["Ask where to start", "Take the reading seriously"],
           playful: [
             "Skim it and bluff your way",
             "Ask him to summarize instead",
@@ -326,7 +326,7 @@ export default {
         greeting:
           '"Partner. Good. I need a second opinion, and yours is becoming reliable."',
         responses: {
-          kind: ["Say the title suits you", "Thank him for the promotion"],
+          kind: ["Say the title suits you", "Say you'll earn the title"],
           playful: ["Ask what the raise is", "Demand a proper contract"],
           bold: ["Claim the title outright", "Say you earned it"],
           neutral: ["Accept it without comment", "Nod, take the title"],
@@ -337,7 +337,7 @@ export default {
         approach: "Read the document",
         greeting: '"Read this. Tell me what\'s wrong with it. Something is."',
         responses: {
-          kind: ["Read it carefully for him", "Thank him for the trust"],
+          kind: ["Read it carefully for him", "Say you'll find the flaw"],
           playful: [
             "Find the error on purpose",
             "Guess the flaw before reading",
@@ -364,7 +364,7 @@ export default {
         greeting:
           '"Every client receives a defense. Whether they deserve one is not a question my family has ever been paid to answer."',
         responses: {
-          kind: ["Say the policy sounds fair", "Ask gently why it matters"],
+          kind: ["Say the policy sounds fair", "Ask why it matters"],
           playful: ["Ask if it's ever backfired", "Tease the family motto"],
           bold: ["Challenge the policy outright", "Ask what he'd do instead"],
           neutral: ["Note the policy, say nothing", "Take it at face value"],
@@ -388,7 +388,7 @@ export default {
         greeting: '"I am listening. Please be concise. I will be taking notes."',
         responses: {
           kind: [
-            "Explain gently, point by point",
+            "Explain it point by point",
             "Reassure him it's not personal",
           ],
           playful: [
@@ -422,7 +422,7 @@ export default {
         greeting:
           '"I recorded that. Not for evidence. I just wanted to remember you said it."',
         responses: {
-          kind: ["Say it means a lot he did", "Thank him for remembering"],
+          kind: ["Say it means a lot he did", "Say you're glad he kept it"],
           playful: [
             "Tease him for keeping track",
             "Ask what else he's recorded",
@@ -437,7 +437,7 @@ export default {
         greeting:
           "\"I've begun a file on you. Don't look so alarmed, it's a compliment. I only file people worth tracking.\"",
         responses: {
-          kind: ["Say you don't mind the file", "Thank him for tracking you"],
+          kind: ["Say you don't mind the file", "Say you're honored to be filed"],
           playful: ["Guess the heading yourself", "Demand to read the file"],
           bold: [
             "Demand he tell you the heading",
@@ -506,7 +506,7 @@ export default {
         approach: "Take the reserved hour",
         greeting: '"I\'ve reserved this hour. Coincidence, obviously."',
         responses: {
-          kind: ["Thank him for the hour", "Say the hour is well spent"],
+          kind: ["Clear your hour for him too", "Say the hour is well spent"],
           playful: ["Call the coincidence out", "Call it a lucky accident"],
           bold: ["Book him for the next one", "Ask for a standing slot"],
           neutral: ["Take the hour, say nothing", "Use the hour as planned"],
@@ -542,7 +542,7 @@ export default {
         greeting:
           '"Argue the other side for me. You\'re the only one who does it properly."',
         responses: {
-          kind: ["Argue gently, let him win", "Concede one point to him"],
+          kind: ["Argue, then let him win", "Concede one point to him"],
           playful: ["Argue just to rile him up", "Switch sides mid-argument"],
           bold: ["Dismantle his argument fully", "Take the harder position"],
           neutral: ["Argue the other side plainly", "Argue until he stops"],
@@ -556,7 +556,7 @@ export default {
         greeting:
           "\"Say no and I'll never raise it again. Say yes and I'll not let it rest.\"",
         responses: {
-          kind: "Say yes gently",
+          kind: "Tell him not to let it rest",
           playful: "Make him wait for an answer",
           bold: "Say yes",
           neutral: "Take a moment before answering",
@@ -642,7 +642,7 @@ export default {
         greeting:
           "\"I could argue anything. I can't argue myself out of this. I've stopped trying.\"",
         responses: {
-          kind: "Ask gently what he found",
+          kind: "Ask what he found",
           playful: "Cross-examine him instead",
           bold: "Tell him he's more than that",
           neutral: "Let him finish looking",
