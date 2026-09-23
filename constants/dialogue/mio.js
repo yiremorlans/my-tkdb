@@ -8,8 +8,8 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: This is Mio. Dionysia, the toolbox. You already know who I am, so I'll skip the rest.",
-        "We've talked {timesMet} times, and every one of them has been about something to fix. That's not on you. But it means I've only ever turned up here when something's broken.\n\nSo, while I'm there, anything you actually want me to look at?\n\nDoesn't have to be broken. If there's something that'd make your week easier, I can probably build it.\n\n...Your desk, though. The light's behind you, so you've been reading in your own shadow every night. I could build you a lamp that clips on and swings clear when you don't need it. Hour, maybe.",
+        "**{firstName}**: It's Mio. From Dionysia. You already know who I am, so I'll skip the rest.",
+        "We've talked {timesMet} times, and every one of them has been about something to fix. That's not on you. But it means I've only ever come by your room when something's broken.\n\nSo while I'm over next, anything you actually want me to look at?\n\nDoesn't have to be broken. If there's something that'd make your week easier, I can probably build it.\n\n...Your desk, though. The light's behind you. Every time I've been by, you're reading in your own shadow. I could build you a lamp that clips on and swings clear when you don't need it. Hour, maybe.",
       ],
       choice: {
         prompt: "Yes or no on the lamp.",
@@ -33,13 +33,13 @@ export default {
             label: "Ask him to stay after",
             style: 4,
             close:
-              "*A pause.*\n\nStay after and do what?\n\n...Fine. Yes. I'll bring the sweet tea. Shion drinks all of it, so I keep some hidden.",
+              "Stay after?\n\n...Sure. Yeah. I'll finish the lamp first, then I'm all yours for a bit.",
           },
         ],
       },
       keepsake: {
         emoji: "💡",
-        line: "A lamp that aims the light where you need it, from the one person who notices how hard you work.",
+        line: "A lamp that aims the light where you need it, because he noticed where it wasn't.",
       },
     },
 
@@ -259,39 +259,35 @@ export default {
         line: '"Give me one second," he says, and finishes the movement without a single wasted motion.',
         approach: "Wait for him to finish",
         greeting:
-          '"Mind the bench, everything on it is more fragile than it looks."',
+          '"Okay. Done. Thanks for waiting, most people start talking halfway through."',
         responses: {
-          kind: ["Notice how much he does", "Wait patiently for him"],
-          playful: ["Pretend to poke the bench", "Time how long 'one sec' is"],
-          bold: ["Hold his gaze", "Pick up a part to look"],
-          neutral: ["Watch him work", "Keep your hands off the bench"],
+          kind: ["Say he's got a lot on", "Ask if he's had a break"],
+          playful: ["Time how long 'one sec' was", "Ask if you get a prize"],
+          bold: ["Say you'd have waited longer", "Ask what he just finished"],
+          neutral: ["Say it was no trouble", "Let him pack up"],
         },
       },
       {
-        line: "\"Whoa, hold up. You don't wanna run here, trust me. The floor's not level.\"",
+        line: '"Wait, wait. You shouldn\'t run around here. The floor over there is slightly sloped."',
         approach: "Watch your step",
-        greeting:
-          "\"There you go. It's been tilted since before I got here. Nobody's fixed it. Yet.\"",
+        greeting: '"There you go. Safety first."',
         responses: {
-          kind: ["Thank him for the warning", "Walk slowly, like he said"],
-          playful: [
-            "Lean with the slope on purpose",
-            "Ask if the tilt's a feature",
-          ],
-          bold: ["Run anyway, on purpose", "Ask why nobody's fixed it"],
-          neutral: ["Watch your step, say nothing", "Walk carefully past"],
+          kind: ["Thank him for the warning", "Say it's good advice"],
+          playful: ["Salute him", "Lean with the slope on purpose"],
+          bold: ["Run anyway, on purpose", "Tell him to relax a little"],
+          neutral: ["Nod and keep going", "Say nothing, walk on"],
         },
       },
       {
-        line: "There's always someone asking him to fix something. He never once says no.",
-        approach: "Sit at the workbench",
+        line: "His phone buzzes with another repair request. He reads it and adds it to the list.",
+        approach: "Ask what came in",
         greeting:
-          "\"Sit anywhere. I'll clear a space. I'm always clearing a space.\"",
+          '"Wait a sec… Wasn\'t this one the carpenter cat\'s job? Well… complaining is more trouble than it\'s worth."',
         responses: {
-          kind: ["Thank him for always helping", "Offer to take a job off him"],
-          playful: ["Ask if he ever says no", "Ask him to fix your life"],
-          bold: ["Ask him for a favor", "Tell him to say no sometimes"],
-          neutral: ["Wait your turn quietly", "Sit where he cleared space"],
+          kind: ["Say he takes on too much", "Offer to take a job off him"],
+          playful: ["Ask who the carpenter cat is", "Offer to complain for him"],
+          bold: ["Tell him to send it back", "Say he's allowed to say no"],
+          neutral: ["Let him add it to the list", "Say nothing"],
         },
       },
     ],
@@ -301,7 +297,7 @@ export default {
         approach: "Say that counts",
         greeting: '"You again, huh. Not complaining, just noting it."',
         responses: {
-          kind: ["Say it's nice being noticed", "Thank him for remembering"],
+          kind: ["Say it's nice being noticed", "Say you'll keep turning up"],
           playful: ["Ask what else he's tracking", "Tease him for noting it"],
           bold: ["Say of course it counts", "Claim the noticing as yours"],
           neutral: ["Shrug, it counts or not", "Let it go unremarked"],
@@ -311,7 +307,7 @@ export default {
         line: "A little pile of spare parts sits apart from the rest of the bin. He won't say what they're for.",
         approach: "Ask what he's building",
         greeting:
-          "\"Give me a sec, I'm almost done. Then I'll show you something cool.\"",
+          "\"Hm? Oh, those. Spare parts. We're gonna need to restock soon.\"",
         responses: {
           kind: ["Let him keep his secret", "Say you're just curious"],
           playful: [
@@ -350,11 +346,11 @@ export default {
         },
       },
       {
-        line: '"Hey, Honor Roll. One more day. Let\'s power through."',
+        line: '"Nice work today. Let\'s get through this day too."',
         approach: "Cheer him on",
-        greeting: '"Hey! Good timing, I was about to take a break anyway."',
+        greeting: '"Yeah. Good work. ...Alright. One more push."',
         responses: {
-          kind: ["Cheer him on gladly", "Offer to help him finish"],
+          kind: ["Offer to help him finish", "Tell him not to overdo it"],
           playful: ["Bet he won't make it", "Race him to the end"],
           bold: [
             "Tell him to just stop for once",
@@ -382,11 +378,11 @@ export default {
         line: "He's got a running list of small things you've mentioned. He swears it doesn't mean anything.",
         approach: "Ask what's on the list",
         greeting:
-          "\"You're easy to have around. Don't let that go to your head.\"",
+          "\"Nothing much. Stuff that needs fixing, mostly. Don't read into it.\"",
         responses: {
           kind: ["Say that's sweet, actually", "Let him keep the list"],
           playful: ["Demand to see the list", "Guess what's on it"],
-          bold: ["Ask what it means, plainly", "Push him to admit it matters"],
+          bold: ["Read into it anyway", "Push him to admit it matters"],
           neutral: ["Let the list go unremarked", "Shrug, say nothing"],
         },
       },
@@ -408,7 +404,7 @@ export default {
         greeting:
           "\"Fixed the thing you didn't ask me to fix. Don't mention it.\"",
         responses: {
-          kind: ["Thank him for fixing it", "Say that means a lot"],
+          kind: ["Say you'll return the favor", "Say that means a lot"],
           playful: ["Demand he admit he did it", "Tease him for the secrecy"],
           bold: ["Call him out for hiding it", "Say you noticed right away"],
           neutral: ["Say nothing about the fix", "Let it go unremarked"],
@@ -417,10 +413,8 @@ export default {
       {
         line: "A half-finished stage prop for the next Dionysia show takes up half the bench. He needs an extra pair of hands.",
         approach: "Lend him a hand",
-        greeting: [
+        greeting:
           '"I\'ve got two hands and about six jobs today. Pick a number."',
-          '"Careful, that bench leg\'s not stable yet. Give me a week."',
-        ],
         responses: {
           kind: ["Lend a hand gladly", "Offer to help however's useful"],
           playful: ["Ask what happens if it breaks", "Demand the easiest job"],
@@ -432,37 +426,34 @@ export default {
         line: '"Oh, somebody\'s in a good mood," Elias says softly, passing through. He just shrugs and keeps working.',
         approach: "Smile at the thought",
         greeting:
-          "\"Don't you start too. Something finally worked on the first try, that's all. ...Okay, and you're here.\"",
+          "\"Don't you start too. Something finally worked on the first try, that's all.\"",
         responses: {
-          kind: ["Say the good mood suits him", "Smile back warmly"],
-          playful: ["Ask what put him in a mood", "Tease him for smiling"],
-          bold: ["Say you caused the mood", "Claim credit for it"],
+          kind: ["Say the good mood suits him", "Ask what finally worked"],
+          playful: ["Side with Elias", "Tease him for smiling"],
+          bold: ["Tell him to own the good mood", "Say he's earned a win"],
           neutral: ["Let the moment pass", "Shrug, keep walking"],
         },
       },
       {
-        line: "He offers to walk partway to class with you, like it's a coincidence and not a habit forming.",
+        line: "He's heading out with his toolbox and offers to walk you partway to class.",
         approach: "Walk with him",
         greeting:
-          "\"Morning. You're heading to class now, right? I've got the same class, I think... Let's go together.\"",
+          "\"You're heading to class, right? I've got a job that way. Let's go together.\"",
         responses: {
-          kind: ["Walk with him gladly", "Say you don't mind the company"],
-          playful: ["Call it a habit outright", "Tease the coincidence"],
-          bold: ["Say it's not a coincidence", "Point out the pattern"],
-          neutral: ["Walk along, say nothing", "Let him walk without comment"],
+          kind: ["Say you'd like that", "Offer to carry something"],
+          playful: ["Ask what's broken this time", "Guess who broke it"],
+          bold: ["Ask to tag along to the job", "Say you'll walk him there too"],
+          neutral: ["Fall into step beside him", "Nod and head off together"],
         },
       },
       {
-        line: '"You should take a break sometimes," he says, in the exact tone he never uses on himself.',
+        line: "He looks you over like you're the one who needs looking after.",
         approach: "Turn it back on him",
         greeting:
-          '"You think I look busy? Takes one to know one. Make sure you give yourself a break every once in a while."',
+          '"You\'re busy again today? Yeah, same for me. You should take a break sometimes too."',
         responses: {
-          kind: ["Promise to actually rest", "Thank him for the advice"],
-          playful: [
-            "Turn it back on him again",
-            "Point out the double standard",
-          ],
+          kind: ["Promise to actually rest", "Say the same goes for him"],
+          playful: ["Ask when he last took one", "Point out the double standard"],
           bold: ["Say he never rests either", "Demand he rest too"],
           neutral: ["Nod, say nothing", "Take the advice, move on"],
         },
@@ -474,7 +465,7 @@ export default {
         approach: "Ask him to stop working",
         greeting: '"Perfect timing. I needed an excuse to stop."',
         responses: {
-          kind: ["Thank him for stopping", "Ask what he was building"],
+          kind: ["Say you'll be his excuse", "Ask what he was building"],
           playful: ["Ask if you're the excuse", "Offer a better excuse"],
           bold: [
             "Say you're worth stopping for",
@@ -489,7 +480,7 @@ export default {
         greeting:
           "\"Hold this a sec? It's small, easy to lose. And no, before you ask, it wasn't any trouble.\"",
         responses: {
-          kind: ["Thank him for noticing", "Say it was trouble, though"],
+          kind: ["Hold it carefully for him", "Say it was trouble, though"],
           playful: ["Call out the secret fix", "Mention three more things"],
           bold: ["Say you noticed immediately", "Ask what else he fixed"],
           neutral: ["Hold the gear, say nothing", "Hold it, wait for the rest"],
@@ -561,7 +552,7 @@ export default {
         greeting:
           "\"I've been trying to say this since spring. I'm still trying.\"",
         responses: {
-          kind: "Say it for him, gently",
+          kind: "Say it for him",
           playful: "Guess the ending for him",
           bold: "Finish the sentence boldly",
           neutral: "Let him find the words",
@@ -585,7 +576,7 @@ export default {
         greeting:
           '"I hold everyone together. You\'re the thing that undoes me. Bit inconvenient."',
         responses: {
-          kind: "Hold his gaze gently",
+          kind: "Don't look away",
           playful: "Catch him looking again",
           bold: "Close the distance yourself",
           neutral: "Look away first",
@@ -647,7 +638,7 @@ export default {
         greeting:
           '"Stay as long as you want. I like the workshop better with you in it."',
         responses: {
-          kind: "Hold his hands gently",
+          kind: "Stay as long as he'll let you",
           playful: "Tease him for going still",
           bold: "Take the work out of his hands",
           neutral: "Sit with him",
@@ -739,29 +730,29 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      "**{name}** looks up from the fine work, smile already there for {user}.",
-      '{user} says the name, and **{name}** sets the tweezers down. "Huh. Good eye."',
-      '"Careful, everything I\'m carrying is more fragile than it looks." **{name}** tells {user} that first, hello second.',
+      '"Hm? Oh, {user}. Good work today." **{name}** shifts the box of parts to his other arm so he can wave.',
+      '{user} says the name, and **{name}** stops mid-yawn. "Sorry. Short sleeper. Hi."',
+      '"...Okay, three more jobs and I\'ll barely make it." **{name}** looks up from his list and decides {user} goes first.',
     ],
     warm: [
-      "**{name}** sets the work aside completely. {user} gets his whole attention.",
-      '"Perfect timing, {user}. I needed an excuse for a break." **{name}** means it.',
-      "{user} calls out, and **{name}** has already fixed the thing they mentioned last week.",
+      "**{name}** sets his toolbox down for {user}, which he doesn't do for most people.",
+      '"Shion can wait five minutes." **{name}** pockets his phone and turns to {user}.',
+      '"You look tired. ...Yeah, I know. I\'m one to talk." **{name}** stays with {user} anyway.',
     ],
     spark: [
-      "**{name}**'s hands slip on the work for a second. {user} pretends not to notice.",
       '"Hm? Looks like there\'s a bug on your head… Nope, my mistake." **{name}** just wanted a closer look at {user}.',
-      "{user} says the name, and **{name}** loses the thread of what he was building.",
+      "**{name}** answers {user} and forgets which pocket the screwdriver's in. Twice.",
+      '"...Huh. It\'s you." **{name}** stops pretending to check his tool case and just looks at {user}.',
     ],
     close: [
       '"Why do I always get sleepy around you?" **{name}** asks {user}, and doesn\'t wait for an answer.',
-      "**{name}** hears {user} and leaves a repair half-finished.",
-      "{user} calls, and **{name}** gets there before Shion can invent an emergency.",
+      "**{name}** lets his phone ring out for {user}. Whoever's broken something can wait.",
+      '"Stay a sec. You\'re the only one who doesn\'t need something fixed." **{name}** says it to {user} like a complaint.',
     ],
     bound: [
-      '"I had a whole speech ready. You walked up and I lost all of it." **{name}** shrugs at {user}, a little red.',
-      "**{name}** rests his forehead on {user}'s shoulder, then goes back to complaining about his day.",
-      "{user} says the name, and **{name}** asks them to stay.",
+      '"I love you. ...Okay, that\'s the sentence. Now tell me about your day." **{name}** doesn\'t let go of {user}\'s hand.',
+      "**{name}** rests his forehead on {user}'s shoulder, yawns, and stays right there.",
+      '"I\'ll walk you back. I wanted to do an inspection anyway." **{name}** falls into step beside {user}.',
     ],
   },
 };
