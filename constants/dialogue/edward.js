@@ -15,10 +15,11 @@ export default {
   // vitality returning at night, the shady-cabal YouTube channel, "I eked out a
   // humble existence in Eastern Europe", "the most powerful vampire? ...just
   // rumors", love-advisor "Rui, or Lyca". He says "I'll", never "I shall"
-  // (reference.md). No pet name for MC here: reference.md gives him "wicked
-  // girl" only twice, both barbed, so it's saved for winnerLines rather than
-  // worn smooth as a term of endearment; "lovely creature" was never canon and
-  // has been cut.
+  // (reference.md). No pet name for MC in these scenes: reference.md gives him
+  // "wicked girl" only twice, both barbed, so it appears only in the one
+  // known-tier dialogue beat built around the name itself. It stays out of
+  // winnerLines too, since a /call winner can be any user and the name is
+  // gendered. "lovely creature" was never canon and has been cut.
   //
   // Texting is the one modern custom Rui never fully broke him of. Per
   // reference.md's "## Bond Scenes" notes he types boomer-style: ornate
@@ -260,24 +261,24 @@ export default {
       {
         line: "He greets you with a charming smile, but there's something dangerous beneath the gentleman's facade.",
         approach: "Accept the invitation",
-        greeting: '"Oh my. Welcome to my home."',
+        greeting: '"Oh my. A new face. How delightful."',
         responses: {
-          kind: ["Thank him for the welcome", "Return the smile warmly"],
+          kind: ["Thank him for the welcome", "Say it's nice to meet him"],
           playful: ["Out-charm the gentleman", "Curtsy back at him"],
-          bold: ["Meet his gaze with strength", "Say you see through the act"],
+          bold: ["Ask what's behind the smile", "Say you see through the act"],
           neutral: ["Let him do the talking", "Nod and step inside"],
         },
       },
       {
-        line: "He bows over your hand and asks, quite properly, whether he may keep hold of it. Then he waits.",
+        line: "He takes your hand and asks, quite properly, whether he may keep hold of it. Then he waits.",
         approach: "Let him take your hand",
         greeting:
           '"Do come in. I won\'t bite. Not without asking first, at any rate."',
         responses: {
-          kind: ["Accept the courtesy", "Let him keep your hand"],
-          playful: ["Keep him at bay playfully", "Ask if anyone ever says yes"],
+          kind: ["Accept the courtesy", "Thank him for asking first"],
+          playful: ["Ask what counts as asking", "Ask if anyone ever says yes"],
           bold: ["Give him permission", "Take your hand back"],
-          neutral: ["Let him bow, say nothing", "Wait for him to let go"],
+          neutral: ["Let him hold it, say nothing", "Wait for him to let go"],
         },
       },
       {
@@ -293,11 +294,11 @@ export default {
       },
       {
         line: "He is standing much too close for a first meeting, and entirely unbothered by that.",
-        approach: "Make some space",
+        approach: "Say you were exploring",
         greeting:
           '"You mustn\'t wander Obscuary alone. It would be troublesome for me if you were to disappear."',
         responses: {
-          kind: ["Let him be close, kindly", "Promise to be careful"],
+          kind: ["Ask him to show you around", "Promise to be careful"],
           playful: [
             "Ask if personal space exists",
             "Ask if he'd notice you gone",
@@ -305,7 +306,7 @@ export default {
           bold: ["Step closer instead of back", "Say you'll wander anyway"],
           neutral: [
             "Hold your ground, say nothing",
-            "Step back a pace, quietly",
+            "Step back a pace",
           ],
         },
       },
@@ -340,7 +341,7 @@ export default {
         approach: "Say you'll keep returning",
         greeting: '"Back so soon? How wonderfully poor of your judgment."',
         responses: {
-          kind: ["Say you meant to", "Confirm you'll be back"],
+          kind: ["Say you meant to", "Say he's worth the trip"],
           playful: ["Call your judgment fine", "Tease him for being surprised"],
           bold: ["Say of course you returned", "Ask why that's remarkable"],
           neutral: ["Shrug, say nothing", "Let the remark pass"],
@@ -352,10 +353,10 @@ export default {
         greeting:
           '"Do sit. I had Rui move the chair nearer. I find I dislike raising my voice."',
         responses: {
-          kind: ["Agree to help gladly", "Say you don't mind the favor"],
-          playful: ["Guess what the favor is", "Demand payment upfront"],
-          bold: ["Ask what he actually wants", "Refuse until he explains"],
-          neutral: ["Go along, say nothing", "Wait to hear the favor"],
+          kind: ["Take the chair he moved", "Ask if he's feeling unwell"],
+          playful: ["Ask if Rui minded moving it", "Scoot the chair even closer"],
+          bold: ["Say the favor was the chair", "Move the chair back a bit"],
+          neutral: ["Sit and wait for the favor", "Leave the chair where it is"],
         },
       },
       {
@@ -364,7 +365,7 @@ export default {
         greeting:
           '"Ah. You saw that. How careless of me... Well, what will you do about it?"',
         responses: {
-          kind: ["Don't look away", "Let him see you kindly"],
+          kind: ["Don't look away", "Say you won't tell Rui"],
           playful: ["Tease the slip", "Egg him on a little"],
           bold: ["Meet it head-on", "Say you saw it too"],
           neutral: ["Watch, say nothing", "Let it pass unremarked"],
@@ -378,7 +379,7 @@ export default {
         responses: {
           kind: ["Say you weren't leaving", "Say you like it here"],
           playful: ["Admit you eyed the door", "Tease him for noticing"],
-          bold: ["Say you're staying, plainly", "Own the glance at the door"],
+          bold: ["Put your feet up", "Own the glance at the door"],
           neutral: ["Shrug, say nothing", "Let it go unremarked"],
         },
       },
@@ -394,7 +395,7 @@ export default {
             "Ask what counts as dull enough",
           ],
           bold: ["Tell him something surprising", "Demand he share one too"],
-          neutral: ["Give a short, plain answer", "Answer briefly"],
+          neutral: ["Say it was a quiet week", "Mention the weather"],
         },
       },
       {
@@ -403,9 +404,9 @@ export default {
         greeting:
           '"Ah, sympathy. How restorative. I feel better already... No, wait. Worse. Stay."',
         responses: {
-          kind: ["Give him the sympathy he wants", "Fuss over him a little"],
+          kind: ["Offer to fetch him tea", "Fuss over him a little"],
           playful: ["Call out the fishing", "Demand he admit he's fine"],
-          bold: ["Refuse to play along", "Say he's clearly fine"],
+          bold: ["Ask what's actually wrong", "Say he's clearly fine"],
           neutral: ["Nod along, say nothing", "Let him have the performance"],
         },
       },
@@ -415,9 +416,9 @@ export default {
         greeting:
           '"Rui thinks I watch too many videos about the shady cabal of elites. He simply hasn\'t seen enough of them."',
         responses: {
-          kind: ["Say Rui might have a point", "Take Rui's side kindly"],
+          kind: ["Say Rui might have a point", "Say Rui just cares a lot"],
           playful: ["Ask what he did this time", "Tease him about the worry"],
-          bold: ["Say Rui's right, plainly", "Push him to explain himself"],
+          bold: ["Say the cabal isn't real", "Push him to explain himself"],
           neutral: ["Stay out of it", "Let it go unremarked"],
         },
       },
@@ -427,7 +428,7 @@ export default {
         greeting:
           "\"I've saved you a seat. I didn't plan to. It simply... happened.\"",
         responses: {
-          kind: ["Say you're glad to see him", "Admit you came to visit"],
+          kind: ["Say you're glad to see him", "Take the seat he saved"],
           playful: ["Tease him for waiting", "Ask how long he waited"],
           bold: ["Say you knew he was waiting", "Call out the pretending"],
           neutral: ["Let the comment pass", "Say nothing about it"],
@@ -439,7 +440,7 @@ export default {
         greeting:
           '"You keep walking into a vampire\'s room of your own accord. What else would I call you?"',
         responses: {
-          kind: ["Let him explain it", "Accept the name warmly"],
+          kind: ["Let him explain it", "Say you like the name"],
           playful: ["Demand a better nickname", "Ask what earned it"],
           bold: ["Claim the name outright", "Say it suits you fine"],
           neutral: ["Let the name stand", "Shrug at the nickname"],
@@ -447,7 +448,7 @@ export default {
       },
       {
         line: "Rui's left him another list of chores. Edward has read exactly none of it.",
-        approach: "Read him the list",
+        approach: "Pick up the list",
         greeting:
           '"Ah, the list. Read it to me, would you? My eyesight is not what it used to be."',
         responses: {
@@ -461,12 +462,12 @@ export default {
         line: "He asks, again, whether you like Rui or Lyca better, far too invested in an answer that isn't his to have.",
         approach: "Refuse to answer",
         greeting:
-          '"Oh? Not even a hint? How cruel. I shall have to draw my own conclusions, then."',
+          '"Oh? Not even a hint? How cruel. I\'ll have to draw my own conclusions, then."',
         responses: {
-          kind: ["Deflect kindly", "Say it's not his to know"],
-          playful: ["Refuse just to torture him", "Make him guess"],
-          bold: ["Say it's none of his business", "Refuse outright"],
-          neutral: ["Shrug, say nothing", "Let the question go unanswered"],
+          kind: ["Say you like them both", "Laugh off his conclusions"],
+          playful: ["Name someone else entirely", "Make him guess"],
+          bold: ["Say it's none of his business", "Say it's not his to know"],
+          neutral: ["Shrug, say nothing", "Change the subject"],
         },
       },
       {
@@ -474,10 +475,10 @@ export default {
         approach: "Go get Rui",
         greeting: '"Rui? Oh, how unkind. I did ask you so nicely."',
         responses: {
-          kind: ["Offer to help him up", "Fetch a blanket instead"],
+          kind: ["Say Rui's on his way", "Fetch a blanket instead"],
           playful: ["Pretend not to hear him", "Tease him for the demand"],
           bold: ["Refuse and tell him to walk", "Say he's perfectly capable"],
-          neutral: ["Go get Rui, say nothing", "Leave to find Rui quietly"],
+          neutral: ["Wait for Rui to arrive", "Hand him a pillow"],
         },
       },
     ],
@@ -494,10 +495,10 @@ export default {
         },
       },
       {
-        line: '"You\'ve stopped flinching," he observes, sounding thrilled and slightly put out.',
+        line: '"You never did flinch," he observes, sounding thrilled and slightly put out.',
         approach: "Refuse to flinch",
         greeting:
-          '"You\'re not afraid of me anymore. How disappointing. How wonderful."',
+          '"Not afraid of me in the least. How disappointing. How wonderful."',
         responses: {
           kind: ["Say it's not disappointing", "Say you trust him now"],
           playful: ["Ask which he'd prefer", "Flinch on purpose, badly"],
@@ -735,12 +736,12 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      "**{name}** bows over {user}'s hand and asks permission afterward.",
-      '"Oh my. How charming." **{name}** greets {user} as though they were in a drawing room and not the middle of everything.',
+      "**{name}** asks {user} whether he may take their hand, then waits for an answer.",
+      '"Oh my. How charming." **{name}** appears at {user}\'s elbow, smiling.',
       "{user} says the name, and **{name}** smiles with rather too many implications in it.",
     ],
     warm: [
-      '"You\'ve stopped flinching," **{name}** observes to {user}, thrilled and slightly put out.',
+      '"You haven\'t flinched once," **{name}** observes to {user}, thrilled and slightly put out.',
       "{user} calls out, and **{name}**'s cough evaporates. He forgets to bring it back.",
       '"Do come here." **{name}** informs {user} that personal space is a modern invention.',
     ],
@@ -751,7 +752,7 @@ export default {
     ],
     close: [
       '"May I?" **{name}** asks {user}, in public, about something unspecified.',
-      "**{name}** takes {user}'s arm and leaves the **{house}** business entirely unattended.",
+      "**{name}** walks {user} the whole way across campus and never once asks to be carried.",
       "{user} calls, and the ancient thing under **{name}**'s manners answers immediately.",
     ],
     bound: [
