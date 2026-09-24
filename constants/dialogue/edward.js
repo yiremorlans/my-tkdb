@@ -30,39 +30,40 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: You Will Forgive The Hour. I keep no other kind, and I have found that the living are at their most honest when tired. 😴🌙",
-        "I have watched you cross the Obscuary hall {timesMet} times, and every time, you look directly at me.\n\nThat is not nothing. The living look at my collar, my hands, a point six inches beside my head. Long enough on this earth, and I can name every place they look instead.\n\nI once performed a cough for you in that hall. Tragic, consumptive, the full performance. You told me to find Rui. 😷🎭\n\nYou Look Me In The Eye. 👀✨ I have begun arranging my evenings around it. 🌇🖤",
+        "**{firstName}**: Rui Is At The Tavern. I Have A Favor To Ask. 🙏🖤",
+        "A Letter Has Come For Me. 💌📜\n\nYou Have Passed My Door {timesMet} Times, So You Know The Way. Would You Come Read It To Me? 🙏🥺",
+        "Alas, My Eyesight Is Not What It Used To Be. 👓😔\n\nNo. You Would See Through That. You Always Do.",
+        "I Once Performed A Cough For You In The Hall. Tragic, Consumptive, The Full Performance. You Told Me To Find Rui. 😷🎭\n\nYou Look Me In The Eye. 👀✨ I Have Begun Arranging My Evenings Around It. 🌇🖤",
       ],
       choice: {
-        prompt:
-          "Now. Say something dreadful to me. It has been an age since anybody dared. 😈",
+        prompt: "Your Turn. I Am In No Hurry, But I Am Curious. 😏🖤",
         options: [
           {
             key: "kind",
-            label: "Say his face is worth it",
+            label: "Ask why it matters to him",
             style: 3,
             close:
-              "...That was not dreadful at all. You have cheated.\n\nDo it again some time when I am braced for it. I was not braced for it. 😤😳",
+              "Most People Look Somewhere Else. My Fangs, My Neck. 👀\n\nYou Never Do. That Is All, And It Is Plenty. 🖤🌙",
           },
           {
             key: "playful",
-            label: "Say he looked tired",
+            label: "Offer to look away next time",
             style: 1,
             close:
-              "I am *very old*, of course I look tired.\n\nNobody says so. They say *pale*, which is a polite way of saying they have not looked. 😩💀",
+              "Do Not You Dare. 😤😤\n\nOr Do. I Am Very Good At Appearing Wherever You Happen To Be Looking. 😏🦇",
           },
           {
             key: "bold",
-            label: "Ask what he's watching for",
+            label: "Say you like looking at him",
             style: 4,
             close:
-              "*There was a long pause.*\n\nAn answer I have not had in a very long while. Which is not a proper reply, and you will not get a better one tonight. Sleep well. 🌙💤",
+              "Oh. 😳😳\n\nThat Was Very Direct Of You. 🙈🖤\n\nMind The Hour. My Vitality Returns At Night, And You Really Should Be More Careful. 😏🦇",
           },
         ],
       },
       keepsake: {
-        emoji: "🕯️",
-        line: "The first person in a very long time to look him in the eye rather than beside it.",
+        emoji: "👀",
+        line: "Looking him in the eye, which he has started planning his evenings around.",
       },
     },
 
