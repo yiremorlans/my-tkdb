@@ -10,7 +10,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Good evening. This message is outside the hours I have set aside for correspondence, so I will be brief.\n\n I am noting that at the top so that you understand it was deliberate.",
-        "I maintain a record of everyone who enters Sinostra on business. It is not surveillance; it is the reason nobody has brought a successful claim against this house since I arrived.\n\nYour entry reads: {timesMet} visits, no petition, no dispute, no request for representation. That column is blank for exactly one person in a document of four hundred and six.\n\nI have checked it three times. I found the blankness irritating and then, on the third check, I found that I did not.",
+        "I maintain a record of everyone who enters Sinostra on business. It is not surveillance; it is the reason nobody has brought a successful claim against this house since I arrived.\n\nYour entry reads: {timesMet} visits, no petition, no dispute, no request for representation. That column is blank for exactly one person in a document of four hundred and six.\n\nI have checked it three times. A blank column is ordinarily an error. I have not been able to classify this one.",
       ],
       choice: {
         prompt:

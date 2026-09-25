@@ -15,39 +15,38 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Hey, Honor Roll! Big news.\n\nJabberwock evening tour's got a spare slot and I've gone and put your name on it. Didn't ask. Bit late to argue now, it's laminated (^_^;)",
-        "Nah, hang on. Honest truth for a sec: I do the tour pitch with everyone. It's basically a nervous tic at this point (^_^;)\n\nBut you've come round {timesMet} times and every single one you've said hello to the animals before you've said hello to me. Every time. Nobody does that.\n\nSo the slot's real. And I shuffled someone for it btw, which you didn't hear from me.",
+        "**{firstName}**: Hey, Honor Roll! Big news.\n\nYou're crew on the boat tour. Made you a badge and everything. Didn't ask. Bit late to argue now, it's laminated (^_^;)",
+        "You've come round {timesMet} times now. Reckon that makes you a regular. My favorite one, if I'm honest with you.\n\nAnyway! All you've gotta do is hand out life jackets and laugh at my jokes. Easy.\n\nAlso I bumped someone for that spot btw, which you didn't hear from me.",
       ],
       choice: {
-        prompt:
-          "So you'll come, hey? Say you'll come. I've already laminated it.",
+        prompt: "So you'll come, hey? Say you'll come.",
         options: [
           {
             key: "kind",
             label: "Say you'd love to",
             style: 3,
             close:
-              "YES! Best news all week!\n\n*Then, about four seconds later:* ...okay, that was a lot. Sorry (^_^;) That was a really normal amount of excited and I've overshot it a bit.",
+              "YES! Best news all week! Gahaha!\n\nBring a mate if you want, they'll get mates' rates. Tell everyone. Tell your whole house (^_^)",
           },
           {
             key: "playful",
-            label: "Ask who got moved",
+            label: "Ask who got bumped",
             style: 1,
             close:
-              "Nobody! Nobody got moved!\n\n...Towa got moved (^_^;) Towa got moved and he doesn't know yet and I'd like to keep it that way for as long as humanly possible.",
+              "Nobody! Nobody got bumped!\n\n...Towa got bumped (^_^;) He always rides along with me, and now he's on flier duty instead. So he doesn't know yet, and I'd like to keep it that way for as long as humanly possible.",
           },
           {
             key: "bold",
-            label: "Ask if it's just the tour",
+            label: "Ask what he meant by that",
             style: 4,
             close:
-              "*There's a gap. A real one, from someone who types like he talks.*\n\nHa! Yeah, nah, course it is, it's a great tour, five stars, people rave...\n\n...Bring a jacket. Gets cold by the water and I'm not sharing mine. *He is absolutely going to share his.*",
+              "Gahaha! Did I say that? Nah, what I meant was the tour. Great tour. Five stars, people rave...\n\n...Right! Bring a jacket, hey, gets cold out on the water.\n\nGotta go, the Capybus is eating the fliers (^_^;)",
           },
         ],
       },
       keepsake: {
-        emoji: "🎟️",
-        line: "A laminated tour slot with somebody else's name scratched off.",
+        emoji: "🪪",
+        line: "A laminated crew badge with your name on it, made before you'd said yes.",
       },
     },
 
