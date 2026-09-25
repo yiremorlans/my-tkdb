@@ -8,7 +8,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Tch. Before you say anything, no, you're not in trouble, and no, this isn't a bill. Yet.",
-        "Somebody put your name on the floor list as a mark. Standard stuff, happens to everyone who comes through more than twice. Not personal, just Sinostra.\n\nI took it off. Personally. Cost me a conversation I did not enjoy having at nine in the morning.\n\n{timesMet} visits and you've never once lost a yen at the tables. Marks lose. You don't even play. You know how rare that is? That's a rounding error. That's ONE person.",
+        "Somebody put your name on the floor list as a mark. Standard stuff, happens to everyone who comes through more than twice. Not personal, just Sinostra.\n\nI took it off. Personally. Cost me a conversation I did not enjoy having at nine in the morning.\n\n{timesMet} visits and you've never once sat down at a table. Marks play. You don't even look. You know how rare that is? That's ONE person.",
       ],
       choice: {
         prompt: "So don't make me regret it.",
@@ -32,13 +32,13 @@ export default {
             label: "Ask what it cost him",
             style: 4,
             close:
-              "Nothing.\n\n*Then, ten seconds later:* A favor, two hundred thousand yen of goodwill, and I had to be nice to a man I hate. Don't mention it. Genuinely. Do not mention it, ever, to anyone.",
+              "Nothing.\n\nA favor, two hundred thousand yen of goodwill, and I had to be nice to a man I hate. Don't mention it. Genuinely. Do not mention it, ever, to anyone.",
           },
         ],
       },
       keepsake: {
         emoji: "💳",
-        line: "A name struck off the floor list before nine in the morning.",
+        line: "A name struck off the floor list at nine in the morning.",
       },
     },
 
