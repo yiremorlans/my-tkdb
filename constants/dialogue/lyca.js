@@ -867,8 +867,8 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '**{name}** stops a few steps short of {user} and sniffs once. "...What do you want me to do? Say it."',
-      "{user} says the name, and **{name}**'s nose twitches before he turns around. \"...Yeah. That's me.\"",
+      '**{name}** stops a few steps short of {user}, arms folded. "...What do you want me to do? Say it."',
+      '{user} says the name, and **{name}** turns right around. "What?"',
       '"Stay there a moment." **{name}** takes {user} in slowly, scent and all.',
     ],
     warm: [
@@ -877,7 +877,7 @@ export default {
       "{user} calls out, and **{name}** falls in at their side, exactly one step behind.",
     ],
     spark: [
-      '"You smell happy." **{name}** tells {user} this as a plain fact.',
+      '"H-Hey, don\'t come so close!" **{name}** says it to {user}, and doesn\'t step back either.',
       "{user} says the name, and **{name}**'s ears do something he has no control over.",
       "**{name}** had practiced a greeting for {user}. It comes out stiff and completely sincere.",
     ],

@@ -244,24 +244,24 @@ export default {
         },
       },
       {
-        line: "He notes your arrival, files it somewhere, and returns to what he was doing.",
-        approach: "Don't interrupt him",
+        line: "He sets his pen down the moment you walk in, pleasant as anything.",
+        approach: "Walk over to him",
         greeting:
-          '"No need to be nervous. I\'ve nothing but the noblest of intentions."',
+          '"Well, hello there. I\'ve been expecting you. May I ask for your assistance with something?"',
         responses: {
-          kind: ["Wait until he's free", "Say you'll be quick"],
-          playful: ["Test his patience", "Ask about the noble intentions"],
-          bold: ["Give him a straight answer", "Say you're not nervous"],
-          neutral: ["Answer plainly, move on", "Wait by the door"],
+          kind: ["Offer to help right away", "Ask what he needs"],
+          playful: ["Ask how he expected you", "Ask if this is a trap"],
+          bold: ["Ask why you, specifically", "Say you're busy, but go on"],
+          neutral: ["Ask what the task is", "Hear him out first"],
         },
       },
       {
-        line: 'He inclines his head, courteous. "Business in Frostheim? I serve the one who runs it."',
+        line: 'He inclines his head, courteous. "Business in Frostheim? Then you\'ll want our captain."',
         approach: "State your business",
         greeting:
           '"Frostheim is ruled by a king, you see. I\'m no more than a servant."',
         responses: {
-          kind: ["Respect his discipline", "Ask to meet the king politely"],
+          kind: ["Ask how the king is doing", "Offer to wait for the king"],
           playful: ["Tease the servant framing", "Ask if the king is in"],
           bold: [
             "Call him more than a servant",
@@ -276,38 +276,38 @@ export default {
         greeting:
           '"This academy has far more than its fair share of loose cannons, wouldn\'t you agree?"',
         responses: {
-          kind: ["Reassure him you're no threat", "Say you came alone"],
+          kind: [
+            "Ask if it's always this bad",
+            "Say you'll keep clear of them",
+          ],
           playful: ["Try to make him crack", "Ask if you count as a cannon"],
-          bold: ["Hold your own", "Ask who he's expecting"],
-          neutral: ["Let him finish checking", "Wait until he's satisfied"],
+          bold: ["Ask if he's one of them", "Ask who he's expecting"],
+          neutral: ["Agree, there are plenty", "Glance back down the hall"],
         },
       },
       {
-        line: "Nothing about his expression moves. Something behind it is definitely taking notes.",
-        approach: "Stand where he can see you",
+        line: "He mentions, in passing, a problem of yours you never told him about.",
+        approach: "Ask how he knew",
         greeting:
-          '"What do you mean? I lend a sympathetic ear to those in need; that\'s all."',
+          "\"Seems you've become involved in a difficult situation. How do I know? I just happened to overhear, that's all.\"",
         responses: {
-          kind: ["Put him at ease", "Say you could use an ear"],
-          playful: ["Ask what he's noting", "Ask if that's all, truly"],
-          bold: ["Refuse the once-over", "Say you don't buy it"],
-          neutral: ["Observe him carefully", "Stay where he can see you"],
+          kind: ["Thank him for the concern", "Admit it's been rough"],
+          playful: ["Ask who he overheard", "Ask how often he overhears"],
+          bold: ["Say you don't buy it", "Ask what else he overheard"],
+          neutral: ["Hear what he has to say", "Let the overhearing go"],
         },
       },
     ],
     known: [
       {
-        line: "You've moved from unknown to accounted for. From him, that's a promotion.",
+        line: "He waves you in mid-errand, the way he does for people who belong here.",
         approach: "Proceed",
         greeting: '"Ah. You again. Proceed, by all means."',
         responses: {
-          kind: [
-            "Say you're glad to be known",
-            "Say you'll stay accounted for",
-          ],
-          playful: ["Ask what the promotion pays", "Act pleased with yourself"],
+          kind: ["Say it's good to see him too", "Say it's nice to belong"],
+          playful: ["Ask if you live here now", "Act pleased with yourself"],
           bold: ["Say you earned it", "Walk past like it's nothing"],
-          neutral: ["Proceed without comment", "Nod and move on"],
+          neutral: ["Slip in and let him work", "Nod and move on"],
         },
       },
       {
@@ -322,45 +322,45 @@ export default {
         },
       },
       {
-        line: '"Four days since last time," he notes. "Yes, I keep track. It\'s rather the job."',
-        approach: "Ask why he keeps track",
+        line: '"You haven\'t slept properly in days," he notes. "Don\'t argue. It shows."',
+        approach: "Ask how he can tell",
         greeting:
           '"An orderly schedule is the key to good health. Yours, I\'m afraid, is not orderly."',
         responses: {
-          kind: ["Say you didn't realize", "Promise to be more orderly"],
-          playful: ["Ask if he has a spreadsheet", "Tease him about counting"],
-          bold: ["Ask why he really tracks it", "Call the job excuse thin"],
-          neutral: [
-            "Shrug, it's just timing",
-            "Let the tracking go unremarked",
-          ],
+          kind: ["Say you didn't realize", "Promise to sleep tonight"],
+          playful: ["Ask if it's that obvious", "Blame the second years"],
+          bold: ["Insist you're fine", "Ask what he'd suggest"],
+          neutral: ["Shrug it off", "Let the remark pass"],
         },
       },
       {
-        line: "The once-over is shorter now. He reached his conclusion about you some time ago.",
-        approach: "Ask what he decided",
+        line: "He brings up a party the way you'd mention the weather, then waits.",
+        approach: "Ask about the party",
         greeting:
-          "\"You've been consistent. I've adjusted my expectations accordingly.\"",
+          '"I hope you\'ll join us for a party some time. Our king, naturally, will not be attending."',
         responses: {
-          kind: ["Ask if the conclusion was kind", "Hope it's a good one"],
-          playful: ["Demand to hear the verdict", "Guess what he decided"],
-          bold: [
-            "Ask what he decided outright",
-            "Say it doesn't matter to you",
+          kind: ["Say you'd love to come", "Ask what you should bring"],
+          playful: [
+            "Ask if there's a dress code",
+            "Ask why the king won't come",
           ],
-          neutral: ["Let him keep his conclusion", "Don't ask, let it be"],
+          bold: ["Say you'll come if he's there", "Ask why he's inviting you"],
+          neutral: ["Ask when it is", "Say you'll think about it"],
         },
       },
       {
-        line: "He nods once as you pass. It isn't nothing.",
+        line: "He nods once as you pass, then thinks better of letting you go.",
         approach: "Return the nod",
         greeting:
           "\"You ask fewer questions than you did at first. Either you're learning, or you've simply given up asking.\"",
         responses: {
-          kind: ["Return the nod warmly", "Say the nod means a lot"],
-          playful: ["Ask if that's a compliment", "Nod back extra big"],
-          bold: ["Call the nod out loud", "Demand more than a nod"],
-          neutral: ["Return the nod, say nothing", "Nod back, keep walking"],
+          kind: ["Say you're still learning", "Say you'll never stop asking"],
+          playful: [
+            "Ask if that's a compliment",
+            "Ask which one he's hoping for",
+          ],
+          bold: ["Say you've given up, then", "Ask a question right now"],
+          neutral: ["Shrug and keep walking", "Nod back, say nothing"],
         },
       },
       {
@@ -381,8 +381,7 @@ export default {
       {
         line: '"Honestly," he murmurs, in the tone he reserves for people he has stopped needing to warn off.',
         approach: "Ask what that means",
-        greeting:
-          '"Honestly. You\'ve made yourself rather difficult to overlook."',
+        greeting: '"You\'ve made yourself rather difficult to overlook."',
         responses: {
           kind: ["Ask what he means", "Say you don't mind the tone"],
           playful: ["Ask if that's a compliment", "Mimic the murmur back"],
@@ -391,78 +390,72 @@ export default {
         },
       },
       {
-        line: "He pours a second cup without being asked, then pretends the extra cup was already there.",
-        approach: "Take the second cup",
+        line: "He's watching two of Frostheim's own spar in the yard below.",
+        approach: "Watch with him",
         greeting:
-          '"Well, well. It seems I poured one too many. How fortunate that you arrived."',
+          "\"Errant and Fuji lack polish, but they've got potential. They're sincere, and that's what counts.\"",
         responses: {
-          kind: ["Say how fortunate indeed", "Accept the cup gladly"],
-          playful: ["Call out the pretending", "Ask who the extra cup was for"],
-          bold: ["Take the cup, no thanks needed", "Point out the obvious lie"],
-          neutral: ["Take the cup, say nothing", "Drink it without comment"],
+          kind: ["Say they're lucky to have him", "Agree they're trying hard"],
+          playful: ["Ask which one he'd bet on", "Ask if he was ever that raw"],
+          bold: ["Say sincerity isn't enough", "Ask what he sees in them"],
+          neutral: ["Watch them spar a while", "Agree they have potential"],
         },
       },
       {
-        line: '"Well, well," he says, and there is nothing sly left in it, only something close to fondness.',
-        approach: "Ask what's changed",
+        line: '"Well, well," he says, a little pleased. He was within earshot when you held your own earlier.',
+        approach: "Ask what he overheard",
         greeting:
-          '"I overheard you defending yourself rather well earlier. I approve, quietly."',
+          '"I happened to overhear you holding your own earlier. Well done."',
         responses: {
-          kind: ["Ask what's changed for him", "Say you noticed the warmth"],
-          playful: ["Tease him about softening", "Ask if that's fondness"],
-          bold: ["Name the fondness outright", "Call him out on the shift"],
-          neutral: ["Let the moment pass quietly", "Say nothing, let it be"],
+          kind: ["Thank him for noticing", "Say it wasn't easy"],
+          playful: ["Ask if he was spying", "Ask how much he heard"],
+          bold: ["Say you didn't need help", "Ask why he didn't step in"],
+          neutral: ["Say it was nothing", "Let the praise stand"],
         },
       },
       {
-        line: "He always seems to know when your classes let out. He calls it scheduling. It isn't.",
-        approach: "Call it what it is",
+        line: "He finds you in the courtyard, which means he came looking.",
+        approach: "Ask what the captain wants",
         greeting:
-          '"I\'ve started setting aside the schedule changes that concern you specifically. Draw no conclusions from that."',
+          '"So this is where you\'ve been idling your time away. Our captain is waiting for you."',
         responses: {
-          kind: ["Say you had noticed", "Promise to draw no conclusions"],
-          playful: [
-            "Call it what it really is",
-            "Tease him about the scheduling",
-          ],
-          bold: ["Ask him to just admit it", "Call out the excuse"],
-          neutral: ["Let him call it scheduling", "Don't push the point"],
+          kind: ["Say you'll go right away", "Thank him for finding you"],
+          playful: ["Say you weren't idling", "Ask if you're in trouble"],
+          bold: ["Say Jin can wait a minute", "Ask why he came himself"],
+          neutral: ["Follow him back", "Head to Jin's room"],
         },
       },
       {
         line: "\"I assure you, it's not poisoned,\" he says, and this time he means it as a joke you're in on.",
-        approach: "Drink it anyway",
+        approach: "Eat it anyway",
         greeting:
           '"I tend to eat lightly. Would you care for some? ...You know the rest by now."',
         responses: {
           kind: ["Thank him for sharing", "Take a bite, trusting him"],
           playful: ["Ask him to taste it first", "Say it's a little bland"],
-          bold: ["Drink it without hesitating", "Say you'd know if it were"],
-          neutral: ["Drink it, say nothing", "Take the joke in stride"],
+          bold: ["Eat it without hesitating", "Say you'd know if it were"],
+          neutral: ["Eat it, say nothing", "Take the joke in stride"],
         },
       },
       {
-        line: "A report sits unread on his desk. He'd rather talk to you than finish it.",
-        approach: "Ask what's in it",
+        line: "He's halfway out the door with a stack of papers when you catch him.",
+        approach: "Catch him on his way out",
         greeting:
-          '"It will keep. Reports rarely improve with haste. Conversation, on the other hand..."',
+          '"Is that everything? I\'m afraid there are several matters I must attend to."',
         responses: {
-          kind: ["Tell him the report can wait", "Offer to help him finish it"],
+          kind: ["Say it can wait until later", "Offer to carry some papers"],
           playful: [
-            "Ask what's in the report",
-            "Tease him for procrastinating",
+            "Ask what matters, exactly",
+            "Ask if the king assigned them",
           ],
-          bold: ["Demand to know what's in it", "Tell him to finish it first"],
-          neutral: ["Let the report sit", "Say nothing about the report"],
+          bold: ["Say it'll only take a minute", "Walk alongside him anyway"],
+          neutral: ["Say that's everything", "Let him go"],
         },
       },
       {
         line: "\"Don't repeat that,\" he says, already knowing you won't.",
         approach: "Note he didn't need to ask",
-        greeting: [
-          '"Should you ever require discretion, you know where to find me."',
-          '"Our king slept through the morning again. You needn\'t relay that to anyone."',
-        ],
+        greeting: ['"This conversation never happened. Understand?"'],
         responses: {
           kind: ["Promise it stays with you", "Reassure him you'll keep it"],
           playful: ["Threaten to repeat it anyway", "Ask what's in it for you"],

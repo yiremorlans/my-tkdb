@@ -10,8 +10,8 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Servant.\n\nTohma's decided I can't keep sending someone to fetch you every time I want a word. Says it's a waste of the staff. Fine. His way, then. Answer.",
-        "You've been underfoot {timesMet} times now. I haven't had you thrown out. Make of that whatever you want. I'm not explaining it.\n\n*The typing indicator starts. Stops. Starts again.*\n\nDon't get ideas. It's not a promotion.",
+        "**{firstName}**: Servant.\n\nTohma's decided I can't keep sending someone to fetch you. Says it's a waste of the staff. Fine. His way, then. Answer.",
+        "You've been underfoot {timesMet} times now. I haven't had you thrown out. Make of that whatever you want. I'm not explaining it.\n\n...\n\nDon't get ideas. It's not a promotion.",
       ],
       choice: {
         prompt: "Well? You've got thumbs. Use them.",
@@ -20,8 +20,7 @@ export default {
             key: "kind",
             label: "Say you're glad he wrote",
             style: 3,
-            close:
-              "...Glad. *A long pause.* Ha. Whatever. Be glad, then. Costs me nothing.",
+            close: "...Glad.\n\nHa. Whatever. Be glad, then. Costs me nothing.",
           },
           {
             key: "playful",
@@ -35,7 +34,7 @@ export default {
             label: "Tell him you'll decide that",
             style: 4,
             close:
-              "Ha. *It comes back instantly.* *There* it is.\n\nGood answer. I've got no patience for people who wait to be told what to think. Go to bed, servant.",
+              "Ha. *There* it is.\n\nGood answer. Keep that. Go do something useful, servant.",
           },
         ],
       },
@@ -235,23 +234,20 @@ export default {
         approach: "Step into the cold",
         greeting: '"Who the hell let you in? ...Tsk. Spit it out, then."',
         responses: {
-          kind: [
-            "Address him the way he expects",
-            "Explain your reason calmly",
-          ],
+          kind: ["Say you came to check on him", "Explain your reason calmly"],
           playful: ["Tease the frost right back", "Joke about being uninvited"],
-          bold: ["Reject the servant title", "Stand your ground at the door"],
+          bold: ["Say you let yourself in", "Stand your ground at the door"],
           neutral: ["Say nothing at all", "Wait to see what he wants"],
         },
       },
       {
         line: "He doesn't turn to look at you. The cold in the room sharpens.",
         approach: "Speak up",
-        greeting: '"Speak quickly. I don\'t like to wait."',
+        greeting: '"What? Talk fast or get out."',
         responses: {
-          kind: ["Keep it short for him", "Answer without hesitation"],
-          playful: ["Refuse to be impressed", "Take your time regardless"],
-          bold: ["Refuse to look away", "Speak before he asks twice"],
+          kind: ["Keep it short for him", "Ask if it's a bad time"],
+          playful: ["Talk slow on purpose", "Ask how fast is fast"],
+          bold: ["Refuse to look away", "Tell him you're staying put"],
           neutral: ["Wait for him to speak", "Match the cold with silence"],
         },
       },
@@ -260,7 +256,7 @@ export default {
         approach: "Close the door after you",
         greeting: "\"You're not supposed to be here. Don't waste my time.\"",
         responses: {
-          kind: ["Show respect for his pride", "Offer to come back later"],
+          kind: ["Ask if he's eaten today", "Offer to come back later"],
           playful: ["Call his bluff lightly", "Joke about the cigarette"],
           bold: ["Push past the dismissal", "Refuse to be waved off"],
           neutral: ["Respect his space", "Stay quiet by the door"],
@@ -268,25 +264,28 @@ export default {
       },
       {
         line: "He weighs you the way one weighs a servant he did not hire, quickly, and without much interest.",
-        approach: "Refuse to be dismissed",
+        approach: "Refuse to be sized up",
         greeting: '"Don\'t just stand there like an idiot. Hurry up."',
         responses: {
           kind: ["Stay composed under his gaze", "Let the insult roll off"],
           playful: [
             "Call him rude to his face",
-            "Act unbothered by the insult",
+            "Ask if you passed inspection",
           ],
           bold: ["Meet him as an equal", "Meet his stare head-on"],
           neutral: ["Wait for him to look up", "Shrug off the insult"],
         },
       },
       {
-        line: "He lights a cigarette and waits for you to explain yourself.",
+        line: "He sets his pen down and waits for you to explain yourself.",
         approach: "State your case",
         greeting: '"Get to the point. The trash here is so long-winded."',
         responses: {
-          kind: ["State your case respectfully", "Keep your explanation brief"],
-          playful: ["Tease him for smoking", "Take your time explaining"],
+          kind: [
+            "Thank him for hearing you out",
+            "Keep your explanation brief",
+          ],
+          playful: ["Promise a very long story", "Take your time explaining"],
           bold: ["Stand with confidence", "Refuse to be rushed"],
           neutral: ["Get straight to the point", "Wait through the silence"],
         },
@@ -308,7 +307,7 @@ export default {
       {
         line: '"You again," he says, and returns to his cigarette. He doesn\'t call you servant this time.',
         approach: "Ask what he needs",
-        greeting: '"Tsk. You again. Make yourself useful while you\'re at it."',
+        greeting: '"Tsk. Make yourself useful while you\'re at it."',
         responses: {
           kind: ["Ask if he needs anything", "Offer to make yourself useful"],
           playful: ["Notice he dropped 'servant'", "Ask if that's an upgrade"],
@@ -329,23 +328,26 @@ export default {
       },
       {
         line: "The dismissal comes a beat slower than it used to.",
-        approach: "Speak while allowed",
-        greeting: '"Don\'t mistake familiarity for permission."',
+        approach: "Stay while he allows it",
+        greeting: '"Sit if you want. Touch anything and you\'re out."',
         responses: {
-          kind: ["Take the warning in stride", "Say you understand the line"],
-          playful: ["Ask what permission looks like", "Push the line a little"],
-          bold: ["Test the line anyway", "Refuse to shrink back"],
-          neutral: ["Accept the boundary quietly", "Let the warning sit"],
+          kind: ["Promise not to touch a thing", "Thank him for the seat"],
+          playful: [
+            "Hover a finger over his desk",
+            "Ask what counts as anything",
+          ],
+          bold: ["Pick something up anyway", "Refuse to shrink back"],
+          neutral: ["Sit without a word", "Keep your hands in your lap"],
         },
       },
       {
         line: "He looks up, places you, and looks back down. From Jin, that is nearly a greeting.",
         approach: "Hold his glance",
-        greeting: '"You. I remember you. Don\'t let it go to your head."',
+        greeting: "\"You. Don't hover, it's annoying.\"",
         responses: {
-          kind: ["Promise it stays humble", "Say you noticed the effort"],
-          playful: ["Let it go to your head", "Grin at the almost-greeting"],
-          bold: ["Hold his glance right back", "Name it as a real greeting"],
+          kind: ["Take a seat so you don't hover", "Ask how his day's been"],
+          playful: ["Hover a little closer", "Call that a warm welcome"],
+          bold: ["Hold his glance right back", "Say you'll stand if you like"],
           neutral: [
             "Hold his glance in silence",
             "Let the moment pass quietly",
@@ -355,42 +357,36 @@ export default {
       {
         line: "He doesn't order you off this time. He just watches to see if you'll leave on your own.",
         approach: "Stay without being told to",
-        greeting: '"Careful. Getting used to me is a bad habit."',
+        greeting: '"Door\'s behind you. ...Well? Use it or sit the hell down."',
         responses: {
-          kind: [
-            "Say the habit's worth keeping",
-            "Reassure him it's not so bad",
-          ],
-          playful: [
-            "Agree it's a terrible habit",
-            "Threaten to stay even longer",
-          ],
+          kind: ["Sit and keep him company", "Say you'd rather stay"],
+          playful: ["Lean on the doorframe", "Ask which he'd prefer"],
           bold: ["Refuse to leave on cue", "Call his bluff and stay put"],
           neutral: ["Stay a while longer", "Wait to see what he does"],
         },
       },
       {
-        line: '"Servant," he says, out of habit now more than insult, and goes back to his cigarette.',
+        line: '"Servant," he says, out of habit now more than insult.',
         approach: "Answer to the name anyway",
         greeting:
-          "\"You're a mid-tier nuisance. That's practically a compliment, coming from me.\"",
+          "\"You're a nuisance. A tolerable one. Don't make me regret saying that.\"",
         responses: {
-          kind: ["Take the compliment kindly", "Thank him for the backhand"],
+          kind: ["Say tolerable suits you", "Thank him for the backhand"],
           playful: ["Upgrade your own title", "Ask for a better nickname"],
           bold: ["Reject the nuisance label", "Demand a real compliment"],
           neutral: ["Let the label slide", "Answer to it anyway"],
         },
       },
       {
-        line: "The room doesn't warm, but he stops performing indifference the second you walk in.",
-        approach: "Take the grudging welcome",
+        line: "He checks the clock when you walk in, like you had an appointment nobody told you about.",
+        approach: "Don't apologize for it",
         greeting:
           "\"You're late. You've got some nerve making me wait, servant.\"",
         responses: {
-          kind: ["Notice him softening quietly", "Let him drop the act"],
-          playful: ["Call out the dropped act", "Tease him for softening"],
-          bold: ["Name what you just saw", "Call him out on the warmth"],
-          neutral: ["Say nothing, just notice", "Let the moment go unremarked"],
+          kind: ["Say you came when you could", "Ask what you missed"],
+          playful: ["Ask when you were due", "Tease him for waiting up"],
+          bold: ["Say you're right on time", "Say he can wait next time"],
+          neutral: ["Take your usual spot", "Let the scolding pass"],
         },
       },
       {
@@ -411,7 +407,7 @@ export default {
         },
       },
       {
-        line: "\"You're persistent,\" he says, like it's an accusation and a compliment at once.",
+        line: "He watches you come in again and doesn't bother hiding the sigh.",
         approach: "Take it as a compliment",
         greeting: "\"You're persistent. I'll give you that much.\"",
         responses: {
@@ -424,24 +420,22 @@ export default {
       {
         line: "He doesn't send Tohma to deal with you anymore. That's new, and he knows you've noticed.",
         approach: "Don't call him out",
-        greeting: "\"What? Tohma's busy. Don't read into it.\"",
+        greeting:
+          "\"What? Tohma's got better things to do. Don't read into it.\"",
         responses: {
-          kind: [
-            "Say you're glad he noticed",
-            "Promise not to read into it",
-          ],
+          kind: ["Say you're glad it's him", "Promise not to read into it"],
           playful: [
             "Point out you outlasted Tohma",
             "Tease him for doing it himself",
           ],
-          bold: ["Say you were never worried", "Meet his voice head-on"],
+          bold: ["Say you'll read into it", "Ask if Tohma's really busy"],
           neutral: ["Take the change in stride", "Let the shift go unremarked"],
         },
       },
       {
         line: "He doesn't ask how you got in this time. He already knows you'll find a way.",
         approach: "Come back uninvited again",
-        greeting: '"Tsk. Again. Who keeps letting you in? ...Whatever. Sit."',
+        greeting: '"Tsk. Again. ...Whatever. Sit."',
         responses: {
           kind: ["Reassure him you mean no harm", "Say you wanted to see him"],
           playful: ["Refuse to reveal your methods", "Brag about your way in"],
@@ -452,7 +446,7 @@ export default {
       {
         line: "He lets a silence sit instead of filling it with a dismissal. From him, that's a kind of patience.",
         approach: "Let the silence hold",
-        greeting: "\"...It's quiet tonight. Don't ruin it.\"",
+        greeting: "\"...It's quiet in here. Don't ruin it.\"",
         responses: {
           kind: ["Let the patience be mutual", "Sit with him in the quiet"],
           playful: [
@@ -715,7 +709,7 @@ export default {
       '"You know who I am. Good." **{name}** allows {user} one step closer.',
     ],
     warm: [
-      "\"Walk with me, then. Keep up.\" **{name}** doesn't break stride, but {user} had guessed right.",
+      '"Walk with me, then. Keep up." **{name}** doesn\'t break stride, but {user} had guessed right.',
       '"You again." **{name}** says it to {user} like a verdict he has stopped appealing.',
       '"Ha. Took you long enough." **{name}** lets {user} fall in at his back.',
     ],
@@ -726,7 +720,7 @@ export default {
     ],
     close: [
       "The **{house}** dispatch goes to Tohma. **{name}** goes to {user}.",
-      "\"Where the hell have you been?\" **{name}** is already at {user}'s side.",
+      '"Where the hell have you been?" **{name}** is already at {user}\'s side.',
       "**{name}** drops the court voice the second it's {user} saying his name.",
     ],
     bound: [

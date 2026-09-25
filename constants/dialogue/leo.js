@@ -42,7 +42,7 @@ export default {
             label: "Say you didn't ask him to",
             style: 4,
             close:
-              "No, u didn't, that's the entire point Honor Roll\n\nanyone can do a favor they got asked for\n\n*Then, faster, like he's covering:* anyway don't read into it, reading into it is so embarrassing for u",
+              "No, u didn't, that's the entire point Honor Roll\n\nanyone can do a favor they got asked for\n\nanyway don't read into it, reading into it is so embarrassing for u",
           },
         ],
       },
@@ -241,13 +241,13 @@ export default {
   dialogue: {
     new: [
       {
-        line: "He smirks dangerously, eyes lit with a hint of amusement.",
+        line: "He smirks, eyes lit with a hint of amusement, like you just made his afternoon.",
         approach: "Walk into the lion's den",
         greeting: "\"You're either brave or stupid. Let's find out which.\"",
         responses: {
-          kind: ["Match his confidence", "Say you're just here to talk"],
+          kind: ["Say you'd rather be brave", "Say you're just here to talk"],
           playful: ["Banter back at him", "Say you're a bit of both"],
-          bold: ["Meet him head-on", "Say you're brave, obviously"],
+          bold: ["Ask which one he's betting on", "Tell him to keep watching"],
           neutral: ["Watch and listen", "Let him do the sizing up"],
         },
       },
@@ -291,9 +291,9 @@ export default {
         greeting:
           '"Say something interesting. I\'m running low on entertainment."',
         responses: {
-          kind: ["Ask who's texting, kindly", "Offer to leave him to it"],
-          playful: ["Guess who it is", "Say you sent it, obviously"],
-          bold: ["Demand he look up", "Ask what's so interesting"],
+          kind: ["Ask what he'd like to hear", "Offer to leave him to it"],
+          playful: ["Say you just did", "Tell him a terrible joke"],
+          bold: ["Say he has to earn it", "Ask what the DM said"],
           neutral: ["Let him keep scrolling", "Wait until he's done"],
         },
       },
@@ -317,9 +317,9 @@ export default {
         greeting: '"I remember you. Don\'t get excited, I remember everyone."',
         responses: {
           kind: ["Say it's nice to be known", "Say you remember him too"],
-          playful: ["Dare him to use it", "Ask when he'll fire it"],
-          bold: ["Say his name back first", "Tell him to use it already"],
-          neutral: ["Say your name back plainly", "Let him hold onto it"],
+          playful: ["Ask what else he remembers", "Bet he's forgotten half"],
+          bold: ["Say nobody remembers everyone", "Tell him to use it already"],
+          neutral: ["Let him think what he likes", "Leave the claim alone"],
         },
       },
       {
@@ -327,10 +327,10 @@ export default {
         approach: "Wait him out",
         greeting: '"Huh, you again? Guess I\'ll allow it."',
         responses: {
-          kind: ["Say hello warmly anyway", "Assume the best of the tone"],
-          playful: ["Ask which tone he meant", "Guess what he's thinking"],
-          bold: ["Ask him to just say it", "Call out the vague tone"],
-          neutral: ["Wait him out calmly", "Let the tone go unread"],
+          kind: ["Thank him for allowing it", "Say it's good to see him"],
+          playful: ["Ask which tone he meant", "Ask what allowing it costs"],
+          bold: ["Say you never asked for it", "Call out the vague tone"],
+          neutral: ["Take the allowance", "Let the tone go unread"],
         },
       },
       {
@@ -341,7 +341,7 @@ export default {
         responses: {
           kind: ["Offer to help find him", "Say Alan's probably fine"],
           playful: [
-            "Guess where Alan's lost now",
+            "Bet he's in the wrong building",
             "Tease Leo for tracking him",
           ],
           bold: ["Say you don't know or care", "Skip the guessing game"],
@@ -354,13 +354,10 @@ export default {
         greeting:
           '"Took you long enough. ...Wait, you actually got it right? Ugh. Fine."',
         responses: {
-          kind: ["Buy him the drink kindly", "Get it right on purpose"],
-          playful: [
-            "Guess the most annoying drink",
-            "Bring the wrong one on purpose",
-          ],
-          bold: ["Refuse to buy it", "Tell him to buy his own"],
-          neutral: ["Buy it, say nothing", "Hand it over without comment"],
+          kind: ["Say you pay attention", "Say you're glad it's right"],
+          playful: ["Ask for a thank-you", "Say next time it's wrong"],
+          bold: ["Tell him next one's on him", "Say he's not that hard to read"],
+          neutral: ["Let him drink in peace", "Leave the 'fine' alone"],
         },
       },
       {
@@ -369,39 +366,33 @@ export default {
         greeting:
           '"What would impress me? Ha. Good luck, Honor Roll. Nobody\'s managed it yet."',
         responses: {
-          kind: [
-            "Ask what impresses him instead",
-            "Admit you don't know either",
-          ],
+          kind: ["Say you're not trying to", "Admit you don't know either"],
           playful: ["Guess something absurd", "Ask if he's ever impressed"],
           bold: ["Blame his high standards", "Challenge him to top it"],
           neutral: ["Shrug at the standard", "Let the scroll continue"],
         },
       },
       {
-        line: "He remembers exactly what rattled you last time. He's saving it.",
-        approach: "Refuse to be rattled",
+        line: "He's been fishing for what rattles you. From the look on his face, he still hasn't found it.",
+        approach: "Ask what he's fishing for",
         greeting:
-          '"Oh, you\'re back. Still jumpy about the thing from last time? No? We\'ll see."',
+          '"Nothing. Just a hobby. Everyone flinches at something, Honor Roll. I\'ll find yours."',
         responses: {
-          kind: ["Ask him not to use it", "Trust he won't be cruel"],
-          playful: ["Dare him to use it now", "Ask what else he's saving"],
-          bold: ["Tell him it won't work twice", "Call out the collecting"],
-          neutral: [
-            "Let him keep his ammunition",
-            "Say nothing, stay unbothered",
-          ],
+          kind: ["Ask him not to look too hard", "Trust he won't be cruel"],
+          playful: ["Offer him a fake one", "Ask what Sho flinches at"],
+          bold: ["Say he'll be looking a while", "Call out the collecting"],
+          neutral: ["Let him keep looking", "Give him nothing to find"],
         },
       },
       {
         line: "\"Honor Roll,\" he says, testing how you'll react to the nickname now that it's stuck.",
         approach: "Own the nickname",
         greeting:
-          '"What, you don\'t like it? Too bad. It\'s stuck now, Honor Roll."',
+          "\"What, you don't like it? Too bad. It's stuck now, Honor Roll.\"",
         responses: {
-          kind: ["Accept the nickname warmly", "Say you like it, honestly"],
-          playful: ["Give him a nickname back", "Wear the nickname proudly"],
-          bold: ["Own the nickname outright", "Dare him to top it"],
+          kind: ["Say you've grown into it", "Say you like it, honestly"],
+          playful: ["Give him a nickname back", "Ask who came up with it"],
+          bold: ["Say you earned it", "Dare him to top it"],
           neutral: ["Let the nickname stand", "Not react to it at all"],
         },
       },
@@ -410,7 +401,10 @@ export default {
         approach: "Let him film you",
         greeting: '"Say something worth filming. Go on, I\'ll wait."',
         responses: {
-          kind: ["Let him film, no complaint", "Say you don't mind the camera"],
+          kind: [
+            "Wish his followers a good day",
+            "Say you don't mind the camera",
+          ],
           playful: ["Ham it up for the camera", "Demand a copy of the clip"],
           bold: ["Object to the filming", "Take the phone from him"],
           neutral: ["Ignore the camera entirely", "Let it happen, say nothing"],
@@ -432,10 +426,13 @@ export default {
         approach: "Sit down",
         greeting: '"Fine, sit. Just don\'t touch my phone."',
         responses: {
-          kind: ["Promise not to touch it", "Sit down gratefully"],
+          kind: ["Promise not to touch it", "Thank him for the room"],
           playful: ["Point out he made room anyway", "Sit closer than invited"],
-          bold: ["Sit like you were invited", "Take the space regardless"],
-          neutral: ["Sit without a word", "Take the seat quietly"],
+          bold: ["Ask what's on it, then", "Say you don't want his phone"],
+          neutral: [
+            "Keep your hands to yourself",
+            "Get comfortable in silence",
+          ],
         },
       },
       {
@@ -451,31 +448,26 @@ export default {
         },
       },
       {
-        line: "He shows you something on his phone before he posts it, like your opinion actually counts for something.",
-        approach: "Give him your honest opinion",
-        greeting: '"Don\'t post that. ...Okay, fine, you can post that one."',
+        line: "He turns his phone around to show you a post before it goes up. He isn't asking. He wants a witness.",
+        approach: "Look at the post",
+        greeting: "\"Tell me that isn't good. Go on. You can't.\"",
         responses: {
-          kind: ["Give an honest, gentle opinion", "Say it looks great"],
-          playful: [
-            "Give an opinion he won't like",
-            "Demand veto power always",
-          ],
-          bold: ["Tell him exactly what to cut", "Say your opinion is final"],
-          neutral: ["Give a flat, honest take", "Shrug, say it's fine"],
+          kind: ["Say it's really good", "Say he has an eye for it"],
+          playful: ["Say you've seen better", "Ask how many takes it took"],
+          bold: ["Tell him exactly what to cut", "Say it's good, not great"],
+          neutral: ["Hand the phone back", "Watch him post it"],
         },
       },
       {
-        line: "\"You're still here,\" he says, not a complaint, just a fact he's cataloguing.",
+        line: "\"Huh. Didn't leave,\" he says, not a complaint, just a fact he's cataloging.",
         approach: "Stay anyway",
-        greeting: [
+        greeting:
           "\"Don't get used to this. I'm only letting you hang around 'cause you're mildly interesting.\"",
-          "\"Night, then. What? I haven't slept. Unlike you, I've actually got shit to do.\"",
-        ],
         responses: {
           kind: ["Say you're glad to be here", "Confirm you're not leaving"],
           playful: ["Ask what category that is", "Threaten to stay forever"],
-          bold: ["Say you're not going anywhere", "Dare him to catalogue that"],
-          neutral: ["Stay, say nothing", "Let him keep cataloguing"],
+          bold: ["Say you're not going anywhere", "Dare him to catalog that"],
+          neutral: ["Stay, say nothing", "Let him keep cataloging"],
         },
       },
     ],
