@@ -277,6 +277,8 @@ Subaru thinks lowly of his stigma. By touching almost anything he can read the r
 
 He is critical of people, breaking away from his kind and meek demeanor and making comments that humans are much nastier than any anomalies.
 
+Author note: Subaru really enjoys serving tea and sweets for his friends.
+
 Summon	 I'll do my best to live up to your expectations.
 Login Bonus	 TBA
 Home Screen
@@ -491,6 +493,9 @@ Despite being diligent and focused in his duties, Jiro’s physical condition is
 He remains composed even when handling corpses, and at times, he laughs when the MC expresses fear of corpses or ghosts.
 
 Though highly capable and knowledgeable as a medical student, Jiro shows little concern for his own deteriorating health.
+
+Author note: Jiro likes being fed and taken care of by the MC.
+
 Opening Cutscene	There's no coming back from this. I will struggle until it's over though. Dying always looks like it hurts. I hope I can save you at least, but don't get your hopes up. Bye.
 Summon	Okay. What part am I examining?
 Login Bonus	 TBA
@@ -573,6 +578,8 @@ Personality
 Ritsu strives to be absolutely perfect. He is extraordinarily formal, and due to that, can sometimes be blind to people’s feelings and seem insufferable, but he is not entirely inhumane. His perfection also softens his ego. When he is talked ill of, his ego cracks and he retorts in response.
 
 He is slightly unconcerned with ethics and morals when it comes to his career, even going as far as stalking and defending Taiga’s actions for the sake of the Laurel Crown. He carries a recorder around with him incase an event happens in which he will need to provide evidence. Ritsu hopes that Taiga will sign his attorney-client contract one day.
+
+Author note: Ritsu has "bad" handwriting.
 
 Opening Cutscene	I see you've guessed my intention. It's of little consequences. I suggest you get as far from here as you can. Father... I was unworthy to be your son. I hope you can forgive me.
 Summon	Rest assured—I, Ritsu Shinjo, will come to your defense.
@@ -741,6 +748,8 @@ Jin possesses a strong sense of self-assurance and confidence, which is suppleme
 However, Tohma describes him as "actually very kind," and his preparedness during the Mr. Long-Legs investigation prove him to be an intelligent, forward-thinking individual. Jin seems to smoke often, sometimes with Tohma.
 
 Jin tends to take on a dominant role and expects the MC to carry out tasks for him on a regular basis, and spends most of his time in the captain's room in Frostheim.
+
+Author note: Jin likes being around the MC so much that he makes a mess of his room just so she'll hang around and interact with him longer.
 
 Opening Cutscene	We were just playing out a fixed match. And I was nothing but a figurehead all along... There's no time left. Get out of here. ...That's my final order to you.
 Summon	Ha. Guess I'll give you some attention.
@@ -1092,6 +1101,8 @@ He is empathetic and cowardly, and was shown to be insecure as he constantly com
 
 He is social online and tends to chase trends, though he struggles to form relationships with people outside of it.
 
+Author note: Kaito is a physical touch person. With Towa, apart from hanging out and practicing dancing together, they hug and lean on each other a lot.
+
 Background
 Kaito was born and raised in Tokyo by his grandma. At one point, his grandmother gifted him the pendant he currently wears.
 
@@ -1192,6 +1203,8 @@ Although on the surface he seems rude and uncaring, Ren cares and thinks a lot. 
 Ren addresses the MC as "senpai" (lowercase when texting, capitalised when spoken).
 
 House style note: beyond "senpai" itself, Ren's texting casing is irregular, not uniformly lowercase — sentence starts are a mixed bag cap/lowercase, but "I"-forms and proper nouns stay capitalized. Spoken lines use normal sentence capitalization.
+
+Author note: Ren enjoys eating with company (the MC and/or Ritsu).
 
 Character Selection	 That's harassment. Is everyone in this place from the past?
 Opening Cutscene	This is exactly why I didn't want to do this! I knew this was how it was gonna end! What am I even doing here...? This is all your fault...
@@ -1369,6 +1382,8 @@ After receiving education at the prestigious British Branch, Emrys Academy, Luca
 His family is mentioned to be wealthy, just like most of the Frostheim students.
 Wide intellect — Lucas was able to outsmart Romeo, who was asking for 2,000£ of interest from Kaito's debt, to let him read Kaito's papers again, making Romeo back off.
 
+Author note: Lucas is a bit naive.
+
 Opening Cutscene	I'm sorry... Yet again, I've failed to protect the people most important to me... Please don't make that face. This is the only path left.
 Summon	Let's go. There is always hope ahead.
 Login Bonus	 TBA
@@ -1461,6 +1476,8 @@ Rui has a nickname for Haru: "Harurin".
 Rui also seems to care deeply about MC and people in general. This is especially evident when he takes care of Lyca or Edward, and he even worries about MC's health. In "Episode 23: Our Last Goodbye act I” when he fails to kill Kyklos, he feels a sense of guilt and despair when he realizes that he was unable to destroy the source of MC's curse and that because of this MC was destined to die. From that episode on, Rui locked himself in his room refusing to come out (he didn't even leave his room to cook meals for Lyca and Edward) and searched for a way to break MC's curse, even going so far as to use black magic.
 
 His guilt and embarrassment were so strong that when he met MC at the ceremony in "Episode 24: Our Last Goodbye Act II" he couldn't even say a word to her.
+
+Author note: Rui is not a jealous person.
 
 Opening Cutscene	Ha ha... You found me! Geez, are you in love with me or something? Hey, now. Don't think about trying to grab my hand. Just be happy enough for the both of us, okay?
 Summon	Hey there, it's me—your curse twin!
@@ -1659,6 +1676,8 @@ The captain of Dionysia and ringleader of the Dionysia circus troupe is warm, ou
 
 Driving - In his profile in-game and from the official website, it is listed that one of his likes is driving.
 Styling - When consulted by the Obscuary ghouls in "S2 E3: The Haunted Host Club", he helps the ghouls and the MC change into their host outfits in his stigma form.
+
+Author note: Jo passed Lyca's "genuinely good person" test.
 
 Hello1
 
@@ -2036,6 +2055,8 @@ However in Episode 10, after the Karuizawa Resort butler he had bonded with mist
 
 Lyca is also somewhat protective of the MC, whether it be from Edward and Rui's flirtatious advances or from danger. He reacts negatively to the former, often telling Edward and Rui to get away from the MC or not to touch her.
 
+Author note: Lyca is very mindful and protective toward the MC and Subaru. Jo passed his "genuinely good person" test.
+
 Background
 In Episode 5, when Lyca was first introduced to MC, Haku, and Zenji by Subaru, the latter reveals Lyca was the offspring of a human and a werewolf and had always worn an earring since the day of his birth, in which Subaru was able to read his memories from with the help of his sitgma.
 
@@ -2258,6 +2279,8 @@ Tohma is known to have a cunning gaze. Contrary to his appearance, Tohma is a ra
 
 He is also open and enthusiastic if the MC needs some or help with work.
 
+Author note: Tohma likes to be helpful.
+
 Background
 Tohma used to be a Vagastrom student in until the middle of last year, with his transfer being first implied by Yumiko before she gets cut off by him in the first episode.
 
@@ -2352,6 +2375,8 @@ In Episode 3: It Came From The Sea, he immediately appears friendly with the MC 
 But, in reality, it is hinted that Towa could have a much darker personality. This aspect of him is shown on several occasions: very often he stops smiling and his eyes become thinner, but not only that, his voice also becomes deeper, the sky becomes cloudier and lightning and rain fall. An example would be when, in the princess castle at the bottom of the sea, Towa gets colder when a turtle tries to stop him from leaving the room. Another example is when Ren treats Haru badly or when he talks to Edward.
 
 Edward observes with amazement that he didn't expect Towa become attached "to such small weak creatures". In Episode 10: Tea With A Twist Of Murder, Edward comments to Towa that his real face is more "charming".
+
+Author note: Towa is a physical touch person with Kaito. Apart from hanging out and practicing dancing together, they hug and lean on each other a lot.
 
 Background
 Not much is known about Towa's history, except that he is a second-year student at Darkwick Academy, and a ghoul who is a member of the Jabberwock House. According to Edward, Towa in his first year was very different; 
