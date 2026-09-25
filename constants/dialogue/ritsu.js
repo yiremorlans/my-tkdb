@@ -9,7 +9,7 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Good evening. This message is outside the hours I have set aside for correspondence, so I will be brief.\n\n I am noting that at the top so that you understand it was deliberate.",
+        "**{firstName}**: Good evening. This message is outside the hours I have set aside for correspondence, so I will be brief.\n\nI am noting that at the top so that you understand it was deliberate.",
         "I maintain a record of everyone who enters Sinostra on business. It is not surveillance; it is the reason nobody has brought a successful claim against this house since I arrived.\n\nYour entry reads: {timesMet} visits, no petition, no dispute, no request for representation. That column is blank for exactly one person in a document of four hundred and six.\n\nI have checked it three times. A blank column is ordinarily an error. I have not been able to classify this one.",
       ],
       choice: {
@@ -21,27 +21,27 @@ export default {
             label: "Say you don't want anything",
             style: 3,
             close:
-              "That is not a category the record has.\n\n*A pause of some length.*\n\nI will create one. Good night.",
+              "That is not a category the record has.\n\nI will create one. Good night.",
           },
           {
             key: "playful",
             label: "Offer to file a petition",
             style: 1,
             close:
-              "Do not. The forms are extensive, and processing it ahead of the existing queue would not be defensible on paper.\n\n...I've already drafted it. That is all I intend to say on the matter.",
+              "Do not. The forms are extensive, and processing it ahead of the existing queue would not be defensible on paper.\n\n...I have already drafted it. That is all I intend to say on the matter.",
           },
           {
             key: "bold",
             label: "Ask what he wants instead",
             style: 4,
             close:
-              "*There is no reply for nearly two minutes, which for a man who is punctual to the second is a great deal of time.*\n\nThat question is outside the scope of this correspondence.\n\nI have not deleted it, however. I have noted it for future discussion.",
+              "That question is outside the scope of this correspondence.\n\nI am aware that took me nearly two minutes to send.\n\nI have not deleted it, however. I have noted it for future discussion.",
           },
         ],
       },
       keepsake: {
         emoji: "📄",
-        line: "A new category in a four-hundred-line record, with one entry in it.",
+        line: "The one blank column in a record of four hundred and six.",
       },
     },
 
@@ -235,36 +235,33 @@ export default {
   dialogue: {
     new: [
       {
-        line: 'He looks up with genuine interest, already assessing your potential. "Your timing is fortuitous, partner. I could use someone sharp."',
-        approach: "State your position",
+        line: 'He looks up and assesses you in a single pass. "You will do. I require a partner for this investigation, and you appear capable of following instructions."',
+        approach: "Hear the proposal",
         greeting:
-          "\"State your position and I'll tell you whether it's defensible.\"",
+          '"The terms are simple. You keep up, and I do the talking. State your position on that."',
         responses: {
-          kind: [
-            "Tell him you trust his read",
-            "Say you're glad for the offer",
-          ],
-          playful: ["Test how sharp he can be", "Undersell your own skills"],
-          bold: ["State your position plainly", "Name your price up front"],
+          kind: ["Agree to his terms", "Say you'll try to keep up"],
+          playful: ["Ask who does the thinking", "Counter with your own terms"],
+          bold: ["Say you'll do some talking", "Name your price up front"],
           neutral: [
-            "Answer without embellishment",
-            "Give him the short version",
+            "Ask for the terms in writing",
+            "Ask how long the job runs",
           ],
         },
       },
       {
-        line: "He finishes a paragraph, caps the pen, and gives you a précis of his day before you asked.",
+        line: "He finishes a paragraph, caps the pen, and gives you a précis of his day before you ask.",
         approach: "Take the briefing",
         greeting:
-          '"Ah, my new partner. Perfect timing. Let\'s work through this together."',
+          '"That was the summary. The full version runs eleven minutes. You may interrupt at the four-minute mark."',
         responses: {
-          kind: ["Say you're ready to work", "Say you appreciate the prep"],
-          playful: ["Ask if that was timed", "Guess the ending yourself"],
-          bold: [
-            "Cut him off before he finishes",
-            "Skip to your own questions",
+          kind: ["Ask for the full version", "Say the summary helped"],
+          playful: ["Interrupt at minute three", "Start a timer of your own"],
+          bold: ["Interrupt him right now", "Say the summary was plenty"],
+          neutral: [
+            "Wait for the four-minute mark",
+            "Ask what happens at four",
           ],
-          neutral: ["Let him finish the clause", "Wait for the full briefing"],
         },
       },
       {
@@ -276,7 +273,7 @@ export default {
           kind: ["Pay the fee without complaint", "Say the rate seems fair"],
           playful: ["Object on principle", "Ask for a student discount"],
           bold: ["Refuse to pay the fee", "Negotiate the rate down"],
-          neutral: ["Note the rate, say nothing", "Accept the terms as given"],
+          neutral: ["Keep it under half an hour", "Accept the terms as given"],
         },
       },
       {
@@ -298,12 +295,15 @@ export default {
         line: "He speaks in complete sentences at a speed that suggests he's already ahead of them.",
         approach: "Try to keep up",
         greeting:
-          '"You have a good face for negotiation. That\'s a compliment, incidentally."',
+          '"Keep up, please. I am on a tight schedule today, and I will not be repeating the second clause."',
         responses: {
-          kind: ["Ask him to slow down kindly", "Thank him for the compliment"],
-          playful: ["Match his pace, badly", "Call the compliment out"],
-          bold: ["Be straightforward", "Meet his pace head-on"],
-          neutral: ["Keep up in silence", "Follow along quietly"],
+          kind: ["Say you'll catch up", "Ask for the gist instead"],
+          playful: [
+            "Ask him to repeat it anyway",
+            "Race him to the next clause",
+          ],
+          bold: ["Say the clause was the problem", "Tell him to slow down"],
+          neutral: ["Ask about the second clause", "Sum up what you caught"],
         },
       },
     ],
@@ -315,9 +315,12 @@ export default {
           "\"According to my notes, you've disagreed with me four times now. I'm choosing not to find that concerning.\"",
         responses: {
           kind: ["Let him have this one", "Agree, just to see his face"],
-          playful: ["Argue back for the fun of it", "Poke a hole in his logic"],
-          bold: ["Argue back and win", "Tell him he's wrong outright"],
-          neutral: ["Consider his point fairly", "Concede if he's right"],
+          playful: [
+            "Go for disagreement five",
+            "Ask what counts as concerning",
+          ],
+          bold: ["Say you were right all four", "Say he should be concerned"],
+          neutral: ["Ask to see the tally", "Ask what the four were"],
         },
       },
       {
@@ -326,10 +329,10 @@ export default {
         greeting:
           '"Partner. Good. I need a second opinion, and yours is becoming reliable."',
         responses: {
-          kind: ["Say the title suits you", "Say you'll earn the title"],
-          playful: ["Ask what the raise is", "Demand a proper contract"],
-          bold: ["Claim the title outright", "Say you earned it"],
-          neutral: ["Accept it without comment", "Nod, take the title"],
+          kind: ["Say you're glad to help", "Thank him for the trust"],
+          playful: ["Ask what the raise is", "Ask what 'becoming' means"],
+          bold: ["Say it's been reliable a while", "Say he needed you sooner"],
+          neutral: ["Ask to see the document", "Ask what the matter is"],
         },
       },
       {
@@ -337,13 +340,13 @@ export default {
         approach: "Read the document",
         greeting: '"Read this. Tell me what\'s wrong with it. Something is."',
         responses: {
-          kind: ["Read it carefully for him", "Say you'll find the flaw"],
-          playful: [
-            "Find the error on purpose",
-            "Guess the flaw before reading",
+          kind: ["Say you'll find the flaw", "Ask what makes him sure"],
+          playful: ["Guess the flaw before reading", "Ask if he planted it"],
+          bold: ["Name the flaw on page one", "Tell him it's fine, unread"],
+          neutral: [
+            "Ask which section worries him",
+            "Mark the flaw and hand it back",
           ],
-          bold: ["Point out the flaw bluntly", "Tell him it's fine, unread"],
-          neutral: ["Read it in silence", "Give a plain assessment"],
         },
       },
       {
@@ -352,22 +355,22 @@ export default {
         greeting:
           '"By my model, there is a 29% chance he is at the baccarat table. We will begin there."',
         responses: {
-          kind: ["Help him track Taiga down", "Reassure him it's fine"],
-          playful: ["Guess where Taiga's hiding", "Bet on the casino odds"],
+          kind: ["Offer to take the back tables", "Reassure him it's fine"],
+          playful: ["Ask about the other 71%", "Bet on the casino odds"],
           bold: ["Drag Taiga back yourself", "Tell him to relax the model"],
-          neutral: ["Check the casino first", "Search without comment"],
+          neutral: ["Head for the baccarat table", "Ask where to look second"],
         },
       },
       {
         line: '"I have been assigned to Sinostra, so I will not allow them to stand trial, no matter how villainous their actions. That is the Shinjo family policy."',
         approach: "Ask about the Shinjo policy",
         greeting:
-          '"Every client receives a defense. Whether they deserve one is not a question my family has ever been paid to answer."',
+          '"Every client receives a defense. In my family that is not an opinion. It is policy."',
         responses: {
-          kind: ["Say the policy sounds fair", "Ask why it matters"],
+          kind: ["Say he sounds proud of it", "Say the policy suits him"],
           playful: ["Ask if it's ever backfired", "Tease the family motto"],
-          bold: ["Challenge the policy outright", "Ask what he'd do instead"],
-          neutral: ["Note the policy, say nothing", "Take it at face value"],
+          bold: ["Ask if he's ever doubted it", "Ask what he'd do instead"],
+          neutral: ["Ask who wrote the policy", "Take it at face value"],
         },
       },
       {
@@ -376,74 +379,62 @@ export default {
         greeting:
           '"You disagreed with me last time. You were half right. That\'s remarkable."',
         responses: {
-          kind: ["Soften the honest opinion", "Praise the parts that work"],
-          playful: ["Point out he was half right", "Rub in being right"],
-          bold: ["Give the blunt opinion", "Tell him exactly what's wrong"],
-          neutral: ["State the opinion plainly", "Give a measured answer"],
+          kind: ["Say his half was good too", "Take remarkable as praise"],
+          playful: ["Ask which half was right", "Ask him to put it in writing"],
+          bold: ["Say you were fully right", "Say it's not that remarkable"],
+          neutral: ["Ask what he changed since", "Let the half stand"],
         },
       },
       {
         line: '"You disagree?" He looks personally offended, then visibly recalibrates. "...Go on, then. Convince me."',
         approach: "Explain your position",
-        greeting: '"I am listening. Please be concise. I will be taking notes."',
+        greeting:
+          '"I am listening. Please be concise. I will be taking notes."',
         responses: {
-          kind: [
-            "Explain it point by point",
-            "Reassure him it's not personal",
-          ],
-          playful: [
-            "Make him work to be convinced",
-            "Enjoy watching him recalibrate",
-          ],
-          bold: ["Convince him outright", "Refuse to back down"],
-          neutral: [
-            "Lay out the position plainly",
-            "State it without argument",
-          ],
+          kind: ["Keep it to three points", "Reassure him it's not personal"],
+          playful: ["Make him work to be convinced", "Slow down for his notes"],
+          bold: ["Say he won't need notes", "Refuse to back down"],
+          neutral: ["Give him one sentence", "Wait for his pen to be ready"],
         },
       },
       {
-        line: "Before you've said a word, he's already pulled out a second chair, angled precisely toward himself.",
-        approach: "Take the offered seat",
+        line: "He is already at the diner, in the usual booth, his notes squared on his side of the table.",
+        approach: "Slide into the booth",
         greeting: [
-          '"I\'ve stopped explaining the basics to you. Take that as the compliment it is."',
-          "\"Don't apologize for interrupting. I've started leaving room for it.\"",
+          '"Our usual booth, of course. I have stopped explaining the basics to you, so we may begin at once."',
         ],
         responses: {
-          kind: ["Take the seat, thank him", "Settle in gladly"],
-          playful: ["Sit somewhere else instead", "Make him ask properly"],
-          bold: ["Take the seat like it's yours", "Sit before the offer lands"],
-          neutral: ["Take the seat quietly", "Sit without comment"],
+          kind: ["Ask where he wants to start", "Say you like this booth"],
+          playful: ["Steal a page of his notes", "Order before he can"],
+          bold: ["Take his side of the table", "Start before he does"],
+          neutral: ["Open your own notes", "Ask what's on today's list"],
         },
       },
       {
-        line: "He repeats something you said days ago, word for word, and looks almost annoyed that he remembered it.",
+        line: "He quotes something you said days ago, word for word, and looks almost annoyed that he has it.",
         approach: "Ask how he remembered",
         greeting:
-          '"I recorded that. Not for evidence. I just wanted to remember you said it."',
+          '"It is on that morning\'s recording. I have played it back more often than the matter requires."',
         responses: {
-          kind: ["Say it means a lot he did", "Say you're glad he kept it"],
-          playful: [
-            "Tease him for keeping track",
-            "Ask what else he's recorded",
+          kind: ["Say you don't mind", "Ask what the matter was"],
+          playful: ["Ask how many times exactly", "Ask for a copy of the tape"],
+          bold: [
+            "Ask why he keeps replaying it",
+            "Say the matter didn't need it",
           ],
-          bold: ["Ask why he really remembers", "Call it out directly"],
-          neutral: ["Note it, say nothing", "Let the moment pass quietly"],
+          neutral: ["Ask if he records everyone", "Let him keep the recording"],
         },
       },
       {
         line: "He's filed you under a new heading in his notebook, one he doesn't let you read.",
         approach: "Ask what heading",
         greeting:
-          "\"I've begun a file on you. Don't look so alarmed, it's a compliment. I only file people worth tracking.\"",
+          '"Everyone I meet goes in the notebook. You have been moved to a heading of your own. Do not ask which."',
         responses: {
-          kind: ["Say you don't mind the file", "Say you're honored to be filed"],
-          playful: ["Guess the heading yourself", "Demand to read the file"],
-          bold: [
-            "Demand he tell you the heading",
-            "Insist on reading the file",
-          ],
-          neutral: ["Let the file stay closed", "Shrug, don't ask again"],
+          kind: ["Say you don't mind the file", "Ask if that's a good sign"],
+          playful: ["Guess the heading yourself", "Ask anyway"],
+          bold: ["Ask what got you moved", "Reach for the notebook"],
+          neutral: ["Don't ask which", "Ask where you were before"],
         },
       },
       {
@@ -452,39 +443,43 @@ export default {
         greeting:
           '"We are business partners. I will make an exception. Please do not mention it to anyone."',
         responses: {
-          kind: ["Thank him sincerely", "Say that means something"],
-          playful: [
-            "Ask if it's a special rate",
-            "Tease him about the freebie",
-          ],
+          kind: ["Promise not to tell anyone", "Say that means something"],
+          playful: ["Ask if it's a special rate", "Ask if lunch is free too"],
           bold: ["Say you'd have paid anyway", "Call it out as a favor"],
-          neutral: ["Accept it without comment", "Take the discount quietly"],
+          neutral: [
+            "Ask how long it stays free",
+            "Ask what counts as partners",
+          ],
         },
       },
       {
-        line: "He recites a statute at you that sounds suspiciously specific to whatever you're currently doing.",
-        approach: "Ask if that's a real law",
+        line: "He recites a Rulebook article at you that sounds suspiciously specific to whatever you're currently doing.",
+        approach: "Ask if that's a real rule",
         greeting:
           '"It is entirely real. I can cite the article and subsection, if you like. You would not like."',
         responses: {
-          kind: ["Take his word for it", "Trust the citation"],
+          kind: ["Take his word for it", "Stop what you're doing"],
           playful: [
-            "Call his bluff on the statute",
-            "Ask him to prove it's real",
+            "Say you'd like the subsection",
+            "Call his bluff on the rule",
           ],
-          bold: ["Say the law sounds made up", "Demand he cite the source"],
-          neutral: ["Let the statute stand", "Move on without checking"],
+          bold: ["Say the rule sounds made up", "Keep doing it anyway"],
+          neutral: ["Ask how old the rule is", "Ask for the article number"],
         },
       },
       {
-        line: "He's brought you the same takeout coffee he buys himself, though you never told him what you drink.",
+        line: "He hands you the same takeout coffee he buys himself. Black, of course.",
         approach: "Take the coffee",
-        greeting: '"I brought two coffees today. That was not an accident."',
+        greeting:
+          '"Your performance declines when your mind is not sharp. Additives would only interfere with the flavor."',
         responses: {
-          kind: ["Take the coffee, thank him", "Say it was thoughtful"],
-          playful: ["Ask how he knew your order", "Tease him about noticing"],
-          bold: ["Say you noticed the gesture", "Call it out as deliberate"],
-          neutral: ["Take the coffee quietly", "Drink it without comment"],
+          kind: ["Thank him for thinking of you", "Say black is fine by you"],
+          playful: ["Ask for sugar anyway", "Ask about your performance"],
+          bold: [
+            "Say your mind is plenty sharp",
+            "Ask if he's worried for you",
+          ],
+          neutral: ["Drink it as it comes", "Ask where he buys it"],
         },
       },
     ],
