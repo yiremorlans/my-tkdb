@@ -329,7 +329,7 @@ export default {
         responses: {
           kind: ["Ask him nicely", "Let him show you"],
           playful: ["Guess what it is", "Refuse to play along"],
-          bold: ["Take it out of his hand", "Make him show you"],
+          bold: ["Take it out of his hand", "Say you'd never have asked"],
           neutral: ["Wait him out", "Say nothing at all"],
         },
       },
@@ -352,7 +352,7 @@ export default {
         responses: {
           kind: ["Ask if he's hurt", "Help him up"],
           playful: ["Laugh at the fall with him", "Ask if the trapdoor won"],
-          bold: ["Tell him to be careful", "Say the trick's getting old"],
+          bold: ["Dare him to go again", "Offer to lure the next one"],
           neutral: ["Watch without reacting", "Say nothing about the fall"],
         },
       },
@@ -360,11 +360,11 @@ export default {
         line: "Someone bolts past you in the corridor, white-faced. He's strolling up from the direction they came.",
         approach: "Ask what he did",
         greeting:
-          '"They were so happy they fainted. That\'s three now. Good week."',
+          '"They were so happy they almost fainted. That\'s three now. Good week."',
         responses: {
           kind: ["Ask if they're all right", "Say that's not funny"],
           playful: ["Ask how he managed it", "Ask if you're next"],
-          bold: ["Tell him that's not a game", "Say you wouldn't drop"],
+          bold: ["Ask to watch the next one", "Say you wouldn't drop"],
           neutral: ["Let it pass unremarked", "Say nothing about it"],
         },
       },
@@ -376,7 +376,7 @@ export default {
         responses: {
           kind: ["Say you are happy, truly", "Keep the gift safe"],
           playful: ["Ask what it is exactly", "Ask where he found it"],
-          bold: ["Tell him screaming isn't happy", "Ask for a bigger one"],
+          bold: ["Say you don't need to scream", "Ask for a bigger one"],
           neutral: ["Take it, say nothing", "Leave it on his palm"],
         },
       },
@@ -388,7 +388,7 @@ export default {
         responses: {
           kind: ["Let him have his trick", "Play along kindly"],
           playful: ["Demand your books back", "Ask what else he can vanish"],
-          bold: ["Take the prop and toss it back", "Call out the theft"],
+          bold: ["Toss the head back to him", "Ask for a scarier prop"],
           neutral: ["Don't react at all", "Let the books stay gone"],
         },
       },
@@ -399,7 +399,7 @@ export default {
         responses: {
           kind: ["Offer him a towel, no fuss", "Let him stay wet"],
           playful: ["Guess where he's been", "Ask if he went swimming"],
-          bold: ["Demand to know why", "Push for the real story"],
+          bold: ["Demand to know why", "Say you'll find out anyway"],
           neutral: ["Don't ask, let it be", "Ignore the wet clothes"],
         },
       },
@@ -407,11 +407,11 @@ export default {
         line: '"Mio says you asked about me," he says, and it\'s not clear yet if that pleases him or not.',
         approach: "Say you were curious",
         greeting:
-          '"Next time, ask me, not Mio. He laughs when I call you my wife."',
+          '"Next time, ask me, not Mio. He sighs when I call you my wife."',
         responses: {
           kind: ["Say you just wondered", "Admit you were curious"],
           playful: ["Ask what else Mio says", "Ask since when you're his wife"],
-          bold: ["Say you asked on purpose", "Own the curiosity outright"],
+          bold: ["Ask him everything, then", "Say Mio's answers were boring"],
           neutral: ["Shrug, say nothing", "Let it go unremarked"],
         },
       },
@@ -422,7 +422,7 @@ export default {
         responses: {
           kind: ["Agree, a little warily", "Ask him to be careful"],
           playful: ["Volunteer immediately", "Ask what happened to the last"],
-          bold: ["Say yes without asking", "Tell him to test it himself"],
+          bold: ["Say yes without asking", "Ask to test it on him next"],
           neutral: ["Neither agree nor refuse", "Say nothing, wait"],
         },
       },
@@ -433,7 +433,7 @@ export default {
         responses: {
           kind: ["Keep the secret gladly", "Say you won't tell Jo"],
           playful: ["Ask what he's hiding", "Threaten to tell Jo anyway"],
-          bold: ["Demand to see it", "Say secrets don't work on you"],
+          bold: ["Demand to see it", "Ask what it's worth to him"],
           neutral: ["Don't ask, don't tell", "Let it go unremarked"],
         },
       },
@@ -444,7 +444,7 @@ export default {
         responses: {
           kind: ["Reach in without fuss", "Hand it back to him"],
           playful: ["Scream for his benefit", "Guess before you look"],
-          bold: ["Reach in without looking", "Empty the bag on him"],
+          bold: ["Say it'll take more than that", "Slip it into his pocket"],
           neutral: ["Look, say nothing", "Leave it in there"],
         },
       },
@@ -457,7 +457,7 @@ export default {
         responses: {
           kind: ["Say you're not going anywhere", "Say you'd have come anyway"],
           playful: ["Ask when that started", "Ask who 'they' are"],
-          bold: ["Make him find you faster", "Tell him they're wrong"],
+          bold: ["Tell him to keep watching", "Tell him they're wrong"],
           neutral: ["Stand there, say nothing", "Wait to be noticed"],
         },
       },
@@ -492,7 +492,7 @@ export default {
         responses: {
           kind: ["Stay close to him", "Say you feel safer near him"],
           playful: ["Ask what he did to it", "Ask if it's still breathing"],
-          bold: ["Ask him to admit it", "Say you don't need the help"],
+          bold: ["Ask him to admit it", "Tell him to stay close, too"],
           neutral: ["Move on, unbothered", "Stay close, ask nothing"],
         },
       },
