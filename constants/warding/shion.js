@@ -97,17 +97,17 @@ export default {
       kind: {
         label: "Say you'll be watching him",
         close:
-          '*The card goes still between his fingers. He keeps his eyes on it, not on you.* "Watching me. Not the trick, not the screaming." *He turns the words over like he is checking them for a catch. Nobody stays for that part, they come for the fright and leave before the lights come up. When he looks up he has already found your face, and he stays on it.* "Sit near the front. That part isn\'t the act."',
+          '*The card goes still between his fingers. He keeps his eyes on it, not on you.* "Watching me. Not the trick, not the screaming." *He turns the words over like he is checking them for a catch. Nobody stays for that part, they come for the fright and leave before the lights come up. When he looks up he has already found your face, and he stays on it.* "Don\'t look away, then. That part isn\'t the act."',
       },
       playful: {
         label: "Bet he can't spook Mio",
         close:
-          '"Mio doesn\'t spook. He has watched every trick I own and never once flinched." *The look he saves for the stage tips younger. Mio is worn thin these days, though, and by midnight the guard slips.* "I\'ve thought about this. Help me pick the night. I want you next to me when his face finally goes."',
+          '"Mio doesn\'t spook. He has watched every trick I own and never once flinched." *The stage face drops, and something childish comes up under it. Mio is worn thin these days, though, and by midnight the guard slips.* "I\'ve thought about this. Help me pick the night. I want you next to me when his face finally goes."',
       },
       bold: {
         label: "Straighten his collar",
         close:
-          '*You step in and set his collar straight. He holds still for it and watches you do it. When you step back the flat calm slides over him again like a coat pulled on.* "I\'ll go stop a few hearts. Not yours." *At the curtain he pauses.* "Yours I\'ve frightened plenty. I\'ve a use for it yet."',
+          '*You step in and set his collar straight. He holds still for it and watches you do it. When you step back the flat calm slides over him again like a coat pulled on.* "I\'ll go stop a few hearts. Not yours." *At the curtain he pauses.* "Yours I already scared plenty. I\'m keeping that one."',
       },
     },
   },

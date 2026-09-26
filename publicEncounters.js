@@ -665,7 +665,7 @@ export async function handleCall(body, now = new Date()) {
   const level = getRelationshipLevel(relationship?.affinity ?? 0);
   const tier = getDialogueTier(level.name);
   const bucket = winnerLineBucket(tier);
-  const milestoneType = pickMilestone(tier, bucket);
+  const milestoneType = pickMilestone(tier, bucket, encounter.character_id);
   const milestone = getMilestone(milestoneType);
 
   const vars = {

@@ -631,7 +631,7 @@ export default {
         },
       },
       {
-        line: 'Haru vaults a bench at the far end of the quad. Elias watches him land it. "He used to be one of ours, you know."',
+        line: 'Haru vaults a bench at the far end of the courtyard. Elias watches him land it. "He used to be one of ours, you know."',
         approach: "Ask about Haru",
         greeting:
           "\"Best acrobat Dionysia had… Don't tell him I said that. He'd never let me forget it.\"",

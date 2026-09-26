@@ -7,9 +7,9 @@ export default {
     title: "A Breath of Cool Air",
     approach: "Hold out the water bottle",
     line:
-      '"For me? You came all the way out here, in this heat, to bring me water. Okay. What\'s the catch?"',
+      '"Hm? Oh, hey. Give me a sec, almost done with this one... Whew. This heat is no joke today."',
     greeting:
-      '"You found me. ...And you brought water. Okay. You\'ve got my attention."',
+      '"Wait, that\'s for me? You came all the way out here in this heat just to bring me water. ...Okay. You\'ve got my attention."',
     responses: {
       kind: {
         label: "Tell him to sit down a minute",

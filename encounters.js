@@ -757,10 +757,15 @@ async function describeBoost(userId, character, boostsSpent) {
 
 // Avatar art in assets/avatar is named `FirstName_LastWord.png` — the last
 // word of lastName, so "Romeo Scorpius Lucci" resolves to Romeo_Lucci.png.
-function getAvatarFilename(character) {
-  if (!character.firstName || !character.lastName) return null;
+// A character with no lastName (Benkei) has no avatar art, so they fall back
+// to their card art in assets/cards — the same image public encounters show.
+function getAvatarFile(character) {
+  if (!character.firstName) return null;
+  if (!character.lastName) {
+    return { dir: 'cards', filename: `${character.firstName}.png` };
+  }
   const lastNamePart = character.lastName.split(' ').pop();
-  return `${character.firstName}_${lastNamePart}.png`;
+  return { dir: 'avatar', filename: `${character.firstName}_${lastNamePart}.png` };
 }
 
 // The "Moments together" block: one row per milestone the user has collected
@@ -855,12 +860,13 @@ export async function buildAffinityMessage(userId, characterIds, opts = {}) {
     const { level, nextLevel, ratio } = getRelationshipProgress(
       affinities[index]?.affinity || 0,
     );
-    const avatarFilename = getAvatarFilename(character);
+    const avatarFile = getAvatarFile(character);
+    const avatarFilename = avatarFile?.filename;
 
     let imageBuffer = null;
-    if (avatarFilename) {
+    if (avatarFile) {
       try {
-        imageBuffer = fs.readFileSync(path.join(__dirname, 'assets', 'avatar', avatarFilename));
+        imageBuffer = fs.readFileSync(path.join(__dirname, 'assets', avatarFile.dir, avatarFile.filename));
       } catch (err) {
         console.error(`Error loading avatar for ${character.id}:`, err);
       }

@@ -14,13 +14,17 @@
 // and constants/characters.js, NOT the bond-scene file: the courtly register
 // never drops, it just stops being armor. The frail gentleman is a performance
 // (parasol, cough, eyesight too poor for his own letters) and underneath it is
-// an ancient, lonely predator tired of the act. bold reaches him most (the
-// partner who sees past it and does not flinch), kind lands too (he genuinely
-// wants to be doted on), playful lands softest (he is the one who does the
-// teasing, too languid for it volleyed back) but still nets the bonus.
+// an ancient, lonely predator tired of the act. The act is shown, never
+// explained: he disarms by being languid and ordinary, and no line restates
+// the rumors, the sun, or his health for the player, who knows them already.
+// bold reaches him most (the partner who sees past it and does not flinch),
+// kind lands too (he genuinely wants to be doted on), playful lands softest
+// (he is the one who does the teasing, too languid for it volleyed back) but
+// still nets the bonus.
 // Canon markers used here, all straight from reference.md: "Wicked girl", "You
 // ought to know better than to...", "Ah ha ha ha.", the devil's hour, "my
-// vitality returns at this hour", "Come here"/"Come closer", "..., would you?"
+// vitality returns at this hour" (never in an Obscuary scene: it is always
+// night there, so the hour means nothing), "Come here"/"Come closer", "..., would you?"
 // tag questions on requests, "..., I'm afraid", "my favorite channel". No age
 // in years is ever stated (reference.md never gives one), no "I shall" and no
 // phrasing lifted from constants/dialogue/edward.js. American spelling, no em
@@ -44,28 +48,29 @@ export default {
     approach: "Sit across from him",
     // setting: a first one-on-one, Edward lounging with a glass of something
     // deep red held loosely by the stem, the slight amused smile on his lips.
-    // He is openly intrigued by her and will not say whether the glass is wine
-    // or blood. kind takes the ambiguity on faith, playful waves it off, bold
-    // calls his bluff and asks for a glass of her own.
+    // He disarms rather than menaces: idle, bored, chatty, the glass waved off
+    // as nothing. He never says whether it is wine or blood; the smile is the
+    // only tell. kind trusts him whatever is in it, playful plays along with
+    // the harmless act, bold asks for a glass of her own.
     line:
-      '"Ah, you came alone. How brave. Sit with me. I have a glass of something red here, and I won\'t be telling you what."',
+      '"Ah, there you are. Sit, would you? Don\'t mind the glass. Just a little something for an old man\'s poor circulation."',
     greeting:
-      '"It could be a vintage from a very good year. It could be something a good deal fresher. You keep watching my mouth for the fangs instead of asking. Humans always watch and never ask. So. Ask me, or do not."',
+      '"No need to look at it like that. It\'s only a glass. Now, sit and entertain me, would you? I\'ve watched everything on my list twice. How troubling."',
     responses: {
       kind: {
         label: "Say you trust him either way",
         close:
-          '"That is either great faith or great foolishness, and at my age the two wear the same face. Stay a while, would you? I find I no longer want the glass, only the company."',
+          '"Either way? Ah ha ha ha. You really should be more careful whom you trust, you know. ...But I don\'t think I\'ll talk you out of it. Stay a while, would you?"',
       },
       playful: {
         label: "Guess it's cranberry juice",
         close:
-          '"Ah ha ha ha. Cranberry. You have decided to be unimpressed by me, on purpose, and it is working. That is its own small marvel. Sit. Be unimpressed a little longer."',
+          '"Cranberry. Ah ha ha ha. Yes, let\'s call it that. Nobody has ever guessed anything so wholesome for me. I could get used to being thought harmless. Sit with me a while longer."',
       },
       bold: {
         label: "Ask him to pour you one",
         close:
-          '"Now that is the right question, wicked girl. You ought to know better than to ask a vampire to pour for you. I\'ll do it anyway. Come closer, and mind you do not spill."',
+          '"Wicked girl. You ought to know better than to ask an invalid to share his medicine. ...Very well. Just a sip. Come closer, and mind you don\'t spill."',
       },
     },
   },
@@ -73,33 +78,35 @@ export default {
     file: "Edward_2.png",
     characters: ["edward"],
     title: "Invitation To Endless Night",
-    // Him inviting her in close after dark, guard already down. Reads wrong
-    // from a near-stranger, so it only enters the pool once they're Friends.
+    // Coming to his room is routine, he calls her over all the time. The ask
+    // here is that she stay: Obscuary is always night, so there is no dawn to
+    // send her home. Guard already down. Reads wrong from a near-stranger, so
+    // it only enters the pool once they're Friends.
     minLevel: "Friend",
     approach: "Cross the room to him",
     // setting: his room, lamps low, moonlight across the floor. Edward is
     // beckoning her nearer with a dangerous but soft smile, his whole attention
-    // on her. kind names the room safe, playful accuses the smile of being
-    // rehearsed, bold simply closes the distance.
+    // on her, asking her not to leave. kind names the room safe, playful
+    // accuses the smile of being rehearsed, bold simply closes the distance.
     line:
-      '"The moonlight suits you from across the room. Come and stand in it properly. Closer. I promise you nothing."',
+      '"Leaving already? You have only just arrived. The moonlight suits you. Come and stand in it properly, would you?"',
     greeting:
-      '"This is the hour my vitality returns. I have told you as much before, and you crossed the floor regardless. Do you know how few have ever done that. Stand just there. Let me look at you a moment, and then you may tell me why you came."',
+      '"There is no dawn here to send you home, so you will have to find some other excuse to leave. I would rather you did not look for one. Stay. I promise you nothing."',
     responses: {
       kind: {
         label: "Say the room feels safe",
         close:
-          '"Safe. Ah ha ha ha. No one has ever called any room of mine that, and there have been a great many. You make it sound like a mercy rather than a lair. Sit with me, then. I\'ll try to deserve the word."',
+          '"Safe. Ah ha ha ha. No one has ever called any room of mine that, and there have been a great many. You make it sound like a mercy rather than a lair. Then stay in it, would you? I\'ll try to deserve the word."',
       },
       playful: {
         label: "Say he practiced that smile",
         close:
-          '"Long enough in front of mirrors, wicked girl. Of course I practiced it. But not for you. For you it simply arrives, and I have stopped forbidding it. Stay where the light is."',
+          '"For a century or two, wicked girl. Of course I practiced it. But not for you. For you it simply arrives, and I have stopped forbidding it. Stay where the light is."',
       },
       bold: {
         label: "Close the last of the gap",
         close:
-          '"There you are. No hesitation on the threshold, no second thoughts, you simply crossed. You cannot know what that means to someone as old as I am, and as used to being left. Or you do, and you came anyway. Do not move, would you? Let the night run long."',
+          '"There you are. Closer than you usually let yourself come. Wicked girl. What were you hoping for? Go on, say it. And then stay and find out."',
       },
     },
   },
@@ -125,12 +132,12 @@ export default {
       kind: {
         label: "Say you'll watch it with him",
         close:
-          '"You would sit through the whole thing at my side, whatever it is. That is either devotion or very fine manners. Come here, then, would you. I\'ll begin it again from the top."',
+          '"You would sit through the whole thing at my side, without even asking what it is? Ah ha ha ha. How trusting. Come here, would you. I\'ll begin it again from the top."',
       },
       playful: {
         label: "Talk over his video",
         close:
-          '"Ah ha ha ha. That is a dreadful racket, and I have not looked back at the screen once. ...Keep going. You have my attention now, wicked girl, which was the whole point, and we both know it."',
+          '"Ah ha ha ha. What a racket. I have not looked back at the screen once. ...Keep going. You have my attention now, wicked girl, which was the whole point, and we both know it."',
       },
       bold: {
         label: "Take the phone from his hands",

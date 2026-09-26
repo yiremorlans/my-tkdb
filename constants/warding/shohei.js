@@ -42,14 +42,14 @@ export default {
     // in a tank top and activewear with a towel round his neck, sweaty and not
     // cleaned up. A casual morning hangout, coffee and breakfast. Keep it light.
     line:
-      '"You got here first, huh. Sit down, ignore the mess. Give me a couple minutes and I\'ll make you some breakfast, Senpai."',
+      '"Oh, you\'re early, huh. Sit down, ignore the mess. Give me a couple minutes and I\'ll make you some breakfast, Senpai."',
     greeting:
       '"Ran some pickup before you got here, lost the last one, don\'t ask. Got some fresh coffee waiting for ya."',
     responses: {
       kind: {
         label: "Say a slow morning is perfect",
         close:
-          "*He huffs, sets a mug down in front of you.* \"...Yeah. That's what I figured. Nobody plans these. You just get one, and it's a good one.\"\n\n*He knocks his mug against yours before he drinks.*",
+          "*He huffs, sets a mug down in front of you.* \"...Yeah. Don't get a lot of these. Not wasting this one.\"\n\n*He knocks his mug against yours before he drinks.*",
       },
       playful: {
         label: "Tease him about the sweat",
@@ -59,7 +59,7 @@ export default {
       bold: {
         label: "Say you like him like this",
         close:
-          "\"Pfft... it's way too early for you to trust whatever's coming outta your mouth.\" *He turns back to the burner, ears blushing.*",
+          "\"Pfft... it's way too early for you to be saying stuff like that. Drink your coffee.\" *He turns back to the burner, ears going red.*",
       },
     },
   },

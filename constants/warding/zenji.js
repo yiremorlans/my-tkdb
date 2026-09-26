@@ -45,7 +45,7 @@ export default {
       kind: {
         label: "Sit with him a while",
         close:
-          '"...Yes. All right. Sit, then, and let an old ghost drip in company.\n\nIt is a great deal better than doing it alone. I had rather forgotten that."',
+          '"...Yes. All right. Sit, then, and let an old ghost weep in company.\n\nIt is a great deal better than doing it alone. I had rather forgotten that."',
       },
       playful: {
         label: "Ask him to read it aloud",
@@ -75,12 +75,12 @@ export default {
       kind: {
         label: "Hand him the closing line",
         close:
-          '*You give him something small and true. He goes very still, then writes fast.*\n\n"...That is the five. That is exactly the five. I have been fishing for it all afternoon and you simply handed it over. Do you know how rare that is, my dear."',
+          '*You give him something small and true. He goes very still, then says it back under his breath, twice, so it cannot get away.*\n\n"...That is the five. That is exactly the five. I have been fishing for it all afternoon and you simply handed it over. Do you know how rare that is, my dear."',
       },
       playful: {
         label: "Feed him a terrible haiku",
         close:
-          '*He writes it down with great ceremony.* "Five, seven, five, and every syllable a small crime.\n\nIt is perfect. I shall publish it under your name, so posterity knows exactly whom to blame."',
+          '*He recites it back with great ceremony.* "Five, seven, five, and every syllable a small crime.\n\nIt is perfect. I shall publish it under your name, so posterity knows exactly whom to blame."',
       },
       bold: {
         label: "Say to leave it unfinished",
@@ -105,7 +105,7 @@ export default {
       kind: {
         label: "Tell him you felt every note",
         close:
-          '"...You felt it." *He lowers the biwa very carefully, as though it might break, or he might.*\n\n"A year of playing to an empty room, and tonight one person felt every note. That is not a small thing. That is the whole thing."',
+          '"...You felt it." *He lowers the biwa very carefully, as though it might break, or he might.*\n\n"A year of playing for rooms that cannot see me, and tonight one person felt every note. That is not a small thing. That is the whole thing."',
       },
       playful: {
         label: "Demand an encore",

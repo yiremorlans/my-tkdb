@@ -103,13 +103,24 @@ Last updated: 2026-09-02
 
 ### Added beyond this spec
 
-**The milestone set is 15 campus-life situations, not the 7 sketched in §16.2.**
+**The milestone set is 33 campus-life situations, not the 7 sketched in §16.2.**
 Each is its own independent tally per user *per character* — `milestone_type` is
 a discrete key, so "Moments together" renders one row per situation rather than
 a single combined counter. Gating is cumulative: a Stranger draws from 3, a
-Devoted from all 15. Spread is roughly 3 / 2 / 4 / 3 / 2 / 1 across
-new → known → warm → spark → close → bound, so every step up the relationship
-curve visibly unlocks something.
+Devoted from all 33. Each level unlocks one more than the last: 3 / 4 / 5 / 6 /
+7 / 8 across new → known → warm → spark → close → bound, so every step up the
+relationship curve visibly unlocks something, and more of it the longer the level
+lasts. Benkei's pool follows the same curve.
+
+**Benkei has his own campus-store set** (`BENKEI_MILESTONES`, `benkei_*` keys).
+The campus set above is student life (reports, classes, dorms, briefings,
+curfew), and he isn't a student: he's the shopkeep at the 24/7 campus store and
+used to be a professor. `MILESTONE_POOLS` lists the keys a character draws from:
+Benkei gets his own set plus the campus moments that don't assume he's a
+student (`coffee_break`, `vending_machine`, `shared_umbrella`, `late_call`,
+`watched_sunset` and so on). Anyone not listed draws from the campus set, so
+his moments never reach a student's tally. `ENCOUNTER_MILESTONES` merges both
+sets for key lookups.
 
 §16.2's `movie_hooky` is split into `skipped_briefing` and `movie_night` — they
 were one entry doing two jobs, and they read better as separate collectibles.
@@ -1214,7 +1225,7 @@ export const ENCOUNTER_MILESTONES = {
   },
   shared_umbrella: {
     minTier: 'warm', emoji: '🌧️', bucket: 'warm',
-    label: 'Shared an umbrella across the quad',
+    label: 'Shared an umbrella across the courtyard',
     afterline: 'It started raining. One umbrella between you.',
     hint: 'the umbrella',
   },
@@ -1271,7 +1282,7 @@ Moments together
 📋 Signed off a Vagastrom report right before they vanished — ×3
 ☕ Coffee breaks together — ×4
 🎬 Skipped a briefing to watch a movie in Rui's room — ×2
-🌧️ Shared an umbrella across the quad — ×1
+🌧️ Shared an umbrella across the courtyard — ×1
 ```
 
 One `getEncounterMilestoneCounts(userId, characterId)` read per character

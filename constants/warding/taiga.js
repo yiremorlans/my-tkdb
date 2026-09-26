@@ -54,7 +54,7 @@ export default {
       playful: {
         label: "Steal a fry from him",
         close:
-          '*His hand shoots out and misses on purpose.* "Gyahaha! Bold move, robbing a guy mid-nap.\n\nThat one\'s yours. Next one costs you."',
+          '*His hand shoots out and misses on purpose.* "Gyahaha! Gutsy, robbing a guy mid-nap.\n\nThat one\'s yours. Next one costs you."',
       },
       bold: {
         label: "Lie down in the sun with him",
@@ -73,9 +73,9 @@ export default {
     // turn in the scene is his own mouth supplying a nickname for someone he
     // supposedly doesn't know.
     line:
-      '"Six... Five. Wrong room, wrong night, and I don\'t know your face. This goes quick."',
+      '"Ten. Nine... Wrong door, wrong night, and I don\'t know your face. This goes quick."',
     greeting:
-      "\"Ten. Nine. Eight...'Kitten'? The fuck did that come from. Nothing about you lands but the name.\"",
+      "\"Eight. Seven. Six... 'Kitten'? The fuck did that come from. Nothing about you lands but the name.\"",
     responses: {
       kind: {
         label: "Say his name, gently",

@@ -45,7 +45,7 @@ export default {
       kind: {
         label: "Slide the tea into his hand",
         close:
-          '*He takes it without thinking, drinks, blinks.* "...It is still warm. Hmph.\n\nYou needn\'t look so pleased with yourself. ...Thank you. There. Do not make me say it twice."',
+          '*He takes it without thinking, drinks, grimaces.* "...Stone cold. I drank it anyway, you will note. Hmph.\n\nYou needn\'t look so pleased with yourself. ...Thank you. There. Do not make me say it twice."',
       },
       playful: {
         label: "Read his notes upside down",
@@ -84,7 +84,7 @@ export default {
       bold: {
         label: "Say to put his name on it",
         close:
-          "\"Oh, I intend to. In letters visible from orbit. Let every institution that laughed me out of a symposium read 'ISAMI' and choke on it.\n\n...You encourage the worst in me, worm. Do not stop.\"",
+          "\"Oh, I intend to. In letters visible from orbit. Let every lowbrow school of thought that opposed my research read 'ISAMI' and choke on it.\n\n...You encourage the worst in me, worm. Do not stop.\"",
       },
     },
   },

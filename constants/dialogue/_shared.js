@@ -49,8 +49,9 @@
 // appended beneath the winner line, so a line must end with the character
 // staying with the caller. Leaving their own duty *for* the caller is fine and
 // common; leaving the caller contradicts the beat that follows. Milestones are
-// character-agnostic and gated only by tier, so don't write a line that
-// forecloses one — in particular don't have them dispose of a *report*, which
+// gated only by tier and are character-agnostic unless the character has its
+// own pool (MILESTONE_POOLS in constants/publicEncounters.js), so don't write
+// a line that forecloses one — in particular don't have them dispose of a *report*, which
 // the signed_report milestone then has them signing.
 //
 // And the setting is not the character's own: an encounter spawns only at the

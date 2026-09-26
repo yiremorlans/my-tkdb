@@ -69,7 +69,7 @@ export default {
     line:
       '"Dandelion, look how many they brought! I ordered everything that looked happy. Open your mouth."',
     greeting:
-      '"You have to try them all. I will be sad if your favorite is not the one I like. ...Which is it going to be?"',
+      '"You have to try them all. I\'ll be sad if your favorite isn\'t the one I like. ...Which is it going to be?"',
     responses: {
       kind: {
         label: "Let him feed you every one",
@@ -96,9 +96,9 @@ export default {
     // setting: he has spent the day filling a whole basket with flowers, all of
     // it meant for the MC, and is holding it out to her.
     line:
-      '"I\'ve been picking since this morning. This one means kind, this one means come back. Hold out your arms."',
+      '"I\'ve been picking since this morning. The yellow ones mean come back. The white ones mean stay. Hold out your arms."',
     greeting:
-      '"The whole basket is yours. I will be upset if even one of them gets left behind. ...Well?"',
+      '"The whole basket is yours. I\'ll be upset if even one of them gets left behind. ...Well?"',
     responses: {
       kind: {
         label: "Take the whole basket",

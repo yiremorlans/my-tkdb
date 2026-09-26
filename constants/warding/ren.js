@@ -38,9 +38,9 @@ export default {
     minLevel: "Friend",
     approach: "Take what he's holding out",
     line:
-      "\"It's just some hard candy. ...Fine, yes, I saw it and thought you'd like the dumb sparkles inside. That's the whole story, there's no part two. Fireworks start in ten. Are you taking it, or am I holding it the whole show.\"",
+      "\"Fireworks start in ten. ...Here. Are you taking it, or am I holding it out the whole show, Senpai.\"",
     greeting:
-      '"Here, take it before I change my mind. I got two from the good stall anyway, so don\'t make it a thing, Senpai."',
+      '"It\'s just hard candy. ...Fine, yes, I saw the dumb sparkles inside and thought you\'d like it. That\'s the whole story, there\'s no part two. I got two from the good stall anyway, so don\'t make it a thing."',
     responses: {
       kind: {
         label: "Thank him and mean it",
@@ -55,7 +55,7 @@ export default {
       bold: {
         label: "Try to take his too",
         close:
-          "\"Hey, that's mine. ...you know what, keep it, I'll live. I'm not going back to the stall, the show's starting and I want my hands free anyway. Stand on this side. Next to me, actually, the crowd's about to close in and I'm not fishing you back out of it.\"",
+          "\"Hey, that's mine. ...You know what, keep it, I'll live. I'm not going back to the stall, the show's starting and I want my hands free anyway. Stand on this side. Next to me, actually, the crowd's about to close in and I'm not fishing you back out of it.\"",
       },
     },
   },
@@ -74,7 +74,7 @@ export default {
       '"...What. He does not look like me. Same jacket, that\'s it, and the earrings are a coincidence. Are we finishing this level or are you going to keep staring at my phone?"',
     responses: {
       kind: {
-        label: "Say you made him on purpose",
+        label: "Say he built him on purpose",
         close:
           "\"...Okay. Maybe I spent an hour in the character creator. The hair took forty minutes on its own. ...I wanted something on the screen I wouldn't get sick of looking at. Don't make it weird. It's your turn, the timer's going.\"",
       },
@@ -86,7 +86,7 @@ export default {
       bold: {
         label: "Grab his phone to see closer",
         close:
-          "\"Hey, I was using that. ...Fine, hold it, but tilt it back so I can see. If my combo drops, that's on you. ...*I guess he does kinda look like me.* Don't push it, and give it back before the next wave, Senpai.\"",
+          "\"Hey, I was using that. ...Fine, hold it, but tilt it back so I can see. If my combo drops, that's on you. ...Okay. He kinda looks like me. Don't push it, and give it back before the next wave, Senpai.\"",
       },
     },
   },

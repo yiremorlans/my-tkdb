@@ -680,7 +680,7 @@ export default {
         },
       },
       {
-        line: "You're halfway through a vending machine sandwich when he spots it from across the quad and confiscates it on the spot.",
+        line: "You're halfway through a vending machine sandwich when he spots it from across the courtyard and confiscates it on the spot.",
         approach: "Surrender the sandwich",
         greeting:
           '"Nope. Hostage situation, remember? Truck. Now. I\'m not watching you eat that."',

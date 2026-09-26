@@ -41,9 +41,9 @@ export default {
     // effect. Studied and careless at once. Everything below is the DM thread
     // it arrived in.
     line:
-      "\"I can see the little dots from ur response, Honor Roll. Admit it, it's the best thing that's happened to you all week\"",
+      "\"Sent u something, Honor Roll. Open it. Best thing that's gonna happen to u all week, and we both know it\"",
     greeting:
-      '"This one\'s not going on the feed. just for u. Mostly so u know exactly what ur missing" ...say something. the longer u take the more I win here',
+      '"This one\'s not going on the feed. just for u. Mostly so u know exactly what ur missing. ...I can see u typing. the longer u take the more I win here"',
     responses: {
       kind: {
         label: "Say he looks good, no bit",

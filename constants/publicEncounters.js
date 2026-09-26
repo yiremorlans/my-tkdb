@@ -234,7 +234,7 @@ const TIER_RANK = { new: 0, known: 1, warm: 2, spark: 3, close: 4, bound: 5 };
 //
 // `hint` is read after the words "picking up after", so it wants to be a noun
 // phrase ("that coffee", not "you had coffee").
-export const ENCOUNTER_MILESTONES = {
+const CAMPUS_MILESTONES = {
   // --- Stranger and up: public, no intimacy assumed ---
   signed_report: {
     minTier: "new",
@@ -279,6 +279,23 @@ export const ENCOUNTER_MILESTONES = {
     hint: "that vending machine run",
   },
 
+  borrowed_book: {
+    minTier: "known",
+    emoji: "📕",
+    bucket: "new",
+    label: "Borrowed a book from them",
+    afterline: "They lent you a book they'd just finished.",
+    hint: "that book",
+  },
+  same_shortcut: {
+    minTier: "known",
+    emoji: "🧭",
+    bucket: "new",
+    label: "Took the same shortcut",
+    afterline: "You both knew the same shortcut.",
+    hint: "that shortcut",
+  },
+
   // --- Friend and up: choosing each other's company ---
   walked_back: {
     minTier: "warm",
@@ -292,7 +309,7 @@ export const ENCOUNTER_MILESTONES = {
     minTier: "warm",
     emoji: "🌧️",
     bucket: "warm",
-    label: "Shared an umbrella across the quad",
+    label: "Shared an umbrella across the courtyard",
     afterline: "It started raining. One umbrella between you.",
     hint: "the umbrella",
   },
@@ -311,6 +328,15 @@ export const ENCOUNTER_MILESTONES = {
     label: "Shared a pair of earbuds on the Galaxy Express",
     afterline: "One earbud each, the whole way back.",
     hint: "that train ride",
+  },
+
+  same_table: {
+    minTier: "warm",
+    emoji: "🍱",
+    bucket: "warm",
+    label: "Ate lunch at the same table",
+    afterline: "The only free seat was at their table. They didn't mind.",
+    hint: "that lunch",
   },
 
   // --- Close Friend and up: skipping things, going somewhere private ---
@@ -341,6 +367,31 @@ export const ENCOUNTER_MILESTONES = {
     hint: "the roof",
   },
 
+  campus_bench: {
+    minTier: "spark",
+    emoji: "🪵",
+    bucket: "spark",
+    label: "Lost an afternoon on a campus bench",
+    afterline: "You sat down for a minute. It was dark when you got up.",
+    hint: "that afternoon on the bench",
+  },
+  storm_watch: {
+    minTier: "spark",
+    emoji: "⛈️",
+    bucket: "spark",
+    label: "Watched a storm from inside",
+    afterline: "A storm came through. You watched it from the window together.",
+    hint: "that storm",
+  },
+  courtyard_stars: {
+    minTier: "spark",
+    emoji: "✨",
+    bucket: "spark",
+    label: "Watched the stars from the courtyard",
+    afterline: "You watched the sky until it got too cold to stay.",
+    hint: "the stars",
+  },
+
   // --- Confidant and up: hours nobody else gets ---
   stayed_up: {
     minTier: "close",
@@ -359,6 +410,48 @@ export const ENCOUNTER_MILESTONES = {
     hint: "that drive",
   },
 
+  midnight_snack: {
+    minTier: "close",
+    emoji: "🌃",
+    bucket: "close",
+    label: "Went on a midnight snack run",
+    afterline:
+      "It was past midnight and you were both hungry. That settled it.",
+    hint: "that midnight snack run",
+  },
+  made_playlist: {
+    minTier: "close",
+    emoji: "🎶",
+    bucket: "close",
+    label: "Got a playlist made just for you",
+    afterline: "They'd made you a playlist and acted like it was nothing.",
+    hint: "that playlist",
+  },
+  galaxy_express: {
+    minTier: "close",
+    emoji: "🛤️",
+    bucket: "close",
+    label: "Took the Galaxy Express together",
+    afterline: "You rode the Galaxy Express together, no stop in mind.",
+    hint: "that ride on the Galaxy Express",
+  },
+  lamplit_steps: {
+    minTier: "close",
+    emoji: "🪜",
+    bucket: "close",
+    label: "Talked on the steps until the lamps went out",
+    afterline: "You sat on the steps and talked until the lamps went out.",
+    hint: "that talk on the steps",
+  },
+  late_call: {
+    minTier: "close",
+    emoji: "📞",
+    bucket: "close",
+    label: "Stayed on a call until one of you fell asleep",
+    afterline: "You talked until one of you fell asleep.",
+    hint: "that call",
+  },
+
   // --- Devoted and up ---
   watched_sunrise: {
     minTier: "bound",
@@ -368,21 +461,299 @@ export const ENCOUNTER_MILESTONES = {
     afterline: "It got light out before either of you went home.",
     hint: "that sunrise",
   },
+  left_note: {
+    minTier: "bound",
+    emoji: "📝",
+    bucket: "bound",
+    label: "Found a note they'd left for you",
+    afterline: "There was a note waiting for you, in their handwriting.",
+    hint: "that note",
+  },
+  first_snow: {
+    minTier: "bound",
+    emoji: "❄️",
+    bucket: "bound",
+    label: "Watched the first snow together",
+    afterline: "The first snow came down, and you watched it together.",
+    hint: "the first snow",
+  },
+  their_scarf: {
+    minTier: "bound",
+    emoji: "🧣",
+    bucket: "bound",
+    label: "Wore their scarf all day",
+    afterline: "You wore their scarf all day. They noticed and said nothing.",
+    hint: "that scarf",
+  },
+  lazy_day: {
+    minTier: "bound",
+    emoji: "🍃",
+    bucket: "bound",
+    label: "Spent a whole day doing nothing together",
+    afterline: "A whole day with nowhere to be. You spent it together.",
+    hint: "that lazy day",
+  },
+  found_bookmark: {
+    minTier: "bound",
+    emoji: "🔖",
+    bucket: "bound",
+    label: "Found your bookmark in their book",
+    afterline:
+      "Your bookmark turned up in their book. They'd been reading what you read.",
+    hint: "that bookmark",
+  },
+  got_flowers: {
+    minTier: "bound",
+    emoji: "💐",
+    bucket: "bound",
+    label: "Got flowers for no reason",
+    afterline: "They brought you flowers and wouldn't give a reason.",
+    hint: "those flowers",
+  },
+  watched_sunset: {
+    minTier: "bound",
+    emoji: "🌆",
+    bucket: "bound",
+    label: "Watched the sunset together",
+    afterline: "You watched the sun go down and stayed after.",
+    hint: "that sunset",
+  },
 };
+
+// Everything above is student life: reports, classes, the dorms, briefings,
+// curfew. Benkei isn't a student. He's the shopkeep at the campus store (open
+// 24/7, a Cornelius cat for a manager) and used to be a professor, so his
+// moments are built on that instead. Same tier spread idea: every step up unlocks something.
+const BENKEI_MILESTONES = {
+  // --- Stranger and up ---
+  benkei_delivery: {
+    minTier: "new",
+    emoji: "📦",
+    bucket: "new",
+    label: "Helped carry a delivery back to the store",
+    afterline:
+      "He was carrying too much again. You took half of it back to the store with him.",
+    hint: "that delivery",
+  },
+  benkei_snack: {
+    minTier: "new",
+    emoji: "🍙",
+    bucket: "new",
+    label: "Got handed a snack he wouldn't take money for",
+    afterline:
+      "He found a snack for you and wouldn't hear a word about paying.",
+    hint: "that snack",
+  },
+
+  // --- Acquaintance and up ---
+  benkei_restock: {
+    minTier: "known",
+    emoji: "🛒",
+    bucket: "new",
+    label: "Helped restock the shelves",
+    afterline:
+      "You stayed to help restock. He thanked you for every single box.",
+    hint: "that restock",
+  },
+  benkei_counter: {
+    minTier: "known",
+    emoji: "🏪",
+    bucket: "new",
+    label: "Kept him company behind the counter",
+    afterline:
+      "You kept him company behind the counter. Nobody came in, which suited you both.",
+    hint: "that quiet shift",
+  },
+
+  // --- Friend and up ---
+  benkei_advising: {
+    minTier: "warm",
+    emoji: "📖",
+    bucket: "warm",
+    label: "Heard about his advising days",
+    afterline:
+      "He told you a little about his advising days, then changed the subject to snacks.",
+    hint: "those old stories",
+  },
+  benkei_walk_back: {
+    minTier: "warm",
+    emoji: "🌙",
+    bucket: "warm",
+    label: "Walked back to the store together",
+    afterline: "You walked back to the store with him, in no hurry.",
+    hint: "that walk back",
+  },
+  benkei_umbrella: {
+    minTier: "warm",
+    emoji: "☂️",
+    bucket: "warm",
+    label: "Shared an umbrella from the store's stock",
+    afterline:
+      "It started raining. He had an umbrella off the shelf, and it was one between you.",
+    hint: "the umbrella",
+  },
+
+  benkei_new_stock: {
+    minTier: "warm",
+    emoji: "🧃",
+    bucket: "warm",
+    label: "Taste-tested the new stock",
+    afterline:
+      "A new snack came in. He wanted your opinion before shelving it.",
+    hint: "that taste test",
+  },
+
+  // --- Close Friend and up ---
+  benkei_tea: {
+    minTier: "spark",
+    emoji: "🍵",
+    bucket: "spark",
+    label: "Had tea in the store's back room",
+    afterline: "He made tea in the back room and let the restocking wait.",
+    hint: "that tea",
+  },
+  benkei_front_step: {
+    minTier: "spark",
+    emoji: "🌇",
+    bucket: "spark",
+    label: "Ate lunch on the store's front step",
+    afterline: "Lunch on the store's front step, just the two of you.",
+    hint: "that lunch on the step",
+  },
+
+  benkei_late_delivery: {
+    minTier: "spark",
+    emoji: "🚚",
+    bucket: "spark",
+    label: "Counted a late delivery with him",
+    afterline: "A delivery came in late. You stayed to count it with him.",
+    hint: "that late delivery",
+  },
+
+  benkei_book_rec: {
+    minTier: "spark",
+    emoji: "📚",
+    bucket: "spark",
+    label: "Got a book recommendation from his teaching days",
+    afterline: "He recommended a book he used to assign.",
+    hint: "that book he recommended",
+  },
+
+  // --- Confidant and up ---
+  benkei_night_shift: {
+    minTier: "close",
+    emoji: "🌌",
+    bucket: "close",
+    label: "Kept him company through a night shift",
+    afterline: "The store never closes, and neither of you noticed the hour.",
+    hint: "that night shift",
+  },
+  benkei_long_way: {
+    minTier: "close",
+    emoji: "🍂",
+    bucket: "close",
+    label: "Took the long way around campus with him",
+    afterline:
+      "You took the long way around campus. He didn't check the time once.",
+    hint: "the long way around",
+  },
+
+  benkei_noodles: {
+    minTier: "close",
+    emoji: "🍜",
+    bucket: "close",
+    label: "Ate cup noodles behind the counter",
+    afterline: "Two cup noodles behind the counter. He paid for both.",
+    hint: "those noodles",
+  },
+  benkei_advising_keepsake: {
+    minTier: "close",
+    emoji: "🗂️",
+    bucket: "close",
+    label: "Saw something from his advising days",
+    afterline: "He showed you something he kept from his advising days.",
+    hint: "what he kept",
+  },
+  benkei_stock_list: {
+    minTier: "close",
+    emoji: "📋",
+    bucket: "close",
+    label: "Got your favorites on the stock list",
+    afterline: "What you like is on the stock list now.",
+    hint: "the stock list",
+  },
+
+  // --- Devoted and up ---
+  benkei_sunrise: {
+    minTier: "bound",
+    emoji: "🌄",
+    bucket: "bound",
+    label: "Watched the sun come up from behind the counter",
+    afterline: "It got light out, and neither of you had left the counter.",
+    hint: "that sunrise",
+  },
+  benkei_humming: {
+    minTier: "bound",
+    emoji: "🎵",
+    bucket: "bound",
+    label: "Caught him humming your song",
+    afterline:
+      "He was humming the song you like. He didn't stop when you noticed.",
+    hint: "that song",
+  },
+};
+
+// Every milestone by key, for lookups (getMilestone, /affinity, bond scenes).
+// Keys are unique across both sets.
+export const ENCOUNTER_MILESTONES = {
+  ...CAMPUS_MILESTONES,
+  ...BENKEI_MILESTONES,
+};
+
+// Which keys each character can collect. A character listed here draws from
+// that pool alone; everyone else draws from the campus-life set. Benkei keeps
+// four campus moments that don't assume he's a student.
+const MILESTONE_POOLS = {
+  benkei: [
+    ...Object.keys(BENKEI_MILESTONES),
+    "coffee_break",
+    "vending_machine",
+    "shared_umbrella",
+    "watched_sunrise",
+    "borrowed_book",
+    "storm_watch",
+    "courtyard_stars",
+    "made_playlist",
+    "late_call",
+    "first_snow",
+    "their_scarf",
+    "found_bookmark",
+    "got_flowers",
+    "watched_sunset",
+  ],
+};
+const DEFAULT_MILESTONE_POOL = Object.keys(CAMPUS_MILESTONES);
+
+export function milestonePoolFor(characterId) {
+  return MILESTONE_POOLS[characterId] ?? DEFAULT_MILESTONE_POOL;
+}
 
 // `tier` is the winner's REAL dialogue tier (getDialogueTier), not the
 // collapsed WINNER_LINE_TIER bucket — the bucket is passed separately and only
-// biases the draw. Returns a key of ENCOUNTER_MILESTONES.
-export function pickMilestone(tier, winnerBucket) {
+// biases the draw. `characterId` picks the pool (see milestonePoolFor).
+// Returns a key of ENCOUNTER_MILESTONES.
+export function pickMilestone(tier, winnerBucket, characterId = null) {
   const rank = TIER_RANK[tier] ?? 0;
-  const eligible = Object.entries(ENCOUNTER_MILESTONES).filter(
-    ([, m]) => TIER_RANK[m.minTier] <= rank,
+  const eligible = milestonePoolFor(characterId).filter(
+    (id) => TIER_RANK[ENCOUNTER_MILESTONES[id].minTier] <= rank,
   );
-  if (eligible.length === 0) return "signed_report";
+  // Unreachable while every pool has a `minTier: "new"` entry.
+  if (eligible.length === 0) return milestonePoolFor(characterId)[0];
 
-  const weighted = eligible.flatMap(([id, m]) =>
-    m.bucket === winnerBucket || m.bucket === "any" ? [id, id] : [id],
-  );
+  const weighted = eligible.flatMap((id) => {
+    const { bucket } = ENCOUNTER_MILESTONES[id];
+    return bucket === winnerBucket || bucket === "any" ? [id, id] : [id];
+  });
   return pickRandom(weighted);
 }
 

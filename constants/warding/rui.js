@@ -12,7 +12,7 @@ export default {
     // holds across the measured foot of air he keeps.
     line: "\"You look at me, then at the drink like it'll help. It won't, cutie. I've watched you leave it sitting there for an hour.\"",
     greeting:
-      "\"Stay till close? It's twenty minutes. Just a moment more, cutie. I've got nothing but moments.\"",
+      "\"Stay till close? It's twenty minutes. Just a moment more. I've got nothing but moments.\"",
     responses: {
       kind: {
         label: "Say you're staying till close",
@@ -78,17 +78,17 @@ export default {
       kind: {
         label: "Get a pic of the desserts",
         close:
-          '"The desserts, sure."\n\n*He tips his chin down and smiles.* "Fine, take it, cutie. Get the yukata in too, I worked for this look."',
+          '"The desserts, sure."\n\n*He tips his chin down and smiles.* "Fine, take it. Get the yukata in too, I worked for this look."',
       },
       playful: {
         label: "Score your tour guide",
         close:
-          '"Haha, what? Only? C\'mon, cutie, I\'m an eleven and you know it. Ask anyone at the bar."\n\n*He spins the empty cup on a fingertip and catches it.* "Keep your tip. Just don\'t ditch your guide before the last stall, okay?"',
+          '"Haha, what? Only? C\'mon, I\'m an eleven and you know it. Ask anyone at the bar."\n\n*He spins the empty cup on a fingertip and catches it.* "Keep your tip. Just don\'t ditch your guide before the last stall, okay?"',
       },
       bold: {
         label: "Say he's sweeter than dessert",
         close:
-          '"...You can\'t just say that with a straight face, cutie. That\'s not fair."\n\n*He smiles.* "Eat it before it melts. Four stalls to go."',
+          '"Hey, that\'s my line. You can\'t just steal it with a straight face."\n\n*He winks.* "I\'ll allow it once. Eat it before it melts. Four stalls to go."',
       },
     },
   },
