@@ -233,7 +233,7 @@ export default {
   dialogue: {
     new: [
       {
-        line: 'He\'s barking orders at the Sinostra students, managing every angle of the casino floor. "HDY waste my time? How Dare You, obviously. Quick, put on this dress and work table seven, we need someone sharp out there."',
+        line: 'He\'s barking orders at the Sinostra students, managing every angle of the casino floor. "HDY waste my time? Quick, put on this dress and work table seven, we need someone sharp out there."',
         approach: "Make yourself useful",
         greeting: '"Well? Table seven isn\'t going to deal itself. Move!"',
         responses: {
@@ -527,6 +527,165 @@ export default {
           neutral: ["Let the moment pass quietly", "Take the welcome as given"],
         },
       },
+      {
+        line: '"What? I\'m on my way to the gym." He adjusts his bag strap, not quite looking at you. "...You can join me if you\'re interested."',
+        approach: "Join him at the gym",
+        greeting:
+          '"Form first, weight second. If you hurt yourself on my watch, I\'m billing you for the embarrassment."',
+        responses: {
+          kind: ["Ask him to spot you", "Say you'll follow his lead"],
+          playful: ["Race him to the treadmill", "Ask what the bill would be"],
+          bold: ["Match his reps", "Say you'll outlift him"],
+          neutral: ["Stretch beside him", "Grab a water"],
+        },
+      },
+      {
+        line: '"Room-temperature water. Electric facial. Mask. Body cream. Neck routine." He\'s counting on his fingers. "I have no free time in the morning."',
+        approach: "Ask to see the routine",
+        greeting:
+          "\"Sit. You're getting the mask. Don't argue, your pores are a cry for help.\"",
+        responses: {
+          kind: ["Let him do the mask", "Say he knows best"],
+          playful: ["Ask which step is the neck", "Say your pores are fine"],
+          bold: ["Ask what it all costs", "Put a mask on him too"],
+          neutral: ["Hold still", "Lean back in the chair"],
+        },
+      },
+      {
+        line: '"Listen up. Call me Fico." He jabs a finger at you. "That\'s the only name I\'ll answer to, understand?"',
+        approach: "Try out the name",
+        greeting:
+          '"Again. With feeling. ...Better. You can keep saying it. Only you, though."',
+        responses: {
+          kind: ["Say it suits him", "Say it with a smile"],
+          playful: ["Call him Lulu instead", "Say it three times fast"],
+          bold: ["Ask what it means", "Say you'll call him Romeo"],
+          neutral: ["Say it once", "Nod"],
+        },
+      },
+      {
+        line: "He's cleaning a pistol at his desk, piece by piece. \"I maintain my bullets myself. You think I'd let another man handle my crown jewels?\"",
+        approach: "Watch him clean it",
+        greeting:
+          "\"Don't touch. You can look. Looking's free. For you, anyway.\"",
+        responses: {
+          kind: ["Keep your hands to yourself", "Say he's careful with it"],
+          playful: ["Ask if they have names", "Ask for the jewel appraisal"],
+          bold: ["Ask him to teach you", "Pick up a cloth and help"],
+          neutral: ["Watch in silence", "Sit across from him"],
+        },
+      },
+      {
+        line: '"You\'re smelling the bedtime fragrance Kurossa picked out for me." He caught you leaning in. "He has a good eye. I often ask him to choose."',
+        approach: "Say it smells good",
+        greeting:
+          "\"Of course it does. It costs more than your wardrobe. ...I'll have him find you one. Don't make it weird.\"",
+        responses: {
+          kind: ["Thank him for the offer", "Say you'd like that"],
+          playful: ["Say Leo has him figured out", "Sniff again, louder"],
+          bold: ["Ask him to pick it himself", "Say you'd rather borrow his"],
+          neutral: ["Step back", "Nod at the bottle"],
+        },
+      },
+      {
+        line: '"Mickey\'s bar? Yes, I\'m going again tonight." He straightens his cuffs. "Only because there\'s nowhere else to drink. ...Coming?"',
+        approach: "Go to Mickey's with him",
+        greeting:
+          "\"First round's on me. Second's on you. Third, we'll see how you've behaved.\"",
+        responses: {
+          kind: ["Say one round is plenty", "Say you'll get the second"],
+          playful: ["Ask how to behave", "Order the priciest thing"],
+          bold: ["Say you'll buy the first", "Tell him to pick the table"],
+          neutral: ["Follow him out", "Grab your coat"],
+        },
+      },
+      {
+        line: '"You want to see my Insta?" He\'s already holding the phone out. "Fine. But do you even know anything about brands?"',
+        approach: "Scroll his Insta",
+        greeting:
+          "\"That one's a limited run. That one's vintage. That one's me, which is priceless.\"",
+        responses: {
+          kind: ["Say he looks great", "Like every post"],
+          playful: ["Ask who took the photos", "Like one from years back"],
+          bold: ["Point out a bad angle", "Say you've got better brands"],
+          neutral: ["Keep scrolling", "Hand the phone back"],
+        },
+      },
+      {
+        line: '"Why are you carrying that!?" He\'s across the floor in three strides. "What if you drop it? I\'ll get one of the young guys. Put it down already!"',
+        approach: "Put it down",
+        greeting:
+          "\"Good. Your hands are worth more than the box. ...That's an insurance thing. Don't read into it.\"",
+        responses: {
+          kind: ["Thank him for the help", "Say you were being careful"],
+          playful: ["Pretend to fumble it", "Ask what your hands are worth"],
+          bold: ["Say you had it handled", "Pick it back up"],
+          neutral: ["Step back from it", "Let the guys take it"],
+        },
+      },
+      {
+        line: '"There\'s a hair on the ground! And dust over here!" He\'s yelling at the whole floor. Then he sees you. "...You. You didn\'t see me yell."',
+        approach: "Say you saw everything",
+        greeting:
+          '"Tch. Fine. You saw. Now help me look for more dust, since you\'re here."',
+        responses: {
+          kind: ["Help him check the corners", "Say the floor looks fine"],
+          playful: ["Point at imaginary dust", "Ask if he's got a white glove"],
+          bold: ["Tell him to yell less", "Say he missed a spot"],
+          neutral: ["Look for dust", "Grab a cloth"],
+        },
+      },
+      {
+        line: '"Those Frostheim slugs start whispering the second they see my face." He\'s glaring down the hall. "One day they\'ll be groveling."',
+        approach: "Stand beside him",
+        greeting:
+          '"Head up. We\'re walking past them. Slowly. Let them whisper about both of us."',
+        responses: {
+          kind: ["Say they're just jealous", "Walk past with him"],
+          playful: ["Wave at them", "Whisper back at them"],
+          bold: ["Stare them down", "Say you'll make them grovel"],
+          neutral: ["Keep walking", "Ignore them"],
+        },
+      },
+      {
+        line: '"Looks like I\'m due for a tune-up." He rolls his shoulder, frowning. "I\'ll call Mio. Keeping my posture beautiful isn\'t easy, no matter how much I train my core."',
+        approach: "Offer to go with him",
+        greeting:
+          '"To Mio\'s? Why? ...Fine. You can carry my water. Room temperature."',
+        responses: {
+          kind: ["Carry his water", "Say you'll keep him company"],
+          playful: ["Ask if Mio charges him", "Say his posture is flawless"],
+          bold: ["Say he's stalling", "Call Mio for him"],
+          neutral: ["Walk with him", "Wait outside"],
+        },
+      },
+      {
+        line: '"This is when the regulars come in, so I sweeten the pot." He\'s adjusting the lights over a table. "And I saw that HNTW out there. Has No Taste Whatsoever, obviously."',
+        approach: "Ask what sweetening means",
+        greeting:
+          '"Better lights, better drinks, better faces on the floor. Yours counts. Stand there."',
+        responses: {
+          kind: ["Stand where he says", "Say you'll help tonight"],
+          playful: ["Ask which one is the HNTW", "Ask for a better name tag"],
+          bold: ["Ask what you get for it", "Pick your own spot"],
+          neutral: ["Watch the regulars", "Stand by the door"],
+        },
+      },
+      {
+        line: '"Well, look what the cat dragged in." He doesn\'t look up from the counting table. "Do I have to teach you how to maintain an adult relationship?"',
+        approach: "Apologize for the absence",
+        greeting:
+          '"This is your last chance, got it? ...That\'s what I said last time. Sit down."',
+        responses: {
+          kind: ["Say you missed him", "Promise to text next time"],
+          playful: [
+            "Ask how many chances are left",
+            "Ask if he counted the days",
+          ],
+          bold: ["Say he could have called", "Say he's glad you're back"],
+          neutral: ["Sit down", "Tell him where you were"],
+        },
+      },
     ],
     spark: [
       {
@@ -722,7 +881,7 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"HDY! How Dare You, obviously, say my name that casually." **{name}** snaps at {user}.',
+      '"HDY waste my time." **{name}** snaps at {user}.',
       "{user} says the name, and **{name}** is already talking. About three things. At once.",
       '"Perfect timing. I need someone I can trust." **{name}** decides this about {user} instantly.',
     ],

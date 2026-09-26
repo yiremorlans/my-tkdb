@@ -287,13 +287,13 @@ const CAMPUS_MILESTONES = {
     afterline: "They lent you a book they'd just finished.",
     hint: "that book",
   },
-  same_shortcut: {
+  helped_search: {
     minTier: "known",
-    emoji: "🧭",
+    emoji: "🔦",
     bucket: "new",
-    label: "Took the same shortcut",
-    afterline: "You both knew the same shortcut.",
-    hint: "that shortcut",
+    label: "Helped them find something they'd lost",
+    afterline: "They'd lost something on the way across campus. You stayed and helped look until it turned up.",
+    hint: "that search",
   },
 
   // --- Friend and up: choosing each other's company ---
@@ -326,7 +326,7 @@ const CAMPUS_MILESTONES = {
     emoji: "🎧",
     bucket: "warm",
     label: "Shared a pair of earbuds on the Galaxy Express",
-    afterline: "One earbud each, the whole way back.",
+    afterline: "You sat together waiting for the Galaxy Express, one earbud each.",
     hint: "that train ride",
   },
 
