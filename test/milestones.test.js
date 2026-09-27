@@ -20,4 +20,21 @@ describe('milestonePoolFor', () => {
   it('never gives a student one of Benkei\'s moments', () => {
     assert.ok(milestonePoolFor('rui').every((key) => !key.startsWith('benkei_')));
   });
+
+  it('keeps Jin to his room-bound moments plus the shared ones that fit', () => {
+    const pool = milestonePoolFor('jin');
+    for (const key of ['jin_tea', 'jin_waltz', 'movie_night', 'signed_report']) {
+      assert.ok(pool.includes(key), key);
+    }
+    for (const key of ['walked_to_class', 'festival_stall', 'late_drive', 'their_scarf']) {
+      assert.ok(!pool.includes(key), key);
+    }
+    assert.ok(pool.every((key) => !key.startsWith('benkei_')));
+  });
+
+  it('never gives anyone else one of Jin\'s moments', () => {
+    for (const id of ['rui', 'benkei']) {
+      assert.ok(milestonePoolFor(id).every((key) => !key.startsWith('jin_')), id);
+    }
+  });
 });

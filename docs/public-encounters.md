@@ -112,15 +112,23 @@ Devoted from all 33. Each level unlocks one more than the last: 3 / 4 / 5 / 6 /
 relationship curve visibly unlocks something, and more of it the longer the level
 lasts. Benkei's pool follows the same curve.
 
-**Benkei has his own campus-store set** (`BENKEI_MILESTONES`, `benkei_*` keys).
-The campus set above is student life (reports, classes, dorms, briefings,
-curfew), and he isn't a student: he's the shopkeep at the 24/7 campus store and
-used to be a professor. `MILESTONE_POOLS` lists the keys a character draws from:
-Benkei gets his own set plus the campus moments that don't assume he's a
-student (`coffee_break`, `vending_machine`, `shared_umbrella`, `late_call`,
-`watched_sunset` and so on). Anyone not listed draws from the campus set, so
-his moments never reach a student's tally. `ENCOUNTER_MILESTONES` merges both
-sets for key lookups.
+**Milestones live in `constants/milestones/`, one file per character, with the
+shared set as the default.** `shared.js` is the campus set above: student life
+(reports, classes, dorms, briefings, curfew). A character with no file draws
+from all of it. A character whose life doesn't fit gets a file exporting
+`{ milestones, shared }`: their own `<id>_*` moments plus the shared keys they
+keep, and nothing else, so their moments never reach anyone else's tally.
+`index.js` assembles `ENCOUNTER_MILESTONES` (every key, for lookups), builds
+the pools, and fails at import on a duplicate key or an unknown shared key.
+
+- **Benkei** (`benkei.js`) isn't a student: he's the shopkeep at the 24/7
+  campus store and used to be a professor. He keeps the campus moments that
+  don't assume he's a student (`coffee_break`, `vending_machine`,
+  `shared_umbrella`, `late_call`, `watched_sunset` and so on).
+- **Jin** (`jin.js`) is a student but stays locked in the Frostheim captain's
+  room, so he keeps only the campus moments that can happen in or from his room
+  (`movie_night`, `storm_watch`, `stayed_up`, `lazy_day` and so on) plus his
+  own `jin_*` set, weighted toward new/known/warm where that list is thinnest.
 
 §16.2's `movie_hooky` is split into `skipped_briefing` and `movie_night` — they
 were one entry doing two jobs, and they read better as separate collectibles.

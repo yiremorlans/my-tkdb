@@ -50,7 +50,7 @@
 // staying with the caller. Leaving their own duty *for* the caller is fine and
 // common; leaving the caller contradicts the beat that follows. Milestones are
 // gated only by tier and are character-agnostic unless the character has its
-// own pool (MILESTONE_POOLS in constants/publicEncounters.js), so don't write
+// own file in constants/milestones/, so don't write
 // a line that forecloses one — in particular don't have them dispose of a *report*, which
 // the signed_report milestone then has them signing.
 //
