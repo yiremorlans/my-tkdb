@@ -35,7 +35,7 @@ export default {
       label: "Dug something out of his wrecked room",
       afterline:
         "He'd lost something in his room again. It took you an hour to find it under the mess.",
-      hint: "that dig through his room",
+      hint: "that hour you spent digging through the mess",
     },
 
     // --- Friend and up ---

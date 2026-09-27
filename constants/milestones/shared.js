@@ -128,7 +128,7 @@ export default {
     label: "Watched a movie in {firstName}'s room",
     afterline:
       "There was a movie on in {firstName}'s room. You stayed for all of it.",
-    hint: "that movie",
+    hint: "that movie night",
   },
   rooftop_lunch: {
     minTier: "spark",

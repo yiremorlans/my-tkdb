@@ -46,114 +46,114 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: Question. Answer it straight or don't bother.",
-        "Every time I throw something at you, you come back with {favResponse}. Not once have you tried to sweeten me up first.\n\nEveryone in this house has a voice they save for me. Softer. Rehearsed as hell. I hear it coming three rooms off and I quit listening at the first word.\n\nYou've never used it. So which is it: guts, or you're too dumb to know better?",
+        "**{firstName}**: Why do you keep coming up here? Answer me.",
+        "Half this school talks about me behind my back. Anyone who wants something from me goes through Tohma.\n\nYou? Whatever I throw at you, I get {favResponse} back. Then you stay and pick up whatever I left on the floor anyway.\n\nSo which is it: guts, or you're too dumb to know better?",
       ],
       choice: {
-        prompt: "Think before you open your mouth. I'll know if you're lying.",
+        prompt: "Pick one. I'm waiting.",
         options: [
           {
             key: "kind",
-            label: "Say he's worth honesty",
+            label: "Say you like the company",
             style: 3,
             close:
-              "*The typing indicator comes and goes three separate times.*\n\n...Then keep it up, *he sends eventually. Nothing else. Four words took him two minutes.*",
+              "Tsk. That's the dumbest thing you've ever said to me.\n\n...Whatever. The door's not locked.",
           },
           {
             key: "playful",
-            label: "Say it's mostly ignorance",
+            label: "Say you came for the mess",
             style: 1,
             close:
-              "Ignorance. You're lying, you're shit at it, and I don't care.\n\nStay dumb, then. It suits you better than the alternative.",
+              "I didn't ask for a joke.\n\nThen you won't mind that I'm never cleaning it again. Get used to it.",
           },
           {
             key: "bold",
-            label: "Tell him guts, obviously",
+            label: "Say you're staying either way",
             style: 4,
             close:
-              "Obviously, *he repeats, and the word comes out half a laugh.*\n\nYou know how many people in this house talk to me like that? One. The rest rehearse a soft voice and think I can't hear the seams. That's what's wrong with this place. You're the only part of it I haven't got memorized.",
+              "Ha. Stubborn.\n\nOnly Tohma talks to me like that, and he's stuck with me. You're not.\n\nFine. Stay. That's an order.",
           },
         ],
       },
       keepsake: {
         emoji: "❔",
-        line: "The one question he asked you straight, and waited on the answer.",
+        line: "The time he asked you straight why you keep coming, and waited on the answer.",
       },
     },
 
     closeFriend: {
       beats: [
-        "*There's no message first. There's a photo of a small flat box on a desk, and then, half a minute later, the words.*\n\n**{firstName}**: That's yours. Has been for weeks. I just didn't get around to saying so.",
-        "It's nothing. A signet. The house's, not the family's, so don't go building a fantasy out of it. Frostheim's, so anyone who wonders what you're doing here has an answer that isn't me.\n\nTake it before I change my mind. I change my mind constantly.",
-        "...Picked it out in March, *he adds, after a silence that clearly cost him something.* Been finding reasons not to hand it over ever since. Do whatever you want with that.",
+        "**{firstName}**: Frostheim's throwing another party Friday. Tohma's handling it. You know I don't waste air on bootlickers.",
+        "Everyone's already decided I won't show. They'd have been right, once. That was before we met in {sinceMet}.\n\nLet them keep thinking it.",
+        "You'll be there. Eight o'clock. Your schedule's not my problem. Arrange it around me.",
       ],
       choice: {
-        prompt: "Say something. Not thank you. I hate being thanked.",
+        prompt: "I'm waiting on a yes. Anything else, keep it to yourself.",
         options: [
           {
             key: "kind",
-            label: "Tell him you'll wear it",
+            label: "Say you'll be there",
             style: 3,
             close:
-              "Obviously you'll wear it. That's what it's *for*.\n\n*Then, after a moment:* ...Suits you. Wearing my house suits you. I heard how that sounded. I'm not saying it again.",
+              "Good.\n\nDon't wander off with the brats once you're inside. Stay somewhere I can find you.",
           },
           {
             key: "playful",
-            label: "Ask what took him so long",
+            label: "Ask if he's finally going",
             style: 1,
             close:
-              "I was *busy*. I wasn't busy. I was a coward about a piece of metal. Don't tell Tohma. He'll be unbearable and he'll be right.",
+              "Did I say that? I said *you'll* be there.\n\nWhere I spend my Friday is none of your business, servant.",
           },
           {
             key: "bold",
-            label: "Ask him to put it on you",
+            label: "Say you'll go if he does",
             style: 4,
             close:
-              "*The reply takes a long time.*\n\nCome up. Now, before I change my mind.\n\n*He does it in the captain's room without turning the lamp on, your hand held flat in both of his, and he takes a hell of a lot longer over it than the job needs. Neither of you mentions that.*",
+              "You've got some nerve setting terms with me.\n\n...Be there by eight. I want one person in that room who isn't surprised.",
           },
         ],
       },
       keepsake: {
-        emoji: "💍",
-        line: "The house signet he chose in March and took until now to hand over.",
+        emoji: "🥂",
+        line: "The order to show up at a party he's never once shown up to.",
       },
     },
 
     confidant: {
       beats: [
-        "*It comes through at an hour when even Frostheim is dark.*\n\n**{firstName}**: You don't repeat this. I'm not asking.",
-        "Everyone here calls me king. Not one of them picked me. I got handed a room, a title, and the little performance everyone runs before they knock: a figurehead with a good view. I've been holding the whole thing up by myself since before you showed up.\n\nThere was someone here once who didn't run it. He's not here now. I'm not getting into it.",
-        "I worked out a long time ago that nothing good sticks around. That's not self-pity, it's just the math.\n\nThen you kept turning up, and I caught myself running the math again, hoping it'd come out different. That's it. That's the whole thing. I hate every fucking word of it.",
+        "**{firstName}**: It's quiet tonight. I've been at the piano for an hour.",
+        "I kept losing my place. My head was on {lastMoment}.",
+        "Somebody should be turning pages for me. Tohma's asleep.\n\nThat's all I'm going to say.",
       ],
       choice: {
-        prompt: "Now tell me I'm being pathetic so we can both move on.",
+        prompt: "The door's open. Quit dawdling.",
         options: [
           {
             key: "kind",
-            label: "Refuse to move past it",
+            label: "Ask him to play for you",
             style: 3,
             close:
-              "*Nothing for a long time.*\n\nNo. You wouldn't, would you. *A pause.* That was the whole risk of telling you.\n\n...Stay put. I'm not done being looked at.",
+              "Tsk. You think I play on request?\n\n...Get up here first. Sit where I tell you and don't talk.",
           },
           {
             key: "playful",
-            label: "Call him extremely pathetic",
+            label: "Ask if you broke his focus",
             style: 1,
             close:
-              "Thanks. That's exactly what I asked for and I hate it.\n\nDo it again tomorrow. Apparently I need it.",
+              "Don't flatter yourself. My focus is fine.\n\nGet up here and I'll prove it.",
           },
           {
             key: "bold",
-            label: "Tell him you're not leaving",
+            label: "Say you're already outside",
             style: 4,
             close:
-              "Nobody gets to promise that, *he writes, fast, almost angry.* People say it and then the math happens anyway.\n\n*Then, much slower:* ...Say it again. I won't believe you. Say it anyway.\n\n*You say it four times before he stops asking. He never once says thank you, and he doesn't put the phone down until it's light.*",
+              "Bold, aren't you.\n\nThen why are you still typing? Get in here. Sit next to me.",
           },
         ],
       },
       keepsake: {
-        emoji: "🕰️",
-        line: "The hour he spent admitting he'd been alone in that room.",
+        emoji: "🎹",
+        line: "A page-turning job he could have done himself.",
       },
     },
 
@@ -516,6 +516,165 @@ export default {
           playful: ["Ask if he was counting", "Ask if he missed you yet"],
           bold: ["Own the long way outright", "Say you came uninvited"],
           neutral: ["Offer no explanation", "Stay, since he allows it"],
+        },
+      },
+      {
+        line: "His room is a wreck again. Papers on the floor, his jacket thrown over the lamp. He watches you notice.",
+        approach: "Start picking up his papers",
+        greeting:
+          '"Leave that. ...No. Since you\'re already down there, the pile by the desk too."',
+        responses: {
+          kind: ["Sort the pile by the desk", "Ask how he wants them filed"],
+          playful: ["Ask how it got this bad", "Say he did this on purpose"],
+          bold: ["Make him take half the pile", "Hand him the jacket to hang"],
+          neutral: [
+            "Stack them without comment",
+            "Clear the floor, say nothing",
+          ],
+        },
+      },
+      {
+        line: '"I\'m hungry," he says, not looking up. "Go order lunch." A pause. "For two."',
+        approach: "Ask who the second is for",
+        greeting:
+          "\"Who do you think? Sit. You're eating whatever I don't finish.\"",
+        responses: {
+          kind: ["Sit and eat with him", "Ask what he's in the mood for"],
+          playful: ["Say you'll finish all of it", "Ask if Tohma's invited"],
+          bold: ["Pick the menu yourself", "Say you'll eat first"],
+          neutral: ["Sit and wait for the food", "Take the seat across"],
+        },
+      },
+      {
+        line: "He hands you a folded note for the chef without explanation. Inside, in his sharp handwriting: no meat today.",
+        approach: "Take the note to the chef",
+        greeting:
+          '"Don\'t read it. ...You read it. Fine. Tell him fish, if he argues."',
+        responses: {
+          kind: ["Promise to deliver it now", "Ask if he's feeling all right"],
+          playful: ["Ask what the meat did to him", "Offer to add a dessert"],
+          bold: ["Say he can tell him himself", "Make him say please first"],
+          neutral: ["Pocket the note and go", "Take it, no questions"],
+        },
+      },
+      {
+        line: '"You look like hell," he says, frowning at you across the room. "When did you last sleep?"',
+        approach: "Tell him you're fine",
+        greeting:
+          "\"Fine. Ha. If you're going to hang around me, take better care of yourself. That's an order.\"",
+        responses: {
+          kind: ["Promise to rest tonight", "Thank him for noticing"],
+          playful: ["Ask if he's worried", "Say he looks worse"],
+          bold: ["Say he doesn't sleep either", "Order him to rest too"],
+          neutral: ["Accept the order", "Sit down a moment"],
+        },
+      },
+      {
+        line: "There's a second cup on the tray. He pushes it an inch toward you and goes back to his papers.",
+        approach: "Take the second cup",
+        greeting: '"It was going cold. Quit gawking and drink it."',
+        responses: {
+          kind: ["Top up his cup first", "Drink it and let him work"],
+          playful: ["Ask who it was really for", "Gawk at him a little longer"],
+          bold: ["Say he poured it for you", "Toast him with it"],
+          neutral: ["Drink without comment", "Hold the cup, say nothing"],
+        },
+      },
+      {
+        line: "He's reading mission documents with a cigarette going. He tilts one page toward you without a word.",
+        approach: "Read over his shoulder",
+        greeting:
+          '"Class C. Beneath me. But the vice-captain missed something. Tell me what you see."',
+        responses: {
+          kind: ["Read it through with care", "Ask what he's already caught"],
+          playful: ["Guess wildly on purpose", "Ask if this is a test"],
+          bold: ["Give your read, no hedging", "Take the whole file from him"],
+          neutral: ["Study the page in silence", "Hand it back when done"],
+        },
+      },
+      {
+        line: '"You hold your fork like a shovel. It\'s been bothering me for weeks."',
+        approach: "Ask him to show you",
+        greeting:
+          "\"Fine. Sit. If I'm teaching you, I'd better see that nose on the grindstone.\"",
+        responses: {
+          kind: ["Sit and pay attention", "Thank him for the lesson"],
+          playful: ["Hold it wrong on purpose", "Ask why it bothers him"],
+          bold: ["Say your grip is fine", "Tell him to prove his way"],
+          neutral: ["Pick up the fork", "Watch his hands"],
+        },
+      },
+      {
+        line: '"Where the hell were you yesterday?" He sounds annoyed. He also sounds like he checked.',
+        approach: "Tell him where you were",
+        greeting:
+          "\"I didn't ask so I could hear excuses. Just don't vanish without telling me again.\"",
+        responses: {
+          kind: ["Promise to tell him next time", "Say you missed him too"],
+          playful: ["Ask if he looked for you", "Say it's a secret"],
+          bold: ["Say he could have texted", "Ask why it matters to him"],
+          neutral: ["Apologize once and sit", "Let it go, stay now"],
+        },
+      },
+      {
+        line: "He's out on his balcony with a cigarette, somewhere even colder than his room. He doesn't send you back inside.",
+        approach: "Step out onto the balcony",
+        greeting:
+          '"Stand upwind. I\'m not listening to you complain about the smoke."',
+        responses: {
+          kind: ["Stand upwind like he said", "Ask if he's been out here long"],
+          playful: ["Complain about the smoke", "Ask what's so good out here"],
+          bold: ["Stand downwind anyway", "Take the cigarette from him"],
+          neutral: ["Look out at the grounds", "Keep him company, no talk"],
+        },
+      },
+      {
+        line: '"Tohma says I talk about you." He looks furious about it. "I don\'t. He\'s lying. ...Sit down."',
+        approach: "Ask what he says about you",
+        greeting: '"Nothing. Tohma exaggerates. Drop it or get out."',
+        responses: {
+          kind: ["Drop it and sit", "Say you talk about him too"],
+          playful: ["Say you'll ask Tohma", "Ask for one example"],
+          bold: ["Refuse to drop it", "Say Tohma isn't lying"],
+          neutral: ["Sit down as told", "Change the subject"],
+        },
+      },
+      {
+        line: "He tosses you something small without warning. A wrapped chocolate, imported, the kind nobody at Darkwick can buy.",
+        approach: "Catch what he throws",
+        greeting:
+          '"I\'m in a good mood today. Eat it before I change my mind."',
+        responses: {
+          kind: ["Thank him for the gift", "Save it for later"],
+          playful: ["Ask what put him in a mood", "Offer him half"],
+          bold: ["Ask for another one", "Eat it in front of him"],
+          neutral: ["Pocket the chocolate", "Unwrap it, say nothing"],
+        },
+      },
+      {
+        line: '"You have plans tonight?" He waits. "Think about whether they\'re more important than me before you answer."',
+        approach: "Weigh your plans out loud",
+        greeting:
+          "\"Take your time. I'm not in a hurry. ...That's a lie. Answer.\"",
+        responses: {
+          kind: ["Say he comes first tonight", "Offer to move your plans"],
+          playful: ["Pretend to think it over", "Ask what he's offering"],
+          bold: ["Say your plans win", "Tell him to ask, not order"],
+          neutral: ["Say you're free", "Tell him your plans"],
+        },
+      },
+      {
+        line: '"Wake me tomorrow." He says it like it\'s already been decided. "Not Tohma. You. Seven."',
+        approach: "Agree to wake him",
+        greeting: '"Seven means seven. Late and you\'re scrubbing the floors."',
+        responses: {
+          kind: ["Promise to bring his tea", "Say you'll be there at seven"],
+          playful: [
+            "Offer six-thirty to annoy him",
+            "Ask what Tohma did wrong",
+          ],
+          bold: ["Say eight or nothing", "Ask what you get for it"],
+          neutral: ["Nod and note the time", "Set an alarm in front of him"],
         },
       },
     ],

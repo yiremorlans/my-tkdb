@@ -170,7 +170,7 @@ async function resolveSceneVars(userId, character, now = new Date()) {
     favResponse: favouredResponsePhrase(character),
     // Read after "picking up from" or similar, so it has to be a noun phrase
     // even when there is no milestone to name.
-    lastMoment: 'the last time',
+    lastMoment: 'the last time we were together',
     since: 'a while',
     // Falls back to the current month if the relationship row can't be read —
     // wrong, but never absent, and nobody but the player will notice.
