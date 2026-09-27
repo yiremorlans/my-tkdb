@@ -84,8 +84,8 @@ export default {
     closeFriend: {
       beats: [
         "**{firstName}**: Five thirty tomorrow. East gate. Don't ask why yet, just say yes.",
-        "I run alone every morning, an hour, before the house is awake enough to have opinions about it. Nobody's ever been invited. It never once occurred to me that anybody should be.",
-        "Here's the part I wasn't going to send: I've known you since {sinceMet}, and you've been running through my head for most of that hour lately, which does nothing good for my splits. So I decided the efficient fix was to stop thinking about you out there and just have you next to me instead.\n\nCall it training. Call it whatever gets you up. I want an hour that isn't a job, or a mission, and doesn't end with either of us owing the other one a report.",
+        "You know I jog every morning. I've told you to try it more than once. It's the only hour of the day nobody needs anything from me.",
+        "Ever since we met in {sinceMet}, a good chunk of that hour has gone to thinking about you, which is terrible for my pace. So I figured I'd just bring you along.\n\nCall it training. I want an hour that isn't a job, or a mission, and doesn't end with either of us owing the other one a report.",
       ],
       choice: {
         prompt: "Well? I already set two alarms, cutie. Say you'll join me.",
@@ -159,73 +159,73 @@ export default {
 
     devoted: {
       beats: [
-        "**{firstName}**: I canceled the show.",
-        "Full house. Two months of rehearsal. Romeo's already going to bill me for the room, and I have not canceled a performance in my life, not for illness, not for a funeral, not once.\n\nYou were in the lower halls when it went wrong and nobody could tell me where. So I dropped the stigma mid-transformation in front of a hundred and forty people and I walked off, and I did not think about it. That's the part I want you to have: I did not think about it.",
-        "I've spent my whole life being the one who decides what gets sacrificed. I'm extremely good at it. I've sacrificed sleep, friendships, whole years of being a person, and I've never once resented any of it.\n\nTonight somebody else did the deciding and it wasn't me, and it turns out that person is you, and you weren't even in the room.",
+        "**{firstName}**: I owe you a confession about that fitting.",
+        "When I fitted you for the silk, I took one measurement I didn't need. I said it was for the costume jewelry.\n\nIt wasn't. I had a silver ring made for you. It's been sitting in my desk drawer for weeks while I waited for the right moment, and I've stopped waiting.",
+        "Somewhere between the morning jogs together and that fitting, you stopped being someone I fit into my schedule, and I started wanting to clear whole days just to spend them with you. You're the only person I stop checking the time with, cutie.\n\nI'm not asking you anything with it. Not yet. I'm just done keeping you to the hours nobody's watching. I want {house} to know about us, and if anyone asks, I'll tell them.",
       ],
       choice: {
         prompt:
-          "Tell me I was an idiot. Nobody else is going to, they're all too polite.",
+          "Can I come see you now? I've put this off long enough, and I don't want to spend another night on it.",
         options: [
           {
             key: "kind",
-            label: "Tell him you're all right",
+            label: "Say he's been on your mind",
             style: 3,
             close:
-              "I know. I've known for an hour.\n\nSay it in person. I'm outside. I've been outside for a while and I couldn't work out how to knock without it meaning something.",
+              "Heh. Then we've both had a terrible week for concentrating.\n\nA hundred costume changes, and I think my hands are going to shake on this one.",
           },
           {
             key: "playful",
-            label: "Ask what Romeo billed him",
+            label: "Only if it isn't costume",
             style: 1,
             close:
-              "More than the show made. He put it in writing. He put it in an *acronym*.\n\nWorth it. Don't tell him that, he'll raise it.",
+              "It is not. I checked the silver twice.\n\nCostume jewelry comes off when the curtain drops. I'm heading over right away.",
           },
           {
             key: "bold",
-            label: "Tell him it wasn't idiotic",
+            label: "Say you're his",
             style: 4,
             close:
-              "*He's at the door before you've finished, still half in costume with the paint smudged, having very clearly walked straight there.*\n\n*He doesn't say anything for a while. He just puts both hands on your shoulders, holds you at arm's length to check, and then gives up entirely and pulls you in.*\n\n> A lifetime on that stage,\n\n*he says into your hair.*\n\n> ...and one of you.",
+              "...I'm already out the door. Say it again when I'm there, so I can hear it.",
           },
         ],
       },
       keepsake: {
-        emoji: "🎟️",
-        line: "A ticket to a show that didn't happen.",
+        emoji: "💍",
+        line: "A silver ring sized at a fitting he said was for the costume.",
       },
     },
 
     soulbound: {
       beats: [
-        "**{firstName}**: No nickname on this one. You'll notice, and I want you to.",
-        "{timesMet} times. I've counted, which I don't do, because I don't keep count of people. Keeping count is how you end up with a ledger of who owes what and I have quite enough of those.\n\nYou're the only person in my life who isn't on one. Not on the debit side, not on the credit side. You're just there, at five thirty, at the gate.",
-        "I adapt to everybody. I told you that months ago and you told me to stop and I said I didn't know how.\n\nI've worked out that I do know how. I know exactly how. It's this: it's whoever I am at six in the morning halfway round the water with the stage nowhere on me and nothing to run. That's the seam. You've been looking at it for a year.",
-        "So: I love you.\n\nNot the captain, not the Venus of Dionysia, not whichever version the room ordered. The one who's out of breath and hasn't got a line ready.\n\nYou can take that at whatever speed you like. I've spent years making decisions for a house full of people. I'm quite happy to not make this one.",
+        "**{firstName}**: No nickname tonight. I'd like you to notice that.",
+        "It's past one. The house is finally asleep, the budget balances, and there's nothing left on my desk to hide behind.\n\nI used to like this hour. Work done, a jog, a set before bed, lights out, nobody needing anything. I was used to quiet nights. I told myself they were the reward.",
+        "{timesMet} times with you, and I can't stand them anymore. I made hot milk for two again tonight, out of habit, and drank both. The other side of the bed has started to feel like a room I keep walking past.\n\nI lie here thinking about your hand with my ring on it, and how long I'd keep you if you were here. The answer keeps getting longer. That isn't something a captain should put in writing. I'm putting it in writing.",
+        "So, plainly: I love you.\n\nNot the captain, not the Venus of Dionysia, not whichever version the room ordered. The man at one in the morning who's finished every task on the list and still can't sleep, because you're not in it.\n\nI want the quiet nights with you in them. All of them. Take this at whatever speed you like. I've made enough decisions for other people. This one's yours.",
       ],
       choice: {
         prompt:
-          "Your call. Entirely, and I mean that more than I've meant anything.",
+          "I thought I was done with feelings like this. So then. How are you going to take responsibility?",
         options: [
           {
             key: "answered",
             label: "Say it back",
             style: 3,
             close:
-              "...East gate. Now. I know it's not five thirty.\n\n*He's there in the dark with no shoes on properly and no explanation for that, and when you get to him he laughs, a real one, cracked open, nothing performed anywhere in it.*\n\n> Say it out here,\n\n*he says, hands either side of your jaw.*\n\n> Where there's nobody to be a captain in front of.",
+              "...Say it again. Slower.\n\nI'm coming to get you. Nobody crosses campus alone at this hour, not even to get to me. Grab a coat, and don't bother bringing a reason to leave early.\n\nThe milk can go cold. I've been careful with you for a year. I don't intend to be careful tonight.",
           },
           {
             key: "held",
             label: "Ask him to give you time",
             style: 2,
             close:
-              "Of course. Take it.\n\n*And then, because he cannot help himself:* And don't manage me about it. If you decide no, say no. I've had a lifetime of people managing me and I'd rather have one person who doesn't.\n\nThe gate's at five thirty. It was at five thirty before any of this and it'll be at five thirty after. I'll wait. That part isn't a favor, it's just where I am.",
+              "Of course. Take it.\n\nJust don't manage me about it. If it's no, say no. I've had a lifetime of people handling me gently, and I'd rather have one person who doesn't.\n\nI'll still pour the second cup. That isn't pressure. It's just where I am at one in the morning now.",
           },
         ],
       },
       keepsake: {
-        emoji: "📇",
-        line: "The one message that didn't start with a nickname.",
+        emoji: "🥛",
+        line: "The second cup of hot milk, poured for her out of habit.",
       },
     },
   },

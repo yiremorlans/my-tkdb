@@ -439,6 +439,24 @@ scored — they're a record of a moment. Content lives in each scene's `keepsake
 field (§5.1), which every scene is required to carry, so every completion
 grants something.
 
+**Every Devoted keepsake is a promise ring (`💍`).** Devoted is where each
+character gives the MC a promise ring, and the ring means one thing across the
+whole roster: *this relationship is not a secret anymore.* It is worn where the
+people they usually protect their regard in front of can see it, which is the
+Devoted anchor's brief (§5.2) made into an object. What stays each character's
+own is everything around it: how they got it, how they hand it over, what they
+say about it, and how much it costs them to be seen having given it (§5.5).
+
+Two limits, because Soulbound sits above it:
+
+- **A promise, not a proposal.** The ring must not spend the declaration
+  Soulbound is built on. For a character whose Soulbound scene is where they say
+  it plainly, the ring is given *before* they have the words: "I'm not asking
+  you anything with it. Not yet."
+- **Only the keepsake line is fixed in kind.** The emoji is always `💍` and the
+  line always names the ring, but the line is still in the character's voice
+  and still unique across the game (§5.4), so no two rings are described alike.
+
 ### 4.3 Remembered choices → dialogue callbacks
 
 > **Stale (2026-09-19):** this section was written against the conditional
@@ -557,6 +575,20 @@ genuine two-way beat — a confession answered, or held. Both paths get a full
 authored ending, and the pick is a permanent `choice_key` that the `bound`
 dialogue tier reads forever. It's the one scene allowed to feel like a finale.
 
+It is also **the spiciest scene in the ladder: the peak of yearning.** Devoted
+made the relationship public; Soulbound makes it plain that they *want* her,
+not only love her. Every Soulbound scene establishes that the character wants
+intimacy with the MC: the ache of her not being there, what they think about
+when she isn't, what they would do with the night if she were. Longing that
+reads as physical, stated by someone who has stopped hiding it. The heat is
+still restraint and implication (§5.5), never graphic, but this is the one
+scene where the reader should feel the want in it rather than only the regard.
+Jo's is the reference: a one-in-the-morning text built on his own Good Night
+lines (hot milk for two, "I thought I was done with feelings like this… So
+then, how are you going to take responsibility?"), where the quiet nights he
+used to call the reward are unbearable without her, and the `answered` close
+ends on "I don't intend to be careful tonight."
+
 ### 4.8 Rift scenes (only if `negative-affinity` ships)
 
 That spec's negative crossings — `Frenemy` / `Rival` / `Adversary`, then the
@@ -640,7 +672,7 @@ scene is measured against, never what it is about.
 | Friend | `{favResponse}` | A pattern in *you*, which they could only have by watching. The tier's whole brief, in one variable. |
 | Close Friend | `{sinceMet}` | The month it started. The first level that reaches past the recent past. |
 | Confidant | `{lastMoment}` | One particular thing that happened between the two of you, named. Not a statistic: an event only you two were at. |
-| Devoted | `{house}` | Everyone else. The only anchor that measures the world rather than the pair, because Devoted is where the private thing becomes visible and costs something in front of the people whose regard they usually protect. |
+| Devoted | `{house}` | Everyone else. The only anchor that measures the world rather than the pair, because Devoted is where the private thing becomes visible and costs something in front of the people whose regard they usually protect. It is the promise ring's (§4.2) whole meaning: the relationship stops being a secret, in front of their house. |
 | Soulbound | `{timesMet}` | The Acquaintance number again, carrying the opposite weight. The loop closing is the point; do not swap it for a fresh variable. |
 
 `{timesMet}` deliberately appears twice. `{house}` and the others stay available
@@ -721,8 +753,8 @@ what gives away that the moment is not really theirs.
 | Friend | They have been paying attention to you while having no particular reason to, and they let you know it. |
 | Close Friend | You are let inside something the rest of their life does not get. What that something is, is theirs. |
 | Confidant | You get the part they manage everyone else away from. Reached for on purpose, and not at a time that suits them. |
-| Devoted | They act on it at a cost, and the cost shows. It stops being deniable as anything else. |
-| Soulbound | Said plainly, and answered. Four beats and a real fork — both endings authored in full, neither one the wrong one. |
+| Devoted | They act on it at a cost, and the cost shows. It stops being deniable as anything else. They give her a promise ring (§4.2): the relationship is no longer a secret. |
+| Soulbound | Said plainly, and answered. The height of yearning: they want her, and say so, and the want reads as wanting intimacy with her, not only closeness (§4.7). Four beats and a real fork — both endings authored in full, neither one the wrong one. |
 
 **A level can be reached on any axis.** Closeness is not only confession. It is
 also what they let you see, what they let you do, what they stop performing,
@@ -730,7 +762,8 @@ how near they let you stand, what they hand over without explaining, and what
 they quietly stop protecting themselves from. A character whose ladder climbs
 almost entirely on one axis is fine, and usually better than one that ticks
 every box — Jo's runs mostly on proximity (an hour running beside him, then his
-hands on her at a fitting, then an embrace, then her face in his hands), while
+hands on her at a fitting, then a ring he sized at that fitting, then a one in
+the morning text about the other side of his bed), while
 a character who touches nobody has to climb on something else entirely. Read
 the table as distance closed, never as a checklist of props: a scene with no
 object handed over and no physical contact anywhere in it is still a Close
@@ -749,7 +782,9 @@ at Acquaintance. Take the tier off the distance closed, not the temperature.
 What that is **not**: explicit. The heat is in restraint — a hand not let go
 of, someone crossing campus at three in the morning — never in anything
 graphic. Keep it at the register of the game's own romance (longing, closeness,
-being chosen) and let the reader fill in the rest.
+being chosen) and let the reader fill in the rest. Soulbound is where that
+register runs hottest (§4.7): the want for intimacy is stated, the details are
+left to the reader.
 
 **Voice.**
 
