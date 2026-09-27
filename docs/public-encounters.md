@@ -1190,7 +1190,7 @@ its own clause:
 
 ```
 {reaction}
-+{gain} — {level.emoji} **{level.name}**  ·  *picking up after {milestone.hint} — a warmer welcome (+{boostsSpent})*
++{gain} — {level.emoji} **{level.name}**  ·  *picking up after {milestone.hint}, a warmer welcome (+{boostsSpent})*
 ```
 
 `{boostsSpent}` is always `1` at the current cap, so the bonus shown is always
@@ -1245,7 +1245,7 @@ export const ENCOUNTER_MILESTONES = {
     minTier: 'close', emoji: '🌌', bucket: 'close',
     label: 'Stayed up talking past curfew',
     afterline: 'You lost track of the hour completely.',
-    hint: 'last night',
+    hint: 'that late night',
   },
   // add freely — every entry needs { minTier, emoji, bucket, label, afterline, hint }
 };

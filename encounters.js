@@ -744,13 +744,13 @@ async function describeBoost(userId, character, boostsSpent) {
         firstName: character.firstName,
         house: character.house || 'Darkwick',
       });
-      return `picking up after ${hint} — ${suffix}`;
+      return `picking up after ${hint}, ${suffix}`;
     }
   } catch (err) {
     console.error('Error reading latest encounter milestone:', err);
   }
 
-  return `picking up where you left off — ${suffix}`;
+  return `picking up where you left off, ${suffix}`;
 }
 
 // --- /affinity ---------------------------------------------------------------

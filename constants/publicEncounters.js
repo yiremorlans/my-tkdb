@@ -276,7 +276,7 @@ const CAMPUS_MILESTONES = {
     bucket: "new",
     label: "Split whatever the vending machine gave up",
     afterline: "The machine ate your money, so they bought instead.",
-    hint: "that vending machine run",
+    hint: "the vending machine that ate your money",
   },
 
   borrowed_book: {
@@ -285,7 +285,7 @@ const CAMPUS_MILESTONES = {
     bucket: "new",
     label: "Borrowed a book from them",
     afterline: "They lent you a book they'd just finished.",
-    hint: "that book",
+    hint: "that book you borrowed",
   },
   helped_search: {
     minTier: "known",
@@ -293,7 +293,7 @@ const CAMPUS_MILESTONES = {
     bucket: "new",
     label: "Helped them find something they'd lost",
     afterline: "They'd lost something on the way across campus. You stayed and helped look until it turned up.",
-    hint: "that search",
+    hint: "that search you helped with",
   },
 
   // --- Friend and up: choosing each other's company ---
@@ -303,7 +303,7 @@ const CAMPUS_MILESTONES = {
     bucket: "warm",
     label: "Walked back to the dorms together",
     afterline: "You walked back toward the dorms, in no hurry.",
-    hint: "that walk back",
+    hint: "that walk back to the dorms",
   },
   shared_umbrella: {
     minTier: "warm",
@@ -318,16 +318,16 @@ const CAMPUS_MILESTONES = {
     emoji: "🎏",
     bucket: "warm",
     label: "Ran a festival stall together",
-    afterline: "You got roped into the same stall for the whole afternoon.",
-    hint: "the festival",
+    afterline: "You both got roped into working the same festival stall all afternoon.",
+    hint: "that shift at the stall",
   },
   shared_earbuds: {
     minTier: "warm",
     emoji: "🎧",
     bucket: "warm",
     label: "Shared a pair of earbuds on the Galaxy Express",
-    afterline: "You sat together waiting for the Galaxy Express, one earbud each.",
-    hint: "that train ride",
+    afterline: "You sat together on the Galaxy Express, one earbud each.",
+    hint: "sharing earbuds on the Galaxy Express",
   },
 
   same_table: {
@@ -336,7 +336,7 @@ const CAMPUS_MILESTONES = {
     bucket: "warm",
     label: "Ate lunch at the same table",
     afterline: "The only free seat was at their table. They didn't mind.",
-    hint: "that lunch",
+    hint: "that lunch together",
   },
 
   // --- Close Friend and up: skipping things, going somewhere private ---
@@ -347,7 +347,7 @@ const CAMPUS_MILESTONES = {
     label: "Skipped a {house} briefing with them",
     afterline:
       "Neither of you made the next briefing. Nobody came looking, either.",
-    hint: "that briefing you both missed",
+    hint: "that skipped briefing",
   },
   movie_night: {
     minTier: "spark",
@@ -364,7 +364,7 @@ const CAMPUS_MILESTONES = {
     bucket: "spark",
     label: "Ate lunch on the roof, away from everyone",
     afterline: "Lunch on the roof. Nobody knew where either of you were.",
-    hint: "the roof",
+    hint: "that rooftop lunch",
   },
 
   campus_bench: {
@@ -381,7 +381,7 @@ const CAMPUS_MILESTONES = {
     bucket: "spark",
     label: "Watched a storm from inside",
     afterline: "A storm came through. You watched it from the window together.",
-    hint: "that storm",
+    hint: "watching that storm together",
   },
   courtyard_stars: {
     minTier: "spark",
@@ -389,7 +389,7 @@ const CAMPUS_MILESTONES = {
     bucket: "spark",
     label: "Watched the stars from the courtyard",
     afterline: "You watched the sky until it got too cold to stay.",
-    hint: "the stars",
+    hint: "that night under the stars",
   },
 
   // --- Confidant and up: hours nobody else gets ---
@@ -399,7 +399,7 @@ const CAMPUS_MILESTONES = {
     bucket: "close",
     label: "Stayed up talking past curfew",
     afterline: "You lost track of the hour completely.",
-    hint: "last night",
+    hint: "that late night",
   },
   late_drive: {
     minTier: "close",
@@ -433,7 +433,7 @@ const CAMPUS_MILESTONES = {
     bucket: "close",
     label: "Took the Galaxy Express together",
     afterline: "You rode the Galaxy Express together, no stop in mind.",
-    hint: "that ride on the Galaxy Express",
+    hint: "that Galaxy Express ride",
   },
   lamplit_steps: {
     minTier: "close",
@@ -449,7 +449,7 @@ const CAMPUS_MILESTONES = {
     bucket: "close",
     label: "Stayed on a call until one of you fell asleep",
     afterline: "You talked until one of you fell asleep.",
-    hint: "that call",
+    hint: "that call you fell asleep on",
   },
 
   // --- Devoted and up ---
@@ -467,7 +467,7 @@ const CAMPUS_MILESTONES = {
     bucket: "bound",
     label: "Found a note they'd left for you",
     afterline: "There was a note waiting for you, in their handwriting.",
-    hint: "that note",
+    hint: "that note waiting for you",
   },
   first_snow: {
     minTier: "bound",
@@ -533,7 +533,7 @@ const BENKEI_MILESTONES = {
     label: "Helped carry a delivery back to the store",
     afterline:
       "He was carrying too much again. You took half of it back to the store with him.",
-    hint: "that delivery",
+    hint: "that delivery you helped carry",
   },
   benkei_snack: {
     minTier: "new",
@@ -542,7 +542,7 @@ const BENKEI_MILESTONES = {
     label: "Got handed a snack he wouldn't take money for",
     afterline:
       "He found a snack for you and wouldn't hear a word about paying.",
-    hint: "that snack",
+    hint: "that snack on the house",
   },
 
   // --- Acquaintance and up ---
@@ -573,7 +573,7 @@ const BENKEI_MILESTONES = {
     label: "Heard about his advising days",
     afterline:
       "He told you a little about his advising days, then changed the subject to snacks.",
-    hint: "those old stories",
+    hint: "those advising stories",
   },
   benkei_walk_back: {
     minTier: "warm",
@@ -581,7 +581,7 @@ const BENKEI_MILESTONES = {
     bucket: "warm",
     label: "Walked back to the store together",
     afterline: "You walked back to the store with him, in no hurry.",
-    hint: "that walk back",
+    hint: "that walk back to the store",
   },
   benkei_umbrella: {
     minTier: "warm",
@@ -636,7 +636,7 @@ const BENKEI_MILESTONES = {
     bucket: "spark",
     label: "Got a book recommendation from his teaching days",
     afterline: "He recommended a book he used to assign.",
-    hint: "that book he recommended",
+    hint: "that book from the old syllabus",
   },
 
   // --- Confidant and up ---
@@ -672,7 +672,7 @@ const BENKEI_MILESTONES = {
     bucket: "close",
     label: "Saw something from his advising days",
     afterline: "He showed you something he kept from his advising days.",
-    hint: "what he kept",
+    hint: "that keepsake from the advising days",
   },
   benkei_stock_list: {
     minTier: "close",
@@ -680,7 +680,7 @@ const BENKEI_MILESTONES = {
     bucket: "close",
     label: "Got your favorites on the stock list",
     afterline: "What you like is on the stock list now.",
-    hint: "the stock list",
+    hint: "your spot on the stock list",
   },
 
   // --- Devoted and up ---
@@ -699,7 +699,7 @@ const BENKEI_MILESTONES = {
     label: "Caught him humming your song",
     afterline:
       "He was humming the song you like. He didn't stop when you noticed.",
-    hint: "that song",
+    hint: "hearing your song",
   },
 };
 

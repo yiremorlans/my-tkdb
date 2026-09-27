@@ -123,7 +123,7 @@ export default {
       beats: [
         "**{firstName}**: Do you have a little time this afternoon? There's an outfit I want you to try on, deep green silk, for the show. I'll be waiting at the office.",
         "To save you the question, it can't be one of the storeroom artifacts. Those run one size for the whole cast and call it close enough. This one needs it exact, and I don't trust anyone else's hands near you for that part.\n\nWould you come alone? I'd rather it just be the two of us for this one.",
-        "Also, if I'm honest...\n\nIt's the one hour this week where nobody needs anything from me except you, standing still while I take my time with you. I don't get many hours like that, and I don't intend to share a single minute of it.",
+        "Also, if I'm honest...\n\nI've thought about {lastMoment} more than I've thought about the show this week. That's not a complaint. It's why I want this hour: nobody needing anything from me except you, standing still while I take my time with you. I don't intend to share a single minute of it.",
       ],
       choice: {
         prompt: "So? Office, three o'clock, if that works for you, cutie.",
