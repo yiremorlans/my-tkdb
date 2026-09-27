@@ -143,7 +143,7 @@ export function claimCommandInvoke(userId, command, now = Date.now()) {
     // can't itself move the cooldown or the count.
     return {
       allowed: false,
-      reason: `One moment — you can use /${command} again in ${formatDuration(required - idleGap)}.`,
+      reason: `You can use /${command} again in ${formatDuration(required - idleGap)}.`,
     };
   }
 

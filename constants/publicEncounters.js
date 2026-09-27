@@ -925,5 +925,5 @@ export function generateEncounter(now = new Date(), overrides = {}) {
 // the Discord message.
 export function buildEncounterContent(teaser, expiresAt) {
   const expiresUnix = Math.floor(new Date(expiresAt).getTime() / 1000);
-  return `${teaser}\n\nType \`/call <name>\` to reach them — you have until <t:${expiresUnix}:R>.`;
+  return `${teaser}\n\nType \`/call <name>\` to reach them. You have until <t:${expiresUnix}:R>.`;
 }

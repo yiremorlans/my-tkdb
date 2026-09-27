@@ -557,7 +557,7 @@ describe('errands', () => {
     seedErrand();
 
     const hit = await buildResponseResultMessage('user-a', 'mio', 'kind');
-    assert.match(hit.content, /Signature collected — 1 \/ 2/);
+    assert.match(hit.content, /Signature collected: 1 \/ 2/);
 
     // A non-target student of the same house does nothing. There are exactly N
     // target rows and filing needs all of them, so the reward is always N.

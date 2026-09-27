@@ -480,9 +480,9 @@ export async function handleEncountersAdmin(body) {
 
     const lines = [
       isMove
-        ? `Encounters have moved to <#${channelId}> — they'll stop posting in <#${previousChannelId}>, and anything still live comes with them.`
+        ? `Encounters have moved to <#${channelId}>. They'll stop posting in <#${previousChannelId}>, and anything still live comes with them.`
         : `Encounters will post in <#${channelId}>.`,
-      "They'll start showing up on their own. When is deliberately not shown to anyone — including you, here — so nobody can wait in the channel for one.",
+      "They'll start showing up on their own. When is deliberately not shown to anyone (including you) so nobody can wait in the channel for one.",
       `Each one stays callable for ${ENCOUNTER_WINDOW_MINUTES} minute${ENCOUNTER_WINDOW_MINUTES === 1 ? '' : 's'} once it appears.`,
       'I need **View Channel**, **Send Messages**, **Attach Files** and **Embed Links** there.',
     ];
@@ -630,7 +630,7 @@ export async function handleCall(body, now = new Date()) {
     const remaining = getGuessCooldownRemaining(encounter.id, userId, now.getTime());
     if (remaining > 0) {
       return {
-        reply: ephemeral(`Give it a moment — try again in ${Math.ceil(remaining / 1000)}s.`),
+        reply: ephemeral(`Give it a moment. Try again in ${Math.ceil(remaining / 1000)}s.`),
         afterReply: null,
       };
     }

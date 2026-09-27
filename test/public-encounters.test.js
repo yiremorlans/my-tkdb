@@ -345,11 +345,11 @@ describe('/call', () => {
 
     await handleCall(callBody({ guess: 'jin' }), NOW);
     const blocked = await handleCall(callBody({ guess: 'leo' }), new Date(NOW.getTime() + 3000));
-    assert.match(blocked.reply.content, /try again in 7s/);
+    assert.match(blocked.reply.content, /Try again in 7s/);
 
     await handleCall(callBody({ userId: 'user-2', guess: 'asdfgh' }), NOW);
     const free = await handleCall(callBody({ userId: 'user-2', guess: 'jin' }), NOW);
-    assert.ok(!/try again in/.test(free.reply.content), 'gibberish costs nothing');
+    assert.ok(!/Try again in/.test(free.reply.content), 'gibberish costs nothing');
   });
 
   it('grants a boost and a milestone without moving affinity', async () => {

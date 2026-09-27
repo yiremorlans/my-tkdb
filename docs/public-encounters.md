@@ -613,7 +613,7 @@ already carries the how and the deadline.
 ```
 {teaser}
 
-Type `/call <name>` to reach them — you have until <t:{expiresUnix}:R>.
+Type `/call <name>` to reach them. You have until <t:{expiresUnix}:R>.
 ```
 
 No buttons/components (it's answered with a slash command).
@@ -670,7 +670,7 @@ Order of checks:
    - matches the encounter's character → correct (step 7)
 6. **Wrong real-name guess:**
    - in-memory cooldown check (§8). Within 10s of this user's last wrong guess
-     for this encounter → `Give it a moment — try again in ${n}s.`
+     for this encounter → `Give it a moment. Try again in ${n}s.`
    - otherwise set `guessCooldown[`${encounterId}:${userId}`] = Date.now()` and
      reply with an alternating line from `WRONG_GUESS_LINES`.
    - after `res.send`: append to the guesses log (fire-and-forget).

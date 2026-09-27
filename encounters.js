@@ -719,8 +719,8 @@ async function maybeSignErrandTarget(userId, characterId) {
 
     const { signed, total } = progress;
     return signed >= total
-      ? `📋 Signature collected — ${signed} / ${total}. File it with \`/docs\`.`
-      : `📋 Signature collected — ${signed} / ${total}.`;
+      ? `📋 Signature collected: ${signed} / ${total}. File it with \`/docs\`.`
+      : `📋 Signature collected: ${signed} / ${total}.`;
   } catch (err) {
     console.error('Error signing errand target:', err);
     return null;
