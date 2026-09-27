@@ -153,7 +153,11 @@ export function claimCommandInvoke(userId, command, now = Date.now()) {
 }
 
 // Wipe this user's invoke-throttle state for one command, back to a
-// completely free first invoke. Two callers, two different reasons it's safe:
+// completely free first invoke. Three callers, each safe for its own reason:
+//   - The command handler claimed the slot and then checkCommandLimit turned
+//     the user away on the 3h cooldown (see app.js). Nothing was rolled, so
+//     there's nothing to reroll: a user checking their clock shouldn't be
+//     locked out of checking it again.
 //   - The command handler claimed the slot via claimCommandInvoke and then
 //     failed before producing anything (e.g. buildMeetPickMessage or
 //     buildRoamDialogueMessage threw). Without this, a single failed /roam or

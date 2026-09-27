@@ -277,6 +277,11 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         try {
           const limit = await checkCommandLimit(userId, 'roam');
           if (!limit.allowed) {
+            // Turned away by the 3h cooldown: no picker was shown, so there
+            // was nothing to reroll. Hand the invoke-throttle slot back, so
+            // checking the cooldown clock stays free and never stacks a
+            // flood cooldown on top of it.
+            releaseCommandInvoke(userId, 'roam');
             // The one place a banked mission reward is offered: a button to
             // spend it, attached only when the user is actually being turned
             // away and actually has one (docs/scheduled-missions.md §13).
@@ -339,6 +344,11 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         try {
           const limit = await checkCommandLimit(userId, 'meet');
           if (!limit.allowed) {
+            // Turned away by the 3h cooldown: no picker was shown, so there
+            // was nothing to reroll. Hand the invoke-throttle slot back, so
+            // checking the cooldown clock stays free and never stacks a
+            // flood cooldown on top of it.
+            releaseCommandInvoke(userId, 'meet');
             // The one place a banked mission reward is offered: a button to
             // spend it, attached only when the user is actually being turned
             // away and actually has one (docs/scheduled-missions.md §13).
