@@ -785,7 +785,7 @@ function renderMomentsTogether(character, counts) {
     .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
     .map(([type, count]) => {
       const milestone = ENCOUNTER_MILESTONES[type];
-      return `${milestone.emoji} ${fillTemplate(milestone.label, vars)} — ×${count}`;
+      return `${milestone.emoji} ${fillTemplate(milestone.label, vars)} ×${count}`;
     });
 
   if (rows.length === 0) return null;

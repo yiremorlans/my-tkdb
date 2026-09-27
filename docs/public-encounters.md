@@ -1279,10 +1279,10 @@ character.
 Rui Mizuki — Close Friend 💖
 
 Moments together
-📋 Signed off a Vagastrom report right before they vanished — ×3
-☕ Coffee breaks together — ×4
-🎬 Skipped a briefing to watch a movie in Rui's room — ×2
-🌧️ Shared an umbrella across the courtyard — ×1
+📋 Signed off a Vagastrom report right before they vanished ×3
+☕ Coffee breaks together ×4
+🎬 Skipped a briefing to watch a movie in Rui's room ×2
+🌧️ Shared an umbrella across the courtyard ×1
 ```
 
 One `getEncounterMilestoneCounts(userId, characterId)` read per character
