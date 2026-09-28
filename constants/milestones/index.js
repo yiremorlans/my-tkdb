@@ -30,13 +30,14 @@ import shared from "./shared.js";
 import benkei from "./benkei.js";
 import edward from "./edward.js";
 import elias from "./elias.js";
+import haru from "./haru.js";
 import jin from "./jin.js";
 import rui from "./rui.js";
 import shion from "./shion.js";
 import towa from "./towa.js";
 import zenji from "./zenji.js";
 
-const CHARACTER_MILESTONES = { benkei, edward, elias, jin, rui, shion, towa, zenji };
+const CHARACTER_MILESTONES = { benkei, edward, elias, haru, jin, rui, shion, towa, zenji };
 
 // new < known < warm < spark < close < bound
 const TIER_RANK = { new: 0, known: 1, warm: 2, spark: 3, close: 4, bound: 5 };
