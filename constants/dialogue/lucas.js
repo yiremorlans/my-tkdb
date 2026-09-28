@@ -539,6 +539,149 @@ export default {
           neutral: ["Walk with him quietly", "Walk on without talking"],
         },
       },
+      {
+        line: '"In Japan they say you meet evil spirits at twilight," he says, already pulling his coat on. "Shall we go and find out?"',
+        approach: "Go with him",
+        greeting: "\"Stay on my left. If anything does turn up, I'll deal with it.\"",
+        responses: {
+          kind: ["Say you trust him", "Ask him to be careful too"],
+          playful: ["Bet him nothing turns up", "Ask if he's hoping for one"],
+          bold: ["Say you'll handle half", "Take the lead yourself"],
+          neutral: ["Fall in on his left", "Walk out with him"],
+        },
+      },
+      {
+        line: "\"Jin's been calling you to his room a lot lately.\" His brow creases. \"Is everything all right?\"",
+        approach: "Tell him it's fine",
+        greeting: "\"If he's ever unkind to you, say the word. I'll have a word with him myself.\"",
+        responses: {
+          kind: ["Thank him for looking out", "Say Jin's not so bad"],
+          playful: ["Say Jin needs a word anyway", "Ask what word he'd have"],
+          bold: ["Say you can handle Jin", "Offer to go with him next time"],
+          neutral: ["Say it's just errands", "Let the subject drop"],
+        },
+      },
+      {
+        line: '"Professor Dante scolded me for defeating the mock anomaly." He looks honestly baffled. "I believe I made the right call."',
+        approach: "Ask what happened",
+        greeting: '"It was meant to be a drill. But it went for a first-year, so I stopped it. Was that wrong?"',
+        responses: {
+          kind: ["Say he did the right thing", "Say the first-year's lucky"],
+          playful: ["Ask if he broke the anomaly", "Suggest losing next time"],
+          bold: ["Say Dante's wrong", "Tell him to argue his case"],
+          neutral: ["Say drills have rules", "Hear him out"],
+        },
+      },
+      {
+        line: 'He has two textbooks open side by side, frowning. "Emrys and Darkwick disagree on this. I wonder which is correct."',
+        approach: "Look at both pages",
+        greeting: "\"You've a sharp eye. Tell me what you make of it. I'd value a second opinion.\"",
+        responses: {
+          kind: ["Work through it with him", "Say both could be right"],
+          playful: ["Say Darkwick, out of loyalty", "Suggest asking an anomaly"],
+          bold: ["Pick a side and defend it", "Say Emrys has it wrong"],
+          neutral: ["Read both passages", "Compare the diagrams"],
+        },
+      },
+      {
+        line: "\"Kaito's taking me for ramen again,\" he says, clearly delighted. \"He says it's Tokyo's signature dish. Come with us?\"",
+        approach: "Join them for ramen",
+        greeting: "\"Wonderful. He'll be thrilled. He insists I'm eating it wrong, so you can settle it.\"",
+        responses: {
+          kind: ["Say you'd love to come", "Offer to show him how"],
+          playful: ["Side with Kaito on principle", "Ask how wrong he eats it"],
+          bold: ["Say you'll order for him", "Bet you finish first"],
+          neutral: ["Walk to the ramen place", "Ask where they're going"],
+        },
+      },
+      {
+        line: "\"Is a 'pajama party' some sort of important event?\" He asks it in complete earnest. \"Kaito insists we invite you.\"",
+        approach: "Explain pajama parties",
+        greeting: "\"I see. No formal dress, and one simply talks until late? How odd. I think I'd like that.\"",
+        responses: {
+          kind: ["Say yes, you'll come", "Say it's just fun, no rules"],
+          playful: ["Invent a strict dress code", "Say pillow fights are required"],
+          bold: ["Say you'll host it", "Tell him to bring biscuits"],
+          neutral: ["Say it's a sleepover", "Ask when it is"],
+        },
+      },
+      {
+        line: "\"Struggling to sleep?\" he asks, noting the shadows under your eyes. \"Back home they'd say the Sandman's running late.\"",
+        approach: "Ask about the Sandman",
+        greeting: "\"An old folktale. He visits the sleepless. I've always suspected he was some sort of anomaly.\"",
+        responses: {
+          kind: ["Say the story helps", "Ask if he sleeps well"],
+          playful: ["Ask if he's hunted him", "Say the Sandman's avoiding you"],
+          bold: ["Say you'd rather stay up", "Ask him to walk you back"],
+          neutral: ["Say you're just tired", "Listen to the story"],
+        },
+      },
+      {
+        line: "\"They've announced what the next test covers.\" He already has a revision plan drawn up. \"I'm happy to help you review.\"",
+        approach: "Take him up on it",
+        greeting: "\"Excellent. Library after class, then. I'll bring the biscuits, you bring the questions.\"",
+        responses: {
+          kind: ["Thank him for the help", "Offer to quiz him back"],
+          playful: ["Say you'll bring only snacks", "Ask if biscuits are graded"],
+          bold: ["Say you'll set the plan", "Bet you outscore him"],
+          neutral: ["Agree on the time", "Pack your notes"],
+        },
+      },
+      {
+        line: "Someone mutters something about you as you pass. Lucas stops, turns, and looks at them until they find somewhere else to be.",
+        approach: "Catch up with him",
+        greeting: "\"I won't have people speak about you like that. Not where I can hear it.\"",
+        responses: {
+          kind: ["Thank him for stepping in", "Say you're all right"],
+          playful: ["Ask how long he'd have stared", "Call it a very polite glare"],
+          bold: ["Say you'd have said something", "Ask him to teach you the look"],
+          neutral: ["Keep walking together", "Let it go"],
+        },
+      },
+      {
+        line: '"An early session warms you up for the day," he says, holding out a practice sword. "Would you care to join me?"',
+        approach: "Take the practice sword",
+        greeting: "\"Your grip's a little high. Here. ...There. Now you won't tire so fast.\"",
+        responses: {
+          kind: ["Thank him for the correction", "Ask him to go easy"],
+          playful: ["Swing wildly first", "Ask if he's ever lost"],
+          bold: ["Challenge him to a bout", "Ask him not to hold back"],
+          neutral: ["Adjust your grip", "Mirror his stance"],
+        },
+      },
+      {
+        line: "He's pulled two chairs up to the fire in the Frostheim common room. \"Everyone assumes it's cold in here. It isn't, really.\"",
+        approach: "Take the other chair",
+        greeting: '"Warm your hands. You look frozen through."',
+        responses: {
+          kind: ["Hold your hands to the fire", "Say the company's warm too"],
+          playful: ["Say Jin's room is a freezer", "Scoot your chair closer"],
+          bold: ["Steal the closer chair", "Say you'll stay till it's out"],
+          neutral: ["Sit by the fire", "Watch the flames"],
+        },
+      },
+      {
+        line: "He's out early, breathing in the cold. \"I'm fond of the morning air. Which do you prefer, morning or night?\"",
+        approach: "Tell him which you prefer",
+        greeting: "\"Really? I'd have guessed the other. I'm glad I asked.\"",
+        responses: {
+          kind: ["Say mornings, with him", "Ask why he likes mornings"],
+          playful: ["Say whichever he doesn't", "Say lunchtime"],
+          bold: ["Ask him to guess again", "Say he'll have to find out"],
+          neutral: ["Say it depends", "Watch the sun come up"],
+        },
+      },
+      {
+        line: "\"I'm stopping by Professor Hyde's about demons before I head back.\" Something cold settles in his voice on the word. \"Go on ahead.\"",
+        approach: "Offer to wait for him",
+        greeting: "\"You needn't. ...But thank you. I'll be quicker knowing someone's waiting.\"",
+        responses: {
+          kind: ["Say you'll wait at the door", "Ask if he's all right"],
+          playful: ["Say you'll time him", "Ask what Hyde's like"],
+          bold: ["Ask why demons", "Say you'll come in with him"],
+          neutral: ["Wait by the stairs", "Head on ahead"],
+        },
+      },
     ],
     spark: [
       {
@@ -732,9 +875,9 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '**{name}** turns to {user} with a smile already on. "Hello there! Have we met?"',
-      '"You have me at a disadvantage." **{name}** inclines his head anyway. {user} had it right.',
-      "**{name}** holds the door for {user} without a word.",
+      '"Allow me." **{name}** falls into step at {user}\'s side, already watching the path ahead.',
+      '"Stay on the inside, if you would." **{name}** takes the outer edge of the path beside {user} without making a fuss of it.',
+      "**{name}** holds the door for {user} with a ready smile.",
     ],
     warm: [
       '"I\'d hoped that was you." **{name}** takes whatever {user} is carrying without asking.',

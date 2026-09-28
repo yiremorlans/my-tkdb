@@ -128,7 +128,28 @@ the pools, and fails at import on a duplicate key or an unknown shared key.
 - **Jin** (`jin.js`) is a student but stays locked in the Frostheim captain's
   room, so he keeps only the campus moments that can happen in or from his room
   (`movie_night`, `storm_watch`, `stayed_up`, `lazy_day` and so on) plus his
-  own `jin_*` set, weighted toward new/known/warm where that list is thinnest.
+  own `jin_*` set, which carries every tier since that list is thin.
+- **Edward** (`edward.js`) is confined to Obscuary, sleeps through the day and
+  can't take the sun, and doesn't attend class. His set is letters, parasol,
+  YouTube and the devil's hour. No sunrise, no reading.
+- **Elias** (`elias.js`) is a fourth-year on probation who runs errands for Jo,
+  not a class-going student. His moments are walks, candy, coffee, snack runs.
+- **Haru** (`haru.js`) runs Jabberwock day and night, so he doesn't regularly
+  go to class. Feeding time, Peekaboo, tour fliers, chores, picking Ren up. No
+  `walked_back`: canon has him unable to walk the caller home.
+- **Rui** (`rui.js`) doesn't attend class and can't get tired. The bar, the
+  kitchen and the garden, and none of the idle moments (`campus_bench`,
+  `lazy_day`).
+- **Shion** (`shion.js`) skips class and is a pariah on campus. Scaring people
+  "happy", Mio's toolbox, the Heebie-Jeebie House, the docks.
+- **Towa** (`towa.js`) can't speak by day and is more animal than student:
+  wordless daytime moments (clover, humming) and night ones (stars, love
+  stories, the tree on the hill).
+- **Zenji** (`zenji.js`) is a ghost: he doesn't eat, can't be seen by most, and
+  has no casual contact, so nothing needs a table, an umbrella or a hand-off.
+
+The rest of the roster keeps the default. Skippers like Leo, Sho and Taiga are
+still students whose lives fit the campus set, and Lyca attends class.
 
 §16.2's `movie_hooky` is split into `skipped_briefing` and `movie_night` — they
 were one entry doing two jobs, and they read better as separate collectibles.

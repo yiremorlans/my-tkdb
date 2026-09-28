@@ -10,7 +10,11 @@
 // replacing them.
 //
 // `hint` is read after the words "picking up after", so it wants to be a noun
-// phrase ("that coffee", not "you had coffee").
+// phrase ("that coffee", not "you had coffee"). It is also bond scenes'
+// {lastMoment}, written in the character's own texts ("My head was on
+// {lastMoment}."), so it has to read in both voices: never refer to the
+// character in the third person ("that jacket", not "his jacket"). "you" is
+// safe, since the narrator and the character both address the player.
 //
 // Files. ./shared.js is the campus-life set and the DEFAULT: a character with
 // no file here draws from every entry in it. A character whose life doesn't
@@ -24,9 +28,15 @@
 import { pickRandom } from "../random.js";
 import shared from "./shared.js";
 import benkei from "./benkei.js";
+import edward from "./edward.js";
+import elias from "./elias.js";
 import jin from "./jin.js";
+import rui from "./rui.js";
+import shion from "./shion.js";
+import towa from "./towa.js";
+import zenji from "./zenji.js";
 
-const CHARACTER_MILESTONES = { benkei, jin };
+const CHARACTER_MILESTONES = { benkei, edward, elias, jin, rui, shion, towa, zenji };
 
 // new < known < warm < spark < close < bound
 const TIER_RANK = { new: 0, known: 1, warm: 2, spark: 3, close: 4, bound: 5 };
