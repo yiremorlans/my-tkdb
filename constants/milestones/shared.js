@@ -22,7 +22,7 @@ export default {
     bucket: "new",
     label: "Coffee breaks together",
     afterline: "You both slipped off for a quick coffee after.",
-    hint: "that coffee",
+    hint: "that coffee break",
   },
   walked_to_class: {
     minTier: "new",
@@ -83,7 +83,7 @@ export default {
     bucket: "warm",
     label: "Shared an umbrella across the courtyard",
     afterline: "It started raining. One umbrella between you.",
-    hint: "the umbrella",
+    hint: "sharing that umbrella",
   },
   festival_stall: {
     minTier: "warm",
@@ -188,7 +188,7 @@ export default {
     bucket: "close",
     label: "Got a playlist made just for you",
     afterline: "They'd made you a playlist and acted like it was nothing.",
-    hint: "that playlist",
+    hint: "that playlist made for you",
   },
   stolen_glances: {
     minTier: "close",
@@ -256,7 +256,7 @@ export default {
     bucket: "bound",
     label: "Wore their scarf all day",
     afterline: "You wore their scarf all day. They kept glancing at it, pleased.",
-    hint: "that scarf",
+    hint: "wearing that scarf all day",
   },
   lazy_day: {
     minTier: "bound",
@@ -280,7 +280,7 @@ export default {
     bucket: "bound",
     label: "Got flowers for no reason",
     afterline: "They brought you flowers and wouldn't give a reason.",
-    hint: "those flowers",
+    hint: "those flowers for no reason",
   },
   watched_sunset: {
     minTier: "bound",

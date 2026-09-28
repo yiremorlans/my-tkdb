@@ -91,7 +91,7 @@ export default {
       label: "Talked over a petty dispute with him",
       afterline:
         "You'd gotten caught up in another petty human dispute. He said humans were absurd, then called you over to sit with him.",
-      hint: "that petty dispute",
+      hint: "that talk about absurd humans",
     },
     edward_video_stopped: {
       minTier: "warm",
@@ -109,7 +109,7 @@ export default {
       label: "Sat with him through an ache",
       afterline:
         "He had an ache where Rui had touched him earlier. You sat with him while he rested it.",
-      hint: "that ache",
+      hint: "sitting out that ache together",
     },
 
     // --- Close Friend and up ---
@@ -120,7 +120,7 @@ export default {
       label: "Helped him fix a careless blunder",
       afterline:
         "Rui's been teaching him how the human world works, but he'd made another careless blunder. You helped him set it right.",
-      hint: "that careless blunder",
+      hint: "fixing that blunder together",
     },
     edward_welcome_back: {
       minTier: "spark",
@@ -139,7 +139,7 @@ export default {
       label: "Got him to bed on a bad day",
       afterline:
         "He was feeling worse than usual, and asked if you could carry him to bed. You got him there.",
-      hint: "that bad spell",
+      hint: "that carry to bed",
     },
 
     // --- Confidant and up ---
@@ -150,7 +150,7 @@ export default {
       label: "Stayed up until the devil's hour",
       afterline:
         "You stayed until the devil's hour. He was livelier than he'd been all day.",
-      hint: "the devil's hour",
+      hint: "staying up to the devil's hour",
     },
 
     edward_gift: {
@@ -160,7 +160,7 @@ export default {
       label: "Got offered the gift again",
       afterline:
         "He brought up the gift again, as if it were a small thing to give. He didn't press when you let it go.",
-      hint: "that offer",
+      hint: "that gift you turned down",
     },
 
     // --- Devoted and up ---
@@ -189,7 +189,7 @@ export default {
       label: "Reminded him of old memories",
       afterline:
         "He said being with you brought up old, old memories. You remind him a little of her.",
-      hint: "those old memories",
+      hint: "hearing who you're a reminder of",
     },
   },
 

@@ -34,7 +34,7 @@ export default {
       label: "Stopped at every flowerbed with him",
       afterline:
         "He stopped at every flowerbed on the way. You waited while he ate his favorite.",
-      hint: "those flowerbeds",
+      hint: "every flowerbed on the way",
     },
     towa_rain: {
       minTier: "known",
@@ -43,7 +43,7 @@ export default {
       label: "Read the weather with him",
       afterline:
         "You watched the sky with him, and he told you it would rain tomorrow. It rained.",
-      hint: "that rain",
+      hint: "reading the sky together",
     },
     towa_where_haru: {
       minTier: "known",
@@ -90,7 +90,7 @@ export default {
       label: "Caught his tune",
       afterline:
         "He hummed the same tune the whole way. By the end you were humming it too, and he looked delighted.",
-      hint: "that tune",
+      hint: "humming that tune together",
     },
     towa_dance: {
       minTier: "warm",
@@ -119,7 +119,7 @@ export default {
       label: "Listened to the tree on the hill",
       afterline:
         "He took you to the tree on the hill and asked if you could hear it crying.",
-      hint: "the tree on the hill",
+      hint: "listening to the tree on the hill",
     },
     towa_boss: {
       minTier: "spark",
@@ -128,7 +128,7 @@ export default {
       label: "Walked past a carnivore with him",
       afterline:
         "There was a carnivore on the path. He told you not to worry, since he's the boss around here.",
-      hint: "that carnivore",
+      hint: "that carnivore on the path",
     },
 
     // --- Confidant and up ---
@@ -139,7 +139,7 @@ export default {
       label: "Waited out Haru's patrol with him",
       afterline:
         "Haru had gone out patrolling again. Towa didn't see the point, and kept you with him until Haru was back.",
-      hint: "that patrol",
+      hint: "waiting out that patrol",
     },
 
     // --- Devoted and up ---
@@ -159,7 +159,7 @@ export default {
       label: "Let him hear your heartbeat",
       afterline:
         "He pressed his ear to your chest to listen to your heartbeat, and stayed there long after he'd heard it.",
-      hint: "your heartbeat",
+      hint: "that long listen",
     },
   },
 

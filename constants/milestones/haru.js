@@ -43,7 +43,7 @@ export default {
       label: "Had an energy drink with him",
       afterline:
         "The day hadn't started for him until he'd had his energy drink. You had one too, and he finished his in one go.",
-      hint: "that energy drink",
+      hint: "those energy drinks",
     },
 
     // --- Friend and up ---
@@ -54,7 +54,7 @@ export default {
       label: "Went with him to pick up Ren",
       afterline:
         "Ren was working at the Mystery Diner again. You went with Haru to pick him up.",
-      hint: "picking up Ren",
+      hint: "that trip to the Mystery Diner",
     },
     haru_chores: {
       minTier: "warm",
@@ -63,7 +63,7 @@ export default {
       label: "Helped with his washing and shopping",
       afterline:
         "He had the washing to take in and the shopping to do. You split it with him.",
-      hint: "your help with the washing and shopping",
+      hint: "splitting the washing and shopping",
     },
 
     // --- Close Friend and up ---
@@ -74,7 +74,7 @@ export default {
       label: "Got that fox away from him",
       afterline:
         "That fox got in again, and he still can't do foxes. You got it back out while he yelled for Towa.",
-      hint: "that fox",
+      hint: "that fox you got out",
     },
     haru_night_walk: {
       minTier: "spark",
@@ -83,7 +83,7 @@ export default {
       label: "Went on his walk after lights-out",
       afterline:
         "The kids were all in bed, so he headed out for a little walk. You went with him.",
-      hint: "that little walk",
+      hint: "that little walk after lights-out",
     },
 
     // --- Confidant and up ---
@@ -114,7 +114,7 @@ export default {
       label: "Went out on the boat, just you two",
       afterline:
         "After the last tour of the day, he took the boat back out just for you. No stamps needed, he said.",
-      hint: "that boat ride",
+      hint: "that boat ride just for you",
     },
   },
 

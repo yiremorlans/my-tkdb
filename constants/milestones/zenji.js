@@ -44,7 +44,7 @@ export default {
       label: "Heard his biwa in the music room",
       afterline:
         "He played his biwa for you in the music room. Someone outside ran off shouting about a ghost, and he asked who they meant.",
-      hint: "the biwa in the music room",
+      hint: "hearing the biwa in the music room",
     },
     zenji_advice_salon: {
       minTier: "known",
@@ -119,7 +119,7 @@ export default {
       label: "Watched the moon with him",
       afterline:
         "You watched the moon with him. He said it was beautiful, and didn't explain what he meant.",
-      hint: "that moon",
+      hint: "watching that moon together",
     },
 
     // --- Confidant and up ---
@@ -158,7 +158,7 @@ export default {
       label: "Told him you could still see him",
       afterline:
         "You'd been quiet so long that he asked if you could still see him. You could, and he was so relieved.",
-      hint: "that quiet spell",
+      hint: "that stretch of quiet",
     },
 
     // --- Devoted and up ---
@@ -187,7 +187,7 @@ export default {
       label: "Heard him read you his poem",
       afterline:
         "He wrote you a poem and read it aloud with you beside him, before you could read it yourself.",
-      hint: "that poem",
+      hint: "that poem written for you",
     },
     zenji_note: {
       minTier: "bound",

@@ -565,6 +565,127 @@ export default {
           neutral: ["Sit, say nothing, play", "Take the white pieces"],
         },
       },
+      {
+        line: "\"Honestly.\" He's pinching the bridge of his nose beneath the monocle. \"The second years have been making quite the racket this morning.\"",
+        approach: "Ask who's to blame",
+        greeting: '"Fuji, predictably. Something about a leaked cafeteria menu. Sit. I could use one sensible voice this morning."',
+        responses: {
+          kind: ["Offer to quiet them down", "Ask if he's had his tea"],
+          playful: ["Ask what the menu says", "Take Kaito's side"],
+          bold: ["Go tell them off yourself", "Ask why he puts up with it"],
+          neutral: ["Sit and keep quiet", "Hand him a cup of tea"],
+        },
+      },
+      {
+        line: "It's late and he's still at the desk, working through Frostheim's paperwork. He glances up. \"You should be asleep.\"",
+        approach: "Offer to help him finish",
+        greeting: "\"Good health is the greatest treasure, you know. ...Very well. Sort those by date, and then you're going to bed.\"",
+        responses: {
+          kind: ["Sort the pile by date", "Tell him to rest too"],
+          playful: ["Say you'll go when he does", "Sort them by color instead"],
+          bold: ["Take half his stack", "Say he looks worse than you"],
+          neutral: ["Sort without talking", "Work until he stops"],
+        },
+      },
+      {
+        line: "\"Honestly. If he'd just take action, everything would be resolved at once.\" He sighs at a door down the corridor. Jin's door.",
+        approach: "Ask what Jin's avoiding",
+        greeting: "\"Our king prefers to rule from his room. I'd simply rather he signed things now and then.\"",
+        responses: {
+          kind: ["Say he does too much for Jin", "Offer to take it in to Jin"],
+          playful: ["Offer to forge the signature", "Ask if Jin's still asleep"],
+          bold: ["Say he should tell Jin", "Knock on Jin's door for him"],
+          neutral: ["Wait with him in the hall", "Let him vent a moment"],
+        },
+      },
+      {
+        line: "\"Look at you, you're trembling.\" He's in front of you before you've come to a stop. \"What happened?\"",
+        approach: "Tell him about it",
+        greeting: "\"You must have had quite a frightening encounter. You poor thing. Sit down. I'll see to the rest.\"",
+        responses: {
+          kind: ["Thank him for noticing", "Say you're glad he's here"],
+          playful: ["Blame the cold", "Say you should see the anomaly"],
+          bold: ["Say you don't need rescuing", "Ask him to come look"],
+          neutral: ["Sit where he says", "Catch your breath first"],
+        },
+      },
+      {
+        line: "You ask him something you should probably already know. He doesn't sigh. He sets his pen down.",
+        approach: "Admit you don't know",
+        greeting: '"Inexperience is not a crime. The crime is choosing to remain ignorant. Now. From the beginning."',
+        responses: {
+          kind: ["Thank him for his patience", "Say you'll take notes"],
+          playful: ["Ask if you're a lost cause", "Ask how he learned it all"],
+          bold: ["Ask him to skip ahead", "Say you'll teach him something"],
+          neutral: ["Listen from the beginning", "Pay attention"],
+        },
+      },
+      {
+        line: "You find him out back of the Vagastrom garage, jacket off, sleeves rolled. He doesn't look surprised you found him.",
+        approach: "Ask why he's out here",
+        greeting: "\"I was Vagastrom once, you know. I still visit. Don't make a thing of it.\"",
+        responses: {
+          kind: ["Say it suits him out here", "Promise not to make a thing"],
+          playful: ["Ask if he misses the grease", "Say the monocle gives him away"],
+          bold: ["Ask why he transferred", "Ask who he's meeting"],
+          neutral: ["Lean on the wall beside him", "Let him keep his reasons"],
+        },
+      },
+      {
+        line: "\"You've been asking around about something,\" he says mildly, and hands you a folded page. \"I happened to overhear.\"",
+        approach: "Take the folded page",
+        greeting: "\"Names and times. Where I got them needn't concern you.\"",
+        responses: {
+          kind: ["Thank him for the help", "Say he didn't have to"],
+          playful: ["Ask who he overheard", "Ask if he overhears you often"],
+          bold: ["Ask where he got it", "Say you'd have found it"],
+          neutral: ["Read the page", "Pocket it for later"],
+        },
+      },
+      {
+        line: "He stops you in the hallway with two fingers raised. \"You're fatigued. You may insist otherwise. You may even believe it.\"",
+        approach: "Insist you're fine",
+        greeting: "\"I can tell at a glance. Take the afternoon. I'll inform whoever needs informing.\"",
+        responses: {
+          kind: ["Thank him for covering", "Ask who covers for him"],
+          playful: ["Ask how bad you look", "Say you'll nap in his office"],
+          bold: ["Say you'll rest if he does", "Refuse the afternoon off"],
+          neutral: ["Take the afternoon", "Head back to your room"],
+        },
+      },
+      {
+        line: 'You walk past without seeing him. His voice follows you, amused. "Ignoring me, are you?"',
+        approach: "Turn back to him",
+        greeting: "\"You've certainly got guts. I'll assume it was an accident. This time.\"",
+        responses: {
+          kind: ["Apologize and stay a while", "Say you didn't see him"],
+          playful: ["Pretend to ignore him again", "Say it was on purpose"],
+          bold: ["Say he could have called out", "Ask if he missed you"],
+          neutral: ["Say hello this time", "Stop and wait"],
+        },
+      },
+      {
+        line: "He watches you haul a box across the hall, then takes it off you without a word. It seems to weigh nothing to him.",
+        approach: "Let him take the box",
+        greeting: "\"Please don't overexert yourself. There are many people here who need you in one piece.\"",
+        responses: {
+          kind: ["Thank him for the hand", "Hold the door for him"],
+          playful: ["Ask if he lifts for fun", "Pile another box on top"],
+          bold: ["Grab the other end anyway", "Say you had it handled"],
+          neutral: ["Point where it goes", "Walk ahead of him"],
+        },
+      },
+      {
+        line: "\"No need to look so wary.\" He holds out an envelope sealed with Frostheim's crest. \"I've nothing but the noblest of intentions.\"",
+        approach: "Open the envelope",
+        greeting: "\"An invitation. Frostheim's evening. I took the liberty of adding your name myself.\"",
+        responses: {
+          kind: ["Thank him for thinking of you", "Say you'll be there"],
+          playful: ["Ask about his real intentions", "Ask what one wears to it"],
+          bold: ["Ask him to save you a dance", "Say you'll only go with him"],
+          neutral: ["Read the invitation", "Tuck it away"],
+        },
+      },
     ],
     spark: [
       {

@@ -493,7 +493,7 @@ export default {
         approach: "Run for it with him",
         greeting: [
           "\"Oops. Lulu's money's all gone. Run now, ask later.\"",
-          "\"This is boring. I'm outta here. ...Something smells amazing. C'mon, we're getting food. Ciao, losers.\"",
+          "\"This is boring. I'm outta here. ...Something smells amazing. C'mon, we're getting food. Ciao!\"",
         ],
         responses: {
           kind: ["Go with him, no lecture", "Offer to cover the float"],
@@ -859,21 +859,25 @@ export default {
       "{user} says the name, and **{name}** grins around it. \"Who're you? ...Whatever. C'mere.\"",
       '"You lost or somethin\'?" **{name}** asks {user}, shuffling the whole time.',
       "{user} says the name, and **{name}** squints. \"Didn't we meet yesterday? ...Nah. Don't remember.\" He sticks around anyway.",
+      '"Don\'t remember a word you said. Ciao!" **{name}** waves {user} off, then doesn\'t go anywhere.',
     ],
     warm: [
       '"Took your damn time, kitten." **{name}** had been waiting on {user}.',
       "{user} calls out, and **{name}** kicks a chair out in their direction.",
       "**{name}** calls {user} a dumbass and deals them in.",
+      '"Lulu can count the chips himself. Ciao!" **{name}** is out of his seat before {user} finishes calling.',
     ],
     spark: [
       '"Kitten." **{name}** says it to {user}, and this time it isn\'t a jab at all.',
       "{user} says the name, and **{name}** folds a hand he was winning.",
+      "{user} says the name, and **{name}** tells the whole table \"Ciao!\" without looking back.",
       "**{name}** hooks a finger in {user}'s collar to pull them down to his level, grinning.",
     ],
     close: [
       '"Anybody touches you, they answer to me." **{name}** tells {user} that was always the deal.',
       "**{name}** hears {user}, and everyone else stops existing.",
       "{user} calls, and **{name}** walks away from a bet he was about to win.",
+      "**{name}** tosses his chips to the nearest mook without counting them. Then he's at {user}'s side.",
     ],
     bound: [
       "\"You're the one hand I'd never fold, kitten.\" **{name}** growls it at {user}, daring them to make something of it.",

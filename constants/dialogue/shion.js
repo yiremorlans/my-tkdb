@@ -520,6 +520,138 @@ export default {
           neutral: ["Take his arm, say nothing", "Walk in beside him"],
         },
       },
+      {
+        line: "He's slumped over a table with his hat over his face. \"Don't talk to me. Mio's damn noisy clock woke me up. I'm in a terrible mood.\"",
+        approach: "Sit down anyway",
+        greeting: "\"...You sat down. I said don't talk. I didn't say leave.\"",
+        responses: {
+          kind: ["Stay quiet beside him", "Ask if he wants to nap"],
+          playful: ["Tick like a clock", "Say you'll hide the clock"],
+          bold: ["Lift the hat off his face", "Say his mood doesn't scare you"],
+          neutral: ["Say nothing at all", "Wait for him to sit up"],
+        },
+      },
+      {
+        line: "\"I'm the only one who didn't get breakfast.\" He's glaring at the kitchen door. \"Because I didn't wake up on time? Everyone should adjust to me.\"",
+        approach: "Agree with him",
+        greeting: "\"Right. See, you get it. You're the only one who gets it.\"",
+        responses: {
+          kind: ["Find him something to eat", "Say you'd have waited"],
+          playful: ["Offer him one crumb", "Say they ate his share"],
+          bold: ["Say he should wake up, then", "Drag him to the store"],
+          neutral: ["Shrug", "Check the kitchen"],
+        },
+      },
+      {
+        line: "\"I swapped Mio's toolbox for a bunch of worms.\" He's crouched by the workshop door, waiting. \"He's gonna be shocked when he opens it.\"",
+        approach: "Wait with him",
+        greeting: "\"Shh. He's coming. Don't warn him. If you warn him, you're next.\"",
+        responses: {
+          kind: ["Ask if the worms are okay", "Say Mio's had a long day"],
+          playful: ["Crouch down next to him", "Bet on Mio's face"],
+          bold: ["Warn Mio anyway", "Dare him to do yours next"],
+          neutral: ["Keep quiet and watch", "Stay where you are"],
+        },
+      },
+      {
+        line: "\"What am I doing?\" He hasn't moved. \"There's a cat over there. I'm just watching it.\"",
+        approach: "Watch the cat too",
+        greeting: "\"It doesn't run from me. It's the only one. ...Besides you.\"",
+        responses: {
+          kind: ["Say the cat likes him", "Sit and watch with him"],
+          playful: ["Meow at the cat", "Ask if the cat's his"],
+          bold: ["Say you don't run either", "Walk over to the cat"],
+          neutral: ["Watch the cat", "Stay still"],
+        },
+      },
+      {
+        line: "\"Where are you going?\" He's fallen into step before you can answer. \"...Hmm. Then I'll come with you.\"",
+        approach: "Let him tag along",
+        greeting: "\"Don't walk so fast. If you lose me, I'll just find you. Takes longer, though.\"",
+        responses: {
+          kind: ["Slow down for him", "Say you're glad of the company"],
+          playful: ["Speed up on purpose", "Ask if he knows where"],
+          bold: ["Tell him to keep up", "Take his sleeve"],
+          neutral: ["Keep walking", "Tell him where"],
+        },
+      },
+      {
+        line: "\"What's with those people? They look like they're having fun.\" He's already heading over. \"I'll join them.\"",
+        approach: "Go with him",
+        greeting: "\"Watch. They'll stop having fun in a second. ...There. Now they're happy.\"",
+        responses: {
+          kind: ["Pull him away first", "Apologize to the group"],
+          playful: ["Ask what he did", "Say that was fast"],
+          bold: ["Say it's your turn to join", "Tell him that's enough"],
+          neutral: ["Watch it happen", "Stand back"],
+        },
+      },
+      {
+        line: "\"Mio is my little brother,\" he says, out of nowhere. \"Blood relation? That's pointless. A hateful chain.\"",
+        approach: "Ask what Mio is to him",
+        greeting: "\"Family. The kind I picked. Mio, Jo, Elias. ...You're on the list. Don't make it weird.\"",
+        responses: {
+          kind: ["Say they're lucky to have him", "Say you're glad to be on it"],
+          playful: ["Ask where you rank", "Ask if Mio knows he's little"],
+          bold: ["Say you picked him too", "Ask what the list means"],
+          neutral: ["Nod", "Let him keep talking"],
+        },
+      },
+      {
+        line: "\"That guy earlier. Who was he?\" He's looking past you, down the hall. \"...I see. Alright then. I'll remember his face.\"",
+        approach: "Tell him it was nobody",
+        greeting: "\"Nobody has a face. I saw it. My wife shouldn't talk to nobodies.\"",
+        responses: {
+          kind: ["Say he's just a classmate", "Say you'd rather talk to him"],
+          playful: ["Ask if he's jealous", "Say nobody was very nice"],
+          bold: ["Tell him to leave him alone", "Say you'll talk to anyone"],
+          neutral: ["Change the subject", "Keep walking"],
+        },
+      },
+      {
+        line: "You find him at the docks after dark, feet in the water, soaked to the waist. He doesn't pull them out when he sees you.",
+        approach: "Sit on the dock with him",
+        greeting: "\"Water's better than air. Air's too dry. You wouldn't get it.\"",
+        responses: {
+          kind: ["Ask if he's feeling okay", "Say you'll stay till he's done"],
+          playful: ["Dip your feet in too", "Splash him"],
+          bold: ["Ask him to explain it", "Say you'd like to get it"],
+          neutral: ["Sit on the edge", "Listen to the water"],
+        },
+      },
+      {
+        line: "He's carrying a briefcase that is definitely not his. \"Elias begged me, so I'm carrying it for him. I'm impressive, right?\"",
+        approach: "Tell him he's impressive",
+        greeting: "\"Right. Say it again. ...Elias didn't say it once. Rude.\"",
+        responses: {
+          kind: ["Say it again, and mean it", "Offer to help him carry it"],
+          playful: ["Ask what's inside", "Say Elias is lucky"],
+          bold: ["Say that's not impressive yet", "Ask to carry it yourself"],
+          neutral: ["Walk with him to Elias", "Nod"],
+        },
+      },
+      {
+        line: "\"The sky's red,\" he says, staring up. \"Just like the blood from that guy's arm.\" He sounds pleased about it.",
+        approach: "Ask which guy",
+        greeting: "\"Doesn't matter. He's fine. Mostly. The sky's still nice, though. Look.\"",
+        responses: {
+          kind: ["Look up with him", "Ask if the guy's okay"],
+          playful: ["Say it's more orange", "Ask if it matches yours"],
+          bold: ["Say that's not funny", "Ask what he did to him"],
+          neutral: ["Watch the sunset", "Say nothing"],
+        },
+      },
+      {
+        line: "\"I'm sleeping in the Heebie-Jeebie House tonight.\" He says it like an invitation. \"Might be fun if someone wanders in.\"",
+        approach: "Ask who he's expecting",
+        greeting: "\"Whoever's dumb enough. ...You're dumb enough. Come by late.\"",
+        responses: {
+          kind: ["Say you'll bring a blanket", "Ask if he'll be cold"],
+          playful: ["Promise to scare him first", "Ask what's in it for you"],
+          bold: ["Say you'll come by late", "Say he'll be the scared one"],
+          neutral: ["Say maybe", "Tell him good night"],
+        },
+      },
     ],
     spark: [
       {

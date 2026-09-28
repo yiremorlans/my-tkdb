@@ -545,6 +545,138 @@ export default {
           neutral: ["Shrug, unbothered either way", "Let the topic drop"],
         },
       },
+      {
+        line: '"Nice timing, Honor Roll." He holds out his hand, palm up, without looking at you. "Give me your hand. Come on, just do it."',
+        approach: "Give him your hand",
+        greeting: "\"See? Was that so hard? ...Relax, I'm just borrowing it to hold my phone steady.\"",
+        responses: {
+          kind: ["Hold the phone steady for him", "Ask what he's filming"],
+          playful: ["Ask for it back with interest", "Say he could have asked"],
+          bold: ["Keep hold after he's done", "Ask what's in it for you"],
+          neutral: ["Hold still", "Look at the screen"],
+        },
+      },
+      {
+        line: "He's glaring at a bottle he can't open. \"Cap walked off. Mid-sentence. While I was asking.\" He holds it out to you.",
+        approach: "Open the bottle for him",
+        greeting: "\"Don't make that face. My hands are for typing, not manual labor.\"",
+        responses: {
+          kind: ["Hand it back open", "Say anyone would struggle"],
+          playful: ["Open it slowly for effect", "Take the first sip"],
+          bold: ["Make him try once more", "Tell him to thank you first"],
+          neutral: ["Twist it open", "Pass it back"],
+        },
+      },
+      {
+        line: "\"Cap smashed my woofer.\" He's holding the pieces like evidence at a trial. \"I was just playing music in the Pit.\"",
+        approach: "Look at the damage",
+        greeting: "\"Can't go clubbing, can't play music. What's left? Being a normal person? Gross.\"",
+        responses: {
+          kind: ["Offer to help fix it", "Say you liked his music"],
+          playful: ["Call it a noble death", "Say Cap has taste"],
+          bold: ["Say he'll just buy another", "Tell him to bill Alan"],
+          neutral: ["Sort the pieces", "Let him grieve it"],
+        },
+      },
+      {
+        line: 'He has a laptop open and a tiny, very broken device beside it. "Someone found the bug I put in his car. Rude."',
+        approach: "Ask whose car it was",
+        greeting: "\"Can't say. You'd be an accessory. ...Fine, you're already an accessory. Sit.\"",
+        responses: {
+          kind: ["Say you'll keep quiet", "Ask if he's in trouble"],
+          playful: ["Ask to plant the next one", "Say he got what he deserved"],
+          bold: ["Say you'll help him rig it", "Tell him to aim higher"],
+          neutral: ["Sit next to the laptop", "Don't ask any more"],
+        },
+      },
+      {
+        line: "He's typing fast, code scrolling past. \"Ordering system. Nothing complex. ...You're staring. Want to watch or not?\"",
+        approach: "Watch him code",
+        greeting: "\"Don't touch the keyboard. You can hold my drink. That's the job.\"",
+        responses: {
+          kind: ["Hold his drink for him", "Say it looks impressive"],
+          playful: ["Ask for a secret menu item", "Pretend to reach for the keys"],
+          bold: ["Ask him to teach you", "Point out a typo"],
+          neutral: ["Watch the screen", "Sit beside him"],
+        },
+      },
+      {
+        line: 'He hands you a tabloid folded open to one page. "Give this to the national treasure wannabe at the food truck. Just do it."',
+        approach: "Take the tabloid over",
+        greeting: '"And watch his face when he reads it. I want a full report, Honor Roll."',
+        responses: {
+          kind: ["Ask if it'll upset him", "Say you'll just drop it off"],
+          playful: ["Say you'll add a doodle", "Demand a cut of the drama"],
+          bold: ["Make him deliver it himself", "Read it first"],
+          neutral: ["Tuck it under your arm", "Report back after"],
+        },
+      },
+      {
+        line: "\"I missed the ultra-spicy chicken thing in Shin-Okubo.\" He's scrolling reviews with real grief. \"Sho's recreating it. You're tasting.\"",
+        approach: "Agree to taste test",
+        greeting: "\"If it's bad, you tell Sho. If it's good, I'll tell him. That's the split.\"",
+        responses: {
+          kind: ["Say you'll be honest with Sho", "Say Sho will nail it"],
+          playful: ["Ask how spicy ultra is", "Say you'll eat his share"],
+          bold: ["Say he tells Sho either way", "Ask for your own plate"],
+          neutral: ["Grab two forks", "Wait for the food"],
+        },
+      },
+      {
+        line: "He tosses a little bottle at you. \"Pillow mist. Bought it 'cause it was trending. Turns out it's good. Ro-Ro's hooked on it too.\"",
+        approach: "Catch the bottle",
+        greeting: "\"Keep it. I have three. Don't tell Ro-Ro, he'll want a fourth.\"",
+        responses: {
+          kind: ["Thank him for it", "Say you'll try it tonight"],
+          playful: ["Spray it at him", "Threaten to tell Ro-Ro"],
+          bold: ["Ask for the other two", "Ask why he's giving it away"],
+          neutral: ["Smell it", "Pocket the bottle"],
+        },
+      },
+      {
+        line: "It's morning and he's heading the wrong way, toward bed. \"Night, then. What? I haven't slept yet. Unlike you, I have shit to do.\"",
+        approach: "Ask what kept him up",
+        greeting: "\"Work. The kind you'd find boring. ...Walk me back. I might fall asleep on the stairs.\"",
+        responses: {
+          kind: ["Walk him to his room", "Tell him to sleep in"],
+          playful: ["Say he's the boring one", "Offer to carry him"],
+          bold: ["Say you'll wake him at noon", "Say he looks awful"],
+          neutral: ["Walk beside him", "Let him go"],
+        },
+      },
+      {
+        line: "You've been away a few days. He looks right at you. \"Who are you?\" Then he laughs. \"Kidding. Got a good excuse?\"",
+        approach: "Give him your excuse",
+        greeting: "\"Weak. Try again. ...No, I'm not saying I noticed you were gone.\"",
+        responses: {
+          kind: ["Say you missed him", "Apologize for vanishing"],
+          playful: ["Make up a wilder excuse", "Ask if he counted the days"],
+          bold: ["Say he noticed", "Ask what he'd have done"],
+          neutral: ["Say you're back now", "Shrug and sit"],
+        },
+      },
+      {
+        line: "\"There she is. You free?\" He's wearing the look he gets right before something goes wrong for someone else.",
+        approach: "Ask what the plan is",
+        greeting: "\"Plan's a strong word. Stand there, look innocent, and hold this. That's all you need to know.\"",
+        responses: {
+          kind: ["Ask if anyone gets hurt", "Say you'll help this once"],
+          playful: ["Practice your innocent face", "Ask for the full briefing"],
+          bold: ["Say you want in all the way", "Ask what you get out of it"],
+          neutral: ["Hold whatever he hands you", "Stand where he points"],
+        },
+      },
+      {
+        line: "\"Wow, it's late.\" He hands you a scrub brush like it's a gift. \"I'm getting a bath going. Here. It's for scrubbing the tub.\"",
+        approach: "Take the scrub brush",
+        greeting: "\"What? You were standing there. Standing there is volunteering. That's the rule.\"",
+        responses: {
+          kind: ["Scrub the tub for him", "Ask if he's had a long day"],
+          playful: ["Hand the brush right back", "Say that rule is made up"],
+          bold: ["Make him scrub half", "Say you get the bath first"],
+          neutral: ["Roll up your sleeves", "Head to the bathroom"],
+        },
+      },
     ],
     spark: [
       {

@@ -9,10 +9,11 @@ describe('milestonePoolFor', () => {
   it('gives Benkei his own moments plus the shared ones picked for him', () => {
     const pool = milestonePoolFor('benkei');
     const shared = pool.filter((key) => !key.startsWith('benkei_'));
-    for (const key of ['coffee_break', 'watched_sunrise', 'made_playlist']) {
+    for (const key of ['coffee_break', 'watched_sunset', 'made_playlist']) {
       assert.ok(shared.includes(key), key);
     }
-    for (const key of ['signed_report', 'walked_to_class', 'movie_night']) {
+    // He has his own umbrella and sunrise, so the campus versions stay out.
+    for (const key of ['signed_report', 'walked_to_class', 'movie_night', 'shared_umbrella', 'watched_sunrise']) {
       assert.ok(!pool.includes(key), key);
     }
   });

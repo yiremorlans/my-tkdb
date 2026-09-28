@@ -14,7 +14,7 @@ export default {
       label: "Watched a cat with him",
       afterline:
         "There was a cat. He watched it, so you watched it too, and nobody else came near.",
-      hint: "that cat",
+      hint: "watching that cat together",
     },
     shion_made_happy: {
       minTier: "new",
@@ -32,7 +32,7 @@ export default {
       label: "Sat out his terrible mood with him",
       afterline:
         "Mio's noisy clock had woken him up. He told you not to talk to him, then didn't leave, so you sat there together.",
-      hint: "that noisy clock",
+      hint: "that bad mood you sat through",
     },
 
     // --- Acquaintance and up ---
@@ -90,7 +90,7 @@ export default {
       label: "Shared Jo's bread, barely",
       afterline:
         "He had bread Jo baked and asked if you wanted some. You got one bite before he ate the rest.",
-      hint: "Jo's bread",
+      hint: "that one bite of Jo's bread",
     },
     shion_briefcase: {
       minTier: "warm",
@@ -99,7 +99,7 @@ export default {
       label: "Returned Elias's briefcase with him",
       afterline:
         "He turned up with Elias's briefcase and wouldn't say why he had it. He asked if it made him look impressive, and you walked it back to Elias together.",
-      hint: "that briefcase",
+      hint: "Elias's briefcase",
     },
     shion_crowd: {
       minTier: "warm",
@@ -130,7 +130,7 @@ export default {
       label: "Kept him company past dark",
       afterline:
         "He didn't want to go back once it got dark. He said nights were hot and hard to breathe through, so you stayed out with him until he was ready.",
-      hint: "that long night",
+      hint: "that stuffy night",
     },
     shion_tell_everything: {
       minTier: "close",
@@ -149,7 +149,7 @@ export default {
       label: "Got asked who you'd been talking to",
       afterline:
         "Someone had been talking to you earlier. He asked who, and said he'd remember that face.",
-      hint: "the guy from earlier",
+      hint: "that face from earlier",
     },
     shion_family: {
       minTier: "bound",
@@ -167,7 +167,7 @@ export default {
       label: "Ate with him, whatever it was",
       afterline:
         "He offered you a bite of his food, and laughed when you asked what it was.",
-      hint: "that bite of meat",
+      hint: "that bite of whatever it was",
     },
   },
 

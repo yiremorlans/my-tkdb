@@ -9,7 +9,7 @@
 // character's least-resonant option nets at least +1, and none may read like the
 // "what happened after" milestone afterlines in constants/publicEncounters.js.
 // The result line also must NOT append the /call boost clause (describeBoost:
-// "a warmer welcome, picking up after that coffee") — the warding +1 is its own.
+// "a warmer welcome, picking up after that coffee break") — the warding +1 is its own.
 // Temperature sits close to the bond scenes (constants/dialogue/shion.js): the
 // flat calm cracking an inch for her, gruesome imagery offered as affection, and
 // the intimacy being him letting her say no and staying anyway — never softening.

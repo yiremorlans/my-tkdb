@@ -524,6 +524,149 @@ export default {
           neutral: ["Pretend you didn't hear it", "Let him recover first"],
         },
       },
+      {
+        line: 'His phone is at 5% and his face is pure panic. "Do you have a charger? Tell me you have a charger."',
+        approach: "Hand him your charger",
+        greeting: "\"You're a lifesaver. Seriously. Tomorrow would've been a disaster.\"",
+        responses: {
+          kind: ["Say he can keep it tonight", "Ask what's so urgent"],
+          playful: ["Charge him one favor for it", "Ask what he'd do without you"],
+          bold: ["Tell him to charge it at night", "Make him put the phone down"],
+          neutral: ["Plug it in for him", "Wait while it charges"],
+        },
+      },
+      {
+        line: "\"Campus store after class? I'm almost out of granulated sugar.\" He says it like it's a medical emergency.",
+        approach: "Go to the store with him",
+        greeting: "\"Okay, I'm baking tonight. If you come, you get first pick. That's the deal.\"",
+        responses: {
+          kind: ["Say you'd come anyway", "Offer to carry the bag"],
+          playful: ["Ask what he's baking", "Bargain for two picks"],
+          bold: ["Say you want to help bake", "Tell him to buy two bags"],
+          neutral: ["Walk with him to the store", "Say sure, after class"],
+        },
+      },
+      {
+        line: "\"I fell asleep in class,\" he confesses, clutching his notebook. \"I don't even know what the homework is. Help me.\"",
+        approach: "Show him your notes",
+        greeting: "\"You're seriously the best. Honor Roll saves the day again. Okay, what'd I miss?\"",
+        responses: {
+          kind: ["Walk him through the homework", "Say it happens to everyone"],
+          playful: ["Ask what he dreamed about", "Charge him a cookie per page"],
+          bold: ["Make him copy it by hand", "Tell him to stay awake"],
+          neutral: ["Hand over the notes", "Point to the right page"],
+        },
+      },
+      {
+        line: "He shoves his phone at you, wheezing. \"Have you seen this yet? It's all over TikTok, it's killing me.\"",
+        approach: "Watch the video",
+        greeting: '"Wait for it. Wait for it... there! Okay, now I need you to watch it again."',
+        responses: {
+          kind: ["Laugh because he's laughing", "Ask him to send it to you"],
+          playful: ["Pretend you don't get it", "Find a better one to show him"],
+          bold: ["Say you saw it last week", "Steal his phone to scroll"],
+          neutral: ["Watch it twice", "Hand the phone back"],
+        },
+      },
+      {
+        line: "He's in an empty classroom working through a dance off his phone, counting under his breath. He freezes when he sees you.",
+        approach: "Ask to see the whole dance",
+        greeting: "\"It's for a trend, okay? Towa's better at it. Don't film me, I'm begging you.\"",
+        responses: {
+          kind: ["Say it looked good", "Promise not to film"],
+          playful: ["Pretend to film anyway", "Try the steps yourself"],
+          bold: ["Ask him to teach you", "Tell him to go from the top"],
+          neutral: ["Sit and watch", "Wait for him to start again"],
+        },
+      },
+      {
+        line: "\"How is Jin's skin that perfect?\" He's squinting into his phone camera. \"Rich kids and their stupid fancy toner.\"",
+        approach: "Tell him his skin's fine",
+        greeting: "\"You're just saying that. ...Are you just saying that? Say it again anyway.\"",
+        responses: {
+          kind: ["Say it again, meaning it", "Say his freckles are cute"],
+          playful: ["Offer to steal Jin's toner", "Blame all the sugar"],
+          bold: ["Tell him to ask Jin", "Say Jin's jealous of him"],
+          neutral: ["Shrug at the comparison", "Let him fuss a bit"],
+        },
+      },
+      {
+        line: "\"Luca got another commendation.\" He's smiling. It doesn't quite reach his eyes. \"Good for him. Seriously.\"",
+        approach: "Ask how he's really doing",
+        greeting: "\"Me? I'm great. I'm fine! ...Okay, it's kind of hard standing next to him sometimes.\"",
+        responses: {
+          kind: ["Say you like him as he is", "Say you'd pick his company"],
+          playful: ["Say Luca can't bake", "Award him a commendation"],
+          bold: ["Tell him to stop comparing", "Say he's braver than he thinks"],
+          neutral: ["Let him vent", "Sit with him a while"],
+        },
+      },
+      {
+        line: "You've been gone a few days. He spots you and makes a noise that isn't quite a word.",
+        approach: "Let him catch up to you",
+        greeting: "\"Oh my god, you're back! I'm so happy. Please don't disappear on me like that again.\"",
+        responses: {
+          kind: ["Say you missed him too", "Promise to text next time"],
+          playful: ["Ask if he cried", "Claim a secret mission"],
+          bold: ["Say he could have called", "Hug him first"],
+          neutral: ["Say you're back now", "Tell him where you went"],
+        },
+      },
+      {
+        line: "\"I could've taken you to lunch with that money,\" he groans, head on the table. \"Why am I such a moron?\"",
+        approach: "Sit down across from him",
+        greeting: "\"Don't ask what I spent it on. Please. My pride's in the negatives already.\"",
+        responses: {
+          kind: ["Say lunch doesn't matter", "Offer to buy this time"],
+          playful: ["Guess what he spent it on", "Say he owes you two lunches"],
+          bold: ["Ask what he spent it on", "Lift his head off the table"],
+          neutral: ["Wait for him to sit up", "Let him groan it out"],
+        },
+      },
+      {
+        line: "His phone is face-down on the table like it might bite. \"Romeo's texting me. Not opening it. Not today.\"",
+        approach: "Ask what Romeo wants",
+        greeting: "\"Nothing good. It's never anything good. Distract me?\"",
+        responses: {
+          kind: ["Distract him with a story", "Say he doesn't have to answer"],
+          playful: ["Read it in a dramatic voice", "Guess what it says"],
+          bold: ["Flip the phone over", "Tell him to open it"],
+          neutral: ["Leave the phone alone", "Change the subject"],
+        },
+      },
+      {
+        line: 'He stares at you a second too long. "You seem different today. Did you change something? Or am I making it up?"',
+        approach: "Make him guess",
+        greeting: "\"Okay, don't tell me. Haircut? No. New earrings? ...I'm gonna get this.\"",
+        responses: {
+          kind: ["Say he's sweet to notice", "Give him a small hint"],
+          playful: ["Say he's getting colder", "Make up something wild"],
+          bold: ["Tell him he's imagining it", "Say he's the one who changed"],
+          neutral: ["Tell him what changed", "Let him keep guessing"],
+        },
+      },
+      {
+        line: "He's in front of the vending machine with the focus of a man picking a weapon. \"New flavors. I want all of them.\"",
+        approach: "Help him pick one",
+        greeting: "\"Okay, you pick. If it's bad, it's on you. If it's good, we split it.\"",
+        responses: {
+          kind: ["Pick the one he eyed first", "Buy the second one yourself"],
+          playful: ["Pick the weirdest flavor", "Pick with your eyes closed"],
+          bold: ["Buy all of them", "Say you get the bigger half"],
+          neutral: ["Point at one", "Let him choose"],
+        },
+      },
+      {
+        line: "He leans his whole weight on your shoulder while he scrolls, like it's the most natural thing in the world.",
+        approach: "Let him lean",
+        greeting: "\"Is this okay? Towa does it all the time. I'm just comfy. ...Should I move? I'll move.\"",
+        responses: {
+          kind: ["Tell him to stay put", "Say it's more than okay"],
+          playful: ["Lean back on him", "Ask if you outrank Towa"],
+          bold: ["Take his phone to scroll", "Tell him he owes you"],
+          neutral: ["Keep still", "Look at his screen"],
+        },
+      },
     ],
     spark: [
       {
@@ -616,7 +759,7 @@ export default {
         line: "The grin drops for a second, pure relief, before it comes roaring back.",
         approach: "Take the good chair",
         greeting:
-          '"I saved you the good chair. Don\'t make it a thing, just sit."',
+          '"I saved you the good chair. Sorry, is that too much? Just sit, just sit."',
         responses: {
           kind: "See past the grin",
           playful: "Tease him about the relief",

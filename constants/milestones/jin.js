@@ -45,7 +45,7 @@ export default {
       label: "Went over his menu with him",
       afterline:
         "He wasn't in the mood for meat. You went over the menu with him until something suited him, then took it down to the chef.",
-      hint: "that menu",
+      hint: "that menu you went over",
     },
     jin_mail: {
       minTier: "known",
@@ -54,7 +54,7 @@ export default {
       label: "Sorted through his mail",
       afterline:
         "He handed you a stack of his mail and tasked you with sorting through it.",
-      hint: "that stack of mail",
+      hint: "that mail you sorted",
     },
 
     // --- Friend and up ---
@@ -92,7 +92,7 @@ export default {
       label: "Went over coursework with him",
       afterline:
         "You didn't know something he thought was obvious. He complained about what they teach at Darkwick, then went over it with you himself.",
-      hint: "that complaint about Darkwick",
+      hint: "that lesson Darkwick didn't teach",
     },
     jin_schedule: {
       minTier: "warm",
@@ -151,7 +151,7 @@ export default {
       label: "Gave him a massage",
       afterline:
         "He'd been too active yesterday and wanted a massage. He told you to put some muscle into it.",
-      hint: "that massage",
+      hint: "that massage you gave",
     },
     jin_etiquette: {
       minTier: "close",
@@ -169,7 +169,7 @@ export default {
       label: "Shared his imported chocolates",
       afterline:
         "He was in a good mood and opened a box of imported chocolates. He let you pick first, before he could change his mind.",
-      hint: "those chocolates",
+      hint: "those imported chocolates",
     },
 
     // --- Devoted and up ---
@@ -198,7 +198,7 @@ export default {
       label: "Wore the jacket he lent you",
       afterline:
         "It was late and cold. He put his jacket over your shoulders, and you stayed a while longer.",
-      hint: "that jacket",
+      hint: "that jacket over your shoulders",
     },
     jin_duet: {
       minTier: "bound",
@@ -207,7 +207,7 @@ export default {
       label: "Played a duet with him",
       afterline:
         "It was quiet. He had you sit next to him for a duet, and you knew the song.",
-      hint: "that duet",
+      hint: "that piano duet",
     },
     jin_retrain: {
       minTier: "bound",
@@ -216,7 +216,7 @@ export default {
       label: "Got retrained at his back",
       afterline:
         "You'd been away a while. He said you had guts abandoning your place at his back, and that he'd have to retrain you. He took his time about it.",
-      hint: "that retraining",
+      hint: "that retraining you had coming",
     },
   },
 

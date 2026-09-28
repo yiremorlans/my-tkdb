@@ -116,13 +116,13 @@ export default {
             label: "Tell him not to scare you",
             style: 4,
             close:
-              "Fair\n\nWasn't planning on it happening again\n\nGonna keep you further back next time\n\nWorking on it",
+              "Fair\n\nWasn't planning on it happening again\n\nGonna keep you further back next time",
           },
         ],
       },
       keepsake: {
         emoji: "🛡️",
-        line: "The two seconds he never had to think about, and never once called brave.",
+        line: "The two seconds he never had to think about, and hasn't stopped thinking about since.",
       },
     },
 

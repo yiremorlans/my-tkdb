@@ -43,7 +43,7 @@ export default {
       label: "Let him fix a loose thread",
       afterline:
         "He spotted a loose thread on your blazer and offered to fix it for you.",
-      hint: "that loose thread",
+      hint: "that loose thread on your blazer",
     },
     rui_roses: {
       minTier: "known",
@@ -52,7 +52,7 @@ export default {
       label: "Helped save his rose bushes",
       afterline:
         "His rose bushes were wilting. You helped him save what you could.",
-      hint: "those rose bushes",
+      hint: "saving those rose bushes",
     },
 
     // --- Friend and up ---
@@ -112,7 +112,7 @@ export default {
       label: "Tended his garden with him",
       afterline:
         "You tended his garden together, and he cut you a rose, thorns already off.",
-      hint: "that rose",
+      hint: "that rose with the thorns off",
     },
   },
 

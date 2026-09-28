@@ -22,7 +22,7 @@ export default {
       bucket: "new",
       label: "Shared his candy",
       afterline: "He offered you a candy. He was already on his third one.",
-      hint: "that candy",
+      hint: "that candy break",
     },
     elias_cafeteria: {
       minTier: "new",
@@ -50,7 +50,7 @@ export default {
       label: "Read through his newspapers with him",
       afterline:
         "He had a stack of newspapers to get through. You took the other half.",
-      hint: "those newspapers",
+      hint: "splitting those newspapers",
     },
     elias_cleaning: {
       minTier: "known",
@@ -59,7 +59,7 @@ export default {
       label: "Helped him clean out of habit",
       afterline:
         "He was cleaning something that wasn't his job anymore. It kept bothering him, he said, so you helped him finish.",
-      hint: "that spot that needed cleaning",
+      hint: "that cleaning you helped finish",
     },
 
     // --- Friend and up ---
@@ -78,7 +78,7 @@ export default {
       label: "Went on a snack run for his dorm",
       afterline:
         "He was buying snacks for the whole dorm. You helped him choose.",
-      hint: "that snack run",
+      hint: "that snack run for the dorm",
     },
     elias_severed_head: {
       minTier: "warm",
@@ -108,7 +108,7 @@ export default {
       label: "Tried the sweets he imports from home",
       afterline:
         "A box of sweets had come in from New Orleans. He let you pick first.",
-      hint: "those sweets from home",
+      hint: "those sweets from New Orleans",
     },
 
     // --- Devoted and up ---
@@ -127,7 +127,7 @@ export default {
       label: "Had your hand taken at goodbye",
       afterline:
         "You turned to leave, and he took your hand to say goodbye, smiling like he was in no hurry to let go.",
-      hint: "that quick goodbye",
+      hint: "that hand at goodbye",
     },
   },
 

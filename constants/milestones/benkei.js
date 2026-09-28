@@ -32,7 +32,7 @@ export default {
       label: "Helped restock the shelves",
       afterline:
         "You stayed to help restock. He thanked you for every single box.",
-      hint: "that restock",
+      hint: "that restock you stayed for",
     },
     benkei_counter: {
       minTier: "known",
@@ -69,7 +69,7 @@ export default {
       label: "Shared an umbrella from the store's stock",
       afterline:
         "It started raining. He had an umbrella off the shelf, and it was one between you.",
-      hint: "the umbrella",
+      hint: "sharing that umbrella off the shelf",
     },
 
     benkei_new_stock: {
@@ -79,7 +79,16 @@ export default {
       label: "Taste-tested the new stock",
       afterline:
         "A new snack came in. He wanted your opinion before shelving it.",
-      hint: "that taste test",
+      hint: "tasting the new stock together",
+    },
+    benkei_manager: {
+      minTier: "warm",
+      emoji: "🐈",
+      bucket: "warm",
+      label: "Won over the store's manager",
+      afterline:
+        "The store's manager, one of Cornelius' cats, spent the whole visit in your lap. He said you'd been promoted.",
+      hint: "that promotion from the store's manager",
     },
 
     // --- Close Friend and up ---
@@ -89,7 +98,7 @@ export default {
       bucket: "spark",
       label: "Had tea in the store's back room",
       afterline: "He made tea in the back room and let the restocking wait.",
-      hint: "that tea",
+      hint: "that tea for two in the back room",
     },
     benkei_front_step: {
       minTier: "spark",
@@ -106,7 +115,7 @@ export default {
       bucket: "spark",
       label: "Counted a late delivery with him",
       afterline: "A delivery came in late. You stayed to count it with him.",
-      hint: "that late delivery",
+      hint: "counting that late delivery together",
     },
 
     benkei_book_rec: {
@@ -126,7 +135,7 @@ export default {
       bucket: "close",
       label: "Kept him company through a night shift",
       afterline: "The store never closes, and neither of you noticed the hour.",
-      hint: "that night shift",
+      hint: "that night shift for two",
     },
 
     benkei_noodles: {
@@ -135,7 +144,7 @@ export default {
       bucket: "close",
       label: "Ate cup noodles behind the counter",
       afterline: "Two cup noodles behind the counter. He paid for both.",
-      hint: "those noodles",
+      hint: "those cup noodles for two",
     },
     benkei_advising_keepsake: {
       minTier: "close",
@@ -144,7 +153,7 @@ export default {
       label: "Looked through his advising keepsakes",
       afterline:
         "He dug out what he kept from his advising days, and you went through it together.",
-      hint: "that keepsake from the advising days",
+      hint: "going through those advising keepsakes",
     },
     benkei_stock_list: {
       minTier: "close",
@@ -153,7 +162,7 @@ export default {
       label: "Wrote up the stock list with him",
       afterline:
         "You wrote up the stock list together. What you like is on it now.",
-      hint: "your spot on the stock list",
+      hint: "writing up that stock list together",
     },
     // --- Devoted and up ---
     benkei_sunrise: {
@@ -162,7 +171,7 @@ export default {
       bucket: "bound",
       label: "Watched the sun come up from behind the counter",
       afterline: "It got light out, and neither of you had left the counter.",
-      hint: "that sunrise",
+      hint: "that sunrise at the counter",
     },
     benkei_humming: {
       minTier: "bound",
@@ -171,7 +180,16 @@ export default {
       label: "Hummed your song together",
       afterline:
         "He was humming the song you like. You joined in, and he didn't stop.",
-      hint: "that song",
+      hint: "humming that song together",
+    },
+    benkei_clementia: {
+      minTier: "bound",
+      emoji: "🕯️",
+      bucket: "bound",
+      label: "Heard about his Clementia House days",
+      afterline:
+        "He talked about his time advising Clementia House, and you listened for as long as he wanted to talk.",
+      hint: "that talk about Clementia House",
     },
   },
 
@@ -179,8 +197,6 @@ export default {
   shared: [
     "coffee_break",
     "vending_machine",
-    "shared_umbrella",
-    "watched_sunrise",
     "borrowed_book",
     "storm_watch",
     "courtyard_stars",

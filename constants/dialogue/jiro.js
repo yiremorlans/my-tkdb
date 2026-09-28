@@ -46,7 +46,7 @@ export default {
       beats: [
         "**{firstName}**: I want to revisit an entry from last week. You came into the ward already treated. A field dressing, applied by you, over a laceration you sustained on a mission and didn't report until the next scheduled check-up.",
         "I redid it. It had closed badly and would've scarred.\n\nYou were on campus, not far from Mortkranken, and treated it yourself anyway. That was a decision, not a mission constraint. The wrong one.\n\nI don't need to know why. Please don't do it again. Redressing a badly wrapped wound is inconvenient.",
-        "You apologized for not coming in, which is the least relevant part of it.\n\nYou answered me with {favResponse}, same as always. You treat your own condition as a footnote.\n\nI'd like that changed.",
+        "You apologized for not coming in, which is the least relevant part of it.\n\nYou usually answer me with {favResponse}. Not about this. You treat your own condition as a footnote.\n\nI'd like that changed.",
       ],
       choice: {
         prompt: "Tell me if that's something you can manage.",
@@ -63,59 +63,58 @@ export default {
             label: "Ask if he'd notice",
             style: 1,
             close:
-              "I'd notice immediately. You walk differently when something hurts.",
+              "I did. You walked into the ward differently. That's how I found it.",
           },
           {
             key: "bold",
             label: "Point out he does it too",
             style: 4,
             close:
-              "That's different. My condition is already documented.\n\n*A pause.*\n\nThat isn't a good argument. I'll think of a better one.",
+              "That's different. My condition is already documented.\n\nYours isn't. That's the problem.",
           },
         ],
       },
       keepsake: {
         emoji: "🩹",
-        line: "The dressing he redid, wound tighter than yours ever was.",
+        line: "The dressing he redid, neater than yours ever was.",
       },
     },
 
     closeFriend: {
       beats: [
-        "**{firstName}**: Come to the lower theater at eleven. The captain will be asleep. Bring nothing.",
-        "*The room is dark except for one lamp. On the bench is a wooden case, old, clearly not medical, and he opens it without preamble.*\n\n*Inside is a fountain pen, the nib worn crooked from one particular hand.*\n\n> This was my brother's. He's dead. He died here last year and I've kept it in a drawer since and never once opened it.",
-        "> I don't know why I keep it. I've written the reasoning out three times and it doesn't resolve. Sentiment isn't a category I have any facility with.\n\n> But I found myself wanting you to have seen it, and that impulse didn't resolve either. I've stopped attempting to resolve things where you're concerned. The failure rate is one hundred percent.",
+        "**{firstName}**: I'm in the examination room until eleven. There's a batch of confections on the counter. They're yours.",
+        "I've changed the recipe four times since we met in {sinceMet}. I don't eat them, so the changes are based on which ones you finish.\n\nLess sugar in the second batch. You left half. More in the third. You finished it and took another.",
+        "I've never adjusted a formula for someone's preference before. Only for tolerance.",
       ],
       choice: {
-        prompt:
-          "You may ask one question about him. One. I have a limited supply of answers.",
+        prompt: "The fourth batch is ready. Tell me if you're coming.",
         options: [
           {
             key: "kind",
-            label: "Ask what he was like",
+            label: "Say you'll come right now",
             style: 3,
             close:
-              "*Jiro doesn't answer for a long time. When he does, he doesn't sound like himself.*\n\n> Loud. Extremely loud. He talked in metaphors and it was intolerable and I'd give a great deal to be made to sit through it once more.\n\n*He closes the case.*\n\n> That's the question spent. Thank you for spending it on that one.",
+              "Good. The door's unlocked.\n\nThey're better warm, according to the recipe. I'll wait.",
           },
           {
             key: "playful",
-            label: "Ask if he was any good",
+            label: "Ask if he'll try one too",
             style: 1,
             close:
-              "> At writing? Terrible. Genuinely terrible. He was told so repeatedly and it never once landed.\n\n*Something almost moves at the corner of his mouth.*\n\n> I haven't said that out loud since he died. It's still funny. I'd assumed it would've stopped being funny.",
+              "I can just manage water. Solids are harder.\n\nI'll try one. A whole one. Stay while I eat it. I'm more likely to finish it that way.",
           },
           {
             key: "bold",
-            label: "Ask him to write with it",
+            label: "Say it isn't about the data",
             style: 4,
             close:
-              "> No.\n\n*Then he sits down, and takes it out, and holds it for a very long time without doing anything with it.*\n\n> ...If you stay,\n\n*he says eventually, not looking up,*\n\n> I'll try. I've found I can attempt things in front of you that I can't attempt alone. I have no explanation for that and I've stopped looking for one.",
+              "Correct. It stopped being data after the second batch. I kept recording it anyway.\n\nI don't have a name for what it is instead. Come before eleven.",
           },
         ],
       },
       keepsake: {
-        emoji: "🖌️",
-        line: "His brother's pen, out of the drawer for the first time.",
+        emoji: "🍬",
+        line: "The fourth batch, measured to what you'd finish.",
       },
     },
 
@@ -219,7 +218,7 @@ export default {
             label: "Ask him to give you time",
             style: 2,
             close:
-              "Understood. That's a reasonable request and I would've made the same one.\n\nI want to state, so that it's unambiguous: nothing in my behavior is contingent on your answer. I'll continue to check on you. I'll continue to be at the lower theater at eleven. I would've done both of those things regardless and did, for eight months, while refusing to label the term.\n\nThe pen stays in the case on the bench. You know where they are.",
+              "Understood. That's a reasonable request and I would've made the same one.\n\nI want to state, so that it's unambiguous: nothing in my behavior is contingent on your answer. I'll continue to check on you. I'll continue to be in the examination room at eleven. I would've done both of those things regardless and did, for eight months, while refusing to label the term.\n\nThere'll be a batch on the counter. You know where to find it.",
           },
         ],
       },
