@@ -277,7 +277,7 @@ export default {
         responses: {
           kind: ["Accept the courtesy", "Thank him for asking first"],
           playful: ["Ask what counts as asking", "Ask if anyone ever says yes"],
-          bold: ["Give him permission", "Take your hand back"],
+          bold: ["Give him permission", "Ask what else he'd ask for"],
           neutral: ["Let him hold it, say nothing", "Wait for him to let go"],
         },
       },
@@ -304,10 +304,7 @@ export default {
             "Ask if he'd notice you gone",
           ],
           bold: ["Step closer instead of back", "Say you'll wander anyway"],
-          neutral: [
-            "Hold your ground, say nothing",
-            "Step back a pace",
-          ],
+          neutral: ["Hold your ground, say nothing", "Step back a pace"],
         },
       },
       {
@@ -339,10 +336,10 @@ export default {
       {
         line: '"You\'ve returned," he says, as though it were remarkable. To him it is.',
         approach: "Say you'll keep returning",
-        greeting: '"Back so soon? How wonderfully poor of your judgment."',
+        greeting: '"I\'d started to think I imagined you."',
         responses: {
           kind: ["Say you meant to", "Say he's worth the trip"],
-          playful: ["Call your judgment fine", "Tease him for being surprised"],
+          playful: ["Say you're very real", "Tease him for being surprised"],
           bold: ["Say of course you returned", "Ask why that's remarkable"],
           neutral: ["Shrug, say nothing", "Let the remark pass"],
         },
@@ -354,9 +351,15 @@ export default {
           '"Do sit. I had Rui move the chair nearer. I find I dislike raising my voice."',
         responses: {
           kind: ["Take the chair he moved", "Ask if he's feeling unwell"],
-          playful: ["Ask if Rui minded moving it", "Scoot the chair even closer"],
-          bold: ["Say the favor was the chair", "Move the chair back a bit"],
-          neutral: ["Sit and wait for the favor", "Leave the chair where it is"],
+          playful: [
+            "Ask if Rui minded moving it",
+            "Scoot the chair even closer",
+          ],
+          bold: ["Say the favor was the chair", "Tell him to name the favor"],
+          neutral: [
+            "Sit and wait for the favor",
+            "Leave the chair where it is",
+          ],
         },
       },
       {
@@ -372,24 +375,24 @@ export default {
         },
       },
       {
-        line: "He's noticed you no longer check where the door is, and looks, for once, genuinely pleased rather than amused.",
-        approach: "Stop looking for the exit",
+        line: "He's noticed you no longer check where the door is. For once, the amusement is gone, and what's left looks a lot like relief.",
+        approach: "Settle in",
         greeting:
           '"You\'ve stopped looking for the exit. I confess I find that rather flattering."',
         responses: {
           kind: ["Say you weren't leaving", "Say you like it here"],
           playful: ["Admit you eyed the door", "Tease him for noticing"],
-          bold: ["Put your feet up", "Own the glance at the door"],
+          bold: ["Put your feet up", "Close the door behind you"],
           neutral: ["Shrug, say nothing", "Let it go unremarked"],
         },
       },
       {
         line: "He has no interest in the missions or the gossip. What he wants, apparently, is the boring parts.",
-        approach: "Tell him about your week",
+        approach: "Ask what he wants to hear",
         greeting:
           '"Tell me about your week. The dull parts, mind. I\'ve had quite enough of the interesting ones."',
         responses: {
-          kind: ["Tell him something dull", "Share something small, human"],
+          kind: ["Tell him something dull", "Share something ordinary"],
           playful: [
             "Make up something absurd",
             "Ask what counts as dull enough",
@@ -400,7 +403,7 @@ export default {
       },
       {
         line: '"I\'m feeling worse than usual today," he says, in the exact tone of a man angling for sympathy.',
-        approach: "Give him the sympathy",
+        approach: "Sit with him a while",
         greeting:
           '"Ah, sympathy. How restorative. I feel better already... No, wait. Worse. Stay."',
         responses: {
@@ -466,7 +469,7 @@ export default {
         responses: {
           kind: ["Say you like them both", "Laugh off his conclusions"],
           playful: ["Name someone else entirely", "Make him guess"],
-          bold: ["Say it's none of his business", "Say it's not his to know"],
+          bold: ["Say it's none of his business", "Say neither, and look at him"],
           neutral: ["Shrug, say nothing", "Change the subject"],
         },
       },
@@ -490,7 +493,7 @@ export default {
         responses: {
           kind: ["Let him see the real thing", "Stay exactly where you are"],
           playful: ["Ask what the predator's like", "Ask for the act back"],
-          bold: ["Close the distance boldly", "Meet the look head on"],
+          bold: ["Tell him to keep it out", "Meet the look head on"],
           neutral: ["Stay, say nothing", "Come closer, no comment"],
         },
       },
@@ -502,7 +505,7 @@ export default {
         responses: {
           kind: ["Say it's not disappointing", "Say you trust him now"],
           playful: ["Ask which he'd prefer", "Flinch on purpose, badly"],
-          bold: ["Say fear was never real", "Ask what he'd do about it"],
+          bold: ["Say he'll have to try harder", "Ask what he'd do about it"],
           neutral: ["Let him decide, say nothing", "Let the observation stand"],
         },
       },
@@ -541,6 +544,162 @@ export default {
           neutral: ["Take the glass, say nothing", "Drink without comment"],
         },
       },
+      {
+        line: '"How strange... I can\'t find my other sock." He\'s holding one up, bewildered. "I could have sworn I put it here. Have you seen it?"',
+        approach: "Help him look",
+        greeting:
+          "\"Under the bed, perhaps? I'd check myself, but it's so very far down. Would you?\"",
+        responses: {
+          kind: ["Check under the bed", "Say you'll find it"],
+          playful: ["Ask if the sock ran off", "Say one sock is a look"],
+          bold: ["Tell him to look himself", "Say he hid it to keep you here"],
+          neutral: ["Search the room", "Check the drawers"],
+        },
+      },
+      {
+        line: '"Going for a walk?" He\'s watching you from the window seat. "Mind you don\'t linger in the garden. Humans are rather susceptible to the miasma there."',
+        approach: "Ask him to walk with you",
+        greeting:
+          '"Me? Out there? ...Well. If you insist on dragging an old man about, I won\'t stop you."',
+        responses: {
+          kind: ["Offer him your arm", "Say you'll go slow for him"],
+          playful: ["Ask what miasma tastes like", "Race him to the gate"],
+          bold: ["Say he's not that old", "Take his hand and go"],
+          neutral: ["Wait by the door", "Fetch his coat"],
+        },
+      },
+      {
+        line: '"Rui? Is my lunch ready yet? ...Oh. It\'s you." He brightens anyway. "You wouldn\'t happen to be feeling heartsore, would you?"',
+        approach: "Ask why he wants to know",
+        greeting:
+          '"Idle curiosity. I\'m a love advisor of some renown. Well. Of some renown in this house."',
+        responses: {
+          kind: ["Tell him the truth", "Ask if he is"],
+          playful: ["Invent a tragic romance", "Ask for his credentials"],
+          bold: ["Say it's about him", "Ask who he'd have you pick"],
+          neutral: ["Say you're fine", "Sit and hear his advice"],
+        },
+      },
+      {
+        line: '"How are you finding Obscuary?" He studies you over steepled fingers. "You\'re adapting remarkably well. Perhaps you\'re predisposed."',
+        approach: "Ask what he means",
+        greeting:
+          '"Only that most humans don\'t settle into a house of anomalies quite so easily. You seem at home. I like that."',
+        responses: {
+          kind: ["Say he makes it easy", "Thank him for having you"],
+          playful: ["Ask if you're secretly a ghoul", "Say you're just nosy"],
+          bold: ["Ask what he thinks you are", "Say maybe you are"],
+          neutral: ["Shrug it off", "Look around the room"],
+        },
+      },
+      {
+        line: '"I felt like stargazing, so I went up the hill." He sounds wounded. "Towa was there already. He chased me away."',
+        approach: "Offer to go with him",
+        greeting:
+          '"Would you? Towa might tolerate me with company. He seems to like you rather more than me."',
+        responses: {
+          kind: ["Say you'll talk to Towa", "Find a different hill"],
+          playful: ["Ask how fast he ran", "Say Towa has good taste"],
+          bold: ["Say you'll claim the hill", "Tell him to stand his ground"],
+          neutral: ["Look out the window", "Find the stars from here"],
+        },
+      },
+      {
+        line: '"Rui has his tavern work at this hour," he says, surrounded by blankets, snacks, and a remote. "He made sure I had everything I needed."',
+        approach: "Ask if he needs anything",
+        greeting:
+          "\"Everything but company. He can't leave that on a tray, I'm told. Sit.\"",
+        responses: {
+          kind: ["Sit and keep him company", "Tuck the blanket in"],
+          playful: ["Steal one of his snacks", "Ask for the remote"],
+          bold: ["Take the best spot", "Say Rui spoils him"],
+          neutral: ["Sit at the end", "Take a snack"],
+        },
+      },
+      {
+        line: '"Really. You became embroiled in another petty human dispute?" He sighs as if it pains him. "How absurd you humans are. Come here."',
+        approach: "Go to him",
+        greeting:
+          "\"Tell me all of it. I adore a petty dispute, as long as it's someone else's.\"",
+        responses: {
+          kind: ["Tell him the whole story", "Say it's handled now"],
+          playful: ["Say you won, of course", "Make it sound dramatic"],
+          bold: ["Ask whose side he's on", "Say he'd have made it worse"],
+          neutral: ["Sit beside him", "Let it go"],
+        },
+      },
+      {
+        line: '"My, where did the time go? Talking to you is so relaxing." He smiles. "Why, do you suppose?"',
+        approach: "Ask him why",
+        greeting:
+          '"Perhaps because I know I could feast upon you at any moment. ...Or perhaps you\'re simply good company. Pick one."',
+        responses: {
+          kind: ["Pick good company", "Say he's relaxing too"],
+          playful: ["Pick both", "Say he's all bark"],
+          bold: ["Say he wouldn't dare", "Pick the first one"],
+          neutral: ["Say nothing", "Check the time"],
+        },
+      },
+      {
+        line: "You've been away. He looks up from his chaise. \"Well, hello there. It's been a while. Come over here. I've been looking forward to your return.\"",
+        approach: "Come over to him",
+        greeting:
+          "\"Tell me where you've been. And whom you've been with. Leave nothing out.\"",
+        responses: {
+          kind: ["Say you missed him", "Tell him everything"],
+          playful: ["Say it's a secret", "Ask if he counted the days"],
+          bold: ["Ask why he wants to know", "Say he could have visited"],
+          neutral: ["Sit and tell him", "Say you were busy"],
+        },
+      },
+      {
+        line: '"Hello? Oh good, there you are." He\'d been looking for you, in his fashion: from the doorway. "Let me know next time you wander off."',
+        approach: "Promise to tell him",
+        greeting:
+          '"Otherwise I\'d have to go looking, and I do so hate getting up. Humor an old man."',
+        responses: {
+          kind: ["Say you'll leave a note", "Say you'll check in"],
+          playful: ["Say you'll wander more", "Ask if he'd really get up"],
+          bold: ["Say he should come find you", "Say you'll go where you like"],
+          neutral: ["Nod", "Sit where he can see you"],
+        },
+      },
+      {
+        line: "Lyca's voice carries from the next room, bright and loud. Edward listens, amused. \"It's good for him, making friends with humans.\"",
+        approach: "Ask about Lyca",
+        greeting:
+          "\"Oh, nothing ominous. Only that he'll outlast them. So will I. One learns to enjoy the noise while it's there.\"",
+        responses: {
+          kind: ["Say you'll stick around", "Say the noise is nice"],
+          playful: ["Say Lyca's louder than noise", "Ask if you're noise too"],
+          bold: ["Ask if he'll outlast you", "Tell him to enjoy you, then"],
+          neutral: ["Listen to Lyca", "Stay quiet"],
+        },
+      },
+      {
+        line: "There's a note on your door in looping, old-fashioned script: Tea at mine. Bring nothing but yourself.",
+        approach: "Go over for tea",
+        greeting:
+          '"You came. I had Rui set out the good cups. He complained, naturally."',
+        responses: {
+          kind: ["Thank him for the invite", "Pour him a cup"],
+          playful: ["Say you brought nothing", "Ask what Rui said"],
+          bold: ["Say you'd have come unasked", "Take the best chair"],
+          neutral: ["Sit down for tea", "Take a cup"],
+        },
+      },
+      {
+        line: "He's holding a phone upside down and frowning at it. \"Rui showed me how to send a picture. I've sent eleven of the ceiling.\"",
+        approach: "Show him how",
+        greeting:
+          '"Patience, please. I have much to learn about the human world. Rui says I learn it in the wrong order."',
+        responses: {
+          kind: ["Walk him through it", "Say he's doing fine"],
+          playful: ["Ask to see the ceilings", "Send one of him to Rui"],
+          bold: ["Take a picture of him", "Say he's doing it on purpose"],
+          neutral: ["Turn the phone over", "Wait while he tries"],
+        },
+      },
     ],
     spark: [
       {
@@ -563,7 +722,7 @@ export default {
         responses: {
           kind: "Say he needn't restrain it",
           playful: "Test the restraint",
-          bold: "Tell him to let loose",
+          bold: "Say you're done waiting",
           neutral: "Say nothing",
         },
       },
@@ -584,7 +743,7 @@ export default {
         greeting: '"Come closer. I promise to behave. I make poor promises."',
         responses: {
           kind: "Take him at his word",
-          playful: "Withdraw the hand slowly",
+          playful: "Ask how poor the promises are",
           bold: "Say you know what he is",
           neutral: "Hold still, say nothing",
         },
@@ -655,7 +814,7 @@ export default {
         responses: {
           kind: "Hold on just as tight",
           playful: "Point out he's holding tight",
-          bold: "Hold on just as tightly",
+          bold: "Hold on tighter than he does",
           neutral: "Let him hold on wordlessly",
         },
       },
@@ -680,7 +839,7 @@ export default {
         responses: {
           kind: "Say yes again",
           playful: "Make him ask twice",
-          bold: "Bare your throat",
+          bold: "Pull him back to your throat",
           neutral: "Say nothing",
         },
       },

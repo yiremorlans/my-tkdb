@@ -60,39 +60,39 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: yo\n\nu good? that report Alan filed looked rough",
-        "been meaning to say this for a while, just never found the moment\n\nvagastrom missions are not a joke, senpai. alan runs us straight into whatever's worst that week, leo mouths off and doubles the mess, and u eat just as much of it as the rest of us do\n\nand every time, good mission or straight up hell, u still come back and hit me with {favResponse} like none of it touched u\n\nI notice that. don't know how to say it without it turning into a whole thing, so here's me saying it like a whole thing anyway\n\nu don't gotta keep handing me {favResponse} on the bad ones. shoulder's free too, whenever u actually wanna talk instead",
+        "**{firstName}**: senpai\n\nasked half the house to come on that diner run today\n\nsuddenly everybody's got somewhere to be",
+        "then there's u\n\ndidn't even ask what we were getting into, just showed up and gave me {favResponse} the whole walk back like it was the best part of ur day",
+        "so I gotta ask\n\nis this a u like me thing? cuz that'd explain a lot",
       ],
       choice: {
-        prompt:
-          "anyway forget I said that part, unless u actually need it, then don't",
+        prompt: "lol relax, I'm kidding. thx for coming tho, for real",
         options: [
           {
             key: "kind",
-            label: "Say you'll remember that",
+            label: "Say you like his company",
             style: 3,
             close:
-              "…yeah?\n\ngood, cuz I meant it, and I don't say stuff like that twice\n\nnow eat something, u look like the mission again",
+              "ok that's worse, I can't even tease u about that one\n\nsame time next week. ur not getting out of it",
           },
           {
             key: "playful",
-            label: "Ask if the truck counts too",
+            label: "Say he owes you a meal",
             style: 1,
             close:
-              "counts as both, free food AND free shoulder, senpai's getting the whole package\n\ndon't tell Leo I said package, he'll make it weird",
+              "knew it\n\nfine, u earned a plate\n\nsame deal next week, right?",
           },
           {
             key: "bold",
-            label: "Say he never asks either",
+            label: "Ask if he wants it to be",
             style: 4,
             close:
-              "…that's different\n\nokay it's not different, shut up\n\nfine, maybe I'll take u up on it too sometime, don't get used to it tho",
+              "geez, senpai\n\nwhat kinda question is that\n\nnot answering that over text",
           },
         ],
       },
       keepsake: {
-        emoji: "🫂",
-        line: "The shoulder he offered before you ever had to ask for it.",
+        emoji: "🛍️",
+        line: "The diner run half the house was suddenly too busy for.",
       },
     },
 
@@ -465,15 +465,15 @@ export default {
         },
       },
       {
-        line: "He's already going off about something Leo did the second he spots you, like he's been saving it up just to tell you.",
-        approach: "Let him vent about Leo",
+        line: "He's glaring at a second plate going cold beside him when you walk up.",
+        approach: "Ask about the extra plate",
         greeting:
-          "\"Leo bailed on me again. Food's sitting there going cold. ...Don't tell Leo I said this, but you're all right, Senpai.\"",
+          "\"Leo bailed on me again. Food's sitting there going cold. ...Whatever. What're you doing here, Senpai?\"",
         responses: {
-          kind: ["Let him vent it all out", "Offer to eat Leo's portion"],
-          playful: ["Egg the rant on", "Ask for the juicy details"],
-          bold: ["Tell him to let it go", "Argue Leo's side to rile him"],
-          neutral: ["Half-listen, say nothing", "Let the rant run its course"],
+          kind: ["Offer to eat with him", "Say Leo's missing out"],
+          playful: ["Say you smelled the food", "Ask if he's sulking"],
+          bold: ["Call Leo out for bailing", "Say you came to see him"],
+          neutral: ["Say you were passing by", "Shrug, say nothing"],
         },
       },
     ],
