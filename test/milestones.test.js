@@ -9,11 +9,18 @@ describe('milestonePoolFor', () => {
   it('gives Benkei his own moments plus the shared ones picked for him', () => {
     const pool = milestonePoolFor('benkei');
     const shared = pool.filter((key) => !key.startsWith('benkei_'));
-    for (const key of ['coffee_break', 'watched_sunrise', 'late_call']) {
+    for (const key of ['coffee_break', 'watched_sunrise', 'made_playlist']) {
       assert.ok(shared.includes(key), key);
     }
-    for (const key of ['signed_report', 'walked_to_class', 'skipped_briefing']) {
+    for (const key of ['signed_report', 'walked_to_class', 'movie_night']) {
       assert.ok(!pool.includes(key), key);
+    }
+  });
+
+  it('gives a character with no file every shared moment', () => {
+    const pool = milestonePoolFor('kaito');
+    for (const key of ['long_way', 'inside_joke', 'movie_night']) {
+      assert.ok(pool.includes(key), key);
     }
   });
 
@@ -26,7 +33,7 @@ describe('milestonePoolFor', () => {
     for (const key of ['jin_tea', 'jin_waltz', 'movie_night', 'signed_report']) {
       assert.ok(pool.includes(key), key);
     }
-    for (const key of ['walked_to_class', 'festival_stall', 'late_drive', 'their_scarf']) {
+    for (const key of ['walked_to_class', 'festival_stall', 'stolen_glances', 'their_scarf']) {
       assert.ok(!pool.includes(key), key);
     }
     assert.ok(pool.every((key) => !key.startsWith('benkei_')));
@@ -70,8 +77,9 @@ describe('milestonePoolFor', () => {
   });
 
   it('respects the canon limits on the non-campus sets', () => {
-    // Edward can't take the sun or read small print.
-    for (const key of ['watched_sunrise', 'rooftop_lunch', 'borrowed_book', 'found_bookmark']) {
+    // Edward can't take the sun or read small print, and a midnight snack
+    // reads as him feeding.
+    for (const key of ['watched_sunrise', 'watched_sunset', 'borrowed_book', 'shared_book', 'midnight_snack']) {
       assert.ok(!milestonePoolFor('edward').includes(key), `edward has ${key}`);
     }
     // Zenji is a ghost: he doesn't eat and can't hand things over.

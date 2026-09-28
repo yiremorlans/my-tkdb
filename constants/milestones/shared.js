@@ -111,32 +111,15 @@ export default {
     hint: "that lunch together",
   },
 
-  // --- Close Friend and up: skipping things, going somewhere private ---
-  skipped_briefing: {
-    minTier: "spark",
-    emoji: "🚪",
-    bucket: "spark",
-    label: "Skipped a {house} briefing with them",
-    afterline:
-      "Neither of you made the next briefing. Nobody came looking, either.",
-    hint: "that skipped briefing",
-  },
+  // --- Close Friend and up: slipping away together, sharing what's only yours ---
   movie_night: {
     minTier: "spark",
     emoji: "🎬",
     bucket: "spark",
     label: "Watched a movie in {firstName}'s room",
     afterline:
-      "There was a movie on in {firstName}'s room. You stayed for all of it.",
+      "You ended up back at {firstName}'s room with a movie on, and stayed for all of it.",
     hint: "that movie night",
-  },
-  rooftop_lunch: {
-    minTier: "spark",
-    emoji: "🌇",
-    bucket: "spark",
-    label: "Ate lunch on the roof, away from everyone",
-    afterline: "Lunch on the roof. Nobody knew where either of you were.",
-    hint: "that rooftop lunch",
   },
 
   campus_bench: {
@@ -155,6 +138,14 @@ export default {
     afterline: "A storm came through. You watched it from the window together.",
     hint: "watching that storm together",
   },
+  inside_joke: {
+    minTier: "spark",
+    emoji: "🤭",
+    bucket: "spark",
+    label: "Started an inside joke",
+    afterline: "Something set you both off, and now one word does it. Nobody else gets it.",
+    hint: "that inside joke",
+  },
   courtyard_stars: {
     minTier: "spark",
     emoji: "✨",
@@ -163,8 +154,16 @@ export default {
     afterline: "You watched the sky until it got too cold to stay.",
     hint: "that night under the stars",
   },
+  long_way: {
+    minTier: "spark",
+    emoji: "🛣️",
+    bucket: "spark",
+    label: "Took the long way back on purpose",
+    afterline: "You both took the long way back, and neither of you mentioned it.",
+    hint: "that long way back",
+  },
 
-  // --- Confidant and up: hours nobody else gets ---
+  // --- Confidant and up: staying longer than you need to, and it shows ---
   stayed_up: {
     minTier: "close",
     emoji: "🌌",
@@ -172,14 +171,6 @@ export default {
     label: "Stayed up talking past curfew",
     afterline: "You lost track of the hour completely.",
     hint: "that late night",
-  },
-  late_drive: {
-    minTier: "close",
-    emoji: "🚗",
-    bucket: "close",
-    label: "Went out on a drive with nowhere to be",
-    afterline: "They drove. Neither of you suggested turning back.",
-    hint: "that drive",
   },
 
   midnight_snack: {
@@ -199,13 +190,14 @@ export default {
     afterline: "They'd made you a playlist and acted like it was nothing.",
     hint: "that playlist",
   },
-  galaxy_express: {
+  stolen_glances: {
     minTier: "close",
-    emoji: "🛤️",
+    emoji: "👀",
     bucket: "close",
-    label: "Took the Galaxy Express together",
-    afterline: "You rode the Galaxy Express together, no stop in mind.",
-    hint: "that Galaxy Express ride",
+    label: "Couldn't stop looking at each other",
+    afterline:
+      "You were with a group after, and barely heard a word. You couldn't stop looking at each other.",
+    hint: "those looks",
   },
   lamplit_steps: {
     minTier: "close",
@@ -215,13 +207,22 @@ export default {
     afterline: "You sat on the steps and talked until the lamps went out.",
     hint: "that talk on the steps",
   },
-  late_call: {
+
+  long_goodbye: {
     minTier: "close",
-    emoji: "📞",
+    emoji: "👋",
     bucket: "close",
-    label: "Stayed on a call until one of you fell asleep",
-    afterline: "You talked until one of you fell asleep.",
-    hint: "that call you fell asleep on",
+    label: "Took forever to say goodbye",
+    afterline: "You said goodbye three times, and neither of you left.",
+    hint: "that long goodbye",
+  },
+  people_talking: {
+    minTier: "close",
+    emoji: "🗣️",
+    bucket: "close",
+    label: "Gave people something to talk about",
+    afterline: "People have noticed how much time you two spend together. Neither of you minds.",
+    hint: "all that talk about you two",
   },
 
   // --- Devoted and up ---
@@ -254,7 +255,7 @@ export default {
     emoji: "🧣",
     bucket: "bound",
     label: "Wore their scarf all day",
-    afterline: "You wore their scarf all day. They noticed and said nothing.",
+    afterline: "You wore their scarf all day. They kept glancing at it, pleased.",
     hint: "that scarf",
   },
   lazy_day: {
@@ -265,14 +266,13 @@ export default {
     afterline: "A whole day with nowhere to be. You spent it together.",
     hint: "that lazy day",
   },
-  found_bookmark: {
+  shared_book: {
     minTier: "bound",
     emoji: "🔖",
     bucket: "bound",
-    label: "Found your bookmark in their book",
-    afterline:
-      "Your bookmark turned up in their book. They'd been reading what you read.",
-    hint: "that bookmark",
+    label: "Shared a book together",
+    afterline: "You read one book side by side, on the same page.",
+    hint: "that book you shared",
   },
   got_flowers: {
     minTier: "bound",

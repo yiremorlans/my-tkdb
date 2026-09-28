@@ -124,7 +124,7 @@ the pools, and fails at import on a duplicate key or an unknown shared key.
 - **Benkei** (`benkei.js`) isn't a student: he's the shopkeep at the 24/7
   campus store and used to be a professor. He keeps the campus moments that
   don't assume he's a student (`coffee_break`, `vending_machine`,
-  `shared_umbrella`, `late_call`, `watched_sunset` and so on).
+  `shared_umbrella`, `watched_sunset` and so on).
 - **Jin** (`jin.js`) is a student but stays locked in the Frostheim captain's
   room, so he keeps only the campus moments that can happen in or from his room
   (`movie_night`, `storm_watch`, `stayed_up`, `lazy_day` and so on) plus his

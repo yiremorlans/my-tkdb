@@ -25,15 +25,24 @@ export default {
         "Edward had popped up out of nowhere and died again. You helped Rui carry him home.",
       hint: "that haul back to Obscuary",
     },
+    rui_curse_twin: {
+      minTier: "new",
+      emoji: "🔗",
+      bucket: "new",
+      label: "Got called his curse twin",
+      afterline:
+        "He called you his curse twin, like it was the best thing two people could have in common.",
+      hint: "that curse twin talk",
+    },
 
     // --- Acquaintance and up ---
     rui_thread: {
       minTier: "known",
       emoji: "🧵",
       bucket: "new",
-      label: "Got a loose thread fixed",
+      label: "Let him fix a loose thread",
       afterline:
-        "He spotted a loose thread on your blazer. You handed it over, and he had it fixed in a minute.",
+        "He spotted a loose thread on your blazer and offered to fix it for you.",
       hint: "that loose thread",
     },
     rui_roses: {
@@ -70,38 +79,39 @@ export default {
       minTier: "spark",
       emoji: "🌟",
       bucket: "spark",
-      label: "Got asked if it was all for him",
+      label: "Did the housework with him",
       afterline:
-        "He admired how hard you work, then asked, grinning, if it was all for him.",
+        "You worked through the Obscuary housework with him. He admired how hard you work, then asked, grinning, if it was all for him.",
       hint: "all that hard work",
     },
 
     // --- Confidant and up ---
-    rui_talked_to_sleep: {
-      minTier: "close",
-      emoji: "💬",
-      bucket: "close",
-      label: "Got talked to sleep",
-      afterline: "He can't get tired, so he talked until you drifted off.",
-      hint: "that talk you fell asleep to",
-    },
 
     // --- Devoted and up ---
-    rui_stayed_over: {
+    rui_regular_date: {
       minTier: "bound",
-      emoji: "🚪",
+      emoji: "💭",
       bucket: "bound",
-      label: "Took him up on his open door",
+      label: "Went on a regular-guy date",
       afterline:
-        "He always says his door is open. This time you stayed the night.",
-      hint: "that night at Obscuary",
+        "He asked what a regular guy would do on a date with you, and you spent the evening doing exactly that.",
+      hint: "that regular-guy date",
+    },
+    rui_drift_off: {
+      minTier: "bound",
+      emoji: "💤",
+      bucket: "bound",
+      label: "Fell asleep to his voice",
+      afterline: "He invited you over to Obscuary, and he talked until you drifted off.",
+      hint: "that night you stayed over",
     },
     rui_rose: {
       minTier: "bound",
       emoji: "🌹",
       bucket: "bound",
-      label: "Got a rose from his garden",
-      afterline: "He cut you a rose from his garden, thorns already off.",
+      label: "Tended his garden with him",
+      afterline:
+        "You tended his garden together, and he cut you a rose, thorns already off.",
       hint: "that rose",
     },
   },
@@ -119,20 +129,20 @@ export default {
     "shared_earbuds",
     "same_table",
     "movie_night",
-    "rooftop_lunch",
     "storm_watch",
     "courtyard_stars",
     "stayed_up",
     "midnight_snack",
     "made_playlist",
-    "galaxy_express",
+    "stolen_glances",
     "lamplit_steps",
-    "late_call",
+    "long_way",
+    "long_goodbye",
     "watched_sunrise",
     "left_note",
     "first_snow",
     "their_scarf",
-    "found_bookmark",
     "watched_sunset",
+    "people_talking",
   ],
 };

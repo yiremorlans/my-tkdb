@@ -20,8 +20,8 @@ export default {
       minTier: "new",
       emoji: "🍭",
       bucket: "new",
-      label: "Took one of his candies",
-      afterline: "He offered you a candy. He was already on his third.",
+      label: "Shared his candy",
+      afterline: "He offered you a candy. He was already on his third one.",
       hint: "that candy",
     },
     elias_cafeteria: {
@@ -56,9 +56,9 @@ export default {
       minTier: "known",
       emoji: "🧽",
       bucket: "new",
-      label: "Caught him cleaning out of habit",
+      label: "Helped him clean out of habit",
       afterline:
-        "He was cleaning something that wasn't his job anymore. It kept bothering him, he said.",
+        "He was cleaning something that wasn't his job anymore. It kept bothering him, he said, so you helped him finish.",
       hint: "that spot that needed cleaning",
     },
 
@@ -110,15 +110,6 @@ export default {
         "A box of sweets had come in from New Orleans. He let you pick first.",
       hint: "those sweets from home",
     },
-    elias_quiet_night: {
-      minTier: "close",
-      emoji: "🌘",
-      bucket: "close",
-      label: "Kept him company on a quiet night",
-      afterline:
-        "It was a quiet night. He said he didn't mind those, then asked you to stay.",
-      hint: "that quiet night",
-    },
 
     // --- Devoted and up ---
     elias_one_drink: {
@@ -126,17 +117,17 @@ export default {
       emoji: "🥃",
       bucket: "bound",
       label: "Kept him company for one drink",
-      afterline: "Neither of you could sleep. It was one drink, and it lasted.",
+      afterline: "Neither of you could sleep, so he offered one drink. You stayed long after the glass was empty.",
       hint: "that one drink",
     },
-    elias_mother: {
+    elias_goodbye_hand: {
       minTier: "bound",
-      emoji: "🏡",
+      emoji: "🫱",
       bucket: "bound",
-      label: "Heard about his mother",
+      label: "Had your hand taken at goodbye",
       afterline:
-        "He told you about his mother in New Orleans, and how he'd like to bring her here.",
-      hint: "that talk about New Orleans",
+        "You turned to leave, and he took your hand to say goodbye, smiling like he was in no hurry to let go.",
+      hint: "that quick goodbye",
     },
   },
 
@@ -145,22 +136,23 @@ export default {
   shared: [
     "walked_back",
     "borrowed_book",
-    "same_table",
+    "shared_umbrella",
     "movie_night",
-    "rooftop_lunch",
     "campus_bench",
     "storm_watch",
     "courtyard_stars",
     "stayed_up",
     "midnight_snack",
-    "galaxy_express",
+    "stolen_glances",
     "lamplit_steps",
-    "late_call",
+    "long_way",
+    "long_goodbye",
     "watched_sunrise",
     "left_note",
     "first_snow",
     "lazy_day",
-    "found_bookmark",
+    "shared_book",
     "watched_sunset",
+    "people_talking",
   ],
 };

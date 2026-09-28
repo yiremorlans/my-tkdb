@@ -32,8 +32,9 @@ export default {
       minTier: "known",
       emoji: "🧦",
       bucket: "new",
-      label: "Found his other sock",
-      afterline: "He'd lost a sock again. You found it before Rui did.",
+      label: "Hunted down his other sock",
+      afterline:
+        "He'd lost a sock again. You hunted for it together and found it before Rui did.",
       hint: "that missing sock",
     },
     edward_video: {
@@ -47,11 +48,11 @@ export default {
     },
     edward_lunch: {
       minTier: "known",
-      emoji: "🥪",
+      emoji: "🍽️",
       bucket: "new",
-      label: "Brought his lunch instead of Rui",
+      label: "Brought his lunch in Rui's place",
       afterline:
-        "He called for Rui about his lunch. You brought it instead, and he didn't seem to mind the swap.",
+        "He called for Rui about his lunch. You brought it instead and he didn't seem to mind the swap.",
       hint: "that lunch you brought",
     },
     edward_tavern_night: {
@@ -78,7 +79,7 @@ export default {
       minTier: "warm",
       emoji: "💘",
       bucket: "warm",
-      label: "Got his love advice, unasked",
+      label: "Talked love lives with him",
       afterline:
         "He wanted to know whether it was Rui or Lyca. He didn't believe either answer.",
       hint: "that talk about Rui and Lyca",
@@ -87,10 +88,19 @@ export default {
       minTier: "warm",
       emoji: "⚖️",
       bucket: "warm",
-      label: "Told him about a petty dispute",
+      label: "Talked over a petty dispute with him",
       afterline:
         "You'd gotten caught up in another petty human dispute. He said humans were absurd, then called you over to sit with him.",
       hint: "that petty dispute",
+    },
+    edward_video_stopped: {
+      minTier: "warm",
+      emoji: "▶️",
+      bucket: "warm",
+      label: "Got his video playing again",
+      afterline:
+        "His YouTube video had stopped playing and Rui was nowhere to be found. You got it going again, and he asked you to stay for the rest.",
+      hint: "that video you got playing again",
     },
     edward_ache: {
       minTier: "warm",
@@ -103,23 +113,33 @@ export default {
     },
 
     // --- Close Friend and up ---
-    edward_bed: {
+    edward_blunder: {
       minTier: "spark",
-      emoji: "🛏️",
+      emoji: "🔰",
       bucket: "spark",
-      label: "Got him back to bed",
+      label: "Helped him fix a careless blunder",
       afterline:
-        "He said he felt worse than usual. You got him back to his room, and he recovered the moment he was lying down.",
-      hint: "that trip back to bed",
+        "Rui's been teaching him how the human world works, but he'd made another careless blunder. You helped him set it right.",
+      hint: "that careless blunder",
     },
     edward_welcome_back: {
       minTier: "spark",
       emoji: "🫖",
       bucket: "spark",
-      label: "Came back to a warm welcome",
+      label: "Caught up with him after time away",
       afterline:
-        "You'd been away a while. He told you to come over, since he'd been looking forward to your return.",
+        "You'd been away a while. He called you over and said he'd been looking forward to your return, so you sat with him and caught up.",
       hint: "that welcome back",
+    },
+
+    edward_bed: {
+      minTier: "spark",
+      emoji: "🛏️",
+      bucket: "spark",
+      label: "Got him to bed on a bad day",
+      afterline:
+        "He was feeling worse than usual, and asked if you could carry him to bed. You got him there.",
+      hint: "that bad spell",
     },
 
     // --- Confidant and up ---
@@ -132,42 +152,44 @@ export default {
         "You stayed until the devil's hour. He was livelier than he'd been all day.",
       hint: "the devil's hour",
     },
-    edward_lap: {
+
+    edward_gift: {
       minTier: "close",
-      emoji: "💤",
+      emoji: "🎁",
       bucket: "close",
-      label: "Let him nap in your lap",
+      label: "Got offered the gift again",
       afterline:
-        "He asked to rest his head in your lap. He was asleep before you'd answered.",
-      hint: "that nap in your lap",
-    },
-    edward_midnight_visit: {
-      minTier: "close",
-      emoji: "🌑",
-      bucket: "close",
-      label: "Visited his room in the middle of the night",
-      afterline:
-        "You came to his room in the middle of the night. He asked what you were hoping for, and waited for you to say it.",
-      hint: "that midnight visit",
+        "He brought up the gift again, as if it were a small thing to give. He didn't press when you let it go.",
+      hint: "that offer",
     },
 
     // --- Devoted and up ---
-    edward_old_days: {
+    edward_peckish: {
+      minTier: "bound",
+      emoji: "🍒",
+      bucket: "bound",
+      label: "Heard he was feeling a little peckish",
+      afterline:
+        "He pulled you in close and said he was feeling a little peckish. He didn't look toward the kitchen once.",
+      hint: "that little request",
+    },
+    edward_lap: {
+      minTier: "bound",
+      emoji: "💤",
+      bucket: "bound",
+      label: "Let him rest his head on your lap",
+      afterline:
+        "He'd slept even worse than usual. He said the cleaning could wait, and rested his head on your lap.",
+      hint: "that rest on your lap",
+    },
+    edward_memories: {
       minTier: "bound",
       emoji: "🕯️",
       bucket: "bound",
-      label: "Heard about his years in Eastern Europe",
+      label: "Reminded him of old memories",
       afterline:
-        "He told you a little about his years in Eastern Europe, and more than he meant to.",
-      hint: "those stories about Eastern Europe",
-    },
-    edward_arms: {
-      minTier: "bound",
-      emoji: "🌙",
-      bucket: "bound",
-      label: "Fell asleep in his arms",
-      afterline: "You couldn't sleep, so he held you until you did.",
-      hint: "that night you fell asleep",
+        "He said being with you brought up old, old memories. You remind him a little of her.",
+      hint: "those old memories",
     },
   },
 
@@ -175,20 +197,19 @@ export default {
   // don't assume class, daylight or reading.
   shared: [
     "signed_report",
-    "walked_back",
-    "skipped_briefing",
     "movie_night",
     "storm_watch",
-    "courtyard_stars",
     "stayed_up",
     "lamplit_steps",
-    "late_call",
     "made_playlist",
     "left_note",
     "first_snow",
     "their_scarf",
     "lazy_day",
     "got_flowers",
-    "watched_sunset",
+    "people_talking",
+    "long_goodbye",
+
+    "inside_joke",
   ],
 };

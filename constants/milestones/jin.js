@@ -3,8 +3,8 @@
 // across the courtyard) never happens with him. The encounter has already put
 // him out in public, so these moments take him back to his room with the
 // caller in tow, most of them built on his canon orders and invitations. They
-// carry every tier, since the campus set he keeps is thin, and include two
-// Devoted swaps for the drive and the scarf.
+// carry every tier, since the campus set he keeps is thin; at Devoted, the
+// helicopter and the jacket stand in for a drive and a scarf.
 // See ./index.js for the contract and entry shape.
 export default {
   milestones: {
@@ -42,10 +42,10 @@ export default {
       minTier: "known",
       emoji: "👨‍🍳",
       bucket: "new",
-      label: "Carried his message to the chef",
+      label: "Went over his menu with him",
       afterline:
-        "He sent you down to tell the chef he wasn't in the mood for meat.",
-      hint: "that message for the chef",
+        "He wasn't in the mood for meat. You went over the menu with him until something suited him, then took it down to the chef.",
+      hint: "that menu",
     },
     jin_mail: {
       minTier: "known",
@@ -89,18 +89,18 @@ export default {
       minTier: "warm",
       emoji: "🎓",
       bucket: "warm",
-      label: "Heard him knock Darkwick classes",
+      label: "Went over coursework with him",
       afterline:
-        "You didn't know something he thought was obvious. He complained about what they teach at Darkwick.",
+        "You didn't know something he thought was obvious. He complained about what they teach at Darkwick, then went over it with you himself.",
       hint: "that complaint about Darkwick",
     },
     jin_schedule: {
       minTier: "warm",
       emoji: "📅",
       bucket: "warm",
-      label: "Rearranged your schedule for him",
+      label: "Rearranged your schedule with him",
       afterline:
-        "You mentioned plans. He told you to rearrange your schedule around him.",
+        "You mentioned plans. He told you to rearrange your schedule around him, and sat you down to do it then and there.",
       hint: "that schedule you rearranged",
     },
 
@@ -109,10 +109,10 @@ export default {
       minTier: "spark",
       emoji: "🩺",
       bucket: "spark",
-      label: "Got sent to the infirmary",
+      label: "Rested up in his room",
       afterline:
-        "He said you looked worn out, told you to take better care of yourself, and had Tohma take you to the infirmary.",
-      hint: "that trip to the infirmary",
+        "He said you looked worn out and told you to take better care of yourself. Then he had you rest in his room until he was satisfied.",
+      hint: "that rest you were ordered to take",
     },
     jin_wake_up: {
       minTier: "spark",
@@ -131,6 +131,16 @@ export default {
       afterline:
         "You asked to dine with him. He let you, and watched to see what you'd learned.",
       hint: "dining together",
+    },
+
+    jin_get_ready: {
+      minTier: "spark",
+      emoji: "👔",
+      bucket: "spark",
+      label: "Helped him get ready",
+      afterline:
+        "He told you to quit dawdling and help him get ready, then found something to redo at every step.",
+      hint: "all that getting ready",
     },
 
     // --- Confidant and up ---
@@ -156,13 +166,22 @@ export default {
       minTier: "close",
       emoji: "🍫",
       bucket: "close",
-      label: "Got his imported chocolates",
+      label: "Shared his imported chocolates",
       afterline:
-        "He was in a good mood and handed you a box of imported chocolates. You took it before he could change his mind.",
+        "He was in a good mood and opened a box of imported chocolates. He let you pick first, before he could change his mind.",
       hint: "those chocolates",
     },
 
     // --- Devoted and up ---
+    jin_forever: {
+      minTier: "bound",
+      emoji: "❄️",
+      bucket: "bound",
+      label: "Got a rare admission out of him",
+      afterline:
+        "He said he didn't take you being there for granted, and that he knew it wouldn't last forever. That was all he'd say.",
+      hint: "that talk about forever",
+    },
     jin_helicopter: {
       minTier: "bound",
       emoji: "🚁",
@@ -176,19 +195,10 @@ export default {
       minTier: "bound",
       emoji: "🧥",
       bucket: "bound",
-      label: "Left his room in his jacket",
+      label: "Wore the jacket he lent you",
       afterline:
-        "He put his jacket over your shoulders before you left his room. He didn't ask for it back.",
+        "It was late and cold. He put his jacket over your shoulders, and you stayed a while longer.",
       hint: "that jacket",
-    },
-    jin_stay: {
-      minTier: "bound",
-      emoji: "🛏️",
-      bucket: "bound",
-      label: "Stayed the night at Frostheim",
-      afterline:
-        "He had plans early, and your house was too far, he said. He had you stay the night.",
-      hint: "that night at Frostheim",
     },
     jin_duet: {
       minTier: "bound",
@@ -199,6 +209,15 @@ export default {
         "It was quiet. He had you sit next to him for a duet, and you knew the song.",
       hint: "that duet",
     },
+    jin_retrain: {
+      minTier: "bound",
+      emoji: "🔙",
+      bucket: "bound",
+      label: "Got retrained at his back",
+      afterline:
+        "You'd been away a while. He said you had guts abandoning your place at his back, and that he'd have to retrain you. He took his time about it.",
+      hint: "that retraining",
+    },
   },
 
   // The campus moments (./shared.js) that can happen in or from his room, or
@@ -206,16 +225,15 @@ export default {
   shared: [
     "signed_report",
     "borrowed_book",
-    "skipped_briefing",
     "movie_night",
     "storm_watch",
     "stayed_up",
     "midnight_snack",
     "made_playlist",
-    "late_call",
+    "people_talking",
     "left_note",
     "first_snow",
     "lazy_day",
-    "found_bookmark",
+
   ],
 };

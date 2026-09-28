@@ -1,7 +1,7 @@
-// Benkei isn't a student. He's the shopkeep at the campus store (open 24/7, a
-// Cornelius cat for a manager) and used to be a professor, so his moments are
-// built on that instead. Same tier spread idea: every step up unlocks
-// something. See ./index.js for the contract and entry shape.
+// Benkei isn't a student. He's the shopkeep at the campus store (open 24/7)
+// and used to be a professor, so his moments are built on that instead. Same
+// tier spread idea: every step up unlocks something. See ./index.js for the
+// contract and entry shape.
 export default {
   milestones: {
     // --- Stranger and up ---
@@ -18,9 +18,9 @@ export default {
       minTier: "new",
       emoji: "🍙",
       bucket: "new",
-      label: "Got handed a snack he wouldn't take money for",
+      label: "Split a snack he wouldn't take money for",
       afterline:
-        "He found a snack for you and wouldn't hear a word about paying.",
+        "He opened a snack to split with you and wouldn't hear a word about paying.",
       hint: "that snack on the house",
     },
 
@@ -49,10 +49,10 @@ export default {
       minTier: "warm",
       emoji: "📖",
       bucket: "warm",
-      label: "Heard about his advising days",
+      label: "Talked over your classes with him",
       afterline:
-        "He told you a little about his advising days, then changed the subject to snacks.",
-      hint: "those advising stories",
+        "You talked through your classes with him. The professor in him came out, and he had notes on every one.",
+      hint: "that talk about your classes",
     },
     benkei_walk_back: {
       minTier: "warm",
@@ -113,8 +113,9 @@ export default {
       minTier: "spark",
       emoji: "📚",
       bucket: "spark",
-      label: "Got a book recommendation from his teaching days",
-      afterline: "He recommended a book he used to assign.",
+      label: "Went through a book from his old syllabus",
+      afterline:
+        "He pulled out a book he used to assign, and you went through it together.",
       hint: "that book from the old syllabus",
     },
 
@@ -126,15 +127,6 @@ export default {
       label: "Kept him company through a night shift",
       afterline: "The store never closes, and neither of you noticed the hour.",
       hint: "that night shift",
-    },
-    benkei_long_way: {
-      minTier: "close",
-      emoji: "🍂",
-      bucket: "close",
-      label: "Took the long way around campus with him",
-      afterline:
-        "You took the long way around campus. He didn't check the time once.",
-      hint: "the long way around",
     },
 
     benkei_noodles: {
@@ -149,19 +141,20 @@ export default {
       minTier: "close",
       emoji: "🗂️",
       bucket: "close",
-      label: "Saw something from his advising days",
-      afterline: "He showed you something he kept from his advising days.",
+      label: "Looked through his advising keepsakes",
+      afterline:
+        "He dug out what he kept from his advising days, and you went through it together.",
       hint: "that keepsake from the advising days",
     },
     benkei_stock_list: {
       minTier: "close",
       emoji: "📋",
       bucket: "close",
-      label: "Got your favorites on the stock list",
-      afterline: "What you like is on the stock list now.",
+      label: "Wrote up the stock list with him",
+      afterline:
+        "You wrote up the stock list together. What you like is on it now.",
       hint: "your spot on the stock list",
     },
-
     // --- Devoted and up ---
     benkei_sunrise: {
       minTier: "bound",
@@ -175,10 +168,10 @@ export default {
       minTier: "bound",
       emoji: "🎵",
       bucket: "bound",
-      label: "Caught him humming your song",
+      label: "Hummed your song together",
       afterline:
-        "He was humming the song you like. He didn't stop when you noticed.",
-      hint: "hearing your song",
+        "He was humming the song you like. You joined in, and he didn't stop.",
+      hint: "that song",
     },
   },
 
@@ -192,11 +185,12 @@ export default {
     "storm_watch",
     "courtyard_stars",
     "made_playlist",
-    "late_call",
     "first_snow",
     "their_scarf",
-    "found_bookmark",
+    "shared_book",
     "got_flowers",
     "watched_sunset",
+    "long_goodbye",
+    "people_talking",
   ],
 };

@@ -30,9 +30,9 @@ export default {
       minTier: "new",
       emoji: "✍️",
       bucket: "new",
-      label: "Laughed at his autograph joke",
+      label: "Played along with his celebrity act",
       afterline:
-        "He played the celebrity and told you he was fresh out of autographs. You laughed, and he looked pleased with himself.",
+        "He played the celebrity and told you he was fresh out of autographs. You played the fan, and he looked pleased with himself.",
       hint: "that autograph joke",
     },
 
@@ -59,9 +59,9 @@ export default {
       minTier: "known",
       emoji: "📨",
       bucket: "new",
-      label: "Let him down about his fan mail",
+      label: "Went through his fan mail with him",
       afterline:
-        "He was sure he'd gotten fan mail. He took the news that he hadn't rather well.",
+        "He was sure he'd gotten fan mail. You went through the pile together, and he took the news that none of it was his rather well.",
       hint: "that fan mail",
     },
     zenji_sensational: {
@@ -80,26 +80,25 @@ export default {
       emoji: "🎥",
       bucket: "warm",
       label: "Filmed a folktale video for him",
-      afterline:
-        "Haku was busy, so you filmed his folktale video instead.",
+      afterline: "Haku was busy, so you filmed his folktale video instead.",
       hint: "that folktale video you filmed",
     },
-    zenji_fishing: {
+    zenji_romanticism: {
       minTier: "warm",
-      emoji: "🎣",
+      emoji: "📖",
       bucket: "warm",
-      label: "Watched his mastery with a fishing pole",
+      label: "Sat through his romanticism lecture",
       afterline:
-        "He wanted to show you his mastery with a fishing pole. Nothing bit. He called it a triumph anyway.",
-      hint: "that fishing trip",
+        "You asked what one of his lines meant. He gave you a whole lecture on romanticism instead.",
+      hint: "that lecture on romanticism",
     },
     zenji_siblings: {
       minTier: "warm",
       emoji: "👪",
       bucket: "warm",
-      label: "Got asked about your siblings",
+      label: "Took a quiet walk with him",
       afterline:
-        "He asked if you had any siblings, then said he didn't mean anything by it.",
+        "You took a walk with him. He asked if you had any siblings, then said he didn't mean anything by it.",
       hint: "that question about siblings",
     },
     zenji_doll: {
@@ -117,19 +116,10 @@ export default {
       minTier: "spark",
       emoji: "🌕",
       bucket: "spark",
-      label: "Heard him say the moon was beautiful",
+      label: "Watched the moon with him",
       afterline:
-        "He said the moon was beautiful, and didn't explain what he meant.",
+        "You watched the moon with him. He said it was beautiful, and didn't explain what he meant.",
       hint: "that moon",
-    },
-    zenji_subaru: {
-      minTier: "spark",
-      emoji: "🛌",
-      bucket: "spark",
-      label: "Woke Subaru while he played",
-      afterline:
-        "Subaru had overslept, so he sent you in to wake him and played the biwa to cheer you on.",
-      hint: "waking Subaru to the biwa",
     },
 
     // --- Confidant and up ---
@@ -137,68 +127,77 @@ export default {
       minTier: "close",
       emoji: "🍡",
       bucket: "close",
-      label: "Ate while he watched",
+      label: "Shared a meal, his way",
       afterline:
         "He wouldn't eat, being on a diet. He watched you finish yours like it was a feast.",
       hint: "that feast for one",
-    },
-    zenji_urashima: {
-      minTier: "close",
-      emoji: "🐢",
-      bucket: "close",
-      label: "Fell asleep to Urashima Taro",
-      afterline:
-        "You couldn't sleep, so he told you the story of Urashima Taro. You didn't hear the end.",
-      hint: "that bedtime story",
     },
     zenji_mortkranken: {
       minTier: "close",
       emoji: "🏥",
       bucket: "close",
-      label: "Got worried over before Mortkranken",
+      label: "Walked partway to Mortkranken with him",
       afterline:
-        "You were headed to Mortkranken. He asked if you were hurt, and hoped you'd take care.",
+        "He walked you partway to Mortkranken, asked if you were hurt, and hoped you'd take care.",
       hint: "that trip to Mortkranken",
     },
     zenji_goodnight: {
       minTier: "close",
       emoji: "🌙",
       bucket: "close",
-      label: "Got bid good night",
+      label: "Ended an evening with his good night",
       afterline:
-        "He looked into your eyes and bid you good night. He called himself the luckiest fella for miles around.",
+        "You spent the evening together. At the end he looked into your eyes and bid you good night, and called himself the luckiest fella for miles around.",
       hint: "that good night",
     },
 
-    // --- Devoted and up ---
-    zenji_pillow: {
-      minTier: "bound",
-      emoji: "🛌",
-      bucket: "bound",
-      label: "Woke up to him by your pillow",
+    zenji_see_me: {
+      minTier: "close",
+      emoji: "👻",
+      bucket: "close",
+      label: "Told him you could still see him",
       afterline:
-        "He was by your pillow when you woke. He swore he'd only just arrived.",
-      hint: "that morning by your pillow",
+        "You'd been quiet so long that he asked if you could still see him. You could, and he was so relieved.",
+      hint: "that quiet spell",
+    },
+
+    // --- Devoted and up ---
+    zenji_hapless_fool: {
+      minTier: "bound",
+      emoji: "📜",
+      bucket: "bound",
+      label: "Got asked to hear his story someday",
+      afterline:
+        "He said he had a little story about a hapless fool of a man, and asked if you'd hear it someday.",
+      hint: "that story about a hapless fool",
+    },
+    zenji_next_life: {
+      minTier: "bound",
+      emoji: "🌸",
+      bucket: "bound",
+      label: "Got promised the next life",
+      afterline:
+        "He said maybe you'd met too late. Then he promised he'd find you in the next life.",
+      hint: "that promise about the next life",
     },
     zenji_poem: {
       minTier: "bound",
       emoji: "🪶",
       bucket: "bound",
-      label: "Got a poem written for you",
+      label: "Heard him read you his poem",
       afterline:
-        "He wrote you a poem, then read it aloud before you could read it yourself.",
+        "He wrote you a poem and read it aloud with you beside him, before you could read it yourself.",
       hint: "that poem",
     },
-    zenji_fears: {
+    zenji_note: {
       minTier: "bound",
-      emoji: "🕊️",
+      emoji: "📝",
       bucket: "bound",
-      label: "Came back to him safe",
+      label: "Found a note he'd had Haku write",
       afterline:
-        "He'd been worried something had happened to you on a mission. He was glad his fears had no teeth.",
-      hint: "that safe return",
+        "There was a note waiting for you in Haku's handwriting. Every word of it was Zenji's.",
+      hint: "that note in Haku's handwriting",
     },
-
   },
 
   // The campus moments (./shared.js) a ghost can share: walking, watching,
@@ -208,14 +207,15 @@ export default {
     "movie_night",
     "campus_bench",
     "storm_watch",
-    "courtyard_stars",
     "stayed_up",
-    "galaxy_express",
     "lamplit_steps",
     "watched_sunrise",
-    "left_note",
     "first_snow",
     "lazy_day",
     "watched_sunset",
+    "inside_joke",
+    "long_goodbye",
+    "long_way",
+    "courtyard_stars",
   ],
 };
