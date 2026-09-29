@@ -74,7 +74,7 @@ export default {
             label: "Tell him to come and get you",
             style: 4,
             close:
-              "Come and GET you!? I am the captain of Mortkranken! I do not fetch patients like a common orderly!\n\nI shall send Jiro. He will drag you here by the collar, and he will not care whether you're in the middle of something important.",
+              "Come and GET you!? I am the captain of Mortkranken! I do not come running when a patient calls!\n\nI shall send Jiro. He will drag you here by the collar, and he will not care whether you're in the middle of something important.",
           },
         ],
       },
