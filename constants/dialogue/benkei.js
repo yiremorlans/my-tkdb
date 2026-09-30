@@ -276,15 +276,15 @@ export default {
         },
       },
       {
-        line: "He's carrying far too much and insists it's no trouble at all.",
-        approach: "Offer to help carry",
+        line: "He's rewriting a price tag by hand because the printed one had a typo.",
+        approach: "Wait for him to finish",
         greeting:
-          '"Oh, no, I\'ve got it. ...Actually, would you take the top one? Thank you."',
+          "\"Sorry, one second. It said 'chocolat.' It's been bothering me all morning.\"",
         responses: {
-          kind: ["Tell him it's no trouble", "Say you're happy to help"],
-          playful: ["Tease him about fussing", "Ask if he's showing off"],
-          bold: ["Take the load from his arms", "Grab the biggest box"],
-          neutral: ["Wait while he finishes", "Hold the door for him"],
+          kind: ["Say the fix looks good", "Tell him it's worth fixing"],
+          playful: ["Ask if he's grading it", "Give the tag a B-minus"],
+          bold: ["Point out another typo", "Offer to write the next one"],
+          neutral: ["Wait while he finishes", "Pick out what you need"],
         },
       },
       {
@@ -621,7 +621,7 @@ export default {
       },
       {
         line: '"You didn\'t have to bring that," he says, clearly pleased that you did.',
-        approach: "Let him take the load",
+        approach: "Give him what you brought",
         greeting: '"Here, hand it over. ...Thank you. I mean it."',
         responses: {
           kind: ["Say you wanted to", "Hand it over carefully"],
@@ -1203,13 +1203,13 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"Oh! H-hello." **{name}** is carrying far too much and insists to {user} that it\'s no trouble.',
+      '"Oh! H-hello." **{name}** answers {user} like it\'s a question from the back row, then remembers he sells gum now.',
       "**{name}** has a snack pressed into {user}'s hand before he's got through saying hello.",
       'A cat watches with total disdain as **{name}** waves {user} over. "Don\'t mind her," he says. "She\'s the manager."',
     ],
     warm: [
-      '"Welcome back!" **{name}** beams at {user} and immediately offers to carry something.',
-      "{user} calls out, and **{name}** sets down the crate he'd been managing badly.",
+      '"Welcome back!" **{name}** beams at {user} and already has their usual on the counter.',
+      "{user} calls out, and **{name}** reaches under the counter for whatever he set aside this time.",
       '"You\'d have been one of mine, in the advising days." **{name}** tells {user} that much, then looks startled he said it aloud.',
     ],
     spark: [
@@ -1223,7 +1223,7 @@ export default {
       "{user} calls, and **{name}** walks the long way around with them, just to have the time.",
     ],
     bound: [
-      '"I\'d made my peace with a quiet life," **{name}** tells {user}. "You\'ve ruined that rather thoroughly."',
+      '"I\'d made my peace with a quiet life," **{name}** tells {user}. "You\'ve kind of ruined that."',
       "**{name}** kisses {user}'s forehead in front of half the campus, like a small ceremony he takes seriously.",
       "{user} says the name, and **{name}** stops going red about it. Mostly.",
     ],
