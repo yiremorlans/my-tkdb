@@ -99,13 +99,15 @@ export function pickMissedLine(now = new Date()) {
 
 // --- winner lines -----------------------------------------------------------
 
-// Collapses the six dialogue tiers onto the five registers the winner lines are
-// authored at — "known" folds into "new" and the rest map straight through.
+// Maps each dialogue tier to the register its winner lines are authored at —
+// one-to-one. "known" (Acquaintance) used to fold into "new", which had
+// second-meeting winners drawing first-introduction lines ("Wait, you know my
+// name?"); it has its own register so "new" can stay Stranger's alone.
 // Add a bucket here, in
 // WINNER_LINE_BUCKETS and in WINNER_LINES together.
 const WINNER_LINE_TIER = {
   new: "new",
-  known: "new",
+  known: "known",
   warm: "warm",
   spark: "spark",
   close: "close",
@@ -116,7 +118,7 @@ const WINNER_LINE_TIER = {
 // WINNER_LINE_TIER, deduped). constants/validateContent.js walks every
 // character's pool against this list, so a typo'd bucket is reported at startup
 // rather than silently never being picked.
-export const WINNER_LINE_BUCKETS = ["new", "warm", "spark", "close", "bound"];
+export const WINNER_LINE_BUCKETS = ["new", "known", "warm", "spark", "close", "bound"];
 
 // Every placeholder fillTemplate knows how to resolve. Anything else is filled
 // with '' rather than left as literal braces, so an unknown one is a silent

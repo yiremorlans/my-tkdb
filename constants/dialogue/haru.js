@@ -900,6 +900,11 @@ export default {
       '{user} says the name, and **{name}** laughs, delighted. "Gahaha! Look at that."',
       "\"Don't mind Peekaboo, he's shy.\" **{name}** introduces Peekaboo before he introduces himself to {user}.",
     ],
+    known: [
+      '"What a coinkydink!" **{name}** grins at {user}. "You keep turnin\' up wherever I am."',
+      '{user} says the name, and **{name}** laughs. "Gahaha! Perfect timin\', I\'m short a pair of hands."',
+      "Peekaboo peers at {user} over the edge of the sling and ducks back down. **{name}** swears that's progress.",
+    ],
     warm: [
       '"Hey, Honor Roll!" **{name}** is filthy to the elbows and beaming at {user}.',
       "{user} calls out, and **{name}** drops the sack he was hauling. It can wait.",

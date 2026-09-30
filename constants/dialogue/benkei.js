@@ -1207,6 +1207,11 @@ export default {
       "**{name}** has a snack pressed into {user}'s hand before he's got through saying hello.",
       'A cat watches with total disdain as **{name}** waves {user} over. "Don\'t mind her," he says. "She\'s the manager."',
     ],
+    known: [
+      '"Oh, you\'re back. Good, good." **{name}** has set something aside for {user}.',
+      "{user} says the name, and **{name}** says theirs back like he's glad of the chance.",
+      '"How are you settling in? Everything going all right?" **{name}** actually waits for {user}\'s answer.',
+    ],
     warm: [
       '"Welcome back!" **{name}** beams at {user} and already has their usual on the counter.',
       "{user} calls out, and **{name}** reaches under the counter for whatever he set aside this time.",

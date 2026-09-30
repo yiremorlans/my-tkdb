@@ -36,8 +36,10 @@
 // any such gap at startup.
 //
 // `winnerLines` holds the public /call reveal lines, keyed by the registers in
-// WINNER_LINE_BUCKETS (constants/publicEncounters.js) — the six dialogue tiers
-// collapsed to five, with "known" folding into "new". A character's own pool
+// WINNER_LINE_BUCKETS (constants/publicEncounters.js) — one per dialogue tier.
+// "new" is Stranger's alone (the first introduction); "known" is Acquaintance,
+// who has met the character before, so it must never read as a first meeting.
+// A character's own pool
 // replaces the shared SHARED_WINNER_LINES pool below rather than merging with
 // it, so an authored reveal always sounds like them; a register left out falls
 // back. {user} is the winner's name (plain text, no @tag), {name} their full name, and the reveal
@@ -260,6 +262,13 @@ export const SHARED_WINNER_LINES = {
     "**{name}** studies {user} a second, then decides they're worth a moment.",
     '"…Do I know you?" **{name}** asks, but doesn\'t walk off. {user} got it right.',
     "**{name}** gives {user} a measured look, then stays.",
+  ],
+  known: [
+    "**{name}** places {user} a beat later than they'd like, but places them.",
+    '"You again." **{name}** stops for {user} without having to think about it.',
+    "{user} got the name out first. **{name}** nods like they'd half expected it.",
+    "**{name}** recognizes {user} and doesn't bother pretending otherwise.",
+    "**{name}** gives {user} a nod that files them under familiar.",
   ],
 
   warm: [

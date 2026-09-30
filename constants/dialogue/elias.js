@@ -946,6 +946,11 @@ export default {
       '{user} says the name, and **{name}** shifts the lollipop to the other cheek. "Oh, you called me?"',
       "**{name}** had been leaning where he shouldn't be. He straightens up for {user}, slowly.",
     ],
+    known: [
+      '"Oh, it\'s you again." **{name}** straightens up for {user}, a little quicker than last time.',
+      '{user} says the name, and **{name}** smiles like he wasn\'t waiting. "Oh, what a coincidence."',
+      '"You have a knack for finding me, don\'t you?" **{name}** tells {user}, and doesn\'t sound like he minds.',
+    ],
     warm: [
       '"Seeing you makes my day. I mean that." **{name}** says it simply, and {user} can tell.',
       "{user} calls out, and **{name}** puts down whatever errand Jo sent him on.",

@@ -867,6 +867,11 @@ export default {
       "{user} names him, and **{name}** looks over, unimpressed that it took this long.",
       '"You know who I am. Good." **{name}** allows {user} one step closer.',
     ],
+    known: [
+      '"You." **{name}** places {user} at a glance, which from him is nearly a greeting.',
+      '{user} names him, and **{name}** sighs. "Persistent. I\'ll give you that much."',
+      '"Don\'t hover, it\'s annoying." **{name}** doesn\'t send {user} away, either.',
+    ],
     warm: [
       '"Walk with me, then. Keep up." **{name}** doesn\'t break stride, but {user} had guessed right.',
       '"You again." **{name}** says it to {user} like a verdict he has stopped appealing.',

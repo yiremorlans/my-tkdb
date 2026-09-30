@@ -899,6 +899,11 @@ export default {
       '"Oh my. How charming." **{name}** appears at {user}\'s elbow, smiling.',
       "{user} says the name, and **{name}** smiles with rather too many implications in it.",
     ],
+    known: [
+      '"You\'ve returned." **{name}** says it to {user} as though it were remarkable.',
+      '{user} says the name, and **{name}** smiles. "I\'d started to think I imagined you."',
+      "**{name}** has a favor to ask of {user}, and asks it with his most harmless smile.",
+    ],
     warm: [
       '"You haven\'t flinched once," **{name}** observes to {user}, thrilled and slightly put out.',
       "{user} calls out, and **{name}**'s cough evaporates. He forgets to bring it back.",
