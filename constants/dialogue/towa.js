@@ -1148,6 +1148,11 @@ export default {
       '"...Dandelion?" **{name}** tries the word out on {user} for the first time.',
       "{user} says the name, and **{name}** turns a dandelion over and over, watching them.",
     ],
+    known: [
+      '"Ah! Dandelion, I found you!" **{name}** is all smiles, practically bouncing over to {user}.',
+      "{user} says the name, and **{name}** holds out a clover he's clearly been holding a while.",
+      "**{name}** was already watching {user} before they called, humming the same three notes.",
+    ],
     warm: [
       "\"You're here.\" **{name}** catches {user}'s sleeve before they've stopped walking.",
       "{user} calls out, and **{name}** holds out a dandelion without a word.",
@@ -1178,6 +1183,11 @@ export default {
       "{user} calls his name, and **{name}** stops humming, turns, and tilts his head at them. ...?",
       "**{name}** answers {user} with three bright notes and a wave. ~ ~ ~ ♪",
       "{user} calls out, and **{name}** looks them over, head tilted, and then beams. ~ ~ ~!",
+    ],
+    known: [
+      "{user} calls, and **{name}** hums two notes, then waits to see whether they'll stay. ~ ~ ~ ♪",
+      "**{name}** comes straight over to {user} and hums the rest of a phrase he'd started. ~ ~ ~ ♫",
+      "{user} calls out, and **{name}** presses a dandelion stem into their palm. ~ ~ ~ ♪",
     ],
     warm: [
       "**{name}** starts humming the moment {user} calls, and catches their sleeve. ~ ~ ~ ♫",

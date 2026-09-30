@@ -901,6 +901,11 @@ export default {
       "**{name}** turns to {user} and bows, a little too gracefully for the middle of a crowd.",
       '{user} says it first, and **{name}** goes a little pink. "Forgive me. I didn\'t expect that."',
     ],
+    known: [
+      '"Welcome back." **{name}** says {user}\'s name now without the small pause in front of it.',
+      "**{name}** has sweets with him for Hotarubi, and offers {user} one before he's even said hello.",
+      "{user} calls out, and **{name}** apologizes for keeping them waiting. He hadn't.",
+    ],
     warm: [
       "{user} calls out, and **{name}**'s polite smile turns into a real one.",
       "**{name}** tries to cross the crowd to {user} in a straight line, and fails, and keeps trying.",
