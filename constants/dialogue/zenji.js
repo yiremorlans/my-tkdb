@@ -883,6 +883,11 @@ export default {
       '{user} names him, and **{name}** beams. "Seventeen syllables, and you\'ve handed me the last five."',
       "**{name}** finishes his sentence to no one at all, then turns to {user} with a flourish.",
     ],
+    known: [
+      '"The wanderer returns." **{name}** looks {user} over, pleased. "You\'re becoming a regular fixture, my dear."',
+      '{user} names him, and **{name}** beams. "Twice is coincidence. Three times is a season."',
+      "**{name}** had {user}'s name on the tip of his tongue all week. They got there first.",
+    ],
     warm: [
       '"You arrive like a season, my dear." **{name}** is delighted with {user}.',
       "{user} calls out, and **{name}** abandons a perfectly good line mid-composition.",

@@ -65,7 +65,7 @@ test('an authored character never draws a shared line', () => {
 
 test('a character with no authored lines falls back to the shared pool', () => {
   // The fallback path is unreachable through CHARACTERS today (all 26 are
-  // authored at all five registers), so it is exercised through an id that
+  // authored at all six registers), so it is exercised through an id that
   // matches nobody — which is also what a roster addition looks like before
   // its lines are written.
   for (const bucket of WINNER_LINE_BUCKETS) {
@@ -95,8 +95,10 @@ test('every line names the winner and the character once filled', () => {
   }
 });
 
-test('"known" collapses onto "new"; every other tier maps to itself', () => {
-  assert.equal(winnerLineBucket('known'), 'new');
+test('every dialogue tier maps to its own register', () => {
+  // "known" used to fold into "new", so Acquaintance winners drew
+  // first-meeting introductions.
+  assert.equal(winnerLineBucket('known'), 'known');
   for (const bucket of WINNER_LINE_BUCKETS) {
     assert.equal(winnerLineBucket(bucket), bucket);
   }

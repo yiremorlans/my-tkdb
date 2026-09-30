@@ -322,14 +322,14 @@ export default {
         },
       },
       {
-        line: "He grunts once in your direction. Two weeks ago he didn't do that.",
+        line: "He looks up when you come in and nods once. Two weeks ago he didn't do that.",
         approach: "Ask what he's got to say",
         greeting: '"...Still here. Good."',
         responses: {
-          kind: ["Say hello back warmly", "Take the grunt kindly"],
-          playful: ["Grunt back at him", "Ask what the grunt meant"],
-          bold: ["Make him say a real word", "Call out the grunt"],
-          neutral: ["Grunt back, nothing more", "Let the grunt stand"],
+          kind: ["Say you're glad you stayed", "Say you'll be around"],
+          playful: ["Ask where else you'd be", "Ask if that was a compliment"],
+          bold: ["Make him say a real sentence", "Ask why that's good"],
+          neutral: ["Nod back, nothing more", "Let it stand"],
         },
       },
       {
@@ -936,10 +936,15 @@ export default {
       "**{name}** had been at that corner a while, working out which way it went. {user} named him before he managed it.",
       '"Careful." **{name}** moves something sharp out of {user}\'s way before he says anything else.',
     ],
+    known: [
+      "**{name}** knows {user}'s voice by now. He doesn't need to check who it is.",
+      '{user} says the name, and **{name}** looks up. "...Still around. Good."',
+      '**{name}** doesn\'t look up from the engine when {user} names him. "Yeah. Heard you coming."',
+    ],
     warm: [
       "{user} calls out, and **{name}** stops walking.",
       "{user} says the name, and **{name}** looks up from his lunch, food forgotten.",
-      '**{name}** grunts. {user} has learned to hear "good" in it.',
+      "**{name}** almost smiles at {user}. It's gone before anyone else catches it.",
     ],
     spark: [
       "**{name}** turns at {user}'s voice and takes a second too long to look away.",
