@@ -429,14 +429,14 @@ export default {
         },
       },
       {
-        line: "He's muttering about Professor Nicholas's methodology like it's a personal insult, entirely unprompted.",
+        line: "He's muttering about the academy's research budget like it's a personal insult, entirely unprompted.",
         approach: "Take his side",
         greeting:
-          '"His entire thesis is amateur guesswork dressed up in Latin."',
+          '"Even Nicolas agrees the work is sound. And still the academy gives me a budget fit for a middle school science fair!"',
         responses: {
-          kind: ["Back him up completely", "Let him vent"],
-          playful: ["Egg on the rant a little", "Ask for more details"],
-          bold: ["Argue the other side", "Tell him to let it go"],
+          kind: ["Say his work deserves better", "Let him vent"],
+          playful: ["Offer to run a bake sale", "Ask what he'd buy first"],
+          bold: ["Say every house is short too", "Tell him to make do"],
           neutral: ["Half-listen, say nothing", "Tune out the rant"],
         },
       },
@@ -895,6 +895,11 @@ export default {
       '"A test subject, wandering in of its own accord." **{name}** looks {user} over, delighted.',
       '{user} says the name, and **{name}** draws himself up. "You should feel honored to have some of my attention."',
       '"You know of me. Naturally." **{name}** informs {user} of this at considerable length.',
+    ],
+    known: [
+      '"...Ah. It\'s you." **{name}** stops shouting for Jiro long enough to deal with {user}.',
+      '{user} says the name, and **{name}** looks almost pleased. "You\'re less useless than the last one."',
+      '"You turn up with zero notice, and now I have to rearrange my schedule." **{name}** rearranges it for {user} anyway.',
     ],
     warm: [
       '"Where on earth have you been, worm?" **{name}** demands of {user}, then looks annoyed at himself for asking.',
