@@ -534,7 +534,7 @@ export default {
       {
         line: "\"I'm the only one who didn't get breakfast.\" He's glaring at the kitchen door. \"Because I didn't wake up on time? Everyone should adjust to me.\"",
         approach: "Agree with him",
-        greeting: "\"Right. See, you get it. You're the only one who gets it.\"",
+        greeting: '"Right. See, you get it. You\'re the only one who gets it."',
         responses: {
           kind: ["Find him something to eat", "Say you'd have waited"],
           playful: ["Offer him one crumb", "Say they ate his share"],
@@ -543,9 +543,10 @@ export default {
         },
       },
       {
-        line: "\"I swapped Mio's toolbox for a bunch of worms.\" He's crouched by the workshop door, waiting. \"He's gonna be shocked when he opens it.\"",
+        line: '"I swapped Mio\'s toolbox for a bunch of worms." He\'s crouched by the workshop door, waiting. "He\'s gonna be shocked when he opens it."',
         approach: "Wait with him",
-        greeting: "\"Shh. He's coming. Don't warn him. If you warn him, you're next.\"",
+        greeting:
+          "\"Shh. He's coming. Don't warn him. If you warn him, you're next.\"",
         responses: {
           kind: ["Ask if the worms are okay", "Say Mio's had a long day"],
           playful: ["Crouch down next to him", "Bet on Mio's face"],
@@ -554,9 +555,10 @@ export default {
         },
       },
       {
-        line: "\"What am I doing?\" He hasn't moved. \"There's a cat over there. I'm just watching it.\"",
+        line: '"What am I doing?" He hasn\'t moved. "There\'s a cat over there. I\'m just watching it."',
         approach: "Watch the cat too",
-        greeting: "\"It doesn't run from me. It's the only one. ...Besides you.\"",
+        greeting:
+          "\"It doesn't run from me. It's the only one. ...Besides you.\"",
         responses: {
           kind: ["Say the cat likes him", "Sit and watch with him"],
           playful: ["Meow at the cat", "Ask if the cat's his"],
@@ -565,9 +567,10 @@ export default {
         },
       },
       {
-        line: "\"Where are you going?\" He's fallen into step before you can answer. \"...Hmm. Then I'll come with you.\"",
+        line: '"Where are you going?" He\'s fallen into step before you can answer. "...Hmm. Then I\'ll come with you."',
         approach: "Let him tag along",
-        greeting: "\"Don't walk so fast. If you lose me, I'll just find you. Takes longer, though.\"",
+        greeting:
+          "\"Don't walk so fast. If you lose me, I'll just find you. Takes longer, though.\"",
         responses: {
           kind: ["Slow down for him", "Say you're glad of the company"],
           playful: ["Speed up on purpose", "Ask if he knows where"],
@@ -578,7 +581,8 @@ export default {
       {
         line: "\"What's with those people? They look like they're having fun.\" He's already heading over. \"I'll join them.\"",
         approach: "Go with him",
-        greeting: "\"Watch. They'll stop having fun in a second. ...There. Now they're happy.\"",
+        greeting:
+          "\"Watch. They'll stop having fun in a second. ...There. Now they're happy.\"",
         responses: {
           kind: ["Pull him away first", "Apologize to the group"],
           playful: ["Ask what he did", "Say that was fast"],
@@ -587,20 +591,25 @@ export default {
         },
       },
       {
-        line: "\"Mio is my little brother,\" he says, out of nowhere. \"Blood relation? That's pointless. A hateful chain.\"",
+        line: '"Mio is my little brother," he says, out of nowhere. "Blood relation? That\'s pointless. A hateful chain."',
         approach: "Ask what Mio is to him",
-        greeting: "\"Family. The kind I picked. Mio, Jo, Elias. ...You're on the list. Don't make it weird.\"",
+        greeting:
+          "\"Family. The kind I picked. Mio, Jo, Elias. ...You're on the list. Don't make it weird.\"",
         responses: {
-          kind: ["Say they're lucky to have him", "Say you're glad to be on it"],
+          kind: [
+            "Say they're lucky to have him",
+            "Say you're glad to be on it",
+          ],
           playful: ["Ask where you rank", "Ask if Mio knows he's little"],
           bold: ["Say you picked him too", "Ask what the list means"],
           neutral: ["Nod", "Let him keep talking"],
         },
       },
       {
-        line: "\"That guy earlier. Who was he?\" He's looking past you, down the hall. \"...I see. Alright then. I'll remember his face.\"",
+        line: '"That guy earlier. Who was he?" He\'s looking past you, down the hall. "...I see. Alright then. I\'ll remember his face."',
         approach: "Tell him it was nobody",
-        greeting: "\"Nobody has a face. I saw it. My wife shouldn't talk to nobodies.\"",
+        greeting:
+          '"Nobody has a face. I saw it. My wife shouldn\'t talk to nobodies."',
         responses: {
           kind: ["Say he's just a classmate", "Say you'd rather talk to him"],
           playful: ["Ask if he's jealous", "Say nobody was very nice"],
@@ -611,7 +620,8 @@ export default {
       {
         line: "You find him at the docks after dark, feet in the water, soaked to the waist. He doesn't pull them out when he sees you.",
         approach: "Sit on the dock with him",
-        greeting: "\"Water's better than air. Air's too dry. You wouldn't get it.\"",
+        greeting:
+          "\"Water's better than air. Air's too dry. You wouldn't get it.\"",
         responses: {
           kind: ["Ask if he's feeling okay", "Say you'll stay till he's done"],
           playful: ["Dip your feet in too", "Splash him"],
@@ -622,7 +632,7 @@ export default {
       {
         line: "He's carrying a briefcase that is definitely not his. \"Elias begged me, so I'm carrying it for him. I'm impressive, right?\"",
         approach: "Tell him he's impressive",
-        greeting: "\"Right. Say it again. ...Elias didn't say it once. Rude.\"",
+        greeting: '"Right. Say it again. ...Elias didn\'t say it once. Rude."',
         responses: {
           kind: ["Say it again, and mean it", "Offer to help him carry it"],
           playful: ["Ask what's inside", "Say Elias is lucky"],
@@ -631,9 +641,10 @@ export default {
         },
       },
       {
-        line: "\"The sky's red,\" he says, staring up. \"Just like the blood from that guy's arm.\" He sounds pleased about it.",
+        line: '"The sky\'s red," he says, staring up. "Just like the blood from that guy\'s arm." He sounds pleased about it.',
         approach: "Ask which guy",
-        greeting: "\"Doesn't matter. He's fine. Mostly. The sky's still nice, though. Look.\"",
+        greeting:
+          "\"Doesn't matter. He's fine. Mostly. The sky's still nice, though. Look.\"",
         responses: {
           kind: ["Look up with him", "Ask if the guy's okay"],
           playful: ["Say it's more orange", "Ask if it matches yours"],
@@ -642,9 +653,10 @@ export default {
         },
       },
       {
-        line: "\"I'm sleeping in the Heebie-Jeebie House tonight.\" He says it like an invitation. \"Might be fun if someone wanders in.\"",
+        line: '"I\'m sleeping in the Heebie-Jeebie House tonight." He says it like an invitation. "Might be fun if someone wanders in."',
         approach: "Ask who he's expecting",
-        greeting: "\"Whoever's dumb enough. ...You're dumb enough. Come by late.\"",
+        greeting:
+          "\"Whoever's dumb enough. ...You're dumb enough. Come by late.\"",
         responses: {
           kind: ["Say you'll bring a blanket", "Ask if he'll be cold"],
           playful: ["Promise to scare him first", "Ask what's in it for you"],
@@ -845,13 +857,18 @@ export default {
   winnerLines: {
     new: [
       '**{name}**\'s eyes track over first, then his head, slow. "...You knew my name." {user} did.',
-      '"Come closer." **{name}** says it to {user} flatly, and means all of it.',
+      '"Come closer." **{name}** says it to {user} like it isn\'t a request.',
       "{user} says the name, and **{name}** looks pleased in a way that isn't reassuring.",
+    ],
+    known: [
+      "**{name}**'s eyes are already on {user}. He doesn't look away when they notice.",
+      '"You\'re still alive, then." **{name}** looks {user} over. "I looked everywhere."',
+      '"Hurry up already." **{name}** has been waiting on {user}, and acts like that\'s their fault.',
     ],
     warm: [
       "**{name}** had been waiting in this exact spot for {user}.",
-      "\"You came.\" **{name}** doesn't say the rest of it to {user}, but it's all over his face.",
-      "{user} calls out, and **{name}** stops frightening whoever he was frightening.",
+      '"My wife." **{name}** greets {user} with it, like it\'s already settled.',
+      "**{name}** was in a foul mood right up until {user} showed up.",
     ],
     spark: [
       "\"You're not scared of me.\" **{name}** can't decide whether that disappoints him about {user}.",

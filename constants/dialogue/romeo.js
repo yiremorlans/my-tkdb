@@ -882,8 +882,13 @@ export default {
   winnerLines: {
     new: [
       '"HDY waste my time." **{name}** snaps at {user}.',
-      "{user} says the name, and **{name}** is already talking. About three things. At once.",
-      '"Perfect timing. I need someone I can trust." **{name}** decides this about {user} instantly.',
+      '**{name}** doesn\'t look up from the count when {user} walks in. "Name, business, and what it\'s worth to me. Go."',
+      '"Who let you up here?" **{name}** asks {user}, then answers himself. "Doesn\'t matter. You\'re here. Be useful."',
+    ],
+    known: [
+      '{user} says the name, and **{name}** snaps, "Spit it out, I don\'t have all day." Then he actually listens.',
+      '"Finally, an NTW." **{name}** waves {user} over. "Not Totally Worthless, obviously. Don\'t make me regret it."',
+      '"Took you long enough." **{name}** has clearly been waiting on {user}, and will die before saying so.',
     ],
     warm: [
       "**{name}** hangs up on a call mid-sentence to greet {user} properly. Suddenly the operation can wait.",

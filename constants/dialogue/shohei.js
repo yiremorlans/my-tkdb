@@ -922,8 +922,13 @@ export default {
       "{user} says the name, and **{name}** waves them over before deciding anything else.",
       '{user} catches **{name}** swinging off his motorcycle. He tugs his helmet off. "What\'re you looking at?"',
     ],
+    known: [
+      '"Oh, it\'s you." **{name}** leans out the truck window at {user}. "Hungry, Senpai, or just bored?"',
+      '{user} says the name, and **{name}** is already heading over. "Yeah, yeah. I heard you the first time."',
+      '**{name}** turns at the sound of {user}\'s voice, already grinning. "Pfft. Knew it was you, Senpai."',
+    ],
     warm: [
-      "\"Senpai!\" **{name}** has {user}'s order on before they've finished crossing the road.",
+      "**{name}** spots {user} across the courtyard and whistles them over. \"C'mon, Senpai. What took you so long?\"",
       "\"What're you yelling for, Senpai? I'm right here.\" **{name}** doesn't bother hiding the grin from {user}.",
       "**{name}** was closing up. He is now, somehow, cooking for {user}.",
     ],

@@ -856,10 +856,14 @@ export default {
   winnerLines: {
     new: [
       '"Huh." **{name}** looks {user} over. "You got guts. Stupid ones, but guts."',
-      "{user} says the name, and **{name}** grins around it. \"Who're you? ...Whatever. C'mere.\"",
       '"You lost or somethin\'?" **{name}** asks {user}, shuffling the whole time.',
-      "{user} says the name, and **{name}** squints. \"Didn't we meet yesterday? ...Nah. Don't remember.\" He sticks around anyway.",
-      '"Don\'t remember a word you said. Ciao!" **{name}** waves {user} off, then doesn\'t go anywhere.',
+      "\"Don't remember a word you said. Ciao!\" **{name}** waves {user} off, and they're gone.",
+      '"Huh? What." **{name}** barely looks at {user}.',
+    ],
+    known: [
+      '"You again, kitten." **{name}** says it to {user} like a fact now, not a jab.',
+      '"What\'s your name again? ...Whatever. I know you." **{name}** shrugs at {user}.',
+      "{user} says the name, and **{name}** grins around it. \"Who're you? ...Whatever. C'mere.\"",
     ],
     warm: [
       '"Took your damn time, kitten." **{name}** had been waiting on {user}.',
@@ -868,9 +872,9 @@ export default {
       '"Lulu can count the chips himself. Ciao!" **{name}** is out of his seat before {user} finishes calling.',
     ],
     spark: [
-      '"Kitten." **{name}** says it to {user}, and this time it isn\'t a jab at all.',
+      '"Kitten." **{name}** grins at {user}, and this time it isn\'t a jab at all.',
       "{user} says the name, and **{name}** folds a hand he was winning.",
-      "{user} says the name, and **{name}** tells the whole table \"Ciao!\" without looking back.",
+      '{user} says the name, and **{name}** tells the whole table "Ciao!" without looking back.',
       "**{name}** hooks a finger in {user}'s collar to pull them down to his level, grinning.",
     ],
     close: [

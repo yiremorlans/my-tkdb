@@ -877,6 +877,11 @@ export default {
       '{user} says the name, and **{name}** stops mid-yawn. "Sorry. Short sleeper. Hi."',
       '"...Okay, three more jobs and I\'ll barely make it." **{name}** looks up from his list and decides {user} goes first.',
     ],
+    known: [
+      '"If this is a repair request, it\'s going on the list." **{name}** looks up and sees it\'s {user}. "Oh, it\'s just you. Good."',
+      '{user} says the name, and **{name}** holds something out to them. "Good timing. Hold this a sec."',
+      '"You\'re busy again today? Yeah, same." **{name}** makes a minute for {user} anyway.',
+    ],
     warm: [
       "**{name}** sets his toolbox down for {user}, which he doesn't do for most people.",
       '"Shion can wait five minutes." **{name}** pockets his phone and turns to {user}.',

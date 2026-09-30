@@ -871,6 +871,11 @@ export default {
       '{user} says the name, and **{name}** turns right around. "What?"',
       '"Stay there a moment." **{name}** takes {user} in slowly, scent and all.',
     ],
+    known: [
+      '"You called me. So you want something." **{name}** waits for {user} to say what it is.',
+      '{user} calls, and **{name}** comes over with a book under his arm. "Wait. Before you say anything. What\'s this word?"',
+      '"Why\'d you call me? ...It\'s okay if there\'s no reason. I just wanna know." **{name}** asks {user}.',
+    ],
     warm: [
       "**{name}** knows the voice before he's found the face, and comes straight to {user}.",
       '"...You again. Where\'re we going today?" **{name}** is already walking toward {user}.',

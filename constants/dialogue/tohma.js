@@ -886,6 +886,11 @@ export default {
       '{user} names him, and **{name}** files it somewhere, smiling. "How resourceful."',
       '"Perhaps I can be of some assistance?" **{name}** asks {user}, as though he hadn\'t already overheard they were looking for him.',
     ],
+    known: [
+      '"Ah. You again." **{name}** turns to {user}. "Proceed, by all means."',
+      "**{name}** greets {user} by name before they've finished calling his. He makes a point of remembering.",
+      '"No need to explain yourself this time." **{name}** gives {user} a moment he could have spent elsewhere.',
+    ],
     warm: [
       '"Honestly." **{name}** was two steps from a clean escape, and {user} caught him anyway.',
       "{user} calls out, and **{name}** gives them his whole attention.",

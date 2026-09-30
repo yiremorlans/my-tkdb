@@ -859,8 +859,9 @@ reveal embed's winner line is the **only** place either of them is named —
 
 Tier comes from the winner's stored affinity with that character (global, not
 per-guild): `getRelationshipLevel(affinity).name` → `getDialogueTier(...)`.
-`WINNER_LINE_TIER` collapses the six dialogue tiers onto the five registers the
-lines are authored at (`known` folds into `new`).
+`WINNER_LINE_TIER` maps each of the six dialogue tiers to its own register.
+`new` is Stranger's first introduction; `known` (Acquaintance) has met the
+character before and must never read as a first meeting.
 
 Lines are **per character**, authored beside that character's other content in
 `constants/dialogue/<id>.js` and keyed by register:

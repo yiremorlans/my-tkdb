@@ -1227,6 +1227,11 @@ export default {
       "{user} says the name, and **{name}** turns the charisma on like a stage light.",
       '"Come on over, cutie." **{name}** greets {user} as though their schedule weren\'t already full.',
     ],
+    known: [
+      '"Twice now, cutie." **{name}** isn\'t the least bit surprised to see {user} again.',
+      "{user} says the name, and **{name}** sets his pen down like he'd been looking for an excuse.",
+      '"You\'re here again. That\'s dangerous for my schedule." **{name}** makes time for {user} anyway.',
+    ],
     warm: [
       '"You\'re back!" **{name}** forgets whatever he was signing. {user} did that.',
       "{user} calls out, and **{name}** folds the schedule away mid-revision.",

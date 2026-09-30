@@ -899,9 +899,14 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      "One earbud comes out for {user}. **{name}** leaves the other in.",
-      '"If this is about work, that\'s harassment." **{name}** stays put for {user} anyway, mildly impressed they found him at all.',
-      "{user} says the name, and **{name}** pauses the game. Doesn't unpause it, either.",
+      "**{name}** stays put for {user}, mildly impressed they found him at all.",
+      '"Is this for a mission? Because I\'m technically on break." **{name}** stays on his phone while {user} talks, but he\'s listening.',
+      '"Whatever it is, I didn\'t do it. Or I\'ll do it later." **{name}** hears {user} out anyway.',
+    ],
+    known: [
+      "\"You're around a lot lately.\" Arms crossed, **{name}** tells {user} it isn't a complaint.",
+      '"Rounds are done. Don\'t ask about the aquatic zone." **{name}** drops down next to {user} like he earned it.',
+      '"If anyone asks, you\'re a customer." **{name}** pulls up a chair for {user} anyway.',
     ],
     warm: [
       "**{name}** puts the phone down for {user}, and doesn't pick it back up.",

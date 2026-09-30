@@ -883,6 +883,11 @@ export default {
       '"Wait, you know my name?" **{name}** looks at {user} like it\'s a prize.',
       "{user} calls out, and **{name}** startles, recovers, and pretends he didn't.",
     ],
+    known: [
+      '"Hey, it\'s you again!" **{name}** waves at {user} with his whole arm, then tries to play it cool. Too late.',
+      '**{name}** already has his phone out for {user}. "Okay, you have to see this. It\'s all over WickHive."',
+      '**{name}** falls into step beside {user} like they\'d planned it. "Okay, where are we going?"',
+    ],
     warm: [
       '"There you are!" **{name}** is talking to {user} at top speed already.',
       "{user} says his name, and **{name}** lights up like it's going in his story later.",

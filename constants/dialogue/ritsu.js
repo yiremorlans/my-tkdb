@@ -544,12 +544,16 @@ export default {
         },
       },
       {
-        line: "\"You've lost your notebook? One moment.\" He flips his own open. \"At 9:04 AM it was inside the photocopier. Yes, I have that recorded.\"",
+        line: '"You\'ve lost your notebook? One moment." He flips his own open. "At 9:04 AM it was inside the photocopier. Yes, I have that recorded."',
         approach: "Ask why he recorded that",
-        greeting: '"I record everything. That you were the subject of this particular entry is incidental."',
+        greeting:
+          '"I record everything. That you were the subject of this particular entry is incidental."',
         responses: {
           kind: ["Thank him for tracking it", "Say you owe him one"],
-          playful: ["Ask what else he recorded", "Ask if you're in there a lot"],
+          playful: [
+            "Ask what else he recorded",
+            "Ask if you're in there a lot",
+          ],
           bold: ["Ask to read his notes", "Say that's a little much"],
           neutral: ["Go get the notebook", "Check the photocopier"],
         },
@@ -557,7 +561,8 @@ export default {
       {
         line: '"Good morning. We have a meeting at 3 PM today." He hands you a printed agenda. "Please adjust your plans accordingly."',
         approach: "Read the agenda",
-        greeting: "\"Item four is yours. I've allotted you six minutes. You may use seven, if the argument merits it.\"",
+        greeting:
+          '"Item four is yours. I\'ve allotted you six minutes. You may use seven, if the argument merits it."',
         responses: {
           kind: ["Thank him for the extra minute", "Promise to prepare"],
           playful: ["Ask what item five is", "Request a snack break item"],
@@ -566,9 +571,10 @@ export default {
         },
       },
       {
-        line: "\"As your business partner, I must ask that you stop consenting to uncompensated labor.\" He saw you carrying someone else's boxes.",
+        line: '"As your business partner, I must ask that you stop consenting to uncompensated labor." He saw you carrying someone else\'s boxes.',
         approach: "Say you were helping",
-        greeting: '"Helping is a service. Services have value. You are undercutting the market, and me."',
+        greeting:
+          '"Helping is a service. Services have value. You are undercutting the market, and me."',
         responses: {
           kind: ["Say you like helping people", "Promise to be careful"],
           playful: ["Offer to invoice them", "Ask his rate for boxes"],
@@ -577,9 +583,10 @@ export default {
         },
       },
       {
-        line: "\"You struggle to get up in the morning?\" He considers this with great seriousness. \"I could call you each day at a set time. I'll have to think about what to charge.\"",
+        line: '"You struggle to get up in the morning?" He considers this with great seriousness. "I could call you each day at a set time. I\'ll have to think about what to charge."',
         approach: "Accept the wake-up call",
-        greeting: '"Excellent. 6:45. I will call once. If you do not answer, I will call once more. That is the entire service."',
+        greeting:
+          '"Excellent. 6:45. I will call once. If you do not answer, I will call once more. That is the entire service."',
         responses: {
           kind: ["Thank him for the offer", "Promise to pick up first ring"],
           playful: ["Haggle the price down", "Ask for a song with it"],
@@ -590,7 +597,8 @@ export default {
       {
         line: 'He hands a business card to a first-year who only asked him the time. He notices you watching. "Always have them on hand."',
         approach: "Ask for a card",
-        greeting: '"You have four already. ...Very well. A fifth. Keep it in a different pocket."',
+        greeting:
+          '"You have four already. ...Very well. A fifth. Keep it in a different pocket."',
         responses: {
           kind: ["Keep it somewhere safe", "Say you'll treasure it"],
           playful: ["Ask him to sign it", "Say you collect them"],
@@ -601,7 +609,8 @@ export default {
       {
         line: '"Taiga Hoshibami has deviated from my behavioral model three times this week." He sounds personally wronged. "I must revise it."',
         approach: "Help revise the model",
-        greeting: '"Your observations would be welcome. You see him at hours I do not. Report everything."',
+        greeting:
+          '"Your observations would be welcome. You see him at hours I do not. Report everything."',
         responses: {
           kind: ["Share what you've seen", "Say the model is good"],
           playful: ["Say Taiga's onto him", "Add 'naps' as a variable"],
@@ -612,10 +621,14 @@ export default {
       {
         line: '"Until the age of three I traveled the world with my mother," he says, of a postcard on the diner wall. "From four, my studies took precedence."',
         approach: "Ask what he remembers",
-        greeting: '"Very little, precisely. A fountain. A great deal of wind. I have no notes from that period, which I regret."',
+        greeting:
+          '"Very little, precisely. A fountain. A great deal of wind. I have no notes from that period, which I regret."',
         responses: {
           kind: ["Say the fountain sounds nice", "Ask about his mother"],
-          playful: ["Ask if he rated the fountain", "Say toddlers take bad notes"],
+          playful: [
+            "Ask if he rated the fountain",
+            "Say toddlers take bad notes",
+          ],
           bold: ["Say he should go back", "Ask if he misses it"],
           neutral: ["Look at the postcard", "Let him continue"],
         },
@@ -623,7 +636,8 @@ export default {
       {
         line: '"I set aside time in the evening to watch opera online," he says, earbuds in hand. "It orders my thoughts. ...You may have the other earbud."',
         approach: "Take the other earbud",
-        greeting: '"Act two. You have missed act one, but I can summarize it in ninety seconds."',
+        greeting:
+          '"Act two. You have missed act one, but I can summarize it in ninety seconds."',
         responses: {
           kind: ["Listen along with him", "Ask which part he loves"],
           playful: ["Ask for the ninety seconds", "Sing the high note"],
@@ -632,9 +646,10 @@ export default {
         },
       },
       {
-        line: "\"I've finished reviewing today's recordings.\" He sets the recorder between you. \"You sighed a total of four times. Is something troubling you?\"",
+        line: '"I\'ve finished reviewing today\'s recordings." He sets the recorder between you. "You sighed a total of four times. Is something troubling you?"',
         approach: "Tell him what's wrong",
-        greeting: '"Take your time. I have cleared fifteen minutes. ...Twenty. I have cleared twenty."',
+        greeting:
+          '"Take your time. I have cleared fifteen minutes. ...Twenty. I have cleared twenty."',
         responses: {
           kind: ["Thank him for noticing", "Say it's nothing big"],
           playful: ["Say one was a yawn", "Ask how many he sighed"],
@@ -643,9 +658,10 @@ export default {
         },
       },
       {
-        line: "\"The vice-captain asked me to organize some documents.\" He's already at the copier. \"We begin by copying everything, in case the originals are lost.\"",
+        line: '"The vice-captain asked me to organize some documents." He\'s already at the copier. "We begin by copying everything, in case the originals are lost."',
         approach: "Help him make copies",
-        greeting: '"You collate. I copy. If you misalign a page, I will know, and I will say nothing, and you will feel it."',
+        greeting:
+          '"You collate. I copy. If you misalign a page, I will know, and I will say nothing, and you will feel it."',
         responses: {
           kind: ["Collate with care", "Offer to take a turn copying"],
           playful: ["Copy your hand instead", "Misalign one on purpose"],
@@ -656,7 +672,8 @@ export default {
       {
         line: "He passes you his notes to copy. The handwriting is appalling. He watches you squint and says nothing, with enormous dignity.",
         approach: "Ask what this word says",
-        greeting: "\"'Jurisdiction.' Obviously. ...It is legible to the trained eye. I will read it aloud. All of it.\"",
+        greeting:
+          "\"'Jurisdiction.' Obviously. ...It is legible to the trained eye. I will read it aloud. All of it.\"",
         responses: {
           kind: ["Say you'll learn to read it", "Thank him for sharing them"],
           playful: ["Guess the word wrong", "Say it looks like a map"],
@@ -667,7 +684,8 @@ export default {
       {
         line: '"You wish to have lunch with me?" He checks his watch, then his planner. "We are business partners. I will accompany you free of charge."',
         approach: "Pick the place",
-        greeting: '"The diner. Our usual booth. ...That was not a question. I have already reserved it."',
+        greeting:
+          '"The diner. Our usual booth. ...That was not a question. I have already reserved it."',
         responses: {
           kind: ["Say you're glad he's free", "Offer to treat him"],
           playful: ["Ask what it'd normally cost", "Suggest somewhere new"],
@@ -676,9 +694,10 @@ export default {
         },
       },
       {
-        line: "\"We made solid progress toward reinstating the Gala today.\" He closes his binder with rare satisfaction. \"Let's reconvene tomorrow.\"",
+        line: '"We made solid progress toward reinstating the Gala today." He closes his binder with rare satisfaction. "Let\'s reconvene tomorrow."',
         approach: "Agree to reconvene",
-        greeting: "\"Same time. Same booth. Bring today's notes. And yourself, which is the more important item.\"",
+        greeting:
+          '"Same time. Same booth. Bring today\'s notes. And yourself, which is the more important item."',
         responses: {
           kind: ["Say you'll bring both", "Say today went well"],
           playful: ["Ask which item is heavier", "Say you'll forget the notes"],
@@ -886,9 +905,14 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"Four seconds. Acceptable." **{name}** had been timing how long it took {user} to place him.',
-      "{user} says the name, and **{name}** notes the exact hour.",
-      '"Consultations are 5,500 yen per half hour." **{name}** waives it for {user}, and mentions that he is waiving it.',
+      "{user} says the name, and **{name}** switches the recorder on.",
+      '"Name, House, nature of the matter." **{name}** has his notebook open before {user} finishes.',
+      '"Five seconds." **{name}** looks up at {user}. "Consultations are billed by the half hour, so I suggest you be brief."',
+    ],
+    known: [
+      '**{name}** looks up from his notebook at {user}. "You were next on my list. Sit."',
+      '**{name}** slides a stack of copies across to {user}. "The originals stay with me. These are yours."',
+      "{user} calls, and **{name}** is already writing down the time. He has started a page just for them.",
     ],
     warm: [
       '"Excellent." **{name}** had a thought and no one worth telling it to until {user} turned up.',

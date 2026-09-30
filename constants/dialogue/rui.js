@@ -588,10 +588,13 @@ export default {
         line: "He's still shaking his head and smiling when you come in, like someone just impressed the heck out of him.",
         approach: "Ask who impressed him",
         greeting:
-          "\"Lyca! Not that long ago he was asking me how everything worked around here. Today some guys were running their mouths about him and he handled it himself. Stood his ground, kept his cool, didn't need me at all!\"",
+          '"Lyca! Not that long ago he was asking me how everything worked around here. Today some guys were running their mouths about him and he handled it himself. Stood his ground, kept his cool, didn\'t need me at all!"',
         responses: {
           kind: ["Say Lyca's working hard", "Say he sounds proud"],
-          playful: ["Tease him for feeling unneeded", "Ask what Lyca said to them"],
+          playful: [
+            "Tease him for feeling unneeded",
+            "Ask what Lyca said to them",
+          ],
           bold: ["Say he'll be out of a job", "Ask if Lyca knows he's proud"],
           neutral: ["Let him brag a while", "Nod, listen to the story"],
         },
@@ -919,14 +922,19 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"Oh wow, look who showed up!" **{name}** beams at {user} from a careful arm\'s length.',
-      "{user} says the name, and **{name}** reaches out, catches himself an inch away, and turns it into a wave.",
-      '"Don\'t shake my hand, long story!" **{name}** tells {user} cheerfully.',
+      '"Hey there! New face, huh? Welcome to the fun side of campus." **{name}** waves {user} over, then keeps a good few steps between them.',
+      '{user} says the name, and **{name}** spins around and points at himself. "Me? Oh, you\'ve got good taste."',
+      '{user} says the name, and **{name}** lights up. "You know me already? Guess my reputation got here first."',
+    ],
+    known: [
+      '"Cutie! Came all this way to check me out, huh?" **{name}** winks at {user}.',
+      "\"You called? Lucky me!\" **{name}** gives {user} a wink. \"Don't worry, I don't bite. That's Ed's thing.\"",
+      '"Oh, hey, cutie! Wanna grab a bite after this?" **{name}** asks {user}, like it\'s the most natural thing in the world.',
     ],
     warm: [
-      '"You\'re back!" **{name}** talks to {user} with his whole body and never quite lands a touch.',
-      "{user} calls out, and **{name}**'s brightness stops being a performance for a second.",
-      '"Come by the bar after," **{name}** tells {user}. "I\'ll mix you something."',
+      "\"Oh good, it's you. Ed's been a creep all day, I need a normal person.\" **{name}** falls into step with {user}, a few careful steps over.",
+      '"Talk to me! About anything. I like hearing you go on." **{name}** settles in across from {user} like he\'s got all night.',
+      '"Harurin said you\'d be around." **{name}** grins at {user}. "Don\'t tell him I asked."',
     ],
     spark: [
       "**{name}** forgets the careful distance {user} is owed. Then remembers. Then regrets remembering.",

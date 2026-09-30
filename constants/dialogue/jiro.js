@@ -902,8 +902,13 @@ export default {
   winnerLines: {
     new: [
       '"Symptoms or errand." **{name}** doesn\'t slow down for {user}. "Pick one."',
-      '{user} says the name, and **{name}** revises his estimate of the walk. "...Fine. Two minutes."',
-      '"You got that from a silhouette." **{name}** tells {user} it was efficient.',
+      '{user} says the name, and **{name}** tugs his mask down to answer. "Yes. Do you need something treated?"',
+      '"Don\'t ask what\'s in the cooler," **{name}** tells {user}, and keeps walking toward the lab.',
+    ],
+    known: [
+      '"Your color\'s better than last week." **{name}** tells {user} this before hello.',
+      '{user} says the name, and **{name}** stops. "I was about to come find you for a check-up. This saves me a trip."',
+      'Someone down the hall bolts at the sight of **{name}**. "That\'s rude, isn\'t it?" he asks {user}. "You never run."',
     ],
     warm: [
       "**{name}** stops for {user}.",

@@ -33,7 +33,7 @@ export default {
       bucket: "new",
       label: "Checked on the Capybus with him",
       afterline:
-        "The Capybus made a noise, so you went with him to check on her, Peekaboo in the sling bag.",
+        "The Capybus made a noise, so you went with him to check on her.",
       hint: "that check on the Capybus",
     },
     haru_energy_drink: {

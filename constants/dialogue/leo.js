@@ -907,6 +907,11 @@ export default {
       '"Brave or stupid?" **{name}** asks {user}, already deciding it\'s content.',
       "{user} says the name, and **{name}** grins like he's already framing the shot.",
     ],
+    known: [
+      '**{name}** doesn\'t look up from his phone. "Knew it\'d be you." {user} has been clocked.',
+      '{user} says the name, and **{name}** smirks. "Took you long enough, Honor Roll."',
+      '**{name}** turns his phone on {user}. "Wave. You\'re on my live stream now."',
+    ],
     warm: [
       "**{name}** raises his phone at {user}, then lowers it. They're not for the feed.",
       '"Finally," **{name}** drawls at {user}, not hiding that he had been watching for them.',

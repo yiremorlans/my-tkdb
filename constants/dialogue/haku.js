@@ -272,7 +272,7 @@ export default {
         },
       },
       {
-        line: 'He\'s stretched out on the bench and lifts a hand without opening his eyes. "Hey. Give me five more minutes."',
+        line: 'He\'s stretched out on the bench and waves a lazy hand in your direction. "Hey. Give me five more minutes."',
         approach: "Let him nap",
         greeting:
           '"...Mm. You waited. That\'s nice of you. Most people just poke me."',
@@ -296,12 +296,12 @@ export default {
         },
       },
       {
-        line: '"You shouldn\'t be out this far alone." He\'s already up. "To the lights, at least. Humor me."',
+        line: '"You shouldn\'t be out this far alone." He\'s already up. "I\'ll walk you to the lights, at least."',
         approach: "Walk with him",
         greeting:
-          '"Stay where I can see you. It\'s not far. ...And don\'t look at the treeline."',
+          "\"Stay where I can see you. It's not far. ...And don't look at the treeline.\"",
         responses: {
-          kind: ["Stay where he can see you", "Say you'll humor him"],
+          kind: ["Stay where he can see you", "Keep your eyes off the trees"],
           playful: ["Ask if he's being dramatic", "Ask if a fox spirit's out"],
           bold: ["Walk off on your own", "Say you can handle the dark"],
           neutral: ["Let him walk, say nothing", "Fall into step quietly"],
@@ -310,14 +310,15 @@ export default {
     ],
     known: [
       {
-        line: '"Oh, it\'s you." He cracks one eye open. "Good timing. I was getting bored."',
-        approach: "Ask if he was waiting for you",
-        greeting: '"Oh, you. ...Yeah, I was hoping it\'d be you."',
+        line: '"Look at that. Sun\'s going down and nothing\'s exploded." He sounds honestly relieved. "Might actually get through today without a disaster."',
+        approach: "Say the day's not over yet",
+        greeting:
+          "\"Don't. You'll jinx it. ...Okay, sit. If something goes wrong, at least I'll have a witness.\"",
         responses: {
-          kind: ["Say you're glad too", "Admit you came looking"],
-          playful: ["Ask if he was really bored", "Tease him for waiting"],
-          bold: ["Say of course it's you", "Own the good timing"],
-          neutral: ["Shrug, take a seat", "Sit without comment"],
+          kind: ["Sit and keep him company", "Promise not to jinx it"],
+          playful: ["Jinx it anyway", "Knock on wood for him"],
+          bold: ["Bet on a disaster by dark", "Say you'll handle any disaster"],
+          neutral: ["Sit, say nothing", "Watch the sun go down"],
         },
       },
       {
@@ -335,8 +336,7 @@ export default {
       {
         line: '"You again." He doesn\'t sound put out about it. "Third time this week. Not that I\'m counting."',
         approach: "Say you'll keep turning up",
-        greeting:
-          '"Don\'t look so pleased," he says with a smirk.',
+        greeting: '"Don\'t look so pleased," he says with a smirk.',
         responses: {
           kind: ["Say you like being counted on", "Say you've kept count too"],
           playful: ["Ask what the count is", "Tease him for keeping count"],
@@ -374,7 +374,10 @@ export default {
         greeting:
           "\"Caught me actually working for once. Don't tell anyone, I've got a reputation to protect.\"",
         responses: {
-          kind: ["Thank him sincerely", "Say that saved you a headache"],
+          kind: [
+            "Offer to cover his next one",
+            "Say that saved you a headache",
+          ],
           playful: [
             "Ask what he wants in return",
             "Tease him for actually working",
@@ -389,7 +392,7 @@ export default {
       {
         line: "\"Hang on, I'll walk you. I don't love the idea of you crossing the campus alone in the dark.\"",
         approach: "Let him walk you",
-        greeting: '"Walk you back? Purely practical. ...Mostly."',
+        greeting: '"Walk you back? Purely practical. It\'s on my way."',
         responses: {
           kind: ["Say you'll take practical", "Fall into step beside him"],
           playful: ["Ask what 'mostly' means", "Call out the practical excuse"],
@@ -414,7 +417,7 @@ export default {
         greeting:
           '"Subaru asked if you\'re doing okay. I told him you seem tougher than you look. Was I right?"',
         responses: {
-          kind: ["Thank Subaru for asking", "Say you're glad to help"],
+          kind: ["Say you're holding up", "Say you're glad to help"],
           playful: [
             "Ask what Subaru really thinks",
             "Tease him for keeping tabs",
@@ -427,26 +430,26 @@ export default {
         },
       },
       {
-        line: '"That old thing?" He tucks the charm back out of sight. "Something I grabbed on my way out. Never got around to throwing it away."',
-        approach: "Ask about the charm",
+        line: '"Saw Tohma earlier. First real chat we\'ve had in a while." He sounds almost pleased. "Guy\'s got his hands full, as always."',
+        approach: "Ask how Tohma's doing",
         greeting:
-          '"Ha ha. You\'ve got that look again. It\'s nothing interesting, promise."',
+          '"Busy. Tired. Pretending he isn\'t. ...Takes one to know one, I guess."',
         responses: {
-          kind: ["Let him keep the charm", "Say there's no need to explain"],
-          playful: ["Guess what the charm does", "Demand to see it properly"],
-          bold: ["Ask what it's really for", "Push past the deflection"],
-          neutral: ["Let it go unremarked", "Say nothing about the charm"],
+          kind: ["Say they both need a break", "Say you're glad they talked"],
+          playful: ["Ask who's more tired", "Call them two of a kind"],
+          bold: ["Say he should rest too", "Ask what they talked about"],
+          neutral: ["Listen, say nothing", "Nod along quietly"],
         },
       },
       {
-        line: '"I\'ve been keeping tabs on you." He says it like it\'s nothing. "Somebody\'s got to get to the bottom of that curse of yours."',
+        line: '"I\'ve been keeping tabs on you." He says it like it\'s nothing. "Somebody\'s got to keep an eye on you and that curse."',
         approach: "Ask if that's really why",
         greeting:
-          "\"How's the search for clues going? Don't try to carry the whole thing yourself. ...I'm not volunteering for anything. I just get bored.\"",
+          "\"How's the search for clues going? Don't try to carry the whole thing yourself. If you ever want to talk it through, I'm happy to listen.\"",
         responses: {
           kind: ["Say you won't go it alone", "Say you appreciate it"],
           playful: ["Call it stalking, lightly", "Tease him for keeping tabs"],
-          bold: ["Ask what he's really after", "Demand the real reason"],
+          bold: ["Ask him to help you look", "Say you'll take him up on it"],
           neutral: ["Accept the help, say little", "Let him keep helping"],
         },
       },
@@ -454,8 +457,7 @@ export default {
         line: "He's the one still up when you can't sleep, like he timed it that way.",
         approach: "Wait him out",
         greeting: [
-          '"Oh hey. Didn\'t peg you as a regular around here, but here you are again."',
-          "\"Can't sleep either? Pull up a chair. I'm not great company this late, but I'm here.\"",
+          "\"Can't sleep either? Pull up a seat. I'm not great company this late, but I'm here.\"",
         ],
         responses: {
           kind: ["Say you're glad he's up too", "Sit with him a while"],
@@ -485,16 +487,16 @@ export default {
         line: '"Careful, princess. Sit that close and people start talking." He doesn\'t move away.',
         approach: "Take the space beside him",
         greeting:
-          '"You make it hard to stay unbothered. Take that as a compliment."',
+          '"Ha ha. Don\'t look at me like that. It was a warning, not an invitation. ...Mostly."',
         responses: {
-          kind: ["Stay close, unbothered", "Say gossip doesn't scare you"],
+          kind: ["Say you'll risk the talk", "Say gossip doesn't scare you"],
           playful: ["Let them talk", "Ask what they'd say"],
           bold: ["Sit even closer", "Dare him to move away"],
           neutral: ["Stay put, say nothing", "Sit at a normal distance"],
         },
       },
       {
-        line: 'He catches your sleeve as you pass. "Stay a minute. The place is better with you in it. ...God, ignore that."',
+        line: 'He catches your sleeve as you pass. "Stay a minute. The place is better with you in it."',
         approach: "Stay the minute",
         greeting: "\"I'd say I wasn't waiting for you. ...Nah. I was.\"",
         responses: {
@@ -517,26 +519,27 @@ export default {
         },
       },
       {
-        line: '"Boo." You don\'t flinch anymore. He looks almost let down. "...Shame. It was a good excuse to catch your arm."',
-        approach: "Refuse to flinch",
+        line: '"Boo." You don\'t flinch anymore. He looks almost let down. "...Shame. Your reactions were the best part of my week."',
+        approach: "Ask if he's disappointed",
         greeting:
-          '"Tch. Guess I need a new excuse. Give me a sec, I\'ll think of one."',
+          '"Ha. A little. Guess I\'ll have to get creative. Give me a sec."',
         responses: {
-          kind: ["Say the boo still works", "Let him catch your arm"],
+          kind: ["Say the boo still works", "Offer him a real reaction"],
           playful: ["Boo him back", "Offer a fake flinch"],
-          bold: ["Grab his arm first", "Tell him to try harder"],
-          neutral: ["Stay unbothered", "Keep walking, unfazed"],
+          bold: ["Tell him to try harder", "Say you'll never flinch again"],
+          neutral: ["Wait for the new scare", "Walk on, say nothing"],
         },
       },
       {
-        line: '"Be careful with your right leg today. Especially in the main building." He isn\'t smiling. "...Go on. Ask which half this is."',
-        approach: "Ask which half this is",
-        greeting: '"Not kidding. Take the other staircase today. Humor me."',
+        line: '"You\'ve been quiet all day." He drops down next to you. "Everyone here comes from somewhere different, you know. No reason you should feel out of place."',
+        approach: "Admit you've felt out of place",
+        greeting:
+          "\"Figured. For what it's worth, you fit in here better than most of us did at first. I'd know.\"",
         responses: {
-          kind: ["Say you'll take the other way", "Thank him for the warning"],
-          playful: ["Ask about your left leg", "Promise to hop everywhere"],
-          bold: ["Ask what he saw", "Ask why the right leg"],
-          neutral: ["Nod, take the other stairs", "Say nothing, heed it"],
+          kind: ["Ask how long it took him", "Say he makes it easier"],
+          playful: ["Ask who fit in worst", "Ask if that's a compliment"],
+          bold: ["Ask what 'I'd know' means", "Say he fits in fine now"],
+          neutral: ["Sit with that a while", "Lean back, say nothing"],
         },
       },
       {
@@ -668,7 +671,7 @@ export default {
         line: "He said today didn't really work for him. He turns up anyway, with a very weak excuse already loaded.",
         approach: "Ask for the weak excuse",
         greeting:
-          '"The excuse is I finished early. I did not finish early. I left early. Subaru\'s covering, he was very nice about it."',
+          '"The excuse is I finished early. I actually did finish early. Nobody believes me, it\'s very insulting."',
         responses: {
           kind: ["Say you're glad he came", "Say he didn't need one"],
           playful: ["Rate the excuse out of ten", "Ask what he's skipping"],
@@ -909,14 +912,19 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"Oh. Hey." **{name}** doesn\'t get up. {user} still got it right.',
+      '**{name}** gives {user} an easy smile. "Got it in one. Not bad."',
       '{user} says the name, and **{name}** glances at something just over their shoulder. "...Ignore that."',
-      '**{name}** lifts a hand at {user} without opening his eyes. "Yep. That\'s me. Good guess."',
+      "\"Yep, that's me.\" **{name}** asks {user} if they need anything while they're here.",
+    ],
+    known: [
+      '{user} calls, and **{name}** hands them the umbrella he was holding. "Rain\'s coming. Trust me on that one."',
+      '**{name}** is sorting out a question Subaru passed his way when {user} calls it. "Hotarubi stuff. Done now. What\'s up?"',
+      '**{name}** is halfway through chasing down late papers when {user} calls it. "Good timing. Two names left. Want to help?"',
     ],
     warm: [
       "**{name}** shifts over on the step. The space is for {user}.",
       '"There you are." **{name}** has already saved {user} the good end of the bench. "...It was free anyway."',
-      '{user} calls it, and **{name}** points at them. "See? Somebody around here pays attention."',
+      "{user} calls it, and **{name}** is already looking their way. \"Knew it'd be you. Don't ask how.\"",
     ],
     spark: [
       "**{name}** hears his name and the unbothered act slips for about a second. {user} caught it.",
