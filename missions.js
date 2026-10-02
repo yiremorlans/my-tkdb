@@ -701,7 +701,8 @@ function errandProgress(mission) {
 }
 
 // An errand's house-change button (migration 025), plus the 🔒 line explaining
-// it when greyed out (null while it's live). Mirrors change_errand_house's own
+// it when a signature has greyed it out (null while it's live, and null once
+// spent: the 🔒 on the button already says that). Mirrors change_errand_house's own
 // checks so the button greys out before the click instead of after it — the
 // RPC still re-checks under the row lock, which is what makes a stale button
 // harmless. `signed` is the count the caller already has.
@@ -715,7 +716,7 @@ function houseChangeControls(mission, signed, from = "briefing") {
       ? "signed"
       : null;
   return {
-    note: blocker ? HOUSE_CHANGE_UNAVAILABLE_LINES[blocker] : null,
+    note: blocker === "signed" ? HOUSE_CHANGE_UNAVAILABLE_LINES.signed : null,
     button: {
       type: MessageComponentTypes.BUTTON,
       // Colored while it can still be used, grey once spent or blocked.
@@ -723,7 +724,7 @@ function houseChangeControls(mission, signed, from = "briefing") {
       label: HOUSE_CHANGE_BUTTON_LABEL,
       custom_id: `mission:house:${mission.id}${from === "docs" ? ":docs" : ""}`,
       disabled: blocker !== null,
-      ...(blocker === "spent" && { emoji: { name: "🔒" } }),
+      ...(blocker && { emoji: { name: "🔒" } }),
     },
   };
 }
@@ -770,7 +771,9 @@ export async function buildMissionBriefing(userId, mission) {
     : "";
 
   const note = houseChange?.note;
-  const hint = houseChange && !note ? ` ${HOUSE_CHANGE_HINT}` : "";
+  // Only offered while the change is live: not once spent, not once signed.
+  const hint =
+    houseChange && !note && !mission.house_changed_at ? ` ${HOUSE_CHANGE_HINT}` : "";
 
   const content = [
     `**MISSION BRIEFING**  ·  ${mission.house}  ·  ${label}`,
@@ -1081,11 +1084,7 @@ export async function buildDocsMessage(mission, targets) {
     targets.length - unsigned.length,
     "docs",
   );
-  // A spent change is shown by the 🔒 on the button itself, so the sheet
-  // doesn't repeat it in text.
-  if (houseChange.note && !mission.house_changed_at) {
-    lines.push(houseChange.note);
-  }
+  if (houseChange.note) lines.push(houseChange.note);
 
   return {
     content: lines.join("\n"),
@@ -1356,7 +1355,8 @@ export async function handleMissionHouseChange(body, missionId, from = "briefing
       type: InteractionResponseType.UPDATE_MESSAGE,
       data: {
         ...message,
-        content: `${HOUSE_CHANGE_DONE_LINE}\n\n${message.content}`,
+        // At the foot of the message, where the 🔒 line would otherwise sit.
+        content: `${message.content}\n\n${HOUSE_CHANGE_DONE_LINE}`,
         // An edit of a message that is already ephemeral; /docs' builder sets
         // flags for its own fresh reply.
         flags: undefined,

@@ -187,12 +187,13 @@ export const HOUSE_CHANGE_UNAVAILABLE_LINES = {
 };
 
 // Appended to an errand's instructions only while the house change is still
-// available. Once it's spent or a signature is in, the 🔒 line above takes its
-// place instead of sitting under an offer that no longer stands.
+// available. Once a signature is in, the 🔒 "signed" line above takes its place;
+// once spent, the 🔒 on the button says it and the "spent" line is only the
+// reply to a stale click.
 export const HOUSE_CHANGE_HINT =
   "Don't like the house? You can request a new one once, before your first signature.";
 
-export const HOUSE_CHANGE_DONE_LINE = "New house assigned. Same errand, fresh signatures.";
+export const HOUSE_CHANGE_DONE_LINE = "🔄 New house assigned. Same errand, fresh signatures.";
 
 export const RIDDLE_WRONG_LINES = [
   "That's not who's behind this. Look again.",

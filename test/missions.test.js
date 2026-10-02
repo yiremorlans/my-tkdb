@@ -709,7 +709,8 @@ describe('errands', () => {
     assert.equal(row.status, 'accepted');
     assert.match(response.data.content, new RegExp(row.house));
     assert.equal(houseChangeButtonOf(response.data.components).disabled, true);
-    assert.match(response.data.content, /already spent/, 'the briefing keeps the line');
+    assert.doesNotMatch(response.data.content, /already spent/, 'the 🔒 on the button says it');
+    assert.match(response.data.content, /New house assigned\.[^\n]*$/, 'the done line closes the message');
     assert.doesNotMatch(response.data.content, /Don't like the house\?/, 'no offer once it is spent');
 
     // A stale button can't spend it twice.
@@ -724,6 +725,7 @@ describe('errands', () => {
 
     const { reply } = await handleDocs(command('user-a'));
     assert.equal(houseChangeButtonOf(reply.components).disabled, true);
+    assert.equal(houseChangeButtonOf(reply.components).emoji?.name, '🔒');
     assert.match(reply.content, /closes once a signature is in/);
 
     const { response } = await handleMissionHouseChange(click('user-a'), 1);
