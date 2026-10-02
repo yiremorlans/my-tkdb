@@ -87,6 +87,7 @@ const {
   handleMissionAccept,
   handleMissionAssistJoin,
   handleMissionFile,
+  handleMissionHouseChange,
   handleRiddle,
   reconcileMissionPosts,
   runGuildMissionPass,
@@ -635,6 +636,115 @@ describe('errands', () => {
 
     const { reply } = await handleDocs(command('user-a'));
     assert.match(reply.content, /\/riddle/);
+    assert.equal(reply.components, undefined);
+  });
+
+  // --- house change (migration 025) ---
+
+  const houseChangeButtonOf = (components) =>
+    components[0].components.find((c) => c.custom_id.startsWith('mission:house:1'));
+
+  it('offers a house change on the briefing and the report sheet of a fresh errand', async () => {
+    seedErrand();
+
+    const { reply: briefing } = await handleMission(command('user-a'));
+    assert.equal(houseChangeButtonOf(briefing.components).disabled, false);
+    assert.match(briefing.content, /Don't like the house\?/);
+    assert.equal(briefing.flags, 64);
+
+    const { reply: docs } = await handleDocs(command('user-a'));
+    assert.equal(houseChangeButtonOf(docs.components).disabled, false);
+    assert.equal(docs.components[0].components[0].custom_id, 'mission:file:1');
+    assert.equal(houseChangeButtonOf(docs.components).custom_id, 'mission:house:1:docs');
+  });
+
+  it('redraws a /docs click as the new house\'s report sheet, not a briefing', async () => {
+    seedErrand();
+
+    const { response } = await handleMissionHouseChange(click('user-a'), 1, 'docs');
+    const row = fake.tables.missions[0];
+
+    assert.equal(response.type, 7);
+    assert.match(response.data.content, /New house assigned/);
+    assert.match(response.data.content, new RegExp(`DARKWICK FIELD REPORT — ${row.house}`));
+    assert.doesNotMatch(response.data.content, /MISSION BRIEFING/);
+    assert.match(response.data.content, /already spent/);
+
+    const [file, houseButton] = response.data.components[0].components;
+    assert.equal(file.custom_id, 'mission:file:1');
+    assert.equal(file.disabled, true, 'nothing signed for the new house yet');
+    assert.equal(houseButton.disabled, true);
+    assert.equal(response.data.flags, undefined, 'an edit, not a new ephemeral');
+  });
+
+  it('carries the house-change button on the pickup briefing', async () => {
+    fake.tables.missions.push(
+      missionRow({ id: 1, mission_type: 'errand', house: 'Dionysia', status: 'open', signatures: { mio: null } }),
+    );
+
+    const { followup } = await handleMissionAccept(click('user-a'), 1);
+    assert.equal(followup.flags, 64);
+    assert.equal(houseChangeButtonOf(followup.components).disabled, false);
+  });
+
+  it('moves the errand to a different house with a fresh draw, once', async () => {
+    seedErrand();
+    const before = { ...fake.tables.missions[0] };
+
+    const { response } = await handleMissionHouseChange(click('user-a'), 1);
+    const row = fake.tables.missions[0];
+
+    assert.equal(response.type, 7, 'replaces the message the button sat on');
+    assert.notEqual(row.house, 'Dionysia', 'never lands on the same house');
+    assert.ok(row.house_changed_at);
+    const roster = getHouseRoster(row.house).map((c) => c.id);
+    const targets = Object.keys(row.signatures);
+    assert.ok(targets.length >= 1 && targets.length <= roster.length);
+    assert.ok(targets.every((id) => roster.includes(id)));
+    assert.ok(Object.values(row.signatures).every((at) => at == null));
+
+    // Same mission, same clock: only the house and the draw moved.
+    assert.equal(row.accept_expires_at, before.accept_expires_at);
+    assert.equal(row.status, 'accepted');
+    assert.match(response.data.content, new RegExp(row.house));
+    assert.equal(houseChangeButtonOf(response.data.components).disabled, true);
+    assert.match(response.data.content, /already spent/);
+    assert.doesNotMatch(response.data.content, /Don't like the house\?/, 'no offer once it is spent');
+
+    // A stale button can't spend it twice.
+    const house = row.house;
+    const again = await handleMissionHouseChange(click('user-a'), 1);
+    assert.match(again.response.data.content, /already spent/);
+    assert.equal(fake.tables.missions[0].house, house);
+  });
+
+  it('closes the house change once a signature is in', async () => {
+    seedErrand({ signed: ['mio'] });
+
+    const { reply } = await handleDocs(command('user-a'));
+    assert.equal(houseChangeButtonOf(reply.components).disabled, true);
+    assert.match(reply.content, /closes once a signature is in/);
+
+    const { response } = await handleMissionHouseChange(click('user-a'), 1);
+    assert.match(response.data.content, /closes once a signature is in/);
+    assert.equal(fake.tables.missions[0].house, 'Dionysia');
+    assert.equal(fake.tables.missions[0].house_changed_at, undefined);
+  });
+
+  it("won't change the house on someone else's errand", async () => {
+    seedErrand();
+
+    const { response } = await handleMissionHouseChange(click('user-b'), 1);
+    assert.match(response.data.content, /already closed/);
+    assert.equal(fake.tables.missions[0].house, 'Dionysia');
+  });
+
+  it('never offers a house change on a riddle', async () => {
+    fake.tables.missions.push(
+      missionRow({ status: 'accepted', accepted_by: 'user-a', riddle_id: RIDDLES.Frostheim[0].id }),
+    );
+
+    const { reply } = await handleMission(command('user-a'));
     assert.equal(reply.components, undefined);
   });
 });

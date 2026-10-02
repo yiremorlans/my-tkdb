@@ -273,6 +273,7 @@ One row per posted mission request (`docs/scheduled-missions.md`). `status` is t
 | `assist_message_id` | TEXT | Co-op only: the public `/mission assist` post |
 | `status` | TEXT | `open` / `accepted` / `completed` / `expired` |
 | `completed_at` | TIMESTAMP | Set on any of the three completion paths |
+| `house_changed_at` | TIMESTAMP | Errand only: when its one free house change was spent (migration 025); NULL = still available |
 
 **Use cases:**
 - Arbitrate the Accept race with one atomic `claim_mission()` statement
@@ -281,6 +282,8 @@ One row per posted mission request (`docs/scheduled-missions.md`). `status` is t
 **`signatures` is JSONB rather than a child table.** An earlier draft had `mission_signatures`, one row per errand target. It was never read on its own: every consumer (`/docs`, the `/mission` briefing, the dossier's progress line, the `/roam` and `/meet` target boost) already had the mission row in hand, so the separate table cost a second round trip on every one of those paths and bought nothing a column could not hold. The key count is now what `signatures_required` used to be, so the two can no longer disagree — an invariant the old shape had to be careful about at spawn. Concurrency is unchanged: `sign_errand_target()` still flips one entry in a single conditional `UPDATE`, guarded on `signatures->>'<id>' IS NULL`, so meeting the same target twice signs once and two simultaneous responses cannot lose a signature.
 
 `sign_errand_target()` takes the **user**, not a mission id, and resolves their held errand itself. It runs on every `/roam` and `/meet` response and almost none of those have an errand behind them, so folding the lookup in makes it one round trip either way instead of a read plus a conditional write.
+
+`change_errand_house()` (migration 025) is the errand's **one free house change**: it locks the row and refuses with `spent` (already changed) or `signed` (any signature collected), otherwise swaps `house` + `signatures` and stamps `house_changed_at` in the same write. The new house (never the current one) and draw are rolled in JS. The 48h window and the daily lead cap are untouched.
 
 `claim_mission()` enforces the **per-player daily lead cap**: `p_day_start` and `p_daily_lead_cap` are passed in, and the count of missions that user has *accepted* since local midnight is tested inside the same `UPDATE` as everything else, so a capped click still updates zero rows and still leaves the request open for the next person. It counts accepts rather than completions on purpose — accepting is the act that denies everybody else, so taking two and letting both lapse spends the day either way. `idx_missions_accepted_by_at` serves that count.
 

@@ -489,6 +489,23 @@ DARKWICK FIELD REPORT — Frostheim   ·   3 signatures
   can't file early — the RPC re-counts against `signatures_required`).
 - `'gone'` → ephemeral *"That mission's already closed."* (expired mid-`/docs`).
 
+### House change (button → `change_errand_house` RPC, migration 025)
+
+Added 2026-10 after feedback that an errand could land a house the player
+doesn't care about. A **Request new house** button (`mission:house:<id>`)
+sits on the pickup briefing, `/mission` and `/docs` of every errand:
+
+- Rerolls the house uniformly over the **other** seven, then redraws `N` and
+  the targets against the new roster. Free.
+- **Once per mission, and only before the first signature.** After that the
+  button renders disabled with a 🔒 line saying why (Discord shows no tooltip).
+  `change_errand_house` re-checks both under the row lock and stamps `house_changed_at` in
+  the same write, so a stale button or double-click returns `'spent'`/`'signed'`.
+- The 48h window, the daily lead cap and the reward rule are untouched.
+- On success the clicked message is redrawn in place for the new house: a
+  `/docs` click (`mission:house:<id>:docs`) gets the new, empty report sheet;
+  a briefing click gets the new briefing.
+
 ---
 
 ## 6. Type: Riddle (debunk) — `/riddle`

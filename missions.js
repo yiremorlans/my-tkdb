@@ -48,6 +48,10 @@ import {
   pickRiddle,
   pickSignatureTargets,
   POST_TTL_HOURS,
+  HOUSE_CHANGE_BUTTON_LABEL,
+  HOUSE_CHANGE_DONE_LINE,
+  HOUSE_CHANGE_HINT,
+  HOUSE_CHANGE_UNAVAILABLE_LINES,
   RESET_BUTTON_LABEL,
   RESET_SPENT_LINES,
   resetOfferLine,
@@ -55,6 +59,7 @@ import {
   rollDailySlots,
   rollHouse,
   rollMissionType,
+  rollHouseChange,
   rollSignatureCount,
   startRiddleCooldown,
   SWEEP_EDIT_CONCURRENCY,
@@ -89,6 +94,7 @@ import {
   getUserRelationships,
   markMissionSlotFired,
   recordMissionCompletion,
+  changeErrandHouse,
   rollGuildMissionSlots,
   setAssistMessageId,
   setGuildMissionsEnabled,
@@ -640,7 +646,7 @@ export async function handleMissionAccept(body, missionId, now = new Date()) {
   try {
     const mission = await getAcceptedMission(userId);
     followup = mission
-      ? ephemeral(await buildMissionBriefing(userId, mission))
+      ? { ...(await buildMissionBriefing(userId, mission)), flags: EPHEMERAL }
       : ephemeral(
           "You've picked up the mission. Run `/mission` for the briefing.",
         );
@@ -694,12 +700,46 @@ function errandProgress(mission) {
   };
 }
 
+// Why an errand's one house change (migration 025) can't be spent, or null
+// while it still can. Mirrors change_errand_house's own checks so the button greys
+// out before the click instead of after it — the RPC still re-checks under the
+// row lock, which is what makes a stale button harmless.
+function houseChangeBlocker(mission) {
+  if (mission.house_changed_at) return "spent";
+  if (errandTargets(mission).some((t) => t.signed)) return "signed";
+  return null;
+}
+
+// `from` is which message the button sits on ("docs" or the briefing), carried
+// in the custom_id so a successful change can redraw that same message rather
+// than swapping a report sheet for a briefing.
+function houseChangeButton(mission, from = "briefing") {
+  return {
+    type: MessageComponentTypes.BUTTON,
+    style: ButtonStyleTypes.SECONDARY,
+    label: HOUSE_CHANGE_BUTTON_LABEL,
+    custom_id: `mission:house:${mission.id}${from === "docs" ? ":docs" : ""}`,
+    disabled: houseChangeBlocker(mission) !== null,
+  };
+}
+
+// The 🔒 line explaining a greyed-out house-change button, or null while it's live.
+function houseChangeNote(mission) {
+  const blocker = houseChangeBlocker(mission);
+  return blocker ? HOUSE_CHANGE_UNAVAILABLE_LINES[blocker] : null;
+}
+
 /**
- * The briefing. Ephemeral, always: it names the house, the type and (for an
- * errand) the exact students to chase, none of which the channel ever sees.
+ * The briefing, as `{ content, components }`. Ephemeral, always: it names the
+ * house, the type and (for an errand) the exact students to chase, none of
+ * which the channel ever sees.
  *
  * The instruction block is always present, by design — a player holding a type
  * they don't know how to finish is a slot nobody can free.
+ *
+ * An errand also carries its house-change button here, so it's on the pickup
+ * briefing — the first moment the player learns the house — as well as on
+ * /mission.
  */
 export async function buildMissionBriefing(userId, mission) {
   const label =
@@ -728,17 +768,38 @@ export async function buildMissionBriefing(userId, mission) {
     ? `\nCloses <t:${Math.floor(new Date(mission.accept_expires_at).getTime() / 1000)}:R>.`
     : "";
 
-  return [
+  const isErrand = mission.mission_type === MISSION_TYPES.ERRAND;
+  const note = isErrand ? houseChangeNote(mission) : null;
+
+  const content = [
     `**MISSION BRIEFING**  ·  ${mission.house}  ·  ${label}`,
     "",
     objective,
     "",
     `Progress: ${progress}${deadline}`,
     "",
-    MISSION_INSTRUCTIONS[mission.mission_type] || "",
+    [
+      MISSION_INSTRUCTIONS[mission.mission_type] || "",
+      isErrand && !note ? HOUSE_CHANGE_HINT : "",
+    ]
+      .filter(Boolean)
+      .join(" "),
+    ...(note ? ["", note] : []),
   ]
     .join("\n")
     .trim();
+
+  if (!isErrand) return { content };
+
+  return {
+    content,
+    components: [
+      {
+        type: MessageComponentTypes.ACTION_ROW,
+        components: [houseChangeButton(mission)],
+      },
+    ],
+  };
 }
 
 /**
@@ -761,7 +822,7 @@ export async function handleMission(body, now = new Date()) {
   }
 
   return {
-    reply: ephemeral(await buildMissionBriefing(userId, mission)),
+    reply: { ...(await buildMissionBriefing(userId, mission)), flags: EPHEMERAL },
     afterReply: async () => {
       await Promise.allSettled([
         trackUserActivity(userId),
@@ -1019,6 +1080,9 @@ export async function buildDocsMessage(mission, targets) {
     );
   }
 
+  const note = houseChangeNote(mission);
+  if (note) lines.push(note);
+
   return {
     content: lines.join("\n"),
     files: await fieldReportFile(mission, targets),
@@ -1035,6 +1099,7 @@ export async function buildDocsMessage(mission, targets) {
             custom_id: `mission:file:${mission.id}`,
             disabled: !ready,
           },
+          houseChangeButton(mission, "docs"),
         ],
       },
     ],
@@ -1203,6 +1268,107 @@ export async function handleMissionFile(body, missionId) {
         trackUserActivity(userId),
         trackCommandUsage(userId, "docs"),
       ]).then(reportFailures("errand filing"));
+    },
+  };
+}
+
+/**
+ * `mission:house:<id>[:docs]` — the errand's one free house change (migration 025).
+ * Sits on the pickup briefing, /mission and /docs.
+ *
+ * The new house (never the current one) and a fresh signature draw are rolled
+ * here; change_errand_house decides under the row lock whether the swap is still
+ * allowed and stamps house_changed_at in the same write, so a stale button or a
+ * double-click can't spend it twice. The 48h window, the daily lead cap and
+ * the reward are untouched — it's the same mission with a different house.
+ *
+ * On success the message the button sat on is redrawn as the same kind of
+ * message for the new house: a /docs click gets the new house's (empty) report
+ * sheet, a briefing click gets the new briefing. `from` comes off the
+ * custom_id's optional `:docs` suffix.
+ */
+export async function handleMissionHouseChange(body, missionId, from = "briefing") {
+  const userId = userIdOf(body);
+
+  let mission;
+  try {
+    mission = await getMissionById(missionId);
+  } catch (err) {
+    console.error("[missions] Could not load errand for a house change:", err.message);
+    return {
+      response: ephemeralResponse("Something went wrong there. Try again?"),
+    };
+  }
+  if (
+    !mission ||
+    mission.accepted_by !== userId ||
+    mission.status !== "accepted" ||
+    mission.mission_type !== MISSION_TYPES.ERRAND
+  ) {
+    return { response: ephemeralResponse("That mission's already closed.") };
+  }
+
+  const house = rollHouseChange(mission.house);
+  const targetIds = house
+    ? pickSignatureTargets(house, rollSignatureCount(house))
+    : [];
+  if (!house || targetIds.length === 0) {
+    console.error(
+      `[missions] No new house for mission ${mission.id} to — refusing`,
+    );
+    return {
+      response: ephemeralResponse("Something went wrong there. Try again?"),
+    };
+  }
+
+  let outcome;
+  try {
+    outcome = await changeErrandHouse(mission.id, userId, house, targetIds);
+  } catch (err) {
+    console.error("[missions] change_errand_house failed:", err.message);
+    return {
+      response: ephemeralResponse("Something went wrong there. Try again?"),
+    };
+  }
+
+  if (outcome === "spent" || outcome === "signed") {
+    return { response: ephemeralResponse(HOUSE_CHANGE_UNAVAILABLE_LINES[outcome]) };
+  }
+  if (outcome !== "changed") {
+    return { response: ephemeralResponse("That mission's already closed.") };
+  }
+
+  // Rendered from what was just written rather than re-read: the RPC only
+  // changed these three fields, and a second round trip here would only risk
+  // the 15-minute followup window for nothing.
+  const updated = {
+    ...mission,
+    house,
+    signatures: Object.fromEntries(targetIds.map((id) => [id, null])),
+    house_changed_at: new Date().toISOString(),
+  };
+  // flags is dropped: it's an edit of a message that is already ephemeral.
+  const { flags: _flags, ...message } =
+    from === "docs"
+      ? await buildDocsMessage(updated, errandTargets(updated))
+      : await buildMissionBriefing(userId, updated);
+
+  return {
+    response: {
+      type: InteractionResponseType.UPDATE_MESSAGE,
+      data: {
+        ...message,
+        content: `${HOUSE_CHANGE_DONE_LINE}\n\n${message.content}`,
+        // The new house has nothing signed, so there's no field-report image
+        // to show; clear any the old message carried.
+        attachments: [],
+      },
+    },
+    afterReply: async () => {
+      await Promise.allSettled([
+        trackUserActivity(userId),
+        trackCommandUsage(userId, "mission"),
+      ]);
     },
   };
 }

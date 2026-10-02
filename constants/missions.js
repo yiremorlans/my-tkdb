@@ -175,6 +175,25 @@ export const RESET_SPENT_LINES = {
   meet: "Reset spent. `/meet` is clear.",
 };
 
+// The errand's one free house change (migration 025). Offered on the pickup
+// briefing, /mission and /docs while it's still available: once per mission,
+// and only before the first signature. Discord shows no tooltip on a disabled
+// button, so the reason it went grey is a line in the message itself.
+export const HOUSE_CHANGE_BUTTON_LABEL = "Request new house"; // 17 chars
+
+export const HOUSE_CHANGE_UNAVAILABLE_LINES = {
+  spent: "🔒 House change already spent on this mission.",
+  signed: "🔒 House change closes once a signature is in.",
+};
+
+// Appended to an errand's instructions only while the house change is still
+// available. Once it's spent or a signature is in, the 🔒 line above takes its
+// place instead of sitting under an offer that no longer stands.
+export const HOUSE_CHANGE_HINT =
+  "Don't like the house? You can request a new one once, before your first signature.";
+
+export const HOUSE_CHANGE_DONE_LINE = "New house assigned. Same errand, fresh signatures.";
+
 export const RIDDLE_WRONG_LINES = [
   "That's not who's behind this. Look again.",
   "Wrong read on the evidence.",
@@ -780,6 +799,18 @@ export function pickSignatureTargets(house, count) {
     picked.push(pool.splice(Math.floor(Math.random() * pool.length), 1)[0]);
   }
   return picked;
+}
+
+/**
+ * The house an errand is changed to: any other house with a roster, never
+ * the one it already has, so the change always changes something.
+ */
+export function rollHouseChange(currentHouse) {
+  return pickRandom(
+    MISSION_HOUSES.filter(
+      (house) => house !== currentHouse && getHouseRoster(house).length > 0,
+    ),
+  );
 }
 
 export function pickRiddle(house) {

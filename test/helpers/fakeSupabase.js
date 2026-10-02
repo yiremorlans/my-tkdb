@@ -408,6 +408,29 @@ export function createFakeSupabase(initialTables = {}) {
       return `filed:${Object.keys(signatures).length}`;
     },
 
+    // db/migrations/025: the errand's one free house change. Lock, refuse if
+    // already spent or anything is signed, then swap house + map and stamp
+    // house_changed_at in the same write.
+    change_errand_house({ p_mission_id, p_user_id, p_house, p_signatures }) {
+      tables.missions = tables.missions || [];
+
+      const mission = tables.missions.find(
+        (r) =>
+          r.id === p_mission_id
+          && r.accepted_by === p_user_id
+          && r.status === 'accepted'
+          && r.mission_type === 'errand',
+      );
+      if (!mission) return 'gone';
+      if (mission.house_changed_at != null) return 'spent';
+      if (Object.values(mission.signatures || {}).some((at) => at != null)) return 'signed';
+
+      mission.house = p_house;
+      mission.signatures = { ...p_signatures };
+      mission.house_changed_at = rpcNow.toISOString();
+      return 'changed';
+    },
+
     // db/migrations/016: resolve the user's held errand, and flip one target if
     // that character is still unsigned. Conditional on still-unsigned, so
     // meeting the same target twice signs once.

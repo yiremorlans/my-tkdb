@@ -1821,6 +1821,28 @@ export async function fileErrand(id, userId) {
   return data;
 }
 
+/**
+ * The errand's one free house change. The new house and targets are rolled by
+ * the caller; the RPC decides under the row lock whether the swap is still
+ * allowed (unused, nothing signed yet) and writes it with house_changed_at in the
+ * same statement. Returns 'changed' | 'spent' | 'signed' | 'gone'.
+ */
+export async function changeErrandHouse(id, userId, house, targetIds) {
+  const { data, error } = await supabase.rpc('change_errand_house', {
+    p_mission_id: id,
+    p_user_id: userId,
+    p_house: house,
+    p_signatures: Object.fromEntries(targetIds.map((targetId) => [targetId, null])),
+  });
+
+  if (error) {
+    console.error('Error changing errand house:', error);
+    throw error;
+  }
+
+  return data;
+}
+
 /** The co-op Join button. Returns 'joined' | 'self' | 'taken'. */
 export async function claimCoopHelper(id, userId) {
   const { data, error } = await supabase.rpc('claim_coop_helper', {

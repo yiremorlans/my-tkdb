@@ -31,6 +31,7 @@ import {
   handleMissionAssistJoin,
   handleMissionDev,
   handleMissionFile,
+  handleMissionHouseChange,
   handleMissionsAdmin,
   handleRiddle,
   wantsMissionAssist,
@@ -1154,6 +1155,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       // mission:accept:<id>  — the public request's one button (§11)
       // mission:file:<id>    — /docs' Complete mission
       // mission:assist:<id>  — a second user backing up a co-op
+      // mission:house:<id>[:docs] — an errand's one free house change
       //
       // Answered inline rather than deferred: each is a single RPC round trip,
       // and 'accept' has to reply with UPDATE_MESSAGE to rewrite the shared
@@ -1228,6 +1230,8 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       const handlers = {
         accept: handleMissionAccept,
         file: handleMissionFile,
+        // mission:house:<id>[:docs] — the suffix says which message to redraw.
+        house: (body, id) => handleMissionHouseChange(body, id, rest[2]),
         assist: handleMissionAssistJoin,
       };
 
