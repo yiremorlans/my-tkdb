@@ -212,13 +212,13 @@ export const CHANCELLOR_AUDIENCE_LINES = [
 ];
 
 export const CHANCELLOR_AUDIENCE_PROMPT =
-  "Name the house you want with `/request`.";
+  "Name the house you want with:\n`/request`";
 
 // {house} is the house he just granted.
 export const CHANCELLOR_GRANTED_LINES = [
-  "He will allow it this time. The errand goes to {house}.",
-  "He agrees with your request. {house} it is.",
-  "Request granted. {house} has your errand now.",
+  "He will allow it this time. The errand goes to **{house}**.",
+  "He agrees with your request. **{house}** it is.",
+  "Request granted. **{house}** has your errand now.",
 ];
 
 export const CHANCELLOR_REQUEST_LINES = {
