@@ -130,11 +130,10 @@ export function isEveningHour(now = new Date()) {
   return hour >= EVENING_HOUR || hour < MORNING_HOUR;
 }
 
-// Coarse time-of-day label used by conditional dialogue's `when: { time }`.
+// Coarse time-of-day label (pmOnly daytime swaps, teaser/missed pools).
 // Just 'day' vs 'evening' today; split further (morning / afternoon / night) by
 // adding cutoffs here — this stays the one place hours are bucketed. Returns
-// null when there is no clock context, so a `time` rule simply won't match
-// rather than throwing.
+// null when there is no clock context rather than throwing.
 export const TIME_BUCKETS = ["day", "evening"];
 
 export function timeBucket(now) {
@@ -317,13 +316,6 @@ export const BACKGROUNDS_BY_LOCATION = {
     "Sinostra_Taiga_Room_Entrance.png",
   ],
 };
-
-export function isGeneralLocation(locationKey) {
-  return (
-    Object.values(GENERAL_LOCATIONS).includes(locationKey) ||
-    Object.values(EVENT_LOCATIONS).includes(locationKey)
-  );
-}
 
 const CHARACTER_ROOM_KEYS = new Set(Object.values(CHARACTER_ROOMS));
 

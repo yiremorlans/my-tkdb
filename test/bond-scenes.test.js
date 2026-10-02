@@ -783,9 +783,10 @@ test('a replay of an unfinished scene is refused even when other levels with the
 
 // --- content resolution -------------------------------------------------------
 
-test('every character has an authored scene at every level, and nothing else resolves', () => {
+test('getBondScene resolves every relationship level to a scene, and nothing off the roster resolves', () => {
   const levels = ['Acquaintance', 'Friend', 'Close Friend', 'Confidant', 'Devoted', 'Soulbound'];
 
+  // Roster-wide coverage is a validateContent error; this pins the level -> key mapping.
   for (const level of levels) {
     const scene = getBondScene(CHAR, level);
     assert.ok(scene?.beats?.length, `${CHAR} has no scene at ${level}`);

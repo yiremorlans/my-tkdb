@@ -30,10 +30,21 @@ function at(ctx, x, y) {
   return { r, g, b, a };
 }
 
+// Each image is rendered and decoded once and shared across the tests below —
+// they only read pixels back, never mutate them.
+const once = (fn) => {
+  let value;
+  return () => (value ??= fn());
+};
+
+const plainRender = once(async () => pixels(await composeEncounter(BG, CHAR)));
+const silhouetteRender = once(async () => pixels(await composeSilhouetteEncounter(BG, CHAR)));
+const backgroundImage = once(() => loadImage(join(projectRoot, 'assets/bg', BG)));
+
 // Where the character actually is: centered horizontally, stood on the bottom
 // edge — the same placement drawEncounterBase computes.
-async function characterBox() {
-  const bg = await loadImage(join(projectRoot, 'assets/bg', BG));
+const characterBox = once(async () => {
+  const bg = await backgroundImage();
   const char = await loadImage(join(projectRoot, 'assets/chars', CHAR));
   return {
     x: (bg.width - char.width) / 2,
@@ -43,15 +54,15 @@ async function characterBox() {
     canvasWidth: bg.width,
     canvasHeight: bg.height,
   };
-}
+});
 
 // A point inside the character's silhouette, found by comparing the plain
 // composite against a background-only render — anywhere they differ is a pixel
 // the character actually painted.
 async function findCharacterPixel() {
   const box = await characterBox();
-  const plain = await pixels(await composeEncounter(BG, CHAR));
-  const bgImage = await loadImage(join(projectRoot, 'assets/bg', BG));
+  const plain = await plainRender();
+  const bgImage = await backgroundImage();
   const bgCanvas = createCanvas(bgImage.width, bgImage.height);
   bgCanvas.getContext('2d').drawImage(bgImage, 0, 0);
   const bgCtx = bgCanvas.getContext('2d');
@@ -74,7 +85,7 @@ describe('composeSilhouetteEncounter', () => {
     const point = await findCharacterPixel();
     assert.ok(point, 'expected to locate a pixel the character paints');
 
-    const { ctx } = await pixels(await composeSilhouetteEncounter(BG, CHAR));
+    const { ctx } = await silhouetteRender();
     const { r, g, b, a } = at(ctx, point.x, point.y);
 
     assert.equal(a, 255, 'the silhouette is opaque');
@@ -83,8 +94,8 @@ describe('composeSilhouetteEncounter', () => {
 
   it('leaves the background untouched', async () => {
     const box = await characterBox();
-    const silhouette = await pixels(await composeSilhouetteEncounter(BG, CHAR));
-    const plain = await pixels(await composeEncounter(BG, CHAR));
+    const silhouette = await silhouetteRender();
+    const plain = await plainRender();
 
     // Well outside the character's bounding box on both sides — a naive
     // source-atop fillRect over the composite would blacken this whole strip.
@@ -109,7 +120,7 @@ describe('composeEncounter', () => {
   it('still bakes a dialogue box in at the bottom', async () => {
     // /roam and /meet depend on this and the refactor moved their shared setup.
     const withDialogue = await pixels(await composeEncounter(BG, CHAR, 'Hello there.'));
-    const without = await pixels(await composeEncounter(BG, CHAR));
+    const without = await plainRender();
 
     const y = withDialogue.height - 30;
     const x = Math.round(withDialogue.width / 2);

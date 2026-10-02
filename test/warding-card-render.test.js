@@ -7,6 +7,7 @@
 // renders as an empty box — so they are pinned here.
 import { test, mock } from 'node:test';
 import assert from 'node:assert';
+import { MAX_BUTTON_LABEL_LENGTH } from '../constants/game.js';
 
 process.env.SUPABASE_URL ??= 'http://fake.local';
 process.env.SUPABASE_SERVICE_ROLE_KEY ??= 'fake-service-role-key';
@@ -70,9 +71,9 @@ test('a warding card is one inlined dialogue beat, never a pool', () => {
       // Colour comes from RESPONSE_STYLES, so a per-response style would be
       // a second source of truth that silently wins or silently does nothing.
       assert.equal(response.style, undefined, `${card.key}.${key}.style`);
-      assert.ok(response.label.length <= 30, `${card.key}.${key}.label > 30`);
+      assert.ok(response.label.length <= MAX_BUTTON_LABEL_LENGTH, `${card.key}.${key}.label > ${MAX_BUTTON_LABEL_LENGTH}`);
     }
-    assert.ok(card.approach.length <= 30, `${card.key}.approach > 30`);
+    assert.ok(card.approach.length <= MAX_BUTTON_LABEL_LENGTH, `${card.key}.approach > ${MAX_BUTTON_LABEL_LENGTH}`);
   }
 });
 

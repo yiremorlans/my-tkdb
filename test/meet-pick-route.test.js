@@ -12,7 +12,8 @@
 import { test, mock } from 'node:test';
 import assert from 'node:assert';
 import { createFakeSupabase } from './helpers/fakeSupabase.js';
-import { generateDiscordKeyPair, signInteraction } from './helpers/discordSign.js';
+import { generateDiscordKeyPair } from './helpers/discordSign.js';
+import { postSignedInteraction, stubDiscordFetch, waitFor } from './helpers/routeHarness.js';
 import { MEET_OPTION_COUNT } from '../constants/game.js';
 
 const TEST_PORT = 38174; // distinct from roam-db-error-resilience's port; separate process either way
@@ -31,55 +32,9 @@ mock.module('@supabase/supabase-js', {
 
 const { server } = await import('../app.js');
 
-// --- stub global fetch: localhost passes through, discord.com is captured -----
-const originalFetch = globalThis.fetch;
-const discordCalls = [];
+const { calls: discordCalls, restore: restoreFetch } = stubDiscordFetch(TEST_PORT);
 
-globalThis.fetch = async (input, opts = {}) => {
-  const url = typeof input === 'string' ? input : input.url;
-
-  if (url.includes(`localhost:${TEST_PORT}`)) return originalFetch(input, opts);
-
-  if (url.includes('discord.com/api')) {
-    let payload = null;
-    if (opts.body instanceof FormData) {
-      const raw = opts.body.get('payload_json');
-      payload = raw ? JSON.parse(raw) : null;
-    } else if (typeof opts.body === 'string') {
-      payload = JSON.parse(opts.body);
-    }
-    discordCalls.push({ url, method: opts.method || 'GET', payload });
-    return new Response(JSON.stringify({ id: 'stub-message' }), {
-      status: 200,
-      headers: { 'Content-Type': 'application/json' },
-    });
-  }
-
-  throw new Error(`unexpected fetch in test: ${url}`);
-};
-
-async function waitFor(predicate, { timeout = 2000, interval = 10 } = {}) {
-  const start = Date.now();
-  while (Date.now() - start < timeout) {
-    if (predicate()) return;
-    await new Promise((r) => setTimeout(r, interval));
-  }
-  throw new Error('waitFor timed out');
-}
-
-async function postInteraction(body) {
-  const bodyString = JSON.stringify(body);
-  const { timestamp, signature } = await signInteraction(keyPair.privateKey, bodyString);
-  return fetch(`http://localhost:${TEST_PORT}/interactions`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Signature-Ed25519': signature,
-      'X-Signature-Timestamp': timestamp,
-    },
-    body: bodyString,
-  });
-}
+const postInteraction = (body) => postSignedInteraction(TEST_PORT, keyPair.privateKey, body);
 
 let tokenSeq = 0;
 function meetCommand(userId) {
@@ -131,6 +86,6 @@ test('/meet is blocked while its cooldown is active', async () => {
 });
 
 test.after(() => {
-  globalThis.fetch = originalFetch;
+  restoreFetch();
   server.close();
 });

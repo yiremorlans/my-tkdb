@@ -14,7 +14,6 @@ import {
   isEveningHour,
   timeBucket,
   isEveningBackground,
-  isGeneralLocation,
   getAvailableBackgrounds,
   weightedBackgrounds,
   getRandomBackgroundForCharacter,
@@ -23,7 +22,6 @@ import {
   EVENING_PM_WEIGHT,
   HOUSES,
   GENERAL_LOCATIONS,
-  EVENT_LOCATIONS,
   CHARACTER_ROOMS,
 } from '../constants/backgrounds.js';
 
@@ -46,7 +44,7 @@ test('isEveningHour covers the evening cutoff through the pre-dawn wrap past mid
   assert.strictEqual(isEveningHour(atHour(12)), false);
 });
 
-test('timeBucket returns null with no clock context, so a `when.time` rule simply never matches', () => {
+test('timeBucket returns null with no clock context instead of throwing', () => {
   assert.strictEqual(timeBucket(null), null);
   assert.strictEqual(timeBucket(undefined), null);
 });
@@ -61,12 +59,6 @@ test('timeBucket returns "day" or "evening" derived from the same isEveningHour 
 test('isEveningBackground recognizes the _PM filename convention', () => {
   assert.strictEqual(isEveningBackground('Frostheim_Balcony_PM.png'), true);
   assert.strictEqual(isEveningBackground('Frostheim_Ballroom.png'), false);
-});
-
-test('isGeneralLocation is true for general and event locations, false for a house', () => {
-  assert.strictEqual(isGeneralLocation(GENERAL_LOCATIONS.DARKWICK), true);
-  assert.strictEqual(isGeneralLocation(EVENT_LOCATIONS.STAR_FESTIVAL), true);
-  assert.strictEqual(isGeneralLocation(HOUSES.FROSTHEIM), false);
 });
 
 test('getAvailableBackgrounds excludes _PM backgrounds during the day', () => {

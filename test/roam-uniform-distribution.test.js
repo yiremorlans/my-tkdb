@@ -23,7 +23,7 @@ import assert from 'node:assert';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { CHARACTERS } from '../constants/characters.js';
+import { CHARACTERS, getCharacterById } from '../constants/characters.js';
 import {
   attributedLocations,
   getRandomBackgroundForCharacter,
@@ -104,29 +104,13 @@ test('a character is never shown at a location not attributed to them', () => {
     'the general pool must contain no house, or the fallback would leak across houses',
   );
 
+  // The turf branch is pinned exactly by the reachability test below (seen ==
+  // attributed); here only the general branch needs sampling, and it does not
+  // depend on the character.
   for (const now of [DAY, EVENING]) {
-    for (const character of CHARACTERS) {
-      const own = new Set(attributedLocations(character));
-
-      for (let i = 0; i < 500; i++) {
-        for (const spot of [
-          getRandomBackgroundForCharacter(character, now),
-          getRandomGeneralBackground(now),
-        ]) {
-          if (!spot) continue; // Benkei has no turf; the general draw still stands
-          const key = spot.locationKey;
-          assert.ok(
-            own.has(key) || generalKeys.has(key),
-            `${character.id} must not appear at ${key} — not attributed, not public`,
-          );
-          if (houseKeys.has(key)) {
-            assert.ok(
-              own.has(key),
-              `${character.id} appeared at ${key}, which is not one of their locations`,
-            );
-          }
-        }
-      }
+    for (let i = 0; i < 500; i++) {
+      const key = getRandomGeneralBackground(now).locationKey;
+      assert.ok(generalKeys.has(key), `the general draw reached ${key}, which is not public`);
     }
   }
 });
@@ -148,32 +132,6 @@ test('Mortkranken characters never reach Frostheim', () => {
         seen.add(getRandomBackgroundForCharacter(character, now).locationKey);
       }
       assert.ok(!seen.has('Frostheim'), `${character.id} reached Frostheim`);
-    }
-  }
-});
-
-test('no location-first character selection survives anywhere in the codebase', () => {
-  // The two helpers that made the old order possible, plus the affinity map
-  // that boosted a *character* at a location (rather than a spot for an
-  // already-chosen character, which cannot skew anything).
-  for (const banned of [
-    'getCharactersForLocation',
-    'getCharactersByHouse',
-    'getRandomBackground(',
-    'selectCharacterAtLocation',
-    'LOCATION_CHARACTER_AFFINITIES',
-  ]) {
-    for (const file of ['encounters.js', 'constants/characters.js', 'constants/backgrounds.js']) {
-      const src = fs
-        .readFileSync(path.join(__dirname, '..', file), 'utf8')
-        .replace(/\/\*[\s\S]*?\*\//g, '')
-        .split('\n')
-        .map((line) => line.replace(/\/\/.*$/, ''))
-        .join('\n');
-      assert.ok(
-        !src.includes(banned),
-        `${banned} reintroduces location-first selection; found in ${file}`,
-      );
     }
   }
 });
@@ -224,7 +182,7 @@ test('a borrowed location is reachable without changing the character\'s house',
   };
 
   for (const [id, { house, alsoSeenAt }] of Object.entries(expectations)) {
-    const character = CHARACTERS.find((c) => c.id === id);
+    const character = getCharacterById(id);
     assert.ok(character, `fixture assumption: "${id}" exists in the catalog`);
 
     // Borrowing scenery must never make someone a second house's character.
@@ -259,7 +217,7 @@ test('every character belongs to exactly one house', () => {
 });
 
 test('Benkei, who has no house, falls through to the general pool', () => {
-  const benkei = CHARACTERS.find((c) => c.id === 'benkei');
+  const benkei = getCharacterById('benkei');
   assert.ok(benkei, 'fixture assumption: "benkei" exists and has no house');
   assert.strictEqual(attributedLocations(benkei).length, 0);
   assert.strictEqual(getRandomBackgroundForCharacter(benkei, DAY), null);

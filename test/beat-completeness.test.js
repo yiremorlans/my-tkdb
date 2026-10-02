@@ -54,8 +54,7 @@ function poolEntries(at, pool) {
   return out;
 }
 
-// Every enforced beat reachable through pickDialogueEntry, for every character
-// (the conditional `when` pools are excluded, see the header).
+// Every beat reachable through pickDialogueEntry, for every character.
 function drawableBeats() {
   const out = [];
   for (const character of CHARACTERS) {
@@ -82,11 +81,6 @@ function missingResponses({ at, entry }) {
   return missing.length ? `${at}: responses missing ${missing.join(', ')}` : null;
 }
 
-function missingLine({ at, entry }) {
-  if (!isBeat(entry)) return `${at}: bare string, not a beat`;
-  return entry.line.trim() ? null : `${at}: no line`;
-}
-
 function missingLineAndApproach({ at, entry }) {
   if (!isBeat(entry)) return `${at}: bare string, not a beat`;
   const problems = [];
@@ -111,27 +105,17 @@ test('the beat walk actually finds beats for the whole roster (guards the checks
   assert.ok(BEATS.length > 500, `only ${BEATS.length} beats found`);
 });
 
-// --- /meet ---------------------------------------------------------------
+// /meet needs a subset of what /roam needs, so one set of checks covers both.
 
-test('/meet: every drawable beat has a line', () => {
-  assert.deepStrictEqual(problemsIn(BEATS, missingLine), []);
-});
-
-test('/meet: every drawable beat has responses for all four kinds', () => {
-  assert.deepStrictEqual(problemsIn(BEATS, missingResponses), []);
-});
-
-// --- /roam ---------------------------------------------------------------
-
-test('/roam: every drawable beat has a line and an approach', () => {
+test('every drawable beat has a line and an approach', () => {
   assert.deepStrictEqual(problemsIn(BEATS, missingLineAndApproach), []);
 });
 
-test('/roam: every drawable beat has a greeting', () => {
+test('every drawable beat has a greeting', () => {
   assert.deepStrictEqual(problemsIn(BEATS, missingGreeting), []);
 });
 
-test('/roam: every drawable beat has responses for all four kinds', () => {
+test('every drawable beat has responses for all four kinds', () => {
   assert.deepStrictEqual(problemsIn(BEATS, missingResponses), []);
 });
 
@@ -141,8 +125,7 @@ test('/roam: every drawable beat has responses for all four kinds', () => {
 // functions hand that completeness through instead of dropping it (a beat
 // that loses its greeting or responses between the pool and the caller would
 // pass the checks above and still ship a "..." caption). They draw at both
-// EVENING and DAYTIME and exempt nothing, so a conditional pool reconnected to
-// pickDialogueEntry fails here on its first uncaptioned line.
+// EVENING and DAYTIME so a pmOnly character's daytimeDialogue swap is covered.
 
 const DRAWS_PER_COMBO = 20;
 const EVENING = new Date('2026-01-01T20:00:00');
@@ -193,27 +176,4 @@ test('/meet: getRandomDialogueEntry always returns a real line and all four resp
     }
   }
   assert.deepStrictEqual([...failures], []);
-});
-
-// --- one dialogue format ---------------------------------------------------
-//
-// Nothing outside a beat can supply a line, so the pool walk above is the whole
-// catalog. Guards the walk against a new pool key appearing beside `dialogue`
-// and going unchecked, the way `daytimeDialogue` did. validateContent errors
-// on the same thing; this fails whether or not the validator is run.
-test('a character carries no dialogue pool the beat walk does not cover', () => {
-  const KNOWN = new Set([
-    'dialogue',
-    'daytimeDialogue',
-    'bondScenes',
-    'winnerLines',
-    'daytimeWinnerLines',
-  ]);
-  const unknown = new Set();
-  for (const character of CHARACTERS) {
-    for (const key of Object.keys(DIALOGUE[character.id] || {})) {
-      if (!KNOWN.has(key)) unknown.add(`${character.id}.${key}`);
-    }
-  }
-  assert.deepStrictEqual([...unknown], []);
 });

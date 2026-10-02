@@ -8,7 +8,8 @@
 import { test, mock } from 'node:test';
 import assert from 'node:assert';
 import { createFakeSupabase } from './helpers/fakeSupabase.js';
-import { generateDiscordKeyPair, signInteraction } from './helpers/discordSign.js';
+import { generateDiscordKeyPair } from './helpers/discordSign.js';
+import { postSignedInteraction, stubDiscordFetch } from './helpers/routeHarness.js';
 
 const TEST_PORT = 38177; // distinct from the other route tests' ports
 process.env.PORT = String(TEST_PORT);
@@ -30,40 +31,20 @@ mock.module('@supabase/supabase-js', {
 });
 
 const { server } = await import('../app.js');
-const { clearMaintenanceCache } = await import('../maintenance.js');
+const { clearMaintenanceCache, MAINTENANCE_MESSAGE } = await import('../maintenance.js');
 
 // /encdev's exemption test lets its handler run past the ack in the
 // background (fire-and-forget, same as app.js itself never awaits it) — stub
 // fetch so that background work can't reach the real network, same pattern
 // as meet-pick-route.test.js.
-const originalFetch = globalThis.fetch;
-globalThis.fetch = async (input, opts = {}) => {
-  const url = typeof input === 'string' ? input : input.url;
-  if (url.includes(`localhost:${TEST_PORT}`)) return originalFetch(input, opts);
-  return new Response(JSON.stringify({ id: 'stub-message' }), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  });
-};
+const { restore: restoreFetch } = stubDiscordFetch(TEST_PORT);
 
 function setMaintenance(on) {
   fake.tables.app_settings[0].maintenance_mode = on;
   clearMaintenanceCache();
 }
 
-async function postInteraction(body) {
-  const bodyString = JSON.stringify(body);
-  const { timestamp, signature } = await signInteraction(keyPair.privateKey, bodyString);
-  return fetch(`http://localhost:${TEST_PORT}/interactions`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Signature-Ed25519': signature,
-      'X-Signature-Timestamp': timestamp,
-    },
-    body: bodyString,
-  });
-}
+const postInteraction = (body) => postSignedInteraction(TEST_PORT, keyPair.privateKey, body);
 
 let tokenSeq = 0;
 function command(name, userId, extra = {}) {
@@ -96,7 +77,7 @@ test('a slash command is blocked with the maintenance message while maintenance 
   assert.strictEqual(res.status, 200);
   assert.strictEqual(body.type, 4); // CHANNEL_MESSAGE_WITH_SOURCE
   assert.strictEqual(body.data.flags, 64); // EPHEMERAL
-  assert.strictEqual(body.data.content, 'App under maintenance, please try again later.');
+  assert.strictEqual(body.data.content, MAINTENANCE_MESSAGE);
 });
 
 test('a component interaction is also blocked while maintenance is on', async () => {
@@ -105,7 +86,7 @@ test('a component interaction is also blocked while maintenance is on', async ()
   const body = await res.json();
 
   assert.strictEqual(body.type, 4);
-  assert.strictEqual(body.data.content, 'App under maintenance, please try again later.');
+  assert.strictEqual(body.data.content, MAINTENANCE_MESSAGE);
 });
 
 test('/encdev stays reachable for the owner while maintenance is on', async () => {
@@ -125,13 +106,13 @@ test('the owner can run /meet and use its buttons while maintenance is on', asyn
   assert.strictEqual(cmd.type, 5); // /meet's normal deferred ack, not the refusal
 
   const btn = await (await postInteraction(component('meet:pick:kaito', 'the-owner'))).json();
-  assert.notStrictEqual(btn.data?.content, 'App under maintenance, please try again later.');
+  assert.notStrictEqual(btn.data?.content, MAINTENANCE_MESSAGE);
 });
 
 test('the owner bypass does not extend to other users', async () => {
   setMaintenance(true);
   const body = await (await postInteraction(command('roam', 'not-the-owner'))).json();
-  assert.strictEqual(body.data.content, 'App under maintenance, please try again later.');
+  assert.strictEqual(body.data.content, MAINTENANCE_MESSAGE);
 });
 
 test('commands work normally once maintenance is off', async () => {
@@ -143,6 +124,6 @@ test('commands work normally once maintenance is off', async () => {
 });
 
 test.after(() => {
-  globalThis.fetch = originalFetch;
+  restoreFetch();
   server.close();
 });

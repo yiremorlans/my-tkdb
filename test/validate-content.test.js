@@ -8,13 +8,13 @@ import { validateContent } from '../constants/validateContent.js';
 import { CHARACTERS } from '../constants/characters.js';
 import { DIALOGUE } from '../constants/dialogue.js';
 import { BOND_SCENE_KEYS, MAX_BUTTON_LABEL_LENGTH } from '../constants/game.js';
-import { BOND_SCENE_PLACEHOLDERS } from '../constants/publicEncounters.js';
 
-test('validateContent does not throw against the real character/dialogue catalog', () => {
-  assert.doesNotThrow(() => validateContent());
-});
-
-test('validateContent reports its findings as { errors, warnings } without throwing when there are no errors', () => {
+// validateContent() throws on any error, so returning at all means the real
+// catalog is clean of every rule it enforces (bond scenes at all six levels,
+// no reused bond line, button-label caps, resolvable placeholders, ...).
+// The sweeps below cover only what it does not error on; the mutation tests
+// prove it actually catches a violation.
+test('validateContent returns { errors: [], warnings } against the real catalog', () => {
   const result = validateContent();
   assert.deepStrictEqual(result.errors, []);
   assert.ok(Array.isArray(result.warnings));
@@ -26,46 +26,8 @@ test('validateContent reports its findings as { errors, warnings } without throw
 // not within a scene and not across characters. It is one continuous exchange in
 // one character's voice, used whole or not at all. So the catalog rule is
 // stricter than anywhere else in the game — every character owes a scene at
-// every level, and no line may appear twice anywhere in the roster. These guard
-// both halves of that.
-test('every character has their own authored bond scene at all six levels', () => {
-  const missing = [];
-  for (const character of CHARACTERS) {
-    const pool = DIALOGUE[character.id]?.bondScenes;
-    for (const key of BOND_SCENE_KEYS) {
-      if (!pool?.[key]) missing.push(`${character.id}.${key}`);
-    }
-  }
-  assert.deepStrictEqual(missing, [], 'a missing scene would deliver nothing at that level');
-});
-
-test('no bond scene line is reused anywhere in the game', () => {
-  const seen = new Map();
-  const duplicates = [];
-
-  const collect = (at, pool) => {
-    for (const [key, scene] of Object.entries(pool || {})) {
-      const lines = [
-        ...scene.beats,
-        scene.choice.prompt,
-        ...scene.choice.options.map((o) => o.close),
-        scene.keepsake.line,
-      ];
-      for (const line of lines) {
-        const text = line.trim();
-        // A sticker-only beat or close has no words to repeat.
-        if (!text) continue;
-        if (seen.has(text)) duplicates.push(`${at}.${key} repeats ${seen.get(text)}`);
-        else seen.set(text, `${at}.${key}`);
-      }
-    }
-  };
-
-  for (const character of CHARACTERS) collect(character.id, DIALOGUE[character.id]?.bondScenes);
-
-  assert.deepStrictEqual(duplicates, [], 'two characters sending the same words gives the moment away');
-});
-
+// every level, and no line may appear twice anywhere in the roster. Both are
+// validateContent errors, covered by the test above.
 test('no character reuses a keepsake emoji across their own six scenes', () => {
   const repeats = [];
   for (const character of CHARACTERS) {
@@ -106,103 +68,9 @@ test('the keepsake emoji check warns rather than errors, and names both levels',
   assert.deepStrictEqual(stillWarning, [], 'and the catalog is clean again');
 });
 
-test('every bond scene choice button fits the 30-char cap the rest of the game uses', () => {
-  const tooLong = [];
-  const check = (at, pool) => {
-    for (const [key, scene] of Object.entries(pool || {})) {
-      for (const option of scene.choice.options) {
-        if (option.label.length > MAX_BUTTON_LABEL_LENGTH) {
-          tooLong.push(`${at}.${key}: "${option.label}" (${option.label.length})`);
-        }
-      }
-    }
-  };
-  for (const character of CHARACTERS) check(character.id, DIALOGUE[character.id]?.bondScenes);
-
-  assert.deepStrictEqual(tooLong, []);
-});
-
-// Both pools pickDialogueEntry can draw from. `daytimeDialogue` is the hard
-// swap a pmOnly character (Towa) gets for the whole daytime instead of the base
-// pool — its beats render the same Discord buttons, so they owe the same caps.
-// It was missing from the two sweeps below until 2026-09-19.
-const DRAWABLE_POOLS = ['dialogue', 'daytimeDialogue'];
-
-// A migrated dialogue[tier] entry — { line, approach } — puts its button
-// label on the beat itself instead of a separate `approach[tier]` pool, but
-// it's rendered on the exact same Discord button as every other label in the
-// game, so it owes the same MAX_BUTTON_LABEL_LENGTH cap (docs/dialogue-approach-pairing.md).
-test("every dialogue beat's approach label fits the 30-char cap the rest of the game uses", () => {
-  const tooLong = [];
-  const isBeat = (e) => !!e && typeof e === 'object' && typeof e.line === 'string';
-  const checkTier = (at, poolData) => {
-    if (!poolData) return;
-    const collections = Array.isArray(poolData) ? [poolData] : Object.values(poolData);
-    for (const entries of collections) {
-      if (!Array.isArray(entries)) continue;
-      for (const entry of entries) {
-        if (!isBeat(entry)) continue;
-        const labels = Array.isArray(entry.approach) ? entry.approach : [entry.approach];
-        for (const label of labels) {
-          if (label.length > MAX_BUTTON_LABEL_LENGTH) {
-            tooLong.push(`${at}: "${label}" (${label.length})`);
-          }
-        }
-      }
-    }
-  };
-  for (const character of CHARACTERS) {
-    for (const pool of DRAWABLE_POOLS) {
-      const tiers = DIALOGUE[character.id]?.[pool];
-      for (const tier of Object.keys(tiers || {})) {
-        checkTier(`${character.id}.${pool}.${tier}`, tiers[tier]);
-      }
-    }
-  }
-
-  assert.deepStrictEqual(tooLong, []);
-});
-
-// Same cap, but for a beat's `responses` — the button labels a player picks in
-// reply to the beat. These used to live in a character-level `responses` pool;
-// that pool is gone, so the beat is the only place the cap can be checked.
-test("every dialogue beat's response labels fit the 30-char cap the rest of the game uses", () => {
-  const tooLong = [];
-  const isBeat = (e) => !!e && typeof e === 'object' && typeof e.line === 'string';
-  const checkTier = (at, poolData) => {
-    if (!poolData) return;
-    const collections = Array.isArray(poolData) ? [poolData] : Object.values(poolData);
-    for (const entries of collections) {
-      if (!Array.isArray(entries)) continue;
-      for (const entry of entries) {
-        if (!isBeat(entry)) continue;
-        for (const [type, value] of Object.entries(entry.responses || {})) {
-          const labels = Array.isArray(value) ? value : [value];
-          for (const label of labels) {
-            if (label.length > MAX_BUTTON_LABEL_LENGTH) {
-              tooLong.push(`${at} ${type}: "${label}" (${label.length})`);
-            }
-          }
-        }
-      }
-    }
-  };
-  for (const character of CHARACTERS) {
-    for (const pool of DRAWABLE_POOLS) {
-      const tiers = DIALOGUE[character.id]?.[pool];
-      for (const tier of Object.keys(tiers || {})) {
-        checkTier(`${character.id}.${pool}.${tier}`, tiers[tier]);
-      }
-    }
-  }
-
-  assert.deepStrictEqual(tooLong, []);
-});
-
-// The check above only proves today's catalog is clean — this proves
-// validateContent() would actually catch a violation instead of silently
-// passing one through, the same way the keepsake-emoji test above pins the
-// bondScenes check's own behavior rather than just today's data.
+// Proves validateContent() would actually catch a violation instead of
+// silently passing one through, the same way the keepsake-emoji test above
+// pins the bondScenes check's own behavior rather than just today's data.
 test('validateContent flags an over-length beat approach — as a single string or inside an array', () => {
   // validateContent() throws (not returns) once errors is non-empty — see its
   // own tail — so this has to catch the throw and read its message, unlike
@@ -265,28 +133,6 @@ test('validateContent flags an over-length beat response — as a single string 
   assert.doesNotThrow(() => validateContent(), 'and the catalog is clean again');
 });
 
-test('every bond scene placeholder is one bondScenes.js can actually resolve', () => {
-  const unknown = [];
-  const check = (at, pool) => {
-    for (const [key, scene] of Object.entries(pool || {})) {
-      const lines = [
-        ...scene.beats,
-        scene.choice.prompt,
-        ...scene.choice.options.map((o) => o.close),
-        scene.keepsake.line,
-      ];
-      for (const line of lines) {
-        for (const match of line.matchAll(/\{(\w+)\}/g)) {
-          if (!BOND_SCENE_PLACEHOLDERS.includes(match[1])) unknown.push(`${at}.${key}: {${match[1]}}`);
-        }
-      }
-    }
-  };
-  for (const character of CHARACTERS) check(character.id, DIALOGUE[character.id]?.bondScenes);
-
-  assert.deepStrictEqual(unknown, [], 'fillTemplate resolves an unknown placeholder to an empty string');
-});
-
 // --- localization ------------------------------------------------------------
 //
 // The source localization is American English, and reference.md (the canon the
@@ -303,7 +149,7 @@ const BRITISH_SPELLING_EXEMPT_PREFIXES = ['DIALOGUE.lucas.'];
 //
 // Deliberately absent from the list: `dialogue`, `glamour`, `toward(s)` and
 // adjectival `burnt`, all of which are correct American English.
-const BRITISH_SPELLINGS = [
+const BRITISH_SPELLING_LIST = [
   ['armour', 'armor'], ['behaviour', 'behavior'], ['cancelled', 'canceled'],
   ['centre', 'center'], ['colour', 'color'], ['defence', 'defense'],
   ['draught', 'draft'], ['favour', 'favor'], ['flavour', 'flavor'],
@@ -323,6 +169,10 @@ const BRITISH_SPELLINGS = [
   ['specialis', 'specializ'], ['summaris', 'summariz'], ['sympathis', 'sympathiz'],
   ['analys', 'analyz'], ['paralys', 'paralyz'],
 ];
+const BRITISH_SPELLINGS = BRITISH_SPELLING_LIST.map(([british, american]) => [
+  new RegExp(`\\b${british}[a-z]*\\b`, 'i'),
+  american,
+]);
 
 // Every authored string in the catalog, wherever it sits in the tree. Walking
 // the exports rather than the source files means comments and internal
@@ -345,8 +195,8 @@ test('no player-facing string uses a British spelling', () => {
 
   for (const [at, text] of strings) {
     if (BRITISH_SPELLING_EXEMPT_PREFIXES.some((prefix) => at.startsWith(prefix))) continue;
-    for (const [british, american] of BRITISH_SPELLINGS) {
-      const match = text.match(new RegExp(`\\b${british}[a-z]*\\b`, 'i'));
+    for (const [pattern, american] of BRITISH_SPELLINGS) {
+      const match = text.match(pattern);
       if (match) found.push(`${at}: "${match[0]}" — use "${american}"`);
     }
   }

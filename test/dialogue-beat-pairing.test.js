@@ -81,7 +81,7 @@ function times(n, fn) {
 
 test('a bare-string line has no approach of its own, so it draws a non-empty generic label', () => {
   const character = { id: BARE_ID };
-  for (const ctx of [{}, { locationKey: 'Nowhere' }, { now: new Date('2026-01-01T20:00:00') }]) {
+  for (const ctx of [{}, { now: new Date('2026-01-01T20:00:00') }]) {
     for (const { line, approach } of times(40, () => getRandomDialogueBeat(character, 'new', null, ctx))) {
       assert.ok(['Bare line A', 'Bare line B'].includes(line));
       assert.strictEqual(typeof approach, 'string');
@@ -116,15 +116,13 @@ test('a beat\'s approach may be an array of interchangeable labels, and only tho
 
 test('a beat always keeps its own approach, even in a tier with bare-string lines', () => {
   const character = { id: MIXED_ID };
-  for (const ctx of [{}, { locationKey: 'Nowhere' }]) {
-    const draws = times(40, () => getRandomDialogueBeat(character, 'new', null, ctx));
-    for (const { line, approach } of draws) {
-      if (line === 'Migrated line') assert.strictEqual(approach, 'Migrated approach');
-      else if (line === 'Unmigrated line') assert.ok(approach.length > 0);
-      else assert.fail(`unexpected line: ${line}`);
-    }
-    assert.ok(draws.some((d) => d.line === 'Migrated line'));
+  const draws = times(40, () => getRandomDialogueBeat(character, 'new'));
+  for (const { line, approach } of draws) {
+    if (line === 'Migrated line') assert.strictEqual(approach, 'Migrated approach');
+    else if (line === 'Unmigrated line') assert.ok(approach.length > 0);
+    else assert.fail(`unexpected line: ${line}`);
   }
+  assert.ok(draws.some((d) => d.line === 'Migrated line'));
 });
 
 test('a variant-keyed tier resolves each variant on its own — one variant can be paired while the other has bare-string lines', () => {

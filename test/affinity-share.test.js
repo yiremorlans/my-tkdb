@@ -7,9 +7,10 @@
 import { test, mock } from 'node:test';
 import assert from 'node:assert';
 import { createFakeSupabase } from './helpers/fakeSupabase.js';
-import { generateDiscordKeyPair, signInteraction } from './helpers/discordSign.js';
+import { generateDiscordKeyPair } from './helpers/discordSign.js';
+import { postSignedInteraction, stubDiscordFetch } from './helpers/routeHarness.js';
 
-const TEST_PORT = 38175; // distinct from the other route tests' ports
+const TEST_PORT = 38178; // distinct from the other route tests' ports
 process.env.PORT = String(TEST_PORT);
 process.env.SUPABASE_URL ??= 'http://fake.local';
 process.env.SUPABASE_SERVICE_ROLE_KEY ??= 'fake-service-role-key';
@@ -24,6 +25,10 @@ mock.module('@supabase/supabase-js', {
 
 const { buildAffinityMessage } = await import('../encounters.js');
 const { server } = await import('../app.js');
+
+// The Share click's background repost goes out over the interaction webhook;
+// keep it off the real network.
+const { restore: restoreFetch } = stubDiscordFetch(TEST_PORT);
 
 function reset() {
   fake.tables.character_relationships = [];
@@ -68,19 +73,7 @@ test('sharedBy makes it the public repost: attribution header, no Share button',
 
 // --- affinity:share component route ----------------------------------------
 
-async function postInteraction(body) {
-  const bodyString = JSON.stringify(body);
-  const { timestamp, signature } = await signInteraction(keyPair.privateKey, bodyString);
-  return fetch(`http://localhost:${TEST_PORT}/interactions`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      'X-Signature-Ed25519': signature,
-      'X-Signature-Timestamp': timestamp,
-    },
-    body: bodyString,
-  });
-}
+const postInteraction = (body) => postSignedInteraction(TEST_PORT, keyPair.privateKey, body);
 
 test('clicking Share greys the button out on the private message (UPDATE_MESSAGE)', async () => {
   const res = await postInteraction({
@@ -106,5 +99,6 @@ test('clicking Share greys the button out on the private message (UPDATE_MESSAGE
 });
 
 test.after(() => {
+  restoreFetch();
   server.close();
 });
