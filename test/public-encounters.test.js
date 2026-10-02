@@ -44,6 +44,7 @@ mock.module('../discordRest.js', {
       edits.push({ channelId, messageId, body });
       return {};
     },
+    editInteractionMessage: async () => ({}),
     // Mirrors the real editChannelMessageSafe: skip with no messageId, record
     // otherwise. Nothing here exercises its failure-swallowing path.
     editChannelMessageSafe: async (channelId, messageId, body) => {

@@ -195,6 +195,38 @@ export const HOUSE_CHANGE_HINT =
 
 export const HOUSE_CHANGE_DONE_LINE = "🔄 New house assigned. Same errand, fresh signatures.";
 
+// The Chancellor's audience: a lucky house-change click. Instead of a random
+// reroll, Cornelius hears the request and the player names the house with
+// `/request`. Rolled per click, so it only ever comes up on the one click the
+// house change allows (a re-click while an audience is open just reopens it).
+export const CHANCELLOR_AUDIENCE_CHANCE = 0.2;
+
+// assets/expressions/cornelius: default while he's listening, close once he
+// agrees.
+export const CHANCELLOR_FACES = { listening: "default.png", granted: "close.png" };
+
+export const CHANCELLOR_AUDIENCE_LINES = [
+  "The Chancellor has agreed to hear your request.",
+  "The Chancellor will see you now.",
+  "Your request reached the Chancellor's desk. He's willing to hear it.",
+];
+
+export const CHANCELLOR_AUDIENCE_PROMPT =
+  "Name the house you want with `/request`.";
+
+// {house} is the house he just granted.
+export const CHANCELLOR_GRANTED_LINES = [
+  "He will allow it this time. The errand goes to {house}.",
+  "He agrees with your request. {house} it is.",
+  "Request granted. {house} has your errand now.",
+];
+
+export const CHANCELLOR_REQUEST_LINES = {
+  noAudience: "The Chancellor isn't hearing requests from you right now.",
+  sameHouse: "Your errand is already in {house}. Name a different house.",
+  filed: "📜 Request filed.",
+};
+
 export const RIDDLE_WRONG_LINES = [
   "That's not who's behind this. Look again.",
   "Wrong read on the evidence.",

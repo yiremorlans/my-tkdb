@@ -506,6 +506,36 @@ sits on the pickup briefing, `/mission` and `/docs` of every errand:
   `/docs` click (`mission:house:<id>:docs`) gets the new, empty report sheet;
   a briefing click gets the new briefing.
 
+**The Chancellor's audience** (added 2026-10). One click in five
+(`CHANCELLOR_AUDIENCE_CHANCE`) skips the reroll and opens an audience instead:
+a separate ephemeral V2 message laid out like a mission post (text left,
+Cornelius' `default.png` from `assets/expressions/cornelius` as a thumbnail on
+the right, served from `BASE_URL/assets`) telling the player to `/request` a house.
+
+- The audience spends nothing. It only opens while the change is still
+  available, and a re-click while it's open reopens it rather than rerolling.
+- `/request house:<house>` (choices: the eight houses; the errand's current
+  house is refused and the audience stays open) runs the same
+  `change_errand_house` RPC with the named house and a fresh draw.
+- On success, both messages from the click are edited in place through its
+  webhook token: the audience swaps to `close.png` with a granted line, and the
+  briefing/report sheet is redrawn exactly as a normal change. That token dies
+  15 minutes after the click, so whatever can't be edited rides on
+  `/request`'s own reply instead.
+- The audience is stamped as `missions.chancellor_audience_at` (migration 026),
+  so it survives a restart. The stamp is never cleared: the audience counts as
+  open only while the change is still available (unspent, nothing signed), so
+  spending it or collecting a signature closes it for good. Opening one is the
+  only extra write; a re-click reopens off the row, and `/request` reads it off
+  the mission it already loads.
+- The click's token and the audience message id stay in memory as edit
+  handles that expire with the token (15 min), never in the database. Without
+  them (a restart, a slow player) `/request` still changes the house and
+  carries the result on its own reply.
+- Testing: `/missiondev chancellor [face]` (owner only) is a cosmetic preview
+  of the audience message (`listening` = default.png, `granted` = close.png).
+  It needs no errand and reads or writes nothing.
+
 ---
 
 ## 6. Type: Riddle (debunk) — `/riddle`

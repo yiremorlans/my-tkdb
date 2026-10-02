@@ -13,6 +13,7 @@ import path from "path";
 import { fileURLToPath } from "url";
 import {
   ButtonStyleTypes,
+  InteractionResponseFlags,
   InteractionResponseType,
   MessageComponentTypes,
 } from "discord-interactions";
@@ -24,6 +25,12 @@ import {
   BANKED_RESET_LINE,
   busyLine,
   CAPPED_LINE,
+  CHANCELLOR_AUDIENCE_CHANCE,
+  CHANCELLOR_AUDIENCE_LINES,
+  CHANCELLOR_AUDIENCE_PROMPT,
+  CHANCELLOR_FACES,
+  CHANCELLOR_GRANTED_LINES,
+  CHANCELLOR_REQUEST_LINES,
   DAILY_LEAD_CAP,
   clearRiddleCooldowns,
   drawErrandTargets,
@@ -63,12 +70,17 @@ import {
   startRiddleCooldown,
   SWEEP_EDIT_CONCURRENCY,
 } from "./constants/missions.js";
-import { matchCharacterGuess, pickRandom } from "./constants/publicEncounters.js";
+import { fillTemplate, matchCharacterGuess, pickRandom } from "./constants/publicEncounters.js";
 import { canManageEncounters } from "./publicEncounters.js";
 import { composeFieldReport } from "./imageComposition.js";
 import { getCharacterById, getFullName } from "./constants/characters.js";
 import { HOUSES } from "./constants/backgrounds.js";
-import { editChannelMessage, editChannelMessageSafe, postChannelMessage } from "./discordRest.js";
+import {
+  editChannelMessage,
+  editChannelMessageSafe,
+  editInteractionMessage,
+  postChannelMessage,
+} from "./discordRest.js";
 import { redeemCooldownReset, releaseCommandInvoke } from "./commandLimits.js";
 import {
   bumpGuildMissionPostFailure,
@@ -90,6 +102,7 @@ import {
   getMissionLogStats,
   getMissionsNeedingPostReconcile,
   getOpenMission,
+  openChancellorAudience,
   getUserRelationships,
   markMissionSlotFired,
   recordMissionCompletion,
@@ -318,10 +331,9 @@ const MESSENGER_CATS = ["Messenger_Cat.png", "Messenger_Cat_2.png"];
 // would read as a tell whether or not it actually correlated. The cat is the
 // same cat for every mission of every house.
 function messengerCatUrl(missionId) {
-  const baseUrl = process.env.BASE_URL || "";
   const file =
     MESSENGER_CATS[Math.abs(Number(missionId) || 0) % MESSENGER_CATS.length];
-  return `${baseUrl}/assets/sprites/${file}`;
+  return absoluteAssetUrl(`sprites/${file}`, `mission ${missionId}'s messenger cat`);
 }
 
 // The board's colour. Missions are house-blind in public, so this is fixed
@@ -344,15 +356,18 @@ function missionEmbed(missionId, description) {
   const embed = { description, color: MISSION_EMBED_COLOR };
 
   const url = messengerCatUrl(missionId);
-  if (/^https?:\/\//i.test(url)) {
-    embed.thumbnail = { url };
-  } else {
-    console.error(
-      `[missions] BASE_URL is unset or invalid — posting mission ${missionId} without the messenger cat (got "${url}")`,
-    );
-  }
+  if (url) embed.thumbnail = { url };
 
   return embed;
+}
+
+// `${BASE_URL}/assets/<relPath>`, or null (logged) when BASE_URL isn't an
+// absolute http(s) URL: Discord rejects a whole message whose image URL isn't.
+function absoluteAssetUrl(relPath, what) {
+  const url = `${process.env.BASE_URL || ""}/assets/${relPath}`;
+  if (/^https?:\/\//i.test(url)) return url;
+  console.error(`[missions] BASE_URL is unset or invalid — sending without ${what} (got "${url}")`);
+  return null;
 }
 
 // --- expiry -----------------------------------------------------------------
@@ -700,6 +715,21 @@ function errandProgress(mission) {
   };
 }
 
+// The client-side mirror of change_errand_house's rules: "spent", "signed", or
+// null while the change is still available.
+function houseChangeBlocker(mission, signed = errandProgress(mission).signed) {
+  if (mission.house_changed_at) return "spent";
+  if (signed > 0) return "signed";
+  return null;
+}
+
+// The Chancellor's audience (migration 026) is open while its stamp is set and
+// the change it was granted for is still available. The stamp is never
+// cleared: spending the change or collecting a signature closes it.
+function chancellorAudienceOpen(mission) {
+  return Boolean(mission?.chancellor_audience_at) && houseChangeBlocker(mission) === null;
+}
+
 // An errand's house-change button (migration 025), plus the 🔒 line explaining
 // it when a signature has greyed it out (null while it's live, and null once
 // spent: the 🔒 on the button already says that). Mirrors change_errand_house's own
@@ -710,11 +740,7 @@ function errandProgress(mission) {
 // in the custom_id so a successful change can redraw that same message rather
 // than swapping a report sheet for a briefing.
 function houseChangeControls(mission, signed, from = "briefing") {
-  const blocker = mission.house_changed_at
-    ? "spent"
-    : signed > 0
-      ? "signed"
-      : null;
+  const blocker = houseChangeBlocker(mission, signed);
   return {
     note: blocker === "signed" ? HOUSE_CHANGE_UNAVAILABLE_LINES.signed : null,
     button: {
@@ -1279,8 +1305,13 @@ export async function handleMissionFile(body, missionId) {
  * `mission:house:<id>[:docs]` — the errand's one free house change (migration 025).
  * Sits on the pickup briefing, /mission and /docs.
  *
- * The new house (never the current one) and a fresh signature draw are rolled
- * here; change_errand_house decides under the row lock whether the swap is still
+ * Usually the new house (never the current one) and a fresh signature draw are
+ * rolled here. One click in CHANCELLOR_AUDIENCE_CHANCE instead opens an
+ * audience with the Chancellor: a separate V2 message with his portrait, and
+ * the player names the house themselves with /request (handleRequest). Nothing
+ * is spent by the audience itself; the change still goes through the same RPC.
+ *
+ * change_errand_house decides under the row lock whether the swap is still
  * allowed and stamps house_changed_at in the same write, so a stale button or a
  * double-click can't spend it twice. The 48h window, the daily lead cap and
  * the reward are untouched — it's the same mission with a different house.
@@ -1288,10 +1319,21 @@ export async function handleMissionFile(body, missionId) {
  * On success the message the button sat on is redrawn as the same kind of
  * message for the new house: a /docs click gets the new house's (empty) report
  * sheet, a briefing click gets the new briefing. `from` comes off the
- * custom_id's optional `:docs` suffix.
+ * custom_id's optional `:docs` suffix. `random` is injectable for tests.
  */
-export async function handleMissionHouseChange(body, missionId, from = "briefing") {
+export async function handleMissionHouseChange(
+  body,
+  missionId,
+  from = "briefing",
+  { random = Math.random } = {},
+) {
   const userId = userIdOf(body);
+  const afterReply = async () => {
+    await Promise.allSettled([
+      trackUserActivity(userId),
+      trackCommandUsage(userId, "mission"),
+    ]);
+  };
 
   let mission;
   try {
@@ -1302,10 +1344,59 @@ export async function handleMissionHouseChange(body, missionId, from = "briefing
       response: ephemeralResponse("Something went wrong there. Try again?"),
     };
   }
-  // Status and type are left to change_errand_house, which checks them under
-  // the row lock and answers 'gone'.
   if (!mission || mission.accepted_by !== userId) {
     return { response: ephemeralResponse("That mission's already closed.") };
+  }
+
+  // An open audience reopens instead of rerolling: the player already won it.
+  const reopen = chancellorAudienceOpen(mission);
+  if (reopen || random() < CHANCELLOR_AUDIENCE_CHANCE) {
+    // The Chancellor doesn't hear a request he can't grant.
+    const blocker = houseChangeBlocker(mission);
+    if (blocker) {
+      return { response: ephemeralResponse(houseChangeRefusalLine(blocker)) };
+    }
+
+    if (!reopen) {
+      let opened;
+      try {
+        opened = await openChancellorAudience(mission.id, userId);
+      } catch (err) {
+        console.error("[missions] Could not open the Chancellor's audience:", err.message);
+        return {
+          response: ephemeralResponse("Something went wrong there. Try again?"),
+        };
+      }
+      if (!opened) {
+        return { response: ephemeralResponse("That mission's already closed.") };
+      }
+    }
+
+    // Set before the message goes out so a fast /request still finds it; the
+    // message id fills in once Discord returns it (onSent, app.js).
+    const handles = {
+      missionId: mission.id,
+      from,
+      token: body.token,
+      messageId: null,
+      expiresAt: Date.now() + INTERACTION_TOKEN_TTL_MS,
+    };
+    setAudienceHandles(userId, handles);
+
+    const data = chancellorMessage(
+      CHANCELLOR_FACES.listening,
+      `${pickRandom(CHANCELLOR_AUDIENCE_LINES)}\n${CHANCELLOR_AUDIENCE_PROMPT}`,
+    );
+    return {
+      response: {
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: { ...data, flags: data.flags | EPHEMERAL },
+      },
+      onSent: (message) => {
+        handles.messageId = message?.id ?? null;
+      },
+      afterReply,
+    };
   }
 
   // rollHouseChange only offers houses with a roster, so a house always draws
@@ -1317,24 +1408,43 @@ export async function handleMissionHouseChange(body, missionId, from = "briefing
       response: ephemeralResponse("Something went wrong there. Try again?"),
     };
   }
-  const targetIds = drawErrandTargets(house);
 
-  let outcome;
+  let change;
   try {
-    outcome = await changeErrandHouse(mission.id, userId, house, targetIds);
+    change = await applyHouseChange(mission, userId, house, from);
   } catch (err) {
     console.error("[missions] change_errand_house failed:", err.message);
     return {
       response: ephemeralResponse("Something went wrong there. Try again?"),
     };
   }
+  if (!change.message) {
+    return { response: ephemeralResponse(houseChangeRefusalLine(change.outcome)) };
+  }
 
-  if (outcome === "spent" || outcome === "signed") {
-    return { response: ephemeralResponse(HOUSE_CHANGE_UNAVAILABLE_LINES[outcome]) };
-  }
-  if (outcome !== "changed") {
-    return { response: ephemeralResponse("That mission's already closed.") };
-  }
+  return {
+    response: {
+      type: InteractionResponseType.UPDATE_MESSAGE,
+      data: change.message,
+    },
+    afterReply,
+  };
+}
+
+function houseChangeRefusalLine(outcome) {
+  return HOUSE_CHANGE_UNAVAILABLE_LINES[outcome] || "That mission's already closed.";
+}
+
+/**
+ * The write and the redraw both house-change paths share: a fresh draw for
+ * `house`, the RPC, and on 'changed' the clicked message rebuilt for the new
+ * house (`from`) with the done line at its foot. Returns `{ outcome, message }`,
+ * `message` only on 'changed'. Throws if the RPC does.
+ */
+async function applyHouseChange(mission, userId, house, from) {
+  const targetIds = drawErrandTargets(house);
+  const outcome = await changeErrandHouse(mission.id, userId, house, targetIds);
+  if (outcome !== "changed") return { outcome };
 
   // Rendered from what was just written rather than re-read: the RPC only
   // changed these three fields, and a second round trip here would only risk
@@ -1351,24 +1461,147 @@ export async function handleMissionHouseChange(body, missionId, from = "briefing
       : await buildMissionBriefing(userId, updated);
 
   return {
-    response: {
-      type: InteractionResponseType.UPDATE_MESSAGE,
-      data: {
-        ...message,
-        // At the foot of the message, where the 🔒 line would otherwise sit.
-        content: `${message.content}\n\n${HOUSE_CHANGE_DONE_LINE}`,
-        // An edit of a message that is already ephemeral; /docs' builder sets
-        // flags for its own fresh reply.
-        flags: undefined,
-        // The new house has nothing signed, so there's no field-report image
-        // to show; clear any the old message carried.
-        attachments: [],
-      },
+    outcome,
+    message: {
+      ...message,
+      // At the foot of the message, where the 🔒 line would otherwise sit.
+      content: `${message.content}\n\n${HOUSE_CHANGE_DONE_LINE}`,
+      // An edit of a message that is already ephemeral; /docs' builder sets
+      // flags for its own fresh reply.
+      flags: undefined,
+      // The new house has nothing signed, so there's no field-report image
+      // to show; clear any the old message carried.
+      attachments: [],
     },
+  };
+}
+
+// --- the Chancellor's audience (/request) -----------------------------------
+
+// Discord interaction tokens stop working 15 minutes after the interaction.
+const INTERACTION_TOKEN_TTL_MS = 15 * 60 * 1000;
+
+// Per user: what /request needs to edit the click's two messages in place (the
+// errand, which message the button sat on, the click's token, the audience
+// message's id). Whether the audience is open lives on the row; these are only
+// edit handles, so they stay in memory and expire with the token.
+const chancellorAudiences = new Map();
+
+function setAudienceHandles(userId, handles) {
+  const now = Date.now();
+  for (const [id, entry] of chancellorAudiences) {
+    if (entry.expiresAt <= now) chancellorAudiences.delete(id);
+  }
+  chancellorAudiences.set(userId, handles);
+}
+
+function liveAudienceHandles(userId, missionId) {
+  const handles = chancellorAudiences.get(userId);
+  return handles?.missionId === missionId && handles.expiresAt > Date.now()
+    ? handles
+    : null;
+}
+
+export function clearChancellorAudiences() {
+  chancellorAudiences.clear();
+}
+
+/**
+ * The Chancellor's V2 message, laid out like a mission post: his line on the
+ * left, his portrait (`face`, a file in assets/expressions/cornelius) as a
+ * thumbnail on the right, in a container with the board's color bar. Served
+ * from /assets like the messenger cat, so the granted edit swaps faces by URL.
+ * Not ephemeral: an edit can't change that flag, so a new message adds it.
+ */
+function chancellorMessage(face, text) {
+  const url = absoluteAssetUrl(`expressions/cornelius/${face}`, "the Chancellor's portrait");
+  const textDisplay = { type: MessageComponentTypes.TEXT_DISPLAY, content: text };
+  const body = url
+    ? {
+        type: MessageComponentTypes.SECTION,
+        components: [textDisplay],
+        accessory: { type: MessageComponentTypes.THUMBNAIL, media: { url } },
+      }
+    : textDisplay;
+
+  return {
+    flags: InteractionResponseFlags.IS_COMPONENTS_V2,
+    components: [
+      { type: MessageComponentTypes.CONTAINER, accent_color: MISSION_EMBED_COLOR, components: [body] },
+    ],
+  };
+}
+
+// An interaction-token edit that reports success instead of throwing.
+async function tryEditInteraction(token, messageId, body, label) {
+  try {
+    await editInteractionMessage(token, messageId, body);
+    return true;
+  } catch (err) {
+    console.error(`[missions] /request could not edit the ${label}:`, err.message);
+    return false;
+  }
+}
+
+/**
+ * `/request house:<house>` — the player's answer to an open audience. Spends
+ * the house change on the named house through the same RPC as the button, then
+ * edits both messages from the click in place: the audience swaps to the
+ * Chancellor's granted face, and the briefing or report sheet is redrawn for
+ * the new house exactly as a normal change would. Whatever can't be edited (a
+ * dead token, a restart) rides on /request's own reply instead.
+ */
+export async function handleRequest(body) {
+  const userId = userIdOf(body);
+  const house = body.data?.options?.find((o) => o.name === "house")?.value;
+
+  const mission = await getAcceptedMission(userId);
+  if (!chancellorAudienceOpen(mission)) {
+    return { reply: ephemeral(CHANCELLOR_REQUEST_LINES.noAudience), afterReply: null };
+  }
+  // Kept open: the player can still name a different house.
+  if (mission.house === house) {
+    return {
+      reply: ephemeral(fillTemplate(CHANCELLOR_REQUEST_LINES.sameHouse, { house })),
+      afterReply: null,
+    };
+  }
+
+  const handles = liveAudienceHandles(userId, mission.id);
+  const change = await applyHouseChange(mission, userId, house, handles?.from);
+  chancellorAudiences.delete(userId);
+  if (!change.message) {
+    return { reply: ephemeral(houseChangeRefusalLine(change.outcome)), afterReply: null };
+  }
+
+  const granted = fillTemplate(pickRandom(CHANCELLOR_GRANTED_LINES), { house });
+  const [audienceEdited, messageEdited] = await Promise.all([
+    Boolean(handles?.messageId) &&
+      tryEditInteraction(
+        handles.token,
+        handles.messageId,
+        chancellorMessage(CHANCELLOR_FACES.granted, granted),
+        "audience",
+      ),
+    Boolean(handles) &&
+      tryEditInteraction(handles.token, "@original", change.message, "briefing"),
+  ]);
+
+  const lead = audienceEdited ? null : granted;
+  let reply;
+  if (messageEdited) {
+    reply = ephemeral(lead ?? CHANCELLOR_REQUEST_LINES.filed);
+  } else {
+    const { attachments, flags, ...message } = change.message;
+    reply = { ...message, content: [lead, message.content].filter(Boolean).join("\n\n") };
+  }
+
+  return {
+    reply,
     afterReply: async () => {
       await Promise.allSettled([
         trackUserActivity(userId),
-        trackCommandUsage(userId, "mission"),
+        trackCommandUsage(userId, "request"),
       ]);
     },
   };
@@ -1960,6 +2193,27 @@ export async function handleMissionDev(body, now = new Date()) {
   if (!isMissionDevOwner(userId)) {
     console.warn(`[missions] /missiondev refused for ${userId} in ${guildId}`);
     return { content: "Unknown command." };
+  }
+
+  // A cosmetic preview of the Chancellor's audience message, for checking the
+  // layout and portraits. Reads and writes nothing, needs no errand, server or
+  // channel. `face: granted` shows the confirmation with close.png, filled
+  // with a random house.
+  if (body.data?.options?.[0]?.name === "chancellor") {
+    const face = body.data.options[0].options?.find((o) => o.name === "face")?.value;
+    const data =
+      face === "granted"
+        ? chancellorMessage(
+            CHANCELLOR_FACES.granted,
+            fillTemplate(pickRandom(CHANCELLOR_GRANTED_LINES), {
+              house: pickRandom(Object.values(HOUSES)),
+            }),
+          )
+        : chancellorMessage(
+            CHANCELLOR_FACES.listening,
+            `${pickRandom(CHANCELLOR_AUDIENCE_LINES)}\n${CHANCELLOR_AUDIENCE_PROMPT}`,
+          );
+    return { ...data, flags: data.flags | EPHEMERAL };
   }
 
   if (!guildId) return { content: "This only works in a server." };

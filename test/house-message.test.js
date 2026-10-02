@@ -26,6 +26,7 @@ mock.module('../discordRest.js', {
     postChannelMessage: async () => ({ id: 'message-1' }),
     editChannelMessage: async () => ({}),
     editChannelMessageSafe: async () => {},
+    editInteractionMessage: async () => ({}),
     openDmChannel: async () => 'dm-1',
     postChannelTyping: async () => {},
     getGuildRoles: async () => [],

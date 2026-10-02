@@ -33,6 +33,7 @@ import {
   handleMissionFile,
   handleMissionHouseChange,
   handleMissionsAdmin,
+  handleRequest,
   handleRiddle,
   wantsMissionAssist,
 } from './missions.js';
@@ -89,6 +90,7 @@ const PORT = process.env.PORT || 3000;
 // Serve character/background art so Discord can load it by URL in message components
 app.use('/assets', express.static('assets'));
 
+// Returns the sent message object (null if Discord sent no body).
 // edit: true PATCHes the deferred response instead of posting a new followup —
 // what a DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE ack needs, so the "thinking"
 // placeholder becomes the real message rather than lingering beside it.
@@ -137,6 +139,13 @@ async function sendFollowup(interactionToken, messageData, timeoutMs = 15000, ed
       throw new Error(`Discord API error: ${response.status} - ${responseText}`);
     } else {
       console.log('[sendFollowup] Success! Total time:', Date.now() - startTime, 'ms');
+    }
+    // The message Discord created or edited, for a caller that needs its id
+    // later (the Chancellor's audience, missions.js handleRequest).
+    try {
+      return responseText ? JSON.parse(responseText) : null;
+    } catch {
+      return null;
     }
   } catch (err) {
     console.error('[sendFollowup] Error:', err.message, 'elapsed:', Date.now() - startTime, 'ms');
@@ -645,7 +654,13 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     // same reason /call is: the 3s inline budget is not reliably enough, and the
     // user seeing "the application did not respond" after a mission was already
     // claimed would be the worst possible failure here.
-    if (name === 'mission' || name === 'docs' || name === 'riddle' || name === 'missions') {
+    if (
+      name === 'mission' ||
+      name === 'docs' ||
+      name === 'riddle' ||
+      name === 'request' ||
+      name === 'missions'
+    ) {
       res.send({
         type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
         data: { flags: EPHEMERAL },
@@ -656,6 +671,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           mission: handleMission,
           docs: handleDocs,
           riddle: handleRiddle,
+          request: handleRequest,
           missions: handleMissionsAdmin,
         };
 
@@ -1155,7 +1171,8 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       // mission:accept:<id>  — the public request's one button (§11)
       // mission:file:<id>    — /docs' Complete mission
       // mission:assist:<id>  — a second user backing up a co-op
-      // mission:house:<id>[:docs] — an errand's one free house change
+      // mission:house:<id>[:docs] — an errand's one free house change (or,
+      //                             sometimes, the Chancellor's audience)
       //
       // Answered inline rather than deferred: each is a single RPC round trip,
       // and 'accept' has to reply with UPDATE_MESSAGE to rewrite the shared
@@ -1287,9 +1304,11 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           if (kind === 'accept') await flagMissionPostForReconcile(missionId);
         }
       } else if (response?.data) {
-        await sendFollowup(req.body.token, response.data).catch(err =>
-          console.error(`Failed to send mission:${kind} refusal:`, err),
-        );
+        // A refusal, or the Chancellor's audience (a new V2 message whose id
+        // /request needs later to edit it, handed back through onSent).
+        await sendFollowup(req.body.token, response.data)
+          .then((sent) => result.onSent?.(sent))
+          .catch(err => console.error(`Failed to send mission:${kind} message:`, err));
       }
 
       // An ephemeral chaser for the clicker only — the pickup briefing after

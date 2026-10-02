@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { InstallGlobalCommands } from "./utils.js";
+import { HOUSES } from "./constants/backgrounds.js";
 
 const ROAM_COMMAND = {
   name: "roam",
@@ -117,6 +118,27 @@ const RIDDLE_COMMAND = {
       description: "Who do you think it is? e.g. Sho, Shohei, Shohei Haizono",
       type: 3, // STRING
       required: true,
+    },
+  ],
+};
+
+// The answer to the Chancellor's audience: a lucky errand house-change click
+// opens one, and this names the house (missions.js handleRequest). Choices
+// rather than free text, so the house can never be misspelled; refusing the
+// errand's current house is the handler's job.
+const REQUEST_COMMAND = {
+  name: "request",
+  description: "Errand missions: name the house you want when the Chancellor hears you",
+  type: 1,
+  integration_types: [0, 1],
+  contexts: [0, 1, 2],
+  options: [
+    {
+      name: "house",
+      description: "The house your errand should move to",
+      type: 3, // STRING
+      required: true,
+      choices: Object.values(HOUSES).map((house) => ({ name: house, value: house })),
     },
   ],
 };
@@ -405,6 +427,23 @@ const MISSIONDEV_COMMAND = {
       name: "sweep",
       description: "Finalize every mission past its deadline right now",
     },
+    {
+      type: 1, // SUB_COMMAND
+      name: "chancellor",
+      description: "Preview the Chancellor's audience message (cosmetic, touches nothing)",
+      options: [
+        {
+          name: "face",
+          description: "Which state to show (listening if omitted)",
+          type: 3, // STRING
+          required: false,
+          choices: [
+            { name: "listening (default.png)", value: "listening" },
+            { name: "granted (close.png)", value: "granted" },
+          ],
+        },
+      ],
+    },
   ],
 };
 
@@ -418,6 +457,7 @@ const ALL_COMMANDS = [
   MISSION_COMMAND,
   DOCS_COMMAND,
   RIDDLE_COMMAND,
+  REQUEST_COMMAND,
   ENCOUNTERS_COMMAND,
   MISSIONS_COMMAND,
   ENCDEV_COMMAND,

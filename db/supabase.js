@@ -1843,6 +1843,32 @@ export async function changeErrandHouse(id, userId, house, targetIds) {
   return data;
 }
 
+/**
+ * Stamps the Chancellor's audience on a held errand whose house change is
+ * unspent (migration 026). Keeps an existing stamp. Returns whether the row
+ * matched; the caller has already refused a signed errand, and
+ * change_errand_house re-checks everything under the row lock at /request.
+ */
+export async function openChancellorAudience(id, userId) {
+  const { data, error } = await supabase
+    .from('missions')
+    .update({ chancellor_audience_at: new Date().toISOString() })
+    .eq('id', id)
+    .eq('accepted_by', userId)
+    .eq('status', 'accepted')
+    .eq('mission_type', 'errand')
+    .is('house_changed_at', null)
+    .is('chancellor_audience_at', null)
+    .select('id');
+
+  if (error) {
+    console.error('Error opening Chancellor audience:', error);
+    throw error;
+  }
+
+  return data.length > 0;
+}
+
 /** The co-op Join button. Returns 'joined' | 'self' | 'taken'. */
 export async function claimCoopHelper(id, userId) {
   const { data, error } = await supabase.rpc('claim_coop_helper', {

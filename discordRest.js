@@ -80,6 +80,26 @@ export async function editChannelMessage(channelId, messageId, body) {
 }
 
 /**
+ * PATCH a message an interaction sent, through that interaction's webhook
+ * token: `@original` for the message the interaction was raised on, or a
+ * followup's own id. The only way to edit an ephemeral message, which the bot
+ * token can't see. Tokens die 15 minutes after the interaction.
+ */
+export async function editInteractionMessage(interactionToken, messageId, body) {
+  const res = await fetch(
+    `${API_BASE}/webhooks/${process.env.APP_ID}/${interactionToken}/messages/${messageId}`,
+    {
+      method: 'PATCH',
+      headers: { 'User-Agent': USER_AGENT, 'Content-Type': 'application/json; charset=UTF-8' },
+      body: JSON.stringify(body),
+    },
+  );
+
+  if (!res.ok) throw await readError(res);
+  return res.json();
+}
+
+/**
  * editChannelMessage for the common "close out a stale post" shape shared by
  * missions.js and publicEncounters.js: skip when there was never a post to
  * edit, and log-and-swallow rather than throw on failure, since these callers

@@ -274,6 +274,7 @@ One row per posted mission request (`docs/scheduled-missions.md`). `status` is t
 | `status` | TEXT | `open` / `accepted` / `completed` / `expired` |
 | `completed_at` | TIMESTAMP | Set on any of the three completion paths |
 | `house_changed_at` | TIMESTAMP | Errand only: when its one free house change was spent (migration 025); NULL = still available |
+| `chancellor_audience_at` | TIMESTAMP | Errand only: when the Chancellor agreed to hear a `/request` (migration 026). Only ever set; the audience counts as open while the house change is still available (`house_changed_at` NULL, nothing signed) |
 
 **Use cases:**
 - Arbitrate the Accept race with one atomic `claim_mission()` statement

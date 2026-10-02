@@ -37,7 +37,9 @@ const posts = [];
 const edits = [];
 // Flip discordFail.edit to make the next editChannelMessage calls throw, the
 // way a Discord 5xx or a deleted post would — the call is still recorded first.
-const discordFail = { edit: false };
+const discordFail = { edit: false, interaction: false };
+// Edits made through an interaction's webhook token (the Chancellor's /request).
+const interactionEdits = [];
 mock.module('../discordRest.js', {
   namedExports: {
     postChannelMessage: async (channelId, body) => {
@@ -54,6 +56,11 @@ mock.module('../discordRest.js', {
     editChannelMessageSafe: async (channelId, messageId, body) => {
       if (!messageId) return;
       edits.push({ channelId, messageId, body });
+    },
+    editInteractionMessage: async (token, messageId, body) => {
+      interactionEdits.push({ token, messageId, body });
+      if (discordFail.interaction) throw new Error('Discord API error: 404');
+      return { id: messageId };
     },
     openDmChannel: async () => 'dm-1',
     postChannelTyping: async () => {},
@@ -86,9 +93,12 @@ const {
   handleMission,
   handleMissionAccept,
   handleMissionAssistJoin,
+  handleMissionDev,
   handleMissionFile,
   handleMissionHouseChange,
+  handleRequest,
   handleRiddle,
+  clearChancellorAudiences,
   reconcileMissionPosts,
   runGuildMissionPass,
   spawnMission,
@@ -106,7 +116,10 @@ function reset() {
   fake.tables.character_relationships = [];
   posts.length = 0;
   edits.length = 0;
+  interactionEdits.length = 0;
   discordFail.edit = false;
+  discordFail.interaction = false;
+  clearChancellorAudiences();
   clearRiddleCooldowns();
   clearCommandInvokeThrottle();
 }
@@ -641,6 +654,10 @@ describe('errands', () => {
 
   // --- house change (migration 025) ---
 
+  // The Chancellor's audience is a 20% roll on the click; pin it either way.
+  const NO_AUDIENCE = { random: () => 1 };
+  const AUDIENCE = { random: () => 0 };
+
   const houseChangeButtonOf = (components) =>
     components[0].components.find((c) => c.custom_id.startsWith('mission:house:1'));
 
@@ -661,7 +678,7 @@ describe('errands', () => {
   it('redraws a /docs click as the new house\'s report sheet, not a briefing', async () => {
     seedErrand();
 
-    const { response } = await handleMissionHouseChange(click('user-a'), 1, 'docs');
+    const { response } = await handleMissionHouseChange(click('user-a'), 1, 'docs', NO_AUDIENCE);
     const row = fake.tables.missions[0];
 
     assert.equal(response.type, 7);
@@ -692,7 +709,7 @@ describe('errands', () => {
     seedErrand();
     const before = { ...fake.tables.missions[0] };
 
-    const { response } = await handleMissionHouseChange(click('user-a'), 1);
+    const { response } = await handleMissionHouseChange(click('user-a'), 1, undefined, NO_AUDIENCE);
     const row = fake.tables.missions[0];
 
     assert.equal(response.type, 7, 'replaces the message the button sat on');
@@ -715,7 +732,7 @@ describe('errands', () => {
 
     // A stale button can't spend it twice.
     const house = row.house;
-    const again = await handleMissionHouseChange(click('user-a'), 1);
+    const again = await handleMissionHouseChange(click('user-a'), 1, undefined, NO_AUDIENCE);
     assert.match(again.response.data.content, /already spent/);
     assert.equal(fake.tables.missions[0].house, house);
   });
@@ -728,7 +745,7 @@ describe('errands', () => {
     assert.equal(houseChangeButtonOf(reply.components).emoji?.name, '🔒');
     assert.match(reply.content, /closes once a signature is in/);
 
-    const { response } = await handleMissionHouseChange(click('user-a'), 1);
+    const { response } = await handleMissionHouseChange(click('user-a'), 1, undefined, NO_AUDIENCE);
     assert.match(response.data.content, /closes once a signature is in/);
     assert.equal(fake.tables.missions[0].house, 'Dionysia');
     assert.equal(fake.tables.missions[0].house_changed_at, undefined);
@@ -737,8 +754,192 @@ describe('errands', () => {
   it("won't change the house on someone else's errand", async () => {
     seedErrand();
 
-    const { response } = await handleMissionHouseChange(click('user-b'), 1);
+    const { response } = await handleMissionHouseChange(click('user-b'), 1, undefined, NO_AUDIENCE);
     assert.match(response.data.content, /already closed/);
+    assert.equal(fake.tables.missions[0].house, 'Dionysia');
+  });
+
+  // --- the Chancellor's audience (/request) ---
+
+  const requestCommand = (userId, house) => command(userId, [{ name: 'house', value: house }]);
+  const clickWithToken = (userId) => ({ ...click(userId), token: 'click-token' });
+
+  async function openAudience(from) {
+    // The portrait is served from BASE_URL; an earlier test unsets it.
+    process.env.BASE_URL = 'https://tkdb.test';
+    const result = await handleMissionHouseChange(clickWithToken('user-a'), 1, from, AUDIENCE);
+    result.onSent?.({ id: 'audience-1' });
+    return result;
+  }
+
+  it('sometimes opens an audience instead of rerolling, spending nothing', async () => {
+    seedErrand();
+
+    const { response } = await openAudience();
+    assert.equal(response.type, 4, 'a new message beside the briefing, not an edit of it');
+    assert.equal(response.data.flags, 64 | 32768, 'ephemeral and V2');
+    assert.equal(response.data.content, undefined, 'V2 carries no content');
+    const [section] = response.data.components[0].components;
+    assert.equal(section.type, 9, 'text beside the portrait, like a mission post');
+    assert.match(section.components[0].content, /Chancellor/);
+    assert.match(section.components[0].content, /\/request/);
+    assert.equal(section.accessory.type, 11);
+    assert.equal(section.accessory.media.url, 'https://tkdb.test/assets/expressions/cornelius/default.png');
+
+    assert.equal(fake.tables.missions[0].house, 'Dionysia');
+    assert.equal(fake.tables.missions[0].house_changed_at, undefined);
+    assert.ok(fake.tables.missions[0].chancellor_audience_at, 'stamped on the row');
+  });
+
+  it('keeps an audience open across a restart, answering on the reply', async () => {
+    seedErrand();
+    await openAudience();
+    clearChancellorAudiences(); // what a restart does to the in-memory edit handles
+
+    const { reply } = await handleRequest(requestCommand('user-a', 'Jabberwock'));
+    const row = fake.tables.missions[0];
+    assert.equal(row.house, 'Jabberwock');
+    assert.ok(row.house_changed_at, 'spending the change closes the audience');
+    assert.equal(interactionEdits.length, 0, 'no token to edit with');
+    assert.match(reply.content, /Jabberwock/);
+    assert.match(reply.content, /MISSION BRIEFING/);
+  });
+
+  it('reopens from the row after a restart without a second roll', async () => {
+    seedErrand();
+    await openAudience();
+    clearChancellorAudiences();
+
+    const { response } = await handleMissionHouseChange(clickWithToken('user-a'), 1, undefined, NO_AUDIENCE);
+    assert.equal(response.data.flags, 64 | 32768);
+  });
+
+  it('/missiondev chancellor previews the audience without touching anything', async () => {
+    process.env.OWNER_DISCORD_ID = 'owner';
+    process.env.BASE_URL = 'https://tkdb.test';
+    const dev = (options) => handleMissionDev({
+      member: { user: { id: 'owner' } },
+      data: { options: [{ name: 'chancellor', options }] },
+    });
+
+    // No errand, no guild settings, no server.
+    const listening = await dev();
+    assert.equal(listening.flags, 64 | 32768);
+    const [section] = listening.components[0].components;
+    assert.match(section.components[0].content, /\/request/);
+    assert.match(section.accessory.media.url, /cornelius\/default\.png$/);
+
+    const granted = await dev([{ name: 'face', value: 'granted' }]);
+    const [grantedSection] = granted.components[0].components;
+    assert.match(grantedSection.accessory.media.url, /cornelius\/close\.png$/);
+    assert.doesNotMatch(grantedSection.components[0].content, /\{house\}/);
+
+    assert.equal(fake.tables.missions.length, 0);
+    delete process.env.OWNER_DISCORD_ID;
+  });
+
+  it('moves the errand to the named house and edits both messages in place', async () => {
+    seedErrand();
+    await openAudience();
+
+    const { reply } = await handleRequest(requestCommand('user-a', 'Obscuary'));
+    const row = fake.tables.missions[0];
+    assert.equal(row.house, 'Obscuary');
+    assert.ok(row.house_changed_at);
+    const roster = getHouseRoster('Obscuary').map((c) => c.id);
+    assert.ok(Object.keys(row.signatures).every((id) => roster.includes(id)));
+
+    const audienceEdit = interactionEdits.find((e) => e.messageId === 'audience-1');
+    assert.equal(audienceEdit.token, 'click-token');
+    const [grantedSection] = audienceEdit.body.components[0].components;
+    assert.equal(grantedSection.accessory.media.url, 'https://tkdb.test/assets/expressions/cornelius/close.png');
+    assert.match(grantedSection.components[0].content, /Obscuary/);
+    assert.equal(audienceEdit.body.flags, 32768, 'an edit keeps V2 and leaves ephemeral alone');
+
+    const briefingEdit = interactionEdits.find((e) => e.messageId === '@original');
+    assert.match(briefingEdit.body.content, /MISSION BRIEFING\*\*  ·  Obscuary/);
+    assert.match(briefingEdit.body.content, /New house assigned/);
+    assert.equal(houseChangeButtonOf(briefingEdit.body.components).disabled, true);
+
+    assert.match(reply.content, /Request filed/);
+
+    // The audience is over once it's been answered.
+    const again = await handleRequest(requestCommand('user-a', 'Frostheim'));
+    assert.match(again.reply.content, /isn't hearing requests/);
+    assert.equal(fake.tables.missions[0].house, 'Obscuary');
+  });
+
+  it('redraws a /docs audience as the report sheet', async () => {
+    seedErrand();
+    await openAudience('docs');
+
+    await handleRequest(requestCommand('user-a', 'Hotarubi'));
+    const briefingEdit = interactionEdits.find((e) => e.messageId === '@original');
+    assert.match(briefingEdit.body.content, /DARKWICK FIELD REPORT — Hotarubi/);
+  });
+
+  it('carries the new house on the reply when the click token has died', async () => {
+    seedErrand();
+    await openAudience();
+    discordFail.interaction = true;
+
+    const { reply } = await handleRequest(requestCommand('user-a', 'Sinostra'));
+    assert.equal(fake.tables.missions[0].house, 'Sinostra');
+    assert.match(reply.content, /Sinostra/);
+    assert.match(reply.content, /MISSION BRIEFING/);
+    assert.equal(reply.attachments, undefined);
+  });
+
+  it('refuses the current house and keeps the audience open', async () => {
+    seedErrand();
+    await openAudience();
+
+    const { reply } = await handleRequest(requestCommand('user-a', 'Dionysia'));
+    assert.match(reply.content, /already in Dionysia/);
+    assert.equal(fake.tables.missions[0].house_changed_at, undefined);
+
+    await handleRequest(requestCommand('user-a', 'Frostheim'));
+    assert.equal(fake.tables.missions[0].house, 'Frostheim');
+  });
+
+  it('a signature closes an open audience for good', async () => {
+    seedErrand();
+    await openAudience();
+
+    const hit = await buildResponseResultMessage('user-a', 'mio', 'kind');
+    assert.match(hit.content, /Signature collected/);
+
+    const { reply } = await handleRequest(requestCommand('user-a', 'Frostheim'));
+    assert.match(reply.content, /isn't hearing requests/);
+    assert.equal(fake.tables.missions[0].house, 'Dionysia');
+
+    const { response } = await handleMissionHouseChange(clickWithToken('user-a'), 1, undefined, AUDIENCE);
+    assert.match(response.data.content, /closes once a signature is in/);
+  });
+
+  it('refuses /request with no audience open', async () => {
+    seedErrand();
+
+    const { reply } = await handleRequest(requestCommand('user-a', 'Frostheim'));
+    assert.match(reply.content, /isn't hearing requests/);
+    assert.equal(fake.tables.missions[0].house, 'Dionysia');
+  });
+
+  it('never opens an audience once the change is closed', async () => {
+    seedErrand({ signed: ['mio'] });
+
+    const { response } = await handleMissionHouseChange(clickWithToken('user-a'), 1, undefined, AUDIENCE);
+    assert.match(response.data.content, /closes once a signature is in/);
+    const { reply } = await handleRequest(requestCommand('user-a', 'Frostheim'));
+    assert.match(reply.content, /isn't hearing requests/);
+  });
+
+  it('reopens an open audience on a second click instead of rerolling', async () => {
+    seedErrand();
+    await openAudience();
+
+    const { response } = await handleMissionHouseChange(clickWithToken('user-a'), 1, undefined, NO_AUDIENCE);
+    assert.equal(response.data.flags, 64 | 32768);
     assert.equal(fake.tables.missions[0].house, 'Dionysia');
   });
 
