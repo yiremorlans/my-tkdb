@@ -26,6 +26,7 @@ import {
   CAPPED_LINE,
   DAILY_LEAD_CAP,
   clearRiddleCooldowns,
+  drawErrandTargets,
   dueSlots,
   formatNameList,
   getRiddle,
@@ -46,7 +47,6 @@ import {
   missionProgressLine,
   nextSlotAt,
   pickRiddle,
-  pickSignatureTargets,
   POST_TTL_HOURS,
   HOUSE_CHANGE_BUTTON_LABEL,
   HOUSE_CHANGE_DONE_LINE,
@@ -60,7 +60,6 @@ import {
   rollHouse,
   rollMissionType,
   rollHouseChange,
-  rollSignatureCount,
   startRiddleCooldown,
   SWEEP_EDIT_CONCURRENCY,
 } from "./constants/missions.js";
@@ -101,6 +100,7 @@ import {
   setMissionMessageId,
   trackCommandUsage,
   trackUserActivity,
+  unsignedSignatures,
 } from "./db/supabase.js";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -212,7 +212,7 @@ export async function spawnMission(
   }
 
   if (missionType === MISSION_TYPES.ERRAND) {
-    targetIds = pickSignatureTargets(house, rollSignatureCount(house));
+    targetIds = drawErrandTargets(house);
     if (targetIds.length === 0) {
       console.error(
         `[missions] ${house} has no roster to draw signatures from — skipping spawn`,
@@ -700,33 +700,30 @@ function errandProgress(mission) {
   };
 }
 
-// Why an errand's one house change (migration 025) can't be spent, or null
-// while it still can. Mirrors change_errand_house's own checks so the button greys
-// out before the click instead of after it — the RPC still re-checks under the
-// row lock, which is what makes a stale button harmless.
-function houseChangeBlocker(mission) {
-  if (mission.house_changed_at) return "spent";
-  if (errandTargets(mission).some((t) => t.signed)) return "signed";
-  return null;
-}
-
+// An errand's house-change button (migration 025), plus the 🔒 line explaining
+// it when greyed out (null while it's live). Mirrors change_errand_house's own
+// checks so the button greys out before the click instead of after it — the
+// RPC still re-checks under the row lock, which is what makes a stale button
+// harmless. `signed` is the count the caller already has.
 // `from` is which message the button sits on ("docs" or the briefing), carried
 // in the custom_id so a successful change can redraw that same message rather
 // than swapping a report sheet for a briefing.
-function houseChangeButton(mission, from = "briefing") {
+function houseChangeControls(mission, signed, from = "briefing") {
+  const blocker = mission.house_changed_at
+    ? "spent"
+    : signed > 0
+      ? "signed"
+      : null;
   return {
-    type: MessageComponentTypes.BUTTON,
-    style: ButtonStyleTypes.SECONDARY,
-    label: HOUSE_CHANGE_BUTTON_LABEL,
-    custom_id: `mission:house:${mission.id}${from === "docs" ? ":docs" : ""}`,
-    disabled: houseChangeBlocker(mission) !== null,
+    note: blocker ? HOUSE_CHANGE_UNAVAILABLE_LINES[blocker] : null,
+    button: {
+      type: MessageComponentTypes.BUTTON,
+      style: ButtonStyleTypes.SECONDARY,
+      label: HOUSE_CHANGE_BUTTON_LABEL,
+      custom_id: `mission:house:${mission.id}${from === "docs" ? ":docs" : ""}`,
+      disabled: blocker !== null,
+    },
   };
-}
-
-// The 🔒 line explaining a greyed-out house-change button, or null while it's live.
-function houseChangeNote(mission) {
-  const blocker = houseChangeBlocker(mission);
-  return blocker ? HOUSE_CHANGE_UNAVAILABLE_LINES[blocker] : null;
 }
 
 /**
@@ -747,6 +744,7 @@ export async function buildMissionBriefing(userId, mission) {
 
   let objective;
   let progress;
+  let houseChange = null;
 
   if (mission.mission_type === MISSION_TYPES.ERRAND) {
     const { unsigned, signed, required } = errandProgress(mission);
@@ -754,6 +752,7 @@ export async function buildMissionBriefing(userId, mission) {
       targetIds: unsigned.map((t) => t.characterId),
     });
     progress = missionProgressLine(mission, { signed, required });
+    houseChange = houseChangeControls(mission, signed);
   } else if (mission.mission_type === MISSION_TYPES.RIDDLE) {
     objective = missionObjectiveLine(mission, {
       riddle: getRiddle(mission.house, mission.riddle_id),
@@ -768,8 +767,8 @@ export async function buildMissionBriefing(userId, mission) {
     ? `\nCloses <t:${Math.floor(new Date(mission.accept_expires_at).getTime() / 1000)}:R>.`
     : "";
 
-  const isErrand = mission.mission_type === MISSION_TYPES.ERRAND;
-  const note = isErrand ? houseChangeNote(mission) : null;
+  const note = houseChange?.note;
+  const hint = houseChange && !note ? ` ${HOUSE_CHANGE_HINT}` : "";
 
   const content = [
     `**MISSION BRIEFING**  ·  ${mission.house}  ·  ${label}`,
@@ -778,25 +777,20 @@ export async function buildMissionBriefing(userId, mission) {
     "",
     `Progress: ${progress}${deadline}`,
     "",
-    [
-      MISSION_INSTRUCTIONS[mission.mission_type] || "",
-      isErrand && !note ? HOUSE_CHANGE_HINT : "",
-    ]
-      .filter(Boolean)
-      .join(" "),
+    `${MISSION_INSTRUCTIONS[mission.mission_type] || ""}${hint}`,
     ...(note ? ["", note] : []),
   ]
     .join("\n")
     .trim();
 
-  if (!isErrand) return { content };
+  if (!houseChange) return { content };
 
   return {
     content,
     components: [
       {
         type: MessageComponentTypes.ACTION_ROW,
-        components: [houseChangeButton(mission)],
+        components: [houseChange.button],
       },
     ],
   };
@@ -1080,8 +1074,12 @@ export async function buildDocsMessage(mission, targets) {
     );
   }
 
-  const note = houseChangeNote(mission);
-  if (note) lines.push(note);
+  const houseChange = houseChangeControls(
+    mission,
+    targets.length - unsigned.length,
+    "docs",
+  );
+  if (houseChange.note) lines.push(houseChange.note);
 
   return {
     content: lines.join("\n"),
@@ -1099,7 +1097,7 @@ export async function buildDocsMessage(mission, targets) {
             custom_id: `mission:file:${mission.id}`,
             disabled: !ready,
           },
-          houseChangeButton(mission, "docs"),
+          houseChange.button,
         ],
       },
     ],
@@ -1299,27 +1297,22 @@ export async function handleMissionHouseChange(body, missionId, from = "briefing
       response: ephemeralResponse("Something went wrong there. Try again?"),
     };
   }
-  if (
-    !mission ||
-    mission.accepted_by !== userId ||
-    mission.status !== "accepted" ||
-    mission.mission_type !== MISSION_TYPES.ERRAND
-  ) {
+  // Status and type are left to change_errand_house, which checks them under
+  // the row lock and answers 'gone'.
+  if (!mission || mission.accepted_by !== userId) {
     return { response: ephemeralResponse("That mission's already closed.") };
   }
 
+  // rollHouseChange only offers houses with a roster, so a house always draws
+  // at least one target.
   const house = rollHouseChange(mission.house);
-  const targetIds = house
-    ? pickSignatureTargets(house, rollSignatureCount(house))
-    : [];
-  if (!house || targetIds.length === 0) {
-    console.error(
-      `[missions] No new house for mission ${mission.id} to — refusing`,
-    );
+  if (!house) {
+    console.error(`[missions] No new house for mission ${mission.id} — refusing`);
     return {
       response: ephemeralResponse("Something went wrong there. Try again?"),
     };
   }
+  const targetIds = drawErrandTargets(house);
 
   let outcome;
   try {
@@ -1344,11 +1337,10 @@ export async function handleMissionHouseChange(body, missionId, from = "briefing
   const updated = {
     ...mission,
     house,
-    signatures: Object.fromEntries(targetIds.map((id) => [id, null])),
+    signatures: unsignedSignatures(targetIds),
     house_changed_at: new Date().toISOString(),
   };
-  // flags is dropped: it's an edit of a message that is already ephemeral.
-  const { flags: _flags, ...message } =
+  const message =
     from === "docs"
       ? await buildDocsMessage(updated, errandTargets(updated))
       : await buildMissionBriefing(userId, updated);
@@ -1359,6 +1351,9 @@ export async function handleMissionHouseChange(body, missionId, from = "briefing
       data: {
         ...message,
         content: `${HOUSE_CHANGE_DONE_LINE}\n\n${message.content}`,
+        // An edit of a message that is already ephemeral; /docs' builder sets
+        // flags for its own fresh reply.
+        flags: undefined,
         // The new house has nothing signed, so there's no field-report image
         // to show; clear any the old message carried.
         attachments: [],

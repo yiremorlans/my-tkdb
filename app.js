@@ -1230,8 +1230,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       const handlers = {
         accept: handleMissionAccept,
         file: handleMissionFile,
-        // mission:house:<id>[:docs] — the suffix says which message to redraw.
-        house: (body, id) => handleMissionHouseChange(body, id, rest[2]),
+        house: handleMissionHouseChange,
         assist: handleMissionAssistJoin,
       };
 
@@ -1255,7 +1254,8 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
       let result;
       try {
-        result = await handler(req.body, missionId);
+        // Any custom_id parts past the id (mission:house:<id>:docs) ride along.
+        result = await handler(req.body, missionId, ...rest.slice(2));
       } catch (err) {
         console.error(`Error in mission:${kind}:`, err);
         result = {

@@ -813,6 +813,11 @@ export function rollHouseChange(currentHouse) {
   );
 }
 
+/** A fresh errand draw for `house`: the count, then that many distinct students. */
+export function drawErrandTargets(house) {
+  return pickSignatureTargets(house, rollSignatureCount(house));
+}
+
 export function pickRiddle(house) {
   const pool = RIDDLES[house];
   if (!pool?.length) return null;

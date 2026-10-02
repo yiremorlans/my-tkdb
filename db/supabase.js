@@ -1670,7 +1670,7 @@ export async function createMission({
         // The errand's frozen target list, unsigned. Written with the row
         // rather than after it, so a mission can never exist in the window
         // where it claims to be an errand but has nothing to collect.
-        signatures: targetIds ? Object.fromEntries(targetIds.map((id) => [id, null])) : null,
+        signatures: targetIds ? unsignedSignatures(targetIds) : null,
         teaser,
         post_expires_at:
           postExpiresAt instanceof Date ? postExpiresAt.toISOString() : postExpiresAt,
@@ -1832,7 +1832,7 @@ export async function changeErrandHouse(id, userId, house, targetIds) {
     p_mission_id: id,
     p_user_id: userId,
     p_house: house,
-    p_signatures: Object.fromEntries(targetIds.map((targetId) => [targetId, null])),
+    p_signatures: unsignedSignatures(targetIds),
   });
 
   if (error) {
@@ -1897,6 +1897,11 @@ export async function signErrandTarget(userId, characterId) {
   }
 
   return data || null;
+}
+
+/** A fresh errand's `signatures` column: every target, none signed yet. */
+export function unsignedSignatures(targetIds) {
+  return Object.fromEntries(targetIds.map((id) => [id, null]));
 }
 
 /**
