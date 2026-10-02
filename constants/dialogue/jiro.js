@@ -888,8 +888,6 @@ export default {
       },
     ],
   },
-  // No temperamentDialogue pool: every leftover line was placed onto a
-  // dialogue beat's `greeting`.
   // When the old per-tier `responses` pool was folded onto the beats above,
   // two labels had no genuine beat match ("Tell him to sleep too", "Let him
   // check you over") and were dropped rather than force-placed.

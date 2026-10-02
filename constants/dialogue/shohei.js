@@ -903,8 +903,6 @@ export default {
       },
     ],
   },
-  // No temperamentDialogue pool: every leftover line was placed onto a
-  // dialogue beat's `greeting`.
   // When the old per-tier `responses` pool was folded onto the beats above,
   // six labels had no genuine beat match ("Tell him it's delicious", "Ask for
   // seconds shamelessly", "Tease him about the apron", "Eat in comfortable

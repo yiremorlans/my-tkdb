@@ -865,8 +865,6 @@ export default {
       },
     ],
   },
-  // No temperamentDialogue pool: every leftover line was placed onto a
-  // dialogue beat's `greeting`.
   // When the old per-tier `responses` pool was folded onto the beats above,
   // three `new`-tier labels had no genuine beat match ("Wave off the burden
   // question", "Bet him he won't", "Push him to commit") and were dropped

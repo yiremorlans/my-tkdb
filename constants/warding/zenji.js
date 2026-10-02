@@ -15,8 +15,8 @@
 // These render like a /roam encounter, not a bond-scene DM:
 //   - `line` is ONE greeting-weight hook (<= ~120 chars), shown as plain text
 //     before the art appears, so it has to land on its own. `greeting` is
-//     what gets painted into the image dialogue box the way a
-//     temperamentDialogue line is, so that is where the scene is carried; it
+//     what gets painted into the image dialogue box the way a /roam beat's
+//     `greeting` is, so that is where the scene is carried; it
 //     can run long, the box grows to fit. Nothing in the card marks it as
 //     rare — that is the sparkle on the approach button, added at render.
 //   - A painted `greeting` is plain text on a canvas, exactly as a /roam
@@ -24,7 +24,7 @@
 //     at the paint) and the canvas font has no emoji glyphs, so an emoji would
 //     render as an empty box. Write it plain.
 //   - Spoken words are wrapped in double quotes; stage directions are left bare,
-//     matching constants/dialogue/*.js temperamentDialogue.
+//     matching the beat `greeting`s in constants/dialogue/*.js.
 //   - Fewer options than a normal /roam encounter (kind / playful / bold).
 // `// setting:` notes preserve what each card's art shows without re-narrating
 // it in the lines.

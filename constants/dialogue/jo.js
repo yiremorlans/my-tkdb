@@ -233,10 +233,7 @@ export default {
   // button always answers the scene the line just set, rather than being
   // drawn from a separate pool at random (docs/dialogue-approach-pairing.md).
   // `approach` may be an array when more than one reaction genuinely fits the
-  // same beat. `spark` was the last tier closed: its 5 lines were expanded to
-  // the full 27-line target to pair with `approach.spark`, which had already
-  // been grown that far on its own — see the note by `dialogue.spark` below
-  // for how the payoff/response pairing was done for it.
+  // same beat.
   dialogue: {
     new: withPronounVariants([
       {
@@ -743,14 +740,6 @@ export default {
         },
       },
     ]),
-    // Expanded 2026-09-17 from 5 flat lines to 27 fully-paired beats, closing
-    // the gap against the already-target-sized `approach.spark` (27 labels).
-    // All 27 original approach labels, all 5 original temperamentDialogue.spark
-    // lines, and all 28 original responses.*.spark labels were placed onto a
-    // beat below before anything new was authored — nothing already written
-    // was discarded. `approach.spark`, `temperamentDialogue.spark`, and the
-    // `spark` key under every `responses` type are now gone: every one of
-    // those pools emptied out completely once its content had a home.
     spark: withPronounVariants([
       {
         line: "{He}'s got the car keys out before you've said anything, like your answer was never really in doubt.",
@@ -1205,16 +1194,6 @@ export default {
       },
     ]),
   },
-  // No temperamentDialogue or responses pools left — every tier is fully
-  // paired, so every `dialogue[tier]` beat above carries its own `approach`,
-  // `greeting`, and `responses` (docs/dialogue-approach-pairing.md). The last leftovers were migrated
-  // 2026-09-18: each remaining temperamentDialogue line was moved onto the
-  // beat it answers best (trimmed where it only restated that beat's own
-  // `line`), and each remaining close/bound `responses` label went onto a
-  // beat as an extra option. `temperamentDialogue.new`'s two lines were
-  // verbatim copies of dialogue.new[3] and [1] (the beats' own `line`s), so
-  // they weren't placed as greetings; the second one's tail seeded
-  // dialogue.new[4]'s greeting instead.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

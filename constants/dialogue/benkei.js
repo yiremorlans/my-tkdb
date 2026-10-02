@@ -241,15 +241,11 @@ export default {
       },
     },
   },
-  // `new` through `bound` (except `spark`, see its own note) are paired
-  // beats — { line, approach, greeting, responses } — so the /roam button,
-  // the payoff caption, and the four response buttons all answer the scene
-  // the line just set, rather than being drawn from separate pools at random
-  // (docs/dialogue-approach-pairing.md).
+  // Every tier is paired beats — { line, approach, greeting, responses } —
+  // so the /roam button, the payoff caption, and the four response buttons
+  // all answer the scene the line just set (docs/dialogue-approach-pairing.md).
   // `approach`/`greeting` may be an array when more than one reaction
-  // genuinely fits the same beat. A beat with no `greeting` had no genuine
-  // match left in temperamentDialogue and falls through to an independent
-  // draw from whatever's left there, same as before this existed.
+  // genuinely fits the same beat.
   dialogue: {
     new: [
       {
@@ -737,15 +733,6 @@ export default {
         },
       },
     ],
-    // Migrated 2026-09-17 to close the gap the two comments below used to
-    // describe: `approach.spark` had already been expanded to the tier's
-    // 27-line target while `dialogue.spark` was still 5, so the two beats
-    // (and their `greeting`/`responses`) drew independently. All 27 of the
-    // original `approach.spark` labels are used below, each paired to a new
-    // or existing line; all 5 original `temperamentDialogue.spark` lines and
-    // all 28 original `responses.spark` labels are used too — nothing left
-    // over, so those pools are gone from the file (see the bottom of this
-    // object for where they used to live).
     spark: [
       {
         line: "He offers to walk you back before you've even said you're leaving.",
@@ -1185,14 +1172,6 @@ export default {
       },
     ],
   },
-  // No temperamentDialogue, approach, or responses pools left — every tier
-  // (including spark, migrated 2026-09-17 to close its size gap) is fully
-  // paired, so every `dialogue[tier]` beat above carries its own `approach`,
-  // `greeting`, and `responses`, and there is no independent pool behind any of
-  // the three left to fall back to (docs/dialogue-approach-pairing.md). The last hole — dialogue.warm[4]
-  // ("He remembers exactly what you asked about last time...") having no
-  // `greeting` and no pool to fall back to — is closed; every beat has one.
-  //
   // `responses` for the warm tier carry two labels per kind, as `new` and
   // `known` already did. The remaining tiers are still one label per kind.
   // The /call reveal lines for this character, keyed by the register in

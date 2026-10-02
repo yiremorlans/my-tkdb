@@ -909,8 +909,6 @@ export default {
       },
     ],
   },
-  // No temperamentDialogue pool: every leftover line was placed onto a
-  // dialogue beat's `greeting`.
   // When the old per-tier `responses` pool was folded onto the beats above,
   // one playful label had no genuine beat match ("Let him see your joy") and
   // was dropped rather than force-placed.

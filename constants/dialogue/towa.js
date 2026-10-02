@@ -845,9 +845,6 @@ export default {
       },
     ],
   },
-  // temperamentDialogue removed: every line was moved onto a dialogue beat's
-  // `greeting` — every tier's pool matched onto a beat exactly, nothing left
-  // over.
   // Every daytime line is a full beat — { line, approach, greeting, responses } —
   // the same shape as `dialogue`, so the wordless daytime /roam button, payoff
   // caption, and response labels all answer the hum the line just set. The

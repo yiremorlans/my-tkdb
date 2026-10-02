@@ -849,8 +849,6 @@ export default {
       },
     ],
   },
-  // No temperamentDialogue pool: every leftover line was placed onto a
-  // dialogue beat's `greeting`.
   // kind is Mio's channel (affinityByResponse.kind = 2): he pours care outward
   // and waves off anything coming back ("Make sure you give yourself a break",
   // "I don't need much sleep", "bit of spit and it'll heal"), so noticing him,

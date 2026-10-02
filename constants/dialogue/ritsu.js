@@ -892,8 +892,6 @@ export default {
       },
     ],
   },
-  // No temperamentDialogue pool: every leftover line was placed onto a
-  // dialogue beat's `greeting`.
   // When the old per-tier `responses` pool was folded onto the beats above,
   // the `new`-tier kind/playful/bold/neutral pool entries had no genuine
   // same-beat fit, so they were dropped rather than force-placed.

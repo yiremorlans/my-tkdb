@@ -39,10 +39,10 @@ If you add a response label that exceeds 30 characters:
 $ git commit -m "Add new response"
 🔍 Validating button label lengths...
 ❌ COMMIT BLOCKED: Button labels exceed the 30-character limit.
-   Please fix the labels in constants/dialogue.js before committing.
+   Please fix the labels in constants/dialogue/<character>.js before committing.
 ```
 
-The commit is rejected. Fix the label in `constants/dialogue.js` and try again.
+The commit is rejected. Fix the label in that character's `constants/dialogue/<character>.js` and try again.
 
 ## Bypassing the Hook (Not Recommended)
 

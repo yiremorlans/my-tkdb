@@ -870,9 +870,6 @@ export default {
       },
     ],
   },
-  // temperamentDialogue removed: every line was moved onto a dialogue beat's
-  // `greeting` — every tier's pool matched onto a beat exactly, nothing left
-  // over.
   // The /call reveal lines for this character, keyed by the register in
   // WINNER_LINE_BUCKETS (constants/publicEncounters.js). Picked from at random
   // like the dialogue; {user} is the winner's mention and {name} their full

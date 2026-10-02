@@ -891,8 +891,6 @@ export default {
       },
     ],
   },
-  // No temperamentDialogue pool: every leftover line was placed onto a
-  // dialogue beat's `greeting`.
   // kind is Haku's channel — low-key, unsentimental care he doesn't have to
   // perform anything back for (affinityByResponse.kind = 2). playful reaches
   // him too: deadpan and playing along when he spooks you is his default

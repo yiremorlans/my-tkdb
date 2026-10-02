@@ -1237,15 +1237,8 @@ function pickDialogueEntry(character, tier, variant, ctx) {
       content.daytimeDialogue[tier] || content.daytimeDialogue.new;
     entries = Array.isArray(daytime) ? daytime : [daytime];
   } else {
-    // The character's own beats, and nothing else. There is exactly one
-    // dialogue format now: the beat, { line, approach, greeting, responses }.
-    //
-    // The conditional `when` layer this used to merge on top — a character's
-    // `dialogueWhen` plus a roster-wide SHARED_DIALOGUE_WHEN — is deleted, data
-    // and machinery both. Its entries predated the beat: bare lines carrying no
-    // `greeting` and no `responses`, so an evening draw that landed on one
-    // captioned the payoff image "..." and dropped all four buttons to
-    // archetype defaults that knew nothing about the scene.
+    // The character's own beats, and nothing else: one dialogue format, the
+    // beat, { line, approach, greeting, responses }.
     //
     // Time-of-day flavor belongs on a character's own beats, written to read at
     // any hour. test/beat-completeness.test.js checks every beat any draw can
@@ -1274,12 +1267,10 @@ export function getRandomDialogueEntry(
   return { line: entry.line, responses: entry.responses };
 }
 
-// A tier entry is either a bare string (legacy — its approach label is drawn
-// independently, from the character's separate `approach` pool) or a
-// `{ line, approach }` pair (see getRandomDialogueBeat) where `approach` is
-// one label or an array of interchangeable labels for that same beat.
-// Normalizes to { line, approachOptions } — approachOptions is null for a
-// legacy string entry, never an empty array.
+// A tier entry is a beat (see getRandomDialogueBeat) where `approach` is one
+// label or an array of interchangeable labels for that same beat. A bare
+// string is still survived (validateContent rejects one, so none ship): it
+// normalizes with approachOptions null, never an empty array.
 //
 // A field authored as a single value or an array of interchangeable options,
 // normalized to an array (or null if absent) — shared by approach, greeting,
@@ -1316,14 +1307,10 @@ function normalizeBeat(entry) {
 // Draws the narration line, its approach-button label, and (optionally) its
 // payoff greeting and response-button overrides as one unit, so the /roam
 // button, payoff image caption, and the four response buttons all answer the
-// scene the player just read (see docs/dialogue-approach-pairing.md) rather than being pulled from separate
-// pools at random. The beat's own `approach` is the only source there is now:
-// the scene-matched SHARED_APPROACH_WHEN layer that used to sit under it is
-// gone, along with the bare-string lines it existed to label.
-// `greeting` is the beat's own payoff
-// caption — every drawable beat carries one now that the conditional pools
-// are severed from pickDialogueEntry, so callers render it directly instead of
-// making a second, independent draw when it comes back null.
+// scene the player just read (see docs/dialogue-approach-pairing.md). The
+// beat's own `approach` is the only source of its label.
+// `greeting` is the beat's own payoff caption — every drawable beat carries
+// one, so callers render it directly.
 // `responses` is the beat's own { kind, playful, bold, neutral } labels
 // (each optional; a string or an array of interchangeable options), or null.
 // A type the beat doesn't carry has nothing character-specific behind it —
@@ -1353,10 +1340,6 @@ export function getRandomDialogueBeat(character, tier, variant = null, ctx = {})
 // only source of character-specific button labels there is. Each value is one
 // label or an array of interchangeable ones; a type the beat leaves out falls
 // through to the archetype default below, which knows nothing about the scene.
-//
-// Labels used to come from a character-level `responses` pool drawn per tier,
-// independently of the line — that's what beat-level responses replaced, and
-// the pool is gone.
 export function generateCharacterResponses(character, beatResponses = null) {
   const archetypeSet = new Set(
     (character.archetype || []).map((a) => a.toLowerCase()),

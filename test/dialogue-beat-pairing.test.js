@@ -1,10 +1,8 @@
 // getRandomDialogueBeat (docs/dialogue-approach-pairing.md): draws a
 // `dialogue[tier]` line and its `approach` button as one unit instead of two
 // independent pools. This is the guarantee the whole design rests on: a beat's
-// own approach is the only source of its label. The layers that used to sit
-// under it — the separate `approach` pools, `approachWhen`,
-// SHARED_APPROACH_WHEN — are deleted, so all a bare string can reach now is
-// APPROACH_LABEL_FALLBACK's generic label. No authored line is bare (see
+// own approach is the only source of its label, so all a bare string can
+// reach is APPROACH_LABEL_FALLBACK's generic label. No authored line is bare (see
 // validateContent, which errors on one), but the picker still has to survive
 // meeting one, which is what the bare-string cases below cover.
 //
@@ -14,7 +12,7 @@
 import { test, mock } from 'node:test';
 import assert from 'node:assert';
 
-const LEGACY_ID = '__test_legacy__';
+const BARE_ID = '__test_bare__';
 const PAIRED_ID = '__test_paired__';
 const ARRAY_APPROACH_ID = '__test_array_approach__';
 const MIXED_ID = '__test_mixed__';
@@ -26,8 +24,8 @@ mock.module('../constants/dialogue.js', {
     DIALOGUE: {
       // Bare-string lines, no beats at all: nothing to carry an approach, so
       // the button comes from the generic fallback.
-      [LEGACY_ID]: {
-        dialogue: { new: ['Legacy line A', 'Legacy line B'] },
+      [BARE_ID]: {
+        dialogue: { new: ['Bare line A', 'Bare line B'] },
       },
       // New shape: every line is a beat, no separate `approach` pool at all.
       // A carries its own `responses` override; B carries none, so it must
@@ -82,10 +80,10 @@ function times(n, fn) {
 }
 
 test('a bare-string line has no approach of its own, so it draws a non-empty generic label', () => {
-  const character = { id: LEGACY_ID };
+  const character = { id: BARE_ID };
   for (const ctx of [{}, { locationKey: 'Nowhere' }, { now: new Date('2026-01-01T20:00:00') }]) {
     for (const { line, approach } of times(40, () => getRandomDialogueBeat(character, 'new', null, ctx))) {
-      assert.ok(['Legacy line A', 'Legacy line B'].includes(line));
+      assert.ok(['Bare line A', 'Bare line B'].includes(line));
       assert.strictEqual(typeof approach, 'string');
       assert.ok(approach.length > 0);
     }

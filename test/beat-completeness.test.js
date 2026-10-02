@@ -6,13 +6,8 @@
 // hoping to hit the one incomplete beat, this walks the whole catalog and
 // checks every beat that any draw could return.
 //
-// That walk is exhaustive. The conditional `when` layer — a character's
-// `dialogueWhen` and a roster-wide SHARED_DIALOGUE_WHEN — used to be merged in
-// on top of the base pool and was exempt from these checks, which is precisely
-// how an evening encounter shipped a "..." caption. It is deleted, data and
-// machinery both, so nothing the checks below skip can reach a draw: whatever
-// comes back, at any hour, had to pass them. There is one dialogue format now,
-// the beat.
+// That walk is exhaustive: whatever a draw returns, at any hour, had to pass
+// the checks below. There is one dialogue format, the beat.
 //
 //   /meet needs:  line + responses with all four kinds (it captions the image
 //                 with the `line`, never the `greeting`)
@@ -202,20 +197,10 @@ test('/meet: getRandomDialogueEntry always returns a real line and all four resp
 
 // --- one dialogue format ---------------------------------------------------
 //
-// The `when` layer is gone from the draw, so a `dialogueWhen` block added back
-// to a dialogue file would be silently dead content — authored, reviewed, never
-// shown. validateContent errors on one; this is the same guard in the suite, so
-// it fails whether or not the validator is run.
-test('no character carries a dialogueWhen block', () => {
-  const offenders = CHARACTERS.filter((c) => DIALOGUE[c.id]?.dialogueWhen !== undefined).map(
-    (c) => c.id,
-  );
-  assert.deepStrictEqual(offenders, []);
-});
-
 // Nothing outside a beat can supply a line, so the pool walk above is the whole
 // catalog. Guards the walk against a new pool key appearing beside `dialogue`
-// and going unchecked, the way `daytimeDialogue` did.
+// and going unchecked, the way `daytimeDialogue` did. validateContent errors
+// on the same thing; this fails whether or not the validator is run.
 test('a character carries no dialogue pool the beat walk does not cover', () => {
   const KNOWN = new Set([
     'dialogue',

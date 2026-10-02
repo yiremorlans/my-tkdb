@@ -5,33 +5,28 @@
 //
 // Each tier is a collection; one line is picked at random per encounter (see
 // getRandomDialogueBeat / getRandomDialogueEntry). `dialogue` tiers are
-// normally string arrays, but may instead be keyed by image variant where a
+// arrays of beats, but may instead be keyed by image variant where a
 // character's lines differ by outfit (Jo's pronouns change between uniform
 // and casual — see withPronounVariants below).
 //
 // `approach` is the label for the single button on the /roam narration message
-// — the "Step forward" beat before the character is actually drawn. It is not a
-// pool of its own any more: it lives on the beat, next to the line it invites,
-// and every drawable beat carries one. The separate tiered `approach` pools,
-// `approachWhen`, and SHARED_APPROACH_WHEN are all gone.
+// — the "Step forward" beat before the character is actually drawn. It lives
+// on the beat, next to the line it invites, and every drawable beat carries one.
 //
-// REQUIRED: write every `dialogue` entry as a { line, approach } pair, never a
-// bare string — `approach` a label, or an array of labels when more than one
-// reaction genuinely fits the same beat. getRandomDialogueBeat
+// REQUIRED: write every `dialogue` entry as a beat, never a bare string —
+// `approach` a label, or an array of labels when more than one reaction
+// genuinely fits the same beat. getRandomDialogueBeat
 // (constants/characters.js) draws the line and its button together, so the
-// invitation always answers the scene the player just read. A bare string has
-// nothing left to fall back to: the independent `approach` pools that used to
-// label one are deleted, and it would render APPROACH_LABEL_FALLBACK's generic
-// "Step forward", which is the bug this shape exists to prevent — that's how a
-// line and a button end up describing two different moments. See
+// invitation always answers the scene the player just read. A bare string
+// would render APPROACH_LABEL_FALLBACK's generic "Step forward" against a
+// scene it knows nothing about, and validateContent fails the build on one. See
 // docs/dialogue-approach-pairing.md and constants/dialogue/benkei.js (its
 // new/known/warm/close/bound tiers) for a worked example.
 //
 // `responses` holds the four button labels offered to the player, and lives on
 // the beat itself — `{ line, approach, greeting, responses: { kind, playful,
 // bold, neutral } }`, each value one label or an array of interchangeable ones.
-// There is no character-level pool behind it: a beat missing a response type
-// falls straight to the archetype defaults in constants/characters.js, which
+// A beat missing a response type falls straight to the archetype defaults in constants/characters.js, which
 // know nothing about the scene just shown. constants/validateContent.js reports
 // any such gap at startup.
 //
@@ -66,22 +61,10 @@
 // work portable: what they set down or walk away from can travel, the room it
 // belongs in cannot.
 //
-// THE CONDITIONAL `when` LAYER IS REMOVED (2026-09-19). There is no
-// `dialogueWhen`, no `SHARED_DIALOGUE_WHEN`, no `approachWhen`, no
-// `SHARED_APPROACH_WHEN`, and no `matchesWhen`/`DIALOGUE_WHEN_DIMENSIONS`
-// behind them — data and machinery both, deleted. validateContent errors if a
-// `dialogueWhen` key reappears on a character, and test/beat-completeness
-// checks the same thing, because a block added back would be authored,
-// reviewed, and never shown.
-//
-// It was an older format than the beat: its entries were bare lines with no
-// `greeting` and no `responses`. Merged on top of the base pool for a matching
-// scene, they meant an evening draw could land on one, caption the payoff image
-// "..." and drop all four buttons to archetype defaults that knew nothing about
-// the scene. SHARED_DIALOGUE_WHEN applied to all 26 characters, so it hit the
-// whole roster, including the 19 who never had a block of their own.
-//
-// One format now: the beat, { line, approach, greeting, responses }.
+// One format: the beat, { line, approach, greeting, responses }. A character
+// file exports only `dialogue`, `daytimeDialogue`, `bondScenes`, `winnerLines`
+// and `daytimeWinnerLines`; validateContent fails the build on any other key,
+// because nothing would ever draw from it.
 // Time-of-day flavor goes on a character's own `dialogue` beats, where it is a
 // complete beat like every other. A line that only works after dark has to be
 // written so it also reads at noon, or it doesn't go in — a base beat carries

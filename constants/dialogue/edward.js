@@ -881,9 +881,6 @@ export default {
       },
     ],
   },
-  // temperamentDialogue removed: every line was moved onto a dialogue beat's
-  // `greeting` — every tier's pool matched onto a beat exactly, nothing left
-  // over.
   // When the old per-tier `responses` pool was folded onto the beats above,
   // one kind label had no genuine beat match ("Let him be gracious") and was
   // dropped rather than force-placed.

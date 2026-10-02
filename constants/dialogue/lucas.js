@@ -887,8 +887,6 @@ export default {
       },
     ],
   },
-  // No temperamentDialogue pool: every leftover line was placed onto a
-  // dialogue beat's `greeting`.
   // When the old per-tier `responses` pool was folded onto the beats above,
   // two labels had no genuine beat match ("Let him finish the thought",
   // "Refuse to let him take the hit") and were dropped rather than force-

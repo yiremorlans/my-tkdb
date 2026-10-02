@@ -330,8 +330,9 @@ from `encounters.js`, `storage.js`, and tests. Keep that working.
 | Consumed | `consuming` | EtL |
 | Obsession | `ruinous` | EtL |
 
-Per character, per tier: `dialogue`, `temperamentDialogue`, `approach`, and
-`responses` (`kind` / `playful` / `bold` / **`cold`** — no `neutral`). The `turn`
+Per character, per tier: `dialogue` beats, `{ line, approach, greeting,
+responses }`, with `responses` keyed `kind` / `playful` / `bold` / **`cold`**
+(no `neutral`). The `turn`
 tier's `responses` are the Accept / Reject / confirm / cancel labels.
 
 **The Rejected track is fully separate content (§3a).** Its three tiers

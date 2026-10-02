@@ -884,8 +884,6 @@ export default {
       },
     ],
   },
-  // No temperamentDialogue pool: every leftover line was placed onto a
-  // dialogue beat's `greeting`.
   // When the old per-tier `responses` pool was folded onto the beats above,
   // two bold labels had no genuine beat match ("Take his hand at the gate",
   // "Say it first") and were dropped rather than force-placed.

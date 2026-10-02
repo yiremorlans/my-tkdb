@@ -33,6 +33,16 @@ import { fileURLToPath } from "url";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
+// Every key a character's dialogue module may export. The draw, the bond-scene
+// delivery and the /call reveal read these and nothing else.
+const CHARACTER_CONTENT_KEYS = new Set([
+  "dialogue",
+  "daytimeDialogue",
+  "bondScenes",
+  "winnerLines",
+  "daytimeWinnerLines",
+]);
+
 // Mirrors bondScenes.js's STICKERS_DIR: a scene's `stickers[index]` names a
 // file here, checked at build time so a typo'd filename fails the build
 // instead of quietly dropping the image at delivery (bondScenes.js's
@@ -461,12 +471,9 @@ export function validateContent() {
       errors.push(`${id} is pmOnly but has no daytimeDialogue`);
     }
 
-    // Every beat must carry its own `approach`. This was a warning while the
-    // roster was mid-migration and a bare string could still draw a label from
-    // the separate `approach` pools / SHARED_APPROACH_WHEN. Those are deleted,
-    // so an unpaired line now renders APPROACH_LABEL_FALLBACK's generic "Step
-    // forward" against a scene it knows nothing about — a defect, not a style
-    // note. (The label length cap is checked per beat below.)
+    // Every beat must carry its own `approach`: an unpaired line renders
+    // APPROACH_LABEL_FALLBACK's generic "Step forward" against a scene it
+    // knows nothing about. (The label length cap is checked per beat below.)
     const unpairedTiers = TIERS.filter(
       (tier) =>
         content.dialogue?.[tier] !== undefined &&
@@ -501,15 +508,14 @@ export function validateContent() {
 
     validateBondScenes(id, content.bondScenes, errors, warnings, bondSceneLines);
 
-    // The conditional `when` layer is removed — data, matcher and validator.
-    // Its entries predated the beat and carried no greeting or responses, so a
-    // draw that landed on one shipped a "..." caption. Nothing reads this key
-    // any more, so a block reintroduced here would be silently dead content
-    // rather than a working feature: fail instead, and point at the one format.
-    if (content.dialogueWhen !== undefined) {
-      errors.push(
-        `${id} has a dialogueWhen block — that format is removed; write the lines as ${"`"}dialogue${"`"} beats { line, approach, greeting, responses } instead`,
-      );
+    // Nothing reads a pool key outside this set, so one would be authored,
+    // reviewed and never shown: fail instead, and point at the one format.
+    for (const key of Object.keys(content)) {
+      if (!CHARACTER_CONTENT_KEYS.has(key)) {
+        errors.push(
+          `${id} has an unknown ${"`"}${key}${"`"} block — nothing draws from it; write the lines as ${"`"}dialogue${"`"} beats { line, approach, greeting, responses } instead`,
+        );
+      }
     }
 
     // CRITICAL: Check for empty dialogue pools (breaks random selection)
