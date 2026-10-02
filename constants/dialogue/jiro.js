@@ -32,7 +32,7 @@ export default {
             label: "Ask why he texted instead",
             style: 4,
             close:
-              "Because catching you during a walk-in is inefficient. I said that already.\n\nThe follow-up is on the day you picked. You can wear whatever is convenient for you. You'll be taking it off anyway",
+              "Because catching you during a walk-in is inefficient. That's already in the notes.\n\nThe follow-up is on the day you picked. You can wear whatever is convenient for you. You'll be taking it off anyway",
           },
         ],
       },
@@ -903,7 +903,7 @@ export default {
     new: [
       '"Symptoms or errand." **{name}** doesn\'t slow down for {user}. "Pick one."',
       '{user} says the name, and **{name}** tugs his mask down to answer. "Yes. Do you need something treated?"',
-      '"Don\'t ask what\'s in the cooler," **{name}** tells {user}, and keeps walking toward the lab.',
+      "\"Don't ask what's in the cooler,\" **{name}** tells {user}, and keeps walking toward the lab.",
     ],
     known: [
       '"Your color\'s better than last week." **{name}** tells {user} this before hello.',
