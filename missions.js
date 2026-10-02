@@ -718,10 +718,12 @@ function houseChangeControls(mission, signed, from = "briefing") {
     note: blocker ? HOUSE_CHANGE_UNAVAILABLE_LINES[blocker] : null,
     button: {
       type: MessageComponentTypes.BUTTON,
-      style: ButtonStyleTypes.SECONDARY,
+      // Colored while it can still be used, grey once spent or blocked.
+      style: blocker ? ButtonStyleTypes.SECONDARY : ButtonStyleTypes.PRIMARY,
       label: HOUSE_CHANGE_BUTTON_LABEL,
       custom_id: `mission:house:${mission.id}${from === "docs" ? ":docs" : ""}`,
       disabled: blocker !== null,
+      ...(blocker === "spent" && { emoji: { name: "🔒" } }),
     },
   };
 }
@@ -1079,7 +1081,11 @@ export async function buildDocsMessage(mission, targets) {
     targets.length - unsigned.length,
     "docs",
   );
-  if (houseChange.note) lines.push(houseChange.note);
+  // A spent change is shown by the 🔒 on the button itself, so the sheet
+  // doesn't repeat it in text.
+  if (houseChange.note && !mission.house_changed_at) {
+    lines.push(houseChange.note);
+  }
 
   return {
     content: lines.join("\n"),

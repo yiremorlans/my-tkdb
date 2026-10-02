@@ -668,12 +668,13 @@ describe('errands', () => {
     assert.match(response.data.content, /New house assigned/);
     assert.match(response.data.content, new RegExp(`DARKWICK FIELD REPORT — ${row.house}`));
     assert.doesNotMatch(response.data.content, /MISSION BRIEFING/);
-    assert.match(response.data.content, /already spent/);
+    assert.doesNotMatch(response.data.content, /already spent/, 'the 🔒 on the button says it');
 
     const [file, houseButton] = response.data.components[0].components;
     assert.equal(file.custom_id, 'mission:file:1');
     assert.equal(file.disabled, true, 'nothing signed for the new house yet');
     assert.equal(houseButton.disabled, true);
+    assert.equal(houseButton.emoji?.name, '🔒');
     assert.equal(response.data.flags, undefined, 'an edit, not a new ephemeral');
   });
 
@@ -708,7 +709,7 @@ describe('errands', () => {
     assert.equal(row.status, 'accepted');
     assert.match(response.data.content, new RegExp(row.house));
     assert.equal(houseChangeButtonOf(response.data.components).disabled, true);
-    assert.match(response.data.content, /already spent/);
+    assert.match(response.data.content, /already spent/, 'the briefing keeps the line');
     assert.doesNotMatch(response.data.content, /Don't like the house\?/, 'no offer once it is spent');
 
     // A stale button can't spend it twice.
