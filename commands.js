@@ -79,7 +79,7 @@ const HOUSE_COMMAND = {
 // STRING, not BOOLEAN: a boolean option renders on Discord desktop as a
 // mandatory True/False click-picker with no keyboard path, which some clients
 // can't reach at all. A string lets people type the value — `wantsMissionAssist`
-// (missions.js) reads anything but an explicit "false"/"no"/"0"/"off" as yes.
+// (missions/player.js) reads anything but an explicit "false"/"no"/"0"/"off" as yes.
 const MISSION_COMMAND = {
   name: "mission",
   description: "Read the briefing for the mission you're holding",
@@ -123,7 +123,7 @@ const RIDDLE_COMMAND = {
 };
 
 // The answer to the Chancellor's audience: a lucky errand house-change click
-// opens one, and this names the house (missions.js handleRequest). Choices
+// opens one, and this names the house (missions/houseChange.js handleRequest). Choices
 // rather than free text, so the house can never be misspelled; refusing the
 // errand's current house is the handler's job.
 const REQUEST_COMMAND = {

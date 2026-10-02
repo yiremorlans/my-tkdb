@@ -69,9 +69,6 @@ mock.module('../imageComposition.js', {
     // Unused here too, but encounters.js imports it statically for the
     // warding builders (docs/warding-cards.md), same reason as below.
     composeWardingCard: async () => Buffer.from('warding-png'),
-    // Unused here, but missions.js imports it statically (via the scheduler),
-    // so the mock has to provide it or the module graph fails to load.
-    composeFieldReport: async () => Buffer.from('report-png'),
   },
 });
 

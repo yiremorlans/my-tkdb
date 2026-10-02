@@ -382,7 +382,7 @@ export async function sweepExpiredEncounters(guildId, now = new Date()) {
 const PERMISSION_ADMINISTRATOR = 1n << 3n; // 0x8
 const PERMISSION_MANAGE_GUILD = 1n << 5n;  // 0x20 — "Manage Server"
 
-// Whether this member may configure encounters (also reused by missions.js
+// Whether this member may configure encounters (also reused by missions/admin.js
 // for /missions and /missiondev — the "Manage Server" check is the same
 // regardless of which admin-facing feature is asking). Discord computes
 // ADMINISTRATOR as every bit set, and the guild owner likewise, so both fall

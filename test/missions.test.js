@@ -87,23 +87,26 @@ const {
 } = await import('../constants/missions.js');
 
 const {
-  cooldownReplyWithReset,
-  handleCooldownReset,
   handleDocs,
   handleMission,
   handleMissionAccept,
   handleMissionAssistJoin,
-  handleMissionDev,
   handleMissionFile,
+} = await import('../missions/player.js');
+const {
   handleMissionHouseChange,
   handleRequest,
-  handleRiddle,
   clearChancellorAudiences,
+} = await import('../missions/houseChange.js');
+const { handleRiddle } = await import('../missions/riddle.js');
+const { cooldownReplyWithReset, handleCooldownReset } = await import('../missions/resets.js');
+const { handleMissionDev } = await import('../missions/admin.js');
+const {
   reconcileMissionPosts,
   runGuildMissionPass,
   spawnMission,
   sweepExpiredMissions,
-} = await import('../missions.js');
+} = await import('../missions/posts.js');
 
 const { buildResponseResultMessage } = await import('../encounters.js');
 const { claimCommandInvoke, clearCommandInvokeThrottle } = await import('../commandLimits.js');

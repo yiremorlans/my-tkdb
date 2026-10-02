@@ -72,7 +72,7 @@ Below is a basic overview of the project structure:
 ├── storage.js   -> Supabase-backed relationship storage (affinity, times met, response type)
 ├── commandLimits.js -> per-command rolling 3-hour cooldown for /roam and /meet (Supabase-backed, anchored to last completed encounter)
 ├── publicEncounters.js -> public call-out encounters: spawn, expiry, /call and /encounters handlers
-├── missions.js  -> scheduled missions: spawn, expiry, /mission, /docs, /riddle, /house dossier, /missions
+├── missions/    -> scheduled missions: spawn, expiry, /mission, /docs, /riddle, /request, /house dossier, /missions (module map atop missions/player.js)
 ├── encounterScheduler.js -> the per-guild tick loop that drives both features' spawns
 ├── discordRest.js -> bot-initiated channel POST/PATCH (everything else answers an interaction)
 ├── imageComposition.js -> canvas-based image rendering (bg + character + dialogue, or a black silhouette)

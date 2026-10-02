@@ -21,22 +21,19 @@ import {
 } from './encounters.js';
 import { MEET_PICK_LINES } from './constants/game.js';
 import { handleCall, handleEncountersAdmin, handleEncounterDev } from './publicEncounters.js';
+import { buildDossierMessage } from './missions/dossier.js';
+import { handleMissionDev, handleMissionsAdmin } from './missions/admin.js';
 import {
-  buildDossierMessage,
-  cooldownReplyWithReset,
-  handleCooldownReset,
   handleDocs,
   handleMission,
   handleMissionAccept,
   handleMissionAssistJoin,
-  handleMissionDev,
   handleMissionFile,
-  handleMissionHouseChange,
-  handleMissionsAdmin,
-  handleRequest,
-  handleRiddle,
   wantsMissionAssist,
-} from './missions.js';
+} from './missions/player.js';
+import { handleMissionHouseChange, handleRequest } from './missions/houseChange.js';
+import { handleRiddle } from './missions/riddle.js';
+import { cooldownReplyWithReset, handleCooldownReset } from './missions/resets.js';
 import {
   buildBondJournal,
   deliverBondScene,
@@ -141,7 +138,7 @@ async function sendFollowup(interactionToken, messageData, timeoutMs = 15000, ed
       console.log('[sendFollowup] Success! Total time:', Date.now() - startTime, 'ms');
     }
     // The message Discord created or edited, for a caller that needs its id
-    // later (the Chancellor's audience, missions.js handleRequest).
+    // later (the Chancellor's audience, missions/houseChange.js handleRequest).
     try {
       return responseText ? JSON.parse(responseText) : null;
     } catch {
@@ -1298,7 +1295,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           // The claim already committed, but the shared post still shows a live
           // Accept button. Flag the row so the mission tick's reconcile pass
           // edits the post with the bot token once this dead interaction token
-          // is out of the picture (missions.js reconcileMissionPosts). Only
+          // is out of the picture (missions/posts.js reconcileMissionPosts). Only
           // 'accept' rewrites that shared, still-clickable post — 'file' edits
           // an ephemeral, 'assist' its own co-op post.
           if (kind === 'accept') await flagMissionPostForReconcile(missionId);

@@ -2,7 +2,7 @@ import "dotenv/config";
 import { InteractionResponseFlags } from "discord-interactions";
 import { getGuildRoles } from "./discordRest.js";
 
-// The ephemeral response flag, in one place: missions.js, encounters.js,
+// The ephemeral response flag, in one place: missions/, encounters.js,
 // publicEncounters.js and bondScenes.js each replied to the same interaction
 // flag under their own locally re-derived alias (one of them as the raw
 // number 64) before this. Import this instead of adding another one.

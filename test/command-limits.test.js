@@ -302,7 +302,7 @@ test('releaseCommandInvoke also wipes the steady 5-minute state, back to a free 
 
   // Without the release, a 3rd invoke this soon after the 2nd would need the
   // full 5 minutes. A real claim (app.js) or a spent mission reset
-  // (missions.js) calls this expecting the command usable right away instead.
+  // (missions/resets.js) calls this expecting the command usable right away instead.
   assert.strictEqual(claimCommandInvoke('flood-11', 'roam', t1 + 1).allowed, true);
 });
 

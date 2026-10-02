@@ -33,7 +33,7 @@ mock.module('../discordRest.js', {
   },
 });
 
-const { buildDossierMessage } = await import('../missions.js');
+const { buildDossierMessage } = await import('../missions/dossier.js');
 
 // house_progress (db/migrations/021) is what getMissionLogStats actually reads
 // for points/filed/byHouse now — mission_log itself is prunable history. This

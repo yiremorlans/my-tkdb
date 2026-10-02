@@ -101,7 +101,7 @@ export async function editInteractionMessage(interactionToken, messageId, body) 
 
 /**
  * editChannelMessage for the common "close out a stale post" shape shared by
- * missions.js and publicEncounters.js: skip when there was never a post to
+ * missions/posts.js and publicEncounters.js: skip when there was never a post to
  * edit, and log-and-swallow rather than throw on failure, since these callers
  * run unattended off a scheduler tick and can't do anything about a dead
  * token or a deleted post except note it and move on. `logLabel` is prefixed

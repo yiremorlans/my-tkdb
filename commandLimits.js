@@ -167,7 +167,7 @@ export function claimCommandInvoke(userId, command, now = Date.now()) {
 //     ends the rerolling session this throttle guards against, so the next
 //     window (three hours off, per the DB cooldown) starts clean rather than
 //     carrying the steady 5-minute state forward.
-// Also reused by the mission cooldown-reset flow (missions.js): spending a
+// Also reused by the mission cooldown-reset flow (missions/resets.js): spending a
 // banked reset on the 3h DB cooldown is meant to make the command usable
 // again immediately, so it clears this too rather than leaving the flood
 // throttle refusing a reward the player just paid for.

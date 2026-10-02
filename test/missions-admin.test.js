@@ -34,7 +34,7 @@ mock.module('../discordRest.js', {
   },
 });
 
-const { handleMissionsAdmin } = await import('../missions.js');
+const { handleMissionsAdmin } = await import('../missions/admin.js');
 const { MISSION_POST_FAILURE_LIMIT } = await import('../constants/missions.js');
 
 // '32' = MANAGE_GUILD. The command's default_member_permissions is only a

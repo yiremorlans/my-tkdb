@@ -17,7 +17,7 @@
 import { clearGuessCooldowns } from './constants/publicEncounters.js';
 import { clearRiddleCooldowns } from './constants/missions.js';
 import { isSpawnDue, spawnEncounter, sweepExpiredEncounters } from './publicEncounters.js';
-import { runGuildMissionPass, sweepExpiredMissions } from './missions.js';
+import { runGuildMissionPass, sweepExpiredMissions } from './missions/posts.js';
 import { getActivePublicEncounter, getEnabledGuilds, getMissionGuilds } from './db/supabase.js';
 import { isMaintenanceModeActive } from './maintenance.js';
 
