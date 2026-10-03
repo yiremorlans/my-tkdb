@@ -55,7 +55,8 @@ Below is a basic overview of the project structure:
 
 ```
 ├── assets/
-│   ├── bg/     -> location background art, served at /assets/bg
+│   ├── bg/     -> location background art, one lowercase folder per house
+│   │              (plus darkwick/, festival/); served at /assets/bg
 │   └── chars/  -> character portrait art, served at /assets/chars
 ├── constants/
 │   ├── backgrounds.js -> houses, general locations, and PM/evening gating

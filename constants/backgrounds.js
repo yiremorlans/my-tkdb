@@ -1,4 +1,5 @@
-// Reference data for every playable location in assets/bg.
+// Reference data for every playable location in assets/bg (one subfolder
+// per location, see backgroundPath).
 // Locations are grouped by "house" (a character's home turf) or as a
 // GENERAL location, which any character can be encountered at regardless
 // of their own house.
@@ -400,17 +401,6 @@ export function weightedBackgrounds(locationKey, now) {
 // equally often and the background weighting is free to express flavor only.
 // Reintroducing a location-first picker would reintroduce the skew.
 
-// Picks a random background from everywhere a specific character could be
-// found on their own turf: their house, plus their exclusive room if they
-// have one (e.g. Jin's Frostheim + Jin_Room). Both pools are combined and
-// drawn from once rather than picked between as two equal-odds options, so
-// a location with more eligible backgrounds is proportionally more likely
-// to come up — same principle getRandomBackground applies globally, just
-// scoped to one character instead of every location. Returns null if the
-// character has no attributed location with anything eligible right now
-// (e.g. Benkei, who has no house) — callers fall back to
-// getRandomGeneralBackground in that case.
-
 // Every location a character can be encountered in.
 //
 // IMPORTANT: this is about scenery, not membership. Every character belongs to
@@ -451,8 +441,15 @@ export function backgroundPool(locationKeys, now) {
   return pool;
 }
 
+// One background from the character's own turf, drawn from turfSpots: house,
+// exclusive room and additionalLocations pooled together, signature spots
+// repeated to weight them, _PM files weighted up after EVENING_HOUR. Both
+// /meet and /roam's turf branch draw through here, so a weight means the same
+// thing in each. Returns null for a character with nothing eligible on their
+// turf right now (no house, room or signature spot) — callers fall back to
+// getRandomGeneralBackground.
 export function getRandomBackgroundForCharacter(character, now = new Date()) {
-  const pool = backgroundPool(attributedLocations(character), now);
+  const pool = turfSpots(character, now);
   if (pool.length === 0) return null;
   return pool[Math.floor(Math.random() * pool.length)];
 }
@@ -486,9 +483,11 @@ export const CHARACTER_SIGNATURE_SPOTS = {
   // "Jin tends to ... spend[] most of his time in the captain's room in
   // Frostheim" (reference.md) — already his own turf via exclusiveRoom, so
   // this only needs a weight, no reachability fix.
+  // 4x, not 2x: at 2x his room was only ~20% of his /roam draws by day, and
+  // he's the roster's recluse ("few have seen his face").
   jin: {
-    "Frostheim_Jin_Room.png": 2,
-    "Frostheim_Jin_Room_PM.png": 2,
+    "Frostheim_Jin_Room.png": 4,
+    "Frostheim_Jin_Room_PM.png": 4,
   },
   // "[Edward] always appears indifferent ... just lying in his room and
   // sleeping" / Lyca: "That moth-eaten Casanova's in his room all day"
@@ -498,10 +497,37 @@ export const CHARACTER_SIGNATURE_SPOTS = {
     "Obscuary_Edward_Room_2.png": 2,
     "Obscuary_Edward_Room_Entrance.png": 2,
   },
+  // "Owner of the extravagant Sinostra casino" / Ritsu: "According to my
+  // behavioral model, he should be in the casino at this time..."
+  taiga: { "Sinostra_Casino.png": 2 },
+  // Jo: "Mio should be in the workshop." / Mio: "...then head back to the
+  // workshop and hand out materials".
+  mio: { "Dionysia_Workshop.png": 2 },
+  // "Spends day and night running around after the creatures in his care."
+  haru: {
+    "Jabberwock_Field.png": 2,
+    "Jabberwock_Field_PM.png": 2,
+    "Jabberwock_Ushi-Oni_Pen_PM.png": 2,
+    // Can turn up at Rui's bar. 1x: findable there, not a regular (he has no
+    // "usual" drink there; his canon drink is an energy drink).
+    [SPECIAL_BACKGROUNDS.OBSCUARY_BAR]: 1,
+  },
+  // He and Alan meet out back of the garage. Vagastrom is already one of his
+  // additionalLocations, so this is a weight only.
+  tohma: { "Vagastrom_Back_Garage_PM.png": 2 },
+  // "In charge of Darkwick Academy's campus store, open to serve its
+  // customers 24/7." He has no house, so this pinned file is his whole turf:
+  // /meet finds him there TURF_PROBABILITY of the time, /roam less often (see
+  // ROAM_TURF_PROBABILITY_OVERRIDES).
+  benkei: { "Darkwick_Campus_Store.png": 2 },
 };
 
 // Fraction of /roam encounters set on the character's own turf; the rest are
-// general locations (Darkwick, Ultio, Galaxy Express, Clementia).
+// general locations (Darkwick, Ultio, Galaxy Express, Clementia). Weighted
+// toward turf because public encounters already put everyone in the general
+// pool (Darkwick + Galaxy Express); /roam is where a character's own house
+// gets seen. (/meet keeps a housed character on turf every time; a houseless
+// one is placed by this same split.)
 //
 // A fixed constant, deliberately NOT derived from how many backgrounds a
 // character's turf happens to hold. Deriving it would give Edward (Obscuary +
@@ -509,7 +535,18 @@ export const CHARACTER_SIGNATURE_SPOTS = {
 // Mio (a crowded Dionysia and no room) for reasons no one chose. It cannot
 // affect who appears — the character is already drawn by the time this is read
 // — only where they are when they do.
-export const TURF_PROBABILITY = 0.55;
+export const TURF_PROBABILITY = 0.65;
+
+// /roam turf share for a character TURF_PROBABILITY doesn't fit. Benkei's turf
+// is only the campus store: /meet keeps him there at TURF_PROBABILITY, but
+// /roam, the "bump into someone" command, finds him out around campus more.
+const ROAM_TURF_PROBABILITY_OVERRIDES = {
+  benkei: 0.35,
+};
+
+export function roamTurfProbability(character) {
+  return ROAM_TURF_PROBABILITY_OVERRIDES[character.id] ?? TURF_PROBABILITY;
+}
 
 // All CHARACTER_SIGNATURE_SPOTS weights are multiples of 0.5 (Rui's 1.5x
 // included), so scaling every repeat count by 2 before rounding represents
@@ -529,9 +566,44 @@ const LOCATION_KEY_BY_FILE = Object.fromEntries(
   ),
 );
 
+// Background art lives one subfolder deep:
+// BACKGROUND_ASSET_DIR/<folder>/<file>.
+// Filenames stay the identifier everywhere else (lists, signature spots,
+// public_encounters.background); only loading adds the folder.
+export const BACKGROUND_ASSET_DIR = "assets/bg";
+
+// A location's folder is its lowercased key ("Frostheim" -> frostheim), except:
+// a character room sits in its house's folder, read off the filename prefix
+// ("Frostheim_Jin_Room.png" -> frostheim), and these share or own a folder.
+const FOLDER_OVERRIDES = {
+  [GENERAL_LOCATIONS.GALAXY]: "darkwick",
+  [EVENT_LOCATIONS.STAR_FESTIVAL]: "festival",
+};
+
+/**
+ * A background filename's path relative to BACKGROUND_ASSET_DIR.
+ *
+ * @param {string} filename - a file listed in BACKGROUNDS_BY_LOCATION
+ * @returns {string} e.g. "darkwick/Darkwick_Library.png"
+ * @throws {Error} on a file no location lists; there is no flat fallback
+ */
+export function backgroundPath(filename) {
+  const locationKey = LOCATION_KEY_BY_FILE[filename];
+  if (!locationKey) {
+    throw new Error(
+      `No ${BACKGROUND_ASSET_DIR} folder for background "${filename}"`,
+    );
+  }
+  const named = CHARACTER_ROOM_KEYS.has(locationKey)
+    ? filename.split("_")[0]
+    : locationKey;
+  const folder = FOLDER_OVERRIDES[locationKey] ?? named.toLowerCase();
+  return `${folder}/${filename}`;
+}
+
 // Every eligible background on this character's turf, with their signature
 // spots repeated to weight them. Returns [] for a character with no attributed
-// location that has anything eligible right now (Benkei, who has no house).
+// location or signature spot that has anything eligible right now.
 export function turfSpots(character, now) {
   const signature = CHARACTER_SIGNATURE_SPOTS[character.id] || {};
   const turf = attributedLocations(character);
@@ -562,9 +634,4 @@ export function getRandomGeneralBackground(now = new Date()) {
   const pool = backgroundPool(Object.values(GENERAL_LOCATIONS), now);
   if (pool.length === 0) return null;
   return pool[Math.floor(Math.random() * pool.length)];
-}
-
-export function getBackgroundUrl(filename) {
-  const baseUrl = process.env.BASE_URL || "";
-  return `${baseUrl}/assets/bg/${filename}`;
 }

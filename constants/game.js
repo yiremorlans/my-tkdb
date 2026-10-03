@@ -173,6 +173,14 @@ export const CASUAL_IMAGE_PROBABILITY_BY_LEVEL = {
   Soulbound: 0.95,
 };
 
+// Per-character overrides of the curve above: a flat casual probability used
+// at every level. Jo's casual art is Venus (and swaps the pronoun variant, see
+// constants/dialogue/_shared.js), so it isn't a reward for closeness: either
+// side of Jo can show up at any level, Stranger included.
+export const CASUAL_IMAGE_PROBABILITY_OVERRIDE = {
+  jo: 0.5,
+};
+
 // --- ambient dialogue pool sizing --------------------------------------------
 // Baseline line count each character's `dialogue` pool
 // (constants/dialogue/<id>.js) should carry per tier, so a wider affinity band

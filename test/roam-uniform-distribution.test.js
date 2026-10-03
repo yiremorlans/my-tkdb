@@ -25,7 +25,10 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { CHARACTERS, getCharacterById } from '../constants/characters.js';
 import {
+  BACKGROUNDS_BY_LOCATION,
+  CHARACTER_SIGNATURE_SPOTS,
   attributedLocations,
+  getAvailableBackgrounds,
   getRandomBackgroundForCharacter,
   getRandomGeneralBackground,
   weightedBackgrounds,
@@ -87,9 +90,11 @@ test('a character is never shown at a location not attributed to them', () => {
   // The containment property that makes the flat distribution safe to ship: a
   // Mortkranken character can turn up on Mortkranken grounds, in their own
   // room, or out in public — never in Frostheim. It holds because the two
-  // branches of selectRoamSpot are each closed: the turf branch pools only
-  // attributedLocations(character), and the general branch pools only
-  // GENERAL_LOCATIONS, which shares no key with HOUSES.
+  // branches of selectRoamSpot are each closed: the turf branch pools
+  // attributedLocations(character) plus only the exact files named as that
+  // character's signature spots (never the rest of their location), and the
+  // general branch pools only GENERAL_LOCATIONS, which shares no key with
+  // HOUSES.
   //
   // "Attributed" is a statement about scenery, not house standing. Lyca is an
   // Obscuary character; Hotarubi is on her list because she is plausibly seen
@@ -140,20 +145,36 @@ test('every character has a reachable setting at any hour', () => {
   for (const now of [DAY, EVENING]) {
     for (const character of CHARACTERS) {
       const turf = getRandomBackgroundForCharacter(character, now);
-      // Benkei has no house and no room; the general pool is his fallback.
+      // A character with no turf at all would fall back to the general pool.
       const spot = turf || getRandomGeneralBackground(now);
       assert.ok(spot?.file, `${character.id} has no reachable background`);
     }
   }
 });
 
-test('attributedLocations reaches every location listed for a character, and no others', () => {
+// The location an off-turf signature spot pins in (Ren's Mystery Diner ->
+// Darkwick), if that file is eligible right now.
+function signatureLocations(character, now) {
+  const files = Object.keys(CHARACTER_SIGNATURE_SPOTS[character.id] || {});
+  return Object.entries(BACKGROUNDS_BY_LOCATION)
+    .filter(([key, list]) =>
+      files.some(
+        (f) => list.includes(f) && getAvailableBackgrounds(key, now).includes(f),
+      ),
+    )
+    .map(([key]) => key);
+}
+
+test('a character reaches their attributed locations and signature spots, and nothing else', () => {
   for (const now of [DAY, EVENING]) {
     for (const character of CHARACTERS) {
-      const expected = new Set(
-        attributedLocations(character).filter((key) => weightedBackgrounds(key, now).length),
-      );
-      if (expected.size === 0) continue; // Benkei
+      const expected = new Set([
+        ...attributedLocations(character).filter(
+          (key) => weightedBackgrounds(key, now).length,
+        ),
+        ...signatureLocations(character, now),
+      ]);
+      if (expected.size === 0) continue; // no turf at all
 
       const seen = new Set();
       for (let i = 0; i < 2000; i++) {
@@ -163,7 +184,8 @@ test('attributedLocations reaches every location listed for a character, and no 
       assert.deepStrictEqual(
         [...seen].sort(),
         [...expected].sort(),
-        `${character.id} should be reachable in exactly its attributed locations`,
+        `${character.id} should reach exactly its attributed locations ` +
+          'and signature spots',
       );
     }
   }
@@ -216,10 +238,28 @@ test('every character belongs to exactly one house', () => {
   }
 });
 
-test('Benkei, who has no house, falls through to the general pool', () => {
+test('/meet places a houseless character the way /roam does', () => {
+  // A housed character is always on turf in /meet; Benkei's turf is only his
+  // pinned campus store, so /meet mixes in general locations for him instead
+  // of showing the store every time.
+  const code = codeOf(
+    'encounters.js',
+    'export async function buildMeetSpawnMessage',
+  );
+  assert.match(
+    code,
+    /character\.house\s*\?\s*getRandomBackgroundForCharacter\(character, now\)\s*:\s*selectRoamSpot\(character, now, TURF_PROBABILITY\)/,
+  );
+});
+
+test('Benkei, who has no house, has the campus store as his whole turf', () => {
   const benkei = getCharacterById('benkei');
   assert.ok(benkei, 'fixture assumption: "benkei" exists and has no house');
   assert.strictEqual(attributedLocations(benkei).length, 0);
-  assert.strictEqual(getRandomBackgroundForCharacter(benkei, DAY), null);
-  assert.ok(getRandomGeneralBackground(DAY)?.file, 'the general fallback must yield a background');
+  for (const now of [DAY, EVENING]) {
+    assert.strictEqual(
+      getRandomBackgroundForCharacter(benkei, now).file,
+      'Darkwick_Campus_Store.png',
+    );
+  }
 });

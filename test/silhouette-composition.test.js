@@ -10,6 +10,10 @@ import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 
 import { composeEncounter, composeSilhouetteEncounter } from '../imageComposition.js';
+import {
+  BACKGROUND_ASSET_DIR,
+  backgroundPath,
+} from '../constants/backgrounds.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const projectRoot = join(__dirname, '..');
@@ -39,7 +43,9 @@ const once = (fn) => {
 
 const plainRender = once(async () => pixels(await composeEncounter(BG, CHAR)));
 const silhouetteRender = once(async () => pixels(await composeSilhouetteEncounter(BG, CHAR)));
-const backgroundImage = once(() => loadImage(join(projectRoot, 'assets/bg', BG)));
+const backgroundImage = once(() =>
+  loadImage(join(projectRoot, BACKGROUND_ASSET_DIR, backgroundPath(BG))),
+);
 
 // Where the character actually is: centered horizontally, stood on the bottom
 // edge — the same placement drawEncounterBase computes.

@@ -10,9 +10,9 @@ import { EPHEMERAL as EPHEMERAL_FLAG } from './utils.js';
 import {
   getRandomBackgroundForCharacter,
   getRandomGeneralBackground,
+  roamTurfProbability,
   getLocationDisplayName,
   GENERAL_LOCATIONS,
-  turfSpots,
   TURF_PROBABILITY,
 } from './constants/backgrounds.js';
 import {
@@ -28,6 +28,7 @@ import {
 } from './constants/characters.js';
 import {
   CASUAL_IMAGE_PROBABILITY_BY_LEVEL,
+  CASUAL_IMAGE_PROBABILITY_OVERRIDE,
   MEET_OPTION_COUNT,
   MEET_PICK_LINES,
   RESPONSE_STYLES,
@@ -77,7 +78,10 @@ function pickRandomDistinct(list, count) {
 }
 
 function getImageVariant(character, levelName) {
-  const probability = CASUAL_IMAGE_PROBABILITY_BY_LEVEL[levelName] || 0;
+  const probability =
+    CASUAL_IMAGE_PROBABILITY_OVERRIDE[character.id] ??
+    CASUAL_IMAGE_PROBABILITY_BY_LEVEL[levelName] ??
+    0;
   const useCasual = Math.random() < probability && character.images.casual;
 
   let variant = useCasual ? 'casual' : 'uniform';
@@ -100,15 +104,16 @@ async function getCharacterProgress(userId, character) {
   return { level, tier, variant };
 }
 
-// Pick where an already-chosen character is found. Their own turf most of the
-// time, a general location otherwise; a character with no eligible turf right
-// now falls through to general rather than returning nothing.
-function selectRoamSpot(character, now) {
-  if (Math.random() < TURF_PROBABILITY) {
-    const turf = turfSpots(character, now);
-    if (turf.length) return pickRandom(turf);
-  }
-  return getRandomGeneralBackground(now);
+// Pick where an already-chosen character is found: their own turf with
+// probability `turfProbability`, a general location otherwise; a character with
+// no eligible turf right now falls through to general rather than returning
+// nothing.
+function selectRoamSpot(character, now, turfProbability) {
+  const turf =
+    Math.random() < turfProbability
+      ? getRandomBackgroundForCharacter(character, now)
+      : null;
+  return turf || getRandomGeneralBackground(now);
 }
 
 // `origin` ('meet' | 'roam') rides along in the custom_id so the response
@@ -231,7 +236,7 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
       ? getCharacterById(pickRandom(errandTargets)) || pickRandom(CHARACTERS)
       : pickRandom(CHARACTERS);
 
-  const spot = selectRoamSpot(character, now);
+  const spot = selectRoamSpot(character, now, roamTurfProbability(character));
   if (!spot) {
     return {
       content: 'You wander for a while, but nowhere seems worth stopping at.',
@@ -586,11 +591,14 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
     };
   }
 
-  // Pools the character's house and exclusive room together (see
-  // getRandomBackgroundForCharacter) so /meet can now land in either —
-  // previously this only ever considered the house. Falls back to a
-  // general location only for a character with neither (e.g. Benkei).
-  const spot = getRandomBackgroundForCharacter(character, now);
+  // A housed character is always on their own turf, signature spots weighted
+  // the same as /roam's turf branch (see getRandomBackgroundForCharacter). A
+  // houseless one (Benkei) has no home to always be found at — their turf is
+  // only a pinned signature spot — so they're placed the way /roam places
+  // everyone: TURF_PROBABILITY at that spot, a general location otherwise.
+  const spot = character.house
+    ? getRandomBackgroundForCharacter(character, now)
+    : selectRoamSpot(character, now, TURF_PROBABILITY);
   const fallbackSpot = spot || getRandomGeneralBackground(now);
 
   const { tier, variant } = await getCharacterProgress(userId, character);

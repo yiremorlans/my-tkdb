@@ -16,7 +16,12 @@ import {
   SHARED_WINNER_LINES,
   SHARED_WRONG_GUESS_LINES,
 } from "./dialogue.js";
-import { TIME_BUCKETS } from "./backgrounds.js";
+import {
+  BACKGROUND_ASSET_DIR,
+  BACKGROUNDS_BY_LOCATION,
+  TIME_BUCKETS,
+  backgroundPath,
+} from "./backgrounds.js";
 import {
   BOND_SCENE_KEYS,
   BOND_SCENE_MAX_BEATS,
@@ -420,6 +425,58 @@ function validateTimedPool(label, pools, errors, warnings) {
   }
 }
 
+// Every listed background must sit where backgroundPath resolves it, matched
+// against real directory listings rather than fs.existsSync: macOS forgives
+// a folder-casing slip that the Linux host won't. A miss here would otherwise
+// only surface as a broken encounter image in production.
+function validateBackgrounds(errors) {
+  const bgDir = join(__dirname, "..", BACKGROUND_ASSET_DIR);
+  const listings = new Map();
+  const namesIn = (dir) => {
+    if (!listings.has(dir)) {
+      let names = [];
+      try {
+        names = fs.readdirSync(join(bgDir, dir));
+      } catch {}
+      listings.set(dir, new Set(names));
+    }
+    return listings.get(dir);
+  };
+
+  for (const file of Object.values(BACKGROUNDS_BY_LOCATION).flat()) {
+    const path = backgroundPath(file);
+    const [folder, name] = path.split("/");
+    if (!namesIn("").has(folder) || !namesIn(folder).has(name)) {
+      errors.push(
+        `background "${file}" is not at ${BACKGROUND_ASSET_DIR}/${path}`,
+      );
+    }
+  }
+  for (const name of namesIn("")) {
+    if (name.endsWith(".png")) {
+      errors.push(
+        `background "${name}" is loose in ${BACKGROUND_ASSET_DIR} — ` +
+          "move it into its folder",
+      );
+    }
+  }
+
+  // A character's room is foldered by its filename prefix; that prefix has to
+  // be their house, or the room's art sits under someone else's house.
+  for (const character of CHARACTERS) {
+    if (!character.exclusiveRoom || !character.house) continue;
+    for (const file of BACKGROUNDS_BY_LOCATION[character.exclusiveRoom] || []) {
+      const folder = backgroundPath(file).split("/")[0];
+      if (folder !== character.house.toLowerCase()) {
+        errors.push(
+          `${character.id}'s room background "${file}" is not filed ` +
+            `under ${character.house}`,
+        );
+      }
+    }
+  }
+}
+
 export function validateContent() {
   const errors = [];
   const warnings = [];
@@ -662,6 +719,8 @@ export function validateContent() {
       }
     }
   }
+
+  validateBackgrounds(errors);
 
   for (const warning of warnings) {
     console.warn("[content]", warning);

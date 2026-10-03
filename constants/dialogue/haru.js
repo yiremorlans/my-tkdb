@@ -365,7 +365,7 @@ export default {
           kind: ["Help hand them out gladly", "Say the tour sounds great"],
           playful: [
             "Improvise a pitch of your own",
-            "Heckle the flier wording",
+            "Sell feeding time as a perk",
           ],
           bold: ["Hand out more than your share", "Take over the pitch"],
           neutral: ["Hand them out quietly", "Help without comment"],

@@ -177,8 +177,8 @@ export const WARDING_PITY = 25;
 // Directory under the repo root where warding art lives. The compositor
 // (imageComposition.js) reads `${WARDING_ASSET_DIR}/<card.file>` off disk and
 // draws the card's dialogue box onto it — mirrors how composeEncounter loads
-// from assets/bg/. Not a public URL: the composed image is sent as an
-// attachment, same as a /roam scene.
+// backgrounds from BACKGROUND_ASSET_DIR (via backgroundPath). Not a public
+// URL: the composed image is sent as an attachment, same as a /roam scene.
 export const WARDING_ASSET_DIR = "assets/warding";
 
 // Ladder position of a RELATIONSHIP_LEVELS name; -1 if it isn't one. Stranger

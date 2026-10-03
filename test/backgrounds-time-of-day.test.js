@@ -174,6 +174,6 @@ test('getRandomBackgroundForCharacter only draws from the house when there is no
   }
 });
 
-test('getRandomBackgroundForCharacter returns null for a character with neither a house nor a room (e.g. Benkei)', () => {
+test('getRandomBackgroundForCharacter returns null for a character with no turf at all', () => {
   assert.strictEqual(getRandomBackgroundForCharacter({}, atHour(12)), null);
 });

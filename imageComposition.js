@@ -4,6 +4,10 @@ import { fileURLToPath } from 'url';
 import fs from 'fs';
 
 import { WARDING_ASSET_DIR } from './constants/warding/index.js';
+import {
+  BACKGROUND_ASSET_DIR,
+  backgroundPath,
+} from './constants/backgrounds.js';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
@@ -36,7 +40,11 @@ console.log('[imageComposition] Registered dialogue font:', DIALOGUE_FONT_PATH);
 // treatment of it (composeSilhouetteEncounter) and must not have the real art
 // underneath, where antialiased edges would bleed through.
 async function drawEncounterBase(bgFilename, charFilename, { drawCharacter = true } = {}) {
-  const bgPath = join(__dirname, `assets/bg/${bgFilename}`);
+  const bgPath = join(
+    __dirname,
+    BACKGROUND_ASSET_DIR,
+    backgroundPath(bgFilename),
+  );
   const charPath = join(__dirname, `assets/chars/${charFilename}`);
 
   console.log('[composeEncounter] Loading images:', bgPath, charPath);
