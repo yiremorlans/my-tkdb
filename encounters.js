@@ -11,6 +11,7 @@ import {
   getRandomBackgroundForCharacter,
   getRandomGeneralBackground,
   getLocationDisplayName,
+  GENERAL_LOCATIONS,
   turfSpots,
   TURF_PROBABILITY,
 } from './constants/backgrounds.js';
@@ -301,9 +302,11 @@ export async function buildRoamSpawnMessage(encounterId) {
   const { spot, characterId, charFilename, greeting, beatResponses } = encounter;
   const character = getCharacterById(characterId);
   const imageBuffer = await composeEncounter(spot.file, charFilename, greeting);
+  const placeName = getLocationDisplayName(spot);
+  const preposition = placeName === GENERAL_LOCATIONS.DARKWICK ? 'around' : 'into';
 
   return {
-    content: `You wander into **${getLocationDisplayName(spot)}** and run into **${getFullName(character)}**...`,
+    content: `You wander ${preposition} **${placeName}** and run into **${getFullName(character)}**...`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
     components: responseActionRow(character.id, false, 'roam', beatResponses),
     flags: EPHEMERAL_FLAG,
