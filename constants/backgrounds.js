@@ -28,6 +28,7 @@ export const CHARACTER_ROOMS = {
   REN: "Ren_Room",
   EDWARD: "Edward_Room",
   RUI: "Rui_Room",
+  LYCA: "Lyca_Room",
   TAIGA: "Taiga_Room",
   ELIAS: "Elias_Room",
 };
@@ -54,17 +55,21 @@ export const BACKGROUND_DISPLAY_NAMES = {
   "Vagastrom_Alan_Room.png": "Alan's Room",
   "Vagastrom_Alan_Room_Entrance.png": "Alan's Quarters",
   "Vagastrom_Leo_Room.png": "Leo's Room",
+  "Vagastrom_Leo_Room_PM.png": "Leo's Room",
   "Vagastrom_Shohei_Room.png": "Sho's Room",
   "Hotarubi_Subaru_Entrance.png": "Subaru's Quarters",
   "Hotarubi_Zenji_Room_PM.png": "Zenji's Room",
   "Mortkranken_Jiro_Room.png": "Jiro's Room",
   "Jabberwock_Ren_Room.png": "Ren's Room",
+  "Jabberwock_Ren_Room_PM.png": "Ren's Room",
   "Obscuary_Edward_Room.png": "Edward's Room",
   "Obscuary_Edward_Room_2.png": "Edward's Room",
   "Obscuary_Edward_Room_Entrance.png": "Edward's Quarters",
   "Obscuary_Rui_Room.png": "Rui's Room",
+  "Obscuary_Lyca_Room.png": "Lyca's Room",
   "Sinostra_Taiga_Room.png": "Taiga's Room",
   "Sinostra_Taiga_Room_Entrance.png": "Taiga's Quarters",
+  "Sinostra_Taiga_Room_Entrance_2.png": "Taiga's Quarters",
   "Dionysia_Elias_Room.png": "Elias's Room",
   // Places
   "Dionysia_Heebie_Jeebie_House.png": "Heebie-Jeebie House",
@@ -173,6 +178,7 @@ export const BACKGROUNDS_BY_LOCATION = {
     "Frostheim_Vault_Entrance.png",
   ],
   [HOUSES.VAGASTROM]: [
+    "Vagastrom_Back_Garage.png",
     "Vagastrom_Back_Garage_PM.png",
     "Vagastrom_Corridor.png",
     "Vagastrom_Garage.png",
@@ -192,7 +198,9 @@ export const BACKGROUNDS_BY_LOCATION = {
     "Hotarubi_Lake_PM.png",
     "Hotarubi_Parlor.png",
     "Hotarubi_Parlor_PM.png",
+    "Hotarubi_Riverside_PM.png",
     "Hotarubi_Tea_Room.png",
+    "Hotarubi_Tea_Room_2.png",
     "Hotarubi_Tea_Room_PM.png",
     "Hotarubi_Temple.png",
     "Hotarubi_Temple_PM.png",
@@ -212,6 +220,7 @@ export const BACKGROUNDS_BY_LOCATION = {
     "Dionysia_Workshop_2.png",
   ],
   [HOUSES.MORTKRANKEN]: [
+    "Mortkranken_Corridor.png",
     "Mortkranken_Entrance.png",
     "Mortkranken_Entrance_PM.png",
     "Mortkranken_Examination_Room.png",
@@ -223,19 +232,28 @@ export const BACKGROUNDS_BY_LOCATION = {
   ],
   [HOUSES.JABBERWOCK]: [
     "Jabberwock_Cave.png",
+    "Jabberwock_Cave_2.png",
     "Jabberwock_Cave_PM.png",
     "Jabberwock_Dorm_Room.png",
+    "Jabberwock_Dorm_Room_PM.png",
     "Jabberwock_Entrance.png",
     "Jabberwock_Field.png",
+    "Jabberwock_Field_2.png",
+    "Jabberwock_Field_2_PM.png",
     "Jabberwock_Field_PM.png",
+    "Jabberwock_Forest.png",
+    "Jabberwock_Forest_PM.png",
     "Jabberwock_Kitchen.png",
+    "Jabberwock_Mountain.png",
     "Jabberwock_Mountain_PM.png",
     "Jabberwock_Tree.png",
     "Jabberwock_Tree_PM.png",
+    "Jabberwock_Ushi-Oni_Pen.png",
     "Jabberwock_Ushi-Oni_Pen_PM.png",
   ],
   [HOUSES.OBSCUARY]: [
     "Obscuary_Bar.png",
+    "Obscuary_Corridor.png",
     "Obscuary_Entrance.png",
     "Obscuary_Garden.png",
     "Obscuary_Guest_Room.png",
@@ -246,6 +264,7 @@ export const BACKGROUNDS_BY_LOCATION = {
     "Sinostra_Auction_Hall_Cage.png",
     "Sinostra_Casino.png",
     "Sinostra_Casino_Nook.png",
+    "Sinostra_Gambling_Den.png",
     "Sinostra_VIP_Room.png",
     "Sinostra_VIP_Room_Entrance.png",
   ],
@@ -342,8 +361,12 @@ export const BACKGROUNDS_BY_LOCATION = {
     "Hotarubi_Eternal_Bamboo.png",
     "Hotarubi_Garden_Star_Festival.png",
     "Hotarubi_Garden_Star_Festival_PM.png",
+    "Hotarubi_Guard_Post.png",
+    "Hotarubi_Guard_Post_PM.png",
     "Hotarubi_Harbor_Star_Festival.png",
+    "Hotarubi_Harbor_Star_Festival_PM.png",
     "Hotarubi_River_PM.png",
+    "Hotarubi_Riverside_Star_Festival_PM.png",
     "Hotarubi_Stall_Star_Festival.png",
     "Hotarubi_Stall_Star_Festival_PM.png",
   ],
@@ -367,6 +390,14 @@ export const BACKGROUNDS_BY_LOCATION = {
     "Chuka_Restaurant_PM.png",
     "Chuka_Sidestreet.png",
     "Chuka_Sidestreet_PM.png",
+    "Harajuku_Alley_PM.png",
+    "Harajuku_Takeshita_PM.png",
+    "Jiyuuno_megami_PM.png",
+    "Shinjuku.png",
+    "Shinjuku_Donut_Store.png",
+    "Shinjuku_Hanamichi_Street_PM.png",
+    "Shinjuku_Ramen_PM.png",
+    "Tokyo_Bay.png",
   ],
   [CHARACTER_ROOMS.JIN]: [
     "Frostheim_Jin_Room.png",
@@ -378,21 +409,29 @@ export const BACKGROUNDS_BY_LOCATION = {
     "Vagastrom_Alan_Room.png",
     "Vagastrom_Alan_Room_Entrance.png",
   ],
-  [CHARACTER_ROOMS.LEO]: ["Vagastrom_Leo_Room.png"],
+  [CHARACTER_ROOMS.LEO]: [
+    "Vagastrom_Leo_Room.png",
+    "Vagastrom_Leo_Room_PM.png",
+  ],
   [CHARACTER_ROOMS.SHOHEI]: ["Vagastrom_Shohei_Room.png"],
   [CHARACTER_ROOMS.SUBARU]: ["Hotarubi_Subaru_Entrance.png"],
   [CHARACTER_ROOMS.ZENJI]: ["Hotarubi_Zenji_Room_PM.png"],
   [CHARACTER_ROOMS.JIRO]: ["Mortkranken_Jiro_Room.png"],
-  [CHARACTER_ROOMS.REN]: ["Jabberwock_Ren_Room.png"],
+  [CHARACTER_ROOMS.REN]: [
+    "Jabberwock_Ren_Room.png",
+    "Jabberwock_Ren_Room_PM.png",
+  ],
   [CHARACTER_ROOMS.EDWARD]: [
     "Obscuary_Edward_Room.png",
     "Obscuary_Edward_Room_2.png",
     "Obscuary_Edward_Room_Entrance.png",
   ],
   [CHARACTER_ROOMS.RUI]: ["Obscuary_Rui_Room.png"],
+  [CHARACTER_ROOMS.LYCA]: ["Obscuary_Lyca_Room.png"],
   [CHARACTER_ROOMS.TAIGA]: [
     "Sinostra_Taiga_Room.png",
     "Sinostra_Taiga_Room_Entrance.png",
+    "Sinostra_Taiga_Room_Entrance_2.png",
   ],
   [CHARACTER_ROOMS.ELIAS]: ["Dionysia_Elias_Room.png"],
 };
@@ -552,9 +591,15 @@ export const CHARACTER_SIGNATURE_SPOTS = {
     "Darkwick_Mystery_Diner_PM.png": 1.5,
   },
   shohei: { "Darkwick_Food_Truck.png": 1.5 },
+  // Jo: "I've left it alone since it's become Shion's hangout" — the
+  // Heebie-Jeebie House. The Breeding Room is his too. Both are Dionysia, already
+  // his turf, so these are only weights. The Docks are Darkwick, pinned in.
   shion: {
     "Darkwick_Docks.png": 1.5,
     "Darkwick_Docks_2.png": 1.5,
+    "Dionysia_Heebie_Jeebie_House.png": 1.5,
+    "Dionysia_Heebie_Jeebie_House_PM.png": 1.5,
+    "Dionysia_Breeding_Room.png": 1.5,
   },
   alan: { "Vagastrom_The_Pit.png": 1.5 },
   romeo: {
@@ -588,6 +633,7 @@ export const CHARACTER_SIGNATURE_SPOTS = {
   taiga: {
     "Sinostra_Casino.png": 1.5,
     "Sinostra_Casino_Nook.png": 1.5,
+    "Sinostra_Gambling_Den.png": 1.5,
   },
   // Jo: "Mio should be in the workshop." / Mio: "...then head back to the
   // workshop and hand out materials".
@@ -595,11 +641,9 @@ export const CHARACTER_SIGNATURE_SPOTS = {
     "Dionysia_Workshop.png": 1.5,
     "Dionysia_Workshop_2.png": 1.5,
   },
-  // "Spends day and night running around after the creatures in his care."
+  // No Jabberwock weights: running after his creatures, he could be anywhere
+  // in the house, so every Jabberwock spot is equally his.
   haru: {
-    "Jabberwock_Field.png": 1.5,
-    "Jabberwock_Field_PM.png": 1.5,
-    "Jabberwock_Ushi-Oni_Pen_PM.png": 1.5,
     // Can turn up at Rui's bar. 1x: findable there, not a regular (he has no
     // "usual" drink there; his canon drink is an energy drink).
     "Obscuary_Bar.png": 1,

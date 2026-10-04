@@ -933,6 +933,7 @@ export const CHARACTERS = [
     firstName: "Lyca",
     lastName: "Colt",
     house: HOUSES.OBSCUARY,
+    exclusiveRoom: CHARACTER_ROOMS.LYCA,
     additionalLocations: [HOUSES.HOTARUBI],
     images: {
       uniform: "Lyca_Colt_Uniform.png",
