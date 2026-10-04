@@ -95,7 +95,7 @@ export default {
             label: "Say you'll be there",
             style: 3,
             close:
-              "Good.\n\n...I wasn't going to admit to the two alarms, but there it is. Five thirty. Don't make me run this one alone after all that.",
+              "Good.\n\n...I wasn't going to admit to the two alarms, but there it is. I've already planned the route for two. I'll keep the pace easy.",
           },
           {
             key: "playful",
@@ -1209,7 +1209,7 @@ export default {
     known: [
       '"Twice now, cutie." **{name}** isn\'t the least bit surprised to see {user} again.',
       "{user} says the name, and **{name}** sets his pen down like he'd been looking for an excuse.",
-      '"You\'re here again. That\'s dangerous for my schedule." **{name}** makes time for {user} anyway.',
+      "\"You're here again. That's dangerous for my schedule.\" **{name}** makes time for {user} anyway.",
     ],
     warm: [
       '"You\'re back!" **{name}** forgets whatever he was signing. {user} did that.',

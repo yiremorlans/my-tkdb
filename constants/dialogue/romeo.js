@@ -7,7 +7,7 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Tch. Before you say anything, no, you're not in trouble, and no, this isn't a bill. Yet.",
+        "**{firstName}**: Before you say anything, no, you're not in trouble, and no, this isn't a bill. Yet.",
         "Somebody put your name on the floor list as a mark. Standard stuff, happens to everyone who comes through more than twice. Not personal, just Sinostra.\n\nI took it off. Personally. Cost me a conversation I did not enjoy having at nine in the morning.\n\n{timesMet} visits and you've never once sat down at a table. Marks play. You don't even look. You know how rare that is? That's ONE person.",
       ],
       choice: {
@@ -25,7 +25,7 @@ export default {
             label: "Ask if you're still a mark",
             style: 1,
             close:
-              "Obviously not, or I wouldn't be wasting a perfectly good morning explaining myself to you.\n\n...You're something else. I haven't worked out what yet. Don't push it.",
+              "Tch. I wouldn't be wasting a perfectly good morning explaining myself to a mark.\n\n...You're something else. I haven't worked out what yet. Don't push it.",
           },
           {
             key: "bold",
@@ -879,7 +879,7 @@ export default {
   winnerLines: {
     new: [
       '"HDY waste my time." **{name}** snaps at {user}.',
-      '**{name}** doesn\'t look up from the count when {user} walks in. "Name, business, and what it\'s worth to me. Go."',
+      "**{name}** doesn't look up from the count when {user} walks in. \"Name, business, and what it's worth to me. Go.\"",
       '"Who let you up here?" **{name}** asks {user}, then answers himself. "Doesn\'t matter. You\'re here. Be useful."',
     ],
     known: [

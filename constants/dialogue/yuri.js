@@ -74,7 +74,7 @@ export default {
             label: "Tell him to come and get you",
             style: 4,
             close:
-              "Come and GET you!? I am the captain of Mortkranken! I do not come running when a patient calls!\n\nI shall send Jiro. He will drag you here by the collar, and he will not care whether you're in the middle of something important.",
+              "Come and GET you!? I am the captain of Mortkranken! I do not come running when a patient calls!\n\nI shall send Jiro. And you WILL come, because I have already cleared my afternoon schedule!",
           },
         ],
       },
@@ -86,40 +86,39 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: The lab. Now. Don't knock, don't announce yourself, and do not, I cannot stress this enough, laugh.",
-        "*He is sitting on the floor between two benches with a paperback in his hands, and the cover has a great deal of purple on it and a young doctor being magnificent at a dragon.*\n\n> It's a medical journal. It's *research*, it's comparative anatomy, it's...\n\n*He stops. He looks at the book. He looks at you.*\n\n> It's *The Ace Doctor Wows Minds In Another World Thesis*. It's a novel. A physician transported to another world and immediately, correctly recognized as the finest mind of his generation. I've read it eleven times.",
-        "> I lost everything in the fire. Four years of research, my instruments, my notes, my... everything. This was in my coat pocket and it's the only object I own that predates it.\n\n> Jiro doesn't know. Nobody knows. I've told you because you didn't laugh, and because I've discovered that not being laughed at is a thing I've been rationing since I was seventeen.",
+        "**{firstName}**: Jiro informs me he told you that he protects me because nobody else could treat him if I died. He said it the way he says everything. As though reading off a label.",
+        "He's right, of course. There is exactly one physician in existence who can keep Jiro Kirisaki on his feet, and you're speaking to him. A genius can't be replaced. Jiro grasped that at once, and it remains the most sensible thing he's ever done.",
+        "Your case is no different. It's been mine since we met in {sinceMet}, and I'll say this once: nobody else can cure you. Not Frostheim, and not every resource Darkwick General has to offer. It takes a mind like mine, and there is only one.\n\nSo you'll keep your appointments and you'll stay put. Losing you would go down as a failure on my record, and I don't intend to have one! That is the only reason.",
       ],
       choice: {
-        prompt:
-          "Say something. And if it's unkind I shall never recover, so choose carefully.",
+        prompt: "That's my prognosis. You may respond.",
         options: [
           {
             key: "kind",
-            label: "Ask him to read some of it",
+            label: "Say you're glad it's him",
             style: 3,
             close:
-              "> Aloud?\n\n*He does it. Badly at first, then with increasing and entirely unembarrassed relish, doing every voice.*\n\n*An hour in he looks up and finds you still sitting on the lab floor listening, and stops mid-sentence and goes very red and cannot get going again for some time.*",
+              "Glad. Of course you're glad. There is no better physician in this academy.\n\n...I'll take that as consent to continue treatment. Indefinitely.",
           },
           {
             key: "playful",
-            label: "Ask if the doctor's handsome",
+            label: "Ask for a second opinion",
             style: 1,
             close:
-              "> Devastatingly. Obviously. That's simply accurate characterization.\n\n> ...He's described as having teal hair in the second volume. I've thought about this more than is healthy and I would like you to say nothing at all.",
+              "A second opinion!? From WHOM!? I have just finished explaining that there is nobody else!\n\nThere's my opinion, and there's being wrong. Those are your options.",
           },
           {
             key: "bold",
-            label: "Ask what else burned",
+            label: "Ask if that's the only reason",
             style: 4,
             close:
-              "*The performance drops out of him completely.*\n\n> Everything I had done. Everything I was going to be.\n\n*A pause.*\n\n> I haven't said that sentence without shouting before. It's much worse quietly. Sit down... no. Stay. Don't go. I'd like you to stay while it's quiet.",
+              "Obviously it is! What other reason could there possibly be!? A physician's reasons are ALWAYS clinical!\n\n...Don't answer that.",
           },
         ],
       },
       keepsake: {
-        emoji: "📕",
-        line: "A battered paperback, the only thing that survived the fire.",
+        emoji: "🩹",
+        line: "The second patient he refuses to hand to anyone else.",
       },
     },
 
@@ -224,7 +223,7 @@ export default {
             label: "Ask him to give you time",
             style: 2,
             close:
-              "Naturally. Naturally! Take as long as you require. I'm a scientist, I'm *made* of patience, I once waited seven weeks for a culture.\n\n*A pause. Then, without the flourish:*\n\n...That was bravado. You'll have spotted it. Take the time anyway. I mean it, and I won't raise it again, and you'll find me exactly where I always am, being insufferable at Jiro.\n\nAnd you may still walk in. That was never conditional on anything. It's always simply been the best part of my week.",
+              "Very well. Very well! Take as long as you require. I'm a scientist, I'm *made* of patience, I once waited seven weeks for a culture.\n\n*A pause. Then, without the flourish:*\n\n...That was bravado. You'll have spotted it. Take the time anyway. I mean it, and I won't raise it again, and you'll find me exactly where I always am, being insufferable at Jiro.\n\nAnd you may still walk in. That was never conditional on anything. It's always simply been the best part of my week.",
           },
         ],
       },
@@ -894,7 +893,7 @@ export default {
     new: [
       '"A test subject, wandering in of its own accord." **{name}** looks {user} over, delighted.',
       '{user} says the name, and **{name}** draws himself up. "You should feel honored to have some of my attention."',
-      '"You know of me. Naturally." **{name}** informs {user} of this at considerable length.',
+      '"You know of me. Of course you do." **{name}** informs {user} of this at considerable length.',
     ],
     known: [
       '"...Ah. It\'s you." **{name}** stops shouting for Jiro long enough to deal with {user}.',
