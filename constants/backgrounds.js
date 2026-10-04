@@ -54,6 +54,7 @@ export const BACKGROUND_DISPLAY_NAMES = {
   "Frostheim_Lucas_Room.png": "Lucas's Room",
   "Vagastrom_Alan_Room.png": "Alan's Room",
   "Vagastrom_Alan_Room_Entrance.png": "Alan's Quarters",
+  "Vagastrom_Alan_Room_PM.png": "Alan's Room",
   "Vagastrom_Leo_Room.png": "Leo's Room",
   "Vagastrom_Leo_Room_PM.png": "Leo's Room",
   "Vagastrom_Shohei_Room.png": "Sho's Room",
@@ -408,6 +409,7 @@ export const BACKGROUNDS_BY_LOCATION = {
   [CHARACTER_ROOMS.ALAN]: [
     "Vagastrom_Alan_Room.png",
     "Vagastrom_Alan_Room_Entrance.png",
+    "Vagastrom_Alan_Room_PM.png",
   ],
   [CHARACTER_ROOMS.LEO]: [
     "Vagastrom_Leo_Room.png",
