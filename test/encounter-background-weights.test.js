@@ -12,6 +12,8 @@ import { fileURLToPath } from 'url';
 
 import { getCharacterById } from '../constants/characters.js';
 import {
+  BACKGROUNDS_BY_LOCATION,
+  CHARACTER_SIGNATURE_SPOTS,
   EVENING_PM_WEIGHT,
   TURF_PROBABILITY,
   backgroundPath,
@@ -36,6 +38,17 @@ function countsByFile(spots) {
   return counts;
 }
 
+// turfSpots skips a signature file no location lists, so a typo would just
+// drop the spot without an error.
+test('every signature spot names a listed background', () => {
+  const listed = new Set(Object.values(BACKGROUNDS_BY_LOCATION).flat());
+  for (const [id, spots] of Object.entries(CHARACTER_SIGNATURE_SPOTS)) {
+    for (const file of Object.keys(spots)) {
+      assert.ok(listed.has(file), `${id}'s signature spot "${file}" is not listed`);
+    }
+  }
+});
+
 test("a signature spot repeats more than the rest of the character's turf", () => {
   const counts = countsByFile(turfSpots(getCharacterById('jin'), DAY));
   // Jin's room is weighted 4x; his house's ordinary spots are 1x.
@@ -53,13 +66,14 @@ test("Rui's 1.5x signature spot keeps its exact ratio", () => {
   );
 });
 
-test('an off-turf signature spot pins that one file, not its whole location', () => {
+test('an off-turf signature spot pins its own files, not its whole location', () => {
   const spots = turfSpots(getCharacterById('ren'), DAY);
   const files = [...countsByFile(spots).keys()];
   assert.ok(files.includes('Darkwick_Mystery_Diner.png'));
+  assert.ok(files.includes('Darkwick_Mystery_Diner_2.png'));
   assert.deepStrictEqual(
     files.filter(
-      (f) => f.startsWith('Darkwick_') && f !== 'Darkwick_Mystery_Diner.png',
+      (f) => f.startsWith('Darkwick_') && !f.startsWith('Darkwick_Mystery_Diner'),
     ),
     [],
   );

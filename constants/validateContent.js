@@ -461,16 +461,18 @@ function validateBackgrounds(errors) {
     }
   }
 
-  // A character's room is foldered by its filename prefix; that prefix has to
-  // be their house, or the room's art sits under someone else's house.
+  // A character's room is foldered by its filename prefix, so every room file
+  // is named <House>_<Name>_… ("Frostheim_Jin_Room.png" for Jin_Room). A wrong
+  // house would put the art under someone else's house.
   for (const character of CHARACTERS) {
     if (!character.exclusiveRoom || !character.house) continue;
+    const name = character.exclusiveRoom.replace(/_Room$/, "");
+    const prefix = `${character.house}_${name}_`;
     for (const file of BACKGROUNDS_BY_LOCATION[character.exclusiveRoom] || []) {
-      const folder = backgroundPath(file).split("/")[0];
-      if (folder !== character.house.toLowerCase()) {
+      if (!file.startsWith(prefix)) {
         errors.push(
-          `${character.id}'s room background "${file}" is not filed ` +
-            `under ${character.house}`,
+          `${character.id}'s room background "${file}" must be named ` +
+            `${prefix}…`,
         );
       }
     }

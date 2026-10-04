@@ -133,6 +133,22 @@ test('validateContent flags an over-length beat response — as a single string 
   assert.doesNotThrow(() => validateContent(), 'and the catalog is clean again');
 });
 
+test('validateContent flags a room background not named <House>_<Name>_', () => {
+  const kaito = CHARACTERS.find((c) => c.id === 'kaito');
+  const original = kaito.house;
+  try {
+    // His room file is Frostheim_Kaito_Room.png, so a Vagastrom Kaito is misfiled.
+    kaito.house = 'Vagastrom';
+    assert.throws(
+      () => validateContent(),
+      /kaito's room background "Frostheim_Kaito_Room\.png" must be named Vagastrom_Kaito_…/,
+    );
+  } finally {
+    kaito.house = original;
+  }
+  assert.doesNotThrow(() => validateContent(), 'and the catalog is clean again');
+});
+
 // --- localization ------------------------------------------------------------
 //
 // The source localization is American English, and reference.md (the canon the

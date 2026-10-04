@@ -257,9 +257,9 @@ test('Benkei, who has no house, has the campus store as his whole turf', () => {
   assert.ok(benkei, 'fixture assumption: "benkei" exists and has no house');
   assert.strictEqual(attributedLocations(benkei).length, 0);
   for (const now of [DAY, EVENING]) {
-    assert.strictEqual(
+    assert.match(
       getRandomBackgroundForCharacter(benkei, now).file,
-      'Darkwick_Campus_Store.png',
+      /^Darkwick_Campus_Store(_PM)?\.png$/,
     );
   }
 });

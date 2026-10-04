@@ -84,6 +84,7 @@ export const CHARACTERS = [
     firstName: "Kaito",
     lastName: "Fuji",
     house: HOUSES.FROSTHEIM,
+    exclusiveRoom: CHARACTER_ROOMS.KAITO,
     images: {
       uniform: "Kaito_Fuji_Uniform.png",
       casual: "Kaito_Fuji_Casual.png",
@@ -120,6 +121,7 @@ export const CHARACTERS = [
     firstName: "Lucas",
     lastName: "Errant",
     house: HOUSES.FROSTHEIM,
+    exclusiveRoom: CHARACTER_ROOMS.LUCAS,
     images: {
       uniform: "Lucas_Errant_Uniform.png",
       casual: "Lucas_Errant_Casual.png",
@@ -474,6 +476,7 @@ export const CHARACTERS = [
     firstName: "Elias",
     lastName: "Pratt",
     house: HOUSES.DIONYSIA,
+    exclusiveRoom: CHARACTER_ROOMS.ELIAS,
     images: { uniform: "Elias_Pratt_Uniform.png" },
     // kind is what actually reaches Elias (affinityByResponse.kind = 2): the
     // voiceline script is a tired caretaker who is quietly lonely under the

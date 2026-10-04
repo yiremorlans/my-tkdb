@@ -17,6 +17,8 @@ export const HOUSES = {
 
 export const CHARACTER_ROOMS = {
   JIN: "Jin_Room",
+  KAITO: "Kaito_Room",
+  LUCAS: "Lucas_Room",
   ALAN: "Alan_Room",
   LEO: "Leo_Room",
   SHOHEI: "Shohei_Room",
@@ -27,25 +29,18 @@ export const CHARACTER_ROOMS = {
   EDWARD: "Edward_Room",
   RUI: "Rui_Room",
   TAIGA: "Taiga_Room",
-};
-
-export const SPECIAL_BACKGROUNDS = {
-  DARKWICK_MYSTERY_DINER: "Darkwick_Mystery_Diner.png",
-  DARKWICK_FOOD_TRUCK: "Darkwick_Food_Truck.png",
-  DARKWICK_DOCKS: "Darkwick_Docks.png",
-  VAGASTROM_THE_PIT: "Vagastrom_The_Pit.png",
-  SINOSTRA_VIP_ROOM_ENTRANCE: "Sinostra_VIP_Room_Entrance.png",
-  OBSCUARY_BAR: "Obscuary_Bar.png",
-  MORTKRANKEN_LAB: "Mortkranken_Lab.png",
-  MORTKRANKEN_LAB_PM: "Mortkranken_Lab_PM.png",
+  ELIAS: "Elias_Room",
 };
 
 // Display names for backgrounds with underscores in filenames
 export const BACKGROUND_DISPLAY_NAMES = {
   // Special locations
   "Darkwick_Mystery_Diner.png": "Darkwick Mystery Diner",
+  "Darkwick_Mystery_Diner_2.png": "Darkwick Mystery Diner",
+  "Darkwick_Mystery_Diner_PM.png": "Darkwick Mystery Diner",
   "Darkwick_Food_Truck.png": "Sho's Food Truck",
   "Darkwick_Docks.png": "Darkwick Docks",
+  "Darkwick_Docks_2.png": "Darkwick Docks",
   "Vagastrom_The_Pit.png": "The Pit",
   "Sinostra_VIP_Room_Entrance.png": "Sinostra VIP Room Entrance",
   "Obscuary_Bar.png": "Obscuary Bar",
@@ -54,6 +49,8 @@ export const BACKGROUND_DISPLAY_NAMES = {
   // Character rooms
   "Frostheim_Jin_Room.png": "Jin's Room",
   "Frostheim_Jin_Room_PM.png": "Jin's Quarters",
+  "Frostheim_Kaito_Room.png": "Kaito's Room",
+  "Frostheim_Lucas_Room.png": "Lucas's Room",
   "Vagastrom_Alan_Room.png": "Alan's Room",
   "Vagastrom_Alan_Room_Entrance.png": "Alan's Quarters",
   "Vagastrom_Leo_Room.png": "Leo's Room",
@@ -68,6 +65,10 @@ export const BACKGROUND_DISPLAY_NAMES = {
   "Obscuary_Rui_Room.png": "Rui's Room",
   "Sinostra_Taiga_Room.png": "Taiga's Room",
   "Sinostra_Taiga_Room_Entrance.png": "Taiga's Quarters",
+  "Dionysia_Elias_Room.png": "Elias's Room",
+  // Places
+  "Dionysia_Heebie_Jeebie_House.png": "Heebie-Jeebie House",
+  "Dionysia_Heebie_Jeebie_House_PM.png": "Heebie-Jeebie House",
 };
 
 export const GENERAL_LOCATIONS = {
@@ -79,6 +80,14 @@ export const GENERAL_LOCATIONS = {
 
 export const EVENT_LOCATIONS = {
   STAR_FESTIVAL: "Star Festival",
+  SAMHAIN: "Samhain",
+};
+
+// Backgrounds reserved for date scenes. Listed so startup checks their files,
+// but no character or general pool names this key, so nothing draws from it
+// yet.
+export const DATE_LOCATIONS = {
+  DATE: "Date",
 };
 
 // All location keys a background (and therefore an encounter) can belong to.
@@ -86,6 +95,7 @@ export const LOCATION_KEYS = {
   ...HOUSES,
   ...GENERAL_LOCATIONS,
   ...EVENT_LOCATIONS,
+  ...DATE_LOCATIONS,
   ...CHARACTER_ROOMS,
 };
 
@@ -148,9 +158,14 @@ export function isEveningBackground(filename) {
 
 export const BACKGROUNDS_BY_LOCATION = {
   [HOUSES.FROSTHEIM]: [
+    "Frostheim_Balcony.png",
     "Frostheim_Balcony_PM.png",
     "Frostheim_Ballroom.png",
+    "Frostheim_Ballroom_Party.png",
     "Frostheim_Castle.png",
+    "Frostheim_Corridor.png",
+    "Frostheim_Dorm.png",
+    "Frostheim_Dorm_PM.png",
     "Frostheim_Entrance.png",
     "Frostheim_Entrance_PM.png",
     "Frostheim_Jin_Entrance.png",
@@ -183,9 +198,18 @@ export const BACKGROUNDS_BY_LOCATION = {
     "Hotarubi_Temple_PM.png",
   ],
   [HOUSES.DIONYSIA]: [
+    "Dionysia_Breeding_Room.png",
     "Dionysia_Circus.png",
+    "Dionysia_Circus_2.png",
+    "Dionysia_Circus_Front.png",
+    "Dionysia_Circus_Front_PM.png",
     "Dionysia_Entrance.png",
+    "Dionysia_Entrance_2.png",
+    "Dionysia_Heebie_Jeebie_House.png",
+    "Dionysia_Heebie_Jeebie_House_PM.png",
+    "Dionysia_Office.png",
     "Dionysia_Workshop.png",
+    "Dionysia_Workshop_2.png",
   ],
   [HOUSES.MORTKRANKEN]: [
     "Mortkranken_Entrance.png",
@@ -206,6 +230,8 @@ export const BACKGROUNDS_BY_LOCATION = {
     "Jabberwock_Field_PM.png",
     "Jabberwock_Kitchen.png",
     "Jabberwock_Mountain_PM.png",
+    "Jabberwock_Tree.png",
+    "Jabberwock_Tree_PM.png",
     "Jabberwock_Ushi-Oni_Pen_PM.png",
   ],
   [HOUSES.OBSCUARY]: [
@@ -224,15 +250,23 @@ export const BACKGROUNDS_BY_LOCATION = {
     "Sinostra_VIP_Room_Entrance.png",
   ],
   [GENERAL_LOCATIONS.DARKWICK]: [
-    "Camp_Darkwick_PM.png",
     "Darkwick_Artifact_Storeroom.png",
+    "Darkwick_Auditorium.png",
     "Darkwick_Auditorium_PM.png",
     "Darkwick_Bus_Stop.png",
+    "Darkwick_Bus_Stop_2.png",
+    "Darkwick_Bus_Stop_PM.png",
     "Darkwick_Cafeteria.png",
+    "Darkwick_Cafeteria_PM.png",
     "Darkwick_Cafeteria_Kitchen.png",
+    "Darkwick_Cafeteria_Kitchen_PM.png",
+    "Darkwick_Camp.png",
+    "Darkwick_Camp_PM.png",
     "Darkwick_Campus_Store.png",
+    "Darkwick_Campus_Store_PM.png",
     "Darkwick_Classroom.png",
     "Darkwick_Classroom_2.png",
+    "Darkwick_Classroom_PM.png",
     "Darkwick_Corridor.png",
     "Darkwick_Corridor_2.png",
     "Darkwick_Corridor_3.png",
@@ -240,23 +274,41 @@ export const BACKGROUNDS_BY_LOCATION = {
     "Darkwick_Corridor_PM.png",
     "Darkwick_Counseling_Room.png",
     "Darkwick_Courtyard.png",
+    "Darkwick_Courtyard_2.png",
     "Darkwick_Courtyard_PM.png",
+    "Darkwick_Courtyard_Stage.png",
     "Darkwick_Docks.png",
+    "Darkwick_Docks_2.png",
     "Darkwick_Entrance.png",
     "Darkwick_Food_Truck.png",
     "Darkwick_Hospital_Room.png",
     "Darkwick_Infirmary.png",
+    "Darkwick_Infirmary_2.png",
+    "Darkwick_Infirmary_PM.png",
     "Darkwick_Library.png",
     "Darkwick_Main_Street.png",
+    "Darkwick_Main_Street_PM.png",
+    "Darkwick_Music_Room.png",
+    "Darkwick_Music_Room_PM.png",
     "Darkwick_Mystery_Diner.png",
+    "Darkwick_Mystery_Diner_2.png",
+    "Darkwick_Mystery_Diner_PM.png",
     "Darkwick_Office.png",
     "Darkwick_Office_PM.png",
+    "Darkwick_Operations_Room.png",
+    "Darkwick_Outdoor.png",
+    "Darkwick_Outdoor_Firepit.png",
     "Darkwick_Staffroom.png",
+    "Darkwick_Staffroom_2.png",
+    "Darkwick_Staffroom_PM.png",
     "Darkwick_Substreet.png",
     "Darkwick_Substreet_1.png",
+    "Darkwick_Substreet_2.png",
     "Darkwick_Substreet_3.png",
     "Darkwick_Substreet_4.png",
     "Darkwick_Substreet_5.png",
+    "Darkwick_Substreet_5_2.png",
+    "Darkwick_Substreet_5_PM.png",
     "Darkwick_Substreet_PM.png",
     "Darkwick_Terrace.png",
     "Darkwick_Training_Grounds.png",
@@ -271,8 +323,11 @@ export const BACKGROUNDS_BY_LOCATION = {
     "Galaxy_Express_AM.png",
     "Galaxy_Express_PM.png",
     "Galaxy_Express_Platform.png",
+    "Galaxy_Express_Platform_2.png",
+    "Galaxy_Express_Platform_PM.png",
     "Galaxy_Express_Space.png",
     "Galaxy_Express_Station.png",
+    "Galaxy_Express_Station_PM.png",
   ],
   [GENERAL_LOCATIONS.CLEMENTIA]: [
     "Clementia_Attic.png",
@@ -292,10 +347,33 @@ export const BACKGROUNDS_BY_LOCATION = {
     "Hotarubi_Stall_Star_Festival.png",
     "Hotarubi_Stall_Star_Festival_PM.png",
   ],
+  [EVENT_LOCATIONS.SAMHAIN]: [
+    "Darkwick_Classroom_Samhain.png",
+    "Darkwick_Corridor_Samhain.png",
+    "Darkwick_Entrance_Samhain.png",
+  ],
+  [DATE_LOCATIONS.DATE]: [
+    "Bach_Beach.png",
+    "Bach_Cottage.png",
+    "Bach_Cottage_PM.png",
+    "Bach_Cottage_Pool.png",
+    "Bach_Cottage_Pool_PM.png",
+    "Bach_Island_Shore.png",
+    "Bach_Island_VIP.png",
+    "Bach_Luxury_Cottage_PM.png",
+    "Cafe.png",
+    "Cafe_2.png",
+    "Chuka_Restaurant.png",
+    "Chuka_Restaurant_PM.png",
+    "Chuka_Sidestreet.png",
+    "Chuka_Sidestreet_PM.png",
+  ],
   [CHARACTER_ROOMS.JIN]: [
     "Frostheim_Jin_Room.png",
     "Frostheim_Jin_Room_PM.png",
   ],
+  [CHARACTER_ROOMS.KAITO]: ["Frostheim_Kaito_Room.png"],
+  [CHARACTER_ROOMS.LUCAS]: ["Frostheim_Lucas_Room.png"],
   [CHARACTER_ROOMS.ALAN]: [
     "Vagastrom_Alan_Room.png",
     "Vagastrom_Alan_Room_Entrance.png",
@@ -316,6 +394,7 @@ export const BACKGROUNDS_BY_LOCATION = {
     "Sinostra_Taiga_Room.png",
     "Sinostra_Taiga_Room_Entrance.png",
   ],
+  [CHARACTER_ROOMS.ELIAS]: ["Dionysia_Elias_Room.png"],
 };
 
 const CHARACTER_ROOM_KEYS = new Set(Object.values(CHARACTER_ROOMS));
@@ -467,18 +546,25 @@ export function getRandomBackgroundForCharacter(character, now = new Date()) {
 // authored. Weighting a *spot* for a character who has already been drawn
 // expresses the same flavor and cannot touch the character distribution.
 export const CHARACTER_SIGNATURE_SPOTS = {
-  ren: { [SPECIAL_BACKGROUNDS.DARKWICK_MYSTERY_DINER]: 2 },
-  shohei: { [SPECIAL_BACKGROUNDS.DARKWICK_FOOD_TRUCK]: 2 },
-  shion: { [SPECIAL_BACKGROUNDS.DARKWICK_DOCKS]: 2 },
-  alan: { [SPECIAL_BACKGROUNDS.VAGASTROM_THE_PIT]: 2 },
-  romeo: {
-    [SPECIAL_BACKGROUNDS.SINOSTRA_VIP_ROOM_ENTRANCE]: 2,
-    [SPECIAL_BACKGROUNDS.OBSCUARY_BAR]: 1,
+  ren: {
+    "Darkwick_Mystery_Diner.png": 1.5,
+    "Darkwick_Mystery_Diner_2.png": 1.5,
+    "Darkwick_Mystery_Diner_PM.png": 1.5,
   },
-  rui: { [SPECIAL_BACKGROUNDS.OBSCUARY_BAR]: 1.5 },
+  shohei: { "Darkwick_Food_Truck.png": 1.5 },
+  shion: {
+    "Darkwick_Docks.png": 1.5,
+    "Darkwick_Docks_2.png": 1.5,
+  },
+  alan: { "Vagastrom_The_Pit.png": 1.5 },
+  romeo: {
+    "Sinostra_VIP_Room_Entrance.png": 1.5,
+    "Obscuary_Bar.png": 1,
+  },
+  rui: { "Obscuary_Bar.png": 1.5 },
   yuri: {
-    [SPECIAL_BACKGROUNDS.MORTKRANKEN_LAB]: 2,
-    [SPECIAL_BACKGROUNDS.MORTKRANKEN_LAB_PM]: 2,
+    "Mortkranken_Lab.png": 1.5,
+    "Mortkranken_Lab_PM.png": 1.5,
   },
   // "Jin tends to ... spend[] most of his time in the captain's room in
   // Frostheim" (reference.md) — already his own turf via exclusiveRoom, so
@@ -493,33 +579,45 @@ export const CHARACTER_SIGNATURE_SPOTS = {
   // sleeping" / Lyca: "That moth-eaten Casanova's in his room all day"
   // (reference.md) — same as Jin, already reachable via exclusiveRoom.
   edward: {
-    "Obscuary_Edward_Room.png": 2,
-    "Obscuary_Edward_Room_2.png": 2,
-    "Obscuary_Edward_Room_Entrance.png": 2,
+    "Obscuary_Edward_Room.png": 1.5,
+    "Obscuary_Edward_Room_2.png": 1.5,
+    "Obscuary_Edward_Room_Entrance.png": 1.5,
   },
   // "Owner of the extravagant Sinostra casino" / Ritsu: "According to my
   // behavioral model, he should be in the casino at this time..."
-  taiga: { "Sinostra_Casino.png": 2 },
+  taiga: {
+    "Sinostra_Casino.png": 1.5,
+    "Sinostra_Casino_Nook.png": 1.5,
+  },
   // Jo: "Mio should be in the workshop." / Mio: "...then head back to the
   // workshop and hand out materials".
-  mio: { "Dionysia_Workshop.png": 2 },
+  mio: {
+    "Dionysia_Workshop.png": 1.5,
+    "Dionysia_Workshop_2.png": 1.5,
+  },
   // "Spends day and night running around after the creatures in his care."
   haru: {
-    "Jabberwock_Field.png": 2,
-    "Jabberwock_Field_PM.png": 2,
-    "Jabberwock_Ushi-Oni_Pen_PM.png": 2,
+    "Jabberwock_Field.png": 1.5,
+    "Jabberwock_Field_PM.png": 1.5,
+    "Jabberwock_Ushi-Oni_Pen_PM.png": 1.5,
     // Can turn up at Rui's bar. 1x: findable there, not a regular (he has no
     // "usual" drink there; his canon drink is an energy drink).
-    [SPECIAL_BACKGROUNDS.OBSCUARY_BAR]: 1,
+    "Obscuary_Bar.png": 1,
   },
-  // He and Alan meet out back of the garage. Vagastrom is already one of his
-  // additionalLocations, so this is a weight only.
-  tohma: { "Vagastrom_Back_Garage_PM.png": 2 },
+  // The Jabberwock tree is his spot. Already on his turf (house), so this is
+  // only a weight.
+  towa: {
+    "Jabberwock_Tree.png": 1.5,
+    "Jabberwock_Tree_PM.png": 1.5,
+  },
   // "In charge of Darkwick Academy's campus store, open to serve its
-  // customers 24/7." He has no house, so this pinned file is his whole turf:
+  // customers 24/7." He has no house, so these pinned files are his whole turf:
   // /meet finds him there TURF_PROBABILITY of the time, /roam less often (see
   // ROAM_TURF_PROBABILITY_OVERRIDES).
-  benkei: { "Darkwick_Campus_Store.png": 2 },
+  benkei: {
+    "Darkwick_Campus_Store.png": 1.5,
+    "Darkwick_Campus_Store_PM.png": 1.5,
+  },
 };
 
 // Fraction of /roam encounters set on the character's own turf; the rest are
@@ -548,9 +646,9 @@ export function roamTurfProbability(character) {
   return ROAM_TURF_PROBABILITY_OVERRIDES[character.id] ?? TURF_PROBABILITY;
 }
 
-// All CHARACTER_SIGNATURE_SPOTS weights are multiples of 0.5 (Rui's 1.5x
+// All CHARACTER_SIGNATURE_SPOTS weights are multiples of 0.5 (the 1.5x ones
 // included), so scaling every repeat count by 2 before rounding represents
-// them exactly — no Math.ceil rounding Rui's 1.5x up into an indistinguishable
+// them exactly — no Math.ceil rounding a 1.5x up into an indistinguishable
 // 2x. Applied uniformly (unweighted spots repeat 1*2=2 times too), so it only
 // changes pool size, never the ratios a uniform pick over the pool reflects.
 const SIGNATURE_SPOT_SCALE = 2;
@@ -578,6 +676,7 @@ export const BACKGROUND_ASSET_DIR = "assets/bg";
 const FOLDER_OVERRIDES = {
   [GENERAL_LOCATIONS.GALAXY]: "darkwick",
   [EVENT_LOCATIONS.STAR_FESTIVAL]: "festival",
+  [EVENT_LOCATIONS.SAMHAIN]: "festival",
 };
 
 /**

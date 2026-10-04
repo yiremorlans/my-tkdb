@@ -1,9 +1,11 @@
 export default {
   // The level-up DMs (docs/bond-scene-dms.md). Haku deflects every sincere
-  // thing said to him and spooks people to watch their faces, so his scenes are
-  // built as a long failure to deflect: each level he tries the joke, and each
-  // level it works a little less. He sees what nobody else can, and the last
-  // thing he admits is that being the only one who sees is lonely.
+  // thing said to him and spooks people to watch their faces. The joke carries
+  // the acquaintance scene (a test he swears wasn't one); from friend on he
+  // leads with the sincere thing instead (her first week, his own coasting),
+  // and what deflection is left is thin and he knows it. He sees what nobody
+  // else can, and the last thing he admits is that being the only one who sees
+  // is lonely.
   //
   // Texting voice, per reference.md's "## Bond Scenes" notes: he clips words
   // ("prob", "No prob") and drops "tbh" into his typed lines, but writes in
@@ -49,39 +51,38 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: Okay, observation time. Don't look into it too much.",
-        "You come back with {favResponse} every single time. Even when I've been kidding. Especially then, actually.\n\nHalf the time I say I'm kidding, I'm not. There really was something behind you. Everyone else laughs and takes the out.\n\nYou're the only one who's ever asked which half. It's starting to be a whole thing tbh.",
+        "**{firstName}**: Been thinking about your first week here.",
+        "Wanting to go home that bad, and staying anyway. I know that wasn't easy. You made the right call. I mean that, even on the days it doesn't feel like it.\n\nAll that going on, and somehow you've still got {favResponse} for me every time. Most people figure I'm a slacker and don't ask much of me tbh.\n\nCan't really pull that with you, though. Your curse, the missions, all of it. Not gonna half-ass this one.",
       ],
       choice: {
-        prompt:
-          "So. What's the plan here. Do you have one or are you just like this.",
+        prompt: "Not to pry, but... you still think about leaving sometimes?",
         options: [
           {
             key: "kind",
-            label: "Say you'll always ask which",
+            label: "Say you're glad you stayed",
             style: 3,
             close:
-              "...Huh.\n\nThat's annoyingly good. Give me a sec.\n\n*The sec is a long one.* Okay. Deal. Ask, and I'll tell you which.",
+              "Good, that's a relief.\n\nOn the days it's rough, come find me. If you want to talk, I'm happy to listen.",
           },
           {
             key: "playful",
-            label: "Say you're just slow",
+            label: "Say only on Mondays",
             style: 1,
             close:
-              "You are not slow, and that's the problem.\n\nIt'd be so much easier if you were slow. I'd know exactly what to do with slow. I've got nothing for whatever this is.",
+              "Fair. Mondays are rough here.\n\nI'll come find you on Mondays, then. I'll bring tea.",
           },
           {
             key: "bold",
-            label: "Tell him to stop kidding",
+            label: "Ask if he'd come after you",
             style: 4,
             close:
-              "Can't. It's load-bearing.\n\n...I'll try. Not tonight. But I'll try, and you'll prob have to be really obvious about noticing, because I won't be.",
+              "You'd make me run after you? That's a lot of effort, princess.\n\n...Yeah. I would.",
           },
         ],
       },
       keepsake: {
-        emoji: "👻",
-        line: "The half of his jokes that weren't jokes.",
+        emoji: "🧳",
+        line: "The first week you almost left, and didn't.",
       },
     },
 

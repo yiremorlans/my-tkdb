@@ -60,7 +60,7 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: senpai\n\nasked half the house to come on that diner run today\n\nsuddenly everybody's got somewhere to be",
+        "**{firstName}**: senpai\n\nI asked half the house to come on that diner run today\n\nsuddenly everybody's got somewhere to be",
         "then there's u\n\ndidn't even ask what we were getting into, just showed up and gave me {favResponse} the whole walk back like it was the best part of ur day",
         "so I gotta ask\n\nis this a u like me thing? cuz that'd explain a lot",
       ],
@@ -91,7 +91,7 @@ export default {
         ],
       },
       keepsake: {
-        emoji: "🛍️",
+        emoji: "🥡",
         line: "The diner run half the house was suddenly too busy for.",
       },
     },
@@ -926,7 +926,7 @@ export default {
       '**{name}** turns at the sound of {user}\'s voice, already grinning. "Pfft. Knew it was you, Senpai."',
     ],
     warm: [
-      "**{name}** spots {user} across the courtyard and whistles them over. \"C'mon, Senpai. What took you so long?\"",
+      '**{name}** spots {user} across the courtyard and whistles them over. "C\'mon, Senpai. What took you so long?"',
       "\"What're you yelling for, Senpai? I'm right here.\" **{name}** doesn't bother hiding the grin from {user}.",
       "**{name}** was closing up. He is now, somehow, cooking for {user}.",
     ],

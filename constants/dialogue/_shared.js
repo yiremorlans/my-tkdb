@@ -143,7 +143,7 @@ export function withPronounVariants(entries) {
 // The teaser and missed pools are keyed by TIME_BUCKETS with an `any` pool
 // merged into both, the same shape the `when: { time }` blocks above resolve
 // to. Darkness is not a mood the feature owns at every hour — at midday the
-// campus is a crush of students between classes and someone is lost in the
+// campus is busy with students between classes and someone is lost in the
 // crowd, and only in the evening is the same figure lost to the dark.
 
 // Short by design — the spawn message already spells out how to answer and how
@@ -159,20 +159,20 @@ export const SHARED_ENCOUNTER_TEASERS = {
   ],
   day: [
     "A familiar figure in the between-class crowd.",
-    "Someone you know, cutting through the crush.",
-    "Half the academy's on this walkway. One you know.",
-    "A familiar uniform in the line ahead.",
-    "The platform's packed. One figure isn't a stranger.",
+    "Someone you know, just turning away.",
+    "A familiar face, half-turned your way.",
+    "Someone you know, about to pass you by.",
+    "Someone familiar, glancing up from their phone.",
     "Someone breaks off from a knot of students.",
-    "A student you recognize, rows of heads away.",
-    "Someone familiar, past the noticeboards.",
+    "A face you know, a few steps ahead.",
+    "Someone familiar, slowing as you get closer.",
   ],
   evening: [
     "A silhouette at the edge of the lamplight.",
-    "Someone stops past the last path light.",
-    "A shape in shadow, end of the corridor.",
-    "The walkway's emptied out. One figure left.",
-    "A figure at the rail, unlit.",
+    "Someone stops just past the last light.",
+    "A shape in shadow, just ahead.",
+    "Everyone else has gone. One figure left.",
+    "Someone lingers, half in shadow.",
     "Someone slips between the lamps ahead.",
     "The dark's nearly got them. Name them?",
     "A shadow you almost recognize, not moving.",
