@@ -101,7 +101,7 @@ export default {
             label: "Ask if he'll try one too",
             style: 1,
             close:
-              "I can just manage water. Solids are harder.\n\nI'll try one. A whole one. Stay while I eat it. I'm more likely to finish it that way.",
+              "Tea is most of what I keep down. Solids are harder.\n\nI'll try one. Are you going to wait while I eat it? I'm more likely to finish it that way.",
           },
           {
             key: "bold",
@@ -113,7 +113,7 @@ export default {
         ],
       },
       keepsake: {
-        emoji: "🍬",
+        emoji: "🍪",
         line: "The fourth batch, measured to what you'd finish.",
       },
     },

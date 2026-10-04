@@ -127,7 +127,7 @@ export default {
         ],
       },
       keepsake: {
-        emoji: "📷",
+        emoji: "🎞️",
         line: "A photograph of Ultio and Clementia students in one frame, from the years nobody talks about.",
       },
     },

@@ -83,32 +83,32 @@ export default {
     closeFriend: {
       beats: [
         "**{firstName}**: You doing anything tonight?",
-        "Not the diner. My room, for once.\n\n...that came out wrong. To play games. Diner's not exactly built for a second player anyway. I've got an actual couch, a second controller, and wifi that won't die on you\n\nKnown you since {sinceMet}, and you've finished basically every game I've put you onto since. Nobody else in this house gets why I like this stuff. Never really tried explaining it to anyone before",
-        "Been meaning to ask you over for actual ages. Whatever, it's cool if you've got plans",
+        "Not the diner. My room, for once.\n\n...that came out wrong. that's not what I meant. I've got a co-op thing that's literally unbeatable solo, and the diner's not built for a second player. Actual couch, second controller, wifi that won't die on you\n\nKnown you since {sinceMet}, and you've finished basically every game I've put you onto since. Nobody else in this house gets why I like this stuff. Never really tried explaining it to anyone before",
+        "It's not like I've been planning this or anything",
       ],
       choice: {
-        prompt: "So. that's the ask. yes or no, I'm not typing it twice",
+        prompt: "whatever, it's cool if you've got plans",
         options: [
           {
             key: "kind",
             label: "Say you'd love to come over",
             style: 3,
             close:
-              "Yeah?\n\n...good.\n\nDoor's unlocked. Don't take forever, I already picked the game.",
+              "Yeah?\n\n...good.\n\nDoor's unlocked. Let yourself in, I'm not getting up.",
           },
           {
             key: "playful",
             label: "Tease him for finally asking",
             style: 1,
             close:
-              "Yeah, laugh it up.\n\nfor the record I had at least three better versions of this text and sent the worst one anyway. bring snacks. I've got a system, don't mess with it.",
+              "Yeah, laugh it up.\n\nthis is exactly why I didn't want to ask. bring snacks. I've got a system, don't mess with it.",
           },
           {
             key: "bold",
             label: "Ask if this counts as a date",
             style: 4,
             close:
-              "...No.\n\n*A long gap.*\n\nOkay, I wouldn't correct you if you called it that. Doesn't mean I'm saying it first. Just show up.",
+              "Call it whatever, I don't care what it's called.\n\n*A pause.*\n\n...just don't call it that in front of that clown.",
           },
         ],
       },
@@ -900,8 +900,8 @@ export default {
   winnerLines: {
     new: [
       "**{name}** stays put for {user}, mildly impressed they found him at all.",
-      '"Is this for a mission? Because I\'m technically on break." **{name}** stays on his phone while {user} talks, but he\'s listening.',
-      '"Whatever it is, I didn\'t do it. Or I\'ll do it later." **{name}** hears {user} out anyway.',
+      "\"Is this for a mission? Because I'm technically on break.\" **{name}** stays on his phone while {user} talks, but he's listening.",
+      "\"Whatever it is, I didn't do it. Or I'll do it later.\" **{name}** hears {user} out anyway.",
     ],
     known: [
       "\"You're around a lot lately.\" Arms crossed, **{name}** tells {user} it isn't a complaint.",

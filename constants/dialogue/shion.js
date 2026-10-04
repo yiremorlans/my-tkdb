@@ -62,7 +62,7 @@ export default {
             label: "Say he was just a classmate",
             style: 3,
             close:
-              "I know. You said.\n\nThat's not what I asked, though. I asked you to say you won't.\n\nHow you are with me stays with me. Keep it there.",
+              "I know. He can have your nodding and your polite laughing.\n\nI'll keep him in mind anyway. For later.",
           },
           {
             key: "playful",
@@ -76,7 +76,7 @@ export default {
             label: "Say only he gets that side",
             style: 4,
             close:
-              "Yeah. Only me.\n\nSaved that. You can't take it back now.\n\nMine, then. Not anybody's. You bring it to me and nobody else gets any.",
+              "Yeah. Only me.\n\nNo taking it back. Give it to him anyway and he'll disappear, just so I can be there when you cry.",
           },
         ],
       },

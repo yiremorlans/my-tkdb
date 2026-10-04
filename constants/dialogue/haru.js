@@ -53,7 +53,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: Hey. Went back and forth on whether I should message you at all, so if this is weird just ignore it (^_^;)",
-        "One of the critters isn't doing great. Nothing dramatic, she's stable. But it's a two-person job and I've only got the one of me.\n\nCould rope in Ren or Towa, sure. But yeah, nah. Not for this one.",
+        "One of the critters isn't doing great. Nothing dramatic, she's stable. But it's a two-person job and I've only got the one of me.\n\nCould rope in Ren or Towa, sure. Didn't want to.",
         "You, though! You're a real good sport, hey. Doesn't matter what mess I drag you into, you come back with {favResponse} and roll with it. Gahaha!\n\nSo I'm chancing it. Last minute, I know (^_^;) Reckon you could come lend us a hand? You'd be a real lifesaver.",
       ],
       choice: {
@@ -71,14 +71,14 @@ export default {
             label: "Ask if there's a tour discount",
             style: 1,
             close:
-              "Mates' rates, obviously. Free, in fact. This one's on the house (^_^;)\n\n...Cheers for making me laugh. Needed that. Gate's open.",
+              "Discount? You're the one helping me out, I should be paying you (^_^;)\n\n...Cheers for making me laugh. Needed that. Gate's open.",
           },
           {
             key: "bold",
             label: "Say he should've asked sooner",
             style: 4,
             close:
-              "Yeah, nah, don't go saying that. I'll get used to it.\n\n...Maybe I should've, though. Noted. Now get over here (^_^;)",
+              "Yeah, nah, don't go saying that. I'll get used to it.\n\n...Maybe I should've, though. Now get over here (^_^;)",
           },
         ],
       },
@@ -900,7 +900,7 @@ export default {
     ],
     known: [
       '"What a coinkydink!" **{name}** grins at {user}. "You keep turnin\' up wherever I am."',
-      '{user} says the name, and **{name}** laughs. "Gahaha! Perfect timin\', I\'m short a pair of hands."',
+      "{user} says the name, and **{name}** laughs. \"Gahaha! Perfect timin', I'm short a pair of hands.\"",
       "Peekaboo peers at {user} over the edge of the sling and ducks back down. **{name}** swears that's progress.",
     ],
     warm: [
