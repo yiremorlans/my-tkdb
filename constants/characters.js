@@ -1177,10 +1177,25 @@ export function getRandomCharacterImageVariant(character) {
 
 // Affinity gained for a given response type, from this character's
 // perspective. NEUTRAL always yields 0, regardless of character.
-export function getAffinityForResponse(character, responseType) {
+//
+// `swap` is the drawn beat's flag (see SWAP_TIERS): for that one response the
+// character's liked type pays 2 and their favorite pays 1, so a scene can call
+// for the less usual approach. The least-liked type stays 0. The base ranking
+// never changes, which is what {favResponse} in the Friend bond scene and the
+// warding cards read.
+export function getAffinityForResponse(character, responseType, { swap = false } = {}) {
   if (responseType === RESPONSE_TYPES.NEUTRAL) return 0;
-  return character.affinityByResponse[responseType] ?? 0;
+  const gain = character.affinityByResponse[responseType] ?? 0;
+  if (!swap) return gain;
+  if (gain === 2) return 1;
+  if (gain === 1) return 2;
+  return gain;
 }
+
+// The dialogue tiers a beat may carry `swap: true` in. Close Friend on: by
+// then the player has learned the favorite, and the Friend bond scene's
+// {favResponse} has already been delivered on the base ranking.
+export const SWAP_TIERS = ["spark", "close", "bound"];
 
 // Last-resort label for the /roam narration button. Unreachable by authored
 // content — every one of the 1239 drawable beats carries its own `approach`,
@@ -1267,8 +1282,8 @@ export function getRandomDialogueEntry(
   ctx = {},
 ) {
   const entry = pickDialogueEntry(character, tier, variant, ctx);
-  if (!entry) return { line: "...", responses: null };
-  return { line: entry.line, responses: entry.responses };
+  if (!entry) return { line: "...", responses: null, swap: false };
+  return { line: entry.line, responses: entry.responses, swap: entry.swap };
 }
 
 // A tier entry is a beat (see getRandomDialogueBeat) where `approach` is one
@@ -1289,6 +1304,7 @@ const NORMALIZED_BEAT_DEFAULT = {
   approachOptions: null,
   greetingOptions: null,
   responses: null,
+  swap: false,
 };
 
 function normalizeBeat(entry) {
@@ -1303,6 +1319,7 @@ function normalizeBeat(entry) {
       approachOptions: toOptions(approach),
       greetingOptions: toOptions(greeting),
       responses: responses || null,
+      swap: entry.swap === true,
     };
   }
   return { ...NORMALIZED_BEAT_DEFAULT };
@@ -1327,16 +1344,17 @@ export function getRandomDialogueBeat(character, tier, variant = null, ctx = {})
       approach: pickRandom(APPROACH_LABEL_FALLBACK),
       greeting: null,
       responses: null,
+      swap: false,
     };
   }
 
-  const { line, approachOptions, greetingOptions, responses } = entry;
+  const { line, approachOptions, greetingOptions, responses, swap } = entry;
   const approach = approachOptions
     ? pickRandom(approachOptions)
     : pickRandom(APPROACH_LABEL_FALLBACK);
   const greeting = greetingOptions ? pickRandom(greetingOptions) : null;
 
-  return { line, approach, greeting, responses };
+  return { line, approach, greeting, responses, swap };
 }
 
 // `beatResponses` is the { kind, playful, bold, neutral } label object off the

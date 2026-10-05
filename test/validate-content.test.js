@@ -219,3 +219,26 @@ test('no player-facing string uses a British spelling', () => {
 
   assert.deepStrictEqual(found, [], 'the source localization is American English');
 });
+
+// `swap` is only meaningful from Close Friend on (SWAP_TIERS): a flag on an
+// earlier beat, or anything but `true`, fails the build rather than quietly
+// scoring a scene the player can't read yet.
+test('validateContent rejects swap below spark and any swap value but true', () => {
+  const known = DIALOGUE.benkei.dialogue.known.find((b) => b && typeof b === 'object');
+  const spark = DIALOGUE.benkei.dialogue.spark.find((b) => b && typeof b === 'object');
+  assert.ok(known && spark, 'benkei should have object beats at known and spark to mutate');
+  try {
+    known.swap = true;
+    assert.throws(() => validateContent(), /benkei dialogue\[known\] beat has swap, which only applies at spark\/close\/bound/);
+  } finally {
+    delete known.swap;
+  }
+  try {
+    spark.swap = 'yes';
+    assert.throws(() => validateContent(), /benkei dialogue\[spark\] beat swap must be true or absent/);
+    spark.swap = true;
+    assert.doesNotThrow(() => validateContent(), 'swap: true at spark is valid');
+  } finally {
+    delete spark.swap;
+  }
+});

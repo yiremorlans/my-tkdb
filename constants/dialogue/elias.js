@@ -7,33 +7,33 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Good evening. I hope this doesn't startle you, turning up out of nowhere. It's nothing serious, I promise. There's something I've been meaning to say, and the right moment keeps slipping away, so… I suppose I'm making one.",
-        "You've passed me on campus {timesMet} times. I've counted, which sounds odd said out loud. Every single time, you've said good evening to the man with the mop. You don't have to, but you do it anyway.\n\nMost people don't, you know. Not out of unkindness. They just don't see the help. And I've always liked going unnoticed, if I'm honest.",
-        "There's a second half, and it's the part I nearly left out. You mentioned once you don't care for the east path after dark. Since then I've found reasons for my rounds to pass through there about when you do.\n\nIt isn't much. I only wanted to know you'd gotten where you were going, and I wanted you to hear it from me, not puzzle it out and think I was strange.",
+        "**{firstName}**: Good evening. I hope this isn't strange, writing out of nowhere. There's something I've been meaning to say.",
+        "You've passed me on campus {timesMet} times. I've been keeping track, apparently. Every time, you've said good evening to the man with the mop.\n\nMost people don't. They don't see the help, and usually I like it that way.",
+        "You mentioned once you don't care for the east path after dark. I take a walk most evenings, nowhere in particular.\n\nOne path's as good as another to me, if you ever wanted the company.",
       ],
       choice: {
-        prompt: "That's all of it, and a bit more than I meant to say tonight.",
+        prompt: "That's all of it. More than I meant to say tonight.",
         options: [
           {
             key: "kind",
             label: "Say he's worth knowing",
             style: 3,
             close:
-              "*A pause, longer than his replies usually take.*\n\nOh, that's very kind of you. It isn't quite true. But I'd like it if you kept saying so anyway.\n\n*A second, shorter pause.* And I'd like it if you let me keep walking that path, when you do. Only because it isn't any trouble. Good night.",
+              "Oh, that's kind of you. It isn't quite true, but I'd like it if you kept saying so.",
           },
           {
             key: "playful",
             label: "Ask what took so long",
             style: 1,
             close:
-              "Oh, I drafted several versions in my head. Discarded most of them.\n\n…It's been some time since anyone made me smile at my own foolishness. I'll be thinking about that for a while.",
+              "I drafted a few versions in my head. This was the least embarrassing one.",
           },
           {
             key: "bold",
             label: "Ask what he used to be",
             style: 4,
             close:
-              "*The pause runs longer than the question should need.*\n\nWhat I used to be? I'll leave that to your imagination, for now.\n\nAsk me again sometime, when it's later and I'm tired enough not to mind answering it. Good night.",
+              "What I used to be? I'll leave that to your imagination, for now.\n\nAsk me again when it's later and I'm too tired to mind.",
           },
         ],
       },
@@ -45,39 +45,39 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: Can I ask you something? You're welcome to tell me it's none of my business.",
-        "Every time I turn one of your questions back around, you let me. You don't push, and you don't sulk about it. Then the next time, you come to tell me {favResponse} again, as if nothing happened.\n\nI've been deflecting people, professionally, for a long while now. It works because people tire of it eventually. You don't seem to. I'd really like to know why.",
+        "**{firstName}**: Jo asked why a quick errand took me all afternoon.",
+        "I told him the line at the shop was long. He gave me a look and let it slide. I didn't mention you.",
+        "You led with {favResponse}, and I lost track of the time. I'm not sure why I kept that part to myself. It just felt like mine.",
       ],
       choice: {
-        prompt:
-          "Please, go ahead. I'll try not to change the subject this time.",
+        prompt: "So now you're in on it.",
         options: [
           {
             key: "kind",
-            label: "Say you're a patient person",
+            label: "Say you liked the walk",
             style: 3,
             close:
-              "Oh, that's the trouble with patient people. I can hold a door shut against a push, but I can't do much about someone who just waits outside it.",
+              "Oh, good. So did I.\n\nMaybe my next errand runs long too.",
           },
           {
             key: "playful",
-            label: "Say you enjoy the deflecting",
+            label: "Offer to back up his story",
             style: 1,
             close:
-              "Oh, you *enjoy* it? Well, that's a first. Most people find it tiresome.\n\nThen I suppose there's no harm in it. It's become one of the nicer parts of my rounds, if I'm honest. I think I'd miss it if you stopped.",
+              "Please don't. Jo can smell a rehearsed answer.\n\nMine was terrible. He knew.",
           },
           {
             key: "bold",
-            label: "Ask him why he deflects",
+            label: "Ask why he left you out",
             style: 4,
             close:
-              "Oh, turning it around on me.\n\nBecause an honest answer invites a second question, and the second one is usually the one I can't answer well. It's easier to be pleasant than to be known.",
+              "If I'd told him, he'd have teased me for a week.\n\nThat's most of the reason.",
           },
         ],
       },
       keepsake: {
-        emoji: "📻",
-        line: "The first question he answered without turning it back around.",
+        emoji: "⏳",
+        line: "An afternoon he told Jo was spent in line.",
       },
     },
 

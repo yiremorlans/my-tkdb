@@ -68,6 +68,15 @@ test('getAffinityForResponse reads the character\'s own KIND/PLAYFUL/BOLD rankin
   assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.BOLD), 0);
 });
 
+test('getAffinityForResponse with swap exchanges favorite and liked, leaving least-liked and NEUTRAL alone', () => {
+  // ren: { kind: 1, playful: 2, bold: 0 }
+  const swap = { swap: true };
+  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.KIND, swap), 2);
+  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.PLAYFUL, swap), 1);
+  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.BOLD, swap), 0);
+  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.NEUTRAL, swap), 0);
+});
+
 test('getAffinityForResponse defaults to 0 for a response type missing from affinityByResponse', () => {
   assert.strictEqual(getAffinityForResponse({ affinityByResponse: {} }, RESPONSE_TYPES.KIND), 0);
 });

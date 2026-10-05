@@ -8,7 +8,7 @@
 //
 // So: anything that leaves a character mute is an error, and anything that
 // silently downgrades them is a warning.
-import { CHARACTERS, RESPONSE_TYPES } from "./characters.js";
+import { CHARACTERS, RESPONSE_TYPES, SWAP_TIERS } from "./characters.js";
 import {
   DIALOGUE,
   SHARED_ENCOUNTER_TEASERS,
@@ -654,6 +654,19 @@ export function validateContent() {
             if (!isBeat(entry)) continue;
             if (!entry.line.trim()) {
               errors.push(`${id} ${poolName}[${tier}] has a beat with an empty line`);
+            }
+            // `swap` scores the beat with favorite and liked exchanged
+            // (getAffinityForResponse). Close Friend on only: earlier, the
+            // player hasn't learned the favorite yet, and the Friend bond
+            // scene's {favResponse} still describes the base ranking.
+            if (entry.swap !== undefined) {
+              if (entry.swap !== true) {
+                errors.push(`${id} ${poolName}[${tier}] beat swap must be true or absent: "${entry.line}"`);
+              } else if (!SWAP_TIERS.includes(tier)) {
+                errors.push(
+                  `${id} ${poolName}[${tier}] beat has swap, which only applies at ${SWAP_TIERS.join("/")}: "${entry.line}"`,
+                );
+              }
             }
             const approachLabels = Array.isArray(entry.approach)
               ? entry.approach

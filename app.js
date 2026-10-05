@@ -982,7 +982,8 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     if (action === 'resp') {
       // origin ('meet' | 'roam') identifies the flow this response completes;
       // absent on buttons rendered before this field was added — default 'meet'.
-      const [characterId, responseTypeId, origin] = rest;
+      // A trailing 's' marks a beat flagged `swap` (see responseActionRow).
+      const [characterId, responseTypeId, origin, beatFlag] = rest;
       const commandName = origin === 'roam' ? 'roam' : 'meet';
 
       // Ack with a silent deferred-update FIRST, then do the real work. This
@@ -1050,6 +1051,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             characterId,
             responseTypeId,
             req.body.message?.components,
+            { swap: beatFlag === 's' },
           );
           await sendFollowup(req.body.token, messageData, 15000, true);
 

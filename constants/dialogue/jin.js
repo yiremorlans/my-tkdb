@@ -703,6 +703,8 @@ export default {
       },
       {
         line: "\"Don't move,\" he says quietly, and takes his time about whatever he's looking at.",
+        // He asked you to hold still: closing the distance overrides him.
+        swap: true,
         approach: "Hold his gaze",
         greeting: '"Look at me when I\'m speaking to you. ...Yes. Like that."',
         responses: {
@@ -762,10 +764,12 @@ export default {
       },
       {
         line: "For once he isn't performing for anybody. He just looks glad.",
+        // An unguarded moment: meeting it gently keeps it, pushing ends it.
+        swap: true,
         approach: "Let him see you smile",
         greeting: '"I suppose I can make an exception for you."',
         responses: {
-          kind: "Let the crown come off",
+          kind: "Tell him you're glad too",
           playful: "Point out the rare smile",
           bold: "Show him you won't break",
           neutral: "Let him have the moment",
@@ -808,13 +812,15 @@ export default {
       },
       {
         line: "He wakes before you and stays exactly where he is rather than disturb you.",
+        // "Stay" is the whole ask; doing exactly that is the answer.
+        swap: true,
         approach: "Let him watch you sleep",
         greeting:
           '"Stay. I have spent my whole life being denied things. Not this."',
         responses: {
           kind: "Stay where you are",
           playful: "Tease him for staying still",
-          bold: "Wake him with a kiss",
+          bold: "Kiss him good morning",
           neutral: ["Lie still beside him", "Let him sleep"],
         },
       },
