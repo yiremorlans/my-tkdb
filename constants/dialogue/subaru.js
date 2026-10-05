@@ -52,38 +52,38 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: May I tell you something unpleasant about myself? I'd rather you heard it from me.",
-        "Everyone thinks I'm kind. I'm not, especially. I'm accommodating, which looks the same from outside and is mostly fear.\n\nAnd I think people are worse than the anomalies. I've read enough of what they leave on things, doorframes, handrails, cups. They put the ugliest parts of themselves down without noticing, and I pick all of it up.\n\nYou answer me with {favResponse} every time and there's never a second thing under it. Do you know how rare that is, for someone who can check?",
+        "**{firstName}**: I hope this isn't a bother. I haven't seen you around Hotarubi for a few days, and I only wanted to check in.",
+        "I went back over everything I said the last time. Then I remembered you've answered me with {favResponse} every time I've ever asked you anything, and I felt a bit silly.\n\nThe tea room has been very quiet. I keep setting out one cup too many.",
       ],
       choice: {
-        prompt: "There. Now you know I'm a bit horrible. Say something.",
+        prompt: "Is everything alright? I hope it wasn't anything I did.",
         options: [
           {
             key: "kind",
-            label: "Say that isn't horrible",
+            label: "Admit it's been a hard week",
             style: 3,
             close:
-              "It is a bit.\n\nBut thank you for arguing. Nobody argues with me. They agree with whatever I say about myself, and I've never found that comforting.",
+              "Oh... I'm sorry. Thank you for telling me the truth, and not just that you were busy.\n\nCome by whenever you're ready. You don't have to talk about it. You can just sit with me.",
           },
           {
             key: "playful",
-            label: "Ask what your doorframe said",
+            label: "Ask how many cups so far",
             style: 1,
             close:
-              "I'd never...!\n\n...Nothing bad. Nothing at all, which almost never happens. Like putting my hand on clean water.\n\nThat was far too much. Good night.",
+              "Four. Haku drank all of them so they wouldn't go to waste, and he's started looking at me oddly.\n\nPlease come back before he asks.",
           },
           {
             key: "bold",
-            label: "Tell him to stop accommodating",
+            label: "Say you missed him too",
             style: 4,
             close:
-              "*A long silence.*\n\nI don't know what I'd be, *he writes.* That's the honest answer. I've been accommodating since I was four and standing on a stage.\n\nBut you're the first to ask me to find out. I might try. Slowly. Be patient with me.",
+              "Oh... You did?\n\nThen I'm glad it wasn't only me. I suppose I can stop pretending the extra cup was an accident.",
           },
         ],
       },
       keepsake: {
-        emoji: "🪡",
-        line: "The one set of hands that left nothing ugly behind.",
+        emoji: "☕",
+        line: "The extra cup he kept setting out while you were gone.",
       },
     },
 
@@ -319,8 +319,7 @@ export default {
       {
         line: "He uses your name now, without the small pause he used to leave in front of it.",
         approach: "Say hello back",
-        greeting:
-          '"Welcome back, Honor Roll. I hoped that was you."',
+        greeting: '"Welcome back, Honor Roll. I hoped that was you."',
         responses: {
           kind: [
             "Say it's nice to be remembered",
@@ -582,12 +581,16 @@ export default {
         },
       },
       {
-        line: "He's holding a mug of plain hot water. \"Breakfast,\" he admits, a little sheepish. \"I know. A proper meal is just so much effort.\"",
+        line: 'He\'s holding a mug of plain hot water. "Breakfast," he admits, a little sheepish. "I know. A proper meal is just so much effort."',
         approach: "Share your breakfast with him",
-        greeting: "\"Oh, I couldn't take yours. ...Well. Perhaps just half. Thank you.\"",
+        greeting:
+          '"Oh, I couldn\'t take yours. ...Well. Perhaps just half. Thank you."',
         responses: {
           kind: ["Split it with him", "Offer to cook tomorrow"],
-          playful: ["Call hot water a bold choice", "Ask if he adds a tea leaf"],
+          playful: [
+            "Call hot water a bold choice",
+            "Ask if he adds a tea leaf",
+          ],
           bold: ["Make him finish all of it", "Take the mug away"],
           neutral: ["Set the food down", "Eat together, no fuss"],
         },
@@ -595,7 +598,8 @@ export default {
       {
         line: "His hair is sticking straight up at the front and he hasn't noticed. He's smiling at you like nothing's wrong.",
         approach: "Point at his hair",
-        greeting: "\"Sorry? My hair? ...Oh no, it really is. That's embarrassing. Don't look, I'll fix it right away.\"",
+        greeting:
+          "\"Sorry? My hair? ...Oh no, it really is. That's embarrassing. Don't look, I'll fix it right away.\"",
         responses: {
           kind: ["Say it looks nice anyway", "Hold up a mirror for him"],
           playful: ["Say it's a new trend", "Take a picture first"],
@@ -606,7 +610,8 @@ export default {
       {
         line: "He yawns behind his hand. \"Anomalous Ecology test. It's so fascinating I stayed up all night. Now I'm paying for it.\"",
         approach: "Ask what he learned",
-        greeting: "\"Oh, you really want to hear? ...Ha ha, I warn you, I'll talk for an hour.\"",
+        greeting:
+          '"Oh, you really want to hear? ...Ha ha, I warn you, I\'ll talk for an hour."',
         responses: {
           kind: ["Say you'd like the hour", "Tell him to nap first"],
           playful: ["Quiz him on the spot", "Ask for the weirdest anomaly"],
@@ -615,9 +620,10 @@ export default {
         },
       },
       {
-        line: "He's hovering by the cafeteria entrance, eyeing the line. \"I feel bad taking time to choose while people wait behind me.\"",
+        line: 'He\'s hovering by the cafeteria entrance, eyeing the line. "I feel bad taking time to choose while people wait behind me."',
         approach: "Get in line with him",
-        greeting: "\"You'd do that? Then... would you choose for both of us? I trust your taste more than mine.\"",
+        greeting:
+          '"You\'d do that? Then... would you choose for both of us? I trust your taste more than mine."',
         responses: {
           kind: ["Order his favorite", "Say he can take his time"],
           playful: ["Pick something wild for him", "Decide by coin toss"],
@@ -628,18 +634,23 @@ export default {
       {
         line: '"I usually eat on the terrace with Lyca," he says, looking at the empty seat. "He seems so busy these days."',
         approach: "Offer to eat with him",
-        greeting: "\"Would you? I'd like that. I think he'd like you there too. Next time, I'll ask him.\"",
+        greeting:
+          "\"Would you? I'd like that. I think he'd like you there too. Next time, I'll ask him.\"",
         responses: {
           kind: ["Say Lyca still needs him", "Say you'll eat here often"],
           playful: ["Ask what keeps Lyca busy", "Promise to report on Lyca"],
-          bold: ["Say you'll ask Lyca yourself", "Take the seat without asking"],
+          bold: [
+            "Say you'll ask Lyca yourself",
+            "Take the seat without asking",
+          ],
           neutral: ["Unwrap your lunch", "Sit across from him"],
         },
       },
       {
-        line: "His phone keeps chiming. He looks mortified. \"I downloaded an app by mistake and it won't stop sending me notifications.\"",
+        line: 'His phone keeps chiming. He looks mortified. "I downloaded an app by mistake and it won\'t stop sending me notifications."',
         approach: "Offer to look at his phone",
-        greeting: "\"Would you? I've tapped everything I can find. It only gets louder.\"",
+        greeting:
+          '"Would you? I\'ve tapped everything I can find. It only gets louder."',
         responses: {
           kind: ["Turn off the notifications", "Show him how to do it"],
           playful: ["Ask what app it is", "Say it clearly adores him"],
@@ -650,7 +661,8 @@ export default {
       {
         line: "He's staring at his phone. \"Lyca's seen my message. Why hasn't he answered? I hope nothing's happened to him.\"",
         approach: "Reassure him about Lyca",
-        greeting: "\"You're right. He's probably just busy. ...I'll only check once more. Maybe twice.\"",
+        greeting:
+          "\"You're right. He's probably just busy. ...I'll only check once more. Maybe twice.\"",
         responses: {
           kind: ["Say Lyca's surely fine", "Offer to look for Lyca"],
           playful: ["Say Lyca's mastered 'seen'", "Bet he replies in five"],
@@ -659,20 +671,25 @@ export default {
         },
       },
       {
-        line: "\"Whew.\" He stands and stretches. \"I'll walk you back to your house. Oh, it's no trouble at all! I wanted some fresh air anyway.\"",
+        line: '"Whew." He stands and stretches. "I\'ll walk you back to your house. Oh, it\'s no trouble at all! I wanted some fresh air anyway."',
         approach: "Let him walk you back",
-        greeting: "\"Ha ha... I'll admit the fresh air was an excuse. I just wasn't ready to say good night.\"",
+        greeting:
+          "\"Ha ha... I'll admit the fresh air was an excuse. I just wasn't ready to say good night.\"",
         responses: {
           kind: ["Say you weren't either", "Walk slow to make it last"],
-          playful: ["Ask about the fresh air", "Say you'll walk him back after"],
+          playful: [
+            "Ask about the fresh air",
+            "Say you'll walk him back after",
+          ],
           bold: ["Take the long way", "Tell him to say so next time"],
           neutral: ["Walk beside him", "Head out the door"],
         },
       },
       {
-        line: "\"I didn't take you for a night owl,\" he says, setting out a second cushion. \"Since you're here, I'll stay up a little longer.\"",
+        line: '"I didn\'t take you for a night owl," he says, setting out a second cushion. "Since you\'re here, I\'ll stay up a little longer."',
         approach: "Sit on the cushion",
-        greeting: "\"You're sure you're okay? You're not sleepy? ...I'll make tea. Something without caffeine.\"",
+        greeting:
+          "\"You're sure you're okay? You're not sleepy? ...I'll make tea. Something without caffeine.\"",
         responses: {
           kind: ["Say you're awake for him", "Help him make the tea"],
           playful: ["Say he's the night owl", "Ask for caffeine anyway"],
@@ -683,10 +700,14 @@ export default {
       {
         line: 'He watches two students argue across the courtyard, and his smile stays exactly where it is. "Humans are much nastier than anomalies, you know."',
         approach: "Ask what he means",
-        greeting: "\"Oh, don't mind me. I've just read too many things people never meant to leave behind.\"",
+        greeting:
+          "\"Oh, don't mind me. I've just read too many things people never meant to leave behind.\"",
         responses: {
           kind: ["Say he doesn't have to smile", "Say not all humans are"],
-          playful: ["Ask if you count as nasty", "Say anomalies are worse cooks"],
+          playful: [
+            "Ask if you count as nasty",
+            "Say anomalies are worse cooks",
+          ],
           bold: ["Agree with him", "Ask who he means"],
           neutral: ["Watch the argument", "Let the comment pass"],
         },
@@ -694,7 +715,8 @@ export default {
       {
         line: "You lend him your pen. He takes it without bracing, turns it over once, and smiles to himself.",
         approach: "Ask what he read",
-        greeting: "\"Only that you chew the end when you're thinking. ...Sorry. I shouldn't have said that.\"",
+        greeting:
+          "\"Only that you chew the end when you're thinking. ...Sorry. I shouldn't have said that.\"",
         responses: {
           kind: ["Say you don't mind at all", "Say he can keep it"],
           playful: ["Deny chewing it", "Ask what else it says"],
@@ -703,9 +725,10 @@ export default {
         },
       },
       {
-        line: "\"I'm going to stretch my legs,\" he says, moving through a slow, exact form. \"No show to practice for. But I'll get rusty otherwise.\"",
+        line: '"I\'m going to stretch my legs," he says, moving through a slow, exact form. "No show to practice for. But I\'ll get rusty otherwise."',
         approach: "Watch him practice",
-        greeting: "\"Oh, you're watching? ...I don't mind. It's been a while since anyone has.\"",
+        greeting:
+          "\"Oh, you're watching? ...I don't mind. It's been a while since anyone has.\"",
         responses: {
           kind: ["Say it's beautiful", "Ask him to keep going"],
           playful: ["Try the pose and wobble", "Ask for an encore"],

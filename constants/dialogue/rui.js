@@ -52,7 +52,7 @@ export default {
       beats: [
         "**{firstName}**: Okay, curse twin. Game time ✨ When yours is gone, what's the first thing you do?! Not if. When. That's the only rule.",
         "I'll go first so it's not weird. Mine's so boring 😂 A T-shirt. Just a regular one, short sleeves, in summer, like a normal person.\n\nBut mine's not the one I'm asking about, so don't get distracted.",
-        "I know yours has a clock on it. I'm not gonna pretend it doesn't. But you've got a whole lot of people who'd drop everything the second you asked, and you've got me. We're gonna figure this out, Honor Roll. In time. That part's not a maybe.\n\nAnd you still bring everybody {favResponse}, every single time, like you're not the one who should be getting them. So here's one back.",
+        "I know yours has a clock on it. I'm not gonna pretend it doesn't. But you've got a whole lot of people working on breaking this thing, and you've got me. We're gonna figure this out, Honor Roll. In time. That part's not a maybe.\n\nAnd you still bring everybody {favResponse}, every single time, like you're not the one who should be getting them. So here's one back.",
       ],
       choice: {
         prompt:
