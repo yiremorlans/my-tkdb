@@ -45,7 +45,7 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: Jo baked. Shion's already on his third slice, so I moved fast.",
+        "**{firstName}**: Jo baked. Shion's already on his second slice, so I moved fast.",
         "I saved you one. It's in a tin, but a lock wouldn't do anything against Shion. Remember my toolbox full of worms?\n\nSo I'm not letting it out of my sight until you get here.",
         "It's good cake. You'll like it.\n\nYou always have {favResponse} for me, even when I'm running between three jobs. Cake's the least I can do.\n\nTake a break when you get here. I'll keep Shion off you for it.",
       ],
@@ -57,7 +57,7 @@ export default {
             label: "Say he needs the break more",
             style: 3,
             close:
-              "...That's not how this works. I saved the cake, you take the break.\n\nFine. Ten minutes. Both of us. Don't tell Jo I agreed that fast.",
+              "...That's not how this works. I saved the cake, you take the break.\n\nFine. Ten minutes. Both of us. Hold me to it, or I'll be back at the bench in five.",
           },
           {
             key: "playful",
@@ -282,10 +282,13 @@ export default {
         line: "His phone buzzes with another repair request. He reads it and adds it to the list.",
         approach: "Ask what came in",
         greeting:
-          '"Wait a sec… Wasn\'t this one the carpenter cat\'s job? Well… complaining is more trouble than it\'s worth."',
+          "\"Wait a sec… Wasn't this one the carpenter cat's job? Well… complaining is more trouble than it's worth.\"",
         responses: {
           kind: ["Say he takes on too much", "Offer to take a job off him"],
-          playful: ["Ask who the carpenter cat is", "Offer to complain for him"],
+          playful: [
+            "Ask who the carpenter cat is",
+            "Offer to complain for him",
+          ],
           bold: ["Tell him to send it back", "Say he's allowed to say no"],
           neutral: ["Let him add it to the list", "Say nothing"],
         },
@@ -307,7 +310,7 @@ export default {
         line: "A little pile of spare parts sits apart from the rest of the bin. He won't say what they're for.",
         approach: "Ask what he's building",
         greeting:
-          "\"Hm? Oh, those. Spare parts. We're gonna need to restock soon.\"",
+          '"Hm? Oh, those. Spare parts. We\'re gonna need to restock soon."',
         responses: {
           kind: ["Let him keep his secret", "Say you're just curious"],
           playful: [
@@ -378,7 +381,7 @@ export default {
         line: "He's got a running list of small things you've mentioned. He swears it doesn't mean anything.",
         approach: "Ask what's on the list",
         greeting:
-          "\"Nothing much. Stuff that needs fixing, mostly. Don't read into it.\"",
+          '"Nothing much. Stuff that needs fixing, mostly. Don\'t read into it."',
         responses: {
           kind: ["Say that's sweet, actually", "Let him keep the list"],
           playful: ["Demand to see the list", "Guess what's on it"],
@@ -442,7 +445,10 @@ export default {
         responses: {
           kind: ["Say you'd like that", "Offer to carry something"],
           playful: ["Ask what's broken this time", "Guess who broke it"],
-          bold: ["Ask to tag along to the job", "Say you'll walk him there too"],
+          bold: [
+            "Ask to tag along to the job",
+            "Say you'll walk him there too",
+          ],
           neutral: ["Fall into step beside him", "Nod and head off together"],
         },
       },
@@ -453,7 +459,10 @@ export default {
           '"You\'re busy again today? Yeah, same for me. You should take a break sometimes too."',
         responses: {
           kind: ["Promise to actually rest", "Say the same goes for him"],
-          playful: ["Ask when he last took one", "Point out the double standard"],
+          playful: [
+            "Ask when he last took one",
+            "Point out the double standard",
+          ],
           bold: ["Say he never rests either", "Demand he rest too"],
           neutral: ["Nod, say nothing", "Take the advice, move on"],
         },
@@ -522,9 +531,10 @@ export default {
         },
       },
       {
-        line: "He's hauling a huge box across the courtyard at an hour nobody should be hauling anything. \"Jo wanted a new trick for the show. Just finished it. Yaaawn...\"",
+        line: 'He\'s hauling a huge box across the courtyard at an hour nobody should be hauling anything. "Jo wanted a new trick for the show. Just finished it. Yaaawn..."',
         approach: "Ask what's in the box",
-        greeting: "\"Saw-the-assistant-in-half trick. Don't worry, nobody gets sawed. I tested it. Twice.\"",
+        greeting:
+          '"Saw-the-assistant-in-half trick. Don\'t worry, nobody gets sawed. I tested it. Twice."',
         responses: {
           kind: ["Take one end of the box", "Tell him to get some sleep"],
           playful: ["Volunteer as the assistant", "Ask who he tested it on"],
@@ -533,9 +543,10 @@ export default {
         },
       },
       {
-        line: "\"Ahh... finally I can eat.\" He's got a small sandwich and a long list. \"This is breakfast and lunch. Still got work this afternoon.\"",
+        line: '"Ahh... finally I can eat." He\'s got a small sandwich and a long list. "This is breakfast and lunch. Still got work this afternoon."',
         approach: "Sit down while he eats",
-        greeting: "\"Stay a few minutes. I eat faster when someone's talking. Tell me anything.\"",
+        greeting:
+          '"Stay a few minutes. I eat faster when someone\'s talking. Tell me anything."',
         responses: {
           kind: ["Share half your lunch", "Tell him to eat slower"],
           playful: ["Tell him a long, dull story", "Steal a bite"],
@@ -544,9 +555,10 @@ export default {
         },
       },
       {
-        line: "\"You haven't seen Shion around here, have you?\" He's a little out of breath. \"Toward the school building? Sigh... I'm too late.\"",
+        line: '"You haven\'t seen Shion around here, have you?" He\'s a little out of breath. "Toward the school building? Sigh... I\'m too late."',
         approach: "Help him look for Shion",
-        greeting: "\"Thanks. If we find him mid-fight, you grab his sleeve. I'll apologize to whoever.\"",
+        greeting:
+          '"Thanks. If we find him mid-fight, you grab his sleeve. I\'ll apologize to whoever."',
         responses: {
           kind: ["Say you'll find him together", "Ask if he's eaten"],
           playful: ["Ask if Shion's on a leash", "Bet he's picking a fight"],
@@ -555,9 +567,10 @@ export default {
         },
       },
       {
-        line: "\"Heading to Vagastrom's garage to service the equipment,\" he says, shouldering his toolbox. \"If I don't check in now and then, it gets dangerous.\"",
+        line: '"Heading to Vagastrom\'s garage to service the equipment," he says, shouldering his toolbox. "If I don\'t check in now and then, it gets dangerous."',
         approach: "Tag along to the garage",
-        greeting: "\"Sure. Stay clear of the lift, though. Alan's fine with visitors. The lift isn't.\"",
+        greeting:
+          "\"Sure. Stay clear of the lift, though. Alan's fine with visitors. The lift isn't.\"",
         responses: {
           kind: ["Carry his toolbox", "Say you'll stay out of the way"],
           playful: ["Ask to ride the lift", "Ask what counts as dangerous"],
@@ -568,7 +581,8 @@ export default {
       {
         line: "\"Tomorrow's test? Eh... we'll manage somehow.\" He glances at your notes. \"If you're that worried, I can predict what'll be on it.\"",
         approach: "Ask for his prediction",
-        greeting: "\"Chapters four and six. Maybe a trick question on seven. Don't ask how I know. I fixed the copier.\"",
+        greeting:
+          '"Chapters four and six. Maybe a trick question on seven. Don\'t ask how I know. I fixed the copier."',
         responses: {
           kind: ["Thank him for the tip", "Offer to study together"],
           playful: ["Ask what else he knows", "Call it cheating, sort of"],
@@ -577,9 +591,10 @@ export default {
         },
       },
       {
-        line: "\"Ugh... I reek like the seaside.\" He's damp to the knees. \"Laundry ASAP. Might as well service the washing machine too.\"",
+        line: '"Ugh... I reek like the seaside." He\'s damp to the knees. "Laundry ASAP. Might as well service the washing machine too."',
         approach: "Ask what happened",
-        greeting: "\"Repair call on the water. Don't ask. I'll tell you once I've showered.\"",
+        greeting:
+          "\"Repair call on the water. Don't ask. I'll tell you once I've showered.\"",
         responses: {
           kind: ["Tell him to shower first", "Say you'll wait"],
           playful: ["Hold your nose", "Say it's a good cologne"],
@@ -590,7 +605,8 @@ export default {
       {
         line: "There's a fresh scrape on his hand. \"This? Shion did it earlier. I'll be fine. Spit on it and it'll heal.\"",
         approach: "Look at his hand",
-        greeting: "\"It's nothing. ...Okay, fine, you can look. It's still nothing.\"",
+        greeting:
+          "\"It's nothing. ...Okay, fine, you can look. It's still nothing.\"",
         responses: {
           kind: ["Clean it for him", "Get him a bandage"],
           playful: ["Offer to spit on it", "Ask what Shion did this time"],
@@ -601,7 +617,8 @@ export default {
       {
         line: "\"You guys can clock out. I'll handle this.\" The others leave. He turns back to the bench, then sees you're still there.",
         approach: "Stay and help",
-        greeting: "\"You didn't have to stay. ...Alright. One more push. With two of us, it's half a push.\"",
+        greeting:
+          "\"You didn't have to stay. ...Alright. One more push. With two of us, it's half a push.\"",
         responses: {
           kind: ["Take whatever job he hands you", "Say you wanted to stay"],
           playful: ["Say you'll supervise", "Clock yourself in"],
@@ -610,9 +627,10 @@ export default {
         },
       },
       {
-        line: "\"Night.\" He pauses. \"If you're worried about waking up tomorrow, I can lend you my special alarm clock. Extra-loud.\"",
+        line: '"Night." He pauses. "If you\'re worried about waking up tomorrow, I can lend you my special alarm clock. Extra-loud."',
         approach: "Borrow the alarm clock",
-        greeting: "\"Built it myself. Don't put it next to your head. I mean it.\"",
+        greeting:
+          '"Built it myself. Don\'t put it next to your head. I mean it."',
         responses: {
           kind: ["Thank him for lending it", "Say you'll bring it back"],
           playful: ["Ask how loud extra-loud is", "Say you'll use it on Shion"],
@@ -621,9 +639,10 @@ export default {
         },
       },
       {
-        line: "\"Whoa!\" A severed head swings up into your face. He's laughing. \"Hahaha, did I scare you? New prop. For Shion's Heebie-Jeebie House.\"",
+        line: '"Whoa!" A severed head swings up into your face. He\'s laughing. "Hahaha, did I scare you? New prop. For Shion\'s Heebie-Jeebie House."',
         approach: "Pretend you weren't scared",
-        greeting: "\"You jumped. I saw it. Don't worry, I jumped too when I finished the eyes.\"",
+        greeting:
+          '"You jumped. I saw it. Don\'t worry, I jumped too when I finished the eyes."',
         responses: {
           kind: ["Say it's really well made", "Ask how long it took"],
           playful: ["Scream on a delay", "Name the head"],
@@ -634,18 +653,22 @@ export default {
       {
         line: "\"Don't tell me you're heading home now?\" He's already reaching for his coat. \"Can't be helped. I'll walk you. I wanted to do an inspection anyway.\"",
         approach: "Let him walk you back",
-        greeting: '"Railings, lights, that step by the fountain. ...And you get home. Two birds."',
+        greeting:
+          '"Railings, lights, that step by the fountain. ...And you get home. Two birds."',
         responses: {
           kind: ["Say you're glad of the company", "Point out the loose step"],
-          playful: ["Ask what you're inspecting", "Grade the railings with him"],
+          playful: [
+            "Ask what you're inspecting",
+            "Grade the railings with him",
+          ],
           bold: ["Say the inspection's an excuse", "Take the long way"],
           neutral: ["Walk beside him", "Head out together"],
         },
       },
       {
-        line: "\"Hm? There's a bug on your head...\" He leans in and squints. \"Nope. My mistake. Sorry for stopping you.\"",
+        line: '"Hm? There\'s a bug on your head..." He leans in and squints. "Nope. My mistake. Sorry for stopping you."',
         approach: "Ask if he's sure",
-        greeting: "\"Yeah. It was a leaf. ...Hold still, it's still there.\"",
+        greeting: '"Yeah. It was a leaf. ...Hold still, it\'s still there."',
         responses: {
           kind: ["Hold still for him", "Thank him for checking"],
           playful: ["Ask if he made up the bug", "Say you'll keep the leaf"],
@@ -654,13 +677,17 @@ export default {
         },
       },
       {
-        line: "\"...Okay. That should do it.\" He sits back from a repair, grinning at the hour. \"Getting called out this late made me laugh. But hey, it's fixed.\"",
+        line: '"...Okay. That should do it." He sits back from a repair, grinning at the hour. "Getting called out this late made me laugh. But hey, it\'s fixed."',
         approach: "Sit with him a minute",
-        greeting: "\"Good work, huh? Mine, I mean. You just watched. That's work too, I guess.\"",
+        greeting:
+          '"Good work, huh? Mine, I mean. You just watched. That\'s work too, I guess."',
         responses: {
           kind: ["Say he did great", "Tell him to rest now"],
           playful: ["Claim half the credit", "Ask who called this late"],
-          bold: ["Say watching was hard work", "Tell him to turn his phone off"],
+          bold: [
+            "Say watching was hard work",
+            "Tell him to turn his phone off",
+          ],
           neutral: ["Pack up his tools", "Stretch your legs"],
         },
       },
@@ -893,10 +920,10 @@ export default {
     close: [
       '"Why do I always get sleepy around you?" **{name}** asks {user}, and doesn\'t wait for an answer.',
       "**{name}** lets his phone ring out for {user}. Whoever's broken something can wait.",
-      '"Stay a sec. You\'re the only one who doesn\'t need something fixed." **{name}** says it to {user} like a complaint.',
+      "\"Stay a sec. You're the only one who doesn't need something fixed.\" **{name}** says it to {user} like a complaint.",
     ],
     bound: [
-      '"I love you. ...Okay, that\'s the sentence. Now tell me about your day." **{name}** doesn\'t let go of {user}\'s hand.',
+      "\"I love you. ...Okay, that's the sentence. Now tell me about your day.\" **{name}** doesn't let go of {user}'s hand.",
       "**{name}** rests his forehead on {user}'s shoulder, yawns, and stays right there.",
       '"I\'ll walk you back. I wanted to do an inspection anyway." **{name}** falls into step beside {user}.',
     ],

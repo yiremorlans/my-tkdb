@@ -44,39 +44,40 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: A word about the last mission, before it becomes an official report.",
-        "After every mission, I take the report up to the captain's room, and more often than not you come with me. Jin gives his verdict from his chair, I give the details, and you hand the details back to me with {favResponse}. Not to him. To me. I noticed after the second debrief and told myself it was nothing. It has happened enough times since that pretending costs more effort than admitting it.\n\nHe has never said a word about it. He would sooner set fire to his own paperwork than say so. But I have served that man long enough to know when something has landed, and this has landed more than once. I am telling you because somebody in that room ought to be honest, and it is evidently not going to be him.",
+        "**{firstName}**: A small matter of house business. Yours, as it happens, which is why I'd rather it didn't come up in the common room.",
+        "Half of Frostheim comes to me in the course of a day. A book that was never returned, a first year who has upset the captain, a dispute nobody else wants to touch. I sort it, they go on their way, and nobody gives it another thought. That's how it ought to be.\n\nYou have never once come to me. You meet everything with {favResponse}, deal with your own trouble, and carry on as though there was none. It hasn't escaped my notice that lately there has been rather a lot of it.",
+        "So consider this formal notice. Whatever you need, a hand with your work, a word in the right ear, a matter handled quietly, you may bring it to me. You won't need to explain, and you won't owe me anything for it.\n\nMy services are technically spoken for by our king. I assure you he won't miss an hour or two. I'm told I'm rather good at this.",
       ],
       choice: {
         prompt:
-          "Well? I have just handed you a good deal more honesty than my position allows. I should like to know what you intend to do with it.",
+          "Well? The next time you're in difficulty, I would much prefer to hear it from you than to happen to overhear it.",
         options: [
           {
             key: "kind",
-            label: "Ask if this troubles him",
+            label: "Say you'll come to him",
             style: 3,
             close:
-              "*A pause, longer than his usual.*\n\nTroubled is not the word I would use. Aware, perhaps, and uncertain what to do with the awareness. He would not thank me for admitting even that much, so let us agree I did not.\n\nYou look concerned enough for both of us. Do stop, it rather undoes the point of my restraint.",
+              "Good. That's all I wanted to hear.\n\nI'll admit it's rather pleasant, being sought out by name instead of by title. Whatever it turns out to be, you'll find me ready for it.",
           },
           {
             key: "playful",
-            label: "Tease him about noticing",
+            label: "Ask what the catch is",
             style: 1,
             close:
-              "Honestly. I file everything, it is rather the job description. I would have noticed this even if I had wanted not to, which, for the record, I did try.\n\nYou have made that considerably harder. I hope you are pleased with yourself.",
+              "A catch. Honestly. I offer my services free of charge and you go looking for the poison.\n\nThere's no catch. If it would set your mind at ease, I could invent one. I'm told I'm quite good at that, too.",
           },
           {
             key: "bold",
-            label: "Say you can't help it",
+            label: "Hand him a problem now",
             style: 4,
             close:
-              "*He goes quiet, the kind of quiet that from him counts as a full confession.*\n\nNo. I don't imagine you can. I find I am not half as troubled by that as I ought to be, given whose favor I appear to be stealing.\n\nI shall have to think about what that means. Do not ask me to think aloud about it tonight.",
+              "Already. Well, you certainly don't let an offer go to waste.\n\nSend me the particulars. It will be dealt with by morning, and you may thank me for it in person.",
           },
         ],
       },
       keepsake: {
-        emoji: "📋",
-        line: "The line in his report about you that he decided not to file.",
+        emoji: "🛎️",
+        line: "{firstName}'s standing offer: bring it to him, whatever it is.",
       },
     },
 
