@@ -70,40 +70,39 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: A confession, offered at an hour when confessions are cheapest. 💌🕯️",
-        "First, one piece of business. As your self-appointed advisor in matters of the heart, I must ask: Rui, or Lyca. I am dying to be proven right, figuratively; I no longer do the other kind.\n\nRui is somewhere in the house right now, developing a headache over the mere fact that I have asked. 🤕😌 That is the appeal of asking.\n\nOr you could say me, and spare the boy his headache. Purely as a mercy. 😇🤝",
-        "That was not the confession. This is.\n\nYou answer me with {favResponse}, every time, without the small recalculation I get from everyone who learns what I am. The living flinch. A quarter-second half-step back, weight onto the back foot. I have never once been wrong about it.\n\nYou Have Not Done It. Not once in {timesMet}. I find the absence more interesting than anything else in this building. 🤔🔍",
+        "**{firstName}**: I Have Been Keeping Track Of Something. Do Not Be Alarmed. I Know Everything, It Is One Of My Few Hobbies. 🔍😌",
+        "With Me, You Lead With {favResponse}. Every Time. 🖤🖤\n\nNever With Rui Or Lyca. I Have Watched Closely. 👀🕯️",
+        "As Your Love Advisor, This Is Very Inconvenient. I Had Rui Down As The Favorite. 💌😩\n\nSo I Will Ask Properly, At Last. 🙏🕯️",
       ],
       choice: {
-        prompt:
-          "Well? Am I to be flattered or frightened? I have a fondness for both. 😏🖤",
+        prompt: "Rui, Or Lyca? One Name Will Do. 🤔🖤",
         options: [
           {
             key: "kind",
-            label: "Say he's not frightening",
+            label: "Say they're all special to you",
             style: 3,
             close:
-              "How very disappointing.\n\n*A long pause.*\n\n...And how very restful. I had forgotten there was such a thing as being restful at somebody. Do carry on. 😌☺️",
+              "All Of Us? How Diplomatic. 😌🖤\n\nRui Would Approve Of That Answer. Which Is Exactly Why I Do Not. 😏😏\n\nI Will Ask Again Next Time, And I Dare You To Pick One. 🖤🦇",
           },
           {
             key: "playful",
-            label: "Do the step back on purpose",
+            label: "Say Rui, then take it back",
             style: 1,
             close:
-              "You did not.\n\nYou did. You did it deliberately and badly and I have not laughed like that in a while, 😂😂 so I will have to allow it.",
+              "You Had Me For One Terrible Second. 😱😱\n\nNow Say The Right Name, I Dare You. Quietly, Though. 🤫🖤\n\nThis Stays Between Us. I Would Hate For Rui Or Lyca To Feel Left Out. 🙏😇",
           },
           {
             key: "bold",
-            label: "Ask what he'd do if you had",
+            label: "Admit you like him best",
             style: 4,
             close:
-              "Nothing whatsoever. That is the tragedy of it.\n\nI would have been charming, shown you out, and thought about it for a very long time. That is the entire repertoire. A long life and no second move. 😔🎭",
+              "Me? 😳😳\n\nHow Delightful. I Did Not Think You Had It In You. 🥰🖤\n\nCome Here And Prove It, Then. I Am Not Letting You Take That Back. 😏🦇",
           },
         ],
       },
       keepsake: {
-        emoji: "🪞",
-        line: "The quarter-second step back that you never once took.",
+        emoji: "💌",
+        line: "The love advice he gave, and the dare he took from your answer.",
       },
     },
 
@@ -469,7 +468,10 @@ export default {
         responses: {
           kind: ["Say you like them both", "Laugh off his conclusions"],
           playful: ["Name someone else entirely", "Make him guess"],
-          bold: ["Say it's none of his business", "Say neither, and look at him"],
+          bold: [
+            "Say it's none of his business",
+            "Say neither, and look at him",
+          ],
           neutral: ["Shrug, say nothing", "Change the subject"],
         },
       },

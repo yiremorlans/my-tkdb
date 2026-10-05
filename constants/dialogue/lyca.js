@@ -49,10 +49,10 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: Your scents gone squeezy. Somethings wrong",
-        "Every time you come around I get your scent first, then {favResponse}. Don't matter what mood I catch you in. I stopped noticing it a while back. It's just you now.\n\nToday you still gave me {favResponse}. Same words. But underneath it your scent went all squeezy, like the time you cried and never told me why.\n\nNobody else can smell that on you. I can. My nose is better than anybody's, so I'm not gonna pretend I didn't.",
+        "Every time you come around I get your scent first, then {favResponse}. The words never change. Your scent does. That's how I know what mood I caught you in.\n\nToday you still gave me {favResponse}. But underneath it your scent went all squeezy, like the time you cried and never told me why.\n\nNobody else can smell that on you. I can. I noticed, so I'm not gonna pretend I didn't.",
       ],
       choice: {
-        prompt: "So what happened. You don't gotta tell me the whole thing",
+        prompt: "How come. You don't gotta say it nice",
         options: [
           {
             key: "kind",
@@ -73,7 +73,7 @@ export default {
             label: "Tell him you need a hug",
             style: 4,
             close:
-              "I get that one\n\nTen seconds. That's how long I can do. But I'm coming over, don't argue, I'm already putting my shoes on\n\nI can stay till you feel better",
+              "A hug. Fine\n\nTen seconds. That's how long I can do. But I'm coming over. I'm already putting my shoes on\n\nI can stay till you feel better",
           },
         ],
       },
@@ -872,7 +872,7 @@ export default {
     known: [
       '"You called me. So you want something." **{name}** waits for {user} to say what it is.',
       '{user} calls, and **{name}** comes over with a book under his arm. "Wait. Before you say anything. What\'s this word?"',
-      '"Why\'d you call me? ...It\'s okay if there\'s no reason. I just wanna know." **{name}** asks {user}.',
+      "\"Why'd you call me? ...It's okay if there's no reason. I just wanna know.\" **{name}** asks {user}.",
     ],
     warm: [
       "**{name}** knows the voice before he's found the face, and comes straight to {user}.",
@@ -880,7 +880,7 @@ export default {
       "{user} calls out, and **{name}** falls in at their side, exactly one step behind.",
     ],
     spark: [
-      '"H-Hey, don\'t come so close!" **{name}** says it to {user}, and doesn\'t step back either.',
+      "\"H-Hey, don't come so close!\" **{name}** says it to {user}, and doesn't step back either.",
       "{user} says the name, and **{name}**'s ears do something he has no control over.",
       "**{name}** had practiced a greeting for {user}. It comes out stiff and completely sincere.",
     ],
