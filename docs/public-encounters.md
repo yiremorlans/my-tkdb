@@ -1,8 +1,8 @@
 # Spec: Public "call out" encounters
 
 Status: **implemented** (code merged; the §1 prerequisites are still a manual,
-one-time setup step per deployment)
-Last updated: 2026-09-02
+one-time setup step per deployment). §17 (call scenes) is **planned**, not built.
+Last updated: 2026-10-05
 
 ### Where the implementation departs from this document
 
@@ -1407,3 +1407,222 @@ New `db/supabase.js` functions:
   bound. If some milestones should be one-time ("first walk home"), add a
   `unique` flag and have `record_encounter_milestone()` cap `total` at 1 (or
   `DO NOTHING`) for those keys.
+
+---
+
+## 17. Call scenes (planned, 2026-10-05)
+
+A rare variant of the win reveal. On a scene hit the channel gets a public,
+interactive moment instead of the usual reveal embed: the character's
+expression portrait, a line, and response buttons only the winner can press.
+Everything here is public. There is no private step.
+
+### 17.1 Trigger
+
+- After a correct `/call`, roll `CALL_SCENE_CHANCE = 0.1` (one global
+  constant in `constants/publicEncounters.js`).
+- The roll only counts when the character has at least one `callScenes`
+  entry for the tier in play (`winnerLineBucket(tier)`) **and** every face
+  that scene references exists under `assets/expressions/<id>/`. Otherwise,
+  or on a miss, today's reveal runs unchanged.
+- Expression art is being added for the whole cast (only benkei, cornelius
+  and yuri exist today; cornelius isn't an encounter character). The build
+  does **not** require scenes or art for every character. A character with
+  neither just never rolls.
+
+### 17.2 What the channel sees
+
+1. **The silhouette post** is edited exactly as it is today to clear the
+   text above the attachment (`content: null`), but **no reveal embed is
+   added**. The silhouette image stays as it is.
+2. **A new public message** (the scene) is posted in the encounter
+   channel as a reply to the silhouette post (`message_reference`). It is a
+   Components V2 message laid out like the Chancellor's audience
+   (`chancellorMessage` in `missions/shared.js`), chosen over an embed for
+   its larger thumbnail:
+   - one Container with `accent_color: level.color`, holding a Section:
+     `line` as a Text Display, and the expression `face` as the Thumbnail
+     accessory (`media.url` =
+     `${BASE_URL}/assets/expressions/<id>/<face>`, already served by the
+     `/assets` static route, so no attachment is uploaded). As in
+     `chancellorMessage`, a non-absolute URL (`BASE_URL` unset) falls back
+     to a bare Text Display and keeps the text.
+   - one Action Row of four buttons, in this order: kind, playful, bold,
+     date
+   The portrait shows who it was, so the post reads as solved without a
+   "That was X" line.
+
+The ephemeral `/call` ack to the winner is unchanged.
+
+### 17.3 Buttons
+
+| Slot | Label | Custom ID | State |
+|---|---|---|---|
+| kind | `responses.kind` (authored) | `scene:<encounterId>:kind` | enabled |
+| playful | `responses.playful` (authored) | `scene:<encounterId>:playful` | enabled |
+| bold | `responses.bold` (authored) | `scene:<encounterId>:bold` | enabled |
+| date | `Ask on a date` (fixed constant) | `scene:<encounterId>:date` | **always disabled** |
+
+The date button replaces `neutral` and is not authored per scene. Its lock
+is the button's `emoji` field, not part of the label:
+
+- winner below Close Friend (affinity < 150): `🔒` + `Ask on a date`, disabled
+- Close Friend and above (Close Friend, Confidant, Devoted, Soulbound): no
+  emoji, still disabled. It reads as "unlocked, coming soon".
+
+It isn't wired to anything yet, and it's shown at every tier, Stranger
+included, for every character. A skip list (e.g. Benkei) is a decision for
+when the date feature itself is designed. The handler rejects a `:date`
+click anyway in case the button is ever enabled by mistake.
+
+### 17.4 Clicking
+
+- **Winner check:** the handler loads the encounter by id and compares the
+  clicker to `solved_by`. Anyone else gets an ephemeral
+  `You're not part of this conversation.` *(Q23 default, wording not yet
+  confirmed)* and nothing changes.
+- **One click:** the first valid click claims the scene atomically
+  (`UPDATE ... SET scene_resolved_at = now() WHERE id = $1 AND
+  scene_resolved_at IS NULL RETURNING ...`). A losing race, or a click on a
+  scene that's already closed, gets a quiet ephemeral ack and no edit.
+- **Flavor only:** a click never changes affinity, the same as every other
+  part of `/call` (see the 2026-09-03 farming audit). The boost was already
+  granted at the win.
+- **The edit** (an `UPDATE_MESSAGE` response to the click):
+  - the Thumbnail accessory swaps to `replyFaces[choice]` if there is one, otherwise
+    it stays on `face`
+  - the text becomes `line`, then `replies[choice]`, then the milestone
+    afterline, separated by blank lines. The chosen label isn't echoed,
+    since the reply carries it *(Q22 default)*.
+  - **the button row is removed**
+- **Tracking:** the chosen response type is recorded through the existing
+  engagement/command-usage helpers. Date-button impressions aren't tracked.
+
+### 17.5 Milestone
+
+It's picked and recorded at the win, as today (`pickMilestone`,
+`recordEncounterMilestone`), so a scene nobody answers still credits the
+moment. It's only *shown* when the scene closes, either on the click or on
+the closeout below. The picked type is stored on the encounter row so the
+click and the closeout can render the same afterline.
+
+### 17.6 Unanswered scenes
+
+When the next encounter spawns in a guild, any earlier scene in that guild
+with `scene_message_id` set and `scene_resolved_at` null is closed out
+before the new silhouette posts. The closeout keeps the face, removes the
+button row, and appends the milestone afterline under `line`, then sets
+`scene_resolved_at` *(Q24 default)*. There's no timer of its own. A guild
+whose encounters are disabled keeps its last scene open until encounters
+resume, which is acceptable.
+
+### 17.7 Content: `callScenes`
+
+A new per-character export, keyed by the same registers as `winnerLines`
+(`WINNER_LINE_BUCKETS`):
+
+```js
+export const callScenes = {
+  warm: [
+    {
+      face: "default.png",                 // assets/expressions/<id>/
+      line: "...{user}...",                // public; winner-line rules
+      responses: { kind: "...", playful: "...", bold: "..." },
+      replies: { kind: "...", playful: "...", bold: "..." },
+      replyFaces: { playful: "smirk.png" }, // optional, per response
+    },
+  ],
+};
+```
+
+Writing rules:
+
+- `line` follows every `winnerLines` invariant (`_shared.js:33-62`): it
+  names `{user}` and the character, names no place and no house venue, and
+  ends with the character staying with the caller, because a milestone
+  follows it.
+- The three labels answer `line` directly (no restated approach, no
+  trailing adverbs, no default "Thank him"), and each is at most 30
+  characters.
+- Replies are written for each scene, in the character's voice, and must
+  read cleanly before the milestone afterline. The usual house rules and
+  the voice-check skill apply.
+- Placeholders are the same set as `WINNER_LINE_PLACEHOLDERS`.
+- For a pmOnly character (Towa), daytime needs a wordless scene pool
+  (`daytimeCallScenes`) or no daytime scenes at all. **Open: decide before
+  writing Towa's scenes.**
+
+`validateContent.js`:
+
+- add `callScenes` (and `daytimeCallScenes`) to the allowed export keys
+- error on: an unknown register, a missing or non-file `face` /
+  `replyFaces` value, a missing `kind`/`playful`/`bold` in `responses` or
+  `replies`, any `neutral` key, a label over 30 characters, an unknown
+  placeholder, or a `line` without `{user}` or the character's name
+- no error when a character has no `callScenes` at all
+
+### 17.8 Data model
+
+Migration `027_call_scenes.sql`, nullable columns on `public_encounters`:
+
+| Column | Type | Purpose |
+|---|---|---|
+| `scene_message_id` | TEXT | The scene post. Null means the win used the normal reveal. |
+| `scene_tier` | TEXT | Register the scene was drawn from |
+| `scene_index` | INT | Index into `callScenes[scene_tier]` |
+| `scene_milestone` | TEXT | Milestone type picked at the win |
+| `scene_user_name` | TEXT | Winner display name, to re-fill `{user}` on edit |
+| `scene_resolved_at` | TIMESTAMPTZ | Set by the click or the closeout. It's the one-click arbiter. |
+
+Partial index on `(guild_id) WHERE scene_message_id IS NOT NULL AND
+scene_resolved_at IS NULL` for the closeout lookup. These columns are pruned
+with the row at 90 days like everything else.
+
+Storing tier and index means a content edit that reorders a pool between
+the win and the click can pair a line with the wrong reply. That's
+accepted: the window is short and the content is static between deploys.
+
+### 17.9 Code touch points
+
+- `constants/publicEncounters.js`: `CALL_SCENE_CHANCE`, `DATE_BUTTON_LABEL`,
+  `callScenePool(bucket, characterId, { daytime })`, scene draw.
+- `publicEncounters.js` `handleCall`: roll and draw before `afterReply`. In
+  `afterReply`, on a hit, do the silhouette edit with no embed, post the
+  scene, and store the columns. Add a new `handleSceneClick(body)` and a
+  closeout step in `spawnEncounter`.
+- `app.js`: route the `scene:` custom_id prefix next to `ward:`.
+- `discordRest.js`: a post helper with `message_reference` if one doesn't
+  exist yet.
+- `db/` + `storage.js`: migration plus the claim, store and closeout
+  queries.
+- `commands.js` + `handleEncounterDev`: a `scene` boolean on
+  `/encdev spawn`. The force flag lives in an in-memory Map keyed by
+  encounter id (dev tooling, so losing it on restart is fine) and makes that
+  encounter's win skip the roll.
+- `constants/dialogue/<id>.js`: `callScenes`, starting with **Yuri**
+  (default + serious faces) and **Benkei**.
+- Tests: roll gating (no scenes / missing art means a normal reveal), the
+  lock state at 149/150, the winner check, one-click claim, the closeout
+  on spawn, and the validator cases above.
+
+### 17.10 Decisions locked in
+
+- **Public, not ephemeral:** the buttons are on the public scene, and the
+  winner check enforces who can use them.
+- **The silhouette stays.** The text above it is cleared as today, it gets no
+  embed, and the scene is a separate reply.
+- **Three authored responses plus a fixed date button**, which is always
+  disabled for now. The lock shows below Close Friend and is gone at Close
+  Friend and above.
+- **One click, flavor only**, with no affinity change. The button row is
+  removed after it.
+- **Milestone recorded at the win**, shown when the scene closes.
+- **Unanswered scenes close when the next spawn happens.**
+- **Scope:** call scenes only. Wiring the date button and other encounter
+  changes are out of scope for this round.
+
+### 17.11 Open
+
+- Q22–Q24 defaults above (no echo of the chosen label; non-winner wording;
+  closeout appearance) are assumed, not confirmed.
+- Towa's daytime scenes (§17.7).

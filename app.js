@@ -84,6 +84,15 @@ const app = express();
 // Get port, or default to 3000
 const PORT = process.env.PORT || 3000;
 
+// Art Discord fetches by URL and reuses as-is: public reveal thumbnails, mission
+// messenger cats, and the Chancellor's audience portrait. Cached so the media
+// proxy and clients keep them instead of revalidating on every view. Edited
+// art can show stale for up to maxAge; rename the file to bust it.
+const CACHED_ASSET_DIRS = ['cards', 'sprites', 'expressions'];
+for (const dir of CACHED_ASSET_DIRS) {
+  app.use(`/assets/${dir}`, express.static(`assets/${dir}`, { maxAge: '30d' }));
+}
+
 // Serve character/background art so Discord can load it by URL in message components
 app.use('/assets', express.static('assets'));
 
