@@ -109,20 +109,19 @@ export function absoluteAssetUrl(relPath, what) {
   return null;
 }
 
-// A V2 container holding `text` (one string, or up to three stacked as
-// separate Text Displays), with the portrait at `url` as a thumbnail beside
-// it, or the bare text when there's no usable URL. The Chancellor's audience
-// and the /call scenes are both laid out this way.
+// A V2 container holding `text`, with the portrait at `url` as a thumbnail
+// beside it, or the bare text when there's no usable URL. The Chancellor's
+// audience and the /call scenes are both laid out this way.
 export function portraitContainer(url, text, color) {
-  const textDisplays = [text].flat().map((content) => ({ type: MessageComponentTypes.TEXT_DISPLAY, content }));
+  const textDisplay = { type: MessageComponentTypes.TEXT_DISPLAY, content: text };
   const body = url
-    ? [{
+    ? {
         type: MessageComponentTypes.SECTION,
-        components: textDisplays,
+        components: [textDisplay],
         accessory: { type: MessageComponentTypes.THUMBNAIL, media: { url } },
-      }]
-    : textDisplays;
-  return { type: MessageComponentTypes.CONTAINER, accent_color: color, components: body };
+      }
+    : textDisplay;
+  return { type: MessageComponentTypes.CONTAINER, accent_color: color, components: [body] };
 }
 
 // An errand's progress, as the {unsigned targets, signed count, required

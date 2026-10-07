@@ -637,8 +637,7 @@ describe('call scenes', () => {
     const section = container.components[0];
     return {
       accent: container.accent_color,
-      text: section.components.at(-1).content,
-      texts: section.components.map((c) => c.content),
+      text: section.components[0].content,
       face: section.accessory.media.url,
       buttons: row?.components ?? null,
     };
@@ -777,15 +776,16 @@ describe('call scenes', () => {
 
     const first = await handleSceneClick(clickBody(), '7', 'kind', NOW);
     assert.equal(first.response.type, 7, 'UPDATE_MESSAGE');
-    const { text, texts, face, buttons } = sceneParts(first.response.data);
+    const { text, face, buttons } = sceneParts(first.response.data);
     // Benkei ranks kind 2 (fave) -> close at Stranger.
     assert.match(face, /\/benkei\/close\.png$/);
     assert.equal(buttons, null, 'the button row is gone');
     // The opening line stays (so the portrait doesn't shift) and the reaction
     // stacks under it: the same love pool /roam draws for a favorite pick at
     // Stranger, then the gain.
-    assert.deepEqual(texts, [...sceneParts(posts[0].body).texts, text]);
-    const match = text.match(/^\+1 — (.*)$/s);
+    const opening = sceneParts(posts[0].body).text;
+    assert.ok(text.startsWith(`${opening}\n\n`), 'a blank line after the opening line');
+    const match = text.slice(opening.length + 2).match(/^\+1 — (.*)$/s);
     assert.ok(match, `text: ${text}`);
     assert.ok(REACTION_LINES.kind.early.love.includes(match[1]), `reaction: ${match[1]}`);
     assert.equal(relationship().affinity, 1);
@@ -799,29 +799,33 @@ describe('call scenes', () => {
   it('gives a liked answer +1 and the least-liked one nothing', async () => {
     await winScene();
     const liked = await handleSceneClick(clickBody({ choice: 'playful' }), '7', 'playful', NOW);
-    assert.match(sceneParts(liked.response.data).text, /^\+1 — /);
+    assert.match(sceneParts(liked.response.data).text, /\n\n\+1 — /);
     assert.equal(relationship().affinity, 1);
 
     await winScene();
     const flat = await handleSceneClick(clickBody({ choice: 'bold' }), '7', 'bold', NOW);
     const { text, face } = sceneParts(flat.response.data);
-    assert.ok(!/^[+-]?\d/.test(text), 'no +0 on a least-liked pick');
+    assert.ok(!/\n\n[+-]?\d/.test(text), 'no +0 on a least-liked pick');
     assert.match(face, /\/benkei\/serious\.png$/);
     assert.equal(relationship()?.affinity ?? 0, 0);
   });
 
   it('posts the gallery layout as text over a full-size portrait and keeps it through the click', async () => {
     await winScene({ layout: 'gallery' });
-    const [text, gallery, row] = posts[0].body.components;
-    assert.equal(text.type, 10, 'Text Display first, no container');
+    const [container, row] = posts[0].body.components;
+    assert.equal(container.type, 17, 'in a container');
+    assert.equal(typeof container.accent_color, 'number');
+    const [text, gallery] = container.components;
+    assert.equal(text.type, 10, 'Text Display first');
     assert.equal(gallery.type, 12, 'then a Media Gallery');
-    assert.match(gallery.items[0].media.url, /\/benkei\/default\.png$/);
+    assert.match(gallery.items[0].media.url, /\/expressions\/benkei\/default\.png$/);
     assert.equal(row.type, 1);
 
     const { response } = await handleSceneClick(clickBody(), '7', 'kind', NOW);
-    const [opening, reaction, answered, ...rest] = response.data.components;
-    assert.equal(opening.content, text.content, 'the opening line stays');
-    assert.match(reaction.content, /^\+1 — /);
+    const [answeredContainer, ...rest] = response.data.components;
+    const [answeredText, answered] = answeredContainer.components;
+    assert.match(answeredText.content, /\n\n\+1 — /);
+    assert.ok(answeredText.content.startsWith(`${text.content}\n\n`), 'the opening line stays');
     assert.match(answered.items[0].media.url, /\/benkei\/close\.png$/);
     assert.deepEqual(rest, [], 'the button row is gone');
   });
@@ -831,7 +835,8 @@ describe('call scenes', () => {
     edits.length = 0;
     await spawnEncounter(guildRow(), NOW, { reanchor: false });
     const closeout = edits.find((e) => e.messageId === 'message-1');
-    assert.deepEqual(closeout.body.components.map((c) => c.type), [10, 12]);
+    assert.deepEqual(closeout.body.components.map((c) => c.type), [17]);
+    assert.deepEqual(closeout.body.components[0].components.map((c) => c.type), [10, 12]);
   });
 
   it('never acts on the date button', async () => {

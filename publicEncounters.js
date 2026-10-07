@@ -874,28 +874,33 @@ export async function handleCall(body, now = new Date()) {
 // The two scene layouts, still being compared (/encdev spawn scene:<layout>).
 // `thumbnail` is the Chancellor's audience: the text with the portrait as a
 // thumbnail, in a container carrying the winner's level color. `gallery` reads
-// like a /roam or /meet: the text above a full-size portrait, no container.
+// like a /roam or /meet: the text above a full-size portrait, in the same
+// container.
 export const CALL_SCENE_LAYOUTS = ['thumbnail', 'gallery'];
 
-// A scene's body for `layout`: `texts` (one string or a list) and the portrait
-// at `url`, or the bare text when there's no usable URL.
-function sceneBody(layout, url, texts, color) {
-  if (layout !== 'gallery') return [portraitContainer(url, texts, color)];
-  return [
-    ...[texts].flat().map((content) => ({ type: MessageComponentTypes.TEXT_DISPLAY, content })),
-    ...(url ? [{ type: MessageComponentTypes.MEDIA_GALLERY, items: [{ media: { url } }] }] : []),
-  ];
+// A scene's body for `layout`: `text` and the portrait at `url`, or the bare
+// text when there's no usable URL.
+function sceneBody(layout, url, text, color) {
+  if (layout !== 'gallery') return [portraitContainer(url, text, color)];
+  return [{
+    type: MessageComponentTypes.CONTAINER,
+    accent_color: color,
+    components: [
+      { type: MessageComponentTypes.TEXT_DISPLAY, content: text },
+      ...(url ? [{ type: MessageComponentTypes.MEDIA_GALLERY, items: [{ media: { url } }] }] : []),
+    ],
+  }];
 }
 
 /**
  * A call scene post in `layout` (see CALL_SCENE_LAYOUTS). `text` is the
- * opening line, or the opening line and the reaction stacked under it once
- * answered. `buttons` (`{ encounterId, responses, locked, order }`) adds the
+ * opening line, or once answered the opening line and the reaction, which
+ * render a blank line apart. `buttons` (`{ encounterId, responses, locked, order }`) adds the
  * answer row in `order`; null renders the answered scene with no row at all.
  */
 export function callSceneMessage({ characterId, face, text, color, layout = 'thumbnail', buttons = null }) {
   const url = absoluteAssetUrl(`expressions/${characterId}/${face}`, `${characterId}'s scene portrait`);
-  const components = sceneBody(layout, url, text, color);
+  const components = sceneBody(layout, url, [text].flat().join('\n\n'), color);
 
   if (buttons) {
     const { encounterId, responses, locked, order = CALL_SCENE_RESPONSES } = buttons;
@@ -932,19 +937,16 @@ export function callSceneMessage({ characterId, face, text, color, layout = 'thu
  * when the post isn't a scene this code would recognize.
  */
 function scenePartsFromPost(message) {
-  const top = message?.components ?? [];
-  const container = top.find((c) => c.type === MessageComponentTypes.CONTAINER);
-  const layout = container ? 'thumbnail' : 'gallery';
+  const container = message?.components?.find((c) => c.type === MessageComponentTypes.CONTAINER);
   const body = container?.components?.[0];
   const section = body?.type === MessageComponentTypes.SECTION;
-  const texts = (section ? body.components : container?.components ?? top)
+  const gallery = container?.components?.find((c) => c.type === MessageComponentTypes.MEDIA_GALLERY);
+  const texts = (section ? body.components : container?.components ?? [])
     .filter((c) => c.type === MessageComponentTypes.TEXT_DISPLAY && c.content)
     .map((c) => c.content);
   if (!texts.length) return null;
-  const url = container
-    ? (section ? body.accessory?.media?.url ?? null : null)
-    : top.find((c) => c.type === MessageComponentTypes.MEDIA_GALLERY)?.items?.[0]?.media?.url ?? null;
-  return { layout, texts, url, color: container?.accent_color };
+  const url = (section ? body.accessory?.media?.url : gallery?.items?.[0]?.media?.url) ?? null;
+  return { layout: gallery ? 'gallery' : 'thumbnail', texts, url, color: container.accent_color };
 }
 
 // A posted scene rebuilt with no button row: the closeout's edit.
@@ -953,7 +955,7 @@ function closedSceneFromPost(message) {
   if (!parts) return null;
   return {
     flags: InteractionResponseFlags.IS_COMPONENTS_V2,
-    components: sceneBody(parts.layout, parts.url, parts.texts, parts.color),
+    components: sceneBody(parts.layout, parts.url, parts.texts.join('\n\n'), parts.color),
   };
 }
 
@@ -1081,10 +1083,9 @@ export async function handleSceneClick(body, encounterId, choice, now = new Date
   // A least-liked pick shows no (+0): the missing (+1) says enough in a
   // public channel.
   const reactionText = gain > 0 ? `+${gain} — ${reaction}` : reaction;
-  // The opening line stays and the reaction stacks under it, so the text
-  // column never narrows and the portrait swaps faces in place instead of
-  // sliding left. The click carries the post, so the line and layout are read
-  // off it.
+  // The opening line stays and the reaction goes under it, so the text column
+  // never narrows and the portrait swaps faces in place instead of sliding
+  // left. The click carries the post, so the line and layout are read off it.
   const posted = scenePartsFromPost(body.message);
   const opening = posted?.texts[0];
 

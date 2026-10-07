@@ -1466,8 +1466,9 @@ boost, and the closeout's fallback boost (§17.6) is never mentioned anywhere.
 
 **Layout trial (2026-10-07).** A second layout, `gallery`, is being compared
 against the thumbnail layout above. It reads like a `/roam` or `/meet`: the
-line as a top-level Text Display over a Media Gallery holding the full-size
-portrait, then the button row, with no Container (so no accent color). The
+line as a Text Display over a Media Gallery, inside the same accent-colored
+Container, then the button row. The gallery image is the expression file
+itself, the same URL the thumbnail uses, so a click swaps faces by URL. The
 click and the closeout read the layout back off the post and keep it. Live
 scenes still post as `thumbnail`; only `/encdev spawn scene:gallery` posts a
 gallery scene (`scene:thumbnail` forces the current one).
@@ -1520,8 +1521,8 @@ click anyway in case the button is ever enabled by mistake.
   same way `/roam` sends it (`deliverBondScene`). Errand signatures stay with
   `/roam` and `/meet`.
 - **The edit** (an `UPDATE_MESSAGE` response to the click):
-  - the reaction **stacks under** `line` as a second Text Display in the
-    same Section; the opening line stays, read back off the clicked post
+  - the reaction **goes under** `line`, a blank line apart in the same Text
+    Display; the opening line stays, read back off the clicked post
     (`body.message`). Replacing it let a shorter reaction narrow the
     container and slide the thumbnail left; keeping it means the face only
     swaps in place. A post with no readable line shows the reaction alone.
