@@ -1027,6 +1027,94 @@ export async function expirePublicEncounter(id, at = new Date()) {
 }
 
 /**
+ * CALL SCENES (docs/public-encounters.md §17, db/migrations/027_call_scenes.sql)
+ *
+ * A scene's state lives on its encounter row. scene_resolved_at is the
+ * one-click arbiter, claimed by a conditional UPDATE exactly like resolved_at.
+ */
+
+export async function getPublicEncounter(id) {
+  const { data, error } = await supabase
+    .from('public_encounters')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error && error.code !== 'PGRST116') {
+    console.error(`[supabase] Could not fetch public encounter ${id}:`, error.message);
+    throw error;
+  }
+
+  return data || null;
+}
+
+// Written once, right after the scene post lands. The post's id is all a row
+// needs: the click recomputes the rest from the relationship, and the closeout
+// reads the post back from Discord.
+export async function setPublicEncounterScene(id, messageId) {
+  const { data, error } = await supabase
+    .from('public_encounters')
+    .update({ scene_message_id: messageId })
+    .eq('id', id)
+    .select();
+
+  if (error) {
+    console.error(`[supabase] Could not save call scene for encounter ${id}:`, error.message);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+// The conditional UPDATE behind both ways a scene closes: stamp
+// scene_resolved_at on every still-open scene matching `filters`, and return
+// the rows that were open.
+async function closeCallScenesWhere(filters, at, label) {
+  let query = supabase
+    .from('public_encounters')
+    .update({ scene_resolved_at: at.toISOString() });
+  for (const [column, value] of Object.entries(filters)) query = query.eq(column, value);
+  const { data, error } = await query
+    .not('scene_message_id', 'is', null)
+    .is('scene_resolved_at', null)
+    .select();
+
+  if (error) {
+    console.error(`[supabase] Could not ${label}:`, error.message);
+    throw error;
+  }
+
+  return data || [];
+}
+
+/**
+ * Close a scene for its winner's one click. Returns the row, or null if it
+ * wasn't theirs or was already closed (a second click, or the closeout got
+ * there first); the caller reads the row only then, to say which.
+ */
+export async function claimCallScene(id, userId, at = new Date()) {
+  const rows = await closeCallScenesWhere(
+    { id, solved_by: userId },
+    at,
+    `claim call scene for encounter ${id}`,
+  );
+  return rows[0] || null;
+}
+
+/**
+ * Close every scene in a guild still waiting on a click, and return them so
+ * the caller can take their buttons off. Run before a new spawn posts, so an
+ * unanswered scene never sits live under the next encounter.
+ */
+export function closeOpenCallScenes(guildId, at = new Date()) {
+  return closeCallScenesWhere(
+    { guild_id: guildId },
+    at,
+    `close open call scenes for guild ${guildId}`,
+  );
+}
+
+/**
  * MONTHLY /call WIN LEADERBOARD (db/migrations/011_encounter_win_stats.sql)
  *
  * encounter_win_stats is a durable rollup written at win time — deliberately

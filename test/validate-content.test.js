@@ -6,7 +6,7 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 import { validateContent } from '../constants/validateContent.js';
 import { CHARACTERS } from '../constants/characters.js';
-import { DIALOGUE } from '../constants/dialogue.js';
+import { DIALOGUE, SHARED_WINNER_LINES } from '../constants/dialogue.js';
 import { BOND_SCENE_KEYS, MAX_BUTTON_LABEL_LENGTH } from '../constants/game.js';
 
 // validateContent() throws on any error, so returning at all means the real
@@ -240,5 +240,74 @@ test('validateContent rejects swap below spark and any swap value but true', () 
     assert.doesNotThrow(() => validateContent(), 'swap: true at spark is valid');
   } finally {
     delete spark.swap;
+  }
+});
+
+// --- call scenes (docs/public-encounters.md §17) -----------------------------
+
+// Benkei's scene-capable Stranger winner line: the one entry in his pool
+// carrying `responses`.
+const benkeiScene = () => DIALOGUE.benkei.winnerLines.new.find((entry) => entry.responses);
+const sceneIndex = () => DIALOGUE.benkei.winnerLines.new.indexOf(benkeiScene());
+
+test('validateContent flags every malformed call scene shape', () => {
+  const scene = benkeiScene();
+  const at = `benkei winnerLines\\.new\\[${sceneIndex()}\\]`;
+  const snapshot = JSON.parse(JSON.stringify(scene));
+  const restore = () => {
+    for (const key of Object.keys(scene)) delete scene[key];
+    Object.assign(scene, JSON.parse(JSON.stringify(snapshot)));
+  };
+
+  const cases = [
+    [() => { scene.face = 'smile.png'; }, new RegExp(`${at} has unknown key "face"`)],
+    [() => { scene.replies = { kind: 'Hi' }; }, new RegExp(`${at} has unknown key "replies"`)],
+    [() => { delete scene.responses.playful; }, new RegExp(`${at} responses is missing "playful"`)],
+    [() => { scene.responses.neutral = 'Wait'; }, new RegExp(`${at} responses has unknown key "neutral"`)],
+    [() => { scene.responses.date = 'Ask'; }, new RegExp(`${at} responses has unknown key "date"`)],
+    [
+      () => { scene.responses.bold = 'A'.repeat(MAX_BUTTON_LABEL_LENGTH + 1); },
+      new RegExp(`${at} bold label is ${MAX_BUTTON_LABEL_LENGTH + 1} chars`),
+    ],
+    [() => { delete scene.line; }, new RegExp(`${at} has no line`)],
+    // The line itself gets the ordinary winner-line checks.
+    [() => { scene.line = scene.line.replaceAll('{user}', 'someone'); }, /benkei winnerLines\.new never mentions \{user\}/],
+    [() => { scene.line = scene.line.replace(/\{(name|firstName)\}/g, 'him'); }, /benkei winnerLines\.new never names the character/],
+    [() => { scene.line += ' {mood}'; }, /benkei winnerLines\.new uses unknown placeholder "\{mood\}"/],
+  ];
+
+  try {
+    for (const [mutate, expected] of cases) {
+      mutate();
+      assert.throws(() => validateContent(), expected);
+      restore();
+    }
+  } finally {
+    restore();
+  }
+
+  assert.doesNotThrow(() => validateContent(), 'and the catalog is clean again');
+});
+
+test('the shared fallback pool can carry no call scene', () => {
+  const pool = SHARED_WINNER_LINES.new;
+  pool.push({ line: '**{name}** waves {user} over.', responses: { kind: 'a', playful: 'b', bold: 'c' } });
+  try {
+    assert.throws(() => validateContent(), /SHARED_WINNER_LINES winnerLines\.new has a non-string line/);
+  } finally {
+    pool.pop();
+  }
+});
+
+test('every character winner line must carry button labels', () => {
+  const pool = DIALOGUE.benkei.winnerLines.close;
+  pool.push('**{name}** waves {user} over.');
+  try {
+    assert.throws(
+      () => validateContent(),
+      new RegExp(`benkei winnerLines\\.close\\[${pool.length - 1}\\] has no button labels`),
+    );
+  } finally {
+    pool.pop();
   }
 });

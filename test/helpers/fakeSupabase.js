@@ -1,6 +1,6 @@
 // A minimal in-memory stand-in for the @supabase/supabase-js client, covering
 // only the chainable shapes this codebase actually uses: select/insert/
-// update/upsert/delete with .eq()/.in()/.is()/.gt()/.lt()/.order()/.limit()/
+// update/upsert/delete with .eq()/.in()/.is()/.not()/.gt()/.lt()/.order()/.limit()/
 // .single(), plus .rpc() for the handful of plpgsql functions in db/migrations.
 // Good enough to exercise db/supabase.js's logic without a real Supabase project.
 //
@@ -20,6 +20,8 @@ function matches(row, filters) {
       // `.is(col, null)` is Postgres IS NULL — a column that was never set is
       // undefined in these plain objects, so both spellings count as null.
       case 'is': return val === null ? row[col] == null : row[col] === val;
+      // Only the `.not(col, 'is', null)` shape is used: IS NOT NULL.
+      case 'not': return row[col] != null;
       case 'gt': return row[col] != null && row[col] > val;
       case 'lt': return row[col] != null && row[col] < val;
       default: return row[col] === val;
@@ -70,6 +72,7 @@ export function createFakeSupabase(initialTables = {}) {
       eq(col, val) { state.filters.push([col, val]); return builder; },
       in(col, vals) { state.filters.push([col, vals, 'in']); return builder; },
       is(col, val) { state.filters.push([col, val, 'is']); return builder; },
+      not(col, op, val) { state.filters.push([col, val, 'not']); return builder; },
       gt(col, val) { state.filters.push([col, val, 'gt']); return builder; },
       lt(col, val) { state.filters.push([col, val, 'lt']); return builder; },
       order(col, opts) { state.order = { col, opts }; return builder; },

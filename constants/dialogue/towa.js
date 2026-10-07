@@ -1141,34 +1141,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      "**{name}** stops humming. His eyes land on {user} and stay there, unblinking.",
-      '"...Dandelion?" **{name}** tries the word out on {user} for the first time.',
-      "{user} says the name, and **{name}** turns a dandelion over and over, watching them.",
+      {
+        line: "**{name}** stops humming. His eyes land on {user} and stay there, unblinking.",
+        responses: {
+          kind: "Wave hello to him",
+          playful: "Try not to blink first",
+          bold: "Ask what he's looking at",
+        },
+      },
+      {
+        line: '"...Dandelion?" **{name}** tries the word out on {user} for the first time.',
+        responses: {
+          kind: "Answer to Dandelion",
+          playful: "Ask if you smell like one",
+          bold: "Tell him your real name",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** turns a dandelion over and over, watching them.",
+        responses: {
+          kind: "Ask about the dandelion",
+          playful: "Make a wish on it",
+          bold: "Ask why he's watching you",
+        },
+      },
+      {
+        line: '**{name}** is already watching {user}, humming. He tilts his head. "Found you."',
+        responses: {
+          kind: "Say you're glad he did",
+          playful: "Hum back at him",
+          bold: "Ask why he's staring",
+        },
+      },
     ],
     known: [
-      '"Ah! Dandelion, I found you!" **{name}** is all smiles, practically bouncing over to {user}.',
-      "{user} says the name, and **{name}** holds out a clover he's clearly been holding a while.",
-      "**{name}** was already watching {user} before they called, humming the same three notes.",
+      {
+        line: '"Ah! Dandelion, I found you!" **{name}** is all smiles, practically bouncing over to {user}.',
+        responses: {
+          kind: "Say you missed him",
+          playful: "Say you were hiding",
+          bold: "Say you weren't lost",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** holds out a clover he's clearly been holding a while.",
+        responses: {
+          kind: "Take the clover",
+          playful: "Count its leaves",
+          bold: "Ask how long he held it",
+        },
+      },
+      {
+        line: "**{name}** was already watching {user} before they called, humming the same three notes.",
+        responses: {
+          kind: "Listen to the whole tune",
+          playful: "Guess the song",
+          bold: "Ask how long he's watched",
+        },
+      },
     ],
     warm: [
-      "\"You're here.\" **{name}** catches {user}'s sleeve before they've stopped walking.",
-      "{user} calls out, and **{name}** holds out a dandelion without a word.",
-      '"I counted the days." **{name}** tells {user} the exact number.',
+      {
+        line: "\"You're here.\" **{name}** catches {user}'s sleeve before they've stopped walking.",
+        responses: {
+          kind: "Let him hold on",
+          playful: "Tug your sleeve back",
+          bold: "Ask him to let go",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}** holds out a dandelion without a word.",
+        responses: {
+          kind: "Take the dandelion",
+          playful: "Tuck it behind your ear",
+          bold: "Ask what it's for",
+        },
+      },
+      {
+        line: '"I counted the days." **{name}** tells {user} the exact number.',
+        responses: {
+          kind: "Say you counted too",
+          playful: "Ask him to count again",
+          bold: "Say that's a lot of days",
+        },
+      },
     ],
     spark: [
-      "**{name}** starts humming again the moment {user} says his name.",
-      '"Come give me a sorry cuddle," **{name}** says to {user}, who hadn\'t done anything wrong.',
-      "{user} got there first, and **{name}** looks at everyone else like they lost.",
+      {
+        line: "**{name}** starts humming again the moment {user} says his name.",
+        responses: {
+          kind: "Listen to him hum",
+          playful: "Hum the next part",
+          bold: "Ask what he's humming",
+        },
+      },
+      {
+        line: '"Come give me a sorry cuddle," **{name}** says to {user}, who hadn\'t done anything wrong.',
+        responses: {
+          kind: "Give him the cuddle",
+          playful: "Ask what you're sorry for",
+          bold: "Say you did nothing wrong",
+        },
+      },
+      {
+        line: "{user} got there first, and **{name}** looks at everyone else like they lost.",
+        responses: {
+          kind: "Say you came for him",
+          playful: "Take a victory lap",
+          bold: "Ask what he thinks he won",
+        },
+      },
     ],
     close: [
-      "\"Where are you going, Dandelion? Take me with you!\" **{name}** has {user}'s sleeve and isn't giving it back.",
-      "**{name}** had been watching the dark. It stopped mattering when {user} called.",
-      "{user} calls, and **{name}** tucks another dandelion into their pocket. There are several now.",
+      {
+        line: "\"Where are you going, Dandelion? Take me with you!\" **{name}** has {user}'s sleeve and isn't giving it back.",
+        responses: {
+          kind: "Take him with you",
+          playful: "Ask where he wants to go",
+          bold: "Say you're going alone",
+        },
+      },
+      {
+        line: "**{name}** had been watching the dark. It stopped mattering when {user} called.",
+        responses: {
+          kind: "Stay with him",
+          playful: "Ask what's in the dark",
+          bold: "Ask what he was watching",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}** tucks another dandelion into their pocket. There are several now.",
+        responses: {
+          kind: "Keep every one",
+          playful: "Count the dandelions",
+          bold: "Ask how many he'll add",
+        },
+      },
     ],
     bound: [
-      '"Do you like me, Dandelion? Because I love you!" **{name}** hums it into {user}\'s shoulder.',
-      "**{name}** reaches {user} and tips his head, listening to their heartbeat like it's his favorite song.",
-      "{user} says the name, and **{name}** decides never to let them out of sight again.",
+      {
+        line: '"Do you like me, Dandelion? Because I love you!" **{name}** hums it into {user}\'s shoulder.',
+        responses: {
+          kind: "Say you love him too",
+          playful: "Ask how much",
+          bold: "Ask what love means",
+        },
+      },
+      {
+        line: "**{name}** reaches {user} and tips his head, listening to their heartbeat like it's his favorite song.",
+        responses: {
+          kind: "Hold still for him",
+          playful: "Ask how it sounds",
+          bold: "Ask what he hears",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** decides never to let them out of sight again.",
+        responses: {
+          kind: "Say you'll stay close",
+          playful: "Say good luck with that",
+          bold: "Say you need space too",
+        },
+      },
     ],
   },
   // The /call reveal lines for a daytime spawn. Towa can't speak until
@@ -1177,34 +1311,160 @@ export default {
   // placeholders; not one word out of him, only humming and what he does.
   daytimeWinnerLines: {
     new: [
-      "{user} calls his name, and **{name}** stops humming, turns, and tilts his head at them. ...?",
-      "**{name}** answers {user} with three bright notes and a wave. ~ ~ ~ ♪",
-      "{user} calls out, and **{name}** looks them over, head tilted, and then beams. ~ ~ ~!",
+      {
+        line: "{user} calls his name, and **{name}** stops humming, turns, and tilts his head at them. ...?",
+        responses: {
+          kind: "Say hello to him",
+          playful: "Tilt your head back",
+          bold: "Ask what the look means",
+        },
+      },
+      {
+        line: "**{name}** answers {user} with three bright notes and a wave. ~ ~ ~ ♪",
+        responses: {
+          kind: "Wave back at him",
+          playful: "Hum three notes back",
+          bold: "Ask what the notes mean",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}** looks them over, head tilted, and then beams. ~ ~ ~!",
+        responses: {
+          kind: "Beam back at him",
+          playful: "Strike a pose for him",
+          bold: "Ask what he's sizing up",
+        },
+      },
     ],
     known: [
-      "{user} calls, and **{name}** hums two notes, then waits to see whether they'll stay. ~ ~ ~ ♪",
-      "**{name}** comes straight over to {user} and hums the rest of a phrase he'd started. ~ ~ ~ ♫",
-      "{user} calls out, and **{name}** presses a dandelion stem into their palm. ~ ~ ~ ♪",
+      {
+        line: "{user} calls, and **{name}** hums two notes, then waits to see whether they'll stay. ~ ~ ~ ♪",
+        responses: {
+          kind: "Stay right where you are",
+          playful: "Hum the third note",
+          bold: "Say you can't stay long",
+        },
+      },
+      {
+        line: "**{name}** comes straight over to {user} and hums the rest of a phrase he'd started. ~ ~ ~ ♫",
+        responses: {
+          kind: "Listen until it ends",
+          playful: "Hum along off-key",
+          bold: "Ask what song it is",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}** presses a dandelion stem into their palm. ~ ~ ~ ♪",
+        responses: {
+          kind: "Close your hand around it",
+          playful: "Blow the seeds at him",
+          bold: "Ask why dandelions",
+        },
+      },
     ],
     warm: [
-      "**{name}** starts humming the moment {user} calls, and catches their sleeve. ~ ~ ~ ♫",
-      "{user} calls, and **{name}** holds out a five-leaf clover, bouncing on his toes until they take it.",
-      "**{name}** comes straight to {user}, humming, like he'd been waiting all day for them to call.",
+      {
+        line: "**{name}** starts humming the moment {user} calls, and catches their sleeve. ~ ~ ~ ♫",
+        responses: {
+          kind: "Let him keep your sleeve",
+          playful: "Hum with him",
+          bold: "Ask where he's taking you",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}** holds out a five-leaf clover, bouncing on his toes until they take it.",
+        responses: {
+          kind: "Take it and say it's lucky",
+          playful: "Make him wait a second",
+          bold: "Ask where he found five",
+        },
+      },
+      {
+        line: "**{name}** comes straight to {user}, humming, like he'd been waiting all day for them to call.",
+        responses: {
+          kind: "Say you're here now",
+          playful: "Ask if he waited all day",
+          bold: "Ask why he waited",
+        },
+      },
     ],
     spark: [
-      "{user} calls, and **{name}** hums the same three notes back at them, over and over.",
-      "{user} got there first, and **{name}** looks at everyone else like they lost. ~ ~ ~ ♪",
-      "**{name}** tugs {user}'s sleeve toward somewhere quieter, humming. Whatever he wants to say will have to wait until dark.",
+      {
+        line: "{user} calls, and **{name}** hums the same three notes back at them, over and over.",
+        responses: {
+          kind: "Hum them back to him",
+          playful: "Add a fourth note",
+          bold: "Ask for a different tune",
+        },
+      },
+      {
+        line: "{user} got there first, and **{name}** looks at everyone else like they lost. ~ ~ ~ ♪",
+        responses: {
+          kind: "Smile at him",
+          playful: "Take a bow with him",
+          bold: "Ask what he won",
+        },
+      },
+      {
+        line: "**{name}** tugs {user}'s sleeve toward somewhere quieter, humming. Whatever he wants to say will have to wait until dark.",
+        responses: {
+          kind: "Go where he leads",
+          playful: "Ask him to mime it",
+          bold: "Say you'll wait for dark",
+        },
+      },
     ],
     close: [
-      "**{name}** has {user}'s sleeve before they've finished calling, and isn't giving it back. ~ ~ ~?",
-      "{user} calls, and **{name}** hums a tune only they know by now, and waits for them to finish it.",
-      "**{name}** reaches {user} and hums low, his eyes going thin at everyone still watching.",
+      {
+        line: "**{name}** has {user}'s sleeve before they've finished calling, and isn't giving it back. ~ ~ ~?",
+        responses: {
+          kind: "Let him keep it",
+          playful: "Ask if it's his sleeve now",
+          bold: "Tug your sleeve free",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}** hums a tune only they know by now, and waits for them to finish it.",
+        responses: {
+          kind: "Finish the tune",
+          playful: "Finish it wrong on purpose",
+          bold: "Make him finish it",
+        },
+      },
+      {
+        line: "**{name}** reaches {user} and hums low, his eyes going thin at everyone still watching.",
+        responses: {
+          kind: "Tell him it's okay",
+          playful: "Glare at them with him",
+          bold: "Tell him to stop glaring",
+        },
+      },
     ],
     bound: [
-      "**{name}** reaches {user} and tips his head to their chest, listening to their heartbeat like it's his favorite song.",
-      "{user} calls, and **{name}** hums the same three notes into their shoulder, all he can say until dark.",
-      "**{name}** pulls {user} close and doesn't let go, humming. The words can keep until night.",
+      {
+        line: "**{name}** reaches {user} and tips his head to their chest, listening to their heartbeat like it's his favorite song.",
+        responses: {
+          kind: "Let him listen",
+          playful: "Hum along to the beat",
+          bold: "Ask if it's fast",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}** hums the same three notes into their shoulder, all he can say until dark.",
+        responses: {
+          kind: "Hum the notes back",
+          playful: "Guess what they mean",
+          bold: "Say tell you tonight",
+        },
+      },
+      {
+        line: "**{name}** pulls {user} close and doesn't let go, humming. The words can keep until night.",
+        responses: {
+          kind: "Hold on to him too",
+          playful: "Hum the harmony",
+          bold: "Wriggle free",
+        },
+      },
     ],
   },
 };

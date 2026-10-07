@@ -865,34 +865,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '**{name}** stops a few steps short of {user}, arms folded. "...What do you want me to do? Say it."',
-      '{user} says the name, and **{name}** turns right around. "What?"',
-      '"Stay there a moment." **{name}** takes {user} in slowly, scent and all.',
+      {
+        line: '**{name}** stops a few steps short of {user}, arms folded. "...What do you want me to do? Say it."',
+        responses: {
+          kind: "Say nothing, just hi",
+          playful: "Ask for a high five",
+          bold: "Tell him to come closer",
+        },
+      },
+      {
+        line: '{user} says the name, and **{name}** turns right around. "What?"',
+        responses: {
+          kind: "Say you only wanted to see him",
+          playful: "Say \"what\" right back",
+          bold: "Tell him to come here",
+        },
+      },
+      {
+        line: '"Stay there a moment." **{name}** takes {user} in slowly, scent and all.',
+        responses: {
+          kind: "Stay still for him",
+          playful: "Ask if you pass",
+          bold: "Step forward anyway",
+        },
+      },
+      {
+        line: '**{name}** studies {user}, nose first. "...Huh. You don\'t smell scared." He folds his arms. "What do you want?"',
+        responses: {
+          kind: "Tell him your name",
+          playful: "Sniff back at him",
+          bold: "Say you're not scared of him",
+        },
+      },
     ],
     known: [
-      '"You called me. So you want something." **{name}** waits for {user} to say what it is.',
-      '{user} calls, and **{name}** comes over with a book under his arm. "Wait. Before you say anything. What\'s this word?"',
-      "\"Why'd you call me? ...It's okay if there's no reason. I just wanna know.\" **{name}** asks {user}.",
+      {
+        line: '"You called me. So you want something." **{name}** waits for {user} to say what it is.',
+        responses: {
+          kind: "Say you don't need a reason",
+          playful: "Make him guess what",
+          bold: "Say exactly what you want",
+        },
+      },
+      {
+        line: '{user} calls, and **{name}** comes over with a book under his arm. "Wait. Before you say anything. What\'s this word?"',
+        responses: {
+          kind: "Help him sound it out",
+          playful: "Make up a definition",
+          bold: "Ask him to guess first",
+        },
+      },
+      {
+        line: "\"Why'd you call me? ...It's okay if there's no reason. I just wanna know.\" **{name}** asks {user}.",
+        responses: {
+          kind: "Say there's no reason",
+          playful: "Say it's a secret",
+          bold: "Give him a real reason",
+        },
+      },
     ],
     warm: [
-      "**{name}** knows the voice before he's found the face, and comes straight to {user}.",
-      '"...You again. Where\'re we going today?" **{name}** is already walking toward {user}.',
-      "{user} calls out, and **{name}** falls in at their side, exactly one step behind.",
+      {
+        line: "**{name}** knows the voice before he's found the face, and comes straight to {user}.",
+        responses: {
+          kind: "Say hi when he gets there",
+          playful: "Ask if he smelled you first",
+          bold: "Meet him halfway",
+        },
+      },
+      {
+        line: '"...You again. Where\'re we going today?" **{name}** is already walking toward {user}.',
+        responses: {
+          kind: "Let him pick today",
+          playful: "Say it's a surprise",
+          bold: "Say you're leading today",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}** falls in at their side, exactly one step behind.",
+        responses: {
+          kind: "Slow down for him",
+          playful: "Take one step back too",
+          bold: "Tell him to walk beside you",
+        },
+      },
     ],
     spark: [
-      "\"H-Hey, don't come so close!\" **{name}** says it to {user}, and doesn't step back either.",
-      "{user} says the name, and **{name}**'s ears do something he has no control over.",
-      "**{name}** had practiced a greeting for {user}. It comes out stiff and completely sincere.",
+      {
+        line: "\"H-Hey, don't come so close!\" **{name}** says it to {user}, and doesn't step back either.",
+        responses: {
+          kind: "Stop where you are",
+          playful: "Take one more step",
+          bold: "Ask why he isn't moving",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}**'s ears do something he has no control over.",
+        responses: {
+          kind: "Pretend not to notice",
+          playful: "Point at his ears",
+          bold: "Ask what his ears mean",
+        },
+      },
+      {
+        line: "**{name}** had practiced a greeting for {user}. It comes out stiff and completely sincere.",
+        responses: {
+          kind: "Say it was a good greeting",
+          playful: "Ask for an encore",
+          bold: "Ask how long he practiced",
+        },
+      },
     ],
     close: [
-      "**{name}** hears {user}, and nothing else on campus is interesting anymore.",
-      "\"Let's go for a walk. I'll go slow, 'cause you're a human.\" **{name}** waits for {user} to move first.",
-      "{user} calls, and **{name}** abandons the **{house}** errand without a flicker of guilt.",
+      {
+        line: "**{name}** hears {user}, and nothing else on campus is interesting anymore.",
+        responses: {
+          kind: "Say you feel the same",
+          playful: "Ask what's boring now",
+          bold: "Say keep it that way",
+        },
+      },
+      {
+        line: "\"Let's go for a walk. I'll go slow, 'cause you're a human.\" **{name}** waits for {user} to move first.",
+        responses: {
+          kind: "Walk with him",
+          playful: "Say you can keep up",
+          bold: "Race him",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}** abandons the **{house}** errand without a flicker of guilt.",
+        responses: {
+          kind: "Say the errand can wait",
+          playful: "Ask if Edward will notice",
+          bold: "Say he should finish it",
+        },
+      },
     ],
     bound: [
-      '"You smell like mine," **{name}** says to {user}, delighted.',
-      "**{name}** doesn't reach for a new word this time. He just says {user}'s name, slow.",
-      "{user} says the name, and **{name}** makes a sound like something finally at rest.",
+      {
+        line: '"You smell like mine," **{name}** says to {user}, delighted.',
+        responses: {
+          kind: "Say you are his",
+          playful: "Ask what you smell like",
+          bold: "Say he smells like yours",
+        },
+      },
+      {
+        line: "**{name}** doesn't reach for a new word this time. He just says {user}'s name, slow.",
+        responses: {
+          kind: "Say his name the same way",
+          playful: "Ask if that's his new word",
+          bold: "Ask him to say it again",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** makes a sound like something finally at rest.",
+        responses: {
+          kind: "Stay right here with him",
+          playful: "Ask what that sound was",
+          bold: "Ask him to make it again",
+        },
+      },
     ],
   },
 };

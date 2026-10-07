@@ -853,38 +853,200 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"Huh." **{name}** looks {user} over. "You got guts. Stupid ones, but guts."',
-      '"You lost or somethin\'?" **{name}** asks {user}, shuffling the whole time.',
-      "\"Don't remember a word you said. Ciao!\" **{name}** waves {user} off, and they're gone.",
-      '"Huh? What." **{name}** barely looks at {user}.',
+      {
+        line: '"Huh." **{name}** looks {user} over. "You got guts. Stupid ones, but guts."',
+        responses: {
+          kind: "Take it as a compliment",
+          playful: "Say his are stupider",
+          bold: "Say you'll show him how many",
+        },
+      },
+      {
+        line: '"You lost or somethin\'?" **{name}** asks {user}, shuffling the whole time.',
+        responses: {
+          kind: "Say you were looking for him",
+          playful: "Ask to see the card trick",
+          bold: "Deal yourself in",
+        },
+      },
+      {
+        line: "\"Don't remember a word you said. Ciao!\" **{name}** waves {user} off, and they're gone.",
+        responses: {
+          kind: "Wave goodbye to him",
+          playful: "Say \"ciao\" back at him",
+          bold: "Make him remember you",
+        },
+      },
+      {
+        line: '"Huh? What." **{name}** barely looks at {user}.',
+        responses: {
+          kind: "Say your name again",
+          playful: "Repeat it slower",
+          bold: "Make him look at you",
+        },
+      },
+      {
+        line: '**{name}** squints at {user} like he\'s trying to place them. "Do I owe you money? \'Cause I don\'t got it."',
+        responses: {
+          kind: "Offer him your snack",
+          playful: "Say he owes you a fortune",
+          bold: "Bet him double or nothing",
+        },
+      },
     ],
     known: [
-      '"You again, kitten." **{name}** says it to {user} like a fact now, not a jab.',
-      '"What\'s your name again? ...Whatever. I know you." **{name}** shrugs at {user}.',
-      "{user} says the name, and **{name}** grins around it. \"Who're you? ...Whatever. C'mere.\"",
+      {
+        line: '"You again, kitten." **{name}** says it to {user} like a fact now, not a jab.',
+        responses: {
+          kind: "Answer to kitten",
+          playful: "Meow at him",
+          bold: "Say don't call you that",
+        },
+      },
+      {
+        line: '"What\'s your name again? ...Whatever. I know you." **{name}** shrugs at {user}.',
+        responses: {
+          kind: "Give him your name again",
+          playful: "Give him a fake name",
+          bold: "Say he'd better remember",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** grins around it. \"Who're you? ...Whatever. C'mere.\"",
+        responses: {
+          kind: "Go over to him",
+          playful: "Ask who's asking",
+          bold: "Make him come to you",
+        },
+      },
     ],
     warm: [
-      '"Took your damn time, kitten." **{name}** had been waiting on {user}.',
-      "{user} calls out, and **{name}** kicks a chair out in their direction.",
-      "**{name}** calls {user} a dumbass and deals them in.",
-      '"Lulu can count the chips himself. Ciao!" **{name}** is out of his seat before {user} finishes calling.',
+      {
+        line: '"Took your damn time, kitten." **{name}** had been waiting on {user}.',
+        responses: {
+          kind: "Say it was worth the wait",
+          playful: "Say kittens nap a lot",
+          bold: "Say he could have come",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}** kicks a chair out in their direction.",
+        responses: {
+          kind: "Take the seat",
+          playful: "Kick it back to him",
+          bold: "Pull it closer to him",
+        },
+      },
+      {
+        line: "**{name}** calls {user} a dumbass and deals them in.",
+        responses: {
+          kind: "Pick up your cards",
+          playful: "Call him one right back",
+          bold: "Raise before looking",
+        },
+      },
+      {
+        line: '"Lulu can count the chips himself. Ciao!" **{name}** is out of his seat before {user} finishes calling.',
+        responses: {
+          kind: "Say you'll wait for him",
+          playful: "Ask if Lulu knows",
+          bold: "Ask where you're going",
+        },
+      },
     ],
     spark: [
-      '"Kitten." **{name}** grins at {user}, and this time it isn\'t a jab at all.',
-      "{user} says the name, and **{name}** folds a hand he was winning.",
-      '{user} says the name, and **{name}** tells the whole table "Ciao!" without looking back.',
-      "**{name}** hooks a finger in {user}'s collar to pull them down to his level, grinning.",
+      {
+        line: '"Kitten." **{name}** grins at {user}, and this time it isn\'t a jab at all.',
+        responses: {
+          kind: "Smile at the nickname",
+          playful: "Purr at him",
+          bold: "Call him something back",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** folds a hand he was winning.",
+        responses: {
+          kind: "Say he didn't have to",
+          playful: "Ask to see his cards",
+          bold: "Say he'd have lost anyway",
+        },
+      },
+      {
+        line: '{user} says the name, and **{name}** tells the whole table "Ciao!" without looking back.',
+        responses: {
+          kind: "Wave to the table",
+          playful: "Say ciao to the table too",
+          bold: "Say they'll miss his money",
+        },
+      },
+      {
+        line: "**{name}** hooks a finger in {user}'s collar to pull them down to his level, grinning.",
+        responses: {
+          kind: "Lean down for him",
+          playful: "Ask what's down here",
+          bold: "Pull him up instead",
+        },
+      },
     ],
     close: [
-      '"Anybody touches you, they answer to me." **{name}** tells {user} that was always the deal.',
-      "**{name}** hears {user}, and everyone else stops existing.",
-      "{user} calls, and **{name}** walks away from a bet he was about to win.",
-      "**{name}** tosses his chips to the nearest mook without counting them. Then he's at {user}'s side.",
+      {
+        line: '"Anybody touches you, they answer to me." **{name}** tells {user} that was always the deal.',
+        responses: {
+          kind: "Say you'll be fine",
+          playful: "Ask what the deal costs",
+          bold: "Say same goes for him",
+        },
+      },
+      {
+        line: "**{name}** hears {user}, and everyone else stops existing.",
+        responses: {
+          kind: "Say the same about him",
+          playful: "Ask where they all went",
+          bold: "Keep his eyes on you",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}** walks away from a bet he was about to win.",
+        responses: {
+          kind: "Say you'll make it up",
+          playful: "Ask what he would've won",
+          bold: "Say you're the better bet",
+        },
+      },
+      {
+        line: "**{name}** tosses his chips to the nearest mook without counting them. Then he's at {user}'s side.",
+        responses: {
+          kind: "Say the mook got lucky",
+          playful: "Ask for a chip",
+          bold: "Say he owes you those",
+        },
+      },
     ],
     bound: [
-      "\"You're the one hand I'd never fold, kitten.\" **{name}** growls it at {user}, daring them to make something of it.",
-      "**{name}** pulls {user} in right there in the open, and the passers-by pretend not to notice.",
-      "{user} says the name, and it's the one thing **{name}** doesn't lose track of.",
+      {
+        line: "\"You're the one hand I'd never fold, kitten.\" **{name}** growls it at {user}, daring them to make something of it.",
+        responses: {
+          kind: "Say you'd never fold either",
+          playful: "Ask what you're worth",
+          bold: "Make something of it",
+        },
+      },
+      {
+        line: "**{name}** pulls {user} in right there in the open, and the passers-by pretend not to notice.",
+        responses: {
+          kind: "Let him pull you in",
+          playful: "Wave at the passers-by",
+          bold: "Pull him in closer",
+        },
+      },
+      {
+        line: "{user} says the name, and it's the one thing **{name}** doesn't lose track of.",
+        responses: {
+          kind: "Say you'll remind him",
+          playful: "Test him with your name",
+          bold: "Say he'd better not",
+        },
+      },
     ],
   },
 };

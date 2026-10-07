@@ -101,11 +101,27 @@ export function missionEmbed(missionId, description) {
 
 // `${BASE_URL}/assets/<relPath>`, or null (logged) when BASE_URL isn't an
 // absolute http(s) URL: Discord rejects a whole message whose image URL isn't.
-function absoluteAssetUrl(relPath, what) {
+// Shared with the /call scenes (publicEncounters.js).
+export function absoluteAssetUrl(relPath, what) {
   const url = `${process.env.BASE_URL || ""}/assets/${relPath}`;
   if (/^https?:\/\//i.test(url)) return url;
-  console.error(`[missions] BASE_URL is unset or invalid — sending without ${what} (got "${url}")`);
+  console.error(`[assets] BASE_URL is unset or invalid — sending without ${what} (got "${url}")`);
   return null;
+}
+
+// A V2 container holding `text`, with the portrait at `url` as a thumbnail
+// beside it, or the bare text when there's no usable URL. The Chancellor's
+// audience and the /call scenes are both laid out this way.
+export function portraitContainer(url, text, color) {
+  const textDisplay = { type: MessageComponentTypes.TEXT_DISPLAY, content: text };
+  const body = url
+    ? {
+        type: MessageComponentTypes.SECTION,
+        components: [textDisplay],
+        accessory: { type: MessageComponentTypes.THUMBNAIL, media: { url } },
+      }
+    : textDisplay;
+  return { type: MessageComponentTypes.CONTAINER, accent_color: color, components: [body] };
 }
 
 // An errand's progress, as the {unsigned targets, signed count, required
@@ -139,20 +155,9 @@ export function houseChangeBlocker(mission, signed = errandProgress(mission).sig
  */
 export function chancellorMessage(face, text) {
   const url = absoluteAssetUrl(`expressions/cornelius/${face}`, "the Chancellor's portrait");
-  const textDisplay = { type: MessageComponentTypes.TEXT_DISPLAY, content: text };
-  const body = url
-    ? {
-        type: MessageComponentTypes.SECTION,
-        components: [textDisplay],
-        accessory: { type: MessageComponentTypes.THUMBNAIL, media: { url } },
-      }
-    : textDisplay;
-
   return {
     flags: InteractionResponseFlags.IS_COMPONENTS_V2,
-    components: [
-      { type: MessageComponentTypes.CONTAINER, accent_color: MISSION_EMBED_COLOR, components: [body] },
-    ],
+    components: [portraitContainer(url, text, MISSION_EMBED_COLOR)],
   };
 }
 
@@ -182,16 +187,18 @@ export function missionTypeGuard(mission, type, { noMission, wrongType }) {
 // --- reward writes ----------------------------------------------------------
 
 // Promise.allSettled swallows rejections by design; this puts them back in the
-// log, which matters because everything it wraps is a reward write.
-export function reportFailures(label) {
+// log, which matters because everything it wraps is a reward write. Hands the
+// results back so a caller can still read them after logging.
+export function reportFailures(label, prefix = "[missions]") {
   return (results) => {
     for (const result of results) {
       if (result.status === "rejected") {
         console.error(
-          `[missions] ${label} side-effect failed:`,
+          `${prefix} ${label} side-effect failed:`,
           result.reason?.message,
         );
       }
     }
+    return results;
   };
 }

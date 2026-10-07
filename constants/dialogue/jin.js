@@ -867,34 +867,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"...Get to the point." **{name}** doesn\'t turn around, but {user} has his attention.',
-      "{user} names him, and **{name}** looks over, unimpressed that it took this long.",
-      '"You know who I am. Good." **{name}** allows {user} one step closer.',
+      {
+        line: '"...Get to the point." **{name}** doesn\'t turn around, but {user} has his attention.',
+        responses: {
+          kind: "Say it in one sentence",
+          playful: "Start with a long preamble",
+          bold: "Wait until he turns around",
+        },
+      },
+      {
+        line: "{user} names him, and **{name}** looks over, unimpressed that it took this long.",
+        responses: {
+          kind: "Say you came when you could",
+          playful: "Say you took the scenic route",
+          bold: "Say he could have found you",
+        },
+      },
+      {
+        line: '"You know who I am. Good." **{name}** allows {user} one step closer.',
+        responses: {
+          kind: "Take the one step",
+          playful: "Take a step and a half",
+          bold: "Stay where you are",
+        },
+      },
+      {
+        line: '**{name}** looks {user} over like he\'s deciding whether they\'re worth his time. "Well? Say something."',
+        responses: {
+          kind: "Say a polite hello",
+          playful: "Bow like a servant",
+          bold: "Say you're worth it",
+        },
+      },
     ],
     known: [
-      '"You." **{name}** places {user} at a glance, which from him is nearly a greeting.',
-      '{user} names him, and **{name}** sighs. "Persistent. I\'ll give you that much."',
-      '"Don\'t hover, it\'s annoying." **{name}** doesn\'t send {user} away, either.',
+      {
+        line: '"You." **{name}** places {user} at a glance, which from him is nearly a greeting.',
+        responses: {
+          kind: "Count it as a hello",
+          playful: "Ask for the full sentence",
+          bold: "Say his name back the same",
+        },
+      },
+      {
+        line: '{user} names him, and **{name}** sighs. "Persistent. I\'ll give you that much."',
+        responses: {
+          kind: "Say you'll take it",
+          playful: "Ask what else he'll give",
+          bold: "Say this is just the start",
+        },
+      },
+      {
+        line: '"Don\'t hover, it\'s annoying." **{name}** doesn\'t send {user} away, either.',
+        responses: {
+          kind: "Give him some room",
+          playful: "Hover a bit closer",
+          bold: "Stand right beside him",
+        },
+      },
     ],
     warm: [
-      '"Walk with me, then. Keep up." **{name}** doesn\'t break stride, but {user} had guessed right.',
-      '"You again." **{name}** says it to {user} like a verdict he has stopped appealing.',
-      '"Ha. Took you long enough." **{name}** lets {user} fall in at his back.',
+      {
+        line: '"Walk with me, then. Keep up." **{name}** doesn\'t break stride, but {user} had guessed right.',
+        responses: {
+          kind: "Fall in beside him",
+          playful: "Race a step ahead",
+          bold: "Set the pace yourself",
+        },
+      },
+      {
+        line: '"You again." **{name}** says it to {user} like a verdict he has stopped appealing.',
+        responses: {
+          kind: "Say he'd miss it otherwise",
+          playful: "Appeal the verdict",
+          bold: "Say get used to it",
+        },
+      },
+      {
+        line: '"Ha. Took you long enough." **{name}** lets {user} fall in at his back.',
+        responses: {
+          kind: "Take the place at his back",
+          playful: "Say you were fashionably late",
+          bold: "Walk at his side instead",
+        },
+      },
     ],
     spark: [
-      '"Ha. Guess I\'ll give you some attention." **{name}** turns fully to {user} this time.',
-      "{user} named him first, and **{name}** looks far too pleased.",
-      "**{name}** does not summon {user} over. He simply stops, and waits.",
+      {
+        line: '"Ha. Guess I\'ll give you some attention." **{name}** turns fully to {user} this time.',
+        responses: {
+          kind: "Say you'll take all of it",
+          playful: "Ask if it's rationed",
+          bold: "Say you'd earned it already",
+        },
+      },
+      {
+        line: "{user} named him first, and **{name}** looks far too pleased.",
+        responses: {
+          kind: "Let him enjoy it",
+          playful: "Ask what he's grinning at",
+          bold: "Say you'll always be first",
+        },
+      },
+      {
+        line: "**{name}** does not summon {user} over. He simply stops, and waits.",
+        responses: {
+          kind: "Go to him",
+          playful: "Make him wait a moment",
+          bold: "Stop and wait too",
+        },
+      },
     ],
     close: [
-      "The **{house}** dispatch goes to Tohma. **{name}** goes to {user}.",
-      '"Where the hell have you been?" **{name}** is already at {user}\'s side.',
-      "**{name}** drops the court voice the second it's {user} saying his name.",
+      {
+        line: "The **{house}** dispatch goes to Tohma. **{name}** goes to {user}.",
+        responses: {
+          kind: "Say Tohma can manage",
+          playful: "Ask if Tohma knows",
+          bold: "Say you outrank the dispatch",
+        },
+      },
+      {
+        line: '"Where the hell have you been?" **{name}** is already at {user}\'s side.',
+        responses: {
+          kind: "Say you're here now",
+          playful: "Say you were hiding from him",
+          bold: "Say you came straight here",
+        },
+      },
+      {
+        line: "**{name}** drops the court voice the second it's {user} saying his name.",
+        responses: {
+          kind: "Say you like this voice",
+          playful: "Ask for the court voice",
+          bold: "Ask him to keep it",
+        },
+      },
     ],
     bound: [
-      '"Mine," **{name}** says, as though {user} calling out had settled an argument he\'d been having alone.',
-      "**{name}** lets the **{house}** business wait. {user} called; that ends it.",
-      "{user} says the name, and **{name}** takes what is his.",
+      {
+        line: '"Mine," **{name}** says, as though {user} calling out had settled an argument he\'d been having alone.',
+        responses: {
+          kind: "Say you're his",
+          playful: "Ask who won the argument",
+          bold: "Say he's yours too",
+        },
+      },
+      {
+        line: "**{name}** lets the **{house}** business wait. {user} called; that ends it.",
+        responses: {
+          kind: "Say the business can wait",
+          playful: "Ask if Tohma will mind",
+          bold: "Say you'll call more often",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** takes what is his.",
+        responses: {
+          kind: "Let him",
+          playful: "Ask what counts as his",
+          bold: "Take what's yours, too",
+        },
+      },
     ],
   },
 };

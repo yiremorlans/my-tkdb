@@ -894,34 +894,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"Well, hey there!" **{name}** grins at {user} over an armful of feed sacks. "You after somethin\'?"',
-      '{user} says the name, and **{name}** laughs, delighted. "Gahaha! Look at that."',
-      "\"Don't mind Peekaboo, he's shy.\" **{name}** introduces Peekaboo before he introduces himself to {user}.",
+      {
+        line: '"Well, hey there!" **{name}** grins at {user} over an armful of feed sacks. "You after somethin\'?"',
+        responses: {
+          kind: "Offer to take a sack",
+          playful: "Say you're after snacks",
+          bold: "Ask what's in the sacks",
+        },
+      },
+      {
+        line: '{user} says the name, and **{name}** laughs, delighted. "Gahaha! Look at that."',
+        responses: {
+          kind: "Say it's nice to meet him",
+          playful: "Laugh right along",
+          bold: "Ask what's so funny",
+        },
+      },
+      {
+        line: "\"Don't mind Peekaboo, he's shy.\" **{name}** introduces Peekaboo before he introduces himself to {user}.",
+        responses: {
+          kind: "Crouch down to Peekaboo",
+          playful: "Introduce yourself to Peekaboo",
+          bold: "Ask to meet him first",
+        },
+      },
+      {
+        line: '"Well, hey there! Gahaha, perfect timing!" **{name}** has a tour flier in {user}\'s hands already.',
+        responses: {
+          kind: "Say the tour sounds fun",
+          playful: "Haggle for a discount",
+          bold: "Say you don't do tours",
+        },
+      },
     ],
     known: [
-      '"What a coinkydink!" **{name}** grins at {user}. "You keep turnin\' up wherever I am."',
-      "{user} says the name, and **{name}** laughs. \"Gahaha! Perfect timin', I'm short a pair of hands.\"",
-      "Peekaboo peers at {user} over the edge of the sling and ducks back down. **{name}** swears that's progress.",
+      {
+        line: '"What a coinkydink!" **{name}** grins at {user}. "You keep turnin\' up wherever I am."',
+        responses: {
+          kind: "Say it's a happy accident",
+          playful: "Say \"coinkydink\" right back",
+          bold: "Say you're following him",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** laughs. \"Gahaha! Perfect timin', I'm short a pair of hands.\"",
+        responses: {
+          kind: "Lend him both hands",
+          playful: "Ask if it pays in snacks",
+          bold: "Ask whose hands are missing",
+        },
+      },
+      {
+        line: "Peekaboo peers at {user} over the edge of the sling and ducks back down. **{name}** swears that's progress.",
+        responses: {
+          kind: "Wave at Peekaboo",
+          playful: "Play peekaboo back",
+          bold: "Say that's not progress",
+        },
+      },
     ],
     warm: [
-      '"Hey, Honor Roll!" **{name}** is filthy to the elbows and beaming at {user}.',
-      "{user} calls out, and **{name}** drops the sack he was hauling. It can wait.",
-      '"Grab a bucket." **{name}** is grinning when he says it to {user}.',
+      {
+        line: '"Hey, Honor Roll!" **{name}** is filthy to the elbows and beaming at {user}.',
+        responses: {
+          kind: "Beam right back",
+          playful: "Ask what he rolled in",
+          bold: "Ask for a hug anyway",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}** drops the sack he was hauling. It can wait.",
+        responses: {
+          kind: "Pick up the sack for him",
+          playful: "Ask if the sack's offended",
+          bold: "Tell him to finish first",
+        },
+      },
+      {
+        line: '"Grab a bucket." **{name}** is grinning when he says it to {user}.',
+        responses: {
+          kind: "Grab a bucket",
+          playful: "Grab two buckets",
+          bold: "Ask what's in the bucket",
+        },
+      },
     ],
     spark: [
-      "**{name}** flirts, lands it, and immediately looks somewhere else. {user} is used to this.",
-      '"Miss me, Honor Roll?" **{name}** asks {user}, then can\'t hold eye contact for the answer.',
-      "{user} says the name, and **{name}**'s grin goes about ten percent honest.",
+      {
+        line: "**{name}** flirts, lands it, and immediately looks somewhere else. {user} is used to this.",
+        responses: {
+          kind: "Let him look away",
+          playful: "Flirt right back",
+          bold: "Make him look at you",
+        },
+      },
+      {
+        line: '"Miss me, Honor Roll?" **{name}** asks {user}, then can\'t hold eye contact for the answer.',
+        responses: {
+          kind: "Say you did",
+          playful: "Say not even a little",
+          bold: "Wait for him to look",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}**'s grin goes about ten percent honest.",
+        responses: {
+          kind: "Say you like the honest part",
+          playful: "Ask for twenty percent",
+          bold: "Ask for the other ninety",
+        },
+      },
     ],
     close: [
-      '"There you are, Honor Roll." **{name}** reaches {user} and, for once, doesn\'t make a joke of it.',
-      "**{name}** goes to kiss {user} mid-sentence, clocks the audience, and grins his way out of it instead.",
-      "{user} calls, and **{name}** leaves the rounds to Ren without a second thought.",
+      {
+        line: '"There you are, Honor Roll." **{name}** reaches {user} and, for once, doesn\'t make a joke of it.',
+        responses: {
+          kind: "Say you missed him",
+          playful: "Make the joke for him",
+          bold: "Ask why no joke",
+        },
+      },
+      {
+        line: "**{name}** goes to kiss {user} mid-sentence, clocks the audience, and grins his way out of it instead.",
+        responses: {
+          kind: "Say later, then",
+          playful: "Wave at the audience",
+          bold: "Kiss him anyway",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}** leaves the rounds to Ren without a second thought.",
+        responses: {
+          kind: "Say Ren can handle it",
+          playful: "Ask if Ren agreed",
+          bold: "Say Ren will be mad",
+        },
+      },
     ],
     bound: [
-      '"Home," **{name}** says, meaning {user}, with his forehead against theirs.',
-      "**{name}** hears his name, and every animal in the park can wait. {user} can't.",
-      "{user} says the name, and **{name}** stops chickening out about any of it.",
+      {
+        line: '"Home," **{name}** says, meaning {user}, with his forehead against theirs.',
+        responses: {
+          kind: "Say he's home too",
+          playful: "Ask if home has snacks",
+          bold: "Say welcome home",
+        },
+      },
+      {
+        line: "**{name}** hears his name, and every animal in the park can wait. {user} can't.",
+        responses: {
+          kind: "Say the critters can wait",
+          playful: "Ask what Peekaboo thinks",
+          bold: "Say they shouldn't wait",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** stops chickening out about any of it.",
+        responses: {
+          kind: "Say you're proud of him",
+          playful: "Ask what he was chicken of",
+          bold: "Tell him to prove it",
+        },
+      },
     ],
   },
 };

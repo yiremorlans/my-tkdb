@@ -899,34 +899,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"Symptoms or errand." **{name}** doesn\'t slow down for {user}. "Pick one."',
-      '{user} says the name, and **{name}** tugs his mask down to answer. "Yes. Do you need something treated?"',
-      "\"Don't ask what's in the cooler,\" **{name}** tells {user}, and keeps walking toward the lab.",
+      {
+        line: '"Symptoms or errand." **{name}** doesn\'t slow down for {user}. "Pick one."',
+        responses: {
+          kind: "Ask if he's got a minute",
+          playful: "Pick both",
+          bold: "Say symptoms, and list them",
+        },
+      },
+      {
+        line: '{user} says the name, and **{name}** tugs his mask down to answer. "Yes. Do you need something treated?"',
+        responses: {
+          kind: "Ask if he needs treating",
+          playful: "Say it's your heart",
+          bold: "Say you came for him",
+        },
+      },
+      {
+        line: "\"Don't ask what's in the cooler,\" **{name}** tells {user}, and keeps walking toward the lab.",
+        responses: {
+          kind: "Offer to carry the cooler",
+          playful: "Ask what's in the cooler",
+          bold: "Follow him anyway",
+        },
+      },
+      {
+        line: '"Hm." **{name}** looks {user} over the way he\'d read a chart. "Your color\'s fine. So what is it?"',
+        responses: {
+          kind: "Ask how his own color is",
+          playful: "Say you just wanted to chat",
+          bold: "Ask him to examine you",
+        },
+      },
     ],
     known: [
-      '"Your color\'s better than last week." **{name}** tells {user} this before hello.',
-      '{user} says the name, and **{name}** stops. "I was about to come find you for a check-up. This saves me a trip."',
-      'Someone down the hall bolts at the sight of **{name}**. "That\'s rude, isn\'t it?" he asks {user}. "You never run."',
+      {
+        line: '"Your color\'s better than last week." **{name}** tells {user} this before hello.',
+        responses: {
+          kind: "Say his care helped",
+          playful: "Ask what color you were",
+          bold: "Ask what it was last week",
+        },
+      },
+      {
+        line: '{user} says the name, and **{name}** stops. "I was about to come find you for a check-up. This saves me a trip."',
+        responses: {
+          kind: "Hold out your wrist",
+          playful: "Ask if it'll hurt",
+          bold: "Say you'll check him too",
+        },
+      },
+      {
+        line: 'Someone down the hall bolts at the sight of **{name}**. "That\'s rude, isn\'t it?" he asks {user}. "You never run."',
+        responses: {
+          kind: "Say you never will",
+          playful: "Pretend to run too",
+          bold: "Say they're missing out",
+        },
+      },
     ],
     warm: [
-      "**{name}** stops for {user}.",
-      '"Sit down before you fall down." **{name}** has been watching how {user} walks.',
-      "{user} calls out, and **{name}** postpones the thing he was on his way to.",
+      {
+        line: "**{name}** stops for {user}.",
+        responses: {
+          kind: "Say you won't keep him",
+          playful: "Freeze too, just to match",
+          bold: "Ask where he was headed",
+        },
+      },
+      {
+        line: '"Sit down before you fall down." **{name}** has been watching how {user} walks.',
+        responses: {
+          kind: "Sit down for him",
+          playful: "Wobble on purpose",
+          bold: "Say you're fine standing",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}** postpones the thing he was on his way to.",
+        responses: {
+          kind: "Say you can walk with him",
+          playful: "Ask if you're on his chart",
+          bold: "Tell him to postpone more",
+        },
+      },
     ],
     spark: [
-      "**{name}** looks at {user} a full second longer than any diagnosis requires.",
-      '"When did you last sleep?" **{name}** asks {user}. "Don\'t lie. I\'ll know."',
-      "{user} got there first, and **{name}** files that somewhere he doesn't file work.",
+      {
+        line: "**{name}** looks at {user} a full second longer than any diagnosis requires.",
+        responses: {
+          kind: "Ask what he's diagnosing",
+          playful: "Ask if it's terminal",
+          bold: "Look back just as long",
+        },
+      },
+      {
+        line: '"When did you last sleep?" **{name}** asks {user}. "Don\'t lie. I\'ll know."',
+        responses: {
+          kind: "Admit it's been a while",
+          playful: "Lie and see if he knows",
+          bold: "Ask when he last slept",
+        },
+      },
+      {
+        line: "{user} got there first, and **{name}** files that somewhere he doesn't file work.",
+        responses: {
+          kind: "Let him keep it",
+          playful: "Ask where he filed it",
+          bold: "Say you saw that",
+        },
+      },
     ],
     close: [
-      '"I don\'t waste time," **{name}** says, reaching {user} in about four strides.',
-      "**{name}** hears {user} and hands the **{house}** chart to whoever is nearest.",
-      "{user} calls, and **{name}** is abruptly off shift.",
+      {
+        line: '"I don\'t waste time," **{name}** says, reaching {user} in about four strides.',
+        responses: {
+          kind: "Say you're glad he hurried",
+          playful: "Count the strides",
+          bold: "Meet him in two",
+        },
+      },
+      {
+        line: "**{name}** hears {user} and hands the **{house}** chart to whoever is nearest.",
+        responses: {
+          kind: "Say the chart can wait",
+          playful: "Ask who got the chart",
+          bold: "Say you're his patient now",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}** is abruptly off shift.",
+        responses: {
+          kind: "Say he deserves the break",
+          playful: "Ask if Yuri knows",
+          bold: "Say he's off for the night",
+        },
+      },
     ],
     bound: [
-      '"That\'s the diagnosis," **{name}** tells {user}. "Treatment is ongoing."',
-      '**{name}** smiles at {user}, on purpose this time. "You told me to practice."',
-      "{user} says the name, and **{name}** lets Yuri shout for him. Let him shout.",
+      {
+        line: '"That\'s the diagnosis," **{name}** tells {user}. "Treatment is ongoing."',
+        responses: {
+          kind: "Say you'll keep coming back",
+          playful: "Ask about side effects",
+          bold: "Ask what the cure is",
+        },
+      },
+      {
+        line: '**{name}** smiles at {user}, on purpose this time. "You told me to practice."',
+        responses: {
+          kind: "Say it's perfect",
+          playful: "Ask him to practice more",
+          bold: "Say do it again",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** lets Yuri shout for him. Let him shout.",
+        responses: {
+          kind: "Say Yuri will be fine",
+          playful: "Shout for Yuri back",
+          bold: "Say let him shout",
+        },
+      },
     ],
   },
 };

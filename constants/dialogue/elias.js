@@ -940,34 +940,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"Oh, hello." His careful courtesy reaches {user} a good second before **{name}** does.',
-      '{user} says the name, and **{name}** shifts the lollipop to the other cheek. "Oh, you called me?"',
-      "**{name}** had been leaning where he shouldn't be. He straightens up for {user}, slowly.",
+      {
+        line: '"Oh, hello." His careful courtesy reaches {user} a good second before **{name}** does.',
+        responses: {
+          kind: "Return the courtesy",
+          playful: "Say his manners beat him here",
+          bold: "Ask what he's being careful of",
+        },
+      },
+      {
+        line: '{user} says the name, and **{name}** shifts the lollipop to the other cheek. "Oh, you called me?"',
+        responses: {
+          kind: "Say hi, nothing more",
+          playful: "Ask what flavor it is",
+          bold: "Ask why he took so long",
+        },
+      },
+      {
+        line: "**{name}** had been leaning where he shouldn't be. He straightens up for {user}, slowly.",
+        responses: {
+          kind: "Say he can keep leaning",
+          playful: "Say you won't tell anyone",
+          bold: "Ask what he's hiding from",
+        },
+      },
+      {
+        line: '**{name}** looks up from his mop at {user}, mildly surprised. "Oh, hello. Did you need something?"',
+        responses: {
+          kind: "Offer him a hand with it",
+          playful: "Ask what he's heard about you",
+          bold: "Ask why a ghoul mops floors",
+        },
+      },
     ],
     known: [
-      '"Oh, it\'s you again." **{name}** straightens up for {user}, a little quicker than last time.',
-      '{user} says the name, and **{name}** smiles like he wasn\'t waiting. "Oh, what a coincidence."',
-      '"You have a knack for finding me, don\'t you?" **{name}** tells {user}, and doesn\'t sound like he minds.',
+      {
+        line: '"Oh, it\'s you again." **{name}** straightens up for {user}, a little quicker than last time.',
+        responses: {
+          kind: "Tell him to relax",
+          playful: "Say he's getting faster",
+          bold: "Ask who he's standing up for",
+        },
+      },
+      {
+        line: '{user} says the name, and **{name}** smiles like he wasn\'t waiting. "Oh, what a coincidence."',
+        responses: {
+          kind: "Say it's a nice one",
+          playful: "Say you planned it",
+          bold: "Ask if he was waiting",
+        },
+      },
+      {
+        line: '"You have a knack for finding me, don\'t you?" **{name}** tells {user}, and doesn\'t sound like he minds.',
+        responses: {
+          kind: "Say you like finding him",
+          playful: "Ask if he's been hiding",
+          bold: "Ask why he's hard to find",
+        },
+      },
     ],
     warm: [
-      '"Seeing you makes my day. I mean that." **{name}** says it simply, and {user} can tell.',
-      "{user} calls out, and **{name}** puts down whatever errand Jo sent him on.",
-      "**{name}** offers {user} a candy before he offers a hello.",
+      {
+        line: '"Seeing you makes my day. I mean that." **{name}** says it simply, and {user} can tell.',
+        responses: {
+          kind: "Say he makes yours too",
+          playful: "Ask for that in writing",
+          bold: "Ask what else he means",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}** puts down whatever errand Jo sent him on.",
+        responses: {
+          kind: "Say the errand can wait",
+          playful: "Ask what Jo's got him on",
+          bold: "Tell him to finish it first",
+        },
+      },
+      {
+        line: "**{name}** offers {user} a candy before he offers a hello.",
+        responses: {
+          kind: "Take the candy, say hi",
+          playful: "Ask for his favorite one",
+          bold: "Ask where the hello went",
+        },
+      },
     ],
     spark: [
-      '"Keep that up and I\'ll start to think you like me." **{name}** smiles at {user} like it\'s a secret.',
-      "{user} says the name, and **{name}**'s easy smile goes real for a second.",
-      "**{name}** takes his time getting to {user}.",
+      {
+        line: '"Keep that up and I\'ll start to think you like me." **{name}** smiles at {user} like it\'s a secret.',
+        responses: {
+          kind: "Say maybe you do",
+          playful: "Ask what gave it away",
+          bold: "Say he should think it",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}**'s easy smile goes real for a second.",
+        responses: {
+          kind: "Smile back at him",
+          playful: "Ask where the real one went",
+          bold: "Ask to see it again",
+        },
+      },
+      {
+        line: "**{name}** takes his time getting to {user}.",
+        responses: {
+          kind: "Let him take his time",
+          playful: "Ask if he's racing",
+          bold: "Tell him to hurry",
+        },
+      },
     ],
     close: [
-      '"Oh, it\'s you… Walk with me a while?" **{name}** falls in beside {user} like the errand never existed.',
-      "**{name}** drops the charm the moment it's {user}.",
-      "{user} calls, and **{name}** stops working the room entirely.",
+      {
+        line: '"Oh, it\'s you… Walk with me a while?" **{name}** falls in beside {user} like the errand never existed.',
+        responses: {
+          kind: "Walk with him",
+          playful: "Ask about the errand",
+          bold: "Say you'll pick the way",
+        },
+      },
+      {
+        line: "**{name}** drops the charm the moment it's {user}.",
+        responses: {
+          kind: "Say you like him better",
+          playful: "Ask where the charm went",
+          bold: "Say you saw it drop",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}** stops working the room entirely.",
+        responses: {
+          kind: "Say you have him to yourself",
+          playful: "Ask who he was working",
+          bold: "Say the room can wait",
+        },
+      },
     ],
     bound: [
-      '"I\'d gotten used to belonging to no one…" **{name}** tells {user}, low. "It seems I\'m yours now."',
-      "**{name}** says {user}'s name back, unhurried.",
-      "{user} says the name, and **{name}** lets the **{house}** errands rot where they stand.",
+      {
+        line: '"I\'d gotten used to belonging to no one…" **{name}** tells {user}, low. "It seems I\'m yours now."',
+        responses: {
+          kind: "Say you're his too",
+          playful: "Ask when it happened",
+          bold: "Say he always was",
+        },
+      },
+      {
+        line: "**{name}** says {user}'s name back, unhurried.",
+        responses: {
+          kind: "Say his name back",
+          playful: "Ask him to say it again",
+          bold: "Ask why so slow",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** lets the **{house}** errands rot where they stand.",
+        responses: {
+          kind: "Say the errands can wait",
+          playful: "Ask if Jo will notice",
+          bold: "Say Jo will notice",
+        },
+      },
     ],
   },
 };

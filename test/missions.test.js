@@ -57,6 +57,7 @@ mock.module('../discordRest.js', {
       if (!messageId) return;
       edits.push({ channelId, messageId, body });
     },
+    getChannelMessage: async () => ({}),
     editInteractionMessage: async (token, messageId, body) => {
       interactionEdits.push({ token, messageId, body });
       if (discordFail.interaction) throw new Error('Discord API error: 404');

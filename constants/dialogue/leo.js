@@ -901,34 +901,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      "**{name}**'s phone is up before he's turned. \"Oh, this is good.\" {user} had guessed right.",
-      '"Brave or stupid?" **{name}** asks {user}, already deciding it\'s content.',
-      "{user} says the name, and **{name}** grins like he's already framing the shot.",
+      {
+        line: "**{name}**'s phone is up before he's turned. \"Oh, this is good.\" {user} had guessed right.",
+        responses: {
+          kind: "Smile for the camera",
+          playful: "Ask what's so good",
+          bold: "Ask who said he could film",
+        },
+      },
+      {
+        line: '"Brave or stupid?" **{name}** asks {user}, already deciding it\'s content.',
+        responses: {
+          kind: "Say you hope brave",
+          playful: "Say both, depending on the day",
+          bold: "Tell him to decide himself",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** grins like he's already framing the shot.",
+        responses: {
+          kind: "Give him your best side",
+          playful: "Ask for a filter",
+          bold: "Step out of the frame",
+        },
+      },
+      {
+        line: '**{name}** already has his phone pointed at {user}. "Okay, new face. Give me a reaction. Something good."',
+        responses: {
+          kind: "Give him a shy wave",
+          playful: "Pose for the camera",
+          bold: "Turn the camera on him",
+        },
+      },
     ],
     known: [
-      '**{name}** doesn\'t look up from his phone. "Knew it\'d be you." {user} has been clocked.',
-      '{user} says the name, and **{name}** smirks. "Took you long enough, Honor Roll."',
-      '**{name}** turns his phone on {user}. "Wave. You\'re on my live stream now."',
+      {
+        line: '**{name}** doesn\'t look up from his phone. "Knew it\'d be you." {user} has been clocked.',
+        responses: {
+          kind: "Say you're flattered",
+          playful: "Ask how he knew",
+          bold: "Tell him to look up",
+        },
+      },
+      {
+        line: '{user} says the name, and **{name}** smirks. "Took you long enough, Honor Roll."',
+        responses: {
+          kind: "Say you hurried over",
+          playful: "Say Honor Roll had homework",
+          bold: "Say he's the one who waited",
+        },
+      },
+      {
+        line: '**{name}** turns his phone on {user}. "Wave. You\'re on my live stream now."',
+        responses: {
+          kind: "Wave for the stream",
+          playful: "Say hi to his followers",
+          bold: "Turn the phone around",
+        },
+      },
     ],
     warm: [
-      "**{name}** raises his phone at {user}, then lowers it. They're not for the feed.",
-      '"Finally," **{name}** drawls at {user}, not hiding that he had been watching for them.',
-      "{user} calls out, and **{name}** insults them warmly.",
+      {
+        line: "**{name}** raises his phone at {user}, then lowers it. They're not for the feed.",
+        responses: {
+          kind: "Smile anyway",
+          playful: "Ask if you're off the feed",
+          bold: "Ask why he put it away",
+        },
+      },
+      {
+        line: '"Finally," **{name}** drawls at {user}, not hiding that he had been watching for them.',
+        responses: {
+          kind: "Say you missed him too",
+          playful: "Ask how long he watched",
+          bold: "Say he could have come over",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}** insults them warmly.",
+        responses: {
+          kind: "Take it as affection",
+          playful: "Insult him right back",
+          bold: "Tell him to try harder",
+        },
+      },
     ],
     spark: [
-      "**{name}** stops the recording. {user} gets the version nobody else does.",
-      '"Say it again. Slower." **{name}** isn\'t talking about his name, and {user} knows it.',
-      "{user} got there first, and **{name}** looks entirely too pleased to be caught.",
+      {
+        line: "**{name}** stops the recording. {user} gets the version nobody else does.",
+        responses: {
+          kind: "Say you like this version",
+          playful: "Ask if you're off the record",
+          bold: "Ask him to keep it off",
+        },
+      },
+      {
+        line: '"Say it again. Slower." **{name}** isn\'t talking about his name, and {user} knows it.',
+        responses: {
+          kind: "Say it again for him",
+          playful: "Say it even slower",
+          bold: "Make him say it first",
+        },
+      },
+      {
+        line: "{user} got there first, and **{name}** looks entirely too pleased to be caught.",
+        responses: {
+          kind: "Let him have it",
+          playful: "Say you'll catch him again",
+          bold: "Ask what you caught him at",
+        },
+      },
     ],
     close: [
-      '"Wow, you wanted me that bad?" **{name}** says it loud enough for everyone nearby. {user} had only called his name.',
-      "**{name}** goes unbearably soft the moment {user} reaches him.",
-      "{user} calls, and **{name}** puts the phone away. Face down.",
+      {
+        line: '"Wow, you wanted me that bad?" **{name}** says it loud enough for everyone nearby. {user} had only called his name.',
+        responses: {
+          kind: "Say yes, that bad",
+          playful: "Say you wanted his phone",
+          bold: "Say it louder than him",
+        },
+      },
+      {
+        line: "**{name}** goes unbearably soft the moment {user} reaches him.",
+        responses: {
+          kind: "Say you like him soft",
+          playful: "Tell him his rep is ruined",
+          bold: "Say you'll tell everyone",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}** puts the phone away. Face down.",
+        responses: {
+          kind: "Say you noticed",
+          playful: "Flip the phone over",
+          bold: "Ask what's on the screen",
+        },
+      },
     ],
     bound: [
-      "**{name}** takes {user}'s hand in public specifically so that it is seen.",
-      '"Do you have any idea what that does to me?" **{name}** mutters, crossing to {user} anyway.',
-      "{user} says the name, and **{name}** keeps this one off the record.",
+      {
+        line: "**{name}** takes {user}'s hand in public specifically so that it is seen.",
+        responses: {
+          kind: "Hold on tight",
+          playful: "Wave at the onlookers",
+          bold: "Make sure they see it",
+        },
+      },
+      {
+        line: '"Do you have any idea what that does to me?" **{name}** mutters, crossing to {user} anyway.',
+        responses: {
+          kind: "Say it does it to you too",
+          playful: "Ask him to show you",
+          bold: "Say that's the point",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** keeps this one off the record.",
+        responses: {
+          kind: "Say it's just for you two",
+          playful: "Ask for one copy",
+          bold: "Tell him to keep it there",
+        },
+      },
     ],
   },
 };

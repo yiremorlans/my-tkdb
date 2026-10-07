@@ -877,34 +877,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"Why, hello there, my dear." **{name}** smiles at {user} as though they were expected.',
-      '{user} names him, and **{name}** beams. "Seventeen syllables, and you\'ve handed me the last five."',
-      "**{name}** finishes his sentence to no one at all, then turns to {user} with a flourish.",
+      {
+        line: '"Why, hello there, my dear." **{name}** smiles at {user} as though they were expected.',
+        responses: {
+          kind: "Say it's nice to be expected",
+          playful: "Ask if you're late",
+          bold: "Ask how he knew you'd come",
+        },
+      },
+      {
+        line: '{user} names him, and **{name}** beams. "Seventeen syllables, and you\'ve handed me the last five."',
+        responses: {
+          kind: "Ask to hear the first twelve",
+          playful: "Ask for royalties",
+          bold: "Say it was an accident",
+        },
+      },
+      {
+        line: "**{name}** finishes his sentence to no one at all, then turns to {user} with a flourish.",
+        responses: {
+          kind: "Ask him to finish the thought",
+          playful: "Say his audience left",
+          bold: "Ask who was listening",
+        },
+      },
+      {
+        line: '**{name}** brightens all at once. "My dear! What a sensational surprise." He sweeps {user} a bow.',
+        responses: {
+          kind: "Ask to hear one of his stories",
+          playful: "Ask for his autograph",
+          bold: "Ask why others can't see him",
+        },
+      },
     ],
     known: [
-      '"The wanderer returns." **{name}** looks {user} over, pleased. "You\'re becoming a regular fixture, my dear."',
-      '{user} names him, and **{name}** beams. "Twice is coincidence. Three times is a season."',
-      "**{name}** had {user}'s name on the tip of his tongue all week. They got there first.",
+      {
+        line: '"The wanderer returns." **{name}** looks {user} over, pleased. "You\'re becoming a regular fixture, my dear."',
+        responses: {
+          kind: "Say you like it here",
+          playful: "Ask for a fixture's plaque",
+          bold: "Say you'll keep coming",
+        },
+      },
+      {
+        line: '{user} names him, and **{name}** beams. "Twice is coincidence. Three times is a season."',
+        responses: {
+          kind: "Say you'll make it a season",
+          playful: "Ask what four times is",
+          bold: "Say it's no coincidence",
+        },
+      },
+      {
+        line: "**{name}** had {user}'s name on the tip of his tongue all week. They got there first.",
+        responses: {
+          kind: "Ask what he'd have said",
+          playful: "Say you win this round",
+          bold: "Say he should've been faster",
+        },
+      },
     ],
     warm: [
-      '"You arrive like a season, my dear." **{name}** is delighted with {user}.',
-      "{user} calls out, and **{name}** abandons a perfectly good line mid-composition.",
-      "**{name}** had a story saved for {user}. He tells it at length, with gestures.",
+      {
+        line: '"You arrive like a season, my dear." **{name}** is delighted with {user}.',
+        responses: {
+          kind: "Ask which season you are",
+          playful: "Call him a weather report",
+          bold: "Say seasons leave, you won't",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}** abandons a perfectly good line mid-composition.",
+        responses: {
+          kind: "Say the line can wait",
+          playful: "Offer to finish it for him",
+          bold: "Ask what the line was",
+        },
+      },
+      {
+        line: "**{name}** had a story saved for {user}. He tells it at length, with gestures.",
+        responses: {
+          kind: "Listen to every word",
+          playful: "Act out the gestures too",
+          bold: "Skip to the ending",
+        },
+      },
     ],
     spark: [
-      '"Horsefeathers." **{name}** had absolutely been watching for {user}.',
-      "{user} says the name, and **{name}** finds himself briefly short of words.",
-      "**{name}** bows to {user} with rather more ceremony than the moment requires.",
+      {
+        line: '"Horsefeathers." **{name}** had absolutely been watching for {user}.',
+        responses: {
+          kind: "Say you were looking too",
+          playful: "Ask what horsefeathers means",
+          bold: "Say he was watching",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** finds himself briefly short of words.",
+        responses: {
+          kind: "Wait for his words",
+          playful: "Offer him a rhyme",
+          bold: "Ask where his words went",
+        },
+      },
+      {
+        line: "**{name}** bows to {user} with rather more ceremony than the moment requires.",
+        responses: {
+          kind: "Bow back to him",
+          playful: "Applaud the ceremony",
+          bold: "Ask what the occasion is",
+        },
+      },
     ],
     close: [
-      '"The moon is beautiful, isn\'t it?" **{name}** asks {user}, whatever the hour, and they know exactly what he means by it.',
-      "**{name}** has stopped composing verses about longing. {user} is standing right there.",
-      '"Can you see me? Phew..." **{name}** is so relieved it\'s {user} that he forgets to be dashing.',
+      {
+        line: '"The moon is beautiful, isn\'t it?" **{name}** asks {user}, whatever the hour, and they know exactly what he means by it.',
+        responses: {
+          kind: "Say it's beautiful tonight",
+          playful: "Ask what moon",
+          bold: "Say you love him too",
+        },
+      },
+      {
+        line: "**{name}** has stopped composing verses about longing. {user} is standing right there.",
+        responses: {
+          kind: "Stay right there",
+          playful: "Ask for one more verse",
+          bold: "Ask what he'd have written",
+        },
+      },
+      {
+        line: '"Can you see me? Phew..." **{name}** is so relieved it\'s {user} that he forgets to be dashing.',
+        responses: {
+          kind: "Say you always can",
+          playful: "Pretend you can't",
+          bold: "Say he's hard to miss",
+        },
+      },
     ],
     bound: [
-      '"Seventeen syllables can\'t hold this, my dear." **{name}** stops trying and crosses to {user} instead.',
-      "**{name}** hasn't much time, and spends all of it getting to {user}.",
-      "{user} says the name, and **{name}** gives up the metaphor entirely.",
+      {
+        line: '"Seventeen syllables can\'t hold this, my dear." **{name}** stops trying and crosses to {user} instead.',
+        responses: {
+          kind: "Say it doesn't need to",
+          playful: "Count the syllables",
+          bold: "Ask him to try anyway",
+        },
+      },
+      {
+        line: "**{name}** hasn't much time, and spends all of it getting to {user}.",
+        responses: {
+          kind: "Say you'll spend it with him",
+          playful: "Ask if you were worth it",
+          bold: "Say make it last",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** gives up the metaphor entirely.",
+        responses: {
+          kind: "Say plain words are enough",
+          playful: "Ask for one last metaphor",
+          bold: "Ask what he means, then",
+        },
+      },
     ],
   },
 };

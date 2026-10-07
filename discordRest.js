@@ -35,12 +35,14 @@ async function readError(res) {
  * `components` matter for bond scenes (docs/bond-scene-dms.md): every beat of a
  * scene is posted here, with the bot token, rather than through an interaction
  * webhook — which is exactly why a scene's Continue button never expires.
+ * `flags` carries IS_COMPONENTS_V2 and `message_reference` makes the post a
+ * reply, both for /call scenes (docs/public-encounters.md §17).
  */
 export async function postChannelMessage(
   channelId,
-  { content, files, embeds, components, allowed_mentions } = {},
+  { content, files, embeds, components, allowed_mentions, flags, message_reference } = {},
 ) {
-  const payload = { content, embeds, components, allowed_mentions };
+  const payload = { content, embeds, components, allowed_mentions, flags, message_reference };
   for (const key of Object.keys(payload)) {
     if (payload[key] === undefined) delete payload[key];
   }
@@ -55,6 +57,20 @@ export async function postChannelMessage(
     method: 'POST',
     headers: authHeaders(),
     body: form,
+  });
+
+  if (!res.ok) throw await readError(res);
+  return res.json();
+}
+
+/**
+ * GET a message the bot can see. The /call scene closeout reads its post back
+ * rather than storing what it would need to redraw it
+ * (docs/public-encounters.md §17.6).
+ */
+export async function getChannelMessage(channelId, messageId) {
+  const res = await fetch(`${API_BASE}/channels/${channelId}/messages/${messageId}`, {
+    headers: authHeaders(),
   });
 
   if (!res.ok) throw await readError(res);

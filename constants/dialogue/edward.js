@@ -894,34 +894,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      "**{name}** asks {user} whether he may take their hand, then waits for an answer.",
-      '"Oh my. How charming." **{name}** appears at {user}\'s elbow, smiling.',
-      "{user} says the name, and **{name}** smiles with rather too many implications in it.",
+      {
+        line: "**{name}** asks {user} whether he may take their hand, then waits for an answer.",
+        responses: {
+          kind: "Offer your hand",
+          playful: "Ask what he'll do with it",
+          bold: "Ask what he really wants",
+        },
+      },
+      {
+        line: '"Oh my. How charming." **{name}** appears at {user}\'s elbow, smiling.',
+        responses: {
+          kind: "Ask if he's been there long",
+          playful: "Curtsy to the gentleman",
+          bold: "Say you saw him coming",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** smiles with rather too many implications in it.",
+        responses: {
+          kind: "Return the smile",
+          playful: "Ask which implication",
+          bold: "Say you caught all of them",
+        },
+      },
+      {
+        line: '"Oh my, a visitor." **{name}** smiles at {user}. "How lovely. Forgive me if I lean on something. I tire so easily."',
+        responses: {
+          kind: "Offer him your arm",
+          playful: "Ask if he's really a vampire",
+          bold: "Say you're not fooled",
+        },
+      },
     ],
     known: [
-      '"You\'ve returned." **{name}** says it to {user} as though it were remarkable.',
-      '{user} says the name, and **{name}** smiles. "I\'d started to think I imagined you."',
-      "**{name}** has a favor to ask of {user}, and asks it with his most harmless smile.",
+      {
+        line: '"You\'ve returned." **{name}** says it to {user} as though it were remarkable.',
+        responses: {
+          kind: "Say you wanted to",
+          playful: "Ask if you're a miracle",
+          bold: "Say of course you did",
+        },
+      },
+      {
+        line: '{user} says the name, and **{name}** smiles. "I\'d started to think I imagined you."',
+        responses: {
+          kind: "Say you'd never vanish",
+          playful: "Ask if you're his best dream",
+          bold: "Say he can check",
+        },
+      },
+      {
+        line: "**{name}** has a favor to ask of {user}, and asks it with his most harmless smile.",
+        responses: {
+          kind: "Ask what the favor is",
+          playful: "Ask what it'll cost you",
+          bold: "Say the smile won't work",
+        },
+      },
     ],
     warm: [
-      '"You haven\'t flinched once," **{name}** observes to {user}, thrilled and slightly put out.',
-      "{user} calls out, and **{name}**'s cough evaporates. He forgets to bring it back.",
-      '"Do come here." **{name}** informs {user} that personal space is a modern invention.',
+      {
+        line: '"You haven\'t flinched once," **{name}** observes to {user}, thrilled and slightly put out.',
+        responses: {
+          kind: "Say he isn't that scary",
+          playful: "Flinch just for him",
+          bold: "Dare him to make you",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}**'s cough evaporates. He forgets to bring it back.",
+        responses: {
+          kind: "Ask if he's feeling better",
+          playful: "Remind him about the cough",
+          bold: "Say the act slipped",
+        },
+      },
+      {
+        line: '"Do come here." **{name}** informs {user} that personal space is a modern invention.',
+        responses: {
+          kind: "Step closer to him",
+          playful: "Ask when it was invented",
+          bold: "Close the space between you",
+        },
+      },
     ],
     spark: [
-      '"You ought to know better than to play with fire," **{name}** tells {user}, sounding delighted about it.',
-      "{user} says the name, and **{name}** stops performing frailty for the length of one look.",
-      '"What were you hoping for? Go on, say it." **{name}** waits on {user}, unhurried.',
+      {
+        line: '"You ought to know better than to play with fire," **{name}** tells {user}, sounding delighted about it.',
+        responses: {
+          kind: "Say you know what you're doing",
+          playful: "Ask if you'll get burned",
+          bold: "Play with it anyway",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** stops performing frailty for the length of one look.",
+        responses: {
+          kind: "Say you saw the real him",
+          playful: "Ask where the frailty went",
+          bold: "Hold the look",
+        },
+      },
+      {
+        line: '"What were you hoping for? Go on, say it." **{name}** waits on {user}, unhurried.',
+        responses: {
+          kind: "Say you hoped to see him",
+          playful: "Say you hoped for tea",
+          bold: "Say it",
+        },
+      },
     ],
     close: [
-      '"May I?" **{name}** asks {user}, in public, about something unspecified.',
-      "**{name}** walks {user} the whole way across campus and never once asks to be carried.",
-      "{user} calls, and the ancient thing under **{name}**'s manners answers immediately.",
+      {
+        line: '"May I?" **{name}** asks {user}, in public, about something unspecified.',
+        responses: {
+          kind: "Say yes",
+          playful: "Ask may you what",
+          bold: "Say he may",
+        },
+      },
+      {
+        line: "**{name}** walks {user} the whole way across campus and never once asks to be carried.",
+        responses: {
+          kind: "Say he did well",
+          playful: "Offer to carry him now",
+          bold: "Say the act is over",
+        },
+      },
+      {
+        line: "{user} calls, and the ancient thing under **{name}**'s manners answers immediately.",
+        responses: {
+          kind: "Say you're glad it came",
+          playful: "Ask how old it is",
+          bold: "Say you like that one",
+        },
+      },
     ],
     bound: [
-      '"Centuries," **{name}** murmurs to {user}, "and not one of them was this."',
-      "**{name}** crosses to {user} without the parasol, the cough, or any of the rest of it.",
-      "{user} says the name, and **{name}** stops being alone.",
+      {
+        line: '"Centuries," **{name}** murmurs to {user}, "and not one of them was this."',
+        responses: {
+          kind: "Say this is yours now",
+          playful: "Ask about century three",
+          bold: "Say it's only the start",
+        },
+      },
+      {
+        line: "**{name}** crosses to {user} without the parasol, the cough, or any of the rest of it.",
+        responses: {
+          kind: "Say he looks well",
+          playful: "Ask where the parasol went",
+          bold: "Say he never needed them",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** stops being alone.",
+        responses: {
+          kind: "Say he never will be again",
+          playful: "Ask if he's sure",
+          bold: "Say you're staying",
+        },
+      },
     ],
   },
 };

@@ -903,34 +903,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      "{user} says the name, and **{name}** switches the recorder on.",
-      '"Name, House, nature of the matter." **{name}** has his notebook open before {user} finishes.',
-      '"Five seconds." **{name}** looks up at {user}. "Consultations are billed by the half hour, so I suggest you be brief."',
+      {
+        line: "{user} says the name, and **{name}** switches the recorder on.",
+        responses: {
+          kind: "Speak clearly for the record",
+          playful: "Wave at the recorder",
+          bold: "Ask him to turn it off",
+        },
+      },
+      {
+        line: '"Name, House, nature of the matter." **{name}** has his notebook open before {user} finishes.',
+        responses: {
+          kind: "Give him all three",
+          playful: "Give a fake name",
+          bold: "Ask him the same three",
+        },
+      },
+      {
+        line: '"Five seconds." **{name}** looks up at {user}. "Consultations are billed by the half hour, so I suggest you be brief."',
+        responses: {
+          kind: "Say you'll keep it short",
+          playful: "Start counting to five",
+          bold: "Book the full half hour",
+        },
+      },
+      {
+        line: '**{name}** hands {user} his card. "Ritsu Shinjo. State your business. The first five minutes are complimentary."',
+        responses: {
+          kind: "Say you'll keep his card",
+          playful: "Ask what minute six costs",
+          bold: "Hire him on the spot",
+        },
+      },
     ],
     known: [
-      '**{name}** looks up from his notebook at {user}. "You were next on my list. Sit."',
-      '**{name}** slides a stack of copies across to {user}. "The originals stay with me. These are yours."',
-      "{user} calls, and **{name}** is already writing down the time. He has started a page just for them.",
+      {
+        line: '**{name}** looks up from his notebook at {user}. "You were next on my list. Sit."',
+        responses: {
+          kind: "Sit down as asked",
+          playful: "Ask who was first",
+          bold: "Stay standing",
+        },
+      },
+      {
+        line: '**{name}** slides a stack of copies across to {user}. "The originals stay with me. These are yours."',
+        responses: {
+          kind: "Take the copies",
+          playful: "Ask for the originals",
+          bold: "Ask what's in them first",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}** is already writing down the time. He has started a page just for them.",
+        responses: {
+          kind: "Ask what the page says",
+          playful: "Ask for a copy of the page",
+          bold: "Say you'll start one on him",
+        },
+      },
     ],
     warm: [
-      '"Excellent." **{name}** had a thought and no one worth telling it to until {user} turned up.',
-      "{user} calls out, and **{name}** caps the pen mid-clause.",
-      "**{name}** has drafted something with {user}'s name on it. He drafted it optimistically.",
+      {
+        line: '"Excellent." **{name}** had a thought and no one worth telling it to until {user} turned up.',
+        responses: {
+          kind: "Ask him to tell you",
+          playful: "Charge him for listening",
+          bold: "Say you're worth telling",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}** caps the pen mid-clause.",
+        responses: {
+          kind: "Say he can finish it",
+          playful: "Finish the clause for him",
+          bold: "Ask what the clause says",
+        },
+      },
+      {
+        line: "**{name}** has drafted something with {user}'s name on it. He drafted it optimistically.",
+        responses: {
+          kind: "Ask to read the draft",
+          playful: "Ask how optimistic",
+          bold: "Sign it without reading",
+        },
+      },
     ],
     spark: [
-      "**{name}** loses his place in a sentence. {user} watches it happen and says nothing.",
-      '"Argue the other side for me," **{name}** says to {user}. "You\'re the only one who does it properly."',
-      "{user} says the name, and **{name}** files it under nothing at all. There is no file.",
+      {
+        line: "**{name}** loses his place in a sentence. {user} watches it happen and says nothing.",
+        responses: {
+          kind: "Wait for him to recover",
+          playful: "Finish the sentence wrong",
+          bold: "Point out he lost it",
+        },
+      },
+      {
+        line: '"Argue the other side for me," **{name}** says to {user}. "You\'re the only one who does it properly."',
+        responses: {
+          kind: "Agree to argue",
+          playful: "Argue both sides",
+          bold: "Argue it better than him",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** files it under nothing at all. There is no file.",
+        responses: {
+          kind: "Say you don't need a file",
+          playful: "Ask to see the file",
+          bold: "Say he should start one",
+        },
+      },
     ],
     close: [
-      "**{name}** switches the recorder off, sets it down deliberately, and goes to {user}.",
-      '"I have no argument for this," **{name}** tells {user}, "and no interest in constructing one."',
-      "{user} calls, and **{name}** is late to the **{house}** meeting for the first time.",
+      {
+        line: "**{name}** switches the recorder off, sets it down deliberately, and goes to {user}.",
+        responses: {
+          kind: "Say you won't tell a soul",
+          playful: "Turn the recorder on",
+          bold: "Ask what's off the record",
+        },
+      },
+      {
+        line: '"I have no argument for this," **{name}** tells {user}, "and no interest in constructing one."',
+        responses: {
+          kind: "Say you don't need one",
+          playful: "Offer to argue for him",
+          bold: "Say you rest your case",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}** is late to the **{house}** meeting for the first time.",
+        responses: {
+          kind: "Say you'll make it up to him",
+          playful: "Ask what the fine is",
+          bold: "Say the meeting can wait",
+        },
+      },
     ],
     bound: [
-      '"No preamble, no clause, no conditions." **{name}** says it to {user} in front of everyone.',
-      "**{name}** closes the file. For {user}, he closes all of them.",
-      "{user} says the name, and **{name}** clears the docket, and then the week.",
+      {
+        line: '"No preamble, no clause, no conditions." **{name}** says it to {user} in front of everyone.',
+        responses: {
+          kind: "Say yes, then",
+          playful: "Ask for it in writing",
+          bold: "Say the same, no conditions",
+        },
+      },
+      {
+        line: "**{name}** closes the file. For {user}, he closes all of them.",
+        responses: {
+          kind: "Say that means everything",
+          playful: "Ask what was in them",
+          bold: "Say you'll open one for him",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** clears the docket, and then the week.",
+        responses: {
+          kind: "Say you'll fill the week",
+          playful: "Ask about next week",
+          bold: "Book the week, then",
+        },
+      },
     ],
   },
 };

@@ -898,34 +898,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"Hm? Oh, {user}. Good work today." **{name}** shifts the box of parts to his other arm so he can wave.',
-      '{user} says the name, and **{name}** stops mid-yawn. "Sorry. Short sleeper. Hi."',
-      '"...Okay, three more jobs and I\'ll barely make it." **{name}** looks up from his list and decides {user} goes first.',
+      {
+        line: '"Hm? Oh, {user}. Good work today." **{name}** shifts the box of parts to his other arm so he can wave.',
+        responses: {
+          kind: "Offer to carry the box",
+          playful: "Ask what work you did",
+          bold: "Say he looks worn out",
+        },
+      },
+      {
+        line: '{user} says the name, and **{name}** stops mid-yawn. "Sorry. Short sleeper. Hi."',
+        responses: {
+          kind: "Say he should sleep more",
+          playful: "Count the yawn as a hello",
+          bold: "Say that's not a real thing",
+        },
+      },
+      {
+        line: '"...Okay, three more jobs and I\'ll barely make it." **{name}** looks up from his list and decides {user} goes first.',
+        responses: {
+          kind: "Say you can wait your turn",
+          playful: "Ask what first place wins",
+          bold: "Say he should drop a job",
+        },
+      },
+      {
+        line: '**{name}** sets his toolbox down for {user}. "If something\'s broken, I\'ve got ten minutes. If Shion broke it, five."',
+        responses: {
+          kind: "Tell him to take a break",
+          playful: "Say Shion sent you",
+          bold: "Hand him something broken",
+        },
+      },
     ],
     known: [
-      '"If this is a repair request, it\'s going on the list." **{name}** looks up and sees it\'s {user}. "Oh, it\'s just you. Good."',
-      '{user} says the name, and **{name}** holds something out to them. "Good timing. Hold this a sec."',
-      '"You\'re busy again today? Yeah, same." **{name}** makes a minute for {user} anyway.',
+      {
+        line: '"If this is a repair request, it\'s going on the list." **{name}** looks up and sees it\'s {user}. "Oh, it\'s just you. Good."',
+        responses: {
+          kind: "Say no repairs today",
+          playful: "Add yourself to the list",
+          bold: "Ask to skip the list",
+        },
+      },
+      {
+        line: '{user} says the name, and **{name}** holds something out to them. "Good timing. Hold this a sec."',
+        responses: {
+          kind: "Hold it for him",
+          playful: "Ask what it does",
+          bold: "Say a sec is never a sec",
+        },
+      },
+      {
+        line: '"You\'re busy again today? Yeah, same." **{name}** makes a minute for {user} anyway.',
+        responses: {
+          kind: "Say you'll take the minute",
+          playful: "Compare to-do lists",
+          bold: "Say he's busier than you",
+        },
+      },
     ],
     warm: [
-      "**{name}** sets his toolbox down for {user}, which he doesn't do for most people.",
-      '"Shion can wait five minutes." **{name}** pockets his phone and turns to {user}.',
-      '"You look tired. ...Yeah, I know. I\'m one to talk." **{name}** stays with {user} anyway.',
+      {
+        line: "**{name}** sets his toolbox down for {user}, which he doesn't do for most people.",
+        responses: {
+          kind: "Say you noticed the toolbox",
+          playful: "Ask if you're a repair job",
+          bold: "Ask why you're the exception",
+        },
+      },
+      {
+        line: '"Shion can wait five minutes." **{name}** pockets his phone and turns to {user}.',
+        responses: {
+          kind: "Say you'll keep it to five",
+          playful: "Ask what Shion broke now",
+          bold: "Ask for ten instead",
+        },
+      },
+      {
+        line: '"You look tired. ...Yeah, I know. I\'m one to talk." **{name}** stays with {user} anyway.',
+        responses: {
+          kind: "Say you'll both rest",
+          playful: "Ask who's more tired",
+          bold: "Say he looks worse",
+        },
+      },
     ],
     spark: [
-      '"Hm? Looks like there\'s a bug on your head… Nope, my mistake." **{name}** just wanted a closer look at {user}.',
-      "**{name}** answers {user} and forgets which pocket the screwdriver's in. Twice.",
-      '"...Huh. It\'s you." **{name}** stops pretending to check his tool case and just looks at {user}.',
+      {
+        line: '"Hm? Looks like there\'s a bug on your head… Nope, my mistake." **{name}** just wanted a closer look at {user}.',
+        responses: {
+          kind: "Let him look",
+          playful: "Check for the bug anyway",
+          bold: "Say he just wanted to look",
+        },
+      },
+      {
+        line: "**{name}** answers {user} and forgets which pocket the screwdriver's in. Twice.",
+        responses: {
+          kind: "Help him find it",
+          playful: "Point at the right pocket",
+          bold: "Say you fluster him",
+        },
+      },
+      {
+        line: '"...Huh. It\'s you." **{name}** stops pretending to check his tool case and just looks at {user}.',
+        responses: {
+          kind: "Say hi to him",
+          playful: "Ask if the case is fine",
+          bold: "Say he wasn't checking it",
+        },
+      },
     ],
     close: [
-      '"Why do I always get sleepy around you?" **{name}** asks {user}, and doesn\'t wait for an answer.',
-      "**{name}** lets his phone ring out for {user}. Whoever's broken something can wait.",
-      "\"Stay a sec. You're the only one who doesn't need something fixed.\" **{name}** says it to {user} like a complaint.",
+      {
+        line: '"Why do I always get sleepy around you?" **{name}** asks {user}, and doesn\'t wait for an answer.',
+        responses: {
+          kind: "Say you'll be his pillow",
+          playful: "Ask if you're boring",
+          bold: "Say it means he trusts you",
+        },
+      },
+      {
+        line: "**{name}** lets his phone ring out for {user}. Whoever's broken something can wait.",
+        responses: {
+          kind: "Say the call can wait",
+          playful: "Ask who broke what",
+          bold: "Tell him to answer it",
+        },
+      },
+      {
+        line: "\"Stay a sec. You're the only one who doesn't need something fixed.\" **{name}** says it to {user} like a complaint.",
+        responses: {
+          kind: "Stay a while with him",
+          playful: "Ask him to fix your hair",
+          bold: "Say he needs fixing too",
+        },
+      },
     ],
     bound: [
-      "\"I love you. ...Okay, that's the sentence. Now tell me about your day.\" **{name}** doesn't let go of {user}'s hand.",
-      "**{name}** rests his forehead on {user}'s shoulder, yawns, and stays right there.",
-      '"I\'ll walk you back. I wanted to do an inspection anyway." **{name}** falls into step beside {user}.',
+      {
+        line: "\"I love you. ...Okay, that's the sentence. Now tell me about your day.\" **{name}** doesn't let go of {user}'s hand.",
+        responses: {
+          kind: "Tell him about your day",
+          playful: "Make him say it twice",
+          bold: "Say it back first",
+        },
+      },
+      {
+        line: "**{name}** rests his forehead on {user}'s shoulder, yawns, and stays right there.",
+        responses: {
+          kind: "Let him rest there",
+          playful: "Count his yawns",
+          bold: "Tell him to go to bed",
+        },
+      },
+      {
+        line: '"I\'ll walk you back. I wanted to do an inspection anyway." **{name}** falls into step beside {user}.',
+        responses: {
+          kind: "Let him walk you",
+          playful: "Ask what he's inspecting",
+          bold: "Say you'll inspect him",
+        },
+      },
     ],
   },
 };

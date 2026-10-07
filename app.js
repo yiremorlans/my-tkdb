@@ -20,7 +20,7 @@ import {
   WARDING_MESSAGE_FLAGS,
 } from './encounters.js';
 import { MEET_PICK_LINES } from './constants/game.js';
-import { handleCall, handleEncountersAdmin, handleEncounterDev } from './publicEncounters.js';
+import { handleCall, handleEncountersAdmin, handleEncounterDev, handleSceneClick } from './publicEncounters.js';
 import { buildDossierMessage } from './missions/dossier.js';
 import { handleMissionDev, handleMissionsAdmin } from './missions/admin.js';
 import {
@@ -804,6 +804,46 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           }
         }
       })();
+      return;
+    }
+
+    // scene:<encounterId>:<kind|playful|bold|date> — the winner answers a /call
+    // scene (docs/public-encounters.md §17). Ack with a silent deferred update
+    // first, since the winner check and the one-click claim are two Supabase
+    // round trips, then PATCH @original with the closed scene, or send a
+    // refusal as an ephemeral followup and leave the post alone.
+    if (action === 'scene') {
+      const [encounterId, choice] = rest;
+      res.send({ type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE });
+
+      let result;
+      try {
+        result = await handleSceneClick(req.body, encounterId, choice);
+      } catch (err) {
+        console.error(`[scene] Click on encounter ${encounterId} failed:`, err.message);
+        result = {
+          response: {
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: { content: 'Something went wrong there. Try again?', flags: EPHEMERAL },
+          },
+        };
+      }
+
+      const { response } = result;
+      try {
+        await sendFollowup(
+          req.body.token,
+          response.data,
+          15000,
+          response.type === InteractionResponseType.UPDATE_MESSAGE,
+        );
+      } catch (err) {
+        // The claim already committed, so the scene can't be answered again;
+        // the next spawn's closeout skips it too. The post keeps its opening.
+        console.error(`[scene] Could not apply the click on encounter ${encounterId}:`, err.message);
+      }
+
+      result.afterReply?.().catch(err => console.error(`[scene] Follow-up for encounter ${encounterId} failed:`, err.message));
       return;
     }
 

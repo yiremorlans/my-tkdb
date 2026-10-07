@@ -899,34 +899,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      "**{name}** holds the door for {user} with a ready smile.",
-      '"Good timing. I\'m off to fetch the mission papers from Tohma." **{name}** waves {user} along with him.',
-      '"Penny for them? I\'m happy to lend an ear." **{name}** offers it to {user} with an easy smile, stranger or not.',
+      {
+        line: "**{name}** holds the door for {user} with a ready smile.",
+        responses: {
+          kind: "Ask if he's coming too",
+          playful: "Bow on your way through",
+          bold: "Hold it open for him",
+        },
+      },
+      {
+        line: '"Good timing. I\'m off to fetch the mission papers from Tohma." **{name}** waves {user} along with him.',
+        responses: {
+          kind: "Offer to carry half",
+          playful: "Ask if you get a badge",
+          bold: "Ask what the mission is",
+        },
+      },
+      {
+        line: '"Penny for them? I\'m happy to lend an ear." **{name}** offers it to {user} with an easy smile, stranger or not.',
+        responses: {
+          kind: "Ask what's on his mind",
+          playful: "Ask what a penny buys",
+          bold: "Tell him what's on yours",
+        },
+      },
+      {
+        line: '"Lucas Errant." **{name}** offers {user} a ready hand. "I don\'t believe we\'ve met. Is everything all right?"',
+        responses: {
+          kind: "Say yes, and ask after him",
+          playful: "Ask if that's a duel invite",
+          bold: "Shake it and hold on",
+        },
+      },
     ],
     known: [
-      '"If you\'re ever in trouble, you know where to find me." **{name}** says it to {user} like a plain fact.',
-      "{user} calls out, and **{name}** turns, openly pleased. \"I'd wondered when I'd see you next.\"",
-      '"Have you eaten today? Honestly, now." **{name}** asks {user} before anything else.',
+      {
+        line: '"If you\'re ever in trouble, you know where to find me." **{name}** says it to {user} like a plain fact.',
+        responses: {
+          kind: "Say the same goes for him",
+          playful: "Ask if a pop quiz counts",
+          bold: "Say you can handle trouble",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}** turns, openly pleased. \"I'd wondered when I'd see you next.\"",
+        responses: {
+          kind: "Say you'd wondered too",
+          playful: "Ask if he kept count",
+          bold: "Say you made sure of it",
+        },
+      },
+      {
+        line: '"Have you eaten today? Honestly, now." **{name}** asks {user} before anything else.',
+        responses: {
+          kind: "Ask if he has",
+          playful: "Say candy counts",
+          bold: "Say you'll eat with him",
+        },
+      },
     ],
     warm: [
-      '"I\'d hoped that was you." **{name}** takes whatever {user} is carrying without asking.',
-      "{user} calls out, and **{name}**'s careful expression goes entirely soft.",
-      "**{name}** had been checking the crowd for hazards. Now he's checking {user} for the same.",
+      {
+        line: '"I\'d hoped that was you." **{name}** takes whatever {user} is carrying without asking.',
+        responses: {
+          kind: "Take half of it back",
+          playful: "Hand him your bag too",
+          bold: "Say you had it handled",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}**'s careful expression goes entirely soft.",
+        responses: {
+          kind: "Smile back at him",
+          playful: "Point out the soft face",
+          bold: "Ask what that look means",
+        },
+      },
+      {
+        line: "**{name}** had been checking the crowd for hazards. Now he's checking {user} for the same.",
+        responses: {
+          kind: "Say you're in one piece",
+          playful: "Ask if you passed",
+          bold: "Check him over right back",
+        },
+      },
     ],
     spark: [
-      "**{name}** hears his name in {user}'s voice and loses count of the drill entirely.",
-      '"You shouldn\'t be out here alone." **{name}** falls in beside {user} rather than say the rest of it.',
-      "{user} got there first, and **{name}** looks at them a moment too long to be only polite.",
+      {
+        line: "**{name}** hears his name in {user}'s voice and loses count of the drill entirely.",
+        responses: {
+          kind: "Say you'll count for him",
+          playful: "Ask what number he was on",
+          bold: "Say he can start over",
+        },
+      },
+      {
+        line: '"You shouldn\'t be out here alone." **{name}** falls in beside {user} rather than say the rest of it.',
+        responses: {
+          kind: "Say you're not, now",
+          playful: "Ask what he'd have said",
+          bold: "Ask him to say the rest",
+        },
+      },
+      {
+        line: "{user} got there first, and **{name}** looks at them a moment too long to be only polite.",
+        responses: {
+          kind: "Look back at him",
+          playful: "Ask what he's looking at",
+          bold: "Hold his gaze",
+        },
+      },
     ],
     close: [
-      "**{name}** doesn't ask whether {user} needs anything. He simply stays.",
-      '"Have you eaten? Honestly, now." **{name}** already has a biscuit out for {user}.',
-      "{user} calls, and **{name}** sets the **{house}** dispatch down without finishing the line.",
+      {
+        line: "**{name}** doesn't ask whether {user} needs anything. He simply stays.",
+        responses: {
+          kind: "Let him stay",
+          playful: "Ask if he's moving in",
+          bold: "Say you'd ask him to",
+        },
+      },
+      {
+        line: '"Have you eaten? Honestly, now." **{name}** already has a biscuit out for {user}.',
+        responses: {
+          kind: "Take the biscuit",
+          playful: "Ask if he baked it",
+          bold: "Say you'll eat if he does",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}** sets the **{house}** dispatch down without finishing the line.",
+        responses: {
+          kind: "Say he can finish it",
+          playful: "Ask how the line ended",
+          bold: "Say the dispatch can wait",
+        },
+      },
     ],
     bound: [
-      "\"There's very little I wouldn't set aside for you,\" **{name}** says, only to {user}.",
-      "**{name}** kisses {user}'s knuckles with people going past on both sides, and does not apologize for it.",
-      "{user} says the name, and every ounce of **{name}**'s restraint goes somewhere else.",
+      {
+        line: "\"There's very little I wouldn't set aside for you,\" **{name}** says, only to {user}.",
+        responses: {
+          kind: "Say the same goes for you",
+          playful: "Ask what's on the list",
+          bold: "Ask what he wouldn't",
+        },
+      },
+      {
+        line: "**{name}** kisses {user}'s knuckles with people going past on both sides, and does not apologize for it.",
+        responses: {
+          kind: "Let him keep your hand",
+          playful: "Curtsy back at him",
+          bold: "Kiss his knuckles back",
+        },
+      },
+      {
+        line: "{user} says the name, and every ounce of **{name}**'s restraint goes somewhere else.",
+        responses: {
+          kind: "Say you missed him",
+          playful: "Ask where it went",
+          bold: "Say he can stop holding back",
+        },
+      },
     ],
   },
 };

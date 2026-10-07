@@ -920,34 +920,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"Hey there! New face, huh? Welcome to the fun side of campus." **{name}** waves {user} over, then keeps a good few steps between them.',
-      '{user} says the name, and **{name}** spins around and points at himself. "Me? Oh, you\'ve got good taste."',
-      '{user} says the name, and **{name}** lights up. "You know me already? Guess my reputation got here first."',
+      {
+        line: '"Hey there! New face, huh? Welcome to the fun side of campus." **{name}** waves {user} over, then keeps a good few steps between them.',
+        responses: {
+          kind: "Say you're glad you came",
+          playful: "Ask where the boring side is",
+          bold: "Close the distance",
+        },
+      },
+      {
+        line: '{user} says the name, and **{name}** spins around and points at himself. "Me? Oh, you\'ve got good taste."',
+        responses: {
+          kind: "Say you've heard good things",
+          playful: "Say you're having doubts",
+          bold: "Ask him to prove it",
+        },
+      },
+      {
+        line: '{user} says the name, and **{name}** lights up. "You know me already? Guess my reputation got here first."',
+        responses: {
+          kind: "Say it was a nice one",
+          playful: "Ask which reputation",
+          bold: "Ask if it's true",
+        },
+      },
+      {
+        line: '**{name}** points both hands at {user}. "Hey, cutie! You\'ve got my whole attention. What\'s the plan?"',
+        responses: {
+          kind: "Say you'd just like to talk",
+          playful: "Say the plan is him",
+          bold: "Reach for his hand",
+        },
+      },
     ],
     known: [
-      '"Cutie! Came all this way to check me out, huh?" **{name}** winks at {user}.',
-      "\"You called? Lucky me!\" **{name}** gives {user} a wink. \"Don't worry, I don't bite. That's Ed's thing.\"",
-      '"Oh, hey, cutie! Wanna grab a bite after this?" **{name}** asks {user}, like it\'s the most natural thing in the world.',
+      {
+        line: '"Cutie! Came all this way to check me out, huh?" **{name}** winks at {user}.',
+        responses: {
+          kind: "Say you came to see him",
+          playful: "Wink back at him",
+          bold: "Say you're checking him out",
+        },
+      },
+      {
+        line: "\"You called? Lucky me!\" **{name}** gives {user} a wink. \"Don't worry, I don't bite. That's Ed's thing.\"",
+        responses: {
+          kind: "Say you're the lucky one",
+          playful: "Ask what his thing is, then",
+          bold: "Say you're not scared of bites",
+        },
+      },
+      {
+        line: '"Oh, hey, cutie! Wanna grab a bite after this?" **{name}** asks {user}, like it\'s the most natural thing in the world.',
+        responses: {
+          kind: "Say you'd love to",
+          playful: "Ask if Ed's paying",
+          bold: "Ask if it's a date",
+        },
+      },
     ],
     warm: [
-      "\"Oh good, it's you. Ed's been a creep all day, I need a normal person.\" **{name}** falls into step with {user}, a few careful steps over.",
-      '"Talk to me! About anything. I like hearing you go on." **{name}** settles in across from {user} like he\'s got all night.',
-      '"Harurin said you\'d be around." **{name}** grins at {user}. "Don\'t tell him I asked."',
+      {
+        line: "\"Oh good, it's you. Ed's been a creep all day, I need a normal person.\" **{name}** falls into step with {user}, a few careful steps over.",
+        responses: {
+          kind: "Ask what Ed did this time",
+          playful: "Say you're not that normal",
+          bold: "Close the few steps",
+        },
+      },
+      {
+        line: '"Talk to me! About anything. I like hearing you go on." **{name}** settles in across from {user} like he\'s got all night.',
+        responses: {
+          kind: "Tell him about your day",
+          playful: "Talk about him instead",
+          bold: "Make him talk first",
+        },
+      },
+      {
+        line: '"Harurin said you\'d be around." **{name}** grins at {user}. "Don\'t tell him I asked."',
+        responses: {
+          kind: "Say your lips are sealed",
+          playful: "Say you'll tell Harurin",
+          bold: "Ask why he asked",
+        },
+      },
     ],
     spark: [
-      "**{name}** forgets the careful distance {user} is owed. Then remembers. Then regrets remembering.",
-      "\"It's illegal to take your eyes off me, cutie.\" **{name}** throws {user} a wink, and they weren't going to.",
-      "{user} says the name, and the crack under **{name}**'s cheer shows, briefly.",
+      {
+        line: "**{name}** forgets the careful distance {user} is owed. Then remembers. Then regrets remembering.",
+        responses: {
+          kind: "Say it's okay",
+          playful: "Ask what he's regretting",
+          bold: "Step closer anyway",
+        },
+      },
+      {
+        line: "\"It's illegal to take your eyes off me, cutie.\" **{name}** throws {user} a wink, and they weren't going to.",
+        responses: {
+          kind: "Say you weren't going to",
+          playful: "Ask what the fine is",
+          bold: "Look away on purpose",
+        },
+      },
+      {
+        line: "{user} says the name, and the crack under **{name}**'s cheer shows, briefly.",
+        responses: {
+          kind: "Ask if he's okay",
+          playful: "Make him laugh",
+          bold: "Ask what's wrong",
+        },
+      },
     ],
     close: [
-      "\"You're not doing all this for me, are you?\" **{name}** asks {user}, laughing like it's a joke. It isn't, quite.",
-      "**{name}** puts his sleeve between his hand and {user}'s cheek.",
-      "{user} calls, and **{name}** leaves the cuttings he was carrying on the nearest bench.",
+      {
+        line: "\"You're not doing all this for me, are you?\" **{name}** asks {user}, laughing like it's a joke. It isn't, quite.",
+        responses: {
+          kind: "Say yes, all of it",
+          playful: "Say it's for the snacks",
+          bold: "Say he knows it is",
+        },
+      },
+      {
+        line: "**{name}** puts his sleeve between his hand and {user}'s cheek.",
+        responses: {
+          kind: "Lean into his hand",
+          playful: "Ask if the sleeve is new",
+          bold: "Ask him to lose the sleeve",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}** leaves the cuttings he was carrying on the nearest bench.",
+        responses: {
+          kind: "Pick up the cuttings",
+          playful: "Ask what they'll grow into",
+          bold: "Say he forgot something",
+        },
+      },
     ],
     bound: [
-      '"Whole curse, and it never stopped me from wanting to be with you." **{name}** says it to {user} across the gap.',
-      "**{name}** reaches {user} and stands as close as the curse allows, which is closer than it used to be.",
-      "{user} says the name, and **{name}** stops being happy enough for the both of them and is simply happy.",
+      {
+        line: '"Whole curse, and it never stopped me from wanting to be with you." **{name}** says it to {user} across the gap.',
+        responses: {
+          kind: "Say you want the same",
+          playful: "Ask what else it couldn't stop",
+          bold: "Close the gap",
+        },
+      },
+      {
+        line: "**{name}** reaches {user} and stands as close as the curse allows, which is closer than it used to be.",
+        responses: {
+          kind: "Stand still with him",
+          playful: "Measure the gap",
+          bold: "Ask how close he can get",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** stops being happy enough for the both of them and is simply happy.",
+        responses: {
+          kind: "Say you're happy too",
+          playful: "Ask what changed",
+          bold: "Ask him to stay that way",
+        },
+      },
     ],
   },
 };

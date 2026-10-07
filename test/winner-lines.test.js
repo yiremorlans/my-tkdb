@@ -26,6 +26,7 @@ import {
   pickWinnerLine,
   winnerLineBucket,
   winnerLinePool,
+  winnerLineText,
 } from '../constants/publicEncounters.js';
 import { CHARACTERS, getFullName } from '../constants/characters.js';
 
@@ -82,7 +83,8 @@ test('every line names the winner and the character once filled', () => {
   for (const character of CHARACTERS) {
     const filled = vars(character);
     for (const bucket of WINNER_LINE_BUCKETS) {
-      for (const line of winnerLinePool(bucket, character.id)) {
+      for (const entry of winnerLinePool(bucket, character.id)) {
+        const line = winnerLineText(entry);
         const out = fillTemplate(line, filled);
         assert.ok(out.includes(filled.user), `${character.id}.${bucket} lost the mention: "${line}"`);
         assert.ok(
@@ -146,7 +148,7 @@ test('a pmOnly character reveals wordlessly by day, and speaks by night', () => 
       }
       assert.deepStrictEqual(day, content.daytimeWinnerLines[bucket], `${character.id}.${bucket}`);
       assert.deepStrictEqual(night, content.winnerLines[bucket], `${character.id}.${bucket}`);
-      for (const line of day) {
+      for (const line of day.map(winnerLineText)) {
         assert.ok(!line.includes('"'), `${character.id}.${bucket} speaks by day: "${line}"`);
       }
     }

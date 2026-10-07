@@ -878,34 +878,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"HDY waste my time." **{name}** snaps at {user}.',
-      "**{name}** doesn't look up from the count when {user} walks in. \"Name, business, and what it's worth to me. Go.\"",
-      '"Who let you up here?" **{name}** asks {user}, then answers himself. "Doesn\'t matter. You\'re here. Be useful."',
+      {
+        line: '"HDY waste my time." **{name}** snaps at {user}.',
+        responses: {
+          kind: "Promise to be quick",
+          playful: "Ask what HDY stands for",
+          bold: "Say your time costs too",
+        },
+      },
+      {
+        line: "**{name}** doesn't look up from the count when {user} walks in. \"Name, business, and what it's worth to me. Go.\"",
+        responses: {
+          kind: "Give him your name first",
+          playful: "Say it's worth a fortune",
+          bold: "Ask what it's worth to him",
+        },
+      },
+      {
+        line: '"Who let you up here?" **{name}** asks {user}, then answers himself. "Doesn\'t matter. You\'re here. Be useful."',
+        responses: {
+          kind: "Ask how you can help",
+          playful: "Say you let yourself up",
+          bold: "Say you're always useful",
+        },
+      },
+      {
+        line: '**{name}** checks his reflection before he turns to {user}. "Well? Are you here to spend money, or to waste my time?"',
+        responses: {
+          kind: "Compliment his skin",
+          playful: "Say you're here to waste it",
+          bold: "Say you're here to make some",
+        },
+      },
     ],
     known: [
-      '{user} says the name, and **{name}** snaps, "Spit it out, I don\'t have all day." Then he actually listens.',
-      '"Finally, an NTW." **{name}** waves {user} over. "Not Totally Worthless, obviously. Don\'t make me regret it."',
-      '"Took you long enough." **{name}** has clearly been waiting on {user}, and will die before saying so.',
+      {
+        line: '{user} says the name, and **{name}** snaps, "Spit it out, I don\'t have all day." Then he actually listens.',
+        responses: {
+          kind: "Keep it quick for him",
+          playful: "Take your time on purpose",
+          bold: "Spit it out",
+        },
+      },
+      {
+        line: '"Finally, an NTW." **{name}** waves {user} over. "Not Totally Worthless, obviously. Don\'t make me regret it."',
+        responses: {
+          kind: "Say you'll earn it",
+          playful: "Call him an NTW back",
+          bold: "Ask to be upgraded",
+        },
+      },
+      {
+        line: '"Took you long enough." **{name}** has clearly been waiting on {user}, and will die before saying so.',
+        responses: {
+          kind: "Say you hurried here",
+          playful: "Ask if he missed you",
+          bold: "Say he's been waiting",
+        },
+      },
     ],
     warm: [
-      "**{name}** hangs up on a call mid-sentence to greet {user} properly. Suddenly the operation can wait.",
-      '"Sit. The good seat. No, I didn\'t hold it. Shut up." **{name}** absolutely held it for {user}.',
-      "{user} calls out, and **{name}** loudly tells someone else what a pain {user} is, beaming the whole time.",
+      {
+        line: "**{name}** hangs up on a call mid-sentence to greet {user} properly. Suddenly the operation can wait.",
+        responses: {
+          kind: "Say he can call them back",
+          playful: "Ask who he hung up on",
+          bold: "Say the operation can wait",
+        },
+      },
+      {
+        line: '"Sit. The good seat. No, I didn\'t hold it. Shut up." **{name}** absolutely held it for {user}.',
+        responses: {
+          kind: "Take the good seat",
+          playful: "Point out he held it",
+          bold: "Sit like it's yours",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}** loudly tells someone else what a pain {user} is, beaming the whole time.",
+        responses: {
+          kind: "Wave at whoever he's telling",
+          playful: "Agree you're a pain",
+          bold: "Say he's the bigger pain",
+        },
+      },
     ],
     spark: [
-      "\"I'm kind of happy to see you. Don't tell anyone.\" **{name}** says this to {user} at volume.",
-      "{user} says the name, and **{name}** loses his thread entirely.",
-      "**{name}** yells at three people on his way over to {user}, and none of it was about them.",
+      {
+        line: "\"I'm kind of happy to see you. Don't tell anyone.\" **{name}** says this to {user} at volume.",
+        responses: {
+          kind: "Say you're happy too",
+          playful: "Tell everyone",
+          bold: "Say everyone heard",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** loses his thread entirely.",
+        responses: {
+          kind: "Wait for him to find it",
+          playful: "Ask what the thread was",
+          bold: "Pick up the thread for him",
+        },
+      },
+      {
+        line: "**{name}** yells at three people on his way over to {user}, and none of it was about them.",
+        responses: {
+          kind: "Say hi to the three",
+          playful: "Ask what they did",
+          bold: "Tell him to stop yelling",
+        },
+      },
     ],
     close: [
-      '"Somebody put that look on your face? Give me a name." **{name}** is already rolling his sleeves for {user}.',
-      "**{name}** hears {user}, and whatever he was collecting on becomes somebody else's job.",
-      '"Stand up straight. I only walk with quality." **{name}** fixes {user}\'s collar himself.',
+      {
+        line: '"Somebody put that look on your face? Give me a name." **{name}** is already rolling his sleeves for {user}.',
+        responses: {
+          kind: "Say you're fine now",
+          playful: "Give him a fake name",
+          bold: "Say you handled it",
+        },
+      },
+      {
+        line: "**{name}** hears {user}, and whatever he was collecting on becomes somebody else's job.",
+        responses: {
+          kind: "Say the debt can wait",
+          playful: "Ask who owes him now",
+          bold: "Say business can wait",
+        },
+      },
+      {
+        line: '"Stand up straight. I only walk with quality." **{name}** fixes {user}\'s collar himself.',
+        responses: {
+          kind: "Let him fix your collar",
+          playful: "Fix his collar back",
+          bold: "Say you're the quality",
+        },
+      },
     ],
     bound: [
-      '**{name}** yells at everyone around them to shut up. Then, to {user}: "Now. You have my attention."',
-      "**{name}** yells at everyone all day, reaches {user}, and goes completely, quietly undone.",
-      "{user} says the name, and **{name}** claims them out loud.",
+      {
+        line: '**{name}** yells at everyone around them to shut up. Then, to {user}: "Now. You have my attention."',
+        responses: {
+          kind: "Say you missed him",
+          playful: "Whisper at him",
+          bold: "Use every second of it",
+        },
+      },
+      {
+        line: "**{name}** yells at everyone all day, reaches {user}, and goes completely, quietly undone.",
+        responses: {
+          kind: "Stay with him",
+          playful: "Ask where the yelling went",
+          bold: "Say you like this side",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** claims them out loud.",
+        responses: {
+          kind: "Say you're his",
+          playful: "Ask if he needs a megaphone",
+          bold: "Claim him back louder",
+        },
+      },
     ],
   },
 };

@@ -3,6 +3,29 @@
 import { getRelationshipLevel, bondLevelIndex } from './constants/game.js';
 import { updateAffinity, incrementTimesMet, updateLastResponseType } from './db/supabase.js';
 
+/**
+ * Where an updateAffinity result left the user: `level` now, `previousLevel` a
+ * moment ago, and `leveledUp`, the crossing the bond-scene DM hangs off
+ * (docs/bond-scene-dms.md §1.1). updateAffinity hands back the affinity it read
+ * before writing, so the crossing is free. Shared by /roam's reply and the
+ * /call scene click.
+ *
+ * Compared by ladder position rather than by name so the check is directional:
+ * only a move *up* the ladder is a level-up. Levels are never skipped — the
+ * largest single gain is 4 (2 base + 2 spent /call boosts) and the narrowest
+ * band is 20 wide — so this always advances one step, but a plain `!==` would
+ * also fire on a step down.
+ */
+export function levelChange(updated) {
+  const previousLevel = getRelationshipLevel(updated.previous_affinity || 0);
+  const level = getRelationshipLevel(updated.affinity || 0);
+  return {
+    level,
+    previousLevel,
+    leveledUp: bondLevelIndex(level.name) > bondLevelIndex(previousLevel.name),
+  };
+}
+
 // Records a dialogue response and applies the given affinity gain (0-2,
 // computed by the caller via getAffinityForResponse). responseType is the
 // RESPONSE_TYPES value the user picked. Returns the updated relationship.
@@ -19,26 +42,11 @@ export async function recordResponse(userId, characterId, gain, responseType) {
       await updateLastResponseType(userId, characterId, responseType);
     }
 
-    // updateAffinity hands back the affinity it read before writing, so the
-    // crossing is free: `level` is where the user is now, `previousLevel` where
-    // they were a moment ago, and `leveledUp` is the difference the bond-scene
-    // DM hangs off (docs/bond-scene-dms.md §1.1).
-    //
-    // Compared by ladder position rather than by name so the check is
-    // directional: only a move *up* the ladder is a level-up. Levels are never
-    // skipped — the largest single gain is 4 (2 base + 2 spent /call boosts)
-    // and the narrowest band is 20 wide — so this always advances one step, but
-    // a plain `!==` would also fire on a step down.
-    const previousLevel = getRelationshipLevel(updated.previous_affinity || 0);
-    const level = getRelationshipLevel(updated.affinity || 0);
-
     return {
       affinity: updated.affinity || 0,
       timesMet: (updated.times_met || 0) + 1,
       gain,
-      level,
-      previousLevel,
-      leveledUp: bondLevelIndex(level.name) > bondLevelIndex(previousLevel.name),
+      ...levelChange(updated),
     };
   } catch (err) {
     console.error('Error recording response to DB:', err);

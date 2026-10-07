@@ -61,6 +61,13 @@
 // work portable: what they set down or walk away from can travel, the room it
 // belongs in cannot.
 //
+// Every character winner line is written as { line, responses }, so any of
+// them can open a call scene, the rare interactive /call reveal
+// (docs/public-encounters.md §17.7): kind/playful/bold button labels, each at
+// most 30 characters, that answer the line. The line still follows every rule
+// above, because the normal reveal draws it too. This applies to
+// `daytimeWinnerLines` as well. The shared pool below stays plain strings.
+//
 // One format: the beat, { line, approach, greeting, responses }. A character
 // file exports only `dialogue`, `daytimeDialogue`, `bondScenes`, `winnerLines`
 // and `daytimeWinnerLines`; validateContent fails the build on any other key,

@@ -162,13 +162,16 @@ One row per posted encounter. At most one per guild should be unresolved at any 
 | `resolved_at` | TIMESTAMP | Set on solve **or** expiry-finalize — also the winner-race arbiter |
 | `outcome` | TEXT | `solved` or `expired` |
 | `solved_by` | TEXT | Discord user id of the winner |
+| `scene_message_id` | TEXT | A call scene's post (migration 027, `docs/public-encounters.md` §17); NULL means the win used the normal reveal |
+| `scene_resolved_at` | TIMESTAMP | Set by the winner's click or the closeout on the next spawn; the one-click arbiter, so a scene grants its +1 (or the closeout's fallback boost) exactly once |
 
 **Use cases:**
 - Decide the winner with one conditional `UPDATE ... WHERE resolved_at IS NULL` — no locking
+- Answer a call scene exactly once on `scene_resolved_at`
 - Let a restart finalize whatever expired while the process was down
 
 ### `encounter_milestones`
-A per-kind tally — one row per `(user, character, milestone_type)`, its `total` bumped on each `/call` win of that kind, not one row per win. The visible progression for a game that deliberately never touches affinity. Bounded (at most one row per milestone kind per relationship), so it never needs pruning. Written by `record_encounter_milestone()`, an atomic `INSERT ... ON CONFLICT DO UPDATE SET total = total + 1`.
+A per-kind tally — one row per `(user, character, milestone_type)`, its `total` bumped on each `/call` win of that kind, not one row per win. The visible progression for `/call`'s normal reveal. A call scene (§17) picks no milestone. Bounded (at most one row per milestone kind per relationship), so it never needs pruning. Written by `record_encounter_milestone()`, an atomic `INSERT ... ON CONFLICT DO UPDATE SET total = total + 1`.
 
 | Column | Type | Purpose |
 |--------|------|---------|
@@ -299,7 +302,7 @@ The durable completion record, the Inspector dossier's whole progression (`/hous
 | `discord_user_id` | TEXT | Who finished it |
 | `house` | TEXT | Which house it was for — the per-house bars sum on this |
 | `mission_type` | TEXT | `errand` / `riddle` / `coop`; also the reset's scope |
-| `mission_id` | BIGINT | The mission, `ON DELETE SET NULL` |
+| `mission_id` | BIGINT | The mission, `ON DELETE SET NULL`. A debugging link only, never read by the app; NULL once `prune_missions` (migration 022) ages the mission out, ~30 days after it was posted |
 | `role` | TEXT | `lead` or `assist`; both count identically toward rank |
 | `points` | INT | Errand: the signature count. Riddle and either side of a co-op: 1 |
 | `completed_at` | TIMESTAMP | When it was filed |
@@ -311,6 +314,8 @@ The durable completion record, the Inspector dossier's whole progression (`/hous
 - Show which houses they've actually worked for, and pick the dossier's emblem
 
 Rows are written fire-and-forget **after** the relevant claim RPC has confirmed the mission actually closed, so a lost race can never bank points.
+
+**A NULL `mission_id` is expected, not a bug.** `missions` and spent `mission_log` rows share a 30-day retention, so the link holds for most of a spent row's life. Unspent rows are never pruned, so an old banked reset will outlive its mission and keep a NULL `mission_id` indefinitely. Use the column for tracing recent completions (e.g. matching a co-op's lead and assist rows); nothing that needs to stay correct may depend on it.
 
 **There is no separate credits table.** Finishing a mission used to clear the `/roam` and `/meet` cooldowns on the spot, which quietly punished good timing: a player who solved a riddle with four minutes left on the clock got four minutes of value from the same reward another player got three hours from. So the reward is banked and spent by the player, from a button that appears only on the "you're still on cooldown" reply to `/roam` or `/meet`. A completion grants exactly one reset and there is already exactly one row here per completion — so the credit **is** the row, unspent while `reset_spent_at IS NULL`. That gets the audit trail (which mission paid for which cleared cooldown) for free, and lets the dossier read rank, per-house tally and unspent balance out of a single query. `idx_mission_log_unspent` serves the one hot read.
 

@@ -881,34 +881,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"Well, well." **{name}** turns to {user} with a courtesy that gives away nothing.',
-      '{user} names him, and **{name}** files it somewhere, smiling. "How resourceful."',
-      '"Perhaps I can be of some assistance?" **{name}** asks {user}, as though he hadn\'t already overheard they were looking for him.',
+      {
+        line: '"Well, well." **{name}** turns to {user} with a courtesy that gives away nothing.',
+        responses: {
+          kind: "Say you hoped to find him",
+          playful: "Say \"well, well\" right back",
+          bold: "Ask what he's hiding",
+        },
+      },
+      {
+        line: '{user} names him, and **{name}** files it somewhere, smiling. "How resourceful."',
+        responses: {
+          kind: "Say you asked around",
+          playful: "Ask what he's filing away",
+          bold: "Say he's not hard to find",
+        },
+      },
+      {
+        line: '"Perhaps I can be of some assistance?" **{name}** asks {user}, as though he hadn\'t already overheard they were looking for him.',
+        responses: {
+          kind: "Say you'd love some help",
+          playful: "Ask how much he overheard",
+          bold: "Say he already knows",
+        },
+      },
+      {
+        line: '**{name}** turns to {user}, already smiling. "Ah, you must be new. Is there something I can do for you?"',
+        responses: {
+          kind: "Ask who helps him for once",
+          playful: "Ask how he could tell",
+          bold: "Say you don't need help",
+        },
+      },
     ],
     known: [
-      '"Ah. You again." **{name}** turns to {user}. "Proceed, by all means."',
-      "**{name}** greets {user} by name before they've finished calling his. He makes a point of remembering.",
-      '"No need to explain yourself this time." **{name}** gives {user} a moment he could have spent elsewhere.',
+      {
+        line: '"Ah. You again." **{name}** turns to {user}. "Proceed, by all means."',
+        responses: {
+          kind: "Ask if it's a bad time",
+          playful: "Ask if you need a permit",
+          bold: "Skip the pleasantries",
+        },
+      },
+      {
+        line: "**{name}** greets {user} by name before they've finished calling his. He makes a point of remembering.",
+        responses: {
+          kind: "Say it's nice to be remembered",
+          playful: "Ask if he keeps a list",
+          bold: "Ask what else he remembers",
+        },
+      },
+      {
+        line: '"No need to explain yourself this time." **{name}** gives {user} a moment he could have spent elsewhere.',
+        responses: {
+          kind: "Say you appreciate it",
+          playful: "Explain yourself anyway",
+          bold: "Ask what changed his mind",
+        },
+      },
     ],
     warm: [
-      '"Honestly." **{name}** was two steps from a clean escape, and {user} caught him anyway.',
-      "{user} calls out, and **{name}** gives them his whole attention.",
-      "**{name}** adjusts his monocle, then decides {user} is worth being late for.",
+      {
+        line: '"Honestly." **{name}** was two steps from a clean escape, and {user} caught him anyway.',
+        responses: {
+          kind: "Say you'll let him go",
+          playful: "Ask where he was escaping to",
+          bold: "Block his escape route",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}** gives them his whole attention.",
+        responses: {
+          kind: "Ask how he's holding up",
+          playful: "Ask if Jin can spare him",
+          bold: "Keep his attention on you",
+        },
+      },
+      {
+        line: "**{name}** adjusts his monocle, then decides {user} is worth being late for.",
+        responses: {
+          kind: "Say you won't keep him long",
+          playful: "Say you're worth the lateness",
+          bold: "Tell him to stay a while",
+        },
+      },
     ],
     spark: [
-      '"Shouting my name across half the campus. You\'ve certainly got guts." **{name}** looks delighted with {user}.',
-      "{user} says the name, and something behind **{name}**'s composure gives, briefly.",
-      "**{name}** was en route to the **{house}** briefing. He is now walking {user}'s way instead.",
+      {
+        line: '"Shouting my name across half the campus. You\'ve certainly got guts." **{name}** looks delighted with {user}.',
+        responses: {
+          kind: "Say you wanted to see him",
+          playful: "Shout it again",
+          bold: "Say he's worth shouting for",
+        },
+      },
+      {
+        line: "{user} says the name, and something behind **{name}**'s composure gives, briefly.",
+        responses: {
+          kind: "Pretend you didn't notice",
+          playful: "Ask what just slipped",
+          bold: "Say you saw it slip",
+        },
+      },
+      {
+        line: "**{name}** was en route to the **{house}** briefing. He is now walking {user}'s way instead.",
+        responses: {
+          kind: "Say you'll walk him there",
+          playful: "Ask if the briefing knows",
+          bold: "Say he's late now",
+        },
+      },
     ],
     close: [
-      '"This conversation never happened," **{name}** murmurs, already steering {user} out of earshot.',
-      "**{name}** hears {user}, and the servant's mask comes off between one step and the next.",
-      "{user} calls, and **{name}**'s next appointment quietly stops mattering.",
+      {
+        line: '"This conversation never happened," **{name}** murmurs, already steering {user} out of earshot.',
+        responses: {
+          kind: "Go where he leads",
+          playful: "Ask which conversation",
+          bold: "Ask what's being hidden",
+        },
+      },
+      {
+        line: "**{name}** hears {user}, and the servant's mask comes off between one step and the next.",
+        responses: {
+          kind: "Say you like him like this",
+          playful: "Ask where the mask goes",
+          bold: "Ask him to leave it off",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}**'s next appointment quietly stops mattering.",
+        responses: {
+          kind: "Say you won't take long",
+          playful: "Ask who he's standing up",
+          bold: "Say they can wait",
+        },
+      },
     ],
     bound: [
-      '"I stopped weighing you up a long while ago," **{name}** tells {user}, taking their hand in the open.',
-      "**{name}** hands the **{house}** dispatch to a passing first-year. {user} called; the matter is settled.",
-      "{user} says the name, and **{name}** clears his entire schedule.",
+      {
+        line: '"I stopped weighing you up a long while ago," **{name}** tells {user}, taking their hand in the open.',
+        responses: {
+          kind: "Hold his hand back",
+          playful: "Ask what you weighed",
+          bold: "Say you never weighed him",
+        },
+      },
+      {
+        line: "**{name}** hands the **{house}** dispatch to a passing first-year. {user} called; the matter is settled.",
+        responses: {
+          kind: "Wave to the first-year",
+          playful: "Ask if that's allowed",
+          bold: "Say the matter's settled",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** clears his entire schedule.",
+        responses: {
+          kind: "Say you'll fill it",
+          playful: "Ask if Jin approved",
+          bold: "Book the whole day",
+        },
+      },
     ],
   },
 };

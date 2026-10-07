@@ -3,12 +3,16 @@
 // dependency-light so it can be unit tested without Discord or Supabase — the
 // I/O lives in ../publicEncounters.js and ../encounterScheduler.js.
 
+import fs from "fs";
+import { dirname, join } from "path";
+import { fileURLToPath } from "url";
 import {
   backgroundPool,
   GENERAL_LOCATIONS,
   timeBucket,
 } from "./backgrounds.js";
-import { CHARACTERS, getFullName } from "./characters.js";
+import { CHARACTERS, getAffinityForResponse, getCharacterById, getFullName } from "./characters.js";
+import { RELATIONSHIP_LEVELS } from "./game.js";
 import { pickRandom } from "./random.js";
 import {
   DIALOGUE,
@@ -44,7 +48,8 @@ export const POST_FAILURE_LIMIT = 3;
 
 // A /call win never moves affinity. It grants a pending boost worth this much
 // extra on the winner's next /roam or /meet with that character, capped at
-// ENCOUNTER_BOOST_CAP.
+// ENCOUNTER_BOOST_CAP. The one exception is a call scene (§17), whose single
+// click grants CALL_SCENE_GAIN directly in place of the boost.
 export const ENCOUNTER_BOOST_GAIN = 1;
 // ...and a user can hold at most this many unspent boosts per character. Wins
 // past the cap still record a milestone; they just don't stack more boost.
@@ -212,11 +217,176 @@ export function pickWinnerLine(
   const pool = winnerLinePool(winnerLineBucket(dialogueTier), characterId, {
     daytime,
   });
-  return fillTemplate(pickRandom(pool), vars);
+  return fillTemplate(winnerLineText(pickRandom(pool)), vars);
+}
+
+// A winner-line entry is a plain line, or `{ line, responses }` for one that
+// can also open a call scene (§17.7). Either way, this is its text (undefined
+// for a malformed entry, which validateContent reports).
+export function winnerLineText(entry) {
+  return typeof entry === "string" ? entry : entry?.line;
 }
 
 export function winnerLineBucket(dialogueTier) {
   return WINNER_LINE_TIER[dialogueTier] || "new";
+}
+
+// --- call scenes ------------------------------------------------------------
+//
+// A rare interactive variant of the win reveal (docs/public-encounters.md §17):
+// the character's expression portrait, an authored `line`, and three response
+// buttons only the winner can press. Content is the character's own winner
+// lines that carry `responses` (§17.7).
+
+// The share of eligible wins that become a scene. Game balance, not deploy
+// config, for the same reason as the tuning constants above.
+export const CALL_SCENE_CHANCE = 0.1;
+
+// The three authored buttons. `neutral` has no slot here: the date button
+// takes it. Shuffled on every post and drawn in one style
+// (CALL_SCENE_BUTTON_STYLE), so the winner can't tell which type is which.
+export const CALL_SCENE_RESPONSES = ["kind", "playful", "bold"];
+
+// One Discord button style (1, primary) for all three answers. The date button
+// keeps the neutral grey, since it isn't an answer.
+export const CALL_SCENE_BUTTON_STYLE = 1;
+
+// What a click grants when it lands on the character's favorite or liked
+// response; the least-liked one grants nothing. Replaces the win's boost, which
+// a scene win doesn't get. An unanswered scene gets that boost back at the
+// closeout instead (§17.6).
+export const CALL_SCENE_GAIN = 1;
+
+// The answers in a fresh random order for one post.
+export function shuffledSceneResponses(random = Math.random) {
+  const order = [...CALL_SCENE_RESPONSES];
+  for (let i = order.length - 1; i > 0; i--) {
+    const j = Math.floor(random() * (i + 1));
+    [order[i], order[j]] = [order[j], order[i]];
+  }
+  return order;
+}
+
+// The fourth button. Shown at every tier, always disabled until the date
+// feature exists; only its lock emoji changes (dateButtonLocked).
+export const DATE_BUTTON_LABEL = "Ask on a date";
+const DATE_UNLOCK_AFFINITY = RELATIONSHIP_LEVELS.find((l) => l.name === "Close Friend").min;
+
+export function dateButtonLocked(affinity) {
+  return (affinity ?? 0) < DATE_UNLOCK_AFFINITY;
+}
+
+// The opening face of every scene, before anyone clicks.
+const SCENE_OPENING_FACE = "default";
+
+// register -> base affinityByResponse rank (2 fave, 1 like, 0 flat) -> face.
+// §17.4.1. Faces are derived, never authored, so a scene carries no face data.
+// The same rank picks the click's reaction line (constants/reactions.js), so
+// face and reaction always agree. `swap` never applies to a scene.
+export const SCENE_FACES = {
+  new: { 2: "close", 1: "sweat", 0: "serious" },
+  known: { 2: "close", 1: "sweat", 0: "serious" },
+  warm: { 2: "smile", 1: "surprise", 0: "serious" },
+  spark: { 2: "surprise_blush", 1: "surprise", 0: "serious" },
+  close: { 2: "full_smile", 1: "smile", 0: "surprise" },
+  bound: { 2: "full_smile_blush", 1: "blush", 0: "close" },
+};
+
+// Faces with a second drawing, picked 50/50 wherever the map lands on them.
+const SCENE_FACE_ALTERNATES = {
+  ren: { blush: "blush_2" },
+  romeo: { blush: "blush_2" },
+};
+
+// Outfits with their own face set: Jo's casual silhouette is his girl look,
+// so every face of that encounter, the opening included, uses the _girl file.
+// Read off the encounter row's variant, never authored on the scene.
+const SCENE_VARIANT_SUFFIXES = {
+  jo: { casual: "_girl" },
+};
+
+const EXPRESSIONS_DIR = join(
+  dirname(fileURLToPath(import.meta.url)),
+  "../assets/expressions",
+);
+
+// A response's rank in the character's base affinityByResponse: 2 favorite,
+// 1 liked, 0 least. Shared by the face map, the click's reaction line and its
+// gain.
+export function baseRank(characterId, choice) {
+  const character = getCharacterById(characterId);
+  return character ? getAffinityForResponse(character, choice) : 0;
+}
+
+/**
+ * The portrait file (in assets/expressions/<id>/) for a scene at `bucket`:
+ * the opening face when `choice` is null, otherwise the face for that
+ * response's base rank. `variant` is the encounter row's; `random` only
+ * decides an alternate drawing.
+ */
+export function sceneFace(characterId, bucket, choice, { variant, random = Math.random } = {}) {
+  let face = SCENE_OPENING_FACE;
+  if (choice) {
+    face = SCENE_FACES[bucket]?.[baseRank(characterId, choice)] ?? SCENE_OPENING_FACE;
+    const alternate = SCENE_FACE_ALTERNATES[characterId]?.[face];
+    if (alternate && random() < 0.5) face = alternate;
+  }
+  const suffix = SCENE_VARIANT_SUFFIXES[characterId]?.[variant] ?? "";
+  return `${face}${suffix}.png`;
+}
+
+// Every file sceneFace can return for this character at this register, across
+// all of their outfits and alternates. The art gate and validateContent both
+// check against it.
+export function sceneFaceFiles(characterId, bucket) {
+  const faces = [SCENE_OPENING_FACE, ...Object.values(SCENE_FACES[bucket] || {})];
+  for (const face of [...faces]) {
+    const alternate = SCENE_FACE_ALTERNATES[characterId]?.[face];
+    if (alternate) faces.push(alternate);
+  }
+  const suffixes = ["", ...Object.values(SCENE_VARIANT_SUFFIXES[characterId] || {})];
+  return [...new Set(suffixes.flatMap((s) => faces.map((f) => `${f}${s}.png`)))];
+}
+
+// The art only changes with a deploy, so each answer is checked once.
+const artReadyCache = new Map();
+
+// Whether every face the map can produce at `bucket` exists on disk. Guards a
+// character added to the roster before their expression art lands.
+export function callSceneArtReady(characterId, bucket, expressionsDir = EXPRESSIONS_DIR) {
+  const key = `${expressionsDir}:${characterId}:${bucket}`;
+  if (!artReadyCache.has(key)) {
+    artReadyCache.set(
+      key,
+      sceneFaceFiles(characterId, bucket).every((file) =>
+        fs.existsSync(join(expressionsDir, characterId, file)),
+      ),
+    );
+  }
+  return artReadyCache.get(key);
+}
+
+/**
+ * Roll for a scene on a win. Returns `{ bucket, scene }`, the scene being a
+ * `{ line, responses }` winner line drawn exactly as the normal reveal draws
+ * one (winnerLinePool, daytime swap included), or null for the normal reveal:
+ * a miss on CALL_SCENE_CHANCE, a line from the shared fallback pool (the only
+ * pool without button labels), or a face missing from the art. Every
+ * character's own winner line carries labels (validateContent), so the rate is
+ * CALL_SCENE_CHANCE whatever the pool's size. `force` (/encdev spawn
+ * scene:true) skips only the roll.
+ */
+export function pickCallScene(
+  dialogueTier,
+  characterId,
+  { daytime = false, force = false, expressionsDir } = {},
+) {
+  if (!force && Math.random() >= CALL_SCENE_CHANCE) return null;
+  const bucket = winnerLineBucket(dialogueTier);
+  const scene = pickRandom(winnerLinePool(bucket, characterId, { daytime }));
+  if (!scene?.responses) return null;
+  if (!callSceneArtReady(characterId, bucket, expressionsDir)) return null;
+  return { bucket, scene };
 }
 
 // --- milestones -------------------------------------------------------------

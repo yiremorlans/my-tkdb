@@ -899,34 +899,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      "**{name}** stays put for {user}, mildly impressed they found him at all.",
-      "\"Is this for a mission? Because I'm technically on break.\" **{name}** stays on his phone while {user} talks, but he's listening.",
-      "\"Whatever it is, I didn't do it. Or I'll do it later.\" **{name}** hears {user} out anyway.",
+      {
+        line: "**{name}** stays put for {user}, mildly impressed they found him at all.",
+        responses: {
+          kind: "Sit down near him",
+          playful: "Say he's bad at hiding",
+          bold: "Ask why he's hiding",
+        },
+      },
+      {
+        line: "\"Is this for a mission? Because I'm technically on break.\" **{name}** stays on his phone while {user} talks, but he's listening.",
+        responses: {
+          kind: "Say it can wait",
+          playful: "Ask if break ever ends",
+          bold: "Say it's urgent",
+        },
+      },
+      {
+        line: "\"Whatever it is, I didn't do it. Or I'll do it later.\" **{name}** hears {user} out anyway.",
+        responses: {
+          kind: "Say nobody's blaming him",
+          playful: "Blame it on him anyway",
+          bold: "Tell him to do it now",
+        },
+      },
+      {
+        line: '**{name}** glances up from his phone at {user}. "I\'m on break. Especially if that clown sent you."',
+        responses: {
+          kind: "Sit and share the break",
+          playful: "Say you're hiding from him too",
+          bold: "Tell him break's over",
+        },
+      },
     ],
     known: [
-      "\"You're around a lot lately.\" Arms crossed, **{name}** tells {user} it isn't a complaint.",
-      '"Rounds are done. Don\'t ask about the aquatic zone." **{name}** drops down next to {user} like he earned it.',
-      '"If anyone asks, you\'re a customer." **{name}** pulls up a chair for {user} anyway.',
+      {
+        line: "\"You're around a lot lately.\" Arms crossed, **{name}** tells {user} it isn't a complaint.",
+        responses: {
+          kind: "Say you like the company",
+          playful: "Ask where to file a complaint",
+          bold: "Say you'll be around more",
+        },
+      },
+      {
+        line: '"Rounds are done. Don\'t ask about the aquatic zone." **{name}** drops down next to {user} like he earned it.',
+        responses: {
+          kind: "Say he earned the break",
+          playful: "Ask about the aquatic zone",
+          bold: "Ask what happened there",
+        },
+      },
+      {
+        line: '"If anyone asks, you\'re a customer." **{name}** pulls up a chair for {user} anyway.',
+        responses: {
+          kind: "Take the chair",
+          playful: "Ask what you're buying",
+          bold: "Refuse to play customer",
+        },
+      },
     ],
     warm: [
-      "**{name}** puts the phone down for {user}, and doesn't pick it back up.",
-      "\"You're behind on the episodes,\" **{name}** tells {user}, who didn't know he'd been counting.",
-      '"It\'s not like I was waiting for you or anything." **{name}** says it to {user} a little too fast.',
+      {
+        line: "**{name}** puts the phone down for {user}, and doesn't pick it back up.",
+        responses: {
+          kind: "Say you're honored",
+          playful: "Check if his battery died",
+          bold: "Hide the phone",
+        },
+      },
+      {
+        line: "\"You're behind on the episodes,\" **{name}** tells {user}, who didn't know he'd been counting.",
+        responses: {
+          kind: "Ask him to catch you up",
+          playful: "Ask how long he's counted",
+          bold: "Say you'll binge them tonight",
+        },
+      },
+      {
+        line: '"It\'s not like I was waiting for you or anything." **{name}** says it to {user} a little too fast.',
+        responses: {
+          kind: "Say you'd have waited too",
+          playful: "Say that was fast",
+          bold: "Call it what it is",
+        },
+      },
     ],
     spark: [
-      "\"Second controller's charged.\" **{name}** says it to {user} like it isn't a confession.",
-      "{user} says the name, and **{name}** goes very deliberately blank-faced about it.",
-      "\"You're kind of in my space,\" **{name}** says to {user}, and doesn't move an inch out of it.",
+      {
+        line: "\"Second controller's charged.\" **{name}** says it to {user} like it isn't a confession.",
+        responses: {
+          kind: "Pick up the controller",
+          playful: "Ask if he charged it for you",
+          bold: "Say you'll beat him",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** goes very deliberately blank-faced about it.",
+        responses: {
+          kind: "Say hi anyway",
+          playful: "Match his blank face",
+          bold: "Ask why the blank face",
+        },
+      },
+      {
+        line: "\"You're kind of in my space,\" **{name}** says to {user}, and doesn't move an inch out of it.",
+        responses: {
+          kind: "Step back a bit",
+          playful: "Ask whose space it is",
+          bold: "Stay in his space",
+        },
+      },
     ],
     close: [
-      '"Stay," **{name}** says when he gets to {user}, casual as anything, and doesn\'t go anywhere either.',
-      "**{name}** loses the run because {user} called his name.",
-      "{user} calls, and **{name}** pockets the phone and straightens up.",
+      {
+        line: '"Stay," **{name}** says when he gets to {user}, casual as anything, and doesn\'t go anywhere either.',
+        responses: {
+          kind: "Say you'll stay",
+          playful: "Ask how long",
+          bold: "Say only if he asks",
+        },
+      },
+      {
+        line: "**{name}** loses the run because {user} called his name.",
+        responses: {
+          kind: "Say sorry about the run",
+          playful: "Ask for a rematch",
+          bold: "Say he was losing anyway",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}** pockets the phone and straightens up.",
+        responses: {
+          kind: "Say you noticed",
+          playful: "Ask if the phone is jealous",
+          bold: "Ask what he's hiding on it",
+        },
+      },
     ],
     bound: [
-      "\"Found me again. Pretty sure that's not luck anymore, Senpai.\" **{name}** doesn't dress it up for {user}.",
-      "**{name}** reaches {user} and puts his chin on their shoulder. That was the whole plan.",
-      "{user} says the name, and **{name}** decides the **{house}** roster can manage without him.",
+      {
+        line: "\"Found me again. Pretty sure that's not luck anymore, Senpai.\" **{name}** doesn't dress it up for {user}.",
+        responses: {
+          kind: "Say it never was luck",
+          playful: "Say you just got lucky",
+          bold: "Say you'll always find him",
+        },
+      },
+      {
+        line: "**{name}** reaches {user} and puts his chin on their shoulder. That was the whole plan.",
+        responses: {
+          kind: "Let him stay there",
+          playful: "Ask if there's a phase two",
+          bold: "Say that's a weak plan",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** decides the **{house}** roster can manage without him.",
+        responses: {
+          kind: "Say Haru will cope",
+          playful: "Ask if Haru knows",
+          bold: "Say Haru will find him",
+        },
+      },
     ],
   },
 };

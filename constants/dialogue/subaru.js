@@ -918,34 +918,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '"Have we met before?" **{name}** asks {user}, then apologizes for not being sure.',
-      "**{name}** turns to {user} and bows, a little too gracefully for the middle of a crowd.",
-      '{user} says it first, and **{name}** goes a little pink. "Forgive me. I didn\'t expect that."',
+      {
+        line: '"Have we met before?" **{name}** asks {user}, then apologizes for not being sure.',
+        responses: {
+          kind: "Say it's fine, you haven't",
+          playful: "Say you met in a past life",
+          bold: "Ask who he took you for",
+        },
+      },
+      {
+        line: "**{name}** turns to {user} and bows, a little too gracefully for the middle of a crowd.",
+        responses: {
+          kind: "Bow back to him",
+          playful: "Applaud the bow",
+          bold: "Ask him not to bow",
+        },
+      },
+      {
+        line: '{user} says it first, and **{name}** goes a little pink. "Forgive me. I didn\'t expect that."',
+        responses: {
+          kind: "Say there's nothing to forgive",
+          playful: "Ask what he expected",
+          bold: "Ask why he's apologizing",
+        },
+      },
+      {
+        line: '"Oh! Hello." **{name}** bows to {user}, a little flustered. "Subaru Kagami. Is there something I could do for you?"',
+        responses: {
+          kind: "Say you just wanted to meet",
+          playful: "Ask if bowing is required",
+          bold: "Ask about his stigma",
+        },
+      },
     ],
     known: [
-      '"Welcome back." **{name}** says {user}\'s name now without the small pause in front of it.',
-      "**{name}** has sweets with him for Hotarubi, and offers {user} one before he's even said hello.",
-      "{user} calls out, and **{name}** apologizes for keeping them waiting. He hadn't.",
+      {
+        line: '"Welcome back." **{name}** says {user}\'s name now without the small pause in front of it.',
+        responses: {
+          kind: "Say it's good to be back",
+          playful: "Point out the missing pause",
+          bold: "Say his name the same way",
+        },
+      },
+      {
+        line: "**{name}** has sweets with him for Hotarubi, and offers {user} one before he's even said hello.",
+        responses: {
+          kind: "Take one, say it's lovely",
+          playful: "Ask which one is best",
+          bold: "Take two",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}** apologizes for keeping them waiting. He hadn't.",
+        responses: {
+          kind: "Say he didn't keep you",
+          playful: "Say you waited for ages",
+          bold: "Tell him to stop apologizing",
+        },
+      },
     ],
     warm: [
-      "{user} calls out, and **{name}**'s polite smile turns into a real one.",
-      "**{name}** tries to cross the crowd to {user} in a straight line, and fails, and keeps trying.",
-      "**{name}** had been hoping it was {user}.",
+      {
+        line: "{user} calls out, and **{name}**'s polite smile turns into a real one.",
+        responses: {
+          kind: "Say you like that smile",
+          playful: "Ask what changed it",
+          bold: "Ask to see it more often",
+        },
+      },
+      {
+        line: "**{name}** tries to cross the crowd to {user} in a straight line, and fails, and keeps trying.",
+        responses: {
+          kind: "Go meet him halfway",
+          playful: "Cheer him on",
+          bold: "Wait for him to make it",
+        },
+      },
+      {
+        line: "**{name}** had been hoping it was {user}.",
+        responses: {
+          kind: "Say you hoped so too",
+          playful: "Ask who else it could be",
+          bold: "Ask why he hoped",
+        },
+      },
     ],
     spark: [
-      "**{name}** hears his name in {user}'s voice and loses his place.",
-      '"Sorry, I\'m staring." **{name}** says it to {user} and carries right on staring.',
-      "{user} got there first, and **{name}** is quietly undone.",
+      {
+        line: "**{name}** hears his name in {user}'s voice and loses his place.",
+        responses: {
+          kind: "Wait for him to find it",
+          playful: "Ask where he was",
+          bold: "Say pick it back up",
+        },
+      },
+      {
+        line: '"Sorry, I\'m staring." **{name}** says it to {user} and carries right on staring.',
+        responses: {
+          kind: "Say he can keep staring",
+          playful: "Stare right back",
+          bold: "Ask what he's staring at",
+        },
+      },
+      {
+        line: "{user} got there first, and **{name}** is quietly undone.",
+        responses: {
+          kind: "Give him a moment",
+          playful: "Ask if he's okay in there",
+          bold: "Ask what undid him",
+        },
+      },
     ],
     close: [
-      "**{name}** stops apologizing mid-sentence when he sees it's {user}.",
-      "{user} presses something personal into **{name}**'s hand on purpose. He reads it the way only {user} is allowed to now, and forgets to look sorry.",
-      "{user} calls, and whatever **{name}** was carrying gets set down.",
+      {
+        line: "**{name}** stops apologizing mid-sentence when he sees it's {user}.",
+        responses: {
+          kind: "Say he never needs to",
+          playful: "Ask him to finish the sorry",
+          bold: "Say you noticed it stop",
+        },
+      },
+      {
+        line: "{user} presses something personal into **{name}**'s hand on purpose. He reads it the way only {user} is allowed to now, and forgets to look sorry.",
+        responses: {
+          kind: "Let him read it",
+          playful: "Ask what he found",
+          bold: "Say there's nothing to hide",
+        },
+      },
+      {
+        line: "{user} calls, and whatever **{name}** was carrying gets set down.",
+        responses: {
+          kind: "Pick it up for him",
+          playful: "Ask if it'll be jealous",
+          bold: "Ask what he dropped",
+        },
+      },
     ],
     bound: [
-      "**{name}** goes straight to {user} the moment he hears them.",
-      "**{name}** reaches {user} with the soft smile everyone gets, then a different one nobody else does.",
-      "{user} says the name, and **{name}** doesn't apologize for a single part of it.",
+      {
+        line: "**{name}** goes straight to {user} the moment he hears them.",
+        responses: {
+          kind: "Open your arms",
+          playful: "Ask if he got lost",
+          bold: "Say you called first",
+        },
+      },
+      {
+        line: "**{name}** reaches {user} with the soft smile everyone gets, then a different one nobody else does.",
+        responses: {
+          kind: "Say you saw the second one",
+          playful: "Ask for the first one too",
+          bold: "Ask what the second means",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** doesn't apologize for a single part of it.",
+        responses: {
+          kind: "Say you're proud of him",
+          playful: "Ask if it felt strange",
+          bold: "Say about time",
+        },
+      },
     ],
   },
 };

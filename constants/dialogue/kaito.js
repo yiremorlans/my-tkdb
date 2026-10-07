@@ -877,34 +877,168 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      '**{name}** jumps a foot. "Eeeek?! Oh, it\'s just you." {user} had only said his name.',
-      '"Wait, you know my name?" **{name}** looks at {user} like it\'s a prize.',
-      "{user} calls out, and **{name}** startles, recovers, and pretends he didn't.",
+      {
+        line: '**{name}** jumps a foot. "Eeeek?! Oh, it\'s just you." {user} had only said his name.',
+        responses: {
+          kind: "Say sorry for the scare",
+          playful: "Shout his name this time",
+          bold: "Ask who he thought it was",
+        },
+      },
+      {
+        line: '"Wait, you know my name?" **{name}** looks at {user} like it\'s a prize.',
+        responses: {
+          kind: "Say it's a good name",
+          playful: "Say you're his biggest fan",
+          bold: "Ask why he's so surprised",
+        },
+      },
+      {
+        line: "{user} calls out, and **{name}** startles, recovers, and pretends he didn't.",
+        responses: {
+          kind: "Pretend you didn't see it",
+          playful: "Ask if he just jumped",
+          bold: "Say you saw that",
+        },
+      },
+      {
+        line: '**{name}** jumps at the sight of {user}, then sags. "Oh thank god. I thought you were collecting on a, um. Never mind! Hi!"',
+        responses: {
+          kind: "Tell him he's safe with you",
+          playful: "Ask how much he owes",
+          bold: "Say you'll deal with them",
+        },
+      },
     ],
     known: [
-      '"Hey, it\'s you again!" **{name}** waves at {user} with his whole arm, then tries to play it cool. Too late.',
-      '**{name}** already has his phone out for {user}. "Okay, you have to see this. It\'s all over WickHive."',
-      '**{name}** falls into step beside {user} like they\'d planned it. "Okay, where are we going?"',
+      {
+        line: '"Hey, it\'s you again!" **{name}** waves at {user} with his whole arm, then tries to play it cool. Too late.',
+        responses: {
+          kind: "Wave back just as big",
+          playful: "Tell him the cool act failed",
+          bold: "Ask why he's playing it cool",
+        },
+      },
+      {
+        line: '**{name}** already has his phone out for {user}. "Okay, you have to see this. It\'s all over WickHive."',
+        responses: {
+          kind: "Lean in to watch",
+          playful: "Say you posted it",
+          bold: "Say WickHive's all rumors",
+        },
+      },
+      {
+        line: '**{name}** falls into step beside {user} like they\'d planned it. "Okay, where are we going?"',
+        responses: {
+          kind: "Say wherever he likes",
+          playful: "Say it's a secret mission",
+          bold: "Say you were going alone",
+        },
+      },
     ],
     warm: [
-      '"There you are!" **{name}** is talking to {user} at top speed already.',
-      "{user} says his name, and **{name}** lights up like it's going in his story later.",
-      "**{name}** was halfway into a WickHive rant. {user} turning up improved it enormously.",
+      {
+        line: '"There you are!" **{name}** is talking to {user} at top speed already.',
+        responses: {
+          kind: "Let him get it all out",
+          playful: "Talk just as fast back",
+          bold: "Ask him to slow down",
+        },
+      },
+      {
+        line: "{user} says his name, and **{name}** lights up like it's going in his story later.",
+        responses: {
+          kind: "Say you're glad to see him",
+          playful: "Ask to approve the post",
+          bold: "Tell him no photos",
+        },
+      },
+      {
+        line: "**{name}** was halfway into a WickHive rant. {user} turning up improved it enormously.",
+        responses: {
+          kind: "Ask him to start over",
+          playful: "Take his side in the rant",
+          bold: "Say the rant is wrong",
+        },
+      },
     ],
     spark: [
-      "**{name}** goes red before he's finished turning around. {user} does that to him now.",
-      '"You... you called ME." **{name}** is going to bring this up to {user} for a week.',
-      "{user} got there first, and **{name}** forgot every word of what he was saying.",
+      {
+        line: "**{name}** goes red before he's finished turning around. {user} does that to him now.",
+        responses: {
+          kind: "Say red suits him",
+          playful: "Point out the blush",
+          bold: "Ask why he's red",
+        },
+      },
+      {
+        line: '"You... you called ME." **{name}** is going to bring this up to {user} for a week.',
+        responses: {
+          kind: "Say you'll call more",
+          playful: "Say it was a misdial",
+          bold: "Say get over it",
+        },
+      },
+      {
+        line: "{user} got there first, and **{name}** forgot every word of what he was saying.",
+        responses: {
+          kind: "Let him find his words",
+          playful: "Remind him what he said",
+          bold: "Ask him to finish",
+        },
+      },
     ],
     close: [
-      "**{name}** is through the crowd before {user} finishes the second syllable.",
-      "\"Please don't leave again,\" **{name}** says into {user}'s shoulder. Half joking.",
-      "{user} calls, and **{name}** doesn't check who's watching.",
+      {
+        line: "**{name}** is through the crowd before {user} finishes the second syllable.",
+        responses: {
+          kind: "Meet him halfway",
+          playful: "Ask if he ran",
+          bold: "Say slow down",
+        },
+      },
+      {
+        line: "\"Please don't leave again,\" **{name}** says into {user}'s shoulder. Half joking.",
+        responses: {
+          kind: "Promise you won't",
+          playful: "Ask which half was joking",
+          bold: "Say he can't stop you",
+        },
+      },
+      {
+        line: "{user} calls, and **{name}** doesn't check who's watching.",
+        responses: {
+          kind: "Say you're glad he didn't",
+          playful: "Wave at whoever's watching",
+          bold: "Ask if he's sure",
+        },
+      },
     ],
     bound: [
-      "\"I still can't believe it's you,\" **{name}** says, arriving at {user} at a run.",
-      "**{name}** had been working up the nerve for something. {user} calling out did the work for him.",
-      "{user} says the name, and **{name}** decides he can be brave today after all.",
+      {
+        line: "\"I still can't believe it's you,\" **{name}** says, arriving at {user} at a run.",
+        responses: {
+          kind: "Say believe it",
+          playful: "Pinch him to prove it",
+          bold: "Ask why he can't",
+        },
+      },
+      {
+        line: "**{name}** had been working up the nerve for something. {user} calling out did the work for him.",
+        responses: {
+          kind: "Ask what he wanted to say",
+          playful: "Say you'll wait for it",
+          bold: "Tell him to say it",
+        },
+      },
+      {
+        line: "{user} says the name, and **{name}** decides he can be brave today after all.",
+        responses: {
+          kind: "Say he's always brave",
+          playful: "Ask what brave looks like",
+          bold: "Dare him to prove it",
+        },
+      },
     ],
   },
 };
