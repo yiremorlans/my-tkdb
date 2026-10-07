@@ -1252,6 +1252,27 @@ export async function grantEncounterBoost(userId, characterId, cap = 1) {
 }
 
 /**
+ * Every character this user holds an unspent boost with, as
+ * { characterId: pendingCount }. Empty for the common case of no /call wins.
+ */
+export async function getPendingEncounterBoosts(userId) {
+  const { data, error } = await supabase
+    .from('character_relationships')
+    .select('character_id, pending_encounter_boost')
+    .eq('discord_user_id', userId)
+    .gt('pending_encounter_boost', 0);
+
+  if (error) {
+    console.error('Error fetching pending encounter boosts:', error);
+    throw error;
+  }
+
+  return Object.fromEntries(
+    (data || []).map((row) => [row.character_id, row.pending_encounter_boost]),
+  );
+}
+
+/**
  * Spend every pending boost for this character at once, returning how many
  * were consumed (0 if none, including when the user has never met them), so
  * the next authored response folds in the full bonus rather than dribbling it

@@ -94,7 +94,7 @@ const {
   sweepExpiredEncounters,
 } = await import('../publicEncounters.js');
 const { runTick, clearSpawnAttemptFence } = await import('../encounterScheduler.js');
-const { buildResponseResultMessage } = await import('../encounters.js');
+const { buildMeetPickMessage, buildResponseResultMessage } = await import('../encounters.js');
 const {
   recordEncounterMilestone,
   getEncounterMilestoneCounts,
@@ -550,6 +550,24 @@ describe('the encounter boost', () => {
       1,
     );
     assert.equal(boostTableWrites().length, 0, 'the spend is not a JS read-then-write');
+  });
+
+  it('labels a boosted character in the /meet picker, and only theirs', async () => {
+    reset({
+      character_relationships: [
+        relationship({ pending_encounter_boost: 1 }),
+        relationship({ character_id: 'haku' }),
+        relationship({ discord_user_id: 'someone-else', character_id: 'haku', pending_encounter_boost: 1 }),
+      ],
+    });
+    const rui = CHARACTERS.find((c) => c.id === 'rui');
+    const haku = CHARACTERS.find((c) => c.id === 'haku');
+
+    const message = await buildMeetPickMessage('user-1', [rui, haku]);
+    const labels = message.components[0].components.map((b) => b.label);
+
+    assert.match(labels[0], / \+1$/);
+    assert.doesNotMatch(labels[1], /\+/, "another user's boost never shows");
   });
 
   it('spends nothing, and writes nothing, for a character with no relationship row', async () => {

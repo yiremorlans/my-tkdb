@@ -52,6 +52,7 @@ import {
   getActiveErrandBoost,
   getEncounterMilestoneCounts,
   getLatestEncounterMilestone,
+  getPendingEncounterBoosts,
   getRelationship as readRelationship,
   getUserRelationships,
   signErrandTarget,
@@ -183,6 +184,19 @@ async function unsignedErrandTargets(userId) {
   } catch (err) {
     console.error('Error reading errand boost:', err);
     return [];
+  }
+}
+
+// The /meet picker labels a character the user holds an unspent /call boost
+// with ("Haku Kusanagi +1"). Same degrade-to-nothing rule as the errand read:
+// a failed lookup shows plain names, it never fails /meet.
+async function pendingBoosts(userId) {
+  if (!userId) return {};
+  try {
+    return await getPendingEncounterBoosts(userId);
+  } catch (err) {
+    console.error('Error reading pending encounter boosts:', err);
+    return {};
   }
 }
 
@@ -541,10 +555,11 @@ export function buildWardingResultMessage(cardKey, responseKey, deltaLine = null
 // --- /meet -----------------------------------------------------------------
 
 /**
- * The /meet picker. `userId` is only used to look up an active errand: its
- * still-unsigned targets take guaranteed slots in the list, and the remaining
- * slots fill at random as before. Four unsigned targets means every slot is a
- * target; one means one slot is.
+ * The /meet picker. `userId` looks up an active errand, whose still-unsigned
+ * targets take guaranteed slots in the list while the remaining slots fill at
+ * random as before (four unsigned targets means every slot is a target; one
+ * means one slot is), and any unspent /call boosts, which add "+1" to that
+ * character's label. A boost only labels; it never seeds a slot.
  *
  * The seeded targets are shuffled in with the rest so their position never
  * telegraphs which of the four is the one the mission wants.
@@ -554,8 +569,15 @@ export function buildWardingResultMessage(cardKey, responseKey, deltaLine = null
 export async function buildMeetPickMessage(userId = null, candidates = null, disabled = false) {
   let chars = candidates;
 
+  // Fetched for every user, not just the boosted ones, so it can run alongside
+  // the errand read instead of after it: the extra request costs no wait.
+  const [targetIds, boosts] = await Promise.all([
+    chars ? [] : unsignedErrandTargets(userId),
+    pendingBoosts(userId),
+  ]);
+
   if (!chars) {
-    const targets = (await unsignedErrandTargets(userId))
+    const targets = targetIds
       .map((id) => getCharacterById(id))
       .filter(Boolean)
       .slice(0, MEET_OPTION_COUNT);
@@ -577,7 +599,9 @@ export async function buildMeetPickMessage(userId = null, candidates = null, dis
         components: chars.map((character) => ({
           type: MessageComponentTypes.BUTTON,
           style: ButtonStyleTypes.SECONDARY,
-          label: getFullName(character),
+          label: boosts[character.id]
+            ? `${getFullName(character)} +${boosts[character.id] * ENCOUNTER_BOOST_GAIN}`
+            : getFullName(character),
           custom_id: `meet:pick:${character.id}`,
           disabled,
         })),
