@@ -240,7 +240,7 @@ export function winnerLineBucket(dialogueTier) {
 
 // The share of eligible wins that become a scene. Game balance, not deploy
 // config, for the same reason as the tuning constants above.
-export const CALL_SCENE_CHANCE = 0.1;
+export const CALL_SCENE_CHANCE = 0; // paused; design rate is 0.1
 
 // The three authored buttons. `neutral` has no slot here: the date button
 // takes it. Shuffled on every post and drawn in one style
