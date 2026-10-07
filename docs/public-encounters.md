@@ -1464,6 +1464,14 @@ The ephemeral `/call` ack to the winner keeps `That was **X**.` but swaps the
 boost line for `They're waiting on your answer.` A scene win promises no
 boost, and the closeout's fallback boost (§17.6) is never mentioned anywhere.
 
+**Layout trial (2026-10-07).** A second layout, `gallery`, is being compared
+against the thumbnail layout above. It reads like a `/roam` or `/meet`: the
+line as a top-level Text Display over a Media Gallery holding the full-size
+portrait, then the button row, with no Container (so no accent color). The
+click and the closeout read the layout back off the post and keep it. Live
+scenes still post as `thumbnail`; only `/encdev spawn scene:gallery` posts a
+gallery scene (`scene:thumbnail` forces the current one).
+
 ### 17.3 Buttons
 
 | Slot | Label | Custom ID | State |
@@ -1519,9 +1527,10 @@ click anyway in case the button is ever enabled by mistake.
     swaps in place. A post with no readable line shows the reaction alone.
     The reaction is the shared `/roam` pool
     (`getReactionLine` in `constants/reactions.js`) for the chosen type, with
-    the choice's base rank as the outcome (2 love, 1 like, 0 flat), followed
-    by ` (+1)` when a point was granted. A flat pick shows the reaction alone,
-    with no `(+0)`. The chosen label isn't echoed.
+    the choice's base rank as the outcome (2 love, 1 like, 0 flat), led by
+    `+1 — ` when a point was granted, the way `/roam` and `/meet` write a
+    gain. A flat pick shows the reaction alone, with no `+0`. The chosen
+    label isn't echoed.
   - the Thumbnail swaps to the face map's face for the choice (§17.4.1)
   - the register (reaction and face) and the accent color come from where the
     winner lands after the gain, the same post-gain read `/roam` makes

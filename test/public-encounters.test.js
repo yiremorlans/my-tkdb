@@ -655,7 +655,7 @@ describe('call scenes', () => {
     };
   }
 
-  async function winScene({ affinity = 0, characterId = 'benkei', variant = 'uniform' } = {}) {
+  async function winScene({ affinity = 0, characterId = 'benkei', variant = 'uniform', layout } = {}) {
     reset({
       guild_settings: [guildRow()],
       public_encounters: [encounterRow({ character_id: characterId, variant })],
@@ -663,7 +663,7 @@ describe('call scenes', () => {
         ? [{ discord_user_id: 'user-1', character_id: characterId, affinity, times_met: 3 }]
         : [],
     });
-    forceCallScene(7);
+    forceCallScene(7, layout);
     const { afterReply } = await handleCall(callBody({ guess: characterId }), NOW);
     await afterReply();
     return fake.tables.public_encounters[0];
@@ -785,7 +785,7 @@ describe('call scenes', () => {
     // stacks under it: the same love pool /roam draws for a favorite pick at
     // Stranger, then the gain.
     assert.deepEqual(texts, [...sceneParts(posts[0].body).texts, text]);
-    const match = text.match(/^(.*) \(\+1\)$/s);
+    const match = text.match(/^\+1 — (.*)$/s);
     assert.ok(match, `text: ${text}`);
     assert.ok(REACTION_LINES.kind.early.love.includes(match[1]), `reaction: ${match[1]}`);
     assert.equal(relationship().affinity, 1);
@@ -799,15 +799,39 @@ describe('call scenes', () => {
   it('gives a liked answer +1 and the least-liked one nothing', async () => {
     await winScene();
     const liked = await handleSceneClick(clickBody({ choice: 'playful' }), '7', 'playful', NOW);
-    assert.match(sceneParts(liked.response.data).text, / \(\+1\)$/);
+    assert.match(sceneParts(liked.response.data).text, /^\+1 — /);
     assert.equal(relationship().affinity, 1);
 
     await winScene();
     const flat = await handleSceneClick(clickBody({ choice: 'bold' }), '7', 'bold', NOW);
     const { text, face } = sceneParts(flat.response.data);
-    assert.ok(!/\(\+/.test(text), 'no (+0) on a least-liked pick');
+    assert.ok(!/^[+-]?\d/.test(text), 'no +0 on a least-liked pick');
     assert.match(face, /\/benkei\/serious\.png$/);
     assert.equal(relationship()?.affinity ?? 0, 0);
+  });
+
+  it('posts the gallery layout as text over a full-size portrait and keeps it through the click', async () => {
+    await winScene({ layout: 'gallery' });
+    const [text, gallery, row] = posts[0].body.components;
+    assert.equal(text.type, 10, 'Text Display first, no container');
+    assert.equal(gallery.type, 12, 'then a Media Gallery');
+    assert.match(gallery.items[0].media.url, /\/benkei\/default\.png$/);
+    assert.equal(row.type, 1);
+
+    const { response } = await handleSceneClick(clickBody(), '7', 'kind', NOW);
+    const [opening, reaction, answered, ...rest] = response.data.components;
+    assert.equal(opening.content, text.content, 'the opening line stays');
+    assert.match(reaction.content, /^\+1 — /);
+    assert.match(answered.items[0].media.url, /\/benkei\/close\.png$/);
+    assert.deepEqual(rest, [], 'the button row is gone');
+  });
+
+  it('closes an unanswered gallery scene in the gallery layout', async () => {
+    await winScene({ layout: 'gallery' });
+    edits.length = 0;
+    await spawnEncounter(guildRow(), NOW, { reanchor: false });
+    const closeout = edits.find((e) => e.messageId === 'message-1');
+    assert.deepEqual(closeout.body.components.map((c) => c.type), [10, 12]);
   });
 
   it('never acts on the date button', async () => {
