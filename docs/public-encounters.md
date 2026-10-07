@@ -1512,7 +1512,12 @@ click anyway in case the button is ever enabled by mistake.
   same way `/roam` sends it (`deliverBondScene`). Errand signatures stay with
   `/roam` and `/meet`.
 - **The edit** (an `UPDATE_MESSAGE` response to the click):
-  - the reaction **replaces** `line`. It's the shared `/roam` pool
+  - the reaction **stacks under** `line` as a second Text Display in the
+    same Section; the opening line stays, read back off the clicked post
+    (`body.message`). Replacing it let a shorter reaction narrow the
+    container and slide the thumbnail left; keeping it means the face only
+    swaps in place. A post with no readable line shows the reaction alone.
+    The reaction is the shared `/roam` pool
     (`getReactionLine` in `constants/reactions.js`) for the chosen type, with
     the choice's base rank as the outcome (2 love, 1 like, 0 flat), followed
     by ` (+1)` when a point was granted. A flat pick shows the reaction alone,

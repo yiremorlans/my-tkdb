@@ -873,8 +873,10 @@ export async function handleCall(body, now = new Date()) {
 /**
  * A call scene post, laid out like the Chancellor's audience: the text with
  * the portrait as a thumbnail, in a container carrying the winner's level
- * color. `buttons` (`{ encounterId, responses, locked, order }`) adds the
- * answer row in `order`; null renders the answered scene with no row at all.
+ * color. `text` is the opening line, or the opening line and the reaction
+ * stacked under it once answered. `buttons` (`{ encounterId, responses,
+ * locked, order }`) adds the answer row in `order`; null renders the answered
+ * scene with no row at all.
  */
 export function callSceneMessage({ characterId, face, text, color, buttons = null }) {
   const url = absoluteAssetUrl(`expressions/${characterId}/${face}`, `${characterId}'s scene portrait`);
@@ -909,21 +911,30 @@ export function callSceneMessage({ characterId, face, text, color, buttons = nul
 }
 
 /**
- * A posted scene as Discord hands it back, rebuilt with no button row: the
- * closeout's edit. Only the text, portrait URL and accent color are read, so
- * nothing read-only on the fetched components reaches the PATCH. Null when the
+ * A posted scene's parts as Discord hands it back: every Text Display's
+ * content, the portrait URL and the accent color. Only these are read, so
+ * nothing read-only on the fetched components reaches a PATCH. Null when the
  * post isn't a scene this code would recognize.
  */
-function closedSceneFromPost(message) {
+function scenePartsFromPost(message) {
   const container = message?.components?.find((c) => c.type === MessageComponentTypes.CONTAINER);
   const body = container?.components?.[0];
   const section = body?.type === MessageComponentTypes.SECTION;
-  const text = section ? body.components?.[0]?.content : body?.content;
-  if (!text) return null;
+  const texts = (section ? body.components : container?.components ?? [])
+    .filter((c) => c.type === MessageComponentTypes.TEXT_DISPLAY && c.content)
+    .map((c) => c.content);
+  if (!texts.length) return null;
   const url = section ? body.accessory?.media?.url ?? null : null;
+  return { texts, url, color: container.accent_color };
+}
+
+// A posted scene rebuilt with no button row: the closeout's edit.
+function closedSceneFromPost(message) {
+  const parts = scenePartsFromPost(message);
+  if (!parts) return null;
   return {
     flags: InteractionResponseFlags.IS_COMPONENTS_V2,
-    components: [portraitContainer(url, text, container.accent_color)],
+    components: [portraitContainer(parts.url, parts.texts, parts.color)],
   };
 }
 
@@ -989,8 +1000,8 @@ async function postCallScene(encounter, { bucket, scene }, { userId, vars, color
 /**
  * `scene:<encounterId>:<kind|playful|bold|date>` — the winner answers their
  * scene. Returns `{ response, afterReply }`: an UPDATE_MESSAGE that swaps the
- * portrait, replaces the line with the reaction (and its +1) and removes the
- * buttons, or an ephemeral refusal that changes nothing.
+ * portrait, stacks the reaction (and its +1) under the opening line and removes
+ * the buttons, or an ephemeral refusal that changes nothing.
  */
 export async function handleSceneClick(body, encounterId, choice, now = new Date()) {
   const userId = userIdOf(body);
@@ -1047,6 +1058,13 @@ export async function handleSceneClick(body, encounterId, choice, now = new Date
 
   const tier = getDialogueTier(level.name);
   const reaction = getReactionLine(character, tier, choice, rank);
+  // A least-liked pick shows no (+0): the missing (+1) says enough in a
+  // public channel.
+  const reactionText = gain > 0 ? `${reaction} (+${gain})` : reaction;
+  // The opening line stays and the reaction stacks under it, so the text
+  // column never narrows and the portrait swaps faces in place instead of
+  // sliding left. The click carries the post, so the line is read off it.
+  const opening = scenePartsFromPost(body.message)?.texts[0];
 
   return {
     response: {
@@ -1054,9 +1072,7 @@ export async function handleSceneClick(body, encounterId, choice, now = new Date
       data: callSceneMessage({
         characterId: row.character_id,
         face: sceneFace(row.character_id, winnerLineBucket(tier), choice, { variant: row.variant }),
-        // The reaction replaces the opening line. A least-liked pick shows no
-        // (+0): the missing (+1) says enough in a public channel.
-        text: gain > 0 ? `${reaction} (+${gain})` : reaction,
+        text: [opening, reactionText].filter(Boolean),
         color: level.color,
       }),
     },

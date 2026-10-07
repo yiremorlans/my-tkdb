@@ -637,7 +637,8 @@ describe('call scenes', () => {
     const section = container.components[0];
     return {
       accent: container.accent_color,
-      text: section.components[0].content,
+      text: section.components.at(-1).content,
+      texts: section.components.map((c) => c.content),
       face: section.accessory.media.url,
       buttons: row?.components ?? null,
     };
@@ -649,6 +650,8 @@ describe('call scenes', () => {
       channel_id: CHANNEL,
       member: { user: { id: userId } },
       data: { custom_id: `scene:${encounterId}:${choice}` },
+      // A component click carries the post it was made on.
+      message: posts[0]?.body,
     };
   }
 
@@ -774,12 +777,14 @@ describe('call scenes', () => {
 
     const first = await handleSceneClick(clickBody(), '7', 'kind', NOW);
     assert.equal(first.response.type, 7, 'UPDATE_MESSAGE');
-    const { text, face, buttons } = sceneParts(first.response.data);
+    const { text, texts, face, buttons } = sceneParts(first.response.data);
     // Benkei ranks kind 2 (fave) -> close at Stranger.
     assert.match(face, /\/benkei\/close\.png$/);
     assert.equal(buttons, null, 'the button row is gone');
-    // The reaction replaces the opening line: the same love pool /roam draws
-    // for a favorite pick at Stranger, then the gain.
+    // The opening line stays (so the portrait doesn't shift) and the reaction
+    // stacks under it: the same love pool /roam draws for a favorite pick at
+    // Stranger, then the gain.
+    assert.deepEqual(texts, [...sceneParts(posts[0].body).texts, text]);
     const match = text.match(/^(.*) \(\+1\)$/s);
     assert.ok(match, `text: ${text}`);
     assert.ok(REACTION_LINES.kind.early.love.includes(match[1]), `reaction: ${match[1]}`);
