@@ -73,6 +73,17 @@ function collectLabels(value) {
   return [];
 }
 
+// The one length cap every button label carries: call scene responses, bond
+// scene options, beat approaches and beat responses. `what` names the slot in
+// the error ("<what> is N chars (max M)").
+function checkLabelLength(what, label, errors) {
+  if (label.length > MAX_BUTTON_LABEL_LENGTH) {
+    errors.push(
+      `${what} is ${label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${label}"`,
+    );
+  }
+}
+
 // A migrated dialogue entry pairs its line with the approach label(s) that
 // belong to it — { line, approach }, approach a string or an array of
 // interchangeable labels for that beat (see getRandomDialogueBeat in
@@ -220,10 +231,8 @@ function validateSceneEntry(where, scene, errors) {
     const label = labels[type];
     if (typeof label !== "string" || !label.trim()) {
       errors.push(`${where} responses is missing "${type}"`);
-    } else if (label.length > MAX_BUTTON_LABEL_LENGTH) {
-      errors.push(
-        `${where} ${type} label is ${label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${label}"`,
-      );
+    } else {
+      checkLabelLength(`${where} ${type} label`, label, errors);
     }
   }
 }
@@ -333,10 +342,8 @@ function validateBondScene(at, scene, errors, warnings, seenLines) {
 
         if (typeof option.label !== "string" || option.label.trim() === "") {
           errors.push(`${where}.label is empty`);
-        } else if (option.label.length > MAX_BUTTON_LABEL_LENGTH) {
-          errors.push(
-            `${where}.label is ${option.label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${option.label}"`,
-          );
+        } else {
+          checkLabelLength(`${where}.label`, option.label, errors);
         }
 
         if (option.style !== undefined && ![1, 2, 3, 4].includes(option.style)) {
@@ -744,11 +751,7 @@ export function validateContent() {
               continue;
             }
             for (const label of approachLabels) {
-              if (label.length > MAX_BUTTON_LABEL_LENGTH) {
-                errors.push(
-                  `${id} ${poolName}[${tier}] beat approach is ${label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${label}"`,
-                );
-              }
+              checkLabelLength(`${id} ${poolName}[${tier}] beat approach`, label, errors);
             }
             // A beat's `responses` carries the same button-label cap as its
             // approach, keyed by RESPONSE_TYPES. The beat is the only place
@@ -756,11 +759,7 @@ export function validateContent() {
             const seenLabels = new Map();
             for (const [type, value] of Object.entries(entry.responses || {})) {
               for (const label of collectLabels(value)) {
-                if (label.length > MAX_BUTTON_LABEL_LENGTH) {
-                  errors.push(
-                    `${id} ${poolName}[${tier}] beat ${type} response is ${label.length} chars (max ${MAX_BUTTON_LABEL_LENGTH}): "${label}"`,
-                  );
-                }
+                checkLabelLength(`${id} ${poolName}[${tier}] beat ${type} response`, label, errors);
                 // The four buttons are rendered side by side off this one
                 // beat, so two of them worded identically while paying
                 // different affinity reads as a bug even though nothing throws.
