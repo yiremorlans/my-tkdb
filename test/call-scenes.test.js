@@ -31,6 +31,12 @@ const byRank = Object.fromEntries(
   Object.entries(benkei.affinityByResponse).map(([type, rank]) => [rank, type]),
 );
 
+// The response type a character ranks at `rank` in their base affinityByResponse.
+function rankOf(id, rank) {
+  const character = CHARACTERS.find((c) => c.id === id);
+  return Object.keys(character.affinityByResponse).find((t) => character.affinityByResponse[t] === rank);
+}
+
 describe('sceneFace', () => {
   it('opens every register on default', () => {
     for (const bucket of Object.keys(SCENE_FACES)) {
@@ -39,19 +45,44 @@ describe('sceneFace', () => {
   });
 
   it('maps each rank at each register through the face table', () => {
+    // Yuri has no overrides, so he reads the table as-is.
+    const yuri = CHARACTERS.find((c) => c.id === 'yuri');
+    const yuriByRank = Object.fromEntries(
+      Object.entries(yuri.affinityByResponse).map(([type, rank]) => [rank, type]),
+    );
     const expected = {
-      new: ['serious', 'sweat', 'close'],
-      known: ['serious', 'sweat', 'close'],
-      warm: ['serious', 'surprise', 'smile'],
-      spark: ['serious', 'surprise', 'surprise_blush'],
-      close: ['surprise', 'smile', 'full_smile'],
-      bound: ['close', 'blush', 'full_smile_blush'],
+      new: ['annoyed', 'sweat', 'close'],
+      known: ['annoyed', 'sweat', 'close'],
+      warm: ['serious', 'surprise', 'surprise_blush'],
+      spark: ['close', 'surprise_blush', 'blush'],
+      close: ['smile', 'full_smile', 'full_smile_blush'],
+      bound: ['smile', 'full_smile', 'full_smile_blush'],
     };
     for (const [bucket, faces] of Object.entries(expected)) {
       faces.forEach((face, rank) => {
-        assert.equal(sceneFace('benkei', bucket, byRank[rank]), `${face}.png`, `${bucket} rank ${rank}`);
+        assert.equal(sceneFace('yuri', bucket, yuriByRank[rank]), `${face}.png`, `${bucket} rank ${rank}`);
       });
     }
+  });
+
+  it('lets a character override a slot, keeping the table elsewhere', () => {
+    assert.equal(sceneFace('haku', 'new', rankOf('haku', 0)), 'serious.png');
+    assert.equal(sceneFace('haku', 'warm', rankOf('haku', 0)), 'serious.png');
+    assert.equal(sceneFace('benkei', 'warm', byRank[0]), 'surprise.png');
+    assert.equal(sceneFace('benkei', 'new', byRank[0]), 'annoyed.png');
+    assert.equal(sceneFace('rui', 'known', rankOf('rui', 2)), 'wink.png');
+    assert.equal(sceneFace('rui', 'known', rankOf('rui', 1)), 'smile.png');
+    assert.equal(sceneFace('rui', 'known', rankOf('rui', 0)), 'annoyed.png');
+    assert.equal(sceneFace('rui', 'new', rankOf('rui', 2)), 'close.png');
+    assert.equal(sceneFace('rui', 'warm', rankOf('rui', 2)), 'blush.png');
+    assert.equal(sceneFace('kaito', 'warm', rankOf('kaito', 2)), 'blush.png');
+    assert.equal(sceneFace('kaito', 'spark', rankOf('kaito', 2)), 'lovestruck.png');
+    assert.equal(sceneFace('alan', 'spark', rankOf('alan', 2)), 'smile_blush.png');
+    assert.equal(sceneFace('edward', 'spark', rankOf('edward', 2)), 'smile_blush.png');
+    assert.equal(sceneFace('edward', 'warm', rankOf('edward', 2)), 'blush.png');
+    assert.equal(sceneFace('leo', 'warm', rankOf('leo', 2)), 'wink.png');
+    assert.equal(sceneFace('jo', 'warm', rankOf('jo', 2)), 'wink.png');
+    assert.equal(sceneFace('kaito', 'spark', rankOf('kaito', 1)), 'surprise_blush.png');
   });
 
   it('uses the _girl set for Jo in casual, opening included', () => {
@@ -59,17 +90,17 @@ describe('sceneFace', () => {
     assert.equal(sceneFace('jo', 'new', null, { variant: 'uniform' }), 'default.png');
     const jo = CHARACTERS.find((c) => c.id === 'jo');
     const fave = Object.keys(jo.affinityByResponse).find((t) => jo.affinityByResponse[t] === 2);
-    assert.equal(sceneFace('jo', 'warm', fave, { variant: 'casual' }), 'smile_girl.png');
+    assert.equal(sceneFace('jo', 'warm', fave, { variant: 'casual' }), 'wink_girl.png');
   });
 
   it('swaps blush for blush_2 half the time for Ren and Romeo only', () => {
     for (const id of ['ren', 'romeo']) {
       const character = CHARACTERS.find((c) => c.id === id);
-      const like = Object.keys(character.affinityByResponse).find((t) => character.affinityByResponse[t] === 1);
-      assert.equal(sceneFace(id, 'bound', like, { random: () => 0.1 }), 'blush_2.png');
-      assert.equal(sceneFace(id, 'bound', like, { random: () => 0.9 }), 'blush.png');
+      const fave = Object.keys(character.affinityByResponse).find((t) => character.affinityByResponse[t] === 2);
+      assert.equal(sceneFace(id, 'spark', fave, { random: () => 0.1 }), 'blush_2.png');
+      assert.equal(sceneFace(id, 'spark', fave, { random: () => 0.9 }), 'blush.png');
     }
-    assert.equal(sceneFace('benkei', 'bound', byRank[1], { random: () => 0.1 }), 'blush.png');
+    assert.equal(sceneFace('haru', 'spark', rankOf('haru', 2), { random: () => 0.1 }), 'blush.png');
   });
 });
 
@@ -77,9 +108,12 @@ describe('sceneFaceFiles', () => {
   it('lists every face the map can produce, including alternates and Jo\'s _girl set', () => {
     assert.deepEqual(
       sceneFaceFiles('benkei', 'new').sort(),
-      ['close.png', 'default.png', 'serious.png', 'sweat.png'],
+      ['annoyed.png', 'close.png', 'default.png', 'sweat.png'],
     );
-    assert.ok(sceneFaceFiles('ren', 'bound').includes('blush_2.png'));
+    assert.ok(sceneFaceFiles('haku', 'new').includes('serious.png'));
+    assert.ok(!sceneFaceFiles('haku', 'new').includes('annoyed.png'));
+    assert.ok(sceneFaceFiles('rui', 'known').includes('wink.png'));
+    assert.ok(sceneFaceFiles('ren', 'spark').includes('blush_2.png'));
     assert.ok(sceneFaceFiles('jo', 'new').includes('default_girl.png'));
     assert.ok(sceneFaceFiles('jo', 'new').includes('close_girl.png'));
   });
@@ -125,6 +159,20 @@ describe('pickCallScene', () => {
       assert.equal(pickCallScene('new', 'benkei', { force: true, expressionsDir: empty }), null);
     } finally {
       fs.rmSync(empty, { recursive: true, force: true });
+    }
+  });
+
+  it('checks an override\'s face, not the table\'s, for the art', () => {
+    // Haku's new-tier flat face is serious; annoyed alone doesn't open a scene.
+    const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'expressions-'));
+    try {
+      fs.mkdirSync(path.join(dir, 'haku'));
+      for (const file of ['default.png', 'close.png', 'sweat.png', 'annoyed.png']) {
+        fs.writeFileSync(path.join(dir, 'haku', file), '');
+      }
+      assert.equal(pickCallScene('new', 'haku', { force: true, expressionsDir: dir }), null);
+    } finally {
+      fs.rmSync(dir, { recursive: true, force: true });
     }
   });
 

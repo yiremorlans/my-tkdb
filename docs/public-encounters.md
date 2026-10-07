@@ -1551,9 +1551,9 @@ gain:
 | Response | Stranger (`new`) | Acquaintance (`known`) | Friend (`warm`) | Close Friend (`spark`) | Confidant (`close`) | Devoted / Soulbound (`bound`) |
 |---|---|---|---|---|---|---|
 | *opening line* | default | default | default | default | default | default |
-| fave (2) | close | close | smile | surprise_blush | full_smile | full_smile_blush |
-| like (1) | sweat | sweat | surprise | surprise | smile | blush |
-| flat (0) | serious | serious | serious | serious | surprise | close |
+| fave (2) | close | close | surprise_blush | blush | full_smile_blush | full_smile_blush |
+| like (1) | sweat | sweat | surprise | surprise_blush | full_smile | full_smile |
+| flat (0) | annoyed | annoyed | serious | close | smile | smile |
 
 One `SCENE_FACES` table in `constants/publicEncounters.js`, keyed
 register → rank. Variants on top of it:
@@ -1565,8 +1565,22 @@ register → rank. Variants on top of it:
   across both looks, so his lines must read with either face set.
 - **`blush_2` (Ren, Romeo):** wherever the map gives `blush.png`, a 50/50
   roll picks `blush_2.png` instead.
-- **Character-specific faces** (`wink.png` for Leo, Rui and Jo, and any
-  later ones) are not used yet. The map stays generic for now.
+- **Overrides (`SCENE_FACE_OVERRIDES`):** a sparse per-character table keyed
+  like `SCENE_FACES` (register → rank) that replaces the table's face for
+  that slot outright; an unlisted slot keeps the table's face. The art check
+  and `validateContent` read the overridden faces. Files are named for the
+  drawing (`annoyed`, `wink`), never for the response type, since one drawing
+  fills different ranks at different registers. Current set:
+
+  | Character | Register | Slot → face |
+  |---|---|---|
+  | Alan, Edward, Haku | new, known | flat → serious |
+  | Benkei | warm | flat → surprise |
+  | Rui | known | fave → wink, like → smile |
+  | Edward, Haku, Haru, Lucas, Mio, Rui, Shohei, Subaru, Towa, Zenji | warm | fave → blush |
+  | Leo, Jo | warm | fave → wink (`wink_girl` for Jo casual) |
+  | Kaito | warm / spark | fave → blush / lovestruck |
+  | Alan, Edward | spark | fave → smile_blush |
 - **Date button:** it has no face. It's disabled and never changes the
   portrait.
 

@@ -806,7 +806,7 @@ describe('call scenes', () => {
     const flat = await handleSceneClick(clickBody({ choice: 'bold' }), '7', 'bold', NOW);
     const { text, face } = sceneParts(flat.response.data);
     assert.ok(!/\n\n[+-]?\d/.test(text), 'no +0 on a least-liked pick');
-    assert.match(face, /\/benkei\/serious\.png$/);
+    assert.match(face, /\/benkei\/annoyed\.png$/);
     assert.equal(relationship()?.affinity ?? 0, 0);
   });
 

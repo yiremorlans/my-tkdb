@@ -284,13 +284,39 @@ const SCENE_OPENING_FACE = "default";
 // The same rank picks the click's reaction line (constants/reactions.js), so
 // face and reaction always agree. `swap` never applies to a scene.
 export const SCENE_FACES = {
-  new: { 2: "close", 1: "sweat", 0: "serious" },
-  known: { 2: "close", 1: "sweat", 0: "serious" },
-  warm: { 2: "smile", 1: "surprise", 0: "serious" },
-  spark: { 2: "surprise_blush", 1: "surprise", 0: "serious" },
-  close: { 2: "full_smile", 1: "smile", 0: "surprise" },
-  bound: { 2: "full_smile_blush", 1: "blush", 0: "close" },
+  new: { 2: "close", 1: "sweat", 0: "annoyed" },
+  known: { 2: "close", 1: "sweat", 0: "annoyed" },
+  warm: { 2: "surprise_blush", 1: "surprise", 0: "serious" },
+  spark: { 2: "blush", 1: "surprise_blush", 0: "close" },
+  close: { 2: "full_smile_blush", 1: "full_smile", 0: "smile" },
+  bound: { 2: "full_smile_blush", 1: "full_smile", 0: "smile" },
 };
+
+// Per-character slots that replace the table's face outright, keyed like it
+// (register -> rank). Sparse: an unlisted slot keeps the table's face. Files
+// are named for the drawing, never for the response type.
+const BLUSH_FAVE = { warm: { 2: "blush" } };
+const SCENE_FACE_OVERRIDES = {
+  alan: { new: { 0: "serious" }, known: { 0: "serious" }, spark: { 2: "smile_blush" } },
+  edward: { new: { 0: "serious" }, known: { 0: "serious" }, ...BLUSH_FAVE, spark: { 2: "smile_blush" } },
+  haku: { new: { 0: "serious" }, known: { 0: "serious" }, ...BLUSH_FAVE },
+  benkei: { warm: { 0: "surprise" } },
+  rui: { known: { 2: "wink", 1: "smile" }, ...BLUSH_FAVE },
+  kaito: { warm: { 2: "blush" }, spark: { 2: "lovestruck" } },
+  haru: BLUSH_FAVE,
+  jo: { warm: { 2: "wink" } },
+  leo: { warm: { 2: "wink" } },
+  lucas: BLUSH_FAVE,
+  mio: BLUSH_FAVE,
+  shohei: BLUSH_FAVE,
+  subaru: BLUSH_FAVE,
+  towa: BLUSH_FAVE,
+  zenji: BLUSH_FAVE,
+};
+
+function mappedFace(characterId, bucket, rank) {
+  return SCENE_FACE_OVERRIDES[characterId]?.[bucket]?.[rank] ?? SCENE_FACES[bucket]?.[rank];
+}
 
 // Faces with a second drawing, picked 50/50 wherever the map lands on them.
 const SCENE_FACE_ALTERNATES = {
@@ -327,7 +353,7 @@ export function baseRank(characterId, choice) {
 export function sceneFace(characterId, bucket, choice, { variant, random = Math.random } = {}) {
   let face = SCENE_OPENING_FACE;
   if (choice) {
-    face = SCENE_FACES[bucket]?.[baseRank(characterId, choice)] ?? SCENE_OPENING_FACE;
+    face = mappedFace(characterId, bucket, baseRank(characterId, choice)) ?? SCENE_OPENING_FACE;
     const alternate = SCENE_FACE_ALTERNATES[characterId]?.[face];
     if (alternate && random() < 0.5) face = alternate;
   }
@@ -339,7 +365,8 @@ export function sceneFace(characterId, bucket, choice, { variant, random = Math.
 // all of their outfits and alternates. The art gate and validateContent both
 // check against it.
 export function sceneFaceFiles(characterId, bucket) {
-  const faces = [SCENE_OPENING_FACE, ...Object.values(SCENE_FACES[bucket] || {})];
+  const ranks = Object.keys(SCENE_FACES[bucket] || {});
+  const faces = [SCENE_OPENING_FACE, ...ranks.map((rank) => mappedFace(characterId, bucket, rank))];
   for (const face of [...faces]) {
     const alternate = SCENE_FACE_ALTERNATES[characterId]?.[face];
     if (alternate) faces.push(alternate);
