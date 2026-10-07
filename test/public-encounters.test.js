@@ -348,7 +348,8 @@ describe('/call', () => {
       handleCall(callBody({ userId: 'user-2' }), NOW),
     ]);
 
-    const winners = results.filter((r) => /That was/.test(r.reply.content));
+    // A scene win (rolled at random) has no reply, so count afterReply.
+    const winners = results.filter((r) => r.afterReply !== null);
     assert.equal(winners.length, 1, 'the atomic claim admits exactly one');
     assert.equal(results.filter((r) => r.afterReply === null).length, 1, 'the loser triggers nothing');
   });
@@ -649,14 +650,14 @@ describe('a locked guild', () => {
 // --- 5. call scenes ----------------------------------------------------------
 
 describe('call scenes', () => {
-  // A V2 message: the container's section holds the text and the portrait.
+  // A V2 message: the container holds the text over a gallery of the portrait.
   function sceneParts(data) {
     const [container, row] = data.components;
-    const section = container.components[0];
+    const [text, gallery] = container.components;
     return {
       accent: container.accent_color,
-      text: section.components[0].content,
-      face: section.accessory.media.url,
+      text: text.content,
+      face: gallery.items[0].media.url,
       buttons: row?.components ?? null,
     };
   }
@@ -672,7 +673,7 @@ describe('call scenes', () => {
     };
   }
 
-  async function winScene({ affinity = 0, characterId = 'benkei', variant = 'uniform', layout } = {}) {
+  async function winScene({ affinity = 0, characterId = 'benkei', variant = 'uniform' } = {}) {
     reset({
       guild_settings: [guildRow()],
       public_encounters: [encounterRow({ character_id: characterId, variant })],
@@ -680,7 +681,7 @@ describe('call scenes', () => {
         ? [{ discord_user_id: 'user-1', character_id: characterId, affinity, times_met: 3 }]
         : [],
     });
-    forceCallScene(7, layout);
+    forceCallScene(7);
     const { afterReply } = await handleCall(callBody({ guess: characterId }), NOW);
     await afterReply();
     return fake.tables.public_encounters[0];
@@ -696,11 +697,11 @@ describe('call scenes', () => {
     reset({ guild_settings: [guildRow()], public_encounters: [encounterRow({ character_id: 'benkei' })] });
     forceCallScene(7);
     const { reply, afterReply } = await handleCall(callBody({ guess: 'benkei' }), NOW);
-    await afterReply();
+    const lateReply = await afterReply();
     const row = fake.tables.public_encounters[0];
 
-    assert.match(reply.content, /They're waiting on your answer\./);
-    assert.ok(!/boost/i.test(reply.content), 'a scene win promises no boost');
+    assert.equal(reply, null, 'the scene names the character, so no ack');
+    assert.equal(lateReply, null, 'the placeholder is deleted, not filled');
 
     const [post] = posts;
     assert.equal(post.channelId, CHANNEL);
@@ -828,33 +829,13 @@ describe('call scenes', () => {
     assert.equal(relationship()?.affinity ?? 0, 0);
   });
 
-  it('posts the gallery layout as text over a full-size portrait and keeps it through the click', async () => {
-    await winScene({ layout: 'gallery' });
+  it('lays the scene out as text over a full-size portrait in a container', async () => {
+    await winScene();
     const [container, row] = posts[0].body.components;
     assert.equal(container.type, 17, 'in a container');
     assert.equal(typeof container.accent_color, 'number');
-    const [text, gallery] = container.components;
-    assert.equal(text.type, 10, 'Text Display first');
-    assert.equal(gallery.type, 12, 'then a Media Gallery');
-    assert.match(gallery.items[0].media.url, /\/expressions\/benkei\/default\.png$/);
+    assert.deepEqual(container.components.map((c) => c.type), [10, 12], 'a Text Display, then a Media Gallery');
     assert.equal(row.type, 1);
-
-    const { response } = await handleSceneClick(clickBody(), '7', 'kind', NOW);
-    const [answeredContainer, ...rest] = response.data.components;
-    const [answeredText, answered] = answeredContainer.components;
-    assert.match(answeredText.content, /\n\n\+1 — /);
-    assert.ok(answeredText.content.startsWith(`${text.content}\n\n`), 'the opening line stays');
-    assert.match(answered.items[0].media.url, /\/benkei\/close\.png$/);
-    assert.deepEqual(rest, [], 'the button row is gone');
-  });
-
-  it('closes an unanswered gallery scene in the gallery layout', async () => {
-    await winScene({ layout: 'gallery' });
-    edits.length = 0;
-    await spawnEncounter(guildRow(), NOW, { reanchor: false });
-    const closeout = edits.find((e) => e.messageId === 'message-1');
-    assert.deepEqual(closeout.body.components.map((c) => c.type), [17]);
-    assert.deepEqual(closeout.body.components[0].components.map((c) => c.type), [10, 12]);
   });
 
   it('never acts on the date button', async () => {

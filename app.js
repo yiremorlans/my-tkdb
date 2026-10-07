@@ -43,6 +43,7 @@ import {
   surfaceBondSceneResume,
 } from './bondScenes.js';
 import { startEncounterScheduler } from './encounterScheduler.js';
+import { deleteInteractionMessage } from './discordRest.js';
 import {
   isMaintenanceModeActive,
   isMaintenanceBypassUser,
@@ -570,18 +571,35 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           result = { reply: { content: 'Something went wrong there. Try again?' }, afterReply: null };
         }
 
-        try {
-          // The defer already made the message ephemeral — drop the redundant
-          // flag from the edit body.
-          const { flags, ...body } = result.reply;
-          await sendFollowup(req.body.token, body, 15000, true);
-        } catch (followupErr) {
-          console.error('Failed to send /call followup:', followupErr);
+        if (result.reply) {
+          try {
+            // The defer already made the message ephemeral — drop the redundant
+            // flag from the edit body.
+            const { flags, ...body } = result.reply;
+            await sendFollowup(req.body.token, body, 15000, true);
+          } catch (followupErr) {
+            console.error('Failed to send /call followup:', followupErr);
+          }
+          // Runs regardless of the followup: the reward grant and public reveal
+          // must not hinge on the winner's ephemeral ack landing.
+          result.afterReply?.().catch(err => console.error('Error in /call follow-up:', err));
+          return;
         }
 
-        // Runs regardless of the followup: the reward grant and public reveal
-        // must not hinge on the winner's ephemeral ack landing.
-        result.afterReply?.().catch(err => console.error('Error in /call follow-up:', err));
+        // A call-scene win: no ack, the scene names the character. afterReply
+        // resolves to the boost ack only when the scene failed to post;
+        // otherwise the "thinking…" placeholder is deleted.
+        try {
+          const lateReply = await result.afterReply();
+          if (lateReply) {
+            const { flags, ...body } = lateReply;
+            await sendFollowup(req.body.token, body, 15000, true);
+          } else {
+            await deleteInteractionMessage(req.body.token, '@original');
+          }
+        } catch (err) {
+          console.error('Error in /call scene follow-up:', err);
+        }
       })();
       return;
     }

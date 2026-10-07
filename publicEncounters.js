@@ -100,7 +100,6 @@ import {
 import {
   absoluteAssetUrl,
   ephemeralResponse,
-  portraitContainer,
   reportFailures,
   userIdOf,
 } from './missions/shared.js';
@@ -650,7 +649,10 @@ export async function handleEncountersAdmin(body) {
  * Handle a `/call` interaction.
  *
  * Returns `{ reply, afterReply }` — the caller sends `reply` (always
- * ephemeral) and then runs `afterReply`, which is null except on a win. The
+ * ephemeral) and then runs `afterReply`, which is null except on a win. A
+ * call-scene win has a null `reply`: the caller awaits `afterReply` and sends
+ * what it resolves to (the boost ack, when the scene failed to post), or
+ * deletes the deferred placeholder when it resolves to null. The
  * split keeps the interaction inside Discord's 3s budget: the reward grant,
  * the milestone, the public message edit and analytics all happen after the
  * user already has their answer.
@@ -743,22 +745,21 @@ export async function handleCall(body, now = new Date()) {
   // Rolled here, not in afterReply, so /encdev's force flag is spent by the
   // win it was set for. A scene replies under the silhouette, so a post that
   // never landed can't have one.
-  const forcedLayout = takeCallSceneForce(encounter.id);
+  const forced = takeCallSceneForce(encounter.id);
   const scene = encounter.message_id
-    ? pickCallScene(tier, encounter.character_id, { daytime, force: forcedLayout !== null })
+    ? pickCallScene(tier, encounter.character_id, { daytime, force: forced })
     : null;
 
-  const replyLines = [
+  // A scene win sends no ack: the scene's own line names the character, so the
+  // winner's placeholder is deleted once the scene posts. The boost ack is
+  // held back for a scene that fails to post, which falls back to a boost.
+  const boostReply = ephemeral([
     `That was **${getFullName(character)}**.`,
-    scene
-      // A scene win has no boost: the click is the reward. The closeout's
-      // fallback boost for an unanswered scene is never mentioned.
-      ? "They're waiting on your answer."
-      // Spell out the reward rather than hint at it: a pending boost, redeemed
-      // by the next authored response with this character — /roam or /meet,
-      // whichever comes first.
-      : `Your next \`/roam\` or \`/meet\` with ${character.firstName} is boosted from this encounter.`,
-  ];
+    // Spell out the reward rather than hint at it: a pending boost, redeemed
+    // by the next authored response with this character — /roam or /meet,
+    // whichever comes first.
+    `Your next \`/roam\` or \`/meet\` with ${character.firstName} is boosted from this encounter.`,
+  ].join('\n'));
 
   const afterReply = async () => {
     // A scene replaces the boost, the milestone and the reveal embed. Posted
@@ -770,7 +771,6 @@ export async function handleCall(body, now = new Date()) {
           vars,
           color: level.color,
           locked: dateButtonLocked(relationship?.affinity),
-          layout: forcedLayout ?? undefined,
         })
       : false;
 
@@ -810,7 +810,9 @@ export async function handleCall(body, now = new Date()) {
       }
     });
 
-    if (!encounter.message_id || sceneShown) return;
+    // The late ack for a scene that never posted (see boostReply).
+    const lateReply = scene && !sceneShown ? boostReply : null;
+    if (!encounter.message_id || sceneShown) return lateReply;
 
     // The public reveal: the catch (this character's own winner line, in the
     // register their relationship with the caller has reached — the generic
@@ -856,9 +858,10 @@ export async function handleCall(body, now = new Date()) {
       // costs the channel its reveal.
       console.error(`[publicEncounters] Could not edit solved encounter ${encounter.id}:`, err.message);
     }
+    return lateReply;
   };
 
-  return { reply: ephemeral(replyLines.join('\n')), afterReply };
+  return { reply: scene ? null : boostReply, afterReply };
 }
 
 // --- call scenes -------------------------------------------------------------
@@ -871,17 +874,10 @@ export async function handleCall(body, now = new Date()) {
 // nothing for the least-liked one. An unanswered scene closes when the next
 // encounter spawns, and its winner gets the boost back then.
 
-// The two scene layouts, still being compared (/encdev spawn scene:<layout>).
-// `thumbnail` is the Chancellor's audience: the text with the portrait as a
-// thumbnail, in a container carrying the winner's level color. `gallery` reads
-// like a /roam or /meet: the text above a full-size portrait, in the same
-// container.
-export const CALL_SCENE_LAYOUTS = ['thumbnail', 'gallery'];
-
-// A scene's body for `layout`: `text` and the portrait at `url`, or the bare
-// text when there's no usable URL.
-function sceneBody(layout, url, text, color) {
-  if (layout !== 'gallery') return [portraitContainer(url, text, color)];
+// A scene's body, laid out like a /roam or /meet: `text` above the full-size
+// portrait at `url` (or the bare text when there's no usable URL), in a
+// container carrying the winner's level color.
+function sceneBody(url, text, color) {
   return [{
     type: MessageComponentTypes.CONTAINER,
     accent_color: color,
@@ -893,14 +889,14 @@ function sceneBody(layout, url, text, color) {
 }
 
 /**
- * A call scene post in `layout` (see CALL_SCENE_LAYOUTS). `text` is the
- * opening line, or once answered the opening line and the reaction, which
- * render a blank line apart. `buttons` (`{ encounterId, responses, locked, order }`) adds the
- * answer row in `order`; null renders the answered scene with no row at all.
+ * A call scene post. `text` is the opening line, or once answered the opening
+ * line and the reaction, which render a blank line apart. `buttons`
+ * (`{ encounterId, responses, locked, order }`) adds the answer row in
+ * `order`; null renders the answered scene with no row at all.
  */
-export function callSceneMessage({ characterId, face, text, color, layout = 'thumbnail', buttons = null }) {
+export function callSceneMessage({ characterId, face, text, color, buttons = null }) {
   const url = absoluteAssetUrl(`expressions/${characterId}/${face}`, `${characterId}'s scene portrait`);
-  const components = sceneBody(layout, url, [text].flat().join('\n\n'), color);
+  const components = sceneBody(url, [text].flat().join('\n\n'), color);
 
   if (buttons) {
     const { encounterId, responses, locked, order = CALL_SCENE_RESPONSES } = buttons;
@@ -931,22 +927,20 @@ export function callSceneMessage({ characterId, face, text, color, layout = 'thu
 }
 
 /**
- * A posted scene's parts as Discord hands it back: its layout, every Text
- * Display's content, the portrait URL and the accent color. Only these are
- * read, so nothing read-only on the fetched components reaches a PATCH. Null
- * when the post isn't a scene this code would recognize.
+ * A posted scene's parts as Discord hands it back: every Text Display's
+ * content, the portrait URL and the accent color. Only these are read, so
+ * nothing read-only on the fetched components reaches a PATCH. Null when the
+ * post isn't a scene this code would recognize.
  */
 function scenePartsFromPost(message) {
   const container = message?.components?.find((c) => c.type === MessageComponentTypes.CONTAINER);
-  const body = container?.components?.[0];
-  const section = body?.type === MessageComponentTypes.SECTION;
-  const gallery = container?.components?.find((c) => c.type === MessageComponentTypes.MEDIA_GALLERY);
-  const texts = (section ? body.components : container?.components ?? [])
+  const parts = container?.components ?? [];
+  const texts = parts
     .filter((c) => c.type === MessageComponentTypes.TEXT_DISPLAY && c.content)
     .map((c) => c.content);
   if (!texts.length) return null;
-  const url = (section ? body.accessory?.media?.url : gallery?.items?.[0]?.media?.url) ?? null;
-  return { layout: gallery ? 'gallery' : 'thumbnail', texts, url, color: container.accent_color };
+  const gallery = parts.find((c) => c.type === MessageComponentTypes.MEDIA_GALLERY);
+  return { texts, url: gallery?.items?.[0]?.media?.url ?? null, color: container.accent_color };
 }
 
 // A posted scene rebuilt with no button row: the closeout's edit.
@@ -955,7 +949,7 @@ function closedSceneFromPost(message) {
   if (!parts) return null;
   return {
     flags: InteractionResponseFlags.IS_COMPONENTS_V2,
-    components: sceneBody(parts.layout, parts.url, parts.texts.join('\n\n'), parts.color),
+    components: sceneBody(parts.url, parts.texts.join('\n\n'), parts.color),
   };
 }
 
@@ -973,13 +967,12 @@ function grantSceneFallbackBoost(userId, characterId, encounterId) {
  * silhouette's text, and store the post's id on the row. Returns false if the
  * scene never posted, so the caller falls back to the normal reveal.
  */
-async function postCallScene(encounter, { bucket, scene }, { userId, vars, color, locked, layout }) {
+async function postCallScene(encounter, { bucket, scene }, { userId, vars, color, locked }) {
   const data = callSceneMessage({
     characterId: encounter.character_id,
     face: sceneFace(encounter.character_id, bucket, null, { variant: encounter.variant }),
     text: fillTemplate(scene.line, vars),
     color,
-    layout,
     buttons: {
       encounterId: encounter.id,
       responses: scene.responses,
@@ -1083,11 +1076,9 @@ export async function handleSceneClick(body, encounterId, choice, now = new Date
   // A least-liked pick shows no (+0): the missing (+1) says enough in a
   // public channel.
   const reactionText = gain > 0 ? `+${gain} — ${reaction}` : reaction;
-  // The opening line stays and the reaction goes under it, so the text column
-  // never narrows and the portrait swaps faces in place instead of sliding
-  // left. The click carries the post, so the line and layout are read off it.
-  const posted = scenePartsFromPost(body.message);
-  const opening = posted?.texts[0];
+  // The opening line stays and the reaction goes under it. The click carries
+  // the post, so the line is read off it.
+  const opening = scenePartsFromPost(body.message)?.texts[0];
 
   return {
     response: {
@@ -1097,7 +1088,6 @@ export async function handleSceneClick(body, encounterId, choice, now = new Date
         face: sceneFace(row.character_id, winnerLineBucket(tier), choice, { variant: row.variant }),
         text: [opening, reactionText].filter(Boolean),
         color: level.color,
-        layout: posted?.layout,
       }),
     },
     afterReply: async () => {
@@ -1158,21 +1148,16 @@ async function stripSceneButtons(row) {
   );
 }
 
-// /encdev spawn scene:<layout> — encounter ids whose win skips the scene roll,
-// each mapped to the layout to post it in. Dev tooling, so losing it on a
-// restart is fine.
-const forcedCallScenes = new Map();
+// /encdev spawn scene:true — encounter ids whose win skips the scene roll.
+// Dev tooling, so losing it on a restart is fine.
+const forcedCallScenes = new Set();
 
-export function forceCallScene(encounterId, layout = 'thumbnail') {
-  forcedCallScenes.set(String(encounterId), layout);
+export function forceCallScene(encounterId) {
+  forcedCallScenes.add(String(encounterId));
 }
 
-// The forced layout, or null when this encounter wasn't forced. Spends it.
 function takeCallSceneForce(encounterId) {
-  const key = String(encounterId);
-  const layout = forcedCallScenes.get(key) ?? null;
-  forcedCallScenes.delete(key);
-  return layout;
+  return forcedCallScenes.delete(String(encounterId));
 }
 
 export function clearCallSceneForces() {
@@ -1386,8 +1371,7 @@ export async function handleEncounterDev(body) {
 
     const rawCharacter = sub.options?.find((o) => o.name === 'character')?.value;
     const variant = sub.options?.find((o) => o.name === 'variant')?.value || undefined;
-    const sceneLayout = sub.options?.find((o) => o.name === 'scene')?.value;
-    const scene = CALL_SCENE_LAYOUTS.includes(sceneLayout) ? sceneLayout : null;
+    const scene = sub.options?.find((o) => o.name === 'scene')?.value === true;
 
     let characterId;
     if (rawCharacter) {
@@ -1405,10 +1389,10 @@ export async function handleEncounterDev(body) {
 
     // Skips only the roll: a character with no scene at the winner's register
     // still gets the normal reveal.
-    if (scene) forceCallScene(row.id, scene);
+    if (scene) forceCallScene(row.id);
 
     return {
-      content: `Spawned **${getFullName(getCharacterById(row.character_id))}** (${row.variant}) as encounter #${row.id} in <#${guild.encounter_channel_id}>.${scene ? ` Its win will be a ${scene} call scene if one exists at your tier.` : ''}`,
+      content: `Spawned **${getFullName(getCharacterById(row.character_id))}** (${row.variant}) as encounter #${row.id} in <#${guild.encounter_channel_id}>.${scene ? ' Its win will be a call scene if one exists at your tier.' : ''}`,
     };
   }
 

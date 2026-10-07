@@ -109,21 +109,6 @@ export function absoluteAssetUrl(relPath, what) {
   return null;
 }
 
-// A V2 container holding `text`, with the portrait at `url` as a thumbnail
-// beside it, or the bare text when there's no usable URL. The Chancellor's
-// audience and the /call scenes are both laid out this way.
-export function portraitContainer(url, text, color) {
-  const textDisplay = { type: MessageComponentTypes.TEXT_DISPLAY, content: text };
-  const body = url
-    ? {
-        type: MessageComponentTypes.SECTION,
-        components: [textDisplay],
-        accessory: { type: MessageComponentTypes.THUMBNAIL, media: { url } },
-      }
-    : textDisplay;
-  return { type: MessageComponentTypes.CONTAINER, accent_color: color, components: [body] };
-}
-
 // An errand's progress, as the {unsigned targets, signed count, required
 // count} that missionObjectiveLine/missionProgressLine each need — computed
 // once per caller instead of filtering the same target list twice for the
@@ -155,9 +140,18 @@ export function houseChangeBlocker(mission, signed = errandProgress(mission).sig
  */
 export function chancellorMessage(face, text) {
   const url = absoluteAssetUrl(`expressions/cornelius/${face}`, "the Chancellor's portrait");
+  const textDisplay = { type: MessageComponentTypes.TEXT_DISPLAY, content: text };
+  // The bare text when there's no usable URL.
+  const body = url
+    ? {
+        type: MessageComponentTypes.SECTION,
+        components: [textDisplay],
+        accessory: { type: MessageComponentTypes.THUMBNAIL, media: { url } },
+      }
+    : textDisplay;
   return {
     flags: InteractionResponseFlags.IS_COMPONENTS_V2,
-    components: [portraitContainer(url, text, MISSION_EMBED_COLOR)],
+    components: [{ type: MessageComponentTypes.CONTAINER, accent_color: MISSION_EMBED_COLOR, components: [body] }],
   };
 }
 

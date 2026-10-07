@@ -1424,12 +1424,12 @@ favorite or liked response, nothing for the least-liked one (revised
 
 ### 17.1 Trigger
 
-- After a correct `/call`, roll `CALL_SCENE_CHANCE = 0.1` (one global
+- After a correct `/call`, roll `CALL_SCENE_CHANCE = 0.07` (one global
   constant in `constants/publicEncounters.js`).
 - On a hit, `pickCallScene` draws one winner line with `pickRandom` from
   `winnerLinePool`, the same pool and the same draw as the normal reveal
   (daytime swap included). Every character winner line carries button labels
-  (§17.7), so the scene rate is 10% at every tier, whatever the pool's size.
+  (§17.7), so the scene rate is 7% at every tier, whatever the pool's size.
 - It falls back to the normal reveal when the drawn line has no labels (only
   the shared fallback pool, for a character with no authored line at that
   register) or when a face the map (§17.4.1) can produce for that tier is
@@ -1445,33 +1445,29 @@ favorite or liked response, nothing for the least-liked one (revised
    added**. The silhouette image stays as it is.
 2. **A new public message** (the scene) is posted in the encounter
    channel as a reply to the silhouette post (`message_reference`). It is a
-   Components V2 message laid out like the Chancellor's audience
-   (`chancellorMessage` in `missions/shared.js`), chosen over an embed for
-   its larger thumbnail:
-   - one Container with `accent_color: level.color`, holding a Section:
-     `line` as a Text Display, and the opening face (`default.png`, see
-     §17.4.1) as the Thumbnail accessory (`media.url` =
+   Components V2 message that reads like a `/roam` or `/meet`:
+   - one Container with `accent_color: level.color`, holding `line` as a
+     Text Display over a Media Gallery of the full-size opening face
+     (`default.png`, see §17.4.1; `media.url` =
      `${BASE_URL}/assets/expressions/<id>/<face>`, already served by the
-     `/assets` static route, so no attachment is uploaded). As in
-     `chancellorMessage`, a non-absolute URL (`BASE_URL` unset) falls back
-     to a bare Text Display and keeps the text.
+     `/assets` static route, so no attachment is uploaded). A non-absolute
+     URL (`BASE_URL` unset) drops the gallery and keeps the text.
    - one Action Row of four buttons: kind, playful and bold in a fresh
      random order on every post, all in one style, then date last
    The portrait shows who it was, so the post reads as solved without a
    "That was X" line.
 
-The ephemeral `/call` ack to the winner keeps `That was **X**.` but swaps the
-boost line for `They're waiting on your answer.` A scene win promises no
-boost, and the closeout's fallback boost (§17.6) is never mentioned anywhere.
+A scene win sends no ephemeral `/call` ack: the scene's line already names
+the character. `handleCall` returns a null `reply`, and app.js deletes the
+deferred "thinking…" placeholder once `afterReply` has posted the scene. A
+scene win promises no boost, and the closeout's fallback boost (§17.6) is
+never mentioned anywhere. If the scene fails to post, the win falls back to a
+boost and `afterReply` resolves to the usual `That was **X**.` + boost ack,
+which app.js sends in place of the placeholder.
 
-**Layout trial (2026-10-07).** A second layout, `gallery`, is being compared
-against the thumbnail layout above. It reads like a `/roam` or `/meet`: the
-line as a Text Display over a Media Gallery, inside the same accent-colored
-Container, then the button row. The gallery image is the expression file
-itself, the same URL the thumbnail uses, so a click swaps faces by URL. The
-click and the closeout read the layout back off the post and keep it. Live
-scenes still post as `thumbnail`; only `/encdev spawn scene:gallery` posts a
-gallery scene (`scene:thumbnail` forces the current one).
+**Layout (2026-10-07).** A thumbnail layout (the Chancellor's audience: a
+Section with the face as a Thumbnail accessory) was trialed against the
+gallery one and dropped; gallery is the only layout.
 
 ### 17.3 Buttons
 
@@ -1523,16 +1519,14 @@ click anyway in case the button is ever enabled by mistake.
 - **The edit** (an `UPDATE_MESSAGE` response to the click):
   - the reaction **goes under** `line`, a blank line apart in the same Text
     Display; the opening line stays, read back off the clicked post
-    (`body.message`). Replacing it let a shorter reaction narrow the
-    container and slide the thumbnail left; keeping it means the face only
-    swaps in place. A post with no readable line shows the reaction alone.
+    (`body.message`). A post with no readable line shows the reaction alone.
     The reaction is the shared `/roam` pool
     (`getReactionLine` in `constants/reactions.js`) for the chosen type, with
     the choice's base rank as the outcome (2 love, 1 like, 0 flat), led by
     `+1 — ` when a point was granted, the way `/roam` and `/meet` write a
     gain. A flat pick shows the reaction alone, with no `+0`. The chosen
     label isn't echoed.
-  - the Thumbnail swaps to the face map's face for the choice (§17.4.1)
+  - the gallery image swaps to the face map's face for the choice (§17.4.1)
   - the register (reaction and face) and the accent color come from where the
     winner lands after the gain, the same post-gain read `/roam` makes
   - **the button row is removed**
@@ -1749,8 +1743,8 @@ from Discord.
 - **Unanswered scenes close when the next spawn happens**, and the winner
   quietly gets the boost instead. Ignoring a scene paying slightly more on
   average is accepted.
-- **Rate stays at 10%** for now (2026-10-06). Every register is labeled, so
-  every character win is eligible; revisit once it has run live.
+- **Rate is 7%** (2026-10-07, down from the 10% design rate). Every register
+  is labeled, so every character win is eligible; revisit once it has run live.
 - **Scenes live in `winnerLines` (2026-10-06):** one pool, with an object
   entry `{ line, responses }` marking a line that can open a scene.
 - **Scope:** call scenes only. Date encounters belong to a later `/roam`

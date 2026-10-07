@@ -116,6 +116,20 @@ export async function editInteractionMessage(interactionToken, messageId, body) 
 }
 
 /**
+ * DELETE a message an interaction sent, through that interaction's webhook
+ * token. With `@original` this clears a deferred interaction's "thinking…"
+ * placeholder when there is nothing to answer with.
+ */
+export async function deleteInteractionMessage(interactionToken, messageId) {
+  const res = await fetch(
+    `${API_BASE}/webhooks/${process.env.APP_ID}/${interactionToken}/messages/${messageId}`,
+    { method: 'DELETE', headers: { 'User-Agent': USER_AGENT } },
+  );
+
+  if (!res.ok) throw await readError(res);
+}
+
+/**
  * editChannelMessage for the common "close out a stale post" shape shared by
  * missions/posts.js and publicEncounters.js: skip when there was never a post to
  * edit, and log-and-swallow rather than throw on failure, since these callers

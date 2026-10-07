@@ -304,13 +304,9 @@ const ENCDEV_COMMAND = {
         },
         {
           name: "scene",
-          description: "Make this encounter's win a call scene in this layout (if the character has one at your tier)",
-          type: 3, // STRING
+          description: "Make this encounter's win a call scene (if the character has one at your tier)",
+          type: 5, // BOOLEAN
           required: false,
-          choices: [
-            { name: "thumbnail", value: "thumbnail" },
-            { name: "gallery", value: "gallery" },
-          ],
         },
       ],
     },
