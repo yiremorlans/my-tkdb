@@ -162,6 +162,36 @@ function missionRow(overrides = {}) {
   };
 }
 
+// Today's daily-cap history, for the Accept and co-op Join tests. Status is
+// irrelevant to the count: taking a mission spends the day whether it was
+// finished or left to lapse.
+
+// `n` missions `userId` accepted at `at`.
+function seedLeads(userId, n, at) {
+  for (let i = 0; i < n; i++) {
+    fake.tables.missions.push(
+      missionRow({ id: 100 + i, status: 'expired', accepted_by: userId, accepted_at: at }),
+    );
+  }
+}
+
+// `n` co-ops `userId` backed up, completed at `at`.
+function seedAssists(userId, n, at) {
+  for (let i = 0; i < n; i++) {
+    fake.tables.missions.push(
+      missionRow({
+        id: 300 + i, // clear of seedLeads' ids
+        mission_type: 'coop',
+        status: 'completed',
+        accepted_by: `lead-${i}`,
+        accepted_at: at,
+        helper_user_id: userId,
+        completed_at: at,
+      }),
+    );
+  }
+}
+
 // --- 1. slot rolling --------------------------------------------------------
 
 describe('daily slot rolling', () => {
@@ -474,16 +504,7 @@ describe('the Accept button', () => {
   it('turns a player away once they have taken their allowance for the day', async () => {
     // Accepted, not completed: taking missions and letting them lapse still
     // spends the server's requests, so it still spends the player's day.
-    for (let i = 0; i < DAILY_LEAD_CAP; i++) {
-      fake.tables.missions.push(
-        missionRow({
-          id: 100 + i,
-          status: 'expired',
-          accepted_by: 'user-a',
-          accepted_at: new Date().toISOString(),
-        }),
-      );
-    }
+    seedLeads('user-a', DAILY_LEAD_CAP, new Date().toISOString());
     fake.tables.missions.push(missionRow({ id: 200, status: 'open' }));
 
     const { response } = await handleMissionAccept(click('user-a'), 200);
@@ -499,11 +520,7 @@ describe('the Accept button', () => {
   });
 
   it('lets a different player take the request the capped one was refused', async () => {
-    for (let i = 0; i < DAILY_LEAD_CAP; i++) {
-      fake.tables.missions.push(
-        missionRow({ id: 100 + i, status: 'expired', accepted_by: 'user-a', accepted_at: new Date().toISOString() }),
-      );
-    }
+    seedLeads('user-a', DAILY_LEAD_CAP, new Date().toISOString());
     fake.tables.missions.push(missionRow({ id: 200, status: 'open' }));
 
     await handleMissionAccept(click('user-a'), 200);
@@ -515,11 +532,7 @@ describe('the Accept button', () => {
 
   it('does not count yesterday against today', async () => {
     const yesterday = new Date(Date.now() - 26 * 60 * 60 * 1000).toISOString();
-    for (let i = 0; i < DAILY_LEAD_CAP + 2; i++) {
-      fake.tables.missions.push(
-        missionRow({ id: 100 + i, status: 'completed', accepted_by: 'user-a', accepted_at: yesterday }),
-      );
-    }
+    seedLeads('user-a', DAILY_LEAD_CAP + 2, yesterday);
     fake.tables.missions.push(missionRow({ id: 200, status: 'open' }));
 
     const { response } = await handleMissionAccept(click('user-a'), 200);
@@ -1125,18 +1138,73 @@ describe('co-op', () => {
     assert.equal(fake.tables.mission_log.length, 2, 'still just the pair');
   });
 
-  it('does not spend the helper’s own mission slot', async () => {
+  it('turns a helper away while they hold a mission of their own', async () => {
     seedCoop();
-    // user-b is already running an errand of their own.
+    // user-b is already running an errand of their own: one mission at a time.
     fake.tables.missions.push(
       missionRow({ id: 2, mission_type: 'errand', status: 'accepted', accepted_by: 'user-b' }),
     );
 
-    const { afterReply } = await handleMissionAssistJoin(click('user-b'), 1);
-    await afterReply();
+    const { response } = await handleMissionAssistJoin(click('user-b'), 1);
 
+    assert.equal(response.data.flags, 64); // EPHEMERAL
+    assert.match(response.data.content, /already have a mission in progress/);
+    assert.match(response.data.content, /\/docs/, 'points them at finishing their errand');
+    assert.equal(fake.tables.missions[0].status, 'accepted', 'the call stays live');
+    assert.equal(fake.tables.missions[0].helper_user_id, undefined);
     assert.equal(fake.tables.missions[1].status, 'accepted', 'their own mission is untouched');
-    assert.equal(fake.tables.missions[1].accepted_by, 'user-b');
+  });
+
+  it('counts a co-op lead waiting on backup as holding a mission', async () => {
+    seedCoop();
+    // user-b is waiting on backup for a co-op of their own.
+    fake.tables.missions.push(
+      missionRow({ id: 2, mission_type: 'coop', status: 'accepted', accepted_by: 'user-b' }),
+    );
+
+    const { response } = await handleMissionAssistJoin(click('user-b'), 1);
+
+    assert.match(response.data.content, /already have a mission in progress/);
+    assert.equal(fake.tables.missions[0].helper_user_id, undefined);
+  });
+
+  it('turns a helper away once they have taken their allowance for the day', async () => {
+    seedCoop();
+    seedLeads('user-b', DAILY_LEAD_CAP, new Date().toISOString());
+
+    const { response } = await handleMissionAssistJoin(click('user-b'), 1);
+
+    assert.equal(response.data.flags, 64); // EPHEMERAL
+    assert.match(response.data.content, new RegExp(`${DAILY_LEAD_CAP} missions for today`));
+    // Like a capped Accept, the call stays live for the next inspector.
+    assert.equal(fake.tables.missions[0].status, 'accepted');
+    assert.equal(fake.tables.missions[0].helper_user_id, undefined);
+
+    const { response: next } = await handleMissionAssistJoin(click('user-c'), 1);
+    assert.equal(next.type, 7, 'someone under the cap can still answer it');
+  });
+
+  it('counts assists toward the cap, for both assisting and accepting', async () => {
+    seedAssists('user-b', DAILY_LEAD_CAP, new Date().toISOString());
+    seedCoop();
+    fake.tables.missions.push(missionRow({ id: 200, status: 'open' }));
+
+    const assist = await handleMissionAssistJoin(click('user-b'), 1);
+    assert.match(assist.response.data.content, new RegExp(`${DAILY_LEAD_CAP} missions for today`));
+    assert.equal(fake.tables.missions.find((r) => r.id === 1).helper_user_id, undefined);
+
+    const { response } = await handleMissionAccept(click('user-b'), 200);
+    assert.match(response.data.content, new RegExp(`${DAILY_LEAD_CAP} missions for today`));
+    assert.equal(fake.tables.missions.find((r) => r.id === 200).status, 'open');
+  });
+
+  it('does not count yesterday’s assists against today', async () => {
+    const yesterday = new Date(Date.now() - 26 * 60 * 60 * 1000).toISOString();
+    seedAssists('user-b', DAILY_LEAD_CAP + 1, yesterday);
+    seedCoop();
+
+    const { response } = await handleMissionAssistJoin(click('user-b'), 1);
+    assert.equal(response.type, 7);
   });
 });
 

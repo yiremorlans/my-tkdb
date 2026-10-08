@@ -1741,7 +1741,8 @@ from Discord.
 - **Answers are reactions (2026-10-06):** a click shows a line from the
   shared reaction pool for its type and base rank, not an authored reply. Scenes carry no
   face data. Jo casual uses the `_girl` set, and Ren/Romeo get `blush_2` as
-  a 50/50 alternate. Character-specific faces (`wink`) are deferred.
+  a 50/50 alternate. Character-specific faces (`wink` etc.) come from
+  `SCENE_FACE_OVERRIDES` (§17.4.1).
 - **Unanswered scenes close when the next spawn happens**, and the winner
   quietly gets the boost instead. Ignoring a scene paying slightly more on
   average is accepted.

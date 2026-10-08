@@ -100,6 +100,21 @@ export function wantsMissionAssist(body) {
 
 // --- Accept button ----------------------------------------------------------
 
+// The per-player limits every claim (Accept and co-op Join) is checked against.
+function claimLimits(now) {
+  return { dayStart: localDayStart(now), dailyLeadCap: DAILY_LEAD_CAP };
+}
+
+// The ephemeral refusal for a claim this player can't make right now
+// ('busy:<type>' or 'capped', from mission_claim_blocker), or null.
+function claimRefusal(outcome) {
+  if (outcome === "capped") return ephemeralResponse(CAPPED_LINE);
+  if (typeof outcome === "string" && outcome.startsWith("busy")) {
+    return ephemeralResponse(busyLine(outcome.split(":")[1]));
+  }
+  return null;
+}
+
 /**
  * `mission:accept:<id>`.
  *
@@ -118,8 +133,7 @@ export async function handleMissionAccept(body, missionId, now = new Date()) {
   try {
     outcome = await claimMission(missionId, userId, {
       acceptHours: ACCEPT_WINDOW_HOURS,
-      dayStart: localDayStart(now),
-      dailyLeadCap: DAILY_LEAD_CAP,
+      ...claimLimits(now),
     });
   } catch (err) {
     console.error("[missions] claim_mission failed:", err.message);
@@ -130,16 +144,11 @@ export async function handleMissionAccept(body, missionId, now = new Date()) {
     };
   }
 
-  if (typeof outcome === "string" && outcome.startsWith("busy")) {
-    return { response: ephemeralResponse(busyLine(outcome.split(":")[1])) };
-  }
-
-  // At their daily limit. Like every other refusal this leaves the request open
-  // and its button live — which is the entire point of the cap, since the next
-  // person to click is exactly who it was held back for.
-  if (outcome === "capped") {
-    return { response: ephemeralResponse(CAPPED_LINE) };
-  }
+  // Busy, or at their daily limit. Like every other refusal this leaves the
+  // request open and its button live — which is the entire point of the cap,
+  // since the next person to click is exactly who it was held back for.
+  const refusal = claimRefusal(outcome);
+  if (refusal) return { response: refusal };
 
   // 'taken' — someone else already holds it. Unlike 'busy'/'capped' (where the
   // mission is still open and its button must stay live for the next eligible
@@ -461,11 +470,12 @@ async function handleMissionAssist(body, mission) {
 }
 
 /**
- * `mission:assist:<id>` — a second user backing the accepter up. The helper
- * does not spend a mission slot of their own, so someone already holding a
- * mission can still answer a call for backup.
+ * `mission:assist:<id>` — a second user backing the accepter up. Under the same
+ * rules as an Accept (migration 029): it counts toward DAILY_LEAD_CAP, and
+ * someone already holding a mission of their own can't answer a call for
+ * backup. A refused click leaves the call live for the next inspector.
  */
-export async function handleMissionAssistJoin(body, missionId) {
+export async function handleMissionAssistJoin(body, missionId, now = new Date()) {
   const helperId = userIdOf(body);
 
   let mission;
@@ -482,7 +492,7 @@ export async function handleMissionAssistJoin(body, missionId) {
 
   let outcome;
   try {
-    outcome = await claimCoopHelper(missionId, helperId);
+    outcome = await claimCoopHelper(missionId, helperId, claimLimits(now));
   } catch (err) {
     console.error("[missions] claim_coop_helper failed:", err.message);
     return {
@@ -493,6 +503,8 @@ export async function handleMissionAssistJoin(body, missionId) {
   if (outcome === "self") {
     return { response: ephemeralResponse("You can't back yourself up.") };
   }
+  const refusal = claimRefusal(outcome);
+  if (refusal) return { response: refusal };
   if (outcome !== "joined") {
     return { response: ephemeralResponse("That mission's already covered.") };
   }

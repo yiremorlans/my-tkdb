@@ -1,6 +1,6 @@
 # Spec: Scheduled missions
 
-Status: **built**
+Status: **built** (§20 riddle culprit reveal and §21 co-op debrief are expansion specs, not built)
 Last updated: 2026-10-08
 
 > **As built.** Everything below is implemented. Where the code differs from
@@ -147,6 +147,18 @@ Last updated: 2026-10-08
 > - It counts missions **accepted**, not completed. Accepting is what denies
 >   everyone else; a player who takes two and lets both lapse has still spent
 >   the server's requests and must not be handed a fresh attempt for failing.
+> - **Assists count too (migration 029, 2026-10-08).** The cap is on missions
+>   *taken*: accepts plus co-op assists (`helper_user_id`, counted by
+>   `completed_at`, since a co-op completes in the same write that records its
+>   helper). Before this a capped player could keep answering every call for
+>   backup and bank a log and a reset each time. `claim_coop_helper` returns
+>   `'capped'` (after `'taken'` / `'self'`) and the call stays live for the
+>   next inspector. **One mission at a time includes assists:** a player
+>   holding their own accepted mission is refused with `'busy:<type>'`, the
+>   same answer `claim_mission` gives (`'capped'` is reported first).
+>   Both claims take a per-user advisory lock (`pg_advisory_xact_lock`) before
+>   counting, so a player's simultaneous clicks on two posts are serialized and
+>   can't both slip under the cap.
 > - `'capped'` is reported ahead of `'busy:<type>'` when both apply: telling
 >   someone to go finish their current mission implies another is waiting for
 >   them afterwards, which at cap is false.
@@ -654,10 +666,12 @@ embed:   First inspector to back them up clears it for both of you — one house
       then `resetCommandLimit(accepterId, cmd)` **and**
       `resetCommandLimit(helperId, cmd)` — the *same* command reset for both.
     - analytics for both.
-  - The helper does **not** consume a mission slot — assisting is a free social
-    bonus, not their accepted mission. A helper who has their own `accepted`
-    mission can still assist (the partial unique index is on `accepted_by`, not
-    the helper).
+  - Assisting follows the Accept rules (migration 029). A helper who holds
+    their own `accepted` mission is refused (`'busy:<type>'`, the usual busy
+    line), and the assist counts toward their `DAILY_LEAD_CAP` (`'capped'`).
+    Either refusal is ephemeral and leaves the post live. The assist never
+    sets `accepted_by` (the co-op completes in the same write), so it never
+    occupies the helper's slot afterwards.
 
 ### If nobody clicks
 
@@ -1179,7 +1193,8 @@ adds nothing to `.env`.
 | `/docs` "Complete" clicked with a stale button | `file_errand` re-checks for unsigned `mission_signatures` → `'not_ready'` |
 | Co-op: accepter clicks own Join button | `'self'` → ephemeral refusal |
 | Co-op: two helpers click together | `claim_coop_helper` row lock → one `'joined'`, one `'taken'` |
-| Co-op: helper already has their own accepted mission | Allowed — assisting doesn't consume a slot |
+| Co-op: helper already has their own accepted mission | Refused with the busy line (`'busy:<type>'`, migration 029); post stays live for someone else |
+| Co-op: helper is at the daily cap | `'capped'` → ephemeral refusal; post stays live for someone else |
 | Co-op: nobody joins before expiry | Mission `expired`, slot frees; optional "moment passed" edit |
 | `/riddle` brute-forcing names | 20s cooldown per wrong guess; riddle dies at `accept_expires_at` |
 | `/mission` / `/docs` / `/riddle` with no pending mission | Ephemeral guidance (next slot time / redirect) |
@@ -1319,3 +1334,280 @@ adds nothing to `.env`.
 - **Assist post house leak.** Spec keeps the house out of the `/mission assist`
   post for consistency; confirm that's wanted vs. showing it to attract a
   helper.
+
+---
+
+## 20. Expansion: culprit reveal + accusations (spec, not built)
+
+Status: **spec**, agreed 2026-10-08. Nothing in this section is built yet.
+
+Gives `/riddle` character art in both directions. A wrong guess that names a
+real student shows that student's annoyed face. A correct guess shows the
+culprit caught out, with an authored line, and grants a pending boost with
+them. Both replies keep the Chancellor's audience layout (§20.3).
+
+### 20.1 Terms
+
+- **Culprit**: the riddle's `answer` character.
+- **Accusation**: a wrong `/riddle` guess that `matchCharacterGuess` resolves
+  to a real character. A guess that resolves to nobody is a **miss**.
+- **Culprit reveal**: the reply to a correct `/riddle`.
+- **Riddle winning line**: the authored line in a culprit reveal, one per
+  riddle.
+
+### 20.2 Accusation (wrong guess, names a real character)
+
+- Reply is ephemeral, in the thumbnail layout (§20.3), with the accused's
+  `annoyed.png`. Alan, Edward and Haku have no `annoyed` drawing and show
+  `serious.png`, the same substitution `SCENE_FACE_OVERRIDES` makes for call
+  scenes.
+- The text is a `RIDDLE_WRONG_LINES` entry, unchanged. No accused dialogue, no
+  printed name: the face says who was accused. Nothing new is authored.
+- Applies to any accused character: the culprit's housemates, other houses,
+  Benkei.
+- The 20s wrong-guess cooldown starts exactly as today. An accusation costs
+  nothing else and has no per-mission limit; it pays nothing, so there is
+  nothing to farm.
+- A **miss** is unchanged: plain ephemeral text, no portrait.
+- The in-cooldown reply (*"Give it a moment…"*) is unchanged and shows no face.
+
+### 20.3 Layout
+
+Both replies reuse `chancellorMessage`'s shape (`missions/shared.js`): one V2
+Container in the board's color, a Section holding the text as a Text Display
+with the face as a Thumbnail accessory, served from
+`/assets/expressions/<id>/<face>`. It needs a character id as well as a face,
+so `chancellorMessage` becomes a thin wrapper over a shared
+`portraitMessage(characterId, face, text)` (name is a suggestion). Sent with
+the ephemeral flag added, as the audience does.
+
+With no usable URL (`BASE_URL` unset, or the face file missing) the
+thumbnail is dropped and the text sends on its own, the existing fallback.
+
+Not the call scene gallery layout: that full-size portrait stays reserved for
+call scenes.
+
+### 20.4 Culprit reveal (correct guess)
+
+Ephemeral, thumbnail layout, the culprit's `sweat.png`. **No buttons**: the
+reward is automatic. The text, in order, one per line:
+
+1. `Debunked. **{Full Name}**.` (kept: the thumbnail is too small to identify
+   by face alone)
+2. The **riddle winning line** (§20.5)
+3. The **boost line**: always shown, shared, plain, so every solver learns
+   riddles grant a boost, e.g. *"A pending boost with {firstName} is waiting
+   on your next `/roam` or `/meet`."* Wording is TBD, but it must stay true
+   when the cap means nothing new was added (the player already holds one), so
+   it states that a boost is waiting, never that one was just added. `{firstName}`
+   only, no he/him about the character.
+4. `BANKED_RESET_LINE`, unchanged
+
+**Reward.** On a completed `complete_mission`, `afterReply` also calls
+`grantEncounterBoost(userId, culprit, ENCOUNTER_BOOST_CAP)` alongside the
+existing `recordMissionCompletion` and analytics writes, under the same
+`reportFailures` net. Every solver qualifies; there is no "no `/call` win
+this month" gate. The cap of 1 per character is the only limit, and the boost
+spends on the next `/roam` or `/meet` with the culprit exactly like a `/call`
+win's.
+
+- No milestone is recorded. Milestones stay tied to encounters.
+- No affinity is written. Missions still never move affinity directly; the
+  boost only adds to a later authored response, as §16 of
+  `public-encounters.md` describes.
+- The reply text is fixed before the grant resolves, which is why the boost
+  line never depends on the grant's result.
+
+### 20.5 Content: riddle winning lines
+
+- One `winningLine` field on every entry in `RIDDLES` (50 lines, two per house
+  student), alongside `prompt`.
+- Same at every tier, Stranger through Soulbound. No per-register variants.
+- It nods to that riddle's report and is sheepish at being caught, with a
+  "making it up to you" beat in the culprit's own voice. The boost line
+  (§20.4) carries the mechanics, so the authored line never mentions boosts,
+  `/roam` or `/meet`.
+- **Towa** is always wordless here, at any hour (he can't speak by day):
+  short described actions or humming, no spoken words. Every other character
+  speaks.
+- Ground every line in `constants/dialogue/reference.md` with the voice-check
+  skill, and follow the house dialogue rules (no em dashes, American spelling
+  except Lucas, per-character memories). A line must not answer the *other*
+  riddle for the same student.
+- `validateContent()` fails the build on a riddle with no `winningLine`, and
+  the missions test pins it.
+
+### 20.6 Code touch points
+
+| File | Change |
+|---|---|
+| `missions/riddle.js` | accusation and culprit reveal replies; boost grant in `afterReply` |
+| `missions/shared.js` | `portraitMessage` (or equivalent), `chancellorMessage` wraps it |
+| `constants/missions.js` | `winningLine` on every riddle; boost line constant; accusation face table (`annoyed`, with the `serious` substitutes) |
+| `constants/validateContent.js` | require `winningLine` |
+| `test/missions.test.js` | accusation shows the accused's face; a miss shows none; reveal shows `sweat`, all four text lines, and grants the boost; boost line still shows when the grant is capped |
+
+No migration: the boost reuses `grant_encounter_boost()` and
+`character_relationships.pending_encounter_boost`.
+
+### 20.7 Decisions locked in
+
+1. Wrong guesses that name a real character get the accused's annoyed face
+   and the generic wrong line, no accused dialogue.
+2. Culprit reveal has no buttons; the boost is automatic.
+3. Both replies are ephemeral and use the Chancellor's thumbnail layout, not
+   the call scene gallery.
+4. Culprit face is a fixed `sweat`.
+5. Every solver gets the boost, capped at 1 per character; the boost line is
+   always shown.
+6. One riddle winning line per riddle, the same at every tier; Towa's is
+   wordless.
+7. No milestone for a solve.
+
+---
+
+## 21. Expansion: co-op debrief (spec, not built)
+
+Status: **spec**, agreed 2026-10-08. Nothing in this section is built yet.
+
+Gives a completed co-op a follow-up for both players: each one opens a private
+**debrief** with one student from the co-op's house, drawn for them alone, and
+gets a pending boost with that student. Same shape as the culprit reveal
+(§20.4): portrait, authored line, boost line, no buttons on the reply.
+
+### 21.1 Terms
+
+- **Debrief**: the private follow-up a co-op player opens after the co-op
+  completes. One per player per co-op: the lead's and the helper's are
+  separate.
+- **Debrief line**: the drawn student's authored line in a debrief.
+
+### 21.2 The completion post
+
+The co-op still completes on the helper's Join click (§7), which edits the
+public assist post. Changes to that edit:
+
+- `content: <@lead> <@helper>` with `allowed_mentions: { users: [leadId, helperId] }`.
+  Both are pinged; the mentions go in `content` because embeds don't ping.
+- The embed text is unchanged, plus one line: *"Each of you has a debrief
+  waiting."*
+- One **[ Debrief ]** button, `custom_id: mission:debrief:<missionId>`, replacing
+  the empty `components`.
+
+The banked-reset announcement stays on this post as today. The debrief does
+not repeat it.
+
+### 21.3 The Debrief button
+
+One button serves both players; the handler branches on who clicked.
+
+- Clicker is `accepted_by` → the lead's debrief (`lead_debriefed_at`).
+- Clicker is `helper_user_id` → the helper's debrief (`helper_debriefed_at`).
+- Anyone else → ephemeral *"This debrief isn't yours."*
+- Already claimed → ephemeral refusal (e.g. *"You've already been debriefed on
+  that one."*), no portrait.
+- Mission not `completed` (shouldn't happen from the post, but the custom_id
+  is client-supplied) → *"That mission's already closed."*
+
+**No expiry.** The button works for as long as the post exists, so a player
+who was away at completion loses nothing. Pending boosts don't expire either.
+
+**Claim.** One conditional update, no RPC:
+`UPDATE missions SET <col> = now() WHERE id = $1 AND <col> IS NULL` via
+`.update().eq('id', id).is(col, null).select()`. An empty result means already
+claimed. A double click grants once.
+
+**Draw** (at claim time, not stored, nothing later needs it): uniform over
+`getHouseRoster(mission.house)`, excluding students the clicker already holds
+a pending boost with (`getPendingEncounterBoosts`). If every student in the
+house is excluded, draw from the full roster. The two players draw
+independently and can get different students.
+
+**Reward.** `afterReply` calls
+`grantEncounterBoost(userId, drawnId, ENCOUNTER_BOOST_CAP)` plus analytics,
+under `reportFailures`. No milestone, no direct affinity, same rules as §20.4.
+
+### 21.4 The debrief reply
+
+Ephemeral, thumbnail layout (`portraitMessage`, §20.3; not the call scene
+gallery), the drawn student's
+`smile.png`. Missing file or no `BASE_URL` → the existing text-only fallback.
+**No buttons.** The text, in order, one per line:
+
+1. `**Debrief: {Full Name}**` (the thumbnail is too small to identify by face
+   alone, same reason as §20.4's name line)
+2. The **debrief line** (§21.6)
+3. The **boost line**: the same constant as §20.4, word for word, so both
+   missions teach the same thing. It says a boost is waiting, never that one
+   was just added, so it stays true when the cap blocked a new grant.
+
+No banked-reset line: the completion post already carries it.
+
+### 21.5 Reminder in `/mission`
+
+For a player with any unclaimed debrief (a `completed` co-op where they are
+the lead with `lead_debriefed_at IS NULL`, or the helper with
+`helper_debriefed_at IS NULL`), `/mission` shows a line and a **[ Debrief ]**
+button with the same `mission:debrief:<id>` custom_id, e.g. *"🗂️ A debrief
+from your {house} co-op is waiting."*
+
+- Shown whether or not the player currently holds a mission; if they hold one,
+  it sits below that mission's block.
+- Several unclaimed → the newest, with "+N more". Each claim surfaces the next.
+- The button works even if the assist post was deleted.
+- `/mission` only. `/house` is unchanged.
+- Expired co-ops never debrief: the query only matches `status='completed'`.
+
+### 21.6 Content: debrief lines
+
+- A `debriefLines` pool per house student, about two each (~50 lines), same
+  at every tier.
+- Each nods to having had inspectors working their house, in that student's
+  own voice. The boost line carries the mechanics, so a debrief line never
+  mentions boosts, `/roam` or `/meet`.
+- **Towa** is always wordless here, as in §20.5.
+- Ground every line in `constants/dialogue/reference.md` with the voice-check
+  skill and follow the house dialogue rules. Don't echo the student's riddle
+  winning lines or existing winnerLines.
+- `validateContent()` fails the build on a house student with no debrief
+  lines, and the missions test pins it.
+
+### 21.7 Migration `030_coop_debrief.sql`
+
+- `ALTER TABLE missions ADD COLUMN lead_debriefed_at TIMESTAMPTZ, ADD COLUMN helper_debriefed_at TIMESTAMPTZ;`
+- Backfill so past co-ops don't surface as unclaimed:
+  `UPDATE missions SET lead_debriefed_at = now(), helper_debriefed_at = now() WHERE mission_type = 'coop' AND status = 'completed';`
+- A partial index for the `/mission` reminder lookup on completed co-ops with
+  an unclaimed column.
+
+No new table, no RPC.
+
+### 21.8 Code touch points
+
+| File | Change |
+|---|---|
+| `missions/player.js` | completion edit (pings, line, button); `mission:debrief` handler; `/mission` reminder |
+| `missions/shared.js` | `portraitMessage` (shared with §20) |
+| `constants/missions.js` | `debriefLines` (or on the character), debrief face, shared boost line constant, refusal lines |
+| `db/supabase.js` | `claimDebrief(missionId, role)`, `getUnclaimedDebriefs(userId)` |
+| `db/migrations/030_coop_debrief.sql` | columns, backfill, index |
+| `app.js` | route `mission:debrief:<id>` |
+| `constants/validateContent.js` | require debrief lines per house student |
+| `test/missions.test.js` | pings both; lead and helper each claim once; outsider refused; second click refused; draw skips held boosts and falls back when all are held; boost line shows when capped; reminder lists newest + count; expired co-op has no reminder |
+
+### 21.9 Decisions locked in
+
+1. Both co-op players get their own debrief, drawn independently from the
+   co-op's house; outsiders are refused.
+2. Delivered by a **[ Debrief ]** button on the completion post, no expiry,
+   one claim per player per co-op.
+3. The completion post pings both players.
+4. The debrief has no buttons; the boost is automatic, capped at 1 per
+   student, and the boost line is always shown (the §20.4 constant).
+5. The draw skips students the player already holds a boost with, falling
+   back to the whole house.
+6. Fixed `smile` face; header names the student in full.
+7. `/mission` carries the reminder and its own Debrief button; `/house` doesn't.
+8. Co-ops completed before launch are backfilled as claimed; expired co-ops
+   never debrief.
+9. No milestone, no direct affinity.

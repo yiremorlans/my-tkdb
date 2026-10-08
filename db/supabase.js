@@ -1978,11 +1978,18 @@ export async function openChancellorAudience(id, userId) {
   return data.length > 0;
 }
 
-/** The co-op Join button. Returns 'joined' | 'self' | 'taken'. */
-export async function claimCoopHelper(id, userId) {
+/**
+ * The co-op Join button. Returns 'joined' | 'self' | 'taken' | 'capped' | 'busy:<type>'.
+ *
+ * An assist counts toward the same daily cap as an accept (migration 029), so
+ * it takes the same `dayStart` / `dailyLeadCap` pair as `claimMission`.
+ */
+export async function claimCoopHelper(id, userId, { dayStart = null, dailyLeadCap = null } = {}) {
   const { data, error } = await supabase.rpc('claim_coop_helper', {
     p_mission_id: id,
     p_user_id: userId,
+    p_day_start: dayStart,
+    p_daily_lead_cap: dailyLeadCap,
   });
 
   if (error) {

@@ -173,6 +173,23 @@ export function createFakeSupabase(initialTables = {}) {
     rpcNow = date;
   }
 
+  // db/migrations/029: mission_claim_blocker — one rule for Accept and Join.
+  // 'capped' (accepts plus assists since dayStart) ahead of 'busy:<type>'; a
+  // null cap or day start disables the limit.
+  function claimBlocker(userId, dayStart, cap) {
+    const missions = tables.missions || [];
+    if (cap != null && dayStart != null) {
+      const taken = missions.filter(
+        (r) =>
+          (r.accepted_by === userId && r.accepted_at != null && r.accepted_at >= dayStart)
+          || (r.helper_user_id === userId && r.completed_at != null && r.completed_at >= dayStart),
+      ).length;
+      if (taken >= cap) return 'capped';
+    }
+    const held = missions.find((r) => r.accepted_by === userId && r.status === 'accepted');
+    return held ? `busy:${held.mission_type || 'unknown'}` : null;
+  }
+
   const rpcHandlers = {
     // db/migrations/010: INSERT ... ON CONFLICT (user, char, kind)
     //                    DO UPDATE SET total = total + 1
@@ -343,9 +360,8 @@ export function createFakeSupabase(initialTables = {}) {
       return true;
     },
 
-    // db/migrations/016: the Accept button. One conditional UPDATE whose WHERE
-    // tests "the mission is open" and "this user holds nothing" together, so an
-    // ineligible click matches zero rows and the mission stays open.
+    // db/migrations/029: the Accept button. Not open → 'taken'; otherwise any
+    // refusal is this user (claimBlocker) and the mission stays open.
     //
     // The partial unique index that backstops it against write skew is a
     // Postgres property and is NOT modelled here — same caveat as the other rpc
@@ -354,38 +370,19 @@ export function createFakeSupabase(initialTables = {}) {
       tables.missions = tables.missions || [];
 
       const mission = tables.missions.find((r) => r.id === p_mission_id);
-      const held = tables.missions.find(
-        (r) => r.accepted_by === p_user_id && r.status === 'accepted',
-      );
+      if (!mission || mission.status !== 'open') return 'taken';
 
-      // db/migrations/016: counted on accepts, not completions — taking two and
-      // letting both lapse still spends the player's day.
-      const ledToday = (p_day_start == null || p_daily_lead_cap == null)
-        ? 0
-        : tables.missions.filter(
-            (r) => r.accepted_by === p_user_id && r.accepted_at != null && r.accepted_at >= p_day_start,
-          ).length;
-      const capped = p_daily_lead_cap != null && p_day_start != null && ledToday >= p_daily_lead_cap;
+      const blocker = claimBlocker(p_user_id, p_day_start, p_daily_lead_cap);
+      if (blocker) return blocker;
 
-      if (mission && mission.status === 'open' && !held && !capped) {
-        const now = rpcNow.toISOString();
-        mission.accepted_by = p_user_id;
-        mission.accepted_at = now;
-        mission.accept_expires_at = new Date(
-          rpcNow.getTime() + p_accept_hours * 60 * 60 * 1000,
-        ).toISOString();
-        mission.status = 'accepted';
-        return 'claimed';
-      }
-
-      if (mission && mission.status === 'open') {
-        // Reported ahead of 'busy' when both apply: telling someone to finish
-        // their current mission implies another is waiting afterwards.
-        if (capped) return 'capped';
-        return `busy:${held?.mission_type || 'unknown'}`;
-      }
-
-      return 'taken';
+      const now = rpcNow.toISOString();
+      mission.accepted_by = p_user_id;
+      mission.accepted_at = now;
+      mission.accept_expires_at = new Date(
+        rpcNow.getTime() + p_accept_hours * 60 * 60 * 1000,
+      ).toISOString();
+      mission.status = 'accepted';
+      return 'claimed';
     },
 
     // db/migrations/016: lock the row, re-check the signature map, then close
@@ -460,9 +457,9 @@ export function createFakeSupabase(initialTables = {}) {
       };
     },
 
-    // db/migrations/016: a second user backing up a co-op. Nothing here touches
-    // accepted_by, which is why assisting never spends the helper's own slot.
-    claim_coop_helper({ p_mission_id, p_user_id }) {
+    // db/migrations/029: a second user backing up a co-op, under the same
+    // rules as Accept (claimBlocker), tested after 'taken' and 'self'.
+    claim_coop_helper({ p_mission_id, p_user_id, p_day_start = null, p_daily_lead_cap = null }) {
       tables.missions = tables.missions || [];
 
       const mission = tables.missions.find((r) => r.id === p_mission_id);
@@ -475,6 +472,9 @@ export function createFakeSupabase(initialTables = {}) {
         return 'taken';
       }
       if (mission.accepted_by === p_user_id) return 'self';
+
+      const blocker = claimBlocker(p_user_id, p_day_start, p_daily_lead_cap);
+      if (blocker) return blocker;
 
       mission.helper_user_id = p_user_id;
       mission.status = 'completed';
