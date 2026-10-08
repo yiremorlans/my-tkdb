@@ -133,6 +133,20 @@ function expandPronounEntry(entry, variant) {
   return expanded;
 }
 
+// The same swap for text filled per-request rather than expanded at load (Jo's
+// /call winner lines, which fillTemplate fills off the encounter row's
+// variant): every token in both cases, `{he}` and `{He}` alike.
+export function pronounVars(variant) {
+  const map = PRONOUN_VARIANTS[variant] || PRONOUN_VARIANTS.uniform;
+  const vars = {};
+  for (const [token, word] of Object.entries(map)) {
+    vars[token] = word;
+    vars[token[0].toUpperCase() + token.slice(1)] =
+      word[0].toUpperCase() + word.slice(1);
+  }
+  return vars;
+}
+
 export function withPronounVariants(entries) {
   return {
     uniform: entries.map((entry) => expandPronounEntry(entry, "uniform")),

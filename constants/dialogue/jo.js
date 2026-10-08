@@ -1199,7 +1199,9 @@ export default {
   // like the dialogue; {user} is the winner's mention and {name} their full
   // name, and the embed's winner line is the only place the reveal names
   // either of them. A register left out here falls back to the generic
-  // WINNER_LINES pool.
+  // WINNER_LINES pool. Pronouns are `{he}`/`{his}` tokens, filled off the
+  // encounter's outfit (winnerLinePronouns), since a casual encounter is Venus;
+  // response labels stay pronoun-free.
   winnerLines: {
     new: [
       {
@@ -1245,7 +1247,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** sets his pen down like he'd been looking for an excuse.",
+        line: "{user} says the name, and **{name}** sets {his} pen down like {he}'d been looking for an excuse.",
         responses: {
           kind: "Be the excuse",
           playful: "Hide the pen",
@@ -1263,7 +1265,7 @@ export default {
     ],
     warm: [
       {
-        line: '"You\'re back!" **{name}** forgets whatever he was signing. {user} did that.',
+        line: '"You\'re back!" **{name}** forgets whatever {he} was signing. {user} did that.',
         responses: {
           kind: "Say the papers can wait",
           playful: "Ask what you just interrupted",
@@ -1289,7 +1291,7 @@ export default {
     ],
     spark: [
       {
-        line: "**{name}** hears his name, and the professional smile becomes a real one for {user}.",
+        line: "**{name}** hears {his} name, and the professional smile becomes a real one for {user}.",
         responses: {
           kind: "Say you like the real smile",
           playful: "Ask for the stage one",

@@ -26,6 +26,7 @@ import {
   pickWinnerLine,
   winnerLineBucket,
   winnerLinePool,
+  winnerLinePronouns,
   winnerLineText,
 } from '../constants/publicEncounters.js';
 import { CHARACTERS, getFullName } from '../constants/characters.js';
@@ -34,11 +35,12 @@ const DIALOGUE_TIERS = ['new', 'known', 'warm', 'spark', 'close', 'bound'];
 const NOON = new Date('2026-09-02T12:00:00');
 const NIGHT = new Date('2026-09-02T22:00:00');
 
-const vars = (character) => ({
+const vars = (character, variant = 'uniform') => ({
   user: 'Kanae',
   name: getFullName(character),
   firstName: character.firstName,
   house: character.house || 'Darkwick',
+  ...winnerLinePronouns(character.id, variant),
 });
 
 test('every character has a non-empty pool at every register', () => {
@@ -115,6 +117,24 @@ test('pickWinnerLine returns a filled line for every character at every tier', (
       assert.ok(line.length > 0 && !/[{}]/.test(line), `${character.id}/${tier}: "${line}"`);
     }
   }
+});
+
+test("Jo's winner lines follow the encounter's outfit", () => {
+  // His casual silhouette is Venus, and the scene swaps to the _girl faces, so
+  // a hard-coded "he"/"his" is wrong half the time. Lines carry {he}/{his}.
+  const jo = CHARACTERS.find((character) => character.id === 'jo');
+  for (const bucket of WINNER_LINE_BUCKETS) {
+    for (const entry of DIALOGUE.jo.winnerLines[bucket]) {
+      const casual = fillTemplate(winnerLineText(entry), vars(jo, 'casual'));
+      assert.ok(!/\b(he|him|his|himself)\b/i.test(casual), `jo.${bucket}: "${casual}"`);
+    }
+  }
+  const tokened = DIALOGUE.jo.winnerLines.known.find((entry) => entry.line.includes('{his}'));
+  assert.match(fillTemplate(tokened.line, vars(jo, 'uniform')), /\bhis pen\b/);
+  assert.match(fillTemplate(tokened.line, vars(jo, 'casual')), /\bher pen\b/);
+  // Only Jo's outfit swaps: anyone else's casual art keeps "he".
+  assert.equal(winnerLinePronouns('jin', 'casual').he, 'he');
+  assert.equal(winnerLinePronouns('jo', 'casual').He, 'She');
 });
 
 test('teasers and missed lines draw something at any hour, and split day from evening', () => {

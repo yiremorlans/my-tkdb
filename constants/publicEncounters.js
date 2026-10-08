@@ -21,6 +21,7 @@ import {
   SHARED_WINNER_LINES,
   SHARED_WRONG_GUESS_LINES,
 } from "./dialogue.js";
+import { pronounVars } from "./dialogue/_shared.js";
 
 // --- tuning -----------------------------------------------------------------
 
@@ -128,7 +129,27 @@ export const WINNER_LINE_BUCKETS = ["new", "known", "warm", "spark", "close", "b
 // Every placeholder fillTemplate knows how to resolve. Anything else is filled
 // with '' rather than left as literal braces, so an unknown one is a silent
 // hole in a public message — validateContent treats it as an error.
-export const WINNER_LINE_PLACEHOLDERS = ["user", "name", "firstName", "house"];
+export const WINNER_LINE_PLACEHOLDERS = [
+  "user",
+  "name",
+  "firstName",
+  "house",
+  ...Object.keys(pronounVars("uniform")),
+];
+
+// Outfits that change a character's pronouns: Jo's casual silhouette is
+// Venus, so his winner lines carry `{he}`/`{his}` tokens, as his dialogue does
+// (withPronounVariants), and they read "she"/"her" on a casual encounter. Read
+// off the encounter row's variant, like SCENE_VARIANT_SUFFIXES. Everyone else
+// resolves the tokens as uniform.
+const PRONOUN_VARIANT_OUTFITS = {
+  jo: ["casual"],
+};
+
+export function winnerLinePronouns(characterId, variant) {
+  const swaps = PRONOUN_VARIANT_OUTFITS[characterId]?.includes(variant);
+  return pronounVars(swaps ? variant : "uniform");
+}
 
 // Every placeholder a bond scene (docs/bond-scene-dms.md) may use — beats,
 // choice prompt, closing lines and keepsake line alike. Frozen here beside the
@@ -175,7 +196,8 @@ export const BOND_SCENE_PLACEHOLDERS = [
 // of their own at the register in play (see winnerLinePool).
 export const WINNER_LINES = SHARED_WINNER_LINES;
 
-// Fills {user} / {name} / {house} / {firstName}. An unknown placeholder
+// Fills {user} / {name} / {house} / {firstName} and the pronoun tokens
+// (winnerLinePronouns). An unknown placeholder
 // resolves to '' rather than being left as literal braces in a public message.
 export function fillTemplate(raw, vars = {}) {
   return String(raw).replace(/\{(\w+)\}/g, (_, key) => vars[key] ?? "");

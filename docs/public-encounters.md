@@ -1556,7 +1556,9 @@ register → rank. Variants on top of it:
   `Jo_Kongoza_Casual.png`), every face, the opening included, uses its
   `_girl` file (`default_girl.png`, `smile_girl.png`, ...). It is read off
   the row, so a scene carries no flag for it. Jo's scenes share one pool
-  across both looks, so his lines must read with either face set.
+  across both looks, so his lines must read with either face set: pronouns
+  in a line are `{he}`/`{his}` tokens, filled "she"/"her" on a casual row
+  (`winnerLinePronouns`), and labels stay pronoun-free.
 - **`blush_2` (Ren, Romeo):** wherever the map gives `blush.png`, a 50/50
   roll picks `blush_2.png` instead.
 - **Overrides (`SCENE_FACE_OVERRIDES`):** a sparse per-character table keyed

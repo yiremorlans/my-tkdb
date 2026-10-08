@@ -38,6 +38,7 @@ import {
   startGuessCooldown,
   matchCharacterGuess,
   winnerLineBucket,
+  winnerLinePronouns,
   WRONG_GUESS_LINES,
 } from './constants/publicEncounters.js';
 import {
@@ -177,12 +178,13 @@ function readRelationshipOrNull(userId, characterId) {
   });
 }
 
-function revealVars(character, user) {
+function revealVars(character, user, variant) {
   return {
     user,
     name: getFullName(character),
     firstName: character.firstName,
     house: character.house || 'Darkwick',
+    ...winnerLinePronouns(character.id, variant),
   };
 }
 
@@ -733,7 +735,7 @@ export async function handleCall(body, now = new Date()) {
   const milestoneType = pickMilestone(tier, bucket, encounter.character_id);
   const milestone = getMilestone(milestoneType);
 
-  const vars = revealVars(character, displayNameOf(body));
+  const vars = revealVars(character, displayNameOf(body), encounter.variant);
 
   // Day or evening is judged at the spawn (the hour that picked the
   // silhouette's background and teaser), not the claim, so a reveal just past
