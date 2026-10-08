@@ -535,26 +535,35 @@ export function createFakeSupabase(initialTables = {}) {
       return { ...row };
     },
 
-    // db/migrations/016: spend one banked reset, but only on a command that is
-    // genuinely still cooling down. The credit is an unspent mission_log row —
-    // there is no separate credits table. The row locks that serialize two
-    // clicks are a Postgres property and are NOT modelled here; this checks the
-    // decision table, not the atomicity.
+    // db/migrations/016 + 028: spend one banked reset, but only on a command
+    // that is genuinely still cooling down. The credit is an unspent
+    // mission_log row — there is no separate credits table. The row locks that
+    // serialize two clicks are a Postgres property and are NOT modelled here;
+    // this checks the decision table, not the atomicity.
     spend_cooldown_reset({ p_user_id, p_command, p_cooldown_seconds }) {
       tables.command_limits = tables.command_limits || [];
       tables.mission_log = tables.mission_log || [];
 
-      const limit = tables.command_limits.find(
-        (r) => r.discord_user_id === p_user_id && r.command_name === p_command,
-      );
-      if (!limit) return 'not_needed';
+      // The clocks still cooling down, longest wait left (most recent stamp)
+      // first, the clicked command on a tie.
+      const cutoff = rpcNow.getTime() - p_cooldown_seconds * 1000;
+      const cooling = tables.command_limits
+        .filter(
+          (r) =>
+            r.discord_user_id === p_user_id
+            && ['roam', 'meet'].includes(r.command_name)
+            && new Date(r.last_used_at).getTime() > cutoff,
+        )
+        .sort(
+          (a, b) =>
+            new Date(b.last_used_at) - new Date(a.last_used_at)
+            || (a.command_name !== p_command) - (b.command_name !== p_command),
+        );
+      if (!cooling.some((r) => r.command_name === p_command)) return 'not_needed';
 
-      const elapsedMs = rpcNow.getTime() - new Date(limit.last_used_at).getTime();
-      if (elapsedMs >= p_cooldown_seconds * 1000) return 'not_needed';
-
-      // Cheapest sufficient credit first: a co-op's reset clears the one
-      // command they're blocked on just as well, so spend it and leave the
-      // two-command one banked. Oldest first within a scope.
+      // Cheapest sufficient credit first: a co-op's reset clears the longer
+      // wait just as well, so spend it and leave the two-command one banked.
+      // Oldest first within a scope.
       const credit = tables.mission_log
         .filter((r) => r.discord_user_id === p_user_id && r.reset_spent_at == null)
         .sort(
@@ -564,14 +573,15 @@ export function createFakeSupabase(initialTables = {}) {
         )[0];
       if (!credit) return 'none';
 
-      const cleared = credit.mission_type === 'coop' ? [p_command] : ['roam', 'meet'];
+      const spentOn = credit.mission_type === 'coop' ? cooling[0].command_name : 'both';
+      const cleared = spentOn === 'both' ? ['roam', 'meet'] : [spentOn];
       tables.command_limits = tables.command_limits.filter(
         (r) => !(r.discord_user_id === p_user_id && cleared.includes(r.command_name)),
       );
 
       credit.reset_spent_at = rpcNow.toISOString();
-      credit.reset_spent_on = credit.mission_type === 'coop' ? p_command : 'both';
-      return credit.reset_spent_on;
+      credit.reset_spent_on = spentOn;
+      return spentOn;
     },
 
     // db/migrations/016: the riddle solve.

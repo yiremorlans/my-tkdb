@@ -1,7 +1,7 @@
 # Spec: Scheduled missions
 
 Status: **built**
-Last updated: 2026-09-04
+Last updated: 2026-10-08
 
 > **As built.** Everything below is implemented. Where the code differs from
 > this document, the code is right and the difference is listed here:
@@ -93,7 +93,8 @@ Last updated: 2026-09-04
 > - The player spends it from a **Use a cooldown reset** button that appears
 >   *only* on the "you're still on cooldown" reply to `/roam` or `/meet`, and
 >   only when they actually hold one. Clicking it clears the cooldown and drops
->   them straight into the command they were blocked on.
+>   them straight into the command it cleared: the one they were blocked on,
+>   or for a co-op reset, the longer of the two waits (migration 028).
 > - **Why:** clearing the clock at completion time quietly punished good
 >   timing. A player who solved a riddle with four minutes left on their
 >   cooldown got four minutes of value out of the same reward another player
@@ -104,9 +105,10 @@ Last updated: 2026-09-04
 >   apply it to both users. Banked, that produces a reset stamped `roam` that
 >   is worth nothing to someone who later wants `/meet` — the exact waste this
 >   change exists to prevent. A co-op now banks a `single`-scope reset for each
->   user, and *which* command it clears is decided when they spend it. Solo
->   missions bank a `both`-scope reset, so the "co-op is worth half a solo
->   clear" gap in decision 4 is preserved.
+>   user, and *which* command it clears is decided when they spend it: the
+>   longer of the two waits (migration 028). Solo missions bank a
+>   `both`-scope reset, so the "co-op is worth half a solo clear" gap in
+>   decision 4 is preserved.
 > - Nothing can be wasted by a mistimed click: `spend_cooldown_reset` refuses
 >   (keeping the credit) if that clock is already clear, and refuses if nothing
 >   is banked. `/house` shows how many the player is holding.
@@ -688,7 +690,7 @@ Progress: {progress line}
 |---|---|---|
 | errand | `2 / N signatures` | `Targets are boosted during /meet and /roam while mission is active. Meet them, then check the sheet and file it with /docs. One house log per signature, plus a banked cooldown reset that clears both.` |
 | riddle | `unsolved` | `Answer with /riddle <your answer>. Solve it for one house log, plus a banked cooldown reset: spend it the next time /roam or /meet tells you to wait, and it clears both.` |
-| coop | `waiting on a partner` / `partner post is live` | `Call a partner with /mission assist. The first inspector to back you up completes it for both of you. One house log each, plus a banked cooldown reset good for one of /roam or /meet.` |
+| coop | `waiting on a partner` / `partner post is live` | `Call a partner with /mission assist. The first inspector to back you up completes it for both of you. One house log each, plus a banked cooldown reset that clears whichever of /roam or /meet has the longer wait.` |
 
 The per-type "how you finish this" phrasing (`MISSION_NEXT_STEP`, §11.3) is the
 same string the `busy:<type>` Accept response uses, so a user who clicks Accept

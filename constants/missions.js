@@ -167,13 +167,29 @@ export function resetOfferLine(held) {
     : `\nYou have **${held} cooldown resets** banked from missions. Spend one now, or keep them for later.`;
 }
 
-// What the player is told after spending one. 'both' is a solo mission's
-// reward, 'roam'/'meet' a co-op's.
-export const RESET_SPENT_LINES = {
-  both: "Reset spent. Both `/roam` and `/meet` are clear.",
-  roam: "Reset spent. `/roam` is clear.",
-  meet: "Reset spent. `/meet` is clear.",
-};
+/**
+ * What the player is told after spending one reset.
+ *
+ * 'both' is a solo mission's reward, 'roam'/'meet' a co-op's, which goes on
+ * the longer wait (migration 028) and so may not be the command they clicked
+ * from. That case is said outright, since the prompt that follows is for the
+ * other command.
+ *
+ * @param {string} outcome   what spend_cooldown_reset returned
+ * @param {'roam'|'meet'} clicked  the command whose reply carried the button
+ * @returns {string|null}    null when `outcome` isn't a spend
+ */
+export function resetSpentLine(outcome, clicked) {
+  if (outcome === "both") {
+    return "Reset spent. Both `/roam` and `/meet` are clear.";
+  }
+  if (outcome !== "roam" && outcome !== "meet") return null;
+  if (outcome === clicked) return `Reset spent. \`/${outcome}\` is clear.`;
+  return (
+    `Reset spent on \`/${outcome}\`, your longer wait. ` +
+    `\`/${clicked}\` is still on its own clock.`
+  );
+}
 
 // The errand's one free house change (migration 025). Offered on the pickup
 // briefing, /mission and /docs while it's still available: once per mission,
@@ -290,7 +306,7 @@ export const MISSION_INSTRUCTIONS = {
   [MISSION_TYPES.RIDDLE]:
     "Answer with `/riddle <your answer>`. Solve it for one house log, plus a banked cooldown reset: spend it the next time `/roam` or `/meet` tells you to wait, and it clears both.",
   [MISSION_TYPES.COOP]:
-    "Call a partner with `/mission assist:true`. The first inspector to back you up completes it for both of you. One house log each, plus a banked cooldown reset good for one of `/roam` or `/meet`.",
+    "Call a partner with `/mission assist:true`. The first inspector to back you up completes it for both of you. One house log each, plus a banked cooldown reset that clears whichever of `/roam` or `/meet` has the longer wait.",
 };
 
 // --- riddles ----------------------------------------------------------------

@@ -1261,7 +1261,7 @@ describe('banked cooldown resets', () => {
     assert.equal(spent('user-a')[0].reset_spent_on, 'both');
   });
 
-  it('clears only the blocked command for a co-op’s reward, chosen at spend time', async () => {
+  it('clears only one command for a co-op’s reward, the clicked one on a tie', async () => {
     onCooldown('user-a');
     bank('user-a', 'coop');
 
@@ -1270,6 +1270,28 @@ describe('banked cooldown resets', () => {
     assert.equal(outcome, 'meet');
     assert.deepEqual(fake.tables.command_limits.map((r) => r.command_name), ['roam']);
     assert.equal(spent('user-a')[0].reset_spent_on, 'meet');
+  });
+
+  it('puts a co-op’s reward on the longer wait, not the clicked command', async () => {
+    onCooldown('user-a', ['meet'], HOURS_3 - 8 * 60_000); // 8 minutes left
+    onCooldown('user-a', ['roam'], 10 * 60_000); // 2h50m left
+    bank('user-a', 'coop');
+
+    const { outcome } = await handleCooldownReset(click('user-a'), 'meet');
+
+    assert.equal(outcome, 'roam');
+    assert.deepEqual(fake.tables.command_limits.map((r) => r.command_name), ['meet']);
+    assert.equal(spent('user-a')[0].reset_spent_on, 'roam');
+  });
+
+  it('ignores an already-clear other clock when picking the longer wait', async () => {
+    onCooldown('user-a', ['meet'], 60_000);
+    onCooldown('user-a', ['roam'], HOURS_3 + 1000); // expired stamp, still on the table
+    bank('user-a', 'coop');
+
+    const { outcome } = await handleCooldownReset(click('user-a'), 'meet');
+
+    assert.equal(outcome, 'meet');
   });
 
   it('spends the cheapest sufficient reset first, keeping the better one banked', async () => {

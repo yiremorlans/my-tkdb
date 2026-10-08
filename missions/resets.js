@@ -6,8 +6,8 @@ import { ButtonStyleTypes, MessageComponentTypes } from "discord-interactions";
 import { EPHEMERAL } from "../utils.js";
 import {
   RESET_BUTTON_LABEL,
-  RESET_SPENT_LINES,
   resetOfferLine,
+  resetSpentLine,
 } from "../constants/missions.js";
 import { redeemCooldownReset, releaseCommandInvoke } from "../commandLimits.js";
 import { countCooldownResets } from "../db/supabase.js";
@@ -62,13 +62,15 @@ export async function cooldownReplyWithReset(userId, command, reason) {
 /**
  * `mission:reset:<roam|meet>` — spend one banked reset.
  *
- * Returns `{ outcome, refusal }`. `outcome` is 'roam' | 'meet' | 'both' when a
- * credit was actually spent; anything else is a refusal, and `refusal` carries
- * the interaction response to send. app.js takes it from there, because what
+ * Returns `{ outcome, open, spentLine, refusal }`. `outcome` is 'roam' |
+ * 'meet' | 'both' when a credit was actually spent; anything else is a
+ * refusal, and `refusal` carries the interaction response to send. On a spend,
+ * `openCommand` is the command that is now clear (the clicked one for 'both') and
+ * `spentLine` says what was spent. app.js takes it from there, because what
  * happens on success is to drop the caller straight into /roam or /meet, and
  * those builders live in encounters.js.
  *
- * Every guard is inside the RPC (db/migrations/016), so a stale button on an
+ * Every guard is inside the RPC (db/migrations/016, rewritten in 028), so a stale button on an
  * ephemeral from hours ago is safe to click: it either finds the clock already
  * clear and keeps the credit, or finds nothing banked and says so.
  */
@@ -92,7 +94,8 @@ export async function handleCooldownReset(body, command) {
       ),
     };
   }
-  if (!RESET_SPENT_LINES[outcome]) {
+  const spentLine = resetSpentLine(outcome, command);
+  if (!spentLine) {
     return {
       outcome,
       refusal: ephemeralResponse(
@@ -120,5 +123,6 @@ export async function handleCooldownReset(body, command) {
     releaseCommandInvoke(userId, cleared);
   }
 
-  return { outcome, refusal: null };
+  const openCommand = outcome === "both" ? command : outcome;
+  return { outcome, openCommand, spentLine, refusal: null };
 }

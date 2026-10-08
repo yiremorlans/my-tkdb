@@ -61,7 +61,6 @@ import {
   trackCharacterEngagement,
   trackCommandUsage,
 } from './db/supabase.js';
-import { RESET_SPENT_LINES } from './constants/missions.js';
 import { validateContent } from './constants/validateContent.js';
 import { startGateway } from './gateway.js';
 import { EPHEMERAL } from './utils.js';
@@ -1250,7 +1249,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
       // mission:reset:<roam|meet> — spend a banked cooldown reset. Handled
       // apart from the three claim buttons because success here means dropping
-      // the caller straight into the command they were blocked on, and those
+      // the caller straight into the command that was cleared, and those
       // builders live in encounters.js.
       if (kind === 'reset') {
         const command = missionId === 'meet' ? 'meet' : 'roam';
@@ -1280,9 +1279,13 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         // already cost one round trip.
         res.send({ type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE });
 
+        // A co-op reset goes on the longer wait, which can be the other
+        // command, so open whichever one handleCooldownReset says is clear.
+        const { openCommand, spentLine } = result;
+
         (async () => {
           try {
-            const messageData = command === 'roam'
+            const messageData = openCommand === 'roam'
               ? await buildRoamDialogueMessage(userId)
               : await buildMeetPickMessage(userId);
 
@@ -1291,7 +1294,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             // way to know that from a /roam prompt appearing on its own.
             await sendFollowup(req.body.token, {
               ...messageData,
-              content: `${RESET_SPENT_LINES[result.outcome]}\n\n${messageData.content ?? ''}`.trim(),
+              content: `${spentLine}\n\n${messageData.content ?? ''}`.trim(),
             }, 15000, true);
           } catch (err) {
             // The reset is already spent and the cooldown really is clear, so
@@ -1299,7 +1302,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             console.error('Error rendering after a cooldown reset:', err);
             try {
               await sendFollowup(req.body.token, {
-                content: `${RESET_SPENT_LINES[result.outcome]} Something went wrong opening it though — run \`/${command}\` again.`,
+                content: `${spentLine} Something went wrong opening it though — run \`/${openCommand}\` again.`,
                 components: [],
               }, 15000, true);
             } catch (followupErr) {
