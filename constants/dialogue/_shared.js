@@ -172,14 +172,14 @@ export function withPronounVariants(entries) {
 export const SHARED_ENCOUNTER_TEASERS = {
   any: [
     "Someone you know, up ahead.",
-    "That outline's familiar. Call out?",
+    "Wait, is that who you think it is?",
     "You've seen that walk before.",
     "A figure ahead. Know them?",
     "Someone slows, like they're waiting.",
     "Quick, you could still reach them.",
   ],
   day: [
-    "A familiar figure in the between-class crowd.",
+    "A familiar figure among the students heading to class.",
     "Someone you know, just turning away.",
     "A familiar face, half-turned your way.",
     "Someone you know, about to pass you by.",
@@ -195,8 +195,8 @@ export const SHARED_ENCOUNTER_TEASERS = {
     "Everyone else has gone. One figure left.",
     "Someone lingers, half in shadow.",
     "Someone slips between the lamps ahead.",
-    "The dark's nearly got them. Name them?",
-    "A shadow you almost recognize, not moving.",
+    "They're almost out of sight. Who is that?",
+    "Someone's standing in the dark. They look familiar.",
   ],
 };
 

@@ -326,9 +326,9 @@ export default {
         greeting:
           '"You visit more than duty requires. I\'ve noticed. I notice everything, given time."',
         responses: {
-          kind: ["Let the interest show", "Say you noticed too"],
+          kind: ["Say you like visiting him", "Say you noticed too"],
           playful: ["Call out the dropped act", "Ask how long he's watched"],
-          bold: ["Name the interest outright", "Ask why he keeps performing"],
+          bold: ["Say duty isn't why you come", "Ask why he keeps performing"],
           neutral: ["Let the act be, say nothing", "Notice, say nothing"],
         },
       },
