@@ -278,10 +278,12 @@ One row per posted mission request (`docs/scheduled-missions.md`). `status` is t
 | `completed_at` | TIMESTAMP | Set on any of the three completion paths |
 | `house_changed_at` | TIMESTAMP | Errand only: when its one free house change was spent (migration 025); NULL = still available |
 | `chancellor_audience_at` | TIMESTAMP | Errand only: when the Chancellor agreed to hear a `/request` (migration 026). Only ever set; the audience counts as open while the house change is still available (`house_changed_at` NULL, nothing signed) |
+| `lead_debriefed_at` / `helper_debriefed_at` | TIMESTAMP | Co-op only: when each player claimed their debrief (migration 030, `docs/scheduled-missions.md` §21). NULL on a completed co-op = still waiting; the claim is one conditional `UPDATE ... WHERE <col> IS NULL`. Co-ops completed before 030 were backfilled as claimed |
 
 **Use cases:**
 - Arbitrate the Accept race with one atomic `claim_mission()` statement
 - Enforce "at most one held mission per user" at the database, not in the app
+- Claim each co-op player's debrief exactly once, and find the unclaimed ones for `/mission`'s reminder (two partial indexes, one per role)
 
 **`signatures` is JSONB rather than a child table.** An earlier draft had `mission_signatures`, one row per errand target. It was never read on its own: every consumer (`/docs`, the `/mission` briefing, the dossier's progress line, the `/roam` and `/meet` target boost) already had the mission row in hand, so the separate table cost a second round trip on every one of those paths and bought nothing a column could not hold. The key count is now what `signatures_required` used to be, so the two can no longer disagree — an invariant the old shape had to be careful about at spawn. Concurrency is unchanged: `sign_errand_target()` still flips one entry in a single conditional `UPDATE`, guarded on `signatures->>'<id>' IS NULL`, so meeting the same target twice signs once and two simultaneous responses cannot lose a signature.
 

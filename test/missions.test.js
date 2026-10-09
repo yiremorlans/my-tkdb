@@ -70,8 +70,12 @@ mock.module('../discordRest.js', {
 });
 
 const {
+  BANKED_RESET_LINE,
   DAILY_LEAD_CAP,
+  DEBRIEF_LINES,
+  MISSION_BOOST_LINE,
   MISSIONS_PER_DAY,
+  RIDDLE_WRONG_LINES,
   MIN_GAP_MS,
   localDayStart,
   WINDOW_START_HOUR,
@@ -92,6 +96,7 @@ const {
   handleMission,
   handleMissionAccept,
   handleMissionAssistJoin,
+  handleMissionDebrief,
   handleMissionFile,
 } = await import('../missions/player.js');
 const {
@@ -110,6 +115,7 @@ const {
 } = await import('../missions/posts.js');
 
 const { buildResponseResultMessage } = await import('../encounters.js');
+const { getCharacterById, getFullName } = await import('../constants/characters.js');
 const { claimCommandInvoke, clearCommandInvokeThrottle } = await import('../commandLimits.js');
 
 function reset() {
@@ -161,6 +167,21 @@ function missionRow(overrides = {}) {
     ...overrides,
   };
 }
+
+// The text of a reply in either shape: plain `content`, or a V2 portrait
+// message's Text Display (inside the Section when there's a thumbnail).
+function replyText(data) {
+  if (data.content != null) return data.content;
+  const [body] = data.components[0].components;
+  return body.accessory ? body.components[0].content : body.content;
+}
+
+// A V2 portrait message's thumbnail URL, or null when it went out as text.
+function thumbnailOf(data) {
+  return data.components?.[0]?.components?.[0]?.accessory?.media?.url ?? null;
+}
+
+const IS_COMPONENTS_V2 = 1 << 15;
 
 // Today's daily-cap history, for the Accept and co-op Join tests. Status is
 // irrelevant to the count: taking a mission spends the day whether it was
@@ -1035,7 +1056,7 @@ describe('riddles', () => {
     );
     await afterReply();
 
-    assert.match(reply.content, /Debunked/);
+    assert.match(replyText(reply), /Debunked/);
     assert.equal(fake.tables.missions[0].status, 'completed');
     assert.equal(fake.tables.mission_log[0].points, 1);
     assert.equal(fake.tables.command_limits.length, 1, 'the cooldown is left alone');
@@ -1063,7 +1084,110 @@ describe('riddles', () => {
       command('user-a', [{ name: 'answer', value: RIDDLE.answer }]),
       new Date(now.getTime() + 21_000),
     );
-    assert.match(later.reply.content, /Debunked/);
+    assert.match(replyText(later.reply), /Debunked/);
+  });
+
+  it('every riddle carries its winning line', () => {
+    for (const pool of Object.values(RIDDLES)) {
+      for (const riddle of pool) {
+        assert.ok(riddle.winningLine?.trim(), `${riddle.id} has no winningLine`);
+      }
+    }
+  });
+
+  it('shows the accused their annoyed face on a wrong name, with the generic line', async () => {
+    process.env.BASE_URL = 'https://tkdb.test';
+    seedRiddle();
+
+    const { reply, afterReply } = await handleRiddle(
+      command('user-a', [{ name: 'answer', value: 'romeo' }]),
+    );
+
+    assert.equal(afterReply, null);
+    assert.equal(reply.flags & 64, 64, 'ephemeral');
+    assert.equal(reply.flags & IS_COMPONENTS_V2, IS_COMPONENTS_V2);
+    assert.equal(thumbnailOf(reply), 'https://tkdb.test/assets/expressions/romeo/annoyed.png');
+    assert.ok(RIDDLE_WRONG_LINES.includes(replyText(reply)), 'no accused dialogue, no name');
+  });
+
+  it('starts the cooldown on an accusation, and the cooldown reply shows no face', async () => {
+    process.env.BASE_URL = 'https://tkdb.test';
+    seedRiddle();
+    const now = new Date();
+
+    await handleRiddle(command('user-a', [{ name: 'answer', value: 'romeo' }]), now);
+    const { reply } = await handleRiddle(
+      command('user-a', [{ name: 'answer', value: 'romeo' }]),
+      new Date(now.getTime() + 5_000),
+    );
+
+    assert.match(reply.content, /try again in/);
+    assert.equal(reply.components, undefined);
+  });
+
+  it('substitutes the serious face for an accused with no annoyed drawing', async () => {
+    process.env.BASE_URL = 'https://tkdb.test';
+    seedRiddle();
+
+    const { reply } = await handleRiddle(command('user-a', [{ name: 'answer', value: 'alan' }]));
+    assert.equal(thumbnailOf(reply), 'https://tkdb.test/assets/expressions/alan/serious.png');
+  });
+
+  it('answers a miss in plain text, with no portrait', async () => {
+    process.env.BASE_URL = 'https://tkdb.test';
+    seedRiddle();
+
+    const { reply } = await handleRiddle(
+      command('user-a', [{ name: 'answer', value: 'the janitor' }]),
+    );
+    assert.equal(reply.components, undefined);
+    assert.ok(RIDDLE_WRONG_LINES.includes(reply.content));
+  });
+
+  it('reveals the culprit caught out, and grants a pending boost with them', async () => {
+    process.env.BASE_URL = 'https://tkdb.test';
+    seedRiddle();
+
+    const { reply, afterReply } = await handleRiddle(
+      command('user-a', [{ name: 'answer', value: RIDDLE.answer }]),
+    );
+    await afterReply();
+
+    const culprit = getCharacterById(RIDDLE.answer);
+    assert.equal(reply.flags & 64, 64, 'ephemeral');
+    assert.equal(reply.components[0].components.length, 1, 'no buttons');
+    assert.equal(thumbnailOf(reply), `https://tkdb.test/assets/expressions/${RIDDLE.answer}/sweat.png`);
+    assert.deepEqual(replyText(reply).split('\n'), [
+      `Debunked. **${getFullName(culprit)}**.`,
+      RIDDLE.winningLine,
+      MISSION_BOOST_LINE(culprit.firstName),
+      BANKED_RESET_LINE,
+    ]);
+
+    const row = fake.tables.character_relationships.find(
+      (r) => r.discord_user_id === 'user-a' && r.character_id === RIDDLE.answer,
+    );
+    assert.equal(row.pending_encounter_boost, 1);
+    assert.equal(row.affinity, 0, 'a boost, never affinity');
+  });
+
+  it('still shows the boost line when the cap means nothing new was added', async () => {
+    seedRiddle();
+    fake.tables.character_relationships.push({
+      discord_user_id: 'user-a',
+      character_id: RIDDLE.answer,
+      affinity: 12,
+      pending_encounter_boost: 1,
+    });
+
+    const { reply, afterReply } = await handleRiddle(
+      command('user-a', [{ name: 'answer', value: RIDDLE.answer }]),
+    );
+    await afterReply();
+
+    const culprit = getCharacterById(RIDDLE.answer);
+    assert.ok(replyText(reply).includes(MISSION_BOOST_LINE(culprit.firstName)));
+    assert.equal(fake.tables.character_relationships[0].pending_encounter_boost, 1, 'capped at 1');
   });
 
   it('answers nothing for someone holding no mission at all', async () => {
@@ -1125,6 +1249,20 @@ describe('co-op', () => {
     assert.equal(banked.length, 2);
     assert.ok(banked.every((r) => r.mission_type === 'coop'), 'a co-op row is a one-command reset');
     assert.deepEqual(banked.map((r) => r.discord_user_id).sort(), ['user-a', 'user-b']);
+  });
+
+  it('pings both players on the completion post and hands them one Debrief button', async () => {
+    seedCoop();
+
+    const { response } = await handleMissionAssistJoin(click('user-b'), 1);
+
+    assert.equal(response.data.content, '<@user-a> <@user-b>');
+    assert.deepEqual(response.data.allowed_mentions, { users: ['user-a', 'user-b'] });
+    assert.match(response.data.embeds[0].description, /Each of you has a debrief waiting\./);
+    assert.match(response.data.embeds[0].description, /banked a cooldown reset/, 'still announced here');
+    const [button] = response.data.components[0].components;
+    assert.equal(button.custom_id, 'mission:debrief:1');
+    assert.equal(button.label, 'Debrief');
   });
 
   it('turns a second helper away rather than paying twice', async () => {
@@ -1205,6 +1343,187 @@ describe('co-op', () => {
 
     const { response } = await handleMissionAssistJoin(click('user-b'), 1);
     assert.equal(response.type, 7);
+  });
+});
+
+// --- co-op debrief ---------------------------------------------------------
+
+describe('co-op debrief', () => {
+  beforeEach(reset);
+
+  const HOUSE = 'Obscuary';
+
+  // A co-op user-a led and user-b backed up, already complete.
+  function seedCompletedCoop(overrides = {}) {
+    fake.tables.missions.push(
+      missionRow({
+        id: 1,
+        mission_type: 'coop',
+        house: HOUSE,
+        status: 'completed',
+        accepted_by: 'user-a',
+        helper_user_id: 'user-b',
+        completed_at: new Date().toISOString(),
+        ...overrides,
+      }),
+    );
+  }
+
+  function holdBoost(userId, characterId) {
+    fake.tables.character_relationships.push({
+      discord_user_id: userId,
+      character_id: characterId,
+      affinity: 0,
+      pending_encounter_boost: 1,
+    });
+  }
+
+  // Which student a debrief reply drew, read back off its header line.
+  function drawnStudent(data) {
+    const header = replyText(data).split('\n')[0];
+    return getHouseRoster(HOUSE).find((c) => header === `**Debrief: ${getFullName(c)}**`);
+  }
+
+  it('every house student has debrief lines', () => {
+    for (const house of MISSION_HOUSES) {
+      for (const character of getHouseRoster(house)) {
+        assert.ok(DEBRIEF_LINES[character.id]?.length > 0, `${character.id} has no debrief lines`);
+      }
+    }
+  });
+
+  it('gives the lead and the helper one debrief each, from the co-op house', async () => {
+    process.env.BASE_URL = 'https://tkdb.test';
+    seedCompletedCoop();
+
+    for (const [userId, column] of [['user-a', 'lead_debriefed_at'], ['user-b', 'helper_debriefed_at']]) {
+      const { response, afterReply } = await handleMissionDebrief(click(userId), 1);
+      await afterReply();
+
+      assert.equal(response.type, 4, 'a new message, not an edit of the post');
+      assert.equal(response.data.flags & 64, 64, 'ephemeral');
+      assert.equal(response.data.components[0].components.length, 1, 'no buttons');
+
+      const student = drawnStudent(response.data);
+      assert.ok(student, `drew a ${HOUSE} student`);
+      assert.equal(thumbnailOf(response.data), `https://tkdb.test/assets/expressions/${student.id}/smile.png`);
+
+      const [, line, boost, ...rest] = replyText(response.data).split('\n');
+      assert.ok(DEBRIEF_LINES[student.id].includes(line));
+      assert.equal(boost, MISSION_BOOST_LINE(student.firstName));
+      assert.deepEqual(rest, [], 'no banked-reset line: the post carries it');
+
+      assert.ok(fake.tables.missions[0][column], `${column} stamped`);
+      const row = fake.tables.character_relationships.find(
+        (r) => r.discord_user_id === userId && r.character_id === student.id,
+      );
+      assert.equal(row.pending_encounter_boost, 1);
+    }
+  });
+
+  it('refuses a second click, granting once', async () => {
+    seedCompletedCoop();
+
+    const first = await handleMissionDebrief(click('user-a'), 1);
+    await first.afterReply();
+    const second = await handleMissionDebrief(click('user-a'), 1);
+
+    assert.match(second.response.data.content, /already been debriefed/);
+    assert.equal(second.response.data.components, undefined, 'no portrait');
+    assert.equal(second.afterReply, undefined);
+    assert.equal(fake.tables.character_relationships.length, 1);
+  });
+
+  it('turns away anyone who was not on the co-op', async () => {
+    seedCompletedCoop();
+
+    const { response } = await handleMissionDebrief(click('user-c'), 1);
+
+    assert.match(response.data.content, /isn't yours/);
+    assert.equal(fake.tables.missions[0].lead_debriefed_at, undefined);
+  });
+
+  it('refuses a mission that never completed', async () => {
+    seedCompletedCoop({ status: 'expired', helper_user_id: null, completed_at: null });
+
+    const { response } = await handleMissionDebrief(click('user-a'), 1);
+    assert.match(response.data.content, /already closed/);
+  });
+
+  it('skips students the player already holds a boost with', async () => {
+    seedCompletedCoop();
+    const roster = getHouseRoster(HOUSE);
+    const [open, ...held] = roster;
+    for (const c of held) holdBoost('user-a', c.id);
+
+    const { response } = await handleMissionDebrief(click('user-a'), 1);
+    assert.equal(drawnStudent(response.data).id, open.id);
+  });
+
+  it('falls back to the whole house when every student is already held, still showing the boost line', async () => {
+    seedCompletedCoop();
+    for (const c of getHouseRoster(HOUSE)) holdBoost('user-a', c.id);
+
+    const { response, afterReply } = await handleMissionDebrief(click('user-a'), 1);
+    await afterReply();
+
+    const student = drawnStudent(response.data);
+    assert.ok(student);
+    assert.ok(replyText(response.data).includes(MISSION_BOOST_LINE(student.firstName)));
+    assert.ok(
+      fake.tables.character_relationships.every((r) => r.pending_encounter_boost === 1),
+      'capped at 1',
+    );
+  });
+
+  it('reminds /mission of the newest unclaimed debrief, with a count of the rest', async () => {
+    const earlier = new Date(Date.now() - 3600_000).toISOString();
+    seedCompletedCoop({ id: 1, house: 'Frostheim', completed_at: earlier });
+    seedCompletedCoop({ id: 2, house: HOUSE, accepted_by: 'user-z', helper_user_id: 'user-a' });
+
+    const { reply } = await handleMission(command('user-a'));
+
+    assert.match(reply.content, new RegExp(`debrief from your ${HOUSE} co-op is waiting`));
+    assert.match(reply.content, /\+1 more/);
+    const button = reply.components.at(-1).components[0];
+    assert.equal(button.custom_id, 'mission:debrief:2');
+
+    const claimed = await handleMissionDebrief(click('user-a'), 2);
+    await claimed.afterReply();
+    const next = await handleMission(command('user-a'));
+    assert.equal(next.reply.components.at(-1).components[0].custom_id, 'mission:debrief:1');
+    assert.doesNotMatch(next.reply.content, /more/);
+  });
+
+  it('shows the reminder below a mission the player is holding', async () => {
+    seedCompletedCoop();
+    fake.tables.missions.push(
+      missionRow({
+        id: 5,
+        status: 'accepted',
+        accepted_by: 'user-a',
+        mission_type: 'errand',
+        house: 'Frostheim',
+        signatures: { jin: null },
+      }),
+    );
+
+    const { reply } = await handleMission(command('user-a'));
+
+    assert.match(reply.content, /MISSION BRIEFING/);
+    assert.ok(reply.content.indexOf('debrief') > reply.content.indexOf('MISSION BRIEFING'));
+    const ids = reply.components.flatMap((row) => row.components.map((c) => c.custom_id));
+    assert.ok(ids.some((id) => id.startsWith('mission:house:5')), 'the errand keeps its button');
+    assert.ok(ids.includes('mission:debrief:1'));
+  });
+
+  it('never reminds about an expired co-op, or one already claimed', async () => {
+    seedCompletedCoop({ id: 1, status: 'expired', helper_user_id: null });
+    seedCompletedCoop({ id: 2, lead_debriefed_at: new Date().toISOString() });
+
+    const { reply } = await handleMission(command('user-a'));
+    assert.doesNotMatch(reply.content, /debrief/);
+    assert.equal(reply.components, undefined);
   });
 });
 

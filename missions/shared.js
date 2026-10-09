@@ -1,6 +1,6 @@
 // Scheduled missions: the small pieces more than one mission module uses (the
-// ephemeral reply shapes, the board's message shapes, errand progress and its
-// house-change rule, the mission-type guard).
+// ephemeral reply shapes, the board's message shapes, the portrait message,
+// errand progress and its house-change rule, the mission-type guard).
 // See player.js for the module map.
 
 import {
@@ -12,6 +12,7 @@ import {
 import { EPHEMERAL } from "../utils.js";
 import { errandTargets } from "../db/supabase.js";
 import { MISSION_NEXT_STEP } from "../constants/missions.js";
+import { expressionExists } from "../constants/publicEncounters.js";
 
 export function ephemeral(content) {
   return { content, flags: EPHEMERAL };
@@ -132,16 +133,18 @@ export function houseChangeBlocker(mission, signed = errandProgress(mission).sig
 }
 
 /**
- * The Chancellor's V2 message, laid out like a mission post: his line on the
- * left, his portrait (`face`, a file in assets/expressions/cornelius) as a
- * thumbnail on the right, in a container with the board's color bar. Served
- * from /assets like the messenger cat, so the granted edit swaps faces by URL.
- * Not ephemeral: an edit can't change that flag, so a new message adds it.
+ * A V2 message laid out like a mission post: `text` on the left, one
+ * character's portrait (`face`, a file in assets/expressions/<characterId>) as
+ * a thumbnail on the right, in a container with the board's color bar. Served
+ * from /assets like the messenger cat, so an edit swaps faces by URL.
+ *
+ * With no usable URL (BASE_URL unset, or no such drawing) the thumbnail is
+ * dropped and the text goes out on its own: the portrait is never
+ * load-bearing. Not ephemeral; see ephemeralPortraitMessage.
  */
-export function chancellorMessage(face, text) {
-  const url = absoluteAssetUrl(`expressions/cornelius/${face}`, "the Chancellor's portrait");
+export function portraitMessage(characterId, face, text) {
   const textDisplay = { type: MessageComponentTypes.TEXT_DISPLAY, content: text };
-  // The bare text when there's no usable URL.
+  const url = portraitUrl(characterId, face);
   const body = url
     ? {
         type: MessageComponentTypes.SECTION,
@@ -153,6 +156,27 @@ export function chancellorMessage(face, text) {
     flags: InteractionResponseFlags.IS_COMPONENTS_V2,
     components: [{ type: MessageComponentTypes.CONTAINER, accent_color: MISSION_EMBED_COLOR, components: [body] }],
   };
+}
+
+// An edit can't change the ephemeral flag, so it's added on the message that
+// is sent new rather than baked into portraitMessage.
+export function ephemeralPortraitMessage(characterId, face, text) {
+  const message = portraitMessage(characterId, face, text);
+  return { ...message, flags: message.flags | EPHEMERAL };
+}
+
+function portraitUrl(characterId, face) {
+  if (!expressionExists(characterId, face)) {
+    console.error(`[assets] No portrait at expressions/${characterId}/${face} — sending without it`);
+    return null;
+  }
+  return absoluteAssetUrl(`expressions/${characterId}/${face}`, `${characterId}'s portrait`);
+}
+
+// The Chancellor's message (houseChange.js): his portrait from
+// assets/expressions/cornelius.
+export function chancellorMessage(face, text) {
+  return portraitMessage("cornelius", face, text);
 }
 
 // --- command guards ---------------------------------------------------------

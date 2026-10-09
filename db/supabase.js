@@ -2000,6 +2000,69 @@ export async function claimCoopHelper(id, userId, { dayStart = null, dailyLeadCa
   return data;
 }
 
+// A co-op player's role -> the missions column naming them, and the column
+// stamped when they claim their debrief (migration 030).
+const DEBRIEF_COLUMNS = {
+  lead: { user: 'accepted_by', debriefed: 'lead_debriefed_at' },
+  helper: { user: 'helper_user_id', debriefed: 'helper_debriefed_at' },
+};
+
+/**
+ * Claim one player's co-op debrief (migration 030): `role` is 'lead' or
+ * 'helper', picking the column. One conditional UPDATE guarded on the column
+ * still being NULL, so a double click claims once. Returns whether this call
+ * was the one that claimed it.
+ */
+export async function claimDebrief(missionId, role, now = new Date()) {
+  const column = DEBRIEF_COLUMNS[role].debriefed;
+  const { data, error } = await supabase
+    .from('missions')
+    .update({ [column]: now.toISOString() })
+    .eq('id', missionId)
+    .is(column, null)
+    .select('id');
+
+  if (error) {
+    console.error('Error claiming debrief:', error);
+    throw error;
+  }
+
+  return (data || []).length > 0;
+}
+
+/**
+ * Every completed co-op this user has a debrief still waiting on, as lead or
+ * as helper, newest first. Two queries rather than an OR, one per column, so
+ * each rides its own partial index from migration 030. Expired co-ops never
+ * match: only `completed` ones debrief.
+ */
+export async function getUnclaimedDebriefs(userId) {
+  const unclaimed = ({ user, debriefed }) =>
+    supabase
+      .from('missions')
+      .select('id, house, completed_at')
+      .eq('mission_type', 'coop')
+      .eq('status', 'completed')
+      .eq(user, userId)
+      .is(debriefed, null);
+
+  // Independent reads: the same user can't be both lead and helper on one co-op.
+  const [lead, helper] = await Promise.all([
+    unclaimed(DEBRIEF_COLUMNS.lead),
+    unclaimed(DEBRIEF_COLUMNS.helper),
+  ]);
+
+  const error = lead.error || helper.error;
+  if (error) {
+    console.error('Error fetching unclaimed debriefs:', error);
+    throw error;
+  }
+
+  return [...(lead.data || []), ...(helper.data || [])].sort((a, b) =>
+    String(b.completed_at).localeCompare(String(a.completed_at)),
+  );
+}
+
 /** The riddle solve. Returns whether this call was the one that closed it. */
 export async function completeMission(id, userId, type) {
   const { data, error } = await supabase.rpc('complete_mission', {

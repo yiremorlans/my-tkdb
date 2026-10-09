@@ -1,6 +1,6 @@
 # Spec: Scheduled missions
 
-Status: **built** (§20 riddle culprit reveal and §21 co-op debrief are expansion specs, not built)
+Status: **built** (including the §20 culprit reveal and §21 co-op debrief expansions; §22 records the 2026-10-08 reward balance review)
 Last updated: 2026-10-08
 
 > **As built.** Everything below is implemented. Where the code differs from
@@ -101,7 +101,7 @@ Last updated: 2026-10-08
 >   got three hours from, and nothing in the game told them to wait. Banking it
 >   makes the reward worth the same to everyone, and makes *when* to spend it a
 >   decision rather than an accident.
-> - **The co-op coin flip is gone.** §7 and §13 roll `roam` or `meet` once and
+> - **The co-op coin flip is gone.** §7 and §13 originally rolled `roam` or `meet` once and
 >   apply it to both users. Banked, that produces a reset stamped `roam` that
 >   is worth nothing to someone who later wants `/meet` — the exact waste this
 >   change exists to prevent. A co-op now banks a `single`-scope reset for each
@@ -127,7 +127,7 @@ Last updated: 2026-10-08
 >   at the command, not mid-flow.
 >
 > **Change after the first build (2026-09-05): 6 requests a day, 2 per player.**
-> §3 and §18 decision 1 say 3 slots a day. It is now **6**, with a new
+> §3 and §18 decision 1 originally said 3 slots a day. It is now **6**, with a new
 > **`DAILY_LEAD_CAP = 2`** enforced inside `claim_mission`.
 >
 > - **Why 6:** sized against roughly 20 active players. At 3/day the average
@@ -172,7 +172,7 @@ Last updated: 2026-10-08
 >   a burst ever does need bounding, cap the **spend rate** (resets cashed per
 >   day) rather than the balance, so nothing earned is ever destroyed.
 
-Three times a day, at unpredictable-but-spread times, a scheduled job posts a
+Six times a day, at unpredictable-but-spread times, a scheduled job posts a
 public **mission request** into the same channel the public "call out"
 encounters use. The post is an embed carrying the messenger cat, a rotating
 Darkwick-Academy-flavored line ("Calling Inspector — a new mission request!",
@@ -187,9 +187,9 @@ three types, rolled at spawn:
 
 | Type | Weight | What you do | Reward |
 |---|---:|---|---|
-| **Riddle** | 55% | Solve a debunk riddle with `/riddle <answer>` | **1 log point** · reset **both** `/roam` + `/meet` cooldowns |
-| **Errand** | 20% | Meet **N specific students** of the mission's house (N rolled at spawn, `1 .. house roster size`) — they're **boosted in your `/roam` / `/meet`** while the errand is open — then file with `/docs` | **N log points** (one per signature) · reset **both** `/roam` + `/meet` cooldowns |
-| **Co-op** | 25% | Call a partner with `/mission assist`; another user backs you up | **1 log point each** (both users) · reset **one** command (`/roam` **or** `/meet`, one coin flip applied to both) for **both** users |
+| **Riddle** | 45% | Solve a debunk riddle with `/riddle <answer>` | **1 log point** · banked reset clearing **both** `/roam` + `/meet` · pending boost with the culprit (§20) |
+| **Errand** | 45% | Meet **N specific students** of the mission's house (N rolled at spawn, `1 .. house roster size`) — they're **boosted in your `/roam` / `/meet`** while the errand is open — then file with `/docs` | **N log points** (one per signature) · banked reset clearing **both** `/roam` + `/meet` · no boost (§22) |
+| **Co-op** | 10% | Call a partner with `/mission assist:True`; another user backs you up | **1 log point each** (both users) · a banked **single** reset each (clears the longer of the two waits) · a debrief boost each (§21) |
 
 Completed missions add **log points** — one per riddle/co-op, N per errand —
 tallied per house and surfaced through `/house`, which is **repurposed** from
@@ -259,7 +259,7 @@ the fiddliest (a second public button + a second claim path).
 scheduler tick (shared with encounters; every ~25s, per enabled guild):
 
   ROLL DAY: if guild.mission_slots_day != today(localTZ):
-    └─ mission_slots_today = 3 random timestamps, one per equal third of
+    └─ mission_slots_today = 6 random timestamps, one per equal sixth of
        05:00–24:00 America/Chicago, >= 2h apart  (all fixed, not configurable)
        mission_slots_day = today; mission_slots_fired = []
 
@@ -273,7 +273,7 @@ scheduler tick (shared with encounters; every ~25s, per enabled guild):
          with slot_time <= now():
     ├─ if slot_time is > STALE_SLOT_MINUTES late           → mark fired, skip (host was asleep)
     ├─ if guild already has a status='open' mission        → mark fired, skip (never two live requests)
-    ├─ roll house (uniform over 8) + type (riddle 50 / errand 25 / coop 25)
+    ├─ roll house (uniform over 8) + type (riddle 45 / errand 45 / coop 10)
     ├─ type='riddle' → pick a riddle from RIDDLES[house]
     ├─ type='errand' → signatures_required = randInt(1, getCharactersByHouse(house).length)
     ├─ INSERT missions row (status='open', post_expires_at = now + POST_TTL_HOURS)
@@ -299,7 +299,7 @@ Accept button  (custom_id: mission:accept:<id>)
 
 ---
 
-## 3. Scheduler — 3 missions/day, banded random times
+## 3. Scheduler — 6 missions/day, banded random times
 
 Runs inside the existing encounter tick (`encounterScheduler.js`). No new
 interval.
@@ -307,11 +307,11 @@ interval.
 ### Slot generation (once per local day, per guild)
 
 **Fixed, not admin-configurable** — constants in `constants/missions.js`:
-**3 slots/day**, active window **05:00–24:00 America/Chicago** (19h),
+**6 slots/day** (raised from 3 on 2026-09-05; 7 is the ceiling, see the top note), active window **05:00–24:00 America/Chicago** (19h),
 consecutive slots **≥ 2h apart**.
 
 ```js
-const MISSIONS_PER_DAY  = 3;
+const MISSIONS_PER_DAY  = 6;
 const WINDOW_START_HOUR  = 5;          // 05:00 CT
 const WINDOW_END_HOUR    = 24;         // midnight CT
 const MIN_GAP_MS         = 2 * 3600_000;
@@ -319,7 +319,7 @@ const MIN_GAP_MS         = 2 * 3600_000;
 function rollDailySlots(localDate) {
   const startMs = atLocalHour(localDate, WINDOW_START_HOUR);           // today 05:00 CT
   const spanMs  = (WINDOW_END_HOUR - WINDOW_START_HOUR) * 3600_000;    // 19h
-  const bandMs  = spanMs / MISSIONS_PER_DAY;                           // ~6h20m
+  const bandMs  = spanMs / MISSIONS_PER_DAY;                           // ~3h10m
   const slots = [];
   for (let i = 0; i < MISSIONS_PER_DAY; i++) {
     let t;
@@ -332,12 +332,12 @@ function rollDailySlots(localDate) {
 }
 ```
 
-- **One mission per third-of-day** (each band ~6h20m) → an early-morning player
+- **One mission per sixth-of-day** (each band ~3h10m) → an early-morning player
   and a late-night player each get a shot most days.
-- The time still moves up to ~6h day to day within its band — no fixed
+- The time still moves up to ~3h day to day within its band — no fixed
   "it's always 2pm" pattern.
-- Band widths (~6h20m) comfortably absorb the 2h re-roll, so no risk of a stuck
-  loop.
+- Band widths (~3h10m) still absorb the 2h re-roll; the fallback only starts
+  firing at 8 slots (test-pinned).
 - Optional anti-lock (skip unless it feels needed): reject a fresh roll landing
   within 30 min of *yesterday's* same-band slot.
 
@@ -346,7 +346,7 @@ function rollDailySlots(localDate) {
 | Column | Meaning |
 |---|---|
 | `mission_slots_day` | the local date `mission_slots_today` was rolled for |
-| `mission_slots_today` | `JSONB` array of 3 ISO timestamps |
+| `mission_slots_today` | `JSONB` array of 6 ISO timestamps |
 | `mission_slots_fired` | `JSONB` array of the slot indices already posted |
 
 Fully restart-safe: on boot the tick re-reads the row, regenerates only if
@@ -356,7 +356,7 @@ Fully restart-safe: on boot the tick re-reads the row, regenerates only if
 
 If the host slept across a slot and it is now more than `STALE_SLOT_MINUTES`
 (90) late, mark it fired without posting — better to lose that mission than to
-post at an odd hour. At 3/day this is acceptable.
+post at an odd hour. At 6/day this is acceptable.
 
 ### Single live request
 
@@ -662,9 +662,9 @@ embed:   First inspector to back them up clears it for both of you — one house
   - Fire-and-forget for **both** users:
     - `recordMissionCompletion({ …, points: 1 })` for each — accepter
       `role='lead'`, helper `role='assist'`, same `house`, same `mission_id`.
-    - **one coin flip**: `const cmd = Math.random() < 0.5 ? 'roam' : 'meet';`
-      then `resetCommandLimit(accepterId, cmd)` **and**
-      `resetCommandLimit(helperId, cmd)` — the *same* command reset for both.
+    - one banked **single**-scope reset each (the `mission_log` row is the
+      credit); which command it clears is decided at spend time, the longer
+      of the two waits (migration 028). No coin flip.
     - analytics for both.
   - Assisting follows the Accept rules (migration 029). A helper who holds
     their own `accepted` mission is refused (`'busy:<type>'`, the usual busy
@@ -742,18 +742,21 @@ Closest house (by affinity): Frostheim
   ```js
   export const INSPECTOR_RANKS = [   // thresholds are POINT (house log) totals
     { min: 0,   name: 'Novice Inspector' },
-    { min: 15,  name: 'Field Inspector' },
-    { min: 40,  name: 'Senior Inspector' },
-    { min: 90,  name: 'Special Inspector' },
-    { min: 160, name: "Chancellor's Right Hand" },
+    { min: 30,  name: 'Field Inspector' },
+    { min: 80,  name: 'Senior Inspector' },
+    { min: 180, name: 'Special Inspector' },
+    { min: 320, name: "Chancellor's Right Hand" },
   ];
   ```
 
-  Paced against `RELATIONSHIP_LEVELS` (constants/game.js): an average player
-  earns ~0.36 house logs/day (one accepted lead every 3-4 days at the current
-  type weights), so these clear in ~41 / ~110 / ~250 / ~440 days — roughly the
-  same order of magnitude as maxing affinity on one favorite character
-  (~67 days to Soulbound, always picking their best response).
+  Paced against `RELATIONSHIP_LEVELS` (constants/game.js), and doubled
+  2026-09 alongside that table's own raise. The original pacing assumed
+  ~0.36 house logs/day per average player in a single ~20-player guild. The
+  measured rates in `docs/benkei-shop.md` §1 (all guilds, 2026-10-08) are
+  much higher: ~1–2.2/day mid-pack and ~3–3.8/day for the top six, because
+  `MISSIONS_PER_DAY` is per guild and players earn across guilds. Logs are also
+  store credit now (§22), so rank pace and shop prices move together; retune
+  both against the same `mission_log` numbers.
 
 - **By house** from `SELECT house, SUM(points) FROM mission_log WHERE
   discord_user_id = $1 GROUP BY house`. Bar via `renderHeartBar`
@@ -1091,9 +1094,9 @@ Rename the "(for testing)" comment; it is now a real reward path.
 
 - Errand / riddle reward: `resetCommandLimit(userId)` — clears **both**
   `/roam` and `/meet` (the shared 3h clock).
-- Co-op reward: one coin flip shared by both users —
-  `const cmd = Math.random() < 0.5 ? 'roam' : 'meet';`
-  `resetCommandLimit(leadId, cmd); resetCommandLimit(helperId, cmd);`
+- Co-op reward: a banked `single`-scope reset for each user, spent on the
+  longer of the two waits (migration 028). The original shared coin flip is
+  gone (see the banking note at the top).
 
 ---
 
@@ -1134,10 +1137,10 @@ export const RIDDLE_WRONG_LINES = [
 
 export const INSPECTOR_RANKS = [   // thresholds are mission_log POINT (house log) totals (§9)
   { min: 0,   name: 'Novice Inspector' },
-  { min: 15,  name: 'Field Inspector' },
-  { min: 40,  name: 'Senior Inspector' },
-  { min: 90,  name: 'Special Inspector' },
-  { min: 160, name: "Chancellor's Right Hand" },
+  { min: 30,  name: 'Field Inspector' },
+  { min: 80,  name: 'Senior Inspector' },
+  { min: 180, name: 'Special Inspector' },
+  { min: 320, name: "Chancellor's Right Hand" },
 ];
 
 // signatures_required roll (§5): randInt(1, getCharactersByHouse(house).length)
@@ -1157,14 +1160,15 @@ admin-configurable.
 
 | Constant | Value | Purpose |
 |---|---|---|
-| `MISSIONS_PER_DAY` | `3` | Slots per guild per local day |
+| `MISSIONS_PER_DAY` | `6` | Slots per guild per local day (ceiling 7) |
 | `WINDOW_START_HOUR` / `WINDOW_END_HOUR` | `5` / `24` | Active window, America/Chicago (05:00–midnight CT) |
 | `MIN_GAP_MS` | `2h` | Minimum spacing between consecutive slots |
 | `STALE_SLOT_MINUTES` | `90` | Skip a slot that comes due more than this late |
 | `POST_TTL_HOURS` | `2` | Unaccepted post → withdrawn |
 | `ACCEPT_WINDOW_HOURS` | `48` | Accepted-but-unfinished → expired, slot frees |
 | `RIDDLE_WRONG_COOLDOWN_SECONDS` | `20` | Gap between wrong `/riddle` guesses (in-memory) |
-| `WEIGHT_RIDDLE` / `WEIGHT_ERRAND` / `WEIGHT_COOP` | `50` / `25` / `25` | Type roll at spawn |
+| `WEIGHT_RIDDLE` / `WEIGHT_ERRAND` / `WEIGHT_COOP` | `45` / `45` / `10` | Type roll at spawn (co-op cut to a 10 floor 2026-09; see §22) |
+| `DAILY_LEAD_CAP` | `2` | Missions taken per user per local day, accepts + assists (migration 029) |
 | `ERRAND_ROAM_TARGET_BIAS` | `~0.5` | Chance a `/roam` by an errand holder is steered to a still-unsigned target instead of the normal roll |
 
 `DISCORD_TOKEN`, `APP_ID`, `SUPABASE_*`, `BASE_URL` already present; this feature
@@ -1245,13 +1249,13 @@ adds nothing to `.env`.
 
 ## 18. Decisions locked in
 
-1. **3 missions/day per guild**, at banded random times — one uniform-random
-   slot per equal third of a **fixed** 05:00–24:00 America/Chicago window,
+1. **6 missions/day per guild** (originally 3), at banded random times — one uniform-random
+   slot per equal sixth of a **fixed** 05:00–24:00 America/Chicago window,
    ≥ 2h apart. Count, gap and window are hard-coded constants, **not**
    admin-configurable. The admin command is enable / disable / status only.
    Spread for early-morning and late-night players, unpredictable day to day.
    Slot state in `guild_settings`; restart-safe.
-2. **Type weights: riddle 50 / errand 25 / co-op 25**, rolled at spawn with the
+2. **Type weights: riddle 45 / errand 45 / co-op 10** (originally 50 / 25 / 25), rolled at spawn with the
    house. Neither type nor house is shown in the channel — only `/mission`
    reveals them.
 3. **At most one accepted mission per user**, enforced by a partial unique index
@@ -1276,9 +1280,12 @@ adds nothing to `.env`.
      → **1 point** (lead) + reset **both** cooldowns. Wrong → 20s cooldown, no
      cap.
    - **Co-op** — `/mission assist` posts a public **Join the mission** button; a
-     *different* user clicks → **1 point each** for both (lead + assist) + reset
-     **one** command (`/roam` **or** `/meet`, a single coin flip applied to both
-     users). Helper does not spend a mission slot.
+     *different* user clicks → **1 point each** for both (lead + assist) + a
+     banked **single** reset each (longer wait at spend time). The helper does
+     not hold the mission, but the assist counts toward their
+     `DAILY_LEAD_CAP` and is refused while they hold their own (migration 029).
+   - **Boosts** (§20, §21): riddle → the culprit, co-op → a debrief student
+     for each player. Errand gets none, deliberately (§22).
 5. **`/mission`, `/docs`, `/riddle` are ephemeral.** They reveal the house
    and/or per-user state. The only public mission command is `/mission assist`
    (another user must see and click its button). The public surface is the
@@ -1289,7 +1296,7 @@ adds nothing to `.env`.
    `mission_log` **points** (`SUM(points)`), per-house point bars, missions-filed
    count, current pending mission. One line of the old "closest house by
    affinity" behavior is kept.
-8. **Accepted-mission TTL 48h**, **unaccepted post TTL 6h** — both finalized by
+8. **Accepted-mission TTL 48h**, **unaccepted post TTL 2h** — both finalized by
    the scheduler; expiry frees the slot via the partial index.
 9. Shares `guild_settings`, the scheduler tick, the channel REST helpers, and
    `matchCharacterGuess` with `public-encounters.md` (§0).
@@ -1300,17 +1307,20 @@ adds nothing to `.env`.
 
 - **Errand grind loop.** An `N ≥ 2` errand spends up to `N−1` cooldown-gated
   meets (the first is free if you're off cooldown) and pays `N` points + a full
-  both-command reset — net cooldown-positive, and now point-positive too. Watch
-  whether dedicated players chain errand → reset → errand. Mitigations if
-  needed: errand resets only one command (like co-op), a per-user daily
-  completion cap, or scale the reset with `N` instead of always full.
+  both-command reset — net cooldown-positive, and now point-positive too.
+  *Partly answered:* `DAILY_LEAD_CAP = 2` (accepts + assists) bounds the chain
+  at two missions a day, and banking removed the reset-timing exploit. Since
+  logs became store credit (§22), watch errand-driven 💎 income against shop
+  prices rather than rank pace.
 - **Rank thresholds vs. scaled errands.** `INSPECTOR_RANKS` thresholds are point
   totals; a lucky run of `N = 4` errands climbs the ladder ~4× faster than a
   riddle streak. Rebalance the thresholds (or cap errand points) if progression
   feels too swingy once real data exists.
 - **`N = 1` errands.** A 1-signature errand is one meeting for 1 point +
-  full reset — strictly better value than a riddle for the same 1 point. Fine,
-  or bump the `signatures_required` floor to 2 for houses that can support it.
+  full reset. Since §20 a riddle pays the same plus a culprit boost, so an
+  `N = 1` errand is now the weakest roll in the pool. Fine at its frequency
+  (1 in ~2 errand rolls for Mortkranken, 1 in 4 for Frostheim/Dionysia), or
+  bump the floor to 2 for houses that can support it.
 - **Target-boost strength.** `ERRAND_ROAM_TARGET_BIAS ≈ 0.5` means half an
   errand holder's `/roam`s aren't really random while the mission is open — does
   that dull `/roam`'s discovery feel? Options: lower the bias, or only apply it
@@ -1320,26 +1330,37 @@ adds nothing to `.env`.
 - **Reveal targets in `/mission`.** Currently `/mission` names them outright. A
   "you'll know them when you see them" version hides the names until the first
   `/docs`.
-- **Per-day completion cap.** Max-one-held already throttles hoarding. Add a
-  hard "N missions filed per user per day/week" if a single fast clicker
-  dominates all 3 daily posts.
+- ~~**Per-day completion cap.**~~ Answered: `DAILY_LEAD_CAP = 2` on missions
+  taken (accepts + assists, migration 029), not on completions.
 - **`/docs` name.** Reads like "documentation". `/report` or `/file` if that's
   clearer — cosmetic.
 - **Expired accepted missions in the dossier.** Show an "unfiled" blemish count,
   or drop silently? Currently silent.
-- **Co-op reset roll.** One shared coin flip for both users (as written), or an
-  independent roll each? Written as shared.
+- ~~**Co-op reset roll.**~~ Answered by banking: no roll; each user's single
+  reset clears the longer wait at spend time (migration 028).
 - **Riddle answer types.** v1 is "name the student" only. Buttons (A/B/C) or
   keyword answers are a later variant.
+- **Co-op weight.** Held at 10 until the debrief (§21) has been live long
+  enough to measure how often a call for backup gets answered. Errand
+  holders are locked out of assisting for as long as they hold one (up to
+  48h), so the helper pool is smaller than the active roster. If most calls
+  are answered, 15 is the next step (take it from riddle, not errand, per §22).
 - **Assist post house leak.** Spec keeps the house out of the `/mission assist`
   post for consistency; confirm that's wanted vs. showing it to attract a
   helper.
 
 ---
 
-## 20. Expansion: culprit reveal + accusations (spec, not built)
+## 20. Expansion: culprit reveal + accusations
 
-Status: **spec**, agreed 2026-10-08. Nothing in this section is built yet.
+Status: **built** 2026-10-08. `portraitMessage(characterId, face, text)` lives
+in `missions/shared.js` with an `ephemeralPortraitMessage` variant, and also
+drops the thumbnail when the face file doesn't exist. The boost line is
+`MISSION_BOOST_LINE` in `constants/missions.js`. There is no accusation face
+table: `accusedFace` falls back to serious wherever the art has no annoyed
+drawing, and `validateContent()` fails the build on a missing mission
+portrait. `app.js sendFollowup` keeps a reply's non-ephemeral flags
+(IS_COMPONENTS_V2) when it edits a deferred ack.
 
 Gives `/riddle` character art in both directions. A wrong guess that names a
 real student shows that student's annoyed face. A correct guess shows the
@@ -1423,8 +1444,10 @@ win's.
 - One `winningLine` field on every entry in `RIDDLES` (50 lines, two per house
   student), alongside `prompt`.
 - Same at every tier, Stranger through Soulbound. No per-register variants.
-- It nods to that riddle's report and is sheepish at being caught, with a
-  "making it up to you" beat in the culprit's own voice. The boost line
+- It nods to that riddle's report and is sheepish at being caught, then
+  gives a reason to see the player again in the culprit's own voice: buying
+  her silence, credit for catching them, or a plain invitation. Never an
+  apology to her: she wasn't the one wronged. The boost line
   (§20.4) carries the mechanics, so the authored line never mentions boosts,
   `/roam` or `/meet`.
 - **Towa** is always wordless here, at any hour (he can't speak by day):
@@ -1466,9 +1489,12 @@ No migration: the boost reuses `grant_encounter_boost()` and
 
 ---
 
-## 21. Expansion: co-op debrief (spec, not built)
+## 21. Expansion: co-op debrief
 
-Status: **spec**, agreed 2026-10-08. Nothing in this section is built yet.
+Status: **built** 2026-10-08 (migration 030). `DEBRIEF_LINES` and
+`pickDebriefStudent` live in `constants/missions.js`; the handler is
+`missions/player.js handleMissionDebrief`. A failed read of the player's
+pending boosts falls back to drawing from the whole house.
 
 Gives a completed co-op a follow-up for both players: each one opens a private
 **debrief** with one student from the co-op's house, drawn for them alone, and
@@ -1611,3 +1637,49 @@ No new table, no RPC.
 8. Co-ops completed before launch are backfilled as claimed; expired co-ops
    never debrief.
 9. No milestone, no direct affinity.
+
+---
+
+## 22. Reward balance (review 2026-10-08)
+
+Reviewed after §20, §21 and migration 029 landed, with `docs/benkei-shop.md`
+turning log points into store credit (💎). Each type now leads on a
+different reward, and that split is intended:
+
+| Type | Weight | Effort | Logs / 💎 | Reset | Boost | Leads on |
+|---|---:|---|---|---|---|---|
+| Riddle | 45 | under a minute | 1 | both | culprit (§20) | affinity per minute |
+| Errand | 45 | `N` meetings, multi-session (avg `N` ≈ 2.06) | **`N`** | both | none | **store credit** |
+| Co-op (each player) | 10 | one call / one click | 1 | single | debrief (§21) | the social path |
+
+**Errand gets no boost, by decision.** On affinity alone a riddle now beats
+an errand (an extra +1 boost for far less effort). That's fine because
+errands are the only type that pays more than one log, and logs are now
+the shop's currency. An errand averages ~2 💎 against a riddle's 1, so the
+slow mission is the one that funds the shop. Giving errands a boost too
+would make them win on both axes. Don't add one without revisiting shop
+prices.
+
+**Weights stay 45 / 45 / 10.** Riddle and errand are equal because they're
+the two solo types, and each wins on a different reward. If co-op is raised
+later (§19 "Co-op weight"), take the points from riddle so errand's share
+of 💎 income doesn't drop.
+
+**The assist cap is what keeps §21 safe.** After the debrief, every assist pays
+a log, a reset and a boost. Without counting assists toward
+`DAILY_LEAD_CAP` (migration 029), an always-online player could answer
+every backup call and farm all three. The cap only binds on the top
+clickers: assists were 61 of 614 completions in the 30 days before it
+landed (`docs/benkei-shop.md` §1).
+
+**Boosts don't break the affinity rule.** Mission boosts are +1 each, capped at
+one pending per character (`ENCOUNTER_BOOST_CAP`), and only spend on a real
+`/roam` / `/meet` response, so missions still never move affinity directly
+(public-encounters §16).
+
+**Measured (2026-10-08, 30 days, all guilds):** errands were 38% of
+completions and 55% of points, so they really are where the 💎 comes from.
+
+**What to watch:** errand-driven 💎 income against shop prices (the reset at
+💎 10 is meant to stay out of daily reach once launch seeds are spent,
+benkei-shop §2), and the co-op answer rate before touching its weight.

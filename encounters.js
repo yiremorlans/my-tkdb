@@ -190,7 +190,7 @@ async function unsignedErrandTargets(userId) {
 // The /meet picker labels a character the user holds an unspent /call boost
 // with ("Haku Kusanagi +1"). Same degrade-to-nothing rule as the errand read:
 // a failed lookup shows plain names, it never fails /meet.
-async function pendingBoosts(userId) {
+export async function pendingBoosts(userId) {
   if (!userId) return {};
   try {
     return await getPendingEncounterBoosts(userId);

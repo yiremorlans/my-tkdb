@@ -397,22 +397,25 @@ export function sceneFaceFiles(characterId, bucket) {
   return [...new Set(suffixes.flatMap((s) => faces.map((f) => `${f}${s}.png`)))];
 }
 
-// The art only changes with a deploy, so each answer is checked once.
-const artReadyCache = new Map();
+// The art only changes with a deploy, so each file is checked once.
+const expressionCache = new Map();
+
+// Whether assets/expressions/<characterId>/<file> exists. Shared with the
+// mission portraits (missions/shared.js portraitMessage).
+export function expressionExists(characterId, file, expressionsDir = EXPRESSIONS_DIR) {
+  const key = `${expressionsDir}:${characterId}/${file}`;
+  if (!expressionCache.has(key)) {
+    expressionCache.set(key, fs.existsSync(join(expressionsDir, characterId, file)));
+  }
+  return expressionCache.get(key);
+}
 
 // Whether every face the map can produce at `bucket` exists on disk. Guards a
 // character added to the roster before their expression art lands.
 export function callSceneArtReady(characterId, bucket, expressionsDir = EXPRESSIONS_DIR) {
-  const key = `${expressionsDir}:${characterId}:${bucket}`;
-  if (!artReadyCache.has(key)) {
-    artReadyCache.set(
-      key,
-      sceneFaceFiles(characterId, bucket).every((file) =>
-        fs.existsSync(join(expressionsDir, characterId, file)),
-      ),
-    );
-  }
-  return artReadyCache.get(key);
+  return sceneFaceFiles(characterId, bucket).every((file) =>
+    expressionExists(characterId, file, expressionsDir),
+  );
 }
 
 /**

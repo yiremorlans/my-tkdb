@@ -33,11 +33,31 @@ Every shop interaction is **ephemeral**. Nothing here is posted publicly.
   by design.
 - User-facing name: **store credit**, always shown with 💎 (`💎 12`).
 
-### Earning-rate reference (2026-10-08, 21 users)
+### Earning-rate reference (2026-10-08, `mission_log`, last 30 days, all guilds)
 
-From `mission_log`: active players earn roughly **10–23 points / week**; the
-top six cleared **85–115 / 30 days** (~3/day); the middle of the pack ~1.5/day.
-Prices in §2 are set against those numbers.
+About 20 completions a day across all guilds (`MISSIONS_PER_DAY` is per
+guild). Points per player over 30 days:
+
+| Tier | 30-day points | Per day |
+|---|---|---|
+| Top six | 86–115 | ~3–3.8 |
+| Middle seven | 30–66 | ~1–2.2 |
+| Bottom seven | ≤ 12 | < 0.5 |
+
+- **Errands are 38% of completions but 55% of points** (547 of 996).
+- Assists were 61 of 614 rows, so counting them toward `DAILY_LEAD_CAP`
+  (migration 029) barely moves these numbers. The cap already held the top
+  players to ~4 points a day.
+- **Seed sizes:** lifetime points top out at 133; the top six are all 100+.
+- **Mission resets:** 465 of the 614 earned in the window were spent (76%).
+  The three highest earners hold only 1–3 unspent, because they spend
+  everything, while several mid-tier players are sitting on 15–29. A bought
+  reset is mostly bought by the players who run out.
+
+Prices in §2 are set against those numbers. Errands are the main source
+(`N` points against 1 for a riddle or co-op), which is why they carry no
+boost: see `docs/scheduled-missions.md` §22 before changing mission
+rewards or weights.
 
 ---
 
@@ -46,12 +66,26 @@ Prices in §2 are set against those numbers.
 | Item | Price | Daily appearance | Per-user qty | Held as |
 |---|---|---|---|---|
 | **Cooldown reset** | 💎 10 | 35% | 1–3 | `user_activity.bought_resets INT` |
-| **Chancellor's envelope** | 💎 7 | 25% | always ×1 | `user_activity.envelopes INT` |
+| **Chancellor's envelope** | 💎 9 | 25% | always ×1 | `user_activity.envelopes INT` |
 | **House compass** | 💎 5 | 50% | 1–3 | `user_activity.compasses INT` |
 | **Fresh picks** | 💎 3 | 60% | 1–3 | `user_activity.fresh_picks INT` |
 
-The reset is deliberately the most expensive item: even the most active player
-cannot buy one a day from earnings alone (~3–4 days top, ~weekly mid).
+The reset is deliberately the most expensive item: from earnings alone even
+the most active player cannot buy one a day (~3 days top, ~weekly mid).
+**The seed breaks that at launch:** with up to 133 💎 seeded and a reset
+buyable ~0.7 times a day (35% × 1–3), the top three can buy at that pace,
+about 7 💎/day against ~3.8 earned, for roughly 5–7 weeks before income
+becomes the limit. That's the accepted cost of seeding in full (§9).
+
+**Nothing in the shop earns credit back.** The closest is an envelope sending
+an errand to a four-student house, which lifts expected `N` from ~2.06 to
+~2.5: about +0.44 💎 per errand, so paying back the envelope would take ~20
+errands. Keep it that way. No item should raise mission payouts.
+
+**Known skew: the compass favors small houses.** It redraws from the chosen
+house's roster, so the chance of landing a specific student is 50% in
+Mortkranken (2), 33% in most houses and 25% in Frostheim or Dionysia (4).
+Accepted as is.
 
 Players can **hold any number** of every item. There is no inventory command;
 held counts appear in the shop page footer and on the button/select that
@@ -75,6 +109,10 @@ spends them (§4).
 - Guarantees the next errand **house-change** click opens the Chancellor's
   audience instead of the 1-in-5 `CHANCELLOR_AUDIENCE_CHANCE` roll
   (`missions/houseChange.js`).
+- **Priced at 💎 9** (raised from 7, 2026-10-08). One envelope steers a whole
+  errand: `N` boosted target meetings over up to 48h, worth about two
+  compasses (💎 10). It sits just under the reset so the reset stays the most
+  expensive item.
 - Can be bought with no open errand and held for later.
 - Spent at the click, only on the path where the audience actually opens (the
   existing "the Chancellor doesn't hear a request he can't grant" guard still
@@ -101,8 +139,6 @@ spends them (§4).
 
 ### 2e. Later (not in the launch scope)
 
-- **Riddle hint**: an authored hint for the player's open riddle, priced above
-  the 1 point a riddle pays.
 - **Errand swap**: replace one unsigned errand target.
 - **Salon headline**: the player's next Advice Salon note leads the issue
   (`docs/advice-salon.md`).
@@ -277,3 +313,4 @@ Service role only, same RLS story as every other table.
 - All 26 characters including Benkei, one item each to start.
 - Page 1 thumbnail = Benkei default expression; page 2 = cat sprite.
 - No purchase confirmation.
+- Envelope 💎 9 (raised from 7, 2026-10-08 balance review).

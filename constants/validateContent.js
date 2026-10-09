@@ -31,11 +31,21 @@ import {
   BOND_SCENE_PLACEHOLDERS,
   CALL_SCENE_RESPONSES,
   callSceneArtReady,
+  expressionExists,
   sceneFaceFiles,
   WINNER_LINE_BUCKETS,
   WINNER_LINE_PLACEHOLDERS,
   winnerLineText,
 } from "./publicEncounters.js";
+import {
+  accusedFace,
+  CULPRIT_FACE,
+  DEBRIEF_FACE,
+  DEBRIEF_LINES,
+  getHouseRoster,
+  MISSION_HOUSES,
+  RIDDLES,
+} from "./missions.js";
 import fs from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
@@ -493,6 +503,38 @@ function validateTimedPool(label, pools, errors, warnings) {
   }
 }
 
+// Mission content (docs/scheduled-missions.md §20, §21): a riddle with no
+// winning line would reveal its culprit saying nothing, and a house student
+// with no debrief lines would break the draw for every co-op in that house.
+// Their portraits are checked here too: at runtime a missing face only drops
+// the thumbnail, which nobody would notice.
+function validateMissionContent(errors) {
+  for (const pool of Object.values(RIDDLES)) {
+    for (const riddle of pool) {
+      if (typeof riddle.winningLine !== "string" || !riddle.winningLine.trim()) {
+        errors.push(`riddle ${riddle.id} has no winningLine`);
+      }
+    }
+  }
+  for (const house of MISSION_HOUSES) {
+    for (const { id } of getHouseRoster(house)) {
+      const lines = DEBRIEF_LINES[id];
+      if (
+        !Array.isArray(lines) ||
+        lines.length === 0 ||
+        lines.some((line) => typeof line !== "string" || !line.trim())
+      ) {
+        errors.push(`${id} has no debrief lines (DEBRIEF_LINES)`);
+      }
+      for (const face of [accusedFace(id), CULPRIT_FACE, DEBRIEF_FACE]) {
+        if (!expressionExists(id, face)) {
+          errors.push(`${id} has no mission portrait assets/expressions/${id}/${face}`);
+        }
+      }
+    }
+  }
+}
+
 // Every listed background must sit where backgroundPath resolves it, matched
 // against real directory listings rather than fs.existsSync: macOS forgives
 // a folder-casing slip that the Linux host won't. A miss here would otherwise
@@ -798,6 +840,7 @@ export function validateContent() {
   }
 
   validateBackgrounds(errors);
+  validateMissionContent(errors);
 
   for (const warning of warnings) {
     console.warn("[content]", warning);

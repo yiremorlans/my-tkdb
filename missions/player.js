@@ -3,8 +3,8 @@
 // drives spawnMission/sweepExpiredMissions rides in encounterScheduler.js
 // alongside the encounter pass.
 //
-// This file holds Accept, /mission and its co-op assist, and the errand's
-// /docs and field report. The rest is split by seam:
+// This file holds Accept, /mission and its co-op assist and debrief, and the
+// errand's /docs and field report. The rest is split by seam:
 //   houseChange.js  the errand's house change: the button, the Chancellor's
 //                   audience and /request
 //   riddle.js       /riddle
@@ -30,12 +30,20 @@ import {
   BANKED_RESET_LINE,
   busyLine,
   CAPPED_LINE,
-  DAILY_LEAD_CAP,
   clearRiddleCooldowns,
+  COOP_DEBRIEF_WAITING_LINE,
+  DAILY_LEAD_CAP,
+  DEBRIEF_BUTTON_LABEL,
+  DEBRIEF_FACE,
+  DEBRIEF_LINES,
+  DEBRIEF_REFUSAL_LINES,
+  debriefReminderLine,
   formatNameList,
   getRiddle,
   localDayKey,
   localDayStart,
+  MISSION_BOOST_LINE,
+  MISSION_ERROR_LINE,
   MISSION_INSTRUCTIONS,
   MISSION_PICKED_UP,
   MISSION_TYPE_LABEL,
@@ -43,20 +51,26 @@ import {
   missionObjectiveLine,
   missionProgressLine,
   nextSlotAt,
+  pickDebriefStudent,
   HOUSE_CHANGE_BUTTON_LABEL,
   HOUSE_CHANGE_HINT,
   HOUSE_CHANGE_UNAVAILABLE_LINES,
 } from "../constants/missions.js";
+import { ENCOUNTER_BOOST_CAP, pickRandom } from "../constants/publicEncounters.js";
 import { composeFieldReport } from "../imageComposition.js";
+import { pendingBoosts } from "../encounters.js";
 import { getCharacterById, getFullName } from "../constants/characters.js";
 import {
   claimCoopHelper,
+  claimDebrief,
   claimMission,
   errandTargets,
   fileErrand,
   getAcceptedMission,
   getGuildSettings,
   getMissionById,
+  getUnclaimedDebriefs,
+  grantEncounterBoost,
   recordMissionCompletion,
   setAssistMessageId,
   trackCommandUsage,
@@ -65,6 +79,7 @@ import {
 import {
   acceptRow,
   ephemeral,
+  ephemeralPortraitMessage,
   ephemeralResponse,
   errandProgress,
   houseChangeBlocker,
@@ -326,21 +341,68 @@ export async function handleMission(body, now = new Date()) {
 
   if (wantsAssist) return handleMissionAssist(body, mission);
 
-  if (!mission) {
-    return {
-      reply: ephemeral(await noMissionLine(body, now)),
-      afterReply: null,
-    };
-  }
+  // Independent reads: the briefing (or the no-mission line) never depends
+  // on whether a debrief is waiting, and the reminder only appends below it.
+  const [message, reminder] = await Promise.all([
+    mission
+      ? buildMissionBriefing(userId, mission)
+      : noMissionLine(body, now).then((content) => ({ content })),
+    debriefReminder(userId),
+  ]);
+  const reply = { ...withDebriefReminder(message, reminder), flags: EPHEMERAL };
+
+  if (!mission) return { reply, afterReply: null };
 
   return {
-    reply: { ...(await buildMissionBriefing(userId, mission)), flags: EPHEMERAL },
+    reply,
     afterReply: async () => {
       await Promise.allSettled([
         trackUserActivity(userId),
         trackCommandUsage(userId, "mission"),
       ]);
     },
+  };
+}
+
+// The newest unclaimed co-op debrief as `{ line, button }`, or null (§21.5).
+// Best-effort: a failed lookup costs the reminder, never /mission itself.
+async function debriefReminder(userId) {
+  let debriefs;
+  try {
+    debriefs = await getUnclaimedDebriefs(userId);
+  } catch (err) {
+    console.error(`[missions] Could not load debriefs for ${userId}:`, err.message);
+    return null;
+  }
+  if (!debriefs.length) return null;
+
+  const [newest] = debriefs;
+  return {
+    line: debriefReminderLine(newest.house, debriefs.length - 1),
+    button: debriefButton(newest.id),
+  };
+}
+
+// Puts the reminder below whatever /mission is already showing, its button in
+// a row of its own.
+function withDebriefReminder(message, reminder) {
+  if (!reminder) return message;
+  return {
+    ...message,
+    content: `${message.content}\n\n${reminder.line}`,
+    components: [
+      ...(message.components || []),
+      { type: MessageComponentTypes.ACTION_ROW, components: [reminder.button] },
+    ],
+  };
+}
+
+function debriefButton(missionId) {
+  return {
+    type: MessageComponentTypes.BUTTON,
+    style: ButtonStyleTypes.PRIMARY,
+    label: DEBRIEF_BUTTON_LABEL,
+    custom_id: `mission:debrief:${missionId}`,
   };
 }
 
@@ -484,7 +546,7 @@ export async function handleMissionAssistJoin(body, missionId, now = new Date())
   } catch (err) {
     console.error("[missions] Could not load co-op mission:", err.message);
     return {
-      response: ephemeralResponse("Something went wrong there. Try again?"),
+      response: ephemeralResponse(MISSION_ERROR_LINE),
     };
   }
   if (!mission)
@@ -496,7 +558,7 @@ export async function handleMissionAssistJoin(body, missionId, now = new Date())
   } catch (err) {
     console.error("[missions] claim_coop_helper failed:", err.message);
     return {
-      response: ephemeralResponse("Something went wrong there. Try again?"),
+      response: ephemeralResponse(MISSION_ERROR_LINE),
     };
   }
 
@@ -512,20 +574,28 @@ export async function handleMissionAssistJoin(body, missionId, now = new Date())
   const helperName = displayNameOf(body);
   const leadId = mission.accepted_by;
 
+  // Both players are pinged so each learns their debrief is waiting (§21.2).
+  // The mentions go in `content` because embeds never ping, and
+  // allowed_mentions names exactly these two.
   return {
     response: {
       type: InteractionResponseType.UPDATE_MESSAGE,
       data: {
-        content: null,
+        content: `<@${leadId}> <@${helperId}>`,
         attachments: [],
         embeds: [
           missionEmbed(
             mission.id,
-            `${helperName} answered the call for backup. Mission complete.\nBoth of you have banked a cooldown reset.`,
+            `${helperName} answered the call for backup. Mission complete.\nBoth of you have banked a cooldown reset.\n${COOP_DEBRIEF_WAITING_LINE}`,
           ),
         ],
-        components: [],
-        allowed_mentions: { parse: [] },
+        components: [
+          {
+            type: MessageComponentTypes.ACTION_ROW,
+            components: [debriefButton(mission.id)],
+          },
+        ],
+        allowed_mentions: { users: [leadId, helperId] },
       },
     },
     afterReply: async () => {
@@ -557,6 +627,88 @@ export async function handleMissionAssistJoin(body, missionId, now = new Date())
         trackUserActivity(helperId),
         trackCommandUsage(helperId, "mission"),
       ]).then(reportFailures("co-op completion"));
+    },
+  };
+}
+
+// --- co-op debrief ---------------------------------------------------------
+
+/**
+ * `mission:debrief:<id>` — one player's private follow-up to a completed
+ * co-op (§21.3): a student from the co-op's house, drawn for them alone, and
+ * a pending boost with that student. One button serves both players, so the
+ * role comes from who clicked; anyone else is refused. No expiry: the button
+ * works for as long as the post (or /mission's reminder) exists.
+ */
+export async function handleMissionDebrief(body, missionId, now = new Date()) {
+  const userId = userIdOf(body);
+
+  // Independent reads: the boosts only feed the draw, which needs the user,
+  // not the mission. A failed boosts read degrades to drawing from the whole
+  // house (encounters.js pendingBoosts).
+  let mission;
+  let boosts;
+  try {
+    [mission, boosts] = await Promise.all([
+      getMissionById(missionId),
+      pendingBoosts(userId),
+    ]);
+  } catch (err) {
+    console.error(`[missions] Could not load co-op ${missionId} for debrief:`, err.message);
+    return { response: ephemeralResponse(MISSION_ERROR_LINE) };
+  }
+  // The custom_id is client-supplied, so don't trust that it names a
+  // completed co-op just because it came off one.
+  if (mission?.mission_type !== MISSION_TYPES.COOP || mission.status !== "completed") {
+    return { response: ephemeralResponse(DEBRIEF_REFUSAL_LINES.closed) };
+  }
+
+  const role =
+    userId === mission.accepted_by
+      ? "lead"
+      : userId === mission.helper_user_id
+        ? "helper"
+        : null;
+  if (!role) return { response: ephemeralResponse(DEBRIEF_REFUSAL_LINES.notYours) };
+
+  // Drawn before the claim, so a house with nobody to draw can't spend it.
+  // Skips students they already hold a boost with, where the grant would be
+  // capped to nothing.
+  const student = pickDebriefStudent(mission.house, Object.keys(boosts));
+  if (!student) {
+    console.error(`[missions] Mission ${mission.id} has no students in ${mission.house} to debrief`);
+    return { response: ephemeralResponse(MISSION_ERROR_LINE) };
+  }
+
+  let claimed;
+  try {
+    claimed = await claimDebrief(mission.id, role, now);
+  } catch (err) {
+    console.error(`[missions] Could not claim debrief on ${mission.id}:`, err.message);
+    return { response: ephemeralResponse(MISSION_ERROR_LINE) };
+  }
+  if (!claimed) return { response: ephemeralResponse(DEBRIEF_REFUSAL_LINES.claimed) };
+
+  // Fixed before the grant resolves, so the boost line never depends on it.
+  const text = [
+    `**Debrief: ${getFullName(student)}**`,
+    pickRandom(DEBRIEF_LINES[student.id]),
+    MISSION_BOOST_LINE(student.firstName),
+  ].join("\n");
+
+  return {
+    response: {
+      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+      data: ephemeralPortraitMessage(student.id, DEBRIEF_FACE, text),
+    },
+    // No milestone and no affinity: the boost only adds to a later authored
+    // response, same as the culprit reveal's (riddle.js handleRiddle).
+    afterReply: async () => {
+      await Promise.allSettled([
+        grantEncounterBoost(userId, student.id, ENCOUNTER_BOOST_CAP),
+        trackUserActivity(userId),
+        trackCommandUsage(userId, "mission"),
+      ]).then(reportFailures("co-op debrief"));
     },
   };
 }
@@ -713,7 +865,7 @@ export async function handleMissionFile(body, missionId) {
   } catch (err) {
     console.error("[missions] Could not load errand:", err.message);
     return {
-      response: ephemeralResponse("Something went wrong there. Try again?"),
+      response: ephemeralResponse(MISSION_ERROR_LINE),
     };
   }
   if (!mission || mission.accepted_by !== userId) {

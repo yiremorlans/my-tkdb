@@ -28,6 +28,7 @@ import {
   handleMission,
   handleMissionAccept,
   handleMissionAssistJoin,
+  handleMissionDebrief,
   handleMissionFile,
   wantsMissionAssist,
 } from './missions/player.js';
@@ -101,6 +102,14 @@ app.use('/assets', express.static('assets'));
 // what a DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE ack needs, so the "thinking"
 // placeholder becomes the real message rather than lingering beside it.
 async function sendFollowup(interactionToken, messageData, timeoutMs = 15000, edit = false) {
+  // An edit of @original can't change whether it's ephemeral (the defer
+  // decided that), so drop that bit and keep any other flag, e.g.
+  // IS_COMPONENTS_V2 on /riddle's portrait reply.
+  if (edit && messageData.flags != null) {
+    const { flags, ...rest } = messageData;
+    const kept = flags & ~EPHEMERAL;
+    messageData = kept ? { ...rest, flags: kept } : rest;
+  }
   const base = `https://discord.com/api/v10/webhooks/${process.env.APP_ID}/${interactionToken}`;
   const url = edit ? `${base}/messages/@original` : base;
   const startTime = Date.now();
@@ -707,9 +716,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         }
 
         try {
-          // The defer already made this ephemeral — drop the redundant flag.
-          const { flags, ...body } = result.reply;
-          await sendFollowup(req.body.token, body, 15000, true);
+          await sendFollowup(req.body.token, result.reply, 15000, true);
         } catch (followupErr) {
           console.error(`Failed to send /${name} followup:`, followupErr);
         }
@@ -1238,6 +1245,8 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       // mission:assist:<id>  — a second user backing up a co-op
       // mission:house:<id>[:docs] — an errand's one free house change (or,
       //                             sometimes, the Chancellor's audience)
+      // mission:debrief:<id> — a co-op player's debrief, off the completion
+      //                        post or /mission's reminder
       //
       // Answered inline rather than deferred: each is a single RPC round trip,
       // and 'accept' has to reply with UPDATE_MESSAGE to rewrite the shared
@@ -1318,6 +1327,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         file: handleMissionFile,
         house: handleMissionHouseChange,
         assist: handleMissionAssistJoin,
+        debrief: handleMissionDebrief,
       };
 
       const handler = handlers[kind];
@@ -1373,8 +1383,8 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           if (kind === 'accept') await flagMissionPostForReconcile(missionId);
         }
       } else if (response?.data) {
-        // A refusal, or the Chancellor's audience (a new V2 message whose id
-        // /request needs later to edit it, handed back through onSent).
+        // A refusal, a debrief, or the Chancellor's audience (a new V2 message
+        // whose id /request needs later to edit it, handed back through onSent).
         await sendFollowup(req.body.token, response.data)
           .then((sent) => result.onSent?.(sent))
           .catch(err => console.error(`Failed to send mission:${kind} message:`, err));

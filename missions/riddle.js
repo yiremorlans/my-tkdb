@@ -2,24 +2,39 @@
 // See player.js for the module map.
 
 import {
+  accusedFace,
   BANKED_RESET_LINE,
   clearRiddleCooldowns,
+  CULPRIT_FACE,
   getRiddle,
   getRiddleCooldownRemaining,
+  MISSION_BOOST_LINE,
+  MISSION_ERROR_LINE,
   MISSION_TYPES,
   RIDDLE_WRONG_LINES,
   startRiddleCooldown,
 } from "../constants/missions.js";
-import { matchCharacterGuess, pickRandom } from "../constants/publicEncounters.js";
+import {
+  ENCOUNTER_BOOST_CAP,
+  matchCharacterGuess,
+  pickRandom,
+} from "../constants/publicEncounters.js";
 import { getCharacterById, getFullName } from "../constants/characters.js";
 import {
   completeMission,
   getAcceptedMission,
+  grantEncounterBoost,
   recordMissionCompletion,
   trackCommandUsage,
   trackUserActivity,
 } from "../db/supabase.js";
-import { ephemeral, missionTypeGuard, reportFailures, userIdOf } from "./shared.js";
+import {
+  ephemeral,
+  ephemeralPortraitMessage,
+  missionTypeGuard,
+  reportFailures,
+  userIdOf,
+} from "./shared.js";
 
 export async function handleRiddle(body, now = new Date()) {
   const userId = userIdOf(body);
@@ -66,8 +81,14 @@ export async function handleRiddle(body, now = new Date()) {
   const guessedId = matchCharacterGuess(rawGuess);
   if (guessedId !== riddle.answer) {
     startRiddleCooldown(mission.id, userId, now.getTime());
+    // An accusation (a real name, wrong) shows the accused's face; a miss
+    // stays plain text. Same generic line either way and no printed name: the
+    // face says who was accused (§20.2).
+    const line = pickRandom(RIDDLE_WRONG_LINES);
     return {
-      reply: ephemeral(pickRandom(RIDDLE_WRONG_LINES)),
+      reply: guessedId
+        ? ephemeralPortraitMessage(guessedId, accusedFace(guessedId), line)
+        : ephemeral(line),
       afterReply: null,
     };
   }
@@ -78,7 +99,7 @@ export async function handleRiddle(body, now = new Date()) {
   } catch (err) {
     console.error("[missions] complete_mission failed:", err.message);
     return {
-      reply: ephemeral("Something went wrong there. Try again?"),
+      reply: ephemeral(MISSION_ERROR_LINE),
       afterReply: null,
     };
   }
@@ -87,14 +108,27 @@ export async function handleRiddle(body, now = new Date()) {
     return { reply: ephemeral("That mission just closed."), afterReply: null };
   }
 
+  // The culprit reveal (§20.4). The name stays in the text because the
+  // thumbnail is too small to identify anyone by face alone. The boost line is
+  // fixed before the grant resolves, which is why it never depends on it.
   const character = getCharacterById(riddle.answer);
   const name = character ? getFullName(character) : riddle.answer;
+  const text = [
+    `Debunked. **${name}**.`,
+    riddle.winningLine,
+    MISSION_BOOST_LINE(character?.firstName ?? name),
+    BANKED_RESET_LINE,
+  ].join("\n");
 
   return {
-    reply: ephemeral(`Debunked. **${name}**.\n${BANKED_RESET_LINE}`),
+    reply: ephemeralPortraitMessage(riddle.answer, CULPRIT_FACE, text),
     afterReply: async () => {
       clearRiddleCooldowns(mission.id);
+      // The boost spends on the next /roam or /meet with the culprit, like a
+      // /call win's. No milestone and no affinity: missions never move
+      // affinity directly.
       await Promise.allSettled([
+        grantEncounterBoost(userId, riddle.answer, ENCOUNTER_BOOST_CAP),
         recordMissionCompletion({
           userId,
           house: mission.house,
