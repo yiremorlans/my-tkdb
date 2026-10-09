@@ -57,7 +57,6 @@ import {
   HOUSE_CHANGE_UNAVAILABLE_LINES,
 } from "../constants/missions.js";
 import { ENCOUNTER_BOOST_CAP, pickRandom } from "../constants/publicEncounters.js";
-import { MAX_BUTTON_LABEL_LENGTH } from "../constants/game.js";
 import { composeFieldReport } from "../imageComposition.js";
 import { pendingBoosts } from "../encounters.js";
 import { getCharacterById, getFullName } from "../constants/characters.js";
@@ -415,11 +414,11 @@ function debriefButton(missionId, role, label = DEBRIEF_BUTTON_LABEL) {
   };
 }
 
+// Exempt from MAX_BUTTON_LABEL_LENGTH: a player's name is never cut short.
+// A 32-char nickname still lands well under Discord's 80-char limit, even if
+// a phone clips it on display.
 function namedDebriefLabel(role, name) {
-  const label = `${DEBRIEF_BUTTON_LABEL}: ${name || DEBRIEF_ROLE_FALLBACK_NAMES[role]}`;
-  return label.length > MAX_BUTTON_LABEL_LENGTH
-    ? `${label.slice(0, MAX_BUTTON_LABEL_LENGTH - 1)}…`
-    : label;
+  return `${DEBRIEF_BUTTON_LABEL}: ${name || DEBRIEF_ROLE_FALLBACK_NAMES[role]}`;
 }
 
 // The clicked message's components with this mission's debrief buttons greyed

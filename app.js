@@ -207,11 +207,12 @@ function disabledComponents(components) {
 }
 
 // The interaction user's name as plain text — server nickname first, then the
-// @handle, then the global display name. Never an `<@id>` tag: callers use this
-// for attribution in channel posts, where a mention would highlight and ping.
+// global display name, then the @handle (the same order as publicEncounters.js
+// and missions/player.js). Never an `<@id>` tag: callers use this for
+// attribution in channel posts, where a mention would highlight and ping.
 function displayNameOf(body) {
   const u = body.member?.user || body.user;
-  return body.member?.nick || u?.username || u?.global_name || 'Someone';
+  return body.member?.nick || u?.global_name || u?.username || 'Someone';
 }
 
 // A bond scene owed a beat it couldn't deliver (no shared server, DMs closed,

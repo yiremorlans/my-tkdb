@@ -107,7 +107,6 @@ const {
 const { handleRiddle } = await import('../missions/riddle.js');
 const { cooldownReplyWithReset, handleCooldownReset } = await import('../missions/resets.js');
 const { handleMissionDev } = await import('../missions/admin.js');
-const { MAX_BUTTON_LABEL_LENGTH } = await import('../constants/game.js');
 const {
   reconcileMissionPosts,
   runGuildMissionPass,
@@ -1277,15 +1276,15 @@ describe('co-op', () => {
     assert.equal(helper.label, 'Debrief: Alex');
   });
 
-  it('falls back to a role name for a lead it cannot read, and fits long names in a label', async () => {
+  it('falls back to a role name for a lead it cannot read, and never cuts a long name short', async () => {
     seedCoop();
 
-    const { response } = await handleMissionAssistJoin(click('user-b', { nick: 'A'.repeat(40) }), 1);
+    const longNick = 'A'.repeat(32); // Discord's nickname max
+    const { response } = await handleMissionAssistJoin(click('user-b', { nick: longNick }), 1);
 
     const [lead, helper] = response.data.components[0].components;
     assert.equal(lead.label, 'Debrief: Lead');
-    assert.equal(helper.label.length, MAX_BUTTON_LABEL_LENGTH);
-    assert.ok(helper.label.endsWith('…'));
+    assert.equal(helper.label, `Debrief: ${longNick}`);
   });
 
   it('turns a second helper away rather than paying twice', async () => {
