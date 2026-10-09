@@ -814,15 +814,13 @@ async function describeBoost(userId, character, boostsSpent) {
 
 // Avatar art in assets/avatar is named `FirstName_LastWord.png` — the last
 // word of lastName, so "Romeo Scorpius Lucci" resolves to Romeo_Lucci.png.
-// A character with no lastName (Benkei) has no avatar art, so they fall back
-// to their card art in assets/cards — the same image public encounters show.
+// A character with no lastName is just `FirstName.png` (Benkei.png).
 function getAvatarFile(character) {
   if (!character.firstName) return null;
-  if (!character.lastName) {
-    return { dir: 'cards', filename: `${character.firstName}.png` };
-  }
-  const lastNamePart = character.lastName.split(' ').pop();
-  return { dir: 'avatar', filename: `${character.firstName}_${lastNamePart}.png` };
+  const lastNamePart = character.lastName
+    ? `_${character.lastName.split(' ').pop()}`
+    : '';
+  return { dir: 'avatar', filename: `${character.firstName}${lastNamePart}.png` };
 }
 
 // The "Moments together" block: one row per milestone the user has collected
