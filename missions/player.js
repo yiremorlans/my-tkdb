@@ -31,12 +31,12 @@ import {
   busyLine,
   CAPPED_LINE,
   clearRiddleCooldowns,
-  COOP_DEBRIEF_WAITING_LINE,
   DAILY_LEAD_CAP,
   DEBRIEF_BUTTON_LABEL,
   DEBRIEF_FACE,
   DEBRIEF_LINES,
   DEBRIEF_REFUSAL_LINES,
+  DEBRIEF_ROLE_FALLBACK_NAMES,
   debriefReminderLine,
   formatNameList,
   getRiddle,
@@ -57,6 +57,7 @@ import {
   HOUSE_CHANGE_UNAVAILABLE_LINES,
 } from "../constants/missions.js";
 import { ENCOUNTER_BOOST_CAP, pickRandom } from "../constants/publicEncounters.js";
+import { MAX_BUTTON_LABEL_LENGTH } from "../constants/game.js";
 import { composeFieldReport } from "../imageComposition.js";
 import { pendingBoosts } from "../encounters.js";
 import { getCharacterById, getFullName } from "../constants/characters.js";
@@ -94,9 +95,13 @@ import {
 // first, then the global display name, then the @handle. Plain text (no
 // `<@id>` tag) so the post names them without pinging. The "Someone" fallback
 // is left unbolded.
-function displayNameOf(body) {
+function plainNameOf(body) {
   const user = body.member?.user || body.user;
-  const name = body.member?.nick || user?.global_name || user?.username;
+  return body.member?.nick || user?.global_name || user?.username || null;
+}
+
+function displayNameOf(body) {
+  const name = plainNameOf(body);
   return name ? `**${name}**` : "Someone";
 }
 
@@ -379,7 +384,7 @@ async function debriefReminder(userId) {
   const [newest] = debriefs;
   return {
     line: debriefReminderLine(newest.house, debriefs.length - 1),
-    button: debriefButton(newest.id),
+    button: debriefButton(newest.id, newest.role),
   };
 }
 
@@ -397,13 +402,41 @@ function withDebriefReminder(message, reminder) {
   };
 }
 
-function debriefButton(missionId) {
+// Every debrief button names its role, so a claim can grey out exactly that
+// player's. The completion post labels each with the player's name (a button
+// looks the same to everyone, so one shared button couldn't be greyed for just
+// one of them); /mission's reminder is only seen by its owner and stays bare.
+function debriefButton(missionId, role, label = DEBRIEF_BUTTON_LABEL) {
   return {
     type: MessageComponentTypes.BUTTON,
     style: ButtonStyleTypes.PRIMARY,
-    label: DEBRIEF_BUTTON_LABEL,
-    custom_id: `mission:debrief:${missionId}`,
+    label,
+    custom_id: `mission:debrief:${missionId}:${role}`,
   };
+}
+
+function namedDebriefLabel(role, name) {
+  const label = `${DEBRIEF_BUTTON_LABEL}: ${name || DEBRIEF_ROLE_FALLBACK_NAMES[role]}`;
+  return label.length > MAX_BUTTON_LABEL_LENGTH
+    ? `${label.slice(0, MAX_BUTTON_LABEL_LENGTH - 1)}…`
+    : label;
+}
+
+// The clicked message's components with this mission's debrief buttons greyed
+// out wherever that debrief is claimed. Labels are read back off the message,
+// since the names on them were never stored; claim state comes from the row.
+// A role-less button (a completion post from before the per-player buttons)
+// is shared, so it stays live.
+function disableClaimedDebriefs(message, missionId, claimedRoles) {
+  return (message?.components || []).map((row) => ({
+    ...row,
+    components: (row.components || []).map((component) => {
+      const [, kind, id, role] = component.custom_id?.split(":") ?? [];
+      const claimedHere =
+        kind === "debrief" && id === String(missionId) && claimedRoles.has(role);
+      return claimedHere ? { ...component, disabled: true } : component;
+    }),
+  }));
 }
 
 /**
@@ -573,6 +606,11 @@ export async function handleMissionAssistJoin(body, missionId, now = new Date())
 
   const helperName = displayNameOf(body);
   const leadId = mission.accepted_by;
+  // The call for backup was the reply to the lead's /mission, so Discord
+  // stamps the lead on it. No guild nickname there, only the account's name.
+  const leadName = plainNameOf({
+    user: body.message?.interaction_metadata?.user ?? body.message?.interaction?.user,
+  });
 
   // Both players are pinged so each learns their debrief is waiting (§21.2).
   // The mentions go in `content` because embeds never ping, and
@@ -586,13 +624,16 @@ export async function handleMissionAssistJoin(body, missionId, now = new Date())
         embeds: [
           missionEmbed(
             mission.id,
-            `${helperName} answered the call for backup. Mission complete.\nBoth of you have banked a cooldown reset.\n${COOP_DEBRIEF_WAITING_LINE}`,
+            `${helperName} answered the call for backup.\n\n**Mission complete.**\n\nBoth of you have banked a cooldown reset.`,
           ),
         ],
         components: [
           {
             type: MessageComponentTypes.ACTION_ROW,
-            components: [debriefButton(mission.id)],
+            components: [
+              debriefButton(mission.id, "lead", namedDebriefLabel("lead", leadName)),
+              debriefButton(mission.id, "helper", namedDebriefLabel("helper", plainNameOf(body))),
+            ],
           },
         ],
         allowed_mentions: { users: [leadId, helperId] },
@@ -636,11 +677,13 @@ export async function handleMissionAssistJoin(body, missionId, now = new Date())
 /**
  * `mission:debrief:<id>` — one player's private follow-up to a completed
  * co-op (§21.3): a student from the co-op's house, drawn for them alone, and
- * a pending boost with that student. One button serves both players, so the
- * role comes from who clicked; anyone else is refused. No expiry: the button
- * works for as long as the post (or /mission's reminder) exists.
+ * a pending boost with that student. The role comes from who clicked, and
+ * must match the button's (`slot`) where it names one; anyone else is refused.
+ * The reply greys the claimed button out on the message it sat on, and the
+ * debrief itself goes out as a new ephemeral. No expiry: the button works for
+ * as long as the post (or /mission's reminder) exists.
  */
-export async function handleMissionDebrief(body, missionId, now = new Date()) {
+export async function handleMissionDebrief(body, missionId, slot = null, now = new Date()) {
   const userId = userIdOf(body);
 
   // Independent reads: the boosts only feed the draw, which needs the user,
@@ -669,7 +712,11 @@ export async function handleMissionDebrief(body, missionId, now = new Date()) {
       : userId === mission.helper_user_id
         ? "helper"
         : null;
-  if (!role) return { response: ephemeralResponse(DEBRIEF_REFUSAL_LINES.notYours) };
+  // On the completion post each player has their own button; the other one's
+  // isn't theirs to press, even though they're on the co-op.
+  if (!role || (slot && slot !== role)) {
+    return { response: ephemeralResponse(DEBRIEF_REFUSAL_LINES.notYours) };
+  }
 
   // Drawn before the claim, so a house with nobody to draw can't spend it.
   // Skips students they already hold a boost with, where the grant would be
@@ -687,20 +734,30 @@ export async function handleMissionDebrief(body, missionId, now = new Date()) {
     console.error(`[missions] Could not claim debrief on ${mission.id}:`, err.message);
     return { response: ephemeralResponse(MISSION_ERROR_LINE) };
   }
-  if (!claimed) return { response: ephemeralResponse(DEBRIEF_REFUSAL_LINES.claimed) };
+  // Either way this role's debrief is now claimed. A refused repeat still
+  // greys the button, so a post left live by a dropped edit (or two players'
+  // edits crossing) heals on the next click.
+  const claimedRoles = new Set(
+    ["lead", "helper"].filter((r) => r === role || mission[`${r}_debriefed_at`]),
+  );
+  const greyOut = {
+    type: InteractionResponseType.UPDATE_MESSAGE,
+    data: { components: disableClaimedDebriefs(body.message, mission.id, claimedRoles) },
+  };
+  if (!claimed) {
+    return { response: greyOut, followup: ephemeral(DEBRIEF_REFUSAL_LINES.claimed) };
+  }
 
   // Fixed before the grant resolves, so the boost line never depends on it.
   const text = [
     `**Debrief: ${getFullName(student)}**`,
-    pickRandom(DEBRIEF_LINES[student.id]),
+    `"${pickRandom(DEBRIEF_LINES[student.id])}"`,
     MISSION_BOOST_LINE(student.firstName),
-  ].join("\n");
+  ].join("\n\n");
 
   return {
-    response: {
-      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-      data: ephemeralPortraitMessage(student.id, DEBRIEF_FACE, text),
-    },
+    response: greyOut,
+    followup: ephemeralPortraitMessage(student.id, DEBRIEF_FACE, text),
     // No milestone and no affinity: the boost only adds to a later authored
     // response, same as the culprit reveal's (riddle.js handleRiddle).
     afterReply: async () => {

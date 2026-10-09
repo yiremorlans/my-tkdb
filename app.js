@@ -717,6 +717,15 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
         try {
           await sendFollowup(req.body.token, result.reply, 15000, true);
+          // A second ephemeral after the reply, e.g. /riddle's rewards under
+          // its culprit reveal. Only once the reply has landed, so it never
+          // shows up on its own above a reveal that failed. Not awaited, so
+          // afterReply's writes don't wait on it.
+          if (result.followup) {
+            sendFollowup(req.body.token, result.followup).catch(err =>
+              console.error(`Failed to send /${name} second message:`, err),
+            );
+          }
         } catch (followupErr) {
           console.error(`Failed to send /${name} followup:`, followupErr);
         }
@@ -1245,8 +1254,9 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       // mission:assist:<id>  — a second user backing up a co-op
       // mission:house:<id>[:docs] — an errand's one free house change (or,
       //                             sometimes, the Chancellor's audience)
-      // mission:debrief:<id> — a co-op player's debrief, off the completion
-      //                        post or /mission's reminder
+      // mission:debrief:<id>:<lead|helper> — a co-op player's debrief, off
+      //                        their own button on the completion post or
+      //                        /mission's reminder (role-less on old posts)
       //
       // Answered inline rather than deferred: each is a single RPC round trip,
       // and 'accept' has to reply with UPDATE_MESSAGE to rewrite the shared
@@ -1383,7 +1393,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           if (kind === 'accept') await flagMissionPostForReconcile(missionId);
         }
       } else if (response?.data) {
-        // A refusal, a debrief, or the Chancellor's audience (a new V2 message
+        // A refusal, or the Chancellor's audience (a new V2 message
         // whose id /request needs later to edit it, handed back through onSent).
         await sendFollowup(req.body.token, response.data)
           .then((sent) => result.onSent?.(sent))
@@ -1391,7 +1401,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       }
 
       // An ephemeral chaser for the clicker only — the pickup briefing after
-      // an Accept. Posted as a new followup (not an edit) so it sits beside
+      // an Accept, or the debrief under its greyed-out button. Posted as a new followup (not an edit) so it sits beside
       // the rewritten public post rather than replacing it.
       if (result.followup) {
         sendFollowup(req.body.token, result.followup).catch(err =>

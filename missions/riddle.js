@@ -109,19 +109,20 @@ export async function handleRiddle(body, now = new Date()) {
   }
 
   // The culprit reveal (§20.4). The name stays in the text because the
-  // thumbnail is too small to identify anyone by face alone. The boost line is
-  // fixed before the grant resolves, which is why it never depends on it.
+  // thumbnail is too small to identify anyone by face alone. The rewards go
+  // in a second message so the portrait stays small; the boost line is fixed
+  // before the grant resolves, which is why it never depends on it.
   const character = getCharacterById(riddle.answer);
   const name = character ? getFullName(character) : riddle.answer;
-  const text = [
-    `Debunked. **${name}**.`,
-    riddle.winningLine,
+  const text = [`Debunked. **${name}**.`, `"${riddle.winningLine}"`].join("\n\n");
+  const rewards = [
     MISSION_BOOST_LINE(character?.firstName ?? name),
     BANKED_RESET_LINE,
-  ].join("\n");
+  ].join("\n\n");
 
   return {
     reply: ephemeralPortraitMessage(riddle.answer, CULPRIT_FACE, text),
+    followup: ephemeral(rewards),
     afterReply: async () => {
       clearRiddleCooldowns(mission.id);
       // The boost spends on the next /roam or /meet with the culprit, like a

@@ -277,9 +277,8 @@ export const MISSION_BOOST_LINE = (firstName) =>
   `A pending boost with ${firstName} is waiting on your next \`/roam\` or \`/meet\`.`;
 
 export const DEBRIEF_BUTTON_LABEL = "Debrief";
-
-// One line added to the co-op completion post.
-export const COOP_DEBRIEF_WAITING_LINE = "Each of you has a debrief waiting.";
+// For a completion post whose lead's name couldn't be read off the call.
+export const DEBRIEF_ROLE_FALLBACK_NAMES = { lead: "Lead", helper: "Backup" };
 
 export const DEBRIEF_REFUSAL_LINES = {
   notYours: "This debrief isn't yours.",

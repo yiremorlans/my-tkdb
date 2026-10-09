@@ -2032,7 +2032,7 @@ export async function claimDebrief(missionId, role, now = new Date()) {
 
 /**
  * Every completed co-op this user has a debrief still waiting on, as lead or
- * as helper, newest first. Two queries rather than an OR, one per column, so
+ * as helper, newest first, each tagged with the user's `role` on it. Two queries rather than an OR, one per column, so
  * each rides its own partial index from migration 030. Expired co-ops never
  * match: only `completed` ones debrief.
  */
@@ -2058,7 +2058,8 @@ export async function getUnclaimedDebriefs(userId) {
     throw error;
   }
 
-  return [...(lead.data || []), ...(helper.data || [])].sort((a, b) =>
+  const withRole = (rows, role) => (rows || []).map((row) => ({ ...row, role }));
+  return [...withRole(lead.data, 'lead'), ...withRole(helper.data, 'helper')].sort((a, b) =>
     String(b.completed_at).localeCompare(String(a.completed_at)),
   );
 }

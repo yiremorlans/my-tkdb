@@ -1411,18 +1411,24 @@ call scenes.
 ### 20.4 Culprit reveal (correct guess)
 
 Ephemeral, thumbnail layout, the culprit's `sweat.png`. **No buttons**: the
-reward is automatic. The text, in order, one per line:
+reward is automatic. The portrait's text, a blank line between the two:
 
 1. `Debunked. **{Full Name}**.` (kept: the thumbnail is too small to identify
    by face alone)
-2. The **riddle winning line** (§20.5)
-3. The **boost line**: always shown, shared, plain, so every solver learns
+2. The **riddle winning line** (§20.5), wrapped in straight `"…"` by the code
+   (the content carries no quotes)
+
+The rewards follow as a second ephemeral (the handler's `followup`, sent by
+app.js only once the reveal has landed), so the portrait stays small. A blank
+line between the two (2026-10-08):
+
+1. The **boost line**: always shown, shared, plain, so every solver learns
    riddles grant a boost, e.g. *"A pending boost with {firstName} is waiting
    on your next `/roam` or `/meet`."* Wording is TBD, but it must stay true
    when the cap means nothing new was added (the player already holds one), so
    it states that a boost is waiting, never that one was just added. `{firstName}`
    only, no he/him about the character.
-4. `BANKED_RESET_LINE`, unchanged
+2. `BANKED_RESET_LINE`, unchanged
 
 **Reward.** On a completed `complete_mission`, `afterReply` also calls
 `grantEncounterBoost(userId, culprit, ENCOUNTER_BOOST_CAP)` alongside the
@@ -1515,25 +1521,43 @@ public assist post. Changes to that edit:
 
 - `content: <@lead> <@helper>` with `allowed_mentions: { users: [leadId, helperId] }`.
   Both are pinged; the mentions go in `content` because embeds don't ping.
-- The embed text is unchanged, plus one line: *"Each of you has a debrief
-  waiting."*
-- One **[ Debrief ]** button, `custom_id: mission:debrief:<missionId>`, replacing
-  the empty `components`.
+- The embed text, a blank line between each part (2026-10-08):
+  `{helper} answered the call for backup.` / `**Mission complete.**` /
+  `Both of you have banked a cooldown reset.` No "debrief waiting" line: the
+  buttons say it.
+- Two buttons, one per player, replacing the empty `components`:
+  **[ Debrief: {lead} ]** (`mission:debrief:<missionId>:lead`) and
+  **[ Debrief: {helper} ]** (`mission:debrief:<missionId>:helper`). Discord shows
+  a button the same way to everyone, so one shared button couldn't be greyed
+  out for just the player who claimed it (2026-10-08). The lead's name comes
+  off the call post's `interaction_metadata.user` (account name, no nickname),
+  falling back to "Lead"; labels are cut to `MAX_BUTTON_LABEL_LENGTH` with "…".
 
 The banked-reset announcement stays on this post as today. The debrief does
 not repeat it.
 
 ### 21.3 The Debrief button
 
-One button serves both players; the handler branches on who clicked.
+The role comes from who clicked; a role in the custom_id (the post's buttons)
+must match it.
 
 - Clicker is `accepted_by` → the lead's debrief (`lead_debriefed_at`).
 - Clicker is `helper_user_id` → the helper's debrief (`helper_debriefed_at`).
-- Anyone else → ephemeral *"This debrief isn't yours."*
+- Anyone else, or a player pressing the other one's button → ephemeral
+  *"This debrief isn't yours."*
 - Already claimed → ephemeral refusal (e.g. *"You've already been debriefed on
   that one."*), no portrait.
 - Mission not `completed` (shouldn't happen from the post, but the custom_id
   is client-supplied) → *"That mission's already closed."*
+
+**Greying out.** On a claim, the handler answers with an `UPDATE_MESSAGE` of
+the message the button was clicked from, disabling each of this mission's
+debrief buttons whose debrief is now claimed, and sends the debrief (or the
+refusal) as its ephemeral `followup`. Labels are read back off the clicked
+message; claim state off the row; the role off each button's custom_id. The
+single role-less button on a completion post from before this change is never
+greyed. A refused repeat click sends the same edit, so a button left live by a
+lost edit heals on its next press.
 
 **No expiry.** The button works for as long as the post exists, so a player
 who was away at completion loses nothing. Pending boosts don't expire either.
@@ -1558,14 +1582,15 @@ under `reportFailures`. No milestone, no direct affinity, same rules as §20.4.
 Ephemeral, thumbnail layout (`portraitMessage`, §20.3; not the call scene
 gallery), the drawn student's
 `smile.png`. Missing file or no `BASE_URL` → the existing text-only fallback.
-**No buttons.** The text, in order, one per line:
+**No buttons.** One message, a blank line between each part:
 
 1. `**Debrief: {Full Name}**` (the thumbnail is too small to identify by face
    alone, same reason as §20.4's name line)
-2. The **debrief line** (§21.6)
+2. The **debrief line** (§21.6), wrapped in straight `"…"` by the code
 3. The **boost line**: the same constant as §20.4, word for word, so both
    missions teach the same thing. It says a boost is waiting, never that one
-   was just added, so it stays true when the cap blocked a new grant.
+   was just added, so it stays true when the cap blocked a new grant. Kept in
+   the portrait here (unlike the riddle's), since it's the only reward line.
 
 No banked-reset line: the completion post already carries it.
 
@@ -1574,7 +1599,7 @@ No banked-reset line: the completion post already carries it.
 For a player with any unclaimed debrief (a `completed` co-op where they are
 the lead with `lead_debriefed_at IS NULL`, or the helper with
 `helper_debriefed_at IS NULL`), `/mission` shows a line and a **[ Debrief ]**
-button with the same `mission:debrief:<id>` custom_id, e.g. *"🗂️ A debrief
+button, `mission:debrief:<id>:<role>` with the player's own role,, e.g. *"🗂️ A debrief
 from your {house} co-op is waiting."*
 
 - Shown whether or not the player currently holds a mission; if they hold one,
