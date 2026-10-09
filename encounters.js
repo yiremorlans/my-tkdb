@@ -151,12 +151,16 @@ function responseActionRow(characterId, disabled = false, origin = 'meet', beatR
   });
 }
 
-// Grey out a set of components exactly as they were shown. Response labels are
-// picked at random per encounter, so re-deriving the row for the result message
-// would show the player a different set of buttons than the one they clicked.
-function disableComponents(rows) {
-  if (!rows?.length) return null;
-  return rows.map((row) => ({
+// Grey out every button in a set of classic action rows, exactly as they were
+// shown, rather than removing or rebuilding them. Response labels are picked at
+// random per encounter, so re-deriving the row for the result message would
+// show the player a different set of buttons than the one they clicked. On bond
+// DMs, stripping (`components: []`) used to be how a used button went away, but
+// it shrinks the message and shoves everything below it up the DM on every
+// click. Disabling keeps the message's height put, and a greyed button still
+// reads as "done" and can't be pressed twice.
+export function disableComponents(rows) {
+  return (rows || []).map((row) => ({
     ...row,
     components: (row.components || []).map((button) => ({ ...button, disabled: true })),
   }));
@@ -726,7 +730,9 @@ export async function buildResponseResultMessage(
 
   return {
     content: [`${reaction}\n${deltaLine}`, signatureLine].filter(Boolean).join('\n'),
-    components: disableComponents(shownComponents) || responseActionRow(characterId, true),
+    components: shownComponents?.length
+      ? disableComponents(shownComponents)
+      : responseActionRow(characterId, true),
     flags: EPHEMERAL_FLAG,
     // Not part of the message — the crossing, for app.js to act on after the
     // reply has gone out. A bond scene is a DM (docs/bond-scene-dms.md) and the

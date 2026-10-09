@@ -16,6 +16,7 @@ import {
   buildWardingSpawnMessage,
   buildWardingPickedUpdate,
   buildWardingResultMessage,
+  disableComponents,
   disableWardingButtons,
   WARDING_MESSAGE_FLAGS,
 } from './encounters.js';
@@ -192,19 +193,6 @@ async function getOriginalResponse(interactionToken, timeoutMs = 15000) {
 // and the two bond-scene triggers here. bondScenes.js itself is unit-tested
 // directly against a mocked discordRest.
 const IS_TEST = process.env.npm_lifecycle_event === 'test';
-
-// Grey out every button on a clicked bond message rather than removing it.
-// Stripping (`components: []`) used to be how a used Continue/choice button
-// went away, but it shrinks the message and shoves everything below it up
-// the DM on every click — jarring mid-scene. Disabling keeps the message's
-// height (and the rest of the conversation) put; a greyed button also still
-// reads as "done" and can't be pressed twice, same as stripping did.
-function disabledComponents(components) {
-  return (components || []).map((row) => ({
-    ...row,
-    components: (row.components || []).map((b) => ({ ...b, disabled: true })),
-  }));
-}
 
 // The interaction user's name as plain text — server nickname first, then the
 // global display name, then the @handle (the same order as publicEncounters.js
@@ -782,16 +770,11 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       const characterId = rest[1];
 
       // Disable the character selection buttons by copying and modifying the original message
-      const disabledComponents = req.body.message?.components?.map(row => ({
-        ...row,
-        components: row.components?.map(btn => ({ ...btn, disabled: true })) || [],
-      })) || [];
-
       res.send({
         type: InteractionResponseType.UPDATE_MESSAGE,
         data: {
           content: req.body.message?.content || MEET_PICK_LINES[0],
-          components: disabledComponents,
+          components: disableComponents(req.body.message?.components),
           flags: EPHEMERAL,
         },
       });
@@ -971,16 +954,11 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
       // Disable the approach button on the dialogue message so it can't be
       // clicked again while the spawn is being composed (or afterwards).
-      const disabledComponents = req.body.message?.components?.map(row => ({
-        ...row,
-        components: row.components?.map(btn => ({ ...btn, disabled: true })) || [],
-      })) || [];
-
       res.send({
         type: InteractionResponseType.UPDATE_MESSAGE,
         data: {
           content: req.body.message?.content || '',
-          components: disabledComponents,
+          components: disableComponents(req.body.message?.components),
           flags: EPHEMERAL,
         },
       });
@@ -1039,7 +1017,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
       res.send({
         type: InteractionResponseType.UPDATE_MESSAGE,
-        data: { components: disabledComponents(req.body.message?.components) },
+        data: { components: disableComponents(req.body.message?.components) },
       });
 
       (async () => {
@@ -1108,14 +1086,10 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             releaseCommandInvoke(userId, commandName);
           }
           if (!limit.allowed) {
-            const collapsed = (req.body.message?.components || []).map(row => ({
-              ...row,
-              components: (row.components || []).map(btn => ({ ...btn, disabled: true })),
-            }));
             try {
               await sendFollowup(req.body.token, {
                 content: limit.reason,
-                components: collapsed,
+                components: disableComponents(req.body.message?.components),
               }, 15000, true);
             } catch (followupErr) {
               console.error('Failed to send /resp cooldown followup:', followupErr);
@@ -1192,7 +1166,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         // scene's own closing line, or an earlier replay beat), so the new
         // message landing there is confirmation enough — no followup.
         // `rnext`/`rchoice` grey out the button just used, same as a live
-        // beat (see `disabledComponents` above for why not stripped).
+        // beat (see `disableComponents` in encounters.js for why not stripped).
         // `replaystart`'s button is left alone — nothing about the ACK
         // changes it — so the scene can be replayed again later.
         res.send(
@@ -1200,7 +1174,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             ? { type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE }
             : {
                 type: InteractionResponseType.UPDATE_MESSAGE,
-                data: { components: disabledComponents(req.body.message?.components) },
+                data: { components: disableComponents(req.body.message?.components) },
               },
         );
         handleBondReplayClick(userId, { kind, characterId: charId, levelKey, arg })
@@ -1227,12 +1201,12 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       }
 
       // ACK, which is the only thing here that uses the interaction. Every
-      // bond button — scene or resume — is greyed out via `disabledComponents`
+      // bond button — scene or resume — is greyed out via `disableComponents`
       // rather than stripped; correct for a stale click too, which just greys
       // a dead button and posts nothing.
       res.send({
         type: InteractionResponseType.UPDATE_MESSAGE,
-        data: { components: disabledComponents(req.body.message?.components) },
+        data: { components: disableComponents(req.body.message?.components) },
       });
 
       // Everything after the ACK is a plain bot-token POST into the DM channel
