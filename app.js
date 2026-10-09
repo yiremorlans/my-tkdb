@@ -299,14 +299,12 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             // The one place a banked mission reward is offered: a button to
             // spend it, attached only when the user is actually being turned
             // away and actually has one (docs/scheduled-missions.md §13).
-            const { flags, ...body } = await cooldownReplyWithReset(userId, 'roam', limit.reason);
-            await sendFollowup(req.body.token, body, 15000, true);
+            await sendFollowup(req.body.token, await cooldownReplyWithReset(userId, 'roam', limit.reason), 15000, true);
             return;
           }
           // User activity is only counted once an encounter actually loads
           // (the roam/spawn button below), not for opening the prompt.
-          const { flags, ...body } = await buildRoamDialogueMessage(userId);
-          await sendFollowup(req.body.token, body, 15000, true);
+          await sendFollowup(req.body.token, await buildRoamDialogueMessage(userId), 15000, true);
           maybeSurfaceBondScene(userId, req.body.token);
         } catch (err) {
           console.error('Error in /roam:', err);
@@ -366,16 +364,14 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             // The one place a banked mission reward is offered: a button to
             // spend it, attached only when the user is actually being turned
             // away and actually has one (docs/scheduled-missions.md §13).
-            const { flags, ...body } = await cooldownReplyWithReset(userId, 'meet', limit.reason);
-            await sendFollowup(req.body.token, body, 15000, true);
+            await sendFollowup(req.body.token, await cooldownReplyWithReset(userId, 'meet', limit.reason), 15000, true);
             return;
           }
           // User activity is only counted once a character actually loads
           // (the meet/pick button below), not for opening the picker.
           // userId, because an errand holder's still-unsigned targets take
           // guaranteed slots in the pick list (docs/scheduled-missions.md §5).
-          const { flags, ...body } = await buildMeetPickMessage(userId);
-          await sendFollowup(req.body.token, body, 15000, true);
+          await sendFollowup(req.body.token, await buildMeetPickMessage(userId), 15000, true);
           maybeSurfaceBondScene(userId, req.body.token);
         } catch (err) {
           console.error('Error in /meet:', err);
@@ -570,10 +566,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
         if (result.reply) {
           try {
-            // The defer already made the message ephemeral — drop the redundant
-            // flag from the edit body.
-            const { flags, ...body } = result.reply;
-            await sendFollowup(req.body.token, body, 15000, true);
+            await sendFollowup(req.body.token, result.reply, 15000, true);
           } catch (followupErr) {
             console.error('Failed to send /call followup:', followupErr);
           }
@@ -589,8 +582,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         try {
           const lateReply = await result.afterReply();
           if (lateReply) {
-            const { flags, ...body } = lateReply;
-            await sendFollowup(req.body.token, body, 15000, true);
+            await sendFollowup(req.body.token, lateReply, 15000, true);
           } else {
             await deleteInteractionMessage(req.body.token, '@original');
           }
