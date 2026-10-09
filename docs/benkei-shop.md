@@ -1,7 +1,7 @@
 # Spec: Benkei's shop & the Lost & Found
 
 Status: **design / not implemented**
-Last updated: 2026-10-08
+Last updated: 2026-10-09
 
 Shopkeep Benkei's campus store, open 24/7 (canon), as a private `/shop`
 command. Players spend **💎 store credit** (a wallet seeded from and fed by
@@ -69,6 +69,7 @@ rewards or weights.
 | **Chancellor's envelope** | 💎 9 | 25% | always ×1 | `user_activity.envelopes INT` |
 | **House compass** | 💎 5 | 50% | 1–3 | `user_activity.compasses INT` |
 | **Fresh picks** | 💎 3 | 60% | 1–3 | `user_activity.fresh_picks INT` |
+| **Reassignment slip** | 💎 6 | 30% | always ×1 | `user_activity.slips INT` |
 
 The reset is deliberately the most expensive item: from earnings alone even
 the most active player cannot buy one a day (~3 days top, ~weekly mid).
@@ -81,6 +82,18 @@ becomes the limit. That's the accepted cost of seeding in full (§9).
 an errand to a four-student house, which lifts expected `N` from ~2.06 to
 ~2.5: about +0.44 💎 per errand, so paying back the envelope would take ~20
 errands. Keep it that way. No item should raise mission payouts.
+
+The reassignment slip (§2e) is held to zero payback by one rule: **a
+reassigned errand always draws `N = 1`.** Without it, a riddle rerolled into
+an errand would land on ~2 points against 1 about 82% of the time, roughly
++0.8 💎 back per slip, which was judged too high.
+
+| From → To | Points before | Points after | Change |
+|---|---|---|---|
+| Riddle → errand (`N = 1`) | 1 | 1 | 0 |
+| Riddle → co-op | 1 | 1 each | 0 |
+| Co-op → riddle / errand (`N = 1`) | 1 | 1 | 0 |
+| Errand (`N ≥ 1`) → riddle / co-op | N | 1 | 0 or less |
 
 **Known skew: the compass favors small houses.** It redraws from the chosen
 house's roster, so the chance of landing a specific student is 50% in
@@ -137,7 +150,36 @@ spends them (§4).
   candidates (`buildMeetPickMessage` with a new draw).
 - Does not touch the cooldown.
 
-### 2e. Later (not in the launch scope)
+### 2e. Reassignment slip
+
+Shop copy:
+
+> **Reassignment slip** · 💎 6
+> Swap your current mission for a different kind of job. Same house, new orders.
+
+- Used from the **`/mission` briefing**: when the player holds ≥1 and the
+  mission can still be reassigned, the briefing carries a **🔁 Reassign (N)**
+  button. Clicking spends one slip and rerolls the mission's **type**, never
+  to the same type, by the existing weights (riddle 45 / errand 45 / co-op 10)
+  with the current type removed.
+- **The house stays.** Changing the house is the envelope's job (§2b).
+- The new mission is set up fresh: a new riddle, a newly drawn errand target,
+  or an open co-op request.
+- **A reassigned errand always draws `N = 1`** (one signature target), so a
+  slip never pays credit back (§2 payback table).
+- **Blocked once there's progress**: any errand signature collected, or a
+  co-op partner already joined (same spirit as `houseChangeBlocker` in
+  `missions/shared.js`). A riddle is never blocked: getting unstuck from one is
+  the point.
+- Spent only when the reroll actually happens, inside one RPC under the mission
+  row lock (`reassign_mission`), so a blocked or stale click costs nothing.
+- A slip can be used again on the reassigned mission; each use costs another
+  slip and can't raise the payout.
+- **Known gain, accepted:** co-op pays a *single* banked reset while riddle and
+  errand pay *both*, so co-op → anything upgrades the reset. Escaping a co-op
+  nobody answers is the slip's main use.
+
+### 2f. Later (not in the launch scope)
 
 - **Errand swap**: replace one unsigned errand target.
 - **Salon headline**: the player's next Advice Salon note leads the issue
@@ -250,6 +292,7 @@ ALTER TABLE user_activity
   ADD COLUMN IF NOT EXISTS envelopes             INT   NOT NULL DEFAULT 0,
   ADD COLUMN IF NOT EXISTS compasses             INT   NOT NULL DEFAULT 0,
   ADD COLUMN IF NOT EXISTS fresh_picks           INT   NOT NULL DEFAULT 0,
+  ADD COLUMN IF NOT EXISTS slips                 INT   NOT NULL DEFAULT 0,
   ADD COLUMN IF NOT EXISTS shop_day              DATE,
   ADD COLUMN IF NOT EXISTS shop_bought           JSONB NOT NULL DEFAULT '{}',
   ADD COLUMN IF NOT EXISTS lost_found_claimed_on DATE;
@@ -264,6 +307,7 @@ Plus:
 - `spend_cooldown_reset` rewrite: fall through to `bought_resets` (§2a).
 - Small spend RPCs, each a conditional decrement returning whether it spent:
   `spend_compass`, `spend_fresh_picks`, `spend_envelope`,
+  `reassign_mission` (spends a slip and rerolls the type under the row lock),
   `claim_lost_found(user, day)`.
 
 Service role only, same RLS story as every other table.
@@ -281,6 +325,7 @@ Service role only, same RLS story as every other table.
 | `encounters.js` | compass select on `/roam` reply; fresh-picks button on `/meet` picker; `lostfound` origin + thank-you clause |
 | `missions/resets.js`, `commandLimits.js` | combined reset count |
 | `missions/houseChange.js` | envelope check before the 1-in-5 roll |
+| `missions/player.js` | 🔁 Reassign button on the `/mission` briefing |
 | `db/supabase.js` | wrappers for the new RPCs / columns |
 | `constants/validateContent.js` | label lengths, every `LOST_ITEMS.characterId` exists, one item per character, no em dashes in Benkei lines |
 | `db/schema.sql`, `db/SCHEMA.md` | new columns |
@@ -295,6 +340,8 @@ Service role only, same RLS story as every other table.
 - `buy_shop_item`: insufficient / sold out / stale-day reset / success.
 - Combined reset count = mission credits + bought; spend order mission-first.
 - Envelope forces the audience and is not spent when the change is blocked.
+- Slip: never rerolls to the same type; reassigned errand has exactly 1
+  target; blocked after a signature or a joined partner, slip kept.
 - Return claim is single-use per day; the meeting skips the cooldown.
 - Content: all 26 characters have a lost item; labels ≤30 chars.
 
@@ -314,3 +361,5 @@ Service role only, same RLS story as every other table.
 - Page 1 thumbnail = Benkei default expression; page 2 = cat sprite.
 - No purchase confirmation.
 - Envelope 💎 9 (raised from 7, 2026-10-08 balance review).
+- Reassignment slip 💎 6, ~30%, ×1; type reroll, house kept; reassigned
+  errand is `N = 1` so payback is zero (2026-10-09).

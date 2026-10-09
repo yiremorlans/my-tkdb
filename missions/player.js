@@ -758,12 +758,13 @@ export async function handleMissionDebrief(body, missionId, slot = null, now = n
     response: greyOut,
     followup: ephemeralPortraitMessage(student.id, DEBRIEF_FACE, text),
     // No milestone and no affinity: the boost only adds to a later authored
-    // response, same as the culprit reveal's (riddle.js handleRiddle).
+    // response, same as the culprit reveal's (riddle.js handleRiddle). No
+    // command_usage_log row either: lead/helper_debriefed_at already record
+    // every claim, unpruned.
     afterReply: async () => {
       await Promise.allSettled([
         grantEncounterBoost(userId, student.id, ENCOUNTER_BOOST_CAP),
         trackUserActivity(userId),
-        trackCommandUsage(userId, "mission"),
       ]).then(reportFailures("co-op debrief"));
     },
   };

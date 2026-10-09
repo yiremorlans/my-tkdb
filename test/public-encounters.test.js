@@ -94,7 +94,7 @@ const {
   sweepExpiredEncounters,
 } = await import('../publicEncounters.js');
 const { runTick, clearSpawnAttemptFence } = await import('../encounterScheduler.js');
-const { buildMeetPickMessage, buildResponseResultMessage } = await import('../encounters.js');
+const { buildMeetPickMessage, buildResponseResultMessage, pickMeetCandidates } = await import('../encounters.js');
 const {
   recordEncounterMilestone,
   getEncounterMilestoneCounts,
@@ -104,6 +104,9 @@ const {
 } = await import('../db/supabase.js');
 const { clearGuessCooldowns, matchCharacterGuess } = await import('../constants/publicEncounters.js');
 const { CHARACTERS, RESPONSE_TYPES } = await import('../constants/characters.js');
+const { HOUSES } = await import('../constants/backgrounds.js');
+const { MEET_OPTION_COUNT } = await import('../constants/game.js');
+const { getHouseRoster } = await import('../constants/missions.js');
 
 function guildRow(overrides = {}) {
   return {
@@ -895,5 +898,37 @@ describe('call scenes', () => {
     } finally {
       DIALOGUE.benkei.winnerLines.bound = own;
     }
+  });
+});
+
+describe('/meet errand seeding (pickMeetCandidates)', () => {
+  const ids = (chars) => chars.map((c) => c.id);
+  const frostheim = ids(getHouseRoster(HOUSES.FROSTHEIM));
+
+  it('guarantees two of four unsigned targets, freshly drawn, and still offers four', () => {
+    const seen = new Set();
+    for (let i = 0; i < 200; i++) {
+      const offered = ids(pickMeetCandidates(frostheim));
+      assert.equal(offered.length, MEET_OPTION_COUNT);
+      assert.equal(new Set(offered).size, offered.length);
+      const seeded = offered.filter((id) => frostheim.includes(id));
+      assert.ok(seeded.length >= 2, 'two targets are always guaranteed');
+      seeded.forEach((id) => seen.add(id));
+    }
+    assert.equal(seen.size, frostheim.length, 'which targets are seeded varies call to call');
+  });
+
+  it('seeds the lone target when only one is unsigned', () => {
+    for (let i = 0; i < 50; i++) {
+      const offered = ids(pickMeetCandidates(['haku']));
+      assert.equal(offered.length, MEET_OPTION_COUNT);
+      assert.ok(offered.includes('haku'));
+    }
+  });
+
+  it('is a plain random draw with nothing unsigned (fully signed, not yet filed)', () => {
+    const offered = pickMeetCandidates([]);
+    assert.equal(offered.length, MEET_OPTION_COUNT);
+    assert.equal(new Set(ids(offered)).size, MEET_OPTION_COUNT);
   });
 });

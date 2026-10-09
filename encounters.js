@@ -64,7 +64,7 @@ import {
   getMilestone,
   pickRandom,
 } from './constants/publicEncounters.js';
-import { ERRAND_ROAM_TARGET_BIAS } from './constants/missions.js';
+import { ERRAND_MEET_TARGET_SLOTS, ERRAND_ROAM_TARGET_BIAS } from './constants/missions.js';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
@@ -169,10 +169,10 @@ export function disableComponents(rows) {
 // --- errand targeting -------------------------------------------------------
 
 // A user holding a scheduled errand (docs/scheduled-missions.md §5) has to run
-// into N *specific* students inside 48h, against a shared 3-hour cooldown. At
-// 26 characters and a four-option picker that is close to hopeless unheld, so
-// their still-unsigned targets are boosted in their own /roam and /meet while
-// the errand is open.
+// into N *specific* students inside 48h, against 3-hour /roam and /meet
+// cooldowns. At 26 characters and a four-option picker that is close to
+// hopeless unheld, so their still-unsigned targets are boosted in their own
+// /roam and /meet while the errand is open.
 //
 // The boost changes only WHO appears. It never touches the cooldown, and it is
 // entirely per-user — each builder looks up the invoking user's own errand, so
@@ -559,14 +559,36 @@ export function buildWardingResultMessage(cardKey, responseKey, deltaLine = null
 // --- /meet -----------------------------------------------------------------
 
 /**
- * The /meet picker. `userId` looks up an active errand, whose still-unsigned
- * targets take guaranteed slots in the list while the remaining slots fill at
- * random as before (four unsigned targets means every slot is a target; one
- * means one slot is), and any unspent /call boosts, which add "+1" to that
- * character's label. A boost only labels; it never seeds a slot.
+ * The four characters a /meet offers. Up to ERRAND_MEET_TARGET_SLOTS of the
+ * errand's still-unsigned `targetIds` are seeded (one unsigned target means one
+ * slot; with more than the cap, which ones is drawn fresh every call), and the
+ * rest fill at random from everyone else, so unseeded targets can still turn
+ * up by chance. No unsigned targets, including an errand fully signed but not
+ * yet filed, means a plain random draw.
  *
  * The seeded targets are shuffled in with the rest so their position never
- * telegraphs which of the four is the one the mission wants.
+ * telegraphs which of the four the mission wants.
+ */
+export function pickMeetCandidates(targetIds = []) {
+  const targets = pickRandomDistinct(
+    targetIds.map((id) => getCharacterById(id)).filter(Boolean),
+    ERRAND_MEET_TARGET_SLOTS,
+  );
+
+  const seededIds = new Set(targets.map((character) => character.id));
+  const rest = pickRandomDistinct(
+    CHARACTERS.filter((character) => !seededIds.has(character.id)),
+    MEET_OPTION_COUNT - targets.length,
+  );
+
+  return pickRandomDistinct([...targets, ...rest], MEET_OPTION_COUNT);
+}
+
+/**
+ * The /meet picker. `userId` looks up an active errand, whose still-unsigned
+ * targets take guaranteed slots in the list (see pickMeetCandidates), and any
+ * unspent /call boosts, which add "+1" to that character's label. A boost only
+ * labels; it never seeds a slot.
  *
  * `candidates` bypasses all of it (tests, and the disabled re-render).
  */
@@ -580,20 +602,7 @@ export async function buildMeetPickMessage(userId = null, candidates = null, dis
     pendingBoosts(userId),
   ]);
 
-  if (!chars) {
-    const targets = targetIds
-      .map((id) => getCharacterById(id))
-      .filter(Boolean)
-      .slice(0, MEET_OPTION_COUNT);
-
-    const seededIds = new Set(targets.map((character) => character.id));
-    const rest = pickRandomDistinct(
-      CHARACTERS.filter((character) => !seededIds.has(character.id)),
-      MEET_OPTION_COUNT - targets.length,
-    );
-
-    chars = pickRandomDistinct([...targets, ...rest], MEET_OPTION_COUNT);
-  }
+  if (!chars) chars = pickMeetCandidates(targetIds);
 
   return {
     content: pickRandom(MEET_PICK_LINES),

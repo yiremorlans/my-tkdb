@@ -1,7 +1,7 @@
 # Spec: Scheduled missions
 
 Status: **built** (including the §20 culprit reveal and §21 co-op debrief expansions; §22 records the 2026-10-08 reward balance review)
-Last updated: 2026-10-08
+Last updated: 2026-10-09
 
 > **As built.** Everything below is implemented. Where the code differs from
 > this document, the code is right and the difference is listed here:
@@ -81,8 +81,8 @@ Last updated: 2026-10-08
 > - **At most one request is posted per tick.** If two slots come due together
 >   after an outage, the second waits for the next tick rather than landing
 >   back-to-back in the channel.
-> - **Open questions in §19 are all still open** — nothing there was decided as
->   part of building this. The one exception is that `/docs` kept its name.
+> - **§19's open questions were all settled 2026-10-09**; the three that
+>   need live data moved to its watch list.
 >
 > **Change after the first build (2026-09-05): cooldown resets are banked.**
 > §5, §6, §7 and §13 below all say a completed mission calls
@@ -430,7 +430,8 @@ UPDATE mission_signatures SET signed_at = NOW()
   same house does nothing. No "cap" logic: there are exactly `N` target rows and
   filing needs every one signed, so the reward is always exactly `N` points.
 - A `/roam` that surfaces a target counts the same as a deliberate `/meet`.
-  Because `/roam` and `/meet` share a 3h cooldown, an `N ≥ 2` errand is a
+  `/roam` and `/meet` each have their own 3h cooldown, and a `/meet` signs at
+  most one student, so an `N ≥ 2` errand is a
   multi-session job **even with the target boost (below)** — the "slow burn"
   type, which is why it is weighted lowest. An `N = 1` errand is one meeting for
   1 point.
@@ -449,11 +450,16 @@ students through a random `/roam` (26 characters) and a 4-option `/meet`, inside
   heavy weight (`ERRAND_ROAM_TARGET_BIAS`, tuned so roughly every other roam
   surfaces a still-needed target). Normal roll when the user has no active
   errand or every target is already signed.
-- **`/meet`** — the unsigned targets take **guaranteed slots** in the pick list
-  (`MEET_OPTION_COUNT = 4`); remaining slots fill at random as today. 4 unsigned
-  targets → every slot is a target; 1 → one slot is.
+- **`/meet`** — up to **`ERRAND_MEET_TARGET_SLOTS = 2`** unsigned targets take
+  guaranteed slots in the pick list (`MEET_OPTION_COUNT = 4`); remaining slots
+  fill at random, so other targets can still turn up by chance. With more than
+  2 unsigned, which 2 are seeded is drawn fresh every `/meet`; 1 unsigned → one
+  slot. A fully signed errand that isn't filed yet seeds nothing. (Changed
+  2026-10-09 from "every unsigned target": a `/meet` signs one student, so
+  more seeded slots never finished an errand faster, they only crowded out
+  everyone else.)
 - The boost only changes **which characters appear**, never how often the user
-  may `/roam` / `/meet` — the shared cooldown is untouched. It makes the errand
+  may `/roam` / `/meet` — the cooldowns are untouched. It makes the errand
   *possible*, not free.
 - Per-user and self-contained: each builder checks the invoking user's own
   active errand. No global state; other players are unaffected.
@@ -1170,6 +1176,7 @@ admin-configurable.
 | `WEIGHT_RIDDLE` / `WEIGHT_ERRAND` / `WEIGHT_COOP` | `45` / `45` / `10` | Type roll at spawn (co-op cut to a 10 floor 2026-09; see §22) |
 | `DAILY_LEAD_CAP` | `2` | Missions taken per user per local day, accepts + assists (migration 029) |
 | `ERRAND_ROAM_TARGET_BIAS` | `~0.5` | Chance a `/roam` by an errand holder is steered to a still-unsigned target instead of the normal roll |
+| `ERRAND_MEET_TARGET_SLOTS` | `2` | Most unsigned targets seeded into one `/meet` pick list (2026-10-09) |
 
 `DISCORD_TOKEN`, `APP_ID`, `SUPABASE_*`, `BASE_URL` already present; this feature
 adds nothing to `.env`.
@@ -1271,8 +1278,8 @@ adds nothing to `.env`.
      **target students** drawn from the house and named in `/mission` / `/docs`.
      Meeting a target via `/roam` / `/meet` signs it; **only targets count**.
      While the errand is held, its unsigned targets are **boosted in that
-     user's `/roam` and `/meet`** (`ERRAND_ROAM_TARGET_BIAS`; guaranteed `/meet`
-     slots) so the chase is feasible — the boost changes who appears, not the
+     user's `/roam` and `/meet`** (`ERRAND_ROAM_TARGET_BIAS`; up to 2 guaranteed
+     `/meet` slots) so the chase is feasible — the boost changes who appears, not the
      cooldown. A **Complete mission** button in `/docs` files it → **one
      `mission_log` row worth `N` points** (lead) + reset **both** `/roam` and
      `/meet` cooldowns.
@@ -1305,49 +1312,49 @@ adds nothing to `.env`.
 
 ## 19. Open questions
 
-- **Errand grind loop.** An `N ≥ 2` errand spends up to `N−1` cooldown-gated
-  meets (the first is free if you're off cooldown) and pays `N` points + a full
-  both-command reset — net cooldown-positive, and now point-positive too.
-  *Partly answered:* `DAILY_LEAD_CAP = 2` (accepts + assists) bounds the chain
-  at two missions a day, and banking removed the reset-timing exploit. Since
-  logs became store credit (§22), watch errand-driven 💎 income against shop
-  prices rather than rank pace.
-- **Rank thresholds vs. scaled errands.** `INSPECTOR_RANKS` thresholds are point
-  totals; a lucky run of `N = 4` errands climbs the ladder ~4× faster than a
-  riddle streak. Rebalance the thresholds (or cap errand points) if progression
-  feels too swingy once real data exists.
-- **`N = 1` errands.** A 1-signature errand is one meeting for 1 point +
-  full reset. Since §20 a riddle pays the same plus a culprit boost, so an
-  `N = 1` errand is now the weakest roll in the pool. Fine at its frequency
-  (1 in ~2 errand rolls for Mortkranken, 1 in 4 for Frostheim/Dionysia), or
-  bump the floor to 2 for houses that can support it.
-- **Target-boost strength.** `ERRAND_ROAM_TARGET_BIAS ≈ 0.5` means half an
-  errand holder's `/roam`s aren't really random while the mission is open — does
-  that dull `/roam`'s discovery feel? Options: lower the bias, or only apply it
-  when the user's cooldown is actually ready.
-- **`/meet` guaranteed vs. weighted.** Written as guaranteed slots for unsigned
-  targets; a softer version just raises their odds in the 4-pick.
-- **Reveal targets in `/mission`.** Currently `/mission` names them outright. A
-  "you'll know them when you see them" version hides the names until the first
-  `/docs`.
-- ~~**Per-day completion cap.**~~ Answered: `DAILY_LEAD_CAP = 2` on missions
-  taken (accepts + assists, migration 029), not on completions.
-- **`/docs` name.** Reads like "documentation". `/report` or `/file` if that's
-  clearer — cosmetic.
-- **Expired accepted missions in the dossier.** Show an "unfiled" blemish count,
-  or drop silently? Currently silent.
-- ~~**Co-op reset roll.**~~ Answered by banking: no roll; each user's single
-  reset clears the longer wait at spend time (migration 028).
-- **Riddle answer types.** v1 is "name the student" only. Buttons (A/B/C) or
-  keyword answers are a later variant.
+None open. Reviewed 2026-10-09; what was decided and what to keep an eye on
+is below.
+
+### 19.1 Answered
+
+- **Target-boost strength.** `ERRAND_ROAM_TARGET_BIAS` stays at 0.5. A player
+  on about one session a day gets ~2 `/meet`s in an errand's 48h, too few for
+  `N = 3–4` alone, so `/roam` has to carry real weight.
+- **`/meet` guaranteed vs. weighted.** Guaranteed, capped at
+  `ERRAND_MEET_TARGET_SLOTS = 2` (§5). A `/meet` signs one student, so seeding
+  all four never sped an errand up.
+- **`N = 1` errands.** Kept. It pays no boost, but the meeting it asks for is
+  itself an encounter with its own affinity, which a riddle's boost only adds
+  to later. Not strictly weaker than a riddle, and floor 2 would have raised
+  errand 💎 income ~24% (§22).
+- **Reveal targets in `/mission`.** Kept named. The target boost assumes the
+  player knows who they're after.
+- **`/docs` name.** Kept; it's live.
+- **Expired accepted missions in the dossier.** Stay silent. Losing the reward
+  is the cost; a permanent blemish would make players shy of errands.
+- **Assist post house leak.** House stays out of the post, as on every other
+  public mission post, and §21's debrief lands better as a surprise.
+- **Riddle answer types.** Not planned. §20's accusation faces depend on a
+  guess being a student's name.
+- **Per-day completion cap.** `DAILY_LEAD_CAP = 2` on missions taken (accepts
+  + assists, migration 029), not on completions.
+- **Co-op reset roll.** Answered by banking: no roll; each user's single reset
+  clears the longer wait at spend time (migration 028).
+
+### 19.2 Watch list (needs live data, no decision yet)
+
+- **Errand 💎 income vs. shop prices.** An `N ≥ 2` errand pays `N` logs + a
+  full reset; `DAILY_LEAD_CAP` bounds it at two missions a day. Since logs
+  became store credit (§22), watch errand-driven 💎 against benkei-shop §2.
+- **Rank thresholds vs. scaled errands.** `INSPECTOR_RANKS` thresholds are
+  point totals; a lucky run of `N = 4` errands climbs ~4× faster than a riddle
+  streak. Rebalance thresholds (or cap errand points) if progression feels
+  too swingy.
 - **Co-op weight.** Held at 10 until the debrief (§21) has been live long
-  enough to measure how often a call for backup gets answered. Errand
-  holders are locked out of assisting for as long as they hold one (up to
-  48h), so the helper pool is smaller than the active roster. If most calls
-  are answered, 15 is the next step (take it from riddle, not errand, per §22).
-- **Assist post house leak.** Spec keeps the house out of the `/mission assist`
-  post for consistency; confirm that's wanted vs. showing it to attract a
-  helper.
+  enough to measure how often a call for backup gets answered. Errand holders
+  can't assist while they hold one (up to 48h), so the helper pool is smaller
+  than the active roster. If most calls are answered, 15 is the next step
+  (taken from riddle, not errand, per §22).
 
 ---
 
@@ -1424,7 +1431,7 @@ line between the two (2026-10-08):
 
 1. The **boost line**: always shown, shared, plain, so every solver learns
    riddles grant a boost, e.g. *"A pending boost with {firstName} is waiting
-   on your next `/roam` or `/meet`."* Wording is TBD, but it must stay true
+   on your next `/roam` or `/meet`."* (`MISSION_BOOST_LINE`). It must stay true
    when the cap means nothing new was added (the player already holds one), so
    it states that a boost is waiting, never that one was just added. `{firstName}`
    only, no he/him about the character.

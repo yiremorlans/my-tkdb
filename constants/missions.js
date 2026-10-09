@@ -98,6 +98,13 @@ export const WEIGHT_COOP = 10;
 // player may roam.
 export const ERRAND_ROAM_TARGET_BIAS = 0.5;
 
+// Most still-unsigned targets seeded into one /meet pick list (2026-10-09). A
+// /meet signs at most one student, so seeding more never finishes an errand
+// faster; it only crowds out the random slots. Two leaves a choice between
+// targets (say, the one a /call boost is waiting on) and keeps the rest of the
+// picker for everyone else.
+export const ERRAND_MEET_TARGET_SLOTS = 2;
+
 // Gap between wrong /riddle guesses, held in memory (see below). This is what
 // stops someone brute-forcing 26 names; there is deliberately no attempt cap,
 // because the riddle already dies with the mission.
