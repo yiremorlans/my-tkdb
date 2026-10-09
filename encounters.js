@@ -847,6 +847,19 @@ function renderMomentsTogether(character, counts) {
   return `**Moments together** 💞\n${rows.join('\n')}`;
 }
 
+// Tokutaisei ("Toku") isn't on the roster yet, so getCharacterById can't find
+// her and she never appears in /roam, /meet or /call. Her relationship with the
+// MC is the abstract one: there's no affinity or milestone with her to show,
+// so her card is only her name and avatar. When she joins CHARACTERS this
+// stand-in and its branch in buildAffinityMessage go away.
+const TOKUTAISEI = { id: 'tokutaisei', firstName: 'Tokutaisei', lastName: null };
+const TOKUTAISEI_IDS = ['tokutaisei', 'toku'];
+const TOKUTAISEI_COLOR = 0x111111;
+
+function resolveAffinityCharacter(charId) {
+  return getCharacterById(charId) || (TOKUTAISEI_IDS.includes(charId) ? TOKUTAISEI : null);
+}
+
 // `opts.shareButton` appends a Share button that reposts this status publicly
 // (app.js, the `affinity:share` component). `opts.sharedBy` is the sharer's
 // plain display name (not an `<@id>` tag) and marks the message as that public
@@ -864,7 +877,7 @@ export async function buildAffinityMessage(userId, characterIds, opts = {}) {
     const charId = rawId.trim().toLowerCase();
     if (!charId) continue;
 
-    const character = getCharacterById(charId);
+    const character = resolveAffinityCharacter(charId);
     // Dedupe on the resolved character id, not the raw id, so an alias (e.g.
     // "sho") and the canonical id ("shohei") don't produce two embeds — and a
     // colliding attachment filename — for the same person.
@@ -894,14 +907,21 @@ export async function buildAffinityMessage(userId, characterIds, opts = {}) {
   // Public-encounter wins never move affinity, so they'd otherwise leave no
   // trace here — the milestone tally is their whole visible progression.
   // A failed read drops the block rather than the embed.
+  // Tokutaisei has no rows to read, so she's skipped in both.
   const [affinities, milestoneCounts] = await Promise.all([
-    Promise.all(validCharacters.map((character) => readRelationship(userId, character.id))),
     Promise.all(
       validCharacters.map((character) =>
-        getEncounterMilestoneCounts(userId, character.id).catch((err) => {
-          console.error(`Error loading milestones for ${character.id}:`, err);
-          return {};
-        }),
+        character === TOKUTAISEI ? null : readRelationship(userId, character.id),
+      ),
+    ),
+    Promise.all(
+      validCharacters.map((character) =>
+        character === TOKUTAISEI
+          ? {}
+          : getEncounterMilestoneCounts(userId, character.id).catch((err) => {
+            console.error(`Error loading milestones for ${character.id}:`, err);
+            return {};
+          }),
       ),
     ),
   ]);
@@ -936,13 +956,15 @@ export async function buildAffinityMessage(userId, characterIds, opts = {}) {
     const moments = renderMomentsTogether(character, milestoneCounts[index]);
     if (moments) parts.push('', moments);
 
-    const description = parts.join('\n');
+    const isTokutaisei = character === TOKUTAISEI;
+    const description = isTokutaisei ? undefined : parts.join('\n');
 
     embeds.push({
       image: imageBuffer ? { url: `attachment://${avatarFilename}` } : undefined,
       title: getFullName(character),
       description,
-      color: level.color, // tracks the relationship level, not a fixed blurple
+      // tracks the relationship level, not a fixed blurple; Toku has no level
+      color: isTokutaisei ? TOKUTAISEI_COLOR : level.color,
     });
 
     if (imageBuffer) {
