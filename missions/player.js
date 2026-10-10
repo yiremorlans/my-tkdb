@@ -38,6 +38,7 @@ import {
   DEBRIEF_REFUSAL_LINES,
   DEBRIEF_ROLE_FALLBACK_NAMES,
   debriefReminderLine,
+  ERRAND_SIGNED_INSTRUCTIONS,
   formatNameList,
   getRiddle,
   localDayKey,
@@ -271,7 +272,7 @@ function houseChangeControls(mission, signed, from = "briefing") {
  *
  * An errand also carries its house-change button here, so it's on the pickup
  * briefing — the first moment the player learns the house — as well as on
- * /mission.
+ * /mission. Both drop out once every target has signed.
  */
 export async function buildMissionBriefing(userId, mission) {
   const label =
@@ -280,6 +281,7 @@ export async function buildMissionBriefing(userId, mission) {
   let objective;
   let progress;
   let houseChange = null;
+  let instructions = MISSION_INSTRUCTIONS[mission.mission_type] || "";
 
   if (mission.mission_type === MISSION_TYPES.ERRAND) {
     const { unsigned, signed, required } = errandProgress(mission);
@@ -287,7 +289,13 @@ export async function buildMissionBriefing(userId, mission) {
       targetIds: unsigned.map((t) => t.characterId),
     });
     progress = missionProgressLine(mission, { signed, required });
-    houseChange = houseChangeControls(mission, signed);
+    if (unsigned.length) {
+      houseChange = houseChangeControls(mission, signed);
+    } else {
+      // Fully signed: only the filing is left, so no "meet the targets"
+      // instructions and no house change (locked or otherwise) to talk about.
+      instructions = ERRAND_SIGNED_INSTRUCTIONS;
+    }
   } else if (mission.mission_type === MISSION_TYPES.RIDDLE) {
     objective = missionObjectiveLine(mission, {
       riddle: getRiddle(mission.house, mission.riddle_id),
@@ -314,7 +322,7 @@ export async function buildMissionBriefing(userId, mission) {
     "",
     `Progress: ${progress}${deadline}`,
     "",
-    `${MISSION_INSTRUCTIONS[mission.mission_type] || ""}${hint}`,
+    `${instructions}${hint}`,
     ...(note ? ["", note] : []),
   ]
     .join("\n")

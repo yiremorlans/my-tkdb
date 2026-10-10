@@ -360,6 +360,11 @@ export const MISSION_INSTRUCTIONS = {
     "Call a partner with `/mission assist:true`. The first inspector to back you up completes it for both of you. One house log each, plus a banked cooldown reset that clears whichever of `/roam` or `/meet` has the longer wait.",
 };
 
+// An errand's instruction block once every target has signed: the targets are
+// done with, so it's only the filing left.
+export const ERRAND_SIGNED_INSTRUCTIONS =
+  "Open `/docs` and click Complete mission. One house log per signature, plus a banked cooldown reset that clears both.";
+
 // --- riddles ----------------------------------------------------------------
 
 // One pool per house; `answer` is a character id belonging to that house, so a
@@ -1193,9 +1198,11 @@ export function missionObjectiveLine(
 ) {
   switch (mission.mission_type) {
     case MISSION_TYPES.ERRAND:
-      return `Darkwick needs signoff from ${mission.house} to complete report. Track down ${formatNameList(
-        targetIds,
-      )}.`;
+      return targetIds.length
+        ? `Darkwick needs signoff from ${mission.house} to complete report. Track down ${formatNameList(
+            targetIds,
+          )}.`
+        : `Every signature from ${mission.house} is in. The report is ready to file.`;
     case MISSION_TYPES.RIDDLE:
       return riddle
         ? `An anomaly report out of ${mission.house} needs debunking.\n\n> ${riddle.prompt}`

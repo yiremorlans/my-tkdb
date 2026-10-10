@@ -1061,6 +1061,7 @@ export const CHARACTERS = [
   },
   {
     id: "romeo",
+    aliases: ["romi", "lulu"],
     firstName: "Romeo",
     lastName: "Scorpius Lucci",
     house: HOUSES.SINOSTRA,

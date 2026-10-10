@@ -412,7 +412,10 @@ Dionysia 1–4.
 
 `/mission` reveals the house **and names the targets**: *"Darkwick needs signoff
 from **{House}** to complete report. Track down **Jin Kamurai**, **Leo Kurosagi**
-and **Alan Mido**."*
+and **Alan Mido**."* The list shrinks as targets sign; once every target has
+signed it reads *"Every signature from **{House}** is in. The report is ready
+to file."* instead, the instructions point at Complete mission in `/docs`, and
+the house-change note and button drop out.
 
 ### Earning a signature
 

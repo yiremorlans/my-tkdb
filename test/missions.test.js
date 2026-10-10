@@ -1648,6 +1648,28 @@ describe('/mission', () => {
     assert.match(reply.content, /Answer with `\/riddle/, 'instructions are always present');
   });
 
+  it('briefs a fully signed errand as ready to file: no targets, no house change', async () => {
+    const at = new Date().toISOString();
+    fake.tables.missions.push(
+      missionRow({
+        status: 'accepted',
+        accepted_by: 'user-a',
+        mission_type: 'errand',
+        house: 'Dionysia',
+        signatures: { mio: at, shion: at },
+      }),
+    );
+
+    const { reply } = await handleMission(command('user-a'));
+
+    assert.doesNotMatch(reply.content, /Track down|nobody/);
+    assert.match(reply.content, /Every signature from Dionysia is in\. The report is ready to file\./);
+    assert.match(reply.content, /Open `\/docs` and click Complete mission/);
+    assert.doesNotMatch(reply.content, /Meet them|House change|new house/);
+    assert.equal(reply.components, undefined, 'no house-change button');
+    assert.match(reply.content, /Progress: 2 \/ 2 signatures/);
+  });
+
   it('points at the next briefing channel when the user holds nothing, without a time', async () => {
     const now = new Date();
     const day = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
