@@ -57,7 +57,7 @@ export default {
             label: "Say you like the company",
             style: 3,
             close:
-              "Tsk. That's the dumbest thing you've ever said to me.\n\n...Whatever. The door's not locked.",
+              "Tch. That's the dumbest thing you've ever said to me.\n\n...Whatever. The door's not locked.",
           },
           {
             key: "playful",
@@ -102,7 +102,7 @@ export default {
             label: "Ask if he's finally going",
             style: 1,
             close:
-              "Did I say that? I said *you'll* be there.\n\nWhere I spend my Friday is none of your business, servant.",
+              "Did I say that? I said *you'll* be there.\n\nYou'll find out at eight, servant.",
           },
           {
             key: "bold",
@@ -159,39 +159,39 @@ export default {
 
     devoted: {
       beats: [
-        "**{firstName}**: Where the fuck are you.\n\nThat's not a question you get to ignore. Where. Exactly.",
-        "*You send it. Nothing comes back for four minutes.*\n\nGood, *he says finally.* I heard what went down in the east corridor tonight and I couldn't account for you. Turns out I'm not someone who handles that well.",
-        "It's been drilled into me my whole life that a captain doesn't run down a hallway.\n\nI ran.\n\nYour place is at my back. I've said that to you before and you took it for possessiveness. It was. It was also the only way I had of saying I want to know where you are.",
+        "**{firstName}**: Can't sleep, and it's your fault.\n\nI used to like this room best with nobody else in it. Door locked, nobody wanting anything from me. Now you leave and all I notice is that it's empty.",
+        "Since the clash, I've kept most of {house} out of this room. Somewhere along the way, I started looking forward to your visits. I don't care who knows it. Let them talk. I'm done pretending you're just here to clean up after me.",
+        "There's a part of me I gave up on.\n\nWith you, I'm whole again. That's as plain as I'm going to say it.",
       ],
       choice: {
-        prompt: "So. What are you going to do about a man who ran?",
+        prompt: "Come over tonight. Don't make me ask twice.",
         options: [
           {
             key: "kind",
-            label: "Tell him you're all right",
+            label: "Say you'll stay the night",
             style: 3,
             close:
-              "I know you're all right. I've known for six minutes.\n\nTurns out knowing and believing aren't the same thing. Say it once more and I'll work on the second one.",
+              "...Good.\n\nYou're not leaving in the morning either. I've decided.",
           },
           {
             key: "playful",
-            label: "Say you'd pay to see it",
+            label: "Ask which side is yours",
             style: 1,
             close:
-              "Nobody saw it. I made sure nobody saw it.\n\nTohma saw it. Tohma hasn't said a word, which from him is basically a parade. I'm never living it down.",
+              "Doesn't matter. You'll end up on mine anyway.\n\nGet up here.",
           },
           {
             key: "bold",
-            label: "Tell him to come find you",
+            label: "Say you won't let him sleep",
             style: 4,
             close:
-              "*No reply at all.*\n\n*Seven minutes later there are footsteps outside, unhurried, because he won't be caught hurrying twice in one night. He doesn't knock. He puts both hands to your jaw, rings cold against it, looks at you far longer than he needs to, and says,*\n\n> There. Accounted for.\n\n*and doesn't let go for a good while after that.*",
+              "Ha. Big talk from someone who isn't here yet.\n\nCome prove it.",
           },
         ],
       },
       keepsake: {
-        emoji: "🧥",
-        line: "The coat he put around you without once admitting he'd run.",
+        emoji: "💍",
+        line: "The ring he left on the nightstand, on the side of the bed that's yours now.",
       },
     },
 
@@ -892,7 +892,7 @@ export default {
         },
       },
       {
-        line: '**{name}** looks {user} over like he\'s deciding whether they\'re worth his time. "Well? Say something."',
+        line: "**{name}** looks {user} over like he's deciding whether they're worth his time. \"Well? Say something.\"",
         responses: {
           kind: "Say a polite hello",
           playful: "Bow like a servant",
@@ -918,7 +918,7 @@ export default {
         },
       },
       {
-        line: '"Don\'t hover, it\'s annoying." **{name}** doesn\'t send {user} away, either.',
+        line: "\"Don't hover, it's annoying.\" **{name}** doesn't send {user} away, either.",
         responses: {
           kind: "Give him some room",
           playful: "Hover a bit closer",
