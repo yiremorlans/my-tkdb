@@ -1329,8 +1329,8 @@ function normalizeBeat(entry) {
 // Draws the narration line, its approach-button label, and (optionally) its
 // payoff greeting and response-button overrides as one unit, so the /roam
 // button, payoff image caption, and the four response buttons all answer the
-// scene the player just read (see docs/dialogue-approach-pairing.md). The
-// beat's own `approach` is the only source of its label.
+// scene the player just read. The beat's own `approach` is the only source of
+// its label.
 // `greeting` is the beat's own payoff caption — every drawable beat carries
 // one, so callers render it directly.
 // `responses` is the beat's own { kind, playful, bold, neutral } labels

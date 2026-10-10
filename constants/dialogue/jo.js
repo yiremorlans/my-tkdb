@@ -229,11 +229,6 @@ export default {
       },
     },
   },
-  // All six tiers are paired beats — { line, approach } — so the /roam
-  // button always answers the scene the line just set, rather than being
-  // drawn from a separate pool at random (docs/dialogue-approach-pairing.md).
-  // `approach` may be an array when more than one reaction genuinely fits the
-  // same beat.
   dialogue: {
     new: withPronounVariants([
       {

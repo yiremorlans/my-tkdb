@@ -241,11 +241,6 @@ export default {
       },
     },
   },
-  // Every tier is paired beats — { line, approach, greeting, responses } —
-  // so the /roam button, the payoff caption, and the four response buttons
-  // all answer the scene the line just set (docs/dialogue-approach-pairing.md).
-  // `approach`/`greeting` may be an array when more than one reaction
-  // genuinely fits the same beat.
   dialogue: {
     new: [
       {

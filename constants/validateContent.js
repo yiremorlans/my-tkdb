@@ -94,10 +94,10 @@ function checkLabelLength(what, label, errors) {
   }
 }
 
-// A migrated dialogue entry pairs its line with the approach label(s) that
-// belong to it — { line, approach }, approach a string or an array of
+// A dialogue entry is a beat that pairs its line with the approach label(s)
+// that belong to it — { line, approach }, approach a string or an array of
 // interchangeable labels for that beat (see getRandomDialogueBeat in
-// characters.js). A tier not yet migrated is still a bare array of strings.
+// characters.js).
 function isBeat(entry) {
   return !!entry && typeof entry === "object" && typeof entry.line === "string";
 }
@@ -738,7 +738,7 @@ export function validateContent() {
       }
     }
 
-    // CRITICAL: a migrated ({ line, approach }) beat must carry both halves —
+    // CRITICAL: a ({ line, approach }) beat must carry both halves —
     // a blank line, or an approach with nothing usable on it, breaks the
     // /roam message the same way an empty pool would.
     //

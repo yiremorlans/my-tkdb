@@ -235,15 +235,6 @@ export default {
       },
     },
   },
-  // `new`/`known`/`warm`/`close`/`bound` are paired beats — { line, approach,
-  // greeting, responses } — so the /roam button, payoff caption, and response
-  // labels all answer the scene the line just set, rather than being drawn
-  // from separate pools at random (docs/dialogue-approach-pairing.md). `new`/`known` responses carry at
-  // least 2 options per type, matching yuri.js; `warm`/`close`/`bound` carry
-  // one, same as yuri.js. `spark` beats carry the same
-  // pairing, though `dialogue.spark` is still 5 lines against the 27-line
-  // target; expanding it is a dedicated authorial pass, not a gap in the
-  // pairing.
   dialogue: {
     new: [
       {

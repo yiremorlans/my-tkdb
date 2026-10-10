@@ -223,17 +223,8 @@ for (const tier of Object.keys(DIALOGUE_POOL_TARGET_BY_TIER)) {
   );
 }
 
-// `approach` (the step-forward button) is tiered identically to `dialogue` —
-// same six keys, picked once per encounter — so DIALOGUE_POOL_TARGET_BY_TIER
-// applies to it unchanged, and it reuses the table directly.
-//
-// Sharing a target does not by itself keep `dialogue` and `approach` in sync
-// — growing one tier's pool without the other still leaves them the same
-// *size* but drawn independently, which is what let mismatched lines and
-// buttons ship together. Pair them instead: write `dialogue[tier]` entries as
-// { line, approach } (getRandomDialogueBeat in characters.js draws both as
-// one beat) rather than expanding `approach[tier]` on its own — see
-// docs/dialogue-approach-pairing.md.
+// `approach` lives on each `dialogue[tier]` beat, so a tier that hits the
+// target above already has one approach per line.
 // `responses` (the Kind/Playful/Bold/Neutral choice labels) have no pool target
 // of their own: they are authored on the beat, so a tier that hits the dialogue
 // target above already has one set of labels per line.

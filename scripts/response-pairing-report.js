@@ -6,20 +6,13 @@
  * The character-level per-tier pool this used to measure against is gone;
  * the archetype default is what an uncovered slot lands on now.
  *
- * Only counts entries that are already { line, approach } beats — a tier
- * still written as bare strings (not yet migrated by the
- * dialogue-approach-pairing project) has no beat to attach a response
- * override to at all, and reports as 0 beats / N/A rather than 0% covered.
+ * Only counts entries that are { line, approach } beats — a bare-string
+ * entry has no beat to attach a response override to, and a tier with none
+ * reports as 0 beats / N/A rather than 0% covered.
  *
  * Usage:
  *   node scripts/response-pairing-report.js            # human-readable table
  *   node scripts/response-pairing-report.js --json      # machine-readable, to stdout
- *
- * Used to regenerate the "Response-button pairing" section embedded in the
- * "Dialogue Pairing Tracker" artifact — re-run this, then update and
- * republish that artifact with the fresh JSON (see its footer for the
- * approach-pairing half's own refresh instructions; this section follows the
- * same pattern under a second embedded data blob).
  */
 import { DIALOGUE } from "../constants/dialogue.js";
 import { CHARACTERS } from "../constants/characters.js";
@@ -95,7 +88,7 @@ if (jsonMode) {
 
 // --- human-readable summary ---
 console.log(
-  `Response-button pairing (${TYPES.join("/")}) — coveredSlots / totalSlots per tier\n(a tier with 0 beats — not yet migrated to { line, approach } — shows as "-")\n`,
+  `Response-button pairing (${TYPES.join("/")}) — coveredSlots / totalSlots per tier\n(a tier with 0 beats shows as "-")\n`,
 );
 
 const header = ["character", ...TIERS].join("\t");

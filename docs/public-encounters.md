@@ -95,9 +95,9 @@ Last updated: 2026-10-07
    so `Promise.all` gets the tier for no extra latency.
 13. **Milestone templates use `{firstName}`, not `{name}`, for possessives**
    ("a movie in Rui's room" rather than "in Rui Mizuki's room").
-14. **§16.7's open questions are unchanged**: no boost expiry, either `/roam` or
-   `/meet` may spend the boost (whichever comes first), a flat +1 per win rather
-   than a themed bonus response, and milestones stack without dedup. The next
+14. **§16.7's decisions (settled 2026-10-09)**: no boost expiry, either `/roam`
+   or `/meet` may spend the boost (whichever comes first), a flat +1 per win
+   rather than a themed bonus response, and milestones stack without dedup. The next
    authored response redeems the pending boost for that character in one
    update (see §16.1), not as a separate nudge split across `/roam`s.
 
@@ -1394,19 +1394,18 @@ New `db/supabase.js` functions:
 
 `ENCOUNTER_AFFINITY_GAIN` is removed — a win grants no direct affinity.
 
-### 16.7 Open questions
+### 16.7 Decisions (settled 2026-10-09)
 
-- **Boost expiry** — v1 has none. Add a 7-day cutoff if unspent boosts feel
-  like they trivialize a later return.
-- **Does `/meet` consume the boost, or only `/roam`?** Current call: whichever
-  authored interaction with that character happens first.
-- **Bonus response button vs. flat +1** — flat +1 for v1 (cheap, predictable).
-  A themed 5th response option ("Bring up the movie", worth +2/+3) is the richer
-  follow-up if the boost should feel like content, not a number.
-- **Milestone dedup** — v1 lets a `milestone_type`'s `total` climb without
-  bound. If some milestones should be one-time ("first walk home"), add a
-  `unique` flag and have `record_encounter_milestone()` cap `total` at 1 (or
-  `DO NOTHING`) for those keys.
+- **Boost expiry:** none. With `ENCOUNTER_BOOST_CAP = 1`, an unspent boost
+  is at most +1, so it can't trivialize a later return.
+- **Which interaction spends the boost:** whichever authored interaction with
+  that character happens first, `/roam` or `/meet`.
+- **Flat +1**, not a bonus response button.
+- **No milestone dedup:** milestones are repeatable, so a `milestone_type`'s
+  `total` climbs without bound. There is no `unique` flag.
+
+**Parked:** a themed 5th response option ("Bring up the movie", worth +2/+3)
+if the boost should ever feel like content rather than a number.
 
 ---
 
@@ -1503,8 +1502,7 @@ click anyway in case the button is ever enabled by mistake.
   scene_resolved_at IS NULL RETURNING ...`), so the winner's click is a
   single round trip. Only when the claim matches nothing is the row read, to
   pick the refusal: anyone but the winner gets an ephemeral
-  `You're not part of this conversation.` *(Q23 default, wording not yet
-  confirmed)*, and a losing race or a click on a closed scene gets a quiet
+  `You're not part of this conversation.`, and a losing race or a click on a closed scene gets a quiet
   `The moment has passed.` Neither edits the post.
 - **The gain:** the click grants `CALL_SCENE_GAIN = 1` when the choice's rank
   in the character's **base** `affinityByResponse` is fave (2) or like (1),
@@ -1747,16 +1745,13 @@ from Discord.
   quietly gets the boost instead. Ignoring a scene paying slightly more on
   average is accepted.
 - **Rate is 7%** (2026-10-07, down from the 10% design rate). Every register
-  is labeled, so every character win is eligible; revisit once it has run live.
+  is labeled, so every character win is eligible.
 - **Scenes live in `winnerLines` (2026-10-06):** one pool, with an object
   entry `{ line, responses }` marking a line that can open a scene.
 - **Scope:** call scenes only. Date encounters belong to a later `/roam`
   and `/meet` extension. Here the date button is only shown (locked), with
   no face and no reaction.
 
-### 17.11 Open
-
-- Q23 (the non-winner wording, `You're not part of this conversation.`) is
-  still an assumed default. Q22 (no label echo) and Q24 (the closeout keeps
-  the opening) were settled on 2026-10-06 with the reaction-replaces-line
-  design.
+- **Non-winner refusal (Q23, settled 2026-10-09):** `You're not part of
+  this conversation.` Q22 (no label echo) and Q24 (the closeout keeps the
+  opening) were settled on 2026-10-06 with the reaction-replaces-line design.

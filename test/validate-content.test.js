@@ -112,7 +112,7 @@ test('validateContent flags an over-length beat approach — as a single string 
 test('validateContent flags an over-length beat response — as a single string or inside an array', () => {
   // Inject the responses rather than hunting the catalog for a beat of the
   // right shape: which beats carry `responses`, and whether as strings or
-  // arrays, changes as characters migrate, and the validator has to handle
+  // arrays, changes as content is authored, and the validator has to handle
   // both shapes regardless.
   const beat = DIALOGUE.benkei.dialogue.known.find((b) => b && typeof b === 'object');
   assert.ok(beat, 'benkei.known should have at least one object beat to mutate');

@@ -1,4 +1,4 @@
-// getRandomDialogueBeat (docs/dialogue-approach-pairing.md): draws a
+// getRandomDialogueBeat: draws a
 // `dialogue[tier]` line and its `approach` button as one unit instead of two
 // independent pools. This is the guarantee the whole design rests on: a beat's
 // own approach is the only source of its label, so all a bare string can
@@ -27,8 +27,7 @@ mock.module('../constants/dialogue.js', {
       [BARE_ID]: {
         dialogue: { new: ['Bare line A', 'Bare line B'] },
       },
-      // New shape: every line is a beat, no separate `approach` pool at all.
-      // A carries its own `responses` override; B carries none, so it must
+      // Every line is a beat. A carries its own `responses` override; B carries none, so it must
       // fall through to null rather than borrow A's.
       [PAIRED_ID]: {
         dialogue: {
@@ -53,8 +52,8 @@ mock.module('../constants/dialogue.js', {
       [MIXED_ID]: {
         dialogue: {
           new: [
-            { line: 'Migrated line', approach: 'Migrated approach' },
-            'Unmigrated line',
+            { line: 'Beat line', approach: 'Beat approach' },
+            'Bare line',
           ],
         },
       },
@@ -90,7 +89,7 @@ test('a bare-string line has no approach of its own, so it draws a non-empty gen
   }
 });
 
-test('a migrated tier never mismatches a line with another beat\'s approach', () => {
+test('a beat tier never mismatches a line with another beat\'s approach', () => {
   const character = { id: PAIRED_ID };
   const draws = times(40, () => getRandomDialogueBeat(character, 'new'));
   for (const { line, approach } of draws) {
@@ -118,11 +117,11 @@ test('a beat always keeps its own approach, even in a tier with bare-string line
   const character = { id: MIXED_ID };
   const draws = times(40, () => getRandomDialogueBeat(character, 'new'));
   for (const { line, approach } of draws) {
-    if (line === 'Migrated line') assert.strictEqual(approach, 'Migrated approach');
-    else if (line === 'Unmigrated line') assert.ok(approach.length > 0);
+    if (line === 'Beat line') assert.strictEqual(approach, 'Beat approach');
+    else if (line === 'Bare line') assert.ok(approach.length > 0);
     else assert.fail(`unexpected line: ${line}`);
   }
-  assert.ok(draws.some((d) => d.line === 'Migrated line'));
+  assert.ok(draws.some((d) => d.line === 'Beat line'));
 });
 
 test('a variant-keyed tier resolves each variant on its own — one variant can be paired while the other has bare-string lines', () => {
@@ -140,7 +139,7 @@ test('a variant-keyed tier resolves each variant on its own — one variant can 
   }
 });
 
-test('getRandomDialogueEntry (used by /meet, which has no approach button) unwraps a migrated beat to its line — never "[object Object]"', () => {
+test('getRandomDialogueEntry (used by /meet, which has no approach button) unwraps a beat to its line — never "[object Object]"', () => {
   const character = { id: PAIRED_ID };
   for (const { line } of times(20, () => getRandomDialogueEntry(character, 'new'))) {
     assert.strictEqual(typeof line, 'string');

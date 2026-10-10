@@ -20,8 +20,7 @@
 // invitation always answers the scene the player just read. A bare string
 // would render APPROACH_LABEL_FALLBACK's generic "Step forward" against a
 // scene it knows nothing about, and validateContent fails the build on one. See
-// docs/dialogue-approach-pairing.md and constants/dialogue/benkei.js (its
-// new/known/warm/close/bound tiers) for a worked example.
+// constants/dialogue/benkei.js for a worked example.
 //
 // `responses` holds the four button labels offered to the player, and lives on
 // the beat itself — `{ line, approach, greeting, responses: { kind, playful,

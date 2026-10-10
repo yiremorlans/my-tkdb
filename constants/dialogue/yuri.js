@@ -467,11 +467,6 @@ export default {
         },
       },
     ],
-    // warm/spark/close/bound below are migrated to full { line, approach,
-    // greeting, responses } beats, same as new/known. warm is now grown out to
-    // its DIALOGUE_POOL_TARGET_BY_TIER size (18); spark/close/bound are still
-    // at 5 against targets of 27/38/46. Pairing doesn't wait on pool growth;
-    // it's a separate axis.
     warm: [
       {
         line: "His cold demeanor cracks slightly: there's obsession in his eyes now, the drive to cure your curse is consuming him.",

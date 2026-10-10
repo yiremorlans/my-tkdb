@@ -1,25 +1,19 @@
 #!/usr/bin/env node
 /**
- * dialogue-pairing-report — snapshots how far each character is through the
- * dialogue/approach pairing migration (docs/dialogue-approach-pairing.md).
+ * dialogue-pairing-report — snapshots each character's dialogue pool sizes.
  *
  * For every character it reports, per tier (new/known/warm/spark/close/bound):
  *   - the raw `dialogue[tier]` entry count, and how many of those entries are
- *     already { line, approach } beats vs. still bare strings
+ *     { line, approach } beats
  *   - DIALOGUE_POOL_TARGET_BY_TIER for that tier, so you can see whether a
  *     count that looks "done" actually hits the target
  *
- * A tier only counts as meeting its target when its PAIRED count reaches the
- * target; bare-string lines have no approach of their own and draw the
- * shared/generic label instead (see docs/dialogue-approach-pairing.md).
+ * A tier only counts as meeting its target when its beat count reaches the
+ * target; a bare-string line has no approach of its own.
  *
  * Usage:
  *   node scripts/dialogue-pairing-report.js            # human-readable table
  *   node scripts/dialogue-pairing-report.js --json      # machine-readable, to stdout
- *
- * Used to regenerate the data embedded in the "Dialogue Pairing Tracker"
- * artifact after each round of migration — re-run this, then update and
- * republish that artifact with the fresh JSON.
  */
 import { DIALOGUE } from "../constants/dialogue.js";
 import { DIALOGUE_POOL_TARGET_BY_TIER } from "../constants/game.js";
