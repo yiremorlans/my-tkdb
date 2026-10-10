@@ -170,8 +170,8 @@ export const RESET_BUTTON_LABEL = "Use a cooldown reset"; // 20 chars, well unde
 // leaves anything behind.
 export function resetOfferLine(held) {
   return held === 1
-    ? "\nYou have **1 cooldown reset** banked from a mission. Spend it now, or keep it for later."
-    : `\nYou have **${held} cooldown resets** banked from missions. Spend one now, or keep them for later.`;
+    ? "\nYou have **1 cooldown reset** banked. Spend it now, or keep it for later."
+    : `\nYou have **${held} cooldown resets** banked. Spend one now, or keep them for later.`;
 }
 
 /**

@@ -101,7 +101,7 @@ Mortkranken (2), 33% in most houses and 25% in Frostheim or Dionysia (4).
 Accepted as is.
 
 Players can **hold any number** of every item. There is no inventory command;
-held counts appear in the shop page footer and on the button/select that
+held counts appear in the shop's wallet header and on the button/select that
 spends them (§4).
 
 ### 2a. Cooldown reset
@@ -116,6 +116,13 @@ spends them (§4).
   `bought_resets`, co-op scope). `countCooldownResets` returns the sum.
 - Buying is never refused because the player already holds resets; price and
   the daily quantity are the limit.
+- **Copy is source-neutral.** Bought and mission resets are one pool, so no
+  player-facing line may say where a reset came from. The cooldown offer
+  (`resetOfferLine`, `constants/missions.js`) already reads "banked", not
+  "banked from a mission/missions" (changed 2026-10-09). At shop launch, the
+  empty-pool refusal in `missions/resets.js` ("Finish a mission to earn one.")
+  also names the shop as a source, and the README's "Finishing a mission ...
+  hands you a reset" paragraph gains the shop.
 
 ### 2b. Chancellor's envelope
 
@@ -211,6 +218,14 @@ Shop copy:
 Components V2, ephemeral, two pages with ◀ ▶ buttons
 (`shop:page:<1|2>`).
 
+**Wallet header (every page, every render).** The first text block of the
+message, above the thumbnail section, is the player's balance and held counts,
+e.g. `💎 23 · Resets 2 · Compasses 1 · Fresh picks 0 · Envelopes 0 · Slips 0`.
+It is rendered on both pages and on every update (page flips, buys, returns),
+so the player always sees what they have without scrolling. It is read from
+the same `user_activity` row the render already loads, so it costs no extra
+query, and after a buy it shows the post-RPC balance.
+
 ### Page 1: Benkei's counter
 
 - Thumbnail: Benkei's **default expression** (`assets/expressions/benkei/…`),
@@ -222,8 +237,6 @@ Components V2, ephemeral, two pages with ◀ ▶ buttons
 - One row per stocked item: name, one-line description, price, and a
   **Buy · 💎N** button (`shop:buy:<itemId>`), disabled when the player can't
   afford it or has bought today's quantity (`Sold out` / `Need 💎N`).
-- Footer: balance and held counts, e.g.
-  `💎 23 · Resets 2 · Compasses 1 · Fresh picks 0 · Envelopes 0`.
 
 ### Page 2: Lost & Found
 
@@ -243,7 +256,7 @@ Components V2, ephemeral, two pages with ◀ ▶ buttons
   `shop_bought`. Returns `bought | insufficient | sold_out`. Double-clicks are
   safe.
 - The interaction is answered with an update to the same message (re-rendered
-  page 1 with the new balance), plus a short Benkei confirmation line.
+  page 1 with the new balance in the wallet header), plus a short Benkei confirmation line.
 - Price, appearance chance and cap live in one constant table
   (`constants/shop.js`, `SHOP_ITEMS`) so the RPC is passed them and game
   balance is written down in one place (same pattern as `COOLDOWN_MS`).
@@ -360,6 +373,8 @@ Service role only, same RLS story as every other table.
 - All 26 characters including Benkei, one item each to start.
 - Page 1 thumbnail = Benkei default expression; page 2 = cat sprite.
 - No purchase confirmation.
+- Balance + held counts are a wallet header at the top of both pages, never a
+  footer (2026-10-09).
 - Envelope 💎 9 (raised from 7, 2026-10-08 balance review).
 - Reassignment slip 💎 6, ~30%, ×1; type reroll, house kept; reassigned
   errand is `N = 1` so payback is zero (2026-10-09).
