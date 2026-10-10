@@ -9,7 +9,7 @@ export default {
   bondScenes: {
     acquaintance: {
       beats: [
-        "**{firstName}**: Odd hour for this. I've stopped being able to tell which hours are odd.",
+        "**{firstName}**: Is this an odd hour? I've stopped being able to tell.",
         "Quick thing, then I'll leave you be. You came through the hall Tuesday while I was dealing with three separate crises, and you didn't add a fourth. You took the clipboard out of my hand long enough for me to drink my coffee while it was still hot.\n\nThat's the whole compliment, cutie. {timesMet} times in this house and you're the first to hand me something instead of a problem. In Dionysia, that makes you rare.",
       ],
       choice: {

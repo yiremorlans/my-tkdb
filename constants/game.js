@@ -200,6 +200,14 @@ export const CASUAL_IMAGE_PROBABILITY_OVERRIDE = {
 // under it; use it when deciding how many lines a tier's rewrite needs, the
 // way constants/dialogue/alan.js's known/warm pools do.
 export const POOL_POINTS_PER_LINE = 4;
+
+// Moods: how many beats in each tier's pool should carry `mood: true` (liked
+// pays 2, favorite pays 1; see getAffinityForResponse), roster-wide. A gentle ramp of
+// roughly 11% -> 15% -> 16% -> 17% of DIALOGUE_POOL_TARGET_BY_TIER, so the
+// favorite stays the reliable answer in most draws. Like the pool target, it's
+// a documented target, not enforced: add moods as a tier's pool grows toward
+// its target, so a short pool doesn't shift moods far more often than intended.
+export const MOOD_BEAT_TARGET_BY_TIER = { warm: 2, spark: 4, close: 6, bound: 8 };
 export const MIN_DIALOGUE_POOL_SIZE = 5;
 
 function levelWidth(index) {

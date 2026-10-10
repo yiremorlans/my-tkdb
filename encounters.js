@@ -24,6 +24,7 @@ import {
   getRandomCharacterImageVariant,
   getRandomDialogueBeat,
   getRandomDialogueEntry,
+  moodNotice,
   RESPONSE_TYPES,
 } from './constants/characters.js';
 import {
@@ -125,10 +126,10 @@ function selectRoamSpot(character, now, turfProbability) {
 // getRandomDialogueEntry (/meet). It is the only source of character-specific
 // labels; without one every button falls to its archetype default, which is
 // what the disabled re-render at the result step does.
-// `swap` is the drawn beat's flag (getAffinityForResponse). It rides in the
-// custom_id as a trailing ":s", so the click scores the beat it answers with
+// `mood` is the drawn beat's flag (getAffinityForResponse). It rides in the
+// custom_id as a trailing ":m", so the click scores the beat it answers with
 // no cache or DB lookup; buttons without it score on the base ranking.
-function responseActionRow(characterId, disabled = false, origin = 'meet', beatResponses = null, swap = false) {
+function responseActionRow(characterId, disabled = false, origin = 'meet', beatResponses = null, mood = false) {
   const character = getCharacterById(characterId);
   const characterResponses = character
     ? generateCharacterResponses(character, beatResponses)
@@ -143,7 +144,7 @@ function responseActionRow(characterId, disabled = false, origin = 'meet', beatR
           type: MessageComponentTypes.BUTTON,
           style: RESPONSE_STYLES[responseType],
           label: option.label,
-          custom_id: `resp:${characterId}:${responseType}:${origin}${swap ? ':s' : ''}`,
+          custom_id: `resp:${characterId}:${responseType}:${origin}${mood ? ':m' : ''}`,
           disabled,
         },
       ],
@@ -283,8 +284,9 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
     approach,
     greeting,
     responses: beatResponses,
-    swap,
+    mood,
   } = getRandomDialogueBeat(character, tier, variant, dialogueCtx);
+  const notice = moodNotice(character, mood);
 
   const charFilename = character.images[variant];
 
@@ -296,11 +298,11 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
     dialogue,
     greeting,
     beatResponses,
-    swap,
+    mood,
   });
 
   return {
-    content: `*${dialogue}*`,
+    content: notice ? `${notice}\n\n*${dialogue}*` : `*${dialogue}*`,
     components: [
       {
         type: MessageComponentTypes.ACTION_ROW,
@@ -327,7 +329,7 @@ export async function buildRoamSpawnMessage(encounterId) {
     };
   }
 
-  const { spot, characterId, charFilename, greeting, beatResponses, swap } = encounter;
+  const { spot, characterId, charFilename, greeting, beatResponses, mood } = encounter;
   const character = getCharacterById(characterId);
   const imageBuffer = await composeEncounter(spot.file, charFilename, greeting);
   const placeName = getLocationDisplayName(spot);
@@ -336,7 +338,7 @@ export async function buildRoamSpawnMessage(encounterId) {
   return {
     content: `You wander ${preposition} **${placeName}** and run into **${getFullName(character)}**...`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
-    components: responseActionRow(character.id, false, 'roam', beatResponses, swap),
+    components: responseActionRow(character.id, false, 'roam', beatResponses, mood),
     flags: EPHEMERAL_FLAG,
   };
 }
@@ -654,7 +656,7 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
   // approach/greeting resolution /meet doesn't render — `line` and
   // `responses` come from the one drawn beat, never two independent draws
   // (see getRandomDialogueEntry).
-  const { line: dialogue, responses: beatResponses, swap } = getRandomDialogueEntry(
+  const { line: dialogue, responses: beatResponses, mood } = getRandomDialogueEntry(
     character,
     tier,
     variant,
@@ -666,11 +668,12 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
   const imageBuffer = await composeEncounter(fallbackSpot.file, charFilename, dialogue);
 
   const locationText = fallbackSpot ? ` at **${getLocationDisplayName(fallbackSpot)}**.` : '.';
+  const notice = moodNotice(character, mood);
 
   return {
-    content: `${getFullName(character)} agrees to meet you${locationText}`,
+    content: `${getFullName(character)} agrees to meet you${locationText}${notice ? `\n${notice}` : ''}`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
-    components: responseActionRow(character.id, false, 'meet', beatResponses, swap),
+    components: responseActionRow(character.id, false, 'meet', beatResponses, mood),
     flags: EPHEMERAL_FLAG,
   };
 }
@@ -682,7 +685,7 @@ export async function buildResponseResultMessage(
   characterId,
   responseTypeId,
   shownComponents = null,
-  { swap = false } = {},
+  { mood = false } = {},
 ) {
   const character = getCharacterById(characterId);
   if (!character) {
@@ -692,7 +695,7 @@ export async function buildResponseResultMessage(
     };
   }
 
-  const baseGain = getAffinityForResponse(character, responseTypeId, { swap });
+  const baseGain = getAffinityForResponse(character, responseTypeId, { mood });
 
   // A /call win never moves affinity itself (a call scene's click aside, which
   // replaces the boost) — it leaves a pending boost that the next authored

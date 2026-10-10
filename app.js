@@ -1035,7 +1035,8 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     if (action === 'resp') {
       // origin ('meet' | 'roam') identifies the flow this response completes;
       // absent on buttons rendered before this field was added — default 'meet'.
-      // A trailing 's' marks a beat flagged `swap` (see responseActionRow).
+      // A trailing 'm' marks a mood beat (see responseActionRow); 's' is the
+      // same flag on buttons rendered before moods were renamed from swaps.
       const [characterId, responseTypeId, origin, beatFlag] = rest;
       const commandName = origin === 'roam' ? 'roam' : 'meet';
 
@@ -1100,7 +1101,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             characterId,
             responseTypeId,
             req.body.message?.components,
-            { swap: beatFlag === 's' },
+            { mood: beatFlag === 'm' || beatFlag === 's' },
           );
           await sendFollowup(req.body.token, messageData, 15000, true);
 

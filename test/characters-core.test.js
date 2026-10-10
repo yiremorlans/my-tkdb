@@ -4,6 +4,7 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 import {
   getAffinityForResponse,
+  moodNotice,
   getCharacterById,
   getFullName,
   RESPONSE_TYPES,
@@ -68,13 +69,23 @@ test('getAffinityForResponse reads the character\'s own KIND/PLAYFUL/BOLD rankin
   assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.BOLD), 0);
 });
 
-test('getAffinityForResponse with swap exchanges favorite and liked, leaving least-liked and NEUTRAL alone', () => {
+// Every mood beat tips the player off; any other beat says nothing.
+test('moodNotice flags mood beats only', () => {
+  const jin = CHARACTERS.find((c) => c.id === 'jin');
+  assert.strictEqual(
+    moodNotice(jin, true),
+    'Jin seems to be in a different **mood** today.',
+  );
+  assert.strictEqual(moodNotice(jin, false), null);
+});
+
+test('getAffinityForResponse with mood exchanges favorite and liked, leaving least-liked and NEUTRAL alone', () => {
   // ren: { kind: 1, playful: 2, bold: 0 }
-  const swap = { swap: true };
-  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.KIND, swap), 2);
-  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.PLAYFUL, swap), 1);
-  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.BOLD, swap), 0);
-  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.NEUTRAL, swap), 0);
+  const mood = { mood: true };
+  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.KIND, mood), 2);
+  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.PLAYFUL, mood), 1);
+  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.BOLD, mood), 0);
+  assert.strictEqual(getAffinityForResponse(ren, RESPONSE_TYPES.NEUTRAL, mood), 0);
 });
 
 test('getAffinityForResponse defaults to 0 for a response type missing from affinityByResponse', () => {

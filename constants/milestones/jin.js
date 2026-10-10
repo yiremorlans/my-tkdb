@@ -24,7 +24,7 @@ export default {
       bucket: "new",
       label: "Carried his dinner up to his room",
       afterline:
-        "He sent you up to his room with his dinner, then ate it while you were still standing there.",
+        'You carried his dinner up to his room. "I\'ll eat it later if I feel like it."',
       hint: "that dinner you carried up",
     },
 

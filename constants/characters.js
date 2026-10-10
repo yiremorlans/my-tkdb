@@ -57,7 +57,7 @@ export const CHARACTERS = [
     // far. Stay here tonight", the Max Affinity "I don't take you being here
     // for granted. I know it won't last forever" — all want gentleness, not a
     // push. playful lands worst (0): he does the teasing himself and has no
-    // patience for it lobbed back — "Get to the point. The trash here is so
+    // use for it lobbed back — "Get to the point. The trash here is so
     // long-winded", "Spit it out", "Why are you so chatty today? Just pour my
     // tea". "Didn't resonate," not dislike.
     affinityByResponse: { kind: 1, playful: 0, bold: 2 },
@@ -68,13 +68,13 @@ export const CHARACTERS = [
       "commands, never asks ('That's an order')",
       "old-money heir — private helicopter, personal chef",
       "classically raised — waltz, piano duets, dining etiquette",
-      "short-tempered, no patience for long-windedness",
+      "patient, but no use for idle chatter",
       "despises bootlickers, respects guts",
       "tsundere generosity ('take it before I change my mind')",
       "smokes",
       "a betrayed figurehead under the crown",
       "knows nothing good lasts",
-      "possessive — 'you wear my name well'",
+      "possessive — 'everyone already knows you're mine'",
       "protective — 'your place at my back'",
       "keeps Tohma as his attendant",
     ],
@@ -1179,24 +1179,32 @@ export function getRandomCharacterImageVariant(character) {
 // Affinity gained for a given response type, from this character's
 // perspective. NEUTRAL always yields 0, regardless of character.
 //
-// `swap` is the drawn beat's flag (see SWAP_TIERS): for that one response the
-// character's liked type pays 2 and their favorite pays 1, so a scene can call
-// for the less usual approach. The least-liked type stays 0. The base ranking
+// `mood` is the drawn beat's flag (see MOOD_TIERS): the character is in a
+// different mood, so for that one response their liked type pays 2 and their
+// favorite pays 1, and the scene calls for the less usual approach. The least-liked type stays 0. The base ranking
 // never changes, which is what {favResponse} in the Friend bond scene and the
 // warding cards read.
-export function getAffinityForResponse(character, responseType, { swap = false } = {}) {
+export function getAffinityForResponse(character, responseType, { mood = false } = {}) {
   if (responseType === RESPONSE_TYPES.NEUTRAL) return 0;
   const gain = character.affinityByResponse[responseType] ?? 0;
-  if (!swap) return gain;
+  if (!mood) return gain;
   if (gain === 2) return 1;
   if (gain === 1) return 2;
   return gain;
 }
 
-// The dialogue tiers a beat may carry `swap: true` in. Close Friend on: by
-// then the player has learned the favorite, and the Friend bond scene's
-// {favResponse} has already been delivered on the base ranking.
-export const SWAP_TIERS = ["spark", "close", "bound"];
+// Moods: the dialogue tiers a beat may carry `mood: true` in. Friend on: the
+// Friend bond scene's {favResponse} has already been delivered on the base
+// ranking. How many mood beats each tier should carry is
+// MOOD_BEAT_TARGET_BY_TIER (constants/game.js).
+export const MOOD_TIERS = ["warm", "spark", "close", "bound"];
+
+// The generic tip-off shown ahead of every mood beat, so the player knows the
+// usual approach may not land today. null for any other beat.
+export function moodNotice(character, mood) {
+  if (!mood) return null;
+  return `${character.firstName} seems to be in a different **mood** today.`;
+}
 
 // Last-resort label for the /roam narration button. Unreachable by authored
 // content — every one of the 1239 drawable beats carries its own `approach`,
@@ -1283,8 +1291,8 @@ export function getRandomDialogueEntry(
   ctx = {},
 ) {
   const entry = pickDialogueEntry(character, tier, variant, ctx);
-  if (!entry) return { line: "...", responses: null, swap: false };
-  return { line: entry.line, responses: entry.responses, swap: entry.swap };
+  if (!entry) return { line: "...", responses: null, mood: false };
+  return { line: entry.line, responses: entry.responses, mood: entry.mood };
 }
 
 // A tier entry is a beat (see getRandomDialogueBeat) where `approach` is one
@@ -1305,7 +1313,7 @@ const NORMALIZED_BEAT_DEFAULT = {
   approachOptions: null,
   greetingOptions: null,
   responses: null,
-  swap: false,
+  mood: false,
 };
 
 function normalizeBeat(entry) {
@@ -1320,7 +1328,7 @@ function normalizeBeat(entry) {
       approachOptions: toOptions(approach),
       greetingOptions: toOptions(greeting),
       responses: responses || null,
-      swap: entry.swap === true,
+      mood: entry.mood === true,
     };
   }
   return { ...NORMALIZED_BEAT_DEFAULT };
@@ -1345,17 +1353,17 @@ export function getRandomDialogueBeat(character, tier, variant = null, ctx = {})
       approach: pickRandom(APPROACH_LABEL_FALLBACK),
       greeting: null,
       responses: null,
-      swap: false,
+      mood: false,
     };
   }
 
-  const { line, approachOptions, greetingOptions, responses, swap } = entry;
+  const { line, approachOptions, greetingOptions, responses, mood } = entry;
   const approach = approachOptions
     ? pickRandom(approachOptions)
     : pickRandom(APPROACH_LABEL_FALLBACK);
   const greeting = greetingOptions ? pickRandom(greetingOptions) : null;
 
-  return { line, approach, greeting, responses, swap };
+  return { line, approach, greeting, responses, mood };
 }
 
 // `beatResponses` is the { kind, playful, bold, neutral } label object off the
