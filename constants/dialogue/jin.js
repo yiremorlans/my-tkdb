@@ -604,11 +604,13 @@ export default {
       },
       {
         line: '"Where the hell were you yesterday?" He sounds annoyed. He also sounds like he checked.',
+        // Annoyed because he worried: owning it lands, pushing back doesn't.
+        mood: true,
         approach: "Tell him where you were",
         greeting:
           "\"I didn't ask so I could hear excuses. Just don't vanish without telling me again.\"",
         responses: {
-          kind: ["Promise to tell him next time", "Say you missed him too"],
+          kind: ["Promise to tell him next time", "Say you're glad he noticed"],
           playful: ["Ask if he looked for you", "Ask if that's an order"],
           bold: ["Say he could have texted", "Ask why it matters to him"],
           neutral: ["Apologize once", "Nod and let it go"],
@@ -704,7 +706,10 @@ export default {
           '"Hold still. You\'re standing next to me looking like a mess."',
         responses: {
           kind: ["Let him take his time", "Hold still for him"],
-          playful: ["Ask if he's done fussing", "Ask if you're presentable now"],
+          playful: [
+            "Ask if he's done fussing",
+            "Ask if you're presentable now",
+          ],
           bold: ["Say you dressed for him", "Stay right where you are"],
           neutral: ["Look away first", "Let him finish"],
         },
@@ -727,7 +732,7 @@ export default {
         mood: true,
         approach: "Show up after a few days",
         greeting:
-          "\"...You've got guts abandoning your place at my back, servant.\"",
+          '"...You\'ve got guts abandoning your place at my back, servant."',
         responses: {
           kind: ["Say you're back for good", "Say you missed your place"],
           playful: ["Ask if he was lost without you", "Ask if he kept it warm"],

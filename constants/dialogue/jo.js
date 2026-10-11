@@ -106,10 +106,10 @@ export default {
           },
           {
             key: "bold",
-            label: "Say he could've just asked",
+            label: "Say he should've asked sooner",
             style: 4,
             close:
-              "I know. I sat on it for a week deciding whether saying it out loud would ruin the whole exercise.\n\nApparently not. So, properly: come run with me. And sleep early tonight. That one isn't a request.",
+              "You're right. I sat on it for a week deciding whether saying it out loud would ruin the whole exercise.\n\nThat's a week of mornings I ran alone for nothing. I won't make that mistake twice. And sleep early tonight. That one isn't a request.",
           },
         ],
       },
@@ -144,10 +144,10 @@ export default {
           },
           {
             key: "bold",
-            label: "Call the fitting an excuse",
+            label: "Ask for the whole afternoon",
             style: 4,
             close:
-              "Caught.\n\nFine. I wanted to see you in something I picked out myself. Don't gloat about it.",
+              "The whole afternoon.\n\n...Done. Mio can have the leadership meeting to himself, and neither of us has to pretend it's about the costume. Don't be late.",
           },
         ],
       },
@@ -159,40 +159,40 @@ export default {
 
     devoted: {
       beats: [
-        "**{firstName}**: I owe you a confession about that fitting.",
-        "When I fitted you for the silk, I took one measurement I didn't need. I said it was for the costume jewelry.\n\nIt wasn't. I had a silver ring made for you. It's been sitting in my desk drawer for weeks while I waited for the right moment, and I've stopped waiting.",
-        "Somewhere between the morning jogs together and that fitting, you stopped being someone I fit into my schedule, and I started wanting to clear whole days just to spend them with you. You're the only person I stop checking the time with, cutie.\n\nI'm not asking you anything with it. Not yet. I'm just done keeping you to the hours nobody's watching. I want {house} to know about us, and if anyone asks, I'll tell them.",
+        "**{firstName}**: Remember the green silk? When I fitted you for it, I took one measurement that had nothing to do with the costume.",
+        "Somewhere between the morning jogs together and that afternoon in my office, you stopped being someone I fit into my schedule, and I started wanting to clear whole days just to spend them with you. You're the only person I stop checking the time with, cutie.",
+        "I'm done keeping you to the hours nobody's watching. I want {house} to know about us, and if anyone asks, I'll tell them myself.",
       ],
       choice: {
         prompt:
-          "Can I come see you now? I've put this off long enough, and I don't want to spend another night on it.",
+          "Are you free tonight? I'd like to come see you.\n\nIf you'd like me to stay, you only have to ask.",
         options: [
           {
             key: "kind",
-            label: "Say he's been on your mind",
+            label: "Ask him to stay the night",
             style: 3,
             close:
-              "Heh. Then we've both had a terrible week for concentrating.\n\nA hundred costume changes, and I think my hands are going to shake on this one.",
+              "Heh. I was hoping you'd ask.\n\nI'm on my way. And I'm skipping the morning jog tomorrow. You can be the reason.",
           },
           {
             key: "playful",
-            label: "Only if it isn't costume",
+            label: "Ask who he'll tell first",
             style: 1,
             close:
-              "It is not. I checked the silver twice.\n\nCostume jewelry comes off when the curtain drops. I'm heading over right away.",
+              "Whoever asks first. Knowing this house, that's everyone by breakfast.\n\nI'm heading over right away.",
           },
           {
             key: "bold",
             label: "Say you're his",
             style: 4,
             close:
-              "...I'm already out the door. Say it again when I'm there, so I can hear it.",
+              "...I'm already out the door. Say it again when I'm there. I'd like to hear it all night.",
           },
         ],
       },
       keepsake: {
         emoji: "💍",
-        line: "A silver ring sized at a fitting he said was for the costume.",
+        line: "A ring sized at a fitting he said was for the costume.",
       },
     },
 
@@ -236,11 +236,14 @@ export default {
         approach: "Ask for a minute of {his} time",
         greeting: '"A new face! Come on in, cutie. What\'s your name?"',
         responses: {
-          kind: ["Say the work can wait", "Offer to help with it"],
-          playful: ["Tease {him} about the papers", "Steal the budget pen"],
+          kind: ["Give your name, keep it short", "Offer to help with it"],
+          playful: [
+            "Tease {him} about the papers",
+            "Give your name with a bow",
+          ],
           bold: [
             "Ask {him} to work less for you",
-            "Demand {his} full attention",
+            "Ask {him} to put the pen down",
           ],
           neutral: ["Sit while {he} works", "Wait without interrupting"],
         },
@@ -269,9 +272,9 @@ export default {
         greeting:
           '"Pull up a chair. I\'ve got a budget to fight with, but I can talk and lose at the same time."',
         responses: {
-          kind: ["Thank {him} for making time", "Appreciate the effort"],
+          kind: ["Offer a second pair of eyes", "Ask if {he}'s eaten today"],
           playful: ["Match the easy charm", "Call out the charm offensive"],
-          bold: ["Meet the charisma head-on", "Refuse to be charmed"],
+          bold: ["Meet the charisma head-on", "Say to let the budget lose"],
           neutral: ["Simply be present", "Let the charm pass by"],
         },
       },
@@ -281,9 +284,9 @@ export default {
         greeting:
           "\"Give me a second to put this down, and then you've got my full attention. What's going on?\"",
         responses: {
-          kind: ["Offer to come back later", "Say you'll leave {him} to it"],
-          playful: ["Steal {his} coffee order", "Rearrange {his} paperwork"],
-          bold: ["Wave {him} over anyway", "Demand {he} take a break"],
+          kind: ["Ask how {his} day's going", "Say you came to see {him}"],
+          playful: ["Steal {his} coffee order", "Say you're the emergency"],
+          bold: ["Say {he} needs a break more", "Make {him} take a real break"],
           neutral: ["Let the schedule wait", "Wait quietly nearby"],
         },
       },
@@ -293,12 +296,15 @@ export default {
         greeting:
           '"Sit, sit. Whatever this is, it can wait until you\'ve said your piece."',
         responses: {
-          kind: ["Say you won't take long", "Thank {him} for {his} time"],
+          kind: ["Say you won't take long", "Ask how long {he}'s been at it"],
           playful: [
             "Tease {him} about signing",
             "Ask what {he}'s signing away",
           ],
-          bold: ["Pull up a chair uninvited", "Take {his} attention outright"],
+          bold: [
+            "Say your piece straight out",
+            "Take {his} attention outright",
+          ],
           neutral: ["Watch {him} work in quiet", "Sit without a word"],
         },
       },
@@ -315,8 +321,8 @@ export default {
         greeting: '"Sit anywhere. I was getting bored in here without you."',
         responses: {
           kind: ["Say you missed the chaos", "Ask if {he}'s had a break"],
-          playful: ["Say you rescued {him}", "Hide the pen from {him}"],
-          bold: ["Ask if {he} waited for you", "Say {he} wanted the excuse"],
+          playful: ["Say you rescued {him}", "Ask if you beat the budget"],
+          bold: ["Ask if {he} waited for you", "Tell {him} the pen stays down"],
           neutral: ["Take the offered seat", "Sit and let {him} finish"],
         },
       },
@@ -326,7 +332,7 @@ export default {
         greeting:
           '"Eat, don\'t be polite about it. The tray exists to be emptied."',
         responses: {
-          kind: ["Thank {him} for the snacks", "Say the dorm's lucky"],
+          kind: ["Save {him} the last one", "Say the dorm's lucky"],
           playful: ["Take two, for later", "Hide a share from Shion"],
           bold: ["Ask who feeds the captain", "Take the tray over to {him}"],
           neutral: ["Take one and say nothing", "Eat while {he} works"],
@@ -352,9 +358,12 @@ export default {
         greeting:
           '"You would? Lifesaver. When you find him, tell him I\'m not even mad. ...I am, a little."',
         responses: {
-          kind: ["Take the last errand", "Say Elias is probably fine"],
+          kind: ["Take the last errand", "Ask what else is on {his} list"],
           playful: ["Offer to impersonate Elias", "Promise a search party"],
-          bold: ["Say Elias is an excuse", "Ask why {he} trusted Elias"],
+          bold: [
+            "Say you'll bring Elias back",
+            "Tell {him} to sit, you've got it",
+          ],
           neutral: [
             "Say you'll look for him too",
             "Ask where Elias usually goes",
@@ -381,7 +390,7 @@ export default {
         approach: "Walk in like a regular",
         greeting: '"Twice now, cutie. You\'re becoming a regular around here."',
         responses: {
-          kind: ["Say you like coming by", "Thank {him} for the welcome"],
+          kind: ["Say you like coming by", "Say you come to check on {him}"],
           playful: ["Ask if you get a punch card", "Ask if regulars get perks"],
           bold: ["Ask if {he} was counting", "Say you'll make it three"],
           neutral: ["Nod and take a seat", "Say you happened to pass by"],
@@ -395,8 +404,8 @@ export default {
           kind: ["Offer to help check the tent", "Ask if anyone got hurt"],
           playful: ["Ask if three's a pattern", "Ask if the act is cursed"],
           bold: [
-            "Tell {him} to replace the tent",
-            "Tell {him} to cancel the act",
+            "Say you'll take the next check",
+            "Say {he} can't watch every act",
           ],
           neutral: ["Let {him} vent about it", "Ask who runs the fire act"],
         },
@@ -407,13 +416,13 @@ export default {
         greeting:
           '"You handle the chaos here better than half my own house does."',
         responses: {
-          kind: ["Thank {him} for noticing", "Say it was no trouble"],
+          kind: ["Say you'll split it with {him}", "Say it was no trouble"],
           playful: [
             "Race {him} to the last errand",
             "Ask if that's a favor owed",
           ],
-          bold: ["Insist on carrying some", "Take the list back from {him}"],
-          neutral: ["Let {him} take it, unbothered", "Hand over the list"],
+          bold: ["Insist on carrying some", "Say you'll return the favor"],
+          neutral: ["Let {him} take this one", "Hand over the list"],
         },
       },
       {
@@ -424,7 +433,7 @@ export default {
         responses: {
           kind: ["Say the nickname stuck", "Say you like the nickname"],
           playful: ["Answer only to 'cutie' now", "Call {him} a bad influence"],
-          bold: ["Ask for a different name", "Tell {him} to say it again"],
+          bold: ["Say {his} schedule can cope", "Tell {him} to say it again"],
           neutral: ["Don't react to the nickname", "Ask what time it is"],
         },
       },
@@ -439,7 +448,7 @@ export default {
             "Ask what Shion did this time",
             "Ask if apologies come in bulk",
           ],
-          bold: ["Say it's not {his} job", "Say Shion should apologize"],
+          bold: ["Say it's not {his} job", "Say you'll do the talking"],
           neutral: ["Walk with {him} in silence", "Ask where Shion is now"],
         },
       },
@@ -449,7 +458,10 @@ export default {
         greeting:
           "\"You're here again. I'm starting to expect it, which is dangerous for my schedule.\"",
         responses: {
-          kind: ["Say there's no rush for you", "Say you'll wait for {him}"],
+          kind: [
+            "Say the slower pace suits {him}",
+            "Say {he} looks better for it",
+          ],
           playful: [
             "Tease {him} for slowing down",
             "Ask if the lineup can wait",
@@ -469,10 +481,7 @@ export default {
             "Guess where {his} head went",
             "Ask if {he} was daydreaming",
           ],
-          bold: [
-            "Press {him} for the real answer",
-            "Ask what pulled {him} away",
-          ],
+          bold: ["Say it looked like something", "Ask what pulled {him} away"],
           neutral: ["Let it go unanswered", "Wait for {him} to continue"],
         },
       },
@@ -482,7 +491,7 @@ export default {
         greeting:
           "\"It's open for anyone. It's just usually you who walks through it.\"",
         responses: {
-          kind: ["Say you'll keep turning up", "Thank {him} for the door"],
+          kind: ["Say you'll keep turning up", "Say you look forward to it"],
           playful: ["Test it tomorrow, early", "Ask about opening hours"],
           bold: ["Ask who else walks through", "Say the door's for you then"],
           neutral: ["Take the open door as is", "Step through without asking"],
@@ -497,7 +506,10 @@ export default {
           '"Honestly? It waited two weeks for me. It can wait an hour for you."',
         ],
         responses: {
-          kind: ["Say the stack can wait", "Say you're glad to see {him}"],
+          kind: [
+            "Ask if {he}'s slept this week",
+            "Say the hour's for {him} too",
+          ],
           playful: [
             "Ask what {he} was signing",
             "Offer to forge {his} signature",
@@ -516,8 +528,8 @@ export default {
           '"Six, then. Windows down, and whatever today was stays outside the car."',
         responses: {
           kind: ["Say the sunset sounds perfect", "Say you'd love the drive"],
-          playful: ["Say you'll drive instead", "Ask who's picking the music"],
-          bold: ["Demand it now, not later", "Take the keys from {him}"],
+          playful: ["Ask for the long way home", "Ask who's picking the music"],
+          bold: ["Say you'll hold {him} to six", "Ask to stay out past sunset"],
           neutral: ["Ride along in quiet", "Get in, watch the road"],
         },
       },
@@ -539,10 +551,10 @@ export default {
         greeting:
           '"Proposal, schedule, program, budget... and yet here I am, making time for you."',
         responses: {
-          kind: ["Thank {him} for the hour", "Ask when {he} last stopped"],
+          kind: ["Say {he} should take two", "Ask when {he} last stopped"],
           playful: [
-            "Confiscate {his} schedule",
-            "Hide the proposal from {him}",
+            "Ask if you're on the agenda",
+            "Ask if the budget gets jealous",
           ],
           bold: ["Say the hour's non-negotiable", "Close the folder for {him}"],
           neutral: ["Sit with {him} quietly", "Take the hour offered"],
@@ -564,18 +576,24 @@ export default {
         },
       },
       {
-        line: '"Botanical garden duty today. Rui knows the equipment better than Mio does, believe it or not. I just carry things."',
-        approach: "Help with garden duty",
+        line: "\"I'm heading to the botanical garden. Rui's been advising me on maintenance for my artifact. He knows it better than Mio does, believe it or not.\"",
+        // A candid mood, letting the Mio secret slip: leaning in and asking
+        // lands better than looking after him.
+        mood: true,
+        approach: "Walk to the garden with {him}",
         greeting:
-          "\"Rui's the expert, not me. Just don't tell Mio I said that.\"",
+          "\"Company's welcome. Just don't tell Mio I said Rui's the expert.\"",
         responses: {
-          kind: ["Offer to carry the heavy stuff", "Say carrying counts too"],
-          playful: ["Doubt {he}'s the expert", "Tell Mio immediately"],
-          bold: ["Ask what Mio doesn't know", "Take the heavier crate"],
-          neutral: [
-            "Help without asking questions",
-            "Follow Rui's instructions",
+          kind: [
+            "Ask how {his} gear is holding",
+            "Say you'll keep {him} company",
           ],
+          playful: [
+            "Ask if Rui's the favorite now",
+            "Promise Mio won't hear it",
+          ],
+          bold: ["Ask what Mio doesn't know", "Ask Rui to teach you too"],
+          neutral: ["Watch Rui walk {him} through it", "Stay out of the way"],
         },
       },
       {
@@ -596,16 +614,22 @@ export default {
       },
       {
         line: '"Come to the school building with me? I\'ve got the teachers to see, and the company beats the walk alone."',
+        // He's in a light, unhurried mood: claiming more of his time lands
+        // better than checking on him.
+        mood: true,
         approach: "Go with {him}",
         greeting:
           '"Walk slow. Whatever they want from me will keep for another ten minutes."',
         responses: {
-          kind: ["Say the company's easy", "Say you'd rather walk too"],
+          kind: ["Ask how {he}'s holding up", "Ask what they want from {him}"],
           playful: [
             "Ask if you're the excuse now",
             "Walk slower than {he} does",
           ],
-          bold: ["Say {he} could've just asked", "Ask {him} to ask next time"],
+          bold: [
+            "Say you'll walk {him} back after",
+            "Say ten minutes isn't enough",
+          ],
           neutral: ["Walk with {him} in quiet", "Set an unhurried pace"],
         },
       },
@@ -651,9 +675,9 @@ export default {
         greeting:
           '"I\'d rather lose the sleep than spend the night wondering about it."',
         responses: {
-          kind: ["Thank {him} for waiting up", "Say you're glad {he} came"],
+          kind: ["Say {he} should be asleep too", "Say you're glad {he} came"],
           playful: ["Walk slower on purpose", "Ask if this is a service now"],
-          bold: ["Say you can walk alone", "Ask what {he} was afraid of"],
+          bold: ["Ask who walks {him} back", "Ask what {he} was afraid of"],
           neutral: ["Walk back beside {him}", "Let the errand wait"],
         },
       },
@@ -666,9 +690,9 @@ export default {
           kind: ["Say you'll be there for it", "Say {he} earned the afternoon"],
           playful: [
             "Ask to be penciled in weekly",
-            "Check {his} math for errors",
+            "Ask what the slot is called",
           ],
-          bold: ["Ask who else gets that slot", "Say it out loud for {him}"],
+          bold: ["Say the whole day's next", "Say you'll hold {him} to it"],
           neutral: ["Let {him} keep the reason", "Take the afternoon offered"],
         },
       },
@@ -680,7 +704,7 @@ export default {
         responses: {
           kind: ["Say you'll give it a try", "Say it clearly works for {him}"],
           playful: ["Doubt you'd survive it", "Ask how early is too early"],
-          bold: ["Ask what {he} thinks about", "Say {he} thinks too much"],
+          bold: ["Ask what {he} thinks about", "Say {he} needs more than that"],
           neutral: ["Say you'll consider it", "Take the advice, say nothing"],
         },
       },
@@ -690,8 +714,11 @@ export default {
         greeting: "\"Here's what I've found so far. Tell me what you think.\"",
         responses: {
           kind: ["Say the work shows", "Give a real opinion"],
-          playful: ["Critique it, badly", "Suggest something outrageous"],
-          bold: ["Ask what took so long", "Pick the best one for {him}"],
+          playful: [
+            "Ask to model one yourself",
+            "Suggest something outrageous",
+          ],
+          bold: ["Say which one you'd cut", "Pick the best one for {him}"],
           neutral: ["Look it over in quiet", "Read through the notes"],
         },
       },
@@ -701,7 +728,7 @@ export default {
         greeting:
           "\"Don't tell the others. There's a queue for that loaf and you just skipped it.\"",
         responses: {
-          kind: ["Thank {him} for the slice", "Say it smells good"],
+          kind: ["Save {him} half the slice", "Say it smells good"],
           playful: ["Ask for the second slice", "Promise not to tell"],
           bold: ["Ask who usually gets first", "Ask when {he} sleeps at all"],
           neutral: ["Eat it where you stand", "Take it without a word"],
@@ -709,12 +736,15 @@ export default {
       },
       {
         line: '"Everyone in this house needs something from me by noon. You just turn up. I\'ve started counting on that more than I should."',
+        // He's half-admitting he leans on you: pressing him to lean more
+        // lands better than reassurance.
+        mood: true,
         approach: "Tell {him} {he}'s dependable",
         greeting:
           '"Careful. Say that too often and I might start believing it."',
         responses: {
-          kind: ["Say it's mutual", "Say {he} can count on you"],
-          playful: ["Threaten to bring a problem", "Ask for something absurd"],
+          kind: ["Say it's mutual", "Ask what {he} needs today"],
+          playful: ["Turn up with snacks instead", "Ask for something absurd"],
           bold: [
             "Ask why that surprises {him}",
             "Say {he} can rely on you more",
@@ -739,71 +769,89 @@ export default {
       {
         line: "{He}'s got the car keys out before you've said anything, like your answer was never really in doubt.",
         approach: "Take the passenger seat",
-        greeting: "Get in. I already know where we're going.",
+        greeting: "Good. Where we're going is a surprise, cutie.",
         responses: {
-          kind: "Buckle in without a word",
-          playful: "Make {him} ask properly",
-          bold: "Get in the passenger seat",
-          neutral: "Let the drive continue",
+          kind: ["Buckle in without a word", "Say you trust {his} pick"],
+          playful: ["Make {him} ask properly", "Guess the destination"],
+          bold: ["Say you were going to ask", "Say you cleared your evening"],
+          neutral: ["Let the drive continue", "Watch the road go by"],
         },
       },
       {
         line: "{He} catches the look on your face and just watches, waiting to see if you'll say it or swallow it again.",
-        approach: "Say what you mean",
-        greeting:
-          '"That look you give me. Say what you mean by it, cutie. Out loud."',
+        // He's asking to be told outright: a flirty answer lands better than
+        // a gentle one.
+        mood: true,
+        approach: "Meet {his} eyes",
+        greeting: '"That look you give me. Say what you mean by it, cutie."',
         responses: {
-          kind: "Say what you meant by it",
-          playful: "Make {him} guess instead",
-          bold: "Say exactly what you mean",
-          neutral: "Let the look speak for itself",
+          kind: ["Say you like looking at {him}", "Say it means you're happy"],
+          playful: ["Ask what look {he} means", "Say {he} has to guess"],
+          bold: ["Say it means come closer", "Say you'd rather show {him}"],
+          neutral: ["Let the look speak for itself", "Let {him} read it"],
         },
       },
       {
-        line: "{He}'s got three things due today and a fourth just walked in and {he} can't make {himself} care about the first three.",
+        line: "{He}'s got three things due today, and since you walked in {he} can't make {himself} care about any of them.",
         approach: "Let the work wait",
         greeting:
           "Nothing on that desk is going anywhere. You are, eventually. Let's not rush that.",
         responses: {
-          kind: "Tell {him} {he} does too much",
-          playful: "Tease {him} out of the office",
-          bold: "Take the pen out of {his} hand",
-          neutral: "Sit and let the work wait",
+          kind: ["Say you're in no rush either", "Say you'll stay a while"],
+          playful: [
+            "Tease {him} out of the office",
+            "Ask which one is due first",
+          ],
+          bold: [
+            "Take the pen out of {his} hand",
+            "Say the desk can wait all day",
+          ],
+          neutral: ["Sit and let the work wait", "Let the hour run on"],
         },
       },
       {
-        line: "{He} holds {his} hand out like it's nothing, like it isn't the first unguarded thing {he}'s done all week.",
-        approach: "Take the offered hand",
-        greeting: "I'm not letting go until you tell me to. So don't, cutie.",
-        responses: {
-          kind: "Take the hand {he} offered",
-          playful: "Make {him} wait for it",
-          bold: "Take {his} hand first",
-          neutral: "Take the hand, say nothing",
-        },
-      },
-      {
-        line: "The Aqua-line's empty this late. {He} didn't plan that, or so {he} claims.",
-        approach: "Ride the Aqua-line with {him}",
+        line: "Walking back from rehearsal, {his} hand drifts toward yours. {He} catches it halfway and lowers it again, like nothing happened.",
+        // He reached and lost his nerve: taking his hand for him lands better
+        // than letting him off gently.
+        mood: true,
+        approach: "Notice the hand",
         greeting:
-          "Just us and the water tonight. I'll take that over an audience any day.",
+          "You saw that. I lost my nerve halfway. Not my finest moment, cutie.",
         responses: {
-          kind: "Say you don't mind the quiet",
-          playful: "Answer 'cutie' with 'cutie'",
-          bold: "Move closer on the seat",
-          neutral: "Ride along in silence",
+          kind: ["Say you'd have let {him}", "Say you didn't mind at all"],
+          playful: ["Ask where the nerve went", "Ask if it'll try again"],
+          bold: ["Grab {his} hand yourself", "Reach for {his} hand first"],
+          neutral: ["Keep walking with {him}", "Let {him} try again later"],
+        },
+      },
+      {
+        line: "The Aqua-line's empty this late. {He} didn't plan the drive for that, or so {he} claims.",
+        approach: "Ride along on the Aqua-line",
+        greeting:
+          "Just us and the road tonight. I'll take that over an audience any day.",
+        responses: {
+          kind: ["Say you prefer it this way", "Say you'd pick this too"],
+          playful: ["Ask if {he} planned it", "Ask if {he} booked the road"],
+          bold: ["Say you'd ride all night", "Ask {him} to skip the exit"],
+          neutral: ["Ride along in silence", "Watch the lights go past"],
         },
       },
       {
         line: "{He} scans the room the second {he} walks in, and doesn't stop looking until {he} finds you.",
-        approach: "Hold {his} gaze",
+        // He's openly glad to find you: keeping your eyes on him lands better
+        // than a soft answer.
+        mood: true,
+        approach: "Catch {his} eye",
         greeting:
-          '"Every night I look for you first. Every single night. Do with that what you like."',
+          "\"There you are. You're always the first person I look for. It's a habit by now, cutie.\"",
         responses: {
-          kind: "Say you look for {him} too",
-          playful: "Ask how long {he}'s done that",
-          bold: "Hold {his} gaze, unflinching",
-          neutral: "Let {him} find you, say nothing",
+          kind: ["Say you'd hoped {he}'d come", "Say you look for {him} too"],
+          playful: [
+            "Ask who {he} looks for second",
+            "Ask how long {he}'s done that",
+          ],
+          bold: ["Keep your eyes on {him}", "Hold {his} gaze across the room"],
+          neutral: ["Let {him} come to you", "Wave from where you are"],
         },
       },
       {
@@ -812,45 +860,54 @@ export default {
         greeting:
           "You want the version under the charm? Careful what you ask for, cutie.",
         responses: {
-          kind: "Say you like what's under it",
-          playful: "Ask what {he}'s hiding",
-          bold: "Demand the honest version",
-          neutral: "Let {him} keep some of it",
+          kind: [
+            "Say you like what's under it",
+            "Say you'll be careful with it",
+          ],
+          playful: ["Ask what {he}'s hiding", "Ask if it bites"],
+          bold: ["Say you can take it", "Ask for all of it"],
+          neutral: ["Let {him} keep some of it", "Listen without pushing"],
         },
       },
       {
         line: "For once {he} doesn't reach for the charm first. {He} just looks tired, and lets you see it.",
         approach: "Let {him} drop the act",
         greeting:
-          "No performance tonight. Just tired, and you, and that's apparently enough.",
+          "Sorry, I'm out of charm tonight. Can I just be tired with you for a bit?",
         responses: {
-          kind: "Notice the tired under it",
-          playful: "Miss the charm out loud",
-          bold: "Say {he} doesn't need the act",
-          neutral: "Sit with {him} quietly",
+          kind: ["Say {he} never has to ask", "Say yes, as long as {he} likes"],
+          playful: ["Miss the charm out loud", "Offer to be charming for two"],
+          bold: [
+            "Say {he} doesn't need the act",
+            "Say you're keeping {him} here",
+          ],
+          neutral: ["Stay with {him} a while", "Let the evening stay slow"],
         },
       },
       {
-        line: '"That look," {he} says, the schedule forgotten. "Do it again. I want to be sure."',
-        approach: "Match the look you're given",
+        line: "{He}'s doing {his} stage makeup before the show, and catches you watching in the mirror.",
+        // He's in performer mode and invites the audience: telling him he
+        // looks stunning lands better than helping.
+        mood: true,
+        approach: "Hand {him} the next brush",
         greeting:
-          "There. That's the one. Keep looking at me like that and see what happens.",
+          "Thank you. You can keep watching, cutie. I don't mind, as long as it's you.",
         responses: {
-          kind: "Give the look back",
-          playful: "Ask which version this is",
-          bold: "Hold the look, don't look away",
-          neutral: "Give it back, unhurried",
+          kind: ["Offer to do the last touches", "Hold the mirror steady"],
+          playful: ["Ask to try the eyeliner", "Ask for a matching look"],
+          bold: ["Say {he} looks stunning", "Say you'll be front row"],
+          neutral: ["Watch {him} finish", "Wait by the mirror"],
         },
       },
       {
-        line: "{He} says something under {his} breath, meant for {himself}, and you catch just enough of it to want the rest.",
+        line: 'You\'re back after a few days away, and {he} says it under {his} breath, mostly to {himself}: "...Missed you."',
         approach: "Ask {him} to say it again",
-        greeting: "No. You heard it once. That's all you're getting tonight.",
+        greeting: "Once was already more than I meant to say, cutie.",
         responses: {
-          kind: "Let {him} keep it, this once",
-          playful: "Guess at what {he} said",
-          bold: "Demand {he} says it again",
-          neutral: "Don't push for it",
+          kind: ["Say you missed {him} too", "Say it's good to be back"],
+          playful: ["Ask how much {he} missed you", "Pretend you didn't hear"],
+          bold: ["Say it back, louder", "Say you won't leave that long"],
+          neutral: ["Don't push for it", "Let the quiet say it"],
         },
       },
       {
@@ -858,80 +915,105 @@ export default {
         approach: "Step past the schedule",
         greeting: "I lost my place. I'm not going to pretend I mind.",
         responses: {
-          kind: "Tell {him} to slow down",
-          playful: "Ask what came after 'budget'",
-          bold: "Step past it entirely",
-          neutral: "Let {him} keep the pace",
+          kind: ["Tell {him} to slow down", "Say tomorrow can wait"],
+          playful: [
+            "Ask what came after 'budget'",
+            "Ask if you're on the list",
+          ],
+          bold: ["Step past it entirely", "Say the list is done for today"],
+          neutral: ["Let {him} keep the pace", "Let {him} find {his} place"],
         },
       },
       {
-        line: "{He} forgets the sentence {he} was building and just looks at you instead.",
-        approach: "Let {him} forget the sentence",
-        greeting: "I had a whole point. Gone. You do that.",
-        responses: {
-          kind: "Let the sentence go unfinished",
-          playful: "Make {him} lose the thread",
-          bold: "Finish the sentence for {him}",
-          neutral: "Wait, unbothered, in the quiet",
-        },
-      },
-      {
-        line: "{He}'s rescheduled the same meeting twice this week, and it isn't the meeting {he}'s avoiding.",
-        approach: "Ask what {he}'s avoiding",
+        line: "{He}'s walking you through the program for the next show, and halfway through the opening act {he} stops and just looks at you.",
+        approach: "Ask about the second act",
         greeting:
-          "Fine. It's you. I've been avoiding how much I look forward to you.",
+          "The second act. Right. I had the whole running order in my head a minute ago, cutie.",
         responses: {
-          kind: "Ask if {he}'s all right",
-          playful: "Guess what {he}'s avoiding",
-          bold: "Ask {him} straight out",
-          neutral: "Let {him} get there alone",
+          kind: ["Say it can wait till tomorrow", "Say {he}'ll remember later"],
+          playful: [
+            "Ask if you made {him} forget",
+            "Ask if you're the second act",
+          ],
+          bold: ["Tell {him} to keep looking", "Say you'd rather watch {him}"],
+          neutral: ["Wait for {him} to find it", "Read the program to {him}"],
         },
       },
       {
-        line: "The easy captain's smile stays perfectly in place, right up until you're the only one left in the room.",
-        approach: "Wait for the mask to slip",
+        line: "{He}'s rescheduled the same meeting twice this week. Both times it would've landed on the hour you usually come by.",
+        approach: "Ask about the meeting",
         greeting:
-          "You're the only one I don't have to hold this up for. It gets heavy, cutie.",
+          "It kept landing on your hour. I wasn't about to give that up for a meeting.",
         responses: {
-          kind: "Let {him} set the smile down",
-          playful: "Tease the slipping mask",
-          bold: "Ask what's under the smile",
-          neutral: "Watch it slip, say nothing",
+          kind: ["Say you'd have waited for {him}", "Say you'll keep coming"],
+          playful: [
+            "Ask how many times it'll move",
+            "Ask if the meeting's jealous",
+          ],
+          bold: ["Ask for a second hour", "Say you'll guard that hour"],
+          neutral: ["Let {him} keep the hour", "Take the hour as it is"],
+        },
+      },
+      {
+        line: "The last of the house files out, and the captain's smile {he} wears for them gives way to a real one, easy and unpracticed.",
+        approach: "Stay once the room empties",
+        greeting:
+          "Thank you for that. Smiling's easy when it's just you, cutie.",
+        responses: {
+          kind: ["Smile back at {him}", "Say you like this smile"],
+          playful: ["Ask which smile this is", "Ask if it's off duty too"],
+          bold: [
+            "Say you'll keep the room empty",
+            "Say no one else gets this one",
+          ],
+          neutral: ["Let the quiet settle", "Stay until {he}'s ready"],
         },
       },
       {
         line: "{He} was fitting a costume on you. Somewhere in it {his} hands stopped being a stylist's.",
         approach: "Let the fitting run long",
         greeting:
-          "This is taking longer than it should. I'm not in any hurry to fix that.",
+          "Hold still. ...I've checked this hem three times now, haven't I?",
         responses: {
-          kind: "Let {him} take {his} time",
-          playful: "Ask if it's about the costume",
-          bold: "Call out the excuse",
-          neutral: "Stand still, let it run long",
+          kind: ["Let {him} take {his} time", "Say there's no rush"],
+          playful: [
+            "Ask if it's about the costume",
+            "Ask if the hem is cursed",
+          ],
+          bold: ["Ask for a fourth check", "Say you'll stand still longer"],
+          neutral: ["Stand still, let it run long", "Hold still for {him}"],
         },
       },
       {
-        line: "{He} says something bold and immediately looks like {he}'s bracing to take it back.",
+        line: '"My whole week\'s been better because of you." {He} colors a little, hearing {himself} say it out loud.',
         approach: "Ask if {he}'s sure",
         greeting: "I'm sure. I don't say things like that by accident.",
         responses: {
-          kind: "Say it's fine either way",
-          playful: "Make {him} repeat it",
-          bold: "Tell {him} you want this",
-          neutral: "Let the moment pass",
+          kind: ["Say you feel the same", "Say yours has been too"],
+          playful: ["Make {him} repeat it", "Point out the blush"],
+          bold: [
+            "Say you'll make it every week",
+            "Say you'll do it on purpose",
+          ],
+          neutral: ["Let the moment pass", "Smile and let it be"],
         },
       },
       {
-        line: "{He} offers you the wheel halfway through the drive, like trust is just another thing {he} hands over without ceremony.",
-        approach: "Take the wheel with {him}",
+        line: "{He} holds out {his} car keys. Tonight {he} wants you to drive, and {he}'ll take the passenger seat.",
+        // He's handing over the wheel for once: telling him he's off duty
+        // lands better than promising to be careful.
+        mood: true,
+        approach: "Take the keys",
         greeting:
-          "Don't crash it. It's the only thing here I actually own outright.",
+          "I'll handle the directions. You handle not scratching the paint, cutie.",
         responses: {
-          kind: "Take the wheel carefully",
-          playful: "Steal the car keys",
-          bold: "Take the wheel like you own it",
-          neutral: "Stay in your seat",
+          kind: [
+            "Promise to drive carefully",
+            "Say you'll get {him} home safe",
+          ],
+          playful: ["Adjust every mirror first", "Ask for {his} best playlist"],
+          bold: ["Say {he} gets to rest now", "Say {he}'s off duty tonight"],
+          neutral: ["Start the car", "Pull out onto the road"],
         },
       },
       {
@@ -940,10 +1022,10 @@ export default {
         greeting:
           "I usually fill the quiet before it gets like this. I didn't want to, with you.",
         responses: {
-          kind: "Let the silence stay easy",
-          playful: "Break it first, on purpose",
-          bold: "Hold the silence and the gaze",
-          neutral: "Say nothing, stay close",
+          kind: ["Let the silence stay easy", "Say the quiet suits you two"],
+          playful: ["Break it first, on purpose", "Count how long it lasts"],
+          bold: ["Hold the silence and the gaze", "Move a little closer"],
+          neutral: ["Say nothing, stay close", "Let it stretch out"],
         },
       },
       {
@@ -952,45 +1034,61 @@ export default {
         greeting:
           "You keep looking for it. I keep hoping you'll find it before I have to show you.",
         responses: {
-          kind: "Say you're not in a rush",
-          playful: "Guess where the seam is",
-          bold: "Name the version you want",
-          neutral: "Let the question go unasked",
+          kind: ["Say you're not in a rush", "Say {he} can show you anytime"],
+          playful: ["Guess where the seam is", "Ask for a hint"],
+          bold: ["Name the version you want", "Say you'll find it first"],
+          neutral: ["Let the question go unasked", "Leave the seam be"],
         },
       },
       {
-        line: "The last of the paperwork's been signed for twenty minutes now. {He} hasn't reached for anything new.",
+        line: "It's well past the end of {his} schedule. The budget's still open in front of {him}, and {he} hasn't turned a page in twenty minutes.",
         approach: "Stay after the schedule ends",
         greeting:
           "\"Stay after everyone's gone home. I'm not done with you, and the budget can wait.\"",
         responses: {
-          kind: "Say the work isn't everything",
-          playful: "Ask what's keeping {him} then",
-          bold: "Say you're not leaving either",
-          neutral: "Wait out the quiet",
+          kind: ["Say the work isn't everything", "Say you'd like to stay"],
+          playful: [
+            "Ask what's keeping {him} then",
+            "Ask if the budget agreed",
+          ],
+          bold: [
+            "Say you're not leaving either",
+            "Ask what else {he} has in mind",
+          ],
+          neutral: ["Wait out the quiet", "Stay without a word"],
         },
       },
       {
         line: "{He}'s not being subtle about looking at you tonight, and doesn't seem to care that you've noticed.",
-        approach: "Let {him} look {his} fill",
-        greeting: "Caught. I wasn't going to apologize for it either.",
+        approach: "Catch {him} looking",
+        greeting:
+          "Don't mind me. I spend all day keeping an eye on the whole house.",
         responses: {
-          kind: "Let {him} look, unbothered",
-          playful: "Dare {him} to keep looking",
-          bold: "Meet the look, don't look away",
-          neutral: "Let it happen, say nothing",
+          kind: ["Blush and hold {his} gaze", "Say you don't mind at all"],
+          playful: ["Say you mind very much", "Ask if you count as the house"],
+          bold: [
+            "Say it's your turn to look",
+            "Say someone should watch {him}",
+          ],
+          neutral: ["Let it happen, say nothing", "Carry on as you were"],
         },
       },
       {
-        line: "There's a foot of space between you that neither of you closed on purpose, and neither of you is closing it by accident either.",
-        approach: "Close the space between you",
+        line: "The rest of Dionysia has cleared out of the office. {He}'s standing a step closer than {he} needs to.",
+        // He's out of excuses and hoping you'll close the gap: taking the
+        // last step lands better than reassurance.
+        mood: true,
+        approach: "Stay where you are",
         greeting:
-          "\"Come here. Closer. I've spent all day being reasonable and I'm done with it.\"",
+          "I'd give you a reason for standing this close, but I'm out of good ones.",
         responses: {
-          kind: "Take the last step",
-          playful: "Make {him} close it first",
-          bold: "Close the distance yourself",
-          neutral: "Let the distance close itself",
+          kind: [
+            "Say {he} doesn't need a reason",
+            "Say you were hoping {he}'d stay",
+          ],
+          playful: ["Say you'll lend {him} one", "Make {him} close it first"],
+          bold: ["Take the last step", "Lean into {his} side"],
+          neutral: ["Let the distance close itself", "Meet {him} halfway"],
         },
       },
       {
@@ -998,10 +1096,16 @@ export default {
         approach: "Ask {him} to mean it",
         greeting: "I meant it. I don't say things like that as a bit, cutie.",
         responses: {
-          kind: "Say you feel it too",
-          playful: "Ask if {he}'s sure this time",
-          bold: "Ask {him} to mean it",
-          neutral: "Let the question go unanswered",
+          kind: ["Say you feel it too", "Say {he} isn't alone in it"],
+          playful: [
+            "Ask if {he}'s sure this time",
+            "Ask what changed {his} mind",
+          ],
+          bold: [
+            "Say you'll take responsibility",
+            "Say you're not giving it back",
+          ],
+          neutral: ["Let the question go unanswered", "Let it sit between you"],
         },
       },
       {
@@ -1010,45 +1114,10 @@ export default {
         greeting:
           "I wrote the same word four times. I'm blaming you for all four.",
         responses: {
-          kind: "Let {him} set it down",
-          playful: "Ask what {he}'s writing",
-          bold: "Take the pen from {him}",
-          neutral: "Wait for {him} to notice",
-        },
-      },
-      {
-        line: "Everything that usually keeps {him} upright, the shows, the schedule, the house, goes quiet for a second, and it's just you {he}'s looking at.",
-        approach: "Hold the moment steady",
-        greeting:
-          '"No proposal, no lineup, no one to keep steady but you. I thought I was past feeling like this."',
-        responses: {
-          kind: "Hold the moment with {him}",
-          playful: "Ask what {he}'s thinking",
-          bold: "Say you're not going anywhere",
-          neutral: "Let the moment hold, quietly",
-        },
-      },
-      {
-        line: "{He} said once, offhand, that {he} thought {he} was past feeling like this. {He} hasn't brought it up again, but {he} hasn't looked away either.",
-        approach: "Ask what {he}'s done about it",
-        greeting: "Nothing yet. I'm still deciding if I'm allowed to.",
-        responses: {
-          kind: "Tell {him} {he}'s allowed to",
-          playful: "Push {him} to just say it",
-          bold: "Ask {him} outright",
-          neutral: "Let {him} take {his} time",
-        },
-      },
-      {
-        line: "The charisma {he} wears for the house, for the school, for everyone, thins out the longer you two are alone.",
-        approach: "Let the charm drop for you",
-        greeting:
-          "It's a lot of work, being charming at everyone. You're the only one I don't have to be it for.",
-        responses: {
-          kind: "Say you never needed the charm",
-          playful: "Miss the charm, teasingly",
-          bold: "Say you noticed the seam",
-          neutral: "Let it drop, unbothered",
+          kind: ["Let {him} set it down", "Say the word can wait"],
+          playful: ["Ask what {he}'s writing", "Ask which word it was"],
+          bold: ["Take the pen from {him}", "Give {him} a fifth to blame"],
+          neutral: ["Wait for {him} to notice", "Let {him} keep looking"],
         },
       },
     ]),
@@ -1114,8 +1183,11 @@ export default {
         responses: {
           kind: "See the tired under the charm",
           playful: "Call it a soft ending",
-          bold: ["Call out the easy ending", "Say the work can wait for you"],
-          neutral: "Let the day end quietly",
+          bold: [
+            "Say you'll end every day here",
+            "Say the work can wait for you",
+          ],
+          neutral: "Let the day end",
         },
       },
     ]),
@@ -1212,7 +1284,7 @@ export default {
         responses: {
           kind: "Say the charm isn't needed",
           playful: "Shield your eyes from it",
-          bold: "Refuse to be dazzled",
+          bold: "Look right past the spotlight",
         },
       },
       {
@@ -1228,7 +1300,7 @@ export default {
         responses: {
           kind: "Offer to sort the schedules",
           playful: "Start a round of applause",
-          bold: "Demand undivided attention",
+          bold: "Ask for ten free minutes",
         },
       },
     ],
@@ -1245,7 +1317,7 @@ export default {
         line: "{user} says the name, and **{name}** sets {his} pen down like {he}'d been looking for an excuse.",
         responses: {
           kind: "Be the excuse",
-          playful: "Hide the pen",
+          playful: "Ask if you're the excuse",
           bold: "Take the rest of the hour",
         },
       },
@@ -1271,7 +1343,7 @@ export default {
         line: "{user} calls out, and **{name}** folds the schedule away mid-revision.",
         responses: {
           kind: "Say you're glad it's away",
-          playful: "Unfold it to peek",
+          playful: "Ask if you're on it",
           bold: "Ask for the whole evening",
         },
       },
