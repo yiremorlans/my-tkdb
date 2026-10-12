@@ -25,6 +25,7 @@ import {
   getRandomDialogueBeat,
   getRandomDialogueEntry,
   moodNotice,
+  RECENT_DIALOGUE_BEAT_WINDOW,
   RESPONSE_TYPES,
 } from './constants/characters.js';
 import {
@@ -54,8 +55,10 @@ import {
   getEncounterMilestoneCounts,
   getLatestEncounterMilestone,
   getPendingEncounterBoosts,
+  getRecentDialogueBeats,
   getRelationship as readRelationship,
   getUserRelationships,
+  rememberDialogueBeat,
   signErrandTarget,
 } from './db/supabase.js';
 import {
@@ -106,6 +109,30 @@ async function getCharacterProgress(userId, character) {
   return { level, tier, variant };
 }
 
+// One /roam or /meet draw wrapped in the recent-beat skip (see
+// recentBeatWindow). A failed read just draws from the full pool. Nothing is
+// written here: the beat only enters the recent list once it's answered (see
+// recordAnsweredBeat), so a dropped spawn leaves no trace.
+async function drawBeatFor(userId, character, ctx, draw) {
+  const [{ tier, variant }, recentBeats] = await Promise.all([
+    getCharacterProgress(userId, character),
+    getRecentDialogueBeats(userId, character.id).catch(() => []),
+  ]);
+  const beat = draw(character, tier, variant, { ...ctx, recentBeats });
+  return { variant, beat };
+}
+
+// The response click's half of the recent-beat skip: the answered beat's key
+// (off the button's custom_id) goes to the front of the list. Best effort and
+// never awaited: a failed write (already logged in rememberDialogueBeat) only
+// means the next draw might repeat. Buttons rendered before beat keys rode in
+// the custom_id carry none and record nothing.
+function recordAnsweredBeat(userId, characterId, beatKey) {
+  if (!beatKey) return;
+  rememberDialogueBeat(userId, characterId, beatKey, RECENT_DIALOGUE_BEAT_WINDOW)
+    .catch(() => {});
+}
+
 // Pick where an already-chosen character is found: their own turf with
 // probability `turfProbability`, a general location otherwise; a character with
 // no eligible turf right now falls through to general rather than returning
@@ -126,15 +153,38 @@ function selectRoamSpot(character, now, turfProbability) {
 // getRandomDialogueEntry (/meet). It is the only source of character-specific
 // labels; without one every button falls to its archetype default, which is
 // what the disabled re-render at the result step does.
-// `mood` is the drawn beat's flag (getAffinityForResponse). It rides in the
-// custom_id as a trailing ":m", so the click scores the beat it answers with
-// no cache or DB lookup; buttons without it score on the base ranking.
-function responseActionRow(characterId, disabled = false, origin = 'meet', beatResponses = null, mood = false) {
+// `mood` (getAffinityForResponse) and `beatKey` (recordAnsweredBeat) ride in
+// the custom_id too, so the click scores and records the beat it answers with
+// no cache or DB lookup. See responseCustomId for the format.
+// A response button's custom_id, `resp:<char>:<type>:<origin>:<m|>:<beatKey>`,
+// and its parse. Built and read only here, so the slot layout and the defaults
+// for older buttons live in one place. Trailing empty slots are dropped, which
+// keeps a plain button as short as it always was.
+function responseCustomId(characterId, responseType, origin, mood, beatKey) {
+  const parts = ['resp', characterId, responseType, origin, mood ? 'm' : '', beatKey || ''];
+  while (!parts.at(-1)) parts.pop();
+  return parts.join(':');
+}
+
+// `parts` is the custom_id after 'resp:'. Older buttons may lack the origin
+// (read as 'meet'), carry 's' for the mood flag (from before moods were
+// renamed from swaps), or have no beat key.
+export function parseResponseCustomId(parts) {
+  const [characterId, responseTypeId, origin, moodFlag, beatKey] = parts;
+  return {
+    characterId,
+    responseTypeId,
+    origin: origin === 'roam' ? 'roam' : 'meet',
+    mood: moodFlag === 'm' || moodFlag === 's',
+    beatKey: beatKey || null,
+  };
+}
+
+function responseActionRow(characterId, disabled = false, origin = 'meet', beatResponses = null, mood = false, beatKey = null) {
   const character = getCharacterById(characterId);
   const characterResponses = character
     ? generateCharacterResponses(character, beatResponses)
     : {};
-
   return RESPONSE_TYPE_ORDER.map((responseType) => {
     const option = characterResponses[responseType] || { label: 'Respond' };
     return {
@@ -144,7 +194,7 @@ function responseActionRow(characterId, disabled = false, origin = 'meet', beatR
           type: MessageComponentTypes.BUTTON,
           style: RESPONSE_STYLES[responseType],
           label: option.label,
-          custom_id: `resp:${characterId}:${responseType}:${origin}${mood ? ':m' : ''}`,
+          custom_id: responseCustomId(characterId, responseType, origin, mood, beatKey),
           disabled,
         },
       ],
@@ -266,7 +316,6 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
     };
   }
 
-  const { tier, variant } = await getCharacterProgress(userId, character);
   const dialogueCtx = {
     now,
     locationKey: spot.locationKey,
@@ -280,12 +329,9 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
   // drawable beat carries one. `responses` carries the beat's four
   // button labels; a type the beat leaves out drops to the archetype default.
   const {
-    line: dialogue,
-    approach,
-    greeting,
-    responses: beatResponses,
-    mood,
-  } = getRandomDialogueBeat(character, tier, variant, dialogueCtx);
+    variant,
+    beat: { line: dialogue, approach, greeting, responses: beatResponses, mood, beatKey },
+  } = await drawBeatFor(userId, character, dialogueCtx, getRandomDialogueBeat);
   const notice = moodNotice(character, mood);
 
   const charFilename = character.images[variant];
@@ -299,6 +345,7 @@ export async function buildRoamDialogueMessage(userId, now = new Date()) {
     greeting,
     beatResponses,
     mood,
+    beatKey,
   });
 
   return {
@@ -329,7 +376,7 @@ export async function buildRoamSpawnMessage(encounterId) {
     };
   }
 
-  const { spot, characterId, charFilename, greeting, beatResponses, mood } = encounter;
+  const { spot, characterId, charFilename, greeting, beatResponses, mood, beatKey } = encounter;
   const character = getCharacterById(characterId);
   const imageBuffer = await composeEncounter(spot.file, charFilename, greeting);
   const placeName = getLocationDisplayName(spot);
@@ -338,7 +385,7 @@ export async function buildRoamSpawnMessage(encounterId) {
   return {
     content: `You wander ${preposition} **${placeName}** and run into **${getFullName(character)}**...`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
-    components: responseActionRow(character.id, false, 'roam', beatResponses, mood),
+    components: responseActionRow(character.id, false, 'roam', beatResponses, mood, beatKey),
     flags: EPHEMERAL_FLAG,
   };
 }
@@ -645,7 +692,6 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
     : selectRoamSpot(character, now, TURF_PROBABILITY);
   const fallbackSpot = spot || getRandomGeneralBackground(now);
 
-  const { tier, variant } = await getCharacterProgress(userId, character);
   const dialogueCtx = {
     now,
     locationKey: fallbackSpot?.locationKey ?? null,
@@ -656,12 +702,10 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
   // approach/greeting resolution /meet doesn't render — `line` and
   // `responses` come from the one drawn beat, never two independent draws
   // (see getRandomDialogueEntry).
-  const { line: dialogue, responses: beatResponses, mood } = getRandomDialogueEntry(
-    character,
-    tier,
+  const {
     variant,
-    dialogueCtx,
-  );
+    beat: { line: dialogue, responses: beatResponses, mood, beatKey },
+  } = await drawBeatFor(userId, character, dialogueCtx, getRandomDialogueEntry);
 
   const charFilename = character.images[variant];
 
@@ -673,7 +717,7 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
   return {
     content: `${getFullName(character)} agrees to meet you${locationText}${notice ? `\n${notice}` : ''}`,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
-    components: responseActionRow(character.id, false, 'meet', beatResponses, mood),
+    components: responseActionRow(character.id, false, 'meet', beatResponses, mood, beatKey),
     flags: EPHEMERAL_FLAG,
   };
 }
@@ -685,7 +729,7 @@ export async function buildResponseResultMessage(
   characterId,
   responseTypeId,
   shownComponents = null,
-  { mood = false } = {},
+  { mood = false, beatKey = null } = {},
 ) {
   const character = getCharacterById(characterId);
   if (!character) {
@@ -714,6 +758,7 @@ export async function buildResponseResultMessage(
 
   const gain = baseGain + boostsSpent * ENCOUNTER_BOOST_GAIN;
   const { level, leveledUp } = await recordResponse(userId, characterId, gain, responseTypeId);
+  recordAnsweredBeat(userId, characterId, beatKey);
 
   const reaction = getReactionLine(
     character,

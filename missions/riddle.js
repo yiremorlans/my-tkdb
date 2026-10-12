@@ -3,7 +3,6 @@
 
 import {
   accusedFace,
-  BANKED_RESET_LINE,
   clearRiddleCooldowns,
   CULPRIT_FACE,
   getRiddle,
@@ -24,14 +23,15 @@ import {
   completeMission,
   getAcceptedMission,
   grantEncounterBoost,
-  recordMissionCompletion,
   trackCommandUsage,
   trackUserActivity,
 } from "../db/supabase.js";
 import {
+  bankedRewardLine,
   ephemeral,
   ephemeralPortraitMessage,
   missionTypeGuard,
+  recordCompletion,
   reportFailures,
   userIdOf,
 } from "./shared.js";
@@ -115,9 +115,10 @@ export async function handleRiddle(body, now = new Date()) {
   const character = getCharacterById(riddle.answer);
   const name = character ? getFullName(character) : riddle.answer;
   const text = [`Debunked. **${name}**.`, `"${riddle.winningLine}"`].join("\n\n");
+  const credit = await recordCompletion(mission, userId, "lead", 1);
   const rewards = [
     MISSION_BOOST_LINE(character?.firstName ?? name),
-    BANKED_RESET_LINE,
+    bankedRewardLine(1, credit),
   ].join("\n\n");
 
   return {
@@ -130,14 +131,6 @@ export async function handleRiddle(body, now = new Date()) {
       // affinity directly.
       await Promise.allSettled([
         grantEncounterBoost(userId, riddle.answer, ENCOUNTER_BOOST_CAP),
-        recordMissionCompletion({
-          userId,
-          house: mission.house,
-          missionType: mission.mission_type,
-          missionId: mission.id,
-          role: "lead",
-          points: 1,
-        }),
         trackUserActivity(userId),
         trackCommandUsage(userId, "riddle"),
       ]).then(reportFailures("riddle solve"));

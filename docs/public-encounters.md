@@ -106,11 +106,14 @@ Last updated: 2026-10-07
 **The milestone set is 33 campus-life situations, not the 7 sketched in §16.2.**
 Each is its own independent tally per user *per character* — `milestone_type` is
 a discrete key, so "Moments together" renders one row per situation rather than
-a single combined counter. Gating is cumulative: a Stranger draws from 3, a
-Devoted from all 33. Each level unlocks one more than the last: 3 / 4 / 5 / 6 /
-7 / 8 across new → known → warm → spark → close → bound, so every step up the
-relationship curve visibly unlocks something, and more of it the longer the level
-lasts. Benkei's pool follows the same curve.
+a single combined counter. A win draws from the caller's own tier only (changed
+2026-10-10; it used to be cumulative): a Stranger draws from its 3, a Devoted
+from its 8. Each level has one more than the last: 3 / 4 / 5 / 6 / 7 / 8 across
+new → known → warm → spark → close → bound. Earlier moments stay in the tally
+but stop being collected. Drawing from the own tier is what lets a bond scene's
+`{lastMoment}` read at its depth: Confidant opens on a Close Friend moment, not
+"that check-up". A tier a pool has nothing at falls back to the nearest one
+below. Every own-set pool follows the same curve.
 
 **Milestones live in `constants/milestones/`, one file per character, with the
 shared set as the default.** `shared.js` is the campus set above: student life
@@ -1296,7 +1299,8 @@ export function pickMilestone(tier, winnerBucket) {
   `/roam` in flight, so a `spark` milestone can never be recorded for a caller
   who is still a Friend.
 - `{house}` / `{name}` / `{firstName}` are filled exactly as in `WINNER_LINES`.
-- `bucket` only nudges selection; every tier-eligible milestone stays reachable.
+- `bucket` only nudges selection within the tier. (Superseded: the draw is now
+  from the caller's own tier only, see "Added beyond this spec".)
 
 ### 16.3 `/affinity` output
 

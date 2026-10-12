@@ -156,12 +156,16 @@ export const ASSIST_LAPSED_LINES = [
   "No partner turned up. The mission lapsed.",
 ];
 
-// What a completed mission actually hands over. Deliberately explicit about
-// the reward being held rather than spent: the whole reason it is banked is
-// that a player finishing a mission with four minutes left on their clock used
-// to get four minutes of value out of it.
-export const BANKED_RESET_LINE =
-  "**Cooldown reset banked.** Next time `/roam` or `/meet` tells you to wait, there'll be a button to spend it.";
+// What a completed mission actually hands over: a reset that is held rather
+// than spent, because a player finishing a mission with four minutes left on
+// their clock used to get four minutes of value out of it.
+export const BANKED_RESET_LINE = "**Cooldown reset banked.**";
+
+// Store credit from a completion (docs/benkei-shop.md §0). `balance` is the
+// wallet after this completion; null when it couldn't be read, so the line
+// still shows what was earned without a wrong total.
+export const STORE_CREDIT_LINE = (added, balance) =>
+  balance == null ? `**+${added} 💎**` : `**+${added} 💎** · 💎 ${balance}`;
 
 export const RESET_BUTTON_LABEL = "Use a cooldown reset"; // 20 chars, well under MAX_BUTTON_LABEL_LENGTH
 
@@ -355,7 +359,7 @@ export const MISSION_INSTRUCTIONS = {
   [MISSION_TYPES.ERRAND]:
     "Targets are boosted during `/meet` and `/roam` while mission is active. Meet them, then check the sheet and file it with `/docs`. One house log per signature, plus a banked cooldown reset that clears both.",
   [MISSION_TYPES.RIDDLE]:
-    "Answer with `/riddle <your answer>`. Solve it for one house log, plus a banked cooldown reset: spend it the next time `/roam` or `/meet` tells you to wait, and it clears both.",
+    "Answer with `/riddle <your answer>`. Solve it for one house log, plus a banked cooldown reset that clears both.",
   [MISSION_TYPES.COOP]:
     "Call a partner with `/mission assist:true`. The first inspector to back you up completes it for both of you. One house log each, plus a banked cooldown reset that clears whichever of `/roam` or `/meet` has the longer wait.",
 };

@@ -1,9 +1,10 @@
 // Characters whose lives don't fit campus life (Benkei, Jin, Edward, Elias,
-// Haru, Rui, Shion, Towa, Zenji) draw from their own set plus the shared
-// moments they keep, and no set leaks into anyone else's pool.
+// Haru, Rui, Shion, Towa, Zenji, and Yuri and Jiro through Mortkranken) draw
+// from their own set plus the shared moments they keep, and no set leaks into
+// anyone else's pool.
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
-import { ENCOUNTER_MILESTONES, milestonePoolFor } from '../constants/publicEncounters.js';
+import { ENCOUNTER_MILESTONES, milestonePoolFor, pickMilestone } from '../constants/publicEncounters.js';
 
 describe('milestonePoolFor', () => {
   it('gives Benkei his own moments plus the shared ones picked for him', () => {
@@ -46,6 +47,15 @@ describe('milestonePoolFor', () => {
     }
   });
 
+  it('gives Yuri and Jiro the same Mortkranken set, and nobody else', () => {
+    assert.deepEqual(milestonePoolFor('yuri'), milestonePoolFor('jiro'));
+    assert.ok(milestonePoolFor('yuri').includes('mortkranken_checkup'));
+    assert.ok(!milestonePoolFor('yuri').includes('shared_earbuds'));
+    for (const id of ['kaito', 'jin', 'benkei']) {
+      assert.ok(milestonePoolFor(id).every((key) => !key.startsWith('mortkranken_')), id);
+    }
+  });
+
   const OWN_SETS = ['benkei', 'edward', 'elias', 'haru', 'jin', 'rui', 'shion', 'towa', 'zenji'];
 
   it('keeps every own set to its own character', () => {
@@ -60,7 +70,7 @@ describe('milestonePoolFor', () => {
   });
 
   it('gives every own-set character something at every tier', () => {
-    for (const id of OWN_SETS) {
+    for (const id of [...OWN_SETS, 'yuri', 'jiro']) {
       const tiers = new Set(milestonePoolFor(id).map((key) => ENCOUNTER_MILESTONES[key].minTier));
       for (const tier of ['new', 'known', 'warm', 'spark', 'close', 'bound']) {
         assert.ok(tiers.has(tier), `${id} has nothing at ${tier}`);
@@ -90,6 +100,19 @@ describe('milestonePoolFor', () => {
     // Rui can't get tired, so he never sits idle.
     for (const key of ['campus_bench', 'lazy_day']) {
       assert.ok(!milestonePoolFor('rui').includes(key), `rui has ${key}`);
+    }
+  });
+
+  // A Close Friend win has to collect a Close Friend moment, or the Confidant
+  // bond scene's {lastMoment} opens on "that check-up".
+  it('draws a win from the caller\'s own tier', () => {
+    for (const id of [null, 'yuri', 'jin', 'rui']) {
+      for (const tier of ['new', 'known', 'warm', 'spark', 'close', 'bound']) {
+        for (let i = 0; i < 50; i++) {
+          const key = pickMilestone(tier, tier, id);
+          assert.equal(ENCOUNTER_MILESTONES[key].minTier, tier, `${id} at ${tier} drew ${key}`);
+        }
+      }
     }
   });
 

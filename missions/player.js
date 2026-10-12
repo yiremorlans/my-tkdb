@@ -27,7 +27,7 @@ import {
 import { EPHEMERAL } from "../utils.js";
 import {
   ACCEPT_WINDOW_HOURS,
-  BANKED_RESET_LINE,
+  STORE_CREDIT_LINE,
   busyLine,
   CAPPED_LINE,
   clearRiddleCooldowns,
@@ -72,13 +72,13 @@ import {
   getMissionById,
   getUnclaimedDebriefs,
   grantEncounterBoost,
-  recordMissionCompletion,
   setAssistMessageId,
   trackCommandUsage,
   trackUserActivity,
 } from "../db/supabase.js";
 import {
   acceptRow,
+  bankedRewardLine,
   ephemeral,
   ephemeralPortraitMessage,
   ephemeralResponse,
@@ -86,6 +86,7 @@ import {
   houseChangeBlocker,
   missionEmbed,
   missionTypeGuard,
+  recordCompletion,
   reportFailures,
   resolveMissionChannel,
   userIdOf,
@@ -619,6 +620,22 @@ export async function handleMissionAssistJoin(body, missionId, now = new Date())
     user: body.message?.interaction_metadata?.user ?? body.message?.interaction?.user,
   });
 
+  // Two mission_log rows, which ARE the two banked resets — a co-op's is
+  // worth one command against a solo clear's two, and which command it
+  // clears is decided when they spend it rather than now. A reset stamped
+  // 'roam' at completion would be worth nothing to someone who later wants
+  // /meet, and a reward you can be handed in a useless form is the whole
+  // problem banking these was meant to fix. Recorded before the post, so its
+  // 💎 line only says "each" once both writes have landed; no running totals
+  // on a public post.
+  const credits = await Promise.all([
+    recordCompletion(mission, leadId, "lead", 1),
+    recordCompletion(mission, helperId, "assist", 1),
+  ]);
+  const creditLine = credits.every(Boolean)
+    ? `\n\n${STORE_CREDIT_LINE(1)} each`
+    : "";
+
   // Both players are pinged so each learns their debrief is waiting (§21.2).
   // The mentions go in `content` because embeds never ping, and
   // allowed_mentions names exactly these two.
@@ -631,7 +648,7 @@ export async function handleMissionAssistJoin(body, missionId, now = new Date())
         embeds: [
           missionEmbed(
             mission.id,
-            `${helperName} answered the call for backup.\n\n**Mission complete.**\n\nBoth of you have banked a cooldown reset.`,
+            `${helperName} answered the call for backup.\n\n**Mission complete.**\n\nBoth of you have banked a cooldown reset.${creditLine}`,
           ),
         ],
         components: [
@@ -648,30 +665,7 @@ export async function handleMissionAssistJoin(body, missionId, now = new Date())
     },
     afterReply: async () => {
       clearRiddleCooldowns(mission.id);
-
-      // Two mission_log rows, which ARE the two banked resets — a co-op's is
-      // worth one command against a solo clear's two, and which command it
-      // clears is decided when they spend it rather than now. A reset stamped
-      // 'roam' at completion would be worth nothing to someone who later wants
-      // /meet, and a reward you can be handed in a useless form is the whole
-      // problem banking these was meant to fix.
       await Promise.allSettled([
-        recordMissionCompletion({
-          userId: leadId,
-          house: mission.house,
-          missionType: mission.mission_type,
-          missionId: mission.id,
-          role: "lead",
-          points: 1,
-        }),
-        recordMissionCompletion({
-          userId: helperId,
-          house: mission.house,
-          missionType: mission.mission_type,
-          missionId: mission.id,
-          role: "assist",
-          points: 1,
-        }),
         trackUserActivity(helperId),
         trackCommandUsage(helperId, "mission"),
       ]).then(reportFailures("co-op completion"));
@@ -960,26 +954,19 @@ export async function handleMissionFile(body, missionId) {
   }
 
   const points = Number(outcome.split(":")[1]) || 1;
+  const credit = await recordCompletion(mission, userId, "lead", points);
 
   return {
     response: {
       type: InteractionResponseType.UPDATE_MESSAGE,
       data: {
-        content: `Report filed. ${mission.house} owes you one. **+${points} house log${points === 1 ? "" : "s"}**\n${BANKED_RESET_LINE}`,
+        content: `Report filed. ${mission.house} owes you one. **+${points} house log${points === 1 ? "" : "s"}**\n${bankedRewardLine(points, credit)}`,
         components: [],
       },
     },
     afterReply: async () => {
       clearRiddleCooldowns(mission.id);
       await Promise.allSettled([
-        recordMissionCompletion({
-          userId,
-          house: mission.house,
-          missionType: mission.mission_type,
-          missionId: mission.id,
-          role: "lead",
-          points,
-        }),
         trackUserActivity(userId),
         trackCommandUsage(userId, "docs"),
       ]).then(reportFailures("errand filing"));

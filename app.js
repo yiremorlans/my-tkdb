@@ -18,6 +18,7 @@ import {
   buildWardingResultMessage,
   disableComponents,
   disableWardingButtons,
+  parseResponseCustomId,
   WARDING_MESSAGE_FLAGS,
 } from './encounters.js';
 import { MEET_PICK_LINES } from './constants/game.js';
@@ -1034,11 +1035,9 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
     if (action === 'resp') {
       // origin ('meet' | 'roam') identifies the flow this response completes;
-      // absent on buttons rendered before this field was added — default 'meet'.
-      // A trailing 'm' marks a mood beat (see responseActionRow); 's' is the
-      // same flag on buttons rendered before moods were renamed from swaps.
-      const [characterId, responseTypeId, origin, beatFlag] = rest;
-      const commandName = origin === 'roam' ? 'roam' : 'meet';
+      // mood and beatKey are the answered beat (see parseResponseCustomId).
+      const { characterId, responseTypeId, origin: commandName, mood, beatKey } =
+        parseResponseCustomId(rest);
 
       // Ack with a silent deferred-update FIRST, then do the real work. This
       // step is claimCommandUse (a DB round trip) followed by
@@ -1101,7 +1100,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             characterId,
             responseTypeId,
             req.body.message?.components,
-            { mood: beatFlag === 'm' || beatFlag === 's' },
+            { mood, beatKey },
           );
           await sendFollowup(req.body.token, messageData, 15000, true);
 

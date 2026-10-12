@@ -123,14 +123,14 @@ test('renderHeartBar never shows a full row of fill hearts before the next level
 //
 // Response-button labels have no target of their own: they live on the beat,
 // so a tier that hits the dialogue target above already has one set per line.
-test('DIALOGUE_POOL_TARGET_BY_TIER is one line per 4 affinity points, floored at 5', () => {
+test('DIALOGUE_POOL_TARGET_BY_TIER is one line per 4 affinity points, floored at 5, capped at 24', () => {
   assert.deepStrictEqual(DIALOGUE_POOL_TARGET_BY_TIER, {
     new: 5,
     known: 13,
     warm: 18,
-    spark: 27,
-    close: 38,
-    bound: 46,
+    spark: 24,
+    close: 24,
+    bound: 24,
   });
 });
 

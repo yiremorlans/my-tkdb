@@ -712,7 +712,7 @@ Progress: {progress line}
 | Type | Progress line | Instruction block |
 |---|---|---|
 | errand | `2 / N signatures` | `Targets are boosted during /meet and /roam while mission is active. Meet them, then check the sheet and file it with /docs. One house log per signature, plus a banked cooldown reset that clears both.` |
-| riddle | `unsolved` | `Answer with /riddle <your answer>. Solve it for one house log, plus a banked cooldown reset: spend it the next time /roam or /meet tells you to wait, and it clears both.` |
+| riddle | `unsolved` | `Answer with /riddle <your answer>. Solve it for one house log, plus a banked cooldown reset that clears both.` |
 | coop | `waiting on a partner` / `partner post is live` | `Call a partner with /mission assist. The first inspector to back you up completes it for both of you. One house log each, plus a banked cooldown reset that clears whichever of /roam or /meet has the longer wait.` |
 
 The per-type "how you finish this" phrasing (`MISSION_NEXT_STEP`, §11.3) is the
@@ -1716,5 +1716,5 @@ one pending per character (`ENCOUNTER_BOOST_CAP`), and only spend on a real
 completions and 55% of points, so they really are where the 💎 comes from.
 
 **What to watch:** errand-driven 💎 income against shop prices (the reset at
-💎 10 is meant to stay out of daily reach once launch seeds are spent,
+💎 12 is meant to stay out of daily reach once launch seeds are spent,
 benkei-shop §2), and the co-op answer rate before touching its weight.

@@ -1,15 +1,40 @@
 # Spec: Benkei's shop & the Lost & Found
 
 Status: **design / not implemented**
-Last updated: 2026-10-09
+Last updated: 2026-10-11
 
 Shopkeep Benkei's campus store, open 24/7 (canon), as a private `/shop`
 command. Players spend **💎 store credit** (a wallet seeded from and fed by
 house mission points) on a small rotating daily stock of consumables. A second
 page, the **Lost & Found**, occasionally holds a character's lost belonging that
-the player can return for free, which opens an extra meeting with them.
+the player can return for free, which opens an extra meeting with them. A
+private `/shift` command (§10) lets players work one campus job a day for 💎.
 
 Every shop interaction is **ephemeral**. Nothing here is posted publicly.
+
+---
+
+## 0. Rollout
+
+Two phases. The wallet goes live before there is anything to spend it on.
+
+**Phase 1: the wallet** (migration `032_store_credit.sql`)
+- `user_activity.store_credit`, the seed and the mission feed exactly as in §1.
+- The only player-facing change is the mission completion message, which
+  gains a running-balance line: `+1 💎 · 💎 48` (the amount is whatever that
+  completion added: `1` for a riddle/co-op/assist, `1` per errand signature).
+- The line is built from the write itself: the completion is recorded before
+  the reply, and `record_mission_completion` returns the new balance. A
+  failed write shows no 💎 line. Riddle and errand put it on the
+  `Cooldown reset banked.` line; the public co-op post shows `+1 💎 each`
+  with no totals.
+- 💎 appears only once earned: never on `/mission` briefings (2026-10-11).
+- No `/house` line, no cooldown-reply mention, no `/shop`, no `/shift`. Once
+  the shop ships, its wallet header is the balance's home, so nothing added in
+  phase 1 has to be removed.
+
+**Phase 2: the shop and `/shift` together** (the next free migration)
+- Everything else in this doc: items, daily stock, Lost & Found, `/shift`.
 
 ---
 
@@ -18,7 +43,7 @@ Every shop interaction is **ephemeral**. Nothing here is posted publicly.
 - **One wallet per user**, not per house. Benkei has no house; the store does
   not care where the points came from. Column: `user_activity.store_credit INT
   NOT NULL DEFAULT 0` (one row per user already, no new table).
-- **Seeded once, in the migration**, as a full copy of each player's lifetime
+- **Seeded once, in the phase 1 migration (§0)**, as a full copy of each player's lifetime
   `SUM(house_progress.points)`. No cap, no fraction: long-time players earned
   it, and the per-day quantity caps (§3) bound how fast a large balance can turn
   into items.
@@ -28,9 +53,11 @@ Every shop interaction is **ephemeral**. Nothing here is posted publicly.
   `recordMissionCompletion` adds to `house_progress.points` (lead *and*
   assist rows, `N` for an errand, `1` for riddle/co-op) is added to
   `store_credit` **in the same write**, so the two cannot drift.
+- **Also fed by `/shift` pay** (§10): 💎 3 a day, which never touches
+  `house_progress`. Shift pay is the one income that isn't a mission point.
 - **Spent only by shop purchases.** Mission points, ranks and the `/house`
-  dossier never go down. The two numbers diverge from the first purchase on,
-  by design.
+  dossier never go down. The two numbers diverge from the first purchase or
+  the first shift on, by design.
 - User-facing name: **store credit**, always shown with 💎 (`💎 12`).
 
 ### Earning-rate reference (2026-10-08, `mission_log`, last 30 days, all guilds)
@@ -54,6 +81,10 @@ guild). Points per player over 30 days:
   everything, while several mid-tier players are sitting on 15–29. A bought
   reset is mostly bought by the players who run out.
 
+**Plus `/shift`:** a flat 💎 3 a day for anyone who works one (§10), so the
+tiers above become roughly ~6–6.8 (top), ~4–5.2 (middle) and ~3–3.5 (bottom)
+for a player who shifts daily. It mostly lifts the bottom tier.
+
 Prices in §2 are set against those numbers. Errands are the main source
 (`N` points against 1 for a riddle or co-op), which is why they carry no
 boost: see `docs/scheduled-missions.md` §22 before changing mission
@@ -65,18 +96,24 @@ rewards or weights.
 
 | Item | Price | Daily appearance | Per-user qty | Held as |
 |---|---|---|---|---|
-| **Cooldown reset** | 💎 10 | 35% | 1–3 | `user_activity.bought_resets INT` |
+| **Cooldown reset** | 💎 12 | 35% | 1–3 | `user_activity.bought_resets INT` |
 | **Chancellor's envelope** | 💎 9 | 25% | always ×1 | `user_activity.envelopes INT` |
 | **House compass** | 💎 5 | 50% | 1–3 | `user_activity.compasses INT` |
 | **Fresh picks** | 💎 3 | 60% | 1–3 | `user_activity.fresh_picks INT` |
 | **Reassignment slip** | 💎 6 | 30% | always ×1 | `user_activity.slips INT` |
 
 The reset is deliberately the most expensive item: from earnings alone even
-the most active player cannot buy one a day (~3 days top, ~weekly mid).
+the most active player cannot buy one a day (~every 2 days top with daily
+shifts, ~3 days mid, ~3½ days bottom).
 **The seed breaks that at launch:** with up to 133 💎 seeded and a reset
-buyable ~0.7 times a day (35% × 1–3), the top three can buy at that pace,
-about 7 💎/day against ~3.8 earned, for roughly 5–7 weeks before income
-becomes the limit. That's the accepted cost of seeding in full (§9).
+buyable ~0.7 times a day (35% × 1–3), buying every offered reset costs about
+8.4 💎/day against ~6.8 earned (top, with shifts). The seed covers the
+difference for roughly 12 weeks before income becomes the limit. That's the
+accepted cost of seeding in full (§9).
+
+**Why 💎 12 (raised from 10, 2026-10-11):** at 💎 10 the offered-reset pace
+was ~7 💎/day, which shift income alone brought top players up to, so their
+seed would never drain. 💎 12 keeps a gap between income and that pace.
 
 **Nothing in the shop earns credit back.** The closest is an envelope sending
 an errand to a four-student house, which lifts expected `N` from ~2.06 to
@@ -296,7 +333,10 @@ query, and after a buy it shows the post-RPC balance.
 
 ## 6. Data model
 
-New migration `030_benkei_shop.sql`, columns on `user_activity` only:
+Phase 1 migration `032_store_credit.sql` adds `store_credit` (with its seed
+and the mission feed). The phase 2 migration (next free number; 030 and 031
+are taken by co-op debrief and recent beats) adds the rest, columns on
+`user_activity` only. Shown together:
 
 ```sql
 ALTER TABLE user_activity
@@ -308,7 +348,9 @@ ALTER TABLE user_activity
   ADD COLUMN IF NOT EXISTS slips                 INT   NOT NULL DEFAULT 0,
   ADD COLUMN IF NOT EXISTS shop_day              DATE,
   ADD COLUMN IF NOT EXISTS shop_bought           JSONB NOT NULL DEFAULT '{}',
-  ADD COLUMN IF NOT EXISTS lost_found_claimed_on DATE;
+  ADD COLUMN IF NOT EXISTS lost_found_claimed_on DATE,
+  ADD COLUMN IF NOT EXISTS shift_day             DATE,
+  ADD COLUMN IF NOT EXISTS shift_last            JSONB NOT NULL DEFAULT '{}';
 -- CHECK (store_credit >= 0) and >= 0 on every count.
 ```
 
@@ -322,6 +364,9 @@ Plus:
   `spend_compass`, `spend_fresh_picks`, `spend_envelope`,
   `reassign_mission` (spends a slip and rerolls the type under the row lock),
   `claim_lost_found(user, day)`.
+- `work_shift(user, day, job, result_index)`: one RPC that refuses if
+  `shift_day = day`, else sets `shift_day`, records `shift_last[job]` and adds
+  💎 3 to `store_credit`, returning the new balance (§10).
 
 Service role only, same RLS story as every other table.
 
@@ -341,6 +386,10 @@ Service role only, same RLS story as every other table.
 | `missions/player.js` | 🔁 Reassign button on the `/mission` briefing |
 | `db/supabase.js` | wrappers for the new RPCs / columns |
 | `constants/validateContent.js` | label lengths, every `LOST_ITEMS.characterId` exists, one item per character, no em dashes in Benkei lines |
+| `constants/shifts.js` (new) | `SHIFT_JOBS`, `SHIFT_PAY`, `BENKEI_SHIFT_GREETINGS`, hiring-board helper |
+| `shift.js` (new) | `/shift` board + work handler |
+| `commands.js`, `app.js` | `/shift`, route `shift:*` components |
+| `missions/*` (completion message) | phase 1 `+N 💎 · 💎 total` line |
 | `db/schema.sql`, `db/SCHEMA.md` | new columns |
 
 ---
@@ -357,6 +406,15 @@ Service role only, same RLS story as every other table.
   target; blocked after a signature or a joined partner, slip kept.
 - Return claim is single-use per day; the meeting skips the cooldown.
 - Content: all 26 characters have a lost item; labels ≤30 chars.
+- Phase 1: a completion adds the same amount to `house_progress.points` and
+  `store_credit`; the seed equals lifetime points.
+- Hiring board: always 4 of 9; deterministic per day key; over 2+ years of
+  day keys no job is closed more than 3 days in a row.
+- `work_shift`: once per day key; pays exactly `SHIFT_PAY`; never writes
+  `house_progress`, `mission_log`, boosts, milestones or recent beats.
+- No two consecutive results from the same job repeat for one user.
+- Content: 6 results per job, ~6 Benkei greetings, job labels ≤30 chars, no
+  em dashes in any shift line.
 
 ---
 
@@ -378,3 +436,117 @@ Service role only, same RLS story as every other table.
 - Envelope 💎 9 (raised from 7, 2026-10-08 balance review).
 - Reassignment slip 💎 6, ~30%, ×1; type reroll, house kept; reassigned
   errand is `N = 1` so payback is zero (2026-10-09).
+
+### Settled (grilling session 2026-10-11): rollout + `/shift`
+
+- Two phases: phase 1 is the wallet only (migration 032, seed, mission feed,
+  completion line); `/shift` ships with the shop in phase 2, not phase 1.
+- Balance shown on the completion line only, never in `/house`.
+- `/shift` is its own private command; one shift a day, one click, 💎 3 flat.
+- No choices, so no affinity: a shift is not a meeting (no errand
+  signature, milestone, `{lastMoment}`, boost spend or recent-beat entry).
+- 💎 only: no house points, no `/house` rank, not counted toward
+  `DAILY_LEAD_CAP`.
+- Nine jobs; 4 hiring a day; no job closed more than 3 days in a row; same
+  midnight-UTC day key as the shop.
+- The work-study board at Benkei's store pays; hosts never mention money.
+- Results are narration + host line + payout, host's default expression as the
+  thumbnail; one tier-neutral pool (safe at new/known).
+- Cooldown reset raised to 💎 12 to keep the seed draining with shift income.
+- Available wherever `/shop` is.
+
+---
+
+## 10. `/shift`: campus jobs
+
+A private command. Benkei keeps a **work-study board** at the store; each day
+four campus jobs are hiring. The player picks one, works one shift and is paid
+💎 3 in store credit. One shift a day, total, across all jobs.
+
+### 10a. The board
+
+- Ephemeral message: a greeting from `BENKEI_SHIFT_GREETINGS` (~6 lines, his
+  young/casual voice, voice-checked), Benkei's default expression as the
+  thumbnail, and one button per hiring job (label ≤30 chars).
+- Already worked today → the board still shows, buttons disabled, with a line
+  saying the next board goes up at the rollover. No wallet header here; the
+  balance appears on the payout.
+- Available wherever `/shop` is.
+
+### 10b. Hiring rotation
+
+- **4 of the 9 jobs** hire each day. Global (same board for everyone),
+  derived from the midnight-UTC day key, nothing stored.
+- **No job is closed more than 3 days in a row.** Walk forward from a fixed
+  `SHIFT_EPOCH` day key: each day, any job closed for the previous 3 days is
+  forced onto the board (longest-closed first), and the rest are filled by a
+  seeded RNG on the day key. Pure and memoized. A 200,000-day simulation
+  (2026-10-11) never closed a job for more than 3 days and never forced more
+  than 4 at once, so the guarantee always fits on the board.
+
+### 10c. Working a shift
+
+- Clicking a job calls `work_shift` (§6), which pays only if the player hasn't
+  worked today's day key. A double-click or a stale board pays nothing.
+- The reply replaces the board:
+  1. **One sentence of narration** describing the work (*"You spent the shift
+     running materials between buildings."*).
+  2. **The host's spoken line.**
+  3. **Payout:** `+3 💎 · 💎 51`.
+  - Thumbnail: the host's default expression.
+- Six results per job. The result is drawn from the job's pool, never the one
+  the player got last time at that job (`shift_last[job]`).
+
+### 10d. What a shift is not
+
+There is no choice in a shift, so there is no affinity. It is **not a
+meeting** and never:
+- counts as an errand signature, even when the host is the errand target;
+- fires a milestone or feeds `{lastMoment}`;
+- spends a pending encounter boost;
+- enters the recent-beat skip;
+- writes `house_progress` or `mission_log`, moves `/house` ranks, or counts
+  toward `DAILY_LEAD_CAP`.
+
+### 10e. Jobs
+
+| id | Host | Job | Canon basis |
+|---|---|---|---|
+| `store` | `benkei` | Campus store | Store staff, open 24/7, manager is one of Cornelius' cats |
+| `food_truck` | `shohei` | Sho's food truck | LVL 21 thanks MC for helping him run it; LVL 18 asks her about packaging |
+| `diner` | `ren` | Mystery Diner | Canon part-timer; LVL 22 "keep me company... serve yourself" |
+| `odd_jobs` | `elias` | Odd jobs | Janitor; "I just handle the odd jobs around here" |
+| `workshop` | `mio` | Mio's workshop | "head back to the workshop and hand out materials"; restocks parts |
+| `garage` | `alan` | Vagastrom garage | The dorm garage (project canon); never closes |
+| `lab` | `yuri` | Mortkranken lab | LVL 22 "I grant you the privilege of being my assistant for the day. Be grateful, worm." |
+| `bar` | `rui` | Rui's bar | He runs the Obscuary bar and preps appetizers (LVL 23) |
+| `jabberwock` | `haru` | Jabberwock | Flyers and the tour; Jabberwock is broke, which is why the board pays |
+
+### 10f. Writing rules
+
+All results are **one tier-neutral pool per job**, written to be safe at
+new/known: no touch, no reveals, nothing that assumes a relationship. Every
+line goes through the voice-check skill and the house rules (no em dashes, no
+"deadpan", American spelling, MC never framed as a thing). Hosts never mention
+money; the board pays. Per job:
+
+- **Benkei:** young, casual, former professor; the cat manager is fair game.
+- **Sho:** teases, never insults MC; food is eaten hot, never wasted.
+- **Ren:** spoken lines cap normally; grievances about the job, Jabberwock,
+  the uniform. Haru may cameo (canon "mates' rates").
+- **Elias:** short plain lines, "Oh," with a comma, no pet names, no
+  "reckon/folks". Unreliable: he invites and hedges, never hires or promises.
+  He overhears things; nobody confides in him.
+- **Mio:** MC never handles his tools or kit; her work is running materials
+  and fetching parts. Never "fragile".
+- **Alan:** no touch, no grunting, MC never defies his warnings. Thin canon:
+  keep the tasks generic, never invent garage specifics.
+- **Yuri:** "keep away" is genius arrogance, not germs. Mortkranken locations
+  only (entrance, examination room, lab, underpass, Jiro's room). If Jiro
+  comes up, stop at sending him; never describe what he'll do. The cure
+  project stays out of shifts.
+- **Rui:** always night (Obscuary). Kitchen and bar prep, MC never closes the
+  distance; hands-to-self is a given, never announced. Forward, not bashful.
+- **Haru:** MC helps, never runs anything; his captaincy is his. Animals are
+  foxes, not dogs. Towa, if present, tags along for Haru, doesn't calm the
+  critters, and is mute by day.

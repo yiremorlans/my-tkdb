@@ -191,6 +191,28 @@ export function createFakeSupabase(initialTables = {}) {
   }
 
   const rpcHandlers = {
+    // db/migrations/031: upsert, moving p_beat_key to the front of beat_keys
+    //                    (older copy dropped) and keeping the newest p_cap.
+    remember_dialogue_beat({ p_user_id, p_character_id, p_beat_key, p_cap }) {
+      tables.recent_dialogue_beats = tables.recent_dialogue_beats || [];
+      const updated_at = rpcNow.toISOString();
+      const existing = tables.recent_dialogue_beats.find(
+        (r) => r.discord_user_id === p_user_id && r.character_id === p_character_id,
+      );
+      const prior = existing ? existing.beat_keys.filter((key) => key !== p_beat_key) : [];
+      const beat_keys = [p_beat_key, ...prior].slice(0, p_cap);
+      if (existing) Object.assign(existing, { beat_keys, updated_at });
+      else {
+        tables.recent_dialogue_beats.push({
+          discord_user_id: p_user_id,
+          character_id: p_character_id,
+          beat_keys,
+          updated_at,
+        });
+      }
+      return null;
+    },
+
     // db/migrations/010: INSERT ... ON CONFLICT (user, char, kind)
     //                    DO UPDATE SET total = total + 1
     record_encounter_milestone({ p_user_id, p_character_id, p_milestone_type }) {
@@ -532,7 +554,17 @@ export function createFakeSupabase(initialTables = {}) {
         });
       }
 
-      return { ...row };
+      // db/migrations/032: the same points go into the store-credit wallet,
+      // and the new balance is what comes back.
+      tables.user_activity = tables.user_activity || [];
+      let activity = tables.user_activity.find((r) => r.discord_user_id === p_user_id);
+      if (!activity) {
+        activity = { discord_user_id: p_user_id, store_credit: 0 };
+        tables.user_activity.push(activity);
+      }
+      activity.store_credit = (activity.store_credit ?? 0) + row.points;
+
+      return activity.store_credit;
     },
 
     // db/migrations/016 + 028: spend one banked reset, but only on a command

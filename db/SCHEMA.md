@@ -17,6 +17,7 @@ Tracks overall user engagement and usage patterns.
 | `total_commands` | BIGINT | Lifetime command count |
 | `created_at` | TIMESTAMP | Record creation time |
 | `updated_at` | TIMESTAMP | Last update time |
+| `store_credit` | INT | 💎 wallet (migration 032, `docs/benkei-shop.md` §1). Seeded once from lifetime `house_progress.points`, then fed by `record_mission_completion` in the same write as the house bump. `CHECK >= 0` |
 
 **Use cases:**
 - Track user engagement and activity streaks
@@ -256,6 +257,19 @@ What finishing a scene leaves behind — an emoji and one line in that character
 
 > `user_activity` also gains `bond_dms_enabled BOOLEAN NOT NULL DEFAULT TRUE` in migration 015 — the opt-out behind the button on a user's first bond DM, and behind `/bonds dms:on|off`. Only an explicit `false` counts as an opt-out, so rows written before the column existed still get their scenes.
 
+### `recent_dialogue_beats`
+The memory behind the recent-beat skip (migration 031): a `/roam` or `/meet` draw leaves out the beats this player most recently answered from this character. One row per pair, updated **when a beat is answered** (a response click that passed the cooldown claim), so it is a short rolling list, not a log. A spawn the player drops is never recorded.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `discord_user_id` | TEXT | Who answered them |
+| `character_id` | TEXT | From whom |
+| `beat_keys` | TEXT[] | Short hashes of the beats' `line` text, newest first, capped at `RECENT_DIALOGUE_BEAT_WINDOW` (5) |
+| `updated_at` | TIMESTAMP | Last answered beat |
+| `PRIMARY KEY (discord_user_id, character_id)` | - | One row per bond |
+
+> Kept off `character_relationships` on purpose: a spawn is only a preview and must never create a relationship row. How many of the stored keys a draw skips depends on the pool (`recentBeatWindow` in `constants/characters.js`). Writes go through the atomic `remember_dialogue_beat()` function (prepend, dedupe, cap in one statement), since the click carries only the beat's key, never the list: no read-then-write.
+
 ### `missions`
 One row per posted mission request (`docs/scheduled-missions.md`). `status` is the whole state machine: `open` → `accepted` → `completed`, or `expired` from either.
 
@@ -337,6 +351,7 @@ Migration 011 schedules `prune_encounter_data()` daily at 03:30 UTC:
 | `encounter_milestones` | forever | Player-visible progression (`/affinity`), not analytics — and a bounded per-kind tally, so it has nothing to prune |
 | `bond_scene_progress` | forever | The record of what a player has been sent; dropping a row would re-send a scene they have already read |
 | `bond_keepsakes` | forever | Player-visible progression; dropping a row would take back a collectible |
+| `recent_dialogue_beats` | n/a | Updated in place, at most one small row per (user, character); nothing accumulates |
 | `missions` | not pruned yet | Bounded by the schedule (3/guild/day). Add to `prune_encounter_data()` alongside `public_encounters` if that stops being true |
 | `mission_log` | forever | Player-visible progression (`/house`) and the banked-reset ledger — an unspent row is a reward the player is still owed |
 

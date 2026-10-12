@@ -186,7 +186,12 @@ export const CASUAL_IMAGE_PROBABILITY_OVERRIDE = {
 // (constants/dialogue/<id>.js) should carry per tier, so a wider affinity band
 // doesn't repeat more than a narrow one. One line per POOL_POINTS_PER_LINE
 // affinity points spent in that tier, floored at MIN_DIALOGUE_POOL_SIZE — the
-// 5-line default nearly every character already uses for 'new'.
+// 5-line default nearly every character already uses for 'new' — and capped at
+// MAX_DIALOGUE_POOL_SIZE. The cap is what holds spark, close and bound at 24:
+// past that, authoring cost outgrows the freshness gained, and the recent-beat
+// skip (recentBeatWindow in constants/characters.js) keeps a capped pool from
+// repeating soon, which matters most for 'bound', since Soulbound plays it
+// forever.
 //
 // A tier can cover more than one relationship level (see
 // DIALOGUE_TIER_BY_LEVEL) — 'bound' shares Devoted and Soulbound — so its
@@ -202,13 +207,14 @@ export const CASUAL_IMAGE_PROBABILITY_OVERRIDE = {
 export const POOL_POINTS_PER_LINE = 4;
 
 // Moods: how many beats in each tier's pool should carry `mood: true` (liked
-// pays 2, favorite pays 1; see getAffinityForResponse), roster-wide. A gentle ramp of
-// roughly 11% -> 15% -> 16% -> 17% of DIALOGUE_POOL_TARGET_BY_TIER, so the
+// pays 2, favorite pays 1; see getAffinityForResponse), roster-wide. Roughly
+// 17% of DIALOGUE_POOL_TARGET_BY_TIER at warm and 25% from spark up, so the
 // favorite stays the reliable answer in most draws. Like the pool target, it's
 // a documented target, not enforced: add moods as a tier's pool grows toward
 // its target, so a short pool doesn't shift moods far more often than intended.
-export const MOOD_BEAT_TARGET_BY_TIER = { warm: 2, spark: 4, close: 6, bound: 8 };
+export const MOOD_BEAT_TARGET_BY_TIER = { warm: 3, spark: 6, close: 6, bound: 6 };
 export const MIN_DIALOGUE_POOL_SIZE = 5;
+export const MAX_DIALOGUE_POOL_SIZE = 24;
 
 function levelWidth(index) {
   const level = RELATIONSHIP_LEVELS[index];
@@ -225,9 +231,12 @@ export const DIALOGUE_POOL_TARGET_BY_TIER = RELATIONSHIP_LEVELS.reduce(
   {},
 );
 for (const tier of Object.keys(DIALOGUE_POOL_TARGET_BY_TIER)) {
-  DIALOGUE_POOL_TARGET_BY_TIER[tier] = Math.max(
-    MIN_DIALOGUE_POOL_SIZE,
-    Math.floor(DIALOGUE_POOL_TARGET_BY_TIER[tier] / POOL_POINTS_PER_LINE),
+  DIALOGUE_POOL_TARGET_BY_TIER[tier] = Math.min(
+    MAX_DIALOGUE_POOL_SIZE,
+    Math.max(
+      MIN_DIALOGUE_POOL_SIZE,
+      Math.floor(DIALOGUE_POOL_TARGET_BY_TIER[tier] / POOL_POINTS_PER_LINE),
+    ),
   );
 }
 

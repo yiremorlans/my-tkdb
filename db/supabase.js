@@ -234,6 +234,46 @@ export async function getRelationship(userId, characterId) {
 }
 
 /**
+ * The beat keys this user most recently answered from this character, newest first
+ * (migration 031). Empty when they have none yet.
+ */
+export async function getRecentDialogueBeats(userId, characterId) {
+  const { data, error } = await supabase
+    .from('recent_dialogue_beats')
+    .select('beat_keys')
+    .eq('discord_user_id', userId)
+    .eq('character_id', characterId)
+    .single();
+
+  if (error && error.code !== 'PGRST116') {
+    console.error('Error fetching recent dialogue beats:', error);
+    throw error;
+  }
+
+  return data?.beat_keys || [];
+}
+
+/**
+ * Put `beatKey` at the front of this user's recent beats with this character,
+ * keeping the newest `cap`. One RPC (db/migrations/031), not a read-then-write:
+ * the response click only carries the beat's key, so the prepend happens in
+ * Postgres and costs the click no extra read.
+ */
+export async function rememberDialogueBeat(userId, characterId, beatKey, cap) {
+  const { error } = await supabase.rpc('remember_dialogue_beat', {
+    p_user_id: userId,
+    p_character_id: characterId,
+    p_beat_key: beatKey,
+    p_cap: cap,
+  });
+
+  if (error) {
+    console.error('Error saving recent dialogue beat:', error);
+    throw error;
+  }
+}
+
+/**
  * Track user activity and command usage
  */
 export async function trackUserActivity(userId) {
@@ -2285,7 +2325,8 @@ export async function clearMissionPostReconcile(id) {
  * points.
  *
  * `points` is the whole progression: N for an errand (one per signature), 1 for
- * a riddle or either side of a co-op.
+ * a riddle or either side of a co-op. The same points go into store credit
+ * (migration 032); returns the new balance.
  */
 export async function recordMissionCompletion({
   userId,
@@ -2309,7 +2350,7 @@ export async function recordMissionCompletion({
     throw error;
   }
 
-  return data || null;
+  return data;
 }
 
 /**

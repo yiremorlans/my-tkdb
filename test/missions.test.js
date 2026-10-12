@@ -71,6 +71,7 @@ mock.module('../discordRest.js', {
 
 const {
   BANKED_RESET_LINE,
+  STORE_CREDIT_LINE,
   DAILY_LEAD_CAP,
   DEBRIEF_LINES,
   MISSION_BOOST_LINE,
@@ -122,6 +123,8 @@ function reset() {
   fake.tables.guild_settings = [];
   fake.tables.missions = [];
   fake.tables.mission_log = [];
+  fake.tables.house_progress = [];
+  fake.tables.user_activity = [];
   fake.tables.command_limits = [];
   fake.tables.character_relationships = [];
   posts.length = 0;
@@ -680,6 +683,38 @@ describe('errands', () => {
     assert.equal(fake.tables.mission_log[0].reset_spent_at, undefined);
   });
 
+  it('shows the store credit the completion actually banked, with the new balance', async () => {
+    seedErrand({ signed: ['mio', 'shion'] });
+    fake.tables.user_activity.push({ discord_user_id: 'user-a', store_credit: 5 });
+
+    const { response } = await handleMissionFile(click('user-a'), 1);
+
+    // Recorded before the reply, so the line reads back the write.
+    assert.equal(fake.tables.user_activity[0].store_credit, 7, 'fed in the completion write');
+    assert.equal(fake.tables.house_progress[0].points, 2, 'house points move by the same amount');
+    assert.match(response.data.content, /\*\*\+2 💎\*\* · 💎 7$/);
+  });
+
+  it('starts a wallet for a player with no activity row yet', async () => {
+    seedErrand({ signed: ['mio', 'shion'] });
+
+    const { response } = await handleMissionFile(click('user-a'), 1);
+    assert.match(response.data.content, /\*\*\+2 💎\*\* · 💎 2$/);
+    assert.deepEqual(
+      fake.tables.user_activity.map((r) => [r.discord_user_id, r.store_credit]),
+      [['user-a', 2]],
+    );
+  });
+
+  it('shows no store credit when the completion write fails', async () => {
+    seedErrand({ signed: ['mio', 'shion'] });
+    fake.forceError('rpc', 'record_mission_completion', { message: 'boom' });
+
+    const { response } = await handleMissionFile(click('user-a'), 1);
+    assert.match(response.data.content, /Report filed/);
+    assert.doesNotMatch(response.data.content, /💎/);
+  });
+
   it('sends someone holding a riddle to /riddle rather than the report sheet', async () => {
     fake.tables.missions.push(
       missionRow({ status: 'accepted', accepted_by: 'user-a', mission_type: 'riddle' }),
@@ -1051,14 +1086,16 @@ describe('riddles', () => {
       last_used_at: new Date().toISOString(),
     });
 
-    const { reply, afterReply } = await handleRiddle(
+    const { reply, followup, afterReply } = await handleRiddle(
       command('user-a', [{ name: 'answer', value: RIDDLE.answer }]),
     );
     await afterReply();
 
     assert.match(replyText(reply), /Debunked/);
+    assert.match(followup.content, /\*\*\+1 💎\*\* · 💎 1/);
     assert.equal(fake.tables.missions[0].status, 'completed');
     assert.equal(fake.tables.mission_log[0].points, 1);
+    assert.equal(fake.tables.user_activity[0].store_credit, 1);
     assert.equal(fake.tables.command_limits.length, 1, 'the cooldown is left alone');
     assert.equal(fake.tables.mission_log[0].reset_spent_at, undefined, 'banked, not spent');
   });
@@ -1166,7 +1203,7 @@ describe('riddles', () => {
     assert.equal(followup.flags & 64, 64, 'ephemeral');
     assert.deepEqual(followup.content.split('\n\n'), [
       MISSION_BOOST_LINE(culprit.firstName),
-      BANKED_RESET_LINE,
+      `${BANKED_RESET_LINE} ${STORE_CREDIT_LINE(1, 1)}`,
     ]);
 
     const row = fake.tables.character_relationships.find(
@@ -1268,6 +1305,7 @@ describe('co-op', () => {
       '**Alex** answered the call for backup.',
       '**Mission complete.**',
       'Both of you have banked a cooldown reset.',
+      `${STORE_CREDIT_LINE(1)} each`,
     ]);
     const [lead, helper] = response.data.components[0].components;
     assert.equal(lead.custom_id, 'mission:debrief:1:lead');
@@ -1812,6 +1850,19 @@ describe('banked cooldown resets', () => {
       ['riddle'],
       'the two-command reset survives',
     );
+  });
+
+  it('spends every banked co-op reset before a two-command one, whatever the bank order', async () => {
+    onCooldown('user-a');
+    bank('user-a', 'coop', new Date(NOW.getTime() - 20_000));
+    bank('user-a', 'riddle', new Date(NOW.getTime() - 10_000));
+    bank('user-a', 'coop');
+
+    await handleCooldownReset(click('user-a'), 'roam');
+    await handleCooldownReset(click('user-a'), 'meet');
+
+    assert.deepEqual(spent('user-a').map((r) => r.mission_type), ['coop', 'coop']);
+    assert.deepEqual(banked('user-a').map((r) => r.mission_type), ['riddle']);
   });
 
   it('refuses, and keeps the reset, when that clock is already clear', async () => {

@@ -35,7 +35,7 @@ process.env.SUPABASE_SERVICE_ROLE_KEY ??= 'fake-service-role-key';
 const { keyPair, publicKeyHex } = await generateDiscordKeyPair();
 process.env.PUBLIC_KEY = publicKeyHex;
 
-const fake = createFakeSupabase({ character_relationships: [], command_limits: [] });
+const fake = createFakeSupabase({ character_relationships: [], command_limits: [], recent_dialogue_beats: [] });
 mock.module('@supabase/supabase-js', {
   namedExports: { createClient: () => fake.client },
 });
@@ -49,19 +49,21 @@ const postInteraction = (body) => postSignedInteraction(TEST_PORT, keyPair.priva
 let tokenSeq = 0;
 // A dialogue-response button click for the given flow. The shown components are
 // what the handler greys out and echoes back on the result / cooldown message.
-function respInteraction(userId, characterId, responseType, origin) {
+// `tail` is whatever follows the origin: the mood slot and the beat key.
+function respInteraction(userId, characterId, responseType, origin, tail = '') {
+  const customId = `resp:${characterId}:${responseType}:${origin}${tail}`;
   return {
     id: `interaction-${++tokenSeq}`,
     token: `token-${tokenSeq}`,
     type: 3, // MESSAGE_COMPONENT
-    data: { custom_id: `resp:${characterId}:${responseType}:${origin}` },
+    data: { custom_id: customId },
     member: { user: { id: userId } },
     message: {
       components: [
         {
           type: 1,
           components: [
-            { type: 2, style: 1, label: 'Say something kind', custom_id: `resp:${characterId}:${responseType}:${origin}` },
+            { type: 2, style: 1, label: 'Say something kind', custom_id: customId },
           ],
         },
       ],
@@ -69,12 +71,16 @@ function respInteraction(userId, characterId, responseType, origin) {
   };
 }
 
-function affinityFor(userId, characterId) {
-  const row = fake.tables.character_relationships.find(
+function rowFor(table, userId, characterId) {
+  return fake.tables[table].find(
     (r) => r.discord_user_id === userId && r.character_id === characterId,
   );
-  return row ? row.affinity : null;
 }
+
+const affinityFor = (userId, characterId) =>
+  rowFor('character_relationships', userId, characterId)?.affinity ?? null;
+const recentBeatsFor = (userId, characterId) =>
+  rowFor('recent_dialogue_beats', userId, characterId)?.beat_keys ?? null;
 
 const originalEdits = () => discordCalls.filter((c) => c.isOriginalEdit);
 
@@ -135,6 +141,31 @@ test('a /meet response is blocked when the meet cooldown is already active', asy
   await waitFor(() => originalEdits().length === 1);
   assert.match(originalEdits()[0].payload.content, /again in/);
   assert.strictEqual(affinityFor(userId, 'taiga'), null, 'no affinity row should be created for a blocked redemption');
+});
+
+test('an answered beat enters the recent-beat skip; a refused click does not', async () => {
+  discordCalls.length = 0;
+  const userId = 'user-recent-beat';
+
+  await postInteraction(respInteraction(userId, 'taiga', 'kind', 'roam', '::aaaaaaaaaaaa'));
+  await waitFor(() => recentBeatsFor(userId, 'taiga') !== null);
+  assert.deepStrictEqual(recentBeatsFor(userId, 'taiga'), ['aaaaaaaaaaaa']);
+
+  // Same window, so the cooldown claim refuses it and nothing is recorded.
+  await postInteraction(respInteraction(userId, 'taiga', 'kind', 'roam', ':m:bbbbbbbbbbbb'));
+  await waitFor(() => originalEdits().length === 2);
+  assert.match(originalEdits()[1].payload.content, /again in/);
+  assert.deepStrictEqual(recentBeatsFor(userId, 'taiga'), ['aaaaaaaaaaaa']);
+});
+
+test('a button rendered before beat keys still scores and records nothing', async () => {
+  discordCalls.length = 0;
+  const userId = 'user-recent-beat-legacy';
+
+  await postInteraction(respInteraction(userId, 'taiga', 'kind', 'meet', ':m'));
+  await waitFor(() => originalEdits().length === 1);
+  assert.notStrictEqual(affinityFor(userId, 'taiga'), null, 'the response should still land');
+  assert.strictEqual(recentBeatsFor(userId, 'taiga'), null);
 });
 
 test.after(() => {

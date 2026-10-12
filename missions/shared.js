@@ -10,8 +10,12 @@ import {
   MessageComponentTypes,
 } from "discord-interactions";
 import { EPHEMERAL } from "../utils.js";
-import { errandTargets } from "../db/supabase.js";
-import { MISSION_NEXT_STEP } from "../constants/missions.js";
+import { errandTargets, recordMissionCompletion } from "../db/supabase.js";
+import {
+  BANKED_RESET_LINE,
+  MISSION_NEXT_STEP,
+  STORE_CREDIT_LINE,
+} from "../constants/missions.js";
 import { expressionExists } from "../constants/publicEncounters.js";
 
 export function ephemeral(content) {
@@ -203,6 +207,35 @@ export function missionTypeGuard(mission, type, { noMission, wrongType }) {
 }
 
 // --- reward writes ----------------------------------------------------------
+
+// Records one completion of `mission` for `userId` and returns { balance },
+// the wallet read back from the write. Runs before the reply, after the claim
+// RPC has closed the mission, so a lost race still never banks points. A failed
+// write returns null: nothing was earned, so nothing is shown.
+export async function recordCompletion(mission, userId, role, points) {
+  try {
+    const balance = await recordMissionCompletion({
+      userId,
+      house: mission.house,
+      missionType: mission.mission_type,
+      missionId: mission.id,
+      role,
+      points,
+    });
+    return { balance };
+  } catch (err) {
+    console.error("[missions] Recording a completion failed:", err.message);
+    return null;
+  }
+}
+
+// The banked-reset line, with the 💎 credit appended when the completion
+// (recordCompletion's result) actually banked it.
+export function bankedRewardLine(points, credit) {
+  return credit
+    ? `${BANKED_RESET_LINE} ${STORE_CREDIT_LINE(points, credit.balance)}`
+    : BANKED_RESET_LINE;
+}
 
 // Promise.allSettled swallows rejections by design; this puts them back in the
 // log, which matters because everything it wraps is a reward write. Hands the

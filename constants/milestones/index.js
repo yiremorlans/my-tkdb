@@ -4,10 +4,10 @@
 // Entry shape. `minTier` gates it to a real relationship depth, so a spark
 // milestone can never land for a caller who is still an Acquaintance.
 // `bucket` only nudges selection toward the register the public winner line
-// used — every tier-eligible entry stays reachable. `label` is the /affinity
-// tally row, `afterline` the ephemeral win reply, `hint` the callback in the
-// next boosted /roam. Gating is cumulative, so depth adds options rather than
-// replacing them.
+// used. `label` is the /affinity tally row, `afterline` the ephemeral win
+// reply, `hint` the callback in the next boosted /roam. A win draws from its
+// own tier only (see pickMilestone), so earlier moments stay in the tally but
+// stop being collected once the relationship moves past them.
 //
 // `hint` is read after the words "picking up after", so it wants to be a noun
 // phrase ("that coffee", not "you had coffee"). It is also bond scenes'
@@ -24,6 +24,10 @@
 // else. Prefix their keys with the character id: keys are unique across every
 // file, since the tally stores only the key. A pool needs at least one
 // `minTier: "new"` entry or a Stranger has nothing to draw.
+//
+// A set can belong to a whole house instead: ./mortkranken.js is shared by
+// Yuri and Jiro, its keys prefixed with the house, and every entry written to
+// fit either of them.
 
 import { pickRandom } from "../random.js";
 import shared from "./shared.js";
@@ -32,12 +36,25 @@ import edward from "./edward.js";
 import elias from "./elias.js";
 import haru from "./haru.js";
 import jin from "./jin.js";
+import mortkranken from "./mortkranken.js";
 import rui from "./rui.js";
 import shion from "./shion.js";
 import towa from "./towa.js";
 import zenji from "./zenji.js";
 
-const CHARACTER_MILESTONES = { benkei, edward, elias, haru, jin, rui, shion, towa, zenji };
+const CHARACTER_MILESTONES = {
+  benkei,
+  edward,
+  elias,
+  haru,
+  jin,
+  jiro: mortkranken,
+  rui,
+  shion,
+  towa,
+  yuri: mortkranken,
+  zenji,
+};
 
 // new < known < warm < spark < close < bound
 const TIER_RANK = { new: 0, known: 1, warm: 2, spark: 3, close: 4, bound: 5 };
@@ -48,9 +65,15 @@ export const ENCOUNTER_MILESTONES = { ...shared };
 // Which keys each character with a file can collect.
 const MILESTONE_POOLS = {};
 
-for (const [characterId, { milestones, shared: keep }] of Object.entries(
-  CHARACTER_MILESTONES,
-)) {
+// A house set is registered once, however many characters draw from it.
+const registered = new Set();
+
+for (const [characterId, set] of Object.entries(CHARACTER_MILESTONES)) {
+  const { milestones, shared: keep } = set;
+  MILESTONE_POOLS[characterId] = [...Object.keys(milestones), ...keep];
+  if (registered.has(set)) continue;
+  registered.add(set);
+
   for (const key of Object.keys(milestones)) {
     if (ENCOUNTER_MILESTONES[key]) {
       throw new Error(`Duplicate milestone key "${key}" in ${characterId}.js`);
@@ -62,7 +85,6 @@ for (const [characterId, { milestones, shared: keep }] of Object.entries(
       throw new Error(`${characterId}.js keeps unknown shared milestone "${key}"`);
     }
   }
-  MILESTONE_POOLS[characterId] = [...Object.keys(milestones), ...keep];
 }
 
 const DEFAULT_MILESTONE_POOL = Object.keys(shared);
@@ -74,14 +96,19 @@ export function milestonePoolFor(characterId) {
 // `tier` is the winner's REAL dialogue tier (getDialogueTier), not the
 // collapsed WINNER_LINE_TIER bucket — the bucket is passed separately and only
 // biases the draw. `characterId` picks the pool (see milestonePoolFor).
+// The draw is from the caller's own tier: a Close Friend win collects a Close
+// Friend moment, so the Confidant bond scene's {lastMoment} reads at the depth
+// it was written for. A tier with nothing in this pool falls back to the
+// nearest tier below that has something.
 // Returns a key of ENCOUNTER_MILESTONES.
 export function pickMilestone(tier, winnerBucket, characterId = null) {
-  const rank = TIER_RANK[tier] ?? 0;
-  const eligible = milestonePoolFor(characterId).filter(
-    (id) => TIER_RANK[ENCOUNTER_MILESTONES[id].minTier] <= rank,
-  );
+  const pool = milestonePoolFor(characterId);
+  let eligible = [];
+  for (let rank = TIER_RANK[tier] ?? 0; rank >= 0 && eligible.length === 0; rank--) {
+    eligible = pool.filter((id) => TIER_RANK[ENCOUNTER_MILESTONES[id].minTier] === rank);
+  }
   // Unreachable while every pool has a `minTier: "new"` entry.
-  if (eligible.length === 0) return milestonePoolFor(characterId)[0];
+  if (eligible.length === 0) return pool[0];
 
   const weighted = eligible.flatMap((id) => {
     const { bucket } = ENCOUNTER_MILESTONES[id];

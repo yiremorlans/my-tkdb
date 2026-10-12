@@ -14,6 +14,7 @@
 // constants/backgrounds.js reads it, and only to decide backgrounds. Adding an
 // entry changes where a character appears and nothing else — not their house,
 // not their affinity, not how often they show up.
+import { createHash } from "node:crypto";
 import { HOUSES, CHARACTER_ROOMS, timeBucket } from "./backgrounds.js";
 import { DIALOGUE } from "./dialogue.js";
 import { pickRandom } from "./random.js";
@@ -1234,10 +1235,49 @@ function resolvePoolTier(pool, tier, variant) {
   return [];
 }
 
-// `ctx` carries the encounter context. Only `now` is read, and only by the
-// pmOnly daytime swap; the conditional `when` layer that used `locationKey`,
-// `backgroundFile` and `event` is gone (see below), so callers may pass those
-// or not.
+// Recent-beat skip, every tier: a /roam or /meet draw leaves out the beats this
+// player most recently answered from this character (ctx.recentBeats, newest
+// first, stored per user+character by migration 031's remember_dialogue_beat on
+// the response click), so an answered line can't come straight back. The window shrinks with the pool so at least MIN_FRESH_DIALOGUE_BEATS
+// stay drawable: a 5-line pool skips 2 instead of turning into a fixed
+// rotation. Lives here rather than constants/game.js, which imports this file.
+export const RECENT_DIALOGUE_BEAT_WINDOW = 5;
+const MIN_FRESH_DIALOGUE_BEATS = 3;
+
+export function recentBeatWindow(poolSize) {
+  return Math.max(
+    0,
+    Math.min(RECENT_DIALOGUE_BEAT_WINDOW, poolSize - MIN_FRESH_DIALOGUE_BEATS),
+  );
+}
+
+// A beat's identity in the recent list: a short hash of its line, so adding or
+// reordering beats keeps history intact. Editing a line just forgets it.
+// Memoized: the pools are static, so each line is hashed once per process
+// rather than on every draw.
+const beatKeyCache = new Map();
+export function dialogueBeatKey(line) {
+  let key = beatKeyCache.get(line);
+  if (!key) {
+    key = createHash("sha1").update(line).digest("hex").slice(0, 12);
+    beatKeyCache.set(line, key);
+  }
+  return key;
+}
+
+// `beats` are already normalized, so every one carries a string `line`.
+function withoutRecent(beats, recentBeats) {
+  const window = recentBeatWindow(beats.length);
+  if (!window || !recentBeats?.length) return beats;
+  const skip = new Set(recentBeats.slice(0, window));
+  const fresh = beats.filter((beat) => !skip.has(dialogueBeatKey(beat.line)));
+  return fresh.length ? fresh : beats;
+}
+
+// `ctx` carries the encounter context. Only `now` (the pmOnly daytime swap)
+// and `recentBeats` (the recent-beat skip above) are read; the conditional
+// `when` layer that used `locationKey`, `backgroundFile` and `event` is gone
+// (see below), so callers may pass those or not.
 //
 // Shared by getRandomDialogueBeat (/roam) and getRandomDialogueEntry (/meet):
 // the pmOnly daytime swap and the random pick from the character's own
@@ -1275,7 +1315,8 @@ function pickDialogueEntry(character, tier, variant, ctx) {
   }
 
   if (entries.length === 0) return null;
-  return normalizeBeat(pickRandom(entries));
+  const beat = pickRandom(withoutRecent(entries.map(normalizeBeat), ctx.recentBeats));
+  return { ...beat, beatKey: dialogueBeatKey(beat.line) };
 }
 
 // /meet's draw — the same single pick getRandomDialogueBeat makes for /roam,
@@ -1291,8 +1332,9 @@ export function getRandomDialogueEntry(
   ctx = {},
 ) {
   const entry = pickDialogueEntry(character, tier, variant, ctx);
-  if (!entry) return { line: "...", responses: null, mood: false };
-  return { line: entry.line, responses: entry.responses, mood: entry.mood };
+  if (!entry) return { line: "...", responses: null, mood: false, beatKey: null };
+  const { line, responses, mood, beatKey } = entry;
+  return { line, responses, mood, beatKey };
 }
 
 // A tier entry is a beat (see getRandomDialogueBeat) where `approach` is one
@@ -1354,16 +1396,17 @@ export function getRandomDialogueBeat(character, tier, variant = null, ctx = {})
       greeting: null,
       responses: null,
       mood: false,
+      beatKey: null,
     };
   }
 
-  const { line, approachOptions, greetingOptions, responses, mood } = entry;
+  const { line, approachOptions, greetingOptions, responses, mood, beatKey } = entry;
   const approach = approachOptions
     ? pickRandom(approachOptions)
     : pickRandom(APPROACH_LABEL_FALLBACK);
   const greeting = greetingOptions ? pickRandom(greetingOptions) : null;
 
-  return { line, approach, greeting, responses, mood };
+  return { line, approach, greeting, responses, mood, beatKey };
 }
 
 // `beatResponses` is the { kind, playful, bold, neutral } label object off the
