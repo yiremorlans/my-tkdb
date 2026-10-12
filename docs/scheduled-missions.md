@@ -85,9 +85,9 @@ Last updated: 2026-10-11
 >   need live data moved to its watch list.
 >
 > **Change after the first build (2026-09-05): cooldown resets are banked.**
-> §13 below says a completed mission calls `resetCommandLimit` and clears the
-> clock on the spot (§5, §6 and §7 said so too until they were updated for
-> migration 033). It no longer does.
+> §5, §6, §7 and §13 originally said a completed mission calls
+> `resetCommandLimit` and clears the clock on the spot. It no longer does, and
+> those sections now describe the banked reset.
 >
 > - Completing a mission leaves its `mission_log` row unspent
 >   (`reset_spent_at IS NULL`) and touches `command_limits` not at all.
@@ -239,7 +239,7 @@ pull that shared infra into this feature's scope and renumber the migration to
 | Recurring scheduler | Long-lived Express process; the encounter tick loop |
 | Post an embed + button, edit it later | `postChannelMessage` / `editChannelMessage` (public-encounters §11) |
 | First-click arbitration + "max one held" | Supabase, atomic conditional `UPDATE` in an RPC + a **partial unique index** (§11) |
-| Reset a user's `/roam` + `/meet` cooldown | `resetCommandLimit(userId, command?)` in `commandLimits.js` already exists (`clearCommandLimit` in `db/supabase.js`) |
+| Reset a user's `/roam` + `/meet` cooldown | `redeemCooldownReset(userId, command)` in `commandLimits.js`, spending a banked reset through `spend_cooldown_reset` (§13) |
 | Riddle answer matching | `matchCharacterGuess` (public-encounters §7.1) |
 | Wrong-guess throttle | in-memory `Map`, same pattern as `/call`'s 10s cooldown |
 | Signature source | `recordResponse` at the `/roam` / `/meet` response step (`encounters.js:402`) — the exact point a "meeting" becomes real |
@@ -1148,15 +1148,24 @@ Two things close that gap:
 
 ## 13. `commandLimits.js`
 
-No new code — `resetCommandLimit(userId, command = null)` already exists
-(`commandLimits.js`, delegating to `clearCommandLimit` in `db/supabase.js`).
-Rename the "(for testing)" comment; it is now a real reward path.
+Completing a mission never touches `command_limits`. The reward is the
+`mission_log` row the closing RPC writes (§11.5), held until the player spends
+it from the **Use a cooldown reset** button on the "you're still on cooldown"
+reply (see the banking note at the top).
 
-- Errand / riddle reward: `resetCommandLimit(userId)` — clears **both**
-  `/roam` and `/meet` (the shared 3h clock).
-- Co-op reward: a banked `single`-scope reset for each user, spent on the
-  longer of the two waits (migration 028). The original shared coin flip is
-  gone (see the banking note at the top).
+`redeemCooldownReset(userId, command)` spends one. The decision, the credit and
+the clear all happen inside `spend_cooldown_reset` (migration 016, rewritten in
+028); `commandLimits.js` only supplies the cooldown length. Returns `'roam' |
+'meet' | 'both'` for what was cleared, `'none'` with nothing banked,
+`'not_needed'` when that clock is already clear, and fails closed (`'error'`).
+
+- Errand / riddle reward: a `both`-scope reset, clearing `/roam` and `/meet`
+  (the shared 3h clock).
+- Co-op reward: a `single`-scope reset for each user, spent on the longer of
+  the two waits (migration 028). The original shared coin flip is gone.
+
+The old `resetCommandLimit` is gone. Its unearned counterpart is the
+owner-only `/encdev reset` helper (`clearCommandLimits`), for testing.
 
 ---
 

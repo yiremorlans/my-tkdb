@@ -37,9 +37,11 @@ Two phases. The wallet goes live before there is anything to spend it on.
   the shop ships, its wallet header is the balance's home, so nothing added in
   phase 1 has to be removed.
 - **Revisit once the shop ships (2026-10-11):** whether the riddle and errand
-  replies still need the running balance. It is the only reason the completion
-  is written before the reply. With the wallet header showing the balance, the
-  replies could drop to `+1 💎` and the write could move after the reply.
+  replies still need the running balance. With the wallet header showing it,
+  they could drop to `+1 💎`. The write stays where it is either way: since
+  migration 033 it is part of the claim, which is what lets a failed write
+  leave the mission open, so dropping the balance would no longer save a
+  round trip.
 
 **Phase 2: the shop and `/shift` together** (the next free migration)
 - Everything else in this doc: items, daily stock, Lost & Found, `/shift`.
@@ -67,7 +69,7 @@ RLS. The bot uses only the service role, so the revoke changes nothing for it.
   - Users with `house_progress` rows but no `user_activity` row get one
     inserted by the seed.
 - **Fed going forward** by every mission completion: whatever
-  `recordMissionCompletion` adds to `house_progress.points` (lead *and*
+  `record_mission_completion` adds to `house_progress.points` (lead *and*
   assist rows, `N` for an errand, `1` for riddle/co-op) is added to
   `store_credit` **in the same write**, so the two cannot drift.
 - **Also fed by `/shift` pay** (§10): 💎 3 a day, which never touches
