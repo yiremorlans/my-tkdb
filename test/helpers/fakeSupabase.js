@@ -407,10 +407,13 @@ export function createFakeSupabase(initialTables = {}) {
       return 'claimed';
     },
 
-    // db/migrations/016: lock the row, re-check the signature map, then close
-    // it. The re-check is what makes a stale /docs button harmless, and the
-    // point count comes back from the same row so it can't disagree.
-    file_errand({ p_mission_id, p_user_id }) {
+    // db/migrations/033 (file_errand from 016, plus the completion): lock the
+    // row, re-check the signature map, then close it and record. The re-check
+    // is what makes a stale /docs button harmless, and the point count comes
+    // back from the same row so it can't disagree. Postgres rolls the close
+    // back if the record fails; here a forced error fails the whole call
+    // before anything is touched, which is the same outcome.
+    file_errand_and_record({ p_mission_id, p_user_id }) {
       tables.missions = tables.missions || [];
 
       const mission = tables.missions.find(
@@ -427,7 +430,16 @@ export function createFakeSupabase(initialTables = {}) {
 
       mission.status = 'completed';
       mission.completed_at = rpcNow.toISOString();
-      return `filed:${Object.keys(signatures).length}`;
+      const points = Object.keys(signatures).length;
+      const balance = rpcHandlers.record_mission_completion({
+        p_user_id,
+        p_house: mission.house,
+        p_mission_type: 'errand',
+        p_mission_id,
+        p_role: 'lead',
+        p_points: points,
+      });
+      return `filed:${points}:${balance}`;
     },
 
     // db/migrations/025: the errand's one free house change. Lock, refuse if
@@ -479,9 +491,11 @@ export function createFakeSupabase(initialTables = {}) {
       };
     },
 
-    // db/migrations/029: a second user backing up a co-op, under the same
-    // rules as Accept (claimBlocker), tested after 'taken' and 'self'.
-    claim_coop_helper({ p_mission_id, p_user_id, p_day_start = null, p_daily_lead_cap = null }) {
+    // db/migrations/033 (claim_coop_helper from 029, plus both completions): a
+    // second user backing up a co-op, under the same rules as Accept
+    // (claimBlocker), tested after 'taken' and 'self'. On 'joined' the lead's
+    // and the helper's rows are written in the same call.
+    join_coop_and_record({ p_mission_id, p_user_id, p_day_start = null, p_daily_lead_cap = null }) {
       tables.missions = tables.missions || [];
 
       const mission = tables.missions.find((r) => r.id === p_mission_id);
@@ -501,6 +515,16 @@ export function createFakeSupabase(initialTables = {}) {
       mission.helper_user_id = p_user_id;
       mission.status = 'completed';
       mission.completed_at = rpcNow.toISOString();
+      for (const [userId, role] of [[mission.accepted_by, 'lead'], [p_user_id, 'assist']]) {
+        rpcHandlers.record_mission_completion({
+          p_user_id: userId,
+          p_house: mission.house,
+          p_mission_type: 'coop',
+          p_mission_id,
+          p_role: role,
+          p_points: 1,
+        });
+      }
       return 'joined';
     },
 
@@ -616,8 +640,9 @@ export function createFakeSupabase(initialTables = {}) {
       return spentOn;
     },
 
-    // db/migrations/016: the riddle solve.
-    complete_mission({ p_mission_id, p_user_id, p_type }) {
+    // db/migrations/033 (complete_mission from 016, plus the completion): the
+    // riddle solve. The new balance, or null if the mission had closed.
+    solve_riddle({ p_mission_id, p_user_id }) {
       tables.missions = tables.missions || [];
 
       const mission = tables.missions.find(
@@ -625,13 +650,20 @@ export function createFakeSupabase(initialTables = {}) {
           r.id === p_mission_id
           && r.accepted_by === p_user_id
           && r.status === 'accepted'
-          && r.mission_type === p_type,
+          && r.mission_type === 'riddle',
       );
-      if (!mission) return false;
+      if (!mission) return null;
 
       mission.status = 'completed';
       mission.completed_at = rpcNow.toISOString();
-      return true;
+      return rpcHandlers.record_mission_completion({
+        p_user_id,
+        p_house: mission.house,
+        p_mission_type: 'riddle',
+        p_mission_id,
+        p_role: 'lead',
+        p_points: 1,
+      });
     },
 
     // db/migrations/011: INSERT ... ON CONFLICT DO UPDATE SET wins = wins + 1

@@ -34,8 +34,15 @@ import {
   bondLevelSlug,
   bondSceneKey,
   FAV_RESPONSE_PHRASE,
+  getDialogueTier,
+  RELATIONSHIP_LEVELS,
 } from './constants/game.js';
-import { fillTemplate, getMilestone, matchCharacterGuess } from './constants/publicEncounters.js';
+import {
+  fillTemplate,
+  getMilestone,
+  matchCharacterGuess,
+  milestoneKeysAtTier,
+} from './constants/publicEncounters.js';
 import { openDmChannel, postChannelMessage, postChannelTyping } from './discordRest.js';
 import { EPHEMERAL as EPHEMERAL_FLAG } from './utils.js';
 import {
@@ -44,7 +51,7 @@ import {
   getBondDmPref,
   getBondKeepsakes,
   getBondSceneRow,
-  getLatestEncounterMilestone,
+  getLatestEncounterMilestoneOf,
   getRelationship,
   listBondScenes,
   listResumableBondScenes,
@@ -162,7 +169,7 @@ function favouredResponsePhrase(character) {
  * best-effort: a scene that can't name how many times you've met is still worth
  * sending, so a failed lookup degrades to a plain phrase rather than aborting.
  */
-async function resolveSceneVars(userId, character, now = new Date()) {
+async function resolveSceneVars(userId, character, levelName, now = new Date()) {
   const vars = {
     firstName: character.firstName,
     house: character.house || 'Darkwick',
@@ -188,8 +195,17 @@ async function resolveSceneVars(userId, character, now = new Date()) {
     console.error('Error reading relationship for bond scene vars:', err);
   }
 
+  // {lastMoment} is a moment from the level just below this scene's: the
+  // Confidant scene names a Close Friend moment. Reading by tier rather than
+  // "newest overall" keeps it fixed while the scene is open, while it waits in
+  // the queue, and on replay, since a /call won since then is drawn at a later
+  // tier. A player who crossed that level without winning a /call there has
+  // no such moment and gets the fallback above.
+  const below = RELATIONSHIP_LEVELS[bondLevelIndex(levelName) - 1];
   try {
-    const latest = await getLatestEncounterMilestone(userId, character.id);
+    const latest = below && await getLatestEncounterMilestoneOf(
+      userId, character.id, milestoneKeysAtTier(getDialogueTier(below.name)),
+    );
     const milestone = latest && getMilestone(latest.milestone_type);
     if (milestone) {
       vars.lastMoment = fillTemplate(milestone.hint, {
@@ -458,7 +474,7 @@ export async function deliverBondScene(userId, characterId, levelName, { already
   //    row the user has *anywhere* — the etiquette frame and the opt-out button
   //    are offered once per person, not once per character, so this counts every
   //    row rather than reusing the per-character `siblings` read above.
-  const vars = await resolveSceneVars(userId, character);
+  const vars = await resolveSceneVars(userId, character, levelName);
   const allRows = await listBondScenes(userId);
   const firstEver = allRows.filter((row) => row.level_name !== levelName
     || row.character_id !== character.id).length === 0;
@@ -570,7 +586,7 @@ export async function handleBondClick(userId, { kind, characterId, levelKey, arg
 
   const scene = getBondScene(character.id, levelName);
   if (!scene?.beats?.length) return { acted: false, reason: 'no-content' };
-  const vars = await resolveSceneVars(userId, character);
+  const vars = await resolveSceneVars(userId, character, levelName);
 
   // The resume button (§2.4). The only thing it does is get the scene back into
   // the DM where it belongs — it never renders a beat itself.
@@ -912,7 +928,7 @@ export async function handleBondReplayClick(userId, { kind, characterId, levelKe
 
   const scene = getBondScene(character.id, levelName);
   if (!scene?.beats?.length) return { posted: false, reason: 'no-content' };
-  const vars = await resolveSceneVars(userId, character);
+  const vars = await resolveSceneVars(userId, character, levelName);
 
   let posted = false;
   if (kind === 'replay' || kind === 'replaystart') {

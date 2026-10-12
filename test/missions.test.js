@@ -75,6 +75,7 @@ const {
   DAILY_LEAD_CAP,
   DEBRIEF_LINES,
   MISSION_BOOST_LINE,
+  MISSION_ERROR_LINE,
   MISSIONS_PER_DAY,
   RIDDLE_WRONG_LINES,
   MIN_GAP_MS,
@@ -706,13 +707,19 @@ describe('errands', () => {
     );
   });
 
-  it('shows no store credit when the completion write fails', async () => {
+  it('leaves the errand open to file again when the filing fails', async () => {
     seedErrand({ signed: ['mio', 'shion'] });
-    fake.forceError('rpc', 'record_mission_completion', { message: 'boom' });
+    fake.forceError('rpc', 'file_errand_and_record', { message: 'boom' });
 
     const { response } = await handleMissionFile(click('user-a'), 1);
-    assert.match(response.data.content, /Report filed/);
-    assert.doesNotMatch(response.data.content, /💎/);
+    assert.match(response.data.content, /Something went wrong filing that/);
+    assert.equal(fake.tables.missions[0].status, 'accepted');
+    assert.equal(fake.tables.mission_log.length, 0);
+
+    // The same button works on the retry.
+    const retry = await handleMissionFile(click('user-a'), 1);
+    assert.match(retry.response.data.content, /Report filed/);
+    assert.equal(fake.tables.mission_log.length, 1);
   });
 
   it('sends someone holding a riddle to /riddle rather than the report sheet', async () => {
@@ -1124,6 +1131,28 @@ describe('riddles', () => {
     assert.match(replyText(later.reply), /Debunked/);
   });
 
+  it('leaves the riddle open to answer again, with no wait, when the solve fails', async () => {
+    seedRiddle();
+    fake.forceError('rpc', 'solve_riddle', { message: 'boom' });
+    const now = new Date();
+
+    const failed = await handleRiddle(
+      command('user-a', [{ name: 'answer', value: RIDDLE.answer }]),
+      now,
+    );
+    assert.equal(failed.reply.content, MISSION_ERROR_LINE);
+    assert.equal(fake.tables.missions[0].status, 'accepted');
+    assert.equal(fake.tables.mission_log.length, 0);
+
+    // Not a wrong answer, so no cooldown: the retry goes straight through.
+    const retry = await handleRiddle(
+      command('user-a', [{ name: 'answer', value: RIDDLE.answer }]),
+      new Date(now.getTime() + 1_000),
+    );
+    assert.match(replyText(retry.reply), /Debunked/);
+    assert.equal(fake.tables.mission_log.length, 1);
+  });
+
   it('every riddle carries its winning line', () => {
     for (const pool of Object.values(RIDDLES)) {
       for (const riddle of pool) {
@@ -1323,6 +1352,20 @@ describe('co-op', () => {
     const [lead, helper] = response.data.components[0].components;
     assert.equal(lead.label, 'Debrief: Lead');
     assert.equal(helper.label, `Debrief: ${longNick}`);
+  });
+
+  it('leaves the call for backup live when the join fails', async () => {
+    seedCoop();
+    fake.forceError('rpc', 'join_coop_and_record', { message: 'boom' });
+
+    const { response } = await handleMissionAssistJoin(click('user-b'), 1);
+    assert.equal(response.data.content, MISSION_ERROR_LINE);
+    assert.equal(fake.tables.missions[0].status, 'accepted');
+    assert.equal(fake.tables.mission_log.length, 0, 'neither side banked anything');
+
+    const retry = await handleMissionAssistJoin(click('user-b'), 1);
+    assert.match(retry.response.data.embeds[0].description, /Mission complete/);
+    assert.equal(fake.tables.mission_log.length, 2);
   });
 
   it('turns a second helper away rather than paying twice', async () => {

@@ -817,3 +817,69 @@ test('scene placeholders are filled from the player\'s own history, not left as 
   assert.doesNotMatch(posted, /\{\w+\}/, 'an unresolved placeholder would ship as a hole');
   assert.match(posted, /\b12\b/, 'times_met is read from the relationship row');
 });
+
+// --- {lastMoment} --------------------------------------------------------------
+
+// Jin's Confidant scene names {lastMoment} on its second beat. It has to be a
+// Close Friend moment, the level below, whatever /call has won since.
+const JIN = 'jin';
+function seedMilestones(...rows) {
+  fake.tables.character_relationships.push(
+    { discord_user_id: USER, character_id: JIN, affinity: 300, times_met: 40 },
+  );
+  fake.tables.encounter_milestones = rows.map(([milestone_type, last_at]) => ({
+    discord_user_id: USER, character_id: JIN, milestone_type, total: 1, first_at: last_at, last_at,
+  }));
+}
+async function jinConfidantSecondBeat() {
+  await handleBondClick(USER, { kind: 'next', characterId: JIN, levelKey: 'con', arg: '1' });
+  return discord.posts.at(-1).content;
+}
+
+test('{lastMoment} names a moment from the level below the scene, not the newest win', async () => {
+  seedMilestones(
+    ['jin_wake_up', '2026-09-01T00:00:00Z'], // Close Friend
+    ['jin_massage', '2026-09-03T00:00:00Z'], // Confidant, newer
+  );
+  await deliverBondScene(USER, JIN, 'Confidant');
+  const beat = await jinConfidantSecondBeat();
+  assert.match(beat, /those early mornings/);
+  assert.doesNotMatch(beat, /that massage you gave/);
+});
+
+test('a /call won mid-scene does not change {lastMoment} on the next beat', async () => {
+  seedMilestones(['jin_wake_up', '2026-09-01T00:00:00Z']);
+  await deliverBondScene(USER, JIN, 'Confidant');
+  fake.tables.encounter_milestones.push({
+    discord_user_id: USER, character_id: JIN, milestone_type: 'jin_massage',
+    total: 1, first_at: '2026-09-05T00:00:00Z', last_at: '2026-09-05T00:00:00Z',
+  });
+  assert.match(await jinConfidantSecondBeat(), /those early mornings/);
+});
+
+test('no /call won at the level below falls back rather than reaching further down', async () => {
+  seedMilestones(['jin_lecture', '2026-09-01T00:00:00Z']); // Friend only
+  await deliverBondScene(USER, JIN, 'Confidant');
+  const beat = await jinConfidantSecondBeat();
+  assert.match(beat, /the last time we were together/);
+  assert.doesNotMatch(beat, /that lesson Darkwick didn't teach/);
+});
+
+test('a replay from a later level still names the moment from the level below the scene', async () => {
+  seedMilestones(['jin_dine', '2026-09-01T00:00:00Z']);
+  await deliverBondScene(USER, JIN, 'Confidant');
+  const scene = getBondScene(JIN, 'Confidant');
+  for (let i = 1; i < scene.beats.length; i++) {
+    await handleBondClick(USER, { kind: 'next', characterId: JIN, levelKey: 'con', arg: String(i) });
+  }
+  await handleBondClick(USER, { kind: 'choice', characterId: JIN, levelKey: 'con', arg: scene.choice.options[0].key });
+  // Devoted now, with Devoted moments won since.
+  fake.tables.encounter_milestones.push({
+    discord_user_id: USER, character_id: JIN, milestone_type: 'jin_forever',
+    total: 3, first_at: '2026-09-10T00:00:00Z', last_at: '2026-09-12T00:00:00Z',
+  });
+
+  await handleBondReplayClick(USER, { kind: 'replaystart', characterId: JIN, levelKey: 'con', arg: 'x' });
+  await handleBondReplayClick(USER, { kind: 'rnext', characterId: JIN, levelKey: 'con', arg: '1' });
+  assert.match(discord.posts.at(-1).content, /dining together/);
+});

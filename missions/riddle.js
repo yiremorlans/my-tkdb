@@ -20,9 +20,9 @@ import {
 } from "../constants/publicEncounters.js";
 import { getCharacterById, getFullName } from "../constants/characters.js";
 import {
-  completeMission,
   getAcceptedMission,
   grantEncounterBoost,
+  solveRiddle,
   trackCommandUsage,
   trackUserActivity,
 } from "../db/supabase.js";
@@ -31,7 +31,6 @@ import {
   ephemeral,
   ephemeralPortraitMessage,
   missionTypeGuard,
-  recordCompletion,
   reportFailures,
   userIdOf,
 } from "./shared.js";
@@ -93,18 +92,20 @@ export async function handleRiddle(body, now = new Date()) {
     };
   }
 
-  let solved;
+  // Closing the mission and recording the completion are one call (migration
+  // 033), so a failed write leaves the riddle open to answer again.
+  let balance;
   try {
-    solved = await completeMission(mission.id, userId, MISSION_TYPES.RIDDLE);
+    balance = await solveRiddle(mission.id, userId);
   } catch (err) {
-    console.error("[missions] complete_mission failed:", err.message);
+    console.error("[missions] solve_riddle failed:", err.message);
     return {
       reply: ephemeral(MISSION_ERROR_LINE),
       afterReply: null,
     };
   }
 
-  if (!solved) {
+  if (balance == null) {
     return { reply: ephemeral("That mission just closed."), afterReply: null };
   }
 
@@ -115,10 +116,9 @@ export async function handleRiddle(body, now = new Date()) {
   const character = getCharacterById(riddle.answer);
   const name = character ? getFullName(character) : riddle.answer;
   const text = [`Debunked. **${name}**.`, `"${riddle.winningLine}"`].join("\n\n");
-  const credit = await recordCompletion(mission, userId, "lead", 1);
   const rewards = [
     MISSION_BOOST_LINE(character?.firstName ?? name),
-    bankedRewardLine(1, credit),
+    bankedRewardLine(1, balance),
   ].join("\n\n");
 
   return {

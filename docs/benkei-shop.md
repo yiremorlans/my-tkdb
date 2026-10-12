@@ -24,17 +24,34 @@ Two phases. The wallet goes live before there is anything to spend it on.
   gains a running-balance line: `+1 💎 · 💎 48` (the amount is whatever that
   completion added: `1` for a riddle/co-op/assist, `1` per errand signature).
 - The line is built from the write itself: the completion is recorded before
-  the reply, and `record_mission_completion` returns the new balance. A
-  failed write shows no 💎 line. Riddle and errand put it on the
+  the reply, and `record_mission_completion` returns the new balance. Since
+  migration 033 the record runs inside the claim that closes the mission
+  (`solve_riddle`, `file_errand_and_record`, `join_coop_and_record`), so the
+  reply waits on one call, as it did before the wallet. A failed write fails the
+  completion: the mission stays open and the player retries (`/riddle` again,
+  or the same File or Join button). Riddle and errand put it on the
   `Cooldown reset banked.` line; the public co-op post shows `+1 💎 each`
   with no totals.
 - 💎 appears only once earned: never on `/mission` briefings (2026-10-11).
 - No `/house` line, no cooldown-reply mention, no `/shop`, no `/shift`. Once
   the shop ships, its wallet header is the balance's home, so nothing added in
   phase 1 has to be removed.
+- **Revisit once the shop ships (2026-10-11):** whether the riddle and errand
+  replies still need the running balance. It is the only reason the completion
+  is written before the reply. With the wallet header showing the balance, the
+  replies could drop to `+1 💎` and the write could move after the reply.
 
 **Phase 2: the shop and `/shift` together** (the next free migration)
 - Everything else in this doc: items, daily stock, Lost & Found, `/shift`.
+- Drop `complete_mission`, `file_errand` and `claim_coop_helper`. Migration 033
+  replaced them with versions that also record the completion, and kept the
+  old ones only so code deployed before it kept working.
+
+**Follow-up, separate migration (2026-10-11):** revoke EXECUTE from `anon` and
+`authenticated` on every `public` function. No migration revokes it, so each
+SECURITY DEFINER function (`record_mission_completion` among them, which mints
+💎) can be called through PostgREST by anyone holding the anon key, bypassing
+RLS. The bot uses only the service role, so the revoke changes nothing for it.
 
 ---
 

@@ -167,8 +167,9 @@ export function winnerLinePronouns(characterId, variant) {
 //   {timesMet}     character_relationships.times_met, as a bare number
 //   {favResponse}  the response type this player leans on, as a noun phrase
 //                  ("a joke") — FAV_RESPONSE_PHRASE in constants/game.js
-//   {lastMoment}   the last /call moment collected with them, as the same noun
-//                  phrase describeBoost uses ("that coffee")
+//   {lastMoment}   the last /call moment collected with them at the level
+//                  just below the scene's, as the same noun phrase
+//                  describeBoost uses ("that coffee")
 //   {since}        how long since the last interaction, as a noun phrase
 //                  ("a few days"), so it reads after "It's been ..."
 //   {sinceMet}     the month name of character_relationships.created_at — when
@@ -449,6 +450,7 @@ export function pickCallScene(
 export {
   ENCOUNTER_MILESTONES,
   getMilestone,
+  milestoneKeysAtTier,
   milestonePoolFor,
   pickMilestone,
 } from "./milestones/index.js";

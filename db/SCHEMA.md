@@ -329,7 +329,7 @@ The durable completion record, the Inspector dossier's whole progression (`/hous
 - Hold the player's unspent cooldown resets, without a second table
 - Show which houses they've actually worked for, and pick the dossier's emblem
 
-Rows are written fire-and-forget **after** the relevant claim RPC has confirmed the mission actually closed, so a lost race can never bank points.
+Rows are written by `record_mission_completion`, called **inside** the RPC that closes the mission (migration 033: `solve_riddle`, `file_errand_and_record`, `join_coop_and_record`). The close and the row are one transaction: a lost race banks nothing, and a failed write leaves the mission open to retry instead of closed with nothing paid. The older `complete_mission`, `file_errand` and `claim_coop_helper` still exist, unused, until the shop migration drops them.
 
 **A NULL `mission_id` is expected, not a bug.** `missions` and spent `mission_log` rows share a 30-day retention, so the link holds for most of a spent row's life. Unspent rows are never pruned, so an old banked reset will outlive its mission and keep a NULL `mission_id` indefinitely. Use the column for tracing recent completions (e.g. matching a co-op's lead and assist rows); nothing that needs to stay correct may depend on it.
 

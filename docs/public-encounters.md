@@ -1380,6 +1380,7 @@ New `db/supabase.js` functions:
 | `recordEncounterMilestone({ userId, characterId, milestoneType })` | RPC to `record_encounter_milestone()` — atomic `total = total + 1`; fire-and-forget |
 | `getEncounterMilestoneCounts(userId, characterId)` | `{ milestone_type: total }` map for the `/affinity` block |
 | `getLatestEncounterMilestone(userId, characterId)` | the kind with the newest `last_at` — names the moment a boosted `/roam` picks up from |
+| `getLatestEncounterMilestoneOf(userId, characterId, types)` | the same, limited to `types` — a bond scene's `{lastMoment}`, read from one tier's keys |
 
 ### 16.5 Wiring summary
 

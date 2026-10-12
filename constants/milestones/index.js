@@ -120,3 +120,9 @@ export function pickMilestone(tier, winnerBucket, characterId = null) {
 export function getMilestone(type) {
   return ENCOUNTER_MILESTONES[type] || null;
 }
+
+// Every milestone key written for `tier`, across all pools. Keys are unique
+// across files, so this needs no character to be unambiguous.
+export function milestoneKeysAtTier(tier) {
+  return Object.keys(ENCOUNTER_MILESTONES).filter((id) => ENCOUNTER_MILESTONES[id].tier === tier);
+}

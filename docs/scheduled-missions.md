@@ -1,7 +1,7 @@
 # Spec: Scheduled missions
 
 Status: **built** (including the §20 culprit reveal and §21 co-op debrief expansions; §22 records the 2026-10-08 reward balance review)
-Last updated: 2026-10-09
+Last updated: 2026-10-11
 
 > **As built.** Everything below is implemented. Where the code differs from
 > this document, the code is right and the difference is listed here:
@@ -85,8 +85,9 @@ Last updated: 2026-10-09
 >   need live data moved to its watch list.
 >
 > **Change after the first build (2026-09-05): cooldown resets are banked.**
-> §5, §6, §7 and §13 below all say a completed mission calls
-> `resetCommandLimit` and clears the clock on the spot. It no longer does.
+> §13 below says a completed mission calls `resetCommandLimit` and clears the
+> clock on the spot (§5, §6 and §7 said so too until they were updated for
+> migration 033). It no longer does.
 >
 > - Completing a mission leaves its `mission_log` row unspent
 >   (`reset_spent_at IS NULL`) and touches `command_limits` not at all.
@@ -151,7 +152,8 @@ Last updated: 2026-10-09
 >   *taken*: accepts plus co-op assists (`helper_user_id`, counted by
 >   `completed_at`, since a co-op completes in the same write that records its
 >   helper). Before this a capped player could keep answering every call for
->   backup and bank a log and a reset each time. `claim_coop_helper` returns
+>   backup and bank a log and a reset each time. `claim_coop_helper` (now
+>   `join_coop_and_record`, migration 033) returns
 >   `'capped'` (after `'taken'` / `'self'`) and the call stays live for the
 >   next inspector. **One mission at a time includes assists:** a player
 >   holding their own accepted mission is refused with `'busy:<type>'`, the
@@ -499,15 +501,20 @@ DARKWICK FIELD REPORT — Frostheim   ·   3 signatures
     line), naming the unsigned targets: `🔒 Need {k} more — {Name}[, {Name}…]`.
   - `custom_id: mission:file:<missionId>`.
 
-### Filing (button → `file_errand` RPC, §11)
+### Filing (button → `file_errand_and_record` RPC, §11)
 
-`file_errand(missionId, userId)` → `'filed' | 'not_ready' | 'gone'`:
+`file_errand_and_record(missionId, userId)` → `'filed:<points>:<balance>' |
+'not_ready' | 'gone'`. Filing and recording the completion are one transaction
+(migration 033): the RPC closes the mission and calls
+`record_mission_completion` (one `mission_log` row worth `N` points, `N` = the
+signature count read from the row it locked, plus the same `N` in
+`house_progress` and 💎). A failed write rolls the filing back and leaves the
+errand open to file again.
 
-- `'filed'` → ephemeral *"Report filed. {House} owes you one — **+N**."* Then
-  fire-and-forget: `recordMissionCompletion({ …, role: 'lead', points: N })`
-  (one `mission_log` row worth `N` points, `N = signatures_required` from the
-  row the caller already loaded for `/docs`), **`resetCommandLimit(userId)`
-  (both `/roam` and `/meet`)**, analytics.
+- `'filed:<N>:<balance>'` → the `/docs` message updates to *"Report filed.
+  {House} owes you one. **+N house logs**"* plus the banked-reset line and
+  **+N 💎** · 💎 {balance}. The `mission_log` row is the banked `both`-scope
+  reset; nothing touches `command_limits`. `afterReply` only does analytics.
 - `'not_ready'` → ephemeral *"You're still short a signature."* (a stale button
   can't file early — the RPC re-counts against `signatures_required`).
 - `'gone'` → ephemeral *"That mission's already closed."* (expired mid-`/docs`).
@@ -601,13 +608,18 @@ export const RIDDLES = {
      reply with a `RIDDLE_WRONG_LINES` entry. No hard attempt cap; the 20s gate
      is what stops brute-forcing 26 names, and the riddle dies with the mission
      (`accept_expires_at`).
-4. **Correct** — `complete_mission(missionId, userId, 'riddle')` RPC
-   (`UPDATE … SET status='completed' WHERE id AND accepted_by AND status='accepted'`):
-   - row updated → ephemeral *"Debunked. **{Full Name}**. Cooldowns cleared —
-     go."* Then fire-and-forget:
-     `recordMissionCompletion({ …, role: 'lead', points: 1 })`,
-     **`resetCommandLimit(userId)` (both)**, analytics.
-   - 0 rows (expired in the same instant) → *"That mission just closed."*
+4. **Correct** — `solve_riddle(missionId, userId)` RPC (migration 033): closes
+   the mission (`UPDATE … SET status='completed' WHERE id AND accepted_by AND
+   status='accepted'`) and records the completion
+   (`record_mission_completion`, `role='lead'`, 1 point) in one transaction,
+   returning the new 💎 balance. A failed write rolls the solve back and the
+   riddle stays open to answer again.
+   - balance returned → the culprit reveal (§20.4), then a follow-up with the
+     boost line, the banked-reset line and **+1 💎** · 💎 {balance}. The
+     `mission_log` row is the banked `both`-scope reset. `afterReply` grants the
+     culprit boost and does analytics.
+   - `NULL` (expired in the same instant, or a double submit) → *"That mission
+     just closed."*, nothing paid out.
 
 ---
 
@@ -658,23 +670,29 @@ embed:   First inspector to back them up clears it for both of you — one house
   app.js reads it back with `GET …/messages/@original` and hands it to
   `afterReply`, which stores it as `assist_message_id`.
 
-### Join button → `claim_coop_helper` RPC (§11)
+### Join button → `join_coop_and_record` RPC (§11)
 
-`claim_coop_helper(missionId, clickerId)` → `'joined' | 'self' | 'taken'`:
+`join_coop_and_record(missionId, clickerId, dayStart, dailyLeadCap)` →
+`'joined' | 'self' | 'taken' | 'capped' | 'busy:<type>'`:
 
 - `'self'` (clicker is the accepter) → ephemeral *"You can't back yourself up."*
 - `'taken'` (already helped / expired / not co-op) → ephemeral *"That mission's
   already covered."*
 - `'joined'`:
-  - `UPDATE_MESSAGE` on the assist post → *"**{helper}** answered the call for
-    backup. Mission complete."*, button disabled.
-  - Fire-and-forget for **both** users:
-    - `recordMissionCompletion({ …, points: 1 })` for each — accepter
-      `role='lead'`, helper `role='assist'`, same `house`, same `mission_id`.
-    - one banked **single**-scope reset each (the `mission_log` row is the
-      credit); which command it clears is decided at spend time, the longer
-      of the two waits (migration 028). No coin flip.
-    - analytics for both.
+  - Both completions are written **inside the join** (migration 033), in the
+    same transaction that closes the mission: `record_mission_completion` for
+    each, accepter `role='lead'`, helper `role='assist'`, 1 point each, same
+    `house` (from the locked row), same `mission_id`. The two writes go in
+    user-id order so swapped-role co-ops between the same pair can't
+    deadlock. A failed write rolls the join back and the post stays live.
+    - each `mission_log` row is that player's banked **single**-scope reset;
+      which command it clears is decided at spend time, the longer of the two
+      waits (migration 028). No coin flip.
+  - `UPDATE_MESSAGE` on the assist post → *"{helper} answered the call for
+    backup. **Mission complete.** Both of you have banked a cooldown reset."*,
+    **+1 💎** each
+    (no balances on a public post), and the Debrief buttons (§21.2).
+  - `afterReply`: analytics for the helper.
   - Assisting follows the Accept rules (migration 029). A helper who holds
     their own `accepted` mission is refused (`'busy:<type>'`, the usual busy
     line), and the assist counts toward their `DAILY_LEAD_CAP` (`'capped'`).
@@ -987,62 +1005,96 @@ type and names the single command.
 | **One user, two different fresh missions, near-simultaneous** | `NOT EXISTS` may pass for both; the partial unique index rejects the second commit with `23505` → caller maps to `'busy:unknown'` (generic three-command line). User keeps exactly one. |
 | **User completes old mission + accepts new one in the same instant** | Completion first → claim succeeds. Claim first → `NOT EXISTS` still sees the old `accepted` row → `'busy:<type>'`, user retries. Correct either way; the index also naturally frees the slot once the old row is `completed`. |
 | **Accept vs. scheduler withdrawal (`post_expires_at`)** | Withdrawal is `UPDATE … SET status='expired' WHERE id AND status='open'`. Whichever commits first wins on `status='open'`; the loser matches 0 rows. If the user won, the withdrawal no-ops; if withdrawal won, the user gets `'taken'`. |
-| **`/docs` "Complete mission" vs. scheduler `accept_expires_at`** | `file_errand` locks the row `FOR UPDATE` and re-checks `status='accepted'`; the expiry `UPDATE` does the same. One wins, the other returns `'gone'` / no-ops. |
+| **`/docs` "Complete mission" vs. scheduler `accept_expires_at`** | `file_errand_and_record` locks the row `FOR UPDATE` and re-checks `status='accepted'`; the expiry `UPDATE` does the same. One wins, the other returns `'gone'` / no-ops. |
 
-### 11.5 The other two claim RPCs
+### 11.5 The other three closing RPCs
+
+Each closes the mission **and** records its completion in one transaction
+(migration 033). Before that, the app called `record_mission_completion` as a
+second round trip after the claim, and a failed write left the player with a
+closed mission, no house log, no banked reset and no 💎. Now a failed write
+rolls the claim back and the mission stays open to retry. The house recorded is
+the one on the locked row, not the app's earlier copy.
 
 ```sql
-CREATE OR REPLACE FUNCTION file_errand(p_mission_id BIGINT, p_user_id TEXT)
-RETURNS TEXT LANGUAGE plpgsql AS $$
-DECLARE unsigned INT;
+-- riddle solve: returns the new 💎 balance, or NULL if already closed
+CREATE OR REPLACE FUNCTION solve_riddle(p_mission_id BIGINT, p_user_id TEXT)
+RETURNS INT LANGUAGE plpgsql AS $$
+DECLARE v_house TEXT;
 BEGIN
-  PERFORM 1 FROM missions
+  UPDATE missions SET status = 'completed', completed_at = NOW()
+   WHERE id = p_mission_id AND accepted_by = p_user_id
+     AND status = 'accepted' AND mission_type = 'riddle'
+  RETURNING house INTO v_house;
+  IF NOT FOUND THEN RETURN NULL; END IF;
+  RETURN record_mission_completion(p_user_id, v_house, 'riddle', p_mission_id, 'lead', 1);
+END;
+$$;
+
+-- errand filing: 'filed:<points>:<balance>' | 'not_ready' | 'gone'
+CREATE OR REPLACE FUNCTION file_errand_and_record(p_mission_id BIGINT, p_user_id TEXT)
+RETURNS TEXT LANGUAGE plpgsql AS $$
+DECLARE v_mission missions; v_points INT; v_balance INT;
+BEGIN
+  SELECT * INTO v_mission FROM missions
    WHERE id = p_mission_id AND accepted_by = p_user_id
      AND status = 'accepted' AND mission_type = 'errand'
    FOR UPDATE;
   IF NOT FOUND THEN RETURN 'gone'; END IF;
-
-  SELECT count(*) INTO unsigned FROM mission_signatures
-   WHERE mission_id = p_mission_id AND signed_at IS NULL;
-  IF unsigned > 0 THEN RETURN 'not_ready'; END IF;
+  IF EXISTS (SELECT 1 FROM jsonb_each(v_mission.signatures) WHERE value = 'null'::jsonb)
+  THEN RETURN 'not_ready'; END IF;
 
   UPDATE missions SET status = 'completed', completed_at = NOW() WHERE id = p_mission_id;
-  RETURN 'filed';
+  v_points := (SELECT count(*) FROM jsonb_object_keys(v_mission.signatures));
+  v_balance := record_mission_completion(
+    p_user_id, v_mission.house, 'errand', p_mission_id, 'lead', v_points);
+  RETURN 'filed:' || v_points || ':' || v_balance;
 END;
 $$;
 
-CREATE OR REPLACE FUNCTION claim_coop_helper(p_mission_id BIGINT, p_user_id TEXT)
+-- co-op join: 'joined' | 'self' | 'taken' | 'capped' | 'busy:<type>'
+CREATE OR REPLACE FUNCTION join_coop_and_record(
+  p_mission_id BIGINT, p_user_id TEXT,
+  p_day_start TIMESTAMPTZ DEFAULT NULL, p_daily_lead_cap INT DEFAULT NULL)
 RETURNS TEXT LANGUAGE plpgsql AS $$
-DECLARE m missions;
+DECLARE m missions; v_blocker TEXT; v_writer RECORD;
 BEGIN
+  PERFORM pg_advisory_xact_lock(hashtext('mission_claims'), hashtext(p_user_id));
   SELECT * INTO m FROM missions WHERE id = p_mission_id FOR UPDATE;
   IF NOT FOUND
      OR m.status <> 'accepted' OR m.mission_type <> 'coop' OR m.helper_user_id IS NOT NULL
   THEN RETURN 'taken'; END IF;
   IF m.accepted_by = p_user_id THEN RETURN 'self'; END IF;
 
+  v_blocker := mission_claim_blocker(p_user_id, p_day_start, p_daily_lead_cap);
+  IF v_blocker IS NOT NULL THEN RETURN v_blocker; END IF;
+
   UPDATE missions
      SET helper_user_id = p_user_id, status = 'completed', completed_at = NOW()
-   WHERE id = p_mission_id AND status = 'accepted' AND helper_user_id IS NULL;
-  RETURN 'joined';
-END;
-$$;
+   WHERE id = p_mission_id;
 
--- riddle solve
-CREATE OR REPLACE FUNCTION complete_mission(p_mission_id BIGINT, p_user_id TEXT, p_type TEXT)
-RETURNS BOOLEAN LANGUAGE plpgsql AS $$
-BEGIN
-  UPDATE missions SET status = 'completed', completed_at = NOW()
-   WHERE id = p_mission_id AND accepted_by = p_user_id
-     AND status = 'accepted' AND mission_type = p_type;
-  RETURN FOUND;
+  -- user-id order, not lead-first, so swapped-role co-ops can't deadlock
+  FOR v_writer IN
+    SELECT * FROM (VALUES (m.accepted_by, 'lead'), (p_user_id, 'assist')) AS w(user_id, role)
+    ORDER BY user_id
+  LOOP
+    PERFORM record_mission_completion(
+      v_writer.user_id, m.house, 'coop', p_mission_id, v_writer.role, 1);
+  END LOOP;
+  RETURN 'joined';
 END;
 $$;
 ```
 
 `FOR UPDATE` row locks serialize the co-op join and the errand file against the
-scheduler's expiry sweep; the winner mutates, the loser returns a terminal
-status. `mission_log` writes are fire-and-forget **after** the RPC confirms.
+scheduler's expiry sweep; the winner mutates and records, the loser returns a
+terminal status. Nothing about a completion is written after the reply any
+more: `afterReply` is left with analytics (and the riddle's culprit boost).
+
+The superseded `complete_mission`, `file_errand` and `claim_coop_helper` are
+still in the database so code deployed before migration 033 keeps working
+without double-banking; they are dropped with the shop's migration
+(`docs/benkei-shop.md`, phase 2).
 
 ### 11.6 The post edit can fail on its own — the reconcile backstop
 
@@ -1082,15 +1134,14 @@ Two things close that gap:
 | `getOpenMission(guildId)` | `status='open'` row for the single-live guard |
 | `getAcceptedMission(userId)` | the user's held mission, for `/mission` `/docs` `/riddle` `/house` |
 | `claimMission(id, userId)` | RPC wrapper (§11.1); returns `'claimed' \| 'taken' \| 'busy:errand' \| 'busy:riddle' \| 'busy:coop' \| 'busy:unknown'` |
-| `fileErrand(id, userId)` | RPC wrapper; `'filed' \| 'not_ready' \| 'gone'` |
-| `claimCoopHelper(id, userId)` | RPC wrapper; `'joined' \| 'self' \| 'taken'` |
-| `completeMission(id, userId, type)` | RPC wrapper (riddle); `boolean` |
+| `fileErrand(id, userId)` | `file_errand_and_record` wrapper (migration 033): files and records in one call; `'filed:<points>:<balance>' \| 'not_ready' \| 'gone'` |
+| `claimCoopHelper(id, userId)` | `join_coop_and_record` wrapper (migration 033): joins and records both rows in one call; `'joined' \| 'self' \| 'taken' \| 'capped' \| 'busy:<type>'` |
+| `solveRiddle(id, userId)` | `solve_riddle` wrapper (migration 033): solves and records in one call; the 💎 balance, or `null` if already closed |
 | `signErrandTarget(missionId, characterId)` | `UPDATE … SET signed_at = NOW() WHERE … AND signed_at IS NULL` `.select()`; returns whether a row flipped |
 | `getErrandTargets(missionId)` | `[{ characterId, signed }]` for `/docs` and `/mission` |
 | `getActiveErrandBoost(userId)` | `{ missionId, house, unsignedTargetIds[] }` (or null) — the per-user lookup the `/roam` roll and `/meet` picker use to bias toward unsigned targets |
 | `setAssistMessageId(id, messageId)` | co-op: store the public assist post id |
 | `finalizeExpiredMissions(guildId?)` | atomic `UPDATE … status='expired'` for `open`/`accepted` past their deadlines; returns finalized rows so the sweep can edit posts |
-| `recordMissionCompletion({ userId, house, type, missionId, role, points })` | INSERT one `mission_log` row (`points` = `N` for errand, `1` for riddle/co-op) |
 | `getMissionLogStats(userId)` | `{ points, filed, byHouse: { [house]: points } }` for `/house` — `points` = `SUM(points)`, `filed` = `count(*)` |
 
 ---
@@ -1204,9 +1255,9 @@ adds nothing to `.env`.
 | All targets signed, errand not yet filed | Boost stops (nothing unsigned); `/docs` "Complete mission" button is enabled |
 | `/meet` while holding an `N = 4` errand | All 4 pick slots are the unsigned targets |
 | `/roam` / `/meet` with no active errand, or errand in a house whose targets are all signed | Normal roll / random picker — boost is a no-op |
-| `/docs` "Complete" clicked with a stale button | `file_errand` re-checks for unsigned `mission_signatures` → `'not_ready'` |
+| `/docs` "Complete" clicked with a stale button | `file_errand_and_record` re-checks for unsigned `missions.signatures` entries → `'not_ready'` |
 | Co-op: accepter clicks own Join button | `'self'` → ephemeral refusal |
-| Co-op: two helpers click together | `claim_coop_helper` row lock → one `'joined'`, one `'taken'` |
+| Co-op: two helpers click together | `join_coop_and_record` row lock → one `'joined'`, one `'taken'` |
 | Co-op: helper already has their own accepted mission | Refused with the busy line (`'busy:<type>'`, migration 029); post stays live for someone else |
 | Co-op: helper is at the daily cap | `'capped'` → ephemeral refusal; post stays live for someone else |
 | Co-op: nobody joins before expiry | Mission `expired`, slot frees; optional "moment passed" edit |
@@ -1440,9 +1491,10 @@ line between the two (2026-10-08):
    only, no he/him about the character.
 2. `BANKED_RESET_LINE`, unchanged
 
-**Reward.** On a completed `complete_mission`, `afterReply` also calls
+**Reward.** On a completed `solve_riddle` (which records the completion in the
+same call, migration 033), `afterReply` also calls
 `grantEncounterBoost(userId, culprit, ENCOUNTER_BOOST_CAP)` alongside the
-existing `recordMissionCompletion` and analytics writes, under the same
+analytics writes, under the same
 `reportFailures` net. Every solver qualifies; there is no "no `/call` win
 this month" gate. The cap of 1 per character is the only limit, and the boost
 spends on the next `/roam` or `/meet` with the culprit exactly like a `/call`

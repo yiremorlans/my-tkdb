@@ -484,7 +484,7 @@ grounded in that player's run:
 | `{timesMet}` | `character_relationships.times_met` |
 | `{house}` / `{firstName}` | `constants/characters.js` |
 | `{favResponse}` | the character's `+2` type from `affinityByResponse` — "you always did lead with a joke" |
-| `{lastMoment}` | `getLatestEncounterMilestone(userId, charId)` → the `hint` template already used by `describeBoost` |
+| `{lastMoment}` | `getLatestEncounterMilestoneOf(userId, charId, keys)`, where `keys` are the milestones of the level just below the scene's (Confidant → Close Friend) → the `hint` template already used by `describeBoost`. Pinned by tier, so it holds mid-scene, in the queue and on replay; no /call won at that level → "the last time we were together" |
 | `{since}` | humanised `now − last_interaction_at` — "It's been a while" vs "Twice this week" |
 
 ### 4.5 Time-of-day variant

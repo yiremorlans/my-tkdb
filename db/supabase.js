@@ -1374,6 +1374,31 @@ export async function getLatestEncounterMilestone(userId, characterId) {
 }
 
 /**
+ * The newest of the given milestone kinds the user has collected with a
+ * character, or null if they have none of them. Bond scenes pass one tier's
+ * keys, so a scene names a moment from the tier it was written against rather
+ * than whatever /call won most recently.
+ */
+export async function getLatestEncounterMilestoneOf(userId, characterId, types) {
+  if (!types.length) return null;
+  const { data, error } = await supabase
+    .from('encounter_milestones')
+    .select('*')
+    .eq('discord_user_id', userId)
+    .eq('character_id', characterId)
+    .in('milestone_type', types)
+    .order('last_at', { ascending: false })
+    .limit(1);
+
+  if (error) {
+    console.error('Error fetching latest encounter milestone of a tier:', error);
+    throw error;
+  }
+
+  return data?.[0] || null;
+}
+
+/**
  * `{ milestone_type: total }` for the /affinity "Moments together" block. The
  * table is already a per-kind tally, so this is a direct read of each row's
  * `total` — a relationship has at most one row per milestone kind.
@@ -1952,12 +1977,15 @@ export async function claimMission(id, userId, { acceptHours = 48, dayStart = nu
 }
 
 /**
- * `/docs` Complete mission. Returns `'filed:<points>'` | 'not_ready' | 'gone'.
- * The point value comes back from the same locked row the RPC checked, so the
- * caller cannot pay out a count that disagrees with what was verified.
+ * `/docs` Complete mission. Returns `'filed:<points>:<balance>'` | 'not_ready'
+ * | 'gone'. The point value comes back from the same locked row the RPC
+ * checked, so the caller cannot pay out a count that disagrees with what was
+ * verified. Filing records the completion in the same transaction (migration
+ * 033): a failed write leaves the errand open, and the balance is the 💎
+ * wallet after it.
  */
 export async function fileErrand(id, userId) {
-  const { data, error } = await supabase.rpc('file_errand', {
+  const { data, error } = await supabase.rpc('file_errand_and_record', {
     p_mission_id: id,
     p_user_id: userId,
   });
@@ -2022,10 +2050,12 @@ export async function openChancellorAudience(id, userId) {
  * The co-op Join button. Returns 'joined' | 'self' | 'taken' | 'capped' | 'busy:<type>'.
  *
  * An assist counts toward the same daily cap as an accept (migration 029), so
- * it takes the same `dayStart` / `dailyLeadCap` pair as `claimMission`.
+ * it takes the same `dayStart` / `dailyLeadCap` pair as `claimMission`. On
+ * 'joined', both completions (the lead's and the helper's assist) are recorded
+ * in the same transaction (migration 033).
  */
 export async function claimCoopHelper(id, userId, { dayStart = null, dailyLeadCap = null } = {}) {
-  const { data, error } = await supabase.rpc('claim_coop_helper', {
+  const { data, error } = await supabase.rpc('join_coop_and_record', {
     p_mission_id: id,
     p_user_id: userId,
     p_day_start: dayStart,
@@ -2104,20 +2134,23 @@ export async function getUnclaimedDebriefs(userId) {
   );
 }
 
-/** The riddle solve. Returns whether this call was the one that closed it. */
-export async function completeMission(id, userId, type) {
-  const { data, error } = await supabase.rpc('complete_mission', {
+/**
+ * The riddle solve, with its completion recorded in the same transaction
+ * (migration 033). Returns the 💎 balance after it, or null when this call
+ * wasn't the one that closed the mission.
+ */
+export async function solveRiddle(id, userId) {
+  const { data, error } = await supabase.rpc('solve_riddle', {
     p_mission_id: id,
     p_user_id: userId,
-    p_type: type,
   });
 
   if (error) {
-    console.error('Error completing mission:', error);
+    console.error('Error solving riddle:', error);
     throw error;
   }
 
-  return Boolean(data);
+  return data ?? null;
 }
 
 /**
@@ -2318,44 +2351,8 @@ export async function clearMissionPostReconcile(id) {
 }
 
 /**
- * One completion row, PLUS the house_progress rollup bump — one RPC
- * (db/migrations/021_house_progress_aggregate.sql) so neither can happen
- * without the other. Written fire-and-forget AFTER the claim RPC has
- * confirmed the mission actually closed, so a lost race can never bank
- * points.
- *
- * `points` is the whole progression: N for an errand (one per signature), 1 for
- * a riddle or either side of a co-op. The same points go into store credit
- * (migration 032); returns the new balance.
- */
-export async function recordMissionCompletion({
-  userId,
-  house,
-  missionType,
-  missionId = null,
-  role = 'lead',
-  points = 1,
-}) {
-  const { data, error } = await supabase.rpc('record_mission_completion', {
-    p_user_id: userId,
-    p_house: house,
-    p_mission_type: missionType,
-    p_mission_id: missionId,
-    p_role: role,
-    p_points: points,
-  });
-
-  if (error) {
-    console.error('Error recording mission completion:', error);
-    throw error;
-  }
-
-  return data;
-}
-
-/**
  * The dossier's numbers: `points` and `byHouse` come from house_progress — a
- * rollup kept up to date at write time by recordMissionCompletion, not summed
+ * rollup kept up to date at write time by record_mission_completion, not summed
  * from mission_log here — so mission_log's raw rows can be pruned (see
  * migration 021) without moving a single one of these numbers. `banked` is
  * the one figure that still has to read mission_log directly: an unspent row
