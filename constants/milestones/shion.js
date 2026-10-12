@@ -6,9 +6,9 @@
 // ./index.js for the contract and entry shape.
 export default {
   milestones: {
-    // --- Stranger and up ---
+    // --- Stranger ---
     shion_cat: {
-      minTier: "new",
+      tier: "new",
       emoji: "🐈",
       bucket: "new",
       label: "Watched a cat with him",
@@ -17,7 +17,7 @@ export default {
       hint: "watching that cat together",
     },
     shion_made_happy: {
-      minTier: "new",
+      tier: "new",
       emoji: "😱",
       bucket: "new",
       label: 'Made someone "happy" with him',
@@ -26,7 +26,7 @@ export default {
       hint: "that happy student",
     },
     shion_bad_mood: {
-      minTier: "new",
+      tier: "new",
       emoji: "⏰",
       bucket: "new",
       label: "Sat out his terrible mood with him",
@@ -35,9 +35,9 @@ export default {
       hint: "that bad mood you sat through",
     },
 
-    // --- Acquaintance and up ---
+    // --- Acquaintance ---
     shion_tagalong: {
-      minTier: "known",
+      tier: "known",
       emoji: "👣",
       bucket: "new",
       label: "Got followed on your errand",
@@ -46,7 +46,7 @@ export default {
       hint: "that errand you didn't do alone",
     },
     shion_worms: {
-      minTier: "known",
+      tier: "known",
       emoji: "🪱",
       bucket: "new",
       label: "Watched Mio open his toolbox with him",
@@ -55,7 +55,7 @@ export default {
       hint: "Mio's toolbox",
     },
     shion_breakfast: {
-      minTier: "known",
+      tier: "known",
       emoji: "🥣",
       bucket: "new",
       label: "Had a late breakfast with him",
@@ -64,7 +64,7 @@ export default {
       hint: "that late breakfast",
     },
     shion_test_subject: {
-      minTier: "known",
+      tier: "known",
       emoji: "⚙️",
       bucket: "new",
       label: "Tested Mio's new tool with him",
@@ -73,9 +73,9 @@ export default {
       hint: "Mio's new magic tool",
     },
 
-    // --- Friend and up ---
+    // --- Friend ---
     shion_heebie_jeebie: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🏚️",
       bucket: "warm",
       label: "Waited at the Heebie-Jeebie House",
@@ -84,7 +84,7 @@ export default {
       hint: "that night at the Heebie-Jeebie House",
     },
     shion_bread: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🥖",
       bucket: "warm",
       label: "Shared Jo's bread, barely",
@@ -93,7 +93,7 @@ export default {
       hint: "that one bite of Jo's bread",
     },
     shion_briefcase: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "💼",
       bucket: "warm",
       label: "Returned Elias's briefcase with him",
@@ -102,7 +102,7 @@ export default {
       hint: "Elias's briefcase",
     },
     shion_crowd: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "👻",
       bucket: "warm",
       label: "Crashed a crowd with him",
@@ -111,9 +111,9 @@ export default {
       hint: "that crowd in the courtyard",
     },
 
-    // --- Close Friend and up ---
+    // --- Close Friend ---
     shion_docks: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🌊",
       bucket: "spark",
       label: "Sat at the docks after dark",
@@ -122,9 +122,9 @@ export default {
       hint: "that night at the docks",
     },
 
-    // --- Confidant and up ---
+    // --- Confidant ---
     shion_airless_night: {
-      minTier: "close",
+      tier: "close",
       emoji: "🥵",
       bucket: "close",
       label: "Kept him company past dark",
@@ -133,7 +133,7 @@ export default {
       hint: "that stuffy night",
     },
     shion_tell_everything: {
-      minTier: "close",
+      tier: "close",
       emoji: "🔒",
       bucket: "close",
       label: "Got questioned about your day",
@@ -141,9 +141,9 @@ export default {
         "He wanted to know everything you'd done since he last saw you, and warned you he'd be angry if you left anything out. You went through it all.",
       hint: "that full report",
     },
-    // --- Devoted and up ---
+    // --- Devoted ---
     shion_that_guy: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "👁️",
       bucket: "bound",
       label: "Got asked who you'd been talking to",
@@ -152,7 +152,7 @@ export default {
       hint: "that face from earlier",
     },
     shion_family: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🫀",
       bucket: "bound",
       label: "Spent an evening with him and Mio",
@@ -161,7 +161,7 @@ export default {
       hint: "being called family",
     },
     shion_meat: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🍖",
       bucket: "bound",
       label: "Ate with him, whatever it was",

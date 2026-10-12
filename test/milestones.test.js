@@ -71,7 +71,7 @@ describe('milestonePoolFor', () => {
 
   it('gives every own-set character something at every tier', () => {
     for (const id of [...OWN_SETS, 'yuri', 'jiro']) {
-      const tiers = new Set(milestonePoolFor(id).map((key) => ENCOUNTER_MILESTONES[key].minTier));
+      const tiers = new Set(milestonePoolFor(id).map((key) => ENCOUNTER_MILESTONES[key].tier));
       for (const tier of ['new', 'known', 'warm', 'spark', 'close', 'bound']) {
         assert.ok(tiers.has(tier), `${id} has nothing at ${tier}`);
       }
@@ -110,7 +110,7 @@ describe('milestonePoolFor', () => {
       for (const tier of ['new', 'known', 'warm', 'spark', 'close', 'bound']) {
         for (let i = 0; i < 50; i++) {
           const key = pickMilestone(tier, tier, id);
-          assert.equal(ENCOUNTER_MILESTONES[key].minTier, tier, `${id} at ${tier} drew ${key}`);
+          assert.equal(ENCOUNTER_MILESTONES[key].tier, tier, `${id} at ${tier} drew ${key}`);
         }
       }
     }

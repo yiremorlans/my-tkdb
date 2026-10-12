@@ -7,9 +7,9 @@
 // contract and entry shape.
 export default {
   milestones: {
-    // --- Stranger and up ---
+    // --- Stranger ---
     zenji_story: {
-      minTier: "new",
+      tier: "new",
       emoji: "📜",
       bucket: "new",
       label: "Listened to one of his new stories",
@@ -18,7 +18,7 @@ export default {
       hint: "that new story",
     },
     zenji_people_watching: {
-      minTier: "new",
+      tier: "new",
       emoji: "👀",
       bucket: "new",
       label: "People-watched with him",
@@ -27,7 +27,7 @@ export default {
       hint: "that people-watching",
     },
     zenji_autograph: {
-      minTier: "new",
+      tier: "new",
       emoji: "✍️",
       bucket: "new",
       label: "Played along with his celebrity act",
@@ -36,9 +36,9 @@ export default {
       hint: "that autograph joke",
     },
 
-    // --- Acquaintance and up ---
+    // --- Acquaintance ---
     zenji_biwa: {
-      minTier: "known",
+      tier: "known",
       emoji: "🪕",
       bucket: "new",
       label: "Heard his biwa in the music room",
@@ -47,7 +47,7 @@ export default {
       hint: "hearing the biwa in the music room",
     },
     zenji_advice_salon: {
-      minTier: "known",
+      tier: "known",
       emoji: "💌",
       bucket: "new",
       label: "Helped run his advice salon",
@@ -56,7 +56,7 @@ export default {
       hint: "that advice salon",
     },
     zenji_fan_letters: {
-      minTier: "known",
+      tier: "known",
       emoji: "📨",
       bucket: "new",
       label: "Went through his fan mail with him",
@@ -65,7 +65,7 @@ export default {
       hint: "that fan mail",
     },
     zenji_sensational: {
-      minTier: "known",
+      tier: "known",
       emoji: "🔮",
       bucket: "new",
       label: "Went looking for something sensational",
@@ -74,9 +74,9 @@ export default {
       hint: "that search for something sensational",
     },
 
-    // --- Friend and up ---
+    // --- Friend ---
     zenji_filming: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🎥",
       bucket: "warm",
       label: "Filmed a folktale video for him",
@@ -84,7 +84,7 @@ export default {
       hint: "that folktale video you filmed",
     },
     zenji_romanticism: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "📖",
       bucket: "warm",
       label: "Sat through his romanticism lecture",
@@ -93,7 +93,7 @@ export default {
       hint: "that lecture on romanticism",
     },
     zenji_siblings: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "👪",
       bucket: "warm",
       label: "Took a quiet walk with him",
@@ -102,7 +102,7 @@ export default {
       hint: "that question about siblings",
     },
     zenji_doll: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🎎",
       bucket: "warm",
       label: "Spent time with him and Saburo",
@@ -111,9 +111,9 @@ export default {
       hint: "that time with Saburo",
     },
 
-    // --- Close Friend and up ---
+    // --- Close Friend ---
     zenji_moon: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🌕",
       bucket: "spark",
       label: "Watched the moon with him",
@@ -122,9 +122,9 @@ export default {
       hint: "watching that moon together",
     },
 
-    // --- Confidant and up ---
+    // --- Confidant ---
     zenji_feast: {
-      minTier: "close",
+      tier: "close",
       emoji: "🍡",
       bucket: "close",
       label: "Shared a meal, his way",
@@ -133,7 +133,7 @@ export default {
       hint: "that feast for one",
     },
     zenji_mortkranken: {
-      minTier: "close",
+      tier: "close",
       emoji: "🏥",
       bucket: "close",
       label: "Walked partway to Mortkranken with him",
@@ -142,7 +142,7 @@ export default {
       hint: "that trip to Mortkranken",
     },
     zenji_goodnight: {
-      minTier: "close",
+      tier: "close",
       emoji: "🌙",
       bucket: "close",
       label: "Ended an evening with his good night",
@@ -152,7 +152,7 @@ export default {
     },
 
     zenji_see_me: {
-      minTier: "close",
+      tier: "close",
       emoji: "👻",
       bucket: "close",
       label: "Told him you could still see him",
@@ -161,9 +161,9 @@ export default {
       hint: "that stretch of quiet",
     },
 
-    // --- Devoted and up ---
+    // --- Devoted ---
     zenji_hapless_fool: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "📜",
       bucket: "bound",
       label: "Got asked to hear his story someday",
@@ -172,7 +172,7 @@ export default {
       hint: "that story about a hapless fool",
     },
     zenji_next_life: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🌸",
       bucket: "bound",
       label: "Got promised the next life",
@@ -181,7 +181,7 @@ export default {
       hint: "that promise about the next life",
     },
     zenji_poem: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🪶",
       bucket: "bound",
       label: "Heard him read you his poem",
@@ -190,7 +190,7 @@ export default {
       hint: "that poem written for you",
     },
     zenji_note: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "📝",
       bucket: "bound",
       label: "Found a note he'd had Haku write",

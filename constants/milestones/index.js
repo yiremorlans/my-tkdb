@@ -1,7 +1,7 @@
 // Encounter milestones: the themed "what happened after" moment a /call win
 // records (docs/public-encounters.md).
 //
-// Entry shape. `minTier` gates it to a real relationship depth, so a spark
+// Entry shape. `tier` is the one relationship depth it is drawn at, so a spark
 // milestone can never land for a caller who is still an Acquaintance.
 // `bucket` only nudges selection toward the register the public winner line
 // used. `label` is the /affinity tally row, `afterline` the ephemeral win
@@ -23,7 +23,7 @@
 // and draws from their own moments plus the shared keys they list, nothing
 // else. Prefix their keys with the character id: keys are unique across every
 // file, since the tally stores only the key. A pool needs at least one
-// `minTier: "new"` entry or a Stranger has nothing to draw.
+// `tier: "new"` entry or a Stranger has nothing to draw.
 //
 // A set can belong to a whole house instead: ./mortkranken.js is shared by
 // Yuri and Jiro, its keys prefixed with the house, and every entry written to
@@ -105,9 +105,9 @@ export function pickMilestone(tier, winnerBucket, characterId = null) {
   const pool = milestonePoolFor(characterId);
   let eligible = [];
   for (let rank = TIER_RANK[tier] ?? 0; rank >= 0 && eligible.length === 0; rank--) {
-    eligible = pool.filter((id) => TIER_RANK[ENCOUNTER_MILESTONES[id].minTier] === rank);
+    eligible = pool.filter((id) => TIER_RANK[ENCOUNTER_MILESTONES[id].tier] === rank);
   }
-  // Unreachable while every pool has a `minTier: "new"` entry.
+  // Unreachable while every pool has a `tier: "new"` entry.
   if (eligible.length === 0) return pool[0];
 
   const weighted = eligible.flatMap((id) => {

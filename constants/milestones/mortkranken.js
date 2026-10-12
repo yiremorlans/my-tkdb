@@ -10,10 +10,10 @@
 // side. See ./index.js for the contract and entry shape.
 export default {
   milestones: {
-    // --- Stranger and up ---
+    // --- Stranger ---
     // The clinic.
     mortkranken_checkup: {
-      minTier: "new",
+      tier: "new",
       emoji: "🩺",
       bucket: "new",
       label: "Sat through a check-up",
@@ -22,7 +22,7 @@ export default {
       hint: "that check-up you sat through",
     },
     mortkranken_experiment: {
-      minTier: "new",
+      tier: "new",
       emoji: "🧪",
       bucket: "new",
       label: "Waited out an experiment",
@@ -31,9 +31,9 @@ export default {
       hint: "that experiment you waited out",
     },
 
-    // --- Acquaintance and up ---
+    // --- Acquaintance ---
     mortkranken_prescription: {
-      minTier: "known",
+      tier: "known",
       emoji: "💊",
       bucket: "new",
       label: "Got a prescription",
@@ -42,7 +42,7 @@ export default {
       hint: "that prescription for your cold",
     },
     mortkranken_full_checkup: {
-      minTier: "known",
+      tier: "known",
       emoji: "📋",
       bucket: "new",
       label: "Got a complete check-up",
@@ -51,7 +51,7 @@ export default {
       hint: "that full check-up, start to finish",
     },
     mortkranken_assistant: {
-      minTier: "known",
+      tier: "known",
       emoji: "🥼",
       bucket: "new",
       label: "Assisted in the lab for a day",
@@ -60,10 +60,10 @@ export default {
       hint: "that day you spent assisting in the lab",
     },
 
-    // --- Friend and up ---
+    // --- Friend ---
     // Still the clinic, but the work stops being the only reason.
     mortkranken_house_call: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🧳",
       bucket: "warm",
       label: "Went along on a house call",
@@ -72,7 +72,7 @@ export default {
       hint: "that house call together",
     },
     mortkranken_lab_night: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🌙",
       bucket: "warm",
       label: "Talked all night in the lab",
@@ -81,7 +81,7 @@ export default {
       hint: "that night talking in the lab",
     },
     mortkranken_walk_home: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🏮",
       bucket: "warm",
       label: "Got walked home",
@@ -90,7 +90,7 @@ export default {
       hint: "that late walk home",
     },
     mortkranken_rounds: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🔦",
       bucket: "warm",
       label: "Walked his night rounds",
@@ -99,11 +99,11 @@ export default {
       hint: "those night rounds together",
     },
 
-    // --- Close Friend and up ---
+    // --- Close Friend ---
     // Personal. These feed the Confidant bond scene's {lastMoment}, so they
     // have to carry its "more of today on {lastMoment} than on your file".
     mortkranken_coat: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🧥",
       bucket: "spark",
       label: "Watched over him while he slept",
@@ -112,7 +112,7 @@ export default {
       hint: "that coat you left over the desk",
     },
     mortkranken_pulse: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🫀",
       bucket: "spark",
       label: "Got your pulse taken, slowly",
@@ -121,7 +121,7 @@ export default {
       hint: "that pulse check that ran long",
     },
     mortkranken_rice_ball: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🍙",
       bucket: "spark",
       label: "Shared a rice ball with him",
@@ -130,7 +130,7 @@ export default {
       hint: "that rice ball you shared",
     },
     mortkranken_scrape: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🩹",
       bucket: "spark",
       label: "Got patched up, carefully",
@@ -139,9 +139,9 @@ export default {
       hint: "patching up that scrape",
     },
 
-    // --- Confidant and up ---
+    // --- Confidant ---
     mortkranken_no_notes: {
-      minTier: "close",
+      tier: "close",
       emoji: "🕯️",
       bucket: "close",
       label: "Spent an evening off the clock",
@@ -150,7 +150,7 @@ export default {
       hint: "that evening off the clock",
     },
     mortkranken_goodnight: {
-      minTier: "close",
+      tier: "close",
       emoji: "🌜",
       bucket: "close",
       label: "Got a proper goodnight",
@@ -159,7 +159,7 @@ export default {
       hint: "that proper goodnight",
     },
     mortkranken_appointment: {
-      minTier: "close",
+      tier: "close",
       emoji: "🗓️",
       bucket: "close",
       label: "Got an appointment for nothing",
@@ -168,9 +168,9 @@ export default {
       hint: "that appointment with nothing to check",
     },
 
-    // --- Devoted and up ---
+    // --- Devoted ---
     mortkranken_after_hours: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🌒",
       bucket: "bound",
       label: "Stayed after the last patient",
@@ -179,7 +179,7 @@ export default {
       hint: "that night after the last patient",
     },
     mortkranken_hand: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🫶",
       bucket: "bound",
       label: "Held hands in the lab",
@@ -190,7 +190,7 @@ export default {
   },
 
   // The campus moments (./shared.js) that sit alongside the clinic, picked so
-  // every tier keeps the 3/4/5/6/7/8 curve. They both attend every class;
+  // each tier, new through bound, holds 3/4/5/6/7/8 entries in all. They both attend every class;
   // nothing that hangs on a meal or a stall.
   shared: [
     "signed_report",

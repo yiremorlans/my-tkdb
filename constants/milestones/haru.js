@@ -6,9 +6,9 @@
 // shared walk home isn't his. See ./index.js for the contract and entry shape.
 export default {
   milestones: {
-    // --- Stranger and up ---
+    // --- Stranger ---
     haru_fliers: {
-      minTier: "new",
+      tier: "new",
       emoji: "📣",
       bucket: "new",
       label: "Handed out tour fliers with him",
@@ -17,7 +17,7 @@ export default {
       hint: "those tour fliers",
     },
     haru_feeding: {
-      minTier: "new",
+      tier: "new",
       emoji: "🥕",
       bucket: "new",
       label: "Helped out at feeding time",
@@ -26,9 +26,9 @@ export default {
       hint: "feeding time",
     },
 
-    // --- Acquaintance and up ---
+    // --- Acquaintance ---
     haru_peekaboo: {
-      minTier: "known",
+      tier: "known",
       emoji: "🐾",
       bucket: "new",
       label: "Checked on the Capybus with him",
@@ -37,7 +37,7 @@ export default {
       hint: "that check on the Capybus",
     },
     haru_energy_drink: {
-      minTier: "known",
+      tier: "known",
       emoji: "🥫",
       bucket: "new",
       label: "Had an energy drink with him",
@@ -46,9 +46,9 @@ export default {
       hint: "those energy drinks",
     },
 
-    // --- Friend and up ---
+    // --- Friend ---
     haru_ren_pickup: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🍽️",
       bucket: "warm",
       label: "Went with him to pick up Ren",
@@ -57,7 +57,7 @@ export default {
       hint: "that trip to the Mystery Diner",
     },
     haru_chores: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🧺",
       bucket: "warm",
       label: "Helped with his washing and shopping",
@@ -66,9 +66,9 @@ export default {
       hint: "splitting the washing and shopping",
     },
 
-    // --- Close Friend and up ---
+    // --- Close Friend ---
     haru_fox: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🦊",
       bucket: "spark",
       label: "Got that fox away from him",
@@ -77,7 +77,7 @@ export default {
       hint: "that fox you got out",
     },
     haru_night_walk: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🌠",
       bucket: "spark",
       label: "Went on his walk after lights-out",
@@ -86,9 +86,9 @@ export default {
       hint: "that little walk after lights-out",
     },
 
-    // --- Confidant and up ---
+    // --- Confidant ---
     haru_hold_fort: {
-      minTier: "close",
+      tier: "close",
       emoji: "🏠",
       bucket: "close",
       label: "Held down the fort with him",
@@ -97,9 +97,9 @@ export default {
       hint: "holding down the fort",
     },
 
-    // --- Devoted and up ---
+    // --- Devoted ---
     haru_night_out: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🌃",
       bucket: "bound",
       label: "Let him take you on a night out",
@@ -108,7 +108,7 @@ export default {
       hint: "that night out",
     },
     haru_boat: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🛶",
       bucket: "bound",
       label: "Went out on the boat, just you two",

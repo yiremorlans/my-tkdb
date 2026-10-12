@@ -4,9 +4,9 @@
 // contract and entry shape.
 export default {
   milestones: {
-    // --- Stranger and up ---
+    // --- Stranger ---
     benkei_delivery: {
-      minTier: "new",
+      tier: "new",
       emoji: "📦",
       bucket: "new",
       label: "Helped carry a delivery back to the store",
@@ -15,7 +15,7 @@ export default {
       hint: "that delivery you helped carry",
     },
     benkei_snack: {
-      minTier: "new",
+      tier: "new",
       emoji: "🍙",
       bucket: "new",
       label: "Split a snack he wouldn't take money for",
@@ -24,9 +24,9 @@ export default {
       hint: "that snack on the house",
     },
 
-    // --- Acquaintance and up ---
+    // --- Acquaintance ---
     benkei_restock: {
-      minTier: "known",
+      tier: "known",
       emoji: "🛒",
       bucket: "new",
       label: "Helped restock the shelves",
@@ -35,7 +35,7 @@ export default {
       hint: "that restock you stayed for",
     },
     benkei_counter: {
-      minTier: "known",
+      tier: "known",
       emoji: "🏪",
       bucket: "new",
       label: "Kept him company behind the counter",
@@ -44,9 +44,9 @@ export default {
       hint: "that quiet shift",
     },
 
-    // --- Friend and up ---
+    // --- Friend ---
     benkei_advising: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "📖",
       bucket: "warm",
       label: "Talked over your classes with him",
@@ -55,7 +55,7 @@ export default {
       hint: "that talk about your classes",
     },
     benkei_walk_back: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🌙",
       bucket: "warm",
       label: "Walked back to the store together",
@@ -63,7 +63,7 @@ export default {
       hint: "that walk back to the store",
     },
     benkei_umbrella: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "☂️",
       bucket: "warm",
       label: "Shared an umbrella from the store's stock",
@@ -73,7 +73,7 @@ export default {
     },
 
     benkei_new_stock: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🧃",
       bucket: "warm",
       label: "Taste-tested the new stock",
@@ -82,7 +82,7 @@ export default {
       hint: "tasting the new stock together",
     },
     benkei_manager: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🐈",
       bucket: "warm",
       label: "Won over the store's manager",
@@ -91,9 +91,9 @@ export default {
       hint: "that promotion from the store's manager",
     },
 
-    // --- Close Friend and up ---
+    // --- Close Friend ---
     benkei_tea: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🍵",
       bucket: "spark",
       label: "Had tea in the store's back room",
@@ -101,7 +101,7 @@ export default {
       hint: "that tea for two in the back room",
     },
     benkei_front_step: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🌇",
       bucket: "spark",
       label: "Ate lunch on the store's front step",
@@ -110,7 +110,7 @@ export default {
     },
 
     benkei_late_delivery: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🚚",
       bucket: "spark",
       label: "Counted a late delivery with him",
@@ -119,7 +119,7 @@ export default {
     },
 
     benkei_book_rec: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "📚",
       bucket: "spark",
       label: "Went through a book from his old syllabus",
@@ -128,9 +128,9 @@ export default {
       hint: "that book from the old syllabus",
     },
 
-    // --- Confidant and up ---
+    // --- Confidant ---
     benkei_night_shift: {
-      minTier: "close",
+      tier: "close",
       emoji: "🌌",
       bucket: "close",
       label: "Kept him company through a night shift",
@@ -139,7 +139,7 @@ export default {
     },
 
     benkei_noodles: {
-      minTier: "close",
+      tier: "close",
       emoji: "🍜",
       bucket: "close",
       label: "Ate cup noodles behind the counter",
@@ -147,7 +147,7 @@ export default {
       hint: "those cup noodles for two",
     },
     benkei_advising_keepsake: {
-      minTier: "close",
+      tier: "close",
       emoji: "🗂️",
       bucket: "close",
       label: "Looked through his advising keepsakes",
@@ -156,7 +156,7 @@ export default {
       hint: "going through those advising keepsakes",
     },
     benkei_stock_list: {
-      minTier: "close",
+      tier: "close",
       emoji: "📋",
       bucket: "close",
       label: "Wrote up the stock list with him",
@@ -164,9 +164,9 @@ export default {
         "You wrote up the stock list together. What you like is on it now.",
       hint: "writing up that stock list together",
     },
-    // --- Devoted and up ---
+    // --- Devoted ---
     benkei_sunrise: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🌄",
       bucket: "bound",
       label: "Watched the sun come up from behind the counter",
@@ -174,7 +174,7 @@ export default {
       hint: "that sunrise at the counter",
     },
     benkei_humming: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🎵",
       bucket: "bound",
       label: "Hummed your song together",
@@ -183,7 +183,7 @@ export default {
       hint: "humming that song together",
     },
     benkei_clementia: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🕯️",
       bucket: "bound",
       label: "Heard about his Clementia House days",

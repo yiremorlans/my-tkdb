@@ -7,9 +7,9 @@
 // needs good eyesight. See ./index.js for the contract and entry shape.
 export default {
   milestones: {
-    // --- Stranger and up ---
+    // --- Stranger ---
     edward_letters: {
-      minTier: "new",
+      tier: "new",
       emoji: "✉️",
       bucket: "new",
       label: "Read his letters out to him",
@@ -18,7 +18,7 @@ export default {
       hint: "those letters you read aloud",
     },
     edward_parasol: {
-      minTier: "new",
+      tier: "new",
       emoji: "🌂",
       bucket: "new",
       label: "Held his parasol for him",
@@ -27,9 +27,9 @@ export default {
       hint: "that parasol you held",
     },
 
-    // --- Acquaintance and up ---
+    // --- Acquaintance ---
     edward_sock: {
-      minTier: "known",
+      tier: "known",
       emoji: "🧦",
       bucket: "new",
       label: "Hunted down his other sock",
@@ -38,7 +38,7 @@ export default {
       hint: "that missing sock",
     },
     edward_video: {
-      minTier: "known",
+      tier: "known",
       emoji: "📺",
       bucket: "new",
       label: "Watched one of his YouTube videos",
@@ -47,7 +47,7 @@ export default {
       hint: "that video about the elites",
     },
     edward_lunch: {
-      minTier: "known",
+      tier: "known",
       emoji: "🍽️",
       bucket: "new",
       label: "Brought his lunch in Rui's place",
@@ -56,7 +56,7 @@ export default {
       hint: "that lunch you brought",
     },
     edward_tavern_night: {
-      minTier: "known",
+      tier: "known",
       emoji: "🍷",
       bucket: "new",
       label: "Kept him company while Rui worked",
@@ -65,9 +65,9 @@ export default {
       hint: "that night Rui was at the tavern",
     },
 
-    // --- Friend and up ---
+    // --- Friend ---
     edward_hill: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🔭",
       bucket: "warm",
       label: "Went stargazing on the hill",
@@ -76,7 +76,7 @@ export default {
       hint: "that night on the hill",
     },
     edward_advice: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "💘",
       bucket: "warm",
       label: "Talked love lives with him",
@@ -85,7 +85,7 @@ export default {
       hint: "that talk about Rui and Lyca",
     },
     edward_dispute: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "⚖️",
       bucket: "warm",
       label: "Talked over a petty dispute with him",
@@ -94,7 +94,7 @@ export default {
       hint: "that talk about absurd humans",
     },
     edward_video_stopped: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "▶️",
       bucket: "warm",
       label: "Got his video playing again",
@@ -103,7 +103,7 @@ export default {
       hint: "that video you got playing again",
     },
     edward_ache: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🩹",
       bucket: "warm",
       label: "Sat with him through an ache",
@@ -112,9 +112,9 @@ export default {
       hint: "sitting out that ache together",
     },
 
-    // --- Close Friend and up ---
+    // --- Close Friend ---
     edward_blunder: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🔰",
       bucket: "spark",
       label: "Helped him fix a careless blunder",
@@ -123,7 +123,7 @@ export default {
       hint: "fixing that blunder together",
     },
     edward_welcome_back: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🫖",
       bucket: "spark",
       label: "Caught up with him after time away",
@@ -133,7 +133,7 @@ export default {
     },
 
     edward_bed: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🛏️",
       bucket: "spark",
       label: "Got him to bed on a bad day",
@@ -142,9 +142,9 @@ export default {
       hint: "that carry to bed",
     },
 
-    // --- Confidant and up ---
+    // --- Confidant ---
     edward_devils_hour: {
-      minTier: "close",
+      tier: "close",
       emoji: "🕛",
       bucket: "close",
       label: "Stayed up until the devil's hour",
@@ -154,7 +154,7 @@ export default {
     },
 
     edward_gift: {
-      minTier: "close",
+      tier: "close",
       emoji: "🎁",
       bucket: "close",
       label: "Got offered the gift again",
@@ -163,9 +163,9 @@ export default {
       hint: "that gift you turned down",
     },
 
-    // --- Devoted and up ---
+    // --- Devoted ---
     edward_peckish: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🍒",
       bucket: "bound",
       label: "Heard he was feeling a little peckish",
@@ -174,7 +174,7 @@ export default {
       hint: "that little request",
     },
     edward_lap: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "💤",
       bucket: "bound",
       label: "Let him rest his head on your lap",
@@ -183,7 +183,7 @@ export default {
       hint: "that rest on your lap",
     },
     edward_memories: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🕯️",
       bucket: "bound",
       label: "Reminded him of old memories",

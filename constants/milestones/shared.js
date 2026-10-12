@@ -5,11 +5,11 @@
 //
 // Everything here is student life: reports, classes, the dorms, briefings,
 // curfew. Ordered loosely by how much of a relationship each one implies,
-// which is also `minTier` order.
+// which is also `tier` order.
 export default {
-  // --- Stranger and up: public, no intimacy assumed ---
+  // --- Stranger: public, no intimacy assumed ---
   signed_report: {
-    minTier: "new",
+    tier: "new",
     emoji: "📋",
     bucket: "any",
     label: "Caught them for a {house} report signature",
@@ -17,7 +17,7 @@ export default {
     hint: "that report hand-off",
   },
   coffee_break: {
-    minTier: "new",
+    tier: "new",
     emoji: "☕",
     bucket: "new",
     label: "Coffee breaks together",
@@ -25,7 +25,7 @@ export default {
     hint: "that coffee break",
   },
   walked_to_class: {
-    minTier: "new",
+    tier: "new",
     emoji: "🎒",
     bucket: "new",
     label: "Walked to class the same way",
@@ -33,9 +33,9 @@ export default {
     hint: "that walk to class",
   },
 
-  // --- Acquaintance and up: shared errands, still incidental ---
+  // --- Acquaintance: shared errands, still incidental ---
   library_study: {
-    minTier: "known",
+    tier: "known",
     emoji: "📚",
     bucket: "new",
     label: "Studied across the same library table",
@@ -43,7 +43,7 @@ export default {
     hint: "that study session",
   },
   vending_machine: {
-    minTier: "known",
+    tier: "known",
     emoji: "🥤",
     bucket: "new",
     label: "Split whatever the vending machine gave up",
@@ -52,7 +52,7 @@ export default {
   },
 
   borrowed_book: {
-    minTier: "known",
+    tier: "known",
     emoji: "📕",
     bucket: "new",
     label: "Borrowed a book from them",
@@ -60,7 +60,7 @@ export default {
     hint: "that book you borrowed",
   },
   helped_search: {
-    minTier: "known",
+    tier: "known",
     emoji: "🔦",
     bucket: "new",
     label: "Helped them find something they'd lost",
@@ -68,9 +68,9 @@ export default {
     hint: "that search you helped with",
   },
 
-  // --- Friend and up: choosing each other's company ---
+  // --- Friend: choosing each other's company ---
   walked_back: {
-    minTier: "warm",
+    tier: "warm",
     emoji: "🌙",
     bucket: "warm",
     label: "Walked back to the dorms together",
@@ -78,7 +78,7 @@ export default {
     hint: "that walk back to the dorms",
   },
   shared_umbrella: {
-    minTier: "warm",
+    tier: "warm",
     emoji: "🌧️",
     bucket: "warm",
     label: "Shared an umbrella across the courtyard",
@@ -86,7 +86,7 @@ export default {
     hint: "sharing that umbrella",
   },
   festival_stall: {
-    minTier: "warm",
+    tier: "warm",
     emoji: "🎏",
     bucket: "warm",
     label: "Ran a festival stall together",
@@ -94,7 +94,7 @@ export default {
     hint: "that shift at the stall",
   },
   shared_earbuds: {
-    minTier: "warm",
+    tier: "warm",
     emoji: "🎧",
     bucket: "warm",
     label: "Shared a pair of earbuds on the Galaxy Express",
@@ -103,7 +103,7 @@ export default {
   },
 
   same_table: {
-    minTier: "warm",
+    tier: "warm",
     emoji: "🍱",
     bucket: "warm",
     label: "Ate lunch at the same table",
@@ -111,9 +111,9 @@ export default {
     hint: "that lunch together",
   },
 
-  // --- Close Friend and up: slipping away together, sharing what's only yours ---
+  // --- Close Friend: slipping away together, sharing what's only yours ---
   movie_night: {
-    minTier: "spark",
+    tier: "spark",
     emoji: "🎬",
     bucket: "spark",
     label: "Watched a movie in {firstName}'s room",
@@ -123,7 +123,7 @@ export default {
   },
 
   campus_bench: {
-    minTier: "spark",
+    tier: "spark",
     emoji: "🪵",
     bucket: "spark",
     label: "Lost an afternoon on a campus bench",
@@ -131,7 +131,7 @@ export default {
     hint: "that afternoon on the bench",
   },
   storm_watch: {
-    minTier: "spark",
+    tier: "spark",
     emoji: "⛈️",
     bucket: "spark",
     label: "Watched a storm from inside",
@@ -139,7 +139,7 @@ export default {
     hint: "watching that storm together",
   },
   inside_joke: {
-    minTier: "spark",
+    tier: "spark",
     emoji: "🤭",
     bucket: "spark",
     label: "Started an inside joke",
@@ -147,7 +147,7 @@ export default {
     hint: "that inside joke",
   },
   courtyard_stars: {
-    minTier: "spark",
+    tier: "spark",
     emoji: "✨",
     bucket: "spark",
     label: "Watched the stars from the courtyard",
@@ -155,7 +155,7 @@ export default {
     hint: "that night under the stars",
   },
   long_way: {
-    minTier: "spark",
+    tier: "spark",
     emoji: "🛣️",
     bucket: "spark",
     label: "Took the long way back on purpose",
@@ -163,9 +163,9 @@ export default {
     hint: "that long way back",
   },
 
-  // --- Confidant and up: staying longer than you need to, and it shows ---
+  // --- Confidant: staying longer than you need to, and it shows ---
   stayed_up: {
-    minTier: "close",
+    tier: "close",
     emoji: "🌌",
     bucket: "close",
     label: "Stayed up talking past curfew",
@@ -174,7 +174,7 @@ export default {
   },
 
   midnight_snack: {
-    minTier: "close",
+    tier: "close",
     emoji: "🌃",
     bucket: "close",
     label: "Went on a midnight snack run",
@@ -183,7 +183,7 @@ export default {
     hint: "that midnight snack run",
   },
   made_playlist: {
-    minTier: "close",
+    tier: "close",
     emoji: "🎶",
     bucket: "close",
     label: "Got a playlist made just for you",
@@ -191,7 +191,7 @@ export default {
     hint: "that playlist made for you",
   },
   stolen_glances: {
-    minTier: "close",
+    tier: "close",
     emoji: "👀",
     bucket: "close",
     label: "Couldn't stop looking at each other",
@@ -200,7 +200,7 @@ export default {
     hint: "those looks",
   },
   lamplit_steps: {
-    minTier: "close",
+    tier: "close",
     emoji: "🪜",
     bucket: "close",
     label: "Talked on the steps until the lamps went out",
@@ -209,7 +209,7 @@ export default {
   },
 
   long_goodbye: {
-    minTier: "close",
+    tier: "close",
     emoji: "👋",
     bucket: "close",
     label: "Took forever to say goodbye",
@@ -217,7 +217,7 @@ export default {
     hint: "that long goodbye",
   },
   people_talking: {
-    minTier: "close",
+    tier: "close",
     emoji: "🗣️",
     bucket: "close",
     label: "Gave people something to talk about",
@@ -225,9 +225,9 @@ export default {
     hint: "all that talk about you two",
   },
 
-  // --- Devoted and up ---
+  // --- Devoted ---
   watched_sunrise: {
-    minTier: "bound",
+    tier: "bound",
     emoji: "🌅",
     bucket: "bound",
     label: "Watched the sun come up together",
@@ -235,7 +235,7 @@ export default {
     hint: "that sunrise",
   },
   left_note: {
-    minTier: "bound",
+    tier: "bound",
     emoji: "📝",
     bucket: "bound",
     label: "Found a note they'd left for you",
@@ -243,7 +243,7 @@ export default {
     hint: "that note waiting for you",
   },
   first_snow: {
-    minTier: "bound",
+    tier: "bound",
     emoji: "❄️",
     bucket: "bound",
     label: "Watched the first snow together",
@@ -251,7 +251,7 @@ export default {
     hint: "the first snow",
   },
   their_scarf: {
-    minTier: "bound",
+    tier: "bound",
     emoji: "🧣",
     bucket: "bound",
     label: "Wore their scarf all day",
@@ -259,7 +259,7 @@ export default {
     hint: "wearing that scarf all day",
   },
   lazy_day: {
-    minTier: "bound",
+    tier: "bound",
     emoji: "🍃",
     bucket: "bound",
     label: "Spent a whole day doing nothing together",
@@ -267,7 +267,7 @@ export default {
     hint: "that lazy day",
   },
   shared_book: {
-    minTier: "bound",
+    tier: "bound",
     emoji: "🔖",
     bucket: "bound",
     label: "Shared a book together",
@@ -275,7 +275,7 @@ export default {
     hint: "that book you shared",
   },
   got_flowers: {
-    minTier: "bound",
+    tier: "bound",
     emoji: "💐",
     bucket: "bound",
     label: "Got flowers for no reason",
@@ -283,7 +283,7 @@ export default {
     hint: "those flowers for no reason",
   },
   watched_sunset: {
-    minTier: "bound",
+    tier: "bound",
     emoji: "🌆",
     bucket: "bound",
     label: "Watched the sunset together",

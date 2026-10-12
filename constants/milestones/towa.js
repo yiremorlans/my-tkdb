@@ -6,9 +6,9 @@
 // hiding or jumping out. See ./index.js for the contract and entry shape.
 export default {
   milestones: {
-    // --- Stranger and up ---
+    // --- Stranger ---
     towa_clover: {
-      minTier: "new",
+      tier: "new",
       emoji: "🍀",
       bucket: "new",
       label: "Hunted for clovers with him",
@@ -17,7 +17,7 @@ export default {
       hint: "that five-leaf clover",
     },
     towa_heard_you: {
-      minTier: "new",
+      tier: "new",
       emoji: "👂",
       bucket: "new",
       label: "Found him at the park",
@@ -26,9 +26,9 @@ export default {
       hint: "that visit to the park",
     },
 
-    // --- Acquaintance and up ---
+    // --- Acquaintance ---
     towa_flowerbeds: {
-      minTier: "known",
+      tier: "known",
       emoji: "🌼",
       bucket: "new",
       label: "Stopped at every flowerbed with him",
@@ -37,7 +37,7 @@ export default {
       hint: "every flowerbed on the way",
     },
     towa_rain: {
-      minTier: "known",
+      tier: "known",
       emoji: "🌦️",
       bucket: "new",
       label: "Read the weather with him",
@@ -46,7 +46,7 @@ export default {
       hint: "reading the sky together",
     },
     towa_where_haru: {
-      minTier: "known",
+      tier: "known",
       emoji: "🔍",
       bucket: "new",
       label: "Helped him look for Haru",
@@ -55,7 +55,7 @@ export default {
       hint: "that search for Haru",
     },
     towa_read_them: {
-      minTier: "known",
+      tier: "known",
       emoji: "👀",
       bucket: "new",
       label: "Got steered away by him",
@@ -64,9 +64,9 @@ export default {
       hint: "that turn off the path",
     },
 
-    // --- Friend and up ---
+    // --- Friend ---
     towa_higher: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "⛰️",
       bucket: "warm",
       label: "Went somewhere higher for the stars",
@@ -75,7 +75,7 @@ export default {
       hint: "that climb for the stars",
     },
     towa_left_behind: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🧸",
       bucket: "warm",
       label: "Stood in for Haru",
@@ -84,7 +84,7 @@ export default {
       hint: "that night Haru went to get Ren",
     },
     towa_tune: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🎵",
       bucket: "warm",
       label: "Caught his tune",
@@ -93,7 +93,7 @@ export default {
       hint: "humming that tune together",
     },
     towa_dance: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "💃",
       bucket: "warm",
       label: "Got pulled into dance practice",
@@ -102,9 +102,9 @@ export default {
       hint: "that dance practice",
     },
 
-    // --- Close Friend and up ---
+    // --- Close Friend ---
     towa_love_stories: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "📖",
       bucket: "spark",
       label: "Told him a love story",
@@ -113,7 +113,7 @@ export default {
       hint: "those love stories",
     },
     towa_tree: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🌳",
       bucket: "spark",
       label: "Listened to the tree on the hill",
@@ -122,7 +122,7 @@ export default {
       hint: "listening to the tree on the hill",
     },
     towa_boss: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🐺",
       bucket: "spark",
       label: "Walked past a carnivore with him",
@@ -131,9 +131,9 @@ export default {
       hint: "that carnivore on the path",
     },
 
-    // --- Confidant and up ---
+    // --- Confidant ---
     towa_patrol: {
-      minTier: "close",
+      tier: "close",
       emoji: "🌩️",
       bucket: "close",
       label: "Waited out Haru's patrol with him",
@@ -142,9 +142,9 @@ export default {
       hint: "waiting out that patrol",
     },
 
-    // --- Devoted and up ---
+    // --- Devoted ---
     towa_sorry_cuddle: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🤗",
       bucket: "bound",
       label: "Owed him a sorry cuddle",
@@ -153,7 +153,7 @@ export default {
       hint: "that sorry cuddle",
     },
     towa_heartbeat: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "💓",
       bucket: "bound",
       label: "Let him hear your heartbeat",

@@ -6,9 +6,9 @@
 // nothing here mentions it. See ./index.js for the contract and entry shape.
 export default {
   milestones: {
-    // --- Stranger and up ---
+    // --- Stranger ---
     rui_bar: {
-      minTier: "new",
+      tier: "new",
       emoji: "🍸",
       bucket: "new",
       label: "Swung by his bar",
@@ -17,7 +17,7 @@ export default {
       hint: "that drink at the bar",
     },
     rui_carry_ed: {
-      minTier: "new",
+      tier: "new",
       emoji: "🧛",
       bucket: "new",
       label: "Helped him carry Edward home",
@@ -26,7 +26,7 @@ export default {
       hint: "that haul back to Obscuary",
     },
     rui_curse_twin: {
-      minTier: "new",
+      tier: "new",
       emoji: "🔗",
       bucket: "new",
       label: "Got called his curse twin",
@@ -35,9 +35,9 @@ export default {
       hint: "that curse twin talk",
     },
 
-    // --- Acquaintance and up ---
+    // --- Acquaintance ---
     rui_thread: {
-      minTier: "known",
+      tier: "known",
       emoji: "🧵",
       bucket: "new",
       label: "Let him fix a loose thread",
@@ -46,7 +46,7 @@ export default {
       hint: "that loose thread on your blazer",
     },
     rui_roses: {
-      minTier: "known",
+      tier: "known",
       emoji: "🥀",
       bucket: "new",
       label: "Helped save his rose bushes",
@@ -55,9 +55,9 @@ export default {
       hint: "saving those rose bushes",
     },
 
-    // --- Friend and up ---
+    // --- Friend ---
     rui_dinner: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🍳",
       bucket: "warm",
       label: "Stayed for dinner at Obscuary",
@@ -65,9 +65,9 @@ export default {
       hint: "that dinner at Obscuary",
     },
 
-    // --- Close Friend and up ---
+    // --- Close Friend ---
     rui_after_closing: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🍹",
       bucket: "spark",
       label: "Stayed at the bar after closing",
@@ -76,7 +76,7 @@ export default {
       hint: "that night after closing",
     },
     rui_for_me: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🌟",
       bucket: "spark",
       label: "Did the housework with him",
@@ -85,11 +85,11 @@ export default {
       hint: "all that hard work",
     },
 
-    // --- Confidant and up ---
+    // --- Confidant ---
 
-    // --- Devoted and up ---
+    // --- Devoted ---
     rui_regular_date: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "💭",
       bucket: "bound",
       label: "Went on a regular-guy date",
@@ -98,7 +98,7 @@ export default {
       hint: "that regular-guy date",
     },
     rui_drift_off: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "💤",
       bucket: "bound",
       label: "Fell asleep to his voice",
@@ -106,7 +106,7 @@ export default {
       hint: "that night you stayed over",
     },
     rui_rose: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🌹",
       bucket: "bound",
       label: "Tended his garden with him",

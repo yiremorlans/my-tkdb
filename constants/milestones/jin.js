@@ -8,9 +8,9 @@
 // See ./index.js for the contract and entry shape.
 export default {
   milestones: {
-    // --- Stranger and up ---
+    // --- Stranger ---
     jin_tea: {
-      minTier: "new",
+      tier: "new",
       emoji: "🫖",
       bucket: "new",
       label: "Poured his tea",
@@ -19,7 +19,7 @@ export default {
       hint: "that pot of tea",
     },
     jin_dinner: {
-      minTier: "new",
+      tier: "new",
       emoji: "🍽️",
       bucket: "new",
       label: "Carried his dinner up to his room",
@@ -28,9 +28,9 @@ export default {
       hint: "that dinner you carried up",
     },
 
-    // --- Acquaintance and up ---
+    // --- Acquaintance ---
     jin_mess: {
-      minTier: "known",
+      tier: "known",
       emoji: "🧹",
       bucket: "new",
       label: "Dug something out of his wrecked room",
@@ -39,7 +39,7 @@ export default {
       hint: "that hour you spent digging through the mess",
     },
     jin_chef: {
-      minTier: "known",
+      tier: "known",
       emoji: "👨‍🍳",
       bucket: "new",
       label: "Went over his menu with him",
@@ -48,7 +48,7 @@ export default {
       hint: "that menu you went over",
     },
     jin_mail: {
-      minTier: "known",
+      tier: "known",
       emoji: "📬",
       bucket: "new",
       label: "Sorted through his mail",
@@ -57,9 +57,9 @@ export default {
       hint: "that mail you sorted",
     },
 
-    // --- Friend and up ---
+    // --- Friend ---
     jin_lunch_for_two: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🥡",
       bucket: "warm",
       label: "Ordered lunch for two to his room",
@@ -68,7 +68,7 @@ export default {
       hint: "that lunch for two",
     },
     jin_waltz: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "💃",
       bucket: "warm",
       label: "Asked him to teach you the waltz",
@@ -77,7 +77,7 @@ export default {
       hint: "that waltz lesson",
     },
     jin_documents: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🗂️",
       bucket: "warm",
       label: "Waited with him for Tohma",
@@ -86,7 +86,7 @@ export default {
       hint: "that wait for Tohma",
     },
     jin_lecture: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🎓",
       bucket: "warm",
       label: "Went over coursework with him",
@@ -95,7 +95,7 @@ export default {
       hint: "that lesson Darkwick didn't teach",
     },
     jin_schedule: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "📅",
       bucket: "warm",
       label: "Rearranged your schedule with him",
@@ -104,9 +104,9 @@ export default {
       hint: "that schedule you rearranged",
     },
 
-    // --- Close Friend and up ---
+    // --- Close Friend ---
     jin_infirmary: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🩺",
       bucket: "spark",
       label: "Rested up in his room",
@@ -115,7 +115,7 @@ export default {
       hint: "that rest you were ordered to take",
     },
     jin_wake_up: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "⏰",
       bucket: "spark",
       label: "Woke him up in the morning",
@@ -124,7 +124,7 @@ export default {
       hint: "those early mornings",
     },
     jin_dine: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🍷",
       bucket: "spark",
       label: "Dined with him",
@@ -134,7 +134,7 @@ export default {
     },
 
     jin_get_ready: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "👔",
       bucket: "spark",
       label: "Helped him get ready",
@@ -143,9 +143,9 @@ export default {
       hint: "all that getting ready",
     },
 
-    // --- Confidant and up ---
+    // --- Confidant ---
     jin_massage: {
-      minTier: "close",
+      tier: "close",
       emoji: "💆",
       bucket: "close",
       label: "Gave him a massage",
@@ -154,7 +154,7 @@ export default {
       hint: "that massage you gave",
     },
     jin_etiquette: {
-      minTier: "close",
+      tier: "close",
       emoji: "🍴",
       bucket: "close",
       label: "Got a lesson in dining etiquette",
@@ -163,7 +163,7 @@ export default {
       hint: "that etiquette lesson",
     },
     jin_good_mood: {
-      minTier: "close",
+      tier: "close",
       emoji: "🍫",
       bucket: "close",
       label: "Shared his imported chocolates",
@@ -172,9 +172,9 @@ export default {
       hint: "those imported chocolates",
     },
 
-    // --- Devoted and up ---
+    // --- Devoted ---
     jin_forever: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "❄️",
       bucket: "bound",
       label: "Got a rare admission out of him",
@@ -183,7 +183,7 @@ export default {
       hint: "that talk about forever",
     },
     jin_helicopter: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🚁",
       bucket: "bound",
       label: "Rode in his helicopter",
@@ -192,7 +192,7 @@ export default {
       hint: "that helicopter ride",
     },
     jin_jacket: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🧥",
       bucket: "bound",
       label: "Wore the jacket he lent you",
@@ -201,7 +201,7 @@ export default {
       hint: "that jacket over your shoulders",
     },
     jin_duet: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🎼",
       bucket: "bound",
       label: "Played a duet with him",
@@ -210,7 +210,7 @@ export default {
       hint: "that piano duet",
     },
     jin_retrain: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🔙",
       bucket: "bound",
       label: "Got retrained at his back",

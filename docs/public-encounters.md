@@ -1239,56 +1239,60 @@ const TIER_RANK = { new: 0, known: 1, warm: 2, spark: 3, close: 4, bound: 5 };
 
 export const ENCOUNTER_MILESTONES = {
   signed_report: {
-    minTier: 'new', emoji: '📋', bucket: 'any',
+    tier: 'new', emoji: '📋', bucket: 'any',
     label: 'Caught them to sign a {house} report before they vanished',
     afterline: 'They signed your {house} report on the way past.',
     hint: 'that report hand-off',
   },
   coffee_break: {
-    minTier: 'new', emoji: '☕', bucket: 'new',
+    tier: 'new', emoji: '☕', bucket: 'new',
     label: 'Coffee breaks together',
     afterline: 'You both slipped off for a quick coffee after.',
     hint: 'that coffee',
   },
   walked_back: {
-    minTier: 'warm', emoji: '🌙', bucket: 'warm',
+    tier: 'warm', emoji: '🌙', bucket: 'warm',
     label: 'Walked back to the dorms together',
     afterline: 'You walked back toward the dorms, in no hurry.',
     hint: 'that walk back',
   },
   shared_umbrella: {
-    minTier: 'warm', emoji: '🌧️', bucket: 'warm',
+    tier: 'warm', emoji: '🌧️', bucket: 'warm',
     label: 'Shared an umbrella across the courtyard',
     afterline: 'It started raining. One umbrella between you.',
     hint: 'the umbrella',
   },
   movie_hooky: {
-    minTier: 'spark', emoji: '🎬', bucket: 'spark',
+    tier: 'spark', emoji: '🎬', bucket: 'spark',
     label: "Skipped a briefing to watch a movie in {name}'s room",
     afterline: "Neither of you made the next briefing — there was a movie on in {name}'s room.",
     hint: 'that movie',
   },
   rooftop_lunch: {
-    minTier: 'spark', emoji: '🌇', bucket: 'spark',
+    tier: 'spark', emoji: '🌇', bucket: 'spark',
     label: 'Ate lunch on the roof, away from everyone',
     afterline: 'Lunch on the roof. Nobody knew where either of you were.',
     hint: 'the roof',
   },
   stayed_up: {
-    minTier: 'close', emoji: '🌌', bucket: 'close',
+    tier: 'close', emoji: '🌌', bucket: 'close',
     label: 'Stayed up talking past curfew',
     afterline: 'You lost track of the hour completely.',
     hint: 'that late night',
   },
-  // add freely — every entry needs { minTier, emoji, bucket, label, afterline, hint }
+  // add freely — every entry needs { tier, emoji, bucket, label, afterline, hint }
 };
 
 // tier: the winner's REAL dialogue tier (getDialogueTier), NOT the collapsed
 // WINNER_LINE_TIER bucket. winnerBucket: the bucket the public line used, for a
-// gentle thematic bias only.
+// gentle thematic bias only. The draw is from the caller's own tier; a tier
+// with no entries falls back to the nearest tier below that has some.
 export function pickMilestone(tier, winnerBucket) {
-  const eligible = Object.entries(ENCOUNTER_MILESTONES)
-    .filter(([, m]) => TIER_RANK[m.minTier] <= TIER_RANK[tier]);
+  let eligible = [];
+  for (let rank = TIER_RANK[tier]; rank >= 0 && eligible.length === 0; rank--) {
+    eligible = Object.entries(ENCOUNTER_MILESTONES)
+      .filter(([, m]) => TIER_RANK[m.tier] === rank);
+  }
   const weighted = eligible.flatMap(([id, m]) =>
     m.bucket === winnerBucket || m.bucket === 'any' ? [id, id] : [id]);
   return weighted[Math.floor(Math.random() * weighted.length)];
@@ -1299,8 +1303,9 @@ export function pickMilestone(tier, winnerBucket) {
   `/roam` in flight, so a `spark` milestone can never be recorded for a caller
   who is still a Friend.
 - `{house}` / `{name}` / `{firstName}` are filled exactly as in `WINNER_LINES`.
-- `bucket` only nudges selection within the tier. (Superseded: the draw is now
-  from the caller's own tier only, see "Added beyond this spec".)
+- `bucket` only nudges selection within the tier. The draw used to be
+  cumulative (every entry at or below the caller's tier); it has been own-tier
+  only since 2026-10-10, see "Added beyond this spec".
 
 ### 16.3 `/affinity` output
 

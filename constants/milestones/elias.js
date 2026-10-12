@@ -6,9 +6,9 @@
 // come along. See ./index.js for the contract and entry shape.
 export default {
   milestones: {
-    // --- Stranger and up ---
+    // --- Stranger ---
     elias_walk: {
-      minTier: "new",
+      tier: "new",
       emoji: "🚶",
       bucket: "new",
       label: "Kept him company on his walk",
@@ -17,7 +17,7 @@ export default {
       hint: "that walk around the academy",
     },
     elias_candy: {
-      minTier: "new",
+      tier: "new",
       emoji: "🍭",
       bucket: "new",
       label: "Shared his candy",
@@ -25,7 +25,7 @@ export default {
       hint: "that candy break",
     },
     elias_cafeteria: {
-      minTier: "new",
+      tier: "new",
       emoji: "🍛",
       bucket: "new",
       label: "Went to the cafeteria with him and Jo",
@@ -34,9 +34,9 @@ export default {
       hint: "that cafeteria lunch with Jo",
     },
 
-    // --- Acquaintance and up ---
+    // --- Acquaintance ---
     elias_errand: {
-      minTier: "known",
+      tier: "known",
       emoji: "📨",
       bucket: "new",
       label: "Walked partway on one of Jo's errands",
@@ -44,7 +44,7 @@ export default {
       hint: "that errand for Jo",
     },
     elias_newspapers: {
-      minTier: "known",
+      tier: "known",
       emoji: "📰",
       bucket: "new",
       label: "Read through his newspapers with him",
@@ -53,7 +53,7 @@ export default {
       hint: "splitting those newspapers",
     },
     elias_cleaning: {
-      minTier: "known",
+      tier: "known",
       emoji: "🧽",
       bucket: "new",
       label: "Helped him clean out of habit",
@@ -62,9 +62,9 @@ export default {
       hint: "that cleaning you helped finish",
     },
 
-    // --- Friend and up ---
+    // --- Friend ---
     elias_coffee: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "☕",
       bucket: "warm",
       label: "Had a cup of his coffee",
@@ -72,7 +72,7 @@ export default {
       hint: "those two coffees",
     },
     elias_snack_run: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "🛍️",
       bucket: "warm",
       label: "Went on a snack run for his dorm",
@@ -81,7 +81,7 @@ export default {
       hint: "that snack run for the dorm",
     },
     elias_severed_head: {
-      minTier: "warm",
+      tier: "warm",
       emoji: "💀",
       bucket: "warm",
       label: "Kept him company holding Shion's severed head",
@@ -90,9 +90,9 @@ export default {
       hint: "that severed head",
     },
 
-    // --- Close Friend and up ---
+    // --- Close Friend ---
     elias_cake: {
-      minTier: "spark",
+      tier: "spark",
       emoji: "🍰",
       bucket: "spark",
       label: "Had cake in the Dionysia office",
@@ -100,9 +100,9 @@ export default {
       hint: "that cake in the office",
     },
 
-    // --- Confidant and up ---
+    // --- Confidant ---
     elias_sweets: {
-      minTier: "close",
+      tier: "close",
       emoji: "🍬",
       bucket: "close",
       label: "Tried the sweets he imports from home",
@@ -111,9 +111,9 @@ export default {
       hint: "those sweets from New Orleans",
     },
 
-    // --- Devoted and up ---
+    // --- Devoted ---
     elias_one_drink: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🥃",
       bucket: "bound",
       label: "Kept him company for one drink",
@@ -121,7 +121,7 @@ export default {
       hint: "that one drink",
     },
     elias_goodbye_hand: {
-      minTier: "bound",
+      tier: "bound",
       emoji: "🫱",
       bucket: "bound",
       label: "Had your hand taken at goodbye",
