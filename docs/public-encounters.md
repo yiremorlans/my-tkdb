@@ -150,6 +150,12 @@ the pools, and fails at import on a duplicate key or an unknown shared key.
   stories, the tree on the hill).
 - **Zenji** (`zenji.js`) is a ghost: he doesn't eat, can't be seen by most, and
   has no casual contact, so nothing needs a table, an umbrella or a hand-off.
+- **Subaru, Haku and Tohma** (`tea.js`, one set shared by all three) drink tea,
+  not coffee: the full campus set minus `coffee_break`, plus `tea_at_house`
+  (joining them for tea back at {house}).
+- **Shohei** (`shohei.js`) would never let the caller buy from a vending
+  machine: the full campus set with `vending_machine` swapped for
+  `shohei_fishing` at the same tier (his LVL 12 fishing rod).
 
 The rest of the roster keeps the default. Skippers like Leo, Sho and Taiga are
 still students whose lives fit the campus set, and Lyca attends class.

@@ -56,6 +56,26 @@ describe('milestonePoolFor', () => {
     }
   });
 
+  it('gives the tea drinkers tea at their house instead of the coffee break', () => {
+    for (const id of ['subaru', 'haku', 'tohma']) {
+      const pool = milestonePoolFor(id);
+      assert.ok(pool.includes('tea_at_house'), id);
+      assert.ok(!pool.includes('coffee_break'), id);
+      assert.ok(pool.includes('vending_machine'), id);
+    }
+    for (const id of ['kaito', 'jo', 'shohei']) {
+      assert.ok(!milestonePoolFor(id).includes('tea_at_house'), id);
+    }
+  });
+
+  it('trades Shohei\'s vending machine for a fishing trip', () => {
+    const pool = milestonePoolFor('shohei');
+    assert.ok(!pool.includes('vending_machine'));
+    assert.ok(pool.includes('shohei_fishing'));
+    assert.ok(pool.includes('coffee_break'));
+    assert.equal(pool.length, milestonePoolFor('kaito').length);
+  });
+
   const OWN_SETS = ['benkei', 'edward', 'elias', 'haru', 'jin', 'rui', 'shion', 'towa', 'zenji'];
 
   it('keeps every own set to its own character', () => {

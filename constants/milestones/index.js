@@ -27,7 +27,8 @@
 //
 // A set can belong to a whole house instead: ./mortkranken.js is shared by
 // Yuri and Jiro, its keys prefixed with the house, and every entry written to
-// fit either of them.
+// fit either of them. ./tea.js is the same idea for a habit rather than a
+// house: Subaru, Haku and Tohma swap the coffee break for tea at {house}.
 
 import { pickRandom } from "../random.js";
 import shared from "./shared.js";
@@ -39,6 +40,8 @@ import jin from "./jin.js";
 import mortkranken from "./mortkranken.js";
 import rui from "./rui.js";
 import shion from "./shion.js";
+import shohei from "./shohei.js";
+import tea from "./tea.js";
 import towa from "./towa.js";
 import zenji from "./zenji.js";
 
@@ -46,11 +49,15 @@ const CHARACTER_MILESTONES = {
   benkei,
   edward,
   elias,
+  haku: tea,
   haru,
   jin,
   jiro: mortkranken,
   rui,
   shion,
+  shohei,
+  subaru: tea,
+  tohma: tea,
   towa,
   yuri: mortkranken,
   zenji,
