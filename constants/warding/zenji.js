@@ -108,7 +108,7 @@ export default {
           '"...You felt it." *He lowers the biwa very carefully, as though it might break, or he might.*\n\n"A year of playing for rooms that cannot see me, and tonight one person felt every note. That is not a small thing. That is the whole thing."',
       },
       playful: {
-        label: "Demand an encore",
+        label: "Call for an encore",
         close:
           '"An ENCORE. From a dead man with tired strings." *He is already retuning.*\n\n"My dear, you have the makings of a truly ruinous influence, and I intend to let you."',
       },

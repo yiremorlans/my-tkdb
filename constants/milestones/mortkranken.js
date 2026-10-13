@@ -45,10 +45,10 @@ export default {
       tier: "known",
       emoji: "📋",
       bucket: "new",
-      label: "Got a complete check-up",
+      label: "Kept a follow-up appointment",
       afterline:
-        "It was a complete check-up this time, start to finish. He took his time and wrote down everything.",
-      hint: "that full check-up, start to finish",
+        "You came back on the date he'd booked. He went over everything again, start to finish, and wrote it all down.",
+      hint: "that follow-up appointment",
     },
     mortkranken_assistant: {
       tier: "known",

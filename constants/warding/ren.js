@@ -37,13 +37,12 @@ export default {
     // from a near-stranger, so it only enters the pool once they're Friends.
     minLevel: "Friend",
     approach: "Take what he's holding out",
-    line:
-      "\"Fireworks start in ten. ...Here. Are you taking it, or am I holding it out the whole show, Senpai.\"",
+    line: '"Fireworks start in ten. ...Here. Are you taking it, or am I holding it out the whole show, Senpai."',
     greeting:
-      '"It\'s just hard candy. ...Fine, yes, I saw the dumb sparkles inside and thought you\'d like it. That\'s the whole story, there\'s no part two. I got two from the good stall anyway, so don\'t make it a thing."',
+      "\"It's just hard candy. ...Fine, yes, I saw the dumb sparkles inside and thought you'd like it. That's the whole story, there's no part two. I got two from the good stall anyway, so don't make it a thing.\"",
     responses: {
       kind: {
-        label: "Thank him and mean it",
+        label: "Say it's exactly your thing",
         close:
           "\"...Don't say it like that. Just eat it, don't do the thing where you save it for later. ...And stand on this side, the view's better. I checked earlier.\"",
       },
@@ -68,13 +67,12 @@ export default {
     // near-stranger, so it only enters the pool once they're Friends.
     minLevel: "Friend",
     approach: "Lean in to see his screen",
-    line:
-      '"See that damage number? Whole boss gone in one combo. My guy carried you the entire run."',
+    line: '"See that damage number? Whole boss gone in one combo. My guy carried you the entire run."',
     greeting:
       '"...What. He does not look like me. Same jacket, that\'s it, and the earrings are a coincidence. Are we finishing this level or are you going to keep staring at my phone?"',
     responses: {
       kind: {
-        label: "Say he built him on purpose",
+        label: "Say the build turned out great",
         close:
           "\"...Okay. Maybe I spent an hour in the character creator. The hair took forty minutes on its own. ...I wanted something on the screen I wouldn't get sick of looking at. Don't make it weird. It's your turn, the timer's going.\"",
       },
