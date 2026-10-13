@@ -254,15 +254,12 @@ export default {
         greeting:
           '"Take your time. Everyone here moves at their own pace, and you don\'t have to rush for me."',
         responses: {
-          kind: ["Thank {him} for the time", "Say you appreciate it"],
+          kind: ["Say you'll keep it quick", "Ask what's on {his} plate"],
           playful: [
             "Call {him} 'cutie' right back",
             "Ask if that goes for everyone",
           ],
-          bold: [
-            "Ask {him} to make time for you",
-            "Push straight to the point",
-          ],
+          bold: ["Say that goes for {him} too", "Push straight to the point"],
           neutral: ["Let {him} decide the pace", "Wait for {him} to lead"],
         },
       },
@@ -320,7 +317,7 @@ export default {
         approach: "Interrupt the paperwork",
         greeting: '"Sit anywhere. I was getting bored in here without you."',
         responses: {
-          kind: ["Say you missed the chaos", "Ask if {he}'s had a break"],
+          kind: ["Say you'll keep {him} company", "Ask if {he}'s had a break"],
           playful: ["Say you rescued {him}", "Ask if you beat the budget"],
           bold: ["Ask if {he} waited for you", "Tell {him} the pen stays down"],
           neutral: ["Take the offered seat", "Sit and let {him} finish"],
@@ -381,7 +378,10 @@ export default {
             "Steal a sip of {his} coffee",
             "Ask if the budget is winning",
           ],
-          bold: ["Ask what {he}'s avoiding", "Tell {him} to skip the budget"],
+          bold: [
+            "Say the budget can lose today",
+            "Tell {him} to skip the budget",
+          ],
           neutral: ["Sit and drink in quiet", "Sit and let {him} vent"],
         },
       },
@@ -416,7 +416,10 @@ export default {
         greeting:
           '"You handle the chaos here better than half my own house does."',
         responses: {
-          kind: ["Say you'll split it with {him}", "Say it was no trouble"],
+          kind: [
+            "Say you'll split it with {him}",
+            "Ask what's left on {his} list",
+          ],
           playful: [
             "Race {him} to the last errand",
             "Ask if that's a favor owed",
@@ -431,7 +434,7 @@ export default {
         greeting:
           '"I lost track of the time again. You\'re a bad influence on my schedule, cutie."',
         responses: {
-          kind: ["Say the nickname stuck", "Say you like the nickname"],
+          kind: ["Ask if {he}'s eaten yet", "Say you like the nickname"],
           playful: ["Answer only to 'cutie' now", "Call {him} a bad influence"],
           bold: ["Say {his} schedule can cope", "Tell {him} to say it again"],
           neutral: ["Don't react to the nickname", "Ask what time it is"],
@@ -466,7 +469,10 @@ export default {
             "Tease {him} for slowing down",
             "Ask if the lineup can wait",
           ],
-          bold: ["Ask why {he} stopped for you", "Say you're worth the delay"],
+          bold: [
+            "Say {he} should stop more often",
+            "Say you're worth the delay",
+          ],
           neutral: ["Let {him} finish at {his} pace", "Ask about the lineup"],
         },
       },
@@ -481,7 +487,7 @@ export default {
             "Guess where {his} head went",
             "Ask if {he} was daydreaming",
           ],
-          bold: ["Say it looked like something", "Ask what pulled {him} away"],
+          bold: ["Tell {him} to sit a minute", "Stay till {he}'s back"],
           neutral: ["Let it go unanswered", "Wait for {him} to continue"],
         },
       },
@@ -592,7 +598,7 @@ export default {
             "Ask if Rui's the favorite now",
             "Promise Mio won't hear it",
           ],
-          bold: ["Ask what Mio doesn't know", "Ask Rui to teach you too"],
+          bold: ["Stay for the whole tune-up", "Ask Rui to teach you too"],
           neutral: ["Watch Rui walk {him} through it", "Stay out of the way"],
         },
       },
@@ -606,7 +612,7 @@ export default {
           kind: ["Say you noticed weeks ago", "Say it suits {him} better"],
           playful: ["Ask what else {he} copied", "Threaten to change orders"],
           bold: [
-            "Ask what else {he} hasn't said",
+            "Say you'll order {his} next",
             "Say it was never about coffee",
           ],
           neutral: ["Let the admission stand", "Drink it, say nothing"],
@@ -641,7 +647,7 @@ export default {
         responses: {
           kind: ["Let {him} make the tea", "Admit you stayed up"],
           playful: ["Deny it, badly", "Ask for two cups"],
-          bold: ["Ask how {he} always knows", "Tell {him} to sleep too"],
+          bold: ["Say you'll drink it with {him}", "Tell {him} to sleep too"],
           neutral: ["Take the tea without a word", "Drink the tea, sit down"],
         },
       },
@@ -677,7 +683,7 @@ export default {
         responses: {
           kind: ["Say {he} should be asleep too", "Say you're glad {he} came"],
           playful: ["Walk slower on purpose", "Ask if this is a service now"],
-          bold: ["Ask who walks {him} back", "Ask what {he} was afraid of"],
+          bold: ["Ask who walks {him} back", "Say you'll walk {him} back too"],
           neutral: ["Walk back beside {him}", "Let the errand wait"],
         },
       },
@@ -698,13 +704,13 @@ export default {
       },
       {
         line: '"I jog every morning before the house is awake. It clears my head, and the work goes faster after. I\'d recommend it to you."',
-        approach: "Ask what's so good about it",
+        approach: "Ask what it does for {him}",
         greeting:
           '"Half an hour with nobody needing anything. It\'s the clearest thinking I get all day."',
         responses: {
           kind: ["Say you'll give it a try", "Say it clearly works for {him}"],
           playful: ["Doubt you'd survive it", "Ask how early is too early"],
-          bold: ["Ask what {he} thinks about", "Say {he} needs more than that"],
+          bold: ["Say the house can wait", "Say {he} needs more than that"],
           neutral: ["Say you'll consider it", "Take the advice, say nothing"],
         },
       },
@@ -728,7 +734,7 @@ export default {
         greeting:
           "\"Don't tell the others. There's a queue for that loaf and you just skipped it.\"",
         responses: {
-          kind: ["Save {him} half the slice", "Say it smells good"],
+          kind: ["Save {him} half the slice", "Ask if {he} ate any yet"],
           playful: ["Ask for the second slice", "Promise not to tell"],
           bold: ["Ask who usually gets first", "Ask when {he} sleeps at all"],
           neutral: ["Eat it where you stand", "Take it without a word"],
@@ -745,10 +751,7 @@ export default {
         responses: {
           kind: ["Say it's mutual", "Ask what {he} needs today"],
           playful: ["Turn up with snacks instead", "Ask for something absurd"],
-          bold: [
-            "Ask why that surprises {him}",
-            "Say {he} can rely on you more",
-          ],
+          bold: ["Say {he} can count on it", "Say {he} can rely on you more"],
           neutral: ["Let the compliment stand", "Let {him} believe it"],
         },
       },
@@ -1170,7 +1173,7 @@ export default {
         greeting: '"With you, I don\'t need to perform. I can just be myself."',
         responses: {
           kind: "Let the quiet be enough",
-          playful: ["Ask if you're the whole show", "Demand the scenic route"],
+          playful: ["Ask if you're the whole show", "Tease him for going soft"],
           bold: "Hold {his} hand openly",
           neutral: "Stay quiet, let it be enough",
         },
@@ -1274,7 +1277,7 @@ export default {
       {
         line: '"A new face." **{name}** looks up from the budget for {user} and doesn\'t look back down.',
         responses: {
-          kind: "Say the budget can wait",
+          kind: "Ask how you can help",
           playful: "Ask if you're in the budget",
           bold: "Pull up a chair",
         },
@@ -1282,7 +1285,7 @@ export default {
       {
         line: "{user} says the name, and **{name}** turns the charisma on like a stage light.",
         responses: {
-          kind: "Say the charm isn't needed",
+          kind: "Smile back, give your name",
           playful: "Shield your eyes from it",
           bold: "Look right past the spotlight",
         },
@@ -1290,7 +1293,7 @@ export default {
       {
         line: '"Come on over, cutie." **{name}** greets {user} as though their schedule weren\'t already full.',
         responses: {
-          kind: "Say you won't stay long",
+          kind: "Ask when the last break was",
           playful: "Call the captain cutie back",
           bold: "Clear a spot on the schedule",
         },
@@ -1310,7 +1313,7 @@ export default {
         responses: {
           kind: "Say twice isn't enough",
           playful: "Ask for a punch card",
-          bold: "Say make it a habit",
+          bold: "Say you're making it a habit",
         },
       },
       {
@@ -1324,7 +1327,7 @@ export default {
       {
         line: "\"You're here again. That's dangerous for my schedule.\" **{name}** makes time for {user} anyway.",
         responses: {
-          kind: "Say a short visit is safe",
+          kind: "Offer to help catch up after",
           playful: "Ask how dangerous",
           bold: "Say the schedule can lose",
         },
@@ -1332,17 +1335,17 @@ export default {
     ],
     warm: [
       {
-        line: '"You\'re back!" **{name}** forgets whatever {he} was signing. {user} did that.',
+        line: '"You\'re back!" **{name}** spots {user} and forgets whatever {he} was signing.',
         responses: {
-          kind: "Say the papers can wait",
+          kind: "Ask how {his} day's been",
           playful: "Ask what you just interrupted",
-          bold: "Take the pen away",
+          bold: "Say {he}'s done for today",
         },
       },
       {
         line: "{user} calls out, and **{name}** folds the schedule away mid-revision.",
         responses: {
-          kind: "Say you're glad it's away",
+          kind: "Say this counts as a break",
           playful: "Ask if you're on it",
           bold: "Ask for the whole evening",
         },
@@ -1378,7 +1381,7 @@ export default {
         responses: {
           kind: "Pretend you saw nothing",
           playful: "Ask what you caught",
-          bold: "Ask what was being hidden",
+          bold: "Say you'll keep the secret",
         },
       },
     ],

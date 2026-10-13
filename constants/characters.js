@@ -634,7 +634,7 @@ export const CHARACTERS = [
       "possessive, territorial — 'Who was that man? I'll remember his face'",
       "no sense of personal space — 'Closer. Closer.'",
       "blunt, flat, childish register — short plain sentences, no dialect or lilt; censored curses ('shite')",
-      "petulant — sulks over a missed breakfast, guilt-trips ('Don't you feel sorry for me?')",
+      "petulant — sulks over a missed breakfast, expects everyone to adjust to him",
       "loves to watch fear and suffering — 'the life fading right out of his skin'",
       "frightens people for fun around the Heebie-Jeebie House",
       "casual gruesome imagery — stitching mouths shut, 'a bite of this flesh'",
