@@ -246,7 +246,7 @@ export default {
         greeting: '"What? Talk fast or get out."',
         responses: {
           kind: ["Keep it short for him", "Ask if it's a bad time"],
-          playful: ["Talk slow on purpose", "Ask how fast is fast"],
+          playful: ["Count to three, then talk", "Ask how fast is fast"],
           bold: ["Say what you came to say", "Tell him you're staying put"],
           neutral: ["Wait for him to speak", "Match the cold with silence"],
         },
@@ -256,9 +256,9 @@ export default {
         approach: "Close the door after you",
         greeting: "\"You're not supposed to be here. Don't waste my time.\"",
         responses: {
-          kind: ["Ask if he's eaten today", "Offer to come back later"],
+          kind: ["Ask if he's eaten today", "Ask if he wants tea"],
           playful: ["Ask whose rule that is", "Joke about the cigarette"],
-          bold: ["Push past the dismissal", "Refuse to be waved off"],
+          bold: ["Say you'll make it worth it", "Refuse to be waved off"],
           neutral: ["Respect his space", "Stay quiet by the door"],
         },
       },
@@ -282,8 +282,8 @@ export default {
         greeting: '"Get to the point. The trash here is so long-winded."',
         responses: {
           kind: ["Say you'll respect his time", "Keep your explanation brief"],
-          playful: ["Promise a very long story", "Take your time explaining"],
-          bold: ["Stand with confidence", "Make your case in one line"],
+          playful: ["Say it in one breath", "Ask if three words will do"],
+          bold: ["Say it plain, no preamble", "Make your case in one line"],
           neutral: ["Get straight to the point", "Wait through the silence"],
         },
       },
@@ -334,7 +334,7 @@ export default {
           kind: ["Promise to keep it quiet", "Say you just wanted to stay"],
           playful: [
             "Ask how chatty is too chatty",
-            "Start chatting right away",
+            "Mime zipping your lips",
           ],
           bold: ["Say he'll miss the chatter", "Say he'd never throw you out"],
           neutral: ["Stay without a word", "Settle in and listen"],
@@ -425,7 +425,7 @@ export default {
             "Point out you outlasted Tohma",
             "Tease him for doing it himself",
           ],
-          bold: ["Say you'll read into it", "Ask if Tohma's really busy"],
+          bold: ["Say you'll read into it", "Say you'll skip Tohma too"],
           neutral: ["Take the change in stride", "Let the shift go unremarked"],
         },
       },
@@ -458,9 +458,9 @@ export default {
         approach: "Greet him properly",
         greeting: '"Your presence is... tolerable."',
         responses: {
-          kind: ["Greet him just as warmly", "Take 'tolerable' as praise"],
+          kind: ["Say it's good to see him", "Take 'tolerable' as praise"],
           playful: ["Point out the almost-smile", "Ask what 'tolerable' means"],
-          bold: ["Call him pleased outright", "Say he missed you"],
+          bold: ["Say he'll find a better word","Say he missed you"],
           neutral: ["Greet him plainly", "Nod and come in"],
         },
       },
@@ -497,7 +497,7 @@ export default {
         responses: {
           kind: ["Say you wanted to see him", "Say you knew he'd hear you"],
           playful: ["Ask how he always knows", "Ask if that earns you points"],
-          bold: ["Say you'll always come to him", "Tell him he was waiting"],
+          bold: ["Say you'll always come to him", "Say you knew where he'd be"],
           neutral: ["Walk the rest of the way", "Wait for him to go on"],
         },
       },
@@ -612,7 +612,7 @@ export default {
         responses: {
           kind: ["Promise to tell him next time", "Say you're glad he noticed"],
           playful: ["Ask if he looked for you", "Ask if that's an order"],
-          bold: ["Say he could have texted", "Ask why it matters to him"],
+          bold: ["Say you'll make up for it", "Ask why it matters to him"],
           neutral: ["Apologize once", "Nod and let it go"],
         },
       },
@@ -893,7 +893,7 @@ export default {
         line: '"Make it quick." **{name}** doesn\'t turn around, but {user} has his attention.',
         responses: {
           kind: "Say it in one sentence",
-          playful: "Start with a long preamble",
+          playful: "Say it's a one-liner",
           bold: "Wait until he turns around",
         },
       },

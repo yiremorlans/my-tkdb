@@ -356,7 +356,7 @@ export default {
           kind: ["Let him keep his secret", "Don't make him explain"],
           playful: ["Read his margin notes aloud", "Peek over his shoulder"],
           bold: ["Say you'll be worth the notes", "Ask to be catalogued again"],
-          neutral: ["Let him finish his notes", "Say nothing about the it"],
+          neutral: ["Let him finish his notes", "Say nothing about it"],
         },
       },
       {
@@ -530,7 +530,7 @@ export default {
           '"I was saying... it was nothing of consequence. The lighting in here is atrocious, that\'s the whole of it."',
         responses: {
           kind: ["Agree about the lighting", "Give him a moment"],
-          playful: ["Blame the lab lighting", "Ask what he was really saying"],
+          playful: ["Offer to fix the lighting", "Ask what he was really saying"],
           bold: ["Match his volume", "Say you'd like to hear it"],
           neutral: ["Say nothing, let him recover", "Wait it out, unbothered"],
         },
@@ -616,7 +616,7 @@ export default {
         greeting:
           '"Carefully. That cost more than your tuition. ...I\'ll be watching."',
         responses: {
-          kind: ["Handle it carefully", "Say you're honored"],
+          kind: ["Ask what it's for", "Say you're honored"],
           playful: [
             "Ask if this is a promotion",
             "Ask what else you may touch",
@@ -740,7 +740,7 @@ export default {
         responses: {
           kind: "Let him keep pretending",
           playful: "Ask what symptom this is",
-          bold: "Call the excuse thin",
+          bold: "Say he can keep it",
           neutral: "Let the silence hold",
         },
       },
