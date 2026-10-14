@@ -306,11 +306,6 @@ export default {
         },
       },
     ]),
-    // Pool sizes track the affinity width of the level(s) they cover (see
-    // RELATIONSHIP_LEVELS / DIALOGUE_TIER_BY_LEVEL in constants/game.js) —
-    // roughly 1 line per POOL_POINTS_PER_LINE affinity points, so a wider band
-    // doesn't repeat more often than a narrow one. known=55 wide → 13, warm=75
-    // wide → 18 at the current POOL_POINTS_PER_LINE of 4.
     known: withPronounVariants([
       {
         line: '"You came back." {He} sets down the pen like {he}\'d been looking for an excuse.',
