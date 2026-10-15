@@ -156,7 +156,8 @@ test('teasers and missed lines draw something at any hour, and split day from ev
 // Towa (pmOnly) can't speak by day, so a daytime reveal must draw his wordless
 // pool at every register, never his spoken `winnerLines` or the shared pool,
 // and nothing in it may be a quoted line. Everyone else is unaffected.
-test('a pmOnly character reveals wordlessly by day, and speaks by night', () => {
+test('a pmOnly character reveals wordlessly by day, and speaks by night', (t) => {
+  t.mock.method(Math, 'random', () => 0.5); // past TIER_MIX, so each register draws its own
   for (const character of CHARACTERS) {
     const content = DIALOGUE[character.id];
     for (const bucket of WINNER_LINE_BUCKETS) {

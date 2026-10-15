@@ -137,6 +137,7 @@ describe('pickCallScene', () => {
   });
 
   it('draws from the same pool as the reveal, at every register', () => {
+    rolls(0.5); // past TIER_MIX, so each register draws its own
     for (const bucket of ['new', 'known', 'warm', 'spark', 'close', 'bound']) {
       const { scene } = pickCallScene(bucket, 'benkei', { force: true });
       assert.ok(DIALOGUE.benkei.winnerLines[bucket].includes(scene), bucket);

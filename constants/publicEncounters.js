@@ -11,7 +11,7 @@ import {
   GENERAL_LOCATIONS,
   timeBucket,
 } from "./backgrounds.js";
-import { CHARACTERS, getAffinityForResponse, getCharacterById, getFullName } from "./characters.js";
+import { CHARACTERS, TIER_MIX, getAffinityForResponse, getCharacterById, getFullName } from "./characters.js";
 import { RELATIONSHIP_LEVELS } from "./game.js";
 import { pickRandom } from "./random.js";
 import {
@@ -222,6 +222,12 @@ export function winnerLinePool(bucket, characterId, { daytime = false } = {}) {
     daytime && content?.daytimeWinnerLines
       ? content.daytimeWinnerLines
       : content?.winnerLines;
+  // TIER_MIX, as /roam and /meet draw it: Close Friend reveals a warm line 10%
+  // of the time, Confidant a spark one. Only from the character's own lines.
+  const mix = TIER_MIX[bucket];
+  if (mix && lines?.[mix.from]?.length && Math.random() < mix.chance) {
+    return lines[mix.from];
+  }
   const authored = lines?.[bucket];
   if (Array.isArray(authored) && authored.length > 0) return authored;
   return [...WINNER_LINES.any, ...(WINNER_LINES[bucket] || WINNER_LINES.new)];
