@@ -1266,15 +1266,40 @@ export function dialogueBeatKey(line) {
 }
 
 // `beats` are already normalized, so every one carries a string `line`.
-function withoutRecent(beats, recentBeats) {
-  const window = recentBeatWindow(beats.length);
+// `poolSize` sizes the window when the beats are one part of a mixed draw
+// (see TIER_MIX), so the skip covers the whole collection the player sees.
+function withoutRecent(beats, recentBeats, poolSize = beats.length) {
+  const window = recentBeatWindow(poolSize);
   if (!window || !recentBeats?.length) return beats;
   const skip = new Set(recentBeats.slice(0, window));
-  const fresh = beats.filter((beat) => !skip.has(dialogueBeatKey(beat.line)));
-  return fresh.length ? fresh : beats;
+  return beats.filter((beat) => !skip.has(dialogueBeatKey(beat.line)));
 }
 
-// `ctx` carries the encounter context. Only `now` (the pmOnly daytime swap)
+// Tier mix: a tier that also draws from an earlier tier's pool, so a small pool
+// plays as a bigger collection. Close Friend ('spark') draws a warm beat 10% of
+// the time and Confidant ('close') a spark beat 10%; each draws its own the
+// other 90%. The recent-beat skip runs across both pools.
+export const TIER_MIX = {
+  spark: { from: "warm", chance: 0.1 },
+  close: { from: "spark", chance: 0.1 },
+};
+
+// Pick one beat from `own`, mixed with `extra` per `chance`, minus recent beats.
+// When the rolled pool has nothing fresh, the other pool takes the draw; when
+// neither does, the skip is dropped rather than drawing nothing.
+function pickMixedBeat(own, extra, chance, recentBeats, rand = Math.random) {
+  const size = own.length + extra.length;
+  const freshOwn = withoutRecent(own, recentBeats, size);
+  const freshExtra = withoutRecent(extra, recentBeats, size);
+  const useExtra = extra.length > 0 && rand() < chance;
+  const [first, second] = useExtra ? [freshExtra, freshOwn] : [freshOwn, freshExtra];
+  if (first.length) return pickRandom(first);
+  if (second.length) return pickRandom(second);
+  return pickRandom(own.length ? own : extra);
+}
+
+// `ctx` carries the encounter context. Only `now` (the pmOnly daytime swap),
+// `rand` (the TIER_MIX roll, Math.random by default; tests pin it)
 // and `recentBeats` (the recent-beat skip above) are read; the conditional
 // `when` layer that used `locationKey`, `backgroundFile` and `event` is gone
 // (see below), so callers may pass those or not.
@@ -1296,11 +1321,13 @@ function pickDialogueEntry(character, tier, variant, ctx) {
   // cutoff as `_PM` backgrounds (timeBucket, off ctx.now) — not a separate
   // threshold. The only time-of-day branch left in the draw.
   let entries;
+  let pool = content.dialogue;
   if (
     character.pmOnly &&
     content.daytimeDialogue &&
     timeBucket(ctx.now) === "day"
   ) {
+    pool = content.daytimeDialogue;
     const daytime =
       content.daytimeDialogue[tier] || content.daytimeDialogue.new;
     entries = Array.isArray(daytime) ? daytime : [daytime];
@@ -1314,8 +1341,16 @@ function pickDialogueEntry(character, tier, variant, ctx) {
     entries = resolvePoolTier(content.dialogue, tier, variant);
   }
 
-  if (entries.length === 0) return null;
-  const beat = pickRandom(withoutRecent(entries.map(normalizeBeat), ctx.recentBeats));
+  const mix = TIER_MIX[tier];
+  const extra = mix && pool?.[mix.from] ? resolvePoolTier(pool, mix.from, variant) : [];
+  if (entries.length === 0 && extra.length === 0) return null;
+  const beat = pickMixedBeat(
+    entries.map(normalizeBeat),
+    extra.map(normalizeBeat),
+    mix?.chance ?? 0,
+    ctx.recentBeats,
+    ctx.rand,
+  );
   return { ...beat, beatKey: dialogueBeatKey(beat.line) };
 }
 

@@ -1165,7 +1165,7 @@ the clear all happen inside `spend_cooldown_reset` (migration 016, rewritten in
   the two waits (migration 028). The original shared coin flip is gone.
 
 The old `resetCommandLimit` is gone. Its unearned counterpart is the
-owner-only `/encdev reset` helper (`clearCommandLimits`), for testing.
+owner-only `/encdev reset` helper (`devResetCommandLimits`), for testing.
 
 ---
 
