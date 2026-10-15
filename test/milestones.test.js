@@ -20,7 +20,7 @@ describe('milestonePoolFor', () => {
   });
 
   it('gives a character with no file every shared moment', () => {
-    const pool = milestonePoolFor('kaito');
+    const pool = milestonePoolFor('jo');
     for (const key of ['long_way', 'inside_joke', 'movie_night']) {
       assert.ok(pool.includes(key), key);
     }
@@ -73,7 +73,25 @@ describe('milestonePoolFor', () => {
     assert.ok(!pool.includes('vending_machine'));
     assert.ok(pool.includes('shohei_fishing'));
     assert.ok(pool.includes('coffee_break'));
-    assert.equal(pool.length, milestonePoolFor('kaito').length);
+    assert.equal(pool.length, milestonePoolFor('jo').length);
+  });
+
+  it('gives Kaito a vending machine where he hands over his own, since he\'s broke', () => {
+    const pool = milestonePoolFor('kaito');
+    assert.ok(!pool.includes('vending_machine'));
+    assert.ok(pool.includes('kaito_vending_machine'));
+    assert.equal(pool.length, milestonePoolFor('jo').length);
+  });
+
+  it('keeps class and studying out of Taiga\'s pool, since he never goes', () => {
+    const pool = milestonePoolFor('taiga');
+    assert.ok(!pool.includes('walked_to_class'));
+    assert.ok(!pool.includes('library_study'));
+    assert.ok(!pool.includes('borrowed_book'));
+    assert.ok(pool.includes('taiga_smell'));
+    assert.ok(pool.includes('taiga_card_game'));
+    assert.ok(pool.includes('taiga_getaway'));
+    assert.equal(pool.length, milestonePoolFor('jo').length);
   });
 
   const OWN_SETS = ['benkei', 'edward', 'elias', 'haru', 'jin', 'rui', 'shion', 'towa', 'zenji'];

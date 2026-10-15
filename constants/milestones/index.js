@@ -37,10 +37,12 @@ import edward from "./edward.js";
 import elias from "./elias.js";
 import haru from "./haru.js";
 import jin from "./jin.js";
+import kaito from "./kaito.js";
 import mortkranken from "./mortkranken.js";
 import rui from "./rui.js";
 import shion from "./shion.js";
 import shohei from "./shohei.js";
+import taiga from "./taiga.js";
 import tea from "./tea.js";
 import towa from "./towa.js";
 import zenji from "./zenji.js";
@@ -53,10 +55,12 @@ const CHARACTER_MILESTONES = {
   haru,
   jin,
   jiro: mortkranken,
+  kaito,
   rui,
   shion,
   shohei,
   subaru: tea,
+  taiga,
   tohma: tea,
   towa,
   yuri: mortkranken,

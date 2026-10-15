@@ -46,7 +46,7 @@ export default {
     tier: "known",
     emoji: "🥤",
     bucket: "new",
-    label: "Split whatever the vending machine gave up",
+    label: "Got treated when the machine ate your money",
     afterline: "The machine ate your money, so they bought instead.",
     hint: "the vending machine that ate your money",
   },
