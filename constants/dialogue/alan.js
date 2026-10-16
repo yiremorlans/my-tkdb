@@ -55,7 +55,7 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: Noticed something",
-        "I run missions the same way every time\n\nCount everyone in, check it twice\n\nDone that since I made captain\n\nStopped checking on you a while back\n\nJust count on you and move on\n\nDont know when that started\n\nYou give me {favResponse} every time\n\nQuit bracing for it to change",
+        "I run missions the same way every time\n\nCount everyone in, check it twice\n\nDone that since I made captain\n\nStopped double-checking you a while back\n\nJust count on you and move on\n\nDont know when that started\n\nYou give me {favResponse} every time\n\nQuit bracing for it to change",
       ],
       choice: {
         prompt: "Don't need anything back",
