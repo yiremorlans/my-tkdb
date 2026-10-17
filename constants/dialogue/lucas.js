@@ -8,7 +8,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Evening! Lucas here. Kaito gave me your number, then made me promise to tell you he said hello first. So: Kaito says hello.",
-        "About today in the east corridor. Two Frostheim third-years were trying to intimidate a first-year, and I was on my way over. You got there first, and you'd calmed the whole thing down before I'd even reached you. No raised voices, nobody made a fool of, and everyone walked away.\n\nI'm usually the one stepping in. Watching you settle it like that was genuinely impressive.",
+        "About the east corridor today. I was on my way over to deal with those Frostheim third-years, and by the time I got there you'd already sorted it. Nobody raised their voice, and nobody was made a fool of.\n\nI'm usually the one stepping in. Watching you settle it like that was genuinely impressive.",
         "So here's my proposal. I train in the yard at six every morning. We've crossed paths {timesMet} times now, purely by chance.\n\nI keep a training log, and the partners column has been empty since Emrys. I'd like to put a name in it.",
       ],
       choice: {
@@ -23,7 +23,7 @@ export default {
           },
           {
             key: "playful",
-            label: "Ask if six is a threat",
+            label: "Call six in the morning cruel",
             style: 1,
             close:
               "It's a kindness, I promise. Emrys started at five.\n\nI'm usually there by ten to, and I'd be very surprised to find anyone there before me. Then again, you've already surprised me once today.",
@@ -46,8 +46,8 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: Urgent question, and I need a straight answer, because Kaito has stopped giving me those.",
-        "Is a \"pajama party\" some sort of important event? He's been insisting for a week that we invite you to one. He says it's a sacred Tokyo tradition. He also said that about ramen, and he was right about ramen, so I can't rule it out.",
-        "I'm asking you because you're the one I always ask. You answer me with {favResponse} every time, whether it's pajama parties or which of two teachers is wrong about a mock anomaly.\n\nEveryone else either laughs or looks at me like a boy from Emrys ought to know already. You just explain it. I don't think you realize how much easier this place got the day I worked out I could come to you.",
+        "Is a \"pajama party\" some sort of important event? He's been insisting for a week that we invite you to one. I can't tell if he's serious.",
+        "You're the one I always ask. You answer me with {favResponse} every time, no matter how odd the question.\n\nEveryone else tells me that's simply how it's done here. You tell me why. You really are very kind. I'm lucky to count you as a friend.",
       ],
       choice: {
         prompt: "So. Pajama party. Real, or is Kaito having me on?",
@@ -57,27 +57,27 @@ export default {
             label: "Say it's real, and you'll come",
             style: 3,
             close:
-              "Right. Then I'll tell him yes before he talks himself out of asking.\n\n*A minute later:* He's replied with a whole row of crying emojis. I'm choosing to read that as happy.",
+              "Right. Then I owe Kaito an apology. I'll tell him you're coming.\n\n*A minute later:* Kaito's replied with a whole row of crying emojis. I'm choosing to read that as happy.",
           },
           {
             key: "playful",
             label: "Say he's being had, completely",
             style: 1,
             close:
-              "I knew it. I knew it the moment he mentioned a mandatory pillow fight.\n\n...I'm still going, obviously. He'd be crushed. Will you come and be had with me?",
+              "I knew it. I knew it the moment he mentioned a mandatory pillow fight.\n\nOf course I'm still going. He'd be crushed. Will you come and be had with me?",
           },
           {
             key: "bold",
-            label: "Say he can always ask you",
+            label: "Say you'll go if he does",
             style: 4,
             close:
-              "I know. That's rather the point of this message.\n\nI've got a list, actually. It's longer than I'd like to admit. Seppuku's near the top. So is whether spirits really come out at twilight, which I'd like to test, with you, some evening soon.",
+              "Then we're both going. If it's a prank, at least I won't be the only one in pajamas.",
           },
         ],
       },
       keepsake: {
-        emoji: "📝",
-        line: "The list of questions he saves for you, pajama parties first.",
+        emoji: "🌙",
+        line: "The pajama party he wouldn't go to without asking you first.",
       },
     },
 
