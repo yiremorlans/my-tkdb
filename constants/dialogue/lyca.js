@@ -48,8 +48,8 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: Your scents gone squeezy. Somethings wrong",
-        "Every time you come around I get your scent first, then {favResponse}. The words never change. Your scent does. That's how I know what mood I caught you in.\n\nToday you still gave me {favResponse}. But underneath it your scent went all squeezy, like the time you cried and never told me why.\n\nNobody else can smell that on you. I can. I noticed, so I'm not gonna pretend I didn't.",
+        "**{firstName}**: Your scent was all squeezy today. Somethings wrong",
+        "You always give me {favResponse}. Your scent's what changes, so thats how I know.\n\nToday you still did {favResponse}. But under it you smelled squeezy. Like that time you cried and didn't tell me how come.\n\nNobody else can smell it on you. I can.\n\nIf somebody did somethin' to you, tell me who.",
       ],
       choice: {
         prompt: "How come. You don't gotta say it nice",
@@ -59,27 +59,27 @@ export default {
             label: "Say you're fine, just tired",
             style: 3,
             close:
-              "...Okay. I'll believe that. For now\n\nBut your scent doesn't lie to me even when you do. So if it goes squeezy again, I'm asking again.",
+              "...Okay. Tired. I'll believe that. For now\n\nThen go sleep. If your scent's still squeezy tomorrow Im asking again",
           },
           {
             key: "playful",
             label: "Ask if he's a detective now",
             style: 1,
             close:
-              "No. Detectives use their eyes. I use my nose. Mine's better\n\nThat's not a so-shul skill either, before you say it. It's just how noses work.",
+              "No. Detectives use their eyes. I use my nose. Mine's better\n\nSo don't bother hiding stuff from me. It won't work",
           },
           {
             key: "bold",
             label: "Tell him you need a hug",
             style: 4,
             close:
-              "A hug. Fine\n\nTen seconds. That's how long I can do. But I'm coming over. I'm already putting my shoes on\n\nI can stay till you feel better",
+              "A hug. Fine\n\nTen seconds. That's all I can do. But I'm coming over\n\nI can stay till you feel better",
           },
         ],
       },
       keepsake: {
         emoji: "🐺",
-        line: "The day your scent went squeezy and he noticed before you said a word.",
+        line: "The day your scent went squeezy under all the right words, and he noticed.",
       },
     },
 
