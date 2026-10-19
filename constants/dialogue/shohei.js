@@ -246,13 +246,13 @@ export default {
     new: [
       {
         line: "The truck's hatch is up and something smells incredible. He waves you over before you've decided anything.",
-        approach: "Let him pick",
+        approach: "Ask what smells so good",
         greeting:
           "\"First time? Don't bother with the menu, I'll pick,\" he says with a smirk.",
         responses: {
-          kind: ["Trust him to pick", "Eat it while it's hot"],
-          playful: ["Give it right back", "Ask what he'd pick for you"],
-          bold: ["Order the spicy one anyway", "Read the menu out loud"],
+          kind: ["Trust whatever he's making", "Eat it while it's hot"],
+          playful: ["Ask if smelling costs extra", "Ask for a bigger portion"],
+          bold: ["Say you came for the cook", "Tell him to surprise you"],
           neutral: ["Let him cook", "Wait for whatever comes"],
         },
       },
@@ -261,9 +261,9 @@ export default {
         approach: "Introduce yourself",
         greeting: '"What\'re you looking at?"',
         responses: {
-          kind: ["Give your name anyway", "Say you didn't mean to stare"],
-          playful: ["Ask what he's looking at", "Say you're looking at him"],
-          bold: ["Hold your ground calmly", "Ask what his problem is"],
+          kind: ["Ask if it's a bad time", "Say you'll keep it quick"],
+          playful: ["Ask what he's looking at", "Ask who ruined his day"],
+          bold: ["Say you wanted to meet him", "Say you like the scowl"],
           neutral: ["Simply be there", "Keep looking, say nothing"],
         },
       },
@@ -273,9 +273,12 @@ export default {
         greeting:
           "\"Don't mind Bonnie, she's just picky about who she likes.\" He looks you over, easy, like he's already decided you're fine. \"She'll come around.\"",
         responses: {
-          kind: ["Say hi to Bonnie too", "Say you'll win her over"],
-          playful: ["Tease him about the bike talk", "Ask what Bonnie likes"],
-          bold: ["Pet the bike anyway", "Say Bonnie likes you already"],
+          kind: ["Ask if the engine's okay", "Ask how long he's had the bike"],
+          playful: [
+            "Ask if the bike talks back",
+            "Ask if it's always this moody",
+          ],
+          bold: ["Talk to the bike yourself", "Grin right back at him"],
           neutral: ["Let him have his moment", "Order and wait"],
         },
       },
@@ -286,8 +289,8 @@ export default {
           "\"Don't just stand there gawking. She's not a photo op.\" He puts himself between you and Bonnie, casual about it.",
         responses: {
           kind: ["Say she's well looked after", "Admire her from here"],
-          playful: ["Take a photo anyway", "Ask if she bites"],
-          bold: ["Ask to ride her sometime", "Reach past him anyway"],
+          playful: ["Ask for a photo with her", "Ask if she bites"],
+          bold: ["Ask to ride her sometime", "Say you'll ask her first"],
           neutral: ["Look a moment, move on", "Drop it, say nothing"],
         },
       },
@@ -296,9 +299,9 @@ export default {
         approach: "Ask about the knuckles",
         greeting: "\"It's nothing. ...I said don't.\"",
         responses: {
-          kind: ["Ask if he's hurt", "Offer to grab some ice"],
-          playful: ["Tease him about the bruise", "Ask who won"],
-          bold: ["Hold his gaze", "Ask anyway"],
+          kind: ["Promise not to pry", "Offer to grab some ice"],
+          playful: ["Ask to see the other guy", "Ask who won"],
+          bold: ["Hold his gaze", "Say you'll ask later"],
           neutral: ["Let it go unasked", "Say nothing"],
         },
       },
@@ -484,9 +487,12 @@ export default {
         greeting:
           "\"Taste this, Senpai. Go on. Bet you it's the best thing you've had all week.\"",
         responses: {
-          kind: ["Exclaim how delicious", "Say it's his best yet"],
-          playful: ["Ask to be taste test forever", "Demand a bigger portion"],
-          bold: ["Give honest feedback", "Take the bet"],
+          kind: ["Say you'd pay double for it", "Say it's his best yet"],
+          playful: [
+            "Ask to be his taster forever",
+            "Ask for a second spoonful",
+          ],
+          bold: ["Lick the spoon clean", "Ask for a whole bowl"],
           neutral: ["Taste it, say little", "Give a flat verdict"],
         },
       },
@@ -508,12 +514,12 @@ export default {
         greeting:
           "\"Took Bonnie out this morning. She's got a mind of her own, runs sweet when it's cool like this.\"",
         responses: {
-          kind: ["Say you're excited", "Ask how Bonnie's running"],
+          kind: ["Say Bonnie sounds happy", "Ask how Bonnie's running"],
           playful: [
             "Act surprised you're going",
             "Ask to drive Bonnie yourself",
           ],
-          bold: ["Climb on before he finishes", "Tell him to open it up"],
+          bold: ["Beat him onto the bike", "Tell him to open it up"],
           neutral: ["Take the helmet, no fuss", "Put the helmet on"],
         },
       },
@@ -525,7 +531,7 @@ export default {
         responses: {
           kind: ["Ask if you can tag along", "Say you'd rather hang with him"],
           playful: ["Ask what's better than the Pit", "Bet he eats pavement"],
-          bold: ["Argue the Pit's not so bad", "Ask to borrow the board"],
+          bold: ["Ask to come watch him skate", "Ask to borrow the board"],
           neutral: ["Walk alongside him", "Watch him ride, say nothing"],
         },
       },
@@ -537,10 +543,7 @@ export default {
         responses: {
           kind: ["Say he's earned a break", "Offer to help him reapply"],
           playful: ["Offer to forge a signature", "Ask where he'd even go"],
-          bold: [
-            "Tell him to take a day anyway",
-            "Say there's probably a reason",
-          ],
+          bold: ["Say you'll cover for him", "Say he should take you along"],
           neutral: ["Let him grumble", "Nod along, say nothing"],
         },
       },
@@ -550,11 +553,8 @@ export default {
         greeting:
           "\"This? It's a fishing rod. Sometimes I catch and filet the fish myself. It's pretty easy, and it saves cash.\"",
         responses: {
-          kind: [
-            "Say that's really resourceful",
-            "Ask what he makes with them",
-          ],
-          playful: ["Ask how many got away", "Ask if he's any good at it"],
+          kind: ["Ask where his fishing spot is", "Ask if he cooks his catch"],
+          playful: ["Ask how many got away", "Ask for the catch of the day"],
           bold: ["Ask to come along next time", "Bet you'd out-fish him"],
           neutral: ["Nod at the rod", "Let it be, say nothing"],
         },
@@ -567,7 +567,7 @@ export default {
         responses: {
           kind: ["Say you're glad to help", "Ask what he's short on"],
           playful: ["Ask if Ren knows about this", "Ask what you're paid in"],
-          bold: ["Ask if this is even allowed", "Offer to talk Ren into it"],
+          bold: ["Say you'll carry the heavy box", "Offer to talk Ren into it"],
           neutral: ["Just start walking", "Follow his lead"],
         },
       },
@@ -578,11 +578,8 @@ export default {
           "\"All right, that's the morning prep done. ...What're you doing up this early? Get over here, you're first in line.\"",
         responses: {
           kind: ["Say he works too hard", "Offer to help him open up"],
-          playful: [
-            "Ask if first gets a discount",
-            "Tease him about the yawning",
-          ],
-          bold: ["Say he looks half asleep", "Tell him to take five"],
+          playful: ["Ask if first gets a discount", "Ask who feeds the cook"],
+          bold: ["Say you'll keep him awake", "Say you came up early for him"],
           neutral: ["Let him yawn it out", "Say good morning, move on"],
         },
       },
@@ -592,10 +589,10 @@ export default {
         greeting:
           '"Since middle school. We\'d eat lunch up on the school roof, and he lived off yakisoba buns, milk, and hot dogs. Guy was skin and bones."',
         responses: {
-          kind: ["Say Leo's lucky to have him", "Ask what Leo was like then"],
+          kind: ["Say Leo's lucky to have him", "Ask how long he's fed Leo"],
           playful: [
             "Ask for embarrassing stories",
-            "Ask who was worse back then",
+            "Ask if that counts as lunch",
           ],
           bold: ["Ask if Leo's changed at all", "Ask about their Shibuya days"],
           neutral: ["Listen, say nothing", "Let him keep talking"],
@@ -603,13 +600,13 @@ export default {
       },
       {
         line: "You drag yourself over after a long day of classes and reports, and he's already watching you with his chin propped on his fist.",
-        approach: "Take the compliment",
+        approach: "Say you survived the day",
         greeting:
           "\"You've been running around all day, huh? Classes, reports, whatever Alan dumped on you. ...Honestly, Senpai, respect. Most people would've bailed by now.\"",
         responses: {
-          kind: ["Thank him, and mean it", "Say he works hard too"],
-          playful: ["Ask him to say it again", "Ask if that was a compliment"],
-          bold: ["Say you know you're good", "Tell him to write it down"],
+          kind: ["Say you're glad you came", "Ask how his day went"],
+          playful: ["Ask what he's staring at", "Ask if he's been waiting"],
+          bold: ["Say he's worth the walk", "Say you saved him for last"],
           neutral: ["Shrug it off", "Nod, say nothing"],
         },
       },
@@ -619,9 +616,9 @@ export default {
         greeting:
           "\"So. You and Leo, huh? What'd he drag you into? ...Don't tell me it was one of his videos.\"",
         responses: {
-          kind: ["Tell him what you did", "Say he should come next time"],
+          kind: ["Say it was nothing wild", "Say he should come next time"],
           playful: ["Make it sound way wilder", "Ask if he's jealous"],
-          bold: ["Ask why he wants to know", "Say Leo was actually fun"],
+          bold: ["Say he's more fun than Leo", "Say Leo was actually fun"],
           neutral: ["Keep it vague", "Shrug, it was nothing"],
         },
       },
@@ -633,7 +630,7 @@ export default {
         responses: {
           kind: [
             "Admit you just wanted to come",
-            "Say you'll just ask next time",
+            "Say the company's the point",
           ],
           playful: [
             "Insist you're here to work",
@@ -645,13 +642,13 @@ export default {
       },
       {
         line: "He waves you over and tilts his phone so you can see. It's a text from Alan, and it's pure gibberish.",
-        approach: "Decode Alan's text",
+        approach: "Look at his phone",
         greeting:
           "\"'come tot hr epuit'? Pfft. What the hell is this, some kinda secret code? Help me out here, Senpai.\"",
         responses: {
           kind: ["Help him work it out", "Say Alan tried his best"],
           playful: ["Text back in gibberish", "Read it in Alan's voice"],
-          bold: ["Tell him to just call Alan", "Say it's obviously the Pit"],
+          bold: ["Call Alan back yourself", "Say it's obviously the Pit"],
           neutral: ["Squint at it, shrug", "Hand the phone back"],
         },
       },
@@ -673,9 +670,9 @@ export default {
         greeting:
           "\"Seriously, it's way too early for this... What? I'm going to class. You're the one who wouldn't shut up about it.\"",
         responses: {
-          kind: ["Say you're proud of him", "Walk him right to the door"],
+          kind: ["Say you're proud of him", "Ask if he slept at all"],
           playful: ["Ask who replaced him", "Take a photo for proof"],
-          bold: ["Make him promise tomorrow", "Say he'll thank you later"],
+          bold: ["Meet him there tomorrow", "Say he'll thank you later"],
           neutral: ["Walk with him, say nothing", "Act like it's normal"],
         },
       },
@@ -685,9 +682,12 @@ export default {
         greeting:
           '"Nope. Hostage situation, remember? Truck. Now. I\'m not watching you eat that."',
         responses: {
-          kind: ["Let him take it", "Say you'll come eat properly"],
+          kind: [
+            "Ask what he's making instead",
+            "Say you'll come eat properly",
+          ],
           playful: ["Defend the sandwich", "Negotiate for its release"],
-          bold: ["Take it back and eat it", "Finish it in one bite"],
+          bold: ["Race him to the truck", "Say he's buying, then"],
           neutral: ["Follow him to the truck", "Hand it over quietly"],
         },
       },
@@ -697,8 +697,8 @@ export default {
         greeting:
           '"Stick with me out there, Senpai. Whatever it throws at us, I\'ve got your back."',
         responses: {
-          kind: ["Say you've got his too", "Thank him for backup"],
-          playful: ["Ask who's got his back", "Say you'll try not to need it"],
+          kind: ["Say you've got his back", "Say you'll stick with him"],
+          playful: ["Ask who's got his back", "Ask if he's your shadow now"],
           bold: ["Say you'll take point", "Tell him to try and keep up"],
           neutral: ["Nod, stay beside him", "Listen to the briefing"],
         },
@@ -709,9 +709,12 @@ export default {
         greeting:
           '"Hey, Senpai. Anything you want on here? Speak now, I\'m almost done."',
         responses: {
-          kind: ["Say it looks amazing", "Ask where he learned that"],
+          kind: ["Ask what's going on the menu", "Ask where he learned that"],
           playful: ["Ask him to letter your name", "Ask for his autograph"],
-          bold: ["Point out a crooked letter", "Say he should charge for it"],
+          bold: [
+            "Ask for a dish named after you",
+            "Say he should charge for it",
+          ],
           neutral: ["Admire it quietly", "Watch him finish"],
         },
       },
