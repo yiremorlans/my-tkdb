@@ -1043,11 +1043,11 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** goes very deliberately blank-faced about it.",
+        line: "{user} calls his name, and **{name}** pockets his phone mid-match.",
         responses: {
-          kind: "Say hi anyway",
-          playful: "Match his blank face",
-          bold: "Ask why the blank face",
+          kind: "Say he can finish the match",
+          playful: "Ask if he just forfeited",
+          bold: "Claim the spot beside him",
         },
       },
       {
@@ -1103,7 +1103,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** decides the **{house}** roster can manage without him.",
+        line: "{user} calls out a hello, and **{name}** decides the **{house}** roster can manage without him.",
         responses: {
           kind: "Say Haru will cope",
           playful: "Ask if Haru knows",

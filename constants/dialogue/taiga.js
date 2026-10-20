@@ -952,7 +952,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** grins around it. \"Who're you? ...Whatever. C'mere.\"",
+        line: "{user} calls his name, and **{name}** grins around it. \"Who're you? ...Whatever. C'mere.\"",
         responses: {
           kind: "Go over to him",
           playful: "Ask who's asking",
@@ -1004,7 +1004,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** folds a hand he was winning.",
+        line: "{user} waves hello, and **{name}** folds a hand he was winning.",
         responses: {
           kind: "Say he didn't have to",
           playful: "Ask to see his cards",
@@ -1012,7 +1012,7 @@ export default {
         },
       },
       {
-        line: '{user} says the name, and **{name}** tells the whole table "Ciao!" without looking back.',
+        line: '{user} says hi, and **{name}** tells the whole table "Ciao!" without looking back.',
         responses: {
           kind: "Wave to the table",
           playful: "Say ciao to the table too",
@@ -1080,7 +1080,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and it's the one thing **{name}** doesn't lose track of.",
+        line: "{user} calls his name, and it's the one thing **{name}** doesn't lose track of.",
         responses: {
           kind: "Say you'll remind him",
           playful: "Test him with your name",

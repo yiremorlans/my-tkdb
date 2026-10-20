@@ -1278,7 +1278,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** turns the charisma on like a stage light.",
+        line: "{user} calls {his} name, and **{name}** turns the charisma on like a stage light.",
         responses: {
           kind: "Smile back, give your name",
           playful: "Shield your eyes from it",
@@ -1312,7 +1312,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** sets {his} pen down like {he}'d been looking for an excuse.",
+        line: "{user} waves hello, and **{name}** sets {his} pen down like {he}'d been looking for an excuse.",
         responses: {
           kind: "Be the excuse",
           playful: "Ask if you're the excuse",
@@ -1424,7 +1424,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and every version of **{name}** answers to it.",
+        line: "{user} calls {his} name, and every version of **{name}** answers to it.",
         responses: {
           kind: "Say you love every version",
           playful: "Ask which version this is",

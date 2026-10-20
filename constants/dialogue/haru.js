@@ -927,7 +927,7 @@ export default {
         },
       },
       {
-        line: '{user} says the name, and **{name}** laughs, delighted. "Gahaha! Look at that."',
+        line: '{user} waves hello, and **{name}** laughs, delighted. "Gahaha! Look at that."',
         responses: {
           kind: "Ask what's on today's rounds",
           playful: "Laugh right along",
@@ -961,7 +961,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** laughs. \"Gahaha! Perfect timin', I'm short a pair of hands.\"",
+        line: "{user} runs into **{name}**, who laughs. \"Gahaha! Perfect timin', I'm short a pair of hands.\"",
         responses: {
           kind: "Lend him both hands",
           playful: "Ask if it pays in snacks",
@@ -1021,7 +1021,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}**'s grin goes about ten percent honest.",
+        line: "{user} says hi, and **{name}**'s grin goes about ten percent honest.",
         responses: {
           kind: "Say you like the honest part",
           playful: "Ask for twenty percent",
@@ -1073,7 +1073,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** stops chickening out about any of it.",
+        line: "{user} calls his name, and **{name}** stops chickening out about any of it.",
         responses: {
           kind: "Say you're proud of him",
           playful: "Ask what he was chicken of",

@@ -935,7 +935,7 @@ export default {
         },
       },
       {
-        line: '{user} says the name, and **{name}** glances at something just over their shoulder. "...Ignore that."',
+        line: '{user} calls his name, and **{name}** glances at something just over their shoulder. "...Ignore that."',
         responses: {
           kind: "Keep your eyes on him",
           playful: "Wave at whatever it is",
@@ -1065,7 +1065,7 @@ export default {
     ],
     bound: [
       {
-        line: "{user} says the name, and **{name}** doesn't deflect it. Not even a little.",
+        line: "{user} calls his name, and **{name}** doesn't deflect it. Not even a little.",
         responses: {
           kind: "Say you'll take it",
           playful: "Ask if he's feeling okay",

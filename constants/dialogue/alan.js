@@ -950,7 +950,7 @@ export default {
         },
       },
       {
-        line: '{user} says the name, and **{name}** looks up. "...Still around. Good."',
+        line: '{user} calls out a hello, and **{name}** looks up. "...Still around. Good."',
         responses: {
           kind: "Say you're not going anywhere",
           playful: "Ask if that's a compliment",
@@ -976,7 +976,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** looks up from his lunch, food forgotten.",
+        line: "{user} runs into **{name}** at lunch, and the food is forgotten.",
         responses: {
           kind: "Tell him to keep eating",
           playful: "Ask if he's sharing",

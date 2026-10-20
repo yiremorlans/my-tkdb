@@ -915,7 +915,7 @@ export default {
         },
       },
       {
-        line: '{user} says the name, and **{name}** draws himself up. "You should feel honored to have some of my attention."',
+        line: '{user} calls his name, and **{name}** draws himself up. "You should feel honored to have some of my attention."',
         responses: {
           kind: "Say you've heard of his work",
           playful: "Curtsy for the doctor",
@@ -949,7 +949,7 @@ export default {
         },
       },
       {
-        line: '{user} says the name, and **{name}** looks almost pleased. "You\'re less useless than the last one."',
+        line: '{user} waves hello, and **{name}** looks almost pleased. "You\'re less useless than the last one."',
         responses: {
           kind: "Take the compliment",
           playful: "Ask what the last one did",
@@ -975,11 +975,11 @@ export default {
         },
       },
       {
-        line: "{user} calls out, and **{name}** drops his notes. He denies dropping them.",
+        line: '{user} calls out, and **{name}** startles so badly his notes scatter. "Y-you could warn a person!"',
         responses: {
-          kind: "Pick up his notes",
-          playful: "Say you saw them drop",
-          bold: "Stay while he sorts them",
+          kind: "Gather his research for him",
+          playful: "Offer to announce yourself",
+          bold: "Say you came looking for him",
         },
       },
       {
@@ -1001,7 +1001,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** goes an interesting color.",
+        line: "{user} says hi, and **{name}** goes an interesting color.",
         responses: {
           kind: "Say it's a nice color",
           playful: "Name the color",
@@ -1061,7 +1061,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and the entire genius act falls off **{name}** at once.",
+        line: "{user} calls out a hello, and the entire genius act falls off **{name}** at once.",
         responses: {
           kind: "Say you like him like this",
           playful: "Ask where the genius went",

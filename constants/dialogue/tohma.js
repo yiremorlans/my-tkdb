@@ -1003,7 +1003,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and something behind **{name}**'s composure gives, briefly.",
+        line: "{user} calls out a hello, and something behind **{name}**'s composure gives, briefly.",
         responses: {
           kind: "Pretend you didn't notice",
           playful: "Say his name again",
@@ -1063,7 +1063,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** clears his entire schedule.",
+        line: "{user} calls his name, and **{name}** clears his entire schedule.",
         responses: {
           kind: "Say he deserves the day",
           playful: "Ask if Jin approved",

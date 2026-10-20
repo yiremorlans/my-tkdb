@@ -876,7 +876,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** looks pleased in a way that isn't reassuring.",
+        line: "{user} says hi, and **{name}** looks pleased in a way that isn't reassuring.",
         responses: {
           kind: "Ask why he looks pleased",
           playful: "Ask what he's plotting",
@@ -954,7 +954,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** closes the distance immediately. All of it.",
+        line: "{user} calls his name, and **{name}** closes the distance immediately. All of it.",
         responses: {
           kind: "Stay where you are",
           playful: "Ask if he left any room",
@@ -1014,7 +1014,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** decides, again, that forever is the plan.",
+        line: "{user} calls out a hello, and **{name}** decides, again, that forever is the plan.",
         responses: {
           kind: "Say forever sounds right",
           playful: "Ask what's after forever",

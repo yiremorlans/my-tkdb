@@ -930,7 +930,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** waves them over before deciding anything else.",
+        line: "{user} calls his name, and **{name}** waves them over before deciding anything else.",
         responses: {
           kind: "Head right over",
           playful: "Wave back from here",
@@ -964,7 +964,7 @@ export default {
         },
       },
       {
-        line: '{user} says the name, and **{name}** is already heading over. "Yeah, yeah. I heard you the first time."',
+        line: '{user} calls his name, and **{name}** is already heading over. "Yeah, yeah. I heard you the first time."',
         responses: {
           kind: "Meet him halfway",
           playful: "Call him one more time",
@@ -1076,7 +1076,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** decides the **{house}** shift can run itself.",
+        line: "{user} calls his name, and **{name}** decides the **{house}** shift can run itself.",
         responses: {
           kind: "Say the shift will survive",
           playful: "Ask who's in charge now",

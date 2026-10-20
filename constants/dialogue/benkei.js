@@ -1217,7 +1217,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** says theirs back like he's glad of the chance.",
+        line: "{user} calls his name, and **{name}** says theirs back like he's glad of the chance.",
         responses: {
           kind: "Say his name back",
           playful: "Ask if he practiced it",
@@ -1277,7 +1277,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** forgets the whole afternoon's restocking list.",
+        line: "{user} calls his name, and **{name}** forgets the whole afternoon's restocking list.",
         responses: {
           kind: "Help him remember the list",
           playful: "Ask what's on the list",
@@ -1329,7 +1329,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** stops going red about it. Mostly.",
+        line: "{user} calls his name, and **{name}** stops going red about it. Mostly.",
         responses: {
           kind: "Say he can still go red",
           playful: "Try to make him red",

@@ -1469,7 +1469,7 @@ Though he appears as optimistic as he can, it's implied that the curse bothers h
 
 Due to being cursed, Rui can't get tired and admits that it's annoying he can't feel tired no matter how much he moves around. Because of this, he doesn't like to be idle and chooses to keep busy. It's also implied it's because of his reaper curse that he takes his work and tasks seriously, despite always giving the impression that he's quite frivolous.
 
-Rui also often reprimands Edward whenever he gets a chance to flirt with the MC, resulting in Rui calling Edward a creep or telling him to stay away. At some point, he even suggests to the MC to get a restraining order on Edward.
+Rui also often reprimands Edward whenever he gets a chance to flirt with the MC, resulting in Rui telling him to stay away. At some point, he even suggests to the MC to get a restraining order on Edward.
 
 Rui has a nickname for Haru: "Harurin".
 
