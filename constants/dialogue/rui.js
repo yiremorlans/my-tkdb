@@ -251,7 +251,7 @@ export default {
         },
       },
       {
-        line: '"Obscuary looks like it\'d be full of downers, but it\'s actually pretty lively in there, right? Not gonna lie, I def prefer it that way."',
+        line: "\"Obscuary looks like it'd be full of downers, but it's actually pretty lively in there, right? Not gonna lie, I def prefer it that way.\"",
         approach: "Peek inside",
         greeting: '"See? Come on in, the more the merrier!"',
         responses: {
@@ -277,7 +277,7 @@ export default {
         line: '"Careful, not too close! Sorry, that came out weird. Can we start over?"',
         approach: "Keep a careful distance",
         greeting:
-          "\"Okay, take two! Hi, I'm Rui. Pretend I opened with something way smoother.\"",
+          '"Okay, take two! Hi, I\'m Rui. Pretend I opened with something way smoother."',
         responses: {
           kind: ["Say no apology needed", "Say you're glad you met him"],
           playful: ["Say the first try was cute", "Pretend you've never met"],
@@ -292,7 +292,10 @@ export default {
           "\"Ahaha, yeah, kinda a lot! Don't worry, he'll be back up in no time. He always is.\"",
         responses: {
           kind: ["Offer to help carry Edward", "Ask how he's holding up"],
-          playful: ["Ask if Ed does it on purpose", "Say Ed looks comfy up there"],
+          playful: [
+            "Ask if Ed does it on purpose",
+            "Say Ed looks comfy up there",
+          ],
           bold: ["Say it wasn't his fault", "Say you'll walk them back"],
           neutral: ["Take his word for it", "Step aside to let him pass"],
         },
@@ -330,7 +333,10 @@ export default {
           '"Hey, cutie, you made it! I was starting to think you found a better bar."',
         responses: {
           kind: ["Say you'll be there", "Ask if he's doing okay too"],
-          playful: ["Ask if tears get a discount", "Say you'll bring the tissues"],
+          playful: [
+            "Ask if tears get a discount",
+            "Say you'll bring the tissues",
+          ],
           bold: ["Say you'll hold him to it", "Admit it's been a long day"],
           neutral: ["Nod, say maybe later", "Take the offer, say nothing"],
         },
@@ -353,7 +359,10 @@ export default {
         greeting:
           '"Ahaha, see? It suits us! Twins gotta stick together, right?"',
         responses: {
-          kind: ["Say you'd pick him as a twin", "Say it's nice not to be alone"],
+          kind: [
+            "Say you'd pick him as a twin",
+            "Say it's nice not to be alone",
+          ],
           playful: ["Ask for matching outfits", "Ask who's the older twin"],
           bold: ["Say you've got his back", "Ask if he means that"],
           neutral: ["Smile, say nothing", "Just wave back"],
@@ -363,7 +372,7 @@ export default {
         line: "He's crouched by the rose bushes outside the dorm, coaxing a stubborn one into blooming. \"This one's fussy. Doesn't do that for just anyone.\"",
         approach: "Ask what it needs",
         greeting:
-          "\"Patience, mostly. ...Wait, look! It's opening up. Guess it likes you.\"",
+          '"Patience, mostly. ...Wait, look! It\'s opening up. Guess it likes you."',
         responses: {
           kind: ["Say his roses are beautiful", "Admire his patience with it"],
           playful: ["Cheer the rose on", "Claim you're fussy as well"],
@@ -374,7 +383,8 @@ export default {
       {
         line: "He stops mid-wipe behind the bar, staring at nothing. A second later the smile clicks back into place like a switch.",
         approach: "Say his name",
-        greeting: '"Hm? Oh! Sorry, spaced out for a sec. Totally fine! What\'s up?"',
+        greeting:
+          '"Hm? Oh! Sorry, spaced out for a sec. Totally fine! What\'s up?"',
         responses: {
           kind: ["Smile back and stay a while", "Ask if he's had a long day"],
           playful: ["Ask who he was dreaming of", "Tease the recovery"],
@@ -386,7 +396,7 @@ export default {
         line: "He's moving a cutting into a bigger pot, chatting the whole time.",
         approach: "Ask how it's going",
         greeting:
-          "\"Great! This little guy outgrew his old pot. Happens to the best of us, right? Ahaha.\"",
+          '"Great! This little guy outgrew his old pot. Happens to the best of us, right? Ahaha."',
         responses: {
           kind: ["Say it's in good hands", "Ask what it'll grow into"],
           playful: ["Ask if you can name it", "Ask what the plants think"],
@@ -412,7 +422,10 @@ export default {
           '"Your usual, coming right up! Less ice than last time, right?"',
         responses: {
           kind: ["Say he's got you figured out", "Ask what his usual is"],
-          playful: ["Ask what else he's memorized", "Ask if he memorizes everyone's"],
+          playful: [
+            "Ask what else he's memorized",
+            "Ask if he memorizes everyone's",
+          ],
           bold: ["Test if he really remembers", "Order something new instead"],
           neutral: ["Order the usual, say nothing", "Nod, take the drink"],
         },
@@ -420,7 +433,8 @@ export default {
       {
         line: "You ask if he's okay. \"Aw, don't worry about me!\" he says, before you've even finished.",
         approach: "Worry about him anyway",
-        greeting: "\"Seriously, I'm good! Now you. How've you been? The real answer.\"",
+        greeting:
+          "\"Seriously, I'm good! Now you. How've you been? The real answer.\"",
         responses: {
           kind: ["Say his worries count too", "Say he can tell you anytime"],
           playful: ["Say you'll trade answers", "Say that was a record dodge"],
@@ -432,7 +446,7 @@ export default {
         line: "He's fending off Edward on your behalf again, with a little more bite than usual.",
         approach: "Hang back and watch",
         greeting:
-          "\"Aw c'mon, Ed, stay away from her! ...Geez, that old man. Sorry, cutie.\"",
+          '"Aw c\'mon, Ed, stay away from her! ...Geez, that old man. Sorry, cutie."',
         responses: {
           kind: ["Say you're glad he's around", "Ask if Ed bugs him too"],
           playful: ["Ask about a restraining order", "Call him your bodyguard"],
@@ -455,27 +469,27 @@ export default {
     ],
     warm: [
       {
-        line: "His grin is real when he sees you. You also catch the half-second where it slips, like you're the only thing standing between him and a very long night.",
-        approach: "Match his brightness",
+        line: "He's hauling a basket of the entire dorm's laundry, piled so high he has to lean around it to see. He spots you and lifts it like a trophy.",
+        approach: "Ask if he needs a hand",
         greeting:
-          "\"You're back! You know it's genuinely brighter in here when you're around? Like, measurably. Kind of amazing.\"",
+          "\"Nope, I've got it! This is my workout. Everyone in the dorm changes clothes like it's a sport, so I'm basically an athlete.\"",
         responses: {
-          kind: ["Say you're glad to be back", "Ask about the long night"],
-          playful: ["Ask what's making it brighter", "Ask for measurements"],
-          bold: ["Say you noticed the slip", "Say the grin can drop"],
-          neutral: ["Just smile back", "Let him do the talking"],
+          kind: ["Say he works too hard", "Ask when he gets a break"],
+          playful: ["Cheer him on like a coach", "Ask for his training plan"],
+          bold: ["Say you'll walk with him", "Claim the next load"],
+          neutral: ["Hold the door open", "Let him get to it"],
         },
       },
       {
-        line: "He saves you the good seat, then turns his whole body toward you like nobody else is in the room, still careful to keep a foot of space between you.",
-        approach: "Take the good seat",
+        line: "You finally have some free time together. He looks like he hurried to make it, a little breathless and very pleased with himself.",
+        approach: "Let him catch his breath",
         greeting:
           '"Hey, hey, hey! We finally get to spend some time together, it\'s illegal to take your eyes off me!"',
         responses: {
-          kind: ["Say you missed him too", "Say you'd never look away"],
-          playful: ["Ask what the fine is", "Start a staring contest"],
-          bold: ["Hold his gaze right back", "Close the foot of space"],
-          neutral: ["Settle in, say nothing", "Sit and watch him talk"],
+          kind: ["Say you missed him", "Say he has your full attention"],
+          playful: ["Tease him for rushing", "Ask if he ditched chores"],
+          bold: ["Claim the whole hour", "Say he's not leaving early"],
+          neutral: ["Ask what he wants to do", "Let him pick the plan"],
         },
       },
       {
@@ -485,116 +499,117 @@ export default {
           '"Pretty much everything! I barely did anything, honestly. Just water and a whole lot of talking to them."',
         responses: {
           kind: ["Say it's clearly working", "Say they're lucky to have him"],
-          playful: ["Ask what he tells them", "Try talking to one yourself"],
-          bold: ["Say you'd bloom for him too", "Ask if they ever talk back"],
+          playful: ["Ask for the secret", "Sniff every single bloom"],
+          bold: ["Say you'd bloom for him too", "Say you'll help water next"],
           neutral: ["Hold the watering can", "Watch him work the rows"],
         },
       },
       {
-        line: 'The Obscuary bar, lights down, your drink already waiting. He leans on his elbows across from you. "This is the best part of my night. Don\'t tell the others."',
-        approach: "Take your waiting drink",
+        line: 'The bar\'s lights are turned low, and your drink is already waiting. He leans on his elbows across the counter from you. "Best part of my night, every time."',
+        approach: "Ask how he knew your order",
         greeting:
-          '"Sit, sit. I made it before you walked in. Tell me it\'s still your favorite."',
+          '"Lucky guess? Nah, I know my regulars. Started on it the second I heard the door. Still your favorite, right?"',
         responses: {
-          kind: ["Say this is your best part", "Thank him for the drink"],
-          playful: ["Promise not to tell", "Ask who the others are"],
+          kind: ["Say you'd come just for this", "Ask how his night's been"],
+          playful: ["Ask what the worst part is", "Toast to every time"],
           bold: ["Ask what makes it the best", "Say he tells everyone that"],
           neutral: ["Take the drink, listen", "Drink it, say nothing"],
         },
       },
       {
-        line: '"Look at you! Okay, tell me everything, and don\'t leave the boring parts out."',
-        approach: "Tell him about your day",
+        line: "He spots you and points across the room, already guessing. \"Wait, wait. Something's different about you. Don't tell me, I'll get it.\"",
+        approach: "Let him guess",
         greeting:
-          '"The boring parts are my favorite, honestly. Nobody ever tells me those."',
+          "\"Not your hair. Not your bag. ...You're smiling more. That's it, right? Who do I thank?\"",
         responses: {
-          kind: ["Promise to tell him more often", "Ask about his day too"],
-          playful: [
-            "Save the boring parts anyway",
-            "Start with the dullest part",
-          ],
-          bold: ["Tell him the good parts first", "Ask what he wants to hear"],
-          neutral: ["Give a short version", "Tell him the main points"],
+          kind: ["Say you're glad to see him", "Ask what he'd guess first"],
+          playful: ["Make him keep guessing", "Say nothing's different"],
+          bold: ["Tell him to look closer", "Dare him to get it right"],
+          neutral: ["Shrug and let him try", "Wait for his answer"],
         },
       },
       {
-        line: "He finds a reason to stay at your end of the bar, and then quits pretending there was a reason.",
-        approach: "Let him linger",
+        line: "He's wiped the same spot of the bar in front of you three times now. On the fourth pass he gives up and just leans there.",
+        // He's been caught goofing off and is hamming it up: teasing lands better than sincerity.
+        mood: true,
+        approach: "Ask if he's slacking off",
         greeting:
           "\"Who, me? Totally working. ...Okay, not really. I'm just thrilled you're here, cutie.\"",
         responses: {
-          kind: ["Say you're thrilled too", "Say you like the company"],
-          playful: ["Tease him for the excuse", "Call him 'cutie' back"],
-          bold: ["Tell him to drop the excuse", "Ask him to stay put"],
-          neutral: [
-            "Sip your drink, say nothing",
-            "Pick the conversation back up",
+          kind: [
+            "Say you were hoping he'd stay",
+            "Say you like having him here",
           ],
+          playful: ["Say the counter's sparkling", "Ask if you're his break"],
+          bold: ["Say he doesn't need an excuse", "Tell him the bar can wait"],
+          neutral: ["Let him lean there", "Nod at the clean spot"],
         },
       },
       {
-        line: 'He spots a loose thread on your uniform and holds out a gloved hand for your blazer. "Give it here. Two minutes, tops."',
+        line: 'He spots a loose thread on your uniform and holds out a hand for your blazer. "Give it here. Two minutes, tops."',
         approach: "Hand over your blazer",
         greeting:
           "\"Loose threads drive me nuts. Relax, I'm fast. I get a lot of practice on Ed's stuff.\"",
         responses: {
-          kind: ["Tell him he's a lifesaver", "Ask how Ed wrecks his stuff"],
+          kind: ["Say his stitches are neat", "Ask where he learned to sew"],
           playful: ["Ask if he charges extra", "Find him another loose one"],
           bold: ["Say he's showing off", "Say you'll bring him more"],
           neutral: ["Watch his hands work", "Wait while he stitches"],
         },
       },
       {
-        line: "He's gone quiet behind the bar, chin propped on a gloved hand, just watching you. It takes him a second to notice you've noticed.",
-        approach: "Ask what he's thinking",
+        line: "It's been a busy week, and you haven't caught up on your phone messages. When you reach the bar, he looks up like he's been saving a question.",
+        approach: "Say you've been swamped",
         greeting:
-          '"Hm? Nothing much! Just thinking it\'s nice, you being here. ...Okay, that came out way too sincere. Ahaha, forget it!"',
+          "\"Huh? Did you know you've got unread messages? Oh, that's why you've been leaving me on delivered! Ahaha!\"",
         responses: {
-          kind: ["Say it's nice being here", "Say sincere suits him"],
-          playful: ["Refuse to forget it", "Ask him to say it again"],
-          bold: ["Say that wasn't nothing", "Say he can drop the laugh"],
-          neutral: ["Let the moment sit", "Watch him right back"],
+          kind: ["Say you missed him this week", "Ask how his week went"],
+          playful: ["Say you've been in demand", "Blame your busy week"],
+          bold: ["Say you came straight here", "Say he has you now"],
+          neutral: ["Ask what you missed", "Say it's been a long week"],
         },
       },
       {
         line: "\"Hey, did you eat yet? No? Okay, sit. I'm making you something and you don't get a vote.\"",
+        // He's in bossy-host mode and having fun with it: playing customer lands better than sincerity.
+        mood: true,
         approach: "Let him feed you",
         greeting:
-          '"I cook for Lyca and Ed every day, one more plate is nothing. My door\'s always open, you know that."',
+          "\"Ahaha, good! You looked like you were running on empty. Don't ever skip a meal on my watch. My door's always open!\"",
         responses: {
-          kind: ["Thank him for the offer", "Offer to help him cook"],
-          playful: ["Ask for seconds already", "Claim Lyca's portion"],
+          kind: ["Ask what his favorite dish is", "Offer to help him cook"],
+          playful: ["Ask if dessert comes too", "Say you'll leave a review"],
           bold: [
             "Say you came for his cooking",
-            "Ask what his favorite dish is",
+            "Say you'll cook for him next",
           ],
           neutral: ["Sit and eat, say nothing", "Eat what he puts down"],
         },
       },
       {
-        line: "He's still shaking his head and smiling when you come in, like someone just impressed the heck out of him.",
-        approach: "Ask who impressed him",
+        line: "He's still shaking his head and smiling when you come in, like Lyca just impressed the heck out of him.",
+        approach: "Ask what Lyca did",
         greeting:
-          '"Lyca! Not that long ago he was asking me how everything worked around here. Today some guys were running their mouths about him and he handled it himself. Stood his ground, kept his cool, didn\'t need me at all!"',
+          "\"Okay, so, some guys were running their mouths about him today. He called them out, stood his ground, and didn't lose his temper once. Didn't need me at all!\"",
         responses: {
           kind: ["Say Lyca's working hard", "Say he sounds proud"],
-          playful: [
-            "Tease him for feeling unneeded",
-            "Ask what Lyca said to them",
-          ],
-          bold: ["Say he'll be out of a job", "Ask if Lyca knows he's proud"],
+          playful: ["Say Lyca learned from the best", "Ask for the full story"],
+          bold: ["Say you saw it coming", "Ask if Lyca knows he's proud"],
           neutral: ["Let him brag a while", "Nod, listen to the story"],
         },
       },
       {
-        line: "He spots you frowning at the mission briefing and pops up across the bar, a careful foot away. \"Whoa, what's with the face? You're gonna give yourself wrinkles, Honor Roll!\"",
+        line: "You're frowning over the mission briefing in the courtyard when he leans into view. \"Whoa, what's with the face? You're gonna give yourself wrinkles, Honor Roll!\"",
         approach: "Admit you're nervous",
         greeting:
-          "\"Aw, c'mon, you're gonna be great! I'll be right there the whole time, and I'm like, weirdly good at this stuff. Ahaha. ...Seriously, though. You've got this, okay?\"",
+          "\"Aw, c'mon, you're gonna be great! I'll be right there the whole time, and I'm weirdly good at this stuff. Ahaha. ...Seriously, though. You've got this.\"",
         responses: {
-          kind: ["Thank him for being there", "Say you believe him"],
-          playful: ["Make him promise a drink after", "Ask how weirdly good"],
-          bold: ["Ask who worries about him", "Say you'll watch his back too"],
+          kind: ["Say he always cheers you up", "Ask if he's nervous too"],
+          playful: [
+            "Make him promise a drink after",
+            "Ask for his wrinkle cream",
+          ],
+          bold: ["Ask who worries about him", "Say you'll watch his back"],
           neutral: ["Nod and let out a breath", "Go back to the briefing"],
         },
       },
@@ -602,87 +617,94 @@ export default {
         line: "\"You're back! I was worried you'd forgotten about me!\" It's a joke. He checks your face anyway, just to be sure.",
         approach: "Promise you didn't forget",
         greeting:
-          '"Two whole days, Honor Roll. I counted. Not in a weird way! Okay, a little in a weird way."',
+          '"Good, \'cause two whole days is way too long! You owe me a full catch-up, Honor Roll."',
         responses: {
-          kind: ["Say you missed him", "Promise you'd never forget"],
-          playful: ["Ask how many hours he counted", "Pretend not to know him"],
-          bold: ["Say you counted too", "Ask if he really worried"],
-          neutral: ["Say you were busy", "Nod and sit down"],
+          kind: ["Say you thought of him", "Say he's hard to forget"],
+          playful: [
+            "Ask if Haru lent him a tracker",
+            "Say you missed his chatter",
+          ],
+          bold: ["Say he can count on you", "Ask if he really worried"],
+          neutral: ["Say you were just away", "Wave hello"],
         },
       },
       {
-        line: "Edward is asleep on a bench in the cold, and Rui is standing over him, hands on hips. \"Didn't you just take a nap, old man? You're gonna catch a cold!\"",
+        line: "Edward is asleep outside in the cold, and Rui is standing over him, hands on hips. \"Didn't you just take a nap, old man? You're gonna catch a cold!\"",
         approach: "Fetch a blanket for Edward",
         greeting:
-          "\"Oh, thank you! He'll never say it, so I will. Honestly, he's an ancient toddler.\"",
+          "\"Oh, you're a lifesaver! I swear, I can't leave him alone for five minutes. Honestly, he's an ancient toddler.\"",
         responses: {
-          kind: ["Tuck the blanket around Ed", "Say Ed's in good hands"],
-          playful: ["Suggest leaving Ed there", "Ask if Ed always snores"],
-          bold: ["Say Ed can look after himself", "Ask who looks after Rui"],
-          neutral: ["Hand over the blanket", "Wait while he fusses"],
+          kind: ["Say Ed's lucky to have him", "Help get Ed back inside"],
+          playful: ["Suggest leaving Ed there", "Ask if this happens a lot"],
+          bold: ["Say Ed can look after himself", "Tell Ed to wake up"],
+          neutral: ["Watch Ed sleep on", "Wait while he fusses"],
         },
       },
       {
-        line: 'He watches Lyca go with a hand pressed to his chest. "That kid says the darndest things. Watching him is bad for my heart."',
-        approach: "Ask what Lyca said",
+        line: "Lyca tells Rui, flat as anything, that his nagging is annoying but the dorm would fall apart without him. Then he walks off like it was nothing, and Rui is left with a hand pressed to his chest.",
+        approach: "Ask if he's okay",
         greeting:
-          '"You don\'t wanna know. Okay, you do. Sit down, this is gonna take a minute."',
+          '"Lyca\'s an open book, but the flip side is he says the darndest things... I feel like watching him is bad for my heart..."',
         responses: {
-          kind: ["Say he looks out for Lyca", "Ask if Lyca's okay"],
-          playful: ["Demand every detail", "Guess what Lyca said"],
-          bold: ["Say he's a total parent", "Ask if his heart's okay"],
-          neutral: ["Listen while he tells it", "Nod along, say little"],
+          kind: ["Say he does so much for them", "Say the dorm's lucky"],
+          playful: ["Ask if he needs to lie down", "Say Lyca's a softie"],
+          bold: ["Say Lyca's just honest", "Say he should hear it more"],
+          neutral: ["Wait for him to recover", "Look where Lyca went"],
         },
       },
       {
-        line: "\"You're out here by yourself? Isn't that, like, not super dangerous? ...Wait, did that make sense? Whatever! Let me walk you back.\"",
-        approach: "Let him walk you back",
+        line: 'He catches you crossing the courtyard alone after dark and jogs over, frowning. "You\'re out here by yourself?"',
+        approach: "Say you're fine",
         greeting:
-          "\"I'll stay a step off to the side, but I'm not letting you walk this alone. Deal?\"",
+          '"Fine or not, let me walk you back! You can\'t talk me out of it."',
         responses: {
-          kind: ["Take the deal", "Say you feel safer with him"],
-          playful: ["Race him back", "Ask what 'not super' means"],
-          bold: ["Say you can walk alone", "Walk closer than a step"],
-          neutral: ["Walk back in quiet", "Let him lead the way"],
-        },
-      },
-      {
-        line: "He's crouched behind the bar, sweeping up glass. \"Sorry! A customer got rowdy and a glass went. Everyone's a little pent up lately, I guess.\"",
-        approach: "Help clean up",
-        greeting:
-          "\"No no, don't touch it, you'll cut yourself. Hold the dustpan? That's the safe job.\"",
-        responses: {
-          kind: ["Ask if he got hurt", "Hold the dustpan steady"],
-          playful: ["Ask who the rowdy one was", "Offer to be his bouncer"],
-          bold: ["Ask if he talked them down", "Say he shouldn't clean alone"],
-          neutral: ["Hold the dustpan, say nothing", "Wait until he's done"],
-        },
-      },
-      {
-        line: "It's late and he's still wide awake, of course. \"Don't worry about me, I always sleep late. Stay as long as you want, I'm not going anywhere.\"",
-        approach: "Stay a while longer",
-        greeting:
-          '"Seriously, take your time. If you go, I\'m just gonna reorganize the bottles again."',
-        responses: {
-          kind: ["Ask if he ever gets to rest", "Stay a while for his sake"],
-          playful: ["Bet you'll outlast him", "Threaten to mess up a shelf"],
-          bold: ["Ask what he does all night", "Say he never actually sleeps"],
-          neutral: ["Stay a bit, say nothing", "Let him do the talking"],
-        },
-      },
-      {
-        line: '"Ed said I was good-looking? I mean, he\'s right. People always tell me my face is my only redeeming feature!" He laughs. It lands a little flat.',
-        approach: "Argue with the word 'only'",
-        greeting:
-          "\"Aw, come on, it's a joke! ...Mostly a joke. You're not gonna make this a whole thing, are you?\"",
-        responses: {
-          kind: ["List his other good features", "Say the joke isn't funny"],
-          playful: ["Agree the face is great", "Ask what Ed actually said"],
-          bold: ["Say he's more than a face", "Make it a whole thing"],
-          neutral: [
-            "Laugh with him, then drop it",
-            "Let it slide, say nothing",
+          kind: ["Say you'd like the company", "Say you're glad he showed up"],
+          playful: [
+            "Say he's out here alone too",
+            "Ask if he's scared of the dark",
           ],
+          bold: [
+            "Say you came out to find him",
+            "Set the pace for both of you",
+          ],
+          neutral: ["Let him lead the way", "Head back together"],
+        },
+      },
+      {
+        line: "Haru's leaning on the bar mid-story, and both of them stop the second you walk in, grinning like they've been arguing about something.",
+        approach: "Ask what you interrupted",
+        greeting:
+          '"Perfect timing! Harurin says his stories are better than mine. Mine have endings!"',
+        responses: {
+          kind: ["Say you're happy to see both", "Ask how their night's going"],
+          playful: ["Ask to hear the ending", "Start a story of your own"],
+          bold: ["Say you came to see Rui", "Say Haru's got a point"],
+          neutral: ["Wait for them to settle", "Lean on the bar too"],
+        },
+      },
+      {
+        line: 'Rui and Haku are crossing the courtyard together when Haku calls you "princess" in passing, easy as anything, and keeps walking. Rui stops and stares after him, grinning like he can\'t believe the nerve.',
+        // He's turned Haku's flirting into a game: playing along beats sincerity here.
+        mood: true,
+        approach: "Ask what's so funny",
+        greeting:
+          "\"Hakucchi! Every time! Okay, fine, he's smooth. But I'm way more fun, right?\"",
+        responses: {
+          kind: ["Say Haku's just teasing", "Say you like them both"],
+          playful: ["Wink at Rui", "Ask Rui for a better nickname"],
+          bold: ["Say Rui's better at it", "Say Haku's got nothing on him"],
+          neutral: ["Wave after Haku", "Watch Haku go"],
+        },
+      },
+      {
+        line: '"What? Ed was praising my good looks? I mean he\'s right, right? People always tell me my face is my only redeeming feature!"',
+        approach: "Say it's not his only one",
+        greeting: '"Oh? Go on, then. Name another one. I\'m listening!"',
+        responses: {
+          kind: ["Say he's also a good person", "Say he's a caring person"],
+          playful: ["Say Ed has good taste", "Praise his modesty"],
+          bold: ["Say his heart's the best part", "Say Ed undersold him"],
+          neutral: ["Laugh along", "Let it slide"],
         },
       },
     ],
@@ -718,7 +740,7 @@ export default {
           '"Okay, that\'s close enough. For you, I mean. I could stand here all day. Hold right there for me, cutie?"',
         responses: {
           kind: "Hold your palm to his",
-          playful: "Close half the inch",
+          playful: "Wiggle your fingers at him",
           bold: "Press where his hand traced",
           neutral: "Let him trace, say nothing",
         },
@@ -743,7 +765,7 @@ export default {
         responses: {
           kind: "Stay right where he stopped",
           playful: "Count how long he'll wait",
-          bold: "Lean in anyway",
+          bold: "Say the inch is his to close",
           neutral: "Hold still, say nothing",
         },
       },
@@ -932,7 +954,7 @@ export default {
         },
       },
       {
-        line: '**{name}** points both hands at {user}. "Hey, cutie! You\'ve got my whole attention. What\'s the plan?"',
+        line: "**{name}** points both hands at {user}. \"Hey, cutie! You've got my whole attention. What's the plan?\"",
         responses: {
           kind: "Say you'd just like to talk",
           playful: "Say the plan is him",
