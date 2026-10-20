@@ -235,61 +235,64 @@ export default {
         line: "He looks up from tinkering with something, hands still steady. There's a ready smile for you.",
         approach: "Ask what he's fixing",
         greeting:
-          '"This? Hinge on a stage set. Somebody sat on it. ...Shion sat on it."',
+          '"This? Hinge off the Heebie-Jeebie House door. Somebody slammed it. ...It was Shion."',
         responses: {
-          kind: ["Offer to hold something", "Say it's looking good"],
-          playful: ["Share a laugh", "Ask if Shion's okay too"],
+          kind: ["Ask if he needs another hand", "Hold the light for him"],
+          playful: [
+            "Ask if it's under warranty",
+            "Ask if it'll come back haunted",
+          ],
           bold: ["Say you came just for him", "Ask to try fixing it"],
-          neutral: ["Watch him work", "Let him finish the hinge"],
+          neutral: ["Watch him work", "Let him finish up"],
         },
       },
       {
         line: "He looks like he hasn't slept. \"I'm a natural short sleeper,\" he says, like that settles it.",
-        approach: "Don't buy the excuse",
+        approach: "Ask how much he slept",
         greeting:
-          '"Yeah, yeah. I know how it looks. I\'m fine, really. Yaaawn..."',
+          '"Yeah, yeah. I know how it looks. I\'m fine, really. (Yaaawn...)"',
         responses: {
-          kind: ["Tell him to actually rest", "Offer to cover a job for him"],
-          playful: ["Tease the 'natural' excuse", "Count his yawns out loud"],
-          bold: ["Call out the lie directly", "Tell him to go take a nap"],
+          kind: ["Offer to run his next errand", "Offer him a coffee"],
+          playful: ["Ask if it's genetic", "Ask if naps count against it"],
+          bold: [
+            "Say you'll wake him in an hour",
+            "Take his next call yourself",
+          ],
           neutral: ["Let the excuse stand", "Take his word for it"],
         },
       },
       {
-        line: '"Give me one second," he says, and finishes the movement without a single wasted motion.',
-        approach: "Wait for him to finish",
+        line: 'He\'s working on a mission tool. "Give me one second," he says, without looking up.',
+        approach: "Wait until he's done",
         greeting:
-          '"Okay. Done. Thanks for waiting, most people start talking halfway through."',
+          '"...There. Done. Thanks for waiting, most people start talking halfway through."',
         responses: {
-          kind: ["Say he's got a lot on", "Ask if he's had a break"],
-          playful: ["Time how long 'one sec' was", "Ask if you get a prize"],
-          bold: ["Say you'd have waited longer", "Ask what he just finished"],
+          kind: ["Pass him what he reaches for", "Offer to tidy up for him"],
+          playful: ["Say you nearly dozed off", "Ask if you're hired now"],
+          bold: ["Say you'd have waited longer", "Ask him to show you how"],
           neutral: ["Say it was no trouble", "Let him pack up"],
         },
       },
       {
-        line: '"Wait, wait. You shouldn\'t run around here. The floor over there is slightly sloped."',
-        approach: "Watch your step",
-        greeting: '"There you go. Safety first."',
+        line: "He's lugging a heavy bag through the dorm. \"Hm? Oh, this luggage? I've got a pretty big repair job to do now.\"",
+        approach: "Wish him luck",
+        greeting: '"Thanks. Well, safety first. I\'ll do my best."',
         responses: {
-          kind: ["Thank him for the warning", "Say it's good advice"],
-          playful: ["Salute him", "Lean with the slope on purpose"],
-          bold: ["Run anyway, on purpose", "Tell him to relax a little"],
-          neutral: ["Nod and keep going", "Say nothing, walk on"],
+          kind: ["Help him carry it over", "Offer to hand him tools"],
+          playful: ["Ask if there's a body in it", "Guess what's in it"],
+          bold: ["Say you'll come along", "Ask to see the job"],
+          neutral: ["Step out of his way", "Let him get going"],
         },
       },
       {
-        line: "His phone buzzes with another repair request. He reads it and adds it to the list.",
+        line: "His phone buzzes with another repair request. He starts to add it to the list, then stops.",
         approach: "Ask what came in",
         greeting:
           "\"Wait a sec… Wasn't this one the carpenter cat's job? Well… complaining is more trouble than it's worth.\"",
         responses: {
           kind: ["Say he takes on too much", "Offer to take a job off him"],
-          playful: [
-            "Ask who the carpenter cat is",
-            "Offer to complain for him",
-          ],
-          bold: ["Tell him to send it back", "Say he's allowed to say no"],
+          playful: ["Ask how long the list is", "Bet the list never shrinks"],
+          bold: ["Say you'll come on that one", "Say he's allowed to say no"],
           neutral: ["Let him add it to the list", "Say nothing"],
         },
       },
@@ -899,19 +902,19 @@ export default {
   winnerLines: {
     new: [
       {
-        line: '"Hm? Oh, {user}. Good work today." **{name}** shifts the box of parts to his other arm so he can wave.',
+        line: '{user} runs into **{name}** on his way out, toolbox in hand. "Hm? Oh, hey. About time for casino maintenance again."',
         responses: {
-          kind: "Offer to carry the box",
-          playful: "Ask what work you did",
-          bold: "Say he looks worn out",
+          kind: "Wish him a smooth job",
+          playful: "Ask if Romeo tips",
+          bold: "Say you'll go with him",
         },
       },
       {
-        line: '{user} says the name, and **{name}** stops mid-yawn. "Sorry. Short sleeper. Hi."',
+        line: '{user} calls his name, and **{name}** waves without slowing down. "Got work before class. Go on ahead, I\'ll catch up."',
         responses: {
-          kind: "Say he should sleep more",
-          playful: "Count the yawn as a hello",
-          bold: "Say that's not a real thing",
+          kind: "Say you'll save him a seat",
+          playful: "Ask if that's a promise",
+          bold: "Walk with him to the job",
         },
       },
       {
@@ -919,15 +922,15 @@ export default {
         responses: {
           kind: "Say you can wait your turn",
           playful: "Ask what first place wins",
-          bold: "Say he should drop a job",
+          bold: "Say you'll take one job",
         },
       },
       {
-        line: '**{name}** sets his toolbox down for {user}. "If something\'s broken, I\'ve got ten minutes. If Shion broke it, five."',
+        line: '"Oh, hey. Good work." **{name}** waves {user} over. "Heading to the store. Not shopping, exactly. More like... restocking."',
         responses: {
-          kind: "Tell him to take a break",
-          playful: "Say Shion sent you",
-          bold: "Hand him something broken",
+          kind: "Offer to carry the bags",
+          playful: "Ask what the difference is",
+          bold: "Say you'll come along",
         },
       },
     ],
