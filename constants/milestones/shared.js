@@ -151,7 +151,7 @@ export default {
     emoji: "✨",
     bucket: "spark",
     label: "Watched the stars from the courtyard",
-    afterline: "You watched the sky until it got too cold to stay.",
+    afterline: "You took turns pointing out stars to each other until it got too cold to stay.",
     hint: "that night under the stars",
   },
   long_way: {
