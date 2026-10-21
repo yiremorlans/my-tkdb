@@ -10,7 +10,7 @@
 // may read like the "what happened after" milestone afterlines in
 // constants/publicEncounters.js.
 //
-// Voice is grounded ONLY in reference.md's Edward section (the home voicelines)
+// Voice is grounded ONLY in reference/edward.md (the home voicelines)
 // and constants/characters.js, NOT the bond-scene file: the courtly register
 // never drops, it just stops being armor. The frail gentleman is a performance
 // (parasol, cough, eyesight too poor for his own letters) and underneath it is
@@ -21,12 +21,12 @@
 // kind lands too (he genuinely wants to be doted on), playful lands softest
 // (he is the one who does the teasing, too languid for it volleyed back) but
 // still nets the bonus.
-// Canon markers used here, all straight from reference.md: "Wicked girl", "You
+// Canon markers used here, all straight from reference/edward.md: "Wicked girl", "You
 // ought to know better than to...", "Ah ha ha ha.", the devil's hour, "my
 // vitality returns at this hour" (never in an Obscuary scene: it is always
 // night there, so the hour means nothing), "Come here"/"Come closer", "..., would you?"
 // tag questions on requests, "..., I'm afraid", "my favorite channel". No age
-// in years is ever stated (reference.md never gives one), no "I shall" and no
+// in years is ever stated (reference/edward.md never gives one), no "I shall" and no
 // phrasing lifted from constants/dialogue/edward.js. American spelling, no em
 // dashes.
 //

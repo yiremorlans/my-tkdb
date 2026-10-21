@@ -10,7 +10,7 @@ export default {
   //
   // He types fast and fluent in mixed case (never all-lowercase), caps for
   // emphasis, no full stops, short lines, and "u"/"ur", "lol", "rn", "tho" —
-  // per reference.md's "## Bond Scenes" notes ("Sho - same as Leo"). No typos:
+  // per reference/shohei.md's "Texting style" notes ("Same as Leo"). No typos:
   // he is the one who makes fun of Alan's ("come tot hr epuit... Pfft."). Only
   // his typed DMs follow those rules; in-person `> ` speech and narration keep
   // normal punctuation.

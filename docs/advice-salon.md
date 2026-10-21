@@ -13,7 +13,7 @@ replies.
 
 ## 1. Canon
 
-`constants/dialogue/reference.md` gets a short note under Zenji (part of this
+`constants/dialogue/reference/zenji.md` gets a short note (part of this
 work):
 
 > **Advice Salon:** Zenji's open-submission column. Haku mentions it only in
@@ -22,7 +22,7 @@ work):
 > stories.
 
 Everything else here (issue layout, cadence) is game framing, not canon. Zenji's
-authored lines follow his reference.md voice: eccentric poet, metaphors, thinks
+authored lines follow his reference/zenji.md voice: eccentric poet, metaphors, thinks
 every Darkwick student is talented, sociable, unbothered by criticism.
 
 ---
@@ -139,7 +139,7 @@ Service role only. Add a prune for published notes after a retention window
 | `app.js` | route `salon:*` components and the modal submit |
 | `encounterScheduler.js` (or a sibling) | daily rollover job posting the issue |
 | `db/supabase.js` | note insert, day fetch, post record, remove |
-| `constants/dialogue/reference.md` | Advice Salon canon note (§1) |
+| `constants/dialogue/reference/zenji.md` | Advice Salon canon note (§1) |
 | `constants/validateContent.js` | no em dashes / "deadpan" in Zenji pools |
 
 ---

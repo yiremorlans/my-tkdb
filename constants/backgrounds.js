@@ -614,7 +614,7 @@ export const CHARACTER_SIGNATURE_SPOTS = {
     "Mortkranken_Lab_PM.png": 1.5,
   },
   // "Jin tends to ... spend[] most of his time in the captain's room in
-  // Frostheim" (reference.md) — already his own turf via exclusiveRoom, so
+  // Frostheim" (reference/jin.md) — already his own turf via exclusiveRoom, so
   // this only needs a weight, no reachability fix.
   // 4x, not 2x: at 2x his room was only ~20% of his /roam draws by day, and
   // he's the roster's recluse ("few have seen his face").
@@ -624,7 +624,7 @@ export const CHARACTER_SIGNATURE_SPOTS = {
   },
   // "[Edward] always appears indifferent ... just lying in his room and
   // sleeping" / Lyca: "That moth-eaten Casanova's in his room all day"
-  // (reference.md) — same as Jin, already reachable via exclusiveRoom.
+  // (reference/edward.md, lyca.md) — same as Jin, already reachable via exclusiveRoom.
   edward: {
     "Obscuary_Edward_Room.png": 1.5,
     "Obscuary_Edward_Room_2.png": 1.5,

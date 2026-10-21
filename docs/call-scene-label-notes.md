@@ -20,8 +20,8 @@ For each character:
   already has labels.
 
 Sources: `characters.js` notes (most are voiceline-verified; Haru is derived
-from reference.md only, and Benkei is partially verified) and the existing
-`new` labels. reference.md sections should still be read per character before
+from its reference file only, and Benkei is partially verified) and the existing
+`new` labels. reference/<id>.md files should still be read per character before
 drafting, as the voice-check skill requires.
 
 ## Status (2026-10-06)
@@ -418,7 +418,7 @@ also be drawn as plain reveals:
     is generic (finding 1). The line's "Especially if…" reads oddly after a
     statement; consider "Especially not if that clown sent you."
 
-### Haru: kind 1, playful 2, bold 0 (reference.md only)
+### Haru: kind 1, playful 2, bold 0 (reference file only)
 - **playful (2):** join the bit. "Say you got lost on purpose", "Say you're
   after free snacks", "Tiptoe dramatically".
 - **kind (1):** notice him and the critters. "Say the critters are lucky",

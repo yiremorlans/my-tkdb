@@ -25,7 +25,7 @@ scoping) — see §5.
   (`getMissionLogStats`), so this check is already house-agnostic.
 - Not fronted by one specific character (originally considered: Ritsu, whose
   own high-affinity lines already reference "the reinstatement of the Gala"
-  and Sinostra "wear[ing] the Laurel Crown" — `constants/dialogue/reference.md`
+  and Sinostra "wear[ing] the Laurel Crown" — `constants/dialogue/reference/`
   lines 585, 631). Instead the arc's content draws from **whichever house the
   player picks**, using that house's existing roster — the same pattern
   `pickSignatureTargets`/`getHouseRoster` already use for errands, not one
@@ -214,7 +214,7 @@ or reward details that are the user's call:
 
 Everything player-facing here is dialogue/narration and needs to go through
 the normal voice process — ground each house's flavor text in
-`constants/dialogue/reference.md` for that house's characters, never invent.
+`constants/dialogue/reference/` for that house's characters, never invent.
 None of this is drafted yet:
 
 - Chancellor's briefing line(s) that open the arc.

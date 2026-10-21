@@ -4,7 +4,7 @@ export default {
   // having noticed. The arc is the crown coming off by degrees — bold is the
   // register that reaches him, so every choice rewards refusing to be dismissed.
   //
-  // Texting voice, per reference.md's "## Bond Scenes" notes: Jin is not afraid
+  // Texting voice, per reference/jin.md's "Texting style" notes: Jin is not afraid
   // of curse words. They stay rare enough to land, and surface when he is riled
   // or raw rather than in the cold register.
   bondScenes: {

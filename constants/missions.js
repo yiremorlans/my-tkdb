@@ -384,7 +384,7 @@ export const ERRAND_SIGNED_INSTRUCTIONS =
 // Every prompt is an anomaly report written the way the Chancellor's office
 // would file one: describe what was observed, name nobody. The observation is
 // always something the character's own script supports (see
-// constants/dialogue/reference.md and each character's `keywords`).
+// constants/dialogue/reference/ and each character's `keywords`).
 //
 // v1 is "name the student", matched with matchCharacterGuess — the same matcher
 // /call uses, so aliases and first names work.

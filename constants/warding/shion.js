@@ -14,7 +14,7 @@
 // flat calm cracking an inch for her, gruesome imagery offered as affection, and
 // the intimacy being him letting her say no and staying anyway — never softening.
 //
-// Voice (reference.md + characters.js): blunt, flat, childish. Short plain
+// Voice (reference/shion.md + characters.js): blunt, flat, childish. Short plain
 // sentences, no dialect or lilt — his canon voicelines are plain flat English
 // (no "aye", "folk", "wee", "'cause", "mightn't"). Censored curses only. NO
 // performer, no showman patter — even "Cruel Magician" is fright work, not a

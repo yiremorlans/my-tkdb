@@ -151,14 +151,14 @@ test('validateContent flags a room background not named <House>_<Name>_', () => 
 
 // --- localization ------------------------------------------------------------
 //
-// The source localization is American English, and reference.md (the canon the
+// The source localization is American English, and constants/dialogue/reference/ (the canon the
 // voices are grounded in) is written that way too. Several characters are
 // British-coded — Edward, Zenji, Lucas — and their register makes it very easy
 // to drift into British spellings while authoring them. That drift is invisible
 // in review and reads as inconsistent voice across the roster, so it is pinned
 // here rather than left to a proof-read. For Edward and Zenji, British-coded
 // voice comes from word choice, not orthography. Lucas is the one exception:
-// reference.md has him as an actual transfer student from Darkwick's UK
+// reference/lucas.md has him as an actual transfer student from Darkwick's UK
 // sister school, so his own lines are allowed real British spelling as part
 // of his voice — it is not drift for him the way it is for everyone else.
 const BRITISH_SPELLING_EXEMPT_PREFIXES = ['DIALOGUE.lucas.'];

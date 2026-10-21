@@ -8,7 +8,7 @@ export default {
   // anyone he's nicknamed, so what slips is her *name*, never her; "kitten"
   // is the part that sticks.
   //
-  // Texting voice, per reference.md's "## Bond Scenes" notes: lowercase, one
+  // Texting voice, per reference/taiga.md's "Texting style" notes: lowercase, one
   // short sentence per line (no paragraphs), and "u"/"ur", "k", "yea", "lol".
   // "Gyahaha!" is still his. In-person `> ` speech and narration keep normal
   // punctuation.

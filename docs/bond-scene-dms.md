@@ -39,7 +39,7 @@ level and has no scene; the first scene fires on `Stranger → Acquaintance`, so
 there are **six scenes per character** (Acquaintance, Friend, Close Friend,
 Confidant, Devoted, Soulbound) — **156 total** across the roster, each written in
 that character's voice from
-[`constants/dialogue/reference.md`](../constants/dialogue/reference.md).
+[`constants/dialogue/reference/`](../constants/dialogue/reference/).
 
 The scene is the reward for the climb: a private moment that only happens
 between the two of you, that `/roam` and `/meet` never show, and that references
@@ -788,7 +788,7 @@ left to the reader.
 
 **Voice.**
 
-Every scene is written from `constants/dialogue/reference.md` — the same source
+Every scene is written from `constants/dialogue/reference/` — the same source
 of truth the encounter dialogue uses, and the only place a trait, a backstory
 or a relationship may come from. `Heebie-Jeebie House` is Shion's hangout,
 never the "Exciting/Waku-Waku House" translation variant.
@@ -989,7 +989,7 @@ logic, the closing **choice** (§4.1) and the **keepsake** grant (§4.2), the
 the resume button (§2.4), validation, tests.
 
 **Phase 2 — per-character scenes (content-bound).** 156 scenes — 1–4 beats plus
-a choice and a keepsake line each, from `reference.md`. Each is an isolated edit
+a choice and a keepsake line each, from `reference/`. Each is an isolated edit
 to one `constants/dialogue/<id>.js` and needs no code change. This is the bulk
 of the total effort and it's writing, not engineering. Landed in full before
 release, which is why §5.3 has no fallback in it.

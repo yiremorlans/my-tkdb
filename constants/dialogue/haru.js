@@ -7,9 +7,9 @@ export default {
   // relentless-cheer act is a system he built so nobody would offer him help.
   // The prosthetic arm is NOT a secret to him (Mio built it, he'll take the
   // glove off in front of a tour group) — never write it as a shameful reveal,
-  // and never invent how he lost it; reference.md is silent on the cause.
+  // and never invent how he lost it; reference/haru.md is silent on the cause.
   //
-  // Texting voice, per reference.md's "## Bond Scenes" notes: little kaomoji
+  // Texting voice, per reference/haru.md's "Texting style" notes: little kaomoji
   // faces in his typed lines — (^_^;) sheepish, (;_;) for the sad ones — plus
   // shortened words like "btw". Not in the `> ` lines he says out loud.
   bondScenes: {

@@ -327,7 +327,7 @@ query, and after a buy it shows the post-RPC balance.
   **different** character.
 - Pool: **all 26 characters, Benkei included**, starting with **one item
   each**: `LOST_ITEMS` in `constants/shop.js`, `{ characterId, item }`.
-  Every item is a belonging grounded in `constants/dialogue/reference.md`;
+  Every item is a belonging grounded in `constants/dialogue/reference/`;
   never invented canon. Thin-canon characters get something generic and safe.
   - Watch the per-character rules (e.g. Zenji's doll Saburo is always with him,
     so never "lost"; Subaru's stigma reads belongings, so his own lost item

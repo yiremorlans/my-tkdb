@@ -5,7 +5,7 @@ split settled on (the reference implementation for a feature module), plus
 the `constants/dialogue/` per-character split.
 
 These are rules for **code**. Character dialogue and other authored content
-have their own rules: `constants/dialogue/reference.md` and the `voice-check`
+have their own rules: `constants/dialogue/reference/` and the `voice-check`
 skill.
 
 When a rule here and existing code disagree, the rule wins for new code. Fix

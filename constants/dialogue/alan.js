@@ -4,7 +4,7 @@ export default {
   // the intimacy is in the fact of a man who says four words a day sitting there
   // typing at all. What he cannot write, he does instead.
   //
-  // Per reference.md's "## Bond Scenes" notes, Alan's typed messages use no full
+  // Per reference/alan.md's "Texting style" notes, Alan's typed messages use no full
   // stops and never put two sentences in one line — each thought gets its own
   // line break. Narration and anything he says out loud (the `> ` lines) keep
   // normal punctuation.

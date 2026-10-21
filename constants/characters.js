@@ -625,7 +625,7 @@ export const CHARACTERS = [
     // frighten people, not to put on a show.
     //
     // The Heebie-Jeebie House is the canon story name for Shion's hangout and
-    // is deliberate. constants/dialogue/reference.md calls the same place the
+    // is deliberate. constants/dialogue/reference/ calls the same place the
     // "Exciting House" (Shion's and Mio's lines) and the "Waku-Waku House"
     // (Jo's) — those are translation variants of the same location, not a
     // different building. Do not "correct" this name against the reference.
@@ -776,7 +776,7 @@ export const CHARACTERS = [
       uniform: "Haru_Sagara_Uniform.png",
       casual: "Haru_Sagara_Casual.png",
     },
-    // Derived from reference.md, not yet voiceline-verified. playful (2):
+    // Derived from reference/haru.md, not yet voiceline-verified. playful (2):
     // "laid back and relentlessly cheerful", "makes jokes", and he "drags
     // those around him into trouble with his antics" — matching the bit is
     // how you join him. kind (1): he runs Jabberwock day and night and no one
@@ -1107,7 +1107,7 @@ export const CHARACTERS = [
     lastName: null,
     house: null,
     images: { uniform: "Benkei_Uniform.png", work: "Benkei_Work.png" },
-    // PARTIALLY VERIFIED. reference.md has a short section for Benkei
+    // PARTIALLY VERIFIED. reference/benkei.md is a short section for Benkei
     // (kind hearted, warm/gentle smile, campus-store shopkeep with one of
     // Cornelius' cats for a manager, former professor and advisor to the
     // now-defunct Clementia House and Ultio House, no voiceline script). The

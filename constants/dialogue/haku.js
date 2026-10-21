@@ -7,7 +7,7 @@ export default {
   // else can, and the last thing he admits is that being the only one who sees
   // is lonely.
   //
-  // Texting voice, per reference.md's "## Bond Scenes" notes: he clips words
+  // Texting voice, per reference/haku.md's "Texting style" notes: he clips words
   // ("prob", "No prob") and drops "tbh" into his typed lines, but writes in
   // normal sentence case, not all-lowercase. Not in the `> ` lines he says out
   // loud.

@@ -1,7 +1,7 @@
 export default {
   // The level-up DMs (docs/bond-scene-dms.md).
   //
-  // SOURCE NOTE: reference.md now carries a (short) entry for Benkei. Everything
+  // SOURCE NOTE: reference/benkei.md now carries a (short) entry for Benkei. Everything
   // below is written to stay inside it: shopkeep at Darkwick's campus store,
   // former professor and advisor to the now-defunct Clementia House and Ultio
   // House, kind hearted, warm and gentle smile, managed day-to-day by one of
@@ -9,7 +9,7 @@ export default {
   // casually rather than formally or old-fashioned (no "shan't," "needn't,"
   // etc.). No name for anyone but himself, and no reason either house ended.
   // School specifics stay vague too (no named forms, no crested merchandise),
-  // because reference.md doesn't furnish Darkwick that far.
+  // because reference/benkei.md doesn't furnish Darkwick that far.
   // None of that is invented here. The closeFriend scene names "the clash" and,
   // on the bold branch, says students died and the fallout took both houses
   // apart. Beyond that it stays silent on cause, because canon is.

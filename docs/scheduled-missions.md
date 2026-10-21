@@ -1530,7 +1530,7 @@ win's.
 - **Towa** is always wordless here, at any hour (he can't speak by day):
   short described actions or humming, no spoken words. Every other character
   speaks.
-- Ground every line in `constants/dialogue/reference.md` with the voice-check
+- Ground every line in `constants/dialogue/reference/` with the voice-check
   skill, and follow the house dialogue rules (no em dashes, American spelling
   except Lucas, per-character memories). A line must not answer the *other*
   riddle for the same student.
@@ -1688,7 +1688,7 @@ from your {house} co-op is waiting."*
   own voice. The boost line carries the mechanics, so a debrief line never
   mentions boosts, `/roam` or `/meet`.
 - **Towa** is always wordless here, as in §20.5.
-- Ground every line in `constants/dialogue/reference.md` with the voice-check
+- Ground every line in `constants/dialogue/reference/` with the voice-check
   skill and follow the house dialogue rules. Don't echo the student's riddle
   winning lines or existing winnerLines.
 - `validateContent()` fails the build on a house student with no debrief

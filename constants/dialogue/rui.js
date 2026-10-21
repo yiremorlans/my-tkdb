@@ -6,7 +6,7 @@ export default {
   // leather. The brightness is real and it is also a wall; the arc is the wall
   // coming down without the brightness going out.
   //
-  // Texting voice, per reference.md's "## Bond Scenes" notes: the odd emoji in
+  // Texting voice, per reference/rui.md's "Texting style" notes: the odd emoji in
   // his typed lines — crying-laughing 😂, sparkle ✨ — and his eager questions
   // land on "?!". Not in the `> ` lines he says out loud.
   bondScenes: {

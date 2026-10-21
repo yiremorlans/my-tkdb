@@ -14,7 +14,7 @@
 // accommodating captain choosing something for himself, and his stigma (he reads
 // the thoughts left on anything he touches) treated as something given, not taken.
 //
-// Voice (reference.md): full contractions, gentle and earnest, never arch. Soft
+// Voice (reference/subaru.md): full contractions, gentle and earnest, never arch. Soft
 // "Oh" openers, sentences that trail into "...", self-deprecating tag questions
 // ("Silly, isn't it?", "I'm being weird, aren't I?"), spelled-out "Ha ha" when
 // he's deflecting attention off himself. He apologizes reflexively but that's
