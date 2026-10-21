@@ -509,9 +509,11 @@ export const CHARACTERS = [
       "always working a lollipop or candy",
       "world-weary, often lost in thought",
       "melancholy under the ease",
-      "out of practice, doubts he can keep up on missions",
       "treasures the peace, dreads it ending",
       "unruffled by the macabre",
+      "reads the magazines and newspapers he subscribes to",
+      "walks the academy 'for his health'",
+      "invites you along: snack runs, the cafeteria, coffee, office cake",
     ],
   },
   {
@@ -1185,7 +1187,11 @@ export function getRandomCharacterImageVariant(character) {
 // favorite pays 1, and the scene calls for the less usual approach. The least-liked type stays 0. The base ranking
 // never changes, which is what {favResponse} in the Friend bond scene and the
 // warding cards read.
-export function getAffinityForResponse(character, responseType, { mood = false } = {}) {
+export function getAffinityForResponse(
+  character,
+  responseType,
+  { mood = false } = {},
+) {
   if (responseType === RESPONSE_TYPES.NEUTRAL) return 0;
   const gain = character.affinityByResponse[responseType] ?? 0;
   if (!mood) return gain;
@@ -1292,7 +1298,9 @@ function pickMixedBeat(own, extra, chance, recentBeats, rand = Math.random) {
   const freshOwn = withoutRecent(own, recentBeats, size);
   const freshExtra = withoutRecent(extra, recentBeats, size);
   const useExtra = extra.length > 0 && rand() < chance;
-  const [first, second] = useExtra ? [freshExtra, freshOwn] : [freshOwn, freshExtra];
+  const [first, second] = useExtra
+    ? [freshExtra, freshOwn]
+    : [freshOwn, freshExtra];
   if (first.length) return pickRandom(first);
   if (second.length) return pickRandom(second);
   return pickRandom(own.length ? own : extra);
@@ -1342,7 +1350,8 @@ function pickDialogueEntry(character, tier, variant, ctx) {
   }
 
   const mix = TIER_MIX[tier];
-  const extra = mix && pool?.[mix.from] ? resolvePoolTier(pool, mix.from, variant) : [];
+  const extra =
+    mix && pool?.[mix.from] ? resolvePoolTier(pool, mix.from, variant) : [];
   if (entries.length === 0 && extra.length === 0) return null;
   const beat = pickMixedBeat(
     entries.map(normalizeBeat),
@@ -1367,7 +1376,8 @@ export function getRandomDialogueEntry(
   ctx = {},
 ) {
   const entry = pickDialogueEntry(character, tier, variant, ctx);
-  if (!entry) return { line: "...", responses: null, mood: false, beatKey: null };
+  if (!entry)
+    return { line: "...", responses: null, mood: false, beatKey: null };
   const { line, responses, mood, beatKey } = entry;
   return { line, responses, mood, beatKey };
 }
@@ -1422,7 +1432,12 @@ function normalizeBeat(entry) {
 // (each optional; a string or an array of interchangeable options), or null.
 // A type the beat doesn't carry has nothing character-specific behind it —
 // generateCharacterResponses drops straight to the archetype default.
-export function getRandomDialogueBeat(character, tier, variant = null, ctx = {}) {
+export function getRandomDialogueBeat(
+  character,
+  tier,
+  variant = null,
+  ctx = {},
+) {
   const entry = pickDialogueEntry(character, tier, variant, ctx);
   if (!entry) {
     return {
@@ -1435,7 +1450,8 @@ export function getRandomDialogueBeat(character, tier, variant = null, ctx = {})
     };
   }
 
-  const { line, approachOptions, greetingOptions, responses, mood, beatKey } = entry;
+  const { line, approachOptions, greetingOptions, responses, mood, beatKey } =
+    entry;
   const approach = approachOptions
     ? pickRandom(approachOptions)
     : pickRandom(APPROACH_LABEL_FALLBACK);

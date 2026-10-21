@@ -1364,7 +1364,7 @@ export default {
         },
       },
       {
-        line: '"Proposal, schedule, budget... and yet here I am." **{name}** is walking over to {user} regardless.',
+        line: '**{name}** walks over to {user} anyway. "Proposal, schedule, budget... and yet here I am."',
         responses: {
           kind: "Say all of it can wait",
           playful: "Ask which one lost",
