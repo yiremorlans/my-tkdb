@@ -236,13 +236,16 @@ export default {
         greeting:
           '"You\'ve arrived at just the right time. Would you mind holding this end for me?"',
         responses: {
-          kind: ["Take the end of the lights", "Offer to help untangle them"],
+          kind: ["Offer to hold the other end", "Help him wind the lights"],
           playful: [
             "Ask if this is how he says hi",
-            "Make him say please first",
+            "Ask if he'll remember you now",
           ],
-          bold: ["Ask why you should help", "Tell him to hold his own end"],
-          neutral: ["Hold it without a word", "Take the end and wait"],
+          bold: [
+            "Take half the lights from him",
+            "Say he'll be seeing you more",
+          ],
+          neutral: ["Say you're new here", "Watch him wind them"],
         },
       },
       {
@@ -250,12 +253,9 @@ export default {
         approach: "Admit you're lost",
         greeting: '"Keep left. You\'ll find your way back."',
         responses: {
-          kind: ["Thank him for the directions", "Promise to keep left"],
-          playful: ["Ask if he gets lost too", "Say it's fun being lost"],
-          bold: [
-            "Say you can find your own way",
-            "Ask what he's doing out here",
-          ],
+          kind: ["Say you're glad it was him", "Ask if you can walk with him"],
+          playful: ["Ask if he gets lost too", "Say out of the way suits you"],
+          bold: ["Say you meant to find him", "Ask what he's doing out here"],
           neutral: ["Nod and walk on", "Say nothing, keep going"],
         },
       },
@@ -265,10 +265,10 @@ export default {
         greeting:
           '"I was just taking a walk around campus. For my health, of course."',
         responses: {
-          kind: ["Notice he looks tired", "Say resting counts too"],
-          playful: ["Ask how the walk is going", "Tease him about slacking"],
-          bold: ["Point out he isn't walking", "Ask what he's avoiding"],
-          neutral: ["Lean on the wall beside him", "Let the excuse slide"],
+          kind: ["Keep him company a minute", "Say it's a good spot for it"],
+          playful: ["Ask what flavor it is", "Tease him about slacking"],
+          bold: ["Lean beside him", "Ask for a lollipop too"],
+          neutral: ["Leave him to it", "Ask if he's busy"],
         },
       },
       {
@@ -277,9 +277,9 @@ export default {
         greeting:
           '"Mostly errands for Jo. Lights today, something else tomorrow. It keeps me out of trouble, mostly."',
         responses: {
-          kind: ["Say it's nice he helps Jo", "Offer to help with the lights"],
-          playful: ["Ask what kind of trouble", "Ask if you count as trouble"],
-          bold: ["Ask if Jo pays him for it", "Ask why he needs keeping busy"],
+          kind: ["Say he can ask you too", "Say you only want the company"],
+          playful: ["Ask what he charges", "Ask what counts as odd"],
+          bold: ["Ask where he's headed next", "Say you'll run one with him"],
           neutral: ["Nod, file it away", "Let him get back to it"],
         },
       },
@@ -289,10 +289,13 @@ export default {
         greeting:
           '"Sorry… I\'m a little short on time. Would you mind if I went on ahead?"',
         responses: {
-          kind: ["Tell him not to apologize", "Say you won't keep him"],
-          playful: ["Ask what the hurry is", "Offer to walk him there"],
-          bold: ["Ask what he's late for", "Ask him to stay a minute"],
-          neutral: ["Step out of his way", "Let him go without a word"],
+          kind: ["Return the smile", "Say you'll catch him later"],
+          playful: [
+            "Ask if that smile's for you",
+            "Ask if he's up to something",
+          ],
+          bold: ["Hold his gaze", "Ask what he's late for"],
+          neutral: ["Nod back at him", "Step aside for him"],
         },
       },
       {
@@ -300,9 +303,9 @@ export default {
         approach: "Ask about the old habit",
         greeting: '"Oh, it\'s nothing. I just like things tidy."',
         responses: {
-          kind: ["Say the floor looks spotless", "Tell him to keep resting"],
-          playful: ["Take the broom from him", "Point out a spot he missed"],
-          bold: ["Ask whose job it is", "Ask if he's meant to be here"],
+          kind: ["Say the floor looks spotless", "Say he did a good job"],
+          playful: ["Ask if he does windows", "Book him for your room next"],
+          bold: ["Say the courtyard's next", "Say you've got a job for him"],
           neutral: ["Let him talk", "Stand with him a while"],
         },
       },
