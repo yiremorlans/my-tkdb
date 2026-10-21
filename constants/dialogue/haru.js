@@ -979,11 +979,11 @@ export default {
     ],
     warm: [
       {
-        line: '"Hey, Honor Roll!" **{name}** is filthy to the elbows and beaming at {user}.',
+        line: "{user} spots **{name}** crossing the courtyard with the shopping, a bag on each arm and the list still in his hand.",
         responses: {
-          kind: "Beam right back",
-          playful: "Ask what he rolled in",
-          bold: "Ask for a hug anyway",
+          kind: "Offer to carry a bag back",
+          playful: "Offer help at mates' rates",
+          bold: "Take both bags off him",
         },
       },
       {
