@@ -91,6 +91,41 @@ Goodnight 4
 Affinity LVL 24	 My next surgery must be a success... I... I cannot afford another failure...
 Max Affinity
 Affinity LVL 25	 You belong to me. I will never hand you over to another researcher... (gasp) N-N-N-No, you've misunderstood! I-I just...!
+Seasonal
+Spring Morning	 Struggling with pollen allergies? I have a new formula here developed in Mortkranken, shall I test it on you?
+Spring Noon	 Hmm hmm hmm hmm hmm! Hmm hmm hmm! Hmm hmm hmm hmm hmm hmm hmm hmm! Pa rum!
+Spring Evening	 Which house's ghouls are out in the field at present? Oh my, I do hope they come back with some exciting injuries.
+Spring Night	 When did the cherry blossoms bloom...? The changing of the seasons seems rather superfluous when I am engaged in my research.
+Summer Morning	 Jiro, make a record of today's temperature. We need to take the changing climate into for illnesses particular to summer.
+Summer Noon	 Darkwick will provide me the materials I need for my research, provided they fall within our budget... But that is simply insufficient.
+Summer Evening	 Hmm... hmm... hmm... hmm... hmm hmm hmm hmm, pa pa pa pa pa pa rum!
+Summer Night	 Why do you look so distressed? If the heat is proving too much for you, I can prescribe you something to lower your body temperature.
+Fall Morning	 Why must a peerless genius such as myself be saddled with performing piddling health checks for the new students!? It's asinine!
+Fall Noon	 A trip to admire the fall foliage? Why yes, I am interested. After all, I'm sure Jabberwock's mountains possess all sorts of undiscovered ingredients. Let's get going.
+Fall Evening	 Sports...? Hmph, such nonsense is entirely superfluous to my life. Why needlessly expend energy in such a manner?
+Fall Night	 Hmm hmm, hmm hmm, hmm hmm, hmm, hmm hmm hmm hmm hmmmm!
+Winter Morning	 Freude! Schöner! Götter! Funke! Tochter aus Elyyyyyyysium!
+Winter Noon	 Eureka! A new formula utilizing an anomalous plant that only grows in subzero temperatures has been discovered, by...! Jiro...
+Winter Evening	 Our research budget for the new year is nearly spent... Come, Jiro! We're going to negotiate with the faculty!
+Winter Night	 I despise the snow. It brings nothing but revolting memories... There, we're done with today's checkup. Any other questions?
+Special
+His Birthday 1	 You... remembered my birthday!? Ahem... If you wish to give me a present, make it either a talented assistant or a useful test subject.
+His Birthday 2	 Wha— You really... got me a birthday present!? F-Fine, I suppose I can accept it.
+His Birthday 3	 A birthday gift...for me? I-I can't imagine what it could be, but...very well. I shall evaluate your efforts!
+MC's Birthday 1	 I am here to celebrate your birthday. Do you feel honored? I've prepared a new formula for you. Let's continue this in the lab, shall we?
+MC's Birthday 2	 Happy birthday. I am doing you the honor of celebrating it. I hope you're prepared to spend this time mindfully.
+New Year's 1	 Happy New Year. I am on my way to make my first shrine visit. You didn't think me the type? I-It's just a tradition!
+New Year's 2	 A happy New Year to you. You noticed the pine arrangement at the entrance? Jiro obtained it.
+Valentine's Day 1	 Hmm, my blood sugar was just starting to drop. I suppose you do have it in you to be considerate every now and then... Pardon? Valentine's Day? ...(gasp)
+Valentine's Day 2	 This is for me? S-surely this isn't chocolate...?! Why?!
+White Day 1	 I suppose I can concede you have proven yourself useful in the lab, worm. ...This is a token of my gratitude.
+White Day 2	 Hold on. This is a reward for assisting me in my experiments, I-It has nothing to do with that business from last month!
+April Fools' 1	 Hmph, did you honestly think you could fool me? I won't fall for your cheap tricks. I've already been fooled by Jiro seven times today!
+April Fools' 2	 Confounded April Fool's Day... I'm calling off today's experiment. I refuse to speak to Jiro until tomorrow.
+Halloween 1	 Trick or treat! I have coordinated the ultimate matching costumes for Jiro and I... Yes, perfect.
+Halloween 2	 This? It is, quite obviously, a portrayal of Victor Frankenstein himself!
+Christmas 1	 Merry Christmas. You can hand me my present at your earliest convenience. You did prepare one for me, didn't you!?
+Christmas 2	 Merry Christm... Wh-what are you wearing?! Cover yourself with my lab coat! Quickly!
 -------
 
 Alan
@@ -175,6 +210,40 @@ Goodnight 4
 Affinity LVL 24	 Can't sleep? ...I'll take you for a drive. Quick run should help you reset.
 Max Affinity
 Affinity LVL 25	 I'm lucky I've got you, MC. As long as you're with me, I feel like I won't lose sight of who I am.
+Seasonal
+Spring Morning	 Don't get lax just 'cause it's warm out. Stay focused.
+Spring Noon	 ...Good camping weather.
+Spring Evening	 Oh, it's you. Must've dozed off. Better get back to work.
+Spring Night	 The cherry blossom illuminations? ...That kind of thing's not for me.
+Summer Morning	 It's getting hot out. Make sure you stay hydrated.
+Summer Noon	 Looks like we've got another mission order. There's more anomalies out there in summer.
+Summer Evening	 The Pit's getting noisy. Those guys better not be pulling stupid shit again...
+Summer Night	 Sorry, didn't mean to scare you again... I was just going for a jog. Didn't think you'd be round this corner.
+Fall Morning	 Good season for a workout. Want to join me?
+Fall Noon	 ...Maybe I'll go check out the fall leaves.
+Fall Evening	 The days are getting shorter. You should get home before it gets dark.
+Fall Night	 ...Long nights make me think about stuff I'd rather forget.
+Winter Morning	 Cold out in the mornings lately. Guess I'll warm up with a coffee.
+Winter Noon	 The first-years ditched... What do they mean, "too cold"?
+Winter Evening	 As long as you got some muscle, you can handle the cold.
+Winter Night	 It's freezing... Guess I'll break out the kerosene heater. Gotta make sure you ventilate if you use it indoors, but it works real fast. Can't do without it in winter.
+Special
+His Birthday 1	 Whose birthday? ...Mine? Oh... Forgot all about it. ...Thanks.
+His Birthday 2	 Today? Hold on. ...April 25th. What's that? A present?
+MC's Birthday 1	 Today's your birthday, yeah? ...Get your stuff. I'll take you for a drive.
+MC's Birthday 2	 Meet me out back, MC. ...No, that's not what I meant. I got something I need to give you.
+New Year's 1	 You helped us out a lot last year. Hope you'll stick around.
+New Year's 2	 MC. I'm taking the guys for the first shrine visit. You want to come?
+Valentine's Day 1	 This chocolate's for me? Do everything proper, don't you? Thanks. I appreciate it.
+Valentine's Day 2	 ...Oh. It's February 14th today. Sweet things? I don't eat them much, but— No, I'll take it. And I'll eat it.
+White Day 1	 White Day's when you repay people for what they got you on Valentine's Day, right? Sorry if these aren't your thing... Didn't really know what you like...
+White Day 2	 MC. Here. For last month. It's not money. I asked the vice-captain for advice and bought some sweets.
+April Fools' 1	 I'm actually a dog. Woof. ...Sorry, that was a lie. Forget I said anything.
+April Fools' 2	 Hey, look outside. It's snowing. ...Wait. That was a lie. Don't fall for it. Bandana... This isn't how he said it'd go...
+Halloween 1	 Saw an anomaly I'd never seen before just now. Ran away when I tried to stop it. That's when I realized it was a human.
+Halloween 2	 There's a lot of suspicious-looking characters around campus today. Tohma said not to worry about it, but... Be careful.
+Christmas 1	 ...You should spend Christmas with family.
+Christmas 2	 What are you wearing...? Put this on. You're gonna catch a cold.
 -------
 
 Zenji
@@ -259,6 +328,40 @@ Goodnight 4
 Affinity LVL 24	 To be able to look into your eyes and bid you good night... I'm the luckiest fella for miles around.
 Max Affinity
 Affinity LVL 25	 Maybe we did meet too late. But it's all right. I promise I'll find you in the next life.
+Seasonal
+Spring Morning	 In spring, the dawn... Red tinges the slowly paling mountain rim... Ah... These mountain fellas must've been goofy for some doll...
+Spring Noon	 There is hope buried under the cherry trees... It means that spring is the season of chance encounters.
+Spring Evening	 The cherry blossoms of Hotarubi are ephemeral—they bloom only to be quickly washed away by the rain. But I am rather fond of that way of life.
+Spring Night	 The beauty of the cherry blossoms under the night sky inspired me to pick up my pen... Oh, it has gotten easier to lift.
+Summer Morning	 Have you seen him!? Who? Why, my doll, of course! This is very troubling. I've got to find him before the boogeymen stir!
+Summer Noon	 My ideal summer vacation? I wish to lay down my burdens in the springs of Yugawara and pursue my wordsmithery in peace, as so many greats have done before me.
+Summer Evening	 This master wordsmith studied by the light of fireflies... I see. Haku! Turn out the lights!
+Summer Night	 I heard a frightful rumor... Apparently the ghost of a dead student has been spotted around Hotarubi...
+Fall Morning	 Fall is the perfect season for a new book, and I have the perfect one for you... From inspired man of the quill Zenji Kotodama, the fruit of his sweat and blood... "Body."
+Fall Noon	 A song for you in the season of the arts... From inspired lute priest Zenji Kotod— Wait, where are you going!?
+Fall Evening	 Gauging the literary significance of this video by something as insignificant as views... Horsefeathers, isn't it?
+Fall Night	 I've decided to make you the heroine of my next work... A beautiful princess who bites into a poisoned apple and falls into a deep slumber... and seven of you!
+Winter Morning	 Good morning, fellas! Time for my biwa recital to color the chill of this frigid sunrise! I call it "Six O'Clock in the Morning."
+Winter Noon	 There's a rumor going around that you can hear a biwa playing in the music room when no one's there... I go all the time though, and I've never heard it...
+Winter Evening	 The setting sun... The sky dyed purple... Your beautiful profile, obscured... (gasp) I've been struck by inspiration!! My dear, I have to leave you here!
+Winter Night	 Are you cold? Then let me warm you up... My dear, why are you scooting away? I'll only make you colder...?
+Special
+His Birthday 1	 Is this... a birthday present...? (hic) (sob) I'm the luckiest fella around...!
+His Birthday 2	 Today, my dear, is a miracle day destined for the future history of literature—my birthday! There it is. That smile's exactly what I was hoping for.
+MC's Birthday 1	 I've planned the perfect day to celebrate the miracle of your birth... We'll start with an ode to you, accompanied by my biwa.
+MC's Birthday 2	 Happy birthday! A song for you, lyrics and composition by Zenji Kotodama... "My Dear."
+New Year's 1	 Happy New Year, my dear. I'll be making the first shrine visit with Haku—care to join us?
+New Year's 2	 Happy New Year, my dear! Another twelve months keeping me right in the swing of things, I'd say! Ha ha!
+Valentine's Day 1	 My dear... is this for me? (hic) (sob) I'll treasure it always...!
+Valentine's Day 2	 Hmm? Why, this package, could it be... chocolate?! (sob) My dear, you're an absolute angel!
+White Day 1	 I'm sorry... I did try to explain that a biwa recital would make a better gift, but Haku insisted I present you with confections instead...
+White Day 2	 Happy White Day! Lend me your ear for my reply to you, won't you? Lyrics and music by Zenji Kotodama. This number's called "Cookie."
+April Fools' 1	 No, I would never lie to you. An inspired man spins fiction with his quill, not his mouth, after all.
+April Fools' 2	 MC!! Can you see me?! Oh, thank goodness... That lout tricked me!
+Halloween 1	 Why, you gave me quite a fright in that getup! What a marvelously queer celebration this is! So this is the legacy of westernization...
+Halloween 2	 Say, those are some swanky glad rage you're rocking! You and I are going to steal the show tonight, my dear.
+Christmas 1	 Merry Christmas! I've completed a new fairy tale. May my wishes reach the hearts of children everywhere...
+Christmas 2	 Merry Christmas. Just for tonight, I'm going to lay down my pen, so let's pray together for the happiness of every child across the globe.
 --------
 Subaru
 Subaru Kagami (加賀見 昴流 Kagami Subaru) is a third year student at Darkwick Academy and is the captain of the Hotarubi House. Though earnest and hardworking, Subaru's strong sense of responsibility often leads him to bottle things up. An esteemed kabuki actor since childhood, he is currently on hiatus for certain, rumored reasons.
@@ -343,6 +446,40 @@ Goodnight 4
 Affinity LVL 24	 You can't sleep? Then let me tell you some stories. Legend has it that evil spirits appear once you've told a hundred. Now, what number was I up to...
 Max Affinity
 Affinity LVL 25	 I don't want to seem like I'm testing you, I just... I get really anxious sometimes... I'm sorry. I'm being weird, aren't I?
+Seasonal
+Spring Morning	 There is no time like spring. Everyone seems more relaxed this time of year. It's reassuring to see.
+Spring Noon	 I have some sakura mochi. I was just about to prepare some tea to go with it—would you like to join me?
+Spring Evening	 They have no control over whether they bloom, and yet they get made a spectacle of nonetheless... Oh, sorry—I was talking about the cherry blossoms.
+Spring Night	 There are many different flowers growing in Hotarubi, but I think the wisteria are my favorites. This is the best time to see them, so you should take a walk around.
+Summer Morning	 Hot today, isn't it? It's always raining in Hotarubi, so it does provide a little escape from the blazing summer sun, but... Ha ha. It is very humid, isn't it?
+Summer Noon	 Summer makes me think of the ghost story Yotsuya Kaidan. The scene where Oiwa becomes hysterical, having realized her face has been disfigured—incredible.
+Summer Evening	 Hotarubi House holds regular festivals during the summer months. If you need a yukata to wear, I'd be happy to pick one out for you.
+Summer Night	 I don't mind scary stories, but when that biwa in the tea room started playing by itself, it did make me jump a little...
+Fall Morning	 The air has gotten crisper, and the leaves are changing color. I know it's only natural for the seasons to shift, so why does it make my heart ache so much?
+Fall Noon	 Oh, these? They're some chestnuts I found. I know—I should give them to Sho. I'm sure he'll be able to make something delicious with them.
+Fall Evening	 That's another kuchikiri tea ceremony under my belt. It's an annual tradition where one cuts open a tea jar to reveal the tea that was preserved from the first harvest.
+Fall Night	 On long autumn nights when the moon is shining beautifully in the sky, it's hard to resist taking a walk outside. Don't stay out until too late though, MC.
+Winter Morning	 ...Oh, MC. Good morning... I had a hard time getting up today. It must be the cold... Ha ha. Not very captain-like, is it?
+Winter Noon	 Today, I'm going to order ingredients from one of my favorite stores so we can all make negima—tuna and scallion—hot pot together. Please, do join us.
+Winter Evening	 It's cold out today. I was just thinking about lighting the fire. Would you like to come and warm up with me?
+Winter Night	 People say winter makes you want to snuggle up with someone, but I find that a good blanket does a much better job.
+Special
+His Birthday 1	 A present? For me? Thank you... I didn't expect you to do anything for my birthday, so I'm a little caught off guard. I really appreciate it.
+His Birthday 2	 You got me a birthday present? I'm touched...Thank you so much. I'll treasure it.
+MC's Birthday 1	 Um... Happy birthday. I really hope this year will be a wonderful one for you.
+MC's Birthday 2	 Happy birthday, MC. Please accept this as a token of my gratitude for all you do for me.
+New Year's 1	 Happy New Year. I hope I can depend on your guidance and support again this year.
+New Year's 2	 Happy New Year. Last year had its ups and downs... but I hope this year will be a little kinder to us all.
+Valentine's Day 1	 Chocolate? Oh, It's Valentine's Day, isn't it? Does that mean these are for me...?
+Valentine's Day 2	 Are these chocolates for me...? Wow... You're always so thoughtful, MC. Thank you.
+White Day 1	 These are for you, MC. I put in a special order for monaka from my favorite confectioner in Ginza. They're wafers filled with bean jam—I hope you like them.
+White Day 2	 Oh, MC! These are my favorite [https://en.wikipedia.org/wiki/Wasanbon wasanbon] sweets. I've been waiting here so I could give them to you.
+April Fools' 1	 Earlier, Haku told me he was switching houses. It gave me a real shock—I'm very relieved that it wasn't true...
+April Fools' 2	 Hmm... It's tricky to think of lies, and to spot them. But maybe today's the one day it's better not to overthink things and to just have a little fun.
+Halloween 1	 Happy Halloween. I know it's nothing special, but I've prepared some treats for the occasion. Oh... But you're more than welcome to play a trick instead.
+Halloween 2	 Halloween actually started out as a festival to drive away evil spirits. And did you know— Oh, sorry. I got a little carried away.
+Christmas 1	 Merry Christmas. We already have our New Year decorations up in Hotarubi, so it has a real east-meets-west atmosphere now. I hope everyone is okay with it...
+Christmas 2	 MC?! Oh, um, you just look a little...different, than usual, and it took me by surprise. No, that Santa costume really suits you.
 ----------
 
 Elias
@@ -468,6 +605,84 @@ Affinity24
 
 Affinity25
 "My true self…? Heh. I’ll leave that to your imagination."
+
+━━━━━━━━━━━━━━━━━━━━
+◆ Seasonal
+━━━━━━━━━━━━━━━━━━━━
+Spring Morning
+"Good morning. It's gotten so warm lately... Doesn't it make you want to just up and go somewhere far away for a spell?"
+
+Spring Noon
+"It's a beautiful day for a stroll. Shion stepped out earlier too, though I'm not sure where he went."
+
+Spring Evening
+"I've been tending to the flowerbeds today. They bloomed so beautifully again this year—I just couldn't leave them be."
+
+Spring Night
+"You've worked hard today. It's a comfortable time of year, but still—be careful out there in the dark."
+
+Summer Morning
+"Sure is scorching out here... and this shirt isn't great with sweat. Makes it awful hard to clean in."
+
+Summer Noon
+"MC. I've got a pitcher of sweet tea chilled and ready—have a glass, if you'd like."
+
+Summer Evening
+"This bamboo? Shion wants to do nagashi-sōmen, so I figured I'd start setting it up."
+
+Summer Night
+"I hear they're holding some kind of midnight dare here in Dionysia tomorrow night. Are you joining in the fun, MC?"
+
+Fall Morning
+"Jo headed out for a jog this morning—said it was perfect weather for it. I don't think I've got it in me."
+
+Fall Noon
+"Will you look at all these leaves... MC, would you mind grabbing the dustpan for me?"
+
+Fall Evening
+"Folks like to say fall is the season to curl up with a good book but... for me reading's really just about studying up on the world."
+
+Fall Night
+"Now, when did it get this late? Between the long fall evening and your wonderful company, I quite lost track of the time."
+
+Winter Morning
+"Where I'm from it does cool down in the winter, but it's not nearly as cold as Japan... I guess I haven't quite adjusted yet."
+
+Winter Noon
+"It sure is chilly today. For Jin to put up with this kind of temperature on the regular... He's a resilient man."
+
+Winter Evening
+"Oh, MC. Jo is making oden tonight—drop by if you can."
+
+Winter Night
+"This scarf? My mother made it for me when I was little. It's hand-knit, so it's not much to look at, though."
+
+━━━━━━━━━━━━━━━━━━━━
+◆ Special
+━━━━━━━━━━━━━━━━━━━━
+His Birthday
+"For my birthday? Well, thank you. I'll bring it back to my room and savor it later."
+
+MC's Birthday
+"Happy birthday, MC. I hope this coming year shines even brighter for you."
+
+New Year's
+"Happy New Year. I love how quiet New Year's is in Japan... but Dionysia was raising a ruckus well past midnight."
+
+Valentine's Day
+"This is chocolate? Well, thank you. Believe it or not, I've got a real soft spot for sweets."
+
+White Day
+"MC. I've got a little thank-you gift here for you. I hope you'll accept it."
+
+April Fools'
+"April Fools', huh? I'm not much good at seeing through lies, so I'll be staying cautious for the whole day."
+
+Halloween
+"Trick or Treat. Ha ha... This takes me back to when I was a kid. Now I feel all nostalgic."
+
+Christmas
+"Oh, are you a reindeer? No, no—it's real cute on you. Especially that red nose."
 ------
 
 Jiro
@@ -561,6 +776,41 @@ Goodnight 4
 Affinity LVL 24	 It's been a long time since I had a family, so I don't know what you're supposed to do in these situations. Could you teach me?
 Max Affinity
 Affinity LVL 25	 There's a high probability that your curse is related to my field of research. It's a problem for me if you die.
+Seasonal
+Spring Morning	 I'm going to see some flowers on Yuri's orders. Do you want to come? I'll be harvesting mandrakes.
+Spring Noon	 Cases of the infectious disease gastroenteritis explode at this time of year. It's boring prescribing the same thing all the time.
+Spring Evening	 Ha ha ha ha! I observed Yuri fighting the urge to fall asleep during class today. Would you like to see the photos?
+Spring Night	 There are rumors that pollen contains ephedrine, a central nervous system stimulant. They're false, though.
+Summer Morning	 Good, today's temperature matches the forecast. I'll be starting a new experiment this afternoon, but the temperature regulation is difficult. It should be fun.
+Summer Noon	 It was another case of hand-foot-and-mouth disease. It's an infectious disease usually more common in children. People without immunity are unfortunate.
+Summer Evening	 A dare? Okay, I'll do it with you. I've always wanted to try screaming in fear.
+Summer Night	 Ha ha ha ha! Oh, sorry. I tried letting the stag beetles I caught for an experiment fight, and it was funnier than I expected.
+Fall Morning	 I don't understand why you would go somewhere without a purpose. Why would you go to a mountain if you didn't need to harvest something?
+Fall Noon	 I went to the botanical garden to get some ingredients and I was given these yams. Do you like candied yams?
+Fall Evening	 A lot of people in Mortkranken dislike exercise. The sporting clubs in Darkwick must be made up of people from other houses.
+Fall Night	 I read books every day, not just in the fall. I like medical journals best. I don't remember what made me start reading them.
+Winter Morning	 Hurk...! Phew... I'm fine... The change in temperature between indoors and outdoors this time of year causes my physical condition to deteriorate more frequently.
+Winter Noon	 I found an anomalous plant that can only grow in extremely low temperatures and successfully created a medication with it. It was just a coincidence though.
+Winter Evening	 Streptococcal infections are on the rise. They're spread through droplet and contact infection. Have you been taking precautions?
+Winter Night	 There are no merits to lowering your body temperature when you're not experiencing inflammation. I made some herbal tea that warms the body. Do you want some?
+Special
+His Birthday 1	 Whose birthday? Oh, mine? I forgot. Did Yuri leak my medical records?
+His Birthday 2	 Yes, it should be my birthday today. I can have this? Oh. Thank you.
+His Birthday 3	 Is it my birthday today? Yes, it says so on my chart. I didn't expect you to remember.
+MC's Birthday 1	 Oh, it's your birthday today, isn't it? What should I do? I suppose I'll go to your room later.
+MC's Birthday 2	 It's time for your check up. Please roll your sleeve and sit here. Yes, the right arm is fine. Also, happy birthday.
+New Year's 1	 Happy New Year. Why are you looking at me like that? Even I celebrate New Years.
+New Year's 2	 Happy New Year. Have I had my first bath of the year? Not yet. Okay. I'll go now.
+Valentine's Day 1	 What's this packet? I can't eat solids. You made it? Oh. I can probably eat some of it then.
+Valentine's Day 2	 So this is the chocolate. I'll accept it, but like we discussed, you'll have to feed it to me. Yes, I did mean now.
+White Day 1	 Here. An eye for an eye, a tooth for a tooth, something handmade for something handmade. Eat it here and tell me what you think.
+White Day 2	 This is for last month. Yes, I made it. Please try some to check the taste. Yes, while I'm watching.
+April Fools' 1	 Yuri's kicking up a fuss and saying I deceived him? I don't remember doing it. It doesn't matter though.
+April Fools' 2	 You want me to lie? Okay. If I only need to fool you, I don't think it will be that hard.
+Halloween 1	 I don't know much about Halloween. I can't eat candy though, so I have to play a trick on you, right?
+Halloween 2	 This? It's a Frankenstein's Monster costume. Yuri put it together for me. He did the makeup too.
+Christmas 1	 This tree? It's a fir tree. Yuri told me to get one, so I cut it down and carried it back here. My special artifact doesn't cut very well.
+Christmas 2	 You're wearing something that short at this time of year? When blood cools at your extremities it dulls mental function. But it does look good.
 ----------
 
 Ritsu
@@ -646,6 +896,40 @@ Goodnight 4
 Affinity LVL 24	 Could I ask you to accompany me a little longer, MC? I realize it's outside of business hours, but... I would appreciate it if you could make a special exception.
 Max Affinity
 Affinity LVL 25	 It seems we make better business partners than I would have expected. I look forward to a long and prosperous relationship with you.
+Seasonal
+Spring Morning	 There has been a noticeable increase in reports of suspicious activity of late. More incidents means more business. Be prepared.
+Spring Noon	 You have a petal in your hair. A little more to the right. No, not there. Just let me remove it. Hold still.
+Spring Evening	 Indeed, the cherry blossoms are in bloom. Incidentally, Japan's oldest cherry blossom tree can be found in Yamanashi Prefecture and is estimated to be 2000 years old.
+Spring Night	 I had tempura at the cafeteria today. It didn't come close to the tempura I would eat with my father at the historic soba restaurant we used to frequent though.
+Summer Morning	 This one is for my face, and this is for my body. I have six handkerchiefs with me— enough for morning, noon, and night. I cannot let my opponents see me sweat.
+Summer Noon	 I witnessed a half-naked man running around in this vicinity. Did you see him? He is risking a charge of indecent exposure.
+Summer Evening	 The warmer it gets, the more of a racket people make. Honestly, how were these people raised?
+Summer Night	 You want to go and watch the fireworks? A rather childish request, but all right. So? Where would one go to view them?
+Fall Morning	 The weather is much more pleasant for going out on professional errands now. A first-rate lawyer keeps their boots on the ground. Now then, let's get going.
+Fall Noon	 I object to the cultural assumption that fall is the season of the arts. The arts should be enjoyed throughout the year, regardless of the season.
+Fall Evening	 Once I've perused the relevant documents in the library, I plan on doing some reading. Please excuse me.
+Fall Night	 The nights may grow longer in the fall, but daylight hours should not affect the time you rise and retire. I'll see you tomorrow.
+Winter Morning	 I have detected a change in how Taiga Hoshibami divides his time since the weather has taken a cold turn. It has created quite a quandary for me...
+Winter Noon	 I've never experienced snowfall heavy enough to obstruct my movement, but I'd like to deepen my knowledge of the phenomenon for future reference.
+Winter Evening	 I'm heading to the diner to fulfill a request from Ren Shiranami. Perhaps I shall enjoy a warm bowl of soup while I'm there.
+Winter Night	 People say that hard work is the key to success, but it only took me a year to master German—as was the case with Italian and French.
+Special
+His Birthday 1	 Indeed, today is my birthday. I've always celebrated this day by enjoying my mother's cooking, but from this year I am striving for a more self-reliant existence.
+His Birthday 2	 You got me a birthday present? Thank you. I’ll record the package contents and time of receipt immediately.
+MC's Birthday 1	 Happy birthday. A year older, a year wiser. I have high hopes for your performance in the coming year.
+MC's Birthday 2	 Happy birthday. Here is an item with the same monetary value as the item you gifted me for my last birthday. Please accept it.
+New Year's 1	 Happy New Year. Let's devote these next 365 days—or 8760 hours—to finding fitting solutions to the challenges that come our way.
+New Year's 2	 Happy New Year. Let us proceed into this year without lapsing in the essentials-inquiry, documentation, and order.
+Valentine's Day 1	 Thank you for the chocolates. Are you gifting them to me out of social obligation, or is this an expression of affection? Your answer will influence what you receive in return.
+Valentine's Day 2	 Before I attempt to interpret the meaning behind this chocolate, I must insist that you first satisfy your duty to explain.
+White Day 1	 White Day has its roots in Japan, having been invented by a certain historic confectionery shop. With that knowledge, please accept this.
+White Day 2	 The convention of a threefold return arguably constitutes evidence of social pressure in the act of gifting. Nevertheless, I present this to you.
+April Fools' 1	 The spreading of false rumors is subject to strict punishment under Article 233 of the Penal Code. Do you still intend to continue this ruse?
+April Fools' 2	 When a lie undermines the trust built day by day, what conceivable worth can it claim? I invite you to share your reasoning.
+Halloween 1	 Coercing another party to choose between a "trick" or a "treat" could amount to intimidation. Engage in such festivities at your own risk.
+Halloween 2	 The words "trick or treat" you just uttered satisfy the elements of a threat. Shall I handle your defense?
+Christmas 1	 Religious freedom is guaranteed by Article 20 of the Constitution. If this is a day that you wish to celebrate, then I will accept that.
+Christmas 2	 That appears to be a costume modeled after Santa Claus. While I doubt its persuasiveness in court, its marketing appeal seems promising.
 -------
 
 Edward
@@ -731,6 +1015,40 @@ Goodnight 4
 Affinity LVL 24	 So, you've come sneaking into my room in the middle of the night? You really are a wicked girl. What were you hoping for? Go on, say it.
 Max Affinity
 Affinity LVL 25	 Being with you brings up old, old memories... Perhaps it's because you remind me a little of her.
+Seasonal
+Spring Morning	 The plants in our garden become rather lively in the spring. See? There's a little cannibalism going on over there.
+Spring Noon	 My favorite channels have been updating more frequently than usual of late. I suppose humans really do experience spring fever.
+Spring Evening	 (yawn) I look more tired than usual? Must be the spring weather... Goodnight.
+Spring Night	 Cherry blossoms are fascinating organisms. Born carrying the stench of death and falling all too soon... Just like humans, really.
+Summer Morning	 Obscuary is lovely in summer. It's so dark and cool, with a lovely miasma breeze. I've no desire to step outside its confines.
+Summer Noon	 How the sun mocks me... Vampires across the nation are advised to avoid going outdoors unless absolutely necessary.
+Summer Evening	 It was so hot this morning that Rui was walking around after his shower in just a towel. A sight for sore eyes, I must say.
+Summer Night	 My air-conditioner? I believe I have it set to 64 degrees. Hm? You're cold? Humans truly are such fragile creatures.
+Fall Morning	 Humans take extra delight in their meals during the harvest season, do they? Interesting. Perhaps I'll follow suit.
+Fall Noon	 The stamina and physical strength of a vampire is dozens of times that of a human. We don't need to work ou— (cough) (wheeze)
+Fall Evening	 Ah, the curtain of night closes. Now that the days are becoming shorter, my physical and mental health have much improved.
+Fall Night	 How beautiful the moon looks tonight. Its light is such a comfort to us non-humans. You look rather lovely bathed in it too.
+Winter Morning	 (sigh) Even in the dead of winter, Lyca is so full of energy in the mornings... Just try to imagine waking to him barking in your ear.
+Winter Noon	 What do you think of my dressing gown? Rui made it for me. It's surprisingly warm.
+Winter Evening	 (cough cough) I only took a few steps outside, yet I felt as though my heart froze over... It's best not to leave one's room on days like this.
+Winter Night	 They say that on cold nights like this, humans long for the warmth of another. Well? Shall I provide it for you?
+Special
+His Birthday 1	 Having you celebrate my birthday makes all these long years of life worth it. How old am I? A gentleman doesn't tell.
+His Birthday 2	 Yes, it is my birthday today. You wish to know my heart's desire? Hmm... If I were to say an eternity spent with you?
+MC's Birthday 1	 It's your birthday, is it? I'll have to give you a present. What do you want? Go on, tell me.
+MC's Birthday 2	 Happy birthday. Yes, Rui and Lyca were making quite the fuss about it this morning. Come by tonight. We can celebrate.
+New Year's 1	 Happy New Year. I heard it's a tradition in this country to impart small monetary gifts. Here, for you.
+New Year's 2	 Happy New Year. I'm told it's customary in this land to speak one's vow for the year ahead. Tell me, what is yours?
+Valentine's Day 1	 My, is this for me? I'm touched. I don't usually partake of human food, but I suppose I'll make an exception.
+Valentine's Day 2	 This chocolate is for me? How kind. I shall let it linger, melting slowly upon my tongue, savouring every texture.
+White Day 1	 It seems that today those who received chocolates on Valentine's Day are supposed to return the favor. What a conscientious country this is...
+White Day 2	 Rui told me that today is set aside to honor the woman one holds dearest. Come, sit here beside me.
+April Fools' 1	 Oh, I'm burning up... I'm not long for this world... Won't you grant me one last request? ...No need to make that face. I'm joking, of course.
+April Fools' 2	 Ow... I seem to have hurt my back. Would you come with me to my bed? A shame. I did mean it.
+Halloween 1	 Trick or treat. I'm a real vampire, you know. Give me your blood, or I'll play a trick on you.
+Halloween 2	 Oh? Lyca isn't with you? He dashed out in high spirits just a moment ago, saying he was off to gather sweets with you.
+Christmas 1	 Merry Christmas. Rather amusing for a vampire to celebrate a holy day, don't you think? Let's fill tonight with magic and wonder.
+Christmas 2	 My, such a charming little Santa. When you beg so sweetly, how could I not be generous with my gifts? Merry Christmas.
 ---------
 
 Jin
@@ -816,6 +1134,40 @@ Goodnight 4
 Affinity LVL 24	 I've got plans early tomorrow. Your house is too far. Stay here tonight.
 Max Affinity
 Affinity LVL 25	 Never learn, do you? I don't take you being here for granted. I know it won't last forever. That's all I'm going to say.
+Seasonal
+Spring Morning	 (yawn) What's with that look? I'm not allowed to yawn?
+Spring Noon	 The flowers you can see from the balcony? Yeah, I had them planted. ...My mother liked them.
+Spring Evening	 Sunset's supposed to be nice this time of year. Come on, servant. Before I change my mind.
+Spring Night	 You're going to see the cherry blossoms tonight with the brats? Suit yourself. I doubt any of you can appreciate them.
+Summer Morning	 Those little shits are so loud this morning... They're worse than the cicadas. Tohma, go exterminate them.
+Summer Noon	 What kind of moron chooses to go out in the sun this time of year? Unless you want your brain to melt, stay here with me.
+Summer Evening	 You've got tickets to a fireworks festival? The view's better from a helicopter. ...You've got guts thinking you can show me a good time, peasant.
+Summer Night	 Haven't heard the sound of waves for a while... Get the speedboat. I'll drive.
+Fall Morning	 I overworked myself. Go get Tohma. I was right having him get that PT license. I should have you get one too.
+Fall Noon	 A pumpkin spice latte? I'm not drinking this saccharine garbage. Give the rest to the brats.
+Fall Evening	 My favorite family vacation? Don't have one. This conversation is over.
+Fall Night	 I don't play the piano because I like it. It's just force of habit.
+Winter Morning	 ...Don't fucking wake me up. Come back later
+Winter Noon	 Why is my name on this snowman? Tohma, give me your gloves. Whichever half-wit made this has shit for eyes.
+Winter Evening	 Tell the chef and the brats we're having a roast dinner tomorrow. Kobe beef. They know how I like it.
+Winter Night	 You're staying here tonight, servant. I'll show you an aurora you couldn't even dream of.
+Special
+His Birthday 1	 A birthday party? This has Tohma written all over it, that asshole's always using me to— You're planning it? ...I'll think about it.
+His Birthday 2	 What? You got me a present? ...You can give it to me later. Come to my room in an hour.
+MC's Birthday 1	 The song I just played? It's G. F. Handel. He wrote it for the queen's birthday.
+MC's Birthday 2	 Hey, servant. Did you get the package from Tohma yet? ...No? Tch... What the hell is he doing...
+New Year's 1	 Hope you're ready for another year being at beck and call, servant. First up, my New Year's courtesy calls. Go do them for me.
+New Year's 2	 ...What took you so long? You're already resigned to another year as my servant, aren't you? ...Hurry up and make my tea then.
+Valentine's Day 1	 What's that sad-looking box you're holding? ...Oh. No, don't throw it away. I'll take it.
+Valentine's Day 2	 What's that red box, servant? ...Stop fidgeting. Just give it to me then.
+White Day 1	 Keep your schedule open tonight. You're having a meal your peasant taste buds couldn't even dream of.
+White Day 2	 Hey. Pick a store from this list. A car will be here in an hour. You better be ready to go when it is.
+April Fools' 1	 Hey, are you all right? ...Tsk. If that was a joke, it wasn't fucking funny. I've changed my mind. Cancel all my plans for the day.
+April Fools' 2	 ...I've only got one thing to say to you. Don’t lie to me. Keep that in mind when you open your mouth.
+Halloween 1	 Where the hell's Tohma? Asshole sent the brats to my room to beg for candy. Next time I see him I'm going to wring his fucking neck.
+Halloween 2	 Trick or treat? Huh. You've got guts. Come here. I'll give you a treat.
+Christmas 1	 Go tell Tohma what color dress you're wearing tonight. Why? Maybe I'll wear a matching ascot tie. If I feel like it.
+Christmas 2	 ...What tasteless rags are you wearing, servant? Take them off. Now.
 --------
 
 Taiga
@@ -907,6 +1259,40 @@ Goodnight 4
 Affinity LVL 24	 If you don't like pain then quit flailing around. I'm getting a taste of you, so close your eyes and shut up.
 Max Affinity
 Affinity LVL 25	 You're not getting away from me, kitten. You're here till death do us part, whether you like it or not.
+Seasonal
+Spring Morning	 (yawn) Man, why am I so tired today... Someone spike my food?
+Spring Noon	 What? Cherry blossoms? Is it that time of year already? Man, that snuck up on me.
+Spring Evening	 Fuck it, I'm taking a nap. Come over here and be my pillow.
+Spring Night	 What's with that vacant look on your face? You need more excitement in your life? Come over here, I'll play with you.
+Summer Morning	 Too hot... Hey, I want my breakfast on ice. They got tons of it over on Jin's turf, go nab some.
+Summer Noon	 Why don't we make a giant pool in Sinostra? It's so hot here. I'll put up the cash... Wait no, I used it all yesterday.
+Summer Evening	 Quiz time—where's Lulu going all dolled up on a stinking hot day like this? Answer— he's cheating on me! Gyahaha!
+Summer Night	 Shower? I don't wanna... Shut up and strip me already then.
+Fall Morning	 Good weather for sports? You get a lot more exercise fighting to the death. Gyahaha!
+Fall Noon	 That looks tasty. Gimme a bite.
+Fall Evening	 We're going out. I've been eating more lately and these guys are too slow. Gonna go stock up.
+Fall Night	 Watch your back. Way easier to jump people when it gets dark so early. Gyahaha!
+Winter Morning	 You trying to pull my covers off? Wanna die?
+Winter Noon	 I wanna go nab some food from Harry's place, but it's too cold for that shit...
+Winter Evening	 Oh, I got an idea. I just gotta use someone as a punching bag to warm up. Hey you guys, stand over there.
+Winter Night	 I don't like the cold... Come on, come be my hot water bottle! Let me cuddle up to you!
+Special
+His Birthday 1	 Huh? Whose birthday? Mine? Gyahaha! Totally forgot about it! Grazie!
+His Birthday 2	 What? Things were just getting good. My birthday? Good timing. Go buy me some chips from over there.
+MC's Birthday 1	 Is it your birthday today? That little twerp told me. Okay, you can take one thing from my room.
+MC's Birthday 2	 Here, kitten. What? You got eyes? It's my wallet. Go buy yourself something nice.
+New Year's 1	 You gonna go skipping off to a shrine together just to get your fortune told? That's dumb. Here, let me guess what it'll say—you'll have an okay year.
+New Year's 2	 (yawn) Oh, you're still alive. Huh? Oh, my first dream of the year was you dying. Gyahaha!
+Valentine's Day 1	 Is that for me? Sure I'll take it, but it better be edible.
+Valentine's Day 2	 What's this? Chocolate? Didn't poison it or something, did you?
+White Day 1	 What's that expectant look on your face? Lulu was harping on about mimosas or something before. That what you want?
+White Day 2	 Here, kitten. For last month. Might be a .45, might be a bouquet. Won't know till you open it!
+April Fools' 1	 I'm gonna die soon, you know? And I'm taking Lulu with me. ...Gotcha! Gyahaha!
+April Fools' 2	 Hey, kitty-cat. I'll break your curse. Abracadabra! Gyahaha! Just kidding!
+Halloween 1	 Trick or treat. Where you gonna put your chips, kitty-cat?
+Halloween 2	 Trick or treat? You're into both, though. You really want it? Down on your knees, kitty-cat.
+Christmas 1	 Come on Santa kitty, tie a ribbon 'round yourself and get over here. Gyahaha!
+Christmas 2	 You know what you're getting yourself into showing up here dressed like that. No slipping away tonight, kitten.
 ---------
 
 Romeo 
@@ -991,6 +1377,42 @@ Goodnight 4
 Affinity LVL 24	 Coming here alone this time of night, haven't you made progress? Come over here, I'll evaluate your efforts.
 Max Affinity
 Affinity LVL 25	 What could you possibly be afraid of? You're one of my people! Walk with your head held high or I'll step on it!
+Seasonal
+Spring Morning	 This year's AW collection is out... Tch. Not even a hint of taste in any of it. They'll bear this mark of shame for years.
+Spring Noon	 I don't mind the springtime in Japan. The mild weather is a bonus, but it's the transient beauty of the cherry blossoms I truly appreciate.
+Spring Evening	 The new prototype is a tear bomb? A lot of anomalies don't even have eyes, is this really going to be useful?
+Spring Night	 Shut up! It's nearly time to settle the books so I'm completely run off my feet! I don't have time to deal with you, understand!?
+Summer Morning	 Summer is all about aquamarine... If you believe that, you're a follower. A trendsetter would know to go against the grain with a heavier jade piece.
+Summer Noon	 Excuse me!? You really think I would stoop to petty theft!? This scarf and hat are UV protection!
+Summer Evening	 This? It's an original hot water blend with salt and lemon I came up with. You shouldn't be cooling your insides just because it's hot outside!
+Summer Night	 The heat's finally starting to ease off. I want to take a shower, but it's nearly our peak hour...
+Fall Morning	 They gave us nothing but useless bottom feeders this year... I'd like to see who raised this bunch of idiots. They don't even have a grasp of basic etiquette.
+Fall Noon	 I'm going to the training grounds to demonstrate sharpshooting for the first-years. It's a waste of my time, but I'm the most skilled at it.
+Fall Evening	 The SS collections are out. What? Are you telling me you don't pay attention to Paris Fashion Week?
+Fall Night	 The boss won't stop whining about being hungry. Obviously I'm not going to cook. What are you all standing around for, you damn TGAs!?
+Winter Morning	 You look like a fat slug in those clothes. Keeping warm is important, but couldn't you at least tough it out when you're meeting me!?
+Winter Noon	 Everywhere is so dry, it's unbearable. I want to go back to my room and moisturize...
+Winter Evening	 I get aches when it's cold... I'm taking off early tonight to go drink, then I'll warm up with a low bath.
+Winter Night	 Tch... This is the most profitable time of year for us, where the hell is that BTH!?
+Special
+His Birthday 1	 Today is Fico's birthday, so you're dining in style. I'm not going to eat any though, so you can finish it off.
+His Birthday 2	 You got me a present? ....Hmph. Not bad, for you. If I feel like it I might use it some time.
+His Birthday 3	 That’s right—it’s my birthday. Obviously you prepared something, didn’t you, BB? Let's see it.
+MC's Birthday 1	 It's your birthday? I suppose I can celebrate it for you, but you'd better be aware of how much of my precious time you're using.
+MC's Birthday 2	 Excuse me? Do you really expect me to remember some BB's birthday?! ...Tch. Come with me.
+MC's Birthday 3	 Come here, BB. I'm going to refine your sense of style today. Consider it an honor.
+New Year's 1	 Felice anno nuovo! This will be the year I claim Fuji's debt and his pendant!
+New Year's 2	 Felice Anno Nuovo. My new year's resolution? Please. Forget those short-sighted platitudes and focus on planning long-term.
+Valentine's Day 1	 Hmph. I'm not familiar with this packaging. If you're giving me chocolate, you better have selected it with the utmost care!
+Valentine's Day 2	 Did you make these chocolates? (sigh) Risky move. Fine, hand them over. I'll try them so you don't embarrass yourself.
+White Day 1	 Here. They're mimosa cookies, a special order from an upmarket confectionary in Ginza. I can't say whether your peasant tastebuds can appreciate them though.
+White Day 2	 I had these dolci shipped from a pastry shop in Florence. Here— go refine that impoverished palate of yours.
+April Fools' 1	 Just you try and fool me—I'll tear those rags off you and throw you in a cage. So? What do you want?
+April Fools' 2	 A drug to make me kinder? Cute. I hope you're prepared for what will happen when it doesn't work.
+Halloween 1	 Do you have face paint in your pores!? Go wash it off before you end up with hyperpigmentation!!
+Halloween 2	 What are those hands for? Charity isn't in my vocabulary. And any prank you pull I'll repay a thousandfold.
+Christmas 1	 Buon Natale! Go get ready—that reindeer's around again. This year I'm going to catch it for sure!!
+Christmas 2	 Buon Natale! Perfect timing. Get out on the floor in that outfit. You've got tables to wait.
 --------
 
 Leo
@@ -1082,6 +1504,40 @@ Goodnight 4
 Affinity LVL 24	 Stay like this till I tell you to leave, okay? Got it? I didn't hear an answer.
 Max Affinity
 Affinity LVL 25	 Wanna make a bet, Honor Roll? Over which will come first—me falling for you, or you getting hooked on me.
+Seasonal
+Spring Morning	 Why the hell would I go to class? I already learned all the first year material.
+Spring Noon	 Cap really puts the "him" in "himbo..." Look at him, he's got a flower stuck in his hair.
+Spring Evening	 Quick Honor Roll, stand over there. Perfect. Now hold my phone. You're the cameraman.
+Spring Night	 Can't believe how many gross dudes this account keeps reeling in. AI-generated pics make it so easy! "Could you send me some more money ♡?" Send.
+Summer Morning	 That rule about having to wear your academy or house uniform on campus is so outdated. I'm going to die wearing all this crap in this heat.
+Summer Noon	 I can't believe Sho seriously ran out of my Killer Sauce. It's summer, this is when I want to eat spicy stuff.
+Summer Evening	 I keep telling Sho we should let off some fireworks and he keeps saying no! You want to do it too, don't you, Honor Roll?
+Summer Night	 Yeah, apparently there's more anomalies around in summer. Statistically speaking. It's just fucking annoying more than anything else, really.
+Fall Morning	 Thought I could have some fun here at Japan's most elite educational institution. What a let down.
+Fall Noon	 Sports? Hard pass. I hate getting sweaty. Ask Sho instead.
+Fall Evening	 Sho hurt himself playing basketball? How unfortunate.
+Fall Night	 Ugh, I want to go clubbing... We should make one in the Pit. Sinostra's got a casino, can't be that hard to get a permit.
+Winter Morning	 This coat? Cute, right? I knew it'd look good on me, so I bought it.
+Winter Noon	 I'm freezing... I'm having a carbonated bath tonight. Wanna join, Honor Roll? Of course I'm serious.
+Winter Evening	 Hey, everyone! It's me! Ugh, my throat's all dry from the cold. I'll just stream tomorrow...
+Winter Night	 The ghouls won't listen to you? No shit. You realize we were hand-picked by demons, right?
+Special
+His Birthday 1	 You got me a birthday present? Oh, thanks. Just put it over there, I'll look at it later. I will, I promise.
+His Birthday 2	 Yeah, it's my birthday. What do I want? ...How about you give me your bank card?
+MC's Birthday 1	 It's your birthday? I'll help you celebrate. Meet me behind the garage later.
+MC's Birthday 2	 Hey, Honor Roll. Heard it's your bday. I'll make you one of those surprise birthday videos. Shut up, just go stand over there.
+New Year's 1	 Happy New Year! I prefer digital payment. What do you mean, what do I mean? I'll be nice to you again this year, so pay up.
+New Year's 2	 Yeah, happy New Year. What do you want? I'm kind of busy right now. I'm about to stream my New Year's gift money collection run.
+Valentine's Day 1	 This is that ultra-spicy chocolate they only sell this time of year... I'm actually genuinely stoked right now.
+Valentine's Day 2	 You got me chocolate? Thanks, I guess. Assuming you just picked the first ones from a list on— Huh. You really picked these yourself?
+White Day 1	 Here, as thanks for the chocolate. You're not going to tell me you don't know Godiva, are you? All right, now we're even.
+White Day 2	 Hey, Honor Roll! I got you something. What do you mean, what for? It was in return for Valentine's but whatever. Give it back if you don't want it.
+April Fools' 1	 Ha ha. You were photobombing one of my pics so I uploaded it and said I had a new girlfriend. 10K interacts in less than an hour. Suckers.
+April Fools' 2	 Hey, Honor Roll, did you know if you pretend to be a dog on April Fool's you get a year of peace? Of course it's true.
+Halloween 1	 Trick or treat! Ugh, the only good thing about this dumb event is the video content it provides.
+Halloween 2	 Hey, why aren't you wearing the sexy policewoman costume I got for you, Honor Roll? Go change.
+Christmas 1	 This Christmas-themed food Sho made might pull some traffic. All right, uploaded. You can eat the rest, Honor Roll. Say "ah"!
+Christmas 2	 Ahaha! I can't believe you're actually wearing that Santa costume I got you. Stand over there so I can take a pic. Merry Christmas.
 -------
 
 Kaito
@@ -1176,6 +1632,40 @@ Goodnight 4
 Affinity LVL 24	 Sure is dark. Reminds me of the closet where we first met. Remember?
 Max Affinity
 Affinity LVL 25	 I know I'm weak, and a coward. But I really do want to become your knight in shining armor, MC.
+Seasonal
+Spring Morning	 (yawn) Man, I wanna sleep, but I can't fail, so I gotta show up for class... Oh! I have Professor Nicolas next! Naptime.
+Spring Noon	 Grr! All those girls in the hall were looking at Luca! I'm so pissed off now I'm not even sleepy anymore!
+Spring Evening	 It's finally warm out again, so I really want to go do something fun... Wish I could get an R&R permit...
+Spring Night	 Mheheh... MC... You've got a petal in your hair... Zzz...
+Summer Morning	 Ugh, it's too hot to go outside... But I can sense a coming-of-age event on the horizon... All right, here I come!
+Summer Noon	 Can't believe Professor Hyde still wears that blindfold in summer. Pfft, I bet it's really sweaty under— Eeeek! S-Sir?!
+Summer Evening	 Hey MC, are you free after this? I was thinking of inviting Luca to let off some fireworks! I want to show him how we do summer here in Japan.
+Summer Night	 I can't believe I get to spend the whole summer hanging out with you MC... (sniffle) Homework? Uh y-yeah, I finished it already...
+Fall Morning	 Is it just me, or is it really cold today?! Guess I better get my coat out soon...
+Fall Noon	 Have you had the chestnut rice from the cafeteria yet? They made it way too fancy. It's supposed to be comfort food...
+Fall Evening	 Tohma's always reading something. Maybe I should too... All right, let's go with this! 10 Ways To Become Popular Overnight!
+Fall Night	 Apparently the moon is the most beautiful in fall since the air gets clearer. Want to go take a look?
+Winter Morning	 It's freezing out there! It's freezing in here! Frostheim sucks!!
+Winter Noon	 The cold can go to hell, but I guess there's outfits you can only wear this time of year...
+Winter Evening	 I really want to go to Starbucks for the new winter drink! But I really really don't want to go on any missions!! Guess I'll never get to try it.
+Winter Night	 Gram... No... No more mandarins... ...Huh?! Oh, it was just a dream... I haven't had a mandarin for ages...
+Special
+His Birthday 1	 Why did Jin, Tohma, and Luca give me all this high-end stuff?! It's freaking me out!! Thank you!?!?
+His Birthday 2	 No way, a present? For me? Thank you... Wait, this isn't a dream, right?! Ow!
+MC's Birthday 1	 Happy birthday, MC! We'll make this the best one— Hey, give those back! Those are the cue cards I made yesterday!!
+MC's Birthday 2	 Tada! Happy birthday, MC! I made you a cake—check it out!
+New Year's 1	 Happy New Year! Let's make it a good one! S-So hey, if, er, if you'd like, c-could we, um... could we make our first shrine visit together?
+New Year's 2	 MC! Happy New Year! Running into each other this early in the new year's gotta be some kind of sign, right?! Maybe my luck's finally turning...
+Valentine's Day 1	 C'mon Kaito, deep breaths. Girls aren't into guys with no chill. So stay cool... Stay— Are those chocolates for me?! I'll take them to my grave!
+Valentine's Day 2	 (sigh) No one's gonna get chocolates for a dim-witted, softheaded, ham-fisted, thick-skulled tortoise like m— Huh? Wait, these are for me?!
+White Day 1	 Do you like the cookies I made? Come on, no way they're that good, heh heh... Heh heh heh... Here, take them all!!
+White Day 2	 Mm, ahem! Oh hey, didn't see you there. These macarons? Yeah, I made them with all my HOW LONG HAVE YOU BEEN THERE?!
+April Fools' 1	 I'd never lie to a girl. Ah! That's not a lie, I swear! MC? Are you listening?!
+April Fools' 2	 All I did was lightly prank Luca and he lectured me for like 20 minutes. Why's he gotta be such a stick-in-the-mud?
+Halloween 1	 Trick or treat! See those carved pumpkins? I was actually the one who made them. What do you think?
+Halloween 2	 Heh heh heh... No one's gonna recognize me in this costume. ...Romeo?! How?!
+Christmas 1	 Hey, uh, MC, do you, uh... Do you have any plans for Christmas? I'm actually totally free!
+Christmas 2	 Hold on. Chill, Kaito. This is a dream. No way MC is wearing a Santa outfit right now. Ow!
 ------
 
 Ren
@@ -1272,6 +1762,40 @@ Goodnight 4
 Affinity LVL 24	 When did it get this late? That was horrifyingly fast... I'll walk part of the way back with you. I was gonna go buy something to drink anyway...
 Max Affinity
 Affinity LVL 25	 Every day here is a fresh hell, sure, but... You're suffering through it with me, so I guess I'll stick it out a little longer...
+Seasonal
+Spring Morning	 That clown's even more slap-happy than usual lately—it's horrible. Has he got spring fever or something?
+Spring Noon	 Towa keeps trying to make me drink some kind of rice porridge with weird flowers in it... It's actual porridge harassment.
+Spring Evening	 All this farm labor's bad enough without all the caterpillars and weird plants that are out there now... This is harassment.
+Spring Night	 I hate cherry blossoms. They're like the flower version of being a legacy kid— all they have to do is bloom once a year and everyone claps.
+Summer Morning	 This is the worst... It's not even noon yet, how is it so hot? Summer is for extroverts and party animals, I wish it could just be over already...
+Summer Noon	 A group trip to the beach? I'd rather die. No decent person would ever go there of their own free will.
+Summer Evening	 Summer was our busy period back home, so I always had to kill myself helping out. Now I'm here though... nothing's changed.
+Summer Night	 How can the A/C be banned in the dorm...? Who gives a shit what temperature some anomalous animal that sneaks in prefers, humans should come first...
+Fall Morning	 Now it's getting colder, I nearly found myself feeling grateful for this tragic jumpsuit... Am I being brainwashed...?
+Fall Noon	 Fall, the season of the harvest—I'll stick with cup noodles, thanks. "Fall, the season to enjoy the outdoors"—screw that. I'm gonna make it the season of naps.
+Fall Evening	 Look—I got bitten by some weird bug anomaly. To hell with the stupid bug spray ban, I'm buying some.
+Fall Night	 I feel like the mountains are rowdier when there's a full moon. Pretty sure my enemy encounter rate goes up when I'm on patrol too... Maybe I'm just imagining it.
+Winter Morning	 There's less patrols in winter but anything involving water like washing up gets even worse... Ugh, I wish I could hibernate too...
+Winter Noon	 Since the climate in Jabberwock's so messed up, sometimes it's actually warm in winter. The blizzards are way stronger though...
+Winter Evening	 Oh god, I just saw what's in the diner's new Mystery Hot Pot... It's gotta be a matter of time before this place goes bust...
+Winter Night	 That clown broke my window so my room's like a freezer... Oh, don't worry. I just took his room instead.
+Special
+His Birthday 1	 You got this for me? That clown's been spreading my personal info around... No, it's fine, I'll still take it. Thanks.
+His Birthday 2	 A birthday present? Thanks. Huh? Senpai, where did you get this?
+MC's Birthday 1	 Happy birthday, MC. ...Isn't it kind of rude to look so surprised I'd celebrate your birthday? That came from the heart, you know.
+MC's Birthday 2	 Hey, come with me a sec. Here. It's for you. Don't overthink it. That clown just kept bugging me about celebrating...
+New Year's 1	 Happy New Year. My resolution? Escaping the hell hole that is Jabberwock, for starters.
+New Year's 2	 The calendar changes and suddenly everything's supposed to be different? Sure, whatever. Anyway... Guess we're stuck with each other again.
+Valentine's Day 1	 You got me chocolates? You're the type who does all this kind of stuff, huh? No, it's fine, you went to the trouble and everything so I'll take them.
+Valentine's Day 2	 Seriously? Obligation chocolate? That's harassment. I-I didn't tell you to throw it out! Think of the planet.
+White Day 1	 MC... Here, if you want them. I just bought the first thing I saw, so don't read into it...
+White Day 2	 Here. Obligation for obligation. Don't overthink it. The whole romantic tension thing gives me hives.
+April Fools' 1	 Guess what? I got special permission to switch houses. That nightmare is now behind me! I wish...
+April Fools' 2	 (sigh) You think you can throw out a "just kidding!" and get away with anything today? That's shallow.
+Halloween 1	 I hope everyone who gets excited about Halloween lives in misery for the rest of their lives. Why the hell do I have to help out with this stupid themed tour?
+Halloween 2	 Halloween? Come on, it's nothing but a clown parade for the clout chasers... Wait, you're dressing up? Seriously?
+Christmas 1	 Can I ask you a question, MC? You don't still believe in Santa Claus, do you? Never mind, it doesn't matter. Have a good Christmas.
+Christmas 2	 Whoa, what's with that outfit? Way to jump scare me... You know, skimpy Santa cosplay at Christmas is a pretty basic move...
 -------
 
 Shohei
@@ -1362,6 +1886,42 @@ Goodnight 4
 Affinity LVL 24	 Can't sleep? Come over here—I'll warm you up. Pfft... I was kidding, don't get mad.
 Max Affinity
 Affinity LVL 25	 Here, this helmet's for you. I got some time today, so I'll take you somewhere. Anywhere you wanna go.
+Seasonal
+Spring Morning	 Forget it, I can't keep my eyes open. Wake me when it's noon.
+Spring Noon	 Pretty warm out lately, huh? Bet it's already snorkeling season in Okinawa. I used to go pretty often.
+Spring Evening	 This? It's chirashizushi. Cuts are pretty chic, right? The idea came to me when I was over in Hotarubi.
+Spring Night	 If I can get an R&R permit granted, I want to go for a solo ride. Haven't been for ages, and riding through the cherry blossoms this time of year feels awesome.
+Summer Morning	 Damn, I'm melting here... I need a haircut. Nah I don't need a barber, I just do it myself. 'Course I'm serious.
+Summer Noon	 Sweating my ass off over here... It's been like a year since I last played basketball. Mido's core's gotta be made of steel... Oh, is that water for me? Thanks.
+Summer Evening	 Summer homework? Nah, haven't done it yet. Only takes a day, right? Pfft... You want me to help you?
+Summer Night	 Leo won't shut up about wanting to let off fireworks, but no way am I doing that shit with him again. I'm sure you can guess why.
+Fall Morning	 Yesterday when I was fishing in the river I saw this guy who looked like one of the Frostheim ghouls out there. Can't have been though, right?
+Fall Noon	 Geez, don't pipe up outta the blue like that. ...What? You gotta a problem with me reading a book?
+Fall Evening	 Pfft... Hey, MC. Come over here. Geez, what're you doing walking around with a leaf in your hair?
+Fall Night	 Scariest Ghost Videos to Fuel Your Nightmares... I asked a buddy for some good videos to kill the time, and he sent me this...
+Winter Morning	 I get more delivery orders on cold days... It's a pain in the ass, but I guess I'll just wear an extra layer...
+Winter Noon	 Damn, I really wanna go snowboarding. I used to go every year before I ended up here... Think they got a good slope in Frostheim?
+Winter Evening	 Huh? I'm looking at a catalog. I could serve hot food if I had an electric pot. I'm thinking about it.
+Winter Night	 I'm freezing my ass off... I just saw Mido walk past in a T-shirt. Are his nerve endings dead?
+Special
+His Birthday 1	 What, you're gonna celebrate my birthday? What do I want for a present? Hmm... I'll take you. Just kidding.
+His Birthday 2	 You got me a present? Wow, thanks. Oh yeah, you free after this?
+His Birthday 3	 Birthday? Oh... Right, that was today. We don’t really need to celebrate... Actually, forget that. Keep your night open, MC.
+MC's Birthday 1	 Know what this is, MC? Yep—an R&R permit. Today's your birthday, right? So, where are we going?
+MC's Birthday 2	 Here, this is for you. Pfft... What's with the face? You said you wanted one, didn't you? Happy birthday.
+MC's Birthday 3	 Happy birthday, MC. I’ll cook you whatever you want tonight. My room.
+New Year's 1	 What'd I wish for at midnight? For this year to be peaceful... Not that any gods are listening out for us.
+New Year's 2	 Happy New Year, MC. It was rough getting up for the first sunrise. I'm thinking of going for a ride along the coast though. You want in?
+Valentine's Day 1	 Yeah, these are all the chocolates I got. No idea how I'm gonna get through them all... So? You didn't get me anything?
+Valentine's Day 2	 Can these go in the fridge? MC, good timing. Could you help me eat some of these chocolates?
+White Day 1	 Baking sweets and cooking are totally different. It's not really in my wheelhouse, but... here. My firsts. Thanks for the chocolates.
+White Day 2	 Hands out, MC. There. Tried baking some macarons. It's White Day today right? They're yours.
+April Fools' 1	 Hey, it's snowing outside. Wait, guess that's not so unlikely in this place... I used to get duped by that one all the time when I was a kid.
+April Fools' 2	 Goddammit Leo... He uploaded another photo of me from behind saying I'm his little brother. It's already got tens of thousands of likes...
+Halloween 1	 You really need an explanation? Leo made me wear it! Shit, why am I always the girl...
+Halloween 2	 ...What do you think. Obviously I lost a bet to that asshole. Where'd he even buy this thing? Some kind of fetish site?
+Christmas 1	 Sorry for making you help me prep all these roast chicken orders... Wanna do something Christmassy together once we're done?
+Christmas 2	 All right, now I just gotta bake the chicken. Oh, hey, MC. Right on— The hell are you wearing? Leo had something to do with this...
 ------
 
 Lucas
@@ -1449,6 +2009,40 @@ Goodnight 4
 Affinity LVL 24	 Sometimes I feel out of sorts, like I'm not myself. I still have a lot of training to do.
 Max Affinity
 Affinity LVL 25	 We have experienced many joys and sorrows together since becoming friends. I'm very glad we met. I look forward to walking the road ahead with you.
+Seasonal
+Spring Morning	 I saw a lot of flowers in bloom while I was jogging through the campus this morning. It really brightened up my run.
+Spring Noon	 Spring in Japan is quite similar to spring in the UK. The weather gets reassuringly warmer, and the air is filled with the scent of flowers.
+Spring Evening	 Kaito has been nodding off in class a lot recently. I wake him up right away, but I'm still worried he'll fall behind...
+Spring Night	 I've never seen cherry blossoms lit up at night before. They looked very different than they do in the daylight. I feel it taught me something about differing viewpoints.
+Summer Morning	 Summer days are long and productive, but in Frostheim the days are short all year round. It's easy to get caught in the dark if you're not careful.
+Summer Noon	 Kaito's going to teach me about Japanese summer again today. This is the first time I've spent the summer with friends— it's been a lot of fun.
+Summer Evening	 There's a summer festival being held in Hotarubi this evening. I've got a yukata for it... Could you help me put it on?
+Summer Night	 The sun stays up until late at night during summer in the UK, so Japan's dark, sweltering summer nights feel quite odd to me.
+Fall Morning	 Tohma has been going out on a lot of private errands lately. I wonder where he's been going? You don't think he's doing secret training, do you?
+Fall Noon	 I like that autumn is considered the season for reading here. I'm reading two books at the moment—this one's in German, and this one's French. Can you read them?
+Fall Evening	 Tohma just gave us some chestnuts, so Kaito and I are going to try roasting them in the kitchen. Would you like to join us?
+Fall Night	 Anomalies are more active in summer in Japan, whereas in the UK, they're more common in the autumn. I suppose Obon and Halloween are to blame there.
+Winter Morning	 MC, your hands are red from the cold. Come on, let's run to the classroom. It'll warm you up.
+Winter Noon	 When Kaito put a satsuma on his head and said, "I'm a New Year's decoration," Tohma fell silent and walked away. I'm confused— was it some sort of spell?
+Winter Evening	 The sun sets early this time of year. It's easy to feel down when the nights are long, but that's why it's especially important to stick to a routine like an exercise schedule.
+Winter Night	 On a clear, frosty night, you can see an aurora in the sky above Frostheim. It's very inspiring—like a beacon of hope in the darkness.
+Special
+His Birthday 1	 I suppose today is my birthday. Thank you. If you don't mind, will you join me in praying for my twin brother's safety?
+His Birthday 2	 ...You want to celebrate my birthday? Thank you, MC. I'm sure somewhere out there someone is celebrating for my brother too.
+MC's Birthday 1	 Happy birthday, MC. There is a reason you were born into this world, and it's something that should be celebrated.
+MC's Birthday 2	 Happy birthday, MC! I truly appreciate how lucky I am to be able to spend this day with you.
+New Year's 1	 Happy New Year. I've heard it's customary to visit a shrine, so I'm planning to invite Kaito to go with me. Would you like to come along?
+New Year's 2	 Happy New Year. The way Japan welcomes the new year is so calm and peaceful. It reminds me of home.
+Valentine's Day 1	 Thank you! This is all very new to me. In the UK, it's men who express their gratitude to women on Valentine's Day.
+Valentine's Day 2	 This is for me? Thank you very much. I actually got you some chocolates and a card too.
+White Day 1	 Thank you for the chocolate you gave me last month. This is a token of my appreciation. They're Thorntons chocolates— I just received them from back home.
+White Day 2	 MC! I'm so glad we ran into each other. These are for last month, they're pink roses— I hope you like them. Thank you for everything.
+April Fools' 1	 How odd... Kaito has been acting peculiar all morning. I wonder if he's coming down with something. Did you notice it, too?
+April Fools' 2	 In England, there's a rule that April Fool's mischief is only allowed until midday. Honestly, it's true!
+Halloween 1	 Is that you under that mask, MC? I could just tell. I don't really understand what's so fun about this holiday.
+Halloween 2	 Today marks the end of the light and the beginning of darkness. The boundary between this world and the next is at it's thinnest, so take care.
+Christmas 1	 Happy Christmas! It's a shame I'm not able to celebrate Christmas Eve with my family this year, but I'm glad that I have all of you now.
+Christmas 2	 You look lovely, MC! That's a Santa Claus costume, isn't it? I am curious about the skirt, though.
 --------
 
 Rui
@@ -1544,6 +2138,40 @@ Goodnight 4
 Affinity LVL 24	 Oh, don't worry about me, I always sleep late! I'm down to chat till you drift off to dreamland.
 Max Affinity
 Affinity LVL 25	 Sometimes I wish I could've met you as a regular guy. I guess you wouldn't have given me the time of day if I had though, ahaha.
+Seasonal
+Spring Morning	 Oh man, so nice... The weather's like perfect this time of year, right? Wish we could just chill like this forever.
+Spring Noon	 Man, you wouldn't even know it was spring with how bleak it is in Obscuary! Aren't there any cuter anomalous plants out there?
+Spring Evening	 I feel like Ed's getting more senile every day... Maybe I should confiscate his tablet.
+Spring Night	 So, what do you think of my spring-inspired cocktail? Almost as cute as you, right? I'm gonna add it to the menu!
+Summer Morning	 C'mon! It's summer, how can the sun never rise in Obscuary!? I wanna get a tan!
+Summer Noon	 It's not summer if you don't hit the beach! I used to go all the time back when I surfed. And then I'd pick up girls on my way home... Just kidding, I promise!
+Summer Evening	 Ta-da! I've got sparklers! Fireworks are fun and all, but there's something special about holding a light that only sparkles for a hot moment.
+Summer Night	 It's so hot out, I bet the bar's gonna be a ghost town... Guess I'll send Harurin and Romi a PR message!
+Fall Morning	 There's so many dead leaves this time of year, it's a nightmare keeping on top of them! But you can use them to make a fire and roast stuff. Gotta look on the brights!
+Fall Noon	 Hey MC, when are you free? I have a date idea for us—a romantic walk to admire the fall leaves! I'll pack us a lunch!
+Fall Evening	 Oh damn! You look so cute all bundled up like that, MC! We've gotta take a selfie together!
+Fall Night	 That piano anomaly makes the soundtrack for the bar! The song picks really tug at the heartstrings, right?
+Winter Morning	 You're a little late today, huh? If you can't get up in the cold, I could be your alarm!
+Winter Noon	 Oh man, how is Lyca so full of energy when it's this cold? You should take him to Frostheim and see if he runs around in the snow like a puppy.
+Winter Evening	 Nothing like winter to make you miss the warmth of human touch... Oh, I'm good! Just getting to talk like this is all I need!
+Winter Night	 Here, this Rui-original hot cocktail will warm you up! I'll blow on it for you, free of charge!
+Special
+His Birthday 1	 Yeah, it's my birthday today! Oh damn, you're gonna celebrate it with me!? No way, I'm like, super touched right now!!
+His Birthday 2	 What's this? A present?! No way, my heart!! Let me get you a drink to say thank you, on the house!
+MC's Birthday 1	 MC... Happy birthday!! C'mon, birthday girl, sit down and chill out! This is your day, you should take it easy!
+MC's Birthday 2	 Happy bday! Dear MC's parents, seriously major props and my eternal gratitude for bringing such a cutie into this world!
+New Year's 1	 Happy New Year! Want to start the year off on a high and come on a shrine date with me?
+New Year's 2	 MC, happy New Year! I'm out grabbing stuff for the party tonight. Obviously you're welcome to crash it!
+Valentine's Day 1	 Oh damn, are these for me? My heart! Is this your way of professing your love to me? Do I have a shot here?
+Valentine's Day 2	 No way... Am I your one and only?! Ahaha! I know, I'm kidding!
+White Day 1	 Ta-da! Happy White Day! This is for you! What's inside? You've gotta open it and find out!
+White Day 2	 Oh hey, MC! This is for last month. What's inside? That's a secret! I'll just put it down here, so pick it up!
+April Fools' 1	 Guess what!? I finally broke my curse! Let's hold hands... just kidding! April Fools!
+April Fools' 2	 I just saw Lyca run off with some weird bottle... He definitely got scammed by someone.
+Halloween 1	 Happy happy happy Halloween!! Trick or treat! Obviously I'm picking trick, ahaha!
+Halloween 2	 Look, MC! Matching costumes! Since we've got it, let's rock the curse twin look!
+Christmas 1	 Merry Christmas, MC! Oh man, I must be like, super blessed to get to spend it with you!
+Christmas 2	 MC, that Santa fit... My heart! Hold on, we gotta take a selfie together!
 -----
 
 Mio
@@ -1666,6 +2294,84 @@ Affinity19
 
 Affinity24
 "…This is a music box my dad gave me when I was a kid. I used to listen to it when I couldn’t sleep. Try winding it up."
+
+━━━━━━━━━━━━━━━━━━━━
+◆ Seasonal
+━━━━━━━━━━━━━━━━━━━━
+Spring Morning
+"Do you get hay fever? If it's bugging you, I can lend you a high-performance mask I made. Just say the word."
+
+Spring Noon
+"Hey, you seen Elias around? Guess the warmer weather's got him going on more walks lately."
+
+Spring Evening
+"Who told Shion that story about bodies buried under cherry trees? This is gonna end badly."
+
+Spring Night
+"Crap...I nodded off. Been doing that a lot lately, even during the day. (yawn)"
+
+Summer Morning
+"Shion, wait, where are you taking that—...Damn it, he's gone. That AC's not calibrated yet—it'll freeze the place."
+
+Summer Noon
+"Man, it's brutal in here. Working cooped up in the shop like this is gonna kill me. Oh—a cold drink? Thanks, I owe you one."
+
+Summer Evening
+"I'm gonna duck into the Heebie-Jeebie House for a bit...It's the coldest place in Dionysia..."
+
+Summer Night
+"You wanna set off fireworks? Shion's got a ton of them. Can't promise you'll stay in one piece, though."
+
+Fall Morning
+"Autumn reading? I wish. I’m just organizing Elias's magazine collection."
+
+Fall Noon
+"I wouldn't go so far as to call it art, but I'm proud to show off my crew's work."
+
+Fall Evening
+"...Sorry. Something just came up, so I need to duck into the workshop for about 15 minutes. Catch you later."
+
+Fall Night
+"Jo's cooking isn't fancy or anything—it just tastes like home. Tomorrow's sweet potato rice, apparently."
+
+Winter Morning
+"...You just sneezed, didn't you? Colds are going around campus lately. Take care of yourself, okay?"
+
+Winter Noon
+"...Hey. I borrowed this scarf from Jo—does it work on me? Be honest."
+
+Winter Evening
+"This is the worst time of year for Shion to go off the rails...It's already freezing, and now everything's underwater. Torture."
+
+Winter Night
+"MC, give me your hand. This is my new permanent hand warmer. When it cools off, just shake it and it heats back up. Pretty proud of this one."
+
+━━━━━━━━━━━━━━━━━━━━
+◆ Special
+━━━━━━━━━━━━━━━━━━━━
+His Birthday
+"Hm? A present? Oh yeah, it's my birthday, isn't it? Thanks. Can I open it?"
+
+MC's Birthday
+"There you are. Here, MC. For you. Isn't it your birthday? Go on, open it."
+
+New Year's
+"Hey. Happy New Year. My resolution? To keep things as calm and uneventful as possible...Not holding my breath, though."
+
+Valentine's Day
+"...That paper bag you're holding— am I allowed to get my hopes up? Hah. Sorry—didn't mean to sound like I was pressuring you."
+
+White Day
+"Here, MC. For last month, what else? I'm big on that kind of thing."
+
+April Fools'
+"...Nice try. Shion put you up to this, didn't he? (sigh). I keep telling him to limit his collateral damage to me."
+
+Halloween
+"Here you go. Happy Halloween. I had a feeling you'd be coming, so I got ready. Impressed?"
+
+Christmas
+"Merry Christmas...Huh. Figured you’d go with Santa. No, it works. I meant it as a compliment."
 --------
 
 Jo
@@ -1836,6 +2542,84 @@ Affinity24
 Affinity25
 
 "I thought I was done with feelings like this… So then—how are you going to take responsibility?"
+
+━━━━━━━━━━━━━━━━━━━━
+◆ Seasonal
+━━━━━━━━━━━━━━━━━━━━
+Spring Morning
+"It's really warmed up, huh? On days like this I just want to bundle you up into the passenger seat and go for a drive along the coast."
+
+Spring Noon
+"My artifact's been in good form lately. Rui thinks it's the spring weather."
+
+Spring Evening
+"It still gets pretty chilly when the sun starts to go down, huh? The others all went out without coats this morning... Hope they're okay."
+
+Spring Night
+"I was thinking of going for a walk to take a little break from work. Wish we had some cherry blossoms in Dionysia."
+
+Summer Morning
+"My morning jogs have started to get pretty sweaty... I'm gonna go take a shower."
+
+Summer Noon
+"Hot weather means hot food. How about jjigae for lunch—extra capsaicin to wake things up?"
+
+Summer Evening
+"I was thinking of taking a quick drive along the Aqua-Line. Want to come with? I'm hoping to catch the sunset on Umihotaru."
+
+Summer Night
+"The Hotarubi summer festivals are on now. Want to go in matching yukata, MC? We can coordinate them."
+
+Fall Morning
+"Now it's cooled down a bit, I've started doing HIIT workouts on my breaks on top of my morning jogs. They're a good change of pace."
+
+Fall Noon
+"I really should get some karate practice in every now and then, even if it's just light sparring. I'll get rusty otherwise. I wonder if anyone would be up for it."
+
+Fall Evening
+"This is such a nice time of year. It makes me want to pack a lunch and go leaf peeping... Too bad my car isn't really suited for the mountains."
+
+Fall Night
+"My ideal fall evening is catching up on TV shows. When I'm busy though, I can only fit in one episode a night."
+
+Winter Morning
+"Morning... Aren't you cold with your neck out like that, MC? Hold on, I'll grab you a shawl."
+
+Winter Noon
+"I might be from Kyushu, but my hometown is in the mountains and it snowed there sometimes. Tokyo winters are a lot warmer by comparison."
+
+Winter Evening
+"This? It's a heated humidifier. Since it boils the water to make steam, it's cleaner and less prone to bacteria."
+
+Winter Night
+"I just saw Shion run off with Mio saying he was going to build a skate rink in Dionysia... I've got a bad feeling about this..."
+
+━━━━━━━━━━━━━━━━━━━━
+◆ Special
+━━━━━━━━━━━━━━━━━━━━
+His Birthday
+"This is for my birthday? Thanks. I'm happy with anything knowing you chose it for me. Can I open it now?"
+
+MC's Birthday
+"Happy Birthday! I'll indulge any wish you have today, MC. What's your first request?"
+
+New Year's
+"Happy New Year. Sorry it's so noisy. When I said I was going to the shrine with you, everyone else wanted to come too."
+
+Valentine's Day
+"This is for me? I'm really happy. I can't believe I'm getting chocolate from a cutie like you... Yeah... I was hoping a little."
+
+White Day
+"Here, MC. These are some of my favorite bath products as a thank you for last month. Maybe you'll like them too."
+
+April Fools'
+"...That look—are you trying to fool me? I can tell. I'm used to being lied to, you know."
+
+Halloween
+"Trick or treat. You're giving me sweets? That's a shame. I was looking forward to playing a trick on you, cutie."
+
+Christmas
+"Merry Christmas. So you went with a reindeer instead of a Santa outfit, huh? No, you look really cute. I'd love to have you as a pet."
 ------
 
 Haku
@@ -1924,6 +2708,40 @@ Goodnight 4
 Affinity LVL 24	 Being cursed really sucks, huh? You can't help but ask yourself, "Why me?" all the time, even when you know it's a question with no answer.
 Max Affinity
 Affinity LVL 25	 I know I'm being selfish—but sometimes, I wish you'd just forget about me...
+Seasonal
+Spring Morning	 I've been noticing more birds in the garden lately. Is that a bush warbler? A white-eye, maybe? A lot going on during spring in Hotarubi.
+Spring Noon	 Heading into another nice, warm afternoon. Maybe I should take a nap...? Oops, nearly forgot I promised Zenji I'd film him.
+Spring Evening	 Must be nice being a ghost—no hayfever, and no hangovers. Spring really is the embodiment of human weakness.
+Spring Night	 My family home is pretty famous in our area for its cherry blossoms... When I was a kid, my friends and I used to go exploring through them at night.
+Summer Morning	 It's so humid... Days like this make me miss Frostheim...
+Summer Noon	 Today, I've got to go round and check the stalls for the festival Hotarubi is holding— wouldn't want any dangerous charlatans sneaking their way in.
+Summer Evening	 Zenji's off roaming around somewhere again... People are more sensitive this time year, so I wish he'd just stay put...
+Summer Night	 You're not going to wear a yukata? Eh, I just thought it'd be cute to see. That's the kind of thing guys think about, don't know what else to tell you.
+Fall Morning	 They say fall is the season of the arts, but I'm a really mediocre flute player. I'm about as uncultured as you can get.
+Fall Noon	 You can hear the biwa, right? He's been going for three hours now. People are going to start getting pissed off, so I'll go tell him to stop soon.
+Fall Evening	 Nightfall can catch you unaware this time of year. It'll be dark soon, so let me know when you're planning to head home. I'll walk you back to the cathedral.
+Fall Night	 It's a stunner of a night. Maybe I'll grab a drink and do a little moon gazing.
+Winter Morning	 You'll catch a cold dressed like that. It's already pretty chilly out there, you know... Here, take my coat.
+Winter Noon	 Winter rain really chills you to the bone. Sorry, walking through the garden must be rough for you this time of year. Come a little closer.
+Winter Evening	 It's cold again today. Now that I think of it, Subaru said he wanted to make hotpot with everyone. Guess I'll go grab some things and make it happen.
+Winter Night	 Your hands hurt because of the cold? Let me see. Oh yeah, your fingertips are all red. Here, stick them in my pockets.
+Special
+His Birthday 1	 Wait, you got me a birthday present? You're so conscientious. Oh, I didn't mean it in a bad way. Thanks, I appreciate it.
+His Birthday 2	 Oh yeah... Today's my birthday, huh? If you’re the one celebrating me, I guess I’ll clear the rest of my day.
+MC's Birthday 1	 Hey, come over here a sec. Here. It's nothing special, but I got you a something. Today's your birthday, right?
+MC's Birthday 2	 Happy birthday. Today's your special day, so I'll take you anywhere you want, Your Highness.
+New Year's 1	 Happy New Year. I know it's a cliché, but I hope this year's a good one for you.
+New Year's 2	 Hey, happy New Year. I'm sensing it's gonna be a rough ride... I'm kidding. Let's take it easy and make it a good one.
+Valentine's Day 1	 Whoa, chocolate? I didn't think you'd give them to me too. Guess I better think of something good to get you in return.
+Valentine's Day 2	 Phew. Thought for a second I was gonna be the only one left out in the cold. Thanks. I'll make sure to enjoy them.
+White Day 1	 Here, for the chocolate you got me last month. I wasn't sure what you'd like, so I got the ones I remember you said were good.
+White Day 2	 MC. You got a sec? Give me your hand. There. For last month. Don't open it till you're alone.
+April Fools' 1	 A bunch of spirits have been following you around all day, are you okay? Psych, just kidding. Seriously, I was joking, I swear.
+April Fools' 2	 Don't move, MC. ...Okay, you're good now. ...Ah, busted? Yeah, you got me. I was kidding.
+Halloween 1	 Looks like you've had your fair share of tricks today. I'll narrow down your options and just make it a treat, then.
+Halloween 2	 Trick or treat? Huh... So you want me to play a trick on you then? Pfft...
+Christmas 1	 You look like you're having fun. Do you have a present for me, Little Miss Santa? Haha, I'm just kidding. Here you go. Merry Christmas.
+Christmas 2	 Cute Santa. Sorry, couldn't help myself. It really does suit you. Mind coming just a little closer?
 -------
 
 Haru
@@ -2019,6 +2837,41 @@ Goodnight 4
 Affinity LVL 24	 A soft bed to lie down in and someone to chat with till I drift off... I'm really living the high life here.
 Max Affinity
 Affinity LVL 25	 Really learned the ropes here, haven't you? Once we have a little cash to spare, I'll buy you your own Jabberwock uniform!
+Seasonal
+Spring Morning	 Today's shearing day for the fluffy squad! It's actually a pretty hefty task, so I've gotta hop to it if I want to be done before summer...
+Spring Noon	 Bucket, check. Trowel, check. Me and Towa are heading to the mountains to pick some veggies. You wanna come?
+Spring Evening	 We've been getting a lot of balmy days lately, and the sun's up longer. Can't help but dilly-dally when I'm working...
+Spring Night	 I've gotta clean out all the sparrow nests soon or they won't be able to look after their kiddos properly. Looks like there's... 61 nests total...
+Summer Morning	 A lot of customers have been saying they wanna stay cool in the summer so I changed up the course. Now we have a special summer-only waterside tour!
+Summer Noon	 It's hot so I invited Ren to go fishing, but his face screwed up like a prune and he yelled at me. What's he got against fish?
+Summer Evening	 Phew... Finally finished harvesting all the feed crops for the day... Everyone's health is dependent on their quality, so now's the time to do it right.
+Summer Night	 Lotta bugs around this time of year... But they're important for the food chain, so I've gotta take care of them... Argh!! Give it a rest with the buzzing!
+Fall Morning	 Hey, nice timing! I'm about to make a fire with the dead leaves I collected so I can bake some potatoes, take a seat!
+Fall Noon	 I like the Jabberwock uniforms. They're made out of high-performance fabric that keeps you warm when it's cold out and safe when you're handling venomous critters!
+Fall Evening	 The hibernation squad's gonna start eating us out of house and home this month... The food bill's gonna be rough... Eeek!
+Fall Night	 You reckon that's a rabbit on the moon? No way, it's a toad! C'mon, look closer!
+Winter Morning	 Rounds are quicker in winter since some of the critters hibernate. Makes things a little easie— Why's the kitchen on fire?!
+Winter Noon	 Brr... Can't help but get green-eyed looking at the furry critters when it's this cold...
+Winter Evening	 Nice and toasty... Hm? I'm talking about Peekaboo! He's better than a hot water bottle in this weather!
+Winter Night	 It's cold outside so some of the critters have been sneaking into our rooms at night. You heard Ren scream just now, right?
+Special
+His Birthday 1	 It's my birthday?! Oops, totally slipped my mind... Thanks for remembering!
+His Birthday 2	 Hmm? What is this? ...A birthday present for me?! You're such a good kid...
+His Birthday 3	 Thanks for celebrating my birthday. I must be doing something right for you to go to all this trouble, huh? Gahaha!
+MC's Birthday 1	 Happy birthday. The Capybus is all yours today—I've got a custom birthday tour all planned out for you!
+MC's Birthday 2	 Hey, there you are! MC! Today's your birthday, right? I got a little something planned for you. Come with me!
+New Year's 1	 Happy New Year! How'd I ring it in? I was milking the cow and when I looked up I'd totally missed the first sunrise! Gahaha!
+New Year's 2	 Happy New Year! We're having a little shindig at Rui's place after work tonight. Wanna come?
+Valentine's Day 1	 You're kidding, I can really have this?! They say a little sugar helps sweeten a tired day! Thanks a million, this'll keep me going a while!
+Valentine's Day 2	 Is this chocolate? Oh, it's Valentine's Day! Thanks a million! 'Course I accept!
+White Day 1	 Ta-da! I bought you some hand cream, for the chocolate you got me last month. Thanks for everything you do here.
+White Day 2	 MC! Come here a sec. Got you some more hand cream. Figured the last one'd be running out by now.
+April Fools' 1	 Can you believe this? Ren got up early, and Towa fed everyone for me! ...Tried to make a joke for April Fools but it just made me feel empty inside...
+April Fools' 2	 Aw no! The Capybus sprouted wings and flew off... April Fool's! Gahaha!
+Halloween 1	 Check it out! The pumpkin Capybus, in town for three days only! I sacrificed sleep and some of our budget to get her ready!
+Halloween 2	 Trick or treat? Guess I'll have to give you some of these sweet potato chips then.
+Christmas 1	 Merry Christmas! This is a reindeer, she lives up in the mountains! And I'm Sagara Claus! Gahaha!
+Christmas 2	 What's the story behind that get-up? Nah, I didn't mean it like that! It suits you! 'Tis the season and all, right?
 --------
 
 Lyca
@@ -2125,6 +2978,40 @@ Goodnight 4
 Affinity LVL 24	 Sleep here. Huh? Is there a law that says we can't sleep together? There's not, is there? Hurry up and lie down.
 Max Affinity
 Affinity LVL 25	 I'm gonna work hard... I'll gonna work so hard, they're gonna say I can live with humans forever...
+Seasonal
+Spring Morning	 That blond gigolo tried to wash my blanket! He's never coming in my room again!
+Spring Noon	 Lately there's flower smells everywhere, but sometimes there's one that kinda smells like you.
+Spring Evening	 Harurin kept nagging, so I went to the safari park. Not gonna lie... it was super fun.
+Spring Night	 Cherry blossom petals are super fun. They're like, whoosh, then they fall everywhere. I wish our house had some.
+Summer Morning	 Urgh... My head...it hurts... This? It's shaved ice. The blond gigolo told me to eat it so I don't get "heat eggs-aw-schun."
+Summer Noon	 I was just in that moth-eaten Casanova's room and it was so cold I thought it was gonna snow! Is he secretly a yeti?
+Summer Evening	 I'm gonna go practice swimming at Harurin's place. Can you do other stuff besides doggy paddle?
+Summer Night	 I know I said I always wanted to do sparklers, but... you sure this's okay? I thought we're not s'posed to play with fire!
+Fall Morning	 I just tried to join in with some guys playing with a ball, but they said I don't know the rules and told me to go away.
+Fall Noon	 Blond Gigolo was makin' this massive fire near the garden just now. It smelled all burnt and sweet... Is that some kinda ritual?
+Fall Evening	 Finished my picture. That Romi guy who comes to the bar all the time said he wanted one, so it's for him.
+Fall Night	 Moth-eaten Casanova said humans like looking at the moon... D'you get sad if you can't see it?
+Winter Morning	 I'm gonna go play at that big ice castle after class! Huh? 'Cause playing in the snow's fun.
+Winter Noon	 Mm, I don't really feel the cold. Humans get warm when they run around too, don't they? Race you over there!
+Winter Evening	 My fingers have been gettin' all tingly and stiff and my hair's all crunchy! What's up with that?
+Winter Night	 How d'you drink hot drinks so quick? They always burn my tongue... Huh? Dogs have sensitive tongues? I'm a wolf, not a dog...
+Special
+His Birthday 1	 Oh right, it's my birthday. Neros told me my mom wrote down the date.
+His Birthday 2	 Huh? That's a birthday present? For me? ...Thanks. Can I open it? ...Whoa. This is awesome!
+MC's Birthday 1	 It's your birthday, right? No, I only know 'cause that blond gigolo was yelling about it. ...Here's your present.
+MC's Birthday 2	 Here. You can have this. You said you liked it, right? ...It's fine. It's your birthday, so it's special.
+New Year's 1	 Hope you have a happy and prop...props... prosp...prospinous? new year... Damn it, I practiced that for ages...
+New Year's 2	 May the new year bring you... Abundant! Prosperity! And happiness! See? I can say it.
+Valentine's Day 1	 Oh, thanks. Professor Nicolas said I can't eat chocolate, so I'll give it to Casanova and Gigolo!
+Valentine's Day 2	 This isn't chocolate. You got me cookies instead? Yeah, I can probably eat these.
+White Day 1	 This is for you. I dunno what kinda stuff human girls like, but Suba helped me pick it, so it's prob'ly fine.
+White Day 2	 Here, eat this, MC! It's for those cookies you gave me last month. I bought it with my pocket money!
+April Fools' 1	 Why's everyone being so mean today?! Telling lies and laughing at me... They're all jerks...!
+April Fools' 2	 Look, MC! This medicine'll make Romi nice! Kurosagi gave it to me!
+Halloween 1	 My ears and tail are out? I know, I'm doing it on purpose. The moth-eaten Casanova said it's okay today.
+Halloween 2	 Rowr, Rowr! Huh? I'm practicin' for Halloween. The moth-eaten Casanova said I could get sweets if I do this.
+Christmas 1	 Hey, look! When I got up this present was next to my pillow! Santa really came...
+Christmas 2	 ...Here, put this on. It's my hoodie. Don't ask why, dummy! Santa doesn't wear clothes like that!!
 ------
 
 Shion
@@ -2263,6 +3150,84 @@ Affinity24
 
 Affinity25 (Max Bond)
 "Hey [Name]. Want to stay by my side forever? Then want a bite of this meat? Hehehe..."
+
+━━━━━━━━━━━━━━━━━━━━
+◆ Seasonal
+━━━━━━━━━━━━━━━━━━━━
+Spring Morning
+"The birds have been twittering their smug little heads off since the crack of dawn... Every living thing's so cheery this time of year. Makes me sick."
+
+Spring Noon
+"Hey. What's a programming change? ...They’re not going to change it someday, are they?"
+
+Spring Evening
+"Mio was asleep in the workshop, so I scribbled on his face with a marker that doesn't wash off."
+
+Spring Night
+"...? What am I doing? Digging under the cherry blossom tree. Heard there's something fun buried down there."
+
+Summer Morning
+"You want to bathe in the sea? All right. As long as we're diving down to the silent depths where it's hard to breathe."
+
+Summer Noon
+"...It's too hot... Too bright... Sticky... Sweaty..."
+
+Summer Evening
+"I'm thirsty... Go over to Elias's place and bring me that sickly sweet brown stuff."
+
+Summer Night
+"This sticky stuff? There's a midnight dare tomorrow night. It's for that."
+
+Fall Morning
+"I'm dirty? 'Course I am. I've been digging in the dirt. These knobbly red potatoes are funny."
+
+Fall Noon
+"Jo wants my knobbly potatoes. He's not getting them though."
+
+Fall Evening
+"These? They're fruit jellies. I traded with Jo for them. I don't need those rubbish potatoes anymore."
+
+Fall Night
+"I like nights this time of year... They just go on and on, all dark and lonely."
+
+Winter Morning
+"Me? I'm waiting for the snow to pile up, aren't I? Today'll be the day. Then we'll all go out and play in it as a family."
+
+Winter Noon
+"Still no snow... Maybe it needs to get a bit colder? If only we could break that sun somehow..."
+
+Winter Evening
+"There's snow in the ice castle? I'm not taking my precious family to that vile hovel."
+
+Winter Night
+"...The snow didn't pile up today. Maybe I'll have Mio build me something to destroy the sun."
+
+━━━━━━━━━━━━━━━━━━━━
+◆ Special
+━━━━━━━━━━━━━━━━━━━━
+His Birthday
+"It’s my birthday today? I don’t c— What's that sickly sweet smell? Show me that box."
+
+MC's Birthday
+"Today you'll be celebrated by me—your husband. What do you want? Riches? The head of your enemy? Or..."
+
+New Year's
+"Jo made a mountain of mochi and now I'm full to bursting. That brown powder on top was the worst part."
+
+Valentine's Day
+"What's this—a jack-in-the-box? Smells like chocolate. I'll try it and see how nasty it is."
+
+White Day
+"MC. This is for the chocolate last month. Mind you open it when you're alone. Ha ha ha..."
+
+April Fools'
+"MC. Go find Mio and tell him I'm dying. Just do it."
+
+Halloween
+"Ha ha ha… I'm here to pick you up. We're going to collect sweets together all day today. Hurry up and get ready."
+
+Christmas
+"Why's your nose all red? Have you been drinking? Christmas...? Never heard of it."
 -------
 
 Tohma
@@ -2351,6 +3316,42 @@ Goodnight 4
 Affinity LVL 24	 Forgetting about everything I've got to do and be, just for a night every once in a while... It's not a bad feeling.
 Max Affinity
 Affinity LVL 25	 In times of difficulty, I hope you'll turn to those around you for help. I will be there to keep you safe.
+Seasonal
+Spring Morning	 That was quite the yawn. No need to apologize. Who wouldn't want to take a nap in this pleasant spring weather?
+Spring Noon	 I once heard a poem that went, "In spring, one sleeps a sleep that knows no dawn." I'm sorry to inform you dawn must come eventually, Captain.
+Spring Evening	 With every advent of spring comes a wealth of gleaming new foliage and a pleasant breeze. I still find it moving each year.
+Spring Night	 The blossoms of spring fall so quickly. Though beautiful, there is something almost brutal in their brevity.
+Summer Morning	 Ha ha. My apologies. Your face is so flushed I couldn't help myself.
+Summer Noon	 Sweltering days like this make me sincerely grateful to be in Frostheim.
+Summer Evening	 Would you care to enjoy the evening cool here with me?
+Summer Night	 If the heat becomes too much for you, please feel free to come visit us in Frostheim any time.
+Fall Morning	 Pleasant days like this make me want to go on a trip somewhere far away.
+Fall Noon	 Tea enjoyed while appreciating the colors of the fall leaves has a unique charm.
+Fall Evening	 The early dusks in the fall can take one by surprise. Be sure to stay alert when walking in the dark.
+Fall Night	 There is nothing better than a book to while away the long fall nights. My eyes are rather tired though... Perhaps some exercise will be a good change of pace.
+Winter Morning	 I thought Frostheim had gotten me used to cold weather, but I suppose this is what they mean when they say "chilled to the bone."
+Winter Noon	 Even the cold weather doesn't seem to deter the second years from gallivanting about... Rather charming, isn't it? In the way barnyard animals are.
+Winter Evening	 I'll take my leave earlier this evening. The nights are getting colder, after all. And there's a small matter I'd like to look into.
+Winter Night	 Haven't you had your fill of winter scenery after frequenting Frostheim? Ha ha. You truly are a strange one.
+Special
+His Birthday 1	 Thank you for putting together such a wonderful celebration for me. Oh? You've even gotten me a gift...
+His Birthday 2	 Did you need something? Oh... Is this a gift for me? You honor me with your kindness.
+His Birthday 3	 A present for me? My, have you done something you feel guilty about? Ha ha, forgive me—that was a joke. I'll gladly accept.
+MC's Birthday 1	 Happy birthday. Perhaps it was a little presumptuous of me, but I've prepared a gift for you... Come now. There's no need to be so formal.
+MC's Birthday 2	 A moment, if you don't mind? This is for you. ...No need to be so nervous. It's merely a birthday gift.
+MC's Birthday 3	 Happy birthday. Do spend the coming year in good health—under my supervision, of course.
+New Year's 1	 Happy New Year, MC. I expect you will help bring Frostheim to even greater heights this year.
+New Year's 2	 A very happy New Year to you. I trust you will continue to extend your gracious support to our captain— and of course, to Frostheim itself.
+Valentine's Day 1	 Oh my, is this for me? How kind of you. I very much look forward to finding out what's inside.
+Valentine's Day 2	 ...Are these chocolates for me? How considerate. Thank you. It would be a shame to simply eat them, so I'll display them in my workroom instead.
+White Day 1	 I ordered you these sweets from a famous confectionery in Asakusa. Hopefully they suit your tastes.
+White Day 2	 What a fortunate coincidence to meet you just now. Here— this is a thank-you for last month. Do make sure you open it in private.
+April Fools' 1	 What I wouldn't give to knock that bastard Jin's head off... Oh come now, what's that face? I'm joking, of course.
+April Fools' 2	 Oh? And who might you be? I must insist that trespassers vacate the premises... I'm joking, of course. I didn't expect such a look from you.
+Halloween 1	 Trick or treat. Oh? So you prefer tricks... Interesting.
+Halloween 2	 I was wondering why the second-years are so excitable today. So it's Halloween. Very well. Come back later this evening.
+Christmas 1	 Merry Christmas. We'll be holding a party in Frostheim later. Would you care to join us?
+Christmas 2	 A very Merry Christmas to you. Are you going to see the Captain? Oh no, no need for you to change. Please, do go and visit him just as you are now.
 --------
 
 Towa
@@ -2445,6 +3446,40 @@ Goodnight 4
 Affinity LVL 24	 Heh heh ♪ Are you tired, Dandelion? You're so weak. It's cute.
 Max Affinity (Night)
 Affinity LVL 25	 Do you like me, Dandelion? Because I love you!
+Seasonal
+Spring Morning	 ~~... ~~... ...!
+Spring Noon	 ...! ...! ~~~~ ♪
+Spring Night	 I love spring. It's when lots of flowers bloom. And did you know the Japanese word for spring is haru? Just like Haru's name!
+Spring Night 2	 This is a cherry blossom petal. It's for you! Look—they're sweet and yummy so I collected all these ones for my treasure box.
+Summer Morning	 ~~~~? ...
+Summer Noon	 ....! ...
+Summer Night	 Have you heard of cherry bombs before? Haru won't buy me any, so I'm looking for them on my own. If you see them blooming somewhere, could you tell me?
+Summer Night 2	 Look, you can see the Milky Way tonight. Did you know Orihime and Hikoboshi can only meet once a year? I could never wait that long to see my soulmate.
+Fall Morning	 .... ♪
+Fall Noon	 ~~~~! ... ♪
+Fall Night	 These leaves are really pretty, but they taste bad...
+Fall Night 2	 Iris went home because he said it's dangerous to stay out in the dark. I can still see fine though, even in the caves!
+Winter Morning	 ...? ....!
+Winter Noon	 ~~~~ ♪ ~~~~ ♪ ~~~~ ♪
+Winter Night	 I told Coriander I wanted to play in the snow, but he said no. Is it really true that you'll die if you play outside on cold nights?
+Winter Night 2	 What? Are you cold, Dandelion? I'll cuddle you, so come outside and play with me!
+Special
+His Birthday 1	 Yep, it's my birthday today! You want to give me a present? Okay, then tell me who you like!
+His Birthday 2	 What's this, Dandelion? A present? For my birthday? Heh heh ♪ Big squeeze!
+MC's Birthday 1	 Happy birthday, Dandelion! I picked this Aphrodite Orchid for you from a secret spot. Say "ah"!
+MC's Birthday 2	 Found you, Dandelion! This is called a tweedia. I grew it for you for your birthday.
+New Year's (Night)	 Haru told me that today's a special day in Japan. Are you happy, Dandelion?
+New Year's	 New Year's is funny! Everyone keeps bowing their heads. Animals do that every day, you know?
+Valentine's Day (Night)	 I know what these are! They're Valentine's Day chocolates! They're Coriander's favorite food. You're giving them to me? Thanks...?
+Valentine's Day	 Dandelion! Today's the day of love! Quick, let's hug!
+White Day (Night)	 This is for you! It's a white rose! They only bloom in one special place on that mountain. It's for the chocolates you gave me.
+White Day	 I picked this dandelion fluff for you! It's white and fluffy just like your voice when you laugh.
+April Fools' (Night)	 Haru's a dope! I hate liars! You won't lie to me, will you, Dandelion?
+April Fools'	 When you said you liked me before... Was that real? Or was it a lie?
+Halloween (Night)	 Trick or treat! If you don't give me lots of delicious flowers, I'm going to play a trick on you!
+Halloween	 Haru told me to wear this bat mask all day today. But I really, really hate it!!
+Christmas (Night)	 Heh heh ♪ Merry Christmas! I heard you're supposed to spend today with your soulmate! I can't wait!
+Christmas	 A red Dandelion! You're supposed to spend the night with the people special to you today. Come over here, Dandelion.
 ------
 Benkei 
 
