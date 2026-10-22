@@ -984,7 +984,7 @@ export default {
         },
       },
       {
-        line: "{user} named him first, and **{name}** looks far too pleased.",
+        line: "Nobody else gets a word in before {user}. **{name}** notices, and looks far too pleased.",
         responses: {
           kind: "Let him enjoy it",
           playful: "Ask what he's grinning at",

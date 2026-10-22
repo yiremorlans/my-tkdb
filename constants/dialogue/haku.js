@@ -1029,7 +1029,7 @@ export default {
         },
       },
       {
-        line: "{user} got there first, and **{name}** stops pretending to be asleep.",
+        line: "{user} calls his name, and **{name}** stops pretending to be asleep.",
         responses: {
           kind: "Say you knew he was awake",
           playful: "Pretend to be asleep too",

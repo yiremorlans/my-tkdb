@@ -902,11 +902,11 @@ export default {
         },
       },
       {
-        line: '"You lost or somethin\'?" **{name}** asks {user}, shuffling the whole time.',
+        line: '"You lost or somethin\'?" **{name}** asks {user}, yawning halfway through it.',
         responses: {
           kind: "Say you were looking for him",
           playful: "Bet him you're not lost",
-          bold: "Take the seat across from him",
+          bold: "Say you know the way",
         },
       },
       {
@@ -970,27 +970,27 @@ export default {
         },
       },
       {
-        line: "{user} calls out, and **{name}** kicks a chair out in their direction.",
+        line: "{user} calls out, and **{name}** wakes up from wherever he was napping, grinning.",
         responses: {
-          kind: "Take the seat",
-          playful: "Sit in it backwards",
-          bold: "Put your feet up on the table",
+          kind: "Say sorry for waking him",
+          playful: "Ask if he slept well",
+          bold: "Say naptime's over",
         },
       },
       {
-        line: "**{name}** calls {user} a dumbass and deals them in.",
+        line: "**{name}** calls {user} a dumbass and steals a bite of their lunch.",
         responses: {
-          kind: "Pick up your cards",
-          playful: "Say he stacked the deck",
-          bold: "Bet it all on the first hand",
+          kind: "Let him have it",
+          playful: "Steal it back",
+          bold: "Make him buy you lunch",
         },
       },
       {
-        line: '"Lulu can count the chips himself. Ciao!" **{name}** is out of his seat before {user} finishes talking.',
+        line: '"Finally, somethin\' not boring." **{name}** perks right up at {user}.',
         responses: {
-          kind: "Hold the door for him",
-          playful: "Race him out the door",
-          bold: "Say the night's yours now",
+          kind: "Say you're glad you came",
+          playful: "Bet you can keep it that way",
+          bold: "Tell him he's stuck with you",
         },
       },
     ],
@@ -1004,19 +1004,19 @@ export default {
         },
       },
       {
-        line: "{user} waves hello, and **{name}** folds a hand he was winning.",
+        line: "{user} waves hello, and **{name}** says their name for the first time, looking smug about it.",
         responses: {
-          kind: "Say he didn't have to",
-          playful: "Ask to see his cards",
-          bold: "Say you're worth the pot",
+          kind: "Say you're proud of him",
+          playful: "Ask him to spell it",
+          bold: "Make him say it again",
         },
       },
       {
-        line: '{user} says hi, and **{name}** tells the whole table "Ciao!" without looking back.',
+        line: '{user} says hi, and **{name}** tells his whole crew "Ciao!" without looking back.',
         responses: {
-          kind: "Wave to the table",
-          playful: "Say ciao to the table too",
-          bold: "Walk out on his arm",
+          kind: "Wave to his crew",
+          playful: "Say ciao to them too",
+          bold: "Walk off on his arm",
         },
       },
       {
@@ -1046,18 +1046,18 @@ export default {
         },
       },
       {
-        line: "{user} calls, and **{name}** walks away from a bet he was about to win.",
+        line: "{user} calls, and **{name}** abandons a perfectly good meal to get to them.",
         responses: {
           kind: "Say you'll make it up",
-          playful: "Ask what he would've won",
-          bold: "Say you're the better bet",
+          playful: "Ask if it was any good",
+          bold: "Say you're worth more",
         },
       },
       {
-        line: "**{name}** tosses his chips to the nearest mook without counting them. Then he's at {user}'s side.",
+        line: "**{name}** shoves whatever he was holding at the nearest mook without looking. Then he's at {user}'s side.",
         responses: {
           kind: "Say the mook got lucky",
-          playful: "Ask the mook to split it",
+          playful: "Ask the mook to keep it",
           bold: "Say he got the better deal",
         },
       },

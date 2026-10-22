@@ -1014,7 +1014,7 @@ export default {
         },
       },
       {
-        line: "{user} calls out a hello, and **{name}** decides, again, that forever is the plan.",
+        line: "{user} meets **{name}** halfway, and he decides, again, that forever is the plan.",
         responses: {
           kind: "Say forever sounds right",
           playful: "Ask what's after forever",

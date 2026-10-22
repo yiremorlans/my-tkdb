@@ -1366,17 +1366,17 @@ export default {
       {
         line: '**{name}** walks over to {user} anyway. "Proposal, schedule, budget... and yet here I am."',
         responses: {
-          kind: "Say all of it can wait",
-          playful: "Ask which one lost",
-          bold: "Say you win over the budget",
+          kind: "Offer to take one off {him}",
+          playful: "Say you'll take that as a win",
+          bold: "Say the budget can wait",
         },
       },
       {
-        line: "{user} got there first, and **{name}** looks caught.",
+        line: "{user} calls out early and catches **{name}** already looking {user}'s way.",
         responses: {
-          kind: "Pretend you saw nothing",
-          playful: "Ask what you caught",
-          bold: "Say you'll keep the secret",
+          kind: "Pretend you didn't notice",
+          playful: "Ask how long it's been",
+          bold: "Say you were looking too",
         },
       },
     ],

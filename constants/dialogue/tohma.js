@@ -1003,7 +1003,7 @@ export default {
         },
       },
       {
-        line: "{user} calls out a hello, and something behind **{name}**'s composure gives, briefly.",
+        line: "{user} greets **{name}** by name, and he's too pleased to remember a single pleasantry he had ready.",
         responses: {
           kind: "Pretend you didn't notice",
           playful: "Say his name again",

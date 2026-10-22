@@ -931,7 +931,7 @@ export default {
         },
       },
       {
-        line: '**{name}** draws himself up at {user}. "Dr. Yuri Isami. You may consider yourself fortunate. Are you ill, by any chance?"',
+        line: '**{name}** draws himself up at {user}. "You stand before a genius and visionary. Consider yourself fortunate. Are you ill, by any chance?"',
         responses: {
           kind: "Ask about his research",
           playful: "Fake a dramatic cough",
@@ -1061,7 +1061,7 @@ export default {
         },
       },
       {
-        line: "{user} calls out a hello, and the entire genius act falls off **{name}** at once.",
+        line: "{user} says hello, and **{name}** catches himself smiling and clears his throat behind his hand.",
         responses: {
           kind: "Say you like him like this",
           playful: "Ask where the genius went",

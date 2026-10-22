@@ -999,11 +999,11 @@ export default {
         },
       },
       {
-        line: '"If anyone asks, you\'re a customer." **{name}** pulls up a chair for {user} anyway.',
+        line: '"Don\'t tell that clown you saw me." **{name}** lets {user} stay anyway.',
         responses: {
-          kind: "Order something to stay",
-          playful: "Ask what you're buying",
-          bold: "Refuse to play customer",
+          kind: "Promise you won't tell",
+          playful: "Ask what he's hiding from",
+          bold: "Say Haru already knows",
         },
       },
     ],
@@ -1103,11 +1103,11 @@ export default {
         },
       },
       {
-        line: "{user} calls out a hello, and **{name}** decides the **{house}** roster can manage without him.",
+        line: "\"Hey. Was hoping it'd be you.\" **{name}** tells {user}, and doesn't even try to take it back.",
         responses: {
-          kind: "Say Haru will cope",
-          playful: "Ask if Haru knows",
-          bold: "Say Haru will find him",
+          kind: "Say you hoped so too",
+          playful: "Ask him to say it again",
+          bold: "Say it'll always be you",
         },
       },
     ],

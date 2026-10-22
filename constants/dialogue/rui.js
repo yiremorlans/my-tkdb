@@ -998,7 +998,7 @@ export default {
         },
       },
       {
-        line: '"Talk to me! About anything. I like hearing you go on." **{name}** settles in across from {user} like he\'s got all night.',
+        line: '"Talk to me! About anything. I like hearing you go on." **{name}** grins at {user} like he\'s got all day.',
         responses: {
           kind: "Tell him about your day",
           playful: "Talk about him instead",

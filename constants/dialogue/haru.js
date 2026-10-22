@@ -7,7 +7,7 @@ export default {
   // relentless-cheer act is a system he built so nobody would offer him help.
   // The prosthetic arm is NOT a secret to him (Mio built it, he'll take the
   // glove off in front of a tour group) — never write it as a shameful reveal,
-  // and never invent how he lost it; reference/haru.md is silent on the cause.
+  // and never elaborate on how it was broken (Shion broke it; that's all we say).
   //
   // Texting voice, per reference/haru.md's "Texting style" notes: little kaomoji
   // faces in his typed lines — (^_^;) sheepish, (;_;) for the sad ones — plus
@@ -919,11 +919,11 @@ export default {
   winnerLines: {
     new: [
       {
-        line: '"Well, hey there!" **{name}** grins at {user} over an armful of feed sacks. "You after somethin\'?"',
+        line: '"Hey, nice timin\'!" **{name}** grins at {user}, an energy drink in hand. "You need somethin\'?"',
         responses: {
-          kind: "Offer to take a sack",
+          kind: "Say you just wanted to say hi",
           playful: "Say you're after a tour",
-          bold: "Ask what's in the sacks",
+          bold: "Ask what he's after",
         },
       },
       {
@@ -987,19 +987,19 @@ export default {
         },
       },
       {
-        line: "{user} calls out, and **{name}** drops the sack he was hauling. It can wait.",
+        line: "{user} calls out, and **{name}** stuffs the shopping list in his pocket. It can wait.",
         responses: {
-          kind: "Pick up the sack for him",
-          playful: "Ask if the sack's offended",
+          kind: "Offer to help with the list",
+          playful: "Offer to be his alibi",
           bold: "Tell him to finish first",
         },
       },
       {
-        line: '"Grab a bucket." **{name}** is grinning when he says it to {user}.',
+        line: '"Walk with me, I\'m late for somethin\'." **{name}** is grinning when he says it to {user}.',
         responses: {
-          kind: "Grab a bucket",
-          playful: "Salute and grab a bucket",
-          bold: "Ask what's in the bucket",
+          kind: "Fall into step with him",
+          playful: "Say you're late for it too",
+          bold: "Make him later",
         },
       },
     ],
@@ -1047,7 +1047,7 @@ export default {
         },
       },
       {
-        line: "{user} calls, and **{name}** leaves the rounds to Ren without a second thought.",
+        line: "{user} calls, and **{name}** hands Ren the shopping list to finish the run alone. He'll hear about it.",
         responses: {
           kind: "Say Ren can handle it",
           playful: "Ask if Ren agreed",
@@ -1065,11 +1065,11 @@ export default {
         },
       },
       {
-        line: "**{name}** hears his name, and every animal in the park can wait. {user} can't.",
+        line: "**{name}** reaches {user} and, for once, has nowhere else he needs to be.",
         responses: {
-          kind: "Say the critters can wait",
-          playful: "Ask what Peekaboo thinks",
-          bold: "Say they shouldn't wait",
+          kind: "Say stay, then",
+          playful: "Ask who's minding the park",
+          bold: "Say he does now: here",
         },
       },
       {
