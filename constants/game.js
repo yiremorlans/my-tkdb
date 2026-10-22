@@ -208,11 +208,14 @@ export const POOL_POINTS_PER_LINE = 4;
 
 // Moods: how many beats in each tier's pool should carry `mood: true` (liked
 // pays 2, favorite pays 1; see getAffinityForResponse), roster-wide. Roughly
-// 17% of DIALOGUE_POOL_TARGET_BY_TIER at warm and 25% from spark up, so the
-// favorite stays the reliable answer in most draws. Like the pool target, it's
+// 17% of DIALOGUE_POOL_TARGET_BY_TIER at warm and spark, rising to 21% at
+// close and bound: about one draw in five or six, so a mood stays a surprise
+// and the favorite stays the reliable answer. It climbs late because the twist
+// lands best once the favorite is habit, and stays under 25% at bound because
+// that pool plays for the rest of the game. Like the pool target, it's
 // a documented target, not enforced: add moods as a tier's pool grows toward
 // its target, so a short pool doesn't shift moods far more often than intended.
-export const MOOD_BEAT_TARGET_BY_TIER = { warm: 3, spark: 6, close: 6, bound: 6 };
+export const MOOD_BEAT_TARGET_BY_TIER = { warm: 3, spark: 4, close: 5, bound: 5 };
 export const MIN_DIALOGUE_POOL_SIZE = 5;
 export const MAX_DIALOGUE_POOL_SIZE = 24;
 

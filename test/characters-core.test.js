@@ -73,10 +73,23 @@ test('getAffinityForResponse reads the character\'s own KIND/PLAYFUL/BOLD rankin
 test('moodNotice flags mood beats only', () => {
   const jin = CHARACTERS.find((c) => c.id === 'jin');
   assert.strictEqual(
-    moodNotice(jin, true),
+    moodNotice(jin, true, () => 0),
     'Jin seems to be in a different **mood** today.',
   );
   assert.strictEqual(moodNotice(jin, false), null);
+});
+
+// The phrasing varies, but every variant names the character and bolds "mood".
+test('moodNotice variants all name the character and bold mood', () => {
+  const jin = CHARACTERS.find((c) => c.id === 'jin');
+  const seen = new Set();
+  for (let i = 0; i < 20; i++) {
+    const notice = moodNotice(jin, true, () => i / 20);
+    assert.ok(notice.startsWith('Jin '), notice);
+    assert.ok(notice.includes('**mood**'), notice);
+    seen.add(notice);
+  }
+  assert.ok(seen.size > 1);
 });
 
 test('getAffinityForResponse with mood exchanges favorite and liked, leaving least-liked and NEUTRAL alone', () => {

@@ -1207,10 +1207,22 @@ export function getAffinityForResponse(
 export const MOOD_TIERS = ["warm", "spark", "close", "bound"];
 
 // The generic tip-off shown ahead of every mood beat, so the player knows the
-// usual approach may not land today. null for any other beat.
-export function moodNotice(character, mood) {
+// usual approach may not land today. Drawn from a few phrasings so a frequent
+// player doesn't read the same sentence every time. Each one names the
+// character as the subject (no possessive, so "Lucas" needs no special case)
+// and none hints at which type pays. null for any other beat. `rand` is
+// Math.random by default; tests pin it.
+const MOOD_NOTICES = [
+  (name) => `${name} seems to be in a different **mood** today.`,
+  (name) => `${name} isn't in the usual **mood**.`,
+  (name) => `${name} is in an unusual **mood**.`,
+  (name) => `${name} is in a **mood** you don't usually see.`,
+  (name) => `${name} is in a different **mood** right now.`,
+];
+export function moodNotice(character, mood, rand = Math.random) {
   if (!mood) return null;
-  return `${character.firstName} seems to be in a different **mood** today.`;
+  const notice = MOOD_NOTICES[Math.floor(rand() * MOOD_NOTICES.length)];
+  return notice(character.firstName);
 }
 
 // Last-resort label for the /roam narration button. Unreachable by authored
