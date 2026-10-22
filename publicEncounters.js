@@ -820,9 +820,13 @@ export async function handleCall(body, now = new Date()) {
     // register their relationship with the caller has reached — the generic
     // pool only fronts a character with no authored lines for that register)
     // and then the milestone's "what happened after" beat, the same
-    // afterline whose `label` shows under /affinity's Moments together.
+    // afterline whose `label` shows under /affinity's Moments together. The
+    // afterline is set off with its emoji and italics so it reads as a cut to
+    // later, not the next sentence of the winner line.
     const revealLines = [pickWinnerLine(tier, vars, encounter.character_id, { daytime })];
-    if (milestone) revealLines.push(fillTemplate(milestone.afterline, vars));
+    if (milestone) {
+      revealLines.push(`${milestone.emoji} *${fillTemplate(milestone.afterline, vars)}*`);
+    }
 
     // Discord rejects the whole edit (400 URL_TYPE_INVALID_URL) if the thumbnail
     // isn't an absolute URL — which is what getCharacterCardUrl returns when

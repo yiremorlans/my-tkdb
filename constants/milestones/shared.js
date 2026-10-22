@@ -13,7 +13,7 @@ export default {
     emoji: "📋",
     bucket: "any",
     label: "Caught them for a {house} report signature",
-    afterline: "They signed your {house} report on the way past.",
+    afterline: "{He} signed your {house} report on the way past.",
     hint: "that report hand-off",
   },
   coffee_break: {
@@ -47,7 +47,7 @@ export default {
     emoji: "🥤",
     bucket: "new",
     label: "Got treated when the machine ate your money",
-    afterline: "The machine ate your money, so they bought instead.",
+    afterline: "The machine ate your money, so {he} bought instead.",
     hint: "the vending machine that ate your money",
   },
 
@@ -56,7 +56,7 @@ export default {
     emoji: "📕",
     bucket: "new",
     label: "Borrowed a book from them",
-    afterline: "They lent you a book they'd just finished.",
+    afterline: "{He} lent you a book {he}'d just finished.",
     hint: "that book you borrowed",
   },
   helped_search: {
@@ -64,7 +64,7 @@ export default {
     emoji: "🔦",
     bucket: "new",
     label: "Helped them find something they'd lost",
-    afterline: "They'd lost something on the way across campus. You stayed and helped look until it turned up.",
+    afterline: "{He}'d lost something on the way across campus. You stayed and helped look until it turned up.",
     hint: "that search you helped with",
   },
 
@@ -107,7 +107,7 @@ export default {
     emoji: "🍱",
     bucket: "warm",
     label: "Ate lunch at the same table",
-    afterline: "The only free seat was at their table. They didn't mind.",
+    afterline: "The only free seat was at {his} table. {He} didn't mind.",
     hint: "that lunch together",
   },
 
@@ -187,7 +187,7 @@ export default {
     emoji: "🎶",
     bucket: "close",
     label: "Got a playlist made just for you",
-    afterline: "They'd made you a playlist and acted like it was nothing.",
+    afterline: "{He}'d made you a playlist and acted like it was nothing.",
     hint: "that playlist made for you",
   },
   stolen_glances: {
@@ -239,7 +239,7 @@ export default {
     emoji: "📝",
     bucket: "bound",
     label: "Found a note they'd left for you",
-    afterline: "There was a note waiting for you, in their handwriting.",
+    afterline: "There was a note waiting for you, in {his} handwriting.",
     hint: "that note waiting for you",
   },
   first_snow: {
@@ -255,7 +255,7 @@ export default {
     emoji: "🧣",
     bucket: "bound",
     label: "Wore their scarf all day",
-    afterline: "You wore their scarf all day. They kept glancing at it, pleased.",
+    afterline: "You wore {his} scarf all day. {He} kept glancing at it, pleased.",
     hint: "wearing that scarf all day",
   },
   lazy_day: {
@@ -279,7 +279,7 @@ export default {
     emoji: "💐",
     bucket: "bound",
     label: "Got flowers for no reason",
-    afterline: "They brought you flowers and wouldn't give a reason.",
+    afterline: "{He} brought you flowers and wouldn't give a reason.",
     hint: "those flowers for no reason",
   },
   watched_sunset: {

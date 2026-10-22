@@ -39,13 +39,22 @@ test('every type has a non-empty pool for every register and outcome', () => {
 });
 
 // Sized by draw frequency (see the reactions.js header): favourite-type `love`
-// pools are biggest, rarely drawn slots smallest, neutral small.
-const POOL_SIZES = {
+// pools are biggest, rarely drawn slots smallest, neutral small. Mood beats
+// (mid/deep only) push extra draws into kind.like and bold.like, so those two
+// grow past early there.
+const EARLY_SIZES = {
   kind: { love: 12, like: 4, flat: 3 },
   playful: { love: 10, like: 6, flat: 4 },
   bold: { love: 10, like: 3, flat: 6 },
   neutral: 4,
 };
+const MOOD_SIZES = {
+  kind: { love: 12, like: 6, flat: 3 },
+  playful: { love: 10, like: 6, flat: 4 },
+  bold: { love: 10, like: 5, flat: 6 },
+  neutral: 4,
+};
+const POOL_SIZES = { early: EARLY_SIZES, mid: MOOD_SIZES, deep: MOOD_SIZES };
 
 test('each pool holds its intended number of lines in every register', () => {
   for (const register of REGISTERS) {
@@ -53,12 +62,12 @@ test('each pool holds its intended number of lines in every register', () => {
       for (const outcome of OUTCOMES) {
         assert.strictEqual(
           REACTION_LINES[type][register][outcome].length,
-          POOL_SIZES[type][outcome],
+          POOL_SIZES[register][type][outcome],
           `${type}.${register}.${outcome}`,
         );
       }
     }
-    assert.strictEqual(REACTION_LINES.neutral[register].length, POOL_SIZES.neutral, `neutral.${register}`);
+    assert.strictEqual(REACTION_LINES.neutral[register].length, POOL_SIZES[register].neutral, `neutral.${register}`);
   }
 });
 

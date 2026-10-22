@@ -15,10 +15,13 @@
 //             tiers to three (see REGISTER_BY_TIER). The higher the affinity, the
 //             more the reaction is allowed to land: "a raised brow" at `early`,
 //             "that undoes them" at `deep`.
-//  outcome    love    the player picked this character's favourite response type
-//                     (gain 2). So kind.love is in effect the pool for
-//                     characters who love kind: character flavor for free.
-//             like    a liked-but-not-favourite type (gain 1)
+//  outcome    love    the pick paid 2. Usually that's the character's favourite
+//                     type, so kind.love is in effect the pool for characters
+//                     who love kind: character flavor for free. On a mood beat
+//                     (MOOD_TIERS) the liked type pays 2 instead, so it draws
+//                     from its own type's love pool.
+//             like    the pick paid 1: a liked-but-not-favourite type, or the
+//                     favourite on a mood beat
 //             flat    the character's least-preferred type (gain 0). It just
 //                     didn't resonate — NOT dislike or hurt. affinityByResponse
 //                     is a {2,1,0} permutation, so every character has one such
@@ -41,7 +44,10 @@
 // Pools are sized by how often they're drawn, not evenly. Players usually hit
 // a character's favourite, so `love` is the biggest (kind, the favourite of
 // 16, slightly ahead of bold and playful); like/flat scale
-// by how many characters rank that type there; neutral stays small. Sizes per
+// by how many characters rank that type there; neutral stays small. Mood beats
+// (warm and up, so mid/deep only) send the 16 kind-favourites and 8
+// bold-favourites into kind.like and bold.like when the player picks the usual
+// way, so those two pools are bigger at mid/deep than at early. Sizes per
 // register are pinned in test/reaction-lines.test.js (POOL_SIZES) — if the
 // roster's rankings shift, revisit them there.
 // Every slot is a collection — add lines any time; that is the whole point.
@@ -114,6 +120,8 @@ export const REACTION_LINES = {
         "That softens them.",
         "Some of the stiffness goes.",
         "They're glad it's you.",
+        "That takes the edge off.",
+        "They look a little lighter.",
       ],
       flat: [
         "Sweet, but not what they need.",
@@ -141,6 +149,8 @@ export const REACTION_LINES = {
         "That settles somewhere deep.",
         "A soft, private look.",
         "Something tender crosses their face.",
+        "That's a comfort to them.",
+        "Quietly, that matters.",
       ],
       flat: [
         "They know you mean it.",
@@ -202,7 +212,7 @@ export const REACTION_LINES = {
       flat: [
         "Not quite their speed.",
         "Fun, just not theirs.",
-        "They let the game drop.",
+        "Cute, but they're not in the mood.",
         "A smile, but they pass.",
       ],
     },
@@ -280,6 +290,8 @@ export const REACTION_LINES = {
         "They match your energy.",
         "They like the nerve.",
         "That gets them going.",
+        "They meet you halfway.",
+        "They take you up on it.",
       ],
       flat: [
         "Bold, but it doesn't land.",
@@ -307,6 +319,8 @@ export const REACTION_LINES = {
         "A slow grin.",
         "They rise to it.",
         "They love your nerve.",
+        "They push right back.",
+        "They're happy to keep up.",
       ],
       flat: [
         "It doesn't reach them. They don't mind.",

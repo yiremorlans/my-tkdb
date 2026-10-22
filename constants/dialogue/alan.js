@@ -916,19 +916,19 @@ export default {
         },
       },
       {
-        line: "**{name}** had been at that corner a while, working out which way it went. {user} named him before he managed it.",
+        line: "**{name}** had been at that corner a while, working out which way it went. {user} comes over to help.",
         responses: {
-          kind: "Ask where he's headed",
-          playful: "Ask if the corner's winning",
-          bold: "Tell him which way to go",
+          kind: "Say you're going that way too",
+          playful: "Ask if he's touring campus",
+          bold: "Walk him there yourself",
         },
       },
       {
-        line: '"Careful." **{name}** moves something sharp out of {user}\'s way before he says anything else.',
+        line: '{user} trips on a loose step walking toward **{name}**. "...You okay?"',
         responses: {
-          kind: "Say you'll watch your step",
-          playful: "Ask if you look that clumsy",
-          bold: "Say you saw it coming",
+          kind: "Say you're okay now",
+          playful: "Play it cool",
+          bold: "Ask him to walk with you",
         },
       },
       {
@@ -950,19 +950,19 @@ export default {
         },
       },
       {
-        line: '{user} calls out a hello, and **{name}** looks up. "...Still around. Good."',
+        line: '{user} stops by to say hi, and **{name}** looks up. "...Still around. Good."',
         responses: {
           kind: "Say you're not going anywhere",
           playful: "Ask if that's a compliment",
-          bold: "Say you'll stay around",
+          bold: "Say you were looking for him",
         },
       },
       {
-        line: '**{name}** doesn\'t look up from the engine when {user} names him. "Yeah. Heard you coming."',
+        line: "**{name}** is out on a run, and slows to a stop when {user} calls out.",
         responses: {
-          kind: "Ask what's wrong with it",
-          playful: "Ask if you're that loud",
-          bold: "Wait until he looks up",
+          kind: "Ask how far he's going",
+          playful: "Ask if he knows the way back",
+          bold: "Say you'll race him",
         },
       },
     ],
@@ -971,7 +971,7 @@ export default {
         line: "{user} calls out, and **{name}** stops walking.",
         responses: {
           kind: "Catch up to him",
-          playful: "Ask if you broke him",
+          playful: "Ask if he was waiting for that",
           bold: "Ask where he's off to",
         },
       },
@@ -984,33 +984,33 @@ export default {
         },
       },
       {
-        line: "**{name}** almost smiles at {user}. It's gone before anyone else catches it.",
+        line: "**{name}** doesn't say much when {user} shows up, but he seems happy to see them.",
         responses: {
-          kind: "Pretend you didn't see",
-          playful: "Say you caught that",
-          bold: "Ask him to do it again",
+          kind: "Say you're glad to see him too",
+          playful: "Ask if he's happy to see you",
+          bold: "Ask if he missed you",
         },
       },
     ],
     spark: [
       {
-        line: "**{name}** turns at {user}'s voice and takes a second too long to look away.",
+        line: '{user} calls out, and **{name}** comes over and pats them on the head. That\'s his hello now.',
         responses: {
-          kind: "Let him look",
-          playful: "Ask if you have something on",
-          bold: "Hold his gaze",
+          kind: "Lean into his hand",
+          playful: "Ask if you get one every time",
+          bold: "Tell him not to stop",
         },
       },
       {
-        line: '"You came looking." **{name}** says it flat to {user}, and stays put.',
+        line: '"...Thought that was you." **{name}** says it low, standing closer to {user} than he needs to.',
         responses: {
-          kind: "Say you always do",
-          playful: "Say you got lost again",
-          bold: "Say you found him",
+          kind: "Say you wanted to see him",
+          playful: "Ask who else it'd be",
+          bold: "Close the last step",
         },
       },
       {
-        line: "**{name}** doesn't say anything when {user} reaches him. He tips his head toward the quiet end of the yard and waits.",
+        line: "**{name}** doesn't say anything when {user} reaches him. He tips his head toward the quiet end of the courtyard and waits.",
         responses: {
           kind: "Follow him there",
           playful: "Ask what's at the quiet end",
@@ -1062,7 +1062,7 @@ export default {
         },
       },
       {
-        line: "**{name}** crosses the yard to {user} without once checking which way he's going.",
+        line: "**{name}** crosses the courtyard to {user} without once checking which way he's going.",
         responses: {
           kind: "Meet him in the middle",
           playful: "Say he didn't get lost",

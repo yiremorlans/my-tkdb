@@ -13,7 +13,7 @@ export default {
       emoji: "🍵",
       bucket: "new",
       label: "Joined them for tea back at {house}",
-      afterline: "They were heading back to {house} for tea. You decided to join them.",
+      afterline: "{He} was heading back to {house} for tea. You decided to join {him}.",
       hint: "that tea back at {house}",
     },
   },

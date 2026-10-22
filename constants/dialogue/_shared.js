@@ -287,7 +287,7 @@ export const SHARED_WINNER_LINES = {
     "{user} calls out and **{name}**'s whole posture changes.",
     "\"Of course it's you.\" **{name}** says it like {user}'s been caught at something.",
     "**{name}** was already half-turned before {user} finished.",
-    "{user} got there first, and **{name}** looks pleased about it.",
+    "{user} beat the crowd to **{name}**, who looks pleased about it.",
   ],
 
   close: [
@@ -300,7 +300,7 @@ export const SHARED_WINNER_LINES = {
 
   bound: [
     "**{name}** isn't even surprised. Of course it's {user}. Always {user}.",
-    "{user} calls out a hello and **{name}**'s already there, report forgotten.",
+    "{user} waves hello and **{name}**'s already there, report forgotten.",
     "\"You didn't have to guess.\" **{name}** takes {user}'s hand and the **{house}** briefing loses.",
     "**{name}** crosses to {user} like the room isn't there.",
     "The **{house}** paperwork hits the floor. **{name}** got to {user} first.",

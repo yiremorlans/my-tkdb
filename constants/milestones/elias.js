@@ -84,10 +84,10 @@ export default {
       tier: "warm",
       emoji: "💀",
       bucket: "warm",
-      label: "Kept him company holding Shion's severed head",
+      label: "Kept him company holding Shion's prop head",
       afterline:
-        "Shion had left him holding a severed head and run off on an urgent errand. You kept him company while he held it.",
-      hint: "that severed head",
+        "Shion had left him holding a severed-head prop and run off on an urgent errand. You kept him company while he held it.",
+      hint: "that severed-head prop",
     },
 
     // --- Close Friend ---
@@ -117,7 +117,8 @@ export default {
       emoji: "🥃",
       bucket: "bound",
       label: "Kept him company for one drink",
-      afterline: "Neither of you could sleep, so he offered one drink. You stayed long after the glass was empty.",
+      afterline:
+        "Neither of you could sleep, so he offered one drink. You stayed long after the glass was empty.",
       hint: "that one drink",
     },
     elias_goodbye_hand: {
