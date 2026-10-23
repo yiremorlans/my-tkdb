@@ -15,7 +15,7 @@ export default {
         options: [
           {
             key: "kind",
-            label: "Confirm it, and thank him",
+            label: "Pick a day right away",
             style: 3,
             close:
               "Noted. The slot is held.\n\nPlease arrive ten minutes early. Otherwise there isn't time for a full examination.",
@@ -232,12 +232,15 @@ export default {
     new: [
       {
         line: "He's writing in an incubation log and barely spares you a glance. His mask is pulled down to his chin, forgotten.",
-        approach: "Interrupt him with a question",
+        approach: "Ask how his day is going",
         greeting: '"I don\'t like unproductive discussions. Like this one."',
         responses: {
-          kind: ["Be patient with him", "Apologize and wait your turn"],
-          playful: ["Try to lighten the mood", "Ask if this counts as one"],
-          bold: ["Be direct with him", "Ask your question anyway"],
+          kind: ["Ask what he's incubating", "Ask how long he's been up"],
+          playful: [
+            "Point out his forgotten mask",
+            "Ask if you're interrupting",
+          ],
+          bold: ["Say you'll be quick", "Tell him why you came"],
           neutral: ["Let him finish the log", "Wait in silence"],
         },
       },
@@ -247,9 +250,9 @@ export default {
         greeting:
           '"Symptoms first, please. Pleasantries slow the diagnosis down."',
         responses: {
-          kind: ["Wait until he's free", "List your symptoms politely"],
-          playful: ["Crack a joke mid-exam", "Say your symptom is boredom"],
-          bold: ["Give it to him straight", "Skip straight to the point"],
+          kind: ["Wait until he's free", "Describe your symptoms"],
+          playful: ["Ask if curiosity counts", "Say your symptom is boredom"],
+          bold: ["Say you came to see him", "Say you have no symptoms"],
           neutral: ["Say only the facts", "Hand over your chart"],
         },
       },
@@ -259,10 +262,13 @@ export default {
         greeting:
           "\"Could you sit down? I'm going to take your pulse. You can breathe normally, it isn't a test.\"",
         responses: {
-          kind: ["Answer him honestly", "Sit down as asked"],
-          playful: ["Hold your breath anyway", "Ask if nervous counts"],
-          bold: ["Tell him to skip the check", "Hold out your wrist first"],
-          neutral: ["Give him quiet", "Breathe normally, say nothing"],
+          kind: ["Roll up your sleeve for him", "Sit down for the checkup"],
+          playful: [
+            "Ask what happens if you pass",
+            "Ask what happens if you fail",
+          ],
+          bold: ["Ask for the full checkup", "Say you only trust his checks"],
+          neutral: ["Give him quiet", "Wait for the check"],
         },
       },
       {
@@ -271,9 +277,9 @@ export default {
         greeting:
           '"Good. Please come by Mortkranken this week so I can confirm it."',
         responses: {
-          kind: ["Promise to be careful", "Promise to stay in one piece"],
+          kind: ["Promise to be careful", "Ask if he's careful too"],
           playful: ["Joke about dying anyway", "Ask if a pulse is enough"],
-          bold: ["Say you'll come by tomorrow", "Ask him to name the day"],
+          bold: ["Say you'll come by tomorrow", "Ask for the check-up now"],
           neutral: ["Stay, say nothing", "Agree to drop by"],
         },
       },
@@ -281,11 +287,11 @@ export default {
         line: "Everything in the room is sterile, ordered, and faintly unwelcoming. He fits it perfectly.",
         approach: "Don't touch anything",
         greeting:
-          '"You kept your hands to yourself. Most people touch the jars, and then they faint. That\'s inconvenient."',
+          '"You kept your hands to yourself. Most people touch the jars. Then they faint."',
         responses: {
-          kind: ["Respect the sterile space", "Keep your hands to yourself"],
-          playful: ["Be deliberately unhelpful", "Ask which jar is worst"],
-          bold: ["Touch something anyway", "Say you won't faint"],
+          kind: ["Respect the sterile space", "Stay where he can work"],
+          playful: ["Ask if you fit in too", "Ask if he decorated"],
+          bold: ["Say it suits him", "Say nothing here scares you"],
           neutral: ["Stand still, say nothing", "Keep a careful distance"],
         },
       },
@@ -296,13 +302,10 @@ export default {
         approach: "Let him use your name",
         greeting: '"Your color\'s better than last week."',
         responses: {
-          kind: ["Say it's nice to be known", "Say you feel better, too"],
-          playful: [
-            "Ask what else is on the chart",
-            "Tease the chart-heading tone",
-          ],
-          bold: ["Say of course he knows it", "Ask him to use it more"],
-          neutral: ["Take the naming plainly", "Say nothing about it"],
+          kind: ["Say you've been resting", "Say his name back"],
+          playful: ["Ask what else is on the chart", "Ask for the full report"],
+          bold: ["Say you like being his patient", "Say you'll keep improving"],
+          neutral: ["Answer to your name", "Say nothing about it"],
         },
       },
       {
@@ -311,9 +314,9 @@ export default {
         greeting:
           "\"If you're staying, could you hold this? Please don't look at what's in it.\"",
         responses: {
-          kind: ["Say you don't mind waiting", "Offer to help while there"],
-          playful: ["Loiter uselessly on purpose", "Peek at what's in it"],
-          bold: ["Take it without question", "Ask what you're holding"],
+          kind: ["Offer to hand him things", "Ask if he's eaten today"],
+          playful: ["Ask if you count as staff", "Ask if staying is allowed"],
+          bold: ["Ask what he's working on", "Say you like watching him work"],
           neutral: ["Stay quietly, out of the way", "Say nothing, just stay"],
         },
       },
@@ -321,14 +324,11 @@ export default {
         line: "\"You're not squeamish,\" he observes. From him that's a character reference.",
         approach: "Take it as a compliment",
         greeting:
-          "\"Most people are squeamish. Yes, it was a compliment. I don't give them often, so I wasn't sure it came across.\"",
+          "\"It was an observation. Most people are squeamish. You aren't. That's useful.\"",
         responses: {
-          kind: [
-            "Say specimens don't bother you",
-            "Take the compliment kindly",
-          ],
-          playful: ["Ask what would spook him", "Act scandalized for effect"],
-          bold: ["Say nothing rattles you", "Challenge him to try harder"],
+          kind: ["Say that means a lot from him", "Offer to assist sometime"],
+          playful: ["Ask what would spook him", "Ask for it in writing"],
+          bold: ["Say nothing rattles you", "Offer to watch a procedure"],
           neutral: ["Shrug at the observation", "Let the comment pass"],
         },
       },
@@ -336,13 +336,13 @@ export default {
         line: '"They said they wanted to die, so I prescribed them what they needed. I don\'t see the point of discussing ethics after the fact."',
         approach: "Pay attention",
         greeting:
-          "\"You're still listening. Most people leave at that part. I don't know why.\"",
+          "\"It was their decision. I only handled the dosage. I've never understood why that's the part people object to.\"",
         responses: {
           kind: ["Listen without judgment", "Say you get the reasoning"],
-          playful: ["Ask for the ethics lecture", "Ask if that was a joke"],
+          playful: ["Ask if that's his opener", "Ask if that was a joke"],
           bold: [
-            "Push back on the ethics of it",
-            "Ask him to justify it properly",
+            "Say he can tell you anything",
+            "Say you'd rather hear it plain",
           ],
           neutral: [
             "Take the explanation, move on",
@@ -352,25 +352,27 @@ export default {
       },
       {
         line: 'You nod off waiting for him and wake to two fingers at your wrist. "Oh, you\'re alive."',
-        approach: "Assure him you're alive",
-        greeting:
-          '"I know. I took your pulse before I asked. People seem to prefer being asked."',
+        approach: "Ask why he's checking",
+        greeting: '"You sleep very still. It seemed worth confirming."',
         responses: {
           kind: ["Say you're very much alive", "Say you feel rested now"],
-          playful: ["Pretend to still be dead", "Ask if he was worried"],
+          playful: ["Ask if 'alive' is the verdict", "Ask if he was worried"],
           bold: ["Ask what your pulse was", "Say he can check anytime"],
           neutral: ["Nod, still half-asleep", "Stretch, say nothing"],
         },
       },
       {
-        line: "He's frowning at an attendance sheet. \"They marked me absent again. I was there. Apparently I'm supposed to answer when they say my name.\"",
-        approach: "Offer to nudge him next time",
+        line: '"I attend classes every day since Yuri does," he says, frowning at an attendance record, "but sometimes they mark me as absent."',
+        approach: "Explain how roll call works",
         greeting:
-          '"I never notice my own name at roll call. I always notice yours, for some reason."',
+          "\"I'm supposed to reply when they say my name? I didn't know that.\"",
         responses: {
-          kind: ["Say it's an easy mistake", "Say you saw him there"],
-          playful: ["Call his name to test him", "Quiz him on his own name"],
-          bold: ["Say you'll cue him every time", "Say you notice his too"],
+          kind: ["Say being there should count", "Show him how to say 'here'"],
+          playful: [
+            "Ask what he thought it was for",
+            "Call his name to test him",
+          ],
+          bold: ["Say you'll practice with him", "Tell him to answer loudly"],
           neutral: ["Nod, say nothing", "Let it go unremarked"],
         },
       },
@@ -392,15 +394,9 @@ export default {
         greeting:
           "\"It isn't favoritism. You arrive first, so you're seen first.\"",
         responses: {
-          kind: [
-            "Say you don't mind either way",
-            "Promise to keep arriving first",
-          ],
-          playful: [
-            "Call it exactly what it is",
-            "Tease the 'coincidence' line",
-          ],
-          bold: ["Name it as favoritism outright", "Ask him to just admit it"],
+          kind: ["Ask how many he's seeing today", "Promise you wont be late"],
+          playful: ["Ask who got bumped", "Ask for a reminder card"],
+          bold: ["Say you'll keep the slot", "Say first suits you fine"],
           neutral: [
             "Let him call it coincidence",
             "Say nothing about the slot",
@@ -408,46 +404,39 @@ export default {
         },
       },
       {
-        line: '"The last patient had something contagious. Probably." He hands you a mask before you ask for one.',
+        line: '"Streptococcal infections are on the rise," he says, and hands you a mask before you ask for one.',
         approach: "Take the mask",
         greeting:
-          '"It\'s probably nothing. If you start coughing blood, come back. Before dinner, ideally."',
+          '"They\'re spread through droplet and contact infection. Have you been taking precautions?"',
         responses: {
-          kind: ["Thank him for the mask", "Take it without question"],
-          playful: [
-            "Ask how contagious, exactly",
-            "Fake a cough and watch him",
-          ],
-          bold: ["Take it without asking why", "Say you're not worried"],
-          neutral: ["Put it on, say nothing", "Take it, say nothing"],
+          kind: ["Put the mask on right away", "Ask if he's feeling okay"],
+          playful: ["Ask how contagious, exactly", "Ask if the mask is a gift"],
+          bold: ["Tell him to put his on", "Say you've been careful"],
+          neutral: ["Put it on, say nothing", "Nod and keep your distance"],
         },
       },
       {
-        line: "He glances at the clock, then at you, then back at the clock, recalculating something.",
-        approach: "Ask what he's timing",
-        greeting: [
-          "\"I've been timing how long you stay. It's longer each visit. I haven't worked out why.\"",
-        ],
+        line: 'He checks the clock and rolls up his sleeve. "Nearly time for my medication."',
+        approach: "Ask how long it takes",
+        greeting:
+          '"It should take approximately one hour. Are you going to wait for me?"',
         responses: {
-          kind: ["Tell him you don't mind", "Say you like to stay late"],
-          playful: ["Ask for the results so far", "Ask if you're the variable"],
-          bold: ["Say he already knows why", "Promise to stay even longer"],
+          kind: ["Say you'll wait for him", "Ask if the treatment hurts"],
+          playful: ["Ask if you can watch", "Offer to time it for him"],
+          bold: ["Say you're coming with him", "Say he can't skip it"],
           neutral: ["Nod and stay where you are", "Say nothing and stay put"],
         },
       },
       {
-        line: '"Yuri asked why I keep the light on later than I need to," he says. "I told him it wasn\'t relevant to his question."',
-        approach: "Ask what the real answer is",
+        line: "It's late and his light is still on. He's reading a medical journal, with a stack of others beside him.",
+        approach: "Ask if he reads every night",
         greeting:
-          "\"I don't sleep much anyway. You tend to come by after dark. That's all it is.\"",
+          '"Every day. I like medical journals best. I don\'t remember what made me start reading them."',
         responses: {
-          kind: ["Ask why it's on so late", "Say you don't need an answer"],
-          playful: [
-            "Guess the real answer yourself",
-            "Tease him about dodging Yuri",
-          ],
-          bold: ["Ask him to just say why", "Push past the deflection"],
-          neutral: ["Let it go unremarked", "Don't press for more"],
+          kind: ["Ask if he's slept at all", "Ask which one he'd recommend"],
+          playful: ["Ask if it's a page-turner", "Ask to borrow the dull one"],
+          bold: ["Ask for the one on infections", "Ask to hear a medical case"],
+          neutral: ["Let him keep reading", "Leave him to his journal"],
         },
       },
       {
@@ -459,21 +448,23 @@ export default {
             "Let him keep the note private",
             "Say you trust it's nothing bad",
           ],
-          playful: ["Guess what he wrote", "Demand to read the chart"],
-          bold: ["Ask him outright what it says", "Take the chart and look"],
+          playful: ["Guess what he wrote", "Offer to trade notes"],
+          bold: ["Ask if it's medical", "Ask to see your chart"],
           neutral: ["Let it go unremarked", "Say nothing about the line"],
         },
       },
       {
-        line: '"You ask surprisingly good questions," he says, and makes a note of it.',
-        approach: "Ask an even better question",
-        greeting:
-          "\"...That one I didn't see coming. I don't have an answer yet. Give me a moment. I'd like to get it right.\"",
+        line: '"What\'s the purpose of educational facilities like Darkwick?" he asks. He genuinely wants to know.',
+        approach: "Give him a reason",
+        greeting: '"You can learn everything you need through self-study."',
         responses: {
-          kind: ["Wait while he thinks it over", "Say you're glad he noticed"],
-          playful: ["Time him while he thinks", "Look far too pleased"],
-          bold: ["Say his questions are good", "Say you meant to stump him"],
-          neutral: ["Take the comment plainly", "Shrug, move on"],
+          kind: ["Say it's for the people there", "Say you'd study less alone"],
+          playful: [
+            "Ask what he'd study instead",
+            "Ask if self-study has exams",
+          ],
+          bold: ["Say you learn more with him", "Say people are the point"],
+          neutral: ["Shrug at the question", "Let him keep his theory"],
         },
       },
     ],
@@ -496,14 +487,16 @@ export default {
         greeting:
           "\"How are you sleeping? I don't, so I'm asking for comparison.\"",
         responses: {
-          kind: ["Sit down, thank him", "Answer about your sleep"],
+          kind: ["Offer to sit up with him", "Answer about your sleep"],
           playful: ["Ask if it's just for you", "Ask how he'd compare"],
-          bold: ["Sit like it's expected", "Ask when he last slept"],
+          bold: ["Sit like it's expected", "Say he needs it more"],
           neutral: ["Sit without comment", "Say you sleep fine"],
         },
       },
       {
         line: 'He\'s favoring one side. "One of my sutures tore. I should get back to Mortkranken. Yuri will have to redo it."',
+        // He's hurting: tending the tear lands, insisting on the walk doesn't.
+        mood: true,
         approach: "Offer to walk him back",
         greeting:
           '"If you want. It\'s only a tear. Yuri will complain the whole time he sutures it."',
@@ -513,7 +506,7 @@ export default {
             "Tease him about the sutures",
             "Promise to out-complain Yuri",
           ],
-          bold: ["Insist on walking with him", "Tell him to lean on you"],
+          bold: ["Insist on walking with him", "Say Yuri can complain to you"],
           neutral: ["Walk along, say nothing", "Carry his things back"],
         },
       },
@@ -522,7 +515,7 @@ export default {
         approach: "Ask what's so funny",
         greeting: "\"It was just the ventilation. That's funny, isn't it?\"",
         responses: {
-          kind: ["Enjoy the laugh with him", "Laugh along with him"],
+          kind: ["Say you like his laugh", "Laugh along with him"],
           playful: ["Insist it was a ghost", "Say the ghost laughed too"],
           bold: ["Point out how rare it is", "Tell him to laugh more often"],
           neutral: ["Let the laugh pass quietly", "Pretend nothing happened"],
@@ -530,11 +523,13 @@ export default {
       },
       {
         line: "He's short with everyone in the ward today. Not with you. He noticed that too.",
+        // A worn, prickly day: quiet company lands, asking him to talk doesn't.
+        mood: true,
         approach: "Ask what's wrong",
         greeting:
           "\"Nothing. People keep telling me I was rude today. You haven't. That's restful.\"",
         responses: {
-          kind: ["Ask what they said he did", "Say you'll stay a while"],
+          kind: ["Ask if he's worn out", "Say you'll stay a while"],
           playful: ["Ask what everyone else did", "Ask how rude he was"],
           bold: ["Say he can tell you", "Ask what would actually help"],
           neutral: ["Leave the subject alone", "Sit and keep it restful"],
@@ -546,9 +541,9 @@ export default {
         greeting:
           "\"I'll give you something mild. You don't have to be brave in here. It doesn't help the reading.\"",
         responses: {
-          kind: ["Answer him honestly", "Tell him where it hurts"],
+          kind: ["Tell him where it hurts", "Take the mild one"],
           playful: ["Try to hide it anyway", "Ask for the strong stuff"],
-          bold: ["Say yes, plainly", "Say you're not being brave"],
+          bold: ["Say yes, it hurts", "Say you're not being brave"],
           neutral: ["Give a flat answer", "Point to the sore spot"],
         },
       },
@@ -558,8 +553,8 @@ export default {
         greeting:
           "\"I'm aware. Mine always looks like this. Yours usually doesn't.\"",
         responses: {
-          kind: ["Sit down, no argument", "Inhale the salts, thank him"],
-          playful: ["Agree, dramatically", "Wince dramatically at salts"],
+          kind: ["Sit down, no argument", "Inhale the salts"],
+          playful: ["Ask if it's that bad", "Sniff once, make a face"],
           bold: ["Say he looks tired too", "Tell him his face is fine"],
           neutral: ["Sit down, say nothing", "Take the salts, say nothing"],
         },
@@ -570,7 +565,7 @@ export default {
         greeting:
           "\"I did. It's like measuring out medication, only nobody's life depends on it. I find that relaxing.\"",
         responses: {
-          kind: ["Thank him for making them", "Say they're really good"],
+          kind: ["Ask him to eat one too", "Say they're really good"],
           playful: ["Ask for the recipe", "Ask if any are poisoned"],
           bold: ["Say he made them for you", "Ask him to make more"],
           neutral: ["Take one, say nothing", "Eat one quietly"],
@@ -584,7 +579,7 @@ export default {
         responses: {
           kind: ["Tell him to take his time", "Say two bites is progress"],
           playful: ["Count the bites out loud", "Cheer for the third bite"],
-          bold: ["Tell him to finish it", "Say you'll bring another"],
+          bold: ["Say you'll stay for bite three", "Say you'll bring another"],
           neutral: ["Watch, say nothing", "Let him eat in peace"],
         },
       },
@@ -596,7 +591,7 @@ export default {
         responses: {
           kind: ["Let him take his time", "Say it's nice to be counted"],
           playful: ["Ask if that's still medical", "Ask for a third count"],
-          bold: ["Call out the long reading", "Ask why he counted twice"],
+          bold: ["Say he can count all day", "Say you noticed, and stay"],
           neutral: ["Say nothing about the count", "Keep your wrist still"],
         },
       },
@@ -613,12 +608,12 @@ export default {
         },
       },
       {
-        line: "He's memorized your allergy list without being told twice. He remembers most things once.",
+        line: "He's memorized your allergy list. He forgets most things, but not that.",
         approach: "Ask what else he's memorized",
         greeting:
           '"Your blood type. Your resting pulse. That you hum on the stairs. Some of it isn\'t medical."',
         responses: {
-          kind: ["Say that means a lot", "Say you'll keep humming"],
+          kind: ["Ask when his medication is", "Say you'll keep humming"],
           playful: ["Test what else he remembers", "Hum for him right now"],
           bold: ["Say of course he remembers", "Ask what else isn't medical"],
           neutral: ["Shrug, say nothing", "Let the list stand"],
@@ -630,7 +625,7 @@ export default {
         greeting:
           '"Then take it. It\'s your arm. I only held the needle steady."',
         responses: {
-          kind: ["Take the progress kindly", "Thank him for a gentle hand"],
+          kind: ["Say his hands are steady", "Say you trust his needle"],
           playful: ["Take way too much credit", "Ask for a sticker anyway"],
           bold: ["Say you've always been brave", "Say he deserves some credit"],
           neutral: ["Take the note plainly", "Roll your sleeve back down"],
@@ -642,7 +637,7 @@ export default {
         greeting:
           '"I brewed it. Tea is most of what I can keep down, so I\'ve had the practice. Please drink all of it."',
         responses: {
-          kind: ["Drink it, thank him", "Say it's the best tea"],
+          kind: ["Drink all of it", "Say it's the best tea"],
           playful: ["Ask what's actually in it", "Wince at the first sip"],
           bold: ["Ask for a second mug", "Finish it in one go"],
           neutral: ["Drink it, say nothing", "Sip it slowly"],
@@ -655,8 +650,8 @@ export default {
           "\"He isn't. Your check-ups take longer because you ask questions. That's all.\"",
         responses: {
           kind: ["Say Yuri might have a point", "Say you'll keep asking them"],
-          playful: ["Side with Yuri, teasingly", "Ask a question right now"],
-          bold: ["Say Yuri's right, plainly", "Say it's more than questions"],
+          playful: ["Ask who's keeping score", "Ask a question right now"],
+          bold: ["Say Yuri's right", "Say it's more than questions"],
           neutral: ["Stay out of it", "Let him have the last word"],
         },
       },
@@ -667,7 +662,7 @@ export default {
         responses: {
           kind: ["Don't make him explain", "Say 'visit' sounds right"],
           playful: ["Guess what he calls it now", "Suggest a better category"],
-          bold: ["Demand to see the log", "Ask what it should say"],
+          bold: ["Say you'd write 'visit' too", "Ask what it should say"],
           neutral: ["Leave the log alone", "Accept the category"],
         },
       },
@@ -685,6 +680,8 @@ export default {
       },
       {
         line: "Yuri is asleep at his desk. Jiro moves around him without a sound and doesn't wake him.",
+        // A hushed, tender moment: honoring his care for Yuri lands, digging into it doesn't.
+        mood: true,
         approach: "Ask why he lets him sleep",
         greeting:
           "\"His hands shake when he's short on sleep, and I need them steady. He won't rest if I ask him to, so I've stopped asking.\"",
@@ -708,7 +705,7 @@ export default {
         responses: {
           kind: ["Let him take your pulse", "Let him take his time"],
           playful: ["Fluff the pulse count", "Remind him, wrongly"],
-          bold: ["Tell him to drop the act", "Say he wasn't checking"],
+          bold: ["Say you've forgotten too", "Say he wasn't checking"],
           neutral: ["Let it stay a diagnosis", "Stay perfectly still"],
         },
       },
@@ -718,9 +715,9 @@ export default {
         greeting:
           "\"Then it isn't the cuff, or the walk over. I'll write down the real cause.\"",
         responses: {
-          kind: ["Confirm what he asked", "Admit it's because of him"],
+          kind: ["Hold still for the count", "Admit it's because of him"],
           playful: ["Ask what else he's confirming", "Ask what he'll write"],
-          bold: ["Confirm it boldly", "Tell him to write it down"],
+          bold: ["Say it's him, not the walk", "Tell him to write it down"],
           neutral: ["Say nothing, let him note it", "Let him write in silence"],
         },
       },
@@ -792,7 +789,7 @@ export default {
         greeting:
           "\"I can't prescribe anything for that. I'll stay instead. That's the treatment.\"",
         responses: {
-          kind: ["Say it hurts less now", "Thank him for staying"],
+          kind: ["Say it hurts less now", "Say the treatment's working"],
           playful: [
             "Deflect with a joke first",
             "Ask how long treatment lasts",
@@ -908,7 +905,7 @@ export default {
         },
       },
       {
-        line: '{user} says the name, and **{name}** tugs his mask down to answer. "Yes. Do you need something treated?"',
+        line: '{user} says hello, and **{name}** tugs his mask down to answer. "Yes. Do you need something treated?"',
         responses: {
           kind: "Ask if he needs treating",
           playful: "Say it's your heart",
@@ -942,7 +939,7 @@ export default {
         },
       },
       {
-        line: '{user} says the name, and **{name}** stops. "I was about to come find you for a check-up. This saves me a trip."',
+        line: '{user} runs into **{name}**, who stops. "I was about to come find you for a check-up. This saves me a trip."',
         responses: {
           kind: "Hold out your wrist",
           playful: "Ask if it'll hurt",
@@ -972,7 +969,7 @@ export default {
         responses: {
           kind: "Sit down for him",
           playful: "Wobble on purpose",
-          bold: "Say you're fine standing",
+          bold: "Sit, and make him sit too",
         },
       },
       {
@@ -1002,7 +999,7 @@ export default {
         },
       },
       {
-        line: "{user} got there first, and **{name}** files that somewhere he doesn't file work.",
+        line: "{user} calls his name, and **{name}** files that somewhere he doesn't file work.",
         responses: {
           kind: "Let him keep it",
           playful: "Ask where he filed it",
@@ -1054,7 +1051,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** lets Yuri shout for him. Let him shout.",
+        line: "{user} calls his name, and **{name}** lets Yuri shout for him. Let him shout.",
         responses: {
           kind: "Say Yuri will be fine",
           playful: "Shout for Yuri back",
