@@ -67,14 +67,14 @@ export default {
     },
 
     // --- Close Friend ---
-    haru_fox: {
+    haru_dog: {
       tier: "spark",
-      emoji: "🦊",
+      emoji: "🐕",
       bucket: "spark",
-      label: "Got that fox away from him",
+      label: "Got that dog away from him",
       afterline:
-        "That fox got in again, and he still can't do foxes. You got it back out while he yelled for Towa.",
-      hint: "that fox you got out",
+        "That dog got in again, and he still can't do dogs. You got it back out while he yelled for Towa.",
+      hint: "that dog you got out",
     },
     haru_night_walk: {
       tier: "spark",
