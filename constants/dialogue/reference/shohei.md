@@ -44,6 +44,29 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - She's kept on her artifact chain when not ridden.
 - She's able to comfortably be ridden by two people but three is very tight.
 
+## Trivia
+Source: Tokyo Debunker Wiki, Shohei Haizono page, Trivia section (tokyodebunker.fandom.com/wiki/Shohei_Haizono; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q: What is your favorite subject?
+  - A: Nothing really... ah, but Anomalous Combat is still better. Since I get to move my body, it's a good stress reliever, y'know?
+  - Q: What is good about your house?
+  - A: What's good about it? ...Since there's a garage, bike maintenance is easy. That's it.
+  - Q: Where would you like to go if you have your R&R permit approved?
+  - A: There's a famous restaurant in Nakame that's famous for its delicious broth. It seems like a creative Japanese restaurant. I'd like to go there once.
+  - Q: What do you think about the ghoul(s) in your house?
+  - A: Ah... Leo's the kind of guy you just can't get rid of. How should I put it... we've just been hanging out together for some reason since middle school. Mido... I never know what he's thinking. That guy, he's the type that doesn't have enough words, right?
+- Sho can't handle spicy foods well.
+- As seen in his Character Story Chapter 3, his room has various items such as a laptop, a guitar, a dart board, and a projector.
+  - When asked if he plays the guitar, he replied that he was into it for a while, but he hasn't touched it recently.
+- He appears to be left-handed, judging by his writing animation on campus.
+- His surname, Haizono, can be roughly translated to mean "gray garden" in Japanese.
+- Sho's stigma incantation, "Spurno," is an anagram of the Ars Goetia demon Purson. He is a Great King of Hell, being served and obeyed by twenty-two legions of demons who know of hidden things, can find treasures, and tells past, present, and future. Taking a human or aerial body he answers truly of all secret and divine things of Earth and the creation of the world. He also brings good familiars.
+- Sho likes girls without makeup.
+- In the Tokyo Debunker popularity contest held by Dengeki Online in January 2026, Sho was ranked 4th as the most popular character in Tokyo Debunker from Season 1.
+- In Season 2 Episode 5, it is revealed that Sho received the fourth highest grade in the February midterms.
+- Sho uses the 俺 [Ore] pronoun for himself and the あんた [Anta] pronoun for others.
+  - When referring to his bike, Bonnie, Sho uses the pronoun お前 [Omae] instead of あんた [Anta].
+
 ## Voicelines
 Character Selection	 Pass. I'm not going on some kindergarten field trip with you.
 Opening Cutscene	What're you doing here? Geez... What else am I supposed to do, huh? I'm the only guy for the job. Pfft... What's with that face? At least see me off with a smile. Well... it's been a fun ride. Thanks for everything.

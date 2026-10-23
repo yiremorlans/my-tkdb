@@ -49,6 +49,36 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - Wears gloves, a turtleneck, and avoids crowded places to avoid committing manslaughter and killing anything he touches.
 - Has repeatedly told Ed that his "vessel isn't worth it" when Ed brings up giving him his life force.
 
+## Trivia
+Source: Tokyo Debunker Wiki, Rui Mizuki page, Trivia section (tokyodebunker.fandom.com/wiki/Rui_Mizuki; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q. What's your favorite subject?
+  - A. Ehh~~~? I haven't been going to classes though~~~... I don't even remember what subjects they're teaching here. I try not to go to the campus building as much as possible, after all.
+  - Q: What is good about your house?
+  - A. Most of the room interiors are hand picked by yours truly so I can recommend all of them~... Ah! But only cute girls are allowed to stay the night!
+  - Q. Where would you like to go if you have your R&R permit approved?
+  - A. Hmm~... If I can go out without worrying about curfew then I'd like to go shopping at Daikanyama and then go home after enjoying a pleasant meal at Yebisu Garden Place Tower~☆ Well, I can't really go out into crowded places though, so everything is just a pipe dream! Ahaha!
+  - Q: What do you think about the ghoul(s) in your house?
+  - A. It's such a pain how Ed barely has any life skills to save himself. I'm practically nursing him at this point... As for Lyca~... Huh? That one is pretty much like taking care of a kid... Oh, c'mon! What do they take me for?!
+- Rui has a series of nicknames that gives to others:
+  - Ren: Renren
+  - Taiga: Tai
+  - Romeo: Romi
+  - Haku: Hakucchi
+  - Jiro: Big J
+  - Shopkeep Benkei: Benny
+  - Lyca: Doggo
+- He appears to be right-handed, judging by his Campus writing animation.
+- Once, he went out on a mission with Edward, where he proceeded to not only destroy the anomaly, but the whole building, too. Rui said it made him think twice about taking him on missions again.
+- Rui has a virtual reality (VR) headset, most likely using it to talk to someone off of Darkwick Academy campus.
+- Rui's birthday, March 14, is also known as White Day in Japan.
+- It was hinted at that Rui had tried to run away in Episode 1 during his conversation with Haku.
+- Rui's undercover disguise as a guild-visiting cat being a black rabbit may be a reference to the Playboy bunny.
+- It is revealed in "Episode 22: Who Killed Robin? Act II" that the person Rui is in contact with via VR headset is one of the former Clementia House students by the name of Shiki. [spark+]
+- In the Tokyo Debunker popularity contest held by Dengeki Online in January 2026, Rui was ranked 3th as the most popular character in Tokyo Debunker from Season 1
+- Rui uses the 俺ちゃん [Ore-chan] pronoun for himself and the 君 [Kimi] pronoun for others.
+  - Rui almost always uses someone’s name rather than using Kimi. When he does use it, such as in campus chats, it's typically with the MC.
+
 ## Voicelines
 Opening Cutscene	Ha ha... You found me! Geez, are you in love with me or something? Hey, now. Don't think about trying to grab my hand. Just be happy enough for the both of us, okay?
 Summon	Hey there, it's me—your curse twin!

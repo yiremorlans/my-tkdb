@@ -36,6 +36,27 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - Parasol - ?
 - Sturdy enough to destroy a possessed doll.
 
+## Trivia
+Source: Tokyo Debunker Wiki, Subaru Kagami page, Trivia section (tokyodebunker.fandom.com/wiki/Subaru_Kagami; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Stigma effect: It's said to be a power that allows him to communicate with the "Tsukumogami" that resides in objects, but...?
+  - Q. What's your favorite place on campus?
+  - A. Lately I've been enjoying my lunch at the second floor terrace of the main school building. It's an easier place to stay for me compared to the ever-crowded cafeteria.
+  - Q. Do you have any concerns with missions?
+  - A. Hotarubi normally doesn't really have many chances to go through difficult missions so I don't really... Oh, but if I must say, perhaps I rely too much on Haku... I feel awful for being such an undependable captain.
+  - Q. Where would you like to go if you have your R&R permit approved?
+  - A. Shibuya... I suppose? I've been living all my life in Tokyo but the truth is, I've never been there. Not even once. O-oh, no! Please don't mind me! I really just mean that I hope I'll get the chance to go some day...! I'm... not too good with crowds.
+- In physiognomy, a mole under the eye is often referred to as a teardrop mole or a tear mole. Therefore, the position of his mole might indicate an unfavorable love life, as it is said those who have a mole under their eye often face challenges in their romantic relationships.
+- He appears to be right-handed, judging by his Campus writing animation.
+- In Leo's Affinity 13 line, it's said that Subaru has an older sister who is married to someone outside of their troupe.
+- His given name, Subaru (加賀見), in Japanese means "to add, include, augment." and also "to have an effect on something or someone".
+- Towa's nickname for Subaru, shameplant, refers to the Mimosa pudica, its species epithet, pudica, is Latin for 'shame', 'bashful', or 'shrinking', alluding to its shrinking reaction to contact.
+- Subaru's WickChat icon is of the leaves of the Wisteria tree within the Hotarubi grounds.
+- Subaru's stigma incantation, "Talnandio," is an anagram of the Ars Goetia demon Dantalion. He is a Great Duke of Hell who teaches all arts and sciences, and also declares the secret counsel of anyone, given that he knows the thoughts of all people and can change them at his will. He can also cause love and show the similitude of any person, show the same by means of a vision, and let them be in any part of the world they will.
+- Because of his family, Subaru is well-known in Tokyo's entertainment districts, Asakusa and Ginza. The shopkeepers and other locals who have known him since he was a child still call him by his nickname: Su.
+- Subaru uses the ぼく [Boku] pronoun for himself and the きみ [Kimi] pronoun for others.
+  - Subaru mostly uses the きみ version of Kimi, but in an affinity chat with Zenji, he uses the katakana form キミ.
+
 ## Voicelines
 Summon	 I'll do my best to live up to your expectations.
 Login Bonus	 TBA

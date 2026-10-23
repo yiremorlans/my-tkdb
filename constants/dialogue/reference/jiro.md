@@ -48,6 +48,27 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - Jiro has experienced sudden attacks of his illness in the presence of the ghost of a young boy, mentions of his having a family, and at the sight of Zenji's birthday(June 19th.) In the latter case he reacted to the sight by ripping down the balloons that spelt out the date, which provided him relief. Hearing the PC say Zenji's name didn't result in the same response, however he did respond with an expression like hurt and a suspicious tone when the PC quoted Zenji.
 - Jiro doesn't react much to his wounds and being in pain, but he will eventually collapse from overexertion or illness if he misses a treatment or has taken too much damage.
 
+## Trivia
+Source: Tokyo Debunker Wiki, Jiro Kirisaki page, Trivia section (tokyodebunker.fandom.com/wiki/Jiro_Kirisaki; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From B’s-LOG Magazine, October 2024 Issue:
+  - Q&A:
+    - What is your favorite subject?
+    - Anomalous Medicine, I suppose. But since I specialize in infectious diseases, I usually study papers and materials not included in the curriculum.
+    - Any concerns with missions?
+    - If I'm informed about the mission schedule in advance, I can adjust my medication dosage beforehand. But, everything should be fine as long as Yuri is there to treat me if anything happens.
+    - Where would you go with an R&R permit?
+    - Nowhere in particular. Or rather, I'm not sure where I'd go.
+    - What do you think about the ghoul(s) in your house?
+    - Oh, the only other ghoul is Yuri. He's my attending doctor. Without him, I’d probably be dead by now. I'm grateful to him, simply put.
+- Jiro often mentions that he cannot eat most solid foods. He survives by drinking liquids such as tea and through daily perfusions that provide him with precise nutrients.
+- He finds fear amusing and appears unafraid of most things.
+- He also finds other things amusing, such as watching Yuri struggle to stay awake in class (to the point of taking photos) or observing stag beetles fight each other.
+- His given name, Jiro (二郎), means "second son" in Japanese, matching his brother Zenji's given name Taro (太郎), which means "eldest son."
+- He appears to be right-handed, as seen in his campus writing animation.
+- In Episode 14, it’s revealed that Jiro barely has enough credits to advance to the next semester due to frequent absences helping in Yuri’s lab. Even when attending class, he often forgets to confirm his attendance.
+- In Episode 22, it is revealed that Yuri gave Jiro his glasses, which Yuri himself had worn for a long time before passing them to him.
+- Jiro uses the 俺 [Ore] pronoun for himself and the あなた [Anata] pronoun for others.
+
 ## Voicelines
 Opening Cutscene	There's no coming back from this. I will struggle until it's over though. Dying always looks like it hurts. I hope I can save you at least, but don't get your hopes up. Bye.
 Summon	Okay. What part am I examining?

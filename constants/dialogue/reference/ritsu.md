@@ -35,6 +35,23 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - Taiga taught him to use it as a blunt weapon, although he forgot he did this.
 - Appears to glow somewhat when held, although what this suggests is unknown.
 
+## Trivia
+Source: Tokyo Debunker Wiki, Ritsu Shinjo page, Trivia section (tokyodebunker.fandom.com/wiki/Ritsu_Shinjo; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q: What is your favorite subject?
+  - A: There's something to learn from every subject, but my best subject is, of course, Anomalous Law. Instead of the basic Six Codes, the subject deals with special cases, like how the Anomalous Investigation Institute and Darkwick regulations handle legal proceedings surrounding anomalies.
+  - Q: What's your favorite place on campus?
+  - A: There's no location in particular, but the restaurant on campus called the Mystery Diner is a good choice. Since it is always deserted, it is a good location for client meetings.
+  - Q: Where would you like to go if you have your R&R permit approved?
+  - A: If I get permission to go out, I would like to go to the opera. Before entering this school, I often went to the New National Theatre in Tokyo with my mother. Bizet's "Carmen" is recommended for beginners. Do you understand French?
+  - Q: What do you think about the ghoul(s) in your house?
+  - A: I have come to the conclusion that it is futile to try to change the violent behavior of the captain, Taiga Hoshibami, as well as the vice captain, Romeo Scorpius Lucci. From now on, I will defend them and certainly win the Laurel Crown.
+- He appears to be right-handed, judging by his Campus writing animation.
+- Ritsu's stigma incantation, "Acimo," is an anagram of the Ars Goetia demon Camio. He is a Great President of Hell, ruling over thirty legions of demons. He is a good disputer, gives men the understanding of the voices of birds, cattle, dogs, and other creatures, and of the noise of the waters too, and gives true answers concerning things to come.
+- Ritsu's mother took him to see his first live opera performance when he was six years old. After the show, he requested to add three foreign language lessons to his weekly schedule, already packed with seven other classes.
+- Ritsu uses the 私 [Watashi] pronoun for himself and the 貴方 [Anata] pronoun for others.
+- It is revealed in "S2 E9: The Frozen Hospital", that whenever Haru is away and leaves the responsibilities of the Jabberwock House up to Ren, Ritsu, and Lyca, the first years always sneak in more than their allowed allocated amount of snacks, as Lyca says Haru only lets them have one bag a day.
+
 ## Voicelines
 Opening Cutscene	I see you've guessed my intention. It's of little consequences. I suggest you get as far from here as you can. Father... I was unworthy to be your son. I hope you can forgive me.
 Summon	Rest assured—I, Ritsu Shinjo, will come to your defense.

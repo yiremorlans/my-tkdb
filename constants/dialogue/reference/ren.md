@@ -44,6 +44,34 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - Has a rope attached that allows the wearer to be reeled in.
 - Cannot restrain incorporeal targets.
 
+## Trivia
+Source: Tokyo Debunker Wiki, Ren Shiranami page, Trivia section (tokyodebunker.fandom.com/wiki/Ren_Shiranami; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Stigma effect: Changing the temperature of water
+  - Q. What is good about your house?
+  - A. Nothing. It smells... and it's gross too... I'm the one who wants to ask if there's anything good to say about this sorry excuse of a dorm.
+  - Q. What's your favorite place on campus?
+  - A. At Darkwick, the only place where I can just lounge freely and do my own thing is my room... Well, it's nothing out of the ordinary; I'm just playing some mobile games and watching some movies...
+  - Q. Do you have any concerns with missions?
+  - A. I have a lot: Sagara is being too loud, Sagara is being too pushy, and Sagara is being too. Damn. Loud.
+  - Q. Where would you like to go if you have your R&R permit approved?
+  - A. Anywhere as long as that clown isn't there is great... Oh, right. There's also this movie theatre in Shinjuku called Musashinokan. I want to go there... Huh? I'm going alone of course. Isn't that obvious...
+- He appears to be right-handed, judging by his Campus writing animation.
+- Ren's father is allergic to dogs, so Ren had never owned any pets.
+- In Episode 3, he is revealed to have thalassophobia.
+- Haru reveals that he has stuck multiple tracking devices on Ren without the latter knowing, in case he wanders off where Haru can't find him.
+- Ren, when translated into Japanese, can mean "lotus", while his surname, Shiranami, can mean "white horse" — his full name combined meaning "white horse lotus".
+- Towa's nickname for Ren is "Wolfsbane" which is known as a toxic and dangerous plant. Wolfsbane symbolizes caution and protection, it is said that since Wolsbane is a toxic plant it serves as a reminder of the balance between nature and its risks.
+  - This is also the same flower Towa has tried poisoning Ren with by throwing them at him.
+- Ren's chat icon (as well as a poster on his room, and one of his shirts) — a shark with the word "Naw" above it — is a reference to the movie Jaws.
+- Ren's stigma incantation, "Raothtas," is an anagram of the Ars Goetia demon Astaroth. He is known as a powerful demon who commands over 40 legions of lesser demons, he teaches mathematical sciences and handicrafts, can make men invisible and lead them to hidden treasures, and answers every question formulated to him. He was also said to give to mortal beings the power over serpents.
+- Ren's character is recycled from Hiroto Miyashiro, one of the characters from the game's original premise back in 2019-2020, wherein the latter is also a prickly, grumpy, and lazy student who loves to eat cup noodles.
+- Ren has repetitive strain injury (RSI), which is widespread among active PC and mobile gamers.
+- His second birth month flower is the water lily and relates to his water symbolism.
+- In middle school, Ren had a ex-girlfriend named Chinatsu who was implied to be cheating on him with another guy.
+- Ren uses the 俺 [Ore] pronoun for himself and the あんた [Anta] pronoun for others.
+- It is revealed in "S2 E9: The Frozen Hospital", that whenever Haru is away and leaves the responsibilities of the Jabberwock House up to Ren, Ritsu, and Lyca, the first years always sneak in more than their allowed allocated amount of snacks, as Lyca says Haru only lets them have one bag a day.
+
 ## Voicelines
 Character Selection	 That's harassment. Is everyone in this place from the past?
 Opening Cutscene	This is exactly why I didn't want to do this! I knew this was how it was gonna end! What am I even doing here...? This is all your fault...

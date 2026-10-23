@@ -26,6 +26,12 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - Knows 'quick change magic', which allows him to do things like change clothes instantly--including those of others.
 - Is the ringmaster of the Dionysia circus
 
+## Trivia
+Source: Tokyo Debunker Wiki, Jo Kongoza page, Trivia section (tokyodebunker.fandom.com/wiki/Jo_Kongoza; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- In "S2 E2: The Ultimate Spectacle", it is revealed that the lipstick the Rooster from the previous episode hands over to the MC is revealed to belong to Kongoza, who can shift genders due to his stigma. [spark+]
+- Jo is the only one whose Training icon in the game's Characters section is him using his stigma, where it shows both his default male and his stigma female forms.
+  - Because of this, Jo is technically also the first female ghoul to debut.
+
 ## Voicelines
 Hello1	 [Name], I’ve been waiting. Things are pretty busy today too, but… Let’s do our best—without overdoing it.
 Inbox1	 Looks like you’ve got a letter. Want to check it now? If so, go ahead and use this desk here.

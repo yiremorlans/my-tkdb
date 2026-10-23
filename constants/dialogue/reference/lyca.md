@@ -56,6 +56,32 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - Werewolves have four stages: Human, partial wolf, half wolf, and full wolf. At 'half wolf' Lyca is an anthropomorphic wolf. However, he loses control of himself after he's been transformed for a while, and may attack indiscriminately.
 - He doesn't remember much when he transforms. He might remember less if he fully transforms?
 
+## Trivia
+Source: Tokyo Debunker Wiki, Lyca Colt page, Trivia section (tokyodebunker.fandom.com/wiki/Lyca_Colt; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q. What's your favorite subject?
+  - A. Hmm... I don't really understand but everything is so fun!
+  - Q. Do you have any concerns with missions?
+  - A. I told everyone that I'm fine doing missions on my own but they keep worrying about me.
+  - Q. Where would you like to go if you have your R&R permit approved?
+  - A. ...I want to see Neros. I still don't know where he is though...
+  - Q: What do you think about the ghoul(s) in your house?
+  - A. Exactly what I call them: a moth-eaten Casanova and a blond gigolo. I'm a human too so why won't they put me in the same house as Suba and his friends?!
+- Lyca is scared of girls, or at least doesn't want to be around them. However, this has no effect of his relationship with the MC.
+- When the game was originally released, Lyca was not a possible choice for the opening cutscene, showing up as a shadowed figure in the Obscuary tab. Shortly before the release of Episode 8, he and Edward both became available as choices.
+- Lyca's name is based on lycanthrope, a word of Greek origins meaning "wolf-human".
+- Despite chocolate being bad for him, the official promo image for the Valentine's homescreen voiceline of the ghouls has Lyca enjoying chocolate.
+- In one of the Campus Stories, he reveals to Yuri he dislikes taking medicinal shots, saying how the needles hurt.
+- Lyca doesn't like having his blanket washed, he also can't sleep without it.
+- He learned what alcohol is during his time with Neros, claiming how the latter used to drink a lot.
+- Towa's nickname for Lyca, Lupin (derived from Lupine), is a vibrant, pea-like blooms that are a classic addition to cottage gardens.
+- The Ghost Carp Lyca catches from one of the festival games in the episode "Episode 18: Lost Stars" makes a cameo in "Episode 24: Our Last Goodbye Act II", where it is being kept as his pet.
+  - In the same episode, Ed echoes Neros' sentiment of telling Lyca that the latter has no need to learn how to read.
+- He appears to be right-handed, judging by his Campus writing animation.
+- Lyca's stigma incantation, "Ramsochisa," is an anagram of the Ars Goetia demon Marchosias. He is a powerful Great Marquis of Hell, commanding thirty legions of demons. He is a strong and excellent fighter and very reliable to the conjurer, giving true answers to all questions. Marchosias hoped after 1,200 years to return to heaven with the non-fallen angels, but he is deceived in that hope.
+- Lyca uses the おれ [Ore] pronoun for himself and the おまえ [Omae] pronoun for others.
+- It is revealed in "S2 E9: The Frozen Hospital", that whenever Haru is away and leaves the responsibilities of the Jabberwock House up to Ren, Ritsu, and Lyca, the first years always sneak in more than their allowed allocated amount of snacks, as Lyca says Haru only lets them have one bag a day.
+
 ## Voicelines
 Opening Cutscene	Dammit! Get back! You're a human, you're s'posed to run away! This is my mess to fix, I'm gonna drag 'em all to hell.
 Summon	What do you want me to do? Say it.

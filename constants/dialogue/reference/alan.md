@@ -31,6 +31,29 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 ### Other
 - Listed in the source as "Alan Mido (Alan Todoroki)".
 
+## Trivia
+Source: Tokyo Debunker Wiki, Alan Mido page, Trivia section (tokyodebunker.fandom.com/wiki/Alan_Mido; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q: Do you have any concerns with missions?
+  - A: ...The path he chose, will it lead closer to the truth? I keep asking myself that.
+  - Q: What's your favorite place on campus?
+  - A: A fishing spot. Since it's in the forest, no one usually comes there. How do you get there from the main building...? ...I won't know until I go back to the dorm.
+  - Q: Where would you like to go if you have your R&R permit approved?
+  - A: Mount Hotaka. Ah, it's in the Northern Alps. It's definitely far from here, but... I'd take the car so it's not a problem.
+  - Q: What do you think about the ghoul(s) in your house?
+  - A: We're just some random people who obtained power by chance. But, clawing their way up like their life depends on it... those guys have that kind of nature.
+- His original surname, Todoroki, can mean "roar, thunder, or boom (of a vehicle)" in Japanese.
+  - This is befitting as his role as Vagastrom's captain, as the term Vagastrom may be a portmanteau of the word vagabond and the suffix "-strom" which is of German origins meaning "lightning/electric current".
+- Alan's stigma incantation, "Yagsal Olbalsa," is an anagram of the Ars Goetia demon Glasyal-Labolas. He is a Great President of Hell, with 36 legions of demons under his command who teaches all Arts and Sciences in an instant, and is an author of bloodshed and manslaughter. He teaches all things past and future. If desired, he can cause the love both of friends and of foes. He can make a man to go invisible. Astrologically, this spirit signifies black magic.
+- Much like Yuri, it is revealed in one of Alan's Campus Stories that he is also terrible with directions.
+- Alan's undercover disguise as a guild-visiting cat being a dog onesie may be a reference to his April Fools' voiceline where he pretends to be a dog.
+- He appears to be right-handed, judging by his Campus writing animation.
+- He is terrible with modern technology, even extending to things such as sewing machines.
+  - His phone doesn't have a password, a phone cover, nor does his WickChat profile have an icon.
+- In "S2 E5: Waves Of Love Act I", Alan reveals he doesn't drink alcohol nor smoke.
+- Alan uses the 俺 [Ore] pronoun for himself and the お前 [Omae] pronoun for others.
+  - While he typically uses お前 [Omae] for others, Alan switches to the pronoun テメー [Temee] on occasion, particularly when angry or frustrated with Leo and/or Sho, as seen in Season 1 Chapter 2 Episode 17.
+
 ## Voicelines
 Character Selection	 I got something I need to do here.
 Opening Cutscene	Don't come any closer. I don't want to hurt you any more. ...Time's up. Sorry...

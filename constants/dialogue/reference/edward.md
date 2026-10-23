@@ -42,6 +42,26 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - Ed has an enhanced sense of awareness, even to the point of slightly breaking the fourth wall on at least one occasion(referring to the PC's thoughts as "captions above her head".) He's aware of things like the presence of a forcefield around the island they were on in Episode 17 without any personal interaction with it as well.
 - Says he's saving his life force for Rui and won't easily give his life up to anything else.
 
+## Trivia
+Source: Tokyo Debunker Wiki, Edward Hart page, Trivia section (tokyodebunker.fandom.com/wiki/Edward_Hart; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q: What is good about your house?
+  - A. There are a lot. For starters, it's far removed from the boisterous campus and nobody dares to interfere with these grounds. But the best part is how there's no sunlight. I'm a vampire, you see. So a dorm that is always engulfed in night time is a comfortable place for me to live in.
+  - Q. What's your favorite place on campus?
+  - A. My own room would be the best place, after all. I can watch YouTube anytime and the Nishikawa bed that Rui picked is exceptionally cozy. What do you think? Would you like to try sleeping on it with me?
+  - Q. Do you have any concerns with missions?
+  - A. I have no such concerns since I don't go on missions. Cough cough... Aah, pardon me. The cold I caught last month still hasn't gone away, you see. Will it be okay to excuse myself soon?
+  - Q: What do you think about the ghoul(s) in your house?
+  - A. I'm envious of how those two are so young and full of energy. When I was around their age, I... oh dearie me. It's quite an old tale so I have completely forgotten about it.
+- He appears to be right-handed, judging by his Campus writing animation.
+- Towa calls Edward "Rafflesia" which is also know as a stinking corpse lily because it smells like dead flesh.
+- When the game was originally released, Edward was not a possible choice for the opening cutscene, showing up as a shadowed figure in the Obscuary tab. Shortly before the release of Episode 8, he and Lyca both became available as choices.
+- According to Rui in Episode 4, Ed does not know how to tie his own shoelaces.
+- According to Edward in Episode 10, he allegedly has bronchitis.
+- Edward's undercover disguise as a guild-visiting cat being a sheep/ram may be a reference to the Caprimagus Card, which has a Link Bonus with his R Character Card.
+- As per Ed's blood test results from "S2 E9: The Frozen Hospital", Jiro reveals that Ed's blood includes an unknown type of antibody that has yet to be looked into.
+- Ed uses the 俺 [Ore] pronoun for himself and the 君 [Kimi] pronoun for others.
+
 ## Voicelines
 Character Selection	 It will soon be the devil's hour, when the spooks gather... That is when I come out to play.
 Opening Cutscene	I knew this day would come. It's a little earlier than I expected, perhaps. I'll shut these lowly creatures up—their bleating is unbearable. You can thank me in the next life.

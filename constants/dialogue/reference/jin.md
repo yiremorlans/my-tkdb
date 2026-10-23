@@ -38,6 +38,24 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - Cannot teleport out of a location that's being affected by an anomaly(such as an anomaly preventing entrance or exit from a location)
 - Jin is able to throw the sword quite precisely despite its size
 
+## Trivia
+Source: Tokyo Debunker Wiki, Jin Kamurai page, Trivia section (tokyodebunker.fandom.com/wiki/Jin_Kamurai; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q: What is your favorite subject?
+  - A: People who don't understand Anomalous Information Studies have no right to talk about anomalies. That's all.
+  - Q: Do you have any concerns with missions?
+  - A: ...If you're talking about the mission, contact Tohma.
+  - Q: What's your favorite place on campus?
+  - A: The dorm balcony. Having a smoke there is especially nice.
+  - Q: Where would you like to go if you have your R&R permit approved?
+  - A: Should I go to my vacation home in Niseko and take a nap? ...It's not impossible. Hey Tohma, get the helicopter.
+- Jin states that he used to listen to "The Blue Danube" often, a song that his former close friend, Yuri Isami, also enjoys.
+- He appears to be right-handed, judging by his campus writing animation.
+- His surname, Kamurai, can be translated to mean "ice cap" in Japanese.
+- Jin is licensed to drive boats, cars and helicopters. Despite this, he rarely drives himself anywhere.
+- In the Tokyo Debunker popularity contest held by Dengeki Online in January 2026, Jin was ranked 2nd as the most popular character in Tokyo Debunker from Season 1.
+- Jin uses the 俺 [Ore] pronoun for himself and the お前 [Omae] pronoun for others.
+
 ## Voicelines
 Opening Cutscene	We were just playing out a fixed match. And I was nothing but a figurehead all along... There's no time left. Get out of here. ...That's my final order to you.
 Summon	Ha. Guess I'll give you some attention.

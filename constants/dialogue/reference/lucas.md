@@ -48,6 +48,23 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - His strict upbringing causes him to to seemingly not think for himself rather than only thinking for the way he was taught. He seems to think for himself more over time, even to the point of expressing concern over [humanlike, childlike] anomalies.
 - He trains daily, as much as possible, whether it's exercise or actual training against fake anomaly targets, but also occasionally goes out late at night in search of demons.
 
+## Trivia
+Source: Tokyo Debunker Wiki, Lucas Errant page, Trivia section (tokyodebunker.fandom.com/wiki/Lucas_Errant; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q: What is good about your dorm?
+  - A: The atmosphere is similar to my hometown and it's comfortable. And then, the air on the premises is so clear that at night there are times when you can see the Aurora. If I'm here, I feel like my soul is in harmony with nature.
+  - Q:  Do you have any concerns with missions?
+  - A: Actually, I want to be sent on a higher ranking mission. I train every day to make that wish come true. Definitely someday... I will be able to subjugate a demon with my hands.
+  - Q: Where would you like to go if you have your R&R permit approved?
+  - A: I want to go to a restaurant that Kaito said "all the Japanese boys like." If I remember correctly... it was called Jiro style ramen. Since there's not a restaurant like this in my hometown in England, I'm really looking forward to it.
+  - Q: What do you think about the ghoul(s) in your house?
+  - A: From the day I transferred to this school, Kaito was my first friend and has been a really good friend to me. I'm also very grateful to Tohma for all the help. Now, all that's left is for Jin to fulfill his duties, but...
+- He appears to be left-handed, judging by his writing animation on campus.
+- Lucas' birthday is the day before Towa's birthday.
+- His surname, Errant, can be used to describe someone who is like a "knight-errant," who travels around in search of adventure, or an errant wind that shifts direction unpredictable.
+- In Episode 20, he reveals that, as per the ordinance of his father, members of the Errant family are forbidden to go on board any boat. However, the reason for this is not revealed.
+- Lucas uses the 俺 [Ore] pronoun for himself and the 君 [Kimi] pronoun for others.
+
 ## Voicelines
 Opening Cutscene	I'm sorry... Yet again, I've failed to protect the people most important to me... Please don't make that face. This is the only path left.
 Summon	Let's go. There is always hope ahead.

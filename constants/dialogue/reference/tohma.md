@@ -44,6 +44,23 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - While Tohma is depicted in a manner that seems to be him overdosing on alprazolam, it's of note that non-anomalous medication is less effective or entirely ineffective on ghouls. [spark+]
 - Tohma says he has "many attentive attending physicians" which may suggest some form of chronic medical problem.
 
+## Trivia
+Source: Tokyo Debunker Wiki, Tohma Ishibashi page, Trivia section (tokyodebunker.fandom.com/wiki/Tohma_Ishibashi; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q: What is your favorite subject?
+  - A: I'm very sorry, but nothing in particular. Darkwick's subjects are a bit unique, so I can just barely keep up.
+  - Q: What is good about your house?
+  - A: It's thoroughly cleaned and furnished to be pleasing to the eyes. Also, the elegant Frostheim students, perhaps.
+  - Q: Do you have any concerns with missions?
+  - A: With the assistance of a uniquely talented master and the perceptive juniors, there are no concerns at all. The captain isn't feeling well? No, that won't be a big deal.
+  - Q: Where would you like to go if you have your R&R permit approved?
+  - A: If I get an R&R permit approved... let's see. For example,  how about going out to a nearby mountain and going trekking. That's surprising? Hahaha... Of course I mean it.
+- Tohma has been entrusted with the management of Darkwick's vaults.
+- He appears to be right-handed, judging by his Campus writing animation.
+- Tohma uses the 私 [Watashi] pronoun for himself and the 貴方 [Anata] pronoun for others.
+  - Tohma uses お前 [Omae] for Jin instead of 貴方 [Anata], as seen in Season 1 Episode 1 Chapter 50
+  - Tohma uses 俺 [Ore] for himself instead of 私 [Watashi] around friends in private as seen in Season 1 Episode 2 Chapter 20, and he also uses お前 [Omae] for Alan instead of 貴方 [Anata] when they are alone.
+
 ## Voicelines
 Opening Cutscene	Just look at the state of your hair. You really ought to go tidy up. You simply cannot help but stick your nose in everywhere, can you? ...I'm counting on you to handle the fallout.
 Summon	Perhaps I can be of some assistance.

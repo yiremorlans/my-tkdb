@@ -50,6 +50,32 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 ### Other
 - Pretty acrobatic despite not training, flipping and cartwheeling across the graveyard to dodge the ghostly arms trying to grab him.
 
+## Trivia
+Source: Tokyo Debunker Wiki, Kaito Fuji page, Trivia section (tokyodebunker.fandom.com/wiki/Kaito_Fuji; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q: What is good about your house?
+  - A: Hm... my house, on the surface, is a symbol of authority! Or that's what's said. Honestly, commoners like me feel out of place... they're all always trying to get the upper hand, I can't stand it.
+  - Q:  Do you have any concerns with missions?
+  - A: Nonono, firstly I'm concerned that the mission itself even exists!? I just want to live a peaceful and fun school life!!
+  - Q: Where would you like to go if you have your R&R permit approved?
+  - A: Um... wait a sec. I think it was featured in Men's An'a*, but... ah, yeah yeah! The number 1 for classic dating spots ranked... the Tokyo Skytree!!! (*Possibly a parody of An An magazine)
+  - Q: What do you think about the ghoul(s) in your house?
+  - A: Hm... the captain and vice captain honestly feel like they live above the clouds... Rumor has it the two of them are colluding with Darkwick, I heard they're doing something nasty. Eh? Luca? ...I don't know that bastard with an unrivaled face.
+- He is very active on WickHive and always knows of recent rumors and trends.
+- Despite being a bow user, his aim is quite poor.
+- Despite having enhanced strength as one of the perks of being a ghoul, according to Professor Hyde in the prologue, he believes Kaito isn't even strong enough to kill a cockroach.
+- In Episode 1, he is revealed to wear limited-edition Nike shoes.
+- Lucas is mentioned to have cut Kaito's hair in the Frostheim chapter.
+- In Episode 2, it is revealed that he takes remedial classes for one of his failed subjects.
+- Towa's nickname for Kaito is "Coriander" which is a symbol of vitality and health. Its seeds were once used in ancient China to create love potions.
+- His character is heavily inspired by Zenitsu Agatsuma from the animanga series, Demon Slayer.
+- The "Shonen Champ" magazine that Kaito mentions in Kaito & Lucas Chapter 1 Character Story is likely a reference to Weekly Shōnen Jump, a popular Japanese shōnen manga magazine.
+- He appears to be right-handed, judging by his Campus writing animation.
+- He reveals in Episode 25 that he once begged his grandmother to get him an acoustic guitar but he got bored of it after three days.
+- Kaito uses the おれ [Ore] pronoun for himself and the お前 [Omae] pronoun for others.
+  - Kaito occasionally uses the きみ [Kimi] pronoun for others instead of おまえ [Omae], as seen in Chapter 13 of the Prologue.
+  - Kaito typically uses the おれ [Ore] instead of the kanji 俺 [Ore] for himself, the おまえ [Omae] instead of the kanji お前 [Omae] for others, and the きみ [Kimi] instead of the kanji 君 [Kimi] for others.
+
 ## Voicelines
 Opening Cutscene	I really was weak and useless all the way to the bitter end, huh? I'm sorry. I'm probably just delaying the inevitable, but... this is all a guy like me can do, you know?
 Summon	What!? M-Me!? I mean of course! I-I've got you covered!

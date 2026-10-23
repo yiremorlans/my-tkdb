@@ -15,3 +15,8 @@ Benkei is seemingly a kind hearted guy who is an employee at the convenience sto
 
 ## Background
 Not much is known about him, except that he was formerly a professor and the advisor of the now-defunct Clementia House before becoming a shopkeep at the school's campus store.
+
+## Trivia
+Source: Tokyo Debunker Wiki, Shopkeep Benkei page, Trivia section (tokyodebunker.fandom.com/wiki/Shopkeep_Benkei; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- His surname, Benkei, may mean "fierce guardian" or "warrior monk". The name Benkei is also widely associated with the historical figure Musashibo Benkei, a 12th-century Japanese warrior monk and loyal retainer of Minamoto no Yoshitsune.
+- Benkei uses the 俺 [Ore] pronoun for himself and the お前 [Omae] pronoun for others.

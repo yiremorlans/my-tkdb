@@ -45,6 +45,10 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - Wants to secure a large amount of money for an unspecified reason
 - Seemingly has a poor memory, although his general tendency to speak in opposites makes it difficult to tell if this is genuine or not.
 
+## Trivia
+Source: Tokyo Debunker Wiki, Shion Genkai page, Trivia section (tokyodebunker.fandom.com/wiki/Shion_Genkai; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- Shion is the first ghoul whose incantation for his stigma is not an anagram of the demon name, but is just the demon name itself - Vepar. Vepar is a strong Great Duke of Hell in the Ars Goetia, commanding 29 legions of demons and governing the seas, storms, and armored ships [spark+]
+
 ## Voicelines
 Shion: Oh, you're still alive?
 

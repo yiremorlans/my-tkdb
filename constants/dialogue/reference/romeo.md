@@ -37,6 +37,56 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - Has the trust of Darkwick(or at least has Hyde's favor?) allowing him to carry around common artifacts as though he owns them(hammerspace briefcase which he added a custom case for; fox robe)
 - Implied to be missing his right leg or foot (likely having been replaced by a prosthetic like Haru's.) Kaito mentions that Romeo cannot run fast. He also shows noticeable pain and discomfort after being run into by Kaito. [Project rule: Romeo has a prosthetic leg, built and serviced by Mio. Never elaborate on how or why.]
 
+## Trivia
+Source: Tokyo Debunker Wiki, Romeo Lucci page, Trivia section (tokyodebunker.fandom.com/wiki/Romeo_Lucci; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q: What is good about your house?
+  - A: This casino that can barely keep running has no good points. At best, it's just a place to make a little money.
+  - Q: Do you have any concerns with missions?
+  - A: Hmph, that WTWUT, isn't it obvious!? Wall-to-wall useless trash!
+  - Q: Where would you like to go if you have your R&R permit approved?
+  - A: When I have some free time, I want to go to South Korea. Ha... if I don't earn more, there won't be enough funds for that...
+  - Q: What do you think about the ghoul(s) in your house?
+  - A: I'm fed up with my boss. No matter how often I say the same thing, it's a WOE. Ha? "Waste" "of" "effort" obviously. Then, as for Shinjo, I'll be giving him a thorough education from now on, and we'll see how he turns out.
+- Romeo doesn't call out the MC, Taiga, Haru, and Rui when they don't refer to him as Fico like everyone else. It's possible that he specifically wants the Sinostra students to refer to him by that nickname.
+- He appears to be right-handed, judging by his Campus writing animation.
+- Romeo's undercover disguise as a guild-visiting cat being a peacock is befitting of his personality, as peacocks are known to represent pridefulness.
+- Romeo's usual order from Rui's bar is an aperol.
+- Romeo's stigma incantation, "Tiris," is an anagram of the Ars Goetia demon Sitri. He is a Great Prince of Hell, and reigns over sixty legions of demons. He causes men to love women and vice versa, and can make people bare themselves naked if desired.
+- Romeo uses the 俺 [Ore] pronoun for himself and the あんた [Anta] pronoun for others.
+- Romeo has explained the meaning following acronyms he has made up.
+  - LB — Lucky Break
+  - SIH — Shrivel In Hell
+  - TGA — Tiresome Good-for-nothing Assholes
+  - BTH — Blundering Thoughtless Hooligan (referring to Taiga)
+  - HS - Headshot
+  - HDY - How Dare You?!
+  - DYUTT — Drink Yourself Under The Table
+  - BB — Basic Bitch (referring to the MC)
+  - PMS — Pompous Mad Scientist (referring to Yuri)
+  - STL — Shifty Two-faced Leech (referring to Tohma)
+  - OOTWR — Out Of Touch With Reality
+  - EITS — Eyes In The Sky (referring to his security cameras)
+  - DYFJ — Do Your Fucking Job
+  - WRK — Work
+  - LYP — Learn Your Place
+  - SR — Sewer Rat
+  - SOP — Smiley Old Prude (referring to Professor Nicolas)
+  - FLB — Fighting a Losing Battle
+  - GH — Greenhorn (referring to Ritsu)
+  - WTWUT — Wall-To-Wall Useless Trash
+  - WOE — Waste Of Effort
+  - VIM — Very Important Meeting
+  - DOF — Dumb Old Freak (referring to Professor Hyde)
+  - OAOF — TBA
+  - HNTW — TBA
+  - DAAB - Dry As A Bone
+  - MHH - Muscle-Headed Himbo (referring to Alan)
+  - RFE - Rocks For Eyes
+  - POG - Perverted Old Geezer (referring to Ed)
+  - TCA - Trash Clockwork Anomaly
+  - RDDC - Rooster, Donkey, Dog, and Cat (referring to The Braymen)
+
 ## Voicelines
 Character Selection	 Hmph. If you want to survive here, you better not piss me off!
 Opening Cutscene	Tch... What do you want? Coming up here now... You're just getting in my way! I've got one last job for you. Tell everyone I looked flawless in my final moments.

@@ -566,6 +566,6 @@ money; the board pays. Per job:
   project stays out of shifts.
 - **Rui:** always night (Obscuary). Kitchen and bar prep, MC never closes the
   distance; hands-to-self is a given, never announced. Forward, not bashful.
-- **Haru:** MC helps, never runs anything; his captaincy is his. Animals are
-  foxes, not dogs. Towa, if present, tags along for Haru, doesn't calm the
+- **Haru:** MC helps, never runs anything; his captaincy is his. He can't do
+  dogs (canon LVL 16). Towa, if present, tags along for Haru, doesn't calm the
   critters, and is mute by day.

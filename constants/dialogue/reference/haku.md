@@ -42,6 +42,27 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - According to Taiga he's able to remove curses if the anomaly that caused the curse is in front of him. It's uncertain if this is his stigma, part of his artifact, or another power.
 - Haku has the trust of Darkwick, allowing him to easily get access to powerful common artifacts such as the skeleton key
 
+## Trivia
+Source: Tokyo Debunker Wiki, Haku Kusanagi page, Trivia section (tokyodebunker.fandom.com/wiki/Haku_Kusanagi; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q: What is good about your house?
+  - A. Let's see... It feels humid everyday thanks to the rain and the building is so old that it's probably on the brink of collapsing. Haha... I guess it's always easier to complain, huh. Despite everything, this place does give me a sense of tranquility. Perhaps because the atmosphere is similar to my family's home.
+  - Q. What's your favorite place on campus?
+  - A. Can I choose a place from our dorm? Then I'd recommend the open-air porch of our guest room. Enjoying a cup of hot tea while your eyes feast on Hotarubi's esteemed garden一it's one of a kind experience.
+  - Q. Do you have any concerns with missions?
+  - A. I don't really have any particular complaints... scratch that. There's one. Our dorm is a little understaffed. Well, I guess there are some who can help out—but asking them would be a little troublesome. We already have someone who can keep this place lively, you see.
+  - Q: What do you think about the ghoul(s) in your house?
+  - A. Another difficult question, huh. Let's see... Subaru is a very capable leader. His only flaw is that he always tries to carry everything by himself. As for Zenji... how do I say this... being around him cheers me up. I'm grateful to him for that.
+- As revealed in one of Tohma's campus stories, Haku used to smoke but is trying to quit, as he declines Tohma's offer.
+- Haku's undercover disguise as a guild-visiting cat being a tanuki may also be a reference to the Tanook Card, which has a Link Bonus with his R Character Card.
+- He appears to be left-handed, judging by his writing animation on campus.
+- In Episode 5, he reveals he has a koi pond that is currently being taken care of by the institute.
+- In Episode 15, Haku reveals he doesn't watch much TV, despite this, Zenji reveals Haku has one in his room.
+- Haku is the only ghoul so far to have two different summoning lines when the player summons any of his SSR Character Cards.
+- In the Tokyo Debunker popularity contest held by Dengeki Online in January 2026, Haku was ranked 1st as the most popular character in Tokyo Debunker from the first season.
+- In "S2 E5: Waves Of Love Act I", Haku reveals he doesn't drink alcohol.
+- Haku uses the おれ [Ore] pronoun for himself and the おまえさん [Omae-san] pronoun for others.
+
 ## Voicelines
 Summon	Well, I'll do what I can.
 Login Bonus	 TBA

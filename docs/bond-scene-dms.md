@@ -465,6 +465,8 @@ Two limits, because Soulbound sits above it:
 > no `greeting`/`responses`, so a draw that landed on one shipped a `"..."`
 > caption. **Do not build 4.3 as written.** The idea still stands; the mechanism
 > has to be redesigned around the beat, which is now the only dialogue format.
+> **Redesigned (2026-10-23):** see [`personalization.md`](./personalization.md)
+> §4, bond scene recall, built on full beats.
 
 The §4.1 choice writes a small flag: `bond_scene_progress.choice_key`. Later
 `/roam` / `/meet` dialogue could react to it — but there is no longer a

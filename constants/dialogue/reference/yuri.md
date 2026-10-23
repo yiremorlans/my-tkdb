@@ -44,6 +44,24 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 ### Other
 - Immune to Jiro's stigma for unknown reasons, allowing him to treat Jiro without taking damage.
 
+## Trivia
+Source: Tokyo Debunker Wiki, Yuri Isami page, Trivia section (tokyodebunker.fandom.com/wiki/Yuri_Isami; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q: What is good about your house?
+  - A. Hmph! Other than the fact that it houses this genius doctor, Yuri Isami, do you really think there's any other redeeming qualities about this house... No, about Darkwick at all?! Of course not!
+  - Q. Do you have any concerns with missions?
+  - A. Thanks to all those brute germs from other houses destroying each and every anomaly, I never have enough specimens to use for my experiments!
+  - Q. Where would you like to go if you have your R&R permit approved?
+  - A. Now that we're talking about it, it's almost time for me to buy clothes for the next season. Where am I going to buy them? Why, at the Nihombashi Takashimaya Shopping Center of course!!
+  - Q: What do you think about the ghoul(s) in your house?
+  - A. Are you referring to Jiro, assistant and patient to the genius Yuri Isami? Well, he still needs a lot of training, you see. He lacks knowledge, skills, experiences, and education. That is to say, he's 100 years too early to become a doctor of my caliber.
+- He appears to be right-handed, judging by his Campus writing animation.
+- He reads isekai manga or light novels, though he pretends he is reading a medical journal when the player (presumably) asks him about his book in his Affinity 5 voice line.
+- Yuri's stigma incantation is an anagram of the Ars Goetia demon Haagenti, who is described within as "a Great President of Hell, ruling thirty-three legions of demons. He makes men wise by instructing them in every subject, transmutes all metals into gold, and changes wine into water and water into wine."
+- Between research, missions, and his duties as captain, Yuri reads over 20 theses a month and publishes one of his own once every two months.
+- In "Episode 22: Who Killed Robin? Act II", it is revealed that the glasses Jiro wears were a gift from Yuri, and that the latter have worn them for the longest time.
+- Yuri uses the 僕 [Boku] pronoun for himself and the 貴様 [Kisama] pronoun for others.
+
 ## Voicelines
 Character Selection	 Allow me to grant you the privilege of becoming my test subject.
 Opening Cutscene	It's all going up in flames... All my research... The fruit of my blood, sweat, and tears! НА... НА НА AH HA HA AH НА HA HA!! Goodbye... Mama...

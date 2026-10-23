@@ -47,6 +47,27 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - Afraid of ghosts, possibly the dark, and maybe dead bodies. Seems to be afraid of 'scary' things in general.
 - Able to spawn clothes onto himself at will.
 
+## Trivia
+Source: Tokyo Debunker Wiki, Zenji Kotodama page, Trivia section (tokyodebunker.fandom.com/wiki/Zenji_Kotodama; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q: What is good about your house?
+  - A. I'm so glad you asked! As a matter of fact, our esteemed Hotarubi house is an ensemble of chic, peaceful, and artistic boys and girls!
+  - Q. Do you have any concerns with missions?
+  - A. Uh-hmm? Let's see... Concerns, concerns... if I must say something then I suppose it's how Haku seems to like working all by himself? Oh, but it won't be a problem! I'll simply put more work to help him... from the shadows, that is.
+  - Q. Where would you like to go if you have your R&R permit approved?
+  - A. Of course! Immediately to the left side as you start ascending Natsume-zaka from the Waseda intersection一there, proudly stands a black granite monument inscribed with the words "The Birthplace of Soseki Natsume"... It's my dream to be able to touch that monument.
+  - Q: What do you think about the ghoul(s) in your house?
+  - A. If I were to describe Subaru as anything then... he's someone with a heart of glass... On the contrary, I can't help but notice Haku's tactless conduct. He ought to learn to be more mindful if he's going to call himself my manager.
+- Towa's nickname for Zenji is "Iris" which is a symbol of communication, positivity and wisdom. Furthermore, Iris represents a good omen for the future and the possibility of going through a positive period after many difficulties.
+- He appears to be right-handed, judging by his Campus writing animation.
+- His folk story recitals are widely avaliable online as animated children videos, being featured in Episode 3: It Came From The Sea when Ren played it on his phone. Later in Episode 15: Tales Of Terror, Haku mentions the popularity of the videos, despite Zenji not particularly invested in making them.
+- In Episode 15, he reveals that he and Jiro never been to an amusement park before, and that Zenji worked as a paperboy at one point.
+- Episode 17: Waves Of Love takes place on June 19th, which happens to be Zenji's birthday, the mention of this date causes a brief reaction from Jiro.
+- Throughout the entirety of Episode 5, the narrative uses subtle hints to foreshadow the plot twist that Zenji is a ghost:
+  - Through Haku's dialogue and clever framing, he fits naturally into scenes, but Subaru and MC never address, acknowledge, or respond to him until explicitly granted the ability to see him.
+  - When Haku is recording Zenji on his phone, MC asks what he's recording a video of- not 'what are you two up to', but instead 'why are you pointing your camera at nothing'.
+- Zenji uses the ボク [Boku] pronoun for himself and the キミ [Kimi] pronoun for others.
+
 ## Voicelines
 Login	 Why, hello there, my dear. Suppose we kick off another swanky day here?
 New Message	 Come now, read those messages out, won't you? They're fan letters for me, aren't they? ...They're not?

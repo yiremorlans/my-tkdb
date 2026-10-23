@@ -43,6 +43,25 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - Cannot capture incorporeal targets.
 - Popping it can cause some form of damage, such as when he destroyed a Cyclops Eye in the staff room after covering it with the gum.
 
+## Trivia
+Source: Tokyo Debunker Wiki, Leo Kurosagi page, Trivia section (tokyodebunker.fandom.com/wiki/Leo_Kurosagi; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q: What is your favorite subject?
+  - A: No~thing. You just have to memorize the textbooks. It's so easy it's boring. I had high hopes because it was supposed to be specialized study of anomalies.
+  - Q: What's your favorite place on campus?
+  - A: The bath. When I enrolled, there wasn't even a bath in my dorm's shower room. I had to use my own money to remodel. It's honestly ridiculous, right?
+  - Q: Where would you like to go if you have your R&R permit approved?
+  - A: The club. Since I entered Darkwick, I haven't been able to go out at all. I'm so stressed I'm gonna go insane.
+  - Q: What do you think about the ghoul(s) in your house?
+  - A: No matter how you look at it, Cap is a himbo. Eh~ Sho... he's my slave, I guess.
+- Leo uses both Instagram and TikTok as platforms to influence, in which he has over 600k followers.
+- He likes to eat spicy food, especially in summer.
+- Leo appears to be right-handed, judging by his Campus writing animation.
+- Leo's undercover disguise as a guild-visiting cat being a black cat may be a reference to the Kuro Card, which has a Link Bonus with his R Character Card.
+- Leo's stigma incantation, "Haxs," is an anagram of the Ars Goetia demon Shax. He is a Great Marquis of Hell, and has power over 30 legions of demons on evil horses. He takes away the sight, hearing and understanding of any person under the conjurer's request, and steals money out of kings' houses, carrying it back to the people.
+- In Episode 24, it is revealed that Leo keeps a specific folder on his phone filled with pictures of MC.
+- Leo uses the オレ [Ore] pronoun for himself and the キミ [Kimi] pronoun for others.
+
 ## Voicelines
 Character Selection	 Aren't you curious about what wish the ghouls sold their souls for?
 Opening Cutscene	Life sucks then you die, right? I just want to make the assholes responsible regret it. Gross, don't make that face at me. You think I'm suddenly pathetic enough to be moved by your ugly crying?

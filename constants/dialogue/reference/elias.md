@@ -23,6 +23,15 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 ### Artifact
 - Throwing Knives - ?
 
+## Trivia
+Source: Tokyo Debunker Wiki, Elias Pratt page, Trivia section (tokyodebunker.fandom.com/wiki/Elias_Pratt; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- Elias' name was not revealed to the MC until Episode 16: The City Of Ill Omens, but his name was mentioned in previous episodes by the ghouls.
+  - Prior to the reveal in Episode 20, it was hinted that Elias used to be a student, as he was the only side character to have his full name revealed.
+  - However, as of Episode 25, the MC did not know of his name until he introduces himself by his full name to her.
+- The nickname Towa has for Elias is "Sundew". In the language of flowers, sundews represent surprise, deception, and hidden danger.
+- Elias uses the 私 [Watashi], 僕 [Boku], and 俺 [Ore] pronouns for himself and the 君 [Kimi] and 貴方 [Anata] pronoun for others.
+  - Season 1 Episode 16 Chapter 6 has Elias using 私 [Watashi] and 僕 [Boku], while later in Episode 16 Chapter 9 he uses 俺 [Ore]. The reason for this is not quite clear.
+
 ## Voicelines
 Hello1	 Oh—why, if it isn’t [Name]. I’m happy to see you again today.
 Inbox1	 It seems a letter has arrived for you. Ah—if you’d like to check it, please do.

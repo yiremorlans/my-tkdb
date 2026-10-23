@@ -56,6 +56,31 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - Anomalies fear him and obey him, particularly when he's angry, even to the point of kneeling out of fear when he's furious. Normal animals experience the same fear, freezing and behaving anxiously in his presence.
 - Says the PC smells nicer than before, perhaps able to smell their curse's advancement due to the flowers that would grow on her as a Kyklos.
 
+## Trivia
+Source: Tokyo Debunker Wiki, Towa Otonashi page, Trivia section (tokyodebunker.fandom.com/wiki/Towa_Otonashi; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q. Do you have any concerns with missions?
+  - A. ~~~~? ~~~~!
+  - Q. What's your favorite place on campus?
+  - A. ~~~~𝅘𝅥𝅮
+  - Q. Where would you like to go if you have your R&R permit approved?
+  - A. ~~~~~~~~𝅘𝅥𝅮
+  - Q. What do you think about the ghoul(s) in your house?
+  - A. ~~~~𝅘𝅥𝅮 ~~~~!!
+- He associates people with flowers, giving them nicknames according to how he perceives their personalities.
+  - MC: Dandelion
+  - Kaito: Coriander
+  - Ren: Wolfsbane
+  - Zenji: Iris
+  - Edward: Rafflesia
+  - Lyca: Lupin
+  - Subaru: Shameplant
+  - Elias: Sundew
+- Towa believes in destiny and soulmates.
+- Towa's birthday is the day after Lucas' birthday.
+- He appears to be right-handed, judging by his Campus writing animation.
+- Towa uses the オレ [Ore] pronoun for himself and the オマエ [Omae] pronoun for others.
+
 ## Voicelines
 Summon	Tell me lots of love stories, okay?
 Login Bonus	 TBA

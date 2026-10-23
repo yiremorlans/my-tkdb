@@ -46,6 +46,29 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - His memory is very poor, although he can remember things and people with prompting.
 - Noted that, as he's not Haru, he can't jump up a building.
 
+## Trivia
+Source: Tokyo Debunker Wiki, Taiga Hoshibami page, Trivia section (tokyodebunker.fandom.com/wiki/Taiga_Hoshibami; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q: What is good about your house?
+  - A: Ah~? It's getting money out of greedy small fry customers and unskilled dealers, isn't it? Gyahaha!
+  - Q: Do you have any concerns with missions?
+  - A: Whenever I go on one, I get hungry right away...
+  - Q: Where would you like to go if you have your R&R permit approved?
+  - A: Macao.
+  - Q: What do you think about the ghoul(s) in your house?
+  - A: Lulu gets so angry every day, I could never get bored of it~ ...Ah~? Shinjo? Who the fuck is that?
+- Taiga gives nicknames to anyone he remembers:
+  - Romeo: Lulu
+  - Haru: Harry
+  - Rui: Mickey
+  - Haku: Nagi
+- He appears to be left-handed, judging by his writing animation on campus.
+- The name Taiga, when translated from Japanese, roughly means "the greater self" which refers to an enlightened person or someone who transcends ego.
+  - Taiga's undercover disguise as a guild-visiting cat being a white tiger may be a reference to how his name, Taiga, can be read as "tiger".
+- Taiga's stigma incantation, "Malab," is an anagram of the Ars Goetia demon Balam. He is a great and powerful king of Hell who commands over forty legions of demons. He gives perfect answers on things past, present, and to come, and can also make men invisible and witty.
+- Taiga uses the オイラ [Oira] pronoun for himself and switches between using the お前 [Omae] and the テメェ [Temee] pronouns for others.
+  - In his affinity chats, Taiga uses a few different pronouns for himself, including 俺 [Ore], オイラ [Oira], and 俺様 [Ore-sama].
+
 ## Voicelines
 Opening Cutscene	Gyahaha! Time to cash in your chips! Guess this whole thing was just a busted flush, huh? Tell me something, would you? What could I have done different to change this outcome?
 Summon	All right, who the hell called me?

@@ -48,6 +48,31 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 - Was an acrobat back in Dionysia, which explains his athleticism and flexibility and the like.
 - Claims to be a pacifist now, suggesting he was not while in Dionysia
 
+## Trivia
+Source: Tokyo Debunker Wiki, Haru Sagara page, Trivia section (tokyodebunker.fandom.com/wiki/Haru_Sagara; fetched 2026-10-23). Fan-wiki notes, kept as written; project rules and canon voicelines outrank them. Same spoiler rule as Stigma & Artifact: lines tagged [spark+] are spark tier and up only.
+- From the B's-LOG magazine October 2024 issue:
+  - Q. What is good about your house?
+  - A. You can feel healed and refreshed by numerous adorable anomalous animals! You'll even get a full hospitality service from Jabberwock's very own handsome ghouls!! What do you think, dearest customer? Would you like to come and try?!
+  - Q. Do you have any concerns with missions?
+  - A. Hmm... I don't mind going for missions but there's no one to watch my kids while I'm gone. Even when I tried using an automatic feeder, the less domesticated critters just won't get used to it...
+  - Q. Where would you like to go if you have your R&R permit approved?
+  - A. That reminds me! Recently Ren told me that I "looked like someone who wanders around Don Quijote late at night." When I looked it up, apparently it's a store chain that sells various useful appliances! Now that's music to my ears~
+  - Q. What do you think about the ghoul(s) in your house?
+  - A. Both Ren and Towa have a nice build so I think it's better if they try to make use of it. If they make the most out of those muscles, they'll be much more reliable... Hm? This sound... Oi, Towa! Hoooold your horses~~~~~~!!
+- Peekaboo rarely leaves his side.
+- As revealed in Episode 5, Haru is shown to own an iPhone.
+- His first name, Haru, can mean "sunlight" in Japanese.
+- Haru paid off debt incurred by a student named Shion Genkai when the latter caused property damage to the Sinostra casino.
+- Despite being afraid of dogs, Haru doesn't seem to have any problems with the human-faced dog. As Towa mentions having to get Haru wash it after encountering Ed holding it, and in Episode 9, where Haru is mentioned to chase after the dog after it had escaped during Romeo's call.
+- He appears to be left-handed, judging by his Campus writing animation.
+- Haru's stigma incantation, "Bahnti," is an anagram of the Ars Goetia demon Bathin. He is a Duke of Hell, who has under his command thirty legions of demons. He knows the virtues of precious stones and herbs, and can bring men suddenly from one country to another. He helps one attain astral projection, and takes you wherever you want to go.
+- Haru speaks in a Kansai dialect with blended aspects of a Chugoku dialect. This could be considered a callback to his roots of living in Okayama for a year.
+  - His voice actor, Masamu Ono, born in Wakayama prefecture of the Kansai region, is known for his Kansai dialect in many roles.
+- In Episode 17, when Haru asks Jiro what the latter packed in terms of food, he discovers Jiro's medicinal needles, in which it is implied that, like Lyca, Haru is deathly afraid of shots.
+- Haru's favourite energy drink flavor, Loco Orange, isn't available in Japan. It's said that the ingredients are very different from energy drinks sold locally.
+  - Additionally, his usual order from Rui's bar is a prosecco.
+- Haru uses the わし [Washi] pronoun for himself and the おめぇ [Omee] pronoun for others.
+
 ## Voicelines
 Summon	 All right, I'll take it from here! Gahaha!
 Login Bonus	 You're doing your best today, too! Here! This is a parting gift from me!
