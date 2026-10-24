@@ -165,7 +165,7 @@ export default {
       beats: [
         "**{firstName}**: Jiro informs me that all of {house} heard what I said in the corridor earlier, and asked whether I'd meant them to. Of course I did. I said it at my usual volume, and I meant every word to carry.",
         "People keep asking why you're always in my facility. For months I've told them they'd misunderstood. A stubborn case. Routine follow-up.\n\nThis time I told them the truth. You aren't my patient. You're mine. Anyone with an objection may bring it to me directly.",
-        "I've tried to disprove what I feel for you. Repeatedly, rigorously, with every method I have. It holds. It was always going to be you, and I'm through pretending otherwise!",
+        "I've tried to explain away what I feel for you. Gratitude. Habit. Professional interest. I ruled out every one. What's left is you, and I'm through pretending otherwise!",
       ],
       choice: {
         prompt:
@@ -183,7 +183,7 @@ export default {
             label: "Ask which side he sleeps on",
             style: 1,
             close:
-              "Which SIDE!? I don't... there isn't... I fall asleep over my notes, if you must know!\n\n...The left. I'll take the left. Stop asking questions and come over.",
+              "Which SIDE!? How should I know! Most nights I wake up face-down on my notes!\n\n...The left. Fine. Stop asking questions and come over.",
           },
           {
             key: "bold",
@@ -196,7 +196,7 @@ export default {
       },
       keepsake: {
         emoji: "💍",
-        line: "A ring that all of Mortkranken heard about before you did.",
+        line: "A ring to match the confession all of Mortkranken already heard.",
       },
     },
 
@@ -530,7 +530,10 @@ export default {
           '"I was saying... it was nothing of consequence. The lighting in here is atrocious, that\'s the whole of it."',
         responses: {
           kind: ["Agree about the lighting", "Give him a moment"],
-          playful: ["Offer to fix the lighting", "Ask what he was really saying"],
+          playful: [
+            "Offer to fix the lighting",
+            "Ask what he was really saying",
+          ],
           bold: ["Match his volume", "Say you'd like to hear it"],
           neutral: ["Say nothing, let him recover", "Wait it out, unbothered"],
         },
@@ -677,7 +680,10 @@ export default {
           '"I replied promptly because the question was urgent. That is the only reason."',
         responses: {
           kind: ["Say his answer was thorough", "Say he explains it best"],
-          playful: ["Ask if he was waiting by it", "Say he must type very fast"],
+          playful: [
+            "Ask if he was waiting by it",
+            "Say he must type very fast",
+          ],
           bold: ["Send another one right away", "Say you'll text him tomorrow"],
           neutral: ["Read it and move on", "Send back a short thanks"],
         },
