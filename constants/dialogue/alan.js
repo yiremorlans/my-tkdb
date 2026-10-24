@@ -55,7 +55,8 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: Noticed something",
-        "I run missions the same way every time\n\nCount everyone in, check it twice\n\nDone that since I made captain\n\nStopped double-checking you a while back\n\nJust count on you and move on\n\nDont know when that started\n\nYou give me {favResponse} every time\n\nQuit bracing for it to change",
+        "I run missions the same way every time\n\nCount everyone in, check it twice\n\nYou're always on the list\n\nStopped checking you twice a while back\n\nPut you next to me now instead",
+        "Dont know when that started\n\nYou give me {favResponse} every time\n\nQuit bracing for it to change",
       ],
       choice: {
         prompt: "Don't need anything back",
@@ -84,14 +85,14 @@ export default {
       },
       keepsake: {
         emoji: "📋",
-        line: "The one name on his roster he stopped double-checking.",
+        line: "The spot beside him he stopped saving for anyone else.",
       },
     },
 
     closeFriend: {
       beats: [
         "**{firstName}**: You good",
-        "Not asking as your captain\n\nAsking as me\n\nThat thing went straight for you back there\n\nDidnt feel like a choice\n\nJust moved\n\nStill thinking about it now though",
+        "Not asking as your captain\n\nAsking as me\n\nYou were right next to me\n\nThat thing went straight for you back there\n\nDidnt feel like a choice\n\nJust moved\n\nStill thinking about it now though",
         "Known you since {sinceMet}\n\nNever once done the math on how close that was till today\n\nDidn't like the answer\n\nGlad this is the version where you're fine",
       ],
       choice: {
@@ -99,17 +100,17 @@ export default {
         options: [
           {
             key: "kind",
-            label: "Thank him for saving you",
+            label: "Ask if he's good too",
             style: 3,
             close:
-              "Nothing to thank me for\n\nWasn't gonna stand there and watch\n\nStill glad you're okay",
+              "Wasn't me it went for\n\n*A pause.*\n\nYeah\n\nAm now",
           },
           {
             key: "playful",
             label: "Ask if he does that math often",
             style: 1,
             close:
-              "Only when it's you\n\nUsually don't bother counting\n\nGonna start",
+              "Only when it's you\n\nNever used to\n\nGonna start",
           },
           {
             key: "bold",
