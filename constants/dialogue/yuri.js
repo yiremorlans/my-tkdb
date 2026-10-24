@@ -183,7 +183,7 @@ export default {
             label: "Ask which side he sleeps on",
             style: 1,
             close:
-              "Which SIDE!? How should I know! Most nights I wake up face-down on my notes!\n\n...The left. Fine. Stop asking questions and come over.",
+              "Which SIDE!? How should I know! Most nights I wake up face-down on my notes.\n\n...Fine. The left. Stop asking questions and come over.",
           },
           {
             key: "bold",
