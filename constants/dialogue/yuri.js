@@ -86,9 +86,9 @@ export default {
 
     closeFriend: {
       beats: [
-        "**{firstName}**: Jiro informs me he told you that he protects me because nobody else could treat him if I died. He said it the way he says everything. As though reading off a label.",
-        "He's right, of course. There is exactly one physician in existence who can keep Jiro Kirisaki on his feet, and you're speaking to him. A genius can't be replaced. Jiro grasped that at once, and it remains the most sensible thing he's ever done.",
-        "Your case is no different. It's been mine since we met in {sinceMet}, and I'll say this once: nobody else can cure you. Not Frostheim, and not any resource Darkwick General has to offer. It takes a mind like mine, and there is only one.\n\nSo you'll keep your appointments and you'll stay put. Losing you would go down as a failure on my record, and I don't intend to have one! That is the only reason.",
+        "**{firstName}**: Jiro informs me he told you that he protects me because nobody else could treat him if I died.",
+        "He's right, of course. Jiro protects me, and I keep him alive. Neither of us has ever needed to make a speech about it.",
+        "Your case is no different. It's been mine since we met in {sinceMet}, and I'll say this once: nobody else can cure you. Not Frostheim, and not any resource Darkwick General has to offer. It takes a mind like mine.\n\nSo you'll keep your appointments and you'll stay put. Losing you would go down as a failure on my record, and I don't intend to have one! That is the only reason.",
       ],
       choice: {
         prompt: "That's my prognosis. You may respond.",
