@@ -241,12 +241,12 @@ export default {
         },
       },
       {
-        line: "Break time at the diner. He looks up from his phone at you hovering, the look he saves for customers who've finished eating and won't leave.",
+        line: "Break time at the diner. He looks up from his phone at you hovering, the look he saves for customers who've finished their coffee and won't leave.",
         approach: "Take it as a hello",
         greeting:
           "\"I'm not doing extra shifts. Unless you're covering my break. Then, maybe.\"",
         responses: {
-          kind: ["Say you just came to eat", "Share his booth for the break"],
+          kind: ["Say you just came for coffee", "Share his booth for the break"],
           playful: [
             "Ask if loitering costs extra",
             "Haggle him down from maybe",

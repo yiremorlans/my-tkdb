@@ -91,7 +91,7 @@ export default {
         ],
       },
       keepsake: {
-        emoji: "🥡",
+        emoji: "📦",
         line: "The diner run half the house was suddenly too busy for.",
       },
     },
@@ -562,7 +562,7 @@ export default {
         },
       },
       {
-        line: "He's short on a few things for tomorrow and headed to the Mystery Diner to borrow from the kitchen. Ren's on shift, which Sho seems to think counts as permission.",
+        line: "He's short on cookware for tomorrow and headed to the Mystery Diner to borrow some from the kitchen. Ren's on shift, which Sho seems to think counts as permission.",
         approach: "Go to the diner with him",
         greeting:
           '"Senpai, there you are. I\'m headed to the diner, could you come with and help me carry some stuff?"',
