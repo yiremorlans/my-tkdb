@@ -44,13 +44,13 @@ export default {
             label: "Ask why not with Luca",
             style: 4,
             close:
-              "*A long pause.*\n\n...because I wanted just one lunch where you're not looking past me at him. That's it.\n\n*Then, immediately:* ...okay that was a lot. Anyway! Ramen's on me. Get the good one, not the one Luca always orders, his taste is genuinely concerning.",
+              "*A long pause.*\n\n...because I wanted just one afternoon where you're not looking past me at him. That's it.\n\n*Then, immediately:* ...okay that was a lot. Anyway! Drinks are on me. Just don't get whatever Luca always orders, his taste is genuinely concerning.",
           },
         ],
       },
       keepsake: {
-        emoji: "🍜",
-        line: "The receipt from the diner, kept because he actually got you there.",
+        emoji: "☕",
+        line: "A table for two, with no Luca showing up halfway through.",
       },
     },
 
