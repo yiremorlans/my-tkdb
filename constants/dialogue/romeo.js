@@ -8,17 +8,17 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Before you say anything, no, you're not in trouble, and no, this isn't a bill. Yet.",
-        "Somebody put your name on the floor list as a mark. Standard stuff, happens to everyone who comes through more than twice. Not personal, just Sinostra.\n\nI took it off. Personally. Cost me a conversation I did not enjoy having at nine in the morning.\n\n{timesMet} visits and you've never once sat down at a table. Marks play. You don't even look. You know how rare that is? That's ONE person.",
+        "Somebody put your name on the floor list as a mark. Standard stuff, happens to everyone who comes through more than twice. Not personal, just Sinostra.\n\nI took it off. Personally. Cost me a conversation I did not enjoy having at nine in the morning.\n\n{timesMet} visits. You've wiped and waited my tables, and you've never once sat down at one. Marks play. You don't even look. That's either good sense or a scheme. I'll find out which.",
       ],
       choice: {
         prompt: "So don't make me regret it.",
         options: [
           {
             key: "kind",
-            label: "Thank him for it",
+            label: "Say you'll stay off the tables",
             style: 3,
             close:
-              "Don't thank me, it's undignified for both of us.\n\n...You're welcome. That's all you're getting. That's the entire allocation for the year.",
+              "Good. End up on that list again, and I won't be taking you off, understand!?\n\n...That's all you're getting. That's the entire allocation for the year.",
           },
           {
             key: "playful",
@@ -32,7 +32,7 @@ export default {
             label: "Ask what it cost him",
             style: 4,
             close:
-              "Nothing.\n\nA favor, two hundred thousand yen of goodwill, and I had to be nice to a man I hate. Don't mention it. Genuinely. Do not mention it, ever, to anyone.",
+              "Nothing.\n\nTwenty thousand yen out of my own pocket, to cover what the floor had you down for, and I had to be nice to the TGA who listed you. Don't mention it. I mean it. Do not mention it, ever, to anyone.",
           },
         ],
       },
@@ -44,39 +44,39 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: Right. Something's been irritating me for a MONTH and I've finally worked out what it is.",
-        "You do {favResponse} with me every single time and you have NEVER ONCE ASKED ME FOR ANYTHING.\n\nEverybody wants something. That's not me being bleak, it's the operating model of this entire academy. People suck up, then comes the ask. I price it in. Honestly it's fine, the ask is where the margin is.\n\nYou've had a month of opportunities. Nothing. You're a WMOO. Wasted Month Of Opportunities, obviously. It's INSULTING.",
+        "**{firstName}**: That's it. I'm done. Nothing but WOE.",
+        "Every job I gave you, I made worse on purpose. Tables, wiped until I couldn't find a single hair. Refills, more than any sane person drinks. Table seven, every peak hour. The chips, counted twice, late, on my orders.\n\nEveryone in this house folds inside a week. Shinjo suddenly has the Compendium of Laws to read the second I put him on the floor. The first-years stand around like TGAs.",
+        "I tell them to LYP, and they learn it.\n\nYou? You answer me with {favResponse}. Every single time, no matter what I hand you.\n\nSo I'm not stopping. I'm changing the question. Everyone in this house has a price. Money, fear, a pretty face. Once I know what it is, I know exactly who could buy them out from under me. I'd like to know yours before anyone else does.",
       ],
       choice: {
-        prompt:
-          "So ask me for something. Anything. I'm begging you, it's making me itch.",
+        prompt: "So. What would it take, BB? Name your price.",
         options: [
           {
             key: "kind",
-            label: "Ask him to sit down a minute",
+            label: "Say you'd never sell him out",
             style: 3,
             close:
-              "That's not a... that's not an ASK, that's not...\n\n*A long pause.*\n\n...Fine. Fine! I'm sitting. I've sat. Are you happy? This is the worst favor I've ever done anyone.\n\n*He sits for forty minutes.*",
+              "...Hmph. Big promise from someone I've been working to the bone.\n\nWords are cheap. I'll believe it when it costs you something.",
           },
           {
             key: "playful",
-            label: "Ask for his skincare routine",
+            label: "Ask him to make an offer",
             style: 1,
             close:
-              "NOW you're talking. Right. Clear your evening. There are ELEVEN STEPS and I'm not skipping the explanations.\n\n*He sends fourteen messages about serums. It's the happiest you've ever seen him.*",
+              "HDY! I asked first. Nobody makes ME bid.\n\nName it when you've got a real one, BB.",
           },
           {
             key: "bold",
-            label: "Say you don't want anything",
+            label: "Say your price is him",
             style: 4,
             close:
-              "Everyone wants something.\n\n...You're going to keep saying that, aren't you. And I'm going to keep waiting for the ask, and it's going to be like this for years, and I'm going to be extremely annoyed the entire time.\n\nFine. FINE. Consider me annoyed.",
+              "Excuse me!? That's not a price. That's extortion.\n\n...Tch. I'll think about it.",
           },
         ],
       },
       keepsake: {
-        emoji: "🧴",
-        line: "Eleven steps, explained in fourteen messages, unprompted.",
+        emoji: "⚖️",
+        line: "The one price in his house he still couldn't name.",
       },
     },
 
