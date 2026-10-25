@@ -18,14 +18,14 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Don't get excited\n\nI message a lot of people\n\nUr not special, ur like extremely not special",
-        "So there's a thread going round about u\n\nNothing too bad, which is honestly the boring outcome, I was hoping for something I could use\n\nAnyway I killed it, ur welcome. didn't like the guy who started it and this was cheaper than dealing with him properly\n\n{timesMet} times you've been round and nobody's got anything on u\n\nkind of impressive and I'm annoyed about it",
+        "So there's a thread going around about u\n\nNothing too bad, which is honestly boring, I was hoping for something I could use\n\nAnyway I killed it, ur welcome\n\ndidn't like the guy who started it and this was cheaper than dealing with him\n\n{timesMet} times we've hung out and nobody's got anything on u\n\nkind of impressive and I'm annoyed about it",
       ],
       choice: {
-        prompt: "go on then, thank me",
+        prompt: "go ahead, thank me",
         options: [
           {
             key: "kind",
-            label: "Thank him sincerely",
+            label: "Say thanks and mean it",
             style: 3,
             close:
               "Ugh\n\nDo it again but sarcastic, I don't know what to do with the other kind, it's making my skin crawl",
