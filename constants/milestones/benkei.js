@@ -36,7 +36,7 @@ export default {
     },
     benkei_counter: {
       tier: "known",
-      emoji: "🏪",
+      emoji: "🛎️",
       bucket: "new",
       label: "Kept him company behind the counter",
       afterline:
@@ -102,7 +102,7 @@ export default {
     },
     benkei_front_step: {
       tier: "spark",
-      emoji: "🌇",
+      emoji: "🥪",
       bucket: "spark",
       label: "Ate lunch on the store's front step",
       afterline: "Lunch on the store's front step, just the two of you.",

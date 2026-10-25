@@ -34,7 +34,7 @@ export default {
     },
     taiga_getaway: {
       tier: "known",
-      emoji: "🏃",
+      emoji: "💸",
       bucket: "new",
       label: "Helped him make a run for it",
       afterline:
