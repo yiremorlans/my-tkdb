@@ -124,7 +124,7 @@ export default {
 
   campus_bench: {
     tier: "spark",
-    emoji: "🪵",
+    emoji: "🍂",
     bucket: "spark",
     label: "Lost an afternoon on a campus bench",
     afterline: "You sat down for a minute. It was dark when you got up.",
@@ -156,7 +156,7 @@ export default {
   },
   long_way: {
     tier: "spark",
-    emoji: "🛣️",
+    emoji: "🧭",
     bucket: "spark",
     label: "Took the long way back on purpose",
     afterline: "You both took the long way back, and neither of you mentioned it.",
@@ -201,7 +201,7 @@ export default {
   },
   lamplit_steps: {
     tier: "close",
-    emoji: "🪜",
+    emoji: "🏮",
     bucket: "close",
     label: "Talked on the steps until the lamps went out",
     afterline: "You sat on the steps and talked until the lamps went out.",
