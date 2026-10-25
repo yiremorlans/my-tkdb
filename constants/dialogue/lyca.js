@@ -11,7 +11,7 @@ export default {
     acquaintance: {
       beats: [
         "**{firstName}**: Is this you\n\nThe blond gigolo put your name in the thingy for me. I pressed it four times. Sorry if it went four times",
-        "I don't mind classes. The teachers say cool stuff. Once I learn to read the textbooks and the blackboard it'll be perfect.\n\nYou listen the same way. Like you're really getting it.\n\nSometimes I smell somethin' sweet off you. Just for a second. Its different from everyone else\n\nI started sitting where I could see you in class. It was s'posed to be so I could hear better. But...\n\nI want to learn about you. Not just what the teachers say. That's what I wanted to tell you {timesMet} classes ago.",
+        "I don't mind classes. The teachers say cool stuff. Once I can read the blackboard its gonna be perfect\n\nYou listen like you're really getting it\n\nSometimes I smell somethin' sweet off you. Just for a second. Its different from everyone else\n\nI started sitting where I could see you in class. It was s'posed to be so I could copy how you write stuff down. But...\n\nI want to learn about you. Not just what the teachers say. That's what I wanted to say the last {timesMet} times. I didn't know how",
       ],
       choice: {
         prompt:
@@ -29,37 +29,37 @@ export default {
             label: "Ask what you smell like",
             style: 1,
             close:
-              "Strawberry milk. The carton kind, from the cafeteria. That's what you smelled like earlier, right when you got the answer.",
+              "Sweet. Like strawberry milk, the carton kind\n\n...Somethin' about it makes my stomach feel weird. I dunno why",
           },
           {
             key: "bold",
             label: "Say you want to know him too",
             style: 4,
             close:
-              "...Really?\n\nOkay. Then I don't gotta stop myself from asking stuff about you. That's better. Can we keep doing that?",
+              "...Really?\n\nNobody asks about me. They just ask what I am\n\nOkay. You can ask. I'll answer if I know the words",
           },
         ],
       },
       keepsake: {
         emoji: "📚",
-        line: "Sitting where he could see you in class, to hear one thing and learn another.",
+        line: "Sitting where he could see you in class, to copy your letters and learn something else.",
       },
     },
 
     friend: {
       beats: [
         "**{firstName}**: Your scent was all squeezy today. Somethings wrong",
-        "You always give me {favResponse}. Your scent's what changes, so thats how I know.\n\nToday you still did {favResponse}. But under it you smelled squeezy. Like that time you cried and didn't tell me how come.\n\nNobody else can smell it on you. I can.\n\nIf somebody did somethin' to you, tell me who.",
+        "You always give me {favResponse}. Your scent's what changes, so thats how I know.\n\nToday you still gave me {favResponse}. But under it you smelled squeezy. Like that time you cried and didn't tell me how come.\n\nNobody else can smell it on you. I can.\n\nIf somebody did somethin' to you, tell me who.",
       ],
       choice: {
         prompt: "How come. You don't gotta say it nice",
         options: [
           {
             key: "kind",
-            label: "Say you're fine, just tired",
+            label: "Say he's right, you're tired",
             style: 3,
             close:
-              "...Okay. Tired. I'll believe that. For now\n\nThen go sleep. If your scent's still squeezy tomorrow Im asking again",
+              "...Tired. Okay. I knew it was somethin'\n\nThen go sleep. If your scent's still squeezy tomorrow Im asking again",
           },
           {
             key: "playful",
@@ -73,7 +73,7 @@ export default {
             label: "Tell him you need a hug",
             style: 4,
             close:
-              "A hug. Fine\n\nTen seconds. That's all I can do. But I'm coming over\n\nI can stay till you feel better",
+              "A hug. Fine\n\nTen seconds. That's the rule. But I'm coming over\n\nAfter, I can stay till your scent's not squeezy",
           },
         ],
       },
