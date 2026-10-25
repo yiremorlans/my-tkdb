@@ -70,39 +70,39 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: I Have Been Keeping Track Of Something. Do Not Be Alarmed. I Know Everything, It Is One Of My Few Hobbies. 🔍😌",
-        "With Me, You Lead With {favResponse}. Every Time. 🖤🖤\n\nNever With Rui Or Lyca. I Have Watched Closely. 👀🕯️",
+        "**{firstName}**: I Have Been Keeping Track Of Something. Do Not Be Alarmed, It Is One Of My Few Hobbies. 🔍😌",
+        "With Me, You Lead With {favResponse} Every Time. 🖤🖤\n\nNever With Rui Or Lyca. I Have Watched Closely. 👀🕯️",
         "As Your Love Advisor, This Is Very Inconvenient. I Had Rui Down As The Favorite. 💌😩\n\nSo I Will Ask Properly, At Last. 🙏🕯️",
       ],
       choice: {
-        prompt: "Rui, Or Lyca? One Name Will Do. 🤔🖤",
+        prompt: "Rui, Or Lyca? Or Some Third Name I Have Not Thought Of. 🤔😌\n\nOne Name Will Do. 🖤🖤",
         options: [
           {
             key: "kind",
             label: "Say they're all special to you",
             style: 3,
             close:
-              "All Of Us? How Diplomatic. 😌🖤\n\nRui Would Approve Of That Answer. Which Is Exactly Why I Do Not. 😏😏\n\nI Will Ask Again Next Time, And I Dare You To Pick One. 🖤🦇",
+              "All Of Us? How Diplomatic. 😌🖤\n\nRui Would Approve Of That Answer. I Am Not Rui. 😏😏\n\nI Will Ask Again Next Time, And I Dare You To Pick One. 🖤🦇",
           },
           {
             key: "playful",
             label: "Say Rui, then take it back",
             style: 1,
             close:
-              "You Had Me For One Terrible Second. 😱😱\n\nNow Say The Right Name, I Dare You. Quietly, Though. 🤫🖤\n\nThis Stays Between Us. I Would Hate For Rui Or Lyca To Feel Left Out. 🙏😇",
+              "You Had Me For One Terrible Second. 😱😱\n\nNow Say The Right Name, I Dare You. 🤫🖤\n\nThis Stays Between Us. I Would Hate For Rui Or Lyca To Feel Left Out. 🙏😇",
           },
           {
             key: "bold",
             label: "Admit you like him best",
             style: 4,
             close:
-              "Me? 😳😳\n\nHow Delightful. I Did Not Think You Had It In You. 🥰🖤\n\nCome Here And Prove It, Then. I Am Not Letting You Take That Back. 😏🦇",
+              "My. 😌🖤\n\nI Had My Suspicions. It Is Still Nicer To Know. 🥰🦇\n\nCome Here And Prove It, Then. I Am Not Letting You Take That Back. 😏🖤",
           },
         ],
       },
       keepsake: {
         emoji: "💌",
-        line: "The love advice he gave, and the dare he took from your answer.",
+        line: "The love advisor's one question, and what he made of your answer.",
       },
     },
 
