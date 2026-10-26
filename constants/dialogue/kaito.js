@@ -6,13 +6,13 @@ export default {
   //
   // The acquaintance scene opens the bond with him working up to asking
   // {firstName} to lunch, one-on-one, no Luca along for it. The ask itself
-  // is reference.md's Home Screen "Morning 5" line, nearly verbatim
+  // is reference/kaito.md's Home Screen "Morning 5" line, nearly verbatim
   // ("Luca's busy after class, so how about we hit up the diner? It's been
   // ages!"); the follow-up quotes his own "Default 3" self-own ("I could've
   // taken MC to lunch with that money! God, why am I such a moron?!"); the
   // choice prompt echoes "Idle 1" ("Am I being annoying?! I'm sorry!").
   //
-  // Texting voice, per reference.md's "## Bond Scenes" notes: a sob emoji (😭)
+  // Texting voice, per reference/kaito.md's "Texting style" notes: a sob emoji (😭)
   // surfaces when he's overwhelmed, his anxious questions almost always double
   // the "??", and he stretches letters when exasperated ("Urghhhh").
   bondScenes: {
@@ -56,39 +56,39 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: Hey, quick question. Corner piece or middle piece??",
-        "Never mind, I already know. Every tray of brownies I've brought over, you wait for everyone to grab theirs and then you take a corner one like you're hoping nobody notices.\n\nI noticed.\n\nSo I made a whole tray that's just corners. Did you know you can do that?? You just cut it different. Took me like two tries.",
-        "And every time I asked if they were any good, you had {favResponse} for them. Not \"they're fine.\" Everyone else says they're fine 😭",
+        "**{firstName}**: Okay don't laugh. I made you cookies. Just you, not a tray for the whole house",
+        "Every time I bake, you're off doing some Honor Roll thing, and by the time you show up it's a crime scene. Luca takes like four \"for after training.\" Tohma takes a plate up to Jin. Jin doesn't even leave his room and he still gets more than you. Urghhhh.\n\nAnd you get the burnt one. EVERY time. The one I was gonna throw out!!\n\nSo I hid a batch for you. First pick, for once.",
+        "My Gram used to do that for me. Every winter she'd save me the mandarins before anyone else got to them. I didn't get it back then. I kind of get it now.\n\nAnd you've had {favResponse} even for the burnt ones, so. You deserve the good ones 😭",
       ],
       choice: {
-        prompt: "Is that weird?? That I noticed?? That's weird. Sorry.",
+        prompt: "Is that weird?? I'm sorry! You're probably busy right now...",
         options: [
           {
             key: "kind",
-            label: "Say you'd hoped he'd notice",
+            label: "Say you're never too busy",
             style: 3,
             close:
-              "You WANTED me to?? Okay. Okay okay okay.\n\nThey're going in the Frostheim kitchen with a sign on them. Nobody touches the corner tray. Not even Luca.",
+              "...Never??\n\nOkay. Give me a sec 😭\n\nI already packed them up for you. They're all yours.",
           },
           {
             key: "playful",
-            label: "Ask who ate the middle bits",
+            label: "Ask what he'll tell Luca",
             style: 1,
             close:
-              "...Me. I ate the middles. All of them. Urghhhh 😭\n\nWorth it though. Don't tell Luca, he'll make me run it off.",
+              "Nothing!! He gets everything else. He can live without cookies for once.",
           },
           {
             key: "bold",
-            label: "Say you're coming to get them",
+            label: "Ask him to eat them with you",
             style: 4,
             close:
-              "Now?? Like you're on your way?? Hold on, there's sugar everywhere. Give me ten minutes. Five.\n\nOkay just come, I'll stand in front of the mess.",
+              "With me?? Like, together??\n\nOkay. Okay, I'm bringing them over. I'm not eating any though. They're yours.\n\n...Maybe one.",
           },
         ],
       },
       keepsake: {
-        emoji: "🍫",
-        line: "A tray of nothing but corner pieces, cut that way for you.",
+        emoji: "🍪",
+        line: "The batch he hid from the whole house so you'd get first pick.",
       },
     },
 
@@ -156,7 +156,7 @@ export default {
           },
           {
             key: "bold",
-            label: "Tell him to be brave right now",
+            label: "Ask him to call you now",
             style: 4,
             close:
               "Right now?? Like... now now??\n\n*The phone rings before you can answer. He is audibly holding it with both hands.*\n\n> Hi. Hi. I called. That's the bravest thing available at this hour, I checked.\n\n*He doesn't hang up for an hour and a half, and mostly you both just breathe at each other.*",
