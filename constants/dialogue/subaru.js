@@ -53,31 +53,32 @@ export default {
     friend: {
       beats: [
         "**{firstName}**: I hope this isn't a bother. I haven't seen you around Hotarubi for a few days, and I only wanted to check in.",
-        "I went back over everything I said the last time. Then I remembered you've answered me with {favResponse} every time I've ever asked you anything, and I felt a bit silly.\n\nThe tea room has been very quiet. I keep setting out one cup too many.",
+        "I went back over everything I said the last time. People have always said my manner is a little peculiar. I've been on a stage since I was four, so maybe that's why. I worried it bothered you too.\n\nThen I remembered you've answered me with {favResponse} every time I've ever asked you anything, and I felt a bit silly.",
+        "The tea room has been very quiet. I keep setting out one cup too many.",
       ],
       choice: {
-        prompt: "Is everything alright? I hope it wasn't anything I did.",
+        prompt: "I'm worrying over nothing, aren't I?",
         options: [
           {
             key: "kind",
-            label: "Admit it's been a hard week",
+            label: "Say it wasn't anything he did",
             style: 3,
             close:
-              "Oh... I'm sorry. Thank you for telling me the truth, and not just that you were busy.\n\nCome by whenever you're ready. You don't have to talk about it. You can just sit with me.",
+              "Oh... Thank you. I'd talked myself into all sorts of things.\n\nIt's good to hear from you. Truly. There's always a place for you at Hotarubi.",
           },
           {
             key: "playful",
-            label: "Ask how many cups so far",
+            label: "Ask if Haku noticed",
             style: 1,
             close:
-              "Four. Haku drank all of them so they wouldn't go to waste, and he's started looking at me oddly.\n\nPlease come back before he asks.",
+              "Haha... Haku notices everything. I'd hoped I was being less obvious.",
           },
           {
             key: "bold",
             label: "Say you missed him too",
             style: 4,
             close:
-              "Oh... You did?\n\nThen I'm glad it wasn't only me. I suppose I can stop pretending the extra cup was an accident.",
+              "Oh... You did?\n\nThen I'm glad it wasn't only me. Come by soon, if you can. I'd like that very much.",
           },
         ],
       },
