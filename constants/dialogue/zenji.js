@@ -54,7 +54,7 @@ export default {
       beats: [
         "**{firstName}**: My dear! The Kotodama Advice Salon is taking its write-ins out into the field, and you have been selected. Congratulations.",
         "I confess an ulterior motive. The columnist has a letter of his own and nobody to send it to. Haku refuses to answer it. He says it is a conflict of interest.",
-        "*Dear Salon,*\n\n*There is a person who goes off on missions and comes back in one piece, every time, and still I fret the whole while that she will get hurt. She has {favResponse} for me whenever we meet, which is more than a fella like me ever expected, and I should hate to lose it.*\n\n*How does one stop worrying?*\n\n*Signed, A Worrywart of Hotarubi*",
+        "*Dear Salon,*\n\n*There is a person who goes off on missions and comes back in one piece, every time, and still I fret the whole while that they will get hurt. They have {favResponse} for me whenever we meet, which is more than a fella like me ever expected, and I should hate to lose it.*\n\n*How does one stop worrying?*\n\n*Signed, A Worrywart of Hotarubi*",
       ],
       choice: {
         prompt:
@@ -65,21 +65,21 @@ export default {
             label: "Say you'll check in after",
             style: 3,
             close:
-              "A report after every mission? Through my manager, who will have to read them aloud?\n\n(Haku: Sure. Love that for me.)\n\nThen the letter writer may rest easy. Figuratively. He does not, strictly speaking, sleep.",
+              "You will tell me when you're home safe? Every time?\n\nThen the salon has its answer, my dear. A worry never goes away. It simply needs a place to rest, and your word will do.",
           },
           {
             key: "playful",
-            label: "Write him back in haiku",
+            label: "Answer as the columnist",
             style: 1,
             close:
-              "Five, seven, five. You counted on your fingers, didn't you? Haku says he could tell.\n\nIt is the finest letter the salon has ever received. I am having it framed. Haku is framing it. I am supervising.",
+              "*Dear Worrywart, the person in question is fine, she is having a lovely time, and she would like you to stop fretting immediately.*\n\n...My dear, you have stolen my column. Stolen it, and answered it better than I would have. I am outraged. I am also somewhat reassured.",
           },
           {
             key: "bold",
             label: "Tell him to come with you",
             style: 4,
             close:
-              "Come along? On a mission? With the boogeymen and the dark and the things that go bump?\n\n...I shall need my doll. And for you to walk on the side nearest anything frightening.\n\n(Haku: He tags along half the time anyway. He just wanted to be asked.)",
+              "Come along? Horsefeathers, I'd never sneak onto a mission.\n\nI was only on the last three.\n\n...Ah. Oh dear. Haku is laughing at me.\n\nA man who is everywhere but can be found nowhere, my dear. It is simply the nature of an inspired man of the quill. I only meant to keep an eye on you from a respectful distance.\n\n...But if I'm to be invited, I suppose I could be found somewhere. Right beside you would be swell.",
           },
         ],
       },
