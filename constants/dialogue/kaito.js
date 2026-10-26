@@ -56,38 +56,39 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: hey can I ask you something and you have to promise not to make it a whole thing",
-        "You always come back with {favResponse}. Every single time. Even when I've been... you know. A lot. Even when I could hear myself being a lot.\n\nAnd I've been trying to work out why. Everyone else waits for me to run out of steam and then changes the subject, and I've gotten really good at not minding that. Professionally good.\n\nYou don't do the waiting thing. That's the question. Why don't you do the waiting thing??",
+        "**{firstName}**: Hey, quick question. Corner piece or middle piece??",
+        "Never mind, I already know. Every tray of brownies I've brought over, you wait for everyone to grab theirs and then you take a corner one like you're hoping nobody notices.\n\nI noticed.\n\nSo I made a whole tray that's just corners. Did you know you can do that?? You just cut it different. Took me like two tries.",
+        "And every time I asked if they were any good, you had {favResponse} for them. Not \"they're fine.\" Everyone else says they're fine 😭",
       ],
       choice: {
-        prompt: "...Was that too much?? That was too much. Sorry.",
+        prompt: "Is that weird?? That I noticed?? That's weird. Sorry.",
         options: [
           {
             key: "kind",
-            label: "Tell him you like listening",
+            label: "Say you'd hoped he'd notice",
             style: 3,
             close:
-              "*The typing indicator runs for a long time and produces one word.*\n\noh.\n\n*Then, four minutes later:* sorry I had to put the phone down for a sec 😭",
+              "You WANTED me to?? Okay. Okay okay okay.\n\nThey're going in the Frostheim kitchen with a sign on them. Nobody touches the corner tray. Not even Luca.",
           },
           {
             key: "playful",
-            label: "Say he's growing on you",
+            label: "Ask who ate the middle bits",
             style: 1,
             close:
-              "LIKE MOLD??\n\nWait, no, I'm taking that as a win. That's a win. I'm screenshotting that and looking at it later, which is a normal thing people do.",
+              "...Me. I ate the middles. All of them. Urghhhh 😭\n\nWorth it though. Don't tell Luca, he'll make me run it off.",
           },
           {
             key: "bold",
-            label: "Tell him to stop apologizing",
+            label: "Say you're coming to get them",
             style: 4,
             close:
-              "Sorr... okay. Not saying it.\n\nThat's really hard actually. Can I have one?? Just one, banked, for emergencies.",
+              "Now?? Like you're on your way?? Hold on, there's sugar everywhere. Give me ten minutes. Five.\n\nOkay just come, I'll stand in front of the mess.",
           },
         ],
       },
       keepsake: {
-        emoji: "📤",
-        line: "The message he sent instead of deleting it, for once.",
+        emoji: "🍫",
+        line: "A tray of nothing but corner pieces, cut that way for you.",
       },
     },
 
