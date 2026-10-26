@@ -72,7 +72,7 @@ export default {
             label: "Say you're telling Sho",
             style: 1,
             close:
-              "lol no ur not\n\nu'd have to explain how u know, and then u'd have to admit u were in on it\n\nnice try tho, I almost bought it\n\nI'm putting u down as a yes",
+              "lol no ur not\n\nu'd have to explain how u know, and then u'd have to admit u were in on it\n\nnice try tho, I almost bought it\n\nI'm taking that as a yes",
           },
           {
             key: "bold",
@@ -92,38 +92,38 @@ export default {
     closeFriend: {
       beats: [
         "**{firstName}**: Ok serious question and if u screenshot this I'll ruin ur life",
-        "hypothetically is it weird if someone has a folder of u\n\nlike a whole folder, on their phone, separate from everything else\n\nok it's not hypothetical, don't make me say it twice",
-        "It's u, it's all u\n\nstarted right after we met in {sinceMet} and I just never stopped adding to it\n\nnone of it gets posted, I've got a hundred better shots for the account and not one of them is in there\n\nI don't even know what it's for, that's the part that's killing me\n\nand I'm telling u because ur the only person who wouldn't ask what the angle is",
+        "do u ever look at the pics I post of u\n\nlike do u actually like them or do u just scroll past\n\nasking bc those are the only ones I let out",
+        "the rest are in a folder, started right after we met in {sinceMet} and I just never stopped adding to it\n\nthose don't go up\n\n600k ppl get plenty of me already\n\nthey don't need everything",
       ],
       choice: {
-        prompt: "ok ur turn, tell me it's weird so I can feel normal",
+        prompt: "and no, u don't get to ask about the rest of them, I asked first",
         options: [
           {
             key: "kind",
-            label: "Say it isn't weird",
+            label: "Say you like the ones he posts",
             style: 3,
             close:
-              "wow ok\n\nthat's the worst thing u could've said, now I have to keep it\n\n…I was always gonna keep it, I just wanted to sound like I had a choice",
+              "obviously, I took them\n\nbut ok, noted\n\nur so easy to please lol",
           },
           {
             key: "playful",
-            label: "Ask for a cut of the views",
+            label: "Ask what else is in there",
             style: 1,
             close:
-              "there are no views Honor Roll, that's the whole problem\n\nit's the least profitable thing I own\n\nfine, u can have 100% of nothing, deal",
+              "u, mostly\n\nand one of Cap with a flower stuck in his hair, that one's staying too",
           },
           {
             key: "bold",
-            label: "Ask to see it",
+            label: "Ask why he's hoarding them",
             style: 4,
             close:
-              "Absolutely not\n\n…ok fine, sent u one\n\njust one, the rest stay mine\n\nur laughing at something off camera in it and I've looked at it way too many times\n\ndon't reply to it, I'll die",
+              "hoarding is a strong word\n\ncurating\n\nand the collection's not open to the public, sorry not sorry",
           },
         ],
       },
       keepsake: {
-        emoji: "📸",
-        line: "A folder that started right after you met, and never got posted.",
+        emoji: "🔒",
+        line: "The pictures of you he doesn't share with anyone.",
       },
     },
 
