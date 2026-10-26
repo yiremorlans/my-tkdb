@@ -234,17 +234,17 @@ export default {
   dialogue: {
     new: [
       {
-        line: "He catches your eye straightaway and breaks into an easy, ready smile.",
+        line: "He's on his way to the training yard when he catches your eye, and breaks into an easy, ready smile.",
         approach: "Return his smile",
         greeting:
-          "\"Oh, hello. I'm still finding my own way round here, if I'm honest. Are you lost too?\"",
+          '"Hello! An early training session will warm you up for the day. Would you care to join me?"',
         responses: {
-          kind: ["Offer to show him around", "Say you're still learning too"],
+          kind: ["Say you'd love to come along", "Join him, bring extra water"],
           playful: [
-            "Say you're hopelessly lost",
-            "Suggest you get lost together",
+            'Ask what "early" means to him',
+            "Ask if there's a warm-up lap",
           ],
-          bold: ["Ask where he's headed", "Lead the way yourself"],
+          bold: ["Ask for his hardest drill", "Walk to the yard with him"],
           neutral: ["Smile back, say little", "Stay silent"],
         },
       },
@@ -252,13 +252,13 @@ export default {
         line: "He holds the door without a word, like it's simply the natural thing to do.",
         approach: "Thank him as you pass",
         greeting:
-          "\"Need a hand with something? I don't know much yet, but I'll help however I can.\"",
+          '"After you. And if you\'re ever in trouble, you can always come to me."',
         responses: {
-          kind: ["Smile and step through", "Say you're fine, but thanks"],
+          kind: ["Say it's a kind habit", "Say he's a true gentleman"],
           playful: ["Curtsy on the way through", "Ask if he holds every door"],
           bold: [
             "Say you'll get the next one",
-            "Hold the door for him instead",
+            "Say the offer goes both ways",
           ],
           neutral: ["Walk through, say nothing", "Nod your thanks"],
         },
@@ -269,13 +269,10 @@ export default {
         greeting:
           "\"You're here 10 minutes early. I'm impressed. Let's check the details for today's mission.\"",
         responses: {
-          kind: ["Offer to help him prep", "Say you're glad to join"],
-          playful: [
-            "Ask if it's a secret mission",
-            "Ask if you get a gold star",
-          ],
-          bold: ["Demand to know the mission", "Say you're ready to go now"],
-          neutral: ["Wait beside him", "Go over the details quietly"],
+          kind: ["Say you trust his prep", "Ask if he's all right"],
+          playful: ["Ask if he checks it twice", "Ask if he ever sleeps in"],
+          bold: ["Say you're ready when he is", "Ask what you're up against"],
+          neutral: ["Wait beside him", "Wait for him to finish"],
         },
       },
       {
@@ -284,9 +281,9 @@ export default {
         greeting:
           "\"We haven't been introduced properly. Lucas Errant. Pleasure's mine.\"",
         responses: {
-          kind: ["Thank him for catching you", "Introduce yourself warmly"],
-          playful: ["Say you tripped on purpose", "Ask if he catches everyone"],
-          bold: ["Tell him you can handle it", "Shake his hand firmly"],
+          kind: ["Say you're glad he was there", "Say you're lucky he was close"],
+          playful: ["Blame the flagstone", "Ask if he catches everyone"],
+          bold: ["Offer your hand to shake", "Give him your name in return"],
           neutral: ["Nod and keep walking", "Give your name, nothing more"],
         },
       },
@@ -294,12 +291,12 @@ export default {
         line: "He's already stepped between a first-year and a pack of older students, calm as if it's nothing.",
         approach: "Back him up",
         greeting:
-          '"Thank you. They\'ll think twice now there are two of us. Stay close, though."',
+          '"Thank you. They\'ll think twice now there are two of us."',
         responses: {
-          kind: ["Stay close, like he asks", "Check on the first-year"],
+          kind: ["Say he was brave to step in", "Check on the first-year"],
           playful: ["Peek around him at the pack", "Ask if he does this daily"],
-          bold: ["Step in front of him", "Stand shoulder to shoulder"],
-          neutral: ["Stay behind him quietly", "Stay close, like he asked"],
+          bold: ["Square up beside him", "Stand shoulder to shoulder"],
+          neutral: ["Stay behind him quietly", "Keep an eye on the pack"],
         },
       },
     ],
