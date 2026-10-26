@@ -47,38 +47,40 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: A matter I have modeled at some length and been unable to resolve. I am therefore asking, which is a method I resort to rarely and dislike.",
-        "Your conduct toward me is {favResponse} without variance. I have run it against every input available: Romeo shouting, Taiga Hoshibami's whereabouts, the hour, whether I have been of any use to you. It does not move.\n\nPeople are transactional. That is not cynicism, it is observed data, and I have built a practice on it: I predict what a person will do from what they are owed and what they want.\n\nI cannot predict you. That is the first time the model has failed since I built it, and I have been unable to enjoy anything since I noticed.",
+        "**{firstName}**: A matter concerning you requires your approval. Please read the following in full.",
+        "I have worked alongside a number of people since arriving at this academy. Most keep me waiting. The captain cannot be relied upon to appear, and the vice-captain cannot be reached unless there is money involved.\n\nYou have never once broken a promise to me. You keep our appointments, and when I put a matter to you, you meet it with {favResponse} rather than hesitation. That is what I require of a business partner, and so far I have found it in exactly one person.",
+        "So I have drafted cards for you. One hundred, on the same card stock as mine. Your name, your title as Inspector, and my number beneath it, so that anyone who calls about you reaches me first.",
       ],
       choice: {
-        prompt: "Explain the discrepancy. I would like the model repaired.",
+        prompt:
+          "I require your approval before they go to print.",
         options: [
           {
             key: "kind",
-            label: "Say you're not a transaction",
+            label: "Say you'll carry one always",
             style: 3,
             close:
-              "Everything is a transaction.\n\n*A long pause.*\n\nThat was said reflexively and I have reviewed it and I do not think it survives scrutiny. I will require some days.",
+              "Good. A card does no work in a drawer.\n\nI have high hopes for your performance.",
           },
           {
             key: "playful",
-            label: "Say you'll invoice him",
+            label: "Ask what your hourly rate is",
             style: 1,
             close:
-              "For what, precisely.\n\n...That was a joke. I have identified it as a joke on the second reading. It was a good one. I am recording that I laughed, since you cannot see it and would otherwise not know.",
+              "I have not set one. A partner negotiates their own rate.\n\nI should warn you that I negotiate well.",
           },
           {
             key: "bold",
-            label: "Tell him to scrap the model",
+            label: "Say it makes you two official",
             style: 4,
             close:
-              "I have refined this model since my studies began. Every person I have encountered is in it, and it has not failed once. It is the reason I am never caught unprepared, in court or out of it. I am aware of how that sounds.\n\nI am not going to discard it. I am prepared to make one exception in it. That is a larger concession than it appears.",
+              "Indeed, this makes our relationship official.\n\n...Ahem. Our professional relationship. They go to print.",
           },
         ],
       },
       keepsake: {
-        emoji: "📐",
-        line: "A single exception written into a model that had never had one.",
+        emoji: "🪪",
+        line: "One hundred cards with your name over his number.",
       },
     },
 
