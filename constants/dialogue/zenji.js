@@ -52,38 +52,40 @@ export default {
 
     friend: {
       beats: [
-        "*Haku, mid-type, mutters that this is the least dignified thing he's ever transcribed, and keeps transcribing anyway.*\n\n**{firstName}**: A confession, my dear, and it does me no credit whatsoever.",
-        "I compliment everyone. It is genuine (this academy is stuffed with talent, somebody ought to say so) but it is also a splendid way of never being asked a question back.\n\nYou have never let it work. Every flourish I hand you, back it comes with {favResponse}, unimpressed, as though I were a person and not a performance.\n\nIt is *appalling*. It is the best thing to happen to me in a year.",
+        "**{firstName}**: My dear! The Kotodama Advice Salon is taking its write-ins out into the field, and you have been selected. Congratulations.",
+        "I confess an ulterior motive. The columnist has a letter of his own and nobody to send it to. Haku refuses to answer it. He says it is a conflict of interest.",
+        "*Dear Salon,*\n\n*There is a person who goes off on missions and comes back in one piece, every time, and still I fret the whole while that she will get hurt. She has {favResponse} for me whenever we meet, which is more than a fella like me ever expected, and I should hate to lose it.*\n\n*How does one stop worrying?*\n\n*Signed, A Worrywart of Hotarubi*",
       ],
       choice: {
-        prompt: "So: what shall we do about it? I am open to terms.",
+        prompt:
+          "There. The salon awaits your reply. Be gentle with the letter writer, my dear. I hear he is very sensitive.",
         options: [
           {
             key: "kind",
-            label: "Say you'd rather have him",
+            label: "Say you'll check in after",
             style: 3,
             close:
-              "You would rather have...\n\n*The message stops there for some time.*\n\nMy dear, I have been a great many people's favorite anecdote and nobody's preference. You will have to give me a moment to learn the difference.",
+              "A report after every mission? Through my manager, who will have to read them aloud?\n\n(Haku: Sure. Love that for me.)\n\nThen the letter writer may rest easy. Figuratively. He does not, strictly speaking, sleep.",
           },
           {
             key: "playful",
-            label: "Demand a bad compliment",
+            label: "Write him back in haiku",
             style: 1,
             close:
-              "A BAD one? Madam. Sir. Whichever you please. You wound me.\n\nVery well: your posture is adequate and your handwriting is a crime against the alphabet. There. I feel unclean and strangely alive.",
+              "Five, seven, five. You counted on your fingers, didn't you? Haku says he could tell.\n\nIt is the finest letter the salon has ever received. I am having it framed. Haku is framing it. I am supervising.",
           },
           {
             key: "bold",
-            label: "Ask him a question back",
+            label: "Tell him to come with you",
             style: 4,
             close:
-              "*There is a very long pause for a man who types as fast as he does.*\n\nNobody has done that, *he says.* In a year, not one person has turned it round.\n\nAsk me again tomorrow. I should like to have a proper answer ready, and I should like very much to have been asked twice.",
+              "Come along? On a mission? With the boogeymen and the dark and the things that go bump?\n\n...I shall need my doll. And for you to walk on the side nearest anything frightening.\n\n(Haku: He tags along half the time anyway. He just wanted to be asked.)",
           },
         ],
       },
       keepsake: {
         emoji: "✉️",
-        line: "The first question anyone had asked him back in a year.",
+        line: "A letter the salon's columnist finally got to send.",
       },
     },
 
