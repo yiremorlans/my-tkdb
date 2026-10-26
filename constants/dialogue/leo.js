@@ -5,7 +5,7 @@ export default {
   // it at you, and the warmth is entirely in what he does while insulting you.
   // Bold is what reaches him; being flattered makes him worse.
   //
-  // Texting voice, per reference.md's "## Bond Scenes" notes: Leo texts in
+  // Texting voice, per reference/leo.md's "Texting style" notes: Leo texts in
   // mixed case (never all-lowercase), drops full stops, keeps paragraphs short,
   // and uses "u"/"ur", "lol", "rn", "tho". "Ugh" and "Tch" survive into private
   // DMs, casual profanity (shit/fuck) when riled or deflecting, and "Honor Roll"
@@ -25,7 +25,7 @@ export default {
         options: [
           {
             key: "kind",
-            label: "Say thanks and mean it",
+            label: "Just say thank you",
             style: 3,
             close:
               "Ugh\n\nDo it again but sarcastic, I don't know what to do with the other kind, it's making my skin crawl",
@@ -54,78 +54,76 @@ export default {
 
     friend: {
       beats: [
-        "**{firstName}**: Ok serious question and if u screenshot this I'll ruin ur life",
-        "u come at me with {favResponse} and u never take the bait\n\nnot once, everyone takes the bait. that's the whole job, I say something and watch it land\n\nu just answer, like I'm a person having a conversation instead of content\n\nit's throwing off my entire operation, and I need to know if ur doing it on purpose, because it's pissing me off how much I don't mind it",
+        "**{firstName}**: Asked Sho to do fireworks with me again\n\nthat's like the fifth time he's said no, I'm literally offering him a good time and he acts like I asked him to commit a crime",
+        "so I'm doing it without him and I need someone who'll actually show up\n\nCap's out, he'd just say \"it's dangerous\" and confiscate them\n\nur the only one who meets my ideas with {favResponse}\n\nthat's why I'm asking u, don't make it weird",
       ],
       choice: {
-        prompt:
-          "and be honest, I'll know if ur managing me, everyone *tries* to manage me",
+        prompt: "so are u in or are u gonna be boring about it",
         options: [
           {
             key: "kind",
-            label: "Say you like talking to him",
+            label: "Offer to keep watch",
             style: 3,
             close:
-              "nobody likes talking to me\n\npeople like being *near* me, there's a difference and I've built a career on it\n\n*A long gap.*\n\n…say that again in like a week and see if I still hate it",
+              "a lookout, wow, so cute\n\nnobody's gonna come, Sho's asleep and Cap's lost somewhere\n\nu can hold the lighter tho\n\nthat's a real job, don't let it go to ur head",
           },
           {
             key: "playful",
-            label: "Say you bite on the inside",
+            label: "Say you're telling Sho",
             style: 1,
             close:
-              "HA\n\nokay that's good, I'm using that\n\nalso that's a lie and we both know it, but it's a funny lie, so, points",
+              "lol no ur not\n\nu'd have to explain how u know, and then u'd have to admit u were in on it\n\nnice try tho, I almost bought it\n\nI'm putting u down as a yes",
           },
           {
             key: "bold",
-            label: "Say he isn't that intimidating",
+            label: "Ask when and where",
             style: 4,
             close:
-              "I'm extremely intimidating\n\nGod, two years of work and one person just walks in and isn't rattled by any of it\n\nand I can't even get properly mad about it, I've tried, it won't take\n\nSho's the only other person who's never once taken the bait and he's had since middle school to build up the tolerance, u've had like a month\n\nso yeah, it's not working on u. I'd appreciate u not looking so pleased about it",
+              "No \"are u sure\", no \"what if we get caught\"\n\nlol knew I picked right\n\nbehind the garage, after Sho's asleep, I'll text u\n\nand if he finds out, it was ur idea",
           },
         ],
       },
       keepsake: {
-        emoji: "🕶️",
-        line: "The admission that the whole act isn't working on you.",
+        emoji: "🎆",
+        line: "A plan Sho still hasn't found out about.",
       },
     },
 
     closeFriend: {
       beats: [
-        "**{firstName}**: So I need u to look at something rn and not be normal about it",
-        "*It's a folder. Photos, hundreds of them, and none of them are the ones he posts: no ring light, no angles, no captions. Cap asleep in the garage. Sho with his mouth full. A courtyard at six in the morning with nobody in it.*\n\nthat's the real drive\n\nnobody's seen it, not the house, not the numbers guys, definitely not the internet",
-        "the stuff I put out is the product\n\nthis is just some pointless shit I take and then never do anything with, and I've never worked out why\n\nur in a bunch of them, I didn't crop u out\n\nI want u to know I thought about cropping u out for like an hour and then didn't",
+        "**{firstName}**: Ok serious question and if u screenshot this I'll ruin ur life",
+        "hypothetically is it weird if someone has a folder of u\n\nlike a whole folder, on their phone, separate from everything else\n\nok it's not hypothetical, don't make me say it twice",
+        "It's u, it's all u\n\nstarted right after we met in {sinceMet} and I just never stopped adding to it\n\nnone of it gets posted, I've got a hundred better shots for the account and not one of them is in there\n\nI don't even know what it's for, that's the part that's killing me\n\nand I'm telling u because ur the only person who wouldn't ask what the angle is",
       ],
       choice: {
-        prompt:
-          "ugh, say something withering, please, the sincerity in this chat is unbearable",
+        prompt: "ok ur turn, tell me it's weird so I can feel normal",
         options: [
           {
             key: "kind",
-            label: "Tell him they're better",
+            label: "Say it isn't weird",
             style: 3,
             close:
-              "lol better than the ones that make me money? cool, great, love that for my business model\n\n…yeah, I know, that's why I don't post them",
+              "wow ok\n\nthat's the worst thing u could've said, now I have to keep it\n\n…I was always gonna keep it, I just wanted to sound like I had a choice",
           },
           {
             key: "playful",
-            label: "Ask for one of yourself",
+            label: "Ask for a cut of the views",
             style: 1,
             close:
-              "absolutely not, they're MINE…\n\n*One arrives four minutes later anyway. It's from a night you don't remember him being at, and you're laughing at something out of frame, and he's clearly been sitting on it for months.*",
+              "there are no views Honor Roll, that's the whole problem\n\nit's the least profitable thing I own\n\nfine, u can have 100% of nothing, deal",
           },
           {
             key: "bold",
-            label: "Ask why you get to see",
+            label: "Ask to see it",
             style: 4,
             close:
-              "because ur the only person who'd look at them and not immediately ask what the play is\n\nthere's no play, that's the whole horrible thing about it\n\ngo away now",
+              "Absolutely not\n\n…ok fine, sent u one\n\njust one, the rest stay mine\n\nur laughing at something off camera in it and I've looked at it way too many times\n\ndon't reply to it, I'll die",
           },
         ],
       },
       keepsake: {
         emoji: "📸",
-        line: "A photo off the drive nobody else has ever been shown.",
+        line: "A folder that started right after you met, and never got posted.",
       },
     },
 
