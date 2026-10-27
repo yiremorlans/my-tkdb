@@ -1,10 +1,15 @@
 # Privacy Policy
 
-Effective Date: October 23, 2026
+Effective Date: October 27, 2026
 
-Tkdb ("the Application") is a private, personal-use Discord application hosted
+My Tkdb ("the Application") is a private, personal-use Discord application hosted
 on GitHub. This policy explains what the Application keeps while it runs in the
 private Discord server(s) where it operates.
+
+My Tkdb is an unofficial, fan-made project. It is **not affiliated with, endorsed
+by, sponsored by, or approved by ZigZaGame Inc.** Tokyo Debunker and all related
+characters, names, artwork, and other materials are the property of ZigZaGame
+Inc. and are used here for non-commercial fan purposes only.
 
 In short: the Application keeps **game data**, such as your progress with each
 character, what you have unlocked, and when you last played. It does not keep
@@ -72,4 +77,4 @@ updated before that change takes effect.
 ## 8. Contact
 
 For questions, or to request deletion of your data, open an issue or contact
-the maintainer on the Tkdb GitHub repository page.
+the maintainer on the My Tkdb GitHub repository page.
