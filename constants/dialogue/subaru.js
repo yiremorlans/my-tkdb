@@ -239,57 +239,57 @@ export default {
   dialogue: {
     new: [
       {
-        line: "He looks up from the garden bed he's weeding, a quiet warmth in his eyes as he notices you.",
+        line: "He's kneeling at a garden bed in his gloves, pulling weeds. The rest of Hotarubi seems to be out.",
         approach: "Come into the garden",
         greeting:
-          '"Welcome. Forgive the state of the garden. I meant to tidy it this morning and lost track of the hour."',
+          '"Oh, welcome. Everyone seemed busy, so I thought I\'d tidy the garden a little. Please excuse the mess."',
         responses: {
-          kind: ["Tell him the garden looks fine", "Offer to help weed"],
-          playful: [
-            "Inspect the garden for faults",
-            "Ask which leaf offends him",
-          ],
-          bold: ["Be direct with him", "Say the garden doesn't matter"],
-          neutral: ["Sit quietly while he works", "Look around, say little"],
+          kind: ["Say he's allowed a break", "Ask what he's planting next"],
+          playful: ["Offer to supervise", "Ask if it's an anomaly garden"],
+          bold: ["Say you came to see him", "Kneel and start weeding"],
+          neutral: ["Watch him work", "Look around, say little"],
         },
       },
       {
         line: "He bows before he speaks. It's automatic, and completely sincere.",
-        approach: "Return his bow",
+        approach: "Introduce yourself",
         greeting:
           "\"Welcome. Hotarubi can seem a little quiet at first. I hope it doesn't feel unwelcoming. It isn't meant to.\"",
         responses: {
-          kind: ["Acknowledge his effort", "Say it doesn't feel that way"],
-          playful: ["Catch him off script", "Bow deeper than he did"],
-          bold: ["Say what you came to say", "Ask why it's so quiet"],
-          neutral: ["Take him at his word", "Nod and take it in"],
+          kind: ["Say it feels peaceful here", "Say you feel welcome"],
+          playful: ["Bow deeper than he did", "Tease him for the formality"],
+          bold: ["Skip the bow, say hello", "Say you'll visit again"],
+          neutral: ["Wait for him to speak", "Nod and take it in"],
         },
       },
       {
-        line: '"I\'ve been working since I was four, so people said I was mature for my age," he says. "But the truth is, I still have a lot to learn."',
-        approach: "Wave off the modesty",
+        line: '"I never thought I\'d get to live like a student until I came to Darkwick," he says. "Every day here truly is fulfilling."',
+        approach: "Ask what he likes best",
         greeting:
-          '"Oh, no, please, I wasn\'t fishing for anything. Ha ha... I only meant I still get things wrong."',
+          '"Oh... the ordinary things. Classes, lunch, someone saying hello in the hall. Ha ha. That must sound very dull."',
         responses: {
-          kind: ["Notice how hard he works", "Say four is very young"],
+          kind: ["Say it sounds lovely", "Say you're glad he's here"],
+          playful: ["Say he's easy to please", "Call him a model student"],
+          bold: ["Invite him to lunch sometime", "Say Darkwick suits him"],
+          neutral: ["Nod along", "Just listen"],
+        },
+      },
+      {
+        line: "He's standing under the wisteria in the Hotarubi grounds, looking up at it like he's forgotten the time.",
+        approach: "Join him under the wisteria",
+        greeting:
+          '"Oh, hello. There are so many flowers in Hotarubi, but I think the wisteria are my favorites."',
+        responses: {
+          kind: ["Ask when they bloom best", "Say they suit Hotarubi"],
           playful: [
-            "Tease him about being 'mature'",
-            "Admit you're a mess too",
+            "Say they match his earring",
+            "Ask if he's been here all day",
           ],
-          bold: ["Refuse the polite version", "Say he's selling himself short"],
-          neutral: ["Let him underplay it", "Just listen"],
-        },
-      },
-      {
-        line: "He finishes the note he's leaving for Haku first. Duty, then greeting. Always in that order.",
-        approach: "Wait while he finishes up",
-        greeting:
-          "\"I'm very sorry to have kept you waiting. It's wonderful to see you again.\"",
-        responses: {
-          kind: ["Say the wait was fine", "Tell him not to apologize"],
-          playful: ["Tease him for the order", "Ask what the note says"],
-          bold: ["Ask to be greeted first", "Greet him before he's done"],
-          neutral: ["Let him finish up", "Wait without a word"],
+          bold: [
+            "Say you'll come back for them",
+            "Stay till he's done looking",
+          ],
+          neutral: ["Wait for him to notice you", "Take in the view"],
         },
       },
       {
@@ -298,21 +298,21 @@ export default {
         greeting:
           "\"Oh. I'd have to ask him first, if you don't mind. He's still getting used to new people.\"",
         responses: {
-          kind: ["Say of course, ask him first", "Tell him to take his time"],
-          playful: ["Ask if Lyca will vet you", "Ask what Lyca eats"],
-          bold: ["Say he doesn't need to ask", "Say you'll ask Lyca yourself"],
+          kind: ["Say Lyca's lucky to have him", "Ask how Lyca is doing"],
+          playful: ["Offer to bring dessert", "Ask if there's a waitlist"],
+          bold: ["Ask for a spot next time", "Say you'll walk him there"],
           neutral: ["Nod and leave it there", "Leave them to it"],
         },
       },
       {
         line: "He's partway through making a pot of tea when you arrive. He reaches for a second cup the moment he sees you.",
-        approach: "Accept the tea",
+        approach: "Stop at the doorway",
         greeting: '"A visitor? Then let me at least offer you tea."',
         responses: {
-          kind: ["Say you'd love a cup", "Thank him for the second cup"],
-          playful: ["Tease him about the tea", "Ask if he expected you"],
-          bold: ["Take the cup before he offers", "Pour it yourself"],
-          neutral: ["Take the tea, say nothing", "Sit and wait for the tea"],
+          kind: ["Ask what he's brewing", "Say it smells wonderful"],
+          playful: ["Ask if there are sweets too", "Ask if he expected you"],
+          bold: ["Stay for the whole pot", "Say you'll pour the next one"],
+          neutral: ["Take the tea, say nothing", "Wait for the tea"],
         },
       },
     ],
