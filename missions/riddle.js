@@ -1,6 +1,7 @@
 // Scheduled missions: /riddle, the riddle mission's answer command.
 // See player.js for the module map.
 
+import { optionValue } from "../utils.js";
 import {
   accusedFace,
   clearRiddleCooldowns,
@@ -37,8 +38,7 @@ import {
 
 export async function handleRiddle(body, now = new Date()) {
   const userId = userIdOf(body);
-  const rawGuess =
-    body.data?.options?.find((o) => o.name === "answer")?.value ?? "";
+  const rawGuess = optionValue(body.data?.options, "answer") ?? "";
 
   const mission = await getAcceptedMission(userId);
   const guardReply = missionTypeGuard(mission, MISSION_TYPES.RIDDLE, {

@@ -23,8 +23,12 @@ function authHeaders() {
 async function readError(res) {
   // Discord returns JSON for real API errors and HTML/empty for gateway-level
   // failures; either way we only want it for the log line.
+  // `status` lets a caller tell a missing permission (403) or a deleted
+  // channel (404) from a rate limit (429), e.g. countdown.js renames.
   const body = await res.text().catch(() => '');
-  return new Error(`Discord API error: ${res.status} ${body.slice(0, 500)}`);
+  const err = new Error(`Discord API error: ${res.status} ${body.slice(0, 500)}`);
+  err.status = res.status;
+  return err;
 }
 
 /**
@@ -193,6 +197,43 @@ export async function postChannelTyping(channelId) {
 export async function getGuildRoles(guildId) {
   const res = await fetch(`${API_BASE}/guilds/${guildId}/roles`, {
     headers: authHeaders(),
+  });
+
+  if (!res.ok) throw await readError(res);
+  return res.json();
+}
+
+/**
+ * GET a channel. Countdown setup (countdown.js) reads it to confirm the bot
+ * can see the channel and to save its current name; a 403 or 404 here means
+ * it can't.
+ */
+export async function getChannel(channelId) {
+  const res = await fetch(`${API_BASE}/channels/${channelId}`, {
+    headers: authHeaders(),
+  });
+
+  if (!res.ok) throw await readError(res);
+  return res.json();
+}
+
+// Discord allows about two name edits per channel per 10 minutes. A raw fetch
+// gets the 429 straight back rather than queueing behind it the way
+// discord.js does, but a slow edge can still stall, so a rename gives up
+// after this long instead of holding a scheduler tick open.
+const RENAME_TIMEOUT_MS = 10 * 1000;
+
+/**
+ * Rename a channel (countdown channels, docs/countdown.md). Needs Manage
+ * Channels on it. Throws with `status` set on an API error; a timeout throws
+ * an AbortError with no status.
+ */
+export async function renameChannel(channelId, name) {
+  const res = await fetch(`${API_BASE}/channels/${channelId}`, {
+    method: 'PATCH',
+    headers: { ...authHeaders(), 'Content-Type': 'application/json; charset=UTF-8' },
+    body: JSON.stringify({ name }),
+    signal: AbortSignal.timeout(RENAME_TIMEOUT_MS),
   });
 
   if (!res.ok) throw await readError(res);

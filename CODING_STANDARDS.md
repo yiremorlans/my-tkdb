@@ -206,6 +206,9 @@ before and after every change.
 **9.2 Mock at module boundaries, before importing.** Call `mock.module(...)`
 for `db/supabase.js`, `discordRest.js`, and `imageComposition.js` first, then
 `await import(...)` the module under test.
+Mock `discordRest.js` with `fakeDiscordRest(overrides)` from
+`test/helpers/fakeDiscordRest.js`, which stubs every export, so a new export
+doesn't break unrelated suites. Override only what the test observes.
 
 **9.3 Import from the module that owns the export,** e.g.
 `../missions/riddle.js`, not a re-export.

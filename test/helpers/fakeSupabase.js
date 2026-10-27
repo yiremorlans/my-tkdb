@@ -689,6 +689,34 @@ export function createFakeSupabase(initialTables = {}) {
       });
       return 1;
     },
+
+    // db/migrations/034: prune past events, refuse at the cap (NULL), else
+    // insert under guild_settings.next_event_number and bump it.
+    create_countdown_event({ p_guild_id, p_name, p_event_date, p_created_by, p_today, p_cap }) {
+      tables.guild_settings = tables.guild_settings || [];
+      tables.countdown_events = tables.countdown_events || [];
+      let settings = tables.guild_settings.find((r) => r.guild_id === p_guild_id);
+      if (!settings) {
+        settings = { guild_id: p_guild_id, enabled: false, locked: false };
+        tables.guild_settings.push(settings);
+      }
+      const number = settings.next_event_number ?? 1;
+      tables.countdown_events = tables.countdown_events.filter(
+        (r) => r.guild_id !== p_guild_id || r.event_date >= p_today,
+      );
+      const held = tables.countdown_events.filter((r) => r.guild_id === p_guild_id).length;
+      if (held >= p_cap) return null;
+      tables.countdown_events.push({
+        guild_id: p_guild_id,
+        event_number: number,
+        name: p_name,
+        event_date: p_event_date,
+        created_by: p_created_by,
+        created_at: rpcNow.toISOString(),
+      });
+      settings.next_event_number = number + 1;
+      return number;
+    },
   };
 
   async function rpc(name, args) {

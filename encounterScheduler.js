@@ -1,6 +1,7 @@
 // The tick loop behind public "call out" encounters (docs/public-encounters.md
-// §3) and scheduled missions (docs/scheduled-missions.md §3). One interval for
-// the whole process, two passes inside it, iterating every enabled guild — not
+// §3), scheduled missions (docs/scheduled-missions.md §3) and countdown
+// channels (docs/countdown.md §11). One interval for the whole process, three
+// passes inside it, iterating every configured guild — not
 // a setTimeout per guild — because all the timing state lives in Postgres
 // (guild_settings.last_encounter_at + next_gap_minutes for encounters,
 // mission_slots_today + mission_slots_fired for missions). Nothing about either
@@ -18,6 +19,7 @@ import { clearGuessCooldowns } from './constants/publicEncounters.js';
 import { clearRiddleCooldowns } from './constants/missions.js';
 import { isSpawnDue, spawnEncounter, sweepExpiredEncounters } from './publicEncounters.js';
 import { runGuildMissionPass, sweepExpiredMissions } from './missions/posts.js';
+import { runCountdownPass } from './countdown.js';
 import { getActivePublicEncounter, getEnabledGuilds, getMissionGuilds } from './db/supabase.js';
 import { isMaintenanceModeActive } from './maintenance.js';
 
@@ -88,6 +90,15 @@ export async function runTick(now = new Date()) {
 
   await runEncounterPass(now);
   await runMissionPass(now);
+
+  // Not gated on `enabled` or `missions_enabled`: countdowns run on their own
+  // (docs/countdown.md §1). runCountdownPass throttles itself to one read per
+  // five minutes and catches per guild, so this only sees a failed guild list.
+  try {
+    await runCountdownPass(now);
+  } catch (err) {
+    console.error('[encounterScheduler] Countdown pass failed:', err.message);
+  }
 }
 
 /**

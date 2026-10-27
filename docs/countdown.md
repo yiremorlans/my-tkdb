@@ -1,7 +1,7 @@
 # Spec: Countdown channels
 
-Status: **planned** (design settled 2026-10-25, not built)
-Last updated: 2026-10-25
+Status: **built** 2026-10-27 (migration 034 must run before deploy, then `npm run register`)
+Last updated: 2026-10-27
 
 A channel whose name counts down to the next event: Tokyo Debunker
 Wishing Well dates (global, the same for every server) and/or a server's own
@@ -36,7 +36,10 @@ its own:
 ## 2. Counting days
 
 - Days are **calendar days in the server's timezone**. Default
-  `America/New_York`; changed with `/countdown timezone` (§5). Discord servers
+  `America/Los_Angeles` (US Pacific, changed from `America/New_York` on
+  2026-10-27); changed with `/countdown timezone` (§5). Pacific puts the
+  daily flip at 12 AM Pacific / 3 AM Eastern, so no North American member
+  sees `Today!` before their own day starts. Discord servers
   have no timezone of their own, and a channel name is the same plain text for
   every viewer, so the bot has to pick one calendar per server.
 - `X` = (event's local date) − (today's local date), in whole days.
@@ -242,7 +245,7 @@ New migration (next free number, currently `034`).
 
 | Column | Type | Purpose |
 |--------|------|---------|
-| `countdown_timezone` | TEXT NOT NULL DEFAULT `'America/New_York'` | IANA name for §2 |
+| `countdown_timezone` | TEXT NOT NULL DEFAULT `'America/Los_Angeles'` | IANA name for §2 |
 | `next_event_number` | INT NOT NULL DEFAULT 1 | Next custom event `#ID`; only ever increments, so IDs are never reused |
 
 **`countdown_channels`**, one row per (guild, kind):
@@ -315,7 +318,9 @@ uses, so there's one code path for "what should this channel say".
 
 - Independent of encounters/missions; off = no channel set, no toggle.
 - Two channels max: Wishing Well and custom event, never mixed.
-- Calendar days in a per-server timezone, default `America/New_York`.
+- Calendar days in a per-server timezone, default `America/Los_Angeles` (was
+  `America/New_York` until 2026-10-27), so the flip lands overnight for
+  every North American member.
 - "Today!" for the event's whole local day; drops off at local midnight.
 - `💎 Wishing Well:` prefix; `💎 Wishing Well: TBA` / `No events scheduled`
   when empty; `in 1 day` singular.

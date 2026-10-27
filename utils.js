@@ -58,6 +58,12 @@ export async function pingRole(guildId, enabled = true) {
   };
 }
 
+// A slash command option's value by name, from a command's or subcommand's
+// `options` array. Undefined when the option wasn't given.
+export function optionValue(options, name) {
+  return options?.find((o) => o.name === name)?.value;
+}
+
 export async function DiscordRequest(endpoint, options) {
   // append endpoint to root API URL
   const url = "https://discord.com/api/v10/" + endpoint;

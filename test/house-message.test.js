@@ -6,6 +6,7 @@
 import { test, mock } from 'node:test';
 import assert from 'node:assert';
 import { createFakeSupabase } from './helpers/fakeSupabase.js';
+import { fakeDiscordRest } from './helpers/fakeDiscordRest.js';
 import { HOUSES } from '../constants/backgrounds.js';
 
 process.env.SUPABASE_URL ??= 'http://fake.local';
@@ -21,18 +22,7 @@ mock.module('@supabase/supabase-js', {
   namedExports: { createClient: () => fake.client },
 });
 
-mock.module('../discordRest.js', {
-  namedExports: {
-    postChannelMessage: async () => ({ id: 'message-1' }),
-    editChannelMessage: async () => ({}),
-    editChannelMessageSafe: async () => {},
-    getChannelMessage: async () => ({}),
-    editInteractionMessage: async () => ({}),
-    openDmChannel: async () => 'dm-1',
-    postChannelTyping: async () => {},
-    getGuildRoles: async () => [],
-  },
-});
+mock.module('../discordRest.js', { namedExports: fakeDiscordRest() });
 
 const { buildDossierMessage } = await import('../missions/dossier.js');
 

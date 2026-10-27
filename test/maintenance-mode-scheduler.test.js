@@ -7,6 +7,7 @@
 import { describe, it, mock } from 'node:test';
 import assert from 'node:assert/strict';
 import { createFakeSupabase } from './helpers/fakeSupabase.js';
+import { fakeDiscordRest } from './helpers/fakeDiscordRest.js';
 
 process.env.SUPABASE_URL ??= 'http://fake.local';
 process.env.SUPABASE_SERVICE_ROLE_KEY ??= 'fake-service-role-key';
@@ -40,19 +41,12 @@ mock.module('@supabase/supabase-js', {
 
 const posts = [];
 mock.module('../discordRest.js', {
-  namedExports: {
+  namedExports: fakeDiscordRest({
     postChannelMessage: async (channelId, body) => {
       posts.push({ channelId, body });
       return { id: `message-${posts.length}` };
     },
-    editChannelMessage: async () => ({}),
-    editChannelMessageSafe: async () => {},
-    getChannelMessage: async () => ({}),
-    editInteractionMessage: async () => ({}),
-    openDmChannel: async () => 'dm-channel-1',
-    postChannelTyping: async () => {},
-    getGuildRoles: async () => [],
-  },
+  }),
 });
 
 mock.module('../imageComposition.js', {

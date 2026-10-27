@@ -9,7 +9,7 @@ import {
   InteractionResponseType,
   MessageComponentTypes,
 } from 'discord-interactions';
-import { EPHEMERAL, pingRole } from './utils.js';
+import { EPHEMERAL, optionValue, pingRole } from './utils.js';
 import {
   buildEncounterContent,
   baseRank,
@@ -525,7 +525,7 @@ export async function handleEncountersAdmin(body) {
   const subcommand = sub?.name;
 
   if (subcommand === 'channel') {
-    const channelId = sub.options?.find((o) => o.name === 'channel')?.value;
+    const channelId = optionValue(sub.options, 'channel');
     if (!channelId) {
       return { reply: ephemeral('Pick a channel to post encounters in.'), afterReply: null };
     }
@@ -662,7 +662,7 @@ export async function handleEncountersAdmin(body) {
 export async function handleCall(body, now = new Date()) {
   const userId = body.member?.user?.id || body.user?.id;
   const guildId = body.guild_id;
-  const rawGuess = body.data?.options?.find((o) => o.name === 'character')?.value ?? '';
+  const rawGuess = optionValue(body.data?.options, 'character') ?? '';
 
   if (!guildId) {
     return { reply: ephemeral('This only works in a server.'), afterReply: null };
@@ -1226,8 +1226,8 @@ export async function handleEncounterDev(body) {
   // bond scene DM is unrelated to public encounters, so it's dispatched before
   // either check.
   if (subcommand === 'bond') {
-    const rawCharacter = sub.options?.find((o) => o.name === 'character')?.value;
-    const levelSlug = sub.options?.find((o) => o.name === 'level')?.value;
+    const rawCharacter = optionValue(sub.options, 'character');
+    const levelSlug = optionValue(sub.options, 'level');
 
     const characterId = matchCharacterGuess(rawCharacter);
     if (!characterId) return { content: `I don't know who "${rawCharacter}" is.` };
@@ -1262,8 +1262,8 @@ export async function handleEncounterDev(body) {
   // only. Like `bond` and `reset`, it is about the caller rather than this
   // guild's encounter state, so it answers before either check.
   if (subcommand === 'warding') {
-    const rawCard = sub.options?.find((o) => o.name === 'card')?.value;
-    const rawCharacter = sub.options?.find((o) => o.name === 'character')?.value;
+    const rawCard = optionValue(sub.options, 'card');
+    const rawCharacter = optionValue(sub.options, 'character');
 
     let card = null;
 
@@ -1311,7 +1311,7 @@ export async function handleEncounterDev(body) {
   // other member) — unrelated to this guild's encounter channel or lock
   // state, so it answers before either check, same as `bond` and `missions`.
   if (subcommand === 'reset') {
-    const choice = sub.options?.find((o) => o.name === 'command')?.value || 'both';
+    const choice = optionValue(sub.options, 'command') || 'both';
     const commands = choice === 'both' ? ['roam', 'meet'] : [choice];
 
     try {
@@ -1375,9 +1375,9 @@ export async function handleEncounterDev(body) {
       };
     }
 
-    const rawCharacter = sub.options?.find((o) => o.name === 'character')?.value;
-    const variant = sub.options?.find((o) => o.name === 'variant')?.value || undefined;
-    const scene = sub.options?.find((o) => o.name === 'scene')?.value === true;
+    const rawCharacter = optionValue(sub.options, 'character');
+    const variant = optionValue(sub.options, 'variant') || undefined;
+    const scene = optionValue(sub.options, 'scene') === true;
 
     let characterId;
     if (rawCharacter) {

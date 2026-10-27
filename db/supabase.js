@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { DEFAULT_COUNTDOWN_TIMEZONE } from '../constants/countdown.js';
 
 // Initialize Supabase client with service role key
 // Service role bypasses RLS policies, required for bot backend operations
@@ -2452,6 +2453,227 @@ export async function countCooldownResets(userId) {
   }
 
   return (data || []).length;
+}
+
+// --- countdown channels (docs/countdown.md) ---------------------------------
+
+/**
+ * Every guild the countdown pass should visit: at least one countdown channel
+ * set and not locked (migration 013). Each comes back as
+ * `{ guild_id, timezone, channels: [countdown_channels rows] }`.
+ *
+ * Found through countdown_channels, not guild_settings.enabled: countdowns
+ * run with encounters and missions both off. A guild with no guild_settings
+ * row has never set a timezone, so it gets the column's default.
+ */
+export async function getCountdownGuilds() {
+  const { data: channels, error } = await withGatewayRetry(() =>
+    supabase.from('countdown_channels').select('*').not('channel_id', 'is', null),
+  );
+  if (error) {
+    console.error('Error fetching countdown channels:', error);
+    throw error;
+  }
+  if (!channels?.length) return [];
+
+  const guildIds = [...new Set(channels.map((row) => row.guild_id))];
+  const { data: settings, error: settingsError } = await withGatewayRetry(() =>
+    supabase
+      .from('guild_settings')
+      .select('guild_id, countdown_timezone, locked')
+      .in('guild_id', guildIds),
+  );
+  if (settingsError) {
+    console.error('Error fetching countdown guild settings:', settingsError);
+    throw settingsError;
+  }
+
+  const byGuild = new Map((settings || []).map((row) => [row.guild_id, row]));
+  return guildIds
+    .filter((guildId) => !byGuild.get(guildId)?.locked)
+    .map((guildId) => ({
+      guild_id: guildId,
+      timezone: byGuild.get(guildId)?.countdown_timezone || DEFAULT_COUNTDOWN_TIMEZONE,
+      channels: channels.filter((row) => row.guild_id === guildId),
+    }));
+}
+
+/**
+ * One guild's countdown setup for /countdown and /event:
+ * `{ timezone, locked, channels: { wishingwell, customevent } }`, each channel
+ * its row or null. The two reads are independent, so they run together.
+ */
+export async function getCountdownSetup(guildId) {
+  const [settings, { data: channels, error }] = await Promise.all([
+    getGuildSettings(guildId),
+    supabase.from('countdown_channels').select('*').eq('guild_id', guildId),
+  ]);
+  if (error) {
+    console.error('Error fetching countdown setup:', error);
+    throw error;
+  }
+
+  const rows = channels || [];
+  return {
+    timezone: settings?.countdown_timezone || DEFAULT_COUNTDOWN_TIMEZONE,
+    locked: Boolean(settings?.locked),
+    channels: {
+      wishingwell: rows.find((row) => row.kind === 'wishingwell') || null,
+      customevent: rows.find((row) => row.kind === 'customevent') || null,
+    },
+  };
+}
+
+/**
+ * Write one countdown kind's row, creating it the first time. Returns false
+ * instead of throwing when the channel is already the other kind's: the
+ * partial unique index (migration 034) is the real guard against two kinds
+ * renaming one channel, and the handler's own check only covers the
+ * non-racing case.
+ */
+export async function saveCountdownChannel(guildId, kind, fields) {
+  const { error } = await supabase
+    .from('countdown_channels')
+    .upsert(
+      { guild_id: guildId, kind, ...fields, updated_at: new Date().toISOString() },
+      { onConflict: 'guild_id,kind' },
+    );
+
+  if (error?.code === '23505') return false;
+  if (error) {
+    console.error('Error saving countdown channel:', error);
+    throw error;
+  }
+  return true;
+}
+
+/**
+ * Count one failed rename against a kind. Reaching `threshold` in a row
+ * clears only that kind's channel (§9), so a broken Wishing Well channel
+ * can't silence the custom event one. `rendered_name` is kept so a re-setup
+ * on the same channel can tell its name is still the countdown's (countdown.js
+ * setCountdownChannel). Returns true when this call disabled it.
+ */
+export async function bumpCountdownRenameFailure(guildId, kind, failuresSoFar, reason, threshold) {
+  const failures = (failuresSoFar || 0) + 1;
+  const disabled = failures >= threshold;
+
+  const { error } = await supabase
+    .from('countdown_channels')
+    .update({
+      rename_failures: failures,
+      ...(disabled ? { channel_id: null, disabled_reason: reason } : {}),
+      updated_at: new Date().toISOString(),
+    })
+    .eq('guild_id', guildId)
+    .eq('kind', kind);
+
+  if (error) {
+    console.error('Error recording countdown rename failure:', error);
+    throw error;
+  }
+  return disabled;
+}
+
+/** `/countdown timezone`. Creates the guild_settings row if there isn't one. */
+export async function setCountdownTimezone(guildId, timezone) {
+  const { error } = await supabase
+    .from('guild_settings')
+    .upsert(
+      { guild_id: guildId, countdown_timezone: timezone, updated_at: new Date().toISOString() },
+      { onConflict: 'guild_id' },
+    );
+
+  if (error) {
+    console.error('Error setting countdown timezone:', error);
+    throw error;
+  }
+}
+
+/**
+ * A guild's custom events, past ones included until the pass prunes them.
+ * At most EVENT_CAP plus a day's worth of stragglers, so callers filter and
+ * sort in memory rather than in the query.
+ */
+export async function listCountdownEvents(guildId) {
+  const { data, error } = await supabase
+    .from('countdown_events')
+    .select('*')
+    .eq('guild_id', guildId);
+
+  if (error) {
+    console.error('Error listing countdown events:', error);
+    throw error;
+  }
+  return data || [];
+}
+
+/**
+ * `/event create`, through create_countdown_event (migration 034), which
+ * checks the cap and claims the #ID in the same transaction as the insert.
+ * Returns the new event_number, or null when the guild is at `cap`.
+ */
+export async function createCountdownEvent(guildId, { name, date, userId, today, cap }) {
+  const { data, error } = await supabase.rpc('create_countdown_event', {
+    p_guild_id: guildId,
+    p_name: name,
+    p_event_date: date,
+    p_created_by: userId,
+    p_today: today,
+    p_cap: cap,
+  });
+
+  if (error) {
+    console.error('Error creating countdown event:', error);
+    throw error;
+  }
+  return data ?? null;
+}
+
+/** `/event edit`. Returns the updated row, or null when there's no such #ID. */
+export async function updateCountdownEvent(guildId, eventNumber, patch) {
+  const { data, error } = await supabase
+    .from('countdown_events')
+    .update(patch)
+    .eq('guild_id', guildId)
+    .eq('event_number', eventNumber)
+    .select();
+
+  if (error) {
+    console.error('Error updating countdown event:', error);
+    throw error;
+  }
+  return data?.[0] || null;
+}
+
+/** `/event delete`. Returns the removed row, or null when there's no such #ID. */
+export async function deleteCountdownEvent(guildId, eventNumber) {
+  const { data, error } = await supabase
+    .from('countdown_events')
+    .delete()
+    .eq('guild_id', guildId)
+    .eq('event_number', eventNumber)
+    .select();
+
+  if (error) {
+    console.error('Error deleting countdown event:', error);
+    throw error;
+  }
+  return data?.[0] || null;
+}
+
+/** Drop a guild's events dated before `today`, its local date (§6). */
+export async function deletePastCountdownEvents(guildId, today) {
+  const { error } = await supabase
+    .from('countdown_events')
+    .delete()
+    .eq('guild_id', guildId)
+    .lt('event_date', today);
+
+  if (error) {
+    console.error('Error pruning past countdown events:', error);
+    throw error;
+  }
 }
 
 export default supabase;

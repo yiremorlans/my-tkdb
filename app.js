@@ -45,6 +45,7 @@ import {
   setBondDmsEnabled,
   surfaceBondSceneResume,
 } from './bondScenes.js';
+import { countdownAutocomplete, handleCountdownAdmin, handleEvent, handleWishingWell } from './countdown.js';
 import { startEncounterScheduler } from './encounterScheduler.js';
 import { deleteInteractionMessage } from './discordRest.js';
 import {
@@ -66,7 +67,7 @@ import {
 } from './db/supabase.js';
 import { validateContent } from './constants/validateContent.js';
 import { startGateway } from './gateway.js';
-import { EPHEMERAL } from './utils.js';
+import { EPHEMERAL, optionValue } from './utils.js';
 
 // Time of day drives which backgrounds and dialogue are eligible (the `_PM`
 // evening cutoff — see constants/backgrounds.js). Discord never tells us a
@@ -230,6 +231,26 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
    */
   if (type === InteractionType.PING) {
     return res.send({ type: InteractionResponseType.PONG });
+  }
+
+  // Choices for options marked `autocomplete` (/countdown timezone, /event
+  // edit|delete). Answered ahead of the maintenance gate below because an
+  // autocomplete can only be answered with choices, never a message: under
+  // maintenance it gets none. Discord gives these the same 3s budget and no
+  // defer, so a failure also answers with no choices rather than nothing.
+  if (type === InteractionType.APPLICATION_COMMAND_AUTOCOMPLETE) {
+    let choices = [];
+    try {
+      if (!(await isMaintenanceModeActive()) || isMaintenanceBypassUser(userId)) {
+        choices = await countdownAutocomplete(req.body);
+      }
+    } catch (err) {
+      console.error(`Error in /${data?.name} autocomplete:`, err);
+    }
+    return res.send({
+      type: InteractionResponseType.APPLICATION_COMMAND_AUTOCOMPLETE_RESULT,
+      data: { choices },
+    });
   }
 
   // Global kill switch (app_settings.maintenance_mode, db/migrations/024, and
@@ -490,10 +511,10 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       // moving anything (bond:replay below). The scene's own closing DM
       // message offers the same replay directly (bond:replaystart), so this
       // command isn't the only way in.
-      const characterOption = (data.options || []).find((o) => o.name === 'character');
-      if (characterOption) {
+      const character = optionValue(data.options, 'character');
+      if (character != null) {
         try {
-          const messageData = await buildBondJournal(userId, characterOption.value);
+          const messageData = await buildBondJournal(userId, character);
           res.send({
             type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
             data: messageData,
@@ -510,9 +531,9 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         return;
       }
 
-      const dmsOption = (data.options || []).find((o) => o.name === 'dms');
-      if (dmsOption) {
-        const content = await setBondDmsEnabled(userId, dmsOption.value === 'on');
+      const dms = optionValue(data.options, 'dms');
+      if (dms != null) {
+        const content = await setBondDmsEnabled(userId, dms === 'on');
         return res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: { content, flags: EPHEMERAL },
@@ -621,6 +642,14 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       return;
     }
 
+    // Read-only, no database: answered in-band.
+    if (name === 'wishingwell') {
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: handleWishingWell().reply,
+      });
+    }
+
     // /mission assist:true is the one mission command that answers in public and
     // without a defer: its output is the call-for-backup post itself, sent
     // straight back as the interaction response. Only one Supabase read sits on
@@ -673,7 +702,9 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       name === 'docs' ||
       name === 'riddle' ||
       name === 'request' ||
-      name === 'missions'
+      name === 'missions' ||
+      name === 'countdown' ||
+      name === 'event'
     ) {
       res.send({
         type: InteractionResponseType.DEFERRED_CHANNEL_MESSAGE_WITH_SOURCE,
@@ -687,6 +718,10 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           riddle: handleRiddle,
           request: handleRequest,
           missions: handleMissionsAdmin,
+          // Setup reads the channel and renames it before it can answer
+          // (docs/countdown.md §5), two Discord calls on top of Supabase.
+          countdown: handleCountdownAdmin,
+          event: handleEvent,
         };
 
         let result;

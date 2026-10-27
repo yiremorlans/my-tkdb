@@ -13,6 +13,7 @@
 import { afterEach, beforeEach, describe, it, mock } from 'node:test';
 import assert from 'node:assert/strict';
 import { createFakeSupabase } from './helpers/fakeSupabase.js';
+import { fakeDiscordRest } from './helpers/fakeDiscordRest.js';
 
 process.env.SUPABASE_URL ??= 'http://fake.local';
 process.env.SUPABASE_SERVICE_ROLE_KEY ??= 'fake-service-role-key';
@@ -37,7 +38,7 @@ mock.module('@supabase/supabase-js', {
 const posts = [];
 const edits = [];
 mock.module('../discordRest.js', {
-  namedExports: {
+  namedExports: fakeDiscordRest({
     postChannelMessage: async (channelId, body) => {
       posts.push({ channelId, body });
       return { id: `message-${posts.length}` };
@@ -46,7 +47,6 @@ mock.module('../discordRest.js', {
       edits.push({ channelId, messageId, body });
       return {};
     },
-    editInteractionMessage: async () => ({}),
     // Reads back what postChannelMessage recorded, as the /call scene closeout
     // does. Discord adds read-only fields to what it returns; the closeout
     // rebuilds rather than echoing them, so the stand-in adds one to prove it.
@@ -61,13 +61,7 @@ mock.module('../discordRest.js', {
       if (!messageId) return;
       edits.push({ channelId, messageId, body });
     },
-    // Unused by anything under test here — publicEncounters.js pulls in
-    // bondScenes.js (for /encdev bond), which imports these statically, so the
-    // mock has to provide them or the whole module graph fails to load.
-    openDmChannel: async () => 'dm-channel-1',
-    postChannelTyping: async () => {},
-    getGuildRoles: async () => [],
-  },
+  }),
 });
 
 // Real compositing is exercised in silhouette-composition.test.js; here it's a

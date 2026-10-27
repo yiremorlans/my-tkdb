@@ -1,6 +1,6 @@
 // /missions (per-guild admin) and /missiondev (owner-only test tooling).
 
-import { EPHEMERAL } from "../utils.js";
+import { EPHEMERAL, optionValue } from "../utils.js";
 import {
   CHANCELLOR_AUDIENCE_LINES,
   CHANCELLOR_AUDIENCE_PROMPT,
@@ -82,7 +82,7 @@ export async function handleMissionsAdmin(body) {
 
   if (subcommand === "enable") {
     const channelId =
-      sub.options?.find((o) => o.name === "channel")?.value ||
+      optionValue(sub.options, "channel") ||
       settings?.encounter_channel_id ||
       null;
 
@@ -216,7 +216,7 @@ export async function handleMissionDev(body, now = new Date()) {
   // channel. `face: granted` shows the confirmation with close.png, filled
   // with a random house.
   if (body.data?.options?.[0]?.name === "chancellor") {
-    const face = body.data.options[0].options?.find((o) => o.name === "face")?.value;
+    const face = optionValue(body.data.options[0].options, "face");
     const data =
       face === "granted"
         ? chancellorMessage(
@@ -289,9 +289,9 @@ export async function handleMissionDev(body, now = new Date()) {
     }
 
     const missionType =
-      sub.options?.find((o) => o.name === "type")?.value || undefined;
+      optionValue(sub.options, "type") || undefined;
 
-    const rawHouse = sub.options?.find((o) => o.name === "house")?.value;
+    const rawHouse = optionValue(sub.options, "house");
     let house;
     if (rawHouse) {
       house = Object.values(HOUSES).find(

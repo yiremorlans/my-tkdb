@@ -21,6 +21,7 @@
 import { test, mock, beforeEach } from 'node:test';
 import assert from 'node:assert';
 import { createFakeSupabase } from './helpers/fakeSupabase.js';
+import { fakeDiscordRest } from './helpers/fakeDiscordRest.js';
 
 process.env.SUPABASE_URL ??= 'http://fake.local';
 process.env.SUPABASE_SERVICE_ROLE_KEY ??= 'fake-service-role-key';
@@ -39,7 +40,7 @@ mock.module('@supabase/supabase-js', {
 // openDmChannel into the 403 that a user sharing no guild with the bot produces.
 const discord = { posts: [], typing: [], dmFails: false, postFails: false };
 mock.module('../discordRest.js', {
-  namedExports: {
+  namedExports: fakeDiscordRest({
     openDmChannel: async (userId) => {
       if (discord.dmFails) throw new Error('Discord API error: 403 Cannot send messages to this user');
       return `dm-${userId}`;
@@ -52,8 +53,7 @@ mock.module('../discordRest.js', {
     postChannelTyping: async (channelId) => {
       discord.typing.push(channelId);
     },
-    getGuildRoles: async () => [],
-  },
+  }),
 });
 
 const {

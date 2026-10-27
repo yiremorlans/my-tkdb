@@ -5,7 +5,7 @@
 // together. See player.js for the module map.
 
 import { InteractionResponseType } from "discord-interactions";
-import { EPHEMERAL } from "../utils.js";
+import { EPHEMERAL, optionValue } from "../utils.js";
 import {
   CHANCELLOR_AUDIENCE_CHANCE,
   CHANCELLOR_AUDIENCE_LINES,
@@ -274,7 +274,7 @@ async function tryEditInteraction(token, messageId, body, label) {
  */
 export async function handleRequest(body) {
   const userId = userIdOf(body);
-  const house = body.data?.options?.find((o) => o.name === "house")?.value;
+  const house = optionValue(body.data?.options, "house");
 
   const mission = await getAcceptedMission(userId);
   if (!chancellorAudienceOpen(mission)) {

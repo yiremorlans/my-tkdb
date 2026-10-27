@@ -14,6 +14,7 @@
 import { beforeEach, describe, it, mock } from 'node:test';
 import assert from 'node:assert/strict';
 import { createFakeSupabase } from './helpers/fakeSupabase.js';
+import { fakeDiscordRest } from './helpers/fakeDiscordRest.js';
 
 process.env.SUPABASE_URL ??= 'http://fake.local';
 process.env.SUPABASE_SERVICE_ROLE_KEY ??= 'fake-service-role-key';
@@ -41,7 +42,7 @@ const discordFail = { edit: false, interaction: false };
 // Edits made through an interaction's webhook token (the Chancellor's /request).
 const interactionEdits = [];
 mock.module('../discordRest.js', {
-  namedExports: {
+  namedExports: fakeDiscordRest({
     postChannelMessage: async (channelId, body) => {
       posts.push({ channelId, body });
       return { id: `message-${posts.length}` };
@@ -57,16 +58,12 @@ mock.module('../discordRest.js', {
       if (!messageId) return;
       edits.push({ channelId, messageId, body });
     },
-    getChannelMessage: async () => ({}),
     editInteractionMessage: async (token, messageId, body) => {
       interactionEdits.push({ token, messageId, body });
       if (discordFail.interaction) throw new Error('Discord API error: 404');
       return { id: messageId };
     },
-    openDmChannel: async () => 'dm-1',
-    postChannelTyping: async () => {},
-    getGuildRoles: async () => [],
-  },
+  }),
 });
 
 const {

@@ -50,6 +50,16 @@ You can hold **one** mission at a time, and **accept at most two a day** — the
 
 **Missions never move affinity either.** They pay **house logs** (`mission_log` rows internally), which is what `/house` ranks you on, plus a banked cooldown reset. An unaccepted request is withdrawn after 2 hours; an accepted one lapses after 48 and frees your slot. Banked resets are deliberately **not** capped — supply already limits them, and a cap would put the most active player back on use-it-or-lose-it. Full design notes are in [`docs/scheduled-missions.md`](docs/scheduled-missions.md).
 
+## Countdown channels
+
+A voice, stage or category channel whose name counts down to the next event: `💎 Wishing Well: in 6 days`, then `Today!` for the whole day. Two optional channels per server, one for Tokyo Debunker Wishing Well dates (the same everywhere, kept in `constants/wishingWell.js`) and one for the server's own events. Independent of encounters and missions. Days are calendar days in the server's countdown timezone, `America/Los_Angeles` (US Pacific) unless changed, so the day flips at midnight Pacific and overnight further east.
+
+- `/countdown wishingwell|customevent channel:` — renames that channel now and keeps it current. `/countdown timezone`, `/countdown disable wishingwell|customevent` (restores the old name) and `/countdown status`. **Manage Server**, ephemeral.
+- `/event create|edit|delete|list` — up to 24 custom events, date only. **Manage Server**, ephemeral.
+- `/wishingwell` — upcoming Wishing Well dates in each viewer's own timezone. Anyone, ephemeral.
+
+The bot needs **View Channel** and **Manage Channels** on the countdown channel. Full design notes are in [`docs/countdown.md`](docs/countdown.md).
+
 ## Project structure
 Below is a basic overview of the project structure:
 
@@ -61,9 +71,11 @@ Below is a basic overview of the project structure:
 ├── constants/
 │   ├── backgrounds.js -> houses, general locations, and PM/evening gating
 │   ├── characters.js  -> character roster, grouped by house
+│   ├── countdown.js   -> countdown day counting, channel names, /event input checks
 │   ├── game.js        -> response options, affinity values, relationship levels
 │   ├── missions.js    -> mission teasers/riddles/ranks, slot + type rolls, riddle cooldown
-│   └── publicEncounters.js -> teasers/winner lines/call scenes/milestones, name matching, guess cooldown
+│   ├── publicEncounters.js -> teasers/winner lines/call scenes/milestones, name matching, guess cooldown
+│   └── wishingWell.js -> Wishing Well dates, updated by hand
 ├── db/
 │   └── schema.sql -> Postgres schema for future migration
 ├── .env.sample  -> sample .env file
@@ -74,8 +86,9 @@ Below is a basic overview of the project structure:
 ├── commandLimits.js -> per-command rolling 3-hour cooldown for /roam and /meet (Supabase-backed, anchored to last completed encounter)
 ├── publicEncounters.js -> public call-out encounters: spawn, expiry, /call, call scenes and /encounters handlers
 ├── missions/    -> scheduled missions: spawn, expiry, /mission, /docs, /riddle, /request, /house dossier, /missions (module map atop missions/player.js)
-├── encounterScheduler.js -> the per-guild tick loop that drives both features' spawns
-├── discordRest.js -> bot-initiated channel POST/PATCH (everything else answers an interaction)
+├── countdown.js -> countdown channels: /countdown, /event, /wishingwell and the rename pass
+├── encounterScheduler.js -> the per-guild tick loop: encounter spawns, mission slots, countdown renames
+├── discordRest.js -> bot-initiated channel POST/PATCH and renames (everything else answers an interaction)
 ├── imageComposition.js -> canvas-based image rendering (bg + character + dialogue, or a black silhouette)
 ├── utils.js     -> utility functions and enums
 ├── package.json

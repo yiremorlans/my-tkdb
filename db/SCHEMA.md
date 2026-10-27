@@ -135,6 +135,8 @@ Only the channel and the on/off switch are per-guild. Cadence and window are fix
 | `mission_slots_today` | JSONB | Today's three request times, as ISO timestamps |
 | `mission_slots_fired` | JSONB | Indices into that array which have already been spent |
 | `mission_post_failures` | INT | Consecutive failed mission POSTs; 3 auto-disables **missions only** |
+| `countdown_timezone` | TEXT | IANA zone countdown days are counted in (migration 034); default `America/Los_Angeles` |
+| `next_event_number` | INT | Next custom countdown event `#ID`; only ever increments, so IDs are never reused |
 | `created_at` / `updated_at` | TIMESTAMP | Record timestamps |
 
 Missions (migration 016, `docs/scheduled-missions.md`) share this row so one guild has one config, but keep their own switch and their own failure counter: a broken mission channel must not silence public encounters, which may be posting fine elsewhere. Count (3/day), spacing (2h) and window (05:00-24:00 America/Chicago) are constants in `constants/missions.js`, so there are no override columns for them here either.
@@ -269,6 +271,34 @@ The memory behind the recent-beat skip (migration 031): a `/roam` or `/meet` dra
 | `PRIMARY KEY (discord_user_id, character_id)` | - | One row per bond |
 
 > Kept off `character_relationships` on purpose: a spawn is only a preview and must never create a relationship row. How many of the stored keys a draw skips depends on the pool (`recentBeatWindow` in `constants/characters.js`). Writes go through the atomic `remember_dialogue_beat()` function (prepend, dedupe, cap in one statement), since the click carries only the beat's key, never the list: no read-then-write.
+
+### `countdown_channels`
+Countdown channels (migration 034, `docs/countdown.md`): one row per (guild, kind), where kind is `wishingwell` or `customevent`. Independent of encounters and missions, so the scheduler finds these guilds here rather than through `guild_settings.enabled`. A guild with no `guild_settings` row uses the default timezone.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `guild_id` / `kind` | TEXT (PK) | One row per kind per guild |
+| `channel_id` | TEXT | Voice, stage or category channel to rename; NULL = this kind is off |
+| `original_name` | TEXT | The channel's name at setup, restored by `/countdown disable` |
+| `rendered_name` | TEXT | Last name the bot wrote; a rename is only sent when the computed name differs |
+| `renamed_at` | TIMESTAMP | For the 5-minute rename guard |
+| `rename_failures` | INT | Consecutive failed renames; 3 clears `channel_id` for **this kind only** |
+| `disabled_reason` | TEXT | Why the auto-disable fired, shown by `/countdown status` |
+| `configured_by` | TEXT | Who last set the channel |
+| `created_at` / `updated_at` | TIMESTAMP | Record timestamps |
+
+A partial unique index on `(guild_id, channel_id) WHERE channel_id IS NOT NULL` keeps the two kinds off one channel.
+
+### `countdown_events`
+A guild's custom events for the `customevent` channel (migration 034). At most 24 per guild, enforced with the `#ID` claim inside `create_countdown_event()`, which locks the guild's `guild_settings` row so concurrent creates can't exceed the cap or share an ID. Past events (local date before today) are deleted by the scheduler pass and by that function.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `guild_id` / `event_number` | TEXT / INT (PK) | The `#ID`, unique per guild, never reused |
+| `name` | TEXT | 1-80 characters |
+| `event_date` | DATE | Local date in the guild's timezone; a timezone change leaves it alone |
+| `created_by` | TEXT | Who created it |
+| `created_at` | TIMESTAMP | Record timestamp |
 
 ### `missions`
 One row per posted mission request (`docs/scheduled-missions.md`). `status` is the whole state machine: `open` → `accepted` → `completed`, or `expired` from either.

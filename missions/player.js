@@ -24,7 +24,7 @@ import {
   InteractionResponseType,
   MessageComponentTypes,
 } from "discord-interactions";
-import { EPHEMERAL } from "../utils.js";
+import { EPHEMERAL, optionValue } from "../utils.js";
 import {
   ACCEPT_WINDOW_HOURS,
   STORE_CREDIT_LINE,
@@ -111,9 +111,9 @@ function displayNameOf(body) {
 // `assist:True`, `assist:yes` all work, while `assist:false` still opts out.
 const ASSIST_NEGATIVES = new Set(["false", "f", "no", "n", "0", "off"]);
 export function wantsMissionAssist(body) {
-  const opt = body.data?.options?.find((o) => o.name === "assist");
-  if (!opt) return false;
-  const value = String(opt.value ?? "").trim().toLowerCase();
+  const value = String(optionValue(body.data?.options, "assist") ?? "")
+    .trim()
+    .toLowerCase();
   if (value === "") return false;
   return !ASSIST_NEGATIVES.has(value);
 }

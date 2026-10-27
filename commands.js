@@ -1,6 +1,7 @@
 import "dotenv/config";
 import { InstallGlobalCommands } from "./utils.js";
 import { HOUSES } from "./constants/backgrounds.js";
+import { EVENT_NAME_MAX } from "./constants/countdown.js";
 
 const ROAM_COMMAND = {
   name: "roam",
@@ -453,6 +454,136 @@ const MISSIONDEV_COMMAND = {
   ],
 };
 
+// Countdown channels (docs/countdown.md §5): a voice, stage or category
+// channel whose name counts down to the next Wishing Well date or custom
+// event. `disable` is a subcommand group so it reads `/countdown disable
+// wishingwell` with no `which:` option; Discord allows groups and plain
+// subcommands side by side. channel_types only filters Discord's picker;
+// text channels are left out because Discord lowercases and hyphenates their
+// names.
+const COUNTDOWN_CHANNEL_OPTION = {
+  type: 7, // CHANNEL
+  name: "channel",
+  description: "A voice, stage, or category channel to rename",
+  required: true,
+  channel_types: [2, 13, 4], // GUILD_VOICE, GUILD_STAGE_VOICE, GUILD_CATEGORY
+};
+
+const COUNTDOWN_COMMAND = {
+  name: "countdown",
+  description: "Set up channels that count down to Wishing Wells and events",
+  type: 1,
+  default_member_permissions: "32", // MANAGE_GUILD
+  integration_types: [0],
+  contexts: [0],
+  options: [
+    {
+      type: 1, // SUB_COMMAND
+      name: "wishingwell",
+      description: "Rename a channel to count down to the next Wishing Well",
+      options: [COUNTDOWN_CHANNEL_OPTION],
+    },
+    {
+      type: 1,
+      name: "customevent",
+      description: "Rename a channel to count down to this server's next event",
+      options: [COUNTDOWN_CHANNEL_OPTION],
+    },
+    {
+      type: 1,
+      name: "timezone",
+      description: "Set the timezone countdown days are counted in",
+      options: [
+        {
+          type: 3, // STRING
+          name: "tz",
+          description: "e.g. America/New_York or Asia/Tokyo",
+          required: true,
+          autocomplete: true,
+        },
+      ],
+    },
+    {
+      type: 2, // SUB_COMMAND_GROUP
+      name: "disable",
+      description: "Stop a countdown and restore the channel's old name",
+      options: [
+        { type: 1, name: "wishingwell", description: "Stop the Wishing Well countdown" },
+        { type: 1, name: "customevent", description: "Stop the custom event countdown (events are kept)" },
+      ],
+    },
+    {
+      type: 1,
+      name: "status",
+      description: "Show what each countdown channel shows",
+    },
+  ],
+};
+
+// The custom events /countdown customevent counts down to (docs/countdown.md
+// §6). Manage Server for the whole command, `list` included. `event` has
+// autocomplete: admins pick "Nov 14 · Fan Meet · #3" and the value is the #ID,
+// so events can share a name. STRING rather than INTEGER so typing a name
+// filters the list; an INTEGER field only accepts digits.
+const EVENT_OPTION = {
+  type: 3, // STRING
+  name: "event",
+  description: "Which event",
+  required: true,
+  autocomplete: true,
+};
+
+const EVENT_COMMAND = {
+  name: "event",
+  description: "Manage this server's custom countdown events",
+  type: 1,
+  default_member_permissions: "32", // MANAGE_GUILD
+  integration_types: [0],
+  contexts: [0],
+  options: [
+    {
+      type: 1,
+      name: "create",
+      description: "Add an event",
+      options: [
+        { type: 3, name: "name", description: `Event name (up to ${EVENT_NAME_MAX} characters)`, required: true, max_length: EVENT_NAME_MAX },
+        { type: 3, name: "date", description: "YYYY-MM-DD, in the server's countdown timezone", required: true },
+      ],
+    },
+    {
+      type: 1,
+      name: "edit",
+      description: "Change an event's name or date",
+      options: [
+        EVENT_OPTION,
+        { type: 3, name: "name", description: `New name (up to ${EVENT_NAME_MAX} characters)`, required: false, max_length: EVENT_NAME_MAX },
+        { type: 3, name: "date", description: "New date, YYYY-MM-DD", required: false },
+      ],
+    },
+    {
+      type: 1,
+      name: "delete",
+      description: "Remove an event",
+      options: [EVENT_OPTION],
+    },
+    {
+      type: 1,
+      name: "list",
+      description: "List upcoming events",
+    },
+  ],
+};
+
+// Public and read-only (docs/countdown.md §8): upcoming Wishing Well dates as
+// Discord timestamps, so each viewer sees their own timezone.
+const WISHINGWELL_COMMAND = {
+  name: "wishingwell",
+  description: "See upcoming Wishing Well dates",
+  type: 1,
+  integration_types: [0, 1],
+  contexts: [0, 1, 2],
+};
+
 const ALL_COMMANDS = [
   ROAM_COMMAND,
   MEET_COMMAND,
@@ -466,6 +597,9 @@ const ALL_COMMANDS = [
   REQUEST_COMMAND,
   ENCOUNTERS_COMMAND,
   MISSIONS_COMMAND,
+  COUNTDOWN_COMMAND,
+  EVENT_COMMAND,
+  WISHINGWELL_COMMAND,
   ENCDEV_COMMAND,
   MISSIONDEV_COMMAND,
 ];

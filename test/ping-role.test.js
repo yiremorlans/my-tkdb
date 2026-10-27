@@ -3,17 +3,18 @@
 // role, and every failure path must fall back to "no ping" rather than throw.
 import { describe, it, mock } from 'node:test';
 import assert from 'node:assert/strict';
+import { fakeDiscordRest } from './helpers/fakeDiscordRest.js';
 
 let roles = {};
 let calls = 0;
 mock.module('../discordRest.js', {
-  namedExports: {
+  namedExports: fakeDiscordRest({
     getGuildRoles: async (guildId) => {
       calls++;
       if (roles[guildId] instanceof Error) throw roles[guildId];
       return roles[guildId] ?? [];
     },
-  },
+  }),
 });
 
 const { pingRole, PING_ROLE_NAME } = await import('../utils.js');
