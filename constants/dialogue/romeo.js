@@ -233,61 +233,70 @@ export default {
   dialogue: {
     new: [
       {
-        line: 'He\'s barking orders at the Sinostra students, managing every angle of the casino floor. "HDY waste my time? Quick, put on this dress and work table seven, we need someone sharp out there."',
+        line: 'He\'s barking orders at the Sinostra students, managing every angle of the casino floor. "HDY stand there wasting my time? Put on this dress and work table seven, we need someone sharp out there."',
         approach: "Make yourself useful",
         greeting: '"Well? Table seven isn\'t going to deal itself. Move!"',
         responses: {
-          kind: ["Do it without complaint", "Say you'll do your best"],
-          playful: ["Trade sass back", "Ask what the dress code is"],
-          bold: ["Take the table without asking", "Bet on yourself"],
+          kind: ["Say you'll learn table seven", "Tell him seven's covered"],
+          playful: [
+            "Ask what the dress is worth",
+            "Ask if the dress is designer",
+          ],
+          bold: [
+            "Say seven will turn a profit",
+            "Say you'll make him look good",
+          ],
           neutral: ["Nod and get on with it", "Stay quiet"],
         },
       },
       {
-        line: "He's on two conversations and one phone call. You are somehow now the third conversation.",
-        approach: "Cut into the conversation",
-        greeting: '"Hold on. ...No, not you. ...Yes, you. What do you want?"',
+        line: '"Hello? Yes, I was just eating lunch. Again? ...Fine. Tonight? All right. Bye now." He hangs up and finds you standing there.',
+        approach: "Ask who called",
+        greeting:
+          '"Excuse me!? Do you make a habit of listening in on calls? Tch. Nothing a newcomer needs to hear. What do you want?"',
         responses: {
-          kind: ["Wait for a natural pause", "Let him finish his call"],
-          playful: ["Interrupt with an absurd claim", "Use his own acronym"],
-          bold: ["Make him hang up first", "Refuse to wait your turn"],
-          neutral: ["Let him run the floor", "Wait for him to notice you"],
+          kind: ["Say lunch should come first", "Ask if it's a bad time"],
+          playful: ["Say you only caught lunch", "Ask what was for lunch"],
+          bold: ["Say you came on business", "Say you've got an offer"],
+          neutral: ["Say you were passing by", "Let him get back to lunch"],
         },
       },
       {
         line: "\"Come to my private office later, I've got a little proposal I think you'll want to hear. But make sure you come alone.\"",
         approach: "Hear the proposal",
         greeting:
-          '"You came alone. Good. The VIP section needs a face at the door, and yours will do. There\'s money in it."',
+          '"The VIP section needs a face at the door, and yours will do. There\'s money in it."',
         responses: {
-          kind: ["Say you'd be glad to help", "Thank him for the chance"],
-          playful: ["Guess the proposal first", "Tease him about secrecy"],
-          bold: ["Take the VIP section", "Ask what your cut is"],
-          neutral: ["Take the offer at face value", "Wait to hear the terms"],
+          kind: ["Say you're glad he asked you", "Say you'll hear him out"],
+          playful: ["Ask if there's a dress code", "Ask if it pays in cash"],
+          bold: ["Name your price up front", "Say you only take big offers"],
+          neutral: ["Say you'll think about it", "Ask for the details"],
         },
       },
       {
-        line: "He's a dealer short tonight. He looks you up and down, does arithmetic, and apparently likes the result.",
-        approach: "Ask what the job pays",
+        line: '"Time to count this month\'s protection fees... Not bad." He\'s counting. "I\'ll up this group by 2% next month. This one could go a little higher too..."',
+        approach: "Ask how business is",
         greeting:
-          '"Pays? Tch. Depends how you work. The face alone gets you a base rate."',
+          '"Tch. Do I look like I have time to chat with a newcomer? ...Business is fine. It could always be better."',
         responses: {
-          kind: ["Accept whatever's fair", "Say you'll earn a raise"],
-          playful: ["Fish for a bigger number", "Joke about your own price"],
-          bold: ["Name your price", "Ask for hazard pay"],
-          neutral: ["Ask for the base rate", "Wait for an actual figure"],
+          kind: ["Ask if he ever gets a break", "Bring him something to drink"],
+          playful: ["Offer to count for a fee", "Ask for a newcomer discount"],
+          bold: [
+            "Offer to bring in new business",
+            "Say you could make it better",
+          ],
+          neutral: ["Watch him count", "Say you'll come back later"],
         },
       },
       {
-        line: "He's got a sheet mask on and a phone to his ear and does not consider either a reason to stop running the floor.",
-        approach: "Walk faster",
-        greeting:
-          "\"You're new. Rule one: don't touch the chips. Rule two: see rule one.\"",
+        line: '"Hmph. If you want to survive here, you better not piss me off!" He says it by way of hello.',
+        approach: "Introduce yourself",
+        greeting: '"You\'re in the way! ...Fine. Talk fast."',
         responses: {
-          kind: ["Keep pace without complaint", "Help him multitask"],
-          playful: ["Touch the chips", "Dare him to stop you"],
-          bold: ["Keep pace and outdo him", "Take over a task yourself"],
-          neutral: ["Keep your hands off the chips", "Keep up without a word"],
+          kind: ["Keep it short for him", "Say you'll keep the peace"],
+          playful: ["Ask how many have survived", "Ask for a survival guide"],
+          bold: ["Say you plan to thrive", "Say you'll be worth knowing"],
+          neutral: ["Keep out of his way", "Get to the point"],
         },
       },
     ],
