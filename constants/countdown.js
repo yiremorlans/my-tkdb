@@ -58,18 +58,30 @@ function countdownSuffix(days) {
 // --- Channel names (§3) -----------------------------------------------------
 
 /**
- * The Wishing Well channel's name. `dates` are Unix seconds; one whose local
- * date is before today is skipped, so "Today!" holds for the event's whole
- * local day regardless of its time.
+ * The Wishing Well channel's name. `dates` are Unix start times, each running
+ * `durationSeconds`. While one is running the channel reads "Today!" on its
+ * start day, then counts down to its end; the next start only shows once it
+ * has ended. An upcoming start reads "Today!" for its whole local day.
  */
-export function wishingWellChannelName(dates, timeZone, now = new Date()) {
+export function wishingWellChannelName(dates, durationSeconds, timeZone, now = new Date()) {
+  const nowSeconds = now.getTime() / 1000;
   const today = localDateKey(timeZone, now);
-  const next = dates
-    .map((seconds) => localDateKey(timeZone, new Date(seconds * 1000)))
-    .filter((key) => key >= today)
-    .sort()[0];
-  if (!next) return "💎 Wishing Well: TBA";
-  return `💎 Wishing Well: ${countdownSuffix(daysBetween(today, next))}`;
+  const localKey = (seconds) => localDateKey(timeZone, new Date(seconds * 1000));
+  const starts = [...dates].sort((a, b) => a - b);
+
+  const running = starts.find(
+    (start) => start <= nowSeconds && nowSeconds < start + durationSeconds,
+  );
+  if (running !== undefined) {
+    if (localKey(running) === today) return "💎 Wishing Well: Today!";
+    const days = daysBetween(today, localKey(running + durationSeconds));
+    if (days === 0) return "💎 Wishing Well: ends today";
+    return `💎 Wishing Well: ends ${countdownSuffix(days)}`;
+  }
+
+  const next = starts.find((start) => start > nowSeconds);
+  if (next === undefined) return "💎 Wishing Well: TBA";
+  return `💎 Wishing Well: ${countdownSuffix(daysBetween(today, localKey(next)))}`;
 }
 
 /**
@@ -201,14 +213,21 @@ export function eventListLine(event) {
 
 /**
  * The public date list. Discord timestamps render in each viewer's own
- * timezone, so this needs no server setting. Dates whose start time has
- * passed are dropped, unlike the channel, which keeps "Today!" all day.
+ * timezone, so this needs no server setting. A running Wishing Well stays
+ * listed, with its end time, until it ends.
  */
-export function wishingWellListMessage(dates, now = new Date()) {
-  const upcoming = dates.filter((seconds) => seconds * 1000 > now.getTime());
-  if (upcoming.length === 0) return "No Wishing Well dates announced yet.";
+export function wishingWellListMessage(dates, durationSeconds, now = new Date()) {
+  const nowSeconds = now.getTime() / 1000;
+  const listed = [...dates]
+    .sort((a, b) => a - b)
+    .filter((start) => start + durationSeconds > nowSeconds);
+  if (listed.length === 0) return "No Wishing Well dates announced yet.";
   return [
     "💎 Wishing Well Dates 💎",
-    ...upcoming.map((seconds) => `- <t:${seconds}:R> <t:${seconds}:F>`),
+    ...listed.map((start) => {
+      if (start > nowSeconds) return `- <t:${start}:R> <t:${start}:F>`;
+      const end = start + durationSeconds;
+      return `- Live now, ends <t:${end}:R> <t:${end}:F>`;
+    }),
   ].join("\n");
 }

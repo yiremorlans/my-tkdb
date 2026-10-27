@@ -1,7 +1,7 @@
 # Spec: Countdown channels
 
 Status: **built** 2026-10-27 (migration 034 must run before deploy, then `npm run register`)
-Last updated: 2026-10-27
+Last updated: 2026-10-27 (Wishing Well run length added)
 
 A channel whose name counts down to the next event: Tokyo Debunker
 Wishing Well dates (global, the same for every server) and/or a server's own
@@ -54,6 +54,13 @@ its own:
   need no conversion.
 - Same-day tie between two custom events: the one created first wins
   (lower `#ID`).
+- **A Wishing Well runs 4 days** (`WISHING_WELL_DURATION_SECONDS`, §7), from
+  its start time to exactly 96 hours later. While one is running, the channel
+  reads `Today!` on its start day, then counts down to its **end**
+  (`ends in 2 days`, `ends in 1 day`, `ends today`). The next start's
+  countdown only appears once the running one has ended, at its end time
+  rather than at local midnight (the scheduler pass lands it within ~5
+  minutes, §11). Added 2026-10-27.
 
 ## 3. Channel name format
 
@@ -62,6 +69,8 @@ its own:
 | 2+ days | `💎 Wishing Well: in 6 days` | `Fan Meet: in 3 days` |
 | 1 day | `💎 Wishing Well: in 1 day` | `Fan Meet: in 1 day` |
 | event day | `💎 Wishing Well: Today!` | `Fan Meet: Today!` |
+| running, 1+ days to end | `💎 Wishing Well: ends in 2 days` | n/a |
+| running, end day | `💎 Wishing Well: ends today` | n/a |
 | nothing upcoming | `💎 Wishing Well: TBA` | `No events scheduled` |
 
 Allowed channel types are voice, stage and category (§5), all of which keep
@@ -188,8 +197,10 @@ reply ephemeral.
   Unix timestamps (seconds). Updated by hand when new dates are announced and
   shipped with a deploy.
 - Global: every server with a Wishing Well channel reads the same list.
-- The bot ignores past timestamps (local date before today), so pruning the
-  file is optional cleanup. Only current and future dates need to be kept.
+- Every Wishing Well lasts the same `WISHING_WELL_DURATION_SECONDS` (4 days),
+  exported from the same file, so only start times are listed.
+- The bot ignores Wishing Wells that have ended, so pruning the file is
+  optional cleanup. Only running and future dates need to be kept.
 - When none remain, the channel reads `💎 Wishing Well: TBA` (§3).
 
 Seed data as of 2026-10-25 (Eastern times for reference):
@@ -217,6 +228,8 @@ export const WISHING_WELL_DATES = [
   - <t:1794538800:R> <t:1794538800:F>
   ```
 
+- A running Wishing Well stays listed until it ends, as
+  `- Live now, ends <t:end:R> <t:end:F>`.
 - Read-only, needs no setup, and works whether or not the server has a
   countdown channel. Empty list: "No Wishing Well dates announced yet."
 
@@ -322,6 +335,9 @@ uses, so there's one code path for "what should this channel say".
   `America/New_York` until 2026-10-27), so the flip lands overnight for
   every North American member.
 - "Today!" for the event's whole local day; drops off at local midnight.
+- Wishing Wells run 4 days; while one runs the channel counts down to its
+  end (`ends in X days` / `ends today`), and the next start shows only after
+  it ends (2026-10-27).
 - `💎 Wishing Well:` prefix; `💎 Wishing Well: TBA` / `No events scheduled`
   when empty; `in 1 day` singular.
 - Rename in the first pass after local midnight, and immediately on any

@@ -27,7 +27,7 @@ import {
   wishingWellChannelName,
   wishingWellListMessage,
 } from './constants/countdown.js';
-import { WISHING_WELL_DATES } from './constants/wishingWell.js';
+import { WISHING_WELL_DATES, WISHING_WELL_DURATION_SECONDS } from './constants/wishingWell.js';
 import { canManageEncounters } from './publicEncounters.js';
 import { getChannel, renameChannel } from './discordRest.js';
 import { ephemeral as plainEphemeral, userIdOf } from './missions/shared.js';
@@ -98,7 +98,7 @@ function renameFailureReason(err) {
 
 function channelName(kind, timezone, events, now) {
   return kind === 'wishingwell'
-    ? wishingWellChannelName(WISHING_WELL_DATES, timezone, now)
+    ? wishingWellChannelName(WISHING_WELL_DATES, WISHING_WELL_DURATION_SECONDS, timezone, now)
     : customEventChannelName(events, timezone, now);
 }
 
@@ -612,5 +612,5 @@ export async function countdownAutocomplete(body, now = new Date()) {
 
 /** The public, read-only date list (§8). Needs no setup and no database. */
 export function handleWishingWell(now = new Date()) {
-  return replyOnly(wishingWellListMessage(WISHING_WELL_DATES, now));
+  return replyOnly(wishingWellListMessage(WISHING_WELL_DATES, WISHING_WELL_DURATION_SECONDS, now));
 }

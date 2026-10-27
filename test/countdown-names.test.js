@@ -1,11 +1,17 @@
 // Countdown channel names (docs/countdown.md §2–§3): calendar days in the
-// server's timezone, "Today!" for the event's whole local day.
+// server's timezone, "Today!" for the event's whole local day, and a running
+// Wishing Well counting down to its end before the next start shows.
 import { describe, it } from 'node:test';
 import assert from 'node:assert/strict';
 import {
   customEventChannelName,
-  wishingWellChannelName,
+  wishingWellChannelName as nameWithDuration,
+  wishingWellListMessage,
 } from '../constants/countdown.js';
+
+const FOUR_DAYS = 4 * 86_400;
+const wishingWellChannelName = (dates, timeZone, now) =>
+  nameWithDuration(dates, FOUR_DAYS, timeZone, now);
 
 const NY = 'America/New_York';
 // Thu Nov 12 2026 10:00 PM EST (spec §2's worked example).
@@ -45,12 +51,32 @@ describe('wishingWellChannelName', () => {
     );
   });
 
-  it('skips past dates and moves on at local midnight', () => {
-    const nov13 = new Date('2026-11-13T05:00:00Z'); // 00:00 EST Nov 13
+  it('counts down to the end while running, not to the next start', () => {
     const nov30 = 1796050800; // Mon Nov 30 2026 10:00 AM EST
+    // Nov 12 10 PM + 4 days ends Mon Nov 16 10 PM EST.
+    const nov13 = new Date('2026-11-13T05:00:00Z'); // 00:00 EST Nov 13
     assert.equal(
       wishingWellChannelName([NOV_12_10PM, nov30], NY, nov13),
-      '💎 Wishing Well: in 17 days',
+      '💎 Wishing Well: ends in 3 days',
+    );
+    const nov15 = new Date('2026-11-15T17:00:00Z');
+    assert.equal(
+      wishingWellChannelName([NOV_12_10PM, nov30], NY, nov15),
+      '💎 Wishing Well: ends in 1 day',
+    );
+    const nov16Evening = new Date('2026-11-17T02:59:00Z'); // 9:59 PM EST Nov 16
+    assert.equal(
+      wishingWellChannelName([NOV_12_10PM, nov30], NY, nov16Evening),
+      '💎 Wishing Well: ends today',
+    );
+  });
+
+  it('moves on to the next start once the running one ends', () => {
+    const nov30 = 1796050800;
+    const justAfterEnd = new Date('2026-11-17T03:01:00Z'); // 10:01 PM EST Nov 16
+    assert.equal(
+      wishingWellChannelName([NOV_12_10PM, nov30], NY, justAfterEnd),
+      '💎 Wishing Well: in 14 days',
     );
   });
 
@@ -58,6 +84,28 @@ describe('wishingWellChannelName', () => {
     const later = new Date('2027-01-01T12:00:00Z');
     assert.equal(wishingWellChannelName([NOV_12_10PM], NY, later), '💎 Wishing Well: TBA');
     assert.equal(wishingWellChannelName([], NY, later), '💎 Wishing Well: TBA');
+  });
+});
+
+describe('wishingWellListMessage', () => {
+  const nov30 = 1796050800;
+
+  it('keeps a running Wishing Well listed with its end time', () => {
+    const nov13 = new Date('2026-11-13T12:00:00Z');
+    const end = NOV_12_10PM + FOUR_DAYS;
+    assert.equal(
+      wishingWellListMessage([NOV_12_10PM, nov30], FOUR_DAYS, nov13),
+      [
+        '💎 Wishing Well Dates 💎',
+        `- Live now, ends <t:${end}:R> <t:${end}:F>`,
+        `- <t:${nov30}:R> <t:${nov30}:F>`,
+      ].join('\n'),
+    );
+  });
+
+  it('drops one once it has ended', () => {
+    const later = new Date('2027-01-01T12:00:00Z');
+    assert.equal(wishingWellListMessage([NOV_12_10PM], FOUR_DAYS, later), 'No Wishing Well dates announced yet.');
   });
 });
 
