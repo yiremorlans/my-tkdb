@@ -6,10 +6,12 @@ import { getMaintenanceMode } from './db/supabase.js';
 //
 // Cached briefly so this isn't a Supabase round trip on every single
 // interaction — every command and every button click would otherwise hit
-// the DB before doing anything else. 10s means a flag flipped in SQL takes
-// effect for everyone within 10 seconds, which is fine for an operator
-// manually toggling a switch and cheap for a check that runs this often.
-const CACHE_MS = 10 * 1000;
+// the DB before doing anything else. 60s means a flag flipped in SQL takes
+// effect for everyone within a minute, which is fine for an operator
+// manually toggling a switch. It's longer than the scheduler's 45s tick
+// (encounterScheduler.js TICK_INTERVAL_MS), so the tick reads it about every
+// other pass instead of every pass; at 10s it re-read on every tick.
+const CACHE_MS = 60 * 1000;
 let cached = { value: false, at: -Infinity };
 
 /**

@@ -1125,7 +1125,7 @@ Two things close that gap:
 
 | Function | Purpose |
 |---|---|
-| `getMissionGuilds()` | `guild_settings WHERE missions_enabled = true` — the scheduler's per-tick list |
+| `getSchedulerGuilds()` | unlocked `guild_settings` rows with encounters or missions on — the scheduler's per-tick list, shared with encounters |
 | `rollGuildMissionSlots(guildId, day, slots)` | write `mission_slots_day/today`, reset `mission_slots_fired` |
 | `markMissionSlotFired(guildId, index)` | append to `mission_slots_fired` |
 | `createMission({ guildId, channelId, type, house, riddleId, signaturesRequired, teaser, postExpiresAt })` | INSERT the `missions` row, returns it |

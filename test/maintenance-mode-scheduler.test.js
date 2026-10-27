@@ -90,3 +90,24 @@ describe('the scheduler tick under maintenance', () => {
     assert.equal(posts.length, 1, 'a spawn attempt runs normally once maintenance clears');
   });
 });
+
+// runTick reads guild_settings once and hands each pass only the guilds with
+// its own switch on (getSchedulerGuilds), so a missions-only server must
+// never get an encounter.
+describe('the shared guild read', () => {
+  it("doesn't spawn encounters in a guild with only missions on", async () => {
+    setMaintenance(false);
+    const { clearSpawnAttemptFence } = await import('../encounterScheduler.js');
+    clearSpawnAttemptFence();
+    Object.assign(fake.tables.guild_settings[0], {
+      enabled: false,
+      missions_enabled: true,
+      last_encounter_at: new Date(NOW.getTime() - 200 * 60 * 1000).toISOString(),
+    });
+    fake.tables.public_encounters = [];
+
+    await runTick(new Date(NOW.getTime() + 10 * 60 * 1000));
+
+    assert.equal(fake.tables.public_encounters.length, 0);
+  });
+});

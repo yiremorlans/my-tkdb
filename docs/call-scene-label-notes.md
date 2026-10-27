@@ -1,8 +1,13 @@
-# Call scene label notes: `new` winner lines
+# Call scene label notes: winner lines
 
-Working notes for writing call-scene buttons (`{ line, responses }` entries in
-`winnerLines`, docs/public-encounters.md §17.7). One pass over every
-character's Stranger (`new`) winner lines, 2026-10-06.
+Reference notes for call-scene buttons (`{ line, responses }` entries in
+`winnerLines`, docs/public-encounters.md §17.7). Winner lines aren't a
+separate pass: each tier's `winnerLines.<tier>` (plus Towa's
+`daytimeWinnerLines`) is reworked inside the **tier-pass** skill for that
+tier, with the same **voice-check** grounding and validation as the dialogue
+beats. The per-character sections below come from a one-time pass over every
+character's Stranger (`new`) winner lines on 2026-10-06. Treat them as a
+starting point for the label language, not the final word.
 
 For each character:
 
@@ -11,18 +16,18 @@ For each character:
   blind. All three labels have to be equally plausible, and the favorite
   must not stand out as the obviously "right" button.
 - **Label language** says what each slot should *do* for this character at
-  Stranger. It's grounded in the `characters.js` notes above
-  `affinityByResponse` and in the `new` beat labels already approved in their
-  dialogue file.
-- **Lines** marks each `new` winner line ✅ (leaves {user} an opening, so it
-  can take buttons), ➖ (weak opening, possible but not first choice) or ❌
-  (a finished moment, stays a plain string). `[scene]` is the line that
-  already has labels.
+  Stranger. It was drawn from the `characters.js` notes above
+  `affinityByResponse` and the `new` beat labels in their dialogue file.
+  Where it disagrees with the character's `<id>-responses-rule` memory or the
+  current reference file, those win.
+- **Lines** marks each `new` winner line ✅ (leaves {user} an opening), ➖
+  (weak opening) or ❌ (a finished moment). Every line has labels now, so
+  these only note how naturally a line invites a reply.
 
-Sources: `characters.js` notes (most are voiceline-verified; Haru is derived
-from its reference file only, and Benkei is partially verified) and the existing
-`new` labels. reference/<id>.md files should still be read per character before
-drafting, as the voice-check skill requires.
+Sources at the time: `characters.js` notes (most voiceline-verified; Haru
+derived from its reference file only, Benkei partially verified) and the
+then-current `new` labels. A tier pass re-grounds in reference/<id>.md first,
+as voice-check requires.
 
 ## Status (2026-10-06)
 

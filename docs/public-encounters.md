@@ -221,7 +221,7 @@ command that writes them, not before.
 
 **`runTick` sweeps expired encounters across all guilds, not just enabled ones.**
 §3 has the sweep inside the per-guild loop, but `/encounters disable` drops a
-guild out of `getEnabledGuilds()` immediately — so a guild disabled mid-encounter
+guild out of the scheduler's encounter guild list immediately — so a guild disabled mid-encounter
 would never finalize the in-flight row, leaving its post showing a countdown that
 had already run out and the row unresolved forever (and therefore never pruned).
 §4's "any in-flight encounter is left to finalize normally" only holds with the
@@ -997,7 +997,7 @@ No `system_state` table — per-guild cadence state lives in `guild_settings`.
 
 | Function | Purpose |
 |---|---|
-| `getEnabledGuilds()` | `SELECT * FROM guild_settings WHERE enabled = true` — the scheduler's per-tick list |
+| `getSchedulerGuilds()` | unlocked `guild_settings` rows with encounters or missions on — the scheduler's per-tick list, shared by both passes |
 | `getGuildSettings(guildId)` | one row, for the `/call` and `/encounters` handlers |
 | `upsertGuildChannel(guildId, channelId, userId, nextAt)` | `/encounters channel` — set channel, `enabled=true`, `next_encounter_at`, reset `post_failures` |
 | `setGuildEnabled(guildId, enabled)` | `/encounters disable` |

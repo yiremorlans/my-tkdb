@@ -158,9 +158,9 @@ Go to your Supabase Dashboard:
   Server can undo a manual disable with one command. **No bot command writes
   `locked`** — set it in SQL only
 - Enforced in three places: `handleEncountersAdmin` (every subcommand refuses),
-  `getEnabledGuilds` (the scheduler never sees the guild), and `handleCall` (a
+  `getSchedulerGuilds` (the scheduler never sees the guild), and `handleCall` (a
   guild locked mid-flight stops being answerable)
-- ⚠️ **Run this BEFORE deploying the app code.** `getEnabledGuilds` filters on
+- ⚠️ **Run this BEFORE deploying the app code.** `getSchedulerGuilds` filters on
   the column, so if it's missing that query errors and **no guild spawns
   anywhere** until the migration lands
 - Lock a guild:
@@ -238,7 +238,7 @@ Go to your Supabase Dashboard:
   `constants/missions.js` — deliberately not per-guild, so there are no override
   columns
 - RLS on, service role only
-- ⚠️ **Run this BEFORE deploying the app code.** `getMissionGuilds` and every
+- ⚠️ **Run this BEFORE deploying the app code.** `getSchedulerGuilds` and every
   mission handler filter on or call something added here
 - Copy and execute
 - Wait for success ✓

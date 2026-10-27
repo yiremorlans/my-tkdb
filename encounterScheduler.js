@@ -20,7 +20,7 @@ import { clearRiddleCooldowns } from './constants/missions.js';
 import { isSpawnDue, spawnEncounter, sweepExpiredEncounters } from './publicEncounters.js';
 import { runGuildMissionPass, sweepExpiredMissions } from './missions/posts.js';
 import { runCountdownPass } from './countdown.js';
-import { getActivePublicEncounter, getEnabledGuilds, getMissionGuilds } from './db/supabase.js';
+import { getActivePublicEncounter, getSchedulerGuilds } from './db/supabase.js';
 import { isMaintenanceModeActive } from './maintenance.js';
 
 // How often the loop looks for work. Must stay well under
@@ -88,8 +88,18 @@ export async function runTick(now = new Date()) {
   }
   loggedMaintenanceSkip = false;
 
-  await runEncounterPass(now);
-  await runMissionPass(now);
+  // One guild_settings read serves both passes, each filtering by its own
+  // switch. A failed read still lets both sweeps run; only the spawns and
+  // slot posts wait for the next tick.
+  let guilds = null;
+  try {
+    guilds = await getSchedulerGuilds();
+  } catch (err) {
+    console.error('[encounterScheduler] Could not read guild settings:', err.message);
+  }
+
+  await runEncounterPass(guilds?.filter((guild) => guild.enabled) ?? null, now);
+  await runMissionPass(guilds?.filter((guild) => guild.missions_enabled) ?? null, now);
 
   // Not gated on `enabled` or `missions_enabled`: countdowns run on their own
   // (docs/countdown.md §1). runCountdownPass throttles itself to one read per
@@ -111,7 +121,7 @@ export async function runTick(now = new Date()) {
  * for exactly the reason the encounter cadence is: nothing is held in memory,
  * and the first tick after boot re-derives everything from the row.
  */
-async function runMissionPass(now) {
+async function runMissionPass(guilds, now) {
   // Same reasoning as the encounter sweep: finalize every guild's expired
   // missions, not just the enabled ones, so an admin running `/missions
   // disable` mid-flight doesn't strand a request on the board forever.
@@ -121,13 +131,7 @@ async function runMissionPass(now) {
     console.error('[encounterScheduler] Mission sweep failed:', err.message);
   }
 
-  let guilds;
-  try {
-    guilds = await getMissionGuilds();
-  } catch (err) {
-    console.error('[encounterScheduler] Could not read mission guilds:', err.message);
-    return;
-  }
+  if (!guilds) return;
 
   if (guilds.length === 0) {
     clearRiddleCooldowns();
@@ -143,10 +147,10 @@ async function runMissionPass(now) {
   }
 }
 
-async function runEncounterPass(now) {
+async function runEncounterPass(guilds, now) {
   // Sweep every guild's expired encounters, not just the enabled ones. An
   // admin who runs `/encounters disable` while an encounter is in flight drops
-  // their guild out of getEnabledGuilds() immediately — if the sweep were
+  // their guild out of the encounter guild list immediately — if the sweep were
   // scoped to that list, the in-flight row would never be finalized, its post
   // would sit showing a countdown that already ran out, and the row would stay
   // unresolved forever (and so never be pruned). §4 of the spec says a
@@ -158,13 +162,7 @@ async function runEncounterPass(now) {
     console.error('[encounterScheduler] Sweep failed:', err.message);
   }
 
-  let guilds;
-  try {
-    guilds = await getEnabledGuilds();
-  } catch (err) {
-    console.error('[encounterScheduler] Could not read guild settings:', err.message);
-    return;
-  }
+  if (!guilds) return;
 
   if (guilds.length === 0) {
     // Nothing configured anywhere — one cheap query and out. Drop any cooldown

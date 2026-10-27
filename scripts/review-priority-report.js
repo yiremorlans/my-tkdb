@@ -8,6 +8,11 @@
  * Ranked by highest tier any player has reached, then players in that tier,
  * then top affinity.
  *
+ * Also counts each character's primary and secondary players: grouping rows
+ * by discord_user_id, a player's highest-affinity character is their primary
+ * and the next is their secondary (ties go to the more recent interaction).
+ * Only the counts are written, never Discord IDs.
+ *
  * Reads Supabase with the service role key, so run it with the bot's .env.
  *
  * Writes review-priority.json at the repo root (gitignored). If one is
@@ -41,7 +46,7 @@ async function fetchRelationships() {
   for (let from = 0; ; from += PAGE_SIZE) {
     const { data, error } = await supabase
       .from("character_relationships")
-      .select("character_id, affinity, last_interaction_at")
+      .select("discord_user_id, character_id, affinity, last_interaction_at")
       .range(from, from + PAGE_SIZE - 1);
     if (error) throw error;
     rows.push(...data);
@@ -59,6 +64,29 @@ function moodBeats(characterId, tier) {
   const pool = DIALOGUE[characterId]?.dialogue?.[tier] || [];
   if (Array.isArray(pool)) return countMoods(pool);
   return Math.max(0, ...Object.values(pool).map(countMoods));
+}
+
+// Per player, their top two characters by affinity (zero affinity doesn't count).
+function countMains(relationships) {
+  const byPlayer = new Map();
+  for (const r of relationships) {
+    if (r.affinity <= 0) continue;
+    if (!byPlayer.has(r.discord_user_id)) byPlayer.set(r.discord_user_id, []);
+    byPlayer.get(r.discord_user_id).push(r);
+  }
+  const primary = {};
+  const secondary = {};
+  for (const rows of byPlayer.values()) {
+    rows.sort(
+      (a, b) =>
+        b.affinity - a.affinity ||
+        new Date(b.last_interaction_at) - new Date(a.last_interaction_at),
+    );
+    const [first, second] = rows;
+    primary[first.character_id] = (primary[first.character_id] || 0) + 1;
+    if (second) secondary[second.character_id] = (secondary[second.character_id] || 0) + 1;
+  }
+  return { primary, secondary };
 }
 
 function buildRow(character, relationships, now) {
@@ -102,13 +130,16 @@ function printChanges(rows, prevRows) {
 
 const relationships = await fetchRelationships();
 const now = Date.now();
-const rows = CHARACTERS.map((character) =>
-  buildRow(
+const mains = countMains(relationships);
+const rows = CHARACTERS.map((character) => ({
+  ...buildRow(
     character,
     relationships.filter((r) => r.character_id === character.id),
     now,
   ),
-);
+  players_primary: mains.primary[character.id] || 0,
+  players_secondary: mains.secondary[character.id] || 0,
+}));
 rows.sort(
   (a, b) =>
     TIERS.indexOf(b.top_tier) - TIERS.indexOf(a.top_tier) ||

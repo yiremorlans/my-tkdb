@@ -714,30 +714,27 @@ export async function getCommandUsageStats(days = 30) {
  */
 
 /**
- * Every guild the scheduler should tick for. Called once per tick, so it stays
- * a single indexed read over a table with fewer rows than the bot has guilds.
+ * Every guild the encounter or mission pass should tick: encounters on
+ * (`enabled`) or missions on (`missions_enabled`). One read per tick serves
+ * both passes, which filter it by their own switch (encounterScheduler.js
+ * runTick). `locked` is the owner's kill switch (db/migrations/013) and
+ * outranks both admin switches: a locked guild is invisible here no matter
+ * what its admins do with `/encounters channel` or `/missions enable`.
+ *
+ * The switches are filtered here rather than in the query: the table has a
+ * row per configured server, so the unlocked rows are already a handful.
  */
-/**
- * Every guild the scheduler should tick. `locked` is the owner's kill switch
- * (db/migrations/013) and outranks `enabled`, which is the server admin's — a
- * locked guild is invisible here no matter what its admins do with
- * `/encounters channel`.
- */
-export async function getEnabledGuilds() {
+export async function getSchedulerGuilds() {
   const { data, error } = await withGatewayRetry(() =>
-    supabase
-      .from('guild_settings')
-      .select('*')
-      .eq('enabled', true)
-      .eq('locked', false),
+    supabase.from('guild_settings').select('*').eq('locked', false),
   );
 
   if (error) {
-    console.error('Error fetching enabled guilds:', error);
+    console.error('Error fetching scheduler guilds:', error);
     throw error;
   }
 
-  return data || [];
+  return (data || []).filter((guild) => guild.enabled || guild.missions_enabled);
 }
 
 /**
@@ -1665,28 +1662,6 @@ export async function listResumableBondScenes(userId) {
  * the Accept race, filing an errand, backing up a co-op — goes through an RPC
  * rather than a read-then-write; see docs/scheduled-missions.md §11.
  */
-
-/**
- * Every guild the mission pass should tick. `locked` is the owner's kill switch
- * and outranks the admin's `missions_enabled`, exactly as it does for
- * encounters — a locked guild goes quiet on both features at once.
- */
-export async function getMissionGuilds() {
-  const { data, error } = await withGatewayRetry(() =>
-    supabase
-      .from('guild_settings')
-      .select('*')
-      .eq('missions_enabled', true)
-      .eq('locked', false),
-  );
-
-  if (error) {
-    console.error('Error fetching mission guilds:', error);
-    throw error;
-  }
-
-  return data || [];
-}
 
 /**
  * `/missions enable` — point missions at a channel and turn them on. Clearing

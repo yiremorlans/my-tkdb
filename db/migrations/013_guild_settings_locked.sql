@@ -16,7 +16,7 @@
 -- Where it is enforced (three independent places, deliberately):
 --   1. handleEncountersAdmin — every /encounters subcommand refuses early, so
 --      a locked guild cannot reconfigure or re-enable itself.
---   2. getEnabledGuilds      — the scheduler never sees a locked guild, so even
+--   2. getSchedulerGuilds    — the scheduler never sees a locked guild, so even
 --      if `enabled` were flipped true by some path this file didn't anticipate,
 --      nothing spawns.
 --   3. handleCall            — a live encounter in a guild locked mid-flight
