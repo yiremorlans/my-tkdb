@@ -300,29 +300,28 @@ export default {
         },
       },
       {
-        line: "He is standing much too close for a first meeting, and entirely unbothered by that.",
-        approach: "Say you were exploring",
+        line: "You turn around and he's simply there, smiling, as though he has been standing behind you for some time.",
+        approach: "Admit you got a little lost",
         greeting:
           '"You mustn\'t wander Obscuary alone. It would be troublesome for me if you were to disappear."',
         responses: {
-          kind: ["Ask him to show you around", "Promise to be careful"],
-          playful: [
-            "Ask if personal space exists",
-            "Ask if he'd notice you gone",
-          ],
-          bold: ["Step closer instead of back", "Say you'll wander anyway"],
+          kind: ["Ask him to show you around", "Ask him to walk with you"],
+          playful: ["Ask how long he's been there", "Ask if he followed you"],
+          bold: ["Say you were looking for him", "Smile right back at him"],
           neutral: ["Hold your ground, say nothing", "Step back a pace"],
         },
       },
       {
-        line: '"The most powerful vampire? No, those are just rumors." He smiles as if it amuses him.',
+        line: "Everyone says Obscuary's captain is the most powerful vampire alive. The man himself is yawning into his sleeve.",
         approach: "Ask if the rumors are true",
-        greeting:
-          '"I have no interest in harming humans. After all, they die so quickly. They should enjoy their short lives while they can."',
+        greeting: '"Hm? The most powerful vampire? No, those are just rumors."',
         responses: {
-          kind: ["Say you believe him", "Say you'll enjoy yours, then"],
-          playful: ["Ask for a demonstration", "Ask how old he really is"],
-          bold: ["Call his bluff", "Say rumors start somewhere"],
+          kind: [
+            "Say you'd like to know him",
+            "Say rumors don't matter to you",
+          ],
+          playful: ["Ask how old he really is", "Ask who started the rumor"],
+          bold: ["Say you'll decide for yourself", "Ask him to prove it wrong"],
           neutral: ["Stay watchful", "Keep your thoughts to yourself"],
         },
       },
