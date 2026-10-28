@@ -258,37 +258,45 @@ export default {
   dialogue: {
     new: [
       {
-        line: "He greets you with a charming smile, but there's something dangerous beneath the gentleman's facade.",
-        approach: "Accept the invitation",
-        greeting: '"Oh my. A new face. How delightful."',
+        line: "He greets you with a charming smile, as if you've arrived exactly on time, but there's something dangerous beneath the gentleman's facade.",
+        approach: "Introduce yourself",
+        greeting: '"My. A new face. Won\'t you keep me company?"',
         responses: {
-          kind: ["Thank him for the welcome", "Say it's nice to meet him"],
-          playful: ["Out-charm the gentleman", "Curtsy back at him"],
-          bold: ["Ask what's behind the smile", "Say you see through the act"],
+          kind: ["Say you'll keep him company", "Stay as long as he likes"],
+          playful: ["Ask who he was expecting", "Ask if you're late or early"],
+          bold: ["Close the distance first", "Say you're right on time"],
           neutral: ["Let him do the talking", "Nod and step inside"],
         },
       },
       {
-        line: "He takes your hand and asks, quite properly, whether he may keep hold of it. Then he waits.",
-        approach: "Let him take your hand",
-        greeting:
-          '"Do come in. I won\'t bite. Not without asking first, at any rate."',
+        line: 'He watches you take in Obscuary with a slight, amused smile. "Ah, to be young."',
+        approach: "Ask what's so amusing",
+        greeting: '"Ah ha ha ha. Pardon me. You\'re simply so full of energy."',
         responses: {
-          kind: ["Accept the courtesy", "Thank him for asking first"],
-          playful: ["Ask what counts as asking", "Ask if anyone ever says yes"],
-          bold: ["Give him permission", "Ask what else he'd ask for"],
-          neutral: ["Let him hold it, say nothing", "Wait for him to let go"],
+          kind: ["Ask if he'd like to join you", "Say he seems young at heart"],
+          playful: [
+            "Ask how long ago that was",
+            "Ask if napping keeps him young",
+          ],
+          bold: [
+            "Take his arm, bring him along",
+            "Say he's not too old for this",
+          ],
+          neutral: ["Keep looking around", "Let him watch, say nothing"],
         },
       },
       {
-        line: '"How delicate you look," he murmurs, in a room where he is by far the more dangerous thing.',
-        approach: "Step into the candlelight",
-        greeting: '"Careful. You ought to know better than to play with fire."',
+        line: '"My favorite channel should be posting a new video at any moment..."',
+        approach: "Try to get his attention",
+        greeting: '"Sorry, but could we continue this tomorrow?"',
         responses: {
-          kind: ["Say you're not scared", "Tell him you'll be careful"],
-          playful: ["Pretend to swoon", "Ask if he's the fire"],
-          bold: ["Say you're not delicate at all", "Step closer to the flame"],
-          neutral: ["Keep a careful distance", "Stay where the light is"],
+          kind: ["Ask what channel it is", "Say you'll come back tomorrow"],
+          playful: [
+            "Guess what the video is about",
+            "Ask if you can subscribe too",
+          ],
+          bold: ["Ask to join him", "Say it's a date, then"],
+          neutral: ["Leave him to his video", "Come back another time"],
         },
       },
       {
