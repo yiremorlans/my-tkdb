@@ -242,15 +242,18 @@ export default {
   dialogue: {
     new: [
       {
-        line: 'He greets you with a flourish, "Why, hello there, my dear. Suppose we kick off another swanky day here?"',
+        line: 'He greets you with a sweeping bow. "Why, hello there, my dear. Suppose we kick off another swanky day here?"',
         approach: "Return his bow",
         greeting:
-          '"Splendid manners. I do so enjoy a visitor who bows back, my dear."',
+          "\"Copacetic! There's an artist's sensibility in you, my dear. I can always tell.\"",
         responses: {
-          kind: ["Thank him for the welcome", "Say it's lovely to meet him"],
-          playful: ["Appreciate his warmth", "Bow even lower, grandly"],
-          bold: ["Be sincere and true", "Ask what makes it swanky"],
-          neutral: ["Bow back without a word", "Nod and smile"],
+          kind: [
+            "Say you'd love to stay a while",
+            "Say it's lovely to meet him",
+          ],
+          playful: ["Say it's the bee's knees", "Ask if it comes with a song"],
+          bold: ["Tell him to lead the way", "Say you'll pick the first stop"],
+          neutral: ["Say hello back", "Nod and smile"],
         },
       },
       {
@@ -259,48 +262,55 @@ export default {
         greeting:
           '"...And they lived happily ever after. Ah! An audience. Did you catch the ending, my dear?"',
         responses: {
-          kind: ["Honor his gentle spirit", "Say you caught the ending"],
-          playful: ["Ask who he was talking to", "Ask for the beginning too"],
-          bold: ["Say the unpoetic truth", "Admit you only heard the end"],
-          neutral: ["Let the verse finish", "Listen, say nothing"],
+          kind: ["Say it was a lovely ending", "Ask to hear it from the top"],
+          playful: ["Call for an encore", "Say it needed more dragons"],
+          bold: [
+            "Say you came for the next one",
+            "Admit you only heard the end",
+          ],
+          neutral: ["Nod along", "Listen, say nothing"],
         },
       },
       {
-        line: '"Seventeen syllables," he murmurs, "and you\'ve just handed me the last five, my dear."',
-        approach: "Give him the last syllables",
+        line: "He's been reciting to the open air. Catching your look, he brightens. \"You want to know the meaning of my words? I see. I'll have to give you a lecture on romanticism.\"",
+        approach: "Say you're all ears",
         greeting:
-          "\"Why, that's the bee's knees! Half this verse is yours now, my dear. I'll have to give you credit.\"",
+          '"A willing pupil! Splendid. Lesson one, my dear: nothing is ever only what it seems. ...Lesson two is still in drafts."',
         responses: {
-          kind: ["Praise the verse honestly", "Say the credit is all his"],
-          playful: ["Rhyme back at him", "Demand top billing"],
-          bold: ["Finish the verse yourself", "Ask to hear the whole thing"],
-          neutral: ["Listen to the wind with him", "Let him keep the verse"],
+          kind: [
+            "Say you'd attend every lecture",
+            "Say his words sound lovely",
+          ],
+          playful: ["Call him Professor Kotodama", "Ask if there'll be a quiz"],
+          bold: ["Ask what romanticism means", "Offer a lesson of your own"],
+          neutral: ["Listen to the recital", "Let him explain"],
         },
       },
       {
         line: '"Well, if it isn\'t a new face. Has this inspired man of the quill left you speechless? ...No? A pity. It happens to some."',
-        approach: "Recover your words",
-        greeting: '"Something brought you here. Let\'s not rush to name what."',
+        approach: "Introduce yourself",
+        greeting:
+          '"Charmed, truly! Zenji Kotodama. Do commit it to memory, my dear. Someday it\'ll be on every bookshelf."',
         responses: {
-          kind: ["Find your words again", "Say it's nice to meet him"],
+          kind: ["Say it's nice to meet him", "Say you'll remember him"],
           playful: [
-            "Refuse to explain why you came",
             "Pretend to be speechless",
+            "Ask for a signed first edition",
           ],
-          bold: ["Ask what he's not writing", "Say you came on purpose"],
-          neutral: ["Respect his mystery", "Let the question sit"],
+          bold: ["Say you'll be first in line", "Say you'll hold him to that"],
+          neutral: ["Nod hello", "Let the question sit"],
         },
       },
       {
         line: '"Oh, have you come to see me? This is troubling." He smiles. "I\'m afraid I\'m out of autographs."',
-        approach: "Ask for an autograph anyway",
+        approach: "Say you're his biggest fan",
         greeting:
-          '"Well, since you asked so nicely... Zenji Kotodama, signed in the air, with a flourish. Treasure it, my dear."',
+          '"A fan with conviction! How sensational. Alas, the muse has me rationed. I\'ll put your name at the top of the list, my dear."',
         responses: {
-          kind: ["Say you came for him", "Thank him for the autograph"],
-          playful: ["Attempt a terrible haiku", "Ask him to sign it twice"],
-          bold: ["Demand a real one anyway", "Ask for a dedication too"],
-          neutral: ["Watch the flourish quietly", "Accept it with a nod"],
+          kind: ["Say his smile will do", "Say you came for the company"],
+          playful: ["Ask to be on the waitlist", "Ask for an IOU"],
+          bold: ["Ask for one in verse", "Say you'll wait for restock"],
+          neutral: ["Say you'll come back later", "Smile and nod"],
         },
       },
     ],
