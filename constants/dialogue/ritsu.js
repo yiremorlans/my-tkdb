@@ -237,44 +237,40 @@ export default {
   dialogue: {
     new: [
       {
-        line: 'He looks up and assesses you in a single pass. "You will do. I require a partner for this investigation, and you appear capable of following instructions."',
+        line: 'He looks up and assesses you in a single pass. "You will do. This investigation requires an inspector, and you appear capable of following instructions."',
         approach: "Hear the proposal",
         greeting:
-          '"The terms are simple. You keep up, and I do the talking. State your position on that."',
+          '"The terms are simple. You investigate, and I do the talking. State your position on that."',
         responses: {
-          kind: ["Agree to his terms", "Say you'll try to keep up"],
-          playful: ["Ask who does the thinking", "Counter with your own terms"],
-          bold: ["Say you'll do some talking", "Name your price up front"],
-          neutral: [
-            "Ask for the terms in writing",
-            "Ask how long the job runs",
-          ],
+          kind: ["Agree to his terms", "Say you'll follow his lead"],
+          playful: ["Ask him to put it in writing", "Ask what your cut is"],
+          bold: ["Say you'd have picked him too", "Name your price up front"],
+          neutral: ["Ask what the case is", "Ask how long the job runs"],
         },
       },
       {
-        line: "He finishes a paragraph, caps the pen, and gives you a précis of his day before you ask.",
-        approach: "Take the briefing",
-        greeting:
-          '"That was the summary. The full version runs eleven minutes. You may interrupt at the four-minute mark."',
+        line: '"Are you aware of the responsibility your position as inspector entails? I suggest you tidy your appearance and wipe that vacant look from your face."',
+        approach: "Fix your appearance",
+        greeting: '"Better. Marginally. We will work on the rest."',
         responses: {
-          kind: ["Ask for the full version", "Say the summary helped"],
-          playful: ["Interrupt at minute three", "Start a timer of your own"],
-          bold: ["Interrupt him right now", "Say the summary was plenty"],
-          neutral: [
-            "Wait for the four-minute mark",
-            "Ask what happens at four",
+          kind: ["Say you won't let him down", "Ask what he'd fix first"],
+          playful: ["Ask what vacant looks like", "Make your most alert face"],
+          bold: [
+            "Book a follow-up inspection",
+            "Say you'll prove it on the job",
           ],
+          neutral: ["Hear him out", "Wait for the rest"],
         },
       },
       {
         line: '"What business do you have with me? Please keep in mind that I charge 5500 yen per half hour for consultations, tax inclusive."',
         approach: "Take the consultation",
         greeting:
-          '"Good. State your business. The clock started when you sat down."',
+          '"Good. The clock is running, so I suggest you begin with the facts."',
         responses: {
-          kind: ["Pay the fee without complaint", "Say the rate seems fair"],
+          kind: ["Pay the fee without complaint", "Say he's worth the rate"],
           playful: ["Object on principle", "Ask for a student discount"],
-          bold: ["Refuse to pay the fee", "Negotiate the rate down"],
+          bold: ["Ask for a retainer rate", "Negotiate the rate down"],
           neutral: ["Keep it under half an hour", "Accept the terms as given"],
         },
       },
@@ -284,13 +280,13 @@ export default {
         greeting:
           '"Before you commit to anything in this house, read it. All of it. I\'ll wait."',
         responses: {
-          kind: ["Ask where to start", "Take the reading seriously"],
+          kind: ["Read every page he hands you", "Say you're glad he checks"],
           playful: [
-            "Skim it and bluff your way",
-            "Ask him to summarize instead",
+            "Ask for the annotated copy",
+            "Ask if there's a quiz after",
           ],
-          bold: ["Sign without reading a word", "Say you trust the house"],
-          neutral: ["Read before you answer", "Take your time with the pages"],
+          bold: ["Read them twice, then sign", "Ask him to walk you through"],
+          neutral: ["Ask where to start", "Take your time with the pages"],
         },
       },
       {
@@ -299,13 +295,13 @@ export default {
         greeting:
           '"Keep up, please. I am on a tight schedule today, and I will not be repeating the second clause."',
         responses: {
-          kind: ["Say you'll catch up", "Ask for the gist instead"],
+          kind: ["Say you won't waste his time", "Say you'll catch up"],
           playful: [
-            "Ask him to repeat it anyway",
-            "Race him to the next clause",
+            "Ask for the transcript later",
+            "Ask if he bills by the word",
           ],
-          bold: ["Say the clause was the problem", "Tell him to slow down"],
-          neutral: ["Ask about the second clause", "Sum up what you caught"],
+          bold: ["Repeat his last point back", "Say you caught every word"],
+          neutral: ["Ask him what the case is", "Sum up what you caught"],
         },
       },
     ],
