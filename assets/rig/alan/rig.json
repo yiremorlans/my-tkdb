@@ -2748,8 +2748,8 @@
             "fist": {
               "image": "roomwear/parts/p156.png",
               "pivot": [
-                0.3525,
-                0.1087
+                0.3348,
+                0.1076
               ],
               "scale": 0.6732
             },
@@ -2814,7 +2814,7 @@
             "fist": {
               "image": "roomwear/parts/p156.png",
               "pivot": [
-                0.3523,
+                0.3346,
                 0.1087
               ],
               "scale": 0.6732,
