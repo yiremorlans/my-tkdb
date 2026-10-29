@@ -28,7 +28,8 @@
 //    layer; hands swap poses). Sprite pixels no part covers go to the
 //    nearest covered pixel's group, within `reach` px (default 8).
 // 3. Each group's pixels, grown by `dilate` px under anything drawn above
-//    it so motion opens no gaps, are cut from the sprite into
+//    it so motion opens no gaps (with `dilateConnected`, never across a
+//    transparent gap in the sprite), are cut from the sprite into
 //    skin/<id>.png and attached to the group's bone just above its parts.
 
 import fs from "node:fs";
@@ -188,7 +189,33 @@ async function main() {
     for (let i = 0; i < W * H; i++) if (owner[i] === g) mask[i] = 1;
     // grow under higher layers only
     const grown = mask.slice();
-    for (let y = 0; y < H; y++) {
+    const growable = (j) => !grown[j] && ownerZ(j) > groupZ[g] && !noGrow.has(ownerPart[j]);
+    if (cfg.dilateConnected) {
+      // Step by step through opaque sprite pixels, so a narrow gap in the
+      // sprite (arm against body) stops the growth instead of being jumped.
+      let frontier = [];
+      for (let i = 0; i < W * H; i++) if (mask[i]) frontier.push(i);
+      for (let step = 0; step < r && frontier.length; step++) {
+        const next = [];
+        for (const i of frontier) {
+          const x = i % W;
+          const y = (i - x) / W;
+          for (let dy = -1; dy <= 1; dy++) {
+            for (let dx = -1; dx <= 1; dx++) {
+              const nx = x + dx;
+              const ny = y + dy;
+              if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+              const j = ny * W + nx;
+              if (spriteA(j) < SOLID_ALPHA || !growable(j)) continue;
+              grown[j] = 1;
+              next.push(j);
+            }
+          }
+        }
+        frontier = next;
+      }
+    }
+    for (let y = 0; !cfg.dilateConnected && y < H; y++) {
       for (let x = 0; x < W; x++) {
         const i = y * W + x;
         if (!mask[i]) continue;

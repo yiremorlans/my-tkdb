@@ -1,0 +1,747 @@
+{
+  "note": "Ren roomwear. Body in sprite px (registered reference); head shared from academy.",
+  "registerHead": {
+    "source": "source/ren_roomwear.png",
+    "box": [
+      291,
+      71,
+      472,
+      262
+    ],
+    "blend": [
+      262,
+      285
+    ]
+  },
+  "scales": {
+    "band": 0.01,
+    "step": 0.01
+  },
+  "minVisible": 0,
+  "blur": 0.6,
+  "targetBlur": 0.6,
+  "coverShared": true,
+  "rotations": [
+    -14,
+    14,
+    2
+  ],
+  "parts": [
+    {
+      "id": "hand_r",
+      "hand": true,
+      "candidates": [
+        "p146"
+      ],
+      "center": [
+        249,
+        722
+      ],
+      "radius": 1,
+      "scales": [
+        0.66,
+        0.68,
+        0.7,
+        0.72
+      ],
+      "flips": [
+        0
+      ]
+    },
+    {
+      "id": "hand_l",
+      "hand": true,
+      "candidates": [
+        "p146"
+      ],
+      "center": [
+        519,
+        722
+      ],
+      "radius": 1,
+      "scales": [
+        0.66,
+        0.68,
+        0.7,
+        0.72
+      ],
+      "flips": [
+        1
+      ]
+    },
+    {
+      "id": "cuff_r",
+      "candidates": [
+        "p130"
+      ],
+      "center": [
+        247,
+        690
+      ],
+      "radius": 20,
+      "scales": [
+        0.65,
+        0.66,
+        0.67
+      ],
+      "parent": "forearm_r",
+      "z": 217,
+      "flips": [
+        0,
+        1
+      ],
+      "rotate": [
+        -8,
+        -4,
+        0
+      ]
+    },
+    {
+      "id": "cuff_l",
+      "candidates": [
+        "p130"
+      ],
+      "center": [
+        521,
+        690
+      ],
+      "radius": 20,
+      "scales": [
+        0.65,
+        0.66,
+        0.67
+      ],
+      "parent": "forearm_l",
+      "z": 217,
+      "flips": [
+        0,
+        1
+      ],
+      "rotate": [
+        0,
+        4,
+        8
+      ]
+    },
+    {
+      "id": "sleeve_lower_r",
+      "candidates": [
+        "p129"
+      ],
+      "center": [
+        248,
+        590
+      ],
+      "radius": 24,
+      "scales": [
+        0.65,
+        0.66,
+        0.67
+      ],
+      "parent": "forearm_r",
+      "z": 216,
+      "flips": [
+        0,
+        1
+      ],
+      "rotate": [
+        -6,
+        -4,
+        -2,
+        0
+      ]
+    },
+    {
+      "id": "sleeve_lower_l",
+      "candidates": [
+        "p129"
+      ],
+      "center": [
+        520,
+        590
+      ],
+      "radius": 24,
+      "scales": [
+        0.65,
+        0.66,
+        0.67
+      ],
+      "parent": "forearm_l",
+      "z": 216,
+      "flips": [
+        0,
+        1
+      ],
+      "rotate": [
+        0,
+        2,
+        4,
+        6
+      ]
+    },
+    {
+      "id": "sleeve_upper_r",
+      "candidates": [
+        "p126",
+        "p128"
+      ],
+      "center": [
+        245,
+        420
+      ],
+      "radius": 24,
+      "scales": [
+        0.64,
+        0.65,
+        0.66,
+        0.67
+      ],
+      "parent": "upper_arm_r",
+      "z": 218,
+      "flips": [
+        0,
+        1
+      ],
+      "rotate": [
+        -4,
+        -2,
+        0,
+        2,
+        4,
+        6,
+        8
+      ],
+      "override": {
+        "center": [
+          269,
+          452
+        ],
+        "scale": [
+          0.66,
+          0.72
+        ],
+        "flipX": false,
+        "rotation": -2
+      }
+    },
+    {
+      "id": "sleeve_upper_l",
+      "candidates": [
+        "p128",
+        "p126"
+      ],
+      "center": [
+        523,
+        420
+      ],
+      "radius": 24,
+      "scales": [
+        0.64,
+        0.65,
+        0.66,
+        0.67
+      ],
+      "parent": "upper_arm_l",
+      "z": 218,
+      "flips": [
+        0,
+        1
+      ],
+      "rotate": [
+        -8,
+        -6,
+        -4,
+        -2,
+        0,
+        2,
+        4
+      ],
+      "override": {
+        "center": [
+          499,
+          452
+        ],
+        "scale": [
+          0.66,
+          0.72
+        ],
+        "flipX": true,
+        "rotation": 2
+      }
+    },
+    {
+      "id": "string_r",
+      "candidates": [
+        "p121",
+        "p122"
+      ],
+      "center": [
+        377,
+        745
+      ],
+      "radius": 14,
+      "scales": [
+        0.61,
+        0.62,
+        0.63
+      ],
+      "parent": "hips",
+      "z": 125,
+      "flips": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "string_l",
+      "candidates": [
+        "p122",
+        "p121"
+      ],
+      "center": [
+        391,
+        745
+      ],
+      "radius": 14,
+      "scales": [
+        0.61,
+        0.62,
+        0.63
+      ],
+      "parent": "hips",
+      "z": 124,
+      "flips": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "zip_pull",
+      "candidates": [
+        "p064"
+      ],
+      "center": [
+        427,
+        697
+      ],
+      "radius": 10,
+      "scales": [
+        0.58,
+        0.59,
+        0.6,
+        0.61,
+        0.62,
+        0.63,
+        0.64,
+        0.65,
+        0.66,
+        0.67,
+        0.68
+      ],
+      "parent": "torso",
+      "z": 212
+    },
+    {
+      "id": "hood_r",
+      "candidates": [
+        "p087",
+        "p106"
+      ],
+      "center": [
+        305,
+        350
+      ],
+      "radius": 24,
+      "scales": [
+        0.66,
+        0.67,
+        0.68,
+        0.69,
+        0.7,
+        0.71
+      ],
+      "parent": "torso",
+      "z": 211,
+      "flips": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "hood_l",
+      "candidates": [
+        "p106",
+        "p087"
+      ],
+      "center": [
+        462,
+        350
+      ],
+      "radius": 24,
+      "scales": [
+        0.66,
+        0.67,
+        0.68,
+        0.69,
+        0.7,
+        0.71
+      ],
+      "parent": "torso",
+      "z": 210.5,
+      "flips": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "front_r",
+      "candidates": [
+        "p108",
+        "p109"
+      ],
+      "center": [
+        310,
+        545
+      ],
+      "radius": 24,
+      "scales": [
+        0.66,
+        0.67,
+        0.68,
+        0.69,
+        0.7,
+        0.71
+      ],
+      "parent": "torso",
+      "z": 210,
+      "flips": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "front_l",
+      "candidates": [
+        "p109",
+        "p108"
+      ],
+      "center": [
+        458,
+        545
+      ],
+      "radius": 24,
+      "scales": [
+        0.66,
+        0.67,
+        0.68,
+        0.69,
+        0.7,
+        0.71
+      ],
+      "parent": "torso",
+      "z": 209.5,
+      "flips": [
+        0,
+        1
+      ]
+    },
+    {
+      "id": "tee",
+      "candidates": [
+        "p013"
+      ],
+      "center": [
+        383,
+        495
+      ],
+      "radius": 24,
+      "scales": [
+        0.66,
+        0.67,
+        0.68,
+        0.69,
+        0.7,
+        0.71
+      ],
+      "parent": "torso",
+      "z": 200
+    },
+    {
+      "id": "chest_skin",
+      "candidates": [
+        "p012"
+      ],
+      "center": [
+        383,
+        305
+      ],
+      "radius": 16,
+      "scales": [
+        0.66,
+        0.67,
+        0.68,
+        0.69,
+        0.7,
+        0.71
+      ],
+      "parent": "torso",
+      "z": 195,
+      "clip": -1
+    },
+    {
+      "id": "neck_skin",
+      "candidates": [
+        "p007"
+      ],
+      "center": [
+        383,
+        285
+      ],
+      "radius": 14,
+      "scales": [
+        0.6,
+        0.62,
+        0.64,
+        0.66,
+        0.68,
+        0.7,
+        0.72,
+        0.74,
+        0.76
+      ],
+      "parent": "torso",
+      "z": 190,
+      "flips": [
+        0
+      ],
+      "clip": -1
+    },
+    {
+      "id": "hood_back",
+      "candidates": [
+        "p058"
+      ],
+      "center": [
+        383,
+        300
+      ],
+      "radius": 20,
+      "scales": [
+        0.66,
+        0.67,
+        0.68,
+        0.69,
+        0.7,
+        0.71
+      ],
+      "parent": "torso",
+      "z": 185,
+      "clip": 0
+    },
+    {
+      "id": "pants_top",
+      "candidates": [
+        "p127"
+      ],
+      "center": [
+        383,
+        760
+      ],
+      "radius": 24,
+      "scales": [
+        0.6,
+        0.61,
+        0.62,
+        0.63,
+        0.64,
+        0.65,
+        0.66,
+        0.67,
+        0.68,
+        0.69,
+        0.7,
+        0.71,
+        0.72
+      ],
+      "parent": "hips",
+      "z": 105,
+      "clip": 0
+    },
+    {
+      "id": "foot_r",
+      "candidates": [
+        "p134",
+        "p143"
+      ],
+      "center": [
+        290,
+        1320
+      ],
+      "radius": 30,
+      "scales": [
+        0.65,
+        0.66,
+        0.67
+      ],
+      "parent": "hips",
+      "z": 120
+    },
+    {
+      "id": "foot_l",
+      "candidates": [
+        "p143",
+        "p134"
+      ],
+      "center": [
+        478,
+        1320
+      ],
+      "radius": 30,
+      "scales": [
+        0.65,
+        0.66,
+        0.67
+      ],
+      "parent": "hips",
+      "z": 121
+    },
+    {
+      "id": "leg_r",
+      "candidates": [
+        "p117",
+        "p125"
+      ],
+      "center": [
+        325,
+        960
+      ],
+      "radius": 24,
+      "scales": [
+        0.6,
+        0.61,
+        0.62,
+        0.63,
+        0.64,
+        0.65,
+        0.66,
+        0.67,
+        0.68,
+        0.69,
+        0.7,
+        0.71,
+        0.72
+      ],
+      "parent": "hips",
+      "z": 100
+    },
+    {
+      "id": "leg_l",
+      "candidates": [
+        "p125",
+        "p117"
+      ],
+      "center": [
+        445,
+        960
+      ],
+      "radius": 24,
+      "scales": [
+        0.6,
+        0.61,
+        0.62,
+        0.63,
+        0.64,
+        0.65,
+        0.66,
+        0.67,
+        0.68,
+        0.69,
+        0.7,
+        0.71,
+        0.72
+      ],
+      "parent": "hips",
+      "z": 101
+    }
+  ],
+  "bones": {
+    "shoulder_r": {
+      "at": [
+        258,
+        340
+      ]
+    },
+    "shoulder_l": {
+      "at": [
+        510,
+        340
+      ]
+    },
+    "forearm_r": {
+      "at": [
+        252,
+        520
+      ]
+    },
+    "forearm_l": {
+      "at": [
+        516,
+        520
+      ]
+    }
+  },
+  "hands": {
+    "pivot": [
+      0.5,
+      0.05
+    ],
+    "z": 212.5,
+    "limits": [
+      -35,
+      35
+    ],
+    "default": "relaxed",
+    "poses": {
+      "relaxed": "p146",
+      "hang": "p137",
+      "open": "p139",
+      "point": "p141",
+      "palm": "p144",
+      "cup": "p145",
+      "pinch": "p148",
+      "spread": "p147"
+    },
+    "sides": {
+      "r": {
+        "fit": "hand_r",
+        "parent": "forearm_r"
+      },
+      "l": {
+        "fit": "hand_l",
+        "parent": "forearm_l"
+      }
+    }
+  },
+  "scale": 0.69,
+  "peel": false,
+  "hotspots": {
+    "chest": {
+      "part": "tee",
+      "rect": [
+        330,
+        320,
+        440,
+        450
+      ]
+    },
+    "hips": {
+      "part": "pants_top",
+      "rect": [
+        305,
+        700,
+        465,
+        800
+      ]
+    }
+  }
+}

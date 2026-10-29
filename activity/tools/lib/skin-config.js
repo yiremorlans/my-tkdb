@@ -3,7 +3,8 @@
 // lists what differs.
 //
 // rig.json top-level `spriteSkin` is shared by every outfit: `dilate`,
-// `reach` (how far, in px, an uncovered sprite pixel looks for a group;
+// `dilateConnected` (growth stops at the sprite's transparent gaps instead
+// of jumping them; default false), `reach` (how far, in px, an uncovered sprite pixel looks for a group;
 // default 8), `skip` (subtrees that keep their own art), `noGrowUnder`
 // (parts no skin grows under: hands tucked under a cuff, whose pose swaps
 // would leave the sprite's wrist behind), `restHands` (each hand's default
@@ -68,7 +69,7 @@ export function boneGroups(flat, skip = [], overrides = {}) {
   return groups;
 }
 
-/** The resolved spriteSkin config ({ dilate, reach, skip, noGrowUnder, restHands, groups, underlays, shades }) for one outfit. */
+/** The resolved spriteSkin config ({ dilate, dilateConnected, reach, skip, noGrowUnder, restHands, groups, underlays, shades }) for one outfit. */
 export function skinConfig(source, outfitName = source.defaultOutfit) {
   const own = (source.outfits ? source.outfits[outfitName]?.spriteSkin : source.spriteSkin) ?? {};
   if (Array.isArray(own.groups)) return own;
@@ -77,6 +78,7 @@ export function skinConfig(source, outfitName = source.defaultOutfit) {
   const skip = own.skip ?? shared.skip ?? [];
   return {
     dilate: own.dilate ?? shared.dilate ?? 3,
+    dilateConnected: own.dilateConnected ?? shared.dilateConnected ?? false,
     reach: own.reach ?? shared.reach ?? 8,
     skip,
     noGrowUnder: own.noGrowUnder ?? shared.noGrowUnder ?? [],
