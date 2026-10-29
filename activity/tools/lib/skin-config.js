@@ -3,7 +3,8 @@
 // lists what differs.
 //
 // rig.json top-level `spriteSkin` is shared by every outfit: `dilate`,
-// `skip` (subtrees that keep their own art), and the neck fixes
+// `reach` (how far, in px, an uncovered sprite pixel looks for a group;
+// default 8), `skip` (subtrees that keep their own art), and the neck fixes
 // (`underlays`, `shades`). An outfit's `spriteSkin` holds overrides only:
 //
 //   "spriteSkin": {
@@ -64,7 +65,7 @@ export function boneGroups(flat, skip = [], overrides = {}) {
   return groups;
 }
 
-/** The resolved spriteSkin config ({ dilate, skip, groups, underlays, shades }) for one outfit. */
+/** The resolved spriteSkin config ({ dilate, reach, skip, groups, underlays, shades }) for one outfit. */
 export function skinConfig(source, outfitName = source.defaultOutfit) {
   const own = (source.outfits ? source.outfits[outfitName]?.spriteSkin : source.spriteSkin) ?? {};
   if (Array.isArray(own.groups)) return own;
@@ -73,6 +74,7 @@ export function skinConfig(source, outfitName = source.defaultOutfit) {
   const skip = own.skip ?? shared.skip ?? [];
   return {
     dilate: own.dilate ?? shared.dilate ?? 3,
+    reach: own.reach ?? shared.reach ?? 8,
     skip,
     groups: boneGroups({ ...flat, parts: flat.parts.filter((p) => !isSkin(p.id)) }, skip, own.groups ?? {}),
     underlays: mergeById(shared.underlays, own.underlays),

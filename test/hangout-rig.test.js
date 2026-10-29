@@ -453,3 +453,13 @@ test('Alan places every touch spot on every outfit', () => {
     for (const spot of Object.keys(TOUCH_SPOTS)) assert.ok(placed.includes(spot), `${outfit}: ${spot}`);
   }
 });
+
+test('head sway is shared: a rig may switch it off but not set its own', async () => {
+  const { Motion, HEAD_SWAY } = await import('../activity/src/rig/motion.js');
+  const rig = JSON.parse(fs.readFileSync('assets/rig/yuri/rig.json', 'utf8'));
+  assert.doesNotThrow(() => validateRig(rig));
+  assert.throws(() => validateRig({ ...rig, motion: { ...rig.motion, sway: { amount: 3 } } }), /head sway is shared/);
+  assert.doesNotThrow(() => validateRig({ ...rig, motion: { ...rig.motion, sway: { enabled: false } } }));
+  assert.deepStrictEqual(HEAD_SWAY, { speed: 0.08, amount: 0.8 });
+  assert.ok(new Motion(rig).enabled.sway);
+});

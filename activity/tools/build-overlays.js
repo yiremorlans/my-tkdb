@@ -8,13 +8,15 @@
 // <portrait>.png, keeps only the changed pixels (grown and feathered a
 // little so the patch blends into the atlas face), crops to them, and writes
 // assets/rig/<character>/overlays/<mood>.png. The crop goes back into
-// rig.json as the mood's `rect`. Atlas moods are never touched: atlas parts
+// rig.json as the mood's `rect`. `within` limits a mood to a box. A mood with "soft": true is a difference
+// matte instead (buildSoftOverlay), for gradients like a blush. Atlas moods are never touched: atlas parts
 // come first, overlays only fill gaps.
 
 import fs from "node:fs";
 import path from "node:path";
 
 import { readPng, writePng } from "./lib/png.js";
+import { findAffineECC, gray, remapHead } from "./register-head.js";
 
 // A pixel counts as changed when any channel moves more than this.
 const DEFAULT_THRESHOLD = 20;
@@ -95,6 +97,105 @@ export function buildOverlay(base, expr, threshold = DEFAULT_THRESHOLD) {
   return { rect: [x0, y0, w, h], buf, changed };
 }
 
+// Below this channel change a pixel counts as unchanged in a soft overlay
+// (compression noise), and below this alpha it's dropped.
+const SOFT_NOISE = 3;
+const SOFT_MIN_ALPHA = 0.02;
+// At or above this alpha a pixel is replaced outright (alpha 1, the
+// expression's own color): strokes that appear or vanish (an eye closing)
+// would otherwise keep a faint trace of what was under them.
+const SOFT_SOLID_ALPHA = 0.5;
+
+/**
+ * A soft overlay (mood `"soft": true`): a difference matte. Each pixel gets
+ * the least alpha, and the color, that turn the default portrait into the
+ * expression exactly when drawn over it, so gradients (a blush) keep their
+ * falloff instead of ending at a threshold. Returns { rect, buf, changed }
+ * or null.
+ */
+export function buildSoftOverlay(base, expr) {
+  if (base.width !== expr.width || base.height !== expr.height) {
+    throw new Error("expression and default sizes differ");
+  }
+  const { width, height } = base;
+  const alpha = new Float32Array(width * height);
+  const color = new Float32Array(width * height * 3);
+  let changed = 0;
+  for (let i = 0; i < width * height; i++) {
+    let a = 0;
+    let moved = false;
+    for (let c = 0; c < 3; c++) {
+      const b = base.data[i * 4 + c];
+      const e = expr.data[i * 4 + c];
+      if (Math.abs(e - b) > SOFT_NOISE) moved = true;
+      // the least alpha that reaches e from b with a color inside 0..255
+      a = Math.max(a, e > b ? (e - b) / (255 - b || 1) : e < b ? (b - e) / (b || 1) : 0);
+    }
+    if (!moved || a < SOFT_MIN_ALPHA || !expr.data[i * 4 + 3]) continue;
+    a = a >= SOFT_SOLID_ALPHA ? 1 : a;
+    alpha[i] = a;
+    changed++;
+    for (let c = 0; c < 3; c++) {
+      const b = base.data[i * 4 + c];
+      color[i * 3 + c] = b + (expr.data[i * 4 + c] - b) / a;
+    }
+  }
+  if (!changed) return null;
+  let x0 = width, y0 = height, x1 = -1, y1 = -1;
+  for (let y = 0; y < height; y++) {
+    for (let x = 0; x < width; x++) {
+      if (!alpha[y * width + x]) continue;
+      x0 = Math.min(x0, x); x1 = Math.max(x1, x);
+      y0 = Math.min(y0, y); y1 = Math.max(y1, y);
+    }
+  }
+  const w = x1 - x0 + 1;
+  const h = y1 - y0 + 1;
+  const buf = Buffer.alloc(w * h * 4);
+  for (let y = 0; y < h; y++) {
+    for (let x = 0; x < w; x++) {
+      const si = (y0 + y) * width + (x0 + x);
+      if (!alpha[si]) continue;
+      const di = (y * w + x) * 4;
+      for (let c = 0; c < 3; c++) buf[di + c] = Math.max(0, Math.min(255, Math.round(color[si * 3 + c])));
+      buf[di + 3] = Math.round(alpha[si] * 255);
+    }
+  }
+  return { rect: [x0, y0, w, h], buf, changed };
+}
+
+/**
+ * The expression as drawn, or aligned onto the default portrait when that
+ * leaves fewer changed pixels. A portrait drawn a fraction of a pixel off
+ * counts every outline in the picture as changed, and its overlay redraws
+ * the hair and shoulders off their place (Yuri's annoyed); most portraits
+ * are drawn in place, and resampling them would only add noise. Tries ECC
+ * affine fits over the whole portrait and over its top and bottom bands
+ * (hair, shoulders), which the face's change doesn't touch. Returns the
+ * image and the largest shift it made, in px (0 when kept as drawn).
+ */
+export function alignExpression(base, expr, threshold = DEFAULT_THRESHOLD) {
+  const { width: W, height: H } = base;
+  const count = (img) => diffMask(base, img, threshold).reduce((n, v) => n + v, 0);
+  let best = { img: expr, shift: 0, changed: count(expr) };
+  for (const box of [[0, 0, W, H], [0, 0, W, Math.round(H * 0.3)], [0, Math.round(H * 0.8), W, H]]) {
+    let M;
+    try {
+      ({ M } = findAffineECC(gray(base), gray(expr), W, H, box));
+    } catch {
+      continue;
+    }
+    let shift = 0;
+    for (const [x, y] of [[0, 0], [W, 0], [0, H], [W, H]]) {
+      shift = Math.max(shift, Math.hypot(M[0][0] * x + M[0][1] * y + M[0][2] - x, M[1][0] * x + M[1][1] * y + M[1][2] - y));
+    }
+    const img = { width: W, height: H, data: remapHead(expr, M, [H, H + 1]) };
+    const changed = count(img);
+    if (changed < best.changed * 0.8) best = { img, shift, changed };
+  }
+  return best;
+}
+
 function main() {
   const character = process.argv[2];
   if (!character) {
@@ -118,7 +219,23 @@ function main() {
       console.warn(`[overlays] ${mood}: no ${exprFile}, skipped`);
       continue;
     }
-    const built = buildOverlay(base, readPng(exprFile), threshold);
+    const aligned = alignExpression(base, readPng(exprFile), threshold);
+    // `within` ([x0, y0, x1, y1], portrait px): changes outside it are
+    // dropped, for a portrait whose outlines are redrawn all over (annoyed)
+    if (def.within) {
+      const [x0, y0, x1, y1] = def.within;
+      const { width: W, height: H } = base;
+      const data = Buffer.from(aligned.img.data);
+      for (let y = 0; y < H; y++) {
+        for (let x = 0; x < W; x++) {
+          if (x >= x0 && x < x1 && y >= y0 && y < y1) continue;
+          base.data.copy(data, (y * W + x) * 4, (y * W + x) * 4, (y * W + x) * 4 + 4);
+        }
+      }
+      aligned.img = { width: W, height: H, data };
+    }
+    if (aligned.shift) console.log(`[overlays] ${mood}: ${def.portrait ?? mood}.png is drawn up to ${aligned.shift.toFixed(2)} px off default; aligned`);
+    const built = def.soft ? buildSoftOverlay(base, aligned.img) : buildOverlay(base, aligned.img, threshold);
     if (!built) {
       console.warn(`[overlays] ${mood}: identical to default, skipped`);
       continue;

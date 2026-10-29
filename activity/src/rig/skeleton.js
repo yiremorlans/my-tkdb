@@ -110,6 +110,9 @@ export function allParts(rig) {
 export function validateRig(rig, { imageExists = () => true, soundExists = () => true } = {}) {
   if (!rig || typeof rig !== "object") throw new Error("rig.json: not an object");
   const missingSounds = soundsOf(rig).filter((f) => !soundExists(f)).map((f) => `missing sound ${f}`);
+  // head sway is shared (motion.js HEAD_SWAY); a rig may only switch it off
+  const sway = Object.keys(rig.motion?.sway ?? {}).filter((k) => k !== "enabled");
+  if (sway.length) missingSounds.push(`motion.sway.${sway.join(", ")}: head sway is shared (motion.js HEAD_SWAY), not set per rig`);
   if (!rig.outfits) {
     const problems = [...rigProblems(rig, imageExists), ...missingSounds];
     if (problems.length) throw new Error(`rig.json:\n  ${problems.join("\n  ")}`);

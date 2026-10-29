@@ -986,10 +986,6 @@
       "speed": 0.2,
       "amount": 0.6
     },
-    "sway": {
-      "speed": 0.08,
-      "amount": 0.8
-    },
     "hair": {
       "enabled": false,
       "speed": 0.4,

@@ -150,7 +150,6 @@ the reference, then tuned in the preview (§3.4). Shape:
   },
   "motion": {
     "breath":  { "speed": 0.25, "amount": 0.012 },
-    "sway":    { "speed": 0.12, "amount": 2.5 },
     "hair":    { "speed": 0.4,  "amount": 3 },
     "arms":    { "speed": 0.25, "amount": 1.5 },
     "blink":   { "meanInterval": 4.0 }
@@ -273,7 +272,11 @@ Everything character- or outfit-specific is data: rig.json,
    and rough centers with a coarse whole-image search for a human to
    confirm. `lines` binds a line-art layer to its fill. Hand poses take
    their per-side pivot/scale from the outfit's hand-fits.json (step 5b).
-   Rerunning it on
+   A `head` section fits the shared head instead: it registers the
+   expression portrait onto the sprite and fits `shared: true` parts on the
+   portrait (Yuri), writing `overlayScale`/`overlayOffset` from it. `clip`
+   cuts a part's art to the sprite's silhouette at rest
+   (`derived/<id>_clip.png`). Rerunning it on
    Alan reproduces rig.json byte for byte (academy is pinned to its
    refined values and reports how close the search lands).
 5. **`match-hands.js <character> --outfit <new> [--from <outfit>] [--set <set>]`**:
@@ -299,7 +302,10 @@ Everything character- or outfit-specific is data: rig.json,
    baselines include academy's boot leaks, its 870 px elbow gap at forearm
    ±60° (mostly background walled in by the bent arm), and the 17 px
    hair-crown leak both outfits share.
-8. **`render-rig.js`** for a side-by-side with the reference.
+8. **`render-rig.js`** for a side-by-side with the reference (`--portrait`
+   compares a mood with its own expression portrait, `--hotspots` outlines
+   the touch points, `--grid` labels coordinates), and **`probe-rig.js`**
+   for the parts drawn at a pixel, bottom to top.
 
 ---
 
@@ -311,7 +317,7 @@ Everything character- or outfit-specific is data: rig.json,
 |---|---|
 | Breathing | torso/shoulder scale on a slow sine |
 | Blink | randomized interval around `meanInterval`, ~120 ms close |
-| Head tilt/sway | `head` rotation, two mixed sines, within limits |
+| Head tilt/sway | `head` rotation, two mixed sines, within limits; one shared setting for every character (`motion.js` `HEAD_SWAY`), never per rig |
 | Hair | 2–4 grouped locks, rotation lagging the head |
 | Arms | small sway in step with the breath |
 | Twitch | on a hand tap (new/known): that forearm (with a little upper arm) eases in toward the body and settles, ~0.6 s; the hand rides along unchanged; `motion.twitch` sets `amount` (deg), `upper`, `peak` (s) |
@@ -487,7 +493,7 @@ activity/
   tools/
     new-rig.js  slice-atlas.js  register-head.js  fit-outfit.js
     match-hands.js  align-hands.js  build-sprite-skin.js  check-rig.js
-    render-rig.js  build-overlays.js  build-portrait-hair.js
+    render-rig.js  probe-rig.js  build-overlays.js  build-portrait-hair.js
     lib/              # render (node-canvas, rig/fit files), match (template fits), png, skin-config
   vite.config.js
 assets/rig/alan/

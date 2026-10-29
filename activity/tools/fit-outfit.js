@@ -20,7 +20,9 @@
 //       { "id": "band_r", ..., "image": "p140",                 // written image, if not the winner
 //         "override": { "center": [246.5, 562.5], "scale": [0.62, 0.58], "flipX": false } },
 //       { "id": "collar_back", ..., "write": false },           // fitted for coverage only
-//       { "id": "pants", ..., "lines": "p210" } ],              // line art bound to its fill
+//       { "id": "pants", ..., "lines": "p210" },                // line art bound to its fill
+//       { "id": "iris_r", ..., "parent": "head", "shared": true },  // the shared head
+//       { "id": "neck_skin", ..., "clip": 2 } ],                // art cut to the sprite
 //     "bones": { "shoulder_r": { "part": "sleeve_upper_r", "at": [0.5, 0.08] } },
 //     "hands": { "pivot": [0.5, 0.05], "z": 230, "limits": [-35, 35], "default": "relaxed",
 //                "poses": { "relaxed": "p153", ... },
@@ -49,10 +51,29 @@
 // e.g. hips between the legs) or `at` alone (reference px), in the order
 // listed. Shared bones can only be set from the default outfit.
 //
+// `shared` parts are the head every outfit shows (face layers, atlas hair):
+// fitted like any other part but written to the top-level `parts`, under a
+// shared bone, and only from the default outfit. List them first (they're
+// in front of the collar) with their own `scales` when the atlas draws the
+// head at another scale than the body. The shared head that `coverShared`
+// starts out covered leaves these out, so a rerun fits them again instead
+// of finding them already covered.
+//
 // --propose fills in `center` for parts that have none with a coarse
 // whole-image search (marked "proposed": true for a human to confirm), and
 // `scale` when neither fit.json nor the outfit has one (a wide search on
-// the largest part), and writes fit.json only.
+// the largest part), and writes fit.json only. A part's `within`
+// ([x0, y0, x1, y1], reference px) keeps its search inside that box (hair
+// strands inside the head), and its own `scales` replace the outfit's band.
+// The scale estimate is only a start: an atlas can draw accessories and
+// the head smaller than the body, so check it against two or three parts.
+//
+// `clip` (px) writes the part's art masked to the sprite's silhouette at
+// rest, grown by that many px (shrunk if negative; 0 still leaves the art
+// under the outline's soft edge), as derived/<id>_clip.png: for art that's
+// right inside the sprite but spills past its edge (a neck base wider than
+// the collar, a face blob rounder than the jaw). Motion can still show the
+// cut edge, so keep it to parts that move little.
 //
 // Existing parts are updated in place (order kept, skin_* and parts the fit
 // doesn't name untouched); new ones are appended in z order.
@@ -60,9 +81,9 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { apply, invert, roundTo, solve, withOutfit } from "../src/rig/skeleton.js";
+import { apply, invert, roundTo, solve, spriteMatrix, withOutfit } from "../src/rig/skeleton.js";
 import { Peeler, blur, flatten, image, loadRGBA, pyRound, resize, rotated } from "./lib/match.js";
-import { isSolid } from "./lib/png.js";
+import { isSolid, readPng, writePng } from "./lib/png.js";
 import { readHandFits } from "./lib/hand-fits.js";
 import { fitFile, readRig, sharedCover, writeRig } from "./lib/render.js";
 
@@ -270,10 +291,13 @@ export function proposeCenters(spec, { target, cover, partImage, scale, centerX 
     const candidates = entry.candidates === "hands" ? [...new Set(Object.values(spec.hands?.poses ?? {}))] : entry.candidates;
     const suffix = Object.keys(sides).find((k) => entry.id.endsWith(k));
     const partner = suffix && Object.keys(sides).map((k) => entry.id.slice(0, -suffix.length) + k).find((id) => id !== entry.id && centers[id]);
+    // a part with its own scales (the head) is searched around their middle
+    const own = entry.scales ?? scales;
+    const base = entry.scales ? own[Math.floor(own.length / 2)] : scale;
     let best = null;
     for (const part of candidates) {
       const img = partImage(part);
-      const factor = Math.min(img.width, img.height) * scale < 96 ? 2 : 4;
+      const factor = Math.min(img.width, img.height) * base < 96 ? 2 : 4;
       const small = level(factor);
       const cov = new Float32Array(small.width * small.height);
       for (let i = 0; i < cov.length; i++) {
@@ -282,11 +306,14 @@ export function proposeCenters(spec, { target, cover, partImage, scale, centerX 
         cov[i] = cover[Math.min(target.height - 1, y) * target.width + Math.min(target.width - 1, x)];
       }
       const coarse = new Peeler(small, cov, { minVisible, blur: 0 });
-      const s = scale / factor;
+      const s = base / factor;
       const tw = Math.max(1, Math.round(img.width * s));
       const th = Math.max(1, Math.round(img.height * s));
       let win = [0, 0, small.width, small.height];
-      if (partner) {
+      if (entry.within) {
+        const [x0, y0, x1, y1] = entry.within.map((v) => v / factor);
+        win = [x0, y0, x1 - tw, y1 - th].map(Math.round);
+      } else if (partner) {
         const [mx, my] = [2 * centerX - centers[partner][0], centers[partner][1]];
         const r = 48 / factor;
         win = [mx / factor - tw / 2 - r, my / factor - th / 2 - r, mx / factor - tw / 2 + r, my / factor - th / 2 + r].map(Math.round);
@@ -299,7 +326,7 @@ export function proposeCenters(spec, { target, cover, partImage, scale, centerX 
           // re-score at full size around the coarse spot
           const cx = (c.px + c.w / 2) * factor;
           const cy = (c.py + c.h / 2) * factor;
-          for (const sc of scales) {
+          for (const sc of own) {
             const fw = Math.max(1, pyRound(img.width * sc));
             const fh = Math.max(1, pyRound(img.height * sc));
             const r = factor * 2;
@@ -374,13 +401,59 @@ export function estimateScale(spec, { target, cover, partImage, range = [0.4, 1.
   return scale;
 }
 
+// --- the head, from the portrait -------------------------------------------
+
+/**
+ * Where the expression portrait lies on the sprite: scale `k` and top-left
+ * `at` (reference px, sub-pixel), so portrait px (u, v) → at + k·(u, v).
+ * The portrait is the same drawing about 3× larger, so the head's parts
+ * are fitted there, where an iris has 9× the pixels, and mapped onto the
+ * sprite with this (Alan's head was fitted the same way). `head.at` is a
+ * rough top-left, searched within `radius` px over `scales` [lo, hi, step].
+ */
+export function registerPortrait(portrait, { target, at, radius = 20, scales = [0.3, 0.4, 0.005], blur: sigma = 0 }) {
+  const peeler = new Peeler(target, new Float32Array(target.width * target.height), { minVisible: 0.5, blur: sigma });
+  const [lo, hi, step] = scales;
+  const win = [at[0] - radius, at[1] - radius, at[0] + radius, at[1] + radius].map(Math.round);
+  let best = null;
+  const tryScale = (k, w) => {
+    const r = peeler.score("portrait", portrait, k, 0, w, best?.err);
+    if (r && (!best || r.err < best.err)) best = r;
+  };
+  for (let k = lo; k <= hi + 1e-9; k += step) tryScale(roundTo(k, 4), win);
+  // finer scales around the best, near its spot
+  const near = [best.px - 3, best.py - 3, best.px + 3, best.py + 3];
+  for (let k = best.s - step; k <= best.s + step + 1e-9; k += step / 10) tryScale(roundTo(k, 4), near);
+  // sub-pixel: a parabola through the error either side, per axis
+  const e = (dx, dy) => peeler.score("portrait", portrait, best.s, 0, [best.px + dx, best.py + dy, best.px + dx, best.py + dy]).err;
+  const vertex = (m, z, p) => {
+    const d = m - 2 * z + p;
+    return d > 0 ? Math.max(-0.5, Math.min(0.5, (m - p) / (2 * d))) : 0;
+  };
+  const e0 = best.err;
+  const dx = vertex(e(-1, 0), e0, e(1, 0));
+  const dy = vertex(e(0, -1), e0, e(0, 1));
+  return { k: best.s, at: [roundTo(best.px + dx, 2), roundTo(best.py + dy, 2)], err: best.err };
+}
+
+/** A fit made on the portrait, moved onto the sprite. */
+export function mapFit(f, { k, at: [x, y] }) {
+  const m = {
+    ...f,
+    px: x + k * f.px, py: y + k * f.py, w: f.w * k, h: f.h * k, s: roundTo(f.s * k, 4),
+    center: [x + k * f.center[0], y + k * f.center[1]],
+  };
+  m.onPortrait = { px: f.px, py: f.py, s: f.s };
+  return m;
+}
+
 // --- writing rig.json -------------------------------------------------------
 
 /**
  * Turns fits into rig.json parts, bones, hands and hotspots for one outfit,
  * updating `source` in place. Returns the list of written part ids.
  */
-export function writeOutfit(source, outfitName, spec, fits, { log = console.log, handFits = {} } = {}) {
+export function writeOutfit(source, outfitName, spec, fits, { log = console.log, handFits = {}, portrait = null } = {}) {
   const outfit = source.outfits[outfitName];
   const partPath = (id) => path.posix.join(outfit.dir && outfit.dir !== "." ? outfit.dir : "", "parts", `${id}.png`);
   const sharedIds = new Set(source.parts.map((p) => p.id));
@@ -413,6 +486,13 @@ export function writeOutfit(source, outfitName, spec, fits, { log = console.log,
   }
 
   const solved = solve(withOutfit(source, outfitName), {});
+  // The portrait's place on the head is where the expression overlays go.
+  if (portrait) {
+    const headAt = apply(solved.get(source.expressions.head ?? "head").bone, [0, 0]);
+    source.expressions.overlayScale = roundTo(portrait.k, 5);
+    source.expressions.overlayOffset = [0, 1].map((i) => round2(portrait.at[i] - headAt[i]));
+    log(`[fit] portrait at ${portrait.at.join(",")} ×${portrait.k} → overlayOffset ${source.expressions.overlayOffset.join(",")}`);
+  }
   const local = (bone, xy) => apply(invert(solved.get(bone).bone), xy).map(round2);
   // An image is an atlas part id (→ <dir>/parts/<id>.png) or a path
   // relative to the outfit dir (derived art, e.g. "derived/leg_r_faded.png").
@@ -422,20 +502,29 @@ export function writeOutfit(source, outfitName, spec, fits, { log = console.log,
   // Updating a part merges into the stored object, so its key order (and
   // any keys the fit doesn't manage) stay as they were.
   const MANAGED_OPTIONAL = ["flipX", "rotation"];
-  const put = (part) => {
-    const i = outfit.parts.findIndex((p) => p.id === part.id);
-    if (i === -1) outfit.parts.push(part);
+  const put = (list, part) => {
+    const i = list.findIndex((p) => p.id === part.id);
+    if (i === -1) list.push(part);
     else {
-      const merged = { ...outfit.parts[i], ...part };
+      const merged = { ...list[i], ...part };
       for (const k of MANAGED_OPTIONAL) if (!(k in part)) delete merged[k];
-      outfit.parts[i] = merged;
+      list[i] = merged;
     }
     written.push(part.id);
   };
 
   const newParts = [];
+  const sharedParts = new Set();
   for (const entry of spec.parts) {
     if (entry.write === false || entry.hand) continue;
+    if (entry.shared) {
+      if (outfitName !== source.defaultOutfit) {
+        throw new Error(`fit.json ${entry.id} is shared; fit it from the default outfit (${source.defaultOutfit})`);
+      }
+      if (!sharedIds.has(entry.parent)) throw new Error(`fit.json ${entry.id} is shared; its parent ${entry.parent} must be a shared bone`);
+      sharedParts.add(entry.id);
+      if (entry.lines) sharedParts.add(`${entry.id}_lines`);
+    }
     const f = fits[entry.id];
     const o = entry.override ?? entry.pin ?? {};
     if (!f && !o.center && !o.position) continue;
@@ -522,9 +611,10 @@ export function writeOutfit(source, outfitName, spec, fits, { log = console.log,
   }
 
   // Existing parts keep their slot; new ones go in z order.
-  const existing = new Set(outfit.parts.map((p) => p.id));
-  for (const p of newParts.filter((q) => existing.has(q.id))) put(p);
-  for (const p of newParts.filter((q) => !existing.has(q.id)).sort((a, b) => (a.z ?? 0) - (b.z ?? 0))) put(p);
+  const listFor = (p) => (sharedParts.has(p.id) ? source.parts : outfit.parts);
+  const existing = new Set([...source.parts, ...outfit.parts].map((p) => p.id));
+  for (const p of newParts.filter((q) => existing.has(q.id))) put(listFor(p), p);
+  for (const p of newParts.filter((q) => !existing.has(q.id)).sort((a, b) => (a.z ?? 0) - (b.z ?? 0))) put(listFor(p), p);
 
   for (const [name, hs] of Object.entries(spec.hotspots ?? {})) {
     const f = fits[hs.part];
@@ -533,6 +623,62 @@ export function writeOutfit(source, outfitName, spec, fits, { log = console.log,
     outfit.hotspots = { ...outfit.hotspots, [name]: { part: hs.part, rect: [(x0 - f.px) / f.w, (y0 - f.py) / f.h, (x1 - f.px) / f.w, (y1 - f.py) / f.h].map(round2) } };
   }
   return written;
+}
+
+// --- clipping to the sprite --------------------------------------------------
+
+/**
+ * For each fit.json part with `clip`, its art with every pixel that lands
+ * outside the sprite's silhouette at rest (grown by `clip` px) cleared,
+ * written to <outfit dir>/derived/<id>_clip.png and set as its image.
+ */
+export function clipParts(source, outfitName, spec, dir, { log = console.log } = {}) {
+  const outfit = source.outfits[outfitName];
+  const outDir = path.join(dir, outfit.dir ?? ".");
+  const sprite = readPng(path.join(dir, outfit.referenceImage));
+  const { width: W, height: H } = sprite;
+  const flat = withOutfit(source, outfitName);
+  for (const entry of spec.parts.filter((e) => e.clip != null)) {
+    const part = [...source.parts, ...outfit.parts].find((p) => p.id === entry.id);
+    if (!part) continue;
+    // writeOutfit has just set the atlas art again, so a rerun never clips a clip
+    const art = readPng(path.join(dir, part.image));
+    const sizes = new Map([[part.id, [art.width, art.height]]]);
+    const m = spriteMatrix(flat, part, solve(flat, {}, sizes).get(part.id).bone, [art.width, art.height]);
+    // clip > 0 grows the silhouette; clip < 0 shrinks it, so art stops
+    // inside the sprite's soft outline instead of tinting it
+    const r = Math.abs(entry.clip);
+    const solidAt = (sx, sy) => sx >= 0 && sy >= 0 && sx < W && sy < H && isSolid(sprite.data, sy * W + sx);
+    const inside = (x, y) => {
+      for (let dy = -r; dy <= r; dy++) {
+        for (let dx = -r; dx <= r; dx++) {
+          const hit = solidAt(Math.round(x + dx), Math.round(y + dy));
+          if (entry.clip >= 0 && hit) return true;
+          if (entry.clip < 0 && !hit) return false;
+        }
+      }
+      return entry.clip < 0;
+    };
+    const out = Buffer.from(art.data);
+    let cut = 0;
+    for (let v = 0; v < art.height; v++) {
+      for (let u = 0; u < art.width; u++) {
+        const i = (v * art.width + u) * 4;
+        if (!out[i + 3]) continue;
+        const x = m[0] * (u + 0.5) + m[2] * (v + 0.5) + m[4];
+        const y = m[1] * (u + 0.5) + m[3] * (v + 0.5) + m[5];
+        if (!inside(x, y)) {
+          out[i + 3] = 0;
+          cut++;
+        }
+      }
+    }
+    const rel = path.posix.join("derived", `${entry.id}_clip.png`);
+    fs.mkdirSync(path.join(outDir, "derived"), { recursive: true });
+    writePng(path.join(outDir, rel), art.width, art.height, out);
+    part.image = path.posix.join(outfit.dir && outfit.dir !== "." ? outfit.dir : "", rel);
+    log(`[clip] ${entry.id}: ${cut} px outside the sprite cleared → ${part.image}`);
+  }
 }
 
 // --- CLI --------------------------------------------------------------------
@@ -558,7 +704,11 @@ async function main() {
   const targetFile = path.join(dir, spec.target ?? outfit.referenceImage);
   const target = blur(flatten(loadRGBA(targetFile)), spec.targetBlur ?? 0.6);
   const { width: W, height: H } = target;
-  const cover = (spec.coverShared !== false && (await sharedCover(source, dir))) || new Float32Array(W * H);
+  // The shared head covers the outfit's fit, minus the head parts this
+  // fit.json places itself.
+  const fitted = new Set(spec.parts.filter((e) => e.shared).flatMap((e) => [e.id, `${e.id}_lines`]));
+  const coverRig = { ...source, parts: source.parts.filter((p) => !fitted.has(p.id)) };
+  const cover = (spec.coverShared !== false && (await sharedCover(coverRig, dir))) || new Float32Array(W * H);
   const partCache = new Map();
   const partImage = (id) => {
     if (!partCache.has(id)) partCache.set(id, loadRGBA(path.join(outDir, "parts", `${id}.png`)));
@@ -581,13 +731,36 @@ async function main() {
   }
 
   const only = opt("only")?.split(",") ?? null;
-  const { fits } = await runFits(spec, { target, cover, partImage, scales: scaleBand(scale, spec.scales), only });
+  // With `head`, the shared parts are fitted on the portrait and mapped
+  // onto the sprite, where they cover what the body fits see.
+  let portrait = null;
+  let fits = {};
+  let bodySpec = spec;
+  if (spec.head) {
+    const pimg = loadRGBA(path.join("assets/expressions", character, `${spec.head.portrait ?? "default"}.png`));
+    portrait = registerPortrait(pimg, { target, ...spec.head });
+    console.log(`[fit] portrait → sprite: ×${portrait.k} at ${portrait.at.join(",")} (err ${portrait.err.toFixed(1)})`);
+    const ptarget = blur(flatten(pimg), spec.head.targetBlur ?? 1.0);
+    const headSpec = { ...spec, parts: spec.parts.filter((e) => e.shared) };
+    const onPortrait = await runFits(headSpec, {
+      target: ptarget, cover: new Float32Array(ptarget.width * ptarget.height), partImage,
+      scales: scaleBand(spec.head.partScale ?? 1.5, spec.head.partScales), only,
+    });
+    const mark = new Peeler(target, cover);
+    for (const [id, f] of Object.entries(onPortrait.fits)) {
+      fits[id] = mapFit(f, portrait);
+      mark.cover({ ...fits[id], px: Math.round(fits[id].px), py: Math.round(fits[id].py) }, f.part, partImage(f.part));
+    }
+    bodySpec = { ...spec, parts: spec.parts.filter((e) => !e.shared) };
+  }
+  Object.assign(fits, (await runFits(bodySpec, { target, cover, partImage, scales: scaleBand(scale, spec.scales), only })).fits);
   fs.writeFileSync(path.join(outDir, "fits.json"), JSON.stringify(fits, null, 1) + "\n");
   if (only || rest.includes("--dry")) {
     console.log(`[fit] fits → ${path.join(outDir, "fits.json")} (rig.json not written${only ? " with --only" : ""})`);
     return;
   }
-  const written = writeOutfit(source, outfitName, spec, fits, { handFits: readHandFits(outDir) });
+  const written = writeOutfit(source, outfitName, spec, fits, { handFits: readHandFits(outDir), portrait });
+  clipParts(source, outfitName, spec, dir);
   writeRig(character, source);
   console.log(`[fit] ${outfitName}: wrote ${written.length} parts to rig.json`);
 }

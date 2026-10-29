@@ -30,10 +30,10 @@ import { isSolid, readPng } from "./lib/png.js";
 import { sliceOutfit } from "./slice-atlas.js";
 
 // House defaults (§3.2, decided 2026-10-28: the body stays nearly still,
-// no hair sway). Tuned per character in the preview afterwards.
+// no hair sway). Tuned per character in the preview afterwards; head sway
+// is shared by every rig (motion.js HEAD_SWAY), so it isn't written here.
 export const DEFAULT_MOTION = {
   breath: { speed: 0.2, amount: 0.6 },
-  sway: { speed: 0.08, amount: 0.8 },
   hair: { enabled: false, speed: 0.4, amount: 3 },
   arms: { speed: 0.25, amount: 0.4 },
   blink: { meanInterval: 4 },

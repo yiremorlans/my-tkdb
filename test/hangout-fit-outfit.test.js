@@ -98,3 +98,29 @@ test('fit bones land where the fitted part puts them', () => {
   assert.deepStrictEqual(apply(solved.get('shoulder').bone, [0, 0]), [35, 20]);
   assert.deepStrictEqual(rig.parts[1].position, [50, 60]);
 });
+
+test('shared parts go to the top-level head, only from the default outfit', () => {
+  const rig = {
+    character: 't', reference: { width: 100, height: 100 }, scale: 1, defaultOutfit: 'a',
+    parts: [{ id: 'root', parent: null, position: [0, 0] }, { id: 'head', parent: 'root', position: [50, 20] }],
+    outfits: { a: { dir: 'a', parts: [] }, b: { dir: 'b', parts: [] } },
+  };
+  const spec = {
+    parts: [
+      { id: 'iris_r', candidates: ['p1'], center: [45, 22], parent: 'head', z: 410, shared: true },
+      { id: 'shirt', candidates: ['p2'], center: [50, 50], parent: 'root', z: 200 },
+    ],
+  };
+  const fits = {
+    iris_r: { part: 'p1', px: 43, py: 20, w: 4, h: 4, s: 0.5, flip: 0, center: [45, 22] },
+    shirt: { part: 'p2', px: 40, py: 40, w: 20, h: 20, s: 1, flip: 0, center: [50, 50] },
+  };
+  writeOutfit(rig, 'a', spec, fits, { log: () => {} });
+  const iris = rig.parts.find((p) => p.id === 'iris_r');
+  assert.deepStrictEqual([iris.parent, iris.image, iris.position], ['head', 'a/parts/p1.png', [-5, 2]]);
+  assert.deepStrictEqual(rig.outfits.a.parts.map((p) => p.id), ['shirt']);
+  // a rerun updates the shared part in place
+  writeOutfit(rig, 'a', spec, { ...fits, iris_r: { ...fits.iris_r, center: [46, 22] } }, { log: () => {} });
+  assert.deepStrictEqual(rig.parts.filter((p) => p.id === 'iris_r').map((p) => p.position), [[-4, 2]]);
+  assert.throws(() => writeOutfit(rig, 'b', spec, fits, { log: () => {} }), /default outfit/);
+});

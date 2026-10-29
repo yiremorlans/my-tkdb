@@ -10,6 +10,10 @@
 //     "exclude": ["mouth", ...],         // part boxes left out unless teal (hair)
 //     "pinToBase": ["lash_r", ...],      // part boxes whose non-teal pixels stay
 //                                        // in the static base, never in a lock
+//     "keepInBase": ["iris_l", ...],     // part boxes that stay in the base whole,
+//                                        // teal or not (irises the color of the hair)
+//     "jawClipY": 430, "jawGrow": 1,      // below it, only the face's own silhouette
+//     "hairBelowJaw": [[x0, y0, x1, y1]], // …plus these boxes: strand tips past the clip
 //     "locks": [ { "id": "hair_front", "rect": [x0, y0, x1, y1],
 //                  "pivot": [x, y] }, ... ] }   // portrait px
 //
@@ -126,6 +130,7 @@ async function main() {
   // Part boxes, in portrait px.
   const boxOf = (id) => {
     const part = rig.parts.find((p) => p.id === id);
+    if (!part?.image) throw new Error(`portraitHair names ${id}, which isn't a head part in rig.json`);
     const m = multiply(face.toPortrait, spriteMatrix(rig, part, solved.get(id).bone, sizes.get(id)));
     const [w, h] = sizes.get(id);
     const xs = [];
@@ -166,7 +171,10 @@ async function main() {
       const a = portrait.data[i + 3] / 255;
       if (a === 0) continue;
       if (inFace && y >= jawClipY) {
-        if (!inFace(x, y)) continue;
+        // `hairBelowJaw` boxes hold strand tips that hang past the clip
+        // beside the jaw; kept whole (their outlines are as dark as clothing)
+        const tip = (cfg.hairBelowJaw ?? []).some(([a, b, c, d]) => x >= a && x < c && y >= b && y < d);
+        if (!inFace(x, y) && !tip) continue;
         const o = (y * width + x) * 4;
         const l = (portrait.data[o] + portrait.data[o + 1] + portrait.data[o + 2]) / 3;
         if (inBand(x, y) && l > (cfg.jawLineLum ?? 110)) {
@@ -212,10 +220,19 @@ async function main() {
     for (const l of locks) if (rectWeight(l.rect, feather, x, y) >= 1) return 0;
     return 1;
   } }];
-  // A lock never takes the non-teal pixels of a pinned box (an eye), and
-  // the base keeps them whatever the lock weight.
-  const pinned = (x, y) => inPinned(x, y) && !teal[y * width + x];
-  layers[0].weight = ((inner) => (x, y) => (pinned(x, y) ? 1 : inner(x, y)))(layers[0].weight);
+  // A lock never takes the non-teal pixels of a pinned box (an eye), nor
+  // any pixel of a keepInBase box, and the base keeps them whatever the
+  // lock weight.
+  const inKept = within((cfg.keepInBase ?? []).map(boxOf));
+  const pinned = (x, y) => inKept(x, y) || (inPinned(x, y) && !teal[y * width + x]);
+  // The base keeps a pinned box 2 px wider than the lock gives it up, so
+  // the lock's edge pixels sit on solid base: two half-covered edges drawn
+  // as separate layers would leave a pale seam around the box.
+  const near = (x, y) => {
+    for (let dy = -2; dy <= 2; dy++) for (let dx = -2; dx <= 2; dx++) if (pinned(x + dx, y + dy)) return true;
+    return false;
+  };
+  layers[0].weight = ((inner) => (x, y) => (near(x, y) ? 1 : inner(x, y)))(layers[0].weight);
   for (const l of locks) {
     layers.push({ id: l.id, lock: l, weight: (x, y) => (pinned(x, y) ? 0 : rectWeight(l.rect, feather, x, y)) });
   }

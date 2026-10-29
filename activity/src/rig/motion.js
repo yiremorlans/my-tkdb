@@ -17,6 +17,12 @@
 
 const TAU = Math.PI * 2;
 
+// Head sway is one house setting for every character and outfit (decided
+// 2026-10-29), so all of them idle alike; it lives here, never in rig.json.
+// rig.json `motion.sway` may only switch it off (`enabled`), for tests and
+// the preview.
+export const HEAD_SWAY = { speed: 0.08, amount: 0.8 };
+
 /** Seconds a twitch takes to peak (rig.json `motion.twitch.peak`). */
 const twitchPeak = (rig) => Math.max(0.01, rig.motion?.twitch?.peak ?? 0.14);
 
@@ -103,8 +109,7 @@ export class Motion {
 
     let head = 0;
     if (this.enabled.sway) {
-      const s = m.sway?.speed ?? 0.12;
-      const a = m.sway?.amount ?? 2.5;
+      const { speed: s, amount: a } = HEAD_SWAY;
       head = a * (0.7 * Math.sin(TAU * s * t) + 0.3 * Math.sin(TAU * s * 1.73 * t + 1.1));
     }
     add(bones.head, "rotation", head);

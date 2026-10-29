@@ -26,7 +26,7 @@
 //    whose `bone` is its nearest ancestor (and whose zRange holds its z).
 //    Parts under `skip` keep their own art (the head has the portrait
 //    layer; hands swap poses). Sprite pixels no part covers go to the
-//    nearest covered pixel's group, within 8 px.
+//    nearest covered pixel's group, within `reach` px (default 8).
 // 3. Each group's pixels, grown by `dilate` px under anything drawn above
 //    it so motion opens no gaps, are cut from the sprite into
 //    skin/<id>.png and attached to the group's bone just above its parts.
@@ -139,7 +139,7 @@ async function main() {
   const spriteA = (i) => sprite.data[i * 4 + 3];
   let frontier = [];
   for (let i = 0; i < W * H; i++) if (owner[i] !== -2) frontier.push(i);
-  for (let step = 0; step < 8 && frontier.length; step++) {
+  for (let step = 0; step < (cfg.reach ?? 8) && frontier.length; step++) {
     const next = [];
     for (const i of frontier) {
       const x = i % W;
