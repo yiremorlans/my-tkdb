@@ -104,7 +104,9 @@ async function main() {
   const images = new Map();
   for (const part of rig.parts) {
     if (!part.image) continue;
-    const img = await loadImage(path.join(dir, part.image));
+    // A rest hand cut on an earlier run is matched as the atlas drawing it
+    // replaced, so a rerun cuts the same pixels (step 6).
+    const img = await loadImage(path.join(dir, part.restFrom ?? part.image));
     images.set(part.id, img);
     sizes.set(part.id, [img.width, img.height]);
   }
@@ -381,8 +383,75 @@ async function main() {
     console.log(`[skin] ${sh.id}: ${sh.mode ?? "shade"} over ${[...parts].join(",")}, ${w}x${h}, z ${sh.z}`);
   }
 
-  // Each skin keeps its slot in the parts list; new ones go at the end.
+  // 6. Rest hands (`restHands: true`): each hand's default pose becomes
+  // the sprite's own hand, cut like a skin (the pixels the hand owns at
+  // rest, grown under whatever is drawn above it) and pivoted at the
+  // wrist, for atlases whose rest drawing differs from the sprite's.
+  // Other poses keep their atlas art.
   const target = source.outfits ? source.outfits[rig.outfit] : source;
+  if (cfg.restHands) {
+    const hands = target.hands?.sets ? target.hands.sets[target.hands.defaultSet] : target.hands;
+    for (const [side, hs] of Object.entries(hands ?? {})) {
+      const part = rig.parts.find((p) => p.id === hs.part);
+      const handZ = part.z ?? 0;
+      const mask = new Uint8Array(W * H);
+      for (let i = 0; i < W * H; i++) if (ownerPart[i] === part.id) mask[i] = 1;
+      const grown = mask.slice();
+      for (let i = 0; i < W * H; i++) {
+        if (!mask[i]) continue;
+        const x = i % W;
+        const y = (i - x) / W;
+        for (let dy = -r; dy <= r; dy++) {
+          for (let dx = -r; dx <= r; dx++) {
+            const nx = x + dx;
+            const ny = y + dy;
+            if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+            const j = ny * W + nx;
+            if (!grown[j] && owner[j] >= 0 && groupZ[owner[j]] > handZ && spriteA(j) > 0) grown[j] = 1;
+          }
+        }
+      }
+      let x0 = W, y0 = H, x1 = -1, y1 = -1;
+      for (let i = 0; i < W * H; i++) {
+        if (!grown[i]) continue;
+        const x = i % W;
+        const y = (i - x) / W;
+        x0 = Math.min(x0, x); x1 = Math.max(x1, x);
+        y0 = Math.min(y0, y); y1 = Math.max(y1, y);
+      }
+      if (x1 < 0) {
+        console.warn(`[skin] ${part.id}: no rest pixels, kept its atlas pose`);
+        continue;
+      }
+      const w = x1 - x0 + 1;
+      const h = y1 - y0 + 1;
+      const buf = Buffer.alloc(w * h * 4);
+      for (let y = 0; y < h; y++) {
+        for (let x = 0; x < w; x++) {
+          const si = (y0 + y) * W + (x0 + x);
+          if (grown[si]) sprite.data.copy(buf, (y * w + x) * 4, si * 4, si * 4 + 4);
+        }
+      }
+      const file = path.posix.join(skinDir, `${part.id}_rest.png`);
+      writePng(path.join(dir, file), w, h, buf);
+      // The hand bone's origin is the wrist every pose pivots on.
+      const [wx, wy] = apply(solved.get(part.id).bone, [0, 0]);
+      const pose = {
+        image: file,
+        pivot: [(wx - x0) / w, (wy - y0) / h].map((v) => Math.round(v * 10000) / 10000),
+        scale: 1,
+        flipX: false,
+      };
+      hs.poses[hs.default] = pose;
+      const own = target.parts.find((p) => p.id === part.id);
+      own.restFrom = part.restFrom ?? part.image;
+      Object.assign(own, { image: pose.image, pivot: pose.pivot, scale: 1 });
+      delete own.flipX;
+      console.log(`[skin] ${part.id}: rest pose cut from the sprite, ${w}x${h} at ${x0},${y0}`);
+    }
+  }
+
+  // Each skin keeps its slot in the parts list; new ones go at the end.
   const madeIds = new Set(made.map((p) => p.id));
   const kept = target.parts.filter((p) => !isSkin(p.id) || madeIds.has(p.id));
   const madeById = new Map(made.map((p) => [p.id, p]));

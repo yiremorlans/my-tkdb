@@ -6,7 +6,8 @@
 // `reach` (how far, in px, an uncovered sprite pixel looks for a group;
 // default 8), `skip` (subtrees that keep their own art), `noGrowUnder`
 // (parts no skin grows under: hands tucked under a cuff, whose pose swaps
-// would leave the sprite's wrist behind), and the neck fixes (`underlays`,
+// would leave the sprite's wrist behind), `restHands` (each hand's default
+// pose cut from the sprite, build-sprite-skin.js step 6), and the neck fixes (`underlays`,
 // `shades`). An outfit's `spriteSkin` holds overrides only:
 //
 //   "spriteSkin": {
@@ -67,7 +68,7 @@ export function boneGroups(flat, skip = [], overrides = {}) {
   return groups;
 }
 
-/** The resolved spriteSkin config ({ dilate, reach, skip, noGrowUnder, groups, underlays, shades }) for one outfit. */
+/** The resolved spriteSkin config ({ dilate, reach, skip, noGrowUnder, restHands, groups, underlays, shades }) for one outfit. */
 export function skinConfig(source, outfitName = source.defaultOutfit) {
   const own = (source.outfits ? source.outfits[outfitName]?.spriteSkin : source.spriteSkin) ?? {};
   if (Array.isArray(own.groups)) return own;
@@ -79,6 +80,7 @@ export function skinConfig(source, outfitName = source.defaultOutfit) {
     reach: own.reach ?? shared.reach ?? 8,
     skip,
     noGrowUnder: own.noGrowUnder ?? shared.noGrowUnder ?? [],
+    restHands: own.restHands ?? shared.restHands ?? false,
     groups: boneGroups({ ...flat, parts: flat.parts.filter((p) => !isSkin(p.id)) }, skip, own.groups ?? {}),
     underlays: mergeById(shared.underlays, own.underlays),
     shades: mergeById(shared.shades, own.shades),
