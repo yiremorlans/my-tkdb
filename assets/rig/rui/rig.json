@@ -981,7 +981,7 @@
         "z": 191
       }
     ],
-    "reach": 16,
+    "reach": 20,
     "noGrowUnder": [
       "hand_r",
       "hand_l"
@@ -1268,14 +1268,14 @@
           "image": "academy/parts/p366.png",
           "position": [
             -26,
-            154.3
+            151.55
           ],
           "pivot": [
             0.5,
             0.05
           ],
           "z": 214,
-          "scale": 0.6,
+          "scale": 0.63,
           "limits": {
             "rotation": [
               -35,
@@ -1289,14 +1289,14 @@
           "image": "academy/parts/p366.png",
           "position": [
             22,
-            154.3
+            151.55
           ],
           "pivot": [
             0.5,
             0.05
           ],
           "z": 214,
-          "scale": 0.6,
+          "scale": 0.63,
           "flipX": true,
           "limits": {
             "rotation": [
@@ -1341,8 +1341,8 @@
           "parent": "forearm_r",
           "image": "academy/derived/sleeve_lower_r_clip.png",
           "position": [
-            -15.5,
-            38.3
+            -16.5,
+            50.3
           ],
           "pivot": [
             0.5,
@@ -1350,7 +1350,7 @@
           ],
           "z": 216,
           "scale": 0.6,
-          "rotation": 4,
+          "rotation": 3,
           "mesh": {
             "bend": true,
             "zone": 0.35
@@ -1362,7 +1362,7 @@
           "image": "academy/derived/sleeve_lower_l_clip.png",
           "position": [
             12.5,
-            38.3
+            50.3
           ],
           "pivot": [
             0.5,
@@ -1370,11 +1370,12 @@
           ],
           "z": 216,
           "scale": 0.6,
-          "rotation": -6,
+          "rotation": 3,
           "mesh": {
             "bend": true,
             "zone": 0.35
-          }
+          },
+          "flipX": true
         },
         {
           "id": "cuff_r",
@@ -1828,7 +1829,7 @@
           "image": "academy/skin/skin_sleeve_lower_r.png",
           "position": [
             -46,
-            -11.2
+            -5.2
           ],
           "pivot": [
             0,
@@ -1847,7 +1848,7 @@
           "image": "academy/skin/skin_forearm_r.png",
           "position": [
             -51,
-            77.8
+            76.8
           ],
           "pivot": [
             0,
@@ -1862,7 +1863,7 @@
           "image": "academy/skin/skin_sleeve_lower_l.png",
           "position": [
             -18,
-            -16.2
+            -3.2
           ],
           "pivot": [
             0,
@@ -1881,7 +1882,7 @@
           "image": "academy/skin/skin_forearm_l.png",
           "position": [
             -13,
-            77.8
+            74.8
           ],
           "pivot": [
             0,
@@ -1925,7 +1926,7 @@
           "parent": "torso",
           "image": "academy/skin/skin_arm_r_underlay.png",
           "position": [
-            -134,
+            -112,
             -366.14
           ],
           "pivot": [
@@ -1940,7 +1941,7 @@
           "parent": "torso",
           "image": "academy/skin/skin_arm_l_underlay.png",
           "position": [
-            72,
+            84,
             -366.14
           ],
           "pivot": [
@@ -1963,9 +1964,9 @@
                   "image": "academy/parts/p366.png",
                   "pivot": [
                     0.5,
-                    0.0682
+                    0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 },
                 "hang": {
                   "image": "academy/parts/p338.png",
@@ -1973,7 +1974,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 },
                 "back": {
                   "image": "academy/parts/p330.png",
@@ -1981,7 +1982,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 },
                 "reach": {
                   "image": "academy/parts/p337.png",
@@ -1989,7 +1990,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 },
                 "open": {
                   "image": "academy/parts/p374.png",
@@ -1997,7 +1998,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 },
                 "pinch": {
                   "image": "academy/parts/p342.png",
@@ -2005,7 +2006,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 },
                 "spread": {
                   "image": "academy/parts/p336.png",
@@ -2013,7 +2014,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 },
                 "point": {
                   "image": "academy/parts/p364.png",
@@ -2021,7 +2022,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 },
                 "beckon": {
                   "image": "academy/parts/p363.png",
@@ -2029,7 +2030,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 }
               }
             },
@@ -2040,10 +2041,10 @@
                 "relaxed": {
                   "image": "academy/parts/p366.png",
                   "pivot": [
-                    0.521,
-                    0.1046
+                    0.5,
+                    0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 },
                 "hang": {
@@ -2052,7 +2053,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 },
                 "back": {
@@ -2061,7 +2062,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 },
                 "reach": {
@@ -2070,7 +2071,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 },
                 "open": {
@@ -2079,7 +2080,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 },
                 "pinch": {
@@ -2088,7 +2089,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 },
                 "spread": {
@@ -2097,7 +2098,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 },
                 "point": {
@@ -2106,7 +2107,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 },
                 "beckon": {
@@ -2115,7 +2116,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 }
               }
@@ -2132,7 +2133,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 },
                 "hang": {
                   "image": "academy/parts/p305.png",
@@ -2140,7 +2141,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 },
                 "back": {
                   "image": "academy/parts/p325.png",
@@ -2148,7 +2149,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 },
                 "reach": {
                   "image": "academy/parts/p340.png",
@@ -2156,7 +2157,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 },
                 "open": {
                   "image": "academy/parts/p328.png",
@@ -2164,7 +2165,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 },
                 "pinch": {
                   "image": "academy/parts/p329.png",
@@ -2172,7 +2173,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 },
                 "spread": {
                   "image": "academy/parts/p334.png",
@@ -2180,7 +2181,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 },
                 "point": {
                   "image": "academy/parts/p339.png",
@@ -2188,7 +2189,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 },
                 "beckon": {
                   "image": "academy/parts/p321.png",
@@ -2196,7 +2197,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6
+                  "scale": 0.63
                 }
               }
             },
@@ -2210,7 +2211,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 },
                 "hang": {
@@ -2219,7 +2220,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 },
                 "back": {
@@ -2228,7 +2229,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 },
                 "reach": {
@@ -2237,7 +2238,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 },
                 "open": {
@@ -2246,7 +2247,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 },
                 "pinch": {
@@ -2255,7 +2256,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 },
                 "spread": {
@@ -2264,7 +2265,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 },
                 "point": {
@@ -2273,7 +2274,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 },
                 "beckon": {
@@ -2282,7 +2283,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.6,
+                  "scale": 0.63,
                   "flipX": true
                 }
               }
@@ -2360,10 +2361,10 @@
             "from": "upper_arm_r",
             "bone": "torso",
             "rect": [
-              250,
+              272,
               330,
-              312,
-              690
+              300,
+              480
             ],
             "tint": 0.55,
             "z": 213
@@ -2372,10 +2373,10 @@
             "from": "upper_arm_l",
             "bone": "torso",
             "rect": [
-              456,
+              468,
               330,
-              518,
-              690
+              496,
+              480
             ],
             "tint": 0.55,
             "z": 213
@@ -2649,14 +2650,14 @@
           "image": "casual/parts/p182.png",
           "position": [
             -17.5,
-            139.25
+            134.6
           ],
           "pivot": [
             0.5,
             0.05
           ],
           "z": 214,
-          "scale": 0.67,
+          "scale": 0.71,
           "limits": {
             "rotation": [
               -35,
@@ -2670,14 +2671,14 @@
           "image": "casual/parts/p182.png",
           "position": [
             17.5,
-            139.25
+            134.6
           ],
           "pivot": [
             0.5,
             0.05
           ],
           "z": 214,
-          "scale": 0.67,
+          "scale": 0.71,
           "flipX": true,
           "limits": {
             "rotation": [
@@ -3089,7 +3090,7 @@
           "parent": "torso",
           "image": "casual/skin/skin_arm_r_underlay.png",
           "position": [
-            -134,
+            -112,
             -366.14
           ],
           "pivot": [
@@ -3104,7 +3105,7 @@
           "parent": "torso",
           "image": "casual/skin/skin_arm_l_underlay.png",
           "position": [
-            82,
+            84,
             -366.14
           ],
           "pivot": [
@@ -3159,7 +3160,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 },
                 "hang": {
                   "image": "casual/parts/p163.png",
@@ -3167,7 +3168,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 },
                 "back": {
                   "image": "casual/parts/p172.png",
@@ -3175,7 +3176,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 },
                 "reach": {
                   "image": "casual/parts/p184.png",
@@ -3183,7 +3184,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 },
                 "open": {
                   "image": "casual/parts/p158.png",
@@ -3191,7 +3192,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 },
                 "pinch": {
                   "image": "casual/parts/p168.png",
@@ -3199,7 +3200,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 },
                 "spread": {
                   "image": "casual/parts/p183.png",
@@ -3207,7 +3208,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 },
                 "point": {
                   "image": "casual/parts/p186.png",
@@ -3215,7 +3216,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 },
                 "beckon": {
                   "image": "casual/parts/p153.png",
@@ -3223,7 +3224,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 }
               }
             },
@@ -3237,7 +3238,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 },
                 "hang": {
@@ -3246,7 +3247,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 },
                 "back": {
@@ -3255,7 +3256,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 },
                 "reach": {
@@ -3264,7 +3265,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 },
                 "open": {
@@ -3273,7 +3274,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 },
                 "pinch": {
@@ -3282,7 +3283,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 },
                 "spread": {
@@ -3291,7 +3292,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 },
                 "point": {
@@ -3300,7 +3301,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 },
                 "beckon": {
@@ -3309,7 +3310,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 }
               }
@@ -3326,7 +3327,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 },
                 "hang": {
                   "image": "casual/parts/p155.png",
@@ -3334,7 +3335,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 },
                 "back": {
                   "image": "casual/parts/p174.png",
@@ -3342,7 +3343,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 },
                 "reach": {
                   "image": "casual/parts/p188.png",
@@ -3350,7 +3351,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 },
                 "open": {
                   "image": "casual/parts/p189.png",
@@ -3358,7 +3359,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 },
                 "pinch": {
                   "image": "casual/parts/p173.png",
@@ -3366,7 +3367,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 },
                 "spread": {
                   "image": "casual/parts/p185.png",
@@ -3374,7 +3375,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 },
                 "point": {
                   "image": "casual/parts/p187.png",
@@ -3382,7 +3383,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 },
                 "beckon": {
                   "image": "casual/parts/p171.png",
@@ -3390,7 +3391,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67
+                  "scale": 0.71
                 }
               }
             },
@@ -3404,7 +3405,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 },
                 "hang": {
@@ -3413,7 +3414,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 },
                 "back": {
@@ -3422,7 +3423,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 },
                 "reach": {
@@ -3431,7 +3432,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 },
                 "open": {
@@ -3440,7 +3441,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 },
                 "pinch": {
@@ -3449,7 +3450,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 },
                 "spread": {
@@ -3458,7 +3459,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 },
                 "point": {
@@ -3467,7 +3468,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 },
                 "beckon": {
@@ -3476,7 +3477,7 @@
                     0.5,
                     0.05
                   ],
-                  "scale": 0.67,
+                  "scale": 0.71,
                   "flipX": true
                 }
               }
@@ -3554,10 +3555,10 @@
             "from": "upper_arm_r",
             "bone": "torso",
             "rect": [
-              250,
+              272,
               330,
-              312,
-              700
+              300,
+              596
             ],
             "tint": 0.55,
             "z": 213
@@ -3566,10 +3567,10 @@
             "from": "upper_arm_l",
             "bone": "torso",
             "rect": [
-              456,
+              468,
               330,
-              518,
-              700
+              496,
+              596
             ],
             "tint": 0.55,
             "z": 213

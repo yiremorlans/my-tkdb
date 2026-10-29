@@ -5,7 +5,7 @@
 //
 // Everything is read from rig.json; open ?character=<id> for another rig,
 // ?outfit=<name> for one of its outfits and ?hands=<set> for one of the
-// outfit's hand sets.
+// outfit's hand sets. The background is flat magenta unless ?room=1.
 
 import { Graphics, Sprite } from "pixi.js";
 
@@ -22,18 +22,20 @@ const base = `/assets/rig/${character}`;
 const $ = (sel) => document.querySelector(sel);
 
 async function main() {
-  // ?leak=1: flat magenta behind him and no room, so any gap between
-  // pieces shows up loudly. ?tier=warm starts at that relationship tier.
+  // Flat magenta behind the character by default, so any gap between
+  // pieces shows up loudly; ?room=1 shows the room instead. ?leak=1 also
+  // hides the dialogue and HUD. ?tier=warm starts at that relationship tier.
   const leakMode = params.has("leak");
   if (leakMode) document.body.classList.add("leak");
+  const room = params.has("room") && !leakMode;
   let scene;
   try {
     scene = await startScene($("#stage"), {
       base,
       tier: params.get("tier"),
       outfit: params.get("outfit"),
-      room: !leakMode,
-      background: leakMode ? "#ff00ff" : "#000",
+      room,
+      background: room ? "#000" : "#ff00ff",
     });
   } catch (err) {
     $("#controls").textContent = err.message;

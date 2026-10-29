@@ -123,7 +123,7 @@ async function main() {
   const ph = ch * zoom;
   const sheet = createCanvas(pw * 3 + 20, ph);
   const s = sheet.getContext("2d");
-  s.fillStyle = arg("bg", "#8e98a3");
+  s.fillStyle = arg("bg", "#ff00ff"); // magenta, so leaks stand out
   s.fillRect(0, 0, sheet.width, sheet.height);
   s.drawImage(rigCanvas, 0, 0);
   s.drawImage(ref, cx, cy, cw, ch, pw + 10, 0, pw, ph);

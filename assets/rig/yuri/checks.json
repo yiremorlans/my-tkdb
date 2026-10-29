@@ -2,9 +2,9 @@
   "angles": {},
   "baselines": {
     "academy": {
-      "leak": 5,
+      "leak": 0,
       "spill": 103,
-      "diff": 1.098,
+      "diff": 1.091,
       "holes": {
         "neck@-4": 21,
         "neck@4": 20,
@@ -26,10 +26,10 @@
         "upper_arm_l@12": 0,
         "forearm_l@-12": 0,
         "forearm_l@110": 106,
-        "hand_r@-35": 1692,
+        "hand_r@-35": 1691,
         "hand_r@35": 0,
         "hand_l@-35": 0,
-        "hand_l@35": 1579
+        "hand_l@35": 1578
       }
     },
     "casual_2": {

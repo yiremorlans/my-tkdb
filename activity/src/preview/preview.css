@@ -74,5 +74,5 @@ body.hide-ui .vn-box, body.hide-ui .choices { display: none; }
 .toggle { display: flex; align-items: center; gap: 6px; margin: 6px 0 2px; }
 .editor-info { font: 11px ui-monospace, monospace; color: var(--muted); white-space: pre-wrap; margin-top: 6px; }
 
-/* ?leak=1 (dev): only Alan over flat magenta, to spot gaps between pieces. */
+/* ?leak=1 (dev): only the character over flat magenta, no dialogue or HUD. */
 body.leak .vn-box, body.leak .choices, body.leak .hud, body.leak .meter { display: none; }
