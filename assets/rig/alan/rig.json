@@ -2670,7 +2670,7 @@
               "scale": 0.68
             },
             "curled": {
-              "image": "roomwear/parts/p144.png",
+              "image": "roomwear/parts/p155.png",
               "pivot": [
                 0.5,
                 0.05
@@ -2686,7 +2686,7 @@
               "scale": 0.68
             },
             "back": {
-              "image": "roomwear/parts/p155.png",
+              "image": "roomwear/parts/p144.png",
               "pivot": [
                 0.5,
                 0.05
@@ -2733,7 +2733,7 @@
               "flipX": true
             },
             "curled": {
-              "image": "roomwear/parts/p144.png",
+              "image": "roomwear/parts/p155.png",
               "pivot": [
                 0.5,
                 0.05
@@ -2751,7 +2751,7 @@
               "flipX": true
             },
             "back": {
-              "image": "roomwear/parts/p155.png",
+              "image": "roomwear/parts/p144.png",
               "pivot": [
                 0.5,
                 0.05

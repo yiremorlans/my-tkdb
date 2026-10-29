@@ -85,9 +85,12 @@ test("Alan's roomwear hands match academy's poses, except academy's open glove",
   }
   const r = assign(scores);
   assert.deepStrictEqual(Object.fromEntries(Object.entries(r.matches).map(([n, m]) => [n, m.part])), {
-    // curled/back: the silhouettes say p155 is the curled hand and p144 the
-    // back of the hand (the opposite of roomwear's current names)
     relaxed: 'p153', curled: 'p155', loose: 'p145', back: 'p144', fist: 'p156', fist_side: 'p147', spread: 'p154',
   });
   assert.deepStrictEqual(r.missing, ['open']);
+  // and roomwear's rig.json names agree with the match
+  const roomwear = withOutfit((await import('../assets/rig/alan/rig.json', { with: { type: 'json' } })).default, 'roomwear');
+  for (const [name, m] of Object.entries(r.matches)) {
+    assert.strictEqual(roomwear.hands.r.poses[name].image, `roomwear/parts/${m.part}.png`, name);
+  }
 });
