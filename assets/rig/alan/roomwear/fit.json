@@ -41,7 +41,7 @@
   ],
   "hands": {
     "pivot": [0.5, 0.05], "z": 230, "limits": [-35, 35], "default": "relaxed",
-    "poses": { "relaxed": "p153", "curled": "p144", "loose": "p145", "back": "p155", "fist": "p156", "fist_side": "p147", "spread": "p154" },
+    "poses": { "relaxed": "p153", "curled": "p155", "loose": "p145", "back": "p144", "fist": "p156", "fist_side": "p147", "spread": "p154" },
     "sides": { "r": { "fit": "hand_r", "parent": "forearm_r" }, "l": { "fit": "hand_l", "parent": "forearm_l" } }
   },
   "hotspots": { "chest": { "part": "tee", "rect": [300, 270, 468, 420] } }
