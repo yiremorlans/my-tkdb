@@ -36,8 +36,11 @@ export async function handSizes(character, outfit, { handSet } = {}) {
     const xs = corners.map((c) => c[0]);
     const x0 = Math.max(0, Math.floor(Math.min(...xs)) - 6);
     const x1 = Math.min(W, Math.ceil(Math.max(...xs)) + 6);
-    const y0 = Math.round(apply(m, [w / 2, h * 0.2])[1]);
-    const y1 = Math.min(H, Math.ceil(Math.max(...corners.map((c) => c[1]))) + 8);
+    // 20% down the drawn box, not the image: a pose drawn upside down
+    // (`artRotation` 180, Romeo's gloves) has its wrist at the image's bottom.
+    const ys = corners.map((c) => c[1]);
+    const y0 = Math.round(Math.min(...ys) + 0.2 * (Math.max(...ys) - Math.min(...ys)));
+    const y1 = Math.min(H, Math.ceil(Math.max(...ys)) + 8);
     let rigArea = 0;
     let spriteArea = 0;
     for (let y = y0; y < y1; y++) {
