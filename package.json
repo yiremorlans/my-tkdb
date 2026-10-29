@@ -13,11 +13,14 @@
     "register": "node commands.js",
     "dev": "nodemon app.js",
     "test": "node --experimental-test-module-mocks --test 'test/**/*.test.js'",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "dev:activity": "vite --config activity/vite.config.js --open /preview.html",
+    "build:activity": "vite build --config activity/vite.config.js"
   },
   "author": "Yire Morlans",
   "license": "MIT",
   "dependencies": {
+    "@discord/embedded-app-sdk": "2.5.0",
     "@supabase/supabase-js": "^2.112.4",
     "canvas": "^3.2.3",
     "discord-interactions": "^4.0.0",
@@ -27,6 +30,9 @@
   },
   "devDependencies": {
     "husky": "^9.1.7",
-    "nodemon": "^3.0.0"
+    "nodemon": "^3.0.0",
+    "pixi.js": "^8.22.0",
+    "pngjs": "^7.0.0",
+    "vite": "^8.3.5"
   }
 }

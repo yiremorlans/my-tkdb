@@ -1184,6 +1184,33 @@ function isEncounterDevOwner(userId) {
 }
 
 /**
+ * `/encdev hangout`: launches the Hangout Activity (docs/hangout-activity.md)
+ * in the channel it's run from, the only way in until release. Returns a
+ * complete interaction response, because LAUNCH_ACTIVITY has to be the
+ * interaction's first response: it can't follow the deferred ack the rest of
+ * /encdev uses. Owner-gated like the rest of /encdev; the token route
+ * re-checks the owner, since anyone in the channel can join a launched
+ * Activity.
+ */
+export function handleEncounterDevHangout(body) {
+  const refusal = encounterDevRefusal(body);
+  if (refusal) return ephemeralResponse(refusal);
+  return { type: InteractionResponseType.LAUNCH_ACTIVITY };
+}
+
+// The gate every /encdev subcommand shares: the refusal to send, or null to
+// go ahead. Owner only, and only in a server.
+function encounterDevRefusal(body) {
+  const userId = userIdOf(body);
+  if (!isEncounterDevOwner(userId)) {
+    console.warn(`[publicEncounters] /encdev refused for ${userId} in ${body.guild_id}`);
+    return 'Unknown command.';
+  }
+  if (!body.guild_id) return 'This only works in a server.';
+  return null;
+}
+
+/**
  * `/encdev` — manual encounter tooling, restricted to OWNER_DISCORD_ID. Exists
  * only to exercise the spawn / reveal / expiry path on demand instead of
  * waiting out the 45–180 minute cadence.
@@ -1193,6 +1220,7 @@ function isEncounterDevOwner(userId) {
  *   /encdev missions                      show this guild's mission slot times for today
  *   /encdev bond <character> <level>      fire a bond scene DM directly (docs/bond-scene-dms.md)
  *   /encdev reset [command]               wipe your own /roam+/meet 3h cooldown and invoke throttle
+ *   /encdev hangout                       launch the Hangout Activity (handleEncounterDevHangout)
  *
  * A manual spawn passes `reanchor: false`, so it never writes guild_settings —
  * the real cadence anchor and the post-failure counter are left exactly as they
@@ -1209,15 +1237,11 @@ function isEncounterDevOwner(userId) {
  * whole thing runs with a ~15s budget rather than the 3s inline one.
  */
 export async function handleEncounterDev(body) {
-  const userId = body.member?.user?.id || body.user?.id;
+  const userId = userIdOf(body);
   const guildId = body.guild_id;
 
-  if (!isEncounterDevOwner(userId)) {
-    console.warn(`[publicEncounters] /encdev refused for ${userId} in ${guildId}`);
-    return { content: 'Unknown command.' };
-  }
-
-  if (!guildId) return { content: 'This only works in a server.' };
+  const refusal = encounterDevRefusal(body);
+  if (refusal) return { content: refusal };
 
   const sub = body.data?.options?.[0];
   const subcommand = sub?.name;

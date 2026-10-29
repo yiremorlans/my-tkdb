@@ -385,6 +385,11 @@ const ENCDEV_COMMAND = {
         },
       ],
     },
+    {
+      type: 1, // SUB_COMMAND
+      name: "hangout",
+      description: "Launch the Hangout Activity here (docs/hangout-activity.md)",
+    },
   ],
 };
 
@@ -584,6 +589,27 @@ const WISHINGWELL_COMMAND = {
   contexts: [0, 1, 2],
 };
 
+// The Hangout Activity's entry point (docs/hangout-activity.md §6). Type 4
+// (PRIMARY_ENTRY_POINT) with handler 2 (DISCORD_LAUNCH_ACTIVITY): Discord
+// launches the Activity itself and never sends app.js an interaction for it.
+// Needs Activities enabled on the app first. Once they are, Discord insists
+// on an entry point and rejects any bulk overwrite without one, so it can't
+// just be left out. Until release the hangout is reached through
+// `/encdev hangout` only: this is hidden like /encdev
+// (default_member_permissions "0"), and the token route refuses everyone
+// but OWNER_DISCORD_ID (activityRoutes.js), so an admin who can still see
+// it, or someone joining the owner's session, gets no further than a
+// refusal.
+const HANGOUT_COMMAND = {
+  name: "hangout",
+  description: "Hang out with a character in their room",
+  type: 4,
+  handler: 2,
+  default_member_permissions: "0",
+  integration_types: [0],
+  contexts: [0],
+};
+
 const ALL_COMMANDS = [
   ROAM_COMMAND,
   MEET_COMMAND,
@@ -600,6 +626,7 @@ const ALL_COMMANDS = [
   COUNTDOWN_COMMAND,
   EVENT_COMMAND,
   WISHINGWELL_COMMAND,
+  HANGOUT_COMMAND,
   ENCDEV_COMMAND,
   MISSIONDEV_COMMAND,
 ];

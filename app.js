@@ -22,7 +22,13 @@ import {
   WARDING_MESSAGE_FLAGS,
 } from './encounters.js';
 import { MEET_PICK_LINES } from './constants/game.js';
-import { handleCall, handleEncountersAdmin, handleEncounterDev, handleSceneClick } from './publicEncounters.js';
+import {
+  handleCall,
+  handleEncounterDev,
+  handleEncounterDevHangout,
+  handleEncountersAdmin,
+  handleSceneClick,
+} from './publicEncounters.js';
 import { buildDossierMessage } from './missions/dossier.js';
 import { handleMissionDev, handleMissionsAdmin } from './missions/admin.js';
 import {
@@ -66,6 +72,7 @@ import {
   trackCommandUsage,
 } from './db/supabase.js';
 import { validateContent } from './constants/validateContent.js';
+import { activityRouter } from './activityRoutes.js';
 import { startGateway } from './gateway.js';
 import { EPHEMERAL, optionValue } from './utils.js';
 
@@ -99,6 +106,24 @@ for (const dir of CACHED_ASSET_DIRS) {
 
 // Serve character/background art so Discord can load it by URL in message components
 app.use('/assets', express.static('assets'));
+
+// The Hangout Activity (docs/hangout-activity.md §6). Its Developer Portal
+// URL mappings point / at this server's root, plus /api and /assets, so the
+// built page (`npm run build:activity` → activity/dist) is served at / and
+// its API under /api/activity. index.html is revalidated on every load so a
+// deploy takes effect at once; everything under static/ has a content hash
+// in its name and never changes. If dist hasn't been built, / just 404s.
+app.use(
+  express.static('activity/dist', {
+    setHeaders(res, filePath) {
+      res.setHeader(
+        'Cache-Control',
+        filePath.endsWith('index.html') ? 'no-cache' : 'public, max-age=31536000, immutable',
+      );
+    },
+  }),
+);
+app.use('/api/activity', activityRouter);
 
 // Returns the sent message object (null if Discord sent no body).
 // edit: true PATCHes the deferred response instead of posting a new followup —
@@ -752,6 +777,12 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         result.afterReply?.().catch(err => console.error(`Error in /${name} follow-up:`, err));
       })();
       return;
+    }
+
+    // Answered inline rather than deferred: LAUNCH_ACTIVITY is only valid as
+    // the interaction's first response.
+    if (name === 'encdev' && data.options?.[0]?.name === 'hangout') {
+      return res.send(handleEncounterDevHangout(req.body));
     }
 
     if (name === 'encdev' || name === 'missiondev') {

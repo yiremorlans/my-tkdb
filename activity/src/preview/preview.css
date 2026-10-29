@@ -1,0 +1,61 @@
+/* Rig preview (dev only): the debug HUD, annoyance meter and slide-out
+   controls drawer, on top of the shared scene styles in
+   ../hangout/hangout.css (preview.html links both). */
+:root {
+  --panel: #1d2027;
+  --line: #2e333d;
+}
+
+/* --- HUD (debug readouts) -------------------------------------------------- */
+.hud {
+  position: absolute;
+  top: calc(8px + var(--safe-top));
+  left: calc(10px + var(--safe-left));
+  right: calc(10px + var(--safe-right));
+  display: flex; justify-content: space-between;
+  font: 12px ui-monospace, monospace; color: #fff;
+  text-shadow: 0 1px 2px #000; pointer-events: none;
+}
+.meter {
+  position: absolute;
+  top: calc(28px + var(--safe-top));
+  left: calc(10px + var(--safe-left));
+  width: 90px; height: 5px;
+  background: rgba(0, 0, 0, 0.5); border-radius: 3px; overflow: hidden;
+  pointer-events: none;
+}
+#meter-fill { height: 100%; width: 0; background: #e0573f; transition: width 80ms linear; }
+
+/* --- debug drawer ---------------------------------------------------------- */
+.drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: min(340px, 92vw);
+  overflow-y: auto;
+  padding: calc(10px + var(--safe-top)) calc(12px + var(--safe-right))
+    calc(10px + var(--safe-bottom)) 12px;
+  background: var(--panel);
+  border-left: 1px solid var(--line);
+  font: 13px/1.4 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  z-index: 10;
+}
+.drawer[hidden] { display: none; }
+.drawer h3 {
+  margin: 14px 0 6px; font-size: 11px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted);
+}
+.drawer h3:first-child { margin-top: 2px; }
+.row { display: flex; flex-wrap: wrap; gap: 4px; }
+.drawer button, .drawer select {
+  background: #2a2f39; color: var(--text); border: 1px solid var(--line);
+  border-radius: 6px; padding: 4px 8px; font: inherit; cursor: pointer;
+}
+.drawer button:hover { border-color: var(--name); }
+.slider { display: grid; grid-template-columns: 110px 1fr 46px; gap: 6px; align-items: center; margin: 2px 0; }
+.slider input { width: 100%; }
+.slider output { font: 11px ui-monospace, monospace; color: var(--muted); text-align: right; }
+.toggle { display: flex; align-items: center; gap: 6px; margin: 6px 0 2px; }
+.editor-info { font: 11px ui-monospace, monospace; color: var(--muted); white-space: pre-wrap; margin-top: 6px; }
+
+/* ?leak=1 (dev): only Alan over flat magenta, to spot gaps between pieces. */
+body.leak .vn-box, body.leak .choices, body.leak .hud, body.leak .meter { display: none; }

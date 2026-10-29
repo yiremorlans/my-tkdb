@@ -1,5 +1,5 @@
 {
-  "ignore": ["assets/*", "node_modules/*", ".git/*"],
+  "ignore": ["assets/*", "node_modules/*", ".git/*", "activity/*"],
   "ext": "js,json",
   "delay": 500
 }

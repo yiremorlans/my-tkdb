@@ -1,0 +1,35 @@
+<!doctype html>
+<!-- Milestone-1 rig preview (dev only, never deployed). See
+     docs/hangout-activity.md §3.4. Run: npm run dev:activity -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Rig Preview</title>
+    <link rel="stylesheet" href="./src/hangout/hangout.css" />
+    <link rel="stylesheet" href="./src/preview/preview.css" />
+  </head>
+  <body>
+    <main id="stage" class="stage">
+      <div class="hud">
+        <span id="fps">-- fps</span>
+        <span id="spot"></span>
+      </div>
+      <div class="meter" title="annoyance"><div id="meter-fill"></div></div>
+
+      <div id="choices" class="choices" hidden></div>
+
+      <section class="vn-box" aria-live="polite">
+        <div class="vn-name"><span id="vn-name">Alan</span></div>
+        <p id="vn-text" class="vn-text"></p>
+        <nav class="vn-icons">
+          <button id="btn-spend" class="vn-icon" title="Spend time" aria-label="Spend time">♥</button>
+          <button id="btn-next" class="vn-icon" title="Next" aria-label="Next">›</button>
+          <button id="btn-debug" class="vn-icon" title="Debug controls" aria-label="Debug controls">⚙</button>
+        </nav>
+      </section>
+    </main>
+    <aside id="controls" class="drawer" hidden></aside>
+    <script type="module" src="./src/preview/preview.js"></script>
+  </body>
+</html>

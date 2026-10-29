@@ -1,0 +1,25 @@
+<!doctype html>
+<!-- The Hangout Activity (docs/hangout-activity.md §4, §6). Built by
+     `npm run build:activity` into activity/dist, which Express serves at /.
+     Inside Discord it signs in through the Embedded App SDK; anywhere else
+     it runs as a plain page. The dev preview is preview.html. -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Hangout</title>
+    <link rel="stylesheet" href="./src/hangout/hangout.css" />
+  </head>
+  <body>
+    <main id="stage" class="stage">
+      <section class="vn-box" aria-live="polite">
+        <div class="vn-name"><span id="vn-name"></span></div>
+        <p id="vn-text" class="vn-text"></p>
+        <nav class="vn-icons">
+          <button id="btn-spend" class="vn-icon" title="Spend time" aria-label="Spend time">♥</button>
+        </nav>
+      </section>
+    </main>
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
