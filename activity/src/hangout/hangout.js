@@ -39,11 +39,16 @@ export class Hangout {
    * Switches to another outfit (rig.json `outfits`). Hotspots and hands come
    * from the new outfit; the hands go back to its defaults.
    */
-  setOutfit(name) {
-    this.renderer.setOutfit(name);
+  setOutfit(name, handSet) {
+    this.renderer.setOutfit(name, handSet);
     this.rig = this.renderer.rig;
     this.motion.rig = this.renderer.rig;
     this.baseHands = { ...this.renderer.handPose };
+  }
+
+  /** Switches the outfit's hand set (rig.json `hands.sets`); hands go back to its defaults. */
+  setHandSet(name) {
+    this.setOutfit(this.renderer.outfit ?? undefined, name);
   }
 
   line(trigger) {

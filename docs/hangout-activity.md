@@ -89,7 +89,11 @@ All tooling lives in `activity/tools/` and runs with Node. Output goes to
 regions, trims each, and writes `parts/<id>.png` plus `parts.json`
 (id → source rect in the atlas). Tiny fragments (stray specks, pieces of a
 larger part split by a gap) are grouped by proximity; anything ambiguous is
-listed for a manual merge rather than guessed.
+listed for a manual merge rather than guessed. The outfit's
+`part-names.json` holds manual merges, names and an `ignore` list of atlas
+rects with helper shapes rather than art (Yuri's flat magenta/green/orange
+masks and blurred purple blob); ignored regions are dropped before ids are
+assigned, so they never shift ids or show up as parts.
 
 ### 3.2 `rig.json`
 
@@ -166,6 +170,19 @@ live) and optional `scale` and `hotspots` (merged over the shared ones).
 flattens one outfit into the shape above, so the renderer and tools are
 otherwise unchanged; the loader validates every outfit, and the preview has
 an outfit picker (`?outfit=<name>`). Alan has `academy` and `roomwear`.
+Every outfit's assets live in its own folder (`academy/`, `roomwear/`:
+parts/, skin/, derived/, parts.json, fit.json); shared head art cut from an
+outfit's atlas keeps that outfit's path.
+
+**Hand sets (decided 2026-10-28).** An outfit's `hands` is one set
+(`{ r, l }`) or several on the same hand parts, for atlases with more than
+one pair (Yuri: white gloves, surgical gloves, bare):
+`"hands": { "defaultSet": "white", "sets": { "white": { "r", "l" }, "bare": { ... } } }`.
+`withOutfit(rig, outfit, { handSet })` flattens the chosen set into `hands`
+(and lists `handSets`), so the app can swap gloves at runtime
+(`RigRenderer`/`Hangout.setHandSet`, e.g. from a reaction) without another
+outfit. Only the set the sprite shows is fitted; the others are named by
+`match-hands.js` against it. Preview: `?hands=<set>` and a picker.
 
 **Hierarchy (Alan):** `root → hips → torso → { neck → head → { face layers,
 hair locks }, shoulder_l/r → upper_arm → forearm → hand }`, legs static. Arms
@@ -224,6 +241,53 @@ room background, plus:
   `alan_academy.png`, then export changed values back into `rig.json`
 
 Milestone 1 ends when the user signs off on the look and feel here.
+
+### 3.5 Pipeline tools (any character, any outfit)
+
+Everything character- or outfit-specific is data: rig.json,
+`<outfit dir>/fit.json` (fitting), `part-names.json` (slicing),
+`checks.json` (quality baselines). Order for a new character or outfit:
+
+1. **`new-rig.js <character> [--hair atlas|portrait]`** (new character):
+   starting rig.json with the standard skeleton (root → hips → torso → neck
+   → head; shoulder → upper_arm → forearm per side), `bones`, motion and
+   annoyance defaults, one outfit, the atlas sliced into its folder, and a
+   fit.json template. Starting joints are measured from the character's own
+   sprite (narrowest neck row, crotch), never copied from another rig; the
+   first fit sets them from the fitted parts (fit.json `bones`).
+2. **`slice-atlas.js <character> --outfit <name>`** (§3.1).
+3. **`register-head.js <character> --outfit <name>`** (second+ outfit):
+   ECC on the head box finds how the outfit's sprite draws the shared head
+   (alan_room.png: 1.33% smaller, ~6 px lower at the neck), reports it, and
+   writes the registered sprite as the outfit's `referenceImage`.
+4. **`fit-outfit.js <character> --outfit <name> [--propose]`**: fit.json
+   lists candidate atlas parts, approximate centers, front-to-back order,
+   parent bone, z, optional `rotate`, and overrides/pins for mostly hidden
+   or hand-refined parts. Front-to-back peeling with the shared head
+   covering the neck; scales in a narrow band around the outfit's scale;
+   centers from the fitted template size. `--propose` estimates the scale
+   and rough centers with a coarse whole-image search for a human to
+   confirm. `lines` binds a line-art layer to its fill. Rerunning it on
+   Alan reproduces rig.json byte for byte (academy is pinned to its
+   refined values and reports how close the search lands).
+5. **`match-hands.js <character> --outfit <new> [--from <outfit>] [--set <set>]`**:
+   names hand poses by silhouette against an existing outfit's (or set's),
+   and flags poses with no counterpart (roomwear has no "open").
+6. **`build-sprite-skin.js`**: one skin group per bone with art; the
+   character's shared `spriteSkin` holds the neck fixes (underlays, neck
+   shade, jaw patch); an outfit's lists only overrides (academy: the
+   front/back torso split, mesh-bent lower sleeves; roomwear: the jaw patch
+   down to row 256).
+7. **`check-rig.js <character> --outfit <name> [--record]`**: rest-pose leak
+   (sprite opaque, rig empty: magenta in `?leak=1`) and spill, enclosed
+   holes at each bone's rotation limits (plus checks.json `angles`, split
+   into tears and walled-in background), and the mean diff vs the
+   reference, each naming the parts involved. `test/hangout-rig-check.test.js`
+   fails when an outfit gets worse than its recorded numbers. Alan's
+   baselines include academy's boot leaks, its 870 px elbow gap at forearm
+   ±60° (mostly background walled in by the bent arm), and the 17 px
+   hair-crown leak both outfits share.
+8. **`render-rig.js`** for a side-by-side with the reference.
 
 ---
 
@@ -370,11 +434,14 @@ activity/
     preview/          # the preview's debug drawer, HUD and editor
     discord.js        # SDK init + auth (no-op outside Discord)
   tools/
-    slice-atlas.js
-    build-overlays.js
+    new-rig.js  slice-atlas.js  register-head.js  fit-outfit.js
+    match-hands.js  build-sprite-skin.js  check-rig.js  render-rig.js
+    build-overlays.js  build-portrait-hair.js
+    lib/              # render (node-canvas), match (template fits), skin-config
   vite.config.js
 assets/rig/alan/
-  source/  parts/  overlays/  rig.json  parts.json
+  source/  overlays/  hair/  rig.json  checks.json
+  academy/  roomwear/   # parts/ skin/ derived/ parts.json fit.json fits.json
 constants/hangout/alan.js
 db/migrations/035_hangout.sql
 activityRoutes.js

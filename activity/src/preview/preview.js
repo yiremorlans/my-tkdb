@@ -3,8 +3,9 @@
 // readout with a 30fps cap, and the part editor that saves back to
 // rig.json. See docs/hangout-activity.md §3.4.
 //
-// Everything is read from rig.json; open ?character=<id> for another rig
-// and ?outfit=<name> for one of its outfits.
+// Everything is read from rig.json; open ?character=<id> for another rig,
+// ?outfit=<name> for one of its outfits and ?hands=<set> for one of the
+// outfit's hand sets.
 
 import { Graphics, Sprite } from "pixi.js";
 
@@ -39,6 +40,7 @@ async function main() {
     return;
   }
   const { app, rig, renderer, motion, hangout, say } = scene;
+  if (params.get("hands") && renderer.rig.handSets?.includes(params.get("hands"))) hangout.setHandSet(params.get("hands"));
   const original = JSON.parse(JSON.stringify(rig));
 
   // The outfit's reference sprite, faded over the rig while editing.
@@ -199,11 +201,32 @@ async function main() {
     hangout.setOutfit(name);
     reference.texture = await loadTexture(`${base}/${renderer.rig.referenceImage}`);
     showHands();
+    showHandSets();
     showPartList();
     selectPart(null);
     const url = new URL(location.href);
     url.searchParams.set("outfit", name);
+    url.searchParams.delete("hands");
     history.replaceState(null, "", url);
+  }
+
+  // Hand sets (gloves on/off) are per outfit; the row only shows with two or more.
+  const handSetRow = section("Hand set");
+  const handSetPick = document.createElement("select");
+  handSetPick.onchange = () => {
+    hangout.setHandSet(handSetPick.value);
+    showHands();
+    const url = new URL(location.href);
+    url.searchParams.set("hands", handSetPick.value);
+    history.replaceState(null, "", url);
+  };
+  handSetRow.append(handSetPick);
+  function showHandSets() {
+    const sets = renderer.rig.handSets ?? [];
+    handSetPick.replaceChildren(...sets.map((name) => new Option(name, name)));
+    handSetPick.value = renderer.rig.handSet ?? "";
+    handSetRow.hidden = sets.length < 2;
+    if (handSetRow.previousElementSibling?.tagName === "H3") handSetRow.previousElementSibling.hidden = sets.length < 2;
   }
 
   const moodRow = section("Moods");
@@ -244,6 +267,7 @@ async function main() {
     }
   }
   showHands();
+  showHandSets();
 
   const motionRow = section("Idle motion");
   for (const [name, params] of Object.entries(rig.motion ?? {})) {

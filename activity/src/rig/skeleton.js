@@ -25,7 +25,9 @@
 // replace. `dir` is where the outfit's generated assets live (parts/, skin/,
 // parts.json), relative to the rig directory; `atlas` is its source atlas.
 // withOutfit() flattens one outfit into the single-outfit shape everything
-// else (solve, the renderer, the tools) works on.
+// else (solve, the renderer, the tools) works on. `spriteSkin` is read only
+// by the tools: an outfit's holds overrides that activity/tools/lib/
+// skin-config.js merges over the rig's shared one.
 export const OUTFIT_KEYS = [
   "parts", "hands", "spriteSkin", "referenceImage", "reference", "scale", "hotspots", "atlas", "dir",
 ];
@@ -37,24 +39,50 @@ export function outfitNames(rig) {
   return names.includes(first) ? [first, ...names.filter((n) => n !== first)] : names;
 }
 
+// Hand sets. An outfit's `hands` is one set ({ r, l }), or several the app
+// can swap between (gloves on or off), all on the same hand parts:
+//   "hands": { "defaultSet": "white",
+//              "sets": { "white": { "r": {...}, "l": {...} }, "bare": { ... } } }
+// withOutfit() flattens the chosen set into `hands`, and lists the set
+// names in `handSets` (with the chosen one in `handSet`).
+
+/** Hand set names for an outfit's `hands`, the default first ([] for a single set). */
+export function handSetNames(hands) {
+  const names = Object.keys(hands?.sets ?? {});
+  const first = hands?.defaultSet ?? names[0];
+  return names.includes(first) ? [first, ...names.filter((n) => n !== first)] : names;
+}
+
 /**
  * rig.json with one outfit applied, in the flat single-outfit shape. Part
  * objects are shared with `rig`, not copied, so edits to the result (the
  * preview's part editor) land in the source. A rig without `outfits` is
- * returned as is.
+ * returned as is. `handSet` picks one of the outfit's hand sets (default:
+ * its defaultSet).
  */
-export function withOutfit(rig, name = rig.defaultOutfit) {
-  if (!rig.outfits) return rig;
+export function withOutfit(rig, name = rig.defaultOutfit, { handSet } = {}) {
+  if (!rig.outfits) return withHandSet(rig, handSet);
   const outfit = rig.outfits[name];
   if (!outfit) throw new Error(`unknown outfit ${name}`);
   const { outfits, defaultOutfit, ...shared } = rig;
-  return {
+  return withHandSet({
     ...shared,
     ...outfit,
     outfit: name,
     parts: [...(shared.parts ?? []), ...(outfit.parts ?? [])],
     hotspots: { ...shared.hotspots, ...outfit.hotspots },
-  };
+  }, handSet);
+}
+
+function withHandSet(flat, handSet) {
+  const names = handSetNames(flat.hands);
+  if (!names.length) {
+    if (handSet) throw new Error(`no hand sets${flat.outfit ? ` in ${flat.outfit}` : ""}`);
+    return flat;
+  }
+  const set = handSet ?? names[0];
+  if (!flat.hands.sets[set]) throw new Error(`unknown hand set ${set}`);
+  return { ...flat, hands: flat.hands.sets[set], handSet: set, handSets: names };
 }
 
 /**
@@ -97,7 +125,14 @@ export function validateRig(rig, { imageExists = () => true } = {}) {
       if (!OUTFIT_KEYS.includes(key)) own.push(`unknown key ${key}`);
     }
     if (!Array.isArray(outfit?.parts)) own.push("`parts` must be an array");
-    else own.push(...rigProblems(withOutfit(rig, name), imageExists));
+    else {
+      own.push(...handSetProblems(outfit.hands));
+      own.push(...rigProblems(withOutfit(rig, name), imageExists));
+      // every other hand set's hands too, under its name
+      for (const set of handSetNames(outfit.hands).slice(1)) {
+        for (const p of handProblems(withOutfit(rig, name, { handSet: set }), imageExists)) own.push(`hand set ${set}: ${p}`);
+      }
+    }
     perOutfit.set(name, own);
   }
   const everywhere = names.length > 1
@@ -147,12 +182,7 @@ function rigProblems(rig, imageExists) {
   }
 
   const known = (id) => byId.has(id);
-  for (const [side, hand] of Object.entries(rig.hands ?? {})) {
-    if (!known(hand.part)) problems.push(`hands.${side}: unknown part ${hand.part}`);
-    if (hand.default && !hand.poses?.[hand.default]) {
-      problems.push(`hands.${side}: default pose ${hand.default} not in poses`);
-    }
-  }
+  problems.push(...handProblems(rig, () => true));
   for (const [name, group] of Object.entries(rig.groups ?? {})) {
     for (const id of group.flat()) {
       if (!known(id)) problems.push(`groups.${name}: unknown part ${id}`);
@@ -168,6 +198,32 @@ function rigProblems(rig, imageExists) {
   }
   for (const [name, spot] of Object.entries(rig.hotspots ?? {})) {
     if (!known(spot.part)) problems.push(`hotspots.${name}: unknown part ${spot.part}`);
+  }
+  return problems;
+}
+
+function handSetProblems(hands) {
+  if (!hands?.sets) return [];
+  const problems = [];
+  if (!Object.keys(hands.sets).length) problems.push("hands.sets is empty");
+  if (hands.defaultSet != null && !hands.sets[hands.defaultSet]) problems.push(`hands.defaultSet ${hands.defaultSet} not in sets`);
+  for (const key of Object.keys(hands)) if (key !== "sets" && key !== "defaultSet") problems.push(`hands: unknown key ${key} beside sets`);
+  return problems;
+}
+
+// A flat rig's hands: known parts, a default pose that exists, and (with
+// `imageExists`) every pose image on disk.
+function handProblems(rig, imageExists) {
+  const ids = new Set(rig.parts.map((p) => p.id));
+  const problems = [];
+  for (const [side, hand] of Object.entries(rig.hands ?? {})) {
+    if (!ids.has(hand.part)) problems.push(`hands.${side}: unknown part ${hand.part}`);
+    if (hand.default && !hand.poses?.[hand.default]) {
+      problems.push(`hands.${side}: default pose ${hand.default} not in poses`);
+    }
+    for (const pose of Object.values(hand.poses ?? {})) {
+      if (pose.image && !imageExists(pose.image)) problems.push(`missing image ${pose.image}`);
+    }
   }
   return problems;
 }
@@ -198,11 +254,15 @@ function findCycle(parts, byId) {
  */
 export function imagesOf(rig) {
   if (rig.outfits) {
-    return [...new Set(Object.keys(rig.outfits).flatMap((name) => imagesOf(withOutfit(rig, name))))];
+    return [...new Set(Object.keys(rig.outfits).flatMap((name) => {
+      const sets = handSetNames(rig.outfits[name].hands);
+      return (sets.length ? sets : [undefined]).flatMap((handSet) => imagesOf(withOutfit(rig, name, { handSet })));
+    }))];
   }
   const files = new Set();
   for (const part of rig.parts) if (part.image) files.add(part.image);
-  for (const hand of Object.values(rig.hands ?? {})) {
+  const sets = rig.hands?.sets ? Object.values(rig.hands.sets) : [rig.hands ?? {}];
+  for (const hand of sets.flatMap((set) => Object.values(set))) {
     for (const pose of Object.values(hand.poses ?? {})) files.add(pose.image);
   }
   for (const mood of Object.values(rig.expressions?.moods ?? {})) {

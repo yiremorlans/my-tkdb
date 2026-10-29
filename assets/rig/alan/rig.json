@@ -75,7 +75,7 @@
     {
       "id": "ear_r",
       "parent": "head",
-      "image": "parts/p093.png",
+      "image": "academy/parts/p093.png",
       "position": [
         -45.49,
         -47.53
@@ -90,7 +90,7 @@
     {
       "id": "ear_l",
       "parent": "head",
-      "image": "parts/p094.png",
+      "image": "academy/parts/p094.png",
       "position": [
         45.61,
         -45.97
@@ -105,7 +105,7 @@
     {
       "id": "face_base",
       "parent": "head",
-      "image": "parts/p117.png",
+      "image": "academy/parts/p117.png",
       "position": [
         -2.26,
         -49.64
@@ -120,7 +120,7 @@
     {
       "id": "jaw",
       "parent": "head",
-      "image": "parts/p097.png",
+      "image": "academy/parts/p097.png",
       "position": [
         -0.4,
         -14.27
@@ -136,7 +136,7 @@
     {
       "id": "nose",
       "parent": "head",
-      "image": "parts/p048.png",
+      "image": "academy/parts/p048.png",
       "position": [
         -4.42,
         -34.02
@@ -151,7 +151,7 @@
     {
       "id": "lip_shade",
       "parent": "head",
-      "image": "parts/p085.png",
+      "image": "academy/parts/p085.png",
       "position": [
         -1.46,
         -8.96
@@ -166,7 +166,7 @@
     {
       "id": "lip_shade_b",
       "parent": "head",
-      "image": "parts/p081.png",
+      "image": "academy/parts/p081.png",
       "position": [
         -0.09,
         -7.45
@@ -181,7 +181,7 @@
     {
       "id": "eye_white_l",
       "parent": "head",
-      "image": "parts/p052.png",
+      "image": "academy/parts/p052.png",
       "position": [
         25.01,
         -56.2
@@ -200,7 +200,7 @@
     {
       "id": "eye_white_r",
       "parent": "head",
-      "image": "parts/p055.png",
+      "image": "academy/parts/p055.png",
       "position": [
         -16.76,
         -56.18
@@ -218,7 +218,7 @@
     {
       "id": "iris_l",
       "parent": "head",
-      "image": "parts/p053.png",
+      "image": "academy/parts/p053.png",
       "position": [
         25.33,
         -57.91
@@ -233,7 +233,7 @@
     {
       "id": "iris_r",
       "parent": "head",
-      "image": "parts/p054.png",
+      "image": "academy/parts/p054.png",
       "position": [
         -23.71,
         -57.08
@@ -249,7 +249,7 @@
     {
       "id": "iris_shine_r",
       "parent": "head",
-      "image": "parts/p031.png",
+      "image": "academy/parts/p031.png",
       "position": [
         -27.97,
         -56.65
@@ -264,7 +264,7 @@
     {
       "id": "iris_shine_l",
       "parent": "head",
-      "image": "parts/p036.png",
+      "image": "academy/parts/p036.png",
       "position": [
         20.56,
         -53.69
@@ -279,7 +279,7 @@
     {
       "id": "iris_shine_l_b",
       "parent": "head",
-      "image": "parts/p060.png",
+      "image": "academy/parts/p060.png",
       "position": [
         19.39,
         -54.11
@@ -295,7 +295,7 @@
     {
       "id": "lash_r",
       "parent": "head",
-      "image": "parts/p042.png",
+      "image": "academy/parts/p042.png",
       "position": [
         -25.52,
         -57.59
@@ -310,7 +310,7 @@
     {
       "id": "lash_l",
       "parent": "head",
-      "image": "parts/p045.png",
+      "image": "academy/parts/p045.png",
       "position": [
         23.42,
         -57.69
@@ -325,7 +325,7 @@
     {
       "id": "lid_r",
       "parent": "head",
-      "image": "parts/p018.png",
+      "image": "academy/parts/p018.png",
       "position": [
         -17.65,
         -56.07
@@ -340,7 +340,7 @@
     {
       "id": "lid_r_b",
       "parent": "head",
-      "image": "parts/p019.png",
+      "image": "academy/parts/p019.png",
       "position": [
         -17.9,
         -56.16
@@ -356,7 +356,7 @@
     {
       "id": "lid_l",
       "parent": "head",
-      "image": "parts/p022.png",
+      "image": "academy/parts/p022.png",
       "position": [
         29.21,
         -56.71
@@ -372,7 +372,7 @@
     {
       "id": "lid_l_b",
       "parent": "head",
-      "image": "parts/p027.png",
+      "image": "academy/parts/p027.png",
       "position": [
         29.21,
         -56.71
@@ -387,7 +387,7 @@
     {
       "id": "lowlid_r",
       "parent": "head",
-      "image": "parts/p066.png",
+      "image": "academy/parts/p066.png",
       "position": [
         -24.82,
         -52.49
@@ -402,7 +402,7 @@
     {
       "id": "lowlid_l",
       "parent": "head",
-      "image": "parts/p064.png",
+      "image": "academy/parts/p064.png",
       "position": [
         25.57,
         -52.64
@@ -417,7 +417,7 @@
     {
       "id": "brow_r",
       "parent": "head",
-      "image": "parts/p026.png",
+      "image": "academy/parts/p026.png",
       "position": [
         -25.54,
         -66.5
@@ -432,7 +432,7 @@
     {
       "id": "brow_l",
       "parent": "head",
-      "image": "parts/p029.png",
+      "image": "academy/parts/p029.png",
       "position": [
         24.29,
         -66.15
@@ -447,7 +447,7 @@
     {
       "id": "mouth",
       "parent": "head",
-      "image": "parts/p091.png",
+      "image": "academy/parts/p091.png",
       "position": [
         1.95,
         -11.15
@@ -463,7 +463,7 @@
     {
       "id": "blush_l",
       "parent": "head",
-      "image": "parts/p151.png",
+      "image": "academy/parts/p151.png",
       "position": [
         26.95,
         -41.12
@@ -479,7 +479,7 @@
     {
       "id": "blush_r",
       "parent": "head",
-      "image": "parts/p150.png",
+      "image": "academy/parts/p150.png",
       "position": [
         -27.72,
         -41.16
@@ -496,7 +496,7 @@
     {
       "id": "sweat",
       "parent": "head",
-      "image": "parts/p107.png",
+      "image": "academy/parts/p107.png",
       "position": [
         26.68,
         -24.91
@@ -986,10 +986,54 @@
       "amount": 0.01
     }
   },
+  "spriteSkin": {
+    "dilate": 5,
+    "skip": [
+      "head",
+      "hand_r",
+      "hand_l",
+      "neck_skin"
+    ],
+    "underlays": [
+      {
+        "id": "skin_head_underlay",
+        "from": "head",
+        "bone": "neck",
+        "belowY": 140,
+        "tint": 0.55,
+        "z": 394
+      }
+    ],
+    "shades": [
+      {
+        "id": "skin_neck_shade",
+        "part": "neck_skin",
+        "bone": "torso",
+        "minDiff": 12,
+        "z": 190.5
+      },
+      {
+        "id": "skin_jaw_patch",
+        "parts": [
+          "neck_skin",
+          "face_base",
+          "jaw"
+        ],
+        "mode": "replace",
+        "rows": [
+          190,
+          242
+        ],
+        "fade": 14,
+        "bone": "neck",
+        "z": 191
+      }
+    ]
+  },
   "outfits": {
     "academy": {
       "atlas": "source/alan_academy_00.png",
-      "dir": ".",
+      "dir": "academy",
       "referenceImage": "source/alan_academy.png",
       "parts": [
         {
@@ -1067,7 +1111,7 @@
         {
           "id": "leg_r",
           "parent": "hips",
-          "image": "derived/leg_r_faded.png",
+          "image": "academy/derived/leg_r_faded.png",
           "position": [
             -61,
             -26.6
@@ -1085,7 +1129,7 @@
         {
           "id": "leg_l",
           "parent": "hips",
-          "image": "derived/leg_l_faded.png",
+          "image": "academy/derived/leg_l_faded.png",
           "position": [
             60.5,
             -32.88
@@ -1103,7 +1147,7 @@
         {
           "id": "pants_top",
           "parent": "hips",
-          "image": "derived/pants_top_faded.png",
+          "image": "academy/derived/pants_top_faded.png",
           "position": [
             -0.06,
             0.7
@@ -1121,7 +1165,7 @@
         {
           "id": "boot_r",
           "parent": "hips",
-          "image": "parts/p206.png",
+          "image": "academy/parts/p206.png",
           "position": [
             -118.42,
             642.28
@@ -1136,7 +1180,7 @@
         {
           "id": "boot_l",
           "parent": "hips",
-          "image": "parts/p206.png",
+          "image": "academy/parts/p206.png",
           "position": [
             118.33,
             642.78
@@ -1152,7 +1196,7 @@
         {
           "id": "neck_skin",
           "parent": "torso",
-          "image": "parts/p137.png",
+          "image": "academy/parts/p137.png",
           "position": [
             2,
             -374.7
@@ -1170,7 +1214,7 @@
         {
           "id": "shirt",
           "parent": "torso",
-          "image": "parts/p014.png",
+          "image": "academy/parts/p014.png",
           "position": [
             0.5,
             -282.85
@@ -1185,7 +1229,7 @@
         {
           "id": "necklace",
           "parent": "torso",
-          "image": "parts/p109.png",
+          "image": "academy/parts/p109.png",
           "position": [
             1.1,
             -366.55
@@ -1200,7 +1244,7 @@
         {
           "id": "necklace_tag",
           "parent": "torso",
-          "image": "parts/p144.png",
+          "image": "academy/parts/p144.png",
           "position": [
             0.08,
             -325.74
@@ -1218,7 +1262,7 @@
         {
           "id": "sleeve_inner_r",
           "parent": "upper_arm_r",
-          "image": "parts/p189.png",
+          "image": "academy/parts/p189.png",
           "position": [
             -17.35,
             25.65
@@ -1236,7 +1280,7 @@
         {
           "id": "forearm_skin_r",
           "parent": "forearm_r",
-          "image": "parts/p184.png",
+          "image": "academy/parts/p184.png",
           "position": [
             -10.7,
             91.54
@@ -1254,7 +1298,7 @@
         {
           "id": "sleeve_lower_r",
           "parent": "forearm_r",
-          "image": "parts/p202.png",
+          "image": "academy/parts/p202.png",
           "position": [
             -0.28,
             34.87
@@ -1273,7 +1317,7 @@
         {
           "id": "sleeve_upper_r",
           "parent": "upper_arm_r",
-          "image": "parts/p203.png",
+          "image": "academy/parts/p203.png",
           "position": [
             -2.67,
             89.43
@@ -1291,7 +1335,7 @@
         {
           "id": "cuff_r",
           "parent": "forearm_r",
-          "image": "parts/p212.png",
+          "image": "academy/parts/p212.png",
           "position": [
             -3.55,
             74.5
@@ -1306,7 +1350,7 @@
         {
           "id": "sleeve_inner_l",
           "parent": "upper_arm_l",
-          "image": "parts/p189.png",
+          "image": "academy/parts/p189.png",
           "position": [
             17.15,
             26.15
@@ -1322,7 +1366,7 @@
         {
           "id": "forearm_skin_l",
           "parent": "forearm_l",
-          "image": "parts/p184.png",
+          "image": "academy/parts/p184.png",
           "position": [
             10.05,
             88.06
@@ -1341,7 +1385,7 @@
         {
           "id": "sleeve_lower_l",
           "parent": "forearm_l",
-          "image": "parts/p202.png",
+          "image": "academy/parts/p202.png",
           "position": [
             -0.27,
             34.87
@@ -1361,7 +1405,7 @@
         {
           "id": "sleeve_upper_l",
           "parent": "upper_arm_l",
-          "image": "parts/p203.png",
+          "image": "academy/parts/p203.png",
           "position": [
             2.08,
             89.43
@@ -1380,7 +1424,7 @@
         {
           "id": "cuff_l",
           "parent": "forearm_l",
-          "image": "parts/p212.png",
+          "image": "academy/parts/p212.png",
           "position": [
             2.95,
             74.5
@@ -1396,7 +1440,7 @@
         {
           "id": "hand_r",
           "parent": "forearm_r",
-          "image": "parts/p207.png",
+          "image": "academy/parts/p207.png",
           "position": [
             -14.31,
             154.9
@@ -1417,7 +1461,7 @@
         {
           "id": "hand_l",
           "parent": "forearm_l",
-          "image": "parts/p207.png",
+          "image": "academy/parts/p207.png",
           "position": [
             13.68,
             154.9
@@ -1439,7 +1483,7 @@
         {
           "id": "bracelet_l",
           "parent": "forearm_l",
-          "image": "parts/p161.png",
+          "image": "academy/parts/p161.png",
           "position": [
             13.58,
             152.88
@@ -1457,7 +1501,7 @@
         {
           "id": "vest",
           "parent": "torso",
-          "image": "parts/p126.png",
+          "image": "academy/parts/p126.png",
           "position": [
             0.2,
             -196.35
@@ -1472,7 +1516,7 @@
         {
           "id": "pocket_chain",
           "parent": "torso",
-          "image": "parts/p146.png",
+          "image": "academy/parts/p146.png",
           "position": [
             27.1,
             -110.65
@@ -1487,7 +1531,7 @@
         {
           "id": "pocket_chain_drop",
           "parent": "torso",
-          "image": "parts/p129.png",
+          "image": "academy/parts/p129.png",
           "position": [
             75.3,
             -81.21
@@ -1505,7 +1549,7 @@
         {
           "id": "pocket_fob",
           "parent": "torso",
-          "image": "parts/p113.png",
+          "image": "academy/parts/p113.png",
           "position": [
             58.19,
             -58.5
@@ -1523,7 +1567,7 @@
         {
           "id": "vest_button_0",
           "parent": "torso",
-          "image": "parts/p138.png",
+          "image": "academy/parts/p138.png",
           "position": [
             -0.85,
             -203.6
@@ -1541,7 +1585,7 @@
         {
           "id": "vest_button_1",
           "parent": "torso",
-          "image": "parts/p139.png",
+          "image": "academy/parts/p139.png",
           "position": [
             -0.6,
             -167.2
@@ -1559,7 +1603,7 @@
         {
           "id": "vest_button_2",
           "parent": "torso",
-          "image": "parts/p141.png",
+          "image": "academy/parts/p141.png",
           "position": [
             -0.6,
             -134.95
@@ -1577,7 +1621,7 @@
         {
           "id": "vest_button_3",
           "parent": "torso",
-          "image": "parts/p142.png",
+          "image": "academy/parts/p142.png",
           "position": [
             -0.85,
             -98.1
@@ -1595,7 +1639,7 @@
         {
           "id": "collar_r",
           "parent": "torso",
-          "image": "parts/p154.png",
+          "image": "academy/parts/p154.png",
           "position": [
             -42.59,
             -373.49
@@ -1610,7 +1654,7 @@
         {
           "id": "collar_l",
           "parent": "torso",
-          "image": "parts/p155.png",
+          "image": "academy/parts/p155.png",
           "position": [
             42.7,
             -375.8
@@ -1625,7 +1669,7 @@
         {
           "id": "neck_hires",
           "parent": "torso",
-          "image": "derived/neck_hires.png",
+          "image": "academy/derived/neck_hires.png",
           "position": [
             -46,
             -448
@@ -1640,7 +1684,7 @@
         {
           "id": "skin_hips",
           "parent": "hips",
-          "image": "skin/skin_hips.png",
+          "image": "academy/skin/skin_hips.png",
           "position": [
             -180,
             -61
@@ -1655,7 +1699,7 @@
         {
           "id": "skin_torso_back",
           "parent": "torso",
-          "image": "skin/skin_torso_back.png",
+          "image": "academy/skin/skin_torso_back.png",
           "position": [
             -141,
             -436
@@ -1670,7 +1714,7 @@
         {
           "id": "skin_torso_front",
           "parent": "torso",
-          "image": "skin/skin_torso_front.png",
+          "image": "academy/skin/skin_torso_front.png",
           "position": [
             -99,
             -427
@@ -1685,7 +1729,7 @@
         {
           "id": "skin_upper_arm_r",
           "parent": "upper_arm_r",
-          "image": "skin/skin_upper_arm_r.png",
+          "image": "academy/skin/skin_upper_arm_r.png",
           "position": [
             -42,
             -13
@@ -1700,7 +1744,7 @@
         {
           "id": "skin_upper_arm_l",
           "parent": "upper_arm_l",
-          "image": "skin/skin_upper_arm_l.png",
+          "image": "academy/skin/skin_upper_arm_l.png",
           "position": [
             -34,
             -12
@@ -1715,7 +1759,7 @@
         {
           "id": "skin_sleeve_lower_r",
           "parent": "forearm_r",
-          "image": "skin/skin_sleeve_lower_r.png",
+          "image": "academy/skin/skin_sleeve_lower_r.png",
           "position": [
             -40,
             -1
@@ -1734,7 +1778,7 @@
         {
           "id": "skin_sleeve_lower_l",
           "parent": "forearm_l",
-          "image": "skin/skin_sleeve_lower_l.png",
+          "image": "academy/skin/skin_sleeve_lower_l.png",
           "position": [
             -35,
             -2
@@ -1753,7 +1797,7 @@
         {
           "id": "skin_forearm_r",
           "parent": "forearm_r",
-          "image": "skin/skin_forearm_r.png",
+          "image": "academy/skin/skin_forearm_r.png",
           "position": [
             -40,
             50
@@ -1768,7 +1812,7 @@
         {
           "id": "skin_forearm_l",
           "parent": "forearm_l",
-          "image": "skin/skin_forearm_l.png",
+          "image": "academy/skin/skin_forearm_l.png",
           "position": [
             -33,
             50
@@ -1783,7 +1827,7 @@
         {
           "id": "skin_head_underlay",
           "parent": "neck",
-          "image": "skin/skin_head_underlay.png",
+          "image": "academy/skin/skin_head_underlay.png",
           "position": [
             -63,
             -122
@@ -1798,7 +1842,7 @@
         {
           "id": "skin_neck_shade",
           "parent": "torso",
-          "image": "skin/skin_neck_shade.png",
+          "image": "academy/skin/skin_neck_shade.png",
           "position": [
             -32,
             -431
@@ -1813,7 +1857,7 @@
         {
           "id": "skin_jaw_patch",
           "parent": "neck",
-          "image": "skin/skin_jaw_patch.png",
+          "image": "academy/skin/skin_jaw_patch.png",
           "position": [
             -29,
             -53
@@ -1832,7 +1876,7 @@
           "default": "relaxed",
           "poses": {
             "relaxed": {
-              "image": "parts/p207.png",
+              "image": "academy/parts/p207.png",
               "pivot": [
                 0.5,
                 0.05
@@ -1840,7 +1884,7 @@
               "scale": 0.7107
             },
             "curled": {
-              "image": "parts/p176.png",
+              "image": "academy/parts/p176.png",
               "pivot": [
                 0.5,
                 0.05
@@ -1848,7 +1892,7 @@
               "scale": 0.7107
             },
             "loose": {
-              "image": "parts/p178.png",
+              "image": "academy/parts/p178.png",
               "pivot": [
                 0.5,
                 0.05
@@ -1856,7 +1900,7 @@
               "scale": 0.7107
             },
             "back": {
-              "image": "parts/p208.png",
+              "image": "academy/parts/p208.png",
               "pivot": [
                 0.5,
                 0.05
@@ -1864,7 +1908,7 @@
               "scale": 0.7107
             },
             "open": {
-              "image": "parts/p196.png",
+              "image": "academy/parts/p196.png",
               "pivot": [
                 0.5,
                 0.05
@@ -1872,7 +1916,7 @@
               "scale": 0.7107
             },
             "fist": {
-              "image": "parts/p197.png",
+              "image": "academy/parts/p197.png",
               "pivot": [
                 0.5,
                 0.05
@@ -1880,7 +1924,7 @@
               "scale": 0.7107
             },
             "fist_side": {
-              "image": "parts/p200.png",
+              "image": "academy/parts/p200.png",
               "pivot": [
                 0.5,
                 0.05
@@ -1888,7 +1932,7 @@
               "scale": 0.7107
             },
             "spread": {
-              "image": "parts/p209.png",
+              "image": "academy/parts/p209.png",
               "pivot": [
                 0.5,
                 0.05
@@ -1902,7 +1946,7 @@
           "default": "relaxed",
           "poses": {
             "relaxed": {
-              "image": "parts/p207.png",
+              "image": "academy/parts/p207.png",
               "pivot": [
                 0.5,
                 0.05
@@ -1911,7 +1955,7 @@
               "flipX": true
             },
             "curled": {
-              "image": "parts/p176.png",
+              "image": "academy/parts/p176.png",
               "pivot": [
                 0.5,
                 0.05
@@ -1920,7 +1964,7 @@
               "flipX": true
             },
             "loose": {
-              "image": "parts/p178.png",
+              "image": "academy/parts/p178.png",
               "pivot": [
                 0.5,
                 0.05
@@ -1929,7 +1973,7 @@
               "flipX": true
             },
             "back": {
-              "image": "parts/p208.png",
+              "image": "academy/parts/p208.png",
               "pivot": [
                 0.5,
                 0.05
@@ -1938,7 +1982,7 @@
               "flipX": true
             },
             "open": {
-              "image": "parts/p196.png",
+              "image": "academy/parts/p196.png",
               "pivot": [
                 0.5,
                 0.05
@@ -1947,7 +1991,7 @@
               "flipX": true
             },
             "fist": {
-              "image": "parts/p197.png",
+              "image": "academy/parts/p197.png",
               "pivot": [
                 0.5,
                 0.05
@@ -1956,7 +2000,7 @@
               "flipX": true
             },
             "fist_side": {
-              "image": "parts/p200.png",
+              "image": "academy/parts/p200.png",
               "pivot": [
                 0.5,
                 0.05
@@ -1965,7 +2009,7 @@
               "flipX": true
             },
             "spread": {
-              "image": "parts/p209.png",
+              "image": "academy/parts/p209.png",
               "pivot": [
                 0.5,
                 0.05
@@ -1977,108 +2021,50 @@
         }
       },
       "spriteSkin": {
-        "dilate": 5,
-        "skip": [
-          "head",
-          "hand_r",
-          "hand_l",
-          "neck_skin"
-        ],
-        "groups": [
-          {
-            "id": "skin_hips",
-            "bone": "hips"
-          },
-          {
-            "id": "skin_torso_back",
-            "bone": "torso",
-            "zRange": [
-              0,
-              209
-            ]
-          },
-          {
-            "id": "skin_torso_front",
-            "bone": "torso",
-            "zRange": [
-              250,
-              399
-            ]
-          },
-          {
-            "id": "skin_upper_arm_r",
-            "bone": "upper_arm_r"
-          },
-          {
-            "id": "skin_upper_arm_l",
-            "bone": "upper_arm_l"
-          },
-          {
-            "id": "skin_sleeve_lower_r",
-            "bone": "forearm_r",
-            "parts": [
-              "sleeve_lower_r"
-            ],
-            "mesh": {
-              "bend": true,
-              "zone": 0.35
+        "groups": {
+          "torso": [
+            {
+              "id": "skin_torso_back",
+              "zRange": [
+                0,
+                209
+              ]
+            },
+            {
+              "id": "skin_torso_front",
+              "zRange": [
+                250,
+                399
+              ]
             }
-          },
-          {
-            "id": "skin_sleeve_lower_l",
-            "bone": "forearm_l",
-            "parts": [
-              "sleeve_lower_l"
-            ],
-            "mesh": {
-              "bend": true,
-              "zone": 0.35
-            }
-          },
-          {
-            "id": "skin_forearm_r",
-            "bone": "forearm_r"
-          },
-          {
-            "id": "skin_forearm_l",
-            "bone": "forearm_l"
-          }
-        ],
-        "underlays": [
-          {
-            "id": "skin_head_underlay",
-            "from": "head",
-            "bone": "neck",
-            "belowY": 140,
-            "tint": 0.55,
-            "z": 394
-          }
-        ],
-        "shades": [
-          {
-            "id": "skin_neck_shade",
-            "part": "neck_skin",
-            "bone": "torso",
-            "minDiff": 12,
-            "z": 190.5
-          },
-          {
-            "id": "skin_jaw_patch",
-            "parts": [
-              "neck_skin",
-              "face_base",
-              "jaw"
-            ],
-            "mode": "replace",
-            "rows": [
-              190,
-              242
-            ],
-            "fade": 14,
-            "bone": "neck",
-            "z": 191
-          }
-        ]
+          ],
+          "forearm_r": [
+            {
+              "id": "skin_sleeve_lower_r",
+              "parts": [
+                "sleeve_lower_r"
+              ],
+              "mesh": {
+                "bend": true,
+                "zone": 0.35
+              }
+            },
+            {}
+          ],
+          "forearm_l": [
+            {
+              "id": "skin_sleeve_lower_l",
+              "parts": [
+                "sleeve_lower_l"
+              ],
+              "mesh": {
+                "bend": true,
+                "zone": 0.35
+              }
+            },
+            {}
+          ]
+        }
       },
       "hotspots": {
         "chest": {
@@ -2804,74 +2790,14 @@
         }
       },
       "spriteSkin": {
-        "dilate": 5,
-        "skip": [
-          "head",
-          "hand_r",
-          "hand_l",
-          "neck_skin"
-        ],
-        "groups": [
-          {
-            "id": "skin_hips",
-            "bone": "hips"
-          },
-          {
-            "id": "skin_torso",
-            "bone": "torso"
-          },
-          {
-            "id": "skin_upper_arm_r",
-            "bone": "upper_arm_r"
-          },
-          {
-            "id": "skin_upper_arm_l",
-            "bone": "upper_arm_l"
-          },
-          {
-            "id": "skin_forearm_r",
-            "bone": "forearm_r"
-          },
-          {
-            "id": "skin_forearm_l",
-            "bone": "forearm_l"
-          }
-        ],
-        "underlays": [
-          {
-            "id": "skin_head_underlay",
-            "from": "head",
-            "bone": "neck",
-            "belowY": 140,
-            "tint": 0.55,
-            "z": 394
-          }
-        ],
-        "shades": [
-          {
-            "id": "skin_neck_shade",
-            "part": "neck_skin",
-            "bone": "torso",
-            "minDiff": 12,
-            "z": 190.5
-          },
-          {
-            "id": "skin_jaw_patch",
-            "parts": [
-              "neck_skin",
-              "face_base",
-              "jaw"
-            ],
-            "mode": "replace",
+        "shades": {
+          "skin_jaw_patch": {
             "rows": [
               190,
               256
-            ],
-            "fade": 14,
-            "bone": "neck",
-            "z": 191
+            ]
           }
-        ]
+        }
       },
       "hotspots": {
         "chest": {

@@ -33,10 +33,10 @@ export class RigRenderer {
   /**
    * Draws another outfit: rebuilds the part nodes and resets the hands to
    * that outfit's defaults. Mood and overlays carry over (they ride on the
-   * shared head).
+   * shared head). `handSet` picks one of the outfit's hand sets.
    */
-  setOutfit(name) {
-    const rig = withOutfit(this.source, name);
+  setOutfit(name, handSet) {
+    const rig = withOutfit(this.source, name, { handSet });
     for (const node of this.nodes.values()) node.destroy();
     this.nodes.clear();
     this.rig = rig;
@@ -60,6 +60,11 @@ export class RigRenderer {
     this.blinkMood = rig.expressions?.moods?.blink ? resolveMood(rig, "blink") : null;
     if (this.moodName) this.setMood(this.moodName);
     this.solved = null;
+  }
+
+  /** Swaps to another of the outfit's hand sets (gloves on/off); hands go to its defaults. */
+  setHandSet(name) {
+    this.setOutfit(this.outfit ?? undefined, name);
   }
 
   setMood(name) {

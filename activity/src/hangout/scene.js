@@ -138,7 +138,10 @@ export async function startScene(stage, { base, loaded, tier, outfit, room = tru
   app.stage.on("pointerdown", (e) => {
     const point = toRef(e);
     if (scene.onPointer?.("down", point, e)) return;
-    scene.onTap?.(hangout.tapAt(point, scene.time));
+    // Tap first: `onTap?.(tapAt(...))` would skip the tap itself whenever
+    // no onTap is set, as in the Activity (main.js).
+    const tap = hangout.tapAt(point, scene.time);
+    scene.onTap?.(tap);
   });
   app.stage.on("pointermove", (e) => scene.onPointer?.("move", toRef(e), e));
   app.stage.on("pointerup", (e) => scene.onPointer?.("up", toRef(e), e));

@@ -7,16 +7,19 @@
 //   node activity/tools/build-sprite-skin.js <character> [--outfit <name>]
 //
 // With rig.json `outfits`, it works on one outfit (default: defaultOutfit):
-// its reference sprite, its parts plus the shared ones, its `spriteSkin`.
-// Skins go to <outfit dir>/skin/ and replace that outfit's skin_* parts.
+// its reference sprite, its parts plus the shared ones. Skins go to
+// <outfit dir>/skin/ and replace that outfit's skin_* parts in place (same
+// slot in the parts list; skins no longer made are dropped).
 //
-// Configured by rig.json `spriteSkin`:
-//   { "dilate": 3, "skip": ["head", "hand_r", "hand_l"],
-//     "groups": [
-//       { "id": "skin_torso_front", "bone": "torso", "zRange": [250, 399] },
-//       { "id": "skin_sleeve_lower_r", "bone": "forearm_r",
-//         "parts": ["sleeve_lower_r"], "mesh": { "bend": true, "zone": 0.35 } },
-//       ... ] }
+// The config comes from lib/skin-config.js: one group per bone with art,
+// the character's shared `spriteSkin` (dilate, skip, the neck underlays and
+// shades), and the outfit's `spriteSkin` overrides, e.g. a front/back torso
+// split by zRange or a mesh-bent sleeve crossing the elbow:
+//   { "groups": { "torso": [{ "id": "skin_torso_back", "zRange": [0, 209] },
+//                           { "id": "skin_torso_front", "zRange": [250, 399] }],
+//                 "forearm_r": [{ "id": "skin_sleeve_lower_r", "parts": ["sleeve_lower_r"],
+//                                 "mesh": { "bend": true, "zone": 0.35 } }, {}] },
+//     "shades": { "skin_jaw_patch": { "rows": [190, 256] } } }
 //
 // 1. Renders the rest pose and records, per sprite pixel, the topmost part.
 // 2. Each part maps to a group: one that names it in `parts`, else the group
@@ -34,6 +37,7 @@ import { createCanvas, loadImage } from "canvas";
 
 import { isVisible, moodParts, resolveMood } from "../src/rig/expressions.js";
 import { invert, apply, solve, spriteMatrix, withOutfit } from "../src/rig/skeleton.js";
+import { skinConfig } from "./lib/skin-config.js";
 import { readPng, writePng } from "./slice-atlas.js";
 
 const isSkin = (id) => id.startsWith("skin_");
@@ -49,8 +53,8 @@ async function main() {
   const rigFile = path.join(dir, "rig.json");
   const source = JSON.parse(fs.readFileSync(rigFile, "utf8"));
   const rig = withOutfit(source, outfitIdx === -1 ? source.defaultOutfit : process.argv[outfitIdx + 1]);
-  const cfg = rig.spriteSkin;
-  if (!cfg) throw new Error(`rig.json has no spriteSkin config${rig.outfit ? ` for ${rig.outfit}` : ""}`);
+  if (!rig.spriteSkin && !source.spriteSkin) throw new Error(`rig.json has no spriteSkin config${rig.outfit ? ` for ${rig.outfit}` : ""}`);
+  const cfg = skinConfig(source, rig.outfit);
   rig.parts = rig.parts.filter((p) => !isSkin(p.id));
   const skinDir = path.posix.join(rig.dir ?? ".", "skin");
   // Skin parts this run makes; they replace the outfit's old ones at the end.
@@ -337,10 +341,12 @@ async function main() {
     console.log(`[skin] ${sh.id}: ${sh.mode ?? "shade"} over ${[...parts].join(",")}, ${w}x${h}, z ${sh.z}`);
   }
 
-  if (source.outfits) {
-    const outfit = source.outfits[rig.outfit];
-    outfit.parts = [...outfit.parts.filter((p) => !isSkin(p.id)), ...made];
-  }
+  // Each skin keeps its slot in the parts list; new ones go at the end.
+  const target = source.outfits ? source.outfits[rig.outfit] : source;
+  const madeIds = new Set(made.map((p) => p.id));
+  const kept = target.parts.filter((p) => !isSkin(p.id) || madeIds.has(p.id));
+  const madeById = new Map(made.map((p) => [p.id, p]));
+  target.parts = [...kept.map((p) => madeById.get(p.id) ?? p), ...made.filter((p) => !kept.some((k) => k.id === p.id))];
   fs.writeFileSync(rigFile, JSON.stringify(source, null, 2) + "\n");
 }
 

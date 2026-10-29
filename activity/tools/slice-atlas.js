@@ -18,7 +18,14 @@
 // merge, never guessed. Optional manual merges and semantic names come from
 // <dir>/part-names.json:
 //
-//   { "names": { "p012": "face_base" }, "merge": [["p100", "p101"]] }
+//   { "names": { "p012": "face_base" }, "merge": [["p100", "p101"]],
+//     "ignore": [[450, 461, 31, 58]] }
+//
+// `ignore` lists atlas rects [x, y, w, h] holding helper shapes rather than
+// art (flat-color masks, a blurred shadow blob). A region whose bounding box
+// lies inside one is dropped before anything else: it gets no id, isn't
+// merged with or reported near other parts, and is listed under `ignored`
+// in parts.json. Atlases without `ignore` slice exactly as before.
 //
 // Ids are positional (reading order of the region's top-left), so they stay
 // stable across re-runs of the same atlas.
@@ -128,14 +135,14 @@ function nearbyRegions(frag, labels, width, height) {
  * groups (each a list of region ids), the fragments that nearly touch more
  * than one larger region, and the specks dropped as noise.
  */
-export function groupFragments(atlas, labels, regions) {
+export function groupFragments(atlas, labels, regions, ignored = new Set()) {
   const alpha = maxAlphas(atlas, labels, regions.length);
   const speck = (r) => r.area < SPECK_AREA || alpha[r.id] < SPECK_ALPHA;
-  const owner = regions.map((r) => r.id);
+  const owner = regions.map((r) => (ignored.has(r.id) ? null : r.id));
   const ambiguous = [];
   const dropped = [];
   for (const frag of regions) {
-    if (frag.area >= FRAGMENT_AREA) continue;
+    if (frag.area >= FRAGMENT_AREA || ignored.has(frag.id)) continue;
     const near = [...nearbyRegions(frag, labels, atlas.width, atlas.height)]
       .filter((id) => regions[id].area >= FRAGMENT_AREA);
     if (near.length === 1) owner[frag.id] = near[0];
@@ -172,15 +179,34 @@ function unionBox(regions, ids) {
 
 function readNames(outDir) {
   const file = path.join(outDir, "part-names.json");
-  if (!fs.existsSync(file)) return { names: {}, merge: [] };
+  if (!fs.existsSync(file)) return { names: {}, merge: [], ignore: [] };
   const raw = JSON.parse(fs.readFileSync(file, "utf8"));
-  return { names: raw.names ?? {}, merge: raw.merge ?? [] };
+  return { names: raw.names ?? {}, merge: raw.merge ?? [], ignore: raw.ignore ?? [] };
+}
+
+/**
+ * Regions whose bounding box lies inside one of the `ignore` rects. Their
+ * pixels are unlabeled (-1) afterwards, so no fragment merges into them
+ * and no part copies them as halo.
+ */
+function dropIgnored(labels, regions, width, ignore) {
+  const ignored = new Set();
+  for (const r of regions) {
+    const inside = ignore.some(([x, y, w, h]) => r.x0 >= x && r.y0 >= y && r.x1 < x + w && r.y1 < y + h);
+    if (!inside) continue;
+    ignored.add(r.id);
+    for (let yy = r.y0; yy <= r.y1; yy++) {
+      for (let xx = r.x0; xx <= r.x1; xx++) if (labels[yy * width + xx] === r.id) labels[yy * width + xx] = -1;
+    }
+  }
+  return ignored;
 }
 
 /** Slices `atlas` into parts. Pure apart from reading part-names.json. */
-export function slice(atlas, { names = {}, merge = [] } = {}) {
+export function slice(atlas, { names = {}, merge = [], ignore = [] } = {}) {
   const { labels, regions } = labelRegions(atlas);
-  const { groups, ambiguous, dropped } = groupFragments(atlas, labels, regions);
+  const ignored = ignore.length ? dropIgnored(labels, regions, atlas.width, ignore) : new Set();
+  const { groups, ambiguous, dropped } = groupFragments(atlas, labels, regions, ignored);
 
   // Positional ids: reading order by top edge (8px rows), then left edge.
   let parts = groups.map((ids) => ({ ids, box: unionBox(regions, ids) }));
@@ -244,6 +270,10 @@ export function slice(atlas, { names = {}, merge = [] } = {}) {
   return {
     parts: out,
     dropped,
+    ignored: [...ignored].map((id) => {
+      const r = regions[id];
+      return [r.x0, r.y0, r.x1 - r.x0 + 1, r.y1 - r.y0 + 1];
+    }),
     ambiguous: ambiguous.map((a) => ({
       fragment: regionToPart.get(a.fragment),
       near: a.near.map((r) => regionToPart.get(r)),
@@ -301,6 +331,47 @@ async function writeContactSheets(parts, dir) {
   return files;
 }
 
+/**
+ * Slices one outfit's atlas into <rig dir>/<outfit dir>/parts and writes
+ * parts.json (and contact sheets into `contact`, if given). `rigDir` is the
+ * character's rig directory; `entry` is the outfit's rig.json entry (atlas,
+ * dir), or {} for the naming convention.
+ */
+export async function sliceOutfit(rigDir, character, outfit, entry = {}, { contact = null, log = console.log } = {}) {
+  const atlasFile = path.join(rigDir, entry.atlas ?? path.join("source", `${character}_${outfit}_00.png`));
+  const outDir = path.join(rigDir, entry.dir ?? outfit);
+  const atlas = readPng(atlasFile);
+  const { parts, ambiguous, dropped, ignored } = slice(atlas, readNames(outDir));
+
+  const partsDir = path.join(outDir, "parts");
+  fs.rmSync(partsDir, { recursive: true, force: true });
+  fs.mkdirSync(partsDir, { recursive: true });
+  for (const p of parts) writePng(path.join(partsDir, `${p.name}.png`), p.rect[2], p.rect[3], p.buf);
+
+  const manifest = {
+    atlas: { file: path.relative(rigDir, atlasFile), width: atlas.width, height: atlas.height },
+    pad: PAD,
+    parts: Object.fromEntries(
+      parts.map((p) => [p.name, { id: p.id, rect: p.rect, area: p.area, fragments: p.fragments }]),
+    ),
+    ambiguous,
+    dropped,
+    ...(ignored.length ? { ignored } : {}),
+  };
+  // atlas.file stays relative to the rig directory, like rig.json's paths.
+  fs.writeFileSync(path.join(outDir, "parts.json"), JSON.stringify(manifest, null, 2) + "\n");
+
+  log(`[slice] ${parts.length} parts → ${partsDir}`);
+  if (dropped.length) log(`[slice] ${dropped.length} specks dropped as noise (rects in parts.json)`);
+  if (ignored.length) log(`[slice] ${ignored.length} regions ignored (part-names.json ignore; rects in parts.json)`);
+  if (ambiguous.length) log(`[slice] ${ambiguous.length} ambiguous fragments listed in parts.json`);
+  if (contact) {
+    const files = await writeContactSheets(parts, contact);
+    log(`[slice] contact sheets: ${files.join(", ")}`);
+  }
+  return { parts, manifest };
+}
+
 async function main() {
   const [character, ...rest] = process.argv.slice(2);
   const opt = (name) => {
@@ -316,38 +387,7 @@ async function main() {
     console.error("(--outfit is required when rig.json has no defaultOutfit)");
     process.exit(1);
   }
-  const contactDir = opt("contact");
-
-  const entry = rig.outfits?.[outfit] ?? {};
-  const atlasFile = path.join(rigDir, entry.atlas ?? path.join("source", `${character}_${outfit}_00.png`));
-  const outDir = path.join(rigDir, entry.dir ?? outfit);
-  const atlas = readPng(atlasFile);
-  const { parts, ambiguous, dropped } = slice(atlas, readNames(outDir));
-
-  const partsDir = path.join(outDir, "parts");
-  fs.rmSync(partsDir, { recursive: true, force: true });
-  fs.mkdirSync(partsDir, { recursive: true });
-  for (const p of parts) writePng(path.join(partsDir, `${p.name}.png`), p.rect[2], p.rect[3], p.buf);
-
-  const manifest = {
-    atlas: { file: path.relative(rigDir, atlasFile), width: atlas.width, height: atlas.height },
-    pad: PAD,
-    parts: Object.fromEntries(
-      parts.map((p) => [p.name, { id: p.id, rect: p.rect, area: p.area, fragments: p.fragments }]),
-    ),
-    ambiguous,
-    dropped,
-  };
-  // atlas.file stays relative to the rig directory, like rig.json's paths.
-  fs.writeFileSync(path.join(outDir, "parts.json"), JSON.stringify(manifest, null, 2) + "\n");
-
-  console.log(`[slice] ${parts.length} parts → ${partsDir}`);
-  if (dropped.length) console.log(`[slice] ${dropped.length} specks dropped as noise (rects in parts.json)`);
-  if (ambiguous.length) console.log(`[slice] ${ambiguous.length} ambiguous fragments listed in parts.json`);
-  if (contactDir) {
-    const files = await writeContactSheets(parts, contactDir);
-    console.log(`[slice] contact sheets: ${files.join(", ")}`);
-  }
+  await sliceOutfit(rigDir, character, outfit, rig.outfits?.[outfit] ?? {}, { contact: opt("contact") });
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) main();
