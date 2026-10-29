@@ -20,6 +20,7 @@ const params = new URLSearchParams(location.search);
 const character = params.get("character") ?? "alan";
 const base = `/assets/rig/${character}`;
 const $ = (sel) => document.querySelector(sel);
+const displayName = character[0].toUpperCase() + character.slice(1);
 
 async function main() {
   // Flat magenta behind the character by default, so any gap between
@@ -28,6 +29,7 @@ async function main() {
   const leakMode = params.has("leak");
   if (leakMode) document.body.classList.add("leak");
   const room = params.has("room") && !leakMode;
+  $("#vn-name").textContent = displayName;
   let scene;
   try {
     scene = await startScene($("#stage"), {
@@ -470,7 +472,7 @@ async function main() {
         b.append(glyph, label);
         b.onclick = () => {
           choices.hidden = true;
-          say("(Alan's reply placeholder)");
+          say(`(${displayName}'s reply placeholder)`);
         };
         return b;
       }),
