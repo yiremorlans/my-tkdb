@@ -1,11 +1,14 @@
-// Node-side rig rendering shared by the tools (render-rig.js, check-rig.js,
-// fit-outfit.js): loads a character's rig.json, resolves one outfit, mood and
-// hand poses, and draws the parts with node-canvas using skeleton.js, the
-// same bone math as the browser renderer.
+// Node-side rig files and rendering shared by the tools (render-rig.js,
+// check-rig.js, fit-outfit.js, align-hands.js, match-hands.js,
+// register-head.js): reads and writes a character's rig.json and an outfit's
+// fit.json, resolves one outfit, mood and hand poses, and
+// draws the parts with node-canvas using skeleton.js, the same bone math as
+// the browser renderer.
 
 import fs from "node:fs";
 import path from "node:path";
 import { createCanvas, loadImage } from "canvas";
+import { PNG } from "pngjs";
 
 import { isVisible, moodParts, overlayMatrix, resolveMood } from "../../src/rig/expressions.js";
 import { Motion } from "../../src/rig/motion.js";
@@ -24,6 +27,11 @@ export function readRig(character, { validate = true } = {}) {
 /** Writes rig.json back in the repo's format (2-space JSON, newline). */
 export function writeRig(character, source) {
   fs.writeFileSync(path.join(rigDir(character), "rig.json"), JSON.stringify(source, null, 2) + "\n");
+}
+
+/** Path of an outfit's fit.json (fit-outfit.js). */
+export function fitFile(dir, outfit) {
+  return path.join(dir, outfit.dir ?? ".", "fit.json");
 }
 
 /** Cached image loader rooted at the rig directory. */
@@ -209,6 +217,25 @@ export async function pixels(source, W, H) {
   const ctx = canvas.getContext("2d");
   ctx.drawImage(img, 0, 0);
   return ctx.getImageData(0, 0, W, H).data;
+}
+
+/** Alpha of the shared parts at rest (the head covers the neck), 0..1 per px. */
+export async function sharedCover(rig, dir) {
+  const { outfits, defaultOutfit, ...shared } = rig;
+  if (!shared.parts?.some((p) => p.image)) return null;
+  const load = imageLoader(dir);
+  const flat = { ...shared, hands: {} };
+  const scene = await prepareScene(flat, load);
+  const { width: W, height: H } = rig.reference;
+  const canvas = createCanvas(W, H);
+  const ctx = canvas.getContext("2d");
+  await drawScene(ctx, scene, {}, (p) => p.id !== "overlays");
+  // Through a PNG round trip: the recorded fits were made against the
+  // quantized mask, so reading the canvas directly would shift them.
+  const png = PNG.sync.read(canvas.toBuffer("image/png"));
+  const cov = new Float32Array(W * H);
+  for (let i = 0; i < W * H; i++) cov[i] = png.data[i * 4 + 3] / 255 > 0.5 ? 1 : 0;
+  return cov;
 }
 
 export { withOutfit };

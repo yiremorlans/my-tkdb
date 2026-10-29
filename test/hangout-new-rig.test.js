@@ -5,7 +5,7 @@ import assert from 'node:assert';
 import fs from 'node:fs';
 
 import { roomBackground, scaffoldFit, scaffoldRig, silhouette } from '../activity/tools/new-rig.js';
-import { readPng } from '../activity/tools/slice-atlas.js';
+import { readPng } from '../activity/tools/lib/png.js';
 import { apply, solve, validateRig, withOutfit } from '../activity/src/rig/skeleton.js';
 
 // A stick figure: head 20 wide, neck 6 wide, body 30 wide, two legs.

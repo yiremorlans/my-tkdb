@@ -8,6 +8,7 @@ import assert from 'node:assert';
 import fs from 'node:fs';
 
 import { alignLines, scaleBand, writeOutfit } from '../activity/tools/fit-outfit.js';
+import { readHandFits } from '../activity/tools/lib/hand-fits.js';
 import { Peeler, image, pyRound, resize } from '../activity/tools/lib/match.js';
 import { apply, solve, withOutfit } from '../activity/src/rig/skeleton.js';
 
@@ -46,7 +47,7 @@ for (const outfit of ['academy', 'roomwear']) {
     const dir = rig.outfits[outfit].dir;
     const base = dir && dir !== '.' ? `assets/rig/alan/${dir}` : 'assets/rig/alan';
     const before = structuredClone(rig.outfits[outfit]);
-    writeOutfit(rig, outfit, readJson(`${base}/fit.json`), readJson(`${base}/fits.json`), { log: () => {} });
+    writeOutfit(rig, outfit, readJson(`${base}/fit.json`), readJson(`${base}/fits.json`), { log: () => {}, handFits: readHandFits(base) });
     assert.strictEqual(JSON.stringify(rig.outfits[outfit]), JSON.stringify(before));
   });
 }

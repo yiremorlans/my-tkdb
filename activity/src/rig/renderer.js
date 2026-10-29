@@ -26,6 +26,7 @@ export class RigRenderer {
     this.view.sortableChildren = true;
     this.nodes = new Map(); // part id → Sprite | MeshPlane
     this.overlayNodes = new Map(); // file → Sprite
+    this.followers = new Set(); // objects whose `rig` tracks the outfit drawn
     this.setOutfit(outfit ?? rig.defaultOutfit);
     this.setMood("default");
   }
@@ -60,6 +61,16 @@ export class RigRenderer {
     this.blinkMood = rig.expressions?.moods?.blink ? resolveMood(rig, "blink") : null;
     if (this.moodName) this.setMood(this.moodName);
     this.solved = null;
+    for (const follower of this.followers) follower.rig = rig;
+  }
+
+  /**
+   * Keeps `follower.rig` on the flattened outfit drawn, now and after every
+   * outfit or hand-set switch (Motion reads it each frame).
+   */
+  follow(follower) {
+    this.followers.add(follower);
+    follower.rig = this.rig;
   }
 
   /** Swaps to another of the outfit's hand sets (gloves on/off); hands go to its defaults. */

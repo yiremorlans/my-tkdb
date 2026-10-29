@@ -1,7 +1,8 @@
 // Hangout: the annoyance meter for spam-tapping (docs/hangout-activity.md
 // §4.2). Pure; time comes in as seconds so tests can drive it.
 //
-// Each tap adds `perTap`; the level decays at `decayPerSec`. Crossing
+// Each tap adds `perTap`, or a share of `threshold` for a weighted spot
+// (SPOT_ANNOYANCE in reactions.js); the level decays at `decayPerSec`. Crossing
 // `threshold` makes the character upset, and taps are ignored for
 // `recoverSec` while he settles. Values come from rig.json `annoyance`.
 
@@ -26,11 +27,14 @@ export class AnnoyanceMeter {
     return t < this.recoverUntil;
   }
 
-  /** Registers a tap. Returns "ignored", "upset" or "ok". */
-  tap(t) {
+  /**
+   * Registers a tap. `share`, when given, adds that fraction of `threshold`
+   * instead of `perTap`. Returns "ignored", "upset" or "ok".
+   */
+  tap(t, share) {
     if (this.recovering(t)) return "ignored";
     const { perTap, threshold, recoverSec } = this.config;
-    this.value = this.level(t) + perTap;
+    this.value = this.level(t) + (share == null ? perTap : share * threshold);
     this.at = t;
     if (this.value >= threshold) {
       this.value = 0;

@@ -94,3 +94,32 @@ test("Alan's roomwear hands match academy's poses, except academy's open glove",
     assert.strictEqual(roomwear.hands.r.poses[name].image, `roomwear/parts/${m.part}.png`, name);
   }
 });
+
+test('align-hands fits a wrist onto the forearm lines and the entry reproduces it', async () => {
+  const { entryFor, fitLine, fitWrist } = await import('../activity/tools/align-hands.js');
+  const { apply, spriteMatrix } = await import('../activity/src/rig/skeleton.js');
+  const bone = [1, 0, 0, 1, 100, 200];
+  // A drawing whose wrist is 40 px wide at x 20–60; the forearm is 20 px at x 92–112.
+  const rows = Array.from({ length: 8 }, (_, i) => ({ y: i + 0.5, l: 20, r: 60 }));
+  const left = fitLine([[150, 92], [190, 92]]);
+  const right = fitLine([[150, 112], [190, 112]]);
+  for (const flip of [1, -1]) {
+    const fit = fitWrist(rows, { left, right, top: 204 }, { bone, flip, baseScale: 0.5 });
+    assert.ok(Math.abs(fit.scale - 0.5) < 1e-6, 'scaled to the forearm width');
+    const entry = entryFor(fit, bone, [80, 100]);
+    const m = spriteMatrix({}, { id: 'hand' }, bone, [80, 100], { ...entry, flipX: flip < 0 });
+    const [x0] = apply(m, [20, 0.5]);
+    const [x1, y1] = apply(m, [60, 0.5]);
+    assert.ok(Math.abs(Math.min(x0, x1) - 92) < 1e-3 && Math.abs(Math.max(x0, x1) - 112) < 1e-3, 'edges on the lines');
+    assert.ok(Math.abs(y1 - 204) < 1e-3, 'top on the default pose top');
+  }
+});
+
+test('a pose entry artRotation turns the art about its pivot', async () => {
+  const { apply, spriteMatrix } = await import('../activity/src/rig/skeleton.js');
+  const bone = [1, 0, 0, 1, 10, 10];
+  const m = spriteMatrix({}, { id: 'hand' }, bone, [10, 10], { pivot: [0, 0], scale: 1, artRotation: 90 });
+  assert.deepStrictEqual(apply(m, [0, 0]), [10, 10]);
+  const [x, y] = apply(m, [5, 0]);
+  assert.ok(Math.abs(x - 10) < 1e-9 && Math.abs(y - 15) < 1e-9);
+});

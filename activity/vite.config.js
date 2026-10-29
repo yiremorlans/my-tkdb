@@ -18,11 +18,13 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig, loadEnv } from "vite";
 
+import { writeHandFits } from "./tools/lib/hand-fits.js";
+
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, "..");
 const assetsDir = path.join(repoRoot, "assets");
 
-const TYPES = { ".png": "image/png", ".json": "application/json", ".ttf": "font/ttf" };
+const TYPES = { ".png": "image/png", ".json": "application/json", ".ttf": "font/ttf", ".wav": "audio/wav", ".ogg": "audio/ogg" };
 
 function serveRepoAssets() {
   return {
@@ -41,7 +43,9 @@ function serveRepoAssets() {
   };
 }
 
-// Dev-only: the preview's part editor saves rig.json through this. Only
+// Dev-only: the preview's part editor saves rig.json through this, plus
+// the hand poses it nudged into each outfit's hand-fits.json (so
+// fit-outfit.js keeps them; align-hands.js --write refits them). Only
 // `vite serve` runs configureServer, so it never exists in a build.
 function saveRig() {
   return {
@@ -57,9 +61,13 @@ function saveRig() {
         req.on("data", (chunk) => (body += chunk));
         req.on("end", () => {
           try {
-            const rig = JSON.parse(body);
-            const file = path.join(assetsDir, "rig", character, "rig.json");
-            fs.writeFileSync(file, JSON.stringify(rig, null, 2) + "\n");
+            // handFits: { <outfit>: { <side>: { <image>: pose entry } } }
+            const { rig, handFits = {} } = JSON.parse(body);
+            const dir = path.join(assetsDir, "rig", character);
+            fs.writeFileSync(path.join(dir, "rig.json"), JSON.stringify(rig, null, 2) + "\n");
+            for (const [outfit, fits] of Object.entries(handFits)) {
+              writeHandFits(path.join(dir, rig.outfits?.[outfit]?.dir ?? "."), fits);
+            }
             res.end("saved");
           } catch (err) {
             res.statusCode = 400;

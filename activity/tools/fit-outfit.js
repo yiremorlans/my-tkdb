@@ -59,17 +59,16 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { createCanvas } from "canvas";
 
-import { apply, invert, solve, withOutfit } from "../src/rig/skeleton.js";
+import { apply, invert, roundTo, solve, withOutfit } from "../src/rig/skeleton.js";
 import { Peeler, blur, flatten, image, loadRGBA, pyRound, resize, rotated } from "./lib/match.js";
-import { drawScene, imageLoader, prepareScene, readRig, writeRig } from "./lib/render.js";
+import { isSolid } from "./lib/png.js";
+import { readHandFits } from "./lib/hand-fits.js";
+import { fitFile, readRig, sharedCover, writeRig } from "./lib/render.js";
 
-const round2 = (v) => Math.round(v * 100) / 100;
+const round2 = (v) => roundTo(v, 2);
 
-export function fitFile(dir, outfit) {
-  return path.join(dir, outfit.dir ?? ".", "fit.json");
-}
+// --- search ranges ----------------------------------------------------------
 
 /** The scales searched: the outfit's scale ± band, in steps. */
 export function scaleBand(base, { band = 0.03, step = 0.01 } = {}) {
@@ -88,24 +87,7 @@ function degrees(spec, rotate) {
   return out;
 }
 
-/** Alpha of the shared parts at rest (the head covers the neck), 0..1 per px. */
-export async function sharedCover(rig, dir) {
-  const { outfits, defaultOutfit, ...shared } = rig;
-  if (!shared.parts?.some((p) => p.image)) return null;
-  const load = imageLoader(dir);
-  const flat = { ...shared, hands: {} };
-  const scene = await prepareScene(flat, load);
-  const { width: W, height: H } = rig.reference;
-  const canvas = createCanvas(W, H);
-  const ctx = canvas.getContext("2d");
-  await drawScene(ctx, scene, {}, (p) => p.id !== "overlays");
-  // Through a PNG round trip, as the Python fits read shared_mask.png.
-  const { PNG } = await import("pngjs");
-  const png = PNG.sync.read(canvas.toBuffer("image/png"));
-  const cov = new Float32Array(W * H);
-  for (let i = 0; i < W * H; i++) cov[i] = png.data[i * 4 + 3] / 255 > 0.5 ? 1 : 0;
-  return cov;
-}
+// --- line art ---------------------------------------------------------------
 
 /** Fill with its line art over it, as one RGBA image; offsets of each inside. */
 export function bindLines(fill, lines, offset) {
@@ -142,11 +124,10 @@ export function bindLines(fill, lines, offset) {
  */
 export function alignLines(fill, lines, radius = 12) {
   const edge = new Uint8Array(fill.width * fill.height);
-  const A = (x, y) => (x < 0 || y < 0 || x >= fill.width || y >= fill.height ? 0 : fill.data[(y * fill.width + x) * 4 + 3]);
+  const solid = (x, y) => x >= 0 && y >= 0 && x < fill.width && y < fill.height && isSolid(fill.data, y * fill.width + x);
   for (let y = 0; y < fill.height; y++) {
     for (let x = 0; x < fill.width; x++) {
-      const a = A(x, y) > 128;
-      if (a && (A(x - 1, y) <= 128 || A(x + 1, y) <= 128 || A(x, y - 1) <= 128 || A(x, y + 1) <= 128)) edge[y * fill.width + x] = 1;
+      if (solid(x, y) && (!solid(x - 1, y) || !solid(x + 1, y) || !solid(x, y - 1) || !solid(x, y + 1))) edge[y * fill.width + x] = 1;
     }
   }
   // grow the edge 1 px so a line drawn just outside still counts
@@ -163,7 +144,7 @@ export function alignLines(fill, lines, radius = 12) {
   }
   const ink = [];
   for (let y = 0; y < lines.height; y++) {
-    for (let x = 0; x < lines.width; x++) if (lines.data[(y * lines.width + x) * 4 + 3] > 128) ink.push([x, y]);
+    for (let x = 0; x < lines.width; x++) if (isSolid(lines.data, y * lines.width + x)) ink.push([x, y]);
   }
   const cx = Math.round((fill.width - lines.width) / 2);
   const cy = Math.round((fill.height - lines.height) / 2);
@@ -183,6 +164,8 @@ export function alignLines(fill, lines, radius = 12) {
   }
   return { offset: best.offset, hits: best.hits, share: ink.length ? best.hits / ink.length : 0 };
 }
+
+// --- fitting ----------------------------------------------------------------
 
 /**
  * Runs the fits in fit.json order. Returns { fits: { id → fit }, peeler }.
@@ -391,11 +374,13 @@ export function estimateScale(spec, { target, cover, partImage, range = [0.4, 1.
   return scale;
 }
 
+// --- writing rig.json -------------------------------------------------------
+
 /**
  * Turns fits into rig.json parts, bones, hands and hotspots for one outfit,
  * updating `source` in place. Returns the list of written part ids.
  */
-export function writeOutfit(source, outfitName, spec, fits, { log = console.log } = {}) {
+export function writeOutfit(source, outfitName, spec, fits, { log = console.log, handFits = {} } = {}) {
   const outfit = source.outfits[outfitName];
   const partPath = (id) => path.posix.join(outfit.dir && outfit.dir !== "." ? outfit.dir : "", "parts", `${id}.png`);
   const sharedIds = new Set(source.parts.map((p) => p.id));
@@ -497,6 +482,9 @@ export function writeOutfit(source, outfitName, spec, fits, { log = console.log 
   // ({ position, scale }) fixes the hand part; `poseScale` the poses'.
   // With `sets` ({ name: { poses, default?, poseScale? } }), the fitted
   // poses are set `set` and the outfit gets hand sets (skeleton.js).
+  // `handFits` (hand-fits.json, from align-hands.js) gives a pose drawing
+  // its own pivot, scale and turn per side, so its wrist joins the forearm
+  // like the default pose's: { <side>: { <atlas part>: { pivot, scale, artRotation } } }.
   const h = spec.hands;
   const setHands = {};
   if (h) {
@@ -516,7 +504,7 @@ export function writeOutfit(source, outfitName, spec, fits, { log = console.log 
       const handSide = (poses, def, scale) => ({
         part: id, default: def,
         poses: Object.fromEntries(Object.entries(poses).map(([name, img]) => [
-          name, { image: imagePath(img), pivot, scale, ...(flipXv ? { flipX: true } : {}) },
+          name, { image: imagePath(img), pivot, scale, ...(flipXv ? { flipX: true } : {}), ...handFits[side]?.[img] },
         ])),
       });
       outfit.hands[side] = handSide(h.poses, h.default, poseScale);
@@ -546,6 +534,8 @@ export function writeOutfit(source, outfitName, spec, fits, { log = console.log 
   }
   return written;
 }
+
+// --- CLI --------------------------------------------------------------------
 
 async function main() {
   const [character, ...rest] = process.argv.slice(2);
@@ -597,7 +587,7 @@ async function main() {
     console.log(`[fit] fits → ${path.join(outDir, "fits.json")} (rig.json not written${only ? " with --only" : ""})`);
     return;
   }
-  const written = writeOutfit(source, outfitName, spec, fits);
+  const written = writeOutfit(source, outfitName, spec, fits, { handFits: readHandFits(outDir) });
   writeRig(character, source);
   console.log(`[fit] ${outfitName}: wrote ${written.length} parts to rig.json`);
 }

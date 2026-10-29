@@ -111,7 +111,7 @@ the reference, then tuned in the preview (§3.4). Shape:
       "image": "parts/face_base.png",
       "parent": "neck",
       "position": [384, 210],          // in parent space
-      "pivot": [0.5, 0.92],            // normalized; rotation centre
+      "pivot": [0.5, 0.92],            // normalized; rotation center
       "z": 40,
       "limits": { "rotation": [-6, 6] } // degrees
     },
@@ -188,11 +188,11 @@ outfit. Only the set the sprite shows is fitted; the others are named by
 hair locks }, shoulder_l/r → upper_arm → forearm → hand }`, legs static. Arms
 layer behind the vest so the shoulder joint stays hidden.
 
-**No arm gesture, no body poses (decided 2026-10-28).** Both were built and
-cut after review: the rigid forearm lift read as unnatural, and full-body
-poses cut from screenshots didn't match the rig or move. The body stays
-nearly still (minimal breath, slight head sway, no hair sway) and reactions
-are carried by expressions and lines. Genuinely fluid motion would need a
+**No body poses (decided 2026-10-28).** Full-body poses cut from
+screenshots were built and cut after review: they didn't match the rig or
+move. The body stays nearly still (minimal breath, slight head sway, no hair
+sway) and reactions are carried by expressions, lines, a short arm twitch
+and hand clenches (§4.2). Genuinely fluid motion would need a
 mesh-deforming rig (Live2D or Spine), which §1 rules out for now.
 
 **Hair from the portrait (decided 2026-10-28).** Alan's atlas hair strands
@@ -238,7 +238,11 @@ room background, plus:
 - buttons to trigger each mood, reaction and hand pose
 - a toggle and speed/amount sliders per idle motion, and per-arm angle limits
 - the optional part editor: drag or nudge parts over a faded copy of
-  `alan_academy.png`, then export changed values back into `rig.json`
+  `alan_academy.png`, then export changed values back into `rig.json`.
+  A hand part moves/turns only the pose on screen (its `pivot` and
+  `artRotation`), never the wrist bone every pose shares; saving also
+  writes those poses to the outfit's `hand-fits.json` so `fit-outfit.js`
+  keeps them (`align-hands.js --write` refits the non-default ones)
 
 Milestone 1 ends when the user signs off on the look and feel here.
 
@@ -267,12 +271,20 @@ Everything character- or outfit-specific is data: rig.json,
    covering the neck; scales in a narrow band around the outfit's scale;
    centers from the fitted template size. `--propose` estimates the scale
    and rough centers with a coarse whole-image search for a human to
-   confirm. `lines` binds a line-art layer to its fill. Rerunning it on
+   confirm. `lines` binds a line-art layer to its fill. Hand poses take
+   their per-side pivot/scale from the outfit's hand-fits.json (step 5b).
+   Rerunning it on
    Alan reproduces rig.json byte for byte (academy is pinned to its
    refined values and reports how close the search lands).
 5. **`match-hands.js <character> --outfit <new> [--from <outfit>] [--set <set>]`**:
    names hand poses by silhouette against an existing outfit's (or set's),
    and flags poses with no counterpart (roomwear has no "open").
+5b. **`align-hands.js <character> --outfit <name> [--set <set>] [--turn <deg>] [--write]`**:
+   lines every non-default hand pose's wrist up with the forearm, per side:
+   the forearm's edges are traced above the default hand and each drawing's
+   wrist is scaled and shifted onto them (optionally turned, `artRotation`).
+   `--write` saves `<outfit>/hand-fits.json` (read by fit-outfit.js) and
+   applies it to rig.json. Rerun it after a hand fit or new hand art.
 6. **`build-sprite-skin.js`**: one skin group per bone with art; the
    character's shared `spriteSkin` holds the neck fixes (underlays, neck
    shade, jaw patch); an outfit's lists only overrides (academy: the
@@ -302,19 +314,57 @@ Everything character- or outfit-specific is data: rig.json,
 | Head tilt/sway | `head` rotation, two mixed sines, within limits |
 | Hair | 2–4 grouped locks, rotation lagging the head |
 | Arms | small sway in step with the breath |
+| Twitch | on a hand tap (new/known): that forearm (with a little upper arm) eases in toward the body and settles, ~0.6 s; the hand rides along unchanged; `motion.twitch` sets `amount` (deg), `upper`, `peak` (s) |
+| Background pan | the room (not the character) drifts on a slow wandering path, two mixed sines; `motion.bgPan` sets `speed` (cycles/s, default 0.022) and `amount` (fraction of the screen, default 0.01); the room is scaled up by twice `amount` so its edges never show; nothing to pan when no room is drawn |
 
 ### 4.2 Interactions
 
-| Trigger | Reaction |
-|---|---|
-| Head pat | smile, then blush ~0.4 s later; no head movement (a moving flat head read as unnatural) |
-| Cheek poke | surprise + blush |
-| Hand tap | smile |
-| Spam-tapping | annoyance meter rises with fast repeated taps and decays over time; past the threshold → **upset** + a line ("…stop that."), taps ignored briefly, then he settles |
-| **Spend time** | full smile + blush, a special line, +1 affinity (§5) |
+Touch faces come off the same expression ladder as call scenes
+(`SCENE_FACES` + `SCENE_FACE_OVERRIDES` in constants/sceneFaces.js,
+docs/public-encounters.md §17.4.1): each spot sits on a rung (2 = the face
+for a favorite response at that tier, 1 = a liked one, 0 = the least), and
+the tier picks the face on that rung. Overrides carry over, so Alan's flat
+face at new is `serious` and his spark fave is `smile_blush`.
+
+| Trigger | Rung | Alan (new/known · warm · spark · close/bound) |
+|---|---|---|
+| Head pat | 2 | close · surprise_blush · smile_blush · full_smile_blush; no head movement (a moving flat head read as unnatural) |
+| Hand tap (L/R) | 2 | close · surprise_blush · smile_blush · full_smile_blush; the arm twitches at new/known |
+| Cheek poke | 1 | sweat · surprise · surprise_blush · full_smile |
+| Ear (L/R) | 1 | sweat · surprise · surprise_blush · full_smile |
+| Lips | 0, 1 from spark, 2 from close | serious · serious · surprise_blush · full_smile_blush |
+| Chest | 0, 1 from spark, 2 from close | serious · serious · surprise_blush · full_smile_blush |
+| Hips | 0, 1 from spark, 2 from close | the most guarded spot: serious with a clench at new, serious at known/warm, blush only from spark; two taps fill the annoyance meter (`SPOT_ANNOYANCE`) |
+| Spam-tapping | — | annoyance meter rises with fast repeated taps and decays over time; past the threshold → **upset** + a line ("…stop that."), taps ignored briefly, then he settles |
+| **Spend time** | — | full smile + blush, a special line, +1 affinity (§5) |
+
+Every character has the same touch spots (`TOUCH_SPOTS` in
+activity/src/hangout/reactions.js): head, cheek, lips, ear_l/ear_r,
+hand_l/hand_r, chest, hips. Left and right share one reaction; every other
+spot has its own. The rungs per tier live in `DEFAULT_REACTIONS`. A
+reaction can also `twitch` the arm (the tapped side for an L/R spot, both
+arms otherwise; by default only a hand tap twitches) and clench a `fist`
+for its duration (guarded spots at low tiers). The preview's "Touch spots"
+row plays each spot.
 
 Hotspot reactions are cosmetic, unlimited and local, with no server call.
 Every reaction plays the line for that trigger in the dialogue box.
+
+A reaction can also play a short sound clip (activity/src/hangout/sounds.js).
+Sounds are opt-in per character: rig.json `sounds` maps a reaction name to a
+file under the rig's directory (`sfx/…`, WAV or Ogg), a list to pick one from at random,
+or `{ byTier: { <tier>: … } }`. It layers over the shared reaction, so faces
+don't have to be restated. A reaction's own `sound` wins. Clips are fetched
+with the rig, a missing one fails validation like a missing image, and they
+are decoded up front through Web Audio so a tap plays with no lag. Clips share a
+10-second cooldown (`SOUND_COOLDOWN` in hangout.js), counted from the clip
+that played: taps inside it, combos included, still react, silently, and
+don't extend it. This is a rule for every rig: the cooldown is shared code,
+not a rig.json setting, and no rig overrides it. Sound plays only on the tapper's device, not
+into the voice call, and the first tap unlocks audio. The ♪ button in the VN
+box mutes it (remembered in localStorage) and shows only for characters with
+sounds. Keep clips short, and export them mono at 22–24 kHz to keep the WAVs
+small.
 
 The Spend time button is lit only when the cooldown is ready. Otherwise it
 shows the time left, and pressing it plays a cooldown-not-ready line.
@@ -326,7 +376,8 @@ the preview.
 ### 4.3 Lines
 
 `constants/hangout/alan.js`, one pool per trigger: `headPat`, `cheekPoke`,
-`handTap`, `upset`, `spendTime`, `cooldownNotReady`, `greeting`. Claude drafts
+`lipsTouch`, `earTouch`, `handTap`, `chestTouch`, `hipsTouch`, `upset`,
+`spendTime`, `cooldownNotReady`, `greeting`. Claude drafts
 them in Alan's voice from `constants/dialogue/alan.js`. **The user approves
 them before release.** They're kept apart from the `/meet` dialogue files.
 
@@ -435,9 +486,9 @@ activity/
     discord.js        # SDK init + auth (no-op outside Discord)
   tools/
     new-rig.js  slice-atlas.js  register-head.js  fit-outfit.js
-    match-hands.js  build-sprite-skin.js  check-rig.js  render-rig.js
-    build-overlays.js  build-portrait-hair.js
-    lib/              # render (node-canvas), match (template fits), skin-config
+    match-hands.js  align-hands.js  build-sprite-skin.js  check-rig.js
+    render-rig.js  build-overlays.js  build-portrait-hair.js
+    lib/              # render (node-canvas, rig/fit files), match (template fits), png, skin-config
   vite.config.js
 assets/rig/alan/
   source/  overlays/  hair/  rig.json  checks.json
@@ -507,4 +558,230 @@ otherwise.
   `_PM` by `TZ` time of day is an easy add.
 - **Outfit**: Alan has academy and roomwear rigs; the preview switches
   between them. Which one the Activity shows (fixed, or following the
-  uniform/casual choice used by `/meet`) is for later.
+  uniform/casual choice used by `/meet`) is for later. Once `/meet` moves
+  into the Activity, the outfit follows the background (§11.5).
+
+---
+
+## 11. Future: `/meet` as the Activity
+
+Status: **specced, deferred.** Not built until every character has a rig
+(§11.6); until then `/meet` stays the image message it is now. Designed
+2026-10-28, settled 2026-10-29.
+
+Once the roster is rigged, picking a character in `/meet` opens the Activity
+with them, and the encounter plays out there instead of as a composed image
+with buttons. `/roam` doesn't change.
+
+### 11.1 Launch and access
+
+- **`/meet` itself doesn't change.** It shows the same ephemeral message with
+  four names: errand targets seeded in, boost labels, the invoke throttle
+  and the cooldown check, all as today (`buildMeetPickMessage`).
+- **Clicking a name opens the Activity.** The `meet:pick` click answers with
+  `LAUNCH_ACTIVITY` (Discord allows it on button clicks) instead of
+  composing the image.
+- **The picker greys out after a pick**, as today: one encounter per `/meet`
+  message. A launch answer can't update the message, so the bot edits it
+  right after the launch. Discord's docs don't say whether that edit is
+  allowed after a launch: **test it.** If it isn't, the server enforces it
+  anyway: a second name on an already-picked message gets a short "already
+  picked" reply, not a second encounter.
+- **Cooldown is also checked at the click.** A name clicked on an older
+  `/meet` message after the user has already answered (cooldown stamped)
+  doesn't launch: the message shows the cooldown text and its buttons grey
+  out, like today's `/meet` cooldown reply. Nobody on `/meet` cooldown gets
+  into the Activity.
+- **Older pickers still work, as today.** Two `/meet`s a minute apart (the
+  invoke throttle allows the second after 1 minute) each give their own
+  encounter, and a name clicked on either launches with that character.
+  Only the first answer pays (§11.3).
+- **No `/hangout`.** It was for testing only. Discord's built-in "Launch"
+  entry-point command can't be removed (a bulk command overwrite without it
+  fails with error 50240), so it's set to `APP_HANDLER` and behaves exactly
+  like `/meet`: same cooldown check, same picker, same `meet` invoke
+  throttle, so it can't be used to get around it.
+- **Shared instances.** Everyone in a channel joins one Activity instance;
+  Discord can't restrict who joins. Each user signs in separately and sees
+  **only their own encounter**. Someone in the instance with no encounter of
+  their own (or on cooldown) sees a refusal line and nothing else: no
+  character, no touch spots.
+
+### 11.2 The encounter
+
+Each click saves its encounter on the server: background → outfit →
+dialogue variant → beat (§11.5), plus the mood flag and `beatKey`. The
+launch answer is sent with `with_response=true`, which returns the
+Activity's instance id, so the server ties each launch to the click that
+caused it and the Activity loads that encounter.
+
+In order:
+
+1. **The intro.** The line today's `/meet` message carries ("Alan Mido
+   agrees to meet you at **The Pit**.") shows as italic narration with no
+   name plate, with the mood notice (`moodNotice`) under it on mood beats.
+2. **The beat.** The drawn beat's `line` under the character's name plate.
+3. **Four response buttons.** The four choices (kind / playful / bold /
+   neutral, in `RESPONSE_TYPE_ORDER`) stack above the box with the beat's
+   labels, within the 30-character limit (the same pools `/roam` uses).
+   - **Type indicator.** The `RESPONSE_STYLES` colors (kind green, playful
+     blurple, bold red, neutral grey) as each button's edge, plus a small
+     glyph per type so the type never depends on color alone.
+4. **The pick.** The choices close and the answer route runs (§11.3).
+5. **The face.** The rig plays a mood for the outcome (love / like / flat,
+   from `getAffinityForResponse`), set per tier like the touch reactions in
+   §4.2. Flat never reads as hurt; it's "didn't resonate".
+6. **The reaction line.** The `getReactionLine` line from
+   `constants/reactions.js`, the same one `/roam` and `/meet` print today
+   ("That lights them up."), in italics with no name plate, since it's
+   narration.
+7. **The gain.** The same delta line `/roam` and `/meet` use today:
+   `+2 — 🤝 **Friend**`, with the boost suffix and the errand signature line
+   when they apply. A neutral pick shows `+0` the same way. A level-up sends
+   the bond-scene DM as usual. The bot also tries to edit the `/meet`
+   message to show the result, so Discord keeps a record like the image
+   flow does; if Discord doesn't allow the edit after a launch, it's
+   skipped.
+8. **The hangout carries on**: touch spots, Spend time and the secret button
+   (§11.4).
+
+**Touches before answering.** Touch spots, Spend time and the secret button
+work any time. Before the answer, each one plays its reaction, mood and
+line, then the VN box returns to the beat's `line` and the four choices
+reappear. Nothing leaves the player without the choices while the answer is
+unrecorded.
+
+**Exiting before answering** costs nothing, like walking away from today's
+`/meet`: nothing is recorded, that picker is spent (its names are greyed
+out), and the next encounter is a new `/meet`.
+
+**Long visits.** The encounter waits as long as the Activity stays open; it
+has no timer. The session token (1h, §6) only matters until the answer is
+recorded, so while an answer is pending the Activity renews it before it
+runs out. If a renewal fails, the four choices stay up with a "try again"
+line; nothing is lost. Once the answer is recorded nothing else calls the
+server, so leaving the Activity open afterwards doesn't matter.
+
+### 11.3 Affinity: one payout per cooldown
+
+The answer to the four choices is the **only** affinity source in the
+Activity, behind the same two guards `/meet` has today:
+
+- **Invoke throttle** (`claimCommandInvoke`, in memory): stops rapid
+  rerolling of the picker. Unchanged, since typing `/meet` is unchanged. The
+  answer route calls `releaseCommandInvoke` when it commits, as the `resp`
+  handler does, and a failed launch releases it too, as a failed pick does.
+- **Reward gate** (`claimCommandUse(userId, 'meet')`): one atomic
+  decide-and-stamp of the 3h cooldown. The answer route calls it, then runs
+  `buildResponseResultMessage`'s logic: boosts, `recordResponse`,
+  `recordAnsweredBeat`, errand signature. Whichever encounter is answered
+  first pays; any other open encounter answered afterwards gets the
+  cooldown refusal, exactly like clicking an older message's response
+  button today.
+
+The saved encounter is never trusted from the client: the Activity is a
+browser page the user can edit, so the mood flag and `beatKey` stay on the
+server (a forged mood flag would raise the gain). Answering deletes the
+encounter, so it can only be answered once. Double clicks, two tabs and
+replayed requests can't pay twice. Unanswered encounters are cleaned up in
+the background after a day, as housekeeping (not a gameplay timer).
+
+Touch spots, Spend time and the secret button never call the server, so
+there's nothing to farm. **Spend time is unlimited and cosmetic**: a
+reaction and a line, no affinity, no cooldown. §5.2's
+`hangout_spend_time` and the `'hangout'` cooldown aren't needed for §11,
+and the "deliberate rule change" in §0 goes back to `/roam` and `/meet`
+being the only affinity sources.
+
+### 11.4 Secret button
+
+Each character has a **fixed, unique secret combo** with no hints in any
+line; players find it or share it.
+
+- **Shape:** 2–3 steps, each one touch spot tapped 1–3 times in a row, e.g.
+  head ×2 → cheek ×1 → hand ×2. No two characters share a combo.
+- **Wrong taps:** a tap that doesn't match the next step resets the combo
+  to the start and counts toward annoyance as normal. There's no time limit
+  between taps, so slow and gentle works.
+- **Annoyance:** taps that match the combo so far don't raise the meter. If
+  the character gets upset **at any point during the visit**, the secret is
+  locked until the next visit.
+- **Once found**, the button appears in the VN box and stays for the rest
+  of the visit; pressing it again replays the scene. It's gone when the
+  Activity closes, and the next visit needs the combo again. Nothing is
+  stored.
+- **The scene** is a special line or short exchange written to land the
+  character's **fave response type** (a tender scene for a kind-lover, a
+  teasing one for a playful-lover…). Cosmetic: no affinity, no milestone.
+- Combos and scenes live in the character's hangout data beside the line
+  pools (`constants/hangout/<id>.js`).
+
+### 11.5 Background and outfit
+
+**Background.** The same pool `/meet` draws from today, via `turfSpots`
+(`constants/backgrounds.js`): the character's house, their exclusive room
+and `additionalLocations`, plus signature spots weighted up (Alan: The Pit
+×1.5) and pinned in when they sit outside the house. `_PM` files only in
+the evening, at `EVENING_PM_WEIGHT`. A houseless character (Benkei) keeps
+`/meet`'s `TURF_PROBABILITY` split between his signature spot and a general
+location. This replaces §10's fixed `Vagastrom_Alan_Room.png` for `/meet`.
+
+**Outfit.** The uniform/casual draw (`getImageVariant` and the
+`CASUAL_IMAGE_PROBABILITY_*` curve) doesn't apply. The outfit comes from the
+rig's `outfits` and **fits the background**:
+
+- each outfit in `rig.json` lists the backgrounds it can appear in
+  (location keys, or files for a single spot), e.g. Alan's `roomwear` in
+  his room, `academy` in the Vagastrom garage spots and The Pit;
+- the background is drawn first, then one outfit at random among those
+  that allow it.
+
+**Dialogue variant.** The variant still keys dialogue (Jo's pronouns change
+between uniform and casual, `constants/dialogue/_shared.js`), so each
+outfit names the variant it counts as (`dialogueVariant: "uniform"` or
+`"casual"`). The beat is drawn last, so it always matches what the
+character is wearing.
+
+**Placement.** One framing per character (`rig.json` `stage`), the same on
+every background; only the background pans behind them. No per-background
+framing.
+
+**Loading.** The Activity loads only the drawn outfit's images, not every
+outfit's, so it opens faster on phones.
+
+### 11.6 When §11 starts
+
+Every character has a rig, **and** their outfits between them cover every
+background `/meet` can put them in. A test checks it for the whole roster,
+so no character can land somewhere with nothing to wear.
+
+**Writing comes last**, after all the rigs exist: touch reaction lines per
+tier, secret scenes and combos, drafted one character at a time from their
+reference file (voice-check workflow) and approved by the user, like §4.3.
+
+### 11.7 Fallback and operations
+
+- **Fallback by timeout.** Discord tells the bot nothing when a launch
+  fails. If the Activity hasn't loaded the encounter within ~30s of the
+  click, the bot posts today's `/meet` result (image + four response
+  buttons) as a followup, and that encounter is answered the normal way.
+  Once the Activity has loaded the encounter, the fallback is cancelled;
+  taking your time afterwards never triggers it. If the image does arrive
+  and both get answered, only the first pays (same reward gate). Depends on
+  followups working after a launch: **test it.** If they don't, the backup
+  is a manual way to ask for the message version from the picker.
+- **`/meet`-only off switch.** A column in `app_settings` (the table
+  maintenance mode uses, db/migrations/024), flipped by hand in SQL and
+  cached for 60s like `maintenance.js`. When on, clicking a name gives
+  today's image flow for everyone; the rest of the bot keeps running. Unlike
+  maintenance mode, which takes the whole bot down. One small migration, no
+  redeploy to flip it.
+- **Analytics.** Completed `/meet`s log to `command_usage_log` as `'meet'`
+  as today, tagged with the path (`activity` or `fallback`), to see how
+  reliably the Activity opens.
+
+### 11.8 Open questions
+
+- **Secret scene by tier**: one scene per character (the default), or three
+  versions in the `reactions.js` bands (early / mid / deep), each in the
+  fave type's register.

@@ -14,7 +14,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { readPng, writePng } from "./slice-atlas.js";
+import { readPng, writePng } from "./lib/png.js";
 
 // A pixel counts as changed when any channel moves more than this.
 const DEFAULT_THRESHOLD = 20;

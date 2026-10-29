@@ -6,7 +6,7 @@ import assert from 'node:assert';
 
 import { describeAffine, findAffineECC, gray, headRegion, remapHead } from '../activity/tools/register-head.js';
 import { readRig } from '../activity/tools/lib/render.js';
-import { readPng } from '../activity/tools/slice-atlas.js';
+import { readPng } from '../activity/tools/lib/png.js';
 
 // A smooth blob (gaussian bumps) on gray, drawn with a scale and offset.
 function blob(W, H, s = 1, dx = 0, dy = 0) {

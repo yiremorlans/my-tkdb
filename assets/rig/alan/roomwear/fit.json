@@ -44,5 +44,8 @@
     "poses": { "relaxed": "p153", "curled": "p155", "loose": "p145", "back": "p144", "fist": "p156", "fist_side": "p147", "spread": "p154" },
     "sides": { "r": { "fit": "hand_r", "parent": "forearm_r" }, "l": { "fit": "hand_l", "parent": "forearm_l" } }
   },
-  "hotspots": { "chest": { "part": "tee", "rect": [300, 270, 468, 420] } }
+  "hotspots": {
+    "chest": { "part": "tee", "rect": [300, 270, 468, 420] },
+    "hips": { "part": "pants_top", "rect": [292, 593, 477, 724] }
+  }
 }

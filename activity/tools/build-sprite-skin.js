@@ -36,11 +36,15 @@ import path from "node:path";
 import { createCanvas, loadImage } from "canvas";
 
 import { isVisible, moodParts, resolveMood } from "../src/rig/expressions.js";
-import { invert, apply, solve, spriteMatrix, withOutfit } from "../src/rig/skeleton.js";
+import { apply, invert, solve, spriteMatrix, withOutfit } from "../src/rig/skeleton.js";
 import { skinConfig } from "./lib/skin-config.js";
-import { readPng, writePng } from "./slice-atlas.js";
+import { SOLID_ALPHA, readPng, writePng } from "./lib/png.js";
 
 const isSkin = (id) => id.startsWith("skin_");
+// A part claims a sprite pixel at alpha SOLID_ALPHA itself, one step looser
+// than lib/png.js isSolid: the committed skins were cut that way, and the
+// stricter test moves their edges.
+const covers = (rgba, i) => rgba[i * 4 + 3] >= SOLID_ALPHA;
 
 async function main() {
   const character = process.argv[2];
@@ -124,7 +128,7 @@ async function main() {
     const alpha = ctx.getImageData(0, 0, W, H).data;
     const g = groupOf.get(part.id) ?? -1;
     for (let i = 0; i < W * H; i++) {
-      if (alpha[i * 4 + 3] >= 128) {
+      if (covers(alpha, i)) {
         owner[i] = g;
         ownerPart[i] = part.id;
       }
@@ -235,7 +239,7 @@ async function main() {
       ctx.setTransform(...spriteMatrix(rig, part, solved.get(part.id).bone, sizes.get(part.id)));
       ctx.drawImage(images.get(part.id), 0, 0);
       const alpha = ctx.getImageData(0, 0, W, H).data;
-      for (let i = 0; i < W * H; i++) if (alpha[i * 4 + 3] >= 128 && (u.belowY == null || i / W >= u.belowY)) cover[i] = 1;
+      for (let i = 0; i < W * H; i++) if (covers(alpha, i) && (u.belowY == null || i / W >= u.belowY)) cover[i] = 1;
     }
     let x0 = W, y0 = H, x1 = -1, y1 = -1;
     for (let i = 0; i < W * H; i++) {

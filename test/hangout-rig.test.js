@@ -7,11 +7,11 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { AnnoyanceMeter } from '../activity/src/hangout/annoyance.js';
-import { Hangout } from '../activity/src/hangout/hangout.js';
-import { DEFAULT_REACTIONS, TIERS, TOUCH_SPOTS, resolveReaction } from '../activity/src/hangout/reactions.js';
-import { DIALOGUE_TIER_BY_LEVEL } from '../constants/game.js';
+import { Hangout, SOUND_COOLDOWN } from '../activity/src/hangout/hangout.js';
+import { DEFAULT_REACTIONS, TOUCH_SPOTS, resolveReaction } from '../activity/src/hangout/reactions.js';
+import { DIALOGUE_TIERS } from '../constants/tiers.js';
 import { resolveMood } from '../activity/src/rig/expressions.js';
-import { apply, imagesOf, outfitNames, solve, validateRig, withOutfit } from '../activity/src/rig/skeleton.js';
+import { apply, imagesOf, outfitNames, solve, soundsOf, validateRig, withOutfit } from '../activity/src/rig/skeleton.js';
 
 function rig(overrides = {}) {
   return {
@@ -140,6 +140,12 @@ test('the annoyance meter trips, ignores taps while recovering, then settles', (
   for (let t = 10; t < 30; t += 1.5) assert.strictEqual(meter.tap(t), 'ok');
 });
 
+test('a weighted tap adds its share of the threshold', () => {
+  const meter = new AnnoyanceMeter({ perTap: 1, decayPerSec: 0.9, threshold: 5, recoverSec: 4 });
+  assert.strictEqual(meter.tap(0, 0.75), 'ok');
+  assert.strictEqual(meter.tap(2, 0.75), 'upset');
+});
+
 test("Alan's rig.json validates against the files on disk, every outfit", () => {
   const dir = 'assets/rig/alan';
   const r = JSON.parse(fs.readFileSync(path.join(dir, 'rig.json'), 'utf8'));
@@ -248,13 +254,14 @@ test('a head pat smiles, then blushes, then returns to the resting mood', () => 
     reactions: { headPat: { mood: 'smile', then: [0.4, 'smile_blush'], duration: 2 } },
   });
   const renderer = {
+    rig: r,
     moodName: 'default',
     handPose: {},
     setMood(name) { this.moodName = name; },
     update() {},
   };
   const motion = { blinking: () => false, pose: () => ({}) };
-  const hangout = new Hangout({ rig: r, renderer, motion });
+  const hangout = new Hangout({ renderer, motion });
   hangout.react('headPat', 10);
   assert.strictEqual(renderer.moodName, 'smile');
   hangout.frame(10.2, 0.2);
@@ -281,34 +288,45 @@ test('switching outfit hands the hangout the new hotspots and default hands', ()
   };
   renderer.setOutfit('academy');
   const motion = { blinking: () => false, pose: () => ({}) };
-  const hangout = new Hangout({ rig: renderer.rig, renderer, motion });
+  const hangout = new Hangout({ renderer, motion });
   hangout.setOutfit('roomwear');
   assert.strictEqual(hangout.rig.outfit, 'roomwear');
-  assert.strictEqual(motion.rig, renderer.rig);
   assert.deepStrictEqual(hangout.baseHands, { r: 'fist' });
   assert.strictEqual(hangout.rig.hotspots.chest, undefined);
-});
-
-test('hangout tiers match the dialogue tiers in constants/game.js', () => {
-  assert.deepStrictEqual(TIERS, [...new Set(Object.values(DIALOGUE_TIER_BY_LEVEL))]);
 });
 
 test('every touch spot reacts at every tier', () => {
   const r = rig({ expressions: { head: 'head', moods: { default: {} } } });
   for (const reaction of new Set(Object.values(TOUCH_SPOTS))) {
-    for (const tier of TIERS) {
+    for (const tier of DIALOGUE_TIERS) {
       assert.ok(resolveReaction(r, reaction, tier), `${reaction} at ${tier}`);
     }
   }
 });
 
 test('a tier with no entry uses the nearest lower one; missing moods fall back', () => {
-  const r = rig({ expressions: { head: 'head', moods: { default: {}, surprise: {} } } });
-  // cheekPoke has no "known" entry: it inherits "new" (surprise)
+  const r = rig({
+    expressions: { head: 'head', moods: { default: {}, surprise: {} } },
+    reactions: { cheekPoke: { byTier: { new: { mood: 'surprise' }, warm: { mood: 'surprise_blush' } } } },
+  });
+  // no "known" entry: it inherits "new" (surprise)
   assert.strictEqual(resolveReaction(r, 'cheekPoke', 'known').mood, 'surprise');
   // this rig has no surprise_blush: falls back to default
   assert.strictEqual(resolveReaction(r, 'cheekPoke', 'warm').mood, 'default');
   assert.ok(DEFAULT_REACTIONS.chestTouch.byTier.bound);
+});
+
+test('a ranked reaction takes the face a call scene shows at that tier and rank', () => {
+  const moods = Object.fromEntries(['default', 'close', 'serious', 'surprise_blush', 'smile_blush', 'blush'].map((m) => [m, {}]));
+  const expressions = { head: 'head', moods };
+  // the shared ladder: fave at warm is surprise_blush, at spark blush
+  assert.strictEqual(resolveReaction(rig({ expressions }), 'headPat', 'warm').mood, 'surprise_blush');
+  assert.strictEqual(resolveReaction(rig({ expressions }), 'headPat', 'spark').mood, 'blush');
+  // a character's override wins: Alan's spark fave is smile_blush, his new flat serious
+  const alan = rig({ character: 'alan', expressions });
+  assert.strictEqual(resolveReaction(alan, 'headPat', 'spark').mood, 'smile_blush');
+  assert.strictEqual(resolveReaction(alan, 'hipsTouch', 'new').mood, 'serious');
+  assert.strictEqual(resolveReaction(alan, 'hipsTouch', 'new').rank, undefined);
 });
 
 test('a rig.json reaction overrides the shared default', () => {
@@ -317,4 +335,121 @@ test('a rig.json reaction overrides the shared default', () => {
     reactions: { headPat: { mood: 'blush', duration: 1 } },
   });
   assert.strictEqual(resolveReaction(r, 'headPat', 'new').mood, 'blush');
+});
+
+test('reaction sounds are listed across byTier, and a missing one is rejected', () => {
+  const r = rig({
+    reactions: {
+      headPat: { sound: 'sfx/pat.wav' },
+      cheekPoke: { byTier: { new: { sound: ['sfx/a.wav', 'sfx/b.wav'] }, warm: { sound: 'sfx/a.wav' } } },
+    },
+  });
+  assert.deepStrictEqual(soundsOf(r), ['sfx/pat.wav', 'sfx/a.wav', 'sfx/b.wav']);
+  assert.deepStrictEqual(soundsOf(rig()), []);
+  assert.match(problems(r, { soundExists: (f) => f !== 'sfx/b.wav' }), /missing sound sfx\/b\.wav/);
+  assert.strictEqual(problems(r, { soundExists: () => true }), '');
+});
+
+test('rig.json sounds layer over a shared reaction by tier, keeping its faces', () => {
+  const moods = Object.fromEntries(['default', 'close', 'surprise_blush'].map((m) => [m, {}]));
+  const r = rig({
+    expressions: { head: 'head', moods },
+    sounds: { headPat: { byTier: { warm: 'sfx/warm.wav' } }, cheekPoke: ['sfx/a.wav', 'sfx/b.wav'] },
+    reactions: { lipsTouch: { mood: 'close', sound: 'sfx/own.wav' } },
+  });
+  assert.strictEqual(resolveReaction(r, 'headPat', 'new').sound, undefined);
+  assert.strictEqual(resolveReaction(r, 'headPat', 'spark').sound, 'sfx/warm.wav');
+  assert.strictEqual(resolveReaction(r, 'headPat', 'warm').mood, 'surprise_blush');
+  assert.deepStrictEqual(resolveReaction(r, 'cheekPoke', 'new').sound, ['sfx/a.wav', 'sfx/b.wav']);
+  assert.strictEqual(resolveReaction(r, 'lipsTouch', 'new').sound, 'sfx/own.wav');
+  assert.deepStrictEqual(soundsOf(r).sort(), ['sfx/a.wav', 'sfx/b.wav', 'sfx/own.wav', 'sfx/warm.wav']);
+});
+
+test('a reaction with a sound plays one of its clips; one without plays nothing', () => {
+  const r = rig({
+    hotspots: {},
+    expressions: { head: 'head', moods: { default: {} } },
+    reactions: { headPat: { mood: 'default', sound: ['sfx/a.wav', 'sfx/b.wav'] }, cheekPoke: { mood: 'default' } },
+  });
+  const renderer = { rig: r, moodName: 'default', handPose: {}, setMood() {}, update() {} };
+  const motion = { blinking: () => false, pose: () => ({}) };
+  const played = [];
+  const hangout = new Hangout({ renderer, motion, play: (f) => played.push(f), random: () => 0.6 });
+  hangout.react('cheekPoke', 0);
+  hangout.react('headPat', 0);
+  assert.deepStrictEqual(played, ['sfx/b.wav']);
+});
+
+test('sounds wait out the cooldown; the reaction itself still plays', () => {
+  const r = rig({
+    hotspots: {},
+    expressions: { head: 'head', moods: { default: {}, blush: {} } },
+    reactions: { headPat: { mood: 'blush', sound: 'sfx/a.wav' } },
+  });
+  const renderer = { rig: r, moodName: 'default', handPose: {}, setMood(name) { this.moodName = name; }, update() {} };
+  const motion = { blinking: () => false, pose: () => ({}) };
+  const played = [];
+  const hangout = new Hangout({ renderer, motion, play: (f) => played.push(f) });
+  hangout.react('headPat', 10);
+  renderer.moodName = 'default';
+  hangout.react('headPat', 10 + SOUND_COOLDOWN - 0.1);
+  assert.strictEqual(renderer.moodName, 'blush');
+  assert.strictEqual(played.length, 1);
+  hangout.react('headPat', 10 + SOUND_COOLDOWN);
+  assert.strictEqual(played.length, 2);
+});
+
+test('a twitch eases the arm in, peaks, and settles back to the idle', async () => {
+  const { Motion } = await import('../activity/src/rig/motion.js');
+  const r = rig({
+    bones: { arms: { r: { upper: 'upper_arm_r', fore: 'forearm_r', hand: 'hand_r', dir: 1 } } },
+    motion: { breath: { enabled: false }, sway: { enabled: false }, arms: { enabled: false }, twitch: { amount: 4, upper: 0.5, peak: 0.05 } },
+  });
+  const motion = new Motion(r, { random: () => 0.5 });
+  motion.twitch(['r'], 1);
+  assert.ok(Math.abs(motion.pose(1.05, 0.05).forearm_r.rotation + 4) < 1e-9, 'peaks inward at `amount`');
+  assert.strictEqual(motion.pose(1.05, 0).upper_arm_r.rotation, motion.pose(1.05, 0).forearm_r.rotation * 0.5);
+  assert.strictEqual(motion.pose(1.05, 0).hand_r, undefined, 'the hand rides along unchanged');
+  assert.ok(Math.abs(motion.pose(1.005, 0.005).forearm_r.rotation) < 0.3, 'starts from rest, no snap');
+  assert.strictEqual(motion.pose(1.31, 0.31).forearm_r, undefined, 'gone after 6× the peak');
+  motion.pose(2, 0.6);
+  assert.deepStrictEqual(motion.twitches, {});
+});
+
+test('a side spot twitches and clenches its own arm; other spots both', () => {
+  const pose = { image: 'h.png' };
+  const hand = { default: 'relaxed', poses: { relaxed: pose, curled: pose, fist: pose } };
+  const r = rig({
+    expressions: { head: 'head', moods: { default: {}, upset: {} } },
+    bones: { arms: { r: {}, l: {} } },
+    hands: { r: hand, l: hand },
+    reactions: { handTap: { mood: 'upset', twitch: true, fist: true, duration: 1 }, hipsTouch: { mood: 'upset', twitch: 2, duration: 1 } },
+  });
+  const twitched = [];
+  const motion = { blinking: () => false, pose: () => ({}), twitch: (sides, t, scale) => twitched.push([sides, scale]) };
+  const renderer = {
+    rig: r,
+    handPose: { r: 'relaxed', l: 'relaxed' },
+    setMood() {},
+    setHandPose(side, p) { this.handPose[side] = p; },
+    update() {},
+  };
+  const hangout = new Hangout({ renderer, motion });
+  hangout.react('handTap', 0, 'hand_l');
+  hangout.frame(0.01, 0.01);
+  assert.deepStrictEqual(renderer.handPose, { r: 'relaxed', l: 'fist' });
+  hangout.frame(1.1, 1);
+  assert.deepStrictEqual(renderer.handPose, { r: 'relaxed', l: 'relaxed' });
+  hangout.react('hipsTouch', 2, 'hips');
+  assert.deepStrictEqual(twitched, [[['l'], 1], [['r', 'l'], 2]]);
+  hangout.frame(2.01, 0.01);
+  assert.deepStrictEqual(renderer.handPose, { r: 'relaxed', l: 'relaxed' }, 'a twitch alone swaps no pose');
+});
+
+test('Alan places every touch spot on every outfit', () => {
+  const alan = JSON.parse(fs.readFileSync(path.resolve('assets/rig/alan/rig.json'), 'utf8'));
+  for (const outfit of outfitNames(alan)) {
+    const placed = Object.keys(withOutfit(alan, outfit).hotspots);
+    for (const spot of Object.keys(TOUCH_SPOTS)) assert.ok(placed.includes(spot), `${outfit}: ${spot}`);
+  }
 });

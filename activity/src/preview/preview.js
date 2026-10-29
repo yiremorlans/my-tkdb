@@ -9,10 +9,12 @@
 
 import { Graphics, Sprite } from "pixi.js";
 
-import { DEFAULT_REACTIONS, TIERS } from "../hangout/reactions.js";
+import { RESPONSE_TYPE_ORDER } from "../../../constants/responseTypes.js";
+import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
+import { DEFAULT_REACTIONS, TOUCH_SPOTS } from "../hangout/reactions.js";
 import { MOBILE_FPS, startScene } from "../hangout/scene.js";
 import { loadTexture } from "../rig/loader.js";
-import { allParts, apply, invert, outfitNames } from "../rig/skeleton.js";
+import { allParts, apply, invert, outfitNames, roundTo, spriteMatrix } from "../rig/skeleton.js";
 
 const params = new URLSearchParams(location.search);
 const character = params.get("character") ?? "alan";
@@ -102,14 +104,46 @@ async function main() {
     return best?.id ?? null;
   }
 
+  // The hand pose a hand part is drawing, or null for any other part. Every
+  // pose hangs off the one wrist bone, so the editor nudges the pose shown
+  // (its pivot and artRotation), never the bone: moving the bone to line up
+  // one pose would knock the others out.
+  function shownPose(id) {
+    for (const [side, hand] of Object.entries(renderer.rig.hands ?? {})) {
+      if (hand.part === id) return { side, entry: hand.poses[renderer.handPose[side]] };
+    }
+    return null;
+  }
+
+  // Poses the editor has changed, shaped like hand-fits.json per outfit
+  // ({ <outfit>: { <side>: { <image>: pose entry } } }) and saved to it too
+  // so fit-outfit.js keeps them.
+  const editedPoses = {};
+  function markPose({ side, entry }) {
+    const image = entry.image.split("/").pop().replace(/\.png$/, "");
+    ((editedPoses[renderer.rig.outfit] ??= {})[side] ??= {})[image] = entry;
+  }
+
   // Moves a part by a reference-space delta, converted into its parent's
   // frame so the stored `position` stays parent-relative.
   function movePart(id, dx, dy) {
     const part = renderer.byId.get(id);
+    const pose = shownPose(id);
+    if (pose) {
+      // spriteMatrix maps the pivot to the bone origin, so shifting the
+      // drawing by d moves the pivot by −L⁻¹·d (L: its linear part).
+      const size = renderer.sizes.get(id);
+      const m = spriteMatrix(renderer.rig, part, renderer.boneOf(id), size, pose.entry);
+      const [ix, iy] = apply(invert([m[0], m[1], m[2], m[3], 0, 0]), [dx, dy]);
+      const [px, py] = pose.entry.pivot ?? part.pivot ?? [0.5, 0.5];
+      pose.entry.pivot = [roundTo(px - ix / size[0], 4), roundTo(py - iy / size[1], 4)];
+      markPose(pose);
+      return showSelection();
+    }
     const parent = part.parent ? renderer.boneOf(part.parent) : [1, 0, 0, 1, 0, 0];
     const inv = invert([parent[0], parent[1], parent[2], parent[3], 0, 0]);
     const [lx, ly] = apply(inv, [dx, dy]);
-    part.position = [round(part.position[0] + lx), round(part.position[1] + ly)];
+    part.position = [roundTo(part.position[0] + lx, 2), roundTo(part.position[1] + ly, 2)];
     showSelection();
   }
 
@@ -135,9 +169,17 @@ async function main() {
     const part = renderer.byId.get(editor.selected);
     const step = e.shiftKey ? 10 : 1;
     const moves = { ArrowLeft: [-step, 0], ArrowRight: [step, 0], ArrowUp: [0, -step], ArrowDown: [0, step] };
+    const pose = shownPose(part.id);
+    const turn = (deg) => {
+      if (!pose) return void (part.rotation = roundTo((part.rotation ?? 0) + deg, 2));
+      const r = roundTo((pose.entry.artRotation ?? 0) + deg, 2);
+      if (r) pose.entry.artRotation = r;
+      else delete pose.entry.artRotation;
+      markPose(pose);
+    };
     if (moves[e.key]) movePart(part.id, ...moves[e.key]);
-    else if (e.key === "q") part.rotation = round((part.rotation ?? 0) - 0.5 * step);
-    else if (e.key === "e") part.rotation = round((part.rotation ?? 0) + 0.5 * step);
+    else if (e.key === "q") turn(-0.5 * step);
+    else if (e.key === "e") turn(0.5 * step);
     else if (e.key === "[") part.z = (part.z ?? 0) - 1;
     else if (e.key === "]") part.z = (part.z ?? 0) + 1;
     else return;
@@ -238,7 +280,7 @@ async function main() {
 
   const tierRow = section("Relationship tier");
   const tierPick = document.createElement("select");
-  for (const tier of TIERS) tierPick.append(new Option(tier, tier));
+  for (const tier of DIALOGUE_TIERS) tierPick.append(new Option(tier, tier));
   tierPick.value = hangout.tier;
   tierPick.onchange = () => hangout.setTier(tierPick.value);
   tierRow.append(tierPick);
@@ -249,6 +291,16 @@ async function main() {
     button(reactRow, name, () => hangout.react(name, scene.time));
   }
   button(reactRow, "Spend time", () => hangout.spendTime(scene.time));
+
+  // One button per placed touch spot, playing it as a tap there would (a
+  // hand tap twitches that arm).
+  const spotRow = section("Touch spots");
+  for (const spot of Object.keys(TOUCH_SPOTS)) {
+    button(spotRow, spot, () => {
+      if (!hangout.rig.hotspots?.[spot]) return say(`(${spot} isn't placed on this outfit)`);
+      hangout.react(hangout.rig.hotspots[spot].reaction ?? TOUCH_SPOTS[spot], scene.time, spot);
+    });
+  }
 
   // Hands are per outfit, so their rows are rebuilt on an outfit switch.
   const handRows = document.createElement("div");
@@ -278,7 +330,7 @@ async function main() {
       if (name in motion.enabled) motion.enabled[name] = v;
     });
     for (const key of Object.keys(params)) {
-      if (key === "enabled") continue;
+      if (key === "enabled" || typeof params[key] !== "number") continue;
       const max = key === "meanInterval" ? 10 : key === "speed" ? 2 : Math.max(1, params[key] * 4);
       slider(motionRow, `${name}.${key}`, () => params[key], (v) => {
         params[key] = v;
@@ -298,6 +350,8 @@ async function main() {
 
   const perfRow = section("Performance");
   toggle(perfRow, "cap 30fps (mobile)", () => app.ticker.maxFPS === MOBILE_FPS, (v) => (app.ticker.maxFPS = v ? MOBILE_FPS : 0));
+
+  // --- part editor --------------------------------------------------------
 
   const editRow = section("Part editor");
   toggle(editRow, "edit parts", () => editor.on, (v) => {
@@ -334,10 +388,12 @@ async function main() {
 
   function showSelection() {
     const part = editor.selected && renderer.byId.get(editor.selected);
+    const pose = part && shownPose(part.id);
     const changes = changedValues();
     info.textContent =
       (part
-        ? `${part.id}  parent ${part.parent ?? "-"}\nposition ${part.position.join(", ")}  rotation ${part.rotation ?? 0}  z ${part.z}\n`
+        ? `${part.id}  parent ${part.parent ?? "-"}\nposition ${part.position.join(", ")}  rotation ${part.rotation ?? 0}  z ${part.z}\n` +
+          (pose ? `pose ${renderer.handPose[pose.side]}  pivot ${pose.entry.pivot?.join(", ")}  turn ${pose.entry.artRotation ?? 0} (moves/turns this pose only)\n` : "")
         : "") + `\n${changes.length} changed:\n${changes.join("\n")}`;
   }
 
@@ -355,16 +411,25 @@ async function main() {
         }
       }
     }
+    for (const [outfit, sides] of Object.entries(editedPoses)) {
+      for (const [side, poses] of Object.entries(sides)) {
+        for (const [image, entry] of Object.entries(poses)) {
+          out.push(`${outfit}/hand ${side}/${image}: pivot ${entry.pivot.join(", ")}  turn ${entry.artRotation ?? 0}`);
+        }
+      }
+    }
     return out;
   }
 
   async function saveRig() {
     const res = await fetch(`/__rig/save?character=${character}`, {
       method: "POST",
-      body: JSON.stringify(rig),
+      body: JSON.stringify({ rig, handFits: editedPoses }),
     });
     info.textContent = res.ok ? "saved rig.json" : `save failed: ${await res.text()}`;
   }
+
+  // --- VN chrome ----------------------------------------------------------
 
   // VN chrome: Spend time, the debug drawer, and layout-only placeholder
   // choices (the conversation itself comes from constants/hangout/<id>.js
@@ -373,16 +438,25 @@ async function main() {
   $("#btn-debug").onclick = () => {
     panel.hidden = !panel.hidden;
   };
+  // The four /roam response types in RESPONSE_TYPE_ORDER, each marked by a
+  // one-color glyph in place of its emoji and button color. The glyphs are
+  // deliberately abstract so they don't give the type away.
+  const RESPONSE_GLYPHS = { kind: "☼", playful: "♪", bold: "⚡\uFE0E", neutral: "♢" };
   const choices = $("#choices");
   const showChoices = () => {
     choices.replaceChildren(
-      ...["(kind response)", "(bold response)", "(playful response)"].map((label) => {
+      ...RESPONSE_TYPE_ORDER.map((type) => {
+        const icon = RESPONSE_GLYPHS[type];
+        const label = `(${type} response)`;
         const b = document.createElement("button");
         b.className = "choice";
-        b.textContent = label;
+        const glyph = document.createElement("span");
+        glyph.className = "choice-icon";
+        glyph.setAttribute("aria-hidden", "true");
+        glyph.textContent = icon;
+        b.append(glyph, label);
         b.onclick = () => {
           choices.hidden = true;
-          hangout.react("handTap", scene.time);
           say("(Alan's reply placeholder)");
         };
         return b;
@@ -397,9 +471,8 @@ async function main() {
 
 }
 
-const round = (n) => Math.round(n * 100) / 100;
 
 main().catch((err) => {
   $("#controls").textContent = `preview failed: ${err.message}`;
-  console.error(`[preview] ${err.stack}`);
+  console.error(`[preview] ${err.message}`);
 });

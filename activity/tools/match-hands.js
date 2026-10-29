@@ -21,8 +21,8 @@ import path from "node:path";
 import { createCanvas, loadImage } from "canvas";
 
 import { withOutfit } from "../src/rig/skeleton.js";
-import { fitFile } from "./fit-outfit.js";
-import { readRig } from "./lib/render.js";
+import { isSolid } from "./lib/png.js";
+import { fitFile, readRig } from "./lib/render.js";
 
 const CANVAS = [240, 320];
 const ORIGIN = [120, 24];
@@ -39,7 +39,7 @@ export async function handMask(file, { scale = 1, pivot = [0.5, 0.05], flipX = f
   ctx.drawImage(img, 0, 0);
   const data = ctx.getImageData(0, 0, W, H).data;
   const mask = new Uint8Array(W * H);
-  for (let i = 0; i < W * H; i++) mask[i] = data[i * 4 + 3] > 128 ? 1 : 0;
+  for (let i = 0; i < W * H; i++) mask[i] = isSolid(data, i) ? 1 : 0;
   return mask;
 }
 

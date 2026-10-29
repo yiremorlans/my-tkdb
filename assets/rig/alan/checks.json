@@ -12,10 +12,10 @@
   "baselines": {
     "academy": {
       "leak": 1044,
-      "spill": 218,
-      "diff": 1.85,
+      "spill": 216,
+      "diff": 1.897,
       "holes": {
-        "neck@-4": 4,
+        "neck@-4": 3,
         "neck@4": 2,
         "head@-7": 1,
         "head@7": 1,
@@ -37,10 +37,10 @@
         "forearm_l@-12": 0,
         "forearm_l@110": 23,
         "forearm_l@60": 410,
-        "hand_r@-35": 4521,
+        "hand_r@-35": 4490,
         "hand_r@35": 0,
         "hand_l@-35": 0,
-        "hand_l@35": 4295
+        "hand_l@35": 4306
       }
     },
     "roomwear": {

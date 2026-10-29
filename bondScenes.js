@@ -34,9 +34,9 @@ import {
   bondLevelSlug,
   bondSceneKey,
   FAV_RESPONSE_PHRASE,
-  getDialogueTier,
   RELATIONSHIP_LEVELS,
 } from './constants/game.js';
+import { getDialogueTier } from './constants/tiers.js';
 import {
   fillTemplate,
   getMilestone,

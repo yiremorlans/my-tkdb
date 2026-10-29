@@ -1,6 +1,5 @@
 // Registers an outfit's sprite to the rig's shared head (docs/hangout-
-// activity.md §3.5), the pipeline step register_head.py did by hand for
-// Alan's roomwear.
+// activity.md §3.5).
 //
 //   node activity/tools/register-head.js <character> [--outfit <name>]
 //        [--source <sprite>] [--ref <sprite>] [--out <png>] [--dry]
@@ -26,14 +25,15 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { solve, withOutfit } from "../src/rig/skeleton.js";
-import { fitFile, sharedCover } from "./fit-outfit.js";
-import { readRig, writeRig } from "./lib/render.js";
-import { readPng, writePng } from "./slice-atlas.js";
+import { roundTo, solve, withOutfit } from "../src/rig/skeleton.js";
+import { readPng, writePng } from "./lib/png.js";
+import { fitFile, readRig, sharedCover, writeRig } from "./lib/render.js";
 
-const round = (v, d = 4) => Math.round(v * 10 ** d) / 10 ** d;
+const round = (v, d = 4) => roundTo(v, d);
 
-/** Gray over mid gray (as register_head.py's gray()), 0..1. */
+// --- image helpers ----------------------------------------------------------
+
+/** Gray over mid gray, 0..1, rounded as OpenCV's cvtColor does. */
 export function gray({ width: W, height: H, data }) {
   const out = new Float32Array(W * H);
   for (let i = 0; i < W * H; i++) {
@@ -96,6 +96,8 @@ function solve6(A, b) {
   }
   return M.map((row, i) => row[n] / row[i]);
 }
+
+// --- ECC registration -------------------------------------------------------
 
 /**
  * ECC affine alignment (Evangelidis & Psarakis, as OpenCV's
@@ -200,6 +202,8 @@ export function describeAffine(M, [cx, cy]) {
   return { scale, dx, dy };
 }
 
+// --- remapping --------------------------------------------------------------
+
 /**
  * The sprite with its head moved onto the rig's: each output pixel samples
  * the sprite through M fully above blend[0], not at all below blend[1],
@@ -275,6 +279,8 @@ export async function headRegion(source, dir, pad = 16) {
     blend: [y1, neckY],
   };
 }
+
+// --- CLI --------------------------------------------------------------------
 
 async function main() {
   const [character, ...rest] = process.argv.slice(2);

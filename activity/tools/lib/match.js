@@ -1,6 +1,6 @@
 // Template matching for rig fitting (fit-outfit.js), in plain JS. It follows
-// the OpenCV calls the original Python fits used (activity/tools/authoring/
-// peelcore.py, fit.py) closely enough to land on the same pixels: INTER_AREA
+// OpenCV's template matching closely enough to land on the same pixels (so
+// Alan's rig.json reproduces byte for byte): INTER_AREA
 // downscaling, Gaussian kernels sized the way OpenCV sizes them for float
 // images, reflect-101 borders, and Python's round-half-to-even for template
 // sizes.
@@ -8,7 +8,9 @@
 // Images here are { width, height, channels, data: Float32Array }, row-major,
 // interleaved, 0-255.
 
-import { readPng } from "../slice-atlas.js";
+import { readPng } from "./png.js";
+
+// --- images -----------------------------------------------------------------
 
 /** Python's round(): half to even, on the double as given. */
 export function pyRound(x) {
@@ -42,6 +44,8 @@ export function flipX(img) {
   }
   return out;
 }
+
+// --- resampling -------------------------------------------------------------
 
 // OpenCV's area-resize weights along one axis: each destination pixel
 // averages the source span it covers, weighted by overlap.
@@ -170,6 +174,8 @@ export function rotated(img, deg) {
   return out;
 }
 
+// --- blur -------------------------------------------------------------------
+
 function gaussianKernel(sigma) {
   // OpenCV's size for float images: round(sigma * 4 * 2 + 1), made odd.
   const n = Math.round(sigma * 8 + 1) | 1;
@@ -230,11 +236,13 @@ export function flatten(img, bg = [255, 0, 255]) {
   return out;
 }
 
+// --- peeling matcher --------------------------------------------------------
+
 /**
- * Front-to-back "peeling" matcher (peelcore.py's Peeler). The target is a
- * flattened, lightly blurred sprite; `covered` (0..1 per pixel) marks what
- * fits so far (and the shared head) already explain, so a part tucked
- * under another is scored only where it shows.
+ * Front-to-back "peeling" matcher. The target is a flattened, lightly
+ * blurred sprite; `covered` (0..1 per pixel) marks what fits so far (and
+ * the shared head) already explain, so a part tucked under another is
+ * scored only where it shows.
  */
 export class Peeler {
   constructor(target, covered, { minVisible = 0.35, blur: sigma = 1.0 } = {}) {

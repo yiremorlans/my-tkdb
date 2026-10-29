@@ -109,6 +109,8 @@ body {
   opacity: 0.85;
 }
 .vn-icon:hover { opacity: 1; transform: scale(1.1); }
+.vn-icon[hidden] { display: none; }
+.vn-icon[aria-pressed="true"] { opacity: 0.4; text-decoration: line-through; }
 
 /* --- response choices ----------------------------------------------------- */
 .choices {
@@ -125,7 +127,7 @@ body {
 .choice {
   padding: 0.7em 1.2em;
   border: 1px solid var(--box-edge);
-  border-radius: 999px;
+  border-radius: 6px;
   background: var(--choice);
   color: var(--text);
   font: inherit;
@@ -134,6 +136,26 @@ body {
   cursor: pointer;
 }
 .choice:hover { background: var(--choice-hover); border-color: var(--name); }
+/* The type glyph sits on the button's left outline, badge-style like
+   .vn-name on the dialogue box. */
+.choice { position: relative; }
+.choice-icon {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  display: grid;
+  place-items: center;
+  width: 1.7em;
+  height: 1.7em;
+  border: 1px solid var(--box-edge);
+  border-radius: 50%;
+  background: rgba(14, 15, 34, 0.94);
+  color: var(--name);
+  font-size: 0.95em;
+  line-height: 1;
+}
+.choice:hover .choice-icon { border-color: var(--name); }
 
 /* --- portrait phones ------------------------------------------------------- */
 @media (orientation: portrait) {

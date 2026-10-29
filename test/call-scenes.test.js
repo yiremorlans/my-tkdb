@@ -7,10 +7,10 @@ import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
 import { DIALOGUE } from '../constants/dialogue.js';
+import { SCENE_FACES } from '../constants/sceneFaces.js';
 
 const {
   CALL_SCENE_CHANCE,
-  SCENE_FACES,
   dateButtonLocked,
   pickCallScene,
   sceneFace,

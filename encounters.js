@@ -35,11 +35,11 @@ import {
   MEET_PICK_LINES,
   RESPONSE_STYLES,
   RESPONSE_TYPE_ORDER,
-  getDialogueTier,
   getRelationshipLevel,
   getRelationshipProgress,
   renderHeartBar,
 } from './constants/game.js';
+import { getDialogueTier } from './constants/tiers.js';
 import { getReactionLine } from './constants/reactions.js';
 import { WARDING_CARDS, wardingCardWritten } from './constants/warding/index.js';
 import { composeEncounter, composeWardingCard } from './imageComposition.js';

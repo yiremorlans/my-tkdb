@@ -73,7 +73,7 @@
         "pin": {
           "position": [
             -14.31,
-            154.9
+            153.9
           ],
           "scale": 0.7249,
           "flipX": false
@@ -84,8 +84,8 @@
         "parent": "forearm_l",
         "pin": {
           "position": [
-            13.68,
-            154.9
+            14.62,
+            153.99
           ],
           "scale": 0.7249,
           "flipX": true

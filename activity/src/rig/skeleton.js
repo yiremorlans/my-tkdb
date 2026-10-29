@@ -15,6 +15,8 @@
 // - `z` is global: draw order ignores the hierarchy, which is how the arms
 //   (children of the torso) draw behind the vest.
 
+// --- outfits ----------------------------------------------------------------
+
 // Outfits. rig.json may hold several outfits for one character:
 //   { "parts": [shared parts], "defaultOutfit": "academy",
 //     "outfits": { "academy": { "referenceImage", "parts", "hands",
@@ -97,21 +99,24 @@ export function allParts(rig) {
   return out;
 }
 
+// --- validation -------------------------------------------------------------
+
 /**
  * Throws a list of problems as one Error if rig.json is malformed. With
  * outfits, each outfit is validated as its flattened rig; a problem every
  * outfit shares (a shared part's) is listed once, the rest under
  * `outfits.<name>`.
  */
-export function validateRig(rig, { imageExists = () => true } = {}) {
+export function validateRig(rig, { imageExists = () => true, soundExists = () => true } = {}) {
   if (!rig || typeof rig !== "object") throw new Error("rig.json: not an object");
+  const missingSounds = soundsOf(rig).filter((f) => !soundExists(f)).map((f) => `missing sound ${f}`);
   if (!rig.outfits) {
-    const problems = rigProblems(rig, imageExists);
+    const problems = [...rigProblems(rig, imageExists), ...missingSounds];
     if (problems.length) throw new Error(`rig.json:\n  ${problems.join("\n  ")}`);
     return rig;
   }
 
-  const problems = [];
+  const problems = [...missingSounds];
   const names = Object.keys(rig.outfits);
   if (!names.length) problems.push("`outfits` is empty");
   if (rig.defaultOutfit != null && !rig.outfits[rig.defaultOutfit]) {
@@ -248,6 +253,8 @@ function findCycle(parts, byId) {
   return cyclic;
 }
 
+// --- images and draw order --------------------------------------------------
+
 /**
  * Every image file rig.json names, relative to the rig's directory, across
  * all outfits.
@@ -271,6 +278,30 @@ export function imagesOf(rig) {
   return [...files];
 }
 
+/**
+ * Every sound file rig.json names (`sounds`, and any reaction's `sound`; a
+ * file or a list, maybe by tier), relative to the rig's directory. Both are
+ * shared by every outfit.
+ */
+export function soundsOf(rig) {
+  const files = new Set();
+  const add = (v) => fileList(v).forEach((f) => files.add(f));
+  const tiers = (v) => (v?.byTier ? Object.values(v.byTier) : [v]);
+  for (const r of Object.values(rig.reactions ?? {})) tiers(r).forEach((t) => add(t?.sound));
+  for (const s of Object.values(rig.sounds ?? {})) tiers(s).forEach(add);
+  return [...files];
+}
+
+/** A `sound` value (one file, a list of files, or none) as a list. */
+export function fileList(value) {
+  return [value ?? []].flat();
+}
+
+/** `n` rounded to `digits` decimal places, the precision rig.json keeps. */
+export function roundTo(n, digits) {
+  return Math.round(n * 10 ** digits) / 10 ** digits;
+}
+
 /** Parts ordered so every parent comes before its children. */
 export function topoOrder(rig) {
   const byId = new Map(rig.parts.map((p) => [p.id, p]));
@@ -285,6 +316,8 @@ export function topoOrder(rig) {
   rig.parts.forEach(visit);
   return order;
 }
+
+// --- bone math --------------------------------------------------------------
 
 // 2D affine as [a, b, c, d, tx, ty]: x' = a*x + c*y + tx, y' = b*x + d*y + ty.
 export const IDENTITY = [1, 0, 0, 1, 0, 0];
@@ -349,6 +382,8 @@ export function solve(rig, pose = {}, sizes = new Map()) {
   return out;
 }
 
+// --- drawing ----------------------------------------------------------------
+
 /**
  * How the rig's view sits on a width×height stage. rig.json `stage` picks
  * the reference rows that fill the stage height ({ top, bottom }) and the
@@ -374,8 +409,11 @@ export function spriteMatrix(rig, part, bone, size, image = part) {
   const [sx, sy] = Array.isArray(s) ? s : [s, s];
   const [px, py] = image.pivot ?? part.pivot ?? [0.5, 0.5];
   const flip = (image.flipX ?? part.flipX) ? -1 : 1;
-  // Pivot to origin, then art scale (and mirror) about the pivot.
-  return multiply(bone, [sx * flip, 0, 0, sy, -px * size[0] * sx * flip, -py * size[1] * sy]);
+  // Pivot to origin, then art scale (and mirror) about the pivot, then the
+  // art's own turn (`artRotation`, deg; hand poses drawn at another angle).
+  const art = [sx * flip, 0, 0, sy, -px * size[0] * sx * flip, -py * size[1] * sy];
+  const turned = image.artRotation ? multiply(boneLocal(0, 0, image.artRotation, 1, 1), art) : art;
+  return multiply(bone, turned);
 }
 
 /**

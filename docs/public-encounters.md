@@ -1563,7 +1563,8 @@ gain:
 | like (1) | sweat | sweat | surprise | surprise_blush | full_smile | full_smile |
 | flat (0) | annoyed | annoyed | serious | close | smile | smile |
 
-One `SCENE_FACES` table in `constants/publicEncounters.js`, keyed
+One `SCENE_FACES` table in `constants/sceneFaces.js` (shared with the
+Hangout Activity's touch reactions), keyed
 register → rank. Variants on top of it:
 
 - **Jo, casual:** when the encounter row's `variant` is `casual` (silhouette

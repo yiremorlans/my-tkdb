@@ -18,13 +18,9 @@ import { createHash } from "node:crypto";
 import { HOUSES, CHARACTER_ROOMS, timeBucket } from "./backgrounds.js";
 import { DIALOGUE } from "./dialogue.js";
 import { pickRandom } from "./random.js";
+import { RESPONSE_TYPES } from "./responseTypes.js";
 
-export const RESPONSE_TYPES = {
-  KIND: "kind",
-  PLAYFUL: "playful",
-  BOLD: "bold",
-  NEUTRAL: "neutral",
-};
+export { RESPONSE_TYPES };
 
 // Each character's affinityByResponse ranks KIND/PLAYFUL/BOLD as a
 // permutation of {2, 1, 0} points — their favorite response type, a
@@ -33,7 +29,7 @@ export const RESPONSE_TYPES = {
 //
 // dialogue holds the lines a character can greet the user with, grouped by
 // how far along the relationship is (see DIALOGUE_TIER_BY_LEVEL in
-// constants/game.js). Each tier is a collection so more lines can be added
+// constants/tiers.js). Each tier is a collection so more lines can be added
 // over time without changing any code — one is picked at random per encounter.
 export const CHARACTERS = [
   // Frostheim

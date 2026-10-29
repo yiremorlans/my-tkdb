@@ -62,10 +62,22 @@ async function main() {
   // Spend time is the cosmetic path until milestone 3 adds the cooldown and
   // the affinity write (hangout.js spendTime).
   $("#btn-spend").onclick = () => hangout.spendTime(scene.time);
+
+  // Mute, only for a character with sounds; remembered across sessions.
+  const { sounds } = scene;
+  const mute = $("#btn-mute");
+  if (sounds.enabled) {
+    mute.hidden = false;
+    mute.ariaPressed = String(sounds.muted);
+    mute.onclick = () => {
+      sounds.setMuted(!sounds.muted);
+      mute.ariaPressed = String(sounds.muted);
+    };
+  }
   scene.say(hangout.line("greeting") ?? "");
 }
 
 main().catch((err) => {
   $("#vn-text").textContent = "Couldn't load the hangout. Try reopening it?";
-  console.error(`[hangout] ${err.stack ?? err.message}`);
+  console.error(`[hangout] ${err.message}`);
 });

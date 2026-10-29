@@ -27,11 +27,10 @@ import { DIALOGUE } from "../constants/dialogue.js";
 import { CHARACTERS } from "../constants/characters.js";
 import {
   getRelationshipLevel,
-  getDialogueTier,
   MOOD_BEAT_TARGET_BY_TIER,
 } from "../constants/game.js";
+import { DIALOGUE_TIERS as TIERS, getDialogueTier } from "../constants/tiers.js";
 
-const TIERS = ["new", "known", "warm", "spark", "close", "bound"];
 const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 const PAGE_SIZE = 1000;
 

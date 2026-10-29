@@ -3,7 +3,6 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 import {
   getRelationshipLevel,
-  getDialogueTier,
   getRelationshipProgress,
   renderHeartBar,
   RELATIONSHIP_LEVELS,
@@ -11,6 +10,7 @@ import {
   HEART_BAR_TRACK,
   DIALOGUE_POOL_TARGET_BY_TIER,
 } from '../constants/game.js';
+import { DIALOGUE_TIERS, getDialogueTier } from '../constants/tiers.js';
 
 test('getRelationshipLevel returns Stranger below the first threshold', () => {
   assert.strictEqual(getRelationshipLevel(0).name, 'Stranger');
@@ -48,6 +48,10 @@ test('getDialogueTier maps every real relationship level to a known tier', () =>
   assert.strictEqual(getDialogueTier('Confidant'), 'close');
   assert.strictEqual(getDialogueTier('Devoted'), 'bound');
   assert.strictEqual(getDialogueTier('Soulbound'), 'bound');
+});
+
+test('DIALOGUE_TIERS lists each tier once, lowest first', () => {
+  assert.deepStrictEqual(DIALOGUE_TIERS, ['new', 'known', 'warm', 'spark', 'close', 'bound']);
 });
 
 test('getDialogueTier falls back to "new" for an unrecognized level name', () => {

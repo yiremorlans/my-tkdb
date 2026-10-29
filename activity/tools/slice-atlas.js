@@ -32,7 +32,8 @@
 
 import fs from "node:fs";
 import path from "node:path";
-import { PNG } from "pngjs";
+
+import { readPng, writePng } from "./lib/png.js";
 
 // Pixels at or below this alpha are background. Above zero so faint
 // anti-alias halos don't chain neighboring parts together.
@@ -45,15 +46,7 @@ const FRAGMENT_GAP = 3;
 // sampling never clamps against an opaque edge when the part rotates.
 const PAD = 2;
 
-export function readPng(file) {
-  return PNG.sync.read(fs.readFileSync(file));
-}
-
-export function writePng(file, width, height, data) {
-  const png = new PNG({ width, height });
-  data.copy ? data.copy(png.data) : png.data.set(data);
-  fs.writeFileSync(file, PNG.sync.write(png));
-}
+// --- alpha regions ----------------------------------------------------------
 
 /** Labels alpha-connected regions. Returns { labels, regions }. */
 export function labelRegions({ width, height, data }, alphaMin = ALPHA_MIN) {
@@ -93,6 +86,8 @@ export function labelRegions({ width, height, data }, alphaMin = ALPHA_MIN) {
   }
   return { labels, regions };
 }
+
+// --- fragments and specks ---------------------------------------------------
 
 // Speck filter: regions this small, or this faint, are atlas noise rather
 // than art. They're reported in parts.json under `dropped`.
@@ -176,6 +171,8 @@ function unionBox(regions, ids) {
   }
   return box;
 }
+
+// --- slicing ----------------------------------------------------------------
 
 function readNames(outDir) {
   const file = path.join(outDir, "part-names.json");
@@ -293,6 +290,8 @@ function touches(labels, { width, height }, x, y, mine) {
   return false;
 }
 
+// --- output -----------------------------------------------------------------
+
 async function writeContactSheets(parts, dir) {
   const { createCanvas } = await import("canvas");
   const CELL = 150;
@@ -371,6 +370,8 @@ export async function sliceOutfit(rigDir, character, outfit, entry = {}, { conta
   }
   return { parts, manifest };
 }
+
+// --- CLI --------------------------------------------------------------------
 
 async function main() {
   const [character, ...rest] = process.argv.slice(2);

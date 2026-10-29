@@ -55,7 +55,7 @@ test("Alan's outfits resolve to their skin groups and neck fixes", () => {
   const roomwear = skinConfig(rig, 'roomwear');
   assert.deepStrictEqual(academy.groups.map((g) => g.id), [
     'skin_hips', 'skin_torso_back', 'skin_torso_front', 'skin_upper_arm_r', 'skin_upper_arm_l',
-    'skin_sleeve_lower_r', 'skin_forearm_r', 'skin_sleeve_lower_l', 'skin_forearm_l',
+    'skin_sleeve_lower_r', 'skin_forearm_r', 'skin_sleeve_lower_l', 'skin_bracelet_l', 'skin_forearm_l',
   ]);
   assert.deepStrictEqual(roomwear.groups.map((g) => g.id), [
     'skin_hips', 'skin_torso', 'skin_upper_arm_r', 'skin_upper_arm_l', 'skin_forearm_r', 'skin_forearm_l',

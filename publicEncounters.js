@@ -48,10 +48,10 @@ import {
 } from './constants/characters.js';
 import {
   bondLevelFromSlug,
-  getDialogueTier,
   getRelationshipLevel,
   RESPONSE_STYLES,
 } from './constants/game.js';
+import { getDialogueTier } from './constants/tiers.js';
 import { timeBucket } from './constants/backgrounds.js';
 import { getReactionLine } from './constants/reactions.js';
 import { missionSlotsLine } from './constants/missions.js';

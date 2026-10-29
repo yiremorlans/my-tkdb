@@ -9,8 +9,16 @@
 //     "arms": { "r": { "upper": "upper_arm_r", "fore": "forearm_r",
 //                      "hand": "hand_r", "dir": 1 }, "l": { ... } } }
 // `dir` mirrors a rotation for the other side.
+//
+// A twitch (twitch()) is a one-off flinch on top of the idle: the arm eases
+// in toward the body and settles back. `motion.twitch` sets its size
+// (forearm degrees; negative flips it outward), how much the upper arm
+// follows, and how soon it peaks (s). The hand rides along unchanged.
 
 const TAU = Math.PI * 2;
+
+/** Seconds a twitch takes to peak (rig.json `motion.twitch.peak`). */
+const twitchPeak = (rig) => Math.max(0.01, rig.motion?.twitch?.peak ?? 0.14);
 
 export class Motion {
   /** `random` is injectable so tests and previews can be deterministic. */
@@ -19,13 +27,35 @@ export class Motion {
     this.random = random;
     // A motion is on unless rig.json sets `"enabled": false` on it.
     this.enabled = {};
-    for (const name of ["breath", "sway", "hair", "arms", "blink"]) {
+    for (const name of ["breath", "sway", "hair", "arms", "twitch", "blink"]) {
       this.enabled[name] = rig.motion?.[name]?.enabled !== false;
     }
     this.hair = new Map(); // lock index → { angle, velocity }
     this.lastHead = 0;
     this.nextBlinkAt = null;
     this.blinkUntil = -1;
+    this.twitches = {}; // arm side → { at, scale }
+  }
+
+  /** Starts a twitch on each arm in `sides` ("r", "l"); `scale` multiplies its size. */
+  twitch(sides, t, scale = 1) {
+    for (const side of sides) this.twitches[side] = { at: t, scale };
+  }
+
+  /**
+   * Twitch strength at time t: one pulse peaking at 1 (× its scale) at
+   * `peak`, gone by ~4× that. x²·e^(2(1−x)) starts from rest (no snap) and
+   * settles without overshoot.
+   */
+  twitchPulse(side, t) {
+    const tw = this.twitches[side];
+    if (!tw || !this.enabled.twitch) return 0;
+    const x = (t - tw.at) / twitchPeak(this.rig);
+    if (x < 0 || x > 6) {
+      if (x > 6) delete this.twitches[side];
+      return 0;
+    }
+    return tw.scale * x * x * Math.exp(2 * (1 - x));
   }
 
   blinkInterval() {
@@ -104,9 +134,16 @@ export class Motion {
       for (const id of ids) add(id, "rotation", st.angle);
     });
 
-    for (const arm of Object.values(bones.arms ?? {})) {
-      if (!this.enabled.arms) continue;
+    for (const [side, arm] of Object.entries(bones.arms ?? {})) {
       const dir = arm.dir ?? 1;
+      // Inward is against `dir`: the hand swings toward the body.
+      const pulse = this.twitchPulse(side, t);
+      if (pulse) {
+        const jerk = -dir * (m.twitch?.amount ?? 1) * pulse;
+        add(arm.upper, "rotation", jerk * (m.twitch?.upper ?? 0.15));
+        add(arm.fore, "rotation", jerk);
+      }
+      if (!this.enabled.arms) continue;
       const a = m.arms?.amount ?? 0.4;
       add(arm.upper, "rotation", dir * a * breathPhase);
       add(arm.fore, "rotation", dir * a * 0.6 * breathPhase);

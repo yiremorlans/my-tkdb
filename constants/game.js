@@ -1,4 +1,5 @@
 import { RESPONSE_TYPES } from './characters.js';
+import { getDialogueTier } from './tiers.js';
 
 // How many characters /meet offers the user to pick from.
 export const MEET_OPTION_COUNT = 4;
@@ -32,13 +33,8 @@ export const RESPONSE_STYLES = {
   [RESPONSE_TYPES.NEUTRAL]: 2,
 };
 
-// The order response buttons are shown in.
-export const RESPONSE_TYPE_ORDER = [
-  RESPONSE_TYPES.KIND,
-  RESPONSE_TYPES.PLAYFUL,
-  RESPONSE_TYPES.BOLD,
-  RESPONSE_TYPES.NEUTRAL,
-];
+// The order response buttons are shown in (constants/responseTypes.js).
+export { RESPONSE_TYPE_ORDER } from './responseTypes.js';
 
 // A collection of button phrasings per response type — one is picked at
 // random each time an encounter is built, so the same 4 buttons don't
@@ -140,26 +136,6 @@ export function renderHeartBar(ratio, fillHeart, segments = HEART_BAR_SEGMENTS) 
   return fillHeart.repeat(filled) + HEART_BAR_TRACK.repeat(segments - filled);
 }
 
-// Groups relationship levels into dialogue tiers — see CHARACTERS'
-// `dialogue` collections in constants/characters.js. Fewer tiers than levels,
-// so several levels share a set of lines. 'known' keeps Acquaintance off the
-// guarded first-meeting content, which belongs to Stranger alone; 'spark' is
-// the flirtatious beat, and is Close Friend's alone so it can't fire at Friend;
-// 'bound' is the romantic tier, and starts at Devoted so it can't fire earlier.
-export const DIALOGUE_TIER_BY_LEVEL = {
-  Stranger: 'new',
-  Acquaintance: 'known',
-  Friend: 'warm',
-  'Close Friend': 'spark',
-  Confidant: 'close',
-  Devoted: 'bound',
-  Soulbound: 'bound',
-};
-
-export function getDialogueTier(levelName) {
-  return DIALOGUE_TIER_BY_LEVEL[levelName] || 'new';
-}
-
 // Odds a /roam or /meet spawn shows a character's casual art instead of
 // uniform. Stranger: always uniform. Higher levels gradually increase casual
 // probability, topping out at 95% for Soulbound.
@@ -194,8 +170,8 @@ export const CASUAL_IMAGE_PROBABILITY_OVERRIDE = {
 // forever.
 //
 // A tier can cover more than one relationship level (see
-// DIALOGUE_TIER_BY_LEVEL) — 'bound' shares Devoted and Soulbound — so its
-// target sums every level mapped to it. The top level has no next level to
+// DIALOGUE_TIER_BY_LEVEL in constants/tiers.js) — 'bound' shares Devoted and
+// Soulbound — so its target sums every level mapped to it. The top level has no next level to
 // measure a width against and contributes 0; for 'bound' that just means the
 // target comes from Devoted's width alone, since Soulbound plays the same
 // pool for the rest of the game.

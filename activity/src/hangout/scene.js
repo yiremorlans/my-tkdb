@@ -8,12 +8,14 @@
 
 import { Application, Sprite } from "pixi.js";
 
-import { Hangout } from "./hangout.js";
-import { TIERS } from "./reactions.js";
+import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
+
 import { loadRig, loadTexture } from "../rig/loader.js";
 import { Motion } from "../rig/motion.js";
 import { RigRenderer } from "../rig/renderer.js";
 import { outfitNames, stageFraming } from "../rig/skeleton.js";
+import { Hangout } from "./hangout.js";
+import { Sounds } from "./sounds.js";
 
 // docs/hangout-activity.md §4.5: the frame cap on phones.
 export const MOBILE_FPS = 30;
@@ -46,9 +48,13 @@ function dialogueBox(box) {
  * holding a `.vn-box`). Throws if the rig doesn't load or validate.
  *
  * Options: `loaded` (loadRig's promise, when the caller already started
- * loading it), `tier` (reactions.js TIERS, else "new"), `outfit` (else the
- * rig's default), `room: false` to skip the background, `background` (the
- * canvas color behind everything), `maxFPS` (0 = uncapped).
+ * loading it), `tier` (constants/tiers.js DIALOGUE_TIERS, else "new"),
+ * `outfit` (else the rig's default), `room: false` to skip the background,
+ * `background` (the canvas color behind everything), `maxFPS` (0 =
+ * uncapped).
+ *
+ * The returned scene's `sounds` (sounds.js) plays reaction clips; its
+ * `setMuted` is the mute toggle.
  *
  * The returned scene's hooks, all optional: `frame(t, dt)` replaces the
  * default per-frame update (hangout.frame);
@@ -59,7 +65,7 @@ function dialogueBox(box) {
 export async function startScene(stage, { base, loaded, tier, outfit, room = true, background = "#000", maxFPS = 0 } = {}) {
   // The renderer doesn't need the rig to start, so both run at once.
   const app = new Application();
-  const [{ rig, textures }] = await Promise.all([
+  const [{ rig, textures, sounds: soundBytes }] = await Promise.all([
     loaded ?? loadRig(base),
     app.init({
       resizeTo: stage,
@@ -77,12 +83,15 @@ export async function startScene(stage, { base, loaded, tier, outfit, room = tru
 
   const renderer = new RigRenderer({ rig, textures, outfit: outfitNames(rig).includes(outfit) ? outfit : undefined });
   const motion = new Motion(renderer.rig);
+  renderer.follow(motion);
   const say = dialogueBox(stage.querySelector(".vn-box"));
-  const hangout = new Hangout({ rig: renderer.rig, renderer, motion, say, tier: TIERS.includes(tier) ? tier : "new" });
+  const sounds = new Sounds(soundBytes);
+  const play = (file) => sounds.play(file);
+  const hangout = new Hangout({ renderer, motion, say, play, tier: DIALOGUE_TIERS.includes(tier) ? tier : "new" });
   app.stage.addChild(renderer.view);
 
   const scene = {
-    app, rig, renderer, motion, hangout, say,
+    app, rig, renderer, motion, hangout, say, sounds,
     time: 0,
     frame: (t, dt) => hangout.frame(t, dt),
     onPointer: null,

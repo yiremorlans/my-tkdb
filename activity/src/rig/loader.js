@@ -5,14 +5,15 @@
 
 import { Texture } from "pixi.js";
 
-import { imagesOf, validateRig } from "./skeleton.js";
+import { imagesOf, soundsOf, validateRig } from "./skeleton.js";
 
 /**
  * Fetches `${baseUrl}/rig.json`, loads its images (every outfit's) as Pixi
  * textures and validates it, each outfit included. Throws one Error listing
  * every problem (unknown parents, cycles, missing images) rather than
  * rendering a half-built character. `rig` is returned as loaded, outfits
- * and all; RigRenderer picks the outfit.
+ * and all; RigRenderer picks the outfit. `sounds` maps each reaction sound
+ * file to its bytes, for hangout/sounds.js to decode.
  */
 export async function loadRig(baseUrl) {
   // Default caching: Express revalidates by ETag, and the dev server sends
@@ -21,15 +22,22 @@ export async function loadRig(baseUrl) {
   if (!res.ok) throw new Error(`rig.json: HTTP ${res.status} at ${baseUrl}`);
   const rig = await res.json();
 
-  const files = imagesOf(rig);
-  const textures = new Map();
-  const results = await Promise.allSettled(files.map((f) => loadTexture(`${baseUrl}/${f}`)));
-  results.forEach((r, i) => {
-    if (r.status === "fulfilled") textures.set(files[i], r.value);
-  });
+  const textures = await loadEach(imagesOf(rig), (f) => loadTexture(`${baseUrl}/${f}`));
+  const sounds = await loadEach(soundsOf(rig), (f) => loadBytes(`${baseUrl}/${f}`));
 
-  validateRig(rig, { imageExists: (f) => textures.has(f) });
-  return { rig, textures, baseUrl };
+  validateRig(rig, { imageExists: (f) => textures.has(f), soundExists: (f) => sounds.has(f) });
+  return { rig, textures, sounds, baseUrl };
+}
+
+// file → what `load` gave for it, for every file that loaded; validateRig
+// reports the ones that didn't.
+async function loadEach(files, load) {
+  const loaded = new Map();
+  const results = await Promise.allSettled(files.map(load));
+  results.forEach((r, i) => {
+    if (r.status === "fulfilled") loaded.set(files[i], r.value);
+  });
+  return loaded;
 }
 
 // Plain <img> decode rather than Pixi's Assets, which decodes in a worker
@@ -41,4 +49,10 @@ export function loadTexture(url) {
     img.onerror = () => reject(new Error(`failed to load ${url}`));
     img.src = url;
   });
+}
+
+async function loadBytes(url) {
+  const res = await fetch(url);
+  if (!res.ok) throw new Error(`failed to load ${url}`);
+  return res.arrayBuffer();
 }

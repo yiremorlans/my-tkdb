@@ -757,6 +757,12 @@
           51
         ]
       },
+      "close": {
+        "layers": [
+          "blink"
+        ],
+        "noBlink": true
+      },
       "smile": {
         "source": "overlay",
         "portrait": "smile",
@@ -842,6 +848,21 @@
     }
   },
   "hotspots": {
+    "lips": {
+      "part": "mouth",
+      "rect": [
+        -0.25,
+        -2,
+        1.25,
+        3
+      ]
+    },
+    "ear_r": {
+      "part": "ear_r"
+    },
+    "ear_l": {
+      "part": "ear_l"
+    },
     "hand_r": {
       "part": "hand_r"
     },
@@ -977,6 +998,11 @@
     "arms": {
       "speed": 0.25,
       "amount": 0.4
+    },
+    "twitch": {
+      "amount": 1,
+      "upper": 0.15,
+      "peak": 0.14
     },
     "blink": {
       "meanInterval": 4
@@ -1443,7 +1469,7 @@
           "image": "academy/parts/p207.png",
           "position": [
             -14.31,
-            154.9
+            153.9
           ],
           "pivot": [
             0.5,
@@ -1463,8 +1489,8 @@
           "parent": "forearm_l",
           "image": "academy/parts/p207.png",
           "position": [
-            13.68,
-            154.9
+            14.62,
+            153.99
           ],
           "pivot": [
             0.5,
@@ -1716,7 +1742,7 @@
           "parent": "torso",
           "image": "academy/skin/skin_torso_front.png",
           "position": [
-            -99,
+            -99.03,
             -427
           ],
           "pivot": [
@@ -1822,7 +1848,7 @@
             0
           ],
           "scale": 1,
-          "z": 232.5
+          "z": 220.5
         },
         {
           "id": "skin_head_underlay",
@@ -1868,6 +1894,21 @@
           ],
           "scale": 1,
           "z": 191
+        },
+        {
+          "id": "skin_bracelet_l",
+          "parent": "forearm_l",
+          "image": "academy/skin/skin_bracelet_l.png",
+          "position": [
+            -8,
+            143
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 232.5
         }
       ],
       "hands": {
@@ -1886,58 +1927,58 @@
             "curled": {
               "image": "academy/parts/p176.png",
               "pivot": [
-                0.5,
-                0.05
+                0.4896,
+                0.0341
               ],
-              "scale": 0.7107
+              "scale": 0.7249
             },
             "loose": {
               "image": "academy/parts/p178.png",
               "pivot": [
-                0.5,
-                0.05
+                0.5505,
+                0.0381
               ],
               "scale": 0.7107
             },
             "back": {
               "image": "academy/parts/p208.png",
               "pivot": [
-                0.5,
-                0.05
+                0.2931,
+                0.0556
               ],
-              "scale": 0.7107
+              "scale": 0.7391
             },
             "open": {
               "image": "academy/parts/p196.png",
               "pivot": [
-                0.5,
-                0.05
+                0.4438,
+                0.0505
               ],
-              "scale": 0.7107
+              "scale": 0.6041
             },
             "fist": {
               "image": "academy/parts/p197.png",
               "pivot": [
-                0.5,
-                0.05
+                0.3389,
+                0.109
               ],
-              "scale": 0.7107
+              "scale": 0.7249
             },
             "fist_side": {
               "image": "academy/parts/p200.png",
               "pivot": [
-                0.5,
-                0.05
+                0.6181,
+                0.0277
               ],
-              "scale": 0.7107
+              "scale": 0.7533
             },
             "spread": {
               "image": "academy/parts/p209.png",
               "pivot": [
-                0.5,
-                0.05
+                0.2642,
+                0.0146
               ],
-              "scale": 0.7107
+              "scale": 0.7533
             }
           }
         },
@@ -1957,64 +1998,64 @@
             "curled": {
               "image": "academy/parts/p176.png",
               "pivot": [
-                0.5,
-                0.05
+                0.4913,
+                0.0342
               ],
-              "scale": 0.7107,
+              "scale": 0.732,
               "flipX": true
             },
             "loose": {
               "image": "academy/parts/p178.png",
               "pivot": [
-                0.5,
-                0.05
+                0.5527,
+                0.0382
               ],
-              "scale": 0.7107,
+              "scale": 0.7178,
               "flipX": true
             },
             "back": {
               "image": "academy/parts/p208.png",
               "pivot": [
-                0.5,
-                0.05
+                0.2948,
+                0.0557
               ],
-              "scale": 0.7107,
+              "scale": 0.7462,
               "flipX": true
             },
             "open": {
               "image": "academy/parts/p196.png",
               "pivot": [
-                0.5,
-                0.05
+                0.4459,
+                0.0505
               ],
-              "scale": 0.7107,
+              "scale": 0.6041,
               "flipX": true
             },
             "fist": {
               "image": "academy/parts/p197.png",
               "pivot": [
-                0.5,
-                0.05
+                0.3409,
+                0.1091
               ],
-              "scale": 0.7107,
+              "scale": 0.732,
               "flipX": true
             },
             "fist_side": {
               "image": "academy/parts/p200.png",
               "pivot": [
-                0.5,
-                0.05
+                0.6201,
+                0.0279
               ],
-              "scale": 0.7107,
+              "scale": 0.7604,
               "flipX": true
             },
             "spread": {
               "image": "academy/parts/p209.png",
               "pivot": [
-                0.5,
-                0.05
+                0.2653,
+                0.0147
               ],
-              "scale": 0.7107,
+              "scale": 0.7604,
               "flipX": true
             }
           }
@@ -2062,6 +2103,12 @@
                 "zone": 0.35
               }
             },
+            {
+              "id": "skin_bracelet_l",
+              "parts": [
+                "bracelet_l"
+              ]
+            },
             {}
           ]
         }
@@ -2074,6 +2121,15 @@
             0.02,
             0.82,
             0.4
+          ]
+        },
+        "hips": {
+          "part": "pants_top",
+          "rect": [
+            0.08,
+            0,
+            0.92,
+            0.75
           ]
         }
       }
@@ -2672,50 +2728,50 @@
             "curled": {
               "image": "roomwear/parts/p155.png",
               "pivot": [
-                0.5,
-                0.05
+                0.4834,
+                0.0403
               ],
-              "scale": 0.68
+              "scale": 0.6664
             },
             "loose": {
               "image": "roomwear/parts/p145.png",
               "pivot": [
-                0.5,
-                0.05
+                0.5335,
+                0.0194
               ],
-              "scale": 0.68
+              "scale": 0.6392
             },
             "back": {
               "image": "roomwear/parts/p144.png",
               "pivot": [
-                0.5,
-                0.05
+                0.2766,
+                0.0557
               ],
-              "scale": 0.68
+              "scale": 0.7072
             },
             "fist": {
               "image": "roomwear/parts/p156.png",
               "pivot": [
-                0.5,
-                0.05
+                0.3525,
+                0.1087
               ],
-              "scale": 0.68
+              "scale": 0.6732
             },
             "fist_side": {
               "image": "roomwear/parts/p147.png",
               "pivot": [
-                0.5,
-                0.05
+                0.5996,
+                0.0197
               ],
-              "scale": 0.68
+              "scale": 0.714
             },
             "spread": {
               "image": "roomwear/parts/p154.png",
               "pivot": [
-                0.5,
-                0.05
+                0.2502,
+                0.0196
               ],
-              "scale": 0.68
+              "scale": 0.7004
             }
           }
         },
@@ -2735,55 +2791,55 @@
             "curled": {
               "image": "roomwear/parts/p155.png",
               "pivot": [
-                0.5,
-                0.05
+                0.4832,
+                0.0403
               ],
-              "scale": 0.68,
+              "scale": 0.6664,
               "flipX": true
             },
             "loose": {
               "image": "roomwear/parts/p145.png",
               "pivot": [
-                0.5,
-                0.05
+                0.5332,
+                0.0194
               ],
-              "scale": 0.68,
+              "scale": 0.6392,
               "flipX": true
             },
             "back": {
               "image": "roomwear/parts/p144.png",
               "pivot": [
-                0.5,
-                0.05
+                0.2765,
+                0.0557
               ],
-              "scale": 0.68,
+              "scale": 0.7004,
               "flipX": true
             },
             "fist": {
               "image": "roomwear/parts/p156.png",
               "pivot": [
-                0.5,
-                0.05
+                0.3523,
+                0.1087
               ],
-              "scale": 0.68,
+              "scale": 0.6732,
               "flipX": true
             },
             "fist_side": {
               "image": "roomwear/parts/p147.png",
               "pivot": [
-                0.5,
-                0.05
+                0.5993,
+                0.0197
               ],
-              "scale": 0.68,
+              "scale": 0.714,
               "flipX": true
             },
             "spread": {
               "image": "roomwear/parts/p154.png",
               "pivot": [
-                0.5,
-                0.05
+                0.2501,
+                0.0196
               ],
-              "scale": 0.68,
+              "scale": 0.7004,
               "flipX": true
             }
           }
@@ -2808,8 +2864,26 @@
             0.83,
             0.41
           ]
+        },
+        "hips": {
+          "part": "pants_top",
+          "rect": [
+            0.08,
+            0,
+            0.92,
+            0.75
+          ]
         }
       }
     }
+  },
+  "sounds": {
+    "headPat": "sfx/alan_default_1.wav",
+    "cheekPoke": "sfx/alan_default_1.wav",
+    "lipsTouch": "sfx/alan_default_1.wav",
+    "earTouch": "sfx/alan_default_1.wav",
+    "handTap": "sfx/alan_default_1.wav",
+    "chestTouch": "sfx/alan_default_1.wav",
+    "hipsTouch": "sfx/alan_default_1.wav"
   }
 }

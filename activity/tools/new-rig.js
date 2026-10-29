@@ -24,9 +24,10 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { CHARACTER_ROOMS, backgroundPath, BACKGROUND_ASSET_DIR, BACKGROUNDS_BY_LOCATION } from "../../constants/backgrounds.js";
+import { BACKGROUNDS_BY_LOCATION, BACKGROUND_ASSET_DIR, CHARACTER_ROOMS, backgroundPath } from "../../constants/backgrounds.js";
 import { validateRig } from "../src/rig/skeleton.js";
-import { readPng, sliceOutfit } from "./slice-atlas.js";
+import { isSolid, readPng } from "./lib/png.js";
+import { sliceOutfit } from "./slice-atlas.js";
 
 // House defaults (§3.2, decided 2026-10-28: the body stays nearly still,
 // no hair sway). Tuned per character in the preview afterwards.
@@ -56,7 +57,7 @@ export function silhouette({ width: W, height: H, data }) {
     let x0 = -1;
     let x1 = -1;
     for (let x = 0; x < W; x++) {
-      if (data[(y * W + x) * 4 + 3] > 128) {
+      if (isSolid(data, y * W + x)) {
         if (x0 < 0) x0 = x;
         x1 = x;
       }

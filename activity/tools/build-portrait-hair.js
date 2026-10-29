@@ -32,8 +32,8 @@ import path from "node:path";
 import { createCanvas, loadImage } from "canvas";
 
 import { overlayMatrix } from "../src/rig/expressions.js";
-import { invert, multiply, solve, spriteMatrix } from "../src/rig/skeleton.js";
-import { readPng, writePng } from "./slice-atlas.js";
+import { invert, multiply, roundTo, solve, spriteMatrix } from "../src/rig/skeleton.js";
+import { isSolid, readPng, writePng } from "./lib/png.js";
 
 const isHair = (id) => id.startsWith("hair_");
 
@@ -154,7 +154,7 @@ async function main() {
   let inBand = null;
   if (jawClipY < maxY) {
     const solid = new Float32Array(width * height);
-    for (let i = 0; i < width * height; i++) solid[i] = face.data[i * 4 + 3] > 128 ? 0 : 1;
+    for (let i = 0; i < width * height; i++) solid[i] = isSolid(face.data, i) ? 0 : 1;
     const outside = erode(solid, width, height, cfg.jawGrow ?? 4);
     inFace = (x, y) => outside[y * width + x] === 0;
     inBand = (x, y) => solid[y * width + x] === 1;
@@ -225,7 +225,7 @@ async function main() {
   const margin = cfg.shadowMargin ?? 10;
   let interior = new Float32Array(width * height);
   for (let i = 0; i < width * height; i++) {
-    interior[i] = hair[i] > 0.5 || face.data[i * 4 + 3] > 128 ? 1 : 0;
+    interior[i] = hair[i] > 0.5 || isSolid(face.data, i) ? 1 : 0;
   }
   interior = erode(interior, width, height, margin);
 
@@ -294,7 +294,7 @@ async function main() {
   const s = rig.expressions.overlayScale;
   const [ox, oy] = rig.expressions.overlayOffset;
   const toHead = ([px, py]) => [ox + px * s, oy + py * s];
-  const round = (v) => Math.round(v * 100) / 100;
+  const round = (v) => roundTo(v, 2);
   let z = cfg.z ?? 500;
   let lockZ = cfg.lockZ ?? z + 10;
   for (const layer of written) {
