@@ -62,6 +62,37 @@
         "hand_l@-35": 0,
         "hand_l@35": 12
       }
+    },
+    "diner": {
+      "leak": 4,
+      "spill": 35,
+      "diff": 1.249,
+      "holes": {
+        "neck@-4": 7,
+        "neck@4": 6,
+        "head@-7": 10,
+        "head@7": 9,
+        "hair_crown_lock@-8": 0,
+        "hair_crown_lock@8": 0,
+        "hair_front_lock@-8": 0,
+        "hair_front_lock@8": 0,
+        "hair_side_r_lock@-8": 0,
+        "hair_side_r_lock@8": 0,
+        "hair_side_l_lock@-8": 5,
+        "hair_side_l_lock@8": 6,
+        "upper_arm_r@-12": 0,
+        "upper_arm_r@22": 3,
+        "forearm_r@-110": 0,
+        "forearm_r@12": 0,
+        "upper_arm_l@-22": 11,
+        "upper_arm_l@12": 0,
+        "forearm_l@-12": 0,
+        "forearm_l@110": 0,
+        "hand_r@-35": 3096,
+        "hand_r@35": 0,
+        "hand_l@-35": 0,
+        "hand_l@35": 3140
+      }
     }
   }
 }

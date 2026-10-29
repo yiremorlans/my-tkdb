@@ -177,8 +177,11 @@ async function main() {
   spread(frontier, cfg.reach ?? 8);
 
   // 3. Cut each group from the sprite.
-  const groupZ = cfg.groups.map((_, g) =>
-    Math.max(...rig.parts.filter((p) => groupOf.get(p.id) === g && p.image).map((p) => p.z ?? 0)));
+  // A group's `z` sets its skin's z outright (the skin sits at groupZ + 0.5)
+  // when its parts sit lower than the skin must: an atlas sleeve kept under
+  // the torso skin so its soft edge can't show, under an arm skin above it.
+  const groupZ = cfg.groups.map((group, g) => (group.z != null ? group.z - 0.5
+    : Math.max(...rig.parts.filter((p) => groupOf.get(p.id) === g && p.image).map((p) => p.z ?? 0))));
   // z of whatever owns a pixel (skipped art counts as on top), so a group
   // only grows under things drawn above it.
   const ownerZ = (i) => (owner[i] >= 0 ? groupZ[owner[i]] : owner[i] === -1 ? Infinity : -Infinity);

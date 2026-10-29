@@ -16,7 +16,8 @@
 //       "torso": [{ "id": "skin_torso_back", "zRange": [0, 209] },
 //                 { "id": "skin_torso_front", "zRange": [250, 399] }],
 //       "forearm_r": [{ "id": "skin_sleeve_lower_r", "parts": ["sleeve_lower_r"],
-//                       "mesh": { "bend": true, "zone": 0.35 } }, {}] },
+//                       "mesh": { "bend": true, "zone": 0.35 } }, {}],
+//       "upper_arm_r": [{ "z": 218.5 }] },    // a skin's z, when its parts sit lower
 //     "shades": { "skin_jaw_patch": { "rows": [190, 256] } }  // merged by id; null drops one
 //   }
 //
