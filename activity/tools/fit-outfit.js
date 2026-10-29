@@ -27,7 +27,8 @@
 //     "hands": { "pivot": [0.5, 0.05], "z": 230, "limits": [-35, 35], "default": "relaxed",
 //                "poses": { "relaxed": "p153", ... },
 //                "sides": { "r": { "fit": "hand_r", "parent": "forearm_r" }, ... },
-//                "set": "white", "sets": { "bare": { "poses": { ... } } } },  // optional hand sets
+//                "set": "white", "sets": { "bare": { "poses": { ... } } },  // optional hand sets
+//                "mirrored": ["fist"] },     // poses drawn for the other hand (a set may override)
 //     "hotspots": { "chest": { "part": "tee", "rect": [300, 270, 468, 420] } } }
 //
 // Parts: `candidates` are atlas part ids (or "hands" for every hand pose);
@@ -590,18 +591,22 @@ export function writeOutfit(source, outfitName, spec, fits, { log = console.log,
         z: h.z ?? 230, scale: pin?.scale ?? f.s, ...(flipXv ? { flipX: flipXv } : {}), limits: { rotation: h.limits ?? [-35, 35] },
       });
       const poseScale = h.poseScale ?? pin?.scale ?? f.s;
-      const handSide = (poses, def, scale) => ({
+      // `mirrored` poses are drawn for the other hand (Rui's fists): they
+      // take the opposite flip, written out since a pose's own flipX
+      // overrides the hand part's.
+      const handSide = (poses, def, scale, mirrored = []) => ({
         part: id, default: def,
-        poses: Object.fromEntries(Object.entries(poses).map(([name, img]) => [
-          name, { image: imagePath(img), pivot, scale, ...(flipXv ? { flipX: true } : {}), ...handFits[side]?.[img] },
-        ])),
+        poses: Object.fromEntries(Object.entries(poses).map(([name, img]) => {
+          const flip = mirrored.includes(name) ? { flipX: !flipXv } : flipXv ? { flipX: true } : {};
+          return [name, { image: imagePath(img), pivot, scale, ...flip, ...handFits[side]?.[img] }];
+        })),
       });
-      outfit.hands[side] = handSide(h.poses, h.default, poseScale);
+      outfit.hands[side] = handSide(h.poses, h.default, poseScale, h.mirrored);
       // Extra hand sets (gloves off, other gloves) ride on the same hand
       // part; only their art (and optionally its scale) differs.
       for (const [name, set] of Object.entries(h.sets ?? {})) {
         setHands[name] ??= {};
-        setHands[name][side] = handSide(set.poses, set.default ?? h.default, set.poseScale ?? poseScale);
+        setHands[name][side] = handSide(set.poses, set.default ?? h.default, set.poseScale ?? poseScale, set.mirrored ?? h.mirrored);
       }
     }
     if (h.sets) {

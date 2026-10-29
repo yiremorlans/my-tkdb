@@ -41,6 +41,8 @@ import { skinConfig } from "./lib/skin-config.js";
 import { SOLID_ALPHA, readPng, writePng } from "./lib/png.js";
 
 const isSkin = (id) => id.startsWith("skin_");
+// How far a `noGrowUnder` part claims uncovered sprite pixels around it.
+const NO_GROW_REACH = 3;
 // A part claims a sprite pixel at alpha SOLID_ALPHA itself, one step looser
 // than lib/png.js isSolid: the committed skins were cut that way, and the
 // stricter test moves their edges.
@@ -136,26 +138,40 @@ async function main() {
   }
 
   // 2. Sprite pixels nothing covers take the nearest covered pixel's group.
+  // Those within NO_GROW_REACH px of a `noGrowUnder` part go to it first and
+  // stay unskinned: they're its own art drawn a little wider in the sprite,
+  // and a skin would leave them behind when the part swaps or turns.
   const spriteA = (i) => sprite.data[i * 4 + 3];
-  let frontier = [];
-  for (let i = 0; i < W * H; i++) if (owner[i] !== -2) frontier.push(i);
-  for (let step = 0; step < (cfg.reach ?? 8) && frontier.length; step++) {
-    const next = [];
-    for (const i of frontier) {
-      const x = i % W;
-      const y = (i - x) / W;
-      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
-        const nx = x + dx;
-        const ny = y + dy;
-        if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
-        const j = ny * W + nx;
-        if (owner[j] !== -2 || spriteA(j) < 16) continue;
-        owner[j] = owner[i];
-        next.push(j);
+  const noGrow = new Set(cfg.noGrowUnder ?? []);
+  const spread = (seeds, steps, withPart = false) => {
+    let frontier = seeds;
+    for (let step = 0; step < steps && frontier.length; step++) {
+      const next = [];
+      for (const i of frontier) {
+        const x = i % W;
+        const y = (i - x) / W;
+        for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+          const nx = x + dx;
+          const ny = y + dy;
+          if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+          const j = ny * W + nx;
+          if (owner[j] !== -2 || spriteA(j) < 16) continue;
+          owner[j] = owner[i];
+          if (withPart) ownerPart[j] = ownerPart[i];
+          next.push(j);
+        }
       }
+      frontier = next;
     }
-    frontier = next;
+  };
+  if (noGrow.size) {
+    const seeds = [];
+    for (let i = 0; i < W * H; i++) if (noGrow.has(ownerPart[i])) seeds.push(i);
+    spread(seeds, NO_GROW_REACH, true);
   }
+  const frontier = [];
+  for (let i = 0; i < W * H; i++) if (owner[i] !== -2) frontier.push(i);
+  spread(frontier, cfg.reach ?? 8);
 
   // 3. Cut each group from the sprite.
   const groupZ = cfg.groups.map((_, g) =>
@@ -180,7 +196,7 @@ async function main() {
             const ny = y + dy;
             if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
             const j = ny * W + nx;
-            if (!grown[j] && ownerZ(j) > groupZ[g] && spriteA(j) > 0) grown[j] = 1;
+            if (!grown[j] && ownerZ(j) > groupZ[g] && spriteA(j) > 0 && !noGrow.has(ownerPart[j])) grown[j] = 1;
           }
         }
       }
@@ -228,18 +244,38 @@ async function main() {
   // 4. Underlays: a part subtree's rest silhouette, cut from the sprite and
   // darkened, attached to another bone just behind it. When the head
   // tilts, the sliver it uncovers under the jaw and ears reads as shadow
-  // instead of a gap.
+  // instead of a gap. `rect` ([x0, y0, x1, y1], reference px) keeps only
+  // that part of the silhouette (an arm's inner edge against the torso, not
+  // its outer edge against the background); `noGrowUnder` parts are left out.
   for (const u of cfg.underlays ?? []) {
     const subtree = new Set(rig.parts.filter((p) => ancestors(p.id).includes(u.from)).map((p) => p.id));
     const cover = new Uint8Array(W * H);
     for (const part of drawn) {
-      if (!subtree.has(part.id) || isSkin(part.id)) continue;
+      if (!subtree.has(part.id) || isSkin(part.id) || noGrow.has(part.id)) continue;
       ctx.setTransform(1, 0, 0, 1, 0, 0);
       ctx.clearRect(0, 0, W, H);
       ctx.setTransform(...spriteMatrix(rig, part, solved.get(part.id).bone, sizes.get(part.id)));
       ctx.drawImage(images.get(part.id), 0, 0);
       const alpha = ctx.getImageData(0, 0, W, H).data;
-      for (let i = 0; i < W * H; i++) if (covers(alpha, i) && (u.belowY == null || i / W >= u.belowY)) cover[i] = 1;
+      for (let i = 0; i < W * H; i++) {
+        if (!covers(alpha, i) || (u.belowY != null && i / W < u.belowY)) continue;
+        if (u.rect) {
+          const x = i % W;
+          const y = (i - x) / W;
+          if (x < u.rect[0] || y < u.rect[1] || x > u.rect[2] || y > u.rect[3]) continue;
+        }
+        cover[i] = 1;
+      }
+    }
+    if (u.rect) {
+      // Within a rect, the subtree's skin groups count too: sprite pixels
+      // its skins carry past its atlas art (reach, dilate) are arm as well.
+      const ownGroups = new Set(cfg.groups.map((gr, g) => (subtree.has(gr.bone) ? g : -9)));
+      for (let y = Math.max(0, u.rect[1]); y <= Math.min(H - 1, u.rect[3]); y++) {
+        for (let x = Math.max(0, u.rect[0]); x <= Math.min(W - 1, u.rect[2]); x++) {
+          if (ownGroups.has(owner[y * W + x])) cover[y * W + x] = 1;
+        }
+      }
     }
     let x0 = W, y0 = H, x1 = -1, y1 = -1;
     for (let i = 0; i < W * H; i++) {

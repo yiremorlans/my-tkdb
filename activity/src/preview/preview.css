@@ -26,6 +26,23 @@
 }
 #meter-fill { height: 100%; width: 0; background: #e0573f; transition: width 80ms linear; }
 
+/* The debug cog sits at the box's bottom left, apart from the scene's icons. */
+.vn-box { padding-left: 3.2em; }
+#btn-debug {
+  position: absolute;
+  left: 0.6em;
+  bottom: 0.6em;
+}
+
+/* The hide-dialogue toggle stays on screen while the box is hidden. */
+#btn-hide-ui {
+  position: absolute;
+  right: calc(10px + var(--safe-right));
+  bottom: calc(8px + var(--safe-bottom));
+  z-index: 5;
+}
+body.hide-ui .vn-box, body.hide-ui .choices { display: none; }
+
 /* --- debug drawer ---------------------------------------------------------- */
 .drawer {
   position: fixed;

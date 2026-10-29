@@ -438,6 +438,17 @@ async function main() {
   $("#btn-debug").onclick = () => {
     panel.hidden = !panel.hidden;
   };
+  // Hides the dialogue box and choices to see the whole character (H too).
+  const hideUi = $("#btn-hide-ui");
+  const toggleUi = () => {
+    const hidden = document.body.classList.toggle("hide-ui");
+    hideUi.setAttribute("aria-pressed", String(hidden));
+    hideUi.title = hidden ? "Show dialogue (H)" : "Hide dialogue (H)";
+  };
+  hideUi.onclick = toggleUi;
+  addEventListener("keydown", (e) => {
+    if (e.key.toLowerCase() === "h" && !e.target.closest("input, select, textarea")) toggleUi();
+  });
   // The four /roam response types in RESPONSE_TYPE_ORDER, each marked by a
   // one-color glyph in place of its emoji and button color. The glyphs are
   // deliberately abstract so they don't give the type away.
