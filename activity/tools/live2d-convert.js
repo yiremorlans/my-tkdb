@@ -186,7 +186,10 @@ const infinite = (s) => typeof s !== "number" || !Number.isFinite(s);
 /**
  * Unity Hermite keyframes -> motion3 segments. The Cubism Unity importer
  * turns linear and bezier segments into slopes and stepped ones into
- * infinite slopes; this inverts that. With Unity's default 1/3 tangent
+ * infinite slopes; this inverts that. Unity holds a span's first value when
+ * either end's slope is infinite, so both map to stepped (2), never to
+ * inverse stepped (3), which would jump to the next value at the span's
+ * start (a hand swapping before the arm gets there). With Unity's default 1/3 tangent
  * weights a Hermite span is exactly a cubic bezier with its control points
  * at 1/3 and 2/3 of the span.
  */
@@ -197,8 +200,7 @@ export function curveToSegments(keys) {
     const { time: t0, value: v0, outSlope: out } = keys[k - 1];
     const { time: t1, value: v1, inSlope: inS } = keys[k];
     const dt = t1 - t0;
-    if (infinite(out)) segs.push(2, t1, v1);
-    else if (infinite(inS)) segs.push(3, t1, v1);
+    if (infinite(out) || infinite(inS)) segs.push(2, t1, v1);
     else if (dt > 0 && Math.abs(out - (v1 - v0) / dt) < 1e-4 && Math.abs(inS - (v1 - v0) / dt) < 1e-4) segs.push(0, t1, v1);
     else {
       segs.push(1, t0 + dt / 3, v0 + (out * dt) / 3, t1 - dt / 3, v1 - (inS * dt) / 3, t1, v1);
