@@ -272,6 +272,22 @@ test('a head pat smiles, then blushes, then returns to the resting mood', () => 
   assert.strictEqual(renderer.moodName, 'default');
 });
 
+test('restMood picks the resting mood by tier', () => {
+  const r = rig({
+    hotspots: {},
+    expressions: { head: 'head', moods: { default: {}, serious: {} } },
+    restMood: { byTier: { new: 'serious', warm: 'default' } },
+  });
+  const renderer = { rig: r, moodName: 'default', handPose: {}, setMood(name) { this.moodName = name; }, update() {} };
+  const motion = { blinking: () => false, pose: () => ({}) };
+  const hangout = new Hangout({ renderer, motion, tier: 'known' });
+  hangout.frame(0, 0);
+  assert.strictEqual(renderer.moodName, 'serious');
+  hangout.setTier('warm');
+  hangout.frame(0.1, 0.1);
+  assert.strictEqual(renderer.moodName, 'default');
+});
+
 test('switching outfit hands the hangout the new hotspots and default hands', () => {
   const r = outfitRig();
   r.outfits.academy.hotspots = { chest: { part: 'shirt' } };

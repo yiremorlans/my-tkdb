@@ -8,7 +8,8 @@
 //                          rect is in their combined bounds, as they move
 //   expressions.moods      mood -> Live2D expressions stacked to draw it
 //                          (smile_blush: smile + blush)
-//   reactionPoses          reaction -> Live2D pose group it also plays
+//   reactionPoses          reaction -> Live2D pose group it also plays, or
+//                          { byTier: { <tier>: group } } (nearest lower tier)
 //   motion.idle.amount     how much of the idle clip's sway to keep (0-1)
 //   motion.breath.amount   how much of the breathing to keep (0-1)
 //   motion.sway.amount     the plugin's own head/body sway (CubismBreath),
@@ -19,6 +20,7 @@
 import { Container } from "pixi.js";
 import { Live2DModel, MotionPriority } from "untitled-pixi-live2d-engine/cubism";
 
+import { forTier } from "../hangout/reactions.js";
 import { validateLive2DRig } from "./validate.js";
 
 // Seconds a reaction's pose holds before its return clip plays.
@@ -292,9 +294,9 @@ export class Live2DRig {
     this.posing = null;
   }
 
-  /** Plays the pose rig.json `reactionPoses` gives reaction `name`, if any. */
-  reactPose(name) {
-    const pose = this.rig.reactionPoses?.[name];
+  /** Plays the pose rig.json `reactionPoses` gives reaction `name` at `tier`, if any. */
+  reactPose(name, tier) {
+    const pose = forTier(this.rig.reactionPoses?.[name], tier);
     if (pose && this.posing !== pose) this.playPose(pose, POSE_HOLD);
   }
 

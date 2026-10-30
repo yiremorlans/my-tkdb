@@ -13,7 +13,7 @@ import { Graphics } from "pixi.js";
 
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 import { loadLines } from "../hangout/lines.js";
-import { DEFAULT_REACTIONS, TOUCH_SPOTS } from "../hangout/reactions.js";
+import { DEFAULT_REACTIONS, TOUCH_SPOTS, forTier } from "../hangout/reactions.js";
 import { MOBILE_FPS } from "../hangout/stage.js";
 import { meetFlow } from "./meet.js";
 import { startScene } from "./scene.js";
@@ -135,7 +135,7 @@ async function main() {
 
   const reactRow = section("Reactions (with their poses)");
   for (const name of Object.keys({ ...DEFAULT_REACTIONS, ...renderer.rig.reactions })) {
-    const pose = renderer.rig.reactionPoses?.[name];
+    const pose = forTier(renderer.rig.reactionPoses?.[name], hangout.tier);
     button(reactRow, pose ? `${name} · ${pose.replace(/^m_/, "")}` : name, () => hangout.react(name, scene.time));
   }
 

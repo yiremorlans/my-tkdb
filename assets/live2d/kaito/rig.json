@@ -62,7 +62,7 @@
       "lovestruck": ["e_dere_00"]
     }
   },
-  "reactionPoses": { "headPat": "m_tere", "upset": "m_udekumi" },
+  "reactionPoses": { "headPat": "m_tere", "cheekPoke": "m_tere", "lipsTouch": "m_tere", "earTouch": "m_odoroki", "handTap": "m_gesture", "chestTouch": "m_odoroki", "bellyTouch": "m_odoroki", "hipsTouch": "m_migikoshi", "upset": "m_udekumi" },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
     "idle": { "amount": 0.35 },

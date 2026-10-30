@@ -161,7 +161,7 @@ export function resolveReaction(rig, name, tier) {
 
 // The tier's entry of a `{ byTier }` value (else the nearest lower tier's),
 // or the value itself when it doesn't vary by tier.
-function forTier(value, tier) {
+export function forTier(value, tier) {
   if (!value?.byTier) return value ?? null;
   for (let i = Math.max(0, DIALOGUE_TIERS.indexOf(tier)); i >= 0; i--) {
     const entry = value.byTier[DIALOGUE_TIERS[i]];

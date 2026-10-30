@@ -59,7 +59,7 @@
       "sad": ["e_kanashimi_00"]
     }
   },
-  "reactionPoses": { "hipsTouch": "m_ryoutekoshi", "upset": "m_hidarikoshi" },
+  "reactionPoses": { "headPat": "m_fanservice", "cheekPoke": "m_gesture", "lipsTouch": "m_ago", "earTouch": "m_odoroki", "handTap": "m_gesture", "chestTouch": "m_odoroki", "bellyTouch": "m_odoroki", "hipsTouch": "m_ryoutekoshi", "upset": "m_hidarikoshi" },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
     "idle": { "amount": 0.35 },

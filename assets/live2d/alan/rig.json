@@ -62,10 +62,13 @@
   },
   "reactionPoses": {
     "headPat": "m_kubi",
-    "chestTouch": "m_udekumi",
-    "bellyTouch": "m_udekumi",
+    "cheekPoke": "m_pocket",
+    "lipsTouch": "m_kubi",
     "earTouch": "m_migikoshi",
     "handTap": "m_pocket",
+    "chestTouch": "m_udekumi",
+    "bellyTouch": "m_udekumi",
+    "hipsTouch": "m_migikoshi",
     "upset": "m_angry"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },

@@ -72,7 +72,7 @@
       "away": ["e_tsujo_away_00"]
     }
   },
-  "reactionPoses": { "headPat": "m_kubi", "upset": "m_udekumi" },
+  "reactionPoses": { "headPat": "m_kubi", "cheekPoke": "m_aori", "lipsTouch": "m_kubi", "earTouch": "m_migikoshi", "handTap": "m_phone", "chestTouch": "m_odoroki", "bellyTouch": "m_odoroki", "hipsTouch": "m_migikoshi", "upset": "m_udekumi" },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
     "idle": { "amount": 0.35 },

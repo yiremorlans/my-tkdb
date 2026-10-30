@@ -63,6 +63,13 @@
   },
   "reactionPoses": {
     "headPat": "m_kuchimoto",
+    "cheekPoke": "m_wink",
+    "lipsTouch": "m_kuchimoto",
+    "earTouch": "m_phone",
+    "handTap": "m_fingerheart",
+    "chestTouch": "m_yubisashi",
+    "bellyTouch": "m_odoroki",
+    "hipsTouch": "m_hidarikoshi",
     "upset": "m_udekumi"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },

@@ -59,7 +59,7 @@
       "upset": ["e_fukigen_00", "e_ase_00"]
     }
   },
-  "reactionPoses": { "upset": "m_udekumi" },
+  "reactionPoses": { "headPat": "m_kao", "cheekPoke": "m_gesture", "lipsTouch": "m_ago", "earTouch": "m_migikoshi", "handTap": "m_gesture", "chestTouch": "m_card", "bellyTouch": "m_card", "hipsTouch": "m_migikoshi", "upset": "m_udekumi" },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
     "idle": { "amount": 0.35 },

@@ -61,7 +61,7 @@
       "sad": ["e_shobokure_00"]
     }
   },
-  "reactionPoses": { "headPat": "m_kuchimoto", "upset": "m_udekumi" },
+  "reactionPoses": { "headPat": "m_kuchimoto", "cheekPoke": "m_face", "lipsTouch": "m_kuchimoto", "earTouch": "m_migikoshi", "handTap": "m_aori", "chestTouch": "m_kamaeru", "bellyTouch": "m_kamaeru", "hipsTouch": "m_migikoshi", "upset": "m_udekumi" },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
     "idle": { "amount": 0.35 },

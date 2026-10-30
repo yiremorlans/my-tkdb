@@ -63,8 +63,15 @@
       "sad": ["e_namida_00"]
     }
   },
+  "restMood": { "byTier": { "new": "serious", "warm": "default" } },
   "reactionPoses": {
     "headPat": "m_atama",
+    "cheekPoke": "m_gesture",
+    "lipsTouch": "m_atama",
+    "earTouch": "m_hidarikoshi",
+    "handTap": "m_gesture",
+    "chestTouch": "m_odoroki",
+    "bellyTouch": "m_odoroki",
     "hipsTouch": "m_ryoutekoshi",
     "upset": "m_udekumi"
   },

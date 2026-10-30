@@ -42,7 +42,7 @@ const SINGLE = {
   sweat: ["e_ase_00"],
   serious: ["e_magao_00", "e_shinken_00", "e_ikari_00", "e_mukanshin_00", "e_fukigen_00"],
   annoyed: ["e_kire_00", "e_fukigen_00", "e_fuman_00", "e_ikari_00", "e_mad_00", "e_keibetsu_00", "e_suneru_00", "e_mu_00", "e_komari_00"],
-  angry: ["e_ikari_00", "e_fukigen_00", "e_fuman_00", "e_kire_00", "e_mad_00", "e_keibetsu_00", "e_komari_00"],
+  angry: ["e_ikari_00", "e_fukigen_00", "e_fuman_00", "e_kire_00", "e_mad_00", "e_keibetsu_00", "e_komari_00", "e_shinken_00"],
   sad: ["e_kanashimi_00", "e_kanasii_00", "e_kanasimi_00", "e_shobokure_00", "e_cry_00", "e_namida_00", "e_kurushimi_00", "e_shippai_00", "e_komari_00"],
   away: ["e_tsujo_away_00"],
   wink: ["e_wink_00"],

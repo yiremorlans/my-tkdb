@@ -65,10 +65,12 @@
       "surprise_blush": ["e_odoroki_00", "e_sekimen_00"],
       "sweat": ["e_ase_00"],
       "serious": ["e_shinken_00"],
+      "annoyed": ["e_odoroki_00"],
+      "upset": ["e_shinken_00", "e_ase_00"],
       "sad": ["e_kanashimi_00"]
     }
   },
-  "reactionPoses": { "upset": "m_udekumi" },
+  "reactionPoses": { "headPat": "m_hidarikoshi", "cheekPoke": "m_hidarikoshi", "lipsTouch": "m_hidarikoshi", "earTouch": "m_hidarikoshi", "handTap": "m_hidarikoshi", "chestTouch": "m_fight", "bellyTouch": "m_fight", "hipsTouch": "m_hidarikoshi", "upset": "m_udekumi" },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
     "idle": { "amount": 0.35 },

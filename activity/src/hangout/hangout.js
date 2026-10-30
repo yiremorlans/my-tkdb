@@ -19,7 +19,7 @@ import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 import { AnnoyanceMeter } from "./annoyance.js";
 import { hotspotAt } from "./hotspots.js";
 import { PLACEHOLDER_LINES } from "./placeholderLines.js";
-import { SPOT_ANNOYANCE, TOUCH_SPOTS, resolveReaction } from "./reactions.js";
+import { SPOT_ANNOYANCE, TOUCH_SPOTS, forTier, resolveReaction } from "./reactions.js";
 
 // Seconds a reaction holds when it doesn't set `duration`.
 const DEFAULT_DURATION = 2.4;
@@ -58,10 +58,15 @@ export class Hangout {
     return this.renderer.rig;
   }
 
-  /** The relationship tier reactions are drawn from (constants/tiers.js DIALOGUE_TIERS). */
+  /**
+   * The relationship tier reactions are drawn from (constants/tiers.js
+   * DIALOGUE_TIERS). It also picks the resting mood: rig.json `restMood`, a
+   * mood or `{ byTier }` (Yuri rests serious until warm), else "default".
+   */
   setTier(tier) {
     if (!DIALOGUE_TIERS.includes(tier)) throw new Error(`unknown tier ${tier}`);
     this.tier = tier;
+    this.baseMood = forTier(this.rig.restMood, tier) ?? "default";
   }
 
   /**

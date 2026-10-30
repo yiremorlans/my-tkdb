@@ -63,6 +63,13 @@
   },
   "reactionPoses": {
     "headPat": "m_kuchimoto",
+    "cheekPoke": "m_fusigi",
+    "lipsTouch": "m_kuchimoto",
+    "earTouch": "m_odoroki",
+    "handTap": "m_fusigi",
+    "chestTouch": "m_odoroki",
+    "bellyTouch": "m_odoroki",
+    "hipsTouch": "m_migikoshi",
     "upset": "m_udekumi"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },

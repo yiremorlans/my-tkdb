@@ -62,6 +62,13 @@
   },
   "reactionPoses": {
     "headPat": "m_poripori",
+    "cheekPoke": "m_poripori",
+    "lipsTouch": "m_kaote",
+    "earTouch": "m_migikoshi",
+    "handTap": "m_gesture",
+    "chestTouch": "m_kaote",
+    "bellyTouch": "m_kaote",
+    "hipsTouch": "m_migikoshi",
     "upset": "m_udekumi"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },

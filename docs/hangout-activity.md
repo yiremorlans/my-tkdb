@@ -179,12 +179,19 @@ ladder can pick (§4.2) but the rig lacks shows `default`, and the validator
 lists it as a warning rather than a failure. **Upset** is `serious` +
 `sweat` where the model has no anger expression of its own.
 
+Between reactions he rests on `default`, or on `restMood` (a mood, or
+`{ "byTier": { … } }` taking the nearest lower tier's): Yuri rests
+`serious` at new and known, `default` from warm.
+
 ### 3.3 Reaction poses
 
 `reactionPoses` maps a reaction (§4.2) to one of the model's pose groups.
 A pose plays like the game's own Animator: the pose clip, then its looping
 `*_hold` clip (the converter writes it, pinned at the clip's last frame),
-then after `POSE_HOLD` (2.5 s) its `*_return` clip. A reaction with no pose
+then after `POSE_HOLD` (2.5 s) its `*_return` clip. Like a reaction, a pose
+can vary by tier: `{ "byTier": { "new": "m_odoroki", "spark": "m_wink" } }`
+takes the nearest lower tier's entry, so a clip that carries its own face
+(Rui's wink) waits for the tier whose face suits it. A reaction with no pose
 is carried by the face, the line and the sound alone.
 
 ### 3.4 Preview and tuning

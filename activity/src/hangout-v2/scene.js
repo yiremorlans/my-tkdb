@@ -72,7 +72,7 @@ export async function startScene(stage, { base, tier, outfit, lines, room = true
   const react = hangout.react.bind(hangout);
   hangout.react = (name, t, spot) => {
     react(name, t, spot);
-    renderer.reactPose(name);
+    renderer.reactPose(name, hangout.tier);
   };
   app.stage.addChild(renderer.view);
 

@@ -62,7 +62,7 @@
       "wink": ["e_wink_00"]
     }
   },
-  "reactionPoses": { "upset": "m_udekumi" },
+  "reactionPoses": { "headPat": "m_odoroki", "cheekPoke": "m_odoroki", "lipsTouch": "m_odoroki", "earTouch": "m_odoroki", "handTap": "m_nagekiss", "chestTouch": { "byTier": { "new": "m_odoroki", "spark": "m_wink" } }, "bellyTouch": "m_odoroki", "hipsTouch": "m_migikoshi", "upset": "m_udekumi" },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
     "idle": { "amount": 0.35 },

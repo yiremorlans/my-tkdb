@@ -64,6 +64,12 @@
   },
   "reactionPoses": {
     "headPat": "m_kuchimoto",
+    "cheekPoke": "m_gesture",
+    "lipsTouch": "m_kuchimoto",
+    "earTouch": "m_hidarikoshi",
+    "handTap": "m_gesture",
+    "chestTouch": "m_odoroki",
+    "bellyTouch": "m_odoroki",
     "hipsTouch": "m_tekumi",
     "upset": "m_fist"
   },

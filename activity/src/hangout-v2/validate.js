@@ -36,6 +36,14 @@ export async function validateLive2DRig(rig, { readJson, fileExists = () => true
   const reactions = new Set([...Object.keys(DEFAULT_REACTIONS), ...Object.keys(rig.reactions ?? {})]);
   for (const name of Object.keys(rig.reactionPoses ?? {})) {
     if (!reactions.has(name)) problems.push(`reactionPoses.${name}: unknown reaction`);
+    for (const tier of Object.keys(rig.reactionPoses[name]?.byTier ?? {})) {
+      if (!DIALOGUE_TIERS.includes(tier)) problems.push(`reactionPoses.${name}: unknown tier ${tier}`);
+    }
+  }
+  const rest = rig.restMood;
+  for (const [tier, mood] of rest?.byTier ? Object.entries(rest.byTier) : rest != null ? [[null, rest]] : []) {
+    if (tier && !DIALOGUE_TIERS.includes(tier)) problems.push(`restMood: unknown tier ${tier}`);
+    if (!rig.expressions?.moods?.[mood]) problems.push(`restMood: no mood ${mood}`);
   }
 
   const names = Object.keys(rig.outfits ?? {});
@@ -121,9 +129,12 @@ async function outfitProblems(rig, name, { readJson, mocIds }) {
 
   // A pose needs its hold and return clips (live2dRig.js playPose).
   const motions = refs.Motions ?? {};
-  for (const [reaction, group] of Object.entries(rig.reactionPoses ?? {})) {
-    for (const g of [group, `${group}_hold`, `${group}_return`]) {
-      if (!motions[g]) problems.push(`reactionPoses.${reaction}: no motion group ${g}`);
+  for (const [reaction, value] of Object.entries(rig.reactionPoses ?? {})) {
+    const groups = value?.byTier ? Object.values(value.byTier) : [value];
+    for (const group of new Set(groups)) {
+      for (const g of [group, `${group}_hold`, `${group}_return`]) {
+        if (!motions[g]) problems.push(`reactionPoses.${reaction}: no motion group ${g}`);
+      }
     }
   }
 
