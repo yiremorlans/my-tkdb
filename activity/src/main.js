@@ -84,15 +84,16 @@ function wireChrome(scene) {
 /** A /meet encounter (§11.2): the scene as drawn, then the flow until answered. */
 async function playEncounter(session, encounter) {
   $("#vn-name").textContent = encounter.name;
+  // Independent fetches, so they go out together.
+  const [lines, { meetFlow }] = await Promise.all([loadLines(encounter.character), import("./hangout-v2/meet.js")]);
   const scene = await startSceneV2($("#stage"), encounter.character, {
     tier: encounter.tier,
     outfit: encounter.outfit,
     place: encounter.background,
-    lines: await loadLines(encounter.character),
+    lines,
     maxFPS: isMobile ? MOBILE_FPS : 0,
   });
   wireChrome(scene);
-  const { meetFlow } = await import("./hangout-v2/meet.js");
   const flow = meetFlow(scene, { box: $(".vn-box"), choices: $("#choices"), next: $("#btn-next") });
   // Renewed only while the answer is pending: once it's recorded nothing
   // else calls the server, so the Activity can stay open as long as it likes.

@@ -138,7 +138,7 @@ export async function handleActivityToken(body, { fetchFn = fetch, env = process
   const user = me.json;
   if (typeof user?.id !== 'string') return DISCORD_UNAVAILABLE;
 
-  if (OWNER_ONLY && (!env.OWNER_DISCORD_ID || user.id !== env.OWNER_DISCORD_ID)) {
+  if (!activityOpenTo(user.id, env)) {
     console.warn(`[activity] session refused for ${user.id}: owner only`);
     return { status: 403, body: { error: 'not_available' } };
   }

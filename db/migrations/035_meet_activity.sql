@@ -36,9 +36,9 @@
 --    switch is on. Tells how reliably the Activity opens.
 --
 -- ⚠️ Run this BEFORE deploying the app code. The /meet pick reads
--- meet_activity_off (a missing column only logs and reads as off = FALSE,
--- i.e. the Activity), but saving an encounter needs meet_encounters, and a
--- completed Activity /meet logs its path into command_usage_log.
+-- meet_activity_off (a missing column reads as off = FALSE, i.e. the
+-- Activity), but saving an encounter needs meet_encounters, and a completed
+-- Activity /meet logs its path into command_usage_log.
 
 ALTER TABLE app_settings
   ADD COLUMN IF NOT EXISTS meet_activity_off BOOLEAN NOT NULL DEFAULT FALSE;

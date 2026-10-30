@@ -54,7 +54,7 @@ mock.module('../imageComposition.js', {
 
 const { server } = await import('../app.js');
 const { clearMaintenanceCache } = await import('../maintenance.js');
-const { ALREADY_PICKED, clearMeetFallbacks, setMeetFallbackDelay } = await import('../meetActivity.js');
+const { ALREADY_PICKED, setMeetFallbackDelay } = await import('../meetActivity.js');
 const { clearHangoutLaunch, hangoutLaunchFor, recordHangoutLaunch } = await import('../activityRoutes.js');
 
 // The launch callback answers with the instance it opened (with_response);
@@ -152,7 +152,6 @@ function resetState() {
   launchStatus = 200;
   setActivityOff(false);
   setMeetFallbackDelay();
-  clearMeetFallbacks();
 }
 
 test("the owner's pick launches the Activity and saves the encounter it'll load", async () => {
@@ -291,7 +290,6 @@ test('the Launch entry point answers like /meet, with the picker', async () => {
 });
 
 test.after(() => {
-  clearMeetFallbacks();
   clearHangoutLaunch('the-owner');
   restoreFetch();
   server.close();

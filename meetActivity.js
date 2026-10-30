@@ -5,8 +5,8 @@
 //                         picker, the draw, the launch (app.js)
 //   loadMeetEncounter     what GET /api/activity/encounter shows
 //   answerMeetEncounter   POST /api/activity/answer, the one payout
-//   runMeetFallback       today's image, ~30s after a launch the Activity
-//                         never loaded
+//   the fallback          today's image, ~30s after a launch the Activity
+//                         never loaded (runMeetFallback)
 //
 // The routes themselves, and the session that names the user, are in
 // activityRoutes.js. Everything that decides the payout (mood flag, beat key)
@@ -30,6 +30,7 @@ import {
   buildMeetEncounterMessage,
   disableComponents,
   drawMeetEncounter,
+  WANDERED_OFF,
 } from './encounters.js';
 import { deliverBondScene } from './bondScenes.js';
 import { checkCommandLimit, claimCommandUse, releaseCommandInvoke } from './commandLimits.js';
@@ -45,7 +46,7 @@ import {
   trackCommandUsage,
   trackUserActivity,
 } from './db/supabase.js';
-import { reportFailures } from './missions/shared.js';
+import { ephemeralResponse, reportFailures } from './missions/shared.js';
 
 const LIVE2D_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'assets', 'live2d');
 
@@ -66,11 +67,6 @@ function readRigOutfits(characterId) {
     }
   }
   return rigOutfits.get(characterId);
-}
-
-/** Forgets the cached rig outfits, so an edited rig.json is read again (tests). */
-export function clearRigOutfits() {
-  rigOutfits.clear();
 }
 
 /**
@@ -129,7 +125,7 @@ const update = (content, components) => ({
  */
 export async function handleMeetPickLaunch(body, userId, characterId, { sendFollowup }, now = new Date()) {
   const shown = body.message?.components;
-  if (!getCharacterById(characterId)) return { response: update('They seem to have wandered off already.', shown) };
+  if (!getCharacterById(characterId)) return { response: update(WANDERED_OFF, shown) };
 
   const pickerMessageId = body.message?.id ?? null;
   // Independent: the cooldown, whether this picker already launched, and the
@@ -150,14 +146,7 @@ export async function handleMeetPickLaunch(body, userId, characterId, { sendFoll
   }
   // One encounter per /meet message, even if Discord wouldn't let the bot
   // grey the picker out after an earlier launch.
-  if (picked) {
-    return {
-      response: {
-        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-        data: { content: ALREADY_PICKED, flags: EPHEMERAL },
-      },
-    };
-  }
+  if (picked) return { response: ephemeralResponse(ALREADY_PICKED) };
 
   let instanceId;
   try {
@@ -217,15 +206,12 @@ async function saveLaunchedEncounter({ body, userId, encounter, instanceId, pick
 
 export const MEET_FALLBACK_MS = 30 * 1000;
 let fallbackMs = MEET_FALLBACK_MS;
-const fallbacks = new Map(); // encounter id → timeout
 
+// No handle is kept to cancel it: the row's loaded_at, read when it fires,
+// is what calls it off, and that also holds when the Activity loaded the
+// encounter through another server instance.
 function scheduleMeetFallback(encounterId, token, sendFollowup) {
-  const timer = setTimeout(() => {
-    fallbacks.delete(encounterId);
-    runMeetFallback(encounterId, token, sendFollowup);
-  }, fallbackMs);
-  timer.unref?.();
-  fallbacks.set(encounterId, timer);
+  setTimeout(() => runMeetFallback(encounterId, token, sendFollowup), fallbackMs).unref?.();
 }
 
 async function postFallback(token, encounter, sendFollowup, userId) {
@@ -244,7 +230,7 @@ async function postFallback(token, encounter, sendFollowup, userId) {
  * normal way; if the Activity loads it later and both are answered, only the
  * first pays (the same cooldown claim). Never throws.
  */
-export async function runMeetFallback(encounterId, token, sendFollowup) {
+async function runMeetFallback(encounterId, token, sendFollowup) {
   let row;
   try {
     row = await getMeetEncounter(encounterId);
@@ -260,12 +246,6 @@ export async function runMeetFallback(encounterId, token, sendFollowup) {
 /** Test hook: the fallback delay (MEET_FALLBACK_MS when called with nothing). */
 export function setMeetFallbackDelay(ms = MEET_FALLBACK_MS) {
   fallbackMs = ms;
-}
-
-/** Cancels every pending fallback (tests, shutdown). */
-export function clearMeetFallbacks() {
-  for (const timer of fallbacks.values()) clearTimeout(timer);
-  fallbacks.clear();
 }
 
 // --- the Activity's side (§11.2, §11.3) ------------------------------------
@@ -289,9 +269,7 @@ export async function loadMeetEncounter(userId, instanceId, now = new Date()) {
     rows.find((r) => r.instance_id == null);
   if (!row) return null;
 
-  await markMeetEncounterLoaded(row.id, now);
-  clearTimeout(fallbacks.get(row.id));
-  fallbacks.delete(row.id);
+  if (!row.loaded_at) await markMeetEncounterLoaded(row.id, now);
 
   const character = getCharacterById(row.character_id);
   return {
@@ -312,10 +290,7 @@ export async function loadMeetEncounter(userId, instanceId, now = new Date()) {
 // has a record. Best effort: the token may be past its 15 minutes, or
 // Discord may not allow edits after a launch.
 function recordResultOnPicker(row, result) {
-  const content = [row.intro, `${result.reaction}\n${result.deltaLine}`, result.signatureLine]
-    .filter(Boolean)
-    .join('\n');
-  return editInteractionMessage(row.interaction_token, '@original', { content })
+  return editInteractionMessage(row.interaction_token, '@original', { content: `${row.intro}\n${result.text}` })
     .catch((err) => console.warn(`[meetActivity] Could not edit the result onto /meet for ${row.discord_user_id}: ${err.message}`));
 }
 
@@ -339,16 +314,21 @@ export async function answerMeetEncounter(userId, encounterId, responseType, now
   const limit = await claimCommandUse(userId, 'meet', now);
   if (limit.failed) return { status: 503, body: { error: 'try_again' } };
 
+  const spend = () => deleteMeetEncounter(row.id)
+    .catch((err) => console.error(`[meetActivity] Could not delete answered encounter ${row.id}: ${err.message}`));
+  if (!limit.allowed) {
+    await spend();
+    return { status: 409, body: { error: 'cooldown', reason: limit.reason } };
+  }
+
   let result;
   try {
-    if (!limit.allowed) return { status: 409, body: { error: 'cooldown', reason: limit.reason } };
     result = await answerResponse(userId, row.character_id, responseType, { mood: row.mood, beatKey: row.beat_key });
   } finally {
-    await deleteMeetEncounter(row.id)
-      .catch((err) => console.error(`[meetActivity] Could not delete answered encounter ${row.id}: ${err.message}`));
+    await spend();
     // A genuine commit ends the rerolling session the invoke throttle was
     // escalating against, as the response button's does (app.js 'resp').
-    if (limit.allowed) releaseCommandInvoke(userId, 'meet');
+    releaseCommandInvoke(userId, 'meet');
   }
   if (!result) return { status: 404, body: { error: 'no_encounter' } };
 

@@ -1,4 +1,4 @@
-import { getMaintenanceMode, getMeetActivityOff } from './db/supabase.js';
+import { getAppSettings } from './db/supabase.js';
 
 // Global kill switch (db/migrations/024, app_settings.maintenance_mode).
 // Same operating model as guild_settings.locked (013): flipped by hand in
@@ -12,29 +12,44 @@ import { getMaintenanceMode, getMeetActivityOff } from './db/supabase.js';
 // (encounterScheduler.js TICK_INTERVAL_MS), so the tick reads it about every
 // other pass instead of every pass; at 10s it re-read on every tick.
 const CACHE_MS = 60 * 1000;
-let cached = { value: false, at: -Infinity };
+let cached = { settings: {}, at: -Infinity };
+
+// The app_settings row, cached for CACHE_MS. One read serves every switch on
+// it, so the maintenance check app.js runs on every interaction keeps the
+// /meet off switch warm too.
+//
+// On a lookup error, serves the last cached row rather than hard-coding
+// "off" — a blip right after maintenance was turned on shouldn't fling the
+// gate back open, and one right after it was turned off shouldn't re-lock
+// everyone out. Before the very first successful read every switch is off,
+// same as the columns' own DEFAULT FALSE.
+async function appSettings(now) {
+  if (now - cached.at < CACHE_MS) return cached.settings;
+
+  try {
+    cached = { settings: await getAppSettings(), at: now };
+  } catch (err) {
+    console.error(`[maintenance] Serving cached app settings after read error: ${err.message}`);
+  }
+  return cached.settings;
+}
 
 /**
  * True while the app is in maintenance. Checked in app.js before any
  * command or component branch runs.
- *
- * On a lookup error, serves the last cached value rather than hard-coding
- * `false` — a blip right after maintenance was turned on shouldn't fling the
- * gate back open, and one right after it was turned off shouldn't re-lock
- * everyone out. Before the very first successful read this defaults to not
- * under maintenance, same as the column's own DEFAULT FALSE.
  */
 export async function isMaintenanceModeActive(now = Date.now()) {
-  if (now - cached.at < CACHE_MS) return cached.value;
+  return (await appSettings(now)).maintenance_mode ?? false;
+}
 
-  try {
-    const value = await getMaintenanceMode();
-    cached = { value, at: now };
-    return value;
-  } catch (err) {
-    console.error('isMaintenanceModeActive: serving cached value after read error:', err);
-    return cached.value;
-  }
+/**
+ * True while /meet picks should skip the Activity and give today's image
+ * flow (app_settings.meet_activity_off, migration 035; docs/hangout-activity.md
+ * §11.7). Read in app.js's meet:pick branch only; the rest of the bot is
+ * unaffected.
+ */
+export async function isMeetActivityOff(now = Date.now()) {
+  return (await appSettings(now)).meet_activity_off ?? false;
 }
 
 /**
@@ -50,34 +65,9 @@ export function isMaintenanceBypassUser(userId) {
 }
 
 // Test hook: force the next call to re-read instead of serving a cached
-// value from an earlier test.
+// row from an earlier test.
 export function clearMaintenanceCache() {
-  cached = { value: false, at: -Infinity };
-  meetOffCached = { value: false, at: -Infinity };
-}
-
-// The /meet-only off switch (app_settings.meet_activity_off, migration 035;
-// docs/hangout-activity.md §11.7). Same 60s cache and the same rule on a
-// read error as the maintenance flag above.
-let meetOffCached = { value: false, at: -Infinity };
-
-/**
- * True while /meet picks should skip the Activity and give today's image
- * flow. Read in app.js's meet:pick branch only; the rest of the bot is
- * unaffected. Before the first successful read it's off (the Activity),
- * like the column's DEFAULT FALSE.
- */
-export async function isMeetActivityOff(now = Date.now()) {
-  if (now - meetOffCached.at < CACHE_MS) return meetOffCached.value;
-
-  try {
-    const value = await getMeetActivityOff();
-    meetOffCached = { value, at: now };
-    return value;
-  } catch (err) {
-    console.error(`[maintenance] isMeetActivityOff: serving cached value after read error: ${err.message}`);
-    return meetOffCached.value;
-  }
+  cached = { settings: {}, at: -Infinity };
 }
 
 export const MAINTENANCE_MESSAGE = 'App under maintenance, please try again later.';

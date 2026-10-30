@@ -760,42 +760,25 @@ export async function getGuildSettings(guildId) {
 }
 
 /**
- * The global maintenance kill switch (app_settings, db/migrations/024). A
- * plain read — callers go through maintenance.js's isMaintenanceModeActive,
- * which caches this so it isn't a Supabase round trip on every interaction.
+ * The app_settings row (db/migrations/024, 035): the hand-flipped switches,
+ * maintenance_mode and meet_activity_off. `*` rather than named columns, so
+ * a column whose migration hasn't run yet reads as unset instead of failing
+ * the read for every switch. Callers go through maintenance.js, which caches
+ * this so it isn't a Supabase round trip on every interaction.
  */
-export async function getMaintenanceMode() {
+export async function getAppSettings() {
   const { data, error } = await supabase
     .from('app_settings')
-    .select('maintenance_mode')
+    .select('*')
     .eq('id', 1)
     .single();
 
   if (error) {
-    console.error('Error fetching maintenance mode:', error);
+    console.error(`[maintenance] Error fetching app settings: ${error.message}`);
     throw error;
   }
 
-  return data?.maintenance_mode ?? false;
-}
-
-/**
- * The /meet-only off switch (app_settings.meet_activity_off, migration 035).
- * Callers go through maintenance.js's isMeetActivityOff, which caches it.
- */
-export async function getMeetActivityOff() {
-  const { data, error } = await supabase
-    .from('app_settings')
-    .select('meet_activity_off')
-    .eq('id', 1)
-    .single();
-
-  if (error) {
-    console.error(`[meetActivity] Error fetching the /meet Activity switch: ${error.message}`);
-    throw error;
-  }
-
-  return data?.meet_activity_off ?? false;
+  return data ?? {};
 }
 
 /**

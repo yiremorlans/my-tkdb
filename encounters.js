@@ -72,6 +72,9 @@ import { ERRAND_MEET_TARGET_SLOTS, ERRAND_ROAM_TARGET_BIAS } from './constants/m
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
+// The reply for a character id the roster doesn't have (a stale button).
+export const WANDERED_OFF = 'They seem to have wandered off already.';
+
 function pickRandomDistinct(list, count) {
   const pool = [...list];
   const picked = [];
@@ -691,7 +694,7 @@ export async function buildMeetPickMessage(userId = null, candidates = null, dis
  * `intro` is the line the /meet message carries ("Alan Mido agrees to meet
  * you at **The Pit**."), `notice` the mood notice under it, or null.
  */
-export async function drawMeetEncounter(userId, characterId, now = new Date(), dress = undefined) {
+export async function drawMeetEncounter(userId, characterId, now = new Date(), dress) {
   const character = getCharacterById(characterId);
   if (!character) return null;
 
@@ -766,7 +769,7 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
   const encounter = await drawMeetEncounter(userId, characterId, now);
   if (!encounter) {
     return {
-      content: 'They seem to have wandered off already.',
+      content: WANDERED_OFF,
       flags: EPHEMERAL_FLAG,
     };
   }
@@ -781,7 +784,9 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
  * target. Shared by the response buttons (buildResponseResultMessage) and the
  * Activity's answer route (meetActivity.js answerMeetEncounter); the caller
  * has already passed the cooldown claim. Returns null for an unknown
- * character, else `{ baseGain, reaction, deltaLine, signatureLine, levelUp }`.
+ * character, else `{ baseGain, reaction, deltaLine, signatureLine, text,
+ * levelUp }`, where `text` is the three lines as the result message shows
+ * them.
  */
 export async function answerResponse(
   userId,
@@ -843,6 +848,7 @@ export async function answerResponse(
     reaction,
     deltaLine,
     signatureLine,
+    text: [`${reaction}\n${deltaLine}`, signatureLine].filter(Boolean).join('\n'),
     // The crossing, for the caller to act on after its reply has gone out. A
     // bond scene is a DM (docs/bond-scene-dms.md) and the interaction must
     // not wait on Discord's DM endpoints, so this is deliberately data rather
@@ -863,14 +869,14 @@ export async function buildResponseResultMessage(
   const result = await answerResponse(userId, characterId, responseTypeId, { mood, beatKey });
   if (!result) {
     return {
-      content: 'They seem to have wandered off already.',
+      content: WANDERED_OFF,
       flags: EPHEMERAL_FLAG,
     };
   }
-  const { reaction, deltaLine, signatureLine, levelUp } = result;
+  const { text, levelUp } = result;
 
   return {
-    content: [`${reaction}\n${deltaLine}`, signatureLine].filter(Boolean).join('\n'),
+    content: text,
     components: shownComponents?.length
       ? disableComponents(shownComponents)
       : responseActionRow(characterId, true),
