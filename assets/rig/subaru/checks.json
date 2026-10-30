@@ -1,0 +1,67 @@
+{
+  "angles": {},
+  "baselines": {
+    "academy": {
+      "leak": 0,
+      "spill": 0,
+      "diff": 0.767,
+      "holes": {
+        "neck@-4": 41,
+        "neck@4": 44,
+        "head@-7": 44,
+        "head@7": 52,
+        "hair_crown_lock@-8": 36,
+        "hair_crown_lock@8": 20,
+        "hair_front_lock@-8": 0,
+        "hair_front_lock@8": 0,
+        "hair_side_r_lock@-8": 3,
+        "hair_side_r_lock@8": 0,
+        "hair_side_l_lock@-8": 0,
+        "hair_side_l_lock@8": 0,
+        "upper_arm_r@-12": 0,
+        "upper_arm_r@22": 0,
+        "forearm_r@-110": 0,
+        "forearm_r@12": 0,
+        "upper_arm_l@-22": 1,
+        "upper_arm_l@12": 1,
+        "forearm_l@-12": 0,
+        "forearm_l@110": 0,
+        "hand_r@-35": 1609,
+        "hand_r@35": 0,
+        "hand_l@-35": 0,
+        "hand_l@35": 1503
+      }
+    },
+    "casual": {
+      "leak": 0,
+      "spill": 5,
+      "diff": 0.704,
+      "holes": {
+        "neck@-4": 41,
+        "neck@4": 44,
+        "head@-7": 44,
+        "head@7": 52,
+        "hair_crown_lock@-8": 36,
+        "hair_crown_lock@8": 20,
+        "hair_front_lock@-8": 0,
+        "hair_front_lock@8": 0,
+        "hair_side_r_lock@-8": 3,
+        "hair_side_r_lock@8": 0,
+        "hair_side_l_lock@-8": 0,
+        "hair_side_l_lock@8": 0,
+        "upper_arm_r@-12": 0,
+        "upper_arm_r@22": 329,
+        "forearm_r@-110": 2,
+        "forearm_r@12": 325,
+        "upper_arm_l@-22": 330,
+        "upper_arm_l@12": 0,
+        "forearm_l@-12": 325,
+        "forearm_l@110": 2,
+        "hand_r@-35": 0,
+        "hand_r@35": 327,
+        "hand_l@-35": 327,
+        "hand_l@35": 0
+      }
+    }
+  }
+}

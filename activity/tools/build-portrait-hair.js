@@ -14,6 +14,8 @@
 //                                        // teal or not (irises the color of the hair)
 //     "jawClipY": 430, "jawGrow": 1,      // below it, only the face's own silhouette
 //     "hairBelowJaw": [[x0, y0, x1, y1]], // …plus these boxes: strand tips past the clip
+//     "cutBelowJaw": [[x0, y0, x1, y1]],  // …minus these: the default outfit's collar
+//                                         // inside a face blob rounder than the jaw
 //     "locks": [ { "id": "hair_front", "rect": [x0, y0, x1, y1],
 //                  "pivot": [x, y] }, ... ] }   // portrait px
 //
@@ -175,6 +177,7 @@ async function main() {
         // beside the jaw; kept whole (their outlines are as dark as clothing)
         const tip = (cfg.hairBelowJaw ?? []).some(([a, b, c, d]) => x >= a && x < c && y >= b && y < d);
         if (!inFace(x, y) && !tip) continue;
+        if ((cfg.cutBelowJaw ?? []).some(([a, b, c, d]) => x >= a && x < c && y >= b && y < d)) continue;
         const o = (y * width + x) * 4;
         const l = (portrait.data[o] + portrait.data[o + 1] + portrait.data[o + 2]) / 3;
         if (inBand(x, y) && l > (cfg.jawLineLum ?? 110)) {

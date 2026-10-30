@@ -42,12 +42,56 @@ import { skinConfig } from "./lib/skin-config.js";
 import { SOLID_ALPHA, readPng, writePng } from "./lib/png.js";
 
 const isSkin = (id) => id.startsWith("skin_");
-// How far a `noGrowUnder` part claims uncovered sprite pixels around it.
-const NO_GROW_REACH = 3;
 // A part claims a sprite pixel at alpha SOLID_ALPHA itself, one step looser
 // than lib/png.js isSolid: the committed skins were cut that way, and the
 // stricter test moves their edges.
 const covers = (rgba, i) => rgba[i * 4 + 3] >= SOLID_ALPHA;
+
+// Narrows a rest hand's mask to the sprite's hand, not what the atlas
+// drawing overlaps beside it (Tohma city: the coat edge past the fingers,
+// across a clear gap): the largest opaque blob, plus soft pixels within
+// 2 px of it (its anti-aliased edge).
+function keepHandBlob(mask, spriteA, W, H) {
+  const blob = new Uint8Array(W * H);
+  const seen = new Uint8Array(W * H);
+  let best = 0;
+  for (let s = 0; s < W * H; s++) {
+    if (!mask[s] || seen[s] || spriteA(s) < 128) continue;
+    const comp = [s];
+    seen[s] = 1;
+    for (let k = 0; k < comp.length; k++) {
+      const x = comp[k] % W;
+      const y = (comp[k] - x) / W;
+      for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+        const nx = x + dx;
+        const ny = y + dy;
+        if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+        const j = ny * W + nx;
+        if (mask[j] && !seen[j] && spriteA(j) >= 128) { seen[j] = 1; comp.push(j); }
+      }
+    }
+    if (comp.length > best) {
+      best = comp.length;
+      blob.fill(0);
+      for (const i of comp) blob[i] = 1;
+    }
+  }
+  for (let i = 0; i < W * H; i++) {
+    if (!mask[i] || blob[i]) continue;
+    if (spriteA(i) >= 128) { mask[i] = 0; continue; }
+    const x = i % W;
+    const y = (i - x) / W;
+    let near = false;
+    for (let dy = -2; dy <= 2 && !near; dy++) {
+      for (let dx = -2; dx <= 2 && !near; dx++) {
+        const nx = x + dx;
+        const ny = y + dy;
+        near = nx >= 0 && ny >= 0 && nx < W && ny < H && blob[ny * W + nx] === 1;
+      }
+    }
+    if (!near) mask[i] = 0;
+  }
+}
 
 async function main() {
   const character = process.argv[2];
@@ -100,6 +144,8 @@ async function main() {
     groupOf.set(part.id, g);
   }
 
+  const spriteA = (i) => sprite.data[i * 4 + 3];
+
   // 1. Topmost part per pixel at rest.
   const sizes = new Map();
   const images = new Map();
@@ -141,10 +187,9 @@ async function main() {
   }
 
   // 2. Sprite pixels nothing covers take the nearest covered pixel's group.
-  // Those within NO_GROW_REACH px of a `noGrowUnder` part go to it first and
+  // Those within `noGrowReach` px of a `noGrowUnder` part go to it first and
   // stay unskinned: they're its own art drawn a little wider in the sprite,
   // and a skin would leave them behind when the part swaps or turns.
-  const spriteA = (i) => sprite.data[i * 4 + 3];
   const noGrow = new Set(cfg.noGrowUnder ?? []);
   const spread = (seeds, steps, withPart = false) => {
     let frontier = seeds;
@@ -170,11 +215,73 @@ async function main() {
   if (noGrow.size) {
     const seeds = [];
     for (let i = 0; i < W * H; i++) if (noGrow.has(ownerPart[i])) seeds.push(i);
-    spread(seeds, NO_GROW_REACH, true);
+    spread(seeds, cfg.noGrowReach, true);
   }
   const frontier = [];
   for (let i = 0; i < W * H; i++) if (owner[i] !== -2) frontier.push(i);
   spread(frontier, cfg.reach ?? 8);
+
+  // The pixels a rest hand is cut from (step 6): those its part owns, plus
+  // sprite pixels inside the hand's box that no part draws (Tohma: the palm
+  // between the atlas glove's thumb and fingers, or the cut hand has holes),
+  // narrowed to the sprite's own hand.
+  const restHandMask = (id) => {
+    const mask = new Uint8Array(W * H);
+    for (let i = 0; i < W * H; i++) if (ownerPart[i] === id) mask[i] = 1;
+    let bx0 = W, by0 = H, bx1 = -1, by1 = -1;
+    for (let i = 0; i < W * H; i++) {
+      if (!mask[i]) continue;
+      const x = i % W;
+      const y = (i - x) / W;
+      bx0 = Math.min(bx0, x); bx1 = Math.max(bx1, x);
+      by0 = Math.min(by0, y); by1 = Math.max(by1, y);
+    }
+    for (let y = by0; y <= by1; y++) {
+      for (let x = bx0; x <= bx1; x++) {
+        const i = y * W + x;
+        if (ownerPart[i] == null && spriteA(i) > 0) mask[i] = 1;
+      }
+    }
+    keepHandBlob(mask, spriteA, W, H);
+    return mask;
+  };
+  // What a rest hand's drawing covers outside the sprite's hand (Tohma city:
+  // the coat edge) goes back to the nearest skin, or nothing draws it. Only
+  // its opaque pixels and their 1 px soft edge: the faint fringe in the gap
+  // beside the fingers widens the coat's edge once the hand moves away.
+  const restMasks = new Map();
+  if (cfg.restHands) {
+    const freed = [];
+    for (const id of noGrow) {
+      const mask = restHandMask(id);
+      restMasks.set(id, mask);
+      for (let i = 0; i < W * H; i++) {
+        if (ownerPart[i] === id && !mask[i]) {
+          owner[i] = spriteA(i) >= 128 ? -2 : -3; // -3: held out of the spread
+          ownerPart[i] = null;
+          freed.push(i);
+        }
+      }
+    }
+    if (freed.length) {
+      const seeds = [];
+      for (let i = 0; i < W * H; i++) if (owner[i] >= 0 && !noGrow.has(ownerPart[i])) seeds.push(i);
+      spread(seeds, cfg.reach ?? 8);
+      const soft = freed.filter((i) => owner[i] === -3);
+      for (const i of soft) {
+        const x = i % W;
+        const y = (i - x) / W;
+        owner[i] = -2;
+        for (const [dx, dy] of [[1, 0], [-1, 0], [0, 1], [0, -1]]) {
+          const nx = x + dx;
+          const ny = y + dy;
+          if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
+          const j = ny * W + nx;
+          if (owner[j] >= 0 && spriteA(j) >= 128 && !noGrow.has(ownerPart[j])) { owner[i] = owner[j]; break; }
+        }
+      }
+    }
+  }
 
   // 3. Cut each group from the sprite.
   // A group's `z` sets its skin's z outright (the skin sits at groupZ + 0.5)
@@ -190,7 +297,10 @@ async function main() {
   for (const [g, group] of cfg.groups.entries()) {
     const mask = new Uint8Array(W * H);
     for (let i = 0; i < W * H; i++) if (owner[i] === g) mask[i] = 1;
-    // grow under higher layers only
+    // grow under higher layers only; a group's own `dilate` replaces the
+    // shared one (Subaru casual's torso: 0, so arms swung in front of the
+    // vest leave no copy of the sleeve on it)
+    const rg = group.dilate ?? r;
     const grown = mask.slice();
     const growable = (j) => !grown[j] && ownerZ(j) > groupZ[g] && !noGrow.has(ownerPart[j]);
     if (cfg.dilateConnected) {
@@ -198,7 +308,7 @@ async function main() {
       // sprite (arm against body) stops the growth instead of being jumped.
       let frontier = [];
       for (let i = 0; i < W * H; i++) if (mask[i]) frontier.push(i);
-      for (let step = 0; step < r && frontier.length; step++) {
+      for (let step = 0; step < rg && frontier.length; step++) {
         const next = [];
         for (const i of frontier) {
           const x = i % W;
@@ -222,8 +332,8 @@ async function main() {
       for (let x = 0; x < W; x++) {
         const i = y * W + x;
         if (!mask[i]) continue;
-        for (let dy = -r; dy <= r; dy++) {
-          for (let dx = -r; dx <= r; dx++) {
+        for (let dy = -rg; dy <= rg; dy++) {
+          for (let dx = -rg; dx <= rg; dx++) {
             const nx = x + dx;
             const ny = y + dy;
             if (nx < 0 || ny < 0 || nx >= W || ny >= H) continue;
@@ -424,8 +534,7 @@ async function main() {
     for (const [side, hs] of Object.entries(hands ?? {})) {
       const part = rig.parts.find((p) => p.id === hs.part);
       const handZ = part.z ?? 0;
-      const mask = new Uint8Array(W * H);
-      for (let i = 0; i < W * H; i++) if (ownerPart[i] === part.id) mask[i] = 1;
+      const mask = restMasks.get(part.id) ?? restHandMask(part.id);
       const grown = mask.slice();
       for (let i = 0; i < W * H; i++) {
         if (!mask[i]) continue;
