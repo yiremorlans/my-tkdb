@@ -465,6 +465,14 @@ usage tracking only.
   `POST /api/activity/token` refuses anyone but `OWNER_DISCORD_ID` (403), so
   someone joining the owner's session sees a refusal line, not the scene.
   Release flips `OWNER_ONLY` in `activityRoutes.js` and drops the hiding.
+- **Version (added 2026-10-30).** `/encdev hangout version:v2` launches the
+  Live2D proof (`activity/src/hangout-v2/`, rig `assets/live2d/<id>/rig.json`)
+  instead of the sprite rig. `LAUNCH_ACTIVITY` can't pass it to the page, so
+  the handler records it per user in memory (10 minutes) and the Activity
+  reads it after sign-in from `GET /api/activity/launch` (Bearer session);
+  anything else is v1. v2 loads Cubism Core from
+  `/assets/live2d/vendor/` and its code as a separate chunk, only for a v2
+  launch. `?version=v2` does the same in a plain browser.
 - **URL mappings** in the Developer Portal: `/` → the Railway app (serving
   `activity/dist`), plus `/api` and `/assets`. The client loads nothing from
   third-party CDNs; PixiJS is bundled by Vite.

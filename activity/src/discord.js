@@ -63,3 +63,19 @@ export async function startDiscord() {
   await sdk.commands.authenticate({ access_token: accessToken });
   return { sdk, user, sessionToken };
 }
+
+/**
+ * The hangout version this launch asked for (`/encdev hangout version:`;
+ * activityRoutes.js GET /launch): "v1" or "v2". Falls back to "v1" if the
+ * route can't answer, so a launch never fails on it.
+ */
+export async function launchVersion(sessionToken) {
+  try {
+    const res = await fetch("/api/activity/launch", { headers: { Authorization: `Bearer ${sessionToken}` } });
+    const { version } = res.ok ? await res.json() : {};
+    return version === "v2" ? "v2" : "v1";
+  } catch (err) {
+    console.warn(`[discord] launch version unavailable: ${err.message}`);
+    return "v1";
+  }
+}

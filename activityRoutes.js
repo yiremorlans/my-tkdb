@@ -1,6 +1,7 @@
 // Hangout Activity API: /api/activity/*, the server side of the Discord
-// Activity (docs/hangout-activity.md §5.1, §6). For now only the OAuth
-// token exchange; the state and spend-time routes land with milestone 3.
+// Activity (docs/hangout-activity.md §5.1, §6). For now the OAuth token
+// exchange and which hangout version a launch asked for; the state and
+// spend-time routes land with milestone 3.
 //
 // Until release (milestone 4) the hangout is owner-only: it's launched from
 // `/encdev hangout` (publicEncounters.js handleEncounterDevHangout), and this
@@ -142,6 +143,39 @@ export async function handleActivityToken(body, { fetchFn = fetch, env = process
   };
 }
 
+// --- GET /api/activity/launch ---------------------------------------------
+
+// `/encdev hangout version:<v>` picks v1 (the sprite rig) or v2 (the Live2D
+// proof, activity/src/hangout-v2/). LAUNCH_ACTIVITY can't carry a parameter
+// to the page, so the choice is kept here per user, in memory, for as long
+// as the launch takes to sign in; the Activity asks for it after sign-in.
+// A restart or an old choice falls back to v1.
+export const HANGOUT_VERSIONS = ['v1', 'v2'];
+export const LAUNCH_TTL_MS = 10 * 60 * 1000;
+const launches = new Map(); // Discord user id → { version, at }
+
+/** Remembers the version `userId` just launched (publicEncounters.js handleEncounterDevHangout). */
+export function recordHangoutLaunch(userId, version, now = new Date()) {
+  launches.set(userId, { version: HANGOUT_VERSIONS.includes(version) ? version : 'v1', at: now.getTime() });
+}
+
+/** The version `userId` last launched within LAUNCH_TTL_MS, else v1. */
+export function hangoutLaunchFor(userId, now = new Date()) {
+  const launch = launches.get(userId);
+  return launch && now.getTime() - launch.at < LAUNCH_TTL_MS ? launch.version : 'v1';
+}
+
+/**
+ * `{ status, body }` for GET /launch: the version the session's user last
+ * launched. The user comes only from the Bearer session token.
+ */
+export function handleActivityLaunch(authorization, { env = process.env } = {}, now = new Date()) {
+  const token = /^Bearer (.+)$/.exec(authorization ?? '')?.[1];
+  const userId = verifySessionToken(token, env.ACTIVITY_SESSION_SECRET, now);
+  if (!userId) return { status: 401, body: { error: 'no_session' } };
+  return { status: 200, body: { version: hangoutLaunchFor(userId, now) } };
+}
+
 // --- router ---------------------------------------------------------------
 
 // JSON parsing is scoped to these routes: /interactions verifies Discord's
@@ -151,5 +185,10 @@ activityRouter.use(express.json({ limit: '4kb' }));
 
 activityRouter.post('/token', async (req, res) => {
   const { status, body } = await handleActivityToken(req.body);
+  res.status(status).json(body);
+});
+
+activityRouter.get('/launch', (req, res) => {
+  const { status, body } = handleActivityLaunch(req.get('authorization'));
   res.status(status).json(body);
 });

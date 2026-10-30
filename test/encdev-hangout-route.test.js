@@ -2,7 +2,8 @@
 // way into the Hangout Activity until release (docs/hangout-activity.md):
 // the owner gets LAUNCH_ACTIVITY as the interaction's first response (it
 // can't follow a deferred ack), everyone else the same refusal as the rest
-// of /encdev, and the other /encdev subcommands keep their deferred ack.
+// of /encdev, and the other /encdev subcommands keep their deferred ack. Its
+// `version` choice is recorded for the Activity (activityRoutes.js).
 import { test, mock } from 'node:test';
 import assert from 'node:assert';
 import { createFakeSupabase } from './helpers/fakeSupabase.js';
@@ -29,6 +30,7 @@ mock.module('@supabase/supabase-js', {
 });
 
 const { server } = await import('../app.js');
+const { hangoutLaunchFor } = await import('../activityRoutes.js');
 
 // The deferred-ack case lets /encdev's handler run on in the background;
 // keep that off the real network.
@@ -52,6 +54,19 @@ const post = async (body) => (await postSignedInteraction(TEST_PORT, keyPair.pri
 test('the owner launches the Activity as the first response', async () => {
   const body = await post(encdev('hangout', 'the-owner'));
   assert.deepStrictEqual(body, { type: 12 }); // LAUNCH_ACTIVITY
+});
+
+test('version:v2 launches the same way and is remembered for the Activity to read', async () => {
+  const body = await post(encdev('hangout', 'the-owner', {
+    data: { name: 'encdev', options: [{ type: 1, name: 'hangout', options: [{ type: 3, name: 'version', value: 'v2' }] }] },
+  }));
+  assert.deepStrictEqual(body, { type: 12 });
+  assert.strictEqual(hangoutLaunchFor('the-owner'), 'v2');
+});
+
+test('a launch without a version goes back to v1', async () => {
+  await post(encdev('hangout', 'the-owner'));
+  assert.strictEqual(hangoutLaunchFor('the-owner'), 'v1');
 });
 
 test('anyone else gets the ephemeral /encdev refusal, not a launch', async () => {

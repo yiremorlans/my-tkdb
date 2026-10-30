@@ -21,9 +21,9 @@ import { Sounds } from "./sounds.js";
 export const MOBILE_FPS = 30;
 
 // The VN box: each line types out; a click on the box finishes it.
-const TYPE_MS = 28;
+export const TYPE_MS = 28;
 
-function dialogueBox(box) {
+export function dialogueBox(box) {
   const text = box.querySelector(".vn-text");
   let typing = null;
   box.addEventListener("click", (e) => {

@@ -1,0 +1,38 @@
+<!doctype html>
+<!-- Hangout v2 preview (dev only, never deployed): the Hangout scene with
+     the game's Live2D model in place of the sprite rig. Proof alongside v1,
+     which it doesn't touch. Run: npm run dev:activity, then open
+     /hangout-v2.html -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Hangout v2 Preview</title>
+    <!-- A classic script (it defines the global Live2DCubismCore), served
+         from /assets like the other repo assets, before the module. -->
+    <script src="assets/live2d/vendor/live2dcubismcore.min.js"></script>
+    <link rel="stylesheet" href="./src/hangout/hangout.css" />
+    <link rel="stylesheet" href="./src/preview/preview.css" />
+  </head>
+  <body>
+    <main id="stage" class="stage">
+      <div class="hud">
+        <span id="fps">-- fps</span>
+        <span id="spot"></span>
+      </div>
+      <div class="meter" title="annoyance"><div id="meter-fill"></div></div>
+
+      <section class="vn-box" aria-live="polite">
+        <div class="vn-name"><span id="vn-name"></span></div>
+        <p id="vn-text" class="vn-text"></p>
+        <nav class="vn-icons">
+          <button id="btn-spend" class="vn-icon" title="Spend time" aria-label="Spend time">♥</button>
+        </nav>
+        <button id="btn-debug" class="vn-icon" title="Debug controls" aria-label="Debug controls">⚙</button>
+      </section>
+      <button id="btn-hide-ui" class="vn-icon" title="Hide dialogue (H)" aria-label="Hide dialogue" aria-pressed="false">◉</button>
+    </main>
+    <aside id="controls" class="drawer" hidden></aside>
+    <script type="module" src="./src/hangout-v2/preview.js"></script>
+  </body>
+</html>

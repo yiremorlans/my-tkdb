@@ -69,6 +69,7 @@ import {
   postChannelMessage,
 } from './discordRest.js';
 import { deliverBondScene } from './bondScenes.js';
+import { recordHangoutLaunch } from './activityRoutes.js';
 import { devResetCommandLimits } from './commandLimits.js';
 import { isMaintenanceModeActive } from './maintenance.js';
 import {
@@ -1191,10 +1192,15 @@ function isEncounterDevOwner(userId) {
  * /encdev uses. Owner-gated like the rest of /encdev; the token route
  * re-checks the owner, since anyone in the channel can join a launched
  * Activity.
+ *
+ * `version` (v1 unless set) picks the sprite rig or the Live2D proof (v2).
+ * LAUNCH_ACTIVITY can't pass it to the page, so it's recorded for the
+ * Activity to ask for after sign-in (activityRoutes.js GET /launch).
  */
 export function handleEncounterDevHangout(body) {
   const refusal = encounterDevRefusal(body);
   if (refusal) return ephemeralResponse(refusal);
+  recordHangoutLaunch(userIdOf(body), optionValue(body.data?.options?.[0]?.options, 'version') ?? 'v1');
   return { type: InteractionResponseType.LAUNCH_ACTIVITY };
 }
 
@@ -1220,7 +1226,7 @@ function encounterDevRefusal(body) {
  *   /encdev missions                      show this guild's mission slot times for today
  *   /encdev bond <character> <level>      fire a bond scene DM directly (docs/bond-scene-dms.md)
  *   /encdev reset [command]               wipe your own /roam+/meet 3h cooldown and invoke throttle
- *   /encdev hangout                       launch the Hangout Activity (handleEncounterDevHangout)
+ *   /encdev hangout [version]             launch the Hangout Activity, v1 or v2 (handleEncounterDevHangout)
  *
  * A manual spawn passes `reanchor: false`, so it never writes guild_settings —
  * the real cadence anchor and the post-failure counter are left exactly as they
