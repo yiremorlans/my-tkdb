@@ -1,0 +1,120 @@
+{
+  "r": {
+    "donor/p141_wrist.png": {
+      "pivot": [
+        0.5522,
+        0.17
+      ],
+      "scale": 0.56
+    },
+    "donor/p129_wrist.png": {
+      "pivot": [
+        0.6531,
+        0.17
+      ],
+      "scale": 0.56
+    },
+    "donor/p138_wrist.png": {
+      "pivot": [
+        0.6679,
+        0.17
+      ],
+      "scale": 0.56
+    },
+    "donor/p134_wrist.png": {
+      "pivot": [
+        0.4529,
+        0.17
+      ],
+      "scale": 0.56
+    },
+    "donor/p146_wrist.png": {
+      "pivot": [
+        0.533,
+        0.17
+      ],
+      "scale": 0.56
+    },
+    "donor/p144_wrist.png": {
+      "pivot": [
+        0.3639,
+        0.17
+      ],
+      "scale": 0.56
+    },
+    "donor/p133_wrist.png": {
+      "pivot": [
+        0.2387,
+        0.17
+      ],
+      "scale": 0.56
+    },
+    "p139": {
+      "pivot": [
+        0.5,
+        0.05
+      ],
+      "scale": 0.56
+    }
+  },
+  "l": {
+    "donor/p141_wrist.png": {
+      "pivot": [
+        0.5522,
+        0.17
+      ],
+      "scale": 0.56
+    },
+    "donor/p129_wrist.png": {
+      "pivot": [
+        0.6531,
+        0.17
+      ],
+      "scale": 0.56
+    },
+    "donor/p138_wrist.png": {
+      "pivot": [
+        0.6679,
+        0.17
+      ],
+      "scale": 0.56
+    },
+    "donor/p134_wrist.png": {
+      "pivot": [
+        0.4529,
+        0.17
+      ],
+      "scale": 0.56
+    },
+    "donor/p146_wrist.png": {
+      "pivot": [
+        0.533,
+        0.17
+      ],
+      "scale": 0.56
+    },
+    "donor/p144_wrist.png": {
+      "pivot": [
+        0.3639,
+        0.17
+      ],
+      "scale": 0.56
+    },
+    "donor/p133_wrist.png": {
+      "pivot": [
+        0.2387,
+        0.17
+      ],
+      "scale": 0.56
+    },
+    "p139": {
+      "image": "academy/parts/p143.png",
+      "pivot": [
+        0.5,
+        0.05
+      ],
+      "scale": 0.55,
+      "flipX": false
+    }
+  }
+}

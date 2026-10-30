@@ -1,0 +1,13 @@
+{
+  "l": {
+    "donor/p143_cuff.png": {
+      "image": "city/donor/p140_cuff.png",
+      "pivot": [
+        0.5,
+        0.05
+      ],
+      "scale": 0.7,
+      "flipX": false
+    }
+  }
+}

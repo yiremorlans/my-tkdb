@@ -1,0 +1,67 @@
+{
+  "angles": {},
+  "baselines": {
+    "academy": {
+      "leak": 4,
+      "spill": 6,
+      "diff": 1.038,
+      "holes": {
+        "neck@-4": 46,
+        "neck@4": 54,
+        "head@-7": 43,
+        "head@7": 67,
+        "hair_crown_lock@-8": 0,
+        "hair_crown_lock@8": 0,
+        "hair_front_lock@-8": 0,
+        "hair_front_lock@8": 0,
+        "hair_side_r_lock@-8": 0,
+        "hair_side_r_lock@8": 50,
+        "hair_side_l_lock@-8": 0,
+        "hair_side_l_lock@8": 0,
+        "upper_arm_r@-12": 0,
+        "upper_arm_r@22": 4,
+        "forearm_r@-110": 0,
+        "forearm_r@12": 5,
+        "upper_arm_l@-22": 6,
+        "upper_arm_l@12": 0,
+        "forearm_l@-12": 6,
+        "forearm_l@110": 0,
+        "hand_r@-35": 2488,
+        "hand_r@35": 0,
+        "hand_l@-35": 0,
+        "hand_l@35": 2754
+      }
+    },
+    "city": {
+      "leak": 0,
+      "spill": 35,
+      "diff": 1.412,
+      "holes": {
+        "neck@-4": 52,
+        "neck@4": 52,
+        "head@-7": 43,
+        "head@7": 53,
+        "hair_crown_lock@-8": 0,
+        "hair_crown_lock@8": 0,
+        "hair_front_lock@-8": 0,
+        "hair_front_lock@8": 0,
+        "hair_side_r_lock@-8": 0,
+        "hair_side_r_lock@8": 50,
+        "hair_side_l_lock@-8": 0,
+        "hair_side_l_lock@8": 0,
+        "upper_arm_r@-12": 0,
+        "upper_arm_r@22": 0,
+        "forearm_r@-110": 1,
+        "forearm_r@12": 1,
+        "upper_arm_l@-22": 0,
+        "upper_arm_l@12": 0,
+        "forearm_l@-12": 0,
+        "forearm_l@110": 0,
+        "hand_r@-35": 0,
+        "hand_r@35": 0,
+        "hand_l@-35": 0,
+        "hand_l@35": 0
+      }
+    }
+  }
+}
