@@ -1,0 +1,82 @@
+{
+  "character": "alan",
+  "reference": { "width": 2000, "height": 2800 },
+  "background": "../../bg/vagastrom/Vagastrom_Alan_Room.png",
+  "stage": {
+    "landscape": { "top": 66, "bottom": 1276, "centerX": 1000 },
+    "portrait": { "top": 85, "bottom": 1667, "centerX": 1000 }
+  },
+  "defaultOutfit": "academy",
+  "outfits": {
+    "academy": {
+      "model": "academy/alan_academy.model3.json",
+      "parts": {
+        "vest": ["ArtMesh134"],
+        "pants": ["pants_R", "pants_L"]
+      },
+      "hotspots": {
+        "chest": { "part": "vest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+      }
+    }
+  },
+  "parts": {
+    "face_base": ["FaceSkin"],
+    "mouth": ["ArtMesh71"],
+    "ear_r": ["ArtMesh100"],
+    "ear_l": ["ArtMesh99"],
+    "hand_r": ["ArtMesh170", "ArtMesh201", "ArtMesh205", "ArtMesh207", "ArtMesh209", "ArtMesh211", "ArtMesh213", "ArtMesh14"],
+    "hand_l": ["ArtMesh22", "ArtMesh18", "ArtMesh286", "ArtMesh288", "ArtMesh284", "ArtMesh282", "ArtMesh280", "ArtMesh278", "ArtMesh276", "ArtMesh172"]
+  },
+  "hotspots": {
+    "lips": { "part": "mouth", "rect": [-0.25, -2, 1.25, 3] },
+    "ear_r": { "part": "ear_r" },
+    "ear_l": { "part": "ear_l" },
+    "hand_r": { "part": "hand_r" },
+    "hand_l": { "part": "hand_l" },
+    "cheek": { "part": "face_base", "rect": [0.12, 0.55, 0.88, 0.82] },
+    "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
+  },
+  "bones": { "arms": { "r": {}, "l": {} } },
+  "expressions": {
+    "fade": 0.2,
+    "moods": {
+      "default": [],
+      "close": ["e_close_00"],
+      "smile": ["e_egao_00"],
+      "full_smile": ["e_manmen_00"],
+      "blush": ["e_sekimen_00"],
+      "smile_blush": ["e_egao_00", "e_sekimen_00"],
+      "full_smile_blush": ["e_manmen_00", "e_sekimen_00"],
+      "surprise": ["e_odoroki_00"],
+      "surprise_blush": ["e_odoroki_00", "e_sekimen_00"],
+      "sweat": ["e_ase_00"],
+      "serious": ["e_ikari_00"],
+      "annoyed": ["e_kire_00"],
+      "upset": ["e_ikari_00", "e_ase_00"],
+      "sad": ["e_kanashimi_00"],
+      "away": ["e_tsujo_away_00"]
+    }
+  },
+  "reactionPoses": {
+    "headPat": "m_kubi",
+    "hipsTouch": "m_udekumi",
+    "upset": "m_angry",
+    "spendTime": "m_pocket"
+  },
+  "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
+  "motion": {
+    "idle": { "amount": 0.35 },
+    "breath": { "amount": 0.5 },
+    "bgPan": { "speed": 0.022, "amount": 0.01 }
+  },
+  "sounds": {
+    "headPat": "../../rig/alan/sfx/alan_default_1.wav",
+    "cheekPoke": "../../rig/alan/sfx/alan_default_1.wav",
+    "lipsTouch": "../../rig/alan/sfx/alan_default_1.wav",
+    "earTouch": "../../rig/alan/sfx/alan_default_1.wav",
+    "handTap": "../../rig/alan/sfx/alan_default_1.wav",
+    "chestTouch": "../../rig/alan/sfx/alan_default_1.wav",
+    "hipsTouch": "../../rig/alan/sfx/alan_default_1.wav"
+  }
+}
