@@ -1,0 +1,69 @@
+{
+  "character": "elias",
+  "reference": { "width": 2000, "height": 2800 },
+  "background": "../../bg/dionysia/Dionysia_Elias_Room.png",
+  "stage": {
+    "landscape": { "top": 110, "bottom": 1320, "centerX": 1000 },
+    "portrait": { "top": 129, "bottom": 1711, "centerX": 1000 }
+  },
+  "defaultOutfit": "academy",
+  "outfits": {
+    "academy": {
+      "model": "academy/elias_academy.model3.json",
+      "parts": { "chest": ["ArtMesh250"], "pants": ["ArtMesh260", "ArtMesh261"] },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+      }
+    }
+  },
+  "parts": {
+    "face_base": ["ArtMesh100"],
+    "mouth": ["ArtMesh79", "ArtMesh80", "ArtMesh81", "ArtMesh82", "ArtMesh83", "ArtMesh84", "ArtMesh85", "ArtMesh87", "ArtMesh88", "ArtMesh89", "ArtMesh86"],
+    "ear_r": ["ArtMesh90", "ArtMesh101", "ArtMesh103"],
+    "ear_l": ["ArtMesh91", "ArtMesh102", "ArtMesh104"],
+    "hand_r": ["ArtMesh155", "ArtMesh268"],
+    "hand_l": ["ArtMesh161", "ArtMesh276"]
+  },
+  "hotspots": {
+    "lips": { "part": "mouth", "rect": [-0.25, -0.5, 1.25, 1.5] },
+    "ear_r": { "part": "ear_r" },
+    "ear_l": { "part": "ear_l" },
+    "hand_r": { "part": "hand_r" },
+    "hand_l": { "part": "hand_l" },
+    "cheek": { "part": "face_base", "rect": [0.12, 0.55, 0.88, 0.82] },
+    "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
+  },
+  "bones": {
+    "arms": {
+      "r": { },
+      "l": { }
+    }
+  },
+  "expressions": {
+    "fade": 0.2,
+    "moods": {
+      "default": [],
+      "close": ["e_close_00"],
+      "smile": ["e_egao_00"],
+      "full_smile": ["e_manmen_00"],
+      "blush": ["e_sekimen_00"],
+      "smile_blush": ["e_egao_00", "e_sekimen_00"],
+      "full_smile_blush": ["e_manmen_00", "e_sekimen_00"],
+      "surprise": ["e_odoroki_00"],
+      "surprise_blush": ["e_odoroki_00", "e_sekimen_00"],
+      "sweat": ["e_ase_00"],
+      "serious": ["e_magao_00"],
+      "annoyed": ["e_komari_00"],
+      "upset": ["e_komari_00", "e_ase_00"],
+      "sad": ["e_komari_00"]
+    }
+  },
+  "reactionPoses": { "hipsTouch": "m_udekumi", "spendTime": "m_gesture" },
+  "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
+  "motion": {
+    "idle": { "amount": 0.35 },
+    "breath": { "amount": 0.5 },
+    "bgPan": { "speed": 0.022, "amount": 0.01 }
+  }
+}

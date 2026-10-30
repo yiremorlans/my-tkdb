@@ -1,0 +1,189 @@
+{
+  "Version": 3,
+  "FileReferences": {
+    "Moc": "shion_academy.moc3",
+    "Textures": [
+      "shion_academy_00.png"
+    ],
+    "Physics": "shion_academy.physics3.json",
+    "Expressions": [
+      {
+        "Name": "e_aori_00",
+        "File": "expressions/e_aori_00.exp3.json"
+      },
+      {
+        "Name": "e_ase_00",
+        "File": "expressions/e_ase_00.exp3.json"
+      },
+      {
+        "Name": "e_bisho_00",
+        "File": "expressions/e_bisho_00.exp3.json"
+      },
+      {
+        "Name": "e_close_00",
+        "File": "expressions/e_close_00.exp3.json"
+      },
+      {
+        "Name": "e_fukigen_00",
+        "File": "expressions/e_fukigen_00.exp3.json"
+      },
+      {
+        "Name": "e_gesu_00",
+        "File": "expressions/e_gesu_00.exp3.json"
+      },
+      {
+        "Name": "e_magao_00",
+        "File": "expressions/e_magao_00.exp3.json"
+      },
+      {
+        "Name": "e_manmen_00",
+        "File": "expressions/e_manmen_00.exp3.json"
+      },
+      {
+        "Name": "e_muku_00",
+        "File": "expressions/e_muku_00.exp3.json"
+      },
+      {
+        "Name": "e_odoroki_00",
+        "File": "expressions/e_odoroki_00.exp3.json"
+      },
+      {
+        "Name": "e_sekimen_00",
+        "File": "expressions/e_sekimen_00.exp3.json"
+      },
+      {
+        "Name": "e_tsujo_00",
+        "File": "expressions/e_tsujo_00.exp3.json"
+      }
+    ],
+    "Motions": {
+      "m_ago": [
+        {
+          "File": "motions/m_ago.motion3.json"
+        }
+      ],
+      "m_ago_hold": [
+        {
+          "File": "motions/m_ago_hold.motion3.json"
+        }
+      ],
+      "m_ago_return": [
+        {
+          "File": "motions/m_ago_return.motion3.json"
+        }
+      ],
+      "m_breath": [
+        {
+          "File": "motions/m_breath.motion3.json"
+        }
+      ],
+      "m_card": [
+        {
+          "File": "motions/m_card.motion3.json"
+        }
+      ],
+      "m_card_hold": [
+        {
+          "File": "motions/m_card_hold.motion3.json"
+        }
+      ],
+      "m_card_return": [
+        {
+          "File": "motions/m_card_return.motion3.json"
+        }
+      ],
+      "m_default": [
+        {
+          "File": "motions/m_default.motion3.json"
+        }
+      ],
+      "m_gesture": [
+        {
+          "File": "motions/m_gesture.motion3.json"
+        }
+      ],
+      "m_gesture_hold": [
+        {
+          "File": "motions/m_gesture_hold.motion3.json"
+        }
+      ],
+      "m_gesture_return": [
+        {
+          "File": "motions/m_gesture_return.motion3.json"
+        }
+      ],
+      "m_head_noloop": [
+        {
+          "File": "motions/m_head_noloop.motion3.json"
+        }
+      ],
+      "m_kao": [
+        {
+          "File": "motions/m_kao.motion3.json"
+        }
+      ],
+      "m_kao_hold": [
+        {
+          "File": "motions/m_kao_hold.motion3.json"
+        }
+      ],
+      "m_kao_return": [
+        {
+          "File": "motions/m_kao_return.motion3.json"
+        }
+      ],
+      "m_migikoshi": [
+        {
+          "File": "motions/m_migikoshi.motion3.json"
+        }
+      ],
+      "m_migikoshi_hold": [
+        {
+          "File": "motions/m_migikoshi_hold.motion3.json"
+        }
+      ],
+      "m_migikoshi_return": [
+        {
+          "File": "motions/m_migikoshi_return.motion3.json"
+        }
+      ],
+      "m_udekumi": [
+        {
+          "File": "motions/m_udekumi.motion3.json"
+        }
+      ],
+      "m_udekumi_hold": [
+        {
+          "File": "motions/m_udekumi_hold.motion3.json"
+        }
+      ],
+      "m_udekumi_return": [
+        {
+          "File": "motions/m_udekumi_return.motion3.json"
+        }
+      ],
+      "Idle": [
+        {
+          "File": "motions/m_default.motion3.json"
+        }
+      ]
+    }
+  },
+  "Groups": [
+    {
+      "Target": "Parameter",
+      "Name": "EyeBlink",
+      "Ids": [
+        "ParamEyeLOpen",
+        "ParamEyeROpen"
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Name": "LipSync",
+      "Ids": [
+        "ParamMouthOpenY"
+      ]
+    }
+  ]
+}
