@@ -1,0 +1,35 @@
+<!doctype html>
+<!-- Live2D plugin test (dev only, never deployed): the game's Live2D model of
+     Alan through untitled-pixi-live2d-engine on the app's own pixi.js, with
+     Cubism Core self-hosted under /assets. Run: npm run dev:activity, then
+     open /live2d-test.html -->
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>Live2D Test</title>
+    <!-- A classic script (it defines the global Live2DCubismCore), so it
+         loads from /assets like every other repo asset, before the module. -->
+    <script src="assets/live2d/vendor/live2dcubismcore.min.js"></script>
+    <style>
+      body { margin: 0; background: #1b1824; color: #eee; font: 14px system-ui, sans-serif; }
+      #stage { position: fixed; inset: 0; }
+      #ui { position: fixed; top: 8px; left: 8px; right: 8px; z-index: 1; display: grid; gap: 6px; }
+      .row { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+      .row > span { color: #a49fb5; font-size: 12px; min-width: 76px; }
+      #ui button { background: #2e2a3b; color: #eee; border: 0; border-radius: 6px; padding: 6px 10px; cursor: pointer; }
+      #ui button.on { background: #6b55c9; }
+      #status { position: fixed; bottom: 8px; left: 8px; right: 8px; font: 12px ui-monospace, monospace; white-space: pre-wrap; }
+    </style>
+  </head>
+  <body>
+    <main id="stage"></main>
+    <div id="ui">
+      <div class="row" id="layers"><span>Layers</span></div>
+      <div class="row" id="poses"><span>Poses</span></div>
+      <div class="row" id="exprs"><span>Expressions</span></div>
+    </div>
+    <div id="status">loading…</div>
+    <script type="module" src="./src/live2d-test/live2d-test.js"></script>
+  </body>
+</html>

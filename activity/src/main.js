@@ -1,7 +1,7 @@
 // Hangout Activity entry (index.html; docs/hangout-activity.md §4). The
 // shared scene (hangout/scene.js) with only the player-facing chrome: the
-// VN box and the Spend time button. No debug drawer, HUD or editor; those
-// are the dev preview's (preview/preview.js).
+// VN box and the annoyance meter. No debug drawer,
+// HUD or editor; those are the dev preview's (preview/preview.js).
 //
 // Inside Discord the scene waits for sign-in (discord.js): until release
 // the token route only lets the owner in, so anyone else (say, joining the
@@ -20,7 +20,9 @@
 // and Cubism Core load only for a v2 launch.
 
 import { discordPlatform, inDiscord, launchVersion, startDiscord } from "./discord.js";
-import { MOBILE_FPS, startScene } from "./hangout/scene.js";
+import { loadLines } from "./hangout/lines.js";
+import { startScene } from "./hangout/scene.js";
+import { MOBILE_FPS } from "./hangout/stage.js";
 import { loadRig } from "./rig/loader.js";
 
 // Cubism Core defines a global (Live2DCubismCore), so it's a classic script,
@@ -80,7 +82,7 @@ async function main() {
   }
 
   $("#vn-name").textContent = character[0].toUpperCase() + character.slice(1);
-  const options = { tier: params.get("tier"), maxFPS: isMobile ? MOBILE_FPS : 0 };
+  const options = { tier: params.get("tier"), lines: await loadLines(character), maxFPS: isMobile ? MOBILE_FPS : 0 };
   console.log(`[hangout] ${version}`);
   const scene =
     version === "v2"
@@ -88,9 +90,12 @@ async function main() {
       : await startScene($("#stage"), { ...options, base, loaded: rigLoad });
   const { hangout } = scene;
 
-  // Spend time is the cosmetic path until milestone 3 adds the cooldown and
-  // the affinity write (hangout.js spendTime).
-  $("#btn-spend").onclick = () => hangout.spendTime(scene.time);
+  // The annoyance meter, so the player sees spam-tapping build toward upset.
+  const meterFill = $("#meter-fill");
+  scene.frame = (t, dt) => {
+    hangout.frame(t, dt);
+    meterFill.style.width = `${Math.min(100, (hangout.meter.level(t) / hangout.meter.config.threshold) * 100)}%`;
+  };
 
   // Mute, only for a character with sounds; remembered across sessions.
   const { sounds } = scene;

@@ -10,12 +10,14 @@
   "outfits": {
     "academy": {
       "model": "academy/alan_academy.model3.json",
+      "dialogueVariant": "uniform",
       "parts": {
         "vest": ["ArtMesh134"],
         "pants": ["pants_R", "pants_L"]
       },
       "hotspots": {
         "chest": { "part": "vest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "belly": { "part": "vest", "rect": [0.2, 0.4, 0.8, 0.99] },
         "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
       }
     }
@@ -60,9 +62,11 @@
   },
   "reactionPoses": {
     "headPat": "m_kubi",
-    "hipsTouch": "m_udekumi",
-    "upset": "m_angry",
-    "spendTime": "m_pocket"
+    "chestTouch": "m_udekumi",
+    "bellyTouch": "m_udekumi",
+    "earTouch": "m_migikoshi",
+    "handTap": "m_pocket",
+    "upset": "m_angry"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
@@ -71,12 +75,12 @@
     "bgPan": { "speed": 0.022, "amount": 0.01 }
   },
   "sounds": {
-    "headPat": "../../rig/alan/sfx/alan_default_1.wav",
-    "cheekPoke": "../../rig/alan/sfx/alan_default_1.wav",
-    "lipsTouch": "../../rig/alan/sfx/alan_default_1.wav",
-    "earTouch": "../../rig/alan/sfx/alan_default_1.wav",
-    "handTap": "../../rig/alan/sfx/alan_default_1.wav",
-    "chestTouch": "../../rig/alan/sfx/alan_default_1.wav",
-    "hipsTouch": "../../rig/alan/sfx/alan_default_1.wav"
+    "headPat": "sfx/alan_default_1.wav",
+    "cheekPoke": "sfx/alan_default_1.wav",
+    "lipsTouch": "sfx/alan_default_1.wav",
+    "earTouch": "sfx/alan_default_1.wav",
+    "handTap": "sfx/alan_default_1.wav",
+    "chestTouch": "sfx/alan_default_1.wav",
+    "hipsTouch": "sfx/alan_default_1.wav"
   }
 }

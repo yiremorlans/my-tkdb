@@ -9,9 +9,11 @@
   "outfits": {
     "academy": {
       "model": "academy/haku_academy.model3.json",
+      "dialogueVariant": "uniform",
       "parts": { "chest": ["ArtMesh209"], "pants": ["ArtMesh235", "ArtMesh236"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 0.89] },
         "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
       }
     }
@@ -60,9 +62,7 @@
   },
   "reactionPoses": {
     "headPat": "m_poripori",
-    "hipsTouch": "m_udekumi",
-    "upset": "m_fist",
-    "spendTime": "m_gesture"
+    "upset": "m_udekumi"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {

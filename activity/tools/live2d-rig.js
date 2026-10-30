@@ -1,4 +1,4 @@
-// Writes a Hangout v2 rig (docs/hangout-activity.md §3.6) for a converted
+// Writes a Hangout v2 rig (docs/hangout-activity.md §3) for a converted
 // Live2D model: assets/live2d/<character>/rig.json, modeled on Alan's
 // hand-tuned one (assets/live2d/alan/rig.json is the template).
 //
@@ -14,7 +14,9 @@
 // - expressions.moods: each sceneFaces.js face mapped onto the expressions
 //   this model has (the vocabularies differ per character);
 // - reactionPoses: the closest pose clip to Alan's for each reaction;
-// - background: v1's rig.json background, else the character's room.
+// - background: v1's rig.json background, else the character's room;
+// - the outfit's dialogueVariant (uniform for academy, casual otherwise),
+//   which /meet's variant roll picks it by (docs/hangout-activity.md §11.5).
 // Hotspots are a starting point: check them in the v2 preview's "show
 // hotspots" overlay (hangout-v2.html?character=<id>).
 
@@ -22,7 +24,7 @@ import fs from "node:fs";
 import path from "node:path";
 import vm from "node:vm";
 
-import { roomBackground } from "./new-rig.js";
+import { roomBackground } from "./lib/backgrounds.js";
 
 const REPO = path.resolve(path.dirname(new URL(import.meta.url).pathname), "../..");
 const LIVE2D = path.join(REPO, "assets/live2d");
@@ -55,11 +57,11 @@ const COMBOS = {
 const MOODS = ["close", "smile", "full_smile", "blush", "smile_blush", "full_smile_blush", "surprise", "surprise_blush", "sweat", "serious", "annoyed", "upset", "sad", "away", "wink", "lovestruck"];
 
 // Alan's: kubi (hand to the neck), udekumi (arms crossed), angry, pocket.
+// Arms crossed always reads as upset, so it's every rig's upset pose.
 const POSES = {
   headPat: ["m_kubi", "m_atama", "m_kuchimoto", "m_tere", "m_poripori"],
-  hipsTouch: ["m_udekumi", "m_tekumi", "m_ryoutekoshi"],
-  upset: ["m_angry", "m_ikari", "m_fist", "m_kobushi", "m_akire", "m_hidarikoshi"],
-  spendTime: ["m_pocket", "m_gesture", "m_migikoshi", "m_hidarikoshi"],
+  hipsTouch: ["m_tekumi", "m_ryoutekoshi"],
+  upset: ["m_udekumi", "m_angry", "m_ikari", "m_fist", "m_kobushi", "m_akire", "m_hidarikoshi"],
 };
 
 export function mapMoods(expressions) {
@@ -239,6 +241,21 @@ export function pickParts(drawables) {
   return { parts: out, face: fb };
 }
 
+/**
+ * The belly, in the chest part's space: from the chest spot's bottom down to
+ * the top of the pants, where the hips spot starts. A short jacket ends
+ * above the pants, so the rect can run past the part (y > 1).
+ */
+export function bellyRect(drawables, chestIds, pantsIds, chestRect) {
+  const box = (ids) => {
+    const bs = drawables.filter((x) => ids.includes(x.id)).map((x) => x.box);
+    return [Math.min(...bs.map((b) => b[0])), Math.min(...bs.map((b) => b[1])), Math.max(...bs.map((b) => b[2])), Math.max(...bs.map((b) => b[3]))];
+  };
+  const chest = box(chestIds);
+  const bottom = (box(pantsIds)[1] - chest[1]) / (chest[3] - chest[1]);
+  return [0.2, chestRect[3], 0.8, Math.round(bottom * 100) / 100];
+}
+
 // --- rig.json -----------------------------------------------------------------
 
 export async function buildRig(character, outfit) {
@@ -265,6 +282,7 @@ export async function buildRig(character, outfit) {
     outfitParts.chest = found.chest;
     outfitHotspots.chest = { part: "chest", rect: alanOutfit.chest.rect };
   }
+  if (found.chest && found.pants) outfitHotspots.belly = { part: "chest", rect: bellyRect(m.drawables, found.chest, found.pants, alanOutfit.chest.rect) };
   if (found.pants) {
     outfitParts.pants = found.pants;
     outfitHotspots.hips = { part: "pants", rect: alanOutfit.hips.rect };
@@ -287,7 +305,14 @@ export async function buildRig(character, outfit) {
     ...(background ? { background } : {}),
     stage,
     defaultOutfit: outfit,
-    outfits: { [outfit]: { model: modelFile, parts: outfitParts, hotspots: outfitHotspots } },
+    outfits: {
+      [outfit]: {
+        model: modelFile,
+        dialogueVariant: outfit === "academy" ? "uniform" : "casual",
+        parts: outfitParts,
+        hotspots: outfitHotspots,
+      },
+    },
     parts,
     hotspots,
     bones: alan.bones,

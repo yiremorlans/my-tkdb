@@ -10,38 +10,13 @@ import { Application, Sprite } from "pixi.js";
 
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 
-import { loadRig, loadTexture } from "../rig/loader.js";
+import { loadRig } from "../rig/loader.js";
 import { Motion } from "../rig/motion.js";
 import { RigRenderer } from "../rig/renderer.js";
-import { outfitNames, stageFraming } from "../rig/skeleton.js";
+import { outfitNames } from "../rig/skeleton.js";
 import { Hangout } from "./hangout.js";
 import { Sounds } from "./sounds.js";
-
-// docs/hangout-activity.md §4.5: the frame cap on phones.
-export const MOBILE_FPS = 30;
-
-// The VN box: each line types out; a click on the box finishes it.
-export const TYPE_MS = 28;
-
-export function dialogueBox(box) {
-  const text = box.querySelector(".vn-text");
-  let typing = null;
-  box.addEventListener("click", (e) => {
-    if (e.target.closest(".vn-icon")) return;
-    clearInterval(typing);
-    text.textContent = text.dataset.full ?? "";
-  });
-  return (line) => {
-    clearInterval(typing);
-    text.textContent = "";
-    text.dataset.full = line;
-    let i = 0;
-    typing = setInterval(() => {
-      text.textContent = line.slice(0, ++i);
-      if (i >= line.length) clearInterval(typing);
-    }, TYPE_MS);
-  };
-}
+import { dialogueBox, frameLoop, loadTexture, stageFraming } from "./stage.js";
 
 /**
  * Loads `${base}/rig.json` and starts the scene in `stage` (an element
@@ -49,9 +24,10 @@ export function dialogueBox(box) {
  *
  * Options: `loaded` (loadRig's promise, when the caller already started
  * loading it), `tier` (constants/tiers.js DIALOGUE_TIERS, else "new"),
- * `outfit` (else the rig's default), `room: false` to skip the background,
+ * `outfit` (else the rig's default), `lines` (Hangout's, else the
+ * placeholders), `room: false` to skip the background,
  * `background` (the canvas color behind everything), `maxFPS` (0 =
- * uncapped).
+ * uncapped; the scene's `frameCap.maxFPS` changes it live).
  *
  * The returned scene's `sounds` (sounds.js) plays reaction clips; its
  * `setMuted` is the mute toggle.
@@ -62,7 +38,7 @@ export function dialogueBox(box) {
  * to keep a pointerdown from tapping a hotspot; `onTap({ spot, result })`
  * hears the tap's outcome.
  */
-export async function startScene(stage, { base, loaded, tier, outfit, room = true, background = "#000", maxFPS = 0 } = {}) {
+export async function startScene(stage, { base, loaded, tier, outfit, lines, room = true, background = "#000", maxFPS = 0 } = {}) {
   // The renderer doesn't need the rig to start, so both run at once.
   const app = new Application();
   const [{ rig, textures, sounds: soundBytes }] = await Promise.all([
@@ -73,9 +49,10 @@ export async function startScene(stage, { base, loaded, tier, outfit, room = tru
       antialias: true,
       resolution: Math.min(devicePixelRatio, 2),
       autoDensity: true,
+      autoStart: false,
     }),
   ]);
-  app.ticker.maxFPS = maxFPS;
+  const frameCap = frameLoop(app, maxFPS);
   stage.prepend(app.canvas);
 
   const bg = room && rig.background ? new Sprite(await loadTexture(`${base}/${rig.background}`)) : null;
@@ -87,11 +64,11 @@ export async function startScene(stage, { base, loaded, tier, outfit, room = tru
   const say = dialogueBox(stage.querySelector(".vn-box"));
   const sounds = new Sounds(soundBytes);
   const play = (file) => sounds.play(file);
-  const hangout = new Hangout({ renderer, motion, say, play, tier: DIALOGUE_TIERS.includes(tier) ? tier : "new" });
+  const hangout = new Hangout({ renderer, motion, say, play, lines, tier: DIALOGUE_TIERS.includes(tier) ? tier : "new" });
   app.stage.addChild(renderer.view);
 
   const scene = {
-    app, rig, renderer, motion, hangout, say, sounds,
+    app, rig, renderer, motion, hangout, say, sounds, frameCap,
     time: 0,
     frame: (t, dt) => hangout.frame(t, dt),
     onPointer: null,

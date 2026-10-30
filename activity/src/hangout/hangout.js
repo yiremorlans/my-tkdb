@@ -1,6 +1,6 @@
 // Hangout: ties the rig to interaction (docs/hangout-activity.md §4.2).
-// Hotspot taps, the annoyance meter, reactions (mood + line) and the
-// Spend time debug path. Cosmetic and local: no server calls here.
+// Hotspot taps, the annoyance meter and reactions (mood + line). Cosmetic
+// and local: no server calls here.
 //
 // Reactions come from reactions.js (shared by every character, varying by
 // relationship tier), with rig.json `reactions` overriding per character.
@@ -10,10 +10,11 @@
 // `fist` move the arms and hands too (reactions.js). `sound` plays a clip
 // through `play` (sounds.js): a file, or a list to pick one from. Sounds
 // share a cooldown so spam-tapping can't spam clips; a reaction inside it
-// still plays, just silently.
+// still plays, just silently. Touch lines hold the same way: a tap while
+// one is still typing out or being read reacts without a new line, so
+// spam-tapping can't flip through the pool. The upset line always speaks.
 
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
-import { fileList } from "../rig/skeleton.js";
 
 import { AnnoyanceMeter } from "./annoyance.js";
 import { hotspotAt } from "./hotspots.js";
@@ -26,6 +27,13 @@ const DEFAULT_DURATION = 2.4;
 // Seconds after a clip plays before any reaction may play another.
 export const SOUND_COOLDOWN = 10;
 
+// The VN box types a line at one character per TYPE_MS (scene.js).
+export const TYPE_MS = 28;
+
+// Seconds a touch line stays up after it finishes typing before another tap
+// may replace it.
+export const LINE_HOLD = 1.5;
+
 export class Hangout {
   constructor({ renderer, motion, say = () => {}, play = () => {}, lines = PLACEHOLDER_LINES, random = Math.random, tier = "new" }) {
     this.renderer = renderer;
@@ -33,6 +41,7 @@ export class Hangout {
     this.say = say;
     this.play = play;
     this.soundReadyAt = -Infinity;
+    this.lineReadyAt = -Infinity;
     this.lines = lines;
     this.random = random;
     this.meter = new AnnoyanceMeter(renderer.rig.annoyance);
@@ -70,8 +79,19 @@ export class Hangout {
     this.setOutfit(this.renderer.outfit ?? undefined, name);
   }
 
+  /**
+   * A random line for `trigger`. `lines` is either one pool per trigger, or
+   * a character's pools per tier (constants/hangout/<id>.js), where a tier
+   * without that trigger uses the nearest lower tier's; a trigger with no
+   * pool anywhere uses the placeholder.
+   */
   line(trigger) {
-    const pool = this.lines[trigger] ?? [];
+    let pool = this.lines[trigger];
+    if (DIALOGUE_TIERS.some((tier) => this.lines[tier])) {
+      pool = null;
+      for (let i = DIALOGUE_TIERS.indexOf(this.tier); i >= 0 && !pool; i--) pool = this.lines[DIALOGUE_TIERS[i]]?.[trigger];
+    }
+    pool ??= PLACEHOLDER_LINES[trigger] ?? [];
     return pool.length ? pool[Math.floor(this.random() * pool.length)] : null;
   }
 
@@ -84,11 +104,6 @@ export class Hangout {
     if (result === "upset") this.react("upset", t, spot);
     else this.react(this.rig.hotspots[spot].reaction ?? TOUCH_SPOTS[spot], t, spot);
     return { spot, result };
-  }
-
-  /** Spend time, debug path: plays the reaction with no data write. */
-  spendTime(t) {
-    this.react("spendTime", t);
   }
 
   /** Plays reaction `name`; `spot` is the touch spot that set it off, if any. */
@@ -106,13 +121,16 @@ export class Hangout {
       this.moodUntil = t + duration;
     }
     if (r.then) this.pendingMood = { at: t + r.then[0], mood: r.then[1] };
-    const sounds = fileList(r.sound);
+    const sounds = [r.sound ?? []].flat();
     if (sounds.length && t >= this.soundReadyAt) {
       this.play(sounds[Math.floor(this.random() * sounds.length)]);
       this.soundReadyAt = t + SOUND_COOLDOWN;
     }
+    if (spot && name !== "upset" && t < this.lineReadyAt) return;
     const text = this.line(r.line ?? name);
-    if (text) this.say(text);
+    if (!text) return;
+    this.say(text);
+    this.lineReadyAt = t + (text.length * TYPE_MS) / 1000 + LINE_HOLD;
   }
 
   /**

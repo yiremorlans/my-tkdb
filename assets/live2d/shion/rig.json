@@ -9,9 +9,11 @@
   "outfits": {
     "academy": {
       "model": "academy/shion_academy.model3.json",
+      "dialogueVariant": "uniform",
       "parts": { "chest": ["ArtMesh150"], "pants": ["ArtMesh173", "ArtMesh174"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 1] },
         "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
       }
     }
@@ -57,7 +59,7 @@
       "upset": ["e_fukigen_00", "e_ase_00"]
     }
   },
-  "reactionPoses": { "hipsTouch": "m_udekumi", "spendTime": "m_gesture" },
+  "reactionPoses": { "upset": "m_udekumi" },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
     "idle": { "amount": 0.35 },

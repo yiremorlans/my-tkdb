@@ -7,7 +7,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 
 import { AnnoyanceMeter } from '../activity/src/hangout/annoyance.js';
-import { Hangout, SOUND_COOLDOWN } from '../activity/src/hangout/hangout.js';
+import { Hangout, LINE_HOLD, SOUND_COOLDOWN, TYPE_MS } from '../activity/src/hangout/hangout.js';
 import { DEFAULT_REACTIONS, TOUCH_SPOTS, resolveReaction } from '../activity/src/hangout/reactions.js';
 import { DIALOGUE_TIERS } from '../constants/tiers.js';
 import { resolveMood } from '../activity/src/rig/expressions.js';
@@ -397,6 +397,29 @@ test('sounds wait out the cooldown; the reaction itself still plays', () => {
   assert.strictEqual(played.length, 1);
   hangout.react('headPat', 10 + SOUND_COOLDOWN);
   assert.strictEqual(played.length, 2);
+});
+
+test('a touch line holds while it types and reads; upset always speaks', () => {
+  const r = rig({
+    hotspots: {},
+    expressions: { head: 'head', moods: { default: {}, blush: {} } },
+    reactions: { headPat: { mood: 'blush' }, upset: { mood: 'default' } },
+  });
+  const renderer = { rig: r, moodName: 'default', handPose: {}, setMood(name) { this.moodName = name; }, update() {} };
+  const motion = { blinking: () => false, pose: () => ({}) };
+  const said = [];
+  const lines = { headPat: ['abcd'], upset: ['no'] };
+  const hangout = new Hangout({ renderer, motion, lines, say: (l) => said.push(l) });
+  const ready = 10 + (4 * TYPE_MS) / 1000 + LINE_HOLD;
+  hangout.react('headPat', 10, 'head');
+  renderer.moodName = 'default';
+  hangout.react('headPat', ready - 0.01, 'head');
+  assert.strictEqual(renderer.moodName, 'blush', 'the reaction still plays');
+  assert.deepStrictEqual(said, ['abcd']);
+  hangout.react('upset', ready - 0.01, 'head');
+  assert.deepStrictEqual(said, ['abcd', 'no']);
+  hangout.react('headPat', 20, 'head');
+  assert.deepStrictEqual(said, ['abcd', 'no', 'abcd']);
 });
 
 test('a twitch eases the arm in, peaks, and settles back to the idle', async () => {

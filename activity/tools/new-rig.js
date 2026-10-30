@@ -24,10 +24,13 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { BACKGROUNDS_BY_LOCATION, BACKGROUND_ASSET_DIR, CHARACTER_ROOMS, backgroundPath } from "../../constants/backgrounds.js";
+import { BACKGROUND_ASSET_DIR, backgroundPath } from "../../constants/backgrounds.js";
 import { validateRig } from "../src/rig/skeleton.js";
+import { roomBackground } from "./lib/backgrounds.js";
 import { isSolid, readPng } from "./lib/png.js";
 import { sliceOutfit } from "./slice-atlas.js";
+
+export { roomBackground };
 
 // House defaults (§3.2, decided 2026-10-28: the body stays nearly still,
 // no hair sway). Tuned per character in the preview afterwards; head sway
@@ -198,13 +201,6 @@ export function scaffoldFit() {
       sides: { r: { fit: "hand_r", parent: "forearm_r" }, l: { fit: "hand_l", parent: "forearm_l" } },
     },
   };
-}
-
-/** The character's room background, relative to the rig dir, if it has one. */
-export function roomBackground(character, rigDir) {
-  const room = CHARACTER_ROOMS[character.toUpperCase()];
-  const file = room && (BACKGROUNDS_BY_LOCATION[room] ?? []).find((f) => !/_PM\.png$/.test(f) && !/Entrance/.test(f));
-  return file ? path.relative(rigDir, path.join(BACKGROUND_ASSET_DIR, backgroundPath(file))) : null;
 }
 
 async function main() {

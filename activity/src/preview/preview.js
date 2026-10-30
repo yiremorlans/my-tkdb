@@ -1,19 +1,22 @@
 // Milestone-1 rig preview (dev only): the Activity's scene
 // (hangout/scene.js) plus a debug drawer with buttons for every mood, reaction and hand pose, idle-motion sliders, an FPS
 // readout with a 30fps cap, and the part editor that saves back to
-// rig.json. See docs/hangout-activity.md §3.4.
+// rig.json. See docs/hangout-activity.md §3.4. A "Live2D poses" row plays
+// poses measured from the game's Live2D motions (proof; preview only).
 //
 // Everything is read from rig.json; open ?character=<id> for another rig,
 // ?outfit=<name> for one of its outfits and ?hands=<set> for one of the
-// outfit's hand sets. The background is flat magenta unless ?room=1.
+// outfit's hand sets; ?pose=<name> starts a Live2D pose. The background is
+// flat magenta unless ?room=1.
 
 import { Graphics, Sprite } from "pixi.js";
 
 import { RESPONSE_TYPE_ORDER } from "../../../constants/responseTypes.js";
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
+import { loadLines } from "../hangout/lines.js";
 import { DEFAULT_REACTIONS, TOUCH_SPOTS } from "../hangout/reactions.js";
-import { MOBILE_FPS, startScene } from "../hangout/scene.js";
-import { loadTexture } from "../rig/loader.js";
+import { startScene } from "../hangout/scene.js";
+import { MOBILE_FPS, loadTexture } from "../hangout/stage.js";
 import { allParts, apply, invert, outfitNames, roundTo, spriteMatrix } from "../rig/skeleton.js";
 
 const params = new URLSearchParams(location.search);
@@ -34,6 +37,7 @@ async function main() {
   try {
     scene = await startScene($("#stage"), {
       base,
+      lines: await loadLines(character),
       tier: params.get("tier"),
       outfit: params.get("outfit"),
       room,
@@ -248,6 +252,7 @@ async function main() {
     reference.texture = await loadTexture(`${base}/${renderer.rig.referenceImage}`);
     showHands();
     showHandSets();
+    showPoses();
     showPartList();
     selectPart(null);
     const url = new URL(location.href);
@@ -291,10 +296,8 @@ async function main() {
 
   const reactRow = section("Reactions");
   for (const name of Object.keys({ ...DEFAULT_REACTIONS, ...rig.reactions })) {
-    if (name === "spendTime") continue; // the Spend time button below
     button(reactRow, name, () => hangout.react(name, scene.time));
   }
-  button(reactRow, "Spend time", () => hangout.spendTime(scene.time));
 
   // One button per placed touch spot, playing it as a tap there would (a
   // hand tap twitches that arm).
@@ -325,6 +328,75 @@ async function main() {
   showHands();
   showHandSets();
 
+  // --- Live2D poses (proof) -----------------------------------------------
+  // Poses measured from the game's Live2D motions, per art piece, as
+  // parent-relative bone rotations sampled per frame, plus hand swaps
+  // (<outfit dir>/live2d-poses.json). They add on top of the idle motion.
+  // A pose with `return` holds its last frame until clicked again, then
+  // plays its return clip, as the game does. Preview only for now.
+  const live = { clip: null, start: 0, hold: false };
+  const poseRow = section("Live2D poses");
+  let poseClips = {};
+  async function showPoses() {
+    poseRow.replaceChildren();
+    live.clip = null;
+    const res = await fetch(`${base}/${renderer.rig.dir}/live2d-poses.json`);
+    poseClips = res.ok ? (await res.json()).poses : {};
+    const returns = new Set(Object.values(poseClips).map((c) => c.return));
+    for (const name of Object.keys(poseClips).filter((n) => !returns.has(n))) {
+      const b = button(poseRow, name.replace(/^m_/, ""), () => {
+        if (live.clip === name && live.hold && poseClips[name].return) {
+          b.classList.remove("on");
+          return playPose(poseClips[name].return);
+        }
+        poseRow.querySelectorAll("button").forEach((x) => x.classList.remove("on"));
+        b.classList.add("on");
+        playPose(name);
+      });
+    }
+    if (!poseRow.children.length) poseRow.textContent = "(no live2d-poses.json for this outfit)";
+  }
+  function playPose(name) {
+    live.clip = name;
+    live.start = scene.time;
+    live.hold = false;
+  }
+  // Linear between the measured frames; past the end a held pose keeps its
+  // last frame and any other clip stops adding.
+  function sampleClip(clip, t) {
+    const n = Object.values(clip.rotation)[0]?.length ?? 1;
+    const f = Math.min(n - 1, Math.max(0, t * clip.fps));
+    const i = Math.floor(f);
+    const k = f - i;
+    const out = {};
+    for (const [bone, v] of Object.entries(clip.rotation)) out[bone] = v[i] + (v[Math.min(n - 1, i + 1)] - v[i]) * k;
+    return out;
+  }
+  const idlePose = motion.pose.bind(motion);
+  motion.pose = (t, dt) => {
+    const pose = idlePose(t, dt);
+    const clip = poseClips[live.clip];
+    if (!clip) return pose;
+    const at = t - live.start;
+    if (at >= clip.duration && !clip.return) {
+      live.clip = null;
+      return pose;
+    }
+    if (at >= clip.duration) live.hold = true;
+    for (const [bone, deg] of Object.entries(sampleClip(clip, at))) {
+      pose[bone] ??= {};
+      pose[bone].rotation = (pose[bone].rotation ?? 0) + deg;
+    }
+    for (const [side, steps] of Object.entries(clip.hands ?? {})) {
+      let hand = steps[0][1];
+      for (const [stepAt, name] of steps) if (at >= stepAt) hand = name;
+      if (hangout.baseHands[side] !== hand) hangout.setBase({ hands: { [side]: hand } });
+    }
+    return pose;
+  };
+  await showPoses();
+  if (poseClips[params.get("pose")]) playPose(params.get("pose"));
+
   const motionRow = section("Idle motion");
   for (const [name, params] of Object.entries(rig.motion ?? {})) {
     // rig.json is the one record of each toggle, so "save rig.json" keeps
@@ -353,7 +425,7 @@ async function main() {
   }
 
   const perfRow = section("Performance");
-  toggle(perfRow, "cap 30fps (mobile)", () => app.ticker.maxFPS === MOBILE_FPS, (v) => (app.ticker.maxFPS = v ? MOBILE_FPS : 0));
+  toggle(perfRow, "cap 30fps (mobile)", () => scene.frameCap.maxFPS === MOBILE_FPS, (v) => (scene.frameCap.maxFPS = v ? MOBILE_FPS : 0));
 
   // --- part editor --------------------------------------------------------
 
@@ -435,10 +507,9 @@ async function main() {
 
   // --- VN chrome ----------------------------------------------------------
 
-  // VN chrome: Spend time, the debug drawer, and layout-only placeholder
+  // VN chrome: the debug drawer, and layout-only placeholder
   // choices (the conversation itself comes from constants/hangout/<id>.js
   // in the next step).
-  $("#btn-spend").onclick = () => hangout.spendTime(scene.time);
   $("#btn-debug").onclick = () => {
     panel.hidden = !panel.hidden;
   };

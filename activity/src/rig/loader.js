@@ -3,8 +3,7 @@
 // The checks themselves live in skeleton.js validateRig so Node tests can
 // run them without a browser.
 
-import { Texture } from "pixi.js";
-
+import { loadTexture } from "../hangout/stage.js";
 import { imagesOf, soundsOf, validateRig } from "./skeleton.js";
 
 /**
@@ -38,17 +37,6 @@ async function loadEach(files, load) {
     if (r.status === "fulfilled") loaded.set(files[i], r.value);
   });
   return loaded;
-}
-
-// Plain <img> decode rather than Pixi's Assets, which decodes in a worker
-// and is more machinery than ~150 small local PNGs need.
-export function loadTexture(url) {
-  return new Promise((resolve, reject) => {
-    const img = new Image();
-    img.onload = () => resolve(Texture.from(img));
-    img.onerror = () => reject(new Error(`failed to load ${url}`));
-    img.src = url;
-  });
 }
 
 async function loadBytes(url) {

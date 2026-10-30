@@ -28,6 +28,10 @@
         "File": "expressions/e_ikari_00.exp3.json"
       },
       {
+        "Name": "e_komari_00",
+        "File": "expressions/e_komari_00.exp3.json"
+      },
+      {
         "Name": "e_kusho2_00",
         "File": "expressions/e_kusho2_00.exp3.json"
       },
@@ -50,6 +54,10 @@
       {
         "Name": "e_pero_00",
         "File": "expressions/e_pero_00.exp3.json"
+      },
+      {
+        "Name": "e_rest_00",
+        "File": "expressions/e_rest_00.exp3.json"
       },
       {
         "Name": "e_sekimen_00",

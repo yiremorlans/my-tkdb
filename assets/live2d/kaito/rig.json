@@ -10,9 +10,11 @@
   "outfits": {
     "academy": {
       "model": "academy/kaito_academy.model3.json",
+      "dialogueVariant": "uniform",
       "parts": { "chest": ["vest"], "pants": ["ArtMesh320", "ArtMesh322", "ArtMesh321", "ArtMesh323"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 0.95] },
         "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
       }
     }
@@ -60,7 +62,7 @@
       "lovestruck": ["e_dere_00"]
     }
   },
-  "reactionPoses": { "headPat": "m_tere", "hipsTouch": "m_udekumi", "spendTime": "m_gesture" },
+  "reactionPoses": { "headPat": "m_tere", "upset": "m_udekumi" },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
     "idle": { "amount": 0.35 },

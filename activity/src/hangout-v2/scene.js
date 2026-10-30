@@ -3,7 +3,8 @@
 // framing, VN box, frame loop and hotspot taps, and the same Hangout class,
 // so reactions, the annoyance meter, lines and sounds behave as in v1. A
 // reaction also plays the pose rig.json `reactionPoses` gives it, and his
-// mouth moves while each line types out.
+// mouth moves while its touch line types out. The scene's `say` shows any
+// other line (narration, the /meet beat) without moving it.
 // The v2 preview (hangout-v2/preview.js) adds its debug drawer through
 // the same hooks as v1's: frame, onPointer, onTap.
 
@@ -13,37 +14,46 @@ import { Live2DPlugin } from "untitled-pixi-live2d-engine/cubism";
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 
 import { Hangout } from "../hangout/hangout.js";
-import { TYPE_MS, dialogueBox } from "../hangout/scene.js";
 import { Sounds } from "../hangout/sounds.js";
-import { loadTexture } from "../rig/loader.js";
-import { stageFraming } from "../rig/skeleton.js";
+import { TYPE_MS, dialogueBox, frameLoop, loadTexture, stageFraming } from "../hangout/stage.js";
 import { Live2DMotion, Live2DRig, loadLive2DRig } from "./live2dRig.js";
 
 extensions.add(Live2DPlugin);
 
 /**
  * Loads `${base}/rig.json` (a v2 rig) and starts the scene in `stage`.
- * Options as v1's startScene: `tier`, `outfit`, `room`, `background`, `maxFPS`.
+ * Options as v1's startScene: `tier`, `outfit`, `lines`, `room`, `background`, `maxFPS`.
  */
-export async function startScene(stage, { base, tier, outfit, room = true, background = "#000", maxFPS = 0 } = {}) {
+export async function startScene(stage, { base, tier, outfit, lines, room = true, background = "#000", maxFPS = 0 } = {}) {
   const app = new Application();
   const [{ rig, sounds: soundBytes, baseUrl }] = await Promise.all([
     loadLive2DRig(base),
-    app.init({ resizeTo: stage, background, antialias: true, resolution: Math.min(devicePixelRatio, 2), autoDensity: true, preference: "webgl" }),
+    app.init({ resizeTo: stage, background, antialias: true, resolution: Math.min(devicePixelRatio, 2), autoDensity: true, preference: "webgl", autoStart: false }),
   ]);
-  app.ticker.maxFPS = maxFPS;
+  const frameCap = frameLoop(app, maxFPS);
   stage.prepend(app.canvas);
 
   const bg = room && rig.background ? new Sprite(await loadTexture(`${base}/${rig.background}`)) : null;
   if (bg) app.stage.addChild(bg);
 
+  /** Swaps the room for another background image (the /meet place, §11.5). */
+  async function setBackground(url) {
+    if (!bg) return;
+    bg.texture = await loadTexture(url);
+    layout();
+  }
+
   const renderer = await Live2DRig.create({ rig, baseUrl, outfit: rig.outfits?.[outfit] ? outfit : undefined });
   const motion = new Live2DMotion();
-  // He talks while a line types out; clicking the box to finish the line
-  // (dialogueBox's own handler) shuts his mouth with it.
+  // He talks while a touch line types out; clicking the box to finish the
+  // line (dialogueBox's own handler) shuts his mouth with it.
   const box = stage.querySelector(".vn-box");
   const typeLine = dialogueBox(box);
   const say = (line) => {
+    renderer.stopTalking();
+    typeLine(line);
+  };
+  const speak = (line) => {
     typeLine(line);
     renderer.talk((line.length * TYPE_MS) / 1000);
   };
@@ -52,8 +62,8 @@ export async function startScene(stage, { base, tier, outfit, room = true, backg
   });
   const sounds = new Sounds(soundBytes);
   const play = (file) => sounds.play(file);
-  const hangout = new Hangout({ renderer, motion, say, play, tier: DIALOGUE_TIERS.includes(tier) ? tier : "new" });
-  // Every reaction (taps, upset, Spend time) also plays its pose, if any.
+  const hangout = new Hangout({ renderer, motion, say: speak, play, lines, tier: DIALOGUE_TIERS.includes(tier) ? tier : "new" });
+  // Every reaction (taps, upset) also plays its pose, if any.
   const react = hangout.react.bind(hangout);
   hangout.react = (name, t, spot) => {
     react(name, t, spot);
@@ -62,12 +72,13 @@ export async function startScene(stage, { base, tier, outfit, room = true, backg
   app.stage.addChild(renderer.view);
 
   const scene = {
-    app, rig: renderer.rig, renderer, motion, hangout, say, sounds,
+    app, rig: renderer.rig, renderer, motion, hangout, say, speak, sounds, frameCap,
     time: 0,
     frame: (t, dt) => hangout.frame(t, dt),
     onPointer: null,
     onTap: null,
     layout,
+    setBackground,
   };
 
   // Background pan, as v1 (rig.json motion.bgPan).

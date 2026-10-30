@@ -19,6 +19,8 @@
 import { Container } from "pixi.js";
 import { Live2DModel, MotionPriority } from "untitled-pixi-live2d-engine/cubism";
 
+import { validateLive2DRig } from "./validate.js";
+
 // Seconds a reaction's pose holds before its return clip plays.
 const POSE_HOLD = 2.5;
 
@@ -37,6 +39,15 @@ export async function loadLive2DRig(baseUrl) {
     const r = await fetch(`${baseUrl}/${file}`);
     if (r.ok) sounds.set(file, await r.arrayBuffer());
   }));
+  // No mocIds: the .moc3 isn't fetched until the model loads.
+  const warnings = await validateLive2DRig(rig, {
+    readJson: async (file) => {
+      const r = await fetch(`${baseUrl}/${file}`);
+      return r.ok ? r.json() : null;
+    },
+    fileExists: (file) => sounds.has(file) || fetch(`${baseUrl}/${file}`, { method: "HEAD" }).then((r) => r.ok, () => false),
+  });
+  for (const w of warnings) console.warn(`[hangout-v2] ${rig.character}: ${w}`);
   return { rig, sounds, baseUrl };
 }
 
@@ -85,6 +96,13 @@ export class Live2DRig {
     this.model = model;
     this.view.addChild(model);
     this.raw = model.internalModel.coreModel.getModel();
+    // A looping clip (the idle, a pose's hold) restarts its fade-in on every
+    // loop by default, blending in from the rest pose for a moment, so
+    // anything it holds away from rest flicks each loop (Zenji's arms every
+    // 3s). The idle is preloaded; the rest load as they're played.
+    const motions = model.internalModel.motionManager;
+    motions.on("motionLoaded", (group, index, motion) => motion.setLoopFadeIn(false));
+    (await motions.loadMotion(motions.groups.idle, 0))?.setLoopFadeIn(false);
     this.paramIndex = new Map(Array.from(this.raw.parameters.ids, (id, i) => [id, i]));
     this.drawableIndex = new Map(model.internalModel.getDrawableIDs().map((id, i) => [id, i]));
     this.poseTimers = [];

@@ -16,8 +16,9 @@
 // rankFace): 2 the face a call scene shows for a favorite response at that
 // tier, 1 a liked one, 0 the least. So a touch draws the same faces as the
 // character's encounters, overrides included. Welcome spots (head, hands)
-// sit on the top rung; guarded ones (lips, chest, hips) start on the bottom
-// and climb from spark.
+// sit on the top rung; guarded ones (lips, ears, chest, hips) start on the bottom
+// and climb from spark. The belly is in between: guarded at first, a liked
+// face from warm.
 //
 // `twitch` (true, or a size multiplier) flinches the arm: the tapped side
 // for a side spot (hand_r, ear_l…), both arms otherwise. By default only a
@@ -43,14 +44,23 @@ export const TOUCH_SPOTS = {
   hand_l: "handTap",
   hand_r: "handTap",
   chest: "chestTouch",
+  belly: "bellyTouch",
   hips: "hipsTouch",
 };
 
 // Spots that fill the annoyance meter faster than a normal tap: the share
-// of the threshold one tap adds. 0.75 fills it on the second tap, with room
-// for a few seconds of decay in between. A rig hotspot's own `annoyance`
+// of the threshold one tap adds, following how guarded the spot is. A
+// normal tap adds 0.2 of the default threshold, so it takes a run of quick
+// taps; at the default decay belly 0.3 fills it on the fourth tap (taps
+// under ~0.35s apart), lips, ears and chest 0.45 on the third (~1s apart), hips
+// 0.75 on the second (~2.8s apart). A rig hotspot's own `annoyance`
 // overrides this.
 export const SPOT_ANNOYANCE = {
+  belly: 0.3,
+  lips: 0.45,
+  ear_l: 0.45,
+  ear_r: 0.45,
+  chest: 0.45,
   hips: 0.75,
 };
 
@@ -87,6 +97,14 @@ export const DEFAULT_REACTIONS = {
       bound: { rank: 2, duration: 3 },
     },
   },
+  bellyTouch: {
+    byTier: {
+      new: { rank: 0, duration: 2.4 },
+      warm: { rank: 1, duration: 2.4 },
+      close: { rank: 2, duration: 2.6 },
+      bound: { rank: 2, duration: 3 },
+    },
+  },
   lipsTouch: {
     byTier: {
       new: { rank: 0, duration: 2.4 },
@@ -95,12 +113,13 @@ export const DEFAULT_REACTIONS = {
       bound: { rank: 2, duration: 3 },
     },
   },
+  // Ears are as guarded as the lips.
   earTouch: {
     byTier: {
-      new: { rank: 1, duration: 2 },
-      warm: { rank: 1, duration: 2.4 },
-      close: { rank: 1, duration: 2.6 },
-      bound: { rank: 1, duration: 2.8 },
+      new: { rank: 0, duration: 2.4 },
+      spark: { rank: 1, duration: 2.6 },
+      close: { rank: 2, duration: 2.6 },
+      bound: { rank: 2, duration: 3 },
     },
   },
   hipsTouch: {
@@ -112,8 +131,13 @@ export const DEFAULT_REACTIONS = {
       bound: { rank: 2, duration: 3 },
     },
   },
+  // The face for a /meet answer's outcome (docs/hangout-activity.md §11.2
+  // step 5): the rung its gain lands on, so love/like/flat match the faces a
+  // call scene shows for a favorite, liked and least response at that tier.
+  answerLove: { rank: 2, duration: 3.2 },
+  answerLike: { rank: 1, duration: 3 },
+  answerFlat: { rank: 0, duration: 2.6 },
   upset: { mood: "upset", duration: 4 },
-  spendTime: { mood: "full_smile_blush", duration: 3.2 },
 };
 
 /**

@@ -387,23 +387,6 @@ export function solve(rig, pose = {}, sizes = new Map()) {
 
 // --- drawing ----------------------------------------------------------------
 
-/**
- * How the rig's view sits on a width×height stage. rig.json `stage` picks
- * the reference rows that fill the stage height ({ top, bottom }) and the
- * column kept centered (centerX), so a crop is data, not code. `stage` may
- * instead hold `landscape` and `portrait` framings, chosen by the stage's
- * shape (a VN bust on a wide screen, more of him on a tall phone).
- * Without it the whole reference fits the height.
- */
-export function stageFraming(rig, width, height) {
-  const { width: refW, height: refH } = rig.reference;
-  const stage = rig.stage ?? {};
-  const pick = width > height ? stage.landscape : stage.portrait;
-  const { top = 0, bottom = refH, centerX = refW / 2 } = pick ?? stage;
-  const scale = height / (bottom - top);
-  return { scale, x: width / 2 - centerX * scale, y: -top * scale };
-}
-
 /** Image px → reference px for a part, given its bone and image size. */
 export function spriteMatrix(rig, part, bone, size, image = part) {
   if (!size) return null;

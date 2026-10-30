@@ -2246,6 +2246,15 @@
             0.83
           ]
         },
+        "belly": {
+          "part": "shirt",
+          "rect": [
+            0.2,
+            0.83,
+            0.8,
+            1.64
+          ]
+        },
         "hips": {
           "part": "pants_top",
           "rect": [

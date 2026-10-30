@@ -79,6 +79,71 @@ function saveRig() {
   };
 }
 
+// Dev-only: the preview's /meet demo (docs/hangout-activity.md §11.2) asks
+// the bot's own content code for an encounter, so it shows what /meet would:
+// - /__meet/beat?character=&tier=&variant= draws the place, the beat and its
+//   four labels, as buildMeetSpawnMessage does (no recent-beat skip, no DB);
+// - /__meet/answer?character=&tier=&type=&mood= scores a pick and returns the
+//   reaction line and the gain line, as buildResponseResultMessage does,
+//   for the first level of that tier and with no boost or errand.
+// Loaded through Vite so edits to constants/ show up without a restart.
+function meetPreview() {
+  return {
+    name: "meet-preview",
+    configureServer(server) {
+      const load = (file) => server.ssrLoadModule(path.join(repoRoot, "constants", file));
+      const send = (res, status, body) => {
+        res.statusCode = status;
+        res.setHeader("Content-Type", "application/json");
+        res.end(JSON.stringify(body));
+      };
+      server.middlewares.use("/__meet", async (req, res) => {
+        try {
+          const url = new URL(req.url, "http://x");
+          const q = Object.fromEntries(url.searchParams);
+          const [chars, bgs, reactions, game, tiers] = await Promise.all(
+            ["characters.js", "backgrounds.js", "reactions.js", "game.js", "tiers.js"].map(load),
+          );
+          const character = chars.getCharacterById(q.character);
+          if (!character || !tiers.DIALOGUE_TIERS.includes(q.tier)) return send(res, 400, { error: "bad character or tier" });
+
+          if (url.pathname === "/beat") {
+            const now = new Date();
+            // A housed character is always on their own turf; a houseless one
+            // (Benkei) splits like /roam (buildMeetSpawnMessage).
+            const turf = character.house || Math.random() < bgs.TURF_PROBABILITY ? bgs.getRandomBackgroundForCharacter(character, now) : null;
+            const spot = turf ?? bgs.getRandomGeneralBackground(now);
+            const ctx = { now, locationKey: spot?.locationKey ?? null, backgroundFile: spot?.file ?? null, event: null };
+            const { line, responses, mood } = chars.getRandomDialogueEntry(character, q.tier, q.variant || "uniform", ctx);
+            const labels = chars.generateCharacterResponses(character, responses);
+            const place = spot ? ` at **${bgs.getLocationDisplayName(spot)}**.` : ".";
+            return send(res, 200, {
+              intro: `${chars.getFullName(character)} agrees to meet you${place}`,
+              notice: chars.moodNotice(character, mood),
+              background: spot ? `assets/bg/${bgs.backgroundPath(spot.file)}` : null,
+              line,
+              mood: !!mood,
+              responses: Object.fromEntries(Object.entries(labels).map(([type, { label }]) => [type, label])),
+            });
+          }
+          if (url.pathname === "/answer") {
+            const gain = chars.getAffinityForResponse(character, q.type, { mood: q.mood === "1" });
+            const level = game.RELATIONSHIP_LEVELS.find((l) => tiers.getDialogueTier(l.name) === q.tier);
+            return send(res, 200, {
+              gain,
+              reaction: reactions.getReactionLine(character, q.tier, q.type, gain),
+              delta: `${gain > 0 ? `+${gain}` : gain} — ${level.emoji ? `${level.emoji} ` : ""}**${level.name}**`,
+            });
+          }
+          send(res, 404, { error: "not found" });
+        } catch (err) {
+          send(res, 500, { error: err.message });
+        }
+      });
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => {
   // The client id the SDK starts with is the bot's APP_ID, from .env locally
   // or the build environment on Railway.
@@ -87,7 +152,7 @@ export default defineConfig(({ mode }) => {
     root: here,
     base: "./",
     publicDir: false,
-    plugins: [serveRepoAssets(), saveRig()],
+    plugins: [serveRepoAssets(), saveRig(), meetPreview()],
     define: { __DISCORD_CLIENT_ID__: JSON.stringify(env.APP_ID ?? "") },
     build: {
       outDir: "dist",

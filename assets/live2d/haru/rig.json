@@ -9,9 +9,11 @@
   "outfits": {
     "academy": {
       "model": "academy/haru_academy.model3.json",
+      "dialogueVariant": "uniform",
       "parts": { "chest": ["ArtMesh143"], "pants": ["ArtMesh246", "ArtMesh247"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 0.74] },
         "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
       }
     }
@@ -57,7 +59,7 @@
       "sad": ["e_kanashimi_00"]
     }
   },
-  "reactionPoses": { "hipsTouch": "m_ryoutekoshi", "upset": "m_hidarikoshi", "spendTime": "m_gesture" },
+  "reactionPoses": { "hipsTouch": "m_ryoutekoshi", "upset": "m_hidarikoshi" },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
     "idle": { "amount": 0.35 },

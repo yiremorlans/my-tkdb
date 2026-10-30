@@ -10,9 +10,11 @@
   "outfits": {
     "academy": {
       "model": "academy/subaru_academy.model3.json",
+      "dialogueVariant": "uniform",
       "parts": { "chest": ["ArtMesh183", "ArtMesh172"], "pants": ["ArtMesh241", "ArtMesh242"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 0.79] },
         "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
       }
     }
@@ -63,8 +65,7 @@
   "reactionPoses": {
     "headPat": "m_kuchimoto",
     "hipsTouch": "m_tekumi",
-    "upset": "m_fist",
-    "spendTime": "m_gesture"
+    "upset": "m_fist"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {

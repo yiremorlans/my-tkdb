@@ -10,9 +10,11 @@
   "outfits": {
     "academy": {
       "model": "academy/towa_academy.model3.json",
+      "dialogueVariant": "uniform",
       "parts": { "chest": ["ArtMesh131"], "pants": ["ArtMesh165", "ArtMesh166"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 0.81] },
         "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
       }
     }
@@ -61,9 +63,7 @@
   },
   "reactionPoses": {
     "headPat": "m_kuchimoto",
-    "hipsTouch": "m_udekumi",
-    "upset": "m_ikari",
-    "spendTime": "m_migikoshi"
+    "upset": "m_udekumi"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {

@@ -1,6 +1,9 @@
 // Hangout v2 preview (dev only): the v2 scene (hangout-v2/scene.js) plus a
-// debug drawer with buttons for every mood, reaction, touch spot and pose,
-// the relationship tier, and a hotspot overlay. See hangout-v2.html.
+// debug drawer with a character picker, buttons for every mood, reaction,
+// touch spot and pose, the relationship tier, and a hotspot overlay. See
+// hangout-v2.html. The VN box plays a /meet encounter as §11.2 lays it out,
+// drawn by the dev server from the bot's own content (vite.config.js
+// /__meet).
 //
 // ?character=<id> picks assets/live2d/<id>/rig.json; ?tier=<tier> the
 // reaction tier; ?pose=<group> starts a pose; ?room=0 hides the room;
@@ -9,12 +12,19 @@
 import { Graphics } from "pixi.js";
 
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
+import { loadLines } from "../hangout/lines.js";
 import { DEFAULT_REACTIONS, TOUCH_SPOTS } from "../hangout/reactions.js";
-import { MOBILE_FPS } from "../hangout/scene.js";
+import { RESPONSE_TYPE_ORDER } from "../../../constants/responseTypes.js";
+import { MOBILE_FPS, TYPE_MS } from "../hangout/stage.js";
 import { startScene } from "./scene.js";
 
 const params = new URLSearchParams(location.search);
 const character = /^[a-z0-9_-]+$/.test(params.get("character") ?? "") ? params.get("character") : "alan";
+// Every character with a Live2D rig, for the drawer's picker. The glob only
+// lists the paths; nothing is loaded.
+const CHARACTERS = Object.keys(import.meta.glob("../../../assets/live2d/*/rig.json"))
+  .map((f) => f.split("/").at(-2))
+  .sort();
 const $ = (sel) => document.querySelector(sel);
 
 async function main() {
@@ -23,6 +33,7 @@ async function main() {
   try {
     scene = await startScene($("#stage"), {
       base: `assets/live2d/${character}`,
+      lines: await loadLines(character),
       tier: params.get("tier"),
       room: params.get("room") !== "0",
       background: "#1b1824",
@@ -33,7 +44,7 @@ async function main() {
     console.error(`[hangout-v2] ${err.stack ?? err.message}`);
     return;
   }
-  const { renderer, hangout, say } = scene;
+  const { renderer, hangout, say, speak } = scene;
 
   // --- frame loop: HUD and hotspot overlay ----------------------------------
   const overlay = new Graphics();
@@ -92,6 +103,20 @@ async function main() {
     return b;
   };
 
+  // Switching reloads the page for that character, keeping the tier.
+  const charRow = section("Character");
+  const charPick = document.createElement("select");
+  for (const id of CHARACTERS) charPick.append(new Option(id[0].toUpperCase() + id.slice(1), id));
+  charPick.value = character;
+  charPick.onchange = () => {
+    const next = new URLSearchParams(location.search);
+    next.set("character", charPick.value);
+    next.set("tier", hangout.tier);
+    next.delete("pose");
+    location.search = next;
+  };
+  charRow.append(charPick);
+
   const moodRow = section("Moods (Live2D expressions)");
   for (const name of Object.keys(renderer.rig.expressions?.moods ?? {})) {
     button(moodRow, name, () => hangout.setBase({ mood: name }));
@@ -101,8 +126,12 @@ async function main() {
   const tierPick = document.createElement("select");
   for (const tier of DIALOGUE_TIERS) tierPick.append(new Option(tier, tier));
   tierPick.value = hangout.tier;
-  tierPick.onchange = () => hangout.setTier(tierPick.value);
+  tierPick.onchange = () => {
+    hangout.setTier(tierPick.value);
+    newEncounter();
+  };
   tierRow.append(tierPick);
+  button(tierRow, "new /meet encounter", () => newEncounter());
 
   const reactRow = section("Reactions (with their poses)");
   for (const name of Object.keys({ ...DEFAULT_REACTIONS, ...renderer.rig.reactions })) {
@@ -158,13 +187,12 @@ async function main() {
   const capWrap = document.createElement("label");
   capWrap.className = "toggle";
   const cap = Object.assign(document.createElement("input"), { type: "checkbox", checked: params.has("mobile") });
-  cap.onchange = () => (scene.app.ticker.maxFPS = cap.checked ? MOBILE_FPS : 0);
+  cap.onchange = () => (scene.frameCap.maxFPS = cap.checked ? MOBILE_FPS : 0);
   capWrap.append(cap, "cap 30fps (mobile)");
   perfRow.append(capWrap);
-  if (cap.checked) scene.app.ticker.maxFPS = MOBILE_FPS;
+  if (cap.checked) scene.frameCap.maxFPS = MOBILE_FPS;
 
   // --- VN chrome ------------------------------------------------------------
-  $("#btn-spend").onclick = () => hangout.spendTime(scene.time);
   $("#btn-debug").onclick = () => {
     panel.hidden = !panel.hidden;
   };
@@ -177,7 +205,88 @@ async function main() {
     if (e.key.toLowerCase() === "h" && !e.target.closest("input, select, textarea")) toggleUi();
   });
 
-  say(hangout.line("greeting") ?? "");
+  // --- /meet (docs/hangout-activity.md §11.2) --------------------------------
+  // The intro as narration, then the beat's line and its four labels. A pick
+  // plays the outcome's face, then the reaction and gain lines as narration,
+  // and the hangout carries on. A touch before the answer plays its line,
+  // then the beat and its choices come back.
+  // Same glyphs as the v1 preview: one per type, abstract so they don't give
+  // the type away.
+  const RESPONSE_GLYPHS = { kind: "☼", playful: "♪", bold: "⚡\uFE0E", neutral: "♢" };
+  const OUTCOME = { 2: "answerLove", 1: "answerLike", 0: "answerFlat" };
+  const box = $(".vn-box");
+  const choices = $("#choices");
+  const next = $("#btn-next");
+  const meet = { beat: null, step: null, back: null };
+  const plain = (text) => text.replace(/\*\*(.+?)\*\*/g, "$1");
+  const show = (text, { narration = false } = {}) => {
+    box.classList.toggle("narration", narration);
+    say(plain(text));
+  };
+  // Only touch lines come through here (Hangout's say), so only they move
+  // his mouth.
+  hangout.say = (line) => {
+    box.classList.remove("narration");
+    speak(line);
+    if (meet.step === "intro" || meet.step === "beat") {
+      choices.hidden = true;
+      clearTimeout(meet.back);
+      meet.back = setTimeout(showBeat, line.length * TYPE_MS + 2000);
+    }
+  };
+
+  async function newEncounter() {
+    clearTimeout(meet.back);
+    choices.hidden = true;
+    next.hidden = true;
+    meet.step = null;
+    const q = new URLSearchParams({ character, tier: hangout.tier, variant: renderer.rig.dialogueVariant ?? "uniform" });
+    const res = await fetch(`/__meet/beat?${q}`);
+    const beat = await res.json();
+    if (!res.ok) return show(`(no /meet encounter: ${beat.error})`, { narration: true });
+    meet.beat = beat;
+    if (beat.background) scene.setBackground(beat.background).catch((err) => console.error(`[hangout-v2] ${err.message}`));
+    meet.step = "intro";
+    show(beat.notice ? `${beat.intro}\n${beat.notice}` : beat.intro, { narration: true });
+    next.hidden = false;
+  }
+
+  function showBeat() {
+    clearTimeout(meet.back);
+    meet.step = "beat";
+    next.hidden = true;
+    show(meet.beat.line);
+    choices.replaceChildren(
+      ...RESPONSE_TYPE_ORDER.map((type) => {
+        const b = document.createElement("button");
+        b.className = "choice";
+        const glyph = document.createElement("span");
+        glyph.className = "choice-icon";
+        glyph.setAttribute("aria-hidden", "true");
+        glyph.textContent = RESPONSE_GLYPHS[type];
+        b.append(glyph, meet.beat.responses[type]);
+        b.onclick = () => answer(type);
+        return b;
+      }),
+    );
+    choices.hidden = false;
+  }
+
+  async function answer(type) {
+    meet.step = "done";
+    choices.hidden = true;
+    const q = new URLSearchParams({ character, tier: hangout.tier, type, mood: meet.beat.mood ? "1" : "0" });
+    const res = await fetch(`/__meet/answer?${q}`);
+    const result = await res.json();
+    if (!res.ok) return show(`(answer failed: ${result.error})`, { narration: true });
+    hangout.react(OUTCOME[Math.max(0, Math.min(2, result.gain))], scene.time);
+    show(`${result.reaction}\n${result.delta}`, { narration: true });
+  }
+
+  next.onclick = () => {
+    if (meet.step === "intro") showBeat();
+  };
+  newEncounter();
   if (renderer.poses.includes(params.get("pose"))) renderer.playPose(params.get("pose"));
   window.__hangoutV2 = scene;
 }

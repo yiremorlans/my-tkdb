@@ -9,9 +9,11 @@
   "outfits": {
     "academy": {
       "model": "academy/mio_academy.model3.json",
+      "dialogueVariant": "uniform",
       "parts": { "chest": ["ArtMesh128"], "pants": ["ArtMesh140", "ArtMesh141"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 0.89] },
         "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
       }
     },
@@ -52,7 +54,7 @@
   "expressions": {
     "fade": 0.2,
     "moods": {
-      "default": [],
+      "default": ["e_rest_00"],
       "close": ["e_close_00"],
       "smile": ["e_kusho_00"],
       "full_smile": ["e_manmen_00"],
@@ -62,16 +64,15 @@
       "surprise": ["e_odoroki_00"],
       "surprise_blush": ["e_odoroki_00", "e_sekimen_00"],
       "sweat": ["e_ase_00"],
-      "serious": ["e_magao_00"],
+      "serious": ["e_magao_00", "e_rest_00"],
       "annoyed": ["e_ikari_00"],
-      "upset": ["e_ikari_00", "e_ase_00"]
+      "upset": ["e_ikari_00", "e_ase_00"],
+      "sad": ["e_komari_00"]
     }
   },
   "reactionPoses": {
     "headPat": "m_kubi",
-    "hipsTouch": "m_udekumi",
-    "upset": "m_hidarikoshi",
-    "spendTime": "m_gesture"
+    "upset": "m_udekumi"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {

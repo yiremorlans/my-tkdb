@@ -56,6 +56,10 @@
         "File": "expressions/e_pero_00.exp3.json"
       },
       {
+        "Name": "e_rest_00",
+        "File": "expressions/e_rest_00.exp3.json"
+      },
+      {
         "Name": "e_sekimen_00",
         "File": "expressions/e_sekimen_00.exp3.json"
       },

@@ -15,7 +15,7 @@
     "dev": "nodemon app.js",
     "test": "node --experimental-test-module-mocks --test 'test/**/*.test.js'",
     "prepare": "husky install",
-    "dev:activity": "vite --config activity/vite.config.js --open /preview.html",
+    "dev:activity": "vite --config activity/vite.config.js --open /hangout-v2.html",
     "build:activity": "vite build --config activity/vite.config.js"
   },
   "author": "Yire Morlans",
