@@ -1,0 +1,3198 @@
+{
+  "character": "edward",
+  "reference": {
+    "width": 768,
+    "height": 1366
+  },
+  "background": "../../bg/obscuary/Obscuary_Edward_Room.png",
+  "stage": {
+    "landscape": {
+      "top": 63,
+      "bottom": 609,
+      "centerX": 384
+    },
+    "portrait": {
+      "top": 73,
+      "bottom": 809,
+      "centerX": 384
+    }
+  },
+  "scale": 0.7,
+  "defaultOutfit": "academy",
+  "parts": [
+    {
+      "id": "root",
+      "parent": null,
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "hips",
+      "parent": "root",
+      "position": [
+        385.75,
+        700.13
+      ]
+    },
+    {
+      "id": "torso",
+      "parent": "hips",
+      "position": [
+        0,
+        0
+      ]
+    },
+    {
+      "id": "neck",
+      "parent": "torso",
+      "position": [
+        -1.75,
+        -415.13
+      ],
+      "limits": {
+        "rotation": [
+          -4,
+          4
+        ]
+      }
+    },
+    {
+      "id": "head",
+      "parent": "neck",
+      "position": [
+        0,
+        -33
+      ],
+      "limits": {
+        "rotation": [
+          -7,
+          7
+        ]
+      }
+    },
+    {
+      "id": "face_base",
+      "parent": "head",
+      "image": "academy/derived/face_base_clip.png",
+      "position": [
+        0.69,
+        -40.03
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 192,
+      "scale": 0.4524
+    },
+    {
+      "id": "ear_l",
+      "parent": "head",
+      "image": "academy/parts/p081.png",
+      "position": [
+        44.54,
+        -52.9
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 413,
+      "scale": 0.4733
+    },
+    {
+      "id": "earring",
+      "parent": "head",
+      "image": "academy/parts/p068.png",
+      "position": [
+        40.54,
+        -36.37
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 413.5,
+      "scale": 0.4733
+    },
+    {
+      "id": "lip_shade",
+      "parent": "head",
+      "image": "academy/parts/p054.png",
+      "position": [
+        -0.87,
+        -19.15
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 414.5,
+      "scale": 0.4733
+    },
+    {
+      "id": "mouth",
+      "parent": "head",
+      "image": "academy/parts/p048.png",
+      "position": [
+        2.43,
+        -23.15
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 415,
+      "scale": 0.4176,
+      "rotation": 180
+    },
+    {
+      "id": "nose",
+      "parent": "head",
+      "image": "academy/parts/p035.png",
+      "position": [
+        -1.22,
+        -37.24
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 416,
+      "scale": 0.4733
+    },
+    {
+      "id": "brow_l",
+      "parent": "head",
+      "image": "academy/parts/p007.png",
+      "position": [
+        22.62,
+        -81.27
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 417,
+      "scale": 0.4872
+    },
+    {
+      "id": "brow_r",
+      "parent": "head",
+      "image": "academy/parts/p006.png",
+      "position": [
+        -25.93,
+        -81.09
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 418,
+      "scale": 0.4733
+    },
+    {
+      "id": "eye_white_l",
+      "parent": "head",
+      "image": "academy/parts/p042.png",
+      "position": [
+        21.4,
+        -64.91
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 419,
+      "scale": 0.4802
+    },
+    {
+      "id": "eye_white_r",
+      "parent": "head",
+      "image": "academy/parts/p039.png",
+      "position": [
+        -23.67,
+        -64.21
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 420,
+      "scale": 0.4872
+    },
+    {
+      "id": "lowlid_l",
+      "parent": "head",
+      "image": "academy/parts/p049.png",
+      "position": [
+        24.7,
+        -64.04
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 421,
+      "scale": 0.4733
+    },
+    {
+      "id": "lowlid_r",
+      "parent": "head",
+      "image": "academy/parts/p048.png",
+      "position": [
+        -27.67,
+        -63.69
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 422,
+      "scale": 0.4733
+    },
+    {
+      "id": "corner_l",
+      "parent": "head",
+      "image": "academy/parts/p034.png",
+      "position": [
+        37.41,
+        -68.56
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 423.1,
+      "scale": 0.4733
+    },
+    {
+      "id": "corner_r",
+      "parent": "head",
+      "image": "academy/parts/p032.png",
+      "position": [
+        -39.5,
+        -67.52
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 423.2,
+      "scale": 0.4733
+    },
+    {
+      "id": "lash_low_r",
+      "parent": "head",
+      "image": "academy/parts/p033.png",
+      "position": [
+        -21.58,
+        -68.91
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 423.5,
+      "scale": 0.4733
+    },
+    {
+      "id": "iris_r",
+      "parent": "head",
+      "image": "academy/parts/p031.png",
+      "position": [
+        -26.45,
+        -67.17
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 424,
+      "scale": 0.4733
+    },
+    {
+      "id": "iris_shine_l",
+      "parent": "head",
+      "image": "academy/parts/p040.png",
+      "position": [
+        18.44,
+        -66.3
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 425,
+      "scale": 0.4802
+    },
+    {
+      "id": "iris_shine_r",
+      "parent": "head",
+      "image": "academy/parts/p040.png",
+      "position": [
+        -25.06,
+        -71.87
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 426,
+      "scale": 0.4802
+    },
+    {
+      "id": "crease_l",
+      "parent": "head",
+      "image": "academy/parts/p027.png",
+      "position": [
+        24.18,
+        -82.31
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 427,
+      "scale": 0.4802
+    },
+    {
+      "id": "crease_r",
+      "parent": "head",
+      "image": "academy/parts/p022.png",
+      "position": [
+        -26.28,
+        -81.61
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 428,
+      "scale": 0.4733
+    },
+    {
+      "id": "lash_l",
+      "parent": "head",
+      "image": "academy/parts/p030.png",
+      "position": [
+        28.36,
+        -71.87
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 429,
+      "scale": 0.4872
+    },
+    {
+      "id": "lash_r",
+      "parent": "head",
+      "image": "academy/parts/p026.png",
+      "position": [
+        -27.67,
+        -68.22
+      ],
+      "pivot": [
+        0.5,
+        0.5
+      ],
+      "z": 430,
+      "scale": 0.4733
+    },
+    {
+      "id": "hair_base",
+      "parent": "head",
+      "image": "hair/hair_base.png",
+      "position": [
+        -77.43,
+        -169.83
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "scale": 0.348,
+      "z": 500
+    },
+    {
+      "id": "hair_crown_lock",
+      "parent": "head",
+      "position": [
+        5.39,
+        -131.9
+      ],
+      "limits": {
+        "rotation": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "id": "hair_crown",
+      "parent": "hair_crown_lock",
+      "image": "hair/hair_crown.png",
+      "position": [
+        -44.89,
+        -37.93
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "scale": 0.348,
+      "z": 510
+    },
+    {
+      "id": "hair_crown_shadow",
+      "parent": "head",
+      "image": "hair/hair_crown_shadow.png",
+      "position": [
+        -39.5,
+        -169.83
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "scale": 0.348,
+      "z": 499
+    },
+    {
+      "id": "hair_front_lock",
+      "parent": "head",
+      "position": [
+        5.39,
+        -128.42
+      ],
+      "limits": {
+        "rotation": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "id": "hair_front",
+      "parent": "hair_front_lock",
+      "image": "hair/hair_front.png",
+      "position": [
+        -37.93,
+        -3.13
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "scale": 0.348,
+      "z": 511
+    },
+    {
+      "id": "hair_front_shadow",
+      "parent": "head",
+      "image": "hair/hair_front_shadow.png",
+      "position": [
+        -32.54,
+        -131.55
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "scale": 0.348,
+      "z": 499
+    },
+    {
+      "id": "hair_side_r_lock",
+      "parent": "head",
+      "position": [
+        -32.89,
+        -114.5
+      ],
+      "limits": {
+        "rotation": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "id": "hair_side_r",
+      "parent": "hair_side_r_lock",
+      "image": "hair/hair_side_r.png",
+      "position": [
+        -30.97,
+        -3.13
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "scale": 0.348,
+      "z": 512
+    },
+    {
+      "id": "hair_side_r_shadow",
+      "parent": "head",
+      "image": "hair/hair_side_r_shadow.png",
+      "position": [
+        -63.86,
+        -117.63
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "scale": 0.348,
+      "z": 499
+    },
+    {
+      "id": "hair_side_l_lock",
+      "parent": "head",
+      "position": [
+        47.15,
+        -114.5
+      ],
+      "limits": {
+        "rotation": [
+          -8,
+          8
+        ]
+      }
+    },
+    {
+      "id": "hair_side_l",
+      "parent": "hair_side_l_lock",
+      "image": "hair/hair_side_l.png",
+      "position": [
+        -6.61,
+        -3.13
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "scale": 0.348,
+      "z": 513
+    },
+    {
+      "id": "hair_side_l_shadow",
+      "parent": "head",
+      "image": "hair/hair_side_l_shadow.png",
+      "position": [
+        40.54,
+        -117.63
+      ],
+      "pivot": [
+        0,
+        0
+      ],
+      "scale": 0.348,
+      "z": 499
+    }
+  ],
+  "bones": {
+    "torso": "torso",
+    "neck": "neck",
+    "head": "head",
+    "arms": {
+      "r": {
+        "upper": "upper_arm_r",
+        "fore": "forearm_r",
+        "hand": "hand_r",
+        "dir": 1
+      },
+      "l": {
+        "upper": "upper_arm_l",
+        "fore": "forearm_l",
+        "hand": "hand_l",
+        "dir": -1
+      }
+    }
+  },
+  "expressions": {
+    "head": "head",
+    "moods": {
+      "default": {},
+      "blink": {
+        "source": "overlay",
+        "portrait": "close",
+        "file": "overlays/blink.png",
+        "hide": [
+          "lash_r",
+          "lash_l",
+          "crease_r",
+          "crease_l",
+          "iris_shine_r",
+          "iris_shine_l",
+          "iris_r",
+          "lash_low_r",
+          "corner_r",
+          "corner_l",
+          "lowlid_r",
+          "lowlid_l",
+          "eye_white_r",
+          "eye_white_l"
+        ],
+        "soft": true,
+        "rect": [
+          158,
+          256,
+          244,
+          55
+        ]
+      },
+      "close": {
+        "layers": [
+          "blink"
+        ],
+        "noBlink": true
+      },
+      "smile": {
+        "source": "overlay",
+        "portrait": "smile",
+        "file": "overlays/smile.png",
+        "rect": [
+          158,
+          243,
+          244,
+          194
+        ],
+        "hide": [
+          "lash_r",
+          "lash_l",
+          "crease_r",
+          "crease_l",
+          "iris_shine_r",
+          "iris_shine_l",
+          "iris_r",
+          "lash_low_r",
+          "corner_r",
+          "corner_l",
+          "lowlid_r",
+          "lowlid_l",
+          "eye_white_r",
+          "eye_white_l"
+        ],
+        "noBlink": true,
+        "soft": true
+      },
+      "smile_blush": {
+        "source": "overlay",
+        "portrait": "smile_blush",
+        "file": "overlays/smile_blush.png",
+        "soft": true,
+        "rect": [
+          158,
+          243,
+          244,
+          194
+        ],
+        "hide": [
+          "lash_r",
+          "lash_l",
+          "crease_r",
+          "crease_l",
+          "iris_shine_r",
+          "iris_shine_l",
+          "iris_r",
+          "lash_low_r",
+          "corner_r",
+          "corner_l",
+          "lowlid_r",
+          "lowlid_l",
+          "eye_white_r",
+          "eye_white_l"
+        ],
+        "noBlink": true
+      },
+      "full_smile": {
+        "source": "overlay",
+        "portrait": "full_smile",
+        "file": "overlays/full_smile.png",
+        "noBlink": true,
+        "hide": [
+          "lash_r",
+          "lash_l",
+          "crease_r",
+          "crease_l",
+          "iris_shine_r",
+          "iris_shine_l",
+          "iris_r",
+          "lash_low_r",
+          "corner_r",
+          "corner_l",
+          "lowlid_r",
+          "lowlid_l",
+          "eye_white_r",
+          "eye_white_l"
+        ],
+        "soft": true,
+        "rect": [
+          158,
+          243,
+          244,
+          194
+        ]
+      },
+      "full_smile_blush": {
+        "source": "overlay",
+        "portrait": "full_smile_blush",
+        "file": "overlays/full_smile_blush.png",
+        "noBlink": true,
+        "hide": [
+          "lash_r",
+          "lash_l",
+          "crease_r",
+          "crease_l",
+          "iris_shine_r",
+          "iris_shine_l",
+          "iris_r",
+          "lash_low_r",
+          "corner_r",
+          "corner_l",
+          "lowlid_r",
+          "lowlid_l",
+          "eye_white_r",
+          "eye_white_l"
+        ],
+        "soft": true,
+        "rect": [
+          158,
+          243,
+          244,
+          194
+        ]
+      },
+      "blush": {
+        "source": "overlay",
+        "portrait": "blush",
+        "file": "overlays/blush.png",
+        "soft": true,
+        "rect": [
+          174,
+          304,
+          223,
+          73
+        ]
+      },
+      "surprise": {
+        "source": "overlay",
+        "portrait": "surprise",
+        "file": "overlays/surprise.png",
+        "rect": [
+          153,
+          236,
+          246,
+          205
+        ]
+      },
+      "surprise_blush": {
+        "source": "overlay",
+        "portrait": "surprise_blush",
+        "file": "overlays/surprise_blush.png",
+        "soft": true,
+        "rect": [
+          156,
+          239,
+          246,
+          200
+        ]
+      },
+      "sweat": {
+        "source": "overlay",
+        "portrait": "sweat",
+        "file": "overlays/sweat.png",
+        "rect": [
+          341,
+          359,
+          22,
+          36
+        ]
+      },
+      "serious": {
+        "source": "overlay",
+        "portrait": "serious",
+        "file": "overlays/serious.png",
+        "rect": [
+          155,
+          241,
+          249,
+          199
+        ]
+      },
+      "upset": {
+        "layers": [
+          "serious",
+          "sweat"
+        ]
+      }
+    },
+    "overlayScale": 0.348,
+    "overlayOffset": [
+      -99.01,
+      -170.18
+    ],
+    "overlayZ": 520
+  },
+  "hotspots": {
+    "lips": {
+      "part": "hair_base",
+      "rect": [
+        0.395,
+        0.769,
+        0.587,
+        0.881
+      ]
+    },
+    "ear_l": {
+      "part": "ear_l"
+    },
+    "hand_r": {
+      "part": "hand_r"
+    },
+    "hand_l": {
+      "part": "hand_l"
+    },
+    "cheek": {
+      "part": "hair_base",
+      "rect": [
+        0.201,
+        0.646,
+        0.805,
+        0.858
+      ]
+    },
+    "head": {
+      "part": "hair_base",
+      "rect": [
+        0.019,
+        0.023,
+        0.993,
+        0.505
+      ]
+    }
+  },
+  "portraitHair": {
+    "portrait": "default",
+    "maxY": 545,
+    "lumMax": 255,
+    "diff": -1,
+    "feather": 14,
+    "z": 500,
+    "lockZ": 510,
+    "exclude": [],
+    "pinToBase": [
+      "lash_r",
+      "lash_l",
+      "crease_r",
+      "crease_l",
+      "iris_shine_r",
+      "iris_shine_l",
+      "iris_r",
+      "lash_low_r",
+      "corner_r",
+      "corner_l",
+      "lowlid_r",
+      "lowlid_l",
+      "eye_white_r",
+      "eye_white_l",
+      "brow_r",
+      "brow_l",
+      "nose",
+      "mouth",
+      "lip_shade"
+    ],
+    "locks": [
+      {
+        "id": "hair_crown",
+        "rect": [
+          170,
+          0,
+          450,
+          110
+        ],
+        "pivot": [
+          300,
+          110
+        ]
+      },
+      {
+        "id": "hair_front",
+        "rect": [
+          190,
+          110,
+          420,
+          360
+        ],
+        "pivot": [
+          300,
+          120
+        ]
+      },
+      {
+        "id": "hair_side_r",
+        "rect": [
+          100,
+          150,
+          210,
+          480
+        ],
+        "pivot": [
+          190,
+          160
+        ]
+      },
+      {
+        "id": "hair_side_l",
+        "rect": [
+          400,
+          150,
+          520,
+          470
+        ],
+        "pivot": [
+          420,
+          160
+        ]
+      }
+    ],
+    "jawClipY": 495,
+    "jawGrow": 1,
+    "faceParts": [],
+    "keepInBase": [
+      "iris_r",
+      "lash_l",
+      "iris_shine_r",
+      "iris_shine_l"
+    ],
+    "hairBelowJaw": []
+  },
+  "annoyance": {
+    "perTap": 1,
+    "decayPerSec": 0.9,
+    "threshold": 5,
+    "recoverSec": 4
+  },
+  "motion": {
+    "breath": {
+      "speed": 0.2,
+      "amount": 0.6
+    },
+    "hair": {
+      "enabled": false,
+      "speed": 0.4,
+      "amount": 3
+    },
+    "arms": {
+      "speed": 0.25,
+      "amount": 0.4
+    },
+    "blink": {
+      "meanInterval": 4
+    },
+    "bgPan": {
+      "speed": 0.022,
+      "amount": 0.01
+    }
+  },
+  "spriteSkin": {
+    "dilate": 5,
+    "skip": [
+      "head",
+      "hand_r",
+      "hand_l"
+    ],
+    "shades": [
+      {
+        "id": "skin_neck_shade",
+        "part": "neck_skin",
+        "bone": "torso",
+        "minDiff": 12,
+        "z": 190.5
+      },
+      {
+        "id": "skin_jaw_patch",
+        "parts": [
+          "neck_skin",
+          "face_base"
+        ],
+        "mode": "replace",
+        "rows": [
+          250,
+          284
+        ],
+        "fade": 14,
+        "bone": "neck",
+        "z": 191
+      }
+    ],
+    "reach": 20,
+    "noGrowUnder": [
+      "hand_r",
+      "hand_l"
+    ],
+    "restHands": true
+  },
+  "outfits": {
+    "academy": {
+      "atlas": "source/edward_academy_00.png",
+      "dir": "academy",
+      "referenceImage": "source/edward_academy.png",
+      "parts": [
+        {
+          "id": "shoulder_r",
+          "parent": "torso",
+          "position": [
+            -121.75,
+            -340.13
+          ]
+        },
+        {
+          "id": "upper_arm_r",
+          "parent": "shoulder_r",
+          "position": [
+            0,
+            0
+          ],
+          "limits": {
+            "rotation": [
+              -12,
+              22
+            ]
+          }
+        },
+        {
+          "id": "forearm_r",
+          "parent": "upper_arm_r",
+          "position": [
+            -13,
+            150
+          ],
+          "limits": {
+            "rotation": [
+              -110,
+              12
+            ]
+          }
+        },
+        {
+          "id": "shoulder_l",
+          "parent": "torso",
+          "position": [
+            118.25,
+            -340.13
+          ]
+        },
+        {
+          "id": "upper_arm_l",
+          "parent": "shoulder_l",
+          "position": [
+            0,
+            0
+          ],
+          "limits": {
+            "rotation": [
+              -22,
+              12
+            ]
+          }
+        },
+        {
+          "id": "forearm_l",
+          "parent": "upper_arm_l",
+          "position": [
+            13,
+            150
+          ],
+          "limits": {
+            "rotation": [
+              -12,
+              110
+            ]
+          }
+        },
+        {
+          "id": "leg_r",
+          "parent": "hips",
+          "image": "academy/derived/leg_r_clip.png",
+          "position": [
+            -46.75,
+            280.87
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 100,
+          "scale": 0.64
+        },
+        {
+          "id": "leg_l",
+          "parent": "hips",
+          "image": "academy/derived/leg_l_clip.png",
+          "position": [
+            46.75,
+            277.37
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 101,
+          "scale": 0.64
+        },
+        {
+          "id": "pants_top",
+          "parent": "hips",
+          "image": "academy/derived/pants_top_clip.png",
+          "position": [
+            -8.75,
+            8.87
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 105,
+          "scale": 0.65
+        },
+        {
+          "id": "foot_r",
+          "parent": "hips",
+          "image": "academy/parts/p139.png",
+          "position": [
+            -92.25,
+            584.37
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 95,
+          "scale": 0.68,
+          "flipX": true
+        },
+        {
+          "id": "foot_l",
+          "parent": "hips",
+          "image": "academy/parts/p139.png",
+          "position": [
+            89.75,
+            584.37
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 96,
+          "scale": 0.68
+        },
+        {
+          "id": "neck_skin",
+          "parent": "torso",
+          "image": "academy/derived/neck_skin_clip.png",
+          "position": [
+            -1.75,
+            -415.63
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 190,
+          "scale": 0.58
+        },
+        {
+          "id": "shirt",
+          "parent": "torso",
+          "image": "academy/derived/shirt_clip.png",
+          "position": [
+            -1.75,
+            -328.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 200,
+          "scale": 0.72
+        },
+        {
+          "id": "sleeve_upper_r",
+          "parent": "upper_arm_r",
+          "image": "academy/derived/sleeve_upper_r_clip.png",
+          "position": [
+            1,
+            70
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 218,
+          "scale": [
+            0.66,
+            0.76
+          ],
+          "flipX": true,
+          "rotation": 8
+        },
+        {
+          "id": "sleeve_upper_l",
+          "parent": "upper_arm_l",
+          "image": "academy/derived/sleeve_upper_l_clip.png",
+          "position": [
+            -1,
+            70
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 218,
+          "scale": [
+            0.66,
+            0.76
+          ],
+          "rotation": -8
+        },
+        {
+          "id": "vest",
+          "parent": "torso",
+          "image": "academy/parts/p098.png",
+          "position": [
+            -1.75,
+            -232.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 204,
+          "scale": 0.7
+        },
+        {
+          "id": "vest_button_a",
+          "parent": "torso",
+          "image": "academy/parts/p089.png",
+          "position": [
+            -26.75,
+            -209.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 205.5,
+          "scale": 0.7
+        },
+        {
+          "id": "vest_button_b",
+          "parent": "torso",
+          "image": "academy/parts/p090.png",
+          "position": [
+            25.25,
+            -209.63
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 205.51,
+          "scale": 0.69
+        },
+        {
+          "id": "vest_button_c",
+          "parent": "torso",
+          "image": "academy/parts/p091.png",
+          "position": [
+            -24.25,
+            -167.63
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 205.52,
+          "scale": 0.69
+        },
+        {
+          "id": "vest_button_d",
+          "parent": "torso",
+          "image": "academy/parts/p093.png",
+          "position": [
+            22.75,
+            -167.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 205.53,
+          "scale": 0.68
+        },
+        {
+          "id": "vest_button_e",
+          "parent": "torso",
+          "image": "academy/parts/p082.png",
+          "position": [
+            -22.25,
+            -120.63
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 205.54,
+          "scale": 0.64
+        },
+        {
+          "id": "vest_button_f",
+          "parent": "torso",
+          "image": "academy/parts/p108.png",
+          "position": [
+            22.75,
+            -120.63
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 205.55,
+          "scale": 0.69
+        },
+        {
+          "id": "vest_chain_a",
+          "parent": "torso",
+          "image": "academy/parts/p133.png",
+          "position": [
+            -1.75,
+            -198.63
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 205,
+          "scale": 0.67
+        },
+        {
+          "id": "vest_chain_b",
+          "parent": "torso",
+          "image": "academy/parts/p136.png",
+          "position": [
+            -0.25,
+            -156.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 205.05,
+          "scale": 0.64
+        },
+        {
+          "id": "vest_chain_c",
+          "parent": "torso",
+          "image": "academy/parts/p137.png",
+          "position": [
+            -2.25,
+            -114.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 205.1,
+          "scale": 0.62,
+          "flipX": true
+        },
+        {
+          "id": "collar_l",
+          "parent": "torso",
+          "image": "academy/parts/p074.png",
+          "position": [
+            24.25,
+            -406.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 202,
+          "scale": 0.69
+        },
+        {
+          "id": "collar_r",
+          "parent": "torso",
+          "image": "academy/parts/p076.png",
+          "position": [
+            -27.25,
+            -406.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 203,
+          "scale": 0.71
+        },
+        {
+          "id": "hand_r",
+          "parent": "forearm_r",
+          "image": "academy/skin/hand_r_rest.png",
+          "position": [
+            -12.5,
+            139.55
+          ],
+          "pivot": [
+            0.5,
+            0.0123
+          ],
+          "z": 212,
+          "scale": 1,
+          "limits": {
+            "rotation": [
+              -35,
+              35
+            ]
+          },
+          "restFrom": "academy/parts/p154.png"
+        },
+        {
+          "id": "hand_l",
+          "parent": "forearm_l",
+          "image": "academy/skin/hand_l_rest.png",
+          "position": [
+            12.5,
+            139.55
+          ],
+          "pivot": [
+            0.5,
+            0.0123
+          ],
+          "z": 212,
+          "scale": 1,
+          "limits": {
+            "rotation": [
+              -35,
+              35
+            ]
+          },
+          "restFrom": "academy/parts/p154.png"
+        },
+        {
+          "id": "shirt_cuff_r",
+          "parent": "forearm_r",
+          "image": "academy/parts/p143.png",
+          "position": [
+            -11,
+            153.5
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 215,
+          "scale": 0.66
+        },
+        {
+          "id": "shirt_cuff_l",
+          "parent": "forearm_l",
+          "image": "academy/parts/p143.png",
+          "position": [
+            11,
+            153.5
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 215,
+          "scale": 0.66,
+          "flipX": true
+        },
+        {
+          "id": "sleeve_lower_r",
+          "parent": "forearm_r",
+          "image": "academy/parts/p147.png",
+          "position": [
+            -1.5,
+            59
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 216,
+          "scale": 0.66
+        },
+        {
+          "id": "sleeve_lower_l",
+          "parent": "forearm_l",
+          "image": "academy/parts/p147.png",
+          "position": [
+            1.5,
+            59
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 216,
+          "scale": 0.66,
+          "flipX": true
+        },
+        {
+          "id": "sleeve_cuff_r",
+          "parent": "forearm_r",
+          "image": "academy/parts/p158.png",
+          "position": [
+            -7.5,
+            112.5
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 217,
+          "scale": 0.68
+        },
+        {
+          "id": "sleeve_cuff_l",
+          "parent": "forearm_l",
+          "image": "academy/parts/p158.png",
+          "position": [
+            7.5,
+            112.5
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 217,
+          "scale": 0.68,
+          "flipX": true
+        },
+        {
+          "id": "epaulette_r",
+          "parent": "upper_arm_r",
+          "image": "academy/parts/p004.png",
+          "position": [
+            23.5,
+            -56
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 222,
+          "scale": 0.69,
+          "flipX": true
+        },
+        {
+          "id": "epaulette_l",
+          "parent": "upper_arm_l",
+          "image": "academy/parts/p004.png",
+          "position": [
+            -23.5,
+            -56
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 222,
+          "scale": 0.69
+        },
+        {
+          "id": "top_r",
+          "parent": "torso",
+          "image": "academy/parts/p087.png",
+          "position": [
+            -71.75,
+            -194.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 206,
+          "scale": 0.63
+        },
+        {
+          "id": "top_l",
+          "parent": "torso",
+          "image": "academy/parts/p088.png",
+          "position": [
+            72.25,
+            -160.63
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 206.1,
+          "scale": 0.64
+        },
+        {
+          "id": "lapel_l",
+          "parent": "torso",
+          "image": "academy/parts/p104.png",
+          "position": [
+            54.75,
+            -301.63
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 207,
+          "scale": 0.69
+        },
+        {
+          "id": "lapel_r",
+          "parent": "torso",
+          "image": "academy/parts/p014.png",
+          "position": [
+            -58.75,
+            -302.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 207.1,
+          "scale": 0.7
+        },
+        {
+          "id": "button",
+          "parent": "torso",
+          "image": "academy/parts/p116.png",
+          "position": [
+            -51.75,
+            -169.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 208,
+          "scale": 0.65
+        },
+        {
+          "id": "pin_bar",
+          "parent": "torso",
+          "image": "academy/parts/p107.png",
+          "position": [
+            95.25,
+            -303.63
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 209,
+          "scale": 0.62
+        },
+        {
+          "id": "brooch_chain",
+          "parent": "torso",
+          "image": "academy/parts/p129.png",
+          "position": [
+            80.25,
+            -303.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 208.5,
+          "scale": 0.65
+        },
+        {
+          "id": "brooch_drop",
+          "parent": "torso",
+          "image": "academy/parts/p125.png",
+          "position": [
+            69.25,
+            -300.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 208.6,
+          "scale": 0.65
+        },
+        {
+          "id": "brooch",
+          "parent": "torso",
+          "image": "academy/parts/p118.png",
+          "position": [
+            68.75,
+            -339.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 209.5,
+          "scale": 0.71
+        },
+        {
+          "id": "aiguillette_b",
+          "parent": "torso",
+          "image": "academy/parts/p044.png",
+          "position": [
+            -117.75,
+            -357.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 319,
+          "scale": 0.63
+        },
+        {
+          "id": "aiguillette_a",
+          "parent": "torso",
+          "image": "academy/parts/p055.png",
+          "position": [
+            -117.75,
+            -344.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 320,
+          "scale": 0.69
+        },
+        {
+          "id": "skin_hips",
+          "parent": "hips",
+          "image": "academy/skin/skin_hips.png",
+          "position": [
+            -153.75,
+            -66.13
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 105.5
+        },
+        {
+          "id": "skin_torso_back",
+          "parent": "torso",
+          "image": "academy/skin/skin_torso_back.png",
+          "position": [
+            -117.75,
+            -451.13
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 210
+        },
+        {
+          "id": "skin_torso_front",
+          "parent": "torso",
+          "image": "academy/skin/skin_torso_front.png",
+          "position": [
+            -146.75,
+            -394.13
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 320.5
+        },
+        {
+          "id": "skin_upper_arm_r",
+          "parent": "upper_arm_r",
+          "image": "academy/skin/skin_upper_arm_r.png",
+          "position": [
+            -38,
+            -74
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 222.5
+        },
+        {
+          "id": "skin_upper_arm_l",
+          "parent": "upper_arm_l",
+          "image": "academy/skin/skin_upper_arm_l.png",
+          "position": [
+            -56,
+            -75
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 222.5
+        },
+        {
+          "id": "skin_sleeve_lower_r",
+          "parent": "forearm_r",
+          "image": "academy/skin/skin_sleeve_lower_r.png",
+          "position": [
+            -31,
+            6
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 216.5,
+          "mesh": {
+            "bend": true,
+            "zone": 0.35
+          }
+        },
+        {
+          "id": "skin_forearm_r",
+          "parent": "forearm_r",
+          "image": "academy/skin/skin_forearm_r.png",
+          "position": [
+            -38,
+            78
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 217.5
+        },
+        {
+          "id": "skin_sleeve_lower_l",
+          "parent": "forearm_l",
+          "image": "academy/skin/skin_sleeve_lower_l.png",
+          "position": [
+            -31,
+            6
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 216.5,
+          "mesh": {
+            "bend": true,
+            "zone": 0.35
+          }
+        },
+        {
+          "id": "skin_forearm_l",
+          "parent": "forearm_l",
+          "image": "academy/skin/skin_forearm_l.png",
+          "position": [
+            -25,
+            78
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 217.5
+        },
+        {
+          "id": "skin_arm_r_underlay",
+          "parent": "torso",
+          "image": "academy/skin/skin_arm_r_underlay.png",
+          "position": [
+            -112.75,
+            -360.13
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 209.9
+        },
+        {
+          "id": "skin_arm_l_underlay",
+          "parent": "torso",
+          "image": "academy/skin/skin_arm_l_underlay.png",
+          "position": [
+            91.25,
+            -360.13
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 209.9
+        },
+        {
+          "id": "skin_neck_shade",
+          "parent": "torso",
+          "image": "academy/skin/skin_neck_shade.png",
+          "position": [
+            -20.75,
+            -446.13
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 190.5
+        },
+        {
+          "id": "skin_jaw_patch",
+          "parent": "neck",
+          "image": "academy/skin/skin_jaw_patch.png",
+          "position": [
+            -25,
+            -31
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 191
+        }
+      ],
+      "hands": {
+        "r": {
+          "part": "hand_r",
+          "default": "relaxed",
+          "poses": {
+            "relaxed": {
+              "image": "academy/skin/hand_r_rest.png",
+              "pivot": [
+                0.5,
+                0.0123
+              ],
+              "scale": 1,
+              "flipX": false
+            },
+            "hang": {
+              "image": "academy/parts/p157.png",
+              "pivot": [
+                0.4483,
+                0.0289
+              ],
+              "scale": 0.67
+            },
+            "open": {
+              "image": "academy/parts/p156.png",
+              "pivot": [
+                0.4459,
+                0.0267
+              ],
+              "scale": 0.67
+            },
+            "spread": {
+              "image": "academy/parts/p148.png",
+              "pivot": [
+                0.2555,
+                -0.0389
+              ],
+              "scale": 0.67
+            },
+            "pinch": {
+              "image": "academy/parts/p146.png",
+              "pivot": [
+                0.3304,
+                0.0988
+              ],
+              "scale": 0.67
+            },
+            "fist_side": {
+              "image": "academy/parts/p159.png",
+              "pivot": [
+                0.5,
+                0.0346
+              ],
+              "scale": 0.67
+            },
+            "curled": {
+              "image": "academy/parts/p160.png",
+              "pivot": [
+                0.5696,
+                0.0349
+              ],
+              "scale": 0.67
+            },
+            "fist": {
+              "image": "academy/donor/romeo_fist.png",
+              "pivot": [
+                0.4483,
+                -0.112
+              ],
+              "scale": 0.68
+            }
+          }
+        },
+        "l": {
+          "part": "hand_l",
+          "default": "relaxed",
+          "poses": {
+            "relaxed": {
+              "image": "academy/skin/hand_l_rest.png",
+              "pivot": [
+                0.5,
+                0.0123
+              ],
+              "scale": 1,
+              "flipX": false
+            },
+            "hang": {
+              "image": "academy/parts/p157.png",
+              "pivot": [
+                0.4483,
+                0.0289
+              ],
+              "scale": 0.67,
+              "flipX": true
+            },
+            "open": {
+              "image": "academy/parts/p156.png",
+              "pivot": [
+                0.4459,
+                0.0267
+              ],
+              "scale": 0.67,
+              "flipX": true
+            },
+            "spread": {
+              "image": "academy/parts/p148.png",
+              "pivot": [
+                0.2555,
+                -0.0389
+              ],
+              "scale": 0.67,
+              "flipX": true
+            },
+            "pinch": {
+              "image": "academy/parts/p146.png",
+              "pivot": [
+                0.3304,
+                0.0988
+              ],
+              "scale": 0.67,
+              "flipX": true
+            },
+            "fist_side": {
+              "image": "academy/parts/p159.png",
+              "pivot": [
+                0.5,
+                0.0346
+              ],
+              "scale": 0.67,
+              "flipX": true
+            },
+            "curled": {
+              "image": "academy/parts/p160.png",
+              "pivot": [
+                0.5696,
+                0.0349
+              ],
+              "scale": 0.67,
+              "flipX": true
+            },
+            "fist": {
+              "image": "academy/donor/romeo_fist.png",
+              "pivot": [
+                0.4469,
+                -0.112
+              ],
+              "scale": 0.68,
+              "flipX": true
+            }
+          }
+        }
+      },
+      "spriteSkin": {
+        "groups": {
+          "torso": [
+            {
+              "id": "skin_torso_back",
+              "zRange": [
+                0,
+                213
+              ]
+            },
+            {
+              "id": "skin_torso_front",
+              "zRange": [
+                214,
+                399
+              ]
+            }
+          ],
+          "forearm_r": [
+            {
+              "id": "skin_sleeve_lower_r",
+              "parts": [
+                "sleeve_lower_r"
+              ],
+              "mesh": {
+                "bend": true,
+                "zone": 0.35
+              }
+            },
+            {}
+          ],
+          "forearm_l": [
+            {
+              "id": "skin_sleeve_lower_l",
+              "parts": [
+                "sleeve_lower_l"
+              ],
+              "mesh": {
+                "bend": true,
+                "zone": 0.35
+              }
+            },
+            {}
+          ]
+        },
+        "underlays": {
+          "skin_arm_r_underlay": {
+            "from": "upper_arm_r",
+            "bone": "torso",
+            "rect": [
+              273,
+              340,
+              291,
+              462
+            ],
+            "tint": 0.55,
+            "z": 209.9
+          },
+          "skin_arm_l_underlay": {
+            "from": "upper_arm_l",
+            "bone": "torso",
+            "rect": [
+              477,
+              340,
+              495,
+              462
+            ],
+            "tint": 0.55,
+            "z": 209.9
+          }
+        },
+        "dilateConnected": true
+      },
+      "hotspots": {
+        "chest": {
+          "part": "shirt",
+          "rect": [
+            0.2,
+            0.22,
+            0.8,
+            0.78
+          ]
+        },
+        "hips": {
+          "part": "pants_top",
+          "rect": [
+            0.1,
+            0.11,
+            0.99,
+            0.84
+          ]
+        }
+      }
+    },
+    "casual": {
+      "atlas": "source/edward_casual_00.png",
+      "dir": "casual",
+      "referenceImage": "casual/derived/edward_casual_rig.png",
+      "parts": [
+        {
+          "id": "shoulder_r",
+          "parent": "torso",
+          "position": [
+            -129.75,
+            -340.13
+          ]
+        },
+        {
+          "id": "upper_arm_r",
+          "parent": "shoulder_r",
+          "position": [
+            0,
+            0
+          ],
+          "limits": {
+            "rotation": [
+              -12,
+              22
+            ]
+          }
+        },
+        {
+          "id": "forearm_r",
+          "parent": "upper_arm_r",
+          "position": [
+            -6,
+            170
+          ],
+          "limits": {
+            "rotation": [
+              -110,
+              12
+            ]
+          }
+        },
+        {
+          "id": "shoulder_l",
+          "parent": "torso",
+          "position": [
+            126.25,
+            -340.13
+          ]
+        },
+        {
+          "id": "upper_arm_l",
+          "parent": "shoulder_l",
+          "position": [
+            0,
+            0
+          ],
+          "limits": {
+            "rotation": [
+              -22,
+              12
+            ]
+          }
+        },
+        {
+          "id": "forearm_l",
+          "parent": "upper_arm_l",
+          "position": [
+            6,
+            170
+          ],
+          "limits": {
+            "rotation": [
+              -12,
+              110
+            ]
+          }
+        },
+        {
+          "id": "foot_r",
+          "parent": "hips",
+          "image": "casual/parts/p126.png",
+          "position": [
+            -91.25,
+            580.87
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 95,
+          "scale": 0.66,
+          "flipX": true
+        },
+        {
+          "id": "foot_l",
+          "parent": "hips",
+          "image": "casual/parts/p126.png",
+          "position": [
+            87.75,
+            580.87
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 96,
+          "scale": 0.66
+        },
+        {
+          "id": "coat_back",
+          "parent": "hips",
+          "image": "casual/derived/coat_back_clip.png",
+          "position": [
+            -0.25,
+            0.37
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 99,
+          "scale": 0.71
+        },
+        {
+          "id": "leg_r",
+          "parent": "hips",
+          "image": "casual/derived/leg_r_clip.png",
+          "position": [
+            -48.25,
+            281.37
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 100,
+          "scale": 0.63,
+          "flipX": true
+        },
+        {
+          "id": "leg_l",
+          "parent": "hips",
+          "image": "casual/derived/leg_l_clip.png",
+          "position": [
+            45.75,
+            276.87
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 101,
+          "scale": 0.64
+        },
+        {
+          "id": "neck_skin",
+          "parent": "torso",
+          "image": "casual/derived/neck_skin_clip.png",
+          "position": [
+            -1.25,
+            -431.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 190,
+          "scale": 0.56
+        },
+        {
+          "id": "shirt",
+          "parent": "torso",
+          "image": "casual/derived/shirt_clip.png",
+          "position": [
+            -25.25,
+            -250.63
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 200,
+          "scale": 0.62
+        },
+        {
+          "id": "pants_top",
+          "parent": "hips",
+          "image": "casual/derived/pants_top_clip.png",
+          "position": [
+            0.25,
+            -48.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 201,
+          "scale": 0.78
+        },
+        {
+          "id": "chain_r",
+          "parent": "torso",
+          "image": "casual/parts/p016.png",
+          "position": [
+            -21.75,
+            -386.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 202,
+          "scale": 0.67
+        },
+        {
+          "id": "chain_l",
+          "parent": "torso",
+          "image": "casual/parts/p016.png",
+          "position": [
+            17.75,
+            -384.63
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 202.1,
+          "scale": 0.65,
+          "flipX": true
+        },
+        {
+          "id": "bolo_tip_a",
+          "parent": "torso",
+          "image": "casual/parts/p020.png",
+          "position": [
+            -6.75,
+            -292.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 202.6,
+          "scale": 0.67
+        },
+        {
+          "id": "bolo_tip_b",
+          "parent": "torso",
+          "image": "casual/parts/p051.png",
+          "position": [
+            5.25,
+            -291.63
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 202.7,
+          "scale": 0.67
+        },
+        {
+          "id": "bolo_slider",
+          "parent": "torso",
+          "image": "casual/parts/p023.png",
+          "position": [
+            -2.25,
+            -343.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 202.8,
+          "scale": 0.67
+        },
+        {
+          "id": "lining_r",
+          "parent": "torso",
+          "image": "casual/parts/p086.png",
+          "position": [
+            -96.75,
+            -36.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 204,
+          "scale": 0.62,
+          "flipX": true
+        },
+        {
+          "id": "lining_l",
+          "parent": "torso",
+          "image": "casual/parts/p092.png",
+          "position": [
+            85.75,
+            -43.63
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 204.1,
+          "scale": 0.62,
+          "flipX": true
+        },
+        {
+          "id": "front_r",
+          "parent": "torso",
+          "image": "casual/parts/p050.png",
+          "position": [
+            -82.75,
+            -60.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 206,
+          "scale": 0.65
+        },
+        {
+          "id": "front_l",
+          "parent": "torso",
+          "image": "casual/parts/p111.png",
+          "position": [
+            79.25,
+            -60.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 206.1,
+          "scale": 0.65
+        },
+        {
+          "id": "lapel_l",
+          "parent": "torso",
+          "image": "casual/parts/p080.png",
+          "position": [
+            61.75,
+            -289.13
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 207,
+          "scale": 0.69
+        },
+        {
+          "id": "lapel_r",
+          "parent": "torso",
+          "image": "casual/parts/p101.png",
+          "position": [
+            -64.25,
+            -289.63
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 207.1,
+          "scale": 0.69
+        },
+        {
+          "id": "button_a",
+          "parent": "torso",
+          "image": "casual/parts/p100.png",
+          "position": [
+            -42.25,
+            -115.63
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 208,
+          "scale": 0.62
+        },
+        {
+          "id": "button_b",
+          "parent": "torso",
+          "image": "casual/parts/p100.png",
+          "position": [
+            -44.25,
+            -27.63
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 208.1,
+          "scale": 0.62
+        },
+        {
+          "id": "hand_r",
+          "parent": "forearm_r",
+          "image": "casual/skin/hand_r_rest.png",
+          "position": [
+            -10,
+            121.5
+          ],
+          "pivot": [
+            0.4821,
+            -0.4244
+          ],
+          "z": 212,
+          "scale": 1,
+          "limits": {
+            "rotation": [
+              -35,
+              35
+            ]
+          },
+          "restFrom": "casual/parts/p135.png"
+        },
+        {
+          "id": "hand_l",
+          "parent": "forearm_l",
+          "image": "casual/skin/hand_l_rest.png",
+          "position": [
+            10,
+            121.5
+          ],
+          "pivot": [
+            0.5091,
+            -0.4244
+          ],
+          "z": 212,
+          "scale": 1,
+          "limits": {
+            "rotation": [
+              -35,
+              35
+            ]
+          },
+          "restFrom": "casual/parts/p135.png"
+        },
+        {
+          "id": "sleeve_lower_r",
+          "parent": "forearm_r",
+          "image": "casual/parts/p125.png",
+          "position": [
+            -4,
+            83
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 216,
+          "scale": 0.68
+        },
+        {
+          "id": "sleeve_lower_l",
+          "parent": "forearm_l",
+          "image": "casual/parts/p125.png",
+          "position": [
+            4,
+            82
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 216,
+          "scale": 0.68,
+          "flipX": true
+        },
+        {
+          "id": "cuff_r",
+          "parent": "forearm_r",
+          "image": "casual/parts/p127.png",
+          "position": [
+            -8.5,
+            138
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 217,
+          "scale": 0.69
+        },
+        {
+          "id": "cuff_l",
+          "parent": "forearm_l",
+          "image": "casual/parts/p127.png",
+          "position": [
+            8.5,
+            138
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 217,
+          "scale": 0.69,
+          "flipX": true
+        },
+        {
+          "id": "sleeve_upper_r",
+          "parent": "upper_arm_r",
+          "image": "casual/derived/sleeve_upper_r_clip.png",
+          "position": [
+            7,
+            68
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 218,
+          "scale": [
+            0.7,
+            0.84
+          ],
+          "rotation": 2
+        },
+        {
+          "id": "sleeve_upper_l",
+          "parent": "upper_arm_l",
+          "image": "casual/derived/sleeve_upper_l_clip.png",
+          "position": [
+            -7,
+            68
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 218,
+          "scale": [
+            0.7,
+            0.84
+          ],
+          "flipX": true,
+          "rotation": -2
+        },
+        {
+          "id": "flap_r",
+          "parent": "upper_arm_r",
+          "image": "casual/parts/p112.png",
+          "position": [
+            15.5,
+            88.5
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 222,
+          "scale": 0.62,
+          "flipX": true,
+          "rotation": -6
+        },
+        {
+          "id": "flap_l",
+          "parent": "upper_arm_l",
+          "image": "casual/parts/p112.png",
+          "position": [
+            -18,
+            87
+          ],
+          "pivot": [
+            0.5,
+            0.5
+          ],
+          "z": 222,
+          "scale": 0.63,
+          "rotation": -4
+        },
+        {
+          "id": "skin_hips",
+          "parent": "hips",
+          "image": "casual/skin/skin_hips.png",
+          "position": [
+            -152.75,
+            -170.13
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 201.5
+        },
+        {
+          "id": "skin_torso_back",
+          "parent": "torso",
+          "image": "casual/skin/skin_torso_back.png",
+          "position": [
+            -146.75,
+            -451.13
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 208.6
+        },
+        {
+          "id": "skin_upper_arm_r",
+          "parent": "upper_arm_r",
+          "image": "casual/skin/skin_upper_arm_r.png",
+          "position": [
+            -32,
+            -54
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 222.5
+        },
+        {
+          "id": "skin_upper_arm_l",
+          "parent": "upper_arm_l",
+          "image": "casual/skin/skin_upper_arm_l.png",
+          "position": [
+            -45,
+            -54
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 222.5
+        },
+        {
+          "id": "skin_sleeve_lower_r",
+          "parent": "forearm_r",
+          "image": "casual/skin/skin_sleeve_lower_r.png",
+          "position": [
+            -36,
+            2
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 216.5,
+          "mesh": {
+            "bend": true,
+            "zone": 0.35
+          }
+        },
+        {
+          "id": "skin_forearm_r",
+          "parent": "forearm_r",
+          "image": "casual/skin/skin_forearm_r.png",
+          "position": [
+            -42,
+            109
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 217.5
+        },
+        {
+          "id": "skin_sleeve_lower_l",
+          "parent": "forearm_l",
+          "image": "casual/skin/skin_sleeve_lower_l.png",
+          "position": [
+            -34,
+            1
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 216.5,
+          "mesh": {
+            "bend": true,
+            "zone": 0.35
+          }
+        },
+        {
+          "id": "skin_forearm_l",
+          "parent": "forearm_l",
+          "image": "casual/skin/skin_forearm_l.png",
+          "position": [
+            -23,
+            109
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 217.5
+        },
+        {
+          "id": "skin_neck_shade",
+          "parent": "torso",
+          "image": "casual/skin/skin_neck_shade.png",
+          "position": [
+            -37.75,
+            -446.13
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 190.5
+        },
+        {
+          "id": "skin_jaw_patch",
+          "parent": "neck",
+          "image": "casual/skin/skin_jaw_patch.png",
+          "position": [
+            -31,
+            -31
+          ],
+          "pivot": [
+            0,
+            0
+          ],
+          "scale": 1,
+          "z": 191
+        }
+      ],
+      "hands": {
+        "r": {
+          "part": "hand_r",
+          "default": "relaxed",
+          "poses": {
+            "relaxed": {
+              "image": "casual/skin/hand_r_rest.png",
+              "pivot": [
+                0.4821,
+                -0.4244
+              ],
+              "scale": 1,
+              "flipX": false
+            },
+            "hang": {
+              "image": "casual/parts/p138.png",
+              "pivot": [
+                0.4483,
+                0.0132
+              ],
+              "scale": 0.67
+            },
+            "open": {
+              "image": "casual/parts/p137.png",
+              "pivot": [
+                0.4459,
+                0.0121
+              ],
+              "scale": 0.67
+            },
+            "spread": {
+              "image": "casual/parts/p130.png",
+              "pivot": [
+                0.2555,
+                -0.0556
+              ],
+              "scale": 0.67
+            },
+            "pinch": {
+              "image": "casual/parts/p129.png",
+              "pivot": [
+                0.3304,
+                0.0843
+              ],
+              "scale": 0.67
+            },
+            "fist_side": {
+              "image": "casual/parts/p139.png",
+              "pivot": [
+                0.5,
+                0.0157
+              ],
+              "scale": 0.67
+            },
+            "curled": {
+              "image": "casual/parts/p140.png",
+              "pivot": [
+                0.5696,
+                0.0159
+              ],
+              "scale": 0.67
+            },
+            "fist": {
+              "image": "casual/donor/yuri_fist_toned.png",
+              "pivot": [
+                0.5,
+                -0.3
+              ],
+              "scale": 0.67
+            }
+          }
+        },
+        "l": {
+          "part": "hand_l",
+          "default": "relaxed",
+          "poses": {
+            "relaxed": {
+              "image": "casual/skin/hand_l_rest.png",
+              "pivot": [
+                0.5091,
+                -0.4244
+              ],
+              "scale": 1,
+              "flipX": false
+            },
+            "hang": {
+              "image": "casual/parts/p138.png",
+              "pivot": [
+                0.4483,
+                0.0132
+              ],
+              "scale": 0.67,
+              "flipX": true
+            },
+            "open": {
+              "image": "casual/parts/p137.png",
+              "pivot": [
+                0.4459,
+                0.0121
+              ],
+              "scale": 0.67,
+              "flipX": true
+            },
+            "spread": {
+              "image": "casual/parts/p130.png",
+              "pivot": [
+                0.2555,
+                -0.0556
+              ],
+              "scale": 0.67,
+              "flipX": true
+            },
+            "pinch": {
+              "image": "casual/parts/p129.png",
+              "pivot": [
+                0.3304,
+                0.0843
+              ],
+              "scale": 0.67,
+              "flipX": true
+            },
+            "fist_side": {
+              "image": "casual/parts/p139.png",
+              "pivot": [
+                0.5,
+                0.0157
+              ],
+              "scale": 0.67,
+              "flipX": true
+            },
+            "curled": {
+              "image": "casual/parts/p140.png",
+              "pivot": [
+                0.5696,
+                0.0159
+              ],
+              "scale": 0.67,
+              "flipX": true
+            },
+            "fist": {
+              "image": "casual/donor/yuri_fist_toned.png",
+              "pivot": [
+                0.5,
+                -0.3
+              ],
+              "scale": 0.67,
+              "flipX": true
+            }
+          }
+        }
+      },
+      "hotspots": {
+        "chest": {
+          "part": "shirt",
+          "rect": [
+            0.32,
+            0,
+            0.91,
+            0.46
+          ]
+        },
+        "hips": {
+          "part": "pants_top",
+          "rect": [
+            0.151,
+            0.089,
+            0.84,
+            0.74
+          ]
+        }
+      },
+      "spriteSkin": {
+        "groups": {
+          "torso": [
+            {
+              "id": "skin_torso_back",
+              "zRange": [
+                0,
+                213
+              ]
+            },
+            {
+              "id": "skin_torso_front",
+              "zRange": [
+                214,
+                399
+              ]
+            }
+          ],
+          "forearm_r": [
+            {
+              "id": "skin_sleeve_lower_r",
+              "parts": [
+                "sleeve_lower_r"
+              ],
+              "mesh": {
+                "bend": true,
+                "zone": 0.35
+              }
+            },
+            {}
+          ],
+          "forearm_l": [
+            {
+              "id": "skin_sleeve_lower_l",
+              "parts": [
+                "sleeve_lower_l"
+              ],
+              "mesh": {
+                "bend": true,
+                "zone": 0.35
+              }
+            },
+            {}
+          ]
+        },
+        "underlays": {},
+        "dilateConnected": true
+      }
+    }
+  },
+  "groups": {
+    "hair_locks": [
+      [
+        "hair_crown_lock"
+      ],
+      [
+        "hair_front_lock"
+      ],
+      [
+        "hair_side_r_lock"
+      ],
+      [
+        "hair_side_l_lock"
+      ]
+    ]
+  }
+}
