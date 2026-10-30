@@ -2647,7 +2647,7 @@
         {
           "id": "hand_r",
           "parent": "forearm_r",
-          "image": "casual/parts/p182.png",
+          "image": "casual/donor/p182_ring.png",
           "position": [
             -17.5,
             134.6
@@ -2668,7 +2668,7 @@
         {
           "id": "hand_l",
           "parent": "forearm_l",
-          "image": "casual/parts/p182.png",
+          "image": "casual/donor/p182_ring_l.png",
           "position": [
             17.5,
             134.6
@@ -3155,7 +3155,7 @@
               "default": "relaxed",
               "poses": {
                 "relaxed": {
-                  "image": "casual/parts/p182.png",
+                  "image": "casual/donor/p182_ring.png",
                   "pivot": [
                     0.5,
                     0.05
@@ -3233,7 +3233,7 @@
               "default": "relaxed",
               "poses": {
                 "relaxed": {
-                  "image": "casual/parts/p182.png",
+                  "image": "casual/donor/p182_ring_l.png",
                   "pivot": [
                     0.5,
                     0.05

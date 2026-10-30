@@ -31,7 +31,17 @@
     {
       "id": "hand_r",
       "hand": true,
-      "candidates": "hands",
+      "candidates": [
+        "p182",
+        "p163",
+        "p172",
+        "p184",
+        "p158",
+        "p168",
+        "p183",
+        "p186",
+        "p153"
+      ],
       "center": [
         250,
         745
@@ -48,7 +58,17 @@
     {
       "id": "hand_l",
       "hand": true,
-      "candidates": "hands",
+      "candidates": [
+        "p182",
+        "p163",
+        "p172",
+        "p184",
+        "p158",
+        "p168",
+        "p183",
+        "p186",
+        "p153"
+      ],
       "center": [
         518,
         745
@@ -960,7 +980,7 @@
     ],
     "default": "relaxed",
     "poses": {
-      "relaxed": "p182",
+      "relaxed": "donor/p182_ring.png",
       "hang": "p163",
       "back": "p172",
       "reach": "p184",
