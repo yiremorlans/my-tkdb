@@ -1,0 +1,36 @@
+{
+  "angles": {},
+  "baselines": {
+    "academy": {
+      "leak": 20,
+      "spill": 9,
+      "diff": 1.664,
+      "holes": {
+        "neck@-4": 6,
+        "neck@4": 10,
+        "head@-7": 6,
+        "head@7": 4,
+        "hair_crown_lock@-8": 0,
+        "hair_crown_lock@8": 0,
+        "hair_front_lock@-8": 0,
+        "hair_front_lock@8": 0,
+        "hair_side_r_lock@-8": 4,
+        "hair_side_r_lock@8": 1,
+        "hair_side_l_lock@-8": 0,
+        "hair_side_l_lock@8": 16,
+        "upper_arm_r@-12": 0,
+        "upper_arm_r@22": 0,
+        "forearm_r@-110": 0,
+        "forearm_r@12": 0,
+        "upper_arm_l@-22": 0,
+        "upper_arm_l@12": 0,
+        "forearm_l@-12": 0,
+        "forearm_l@110": 0,
+        "hand_r@-35": 299,
+        "hand_r@35": 0,
+        "hand_l@-35": 0,
+        "hand_l@35": 288
+      }
+    }
+  }
+}
