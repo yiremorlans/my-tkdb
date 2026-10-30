@@ -307,6 +307,48 @@ Everything character- or outfit-specific is data: rig.json,
    the touch points, `--grid` labels coordinates), and **`probe-rig.js`**
    for the parts drawn at a pixel, bottom to top.
 
+### 3.6 Hangout v2 models (Live2D, added 2026-10-30)
+
+v2 (§6, "Version") draws the game's own Live2D model instead of a sprite
+rig: `assets/live2d/<id>/<outfit>/` holds the Cubism files and
+`assets/live2d/<id>/rig.json` the v1-shaped keys `live2dRig.js` reads. The
+game's models share one 2000x2800 canvas. Order for a new character or
+outfit:
+
+1. **Pull the game's cache from BlueStacks.** The game downloads each
+   model's bundle the first time a scene needs it, so a character missing
+   from the cache has to be played to first. With BlueStacks running:
+   ```
+   hd-adb connect 127.0.0.1:5555
+   hd-adb -s 127.0.0.1:5555 pull /sdcard/Android/data/com.zigzagame.tokyodebunker <dir>
+   ```
+   (`hd-adb` is `/Applications/BlueStacks.app/Contents/MacOS/hd-adb`.) The
+   catalog, `files/com.unity.addressables/catalog_*.json`, names each model
+   bundle `dialogueactors_assets_<name><outfit>_<hash>.bundle` (game names:
+   `luca`, `sho`, `jou` for Jo). The cached copy is
+   `files/UnityCache/Shared/<x>/<hash>/__data`; no folder with that hash
+   means it isn't downloaded yet.
+2. **Start AssetRipper headless:** `AssetRipper.GUI.Premium --headless --port 54321`
+   (the Free build takes the same flags).
+3. **`live2d-convert.js <character> --bundle <__data>`**: AssetRipper's
+   Unity-project export, then the moc3 (the CubismMoc asset's bytes),
+   physics3 (from the prefab's CubismPhysicsController), exp3 and motion3
+   files (Unity Hermite curves turned back into exact beziers, infinite
+   slopes into stepped segments), a looping `*_hold` clip pinned at the last
+   frame of every pose that has a `*_return`, and model3.json. Files are
+   `<character>_<outfit>.*` after the repo's ids. `--assets` takes an
+   export made by hand. Converting Alan's bundle reproduces his committed
+   files.
+4. **`live2d-rig.js <character>`**: rig.json from Alan's as a template.
+   Hotspot parts are picked from the model's part tree at rest (face skin,
+   PartMouth, PartEar, the lowest arm pieces, the biggest torso piece, the
+   legs), the stage is Alan's framing shifted to the face, moods and
+   reaction poses are mapped onto the expressions and clips this model has,
+   and the background is v1's or the character's room. It reproduces the
+   20 academy rigs it wrote (2026-10-30) byte for byte.
+5. **Check it** in `hangout-v2.html?character=<id>` with "show hotspots",
+   and tune rig.json by hand where the picks are off.
+
 ---
 
 ## 4. The Activity
@@ -502,6 +544,7 @@ activity/
     new-rig.js  slice-atlas.js  register-head.js  fit-outfit.js
     match-hands.js  align-hands.js  build-sprite-skin.js  check-rig.js
     render-rig.js  probe-rig.js  build-overlays.js  build-portrait-hair.js
+    live2d-convert.js  live2d-rig.js   # Hangout v2 models (§3.6)
     lib/              # render (node-canvas, rig/fit files), match (template fits), png, skin-config
   vite.config.js
 assets/rig/alan/

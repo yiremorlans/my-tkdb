@@ -1,0 +1,267 @@
+{
+  "Version": 3,
+  "Meta": {
+    "Duration": 1.65,
+    "Fps": 60.0,
+    "Loop": true,
+    "AreBeziersRestricted": true,
+    "FadeInTime": 0,
+    "FadeOutTime": 0,
+    "CurveCount": 21,
+    "TotalSegmentCount": 27,
+    "TotalPointCount": 48,
+    "UserDataCount": 0,
+    "TotalUserDataSize": 0
+  },
+  "Curves": [
+    {
+      "Target": "Parameter",
+      "Id": "ParamTear",
+      "Segments": [
+        0,
+        1,
+        0,
+        1.65,
+        1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLTearDown",
+      "Segments": [
+        0,
+        0.001,
+        0,
+        0.317,
+        0.001,
+        0,
+        0.817,
+        0.643,
+        0,
+        1.533,
+        0.826,
+        0,
+        1.65,
+        1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamRTearDown",
+      "Segments": [
+        0,
+        0,
+        0,
+        0.733,
+        0.703,
+        0,
+        1.133,
+        0.868,
+        0,
+        1.233,
+        0.998,
+        0,
+        1.65,
+        1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamSnot",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamSnotAnim",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLargeTear1R",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLARGEATEAR1RANIM",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLargeTear2R",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLARGEATEAR2RANIM",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLargeTear2R2",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLARGEATEAR2RANIM2",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLargeTear3R",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLARGEATEAR3RANIM",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLargeTear1L",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLARGEATEAR1RANIM2",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLargeTear2R3",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLARGEATEAR2RANIM3",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLargeTear2L",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLARGEATEAR2RANIM4",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLargeTear3L2",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLARGEATEAR3RANIM2",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.65,
+        0
+      ]
+    }
+  ]
+}

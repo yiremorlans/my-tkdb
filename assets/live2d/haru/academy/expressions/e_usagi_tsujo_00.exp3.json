@@ -1,0 +1,42 @@
+{
+  "Type": "Live2D Expression",
+  "FadeInTime": 0.2,
+  "FadeOutTime": 0.2,
+  "Parameters": [
+    {
+      "Id": "ParamKaiiEyeLOpen",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamKaiiEyeROpen",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamKaiiMouthOpenY",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamKaiiTooth",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamKaiiAnger",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamKaiiSmile",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamKaiiTear",
+      "Value": 0,
+      "Blend": "Add"
+    }
+  ]
+}

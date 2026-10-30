@@ -1,0 +1,185 @@
+{
+  "Version": 3,
+  "Meta": {
+    "Duration": 0.833,
+    "Fps": 60.0,
+    "Loop": false,
+    "AreBeziersRestricted": true,
+    "FadeInTime": 0,
+    "FadeOutTime": 0,
+    "CurveCount": 8,
+    "TotalSegmentCount": 17,
+    "TotalPointCount": 51,
+    "UserDataCount": 0,
+    "TotalUserDataSize": 0
+  },
+  "Curves": [
+    {
+      "Target": "Parameter",
+      "Id": "ParamMouthForm",
+      "Segments": [
+        0,
+        1,
+        0,
+        0.833,
+        1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamMouthOpenY",
+      "Segments": [
+        0,
+        0,
+        0,
+        0.833,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamTooth01",
+      "Segments": [
+        0,
+        0,
+        0,
+        0.833,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "TONGUE",
+      "Segments": [
+        0,
+        0,
+        1,
+        0.00567,
+        0.0,
+        0.01133,
+        0.096,
+        0.017,
+        0.11,
+        1,
+        0.128,
+        0.381,
+        0.239,
+        0.5,
+        0.35,
+        0.5,
+        1,
+        0.511,
+        0.5,
+        0.672,
+        0.0,
+        0.833,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "Paramtonguewidth",
+      "Segments": [
+        0,
+        0.432,
+        0,
+        0.833,
+        0.432
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "TONGUE_move",
+      "Segments": [
+        0,
+        0,
+        1,
+        0.00567,
+        0.0,
+        0.01133,
+        1.0,
+        0.017,
+        1,
+        1,
+        0.13367,
+        1.0,
+        0.25033,
+        0.439,
+        0.367,
+        -0.1,
+        1,
+        0.52233,
+        -0.819,
+        0.67767,
+        -1.0,
+        0.833,
+        -1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "TONGUE_move2",
+      "Segments": [
+        0,
+        0,
+        1,
+        0.00567,
+        0.0,
+        0.01133,
+        1.0,
+        0.017,
+        1,
+        1,
+        0.13367,
+        1.0,
+        0.25033,
+        0.2,
+        0.367,
+        0.2,
+        1,
+        0.52233,
+        0.2,
+        0.67767,
+        1.0,
+        0.833,
+        1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamMouthSide",
+      "Segments": [
+        0,
+        0,
+        1,
+        0.05567,
+        0.0,
+        0.11133,
+        1.0,
+        0.167,
+        1,
+        1,
+        0.23367,
+        1.0,
+        0.30033,
+        0.639,
+        0.367,
+        0,
+        1,
+        0.439,
+        -0.692,
+        0.511,
+        -1.0,
+        0.583,
+        -1,
+        1,
+        0.66633,
+        -1.0,
+        0.74967,
+        0.0,
+        0.833,
+        0
+      ]
+    }
+  ]
+}

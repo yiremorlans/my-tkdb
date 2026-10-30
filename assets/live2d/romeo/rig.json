@@ -1,0 +1,69 @@
+{
+  "character": "romeo",
+  "reference": { "width": 2000, "height": 2800 },
+  "stage": {
+    "landscape": { "top": 186, "bottom": 1396, "centerX": 1000 },
+    "portrait": { "top": 205, "bottom": 1787, "centerX": 1000 }
+  },
+  "defaultOutfit": "academy",
+  "outfits": {
+    "academy": {
+      "model": "academy/romeo_academy.model3.json",
+      "parts": { "chest": ["ArtMesh446"], "pants": ["ArtMesh467", "ArtMesh468"] },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+      }
+    }
+  },
+  "parts": {
+    "face_base": ["ArtMesh123"],
+    "mouth": ["ArtMesh104", "ArtMesh106", "ArtMesh105", "ArtMesh99", "h", "ArtMesh101", "ArtMesh100", "ArtMesh102", "ArtMesh103", "ArtMesh107", "ArtMesh98"],
+    "ear_r": ["ArtMesh124", "ArtMesh125", "ArtMesh128"],
+    "ear_l": ["ArtMesh126", "ArtMesh127", "ArtMesh129"],
+    "hand_r": ["ArtMesh175", "ArtMesh176"],
+    "hand_l": ["ArtMesh247"]
+  },
+  "hotspots": {
+    "lips": { "part": "mouth", "rect": [-0.25, -0.5, 1.25, 1.5] },
+    "ear_r": { "part": "ear_r" },
+    "ear_l": { "part": "ear_l" },
+    "hand_r": { "part": "hand_r" },
+    "hand_l": { "part": "hand_l" },
+    "cheek": { "part": "face_base", "rect": [0.12, 0.55, 0.88, 0.82] },
+    "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
+  },
+  "bones": {
+    "arms": {
+      "r": { },
+      "l": { }
+    }
+  },
+  "expressions": {
+    "fade": 0.2,
+    "moods": {
+      "default": [],
+      "close": ["e_close_00"],
+      "smile": ["e_egao_00"],
+      "full_smile": ["e_manmen_00"],
+      "blush": ["e_sekimen_00"],
+      "smile_blush": ["e_egao_00", "e_sekimen_00"],
+      "full_smile_blush": ["e_manmen_00", "e_sekimen_00"],
+      "surprise": ["e_odoroki_00"],
+      "surprise_blush": ["e_odoroki_00", "e_sekimen_00"],
+      "sweat": ["e_ase_00"],
+      "serious": ["e_ikari_00"],
+      "annoyed": ["e_ikari_00"],
+      "upset": ["e_ikari_00", "e_ase_00"],
+      "sad": ["e_cry_00"],
+      "away": ["e_tsujo_away_00"]
+    }
+  },
+  "reactionPoses": { "hipsTouch": "m_udekumi", "upset": "m_fist", "spendTime": "m_gesture" },
+  "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
+  "motion": {
+    "idle": { "amount": 0.35 },
+    "breath": { "amount": 0.5 },
+    "bgPan": { "speed": 0.022, "amount": 0.01 }
+  }
+}

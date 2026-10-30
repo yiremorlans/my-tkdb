@@ -1,0 +1,75 @@
+{
+  "character": "jin",
+  "reference": { "width": 2000, "height": 2800 },
+  "background": "../../bg/frostheim/Frostheim_Jin_Room.png",
+  "stage": {
+    "landscape": { "top": 145, "bottom": 1355, "centerX": 1000 },
+    "portrait": { "top": 164, "bottom": 1746, "centerX": 1000 }
+  },
+  "defaultOutfit": "academy",
+  "outfits": {
+    "academy": {
+      "model": "academy/jin_academy.model3.json",
+      "parts": { "chest": ["ArtMesh167"], "pants": ["ArtMesh186", "ArtMesh187"] },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+      }
+    }
+  },
+  "parts": {
+    "face_base": ["ArtMesh95"],
+    "mouth": ["ArtMesh72", "ArtMesh70", "ArtMesh307", "ArtMesh79", "ArtMesh78", "ArtMesh77", "ArtMesh76", "ArtMesh75", "ArtMesh306", "ArtMesh305", "ArtMesh304", "ArtMesh303"],
+    "ear_r": ["ArtMesh96"],
+    "ear_l": ["ArtMesh97"],
+    "hand_r": ["ArtMesh287", "ArtMesh286", "ArtMesh283", "ArtMesh258"],
+    "hand_l": ["ArtMesh234", "ArtMesh235", "ArtMesh236"]
+  },
+  "hotspots": {
+    "lips": { "part": "mouth", "rect": [-0.25, -0.5, 1.25, 1.5] },
+    "ear_r": { "part": "ear_r" },
+    "ear_l": { "part": "ear_l" },
+    "hand_r": { "part": "hand_r" },
+    "hand_l": { "part": "hand_l" },
+    "cheek": { "part": "face_base", "rect": [0.12, 0.55, 0.88, 0.82] },
+    "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
+  },
+  "bones": {
+    "arms": {
+      "r": { },
+      "l": { }
+    }
+  },
+  "expressions": {
+    "fade": 0.2,
+    "moods": {
+      "default": [],
+      "close": ["e_close_00"],
+      "smile": ["e_jishin_00"],
+      "full_smile": ["e_amae_00"],
+      "blush": ["e_sekimen_00"],
+      "smile_blush": ["e_jishin_00", "e_sekimen_00"],
+      "full_smile_blush": ["e_amae_00", "e_sekimen_00"],
+      "surprise": ["e_odoroki_00"],
+      "surprise_blush": ["e_odoroki_00", "e_sekimen_00"],
+      "sweat": ["e_ase_00"],
+      "serious": ["e_ikari_00"],
+      "annoyed": ["e_kire_00"],
+      "upset": ["e_ikari_00", "e_ase_00"],
+      "sad": ["e_kanashimi_00"],
+      "away": ["e_tsujo_away_00"]
+    }
+  },
+  "reactionPoses": {
+    "headPat": "m_kubi",
+    "hipsTouch": "m_udekumi",
+    "upset": "m_akire",
+    "spendTime": "m_gesture"
+  },
+  "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
+  "motion": {
+    "idle": { "amount": 0.35 },
+    "breath": { "amount": 0.5 },
+    "bgPan": { "speed": 0.022, "amount": 0.01 }
+  }
+}

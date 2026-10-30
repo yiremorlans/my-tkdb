@@ -1,0 +1,17 @@
+{
+  "Type": "Live2D Expression",
+  "FadeInTime": 0.2,
+  "FadeOutTime": 0.2,
+  "Parameters": [
+    {
+      "Id": "ParamHanaji",
+      "Value": 1,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamHanajiON",
+      "Value": 1,
+      "Blend": "Add"
+    }
+  ]
+}

@@ -1,0 +1,344 @@
+{
+  "Version": 3,
+  "FileReferences": {
+    "Moc": "towa_academy.moc3",
+    "Textures": [
+      "towa_academy_00.png"
+    ],
+    "Physics": "towa_academy.physics3.json",
+    "Expressions": [
+      {
+        "Name": "e_ase_00",
+        "File": "expressions/e_ase_00.exp3.json"
+      },
+      {
+        "Name": "e_close_00",
+        "File": "expressions/e_close_00.exp3.json"
+      },
+      {
+        "Name": "e_cry_00",
+        "File": "expressions/e_cry_00.exp3.json"
+      },
+      {
+        "Name": "e_fuman_00",
+        "File": "expressions/e_fuman_00.exp3.json"
+      },
+      {
+        "Name": "e_ikari_00",
+        "File": "expressions/e_ikari_00.exp3.json"
+      },
+      {
+        "Name": "e_ikari_02",
+        "File": "expressions/e_ikari_02.exp3.json"
+      },
+      {
+        "Name": "e_kanasii_00",
+        "File": "expressions/e_kanasii_00.exp3.json"
+      },
+      {
+        "Name": "e_kusho_00",
+        "File": "expressions/e_kusho_00.exp3.json"
+      },
+      {
+        "Name": "e_magao_00",
+        "File": "expressions/e_magao_00.exp3.json"
+      },
+      {
+        "Name": "e_manmen_00",
+        "File": "expressions/e_manmen_00.exp3.json"
+      },
+      {
+        "Name": "e_obie_00",
+        "File": "expressions/e_obie_00.exp3.json"
+      },
+      {
+        "Name": "e_odoroki_00",
+        "File": "expressions/e_odoroki_00.exp3.json"
+      },
+      {
+        "Name": "e_sekimen_00",
+        "File": "expressions/e_sekimen_00.exp3.json"
+      },
+      {
+        "Name": "e_shout_00",
+        "File": "expressions/e_shout_00.exp3.json"
+      },
+      {
+        "Name": "e_sob_00",
+        "File": "expressions/e_sob_00.exp3.json"
+      },
+      {
+        "Name": "e_toroketa_00",
+        "File": "expressions/e_toroketa_00.exp3.json"
+      },
+      {
+        "Name": "e_tsujo_00",
+        "File": "expressions/e_tsujo_00.exp3.json"
+      }
+    ],
+    "Motions": {
+      "e_cry_02": [
+        {
+          "File": "motions/e_cry_02.motion3.json"
+        }
+      ],
+      "e_sob_02": [
+        {
+          "File": "motions/e_sob_02.motion3.json"
+        }
+      ],
+      "m_breath": [
+        {
+          "File": "motions/m_breath.motion3.json"
+        }
+      ],
+      "m_breath_B": [
+        {
+          "File": "motions/m_breath_B.motion3.json"
+        }
+      ],
+      "m_default": [
+        {
+          "File": "motions/m_default.motion3.json"
+        }
+      ],
+      "m_default_B": [
+        {
+          "File": "motions/m_default_B.motion3.json"
+        }
+      ],
+      "m_fusigi": [
+        {
+          "File": "motions/m_fusigi.motion3.json"
+        }
+      ],
+      "m_fusigi_hold": [
+        {
+          "File": "motions/m_fusigi_hold.motion3.json"
+        }
+      ],
+      "m_fusigi_B": [
+        {
+          "File": "motions/m_fusigi_B.motion3.json"
+        }
+      ],
+      "m_fusigi_B_hold": [
+        {
+          "File": "motions/m_fusigi_B_hold.motion3.json"
+        }
+      ],
+      "m_fusigi_B_return": [
+        {
+          "File": "motions/m_fusigi_B_return.motion3.json"
+        }
+      ],
+      "m_fusigi_return": [
+        {
+          "File": "motions/m_fusigi_return.motion3.json"
+        }
+      ],
+      "m_ikari": [
+        {
+          "File": "motions/m_ikari.motion3.json"
+        }
+      ],
+      "m_ikari_hold": [
+        {
+          "File": "motions/m_ikari_hold.motion3.json"
+        }
+      ],
+      "m_ikari_B": [
+        {
+          "File": "motions/m_ikari_B.motion3.json"
+        }
+      ],
+      "m_ikari_B_hold": [
+        {
+          "File": "motions/m_ikari_B_hold.motion3.json"
+        }
+      ],
+      "m_ikari_B_return": [
+        {
+          "File": "motions/m_ikari_B_return.motion3.json"
+        }
+      ],
+      "m_ikari_return": [
+        {
+          "File": "motions/m_ikari_return.motion3.json"
+        }
+      ],
+      "m_kuchimoto": [
+        {
+          "File": "motions/m_kuchimoto.motion3.json"
+        }
+      ],
+      "m_kuchimoto_hold": [
+        {
+          "File": "motions/m_kuchimoto_hold.motion3.json"
+        }
+      ],
+      "m_kuchimoto_B": [
+        {
+          "File": "motions/m_kuchimoto_B.motion3.json"
+        }
+      ],
+      "m_kuchimoto_B_hold": [
+        {
+          "File": "motions/m_kuchimoto_B_hold.motion3.json"
+        }
+      ],
+      "m_kuchimoto_B_return": [
+        {
+          "File": "motions/m_kuchimoto_B_return.motion3.json"
+        }
+      ],
+      "m_kuchimoto_return": [
+        {
+          "File": "motions/m_kuchimoto_return.motion3.json"
+        }
+      ],
+      "m_migikoshi": [
+        {
+          "File": "motions/m_migikoshi.motion3.json"
+        }
+      ],
+      "m_migikoshi_hold": [
+        {
+          "File": "motions/m_migikoshi_hold.motion3.json"
+        }
+      ],
+      "m_migikoshi_B": [
+        {
+          "File": "motions/m_migikoshi_B.motion3.json"
+        }
+      ],
+      "m_migikoshi_B_hold": [
+        {
+          "File": "motions/m_migikoshi_B_hold.motion3.json"
+        }
+      ],
+      "m_migikoshi_B_return": [
+        {
+          "File": "motions/m_migikoshi_B_return.motion3.json"
+        }
+      ],
+      "m_migikoshi_return": [
+        {
+          "File": "motions/m_migikoshi_return.motion3.json"
+        }
+      ],
+      "m_nod_noloop": [
+        {
+          "File": "motions/m_nod_noloop.motion3.json"
+        }
+      ],
+      "m_nod_noloop_B": [
+        {
+          "File": "motions/m_nod_noloop_B.motion3.json"
+        }
+      ],
+      "m_odoroki": [
+        {
+          "File": "motions/m_odoroki.motion3.json"
+        }
+      ],
+      "m_odoroki_hold": [
+        {
+          "File": "motions/m_odoroki_hold.motion3.json"
+        }
+      ],
+      "m_odoroki_B": [
+        {
+          "File": "motions/m_odoroki_B.motion3.json"
+        }
+      ],
+      "m_odoroki_B_hold": [
+        {
+          "File": "motions/m_odoroki_B_hold.motion3.json"
+        }
+      ],
+      "m_odoroki_B_return": [
+        {
+          "File": "motions/m_odoroki_B_return.motion3.json"
+        }
+      ],
+      "m_odoroki_return": [
+        {
+          "File": "motions/m_odoroki_return.motion3.json"
+        }
+      ],
+      "m_shakehead_noloop": [
+        {
+          "File": "motions/m_shakehead_noloop.motion3.json"
+        }
+      ],
+      "m_shakehead_noloop_B": [
+        {
+          "File": "motions/m_shakehead_noloop_B.motion3.json"
+        }
+      ],
+      "m_udekumi": [
+        {
+          "File": "motions/m_udekumi.motion3.json"
+        }
+      ],
+      "m_udekumi_hold": [
+        {
+          "File": "motions/m_udekumi_hold.motion3.json"
+        }
+      ],
+      "m_udekumi_B": [
+        {
+          "File": "motions/m_udekumi_B.motion3.json"
+        }
+      ],
+      "m_udekumi_B_hold": [
+        {
+          "File": "motions/m_udekumi_B_hold.motion3.json"
+        }
+      ],
+      "m_udekumi_B_return": [
+        {
+          "File": "motions/m_udekumi_B_return.motion3.json"
+        }
+      ],
+      "m_udekumi_return": [
+        {
+          "File": "motions/m_udekumi_return.motion3.json"
+        }
+      ],
+      "m_yurayura_noloop": [
+        {
+          "File": "motions/m_yurayura_noloop.motion3.json"
+        }
+      ],
+      "m_yurayura_noloop_B": [
+        {
+          "File": "motions/m_yurayura_noloop_B.motion3.json"
+        }
+      ],
+      "Idle": [
+        {
+          "File": "motions/m_default.motion3.json"
+        }
+      ]
+    }
+  },
+  "Groups": [
+    {
+      "Target": "Parameter",
+      "Name": "EyeBlink",
+      "Ids": [
+        "ParamEyeLOpen",
+        "ParamEyeROpen"
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Name": "LipSync",
+      "Ids": [
+        "ParamMouthOpenY"
+      ]
+    }
+  ]
+}

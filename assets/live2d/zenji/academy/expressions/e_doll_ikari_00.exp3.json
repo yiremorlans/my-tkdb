@@ -1,0 +1,42 @@
+{
+  "Type": "Live2D Expression",
+  "FadeInTime": 0.2,
+  "FadeOutTime": 0.2,
+  "Parameters": [
+    {
+      "Id": "ParamDollOnoff",
+      "Value": 1,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamDollEyeROpen",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamDollEyeBallX",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamDollEyeBallY",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamDollHornChange",
+      "Value": 1,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamDollEyeChange",
+      "Value": 1,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamDollMouthChange",
+      "Value": 1,
+      "Blend": "Add"
+    }
+  ]
+}

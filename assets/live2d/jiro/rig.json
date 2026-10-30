@@ -1,0 +1,74 @@
+{
+  "character": "jiro",
+  "reference": { "width": 2000, "height": 2800 },
+  "background": "../../bg/mortkranken/Mortkranken_Jiro_Room.png",
+  "stage": {
+    "landscape": { "top": 109, "bottom": 1319, "centerX": 1000 },
+    "portrait": { "top": 128, "bottom": 1710, "centerX": 1000 }
+  },
+  "defaultOutfit": "academy",
+  "outfits": {
+    "academy": {
+      "model": "academy/jiro_academy.model3.json",
+      "parts": { "chest": ["ArtMesh152"], "pants": ["ArtMesh173", "ArtMesh174"] },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+      }
+    }
+  },
+  "parts": {
+    "face_base": ["ArtMesh115"],
+    "mouth": ["ArtMesh90", "ArtMesh93", "ArtMesh94", "ArtMesh96", "ArtMesh97", "ArtMesh99", "ArtMesh100", "ArtMesh101", "ArtMesh95", "ArtMesh91"],
+    "ear_r": ["ArtMesh116", "ArtMesh117", "ArtMesh118", "ArtMesh119"],
+    "ear_l": ["ArtMesh120"],
+    "hand_r": ["ArtMesh199"],
+    "hand_l": ["ArtMesh185"]
+  },
+  "hotspots": {
+    "lips": { "part": "mouth", "rect": [-0.25, -0.5, 1.25, 1.5] },
+    "ear_r": { "part": "ear_r" },
+    "ear_l": { "part": "ear_l" },
+    "hand_r": { "part": "hand_r" },
+    "hand_l": { "part": "hand_l" },
+    "cheek": { "part": "face_base", "rect": [0.12, 0.55, 0.88, 0.82] },
+    "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
+  },
+  "bones": {
+    "arms": {
+      "r": { },
+      "l": { }
+    }
+  },
+  "expressions": {
+    "fade": 0.2,
+    "moods": {
+      "default": [],
+      "close": ["e_close_00"],
+      "smile": ["e_smile_00"],
+      "full_smile": ["e_manmen_00"],
+      "blush": ["e_sekimen_00"],
+      "smile_blush": ["e_smile_00", "e_sekimen_00"],
+      "full_smile_blush": ["e_manmen_00", "e_sekimen_00"],
+      "surprise": ["e_odoroki_00"],
+      "surprise_blush": ["e_odoroki_00", "e_sekimen_00"],
+      "sweat": ["e_ase_00"],
+      "serious": ["e_fukigen_00"],
+      "annoyed": ["e_fukigen_00"],
+      "upset": ["e_fukigen_00", "e_ase_00"],
+      "sad": ["e_kanashimi_00"]
+    }
+  },
+  "reactionPoses": {
+    "headPat": "m_kubi",
+    "hipsTouch": "m_udekumi",
+    "upset": "m_hidarikoshi",
+    "spendTime": "m_gesture"
+  },
+  "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
+  "motion": {
+    "idle": { "amount": 0.35 },
+    "breath": { "amount": 0.5 },
+    "bgPan": { "speed": 0.022, "amount": 0.01 }
+  }
+}

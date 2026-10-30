@@ -1,0 +1,83 @@
+{
+  "Version": 3,
+  "Meta": {
+    "Duration": 1.5,
+    "Fps": 60.0,
+    "Loop": true,
+    "AreBeziersRestricted": true,
+    "FadeInTime": 0,
+    "FadeOutTime": 0,
+    "CurveCount": 3,
+    "TotalSegmentCount": 11,
+    "TotalPointCount": 18,
+    "UserDataCount": 0,
+    "TotalUserDataSize": 0
+  },
+  "Curves": [
+    {
+      "Target": "Parameter",
+      "Id": "ParamTear",
+      "Segments": [
+        0,
+        1,
+        0,
+        1.5,
+        1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLTearDown",
+      "Segments": [
+        0,
+        0,
+        0,
+        0.433,
+        0.63,
+        0,
+        1.083,
+        0.75,
+        0,
+        1.25,
+        1,
+        0,
+        1.483,
+        1,
+        1,
+        1.48867,
+        0.66667,
+        1.49433,
+        0.33333,
+        1.5,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamRTearDown",
+      "Segments": [
+        0,
+        0,
+        0,
+        0.25,
+        0,
+        0,
+        1,
+        0.63,
+        0,
+        1.333,
+        0.75,
+        0,
+        1.483,
+        1,
+        1,
+        1.48867,
+        0.66667,
+        1.49433,
+        0.33333,
+        1.5,
+        0
+      ]
+    }
+  ]
+}

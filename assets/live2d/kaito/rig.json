@@ -1,0 +1,70 @@
+{
+  "character": "kaito",
+  "reference": { "width": 2000, "height": 2800 },
+  "background": "../../bg/frostheim/Frostheim_Kaito_Room.png",
+  "stage": {
+    "landscape": { "top": 256, "bottom": 1466, "centerX": 1000 },
+    "portrait": { "top": 275, "bottom": 1857, "centerX": 1000 }
+  },
+  "defaultOutfit": "academy",
+  "outfits": {
+    "academy": {
+      "model": "academy/kaito_academy.model3.json",
+      "parts": { "chest": ["vest"], "pants": ["ArtMesh320", "ArtMesh322", "ArtMesh321", "ArtMesh323"] },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+      }
+    }
+  },
+  "parts": {
+    "face_base": ["face"],
+    "mouth": ["ArtMesh106", "ArtMesh107", "ArtMesh108", "ArtMesh109", "ArtMesh110", "ArtMesh111", "ArtMesh112", "ArtMesh113", "ArtMesh114", "mouth_area"],
+    "ear_r": ["ArtMesh169", "ArtMesh324", "ArtMesh325", "ArtMesh326"],
+    "ear_l": ["ArtMesh330", "ArtMesh327", "ArtMesh328", "ArtMesh329"],
+    "hand_r": ["ArtMesh274"],
+    "hand_l": ["ArtMesh292", "ArtMesh295", "ArtMesh296"]
+  },
+  "hotspots": {
+    "lips": { "part": "mouth", "rect": [-0.25, -0.5, 1.25, 1.5] },
+    "ear_r": { "part": "ear_r" },
+    "ear_l": { "part": "ear_l" },
+    "hand_r": { "part": "hand_r" },
+    "hand_l": { "part": "hand_l" },
+    "cheek": { "part": "face_base", "rect": [0.12, 0.55, 0.88, 0.82] },
+    "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
+  },
+  "bones": {
+    "arms": {
+      "r": { },
+      "l": { }
+    }
+  },
+  "expressions": {
+    "fade": 0.2,
+    "moods": {
+      "default": [],
+      "close": ["e_close_00"],
+      "smile": ["e_kusho_00"],
+      "full_smile": ["e_manmen_00"],
+      "blush": ["e_sekimen_00"],
+      "smile_blush": ["e_kusho_00", "e_sekimen_00"],
+      "full_smile_blush": ["e_manmen_00", "e_sekimen_00"],
+      "surprise": ["e_odoroki_00"],
+      "surprise_blush": ["e_odoroki_00", "e_sekimen_00"],
+      "sweat": ["e_ase_00"],
+      "serious": ["e_magao_00"],
+      "annoyed": ["e_fuman_00"],
+      "upset": ["e_ikari_00", "e_ase_00"],
+      "sad": ["e_cry_00"],
+      "lovestruck": ["e_dere_00"]
+    }
+  },
+  "reactionPoses": { "headPat": "m_tere", "hipsTouch": "m_udekumi", "spendTime": "m_gesture" },
+  "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
+  "motion": {
+    "idle": { "amount": 0.35 },
+    "breath": { "amount": 0.5 },
+    "bgPan": { "speed": 0.022, "amount": 0.01 }
+  }
+}
