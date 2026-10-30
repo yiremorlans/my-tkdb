@@ -14,6 +14,25 @@
         "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
         "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
       }
+    },
+    "femacademy": {
+      "model": "femacademy/jo_femacademy.model3.json",
+      "dialogueVariant": "casual",
+      "parts": {
+        "chest": ["ArtMesh122"],
+        "pants": ["ArtMesh133", "ArtMesh134"],
+        "face_base": ["ArtMesh102"],
+        "mouth": ["ArtMesh77", "ArtMesh79", "ArtMesh80", "ArtMesh81", "ArtMesh82", "ArtMesh84", "ArtMesh85", "ArtMesh86", "ArtMesh87", "ArtMesh78", "ArtMesh83"],
+        "ear_r": ["ArtMesh88", "ArtMesh107", "ArtMesh105"],
+        "ear_l": ["ArtMesh89", "ArtMesh104", "ArtMesh106", "ArtMesh108"],
+        "hand_r": ["ArtMesh138"],
+        "hand_l": ["ArtMesh172"]
+      },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 1.04] },
+        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+      }
     }
   },
   "parts": {
@@ -53,8 +72,8 @@
       "surprise_blush": ["e_odoroki_00", "e_sekimen_00"],
       "sweat": ["e_ase_00"],
       "serious": ["e_magao_00"],
-      "annoyed": ["e_ikari_00"],
-      "upset": ["e_ikari_00", "e_ase_00"],
+      "annoyed": ["e_komari_00"],
+      "upset": ["e_komari_00", "e_ase_00"],
       "sad": ["e_kanashimi_00"],
       "wink": ["e_wink_00"]
     }
