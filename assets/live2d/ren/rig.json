@@ -15,6 +15,16 @@
         "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
         "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
       }
+    },
+    "roomwear": {
+      "model": "roomwear/ren_roomwear.model3.json",
+      "dialogueVariant": "casual",
+      "parts": { "chest": ["ArtMesh314"], "pants": ["ArtMesh326", "ArtMesh327"], "hand_l": ["ArtMesh162"] },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 0.88] },
+        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+      }
     }
   },
   "parts": {

@@ -247,8 +247,10 @@ Order for a new character or outfit:
 6. **Validate:** `node --test test/hangout-v2-rig.test.js`.
 
 Every character has an academy model (2026-10-30; Benkei's is his
-default bundle, `benkei_`). Jo also has `femacademy` (`jofemacademy`); no
-other second outfits yet ([`live2d-outfits.md`](./live2d-outfits.md)).
+default bundle, `benkei_`). Second outfits so far: Benkei `work`
+(`benkeiapron`), Jo `femacademy` (`jofemacademy`), Mio `work` (`miowork`)
+and Ren `roomwear` (`renroomwear`)
+([`live2d-outfits.md`](./live2d-outfits.md)).
 ---
 
 ## 4. The Activity
@@ -685,10 +687,10 @@ picking logic:
   uniform and casual, `constants/dialogue/_shared.js`), and the beat is
   drawn last, so it always matches what the character is wearing.
 
-Today every rig but Jo's has only academy (2026-10-30), so every roll
-lands on academy and uniform, the same as a character with no casual image
-today. Jo's `femacademy` is marked `"casual"` (the variant whose lines use she/her), so Jo's
-casual rolls land on it.
+Today only Benkei, Jo, Mio and Ren have a second outfit (2026-10-30), each
+marked `"casual"`; everyone else's rolls land on academy and uniform, the
+same as a character with no casual image today. Jo's is `femacademy`, the
+outfit for the variant whose lines use she/her.
 A second outfit (casual, city, work or roomwear,
 [`live2d-outfits.md`](./live2d-outfits.md)) is marked `"casual"` and takes
 the casual rolls.

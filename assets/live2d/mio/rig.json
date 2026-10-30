@@ -14,6 +14,16 @@
         "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
         "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
       }
+    },
+    "work": {
+      "model": "work/mio_work.model3.json",
+      "dialogueVariant": "casual",
+      "parts": { "chest": ["ArtMesh8"], "pants": ["ArtMesh218", "ArtMesh219"], "hand_l": ["ArtMesh157"] },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 1.22] },
+        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+      }
     }
   },
   "parts": {
@@ -54,8 +64,7 @@
       "sweat": ["e_ase_00"],
       "serious": ["e_magao_00"],
       "annoyed": ["e_ikari_00"],
-      "upset": ["e_ikari_00", "e_ase_00"],
-      "sad": ["e_komari_00"]
+      "upset": ["e_ikari_00", "e_ase_00"]
     }
   },
   "reactionPoses": {

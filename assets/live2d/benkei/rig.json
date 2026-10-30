@@ -16,6 +16,16 @@
         "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 1.13] },
         "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
       }
+    },
+    "work": {
+      "model": "work/benkei_work.model3.json",
+      "dialogueVariant": "casual",
+      "parts": { "chest": ["ArtMesh104", "ArtMesh184"], "pants": ["ArtMesh111", "ArtMesh112"] },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 1.33] },
+        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+      }
     }
   },
   "parts": {

@@ -5,23 +5,21 @@ Hangout v2 (Live2D) is the default rig. Every character loads from two outfits:
 `assets/live2d/<id>/<outfit>/` and are registered under `outfits` in
 `assets/live2d/<id>/rig.json`.
 
-Status as of 2026-10-30: academy done for everyone. Jo also has `femacademy`
+Status as of 2026-10-30: academy done for everyone. Second outfits done for
+Benkei (`work`), Mio (`work`) and Ren (`roomwear`). Jo also has `femacademy`
 (game bundle `jofemacademy`, `dialogueVariant: "casual"`), an extra outfit
-outside the four slots. No other second outfits yet.
-
-Second-outfit bundles already in the game's cache (2026-10-30 pull), not
-converted: `benkeiapron`, `miowork`, `renroomwear`.
+outside the four slots.
 
 ## Benkei
 
 - [x] Benkei `academy` (game bundle `benkei_`, his default)
-- [ ] Benkei second outfit (old rig: `apron`; portrait `Benkei_Work.png`; bundle `benkeiapron` is cached)
+- [x] Benkei `work` (game bundle `benkeiapron`; old rig called it `apron`)
 
 ## Second outfit already chosen in the old rig
 
 - [ ] Alan `roomwear`
 - [ ] Edward `casual`
-- [ ] Ren `roomwear` (old rig also had `diner` as a third; bundle `renroomwear` is cached)
+- [x] Ren `roomwear` (game bundle `renroomwear`; old rig also had `diner` as a third)
 - [ ] Rui `casual`
 - [ ] Shohei `casual` (source art only, never added to the old rig.json)
 - [ ] Subaru `casual`
@@ -52,5 +50,5 @@ Pick city / casual / work / roomwear for each.
 Needs art first; uniform portrait only.
 
 - [ ] Elias: slot ___
-- [ ] Mio: slot ___ (the game has `miowork`, cached)
+- [x] Mio: `work` (game bundle `miowork`; the game had the art after all)
 - [ ] Shion: slot ___
