@@ -1,18 +1,27 @@
-# Spec: Hangout — rigged-sprite Discord Activity
+# Spec: Hangout — Live2D Discord Activity
 
-Status: **specced** (not started)
-Last updated: 2026-10-28
+Status: **in progress.** The Activity shell runs owner-only in Discord
+(milestone 2) on the Live2D rig. It is becoming the `/meet` interaction
+(§11).
+Last updated: 2026-10-30
 
-A new feature, separate from `/roam` and `/meet` (which stay exactly as they
-are). The Hangout is a **solo, private Discord Activity** where a character —
-Alan first — idles in their own room as an **animated, code-rigged sprite**.
-The user taps him for reactions and lines, and once per cooldown can
-**Spend time** with him to earn a small amount of affinity.
+A new home for `/meet`; `/roam` stays exactly as it is. The Hangout is a **solo, private Discord Activity** where a character —
+Alan first — idles in their own room as their **Live2D model**, the same
+one the game uses. The user taps him for reactions and lines. It is becoming
+the `/meet` interaction (§11): the encounter plays out in it, and answering
+that encounter is its only affinity source (§11.3).
 
-The rig is built entirely in code (PixiJS) from art already on hand. There is
-no Live2D, no Cubism Editor, and no `.moc3` — nothing is extracted from the
-game, and nobody has to rig by hand. The only hands-on step is optionally
-nudging parts in a dev-only editor (§3.4).
+The rig is the game's own model, pulled from its cache and converted back to
+Cubism files (§3), rendered with PixiJS and a Cubism plugin. Nobody rigs by
+hand: the only hands-on step is tuning a character's `rig.json` (touch
+spots, moods, reaction poses) in a dev-only preview (§3.4).
+
+**Rig history (2026-10-30).** The Hangout was first built on a code-rigged
+sprite (v1): atlas parts on a bone hierarchy, nearly still by design
+(Appendix A). The Live2D models (v2) replaced it as the rig. v1 stays in the
+repo, for comparison only (`/encdev hangout version:v1`, §6), until Live2D
+has launched; removing it is a separate effort after that (§8). Where this spec
+says "the rig" it means the Live2D one.
 
 Launched from `/hangout` (the Activity's entry-point command) or the
 voice-channel Activity launcher. Private and unlisted: the bot's own servers
@@ -24,19 +33,19 @@ only, no App Directory listing, no monetization.
 
 | Shared piece | Where it's defined | Used here for |
 |---|---|---|
-| `command_limits`, `claimCommandSlot`, 3h `COOLDOWN_MS` | `commandLimits.js`, `db/supabase.js` | the hangout's own cooldown, under `command_name = 'hangout'` (§5.2) |
-| `levelChange`, `deliverBondScene` | `storage.js`, `bondScenes.js` | level-ups from Spend time fire the same bond-scene DM (§5.3) |
-| `character_relationships` | `db/SCHEMA.md` | the affinity Spend time writes |
-| `command_usage_log`, `character_engagement` | `db/SCHEMA.md` | analytics, logged as `'hangout'` (§5.4) |
+| `claimCommandUse`, 3h `COOLDOWN_MS` | `commandLimits.js`, `db/supabase.js` | the `/meet` reward gate on the answer (§11.3) |
+| `levelChange`, `deliverBondScene` | `storage.js`, `bondScenes.js` | level-ups from the `/meet` answer fire the same bond-scene DM (§11.2) |
+| `character_relationships` | `db/SCHEMA.md` | the affinity the `/meet` answer writes |
+| `command_usage_log`, `character_engagement` | `db/SCHEMA.md` | analytics: `'meet'` for answers (§11.7), `'hangout_open'` for opens (§5.2) |
 | `CHARACTER_ROOMS`, `backgroundPath` | `constants/backgrounds.js` | the room background (`Vagastrom_Alan_Room.png`) |
 | Dialogue box look, fonts | `imageComposition.js`, `assets/fonts` | the Activity's UI styling (§4.4) |
 | Alan's voice | `constants/dialogue/alan.js` | reference for drafting hangout lines (§4.3) |
 
-**Deliberate rule change.** [`bond-scene-dms.md`](./bond-scene-dms.md) and
+**Affinity sources.** [`bond-scene-dms.md`](./bond-scene-dms.md) and
 [`scheduled-missions.md`](./scheduled-missions.md) both state that `/roam` and
-`/meet` are the only things that move affinity. The Hangout's Spend time is a
-third, intentionally small source (+1, own cooldown). Update those two lines
-when this ships.
+`/meet` are the only things that move affinity. The Hangout keeps that rule:
+it moves affinity only as `/meet`, through the answer (§11.3). Touches are
+cosmetic.
 
 ---
 
@@ -46,17 +55,20 @@ when this ships.
 - A rigged character that feels alive with minimal movement — the rig is the
   main attraction.
 - A data-driven pipeline: adding another character is new data files
-  (`rig.json`, overlays, lines), not new code.
+  (the converted model, `rig.json`, lines), not new code.
 - Reads and writes the existing tkdb data through the server, never directly
   from the browser.
 
-**Out of scope for v1**
+**Out of scope for the first release**
 - Shared multiplayer rooms (everyone in the voice call seeing the same
-  character). v1 is solo per user.
-- Store-credit gifts, lip sync, cursor/eye tracking, walking, large arm
-  movements (overhead waves, hand behind head).
-- Characters other than Alan.
-- Public listing, and extracting or using game model files.
+  character). The release is solo per user.
+- Store-credit gifts, voice-driven lip sync (the mouth only flaps while a
+  line types), cursor/eye tracking, walking, and motion the game's models
+  don't have.
+- Picking a character inside Discord: the Activity opens Alan until §11
+  routes `/meet`'s pick into it. Other characters' rigs load in a plain
+  browser with `?character=<id>`.
+- Public listing.
 
 ---
 
@@ -64,26 +76,689 @@ when this ships.
 
 | File | What it is | Role |
 |---|---|---|
-| `alan_academy_00.png` (1858×1858) | Texture atlas: every part cut out — face base, eyes, brows, ears, ~80 hair strands, shirt, vest, sleeves, forearms, pants, boots, ~12 hand poses | the parts the rig is built from |
-| `alan_academy.png` (768×1366) | Assembled full-body Alan | placement reference for rig authoring only; not rendered |
-| `assets/expressions/alan/*.png` (562×562 each) | Flattened head portraits: `default`, `close`, `smile`, `full_smile`, `serious`, `surprise`, `sweat`, `blush`, `smile_blush`, `full_smile_blush`, `surprise_blush` | fallback source for expression overlays (§3.3) |
+| The game's model bundle per character and outfit (`dialogueactors_assets_<name><outfit>_<hash>.bundle`, from the game's cache) | The Live2D model the game's dialogue scenes use: moc3, textures, physics, expressions, pose clips | converted into `assets/live2d/<id>/<outfit>/` (§3.5) |
 | `assets/bg/vagastrom/Vagastrom_Alan_Room.png` | Alan's room | background |
+| `assets/rig/alan/sfx/*.wav` | Alan's reaction sounds | sounds (§4.2); move under `assets/live2d/` when v1 is removed |
 
-The atlas and reference sprite move into the repo under
-`assets/rig/alan/source/`.
+The sprite rig's sources (texture atlas, reference sprite, expression
+portraits) are only used by v1 (Appendix A).
 
-**Rights.** This is Tokyo Debunker art. Keeping the Activity private and
-unlisted is what makes using it acceptable for now; going public waits on
-confirming rights.
+**Rights.** This is Tokyo Debunker art, and the rig is the game's own model
+files, extracted from its cache. Keeping the Activity private and unlisted
+is what makes using it acceptable for now; going public waits on confirming
+rights.
 
 ---
 
 ## 3. Rig pipeline
 
-All tooling lives in `activity/tools/` and runs with Node. Output goes to
-`assets/rig/<character>/` (one rig per character).
+A character's rig is the game's own Live2D model for each outfit, converted
+back to Cubism files, plus a `rig.json` that maps the Hangout's touch spots,
+moods and reactions onto it. The model breathes, blinks, idles and runs its
+physics itself; the Hangout only layers moods, reaction poses and talking on
+top. Tooling lives in `activity/tools/` and runs with Node. Output goes to
+`assets/live2d/<character>/`: one folder per outfit with the Cubism files,
+and one `rig.json` for the character. The game's models share one 2000×2800
+canvas, which is every rig's reference space.
 
-### 3.1 Slice
+The sprite rig this replaced (v1, `assets/rig/<character>/`) is kept until
+Live2D has launched and is then removed on its own (§8). Its pipeline is in
+Appendix A.
+
+### 3.1 `rig.json`
+
+`activity/src/hangout-v2/live2dRig.js` documents the format (including each
+outfit's `dialogueVariant`, §11.5) and `validate.js`
+checks it, in the browser on load and in
+`test/hangout-v2-rig.test.js` against every rig on disk. Alan's, trimmed:
+
+```jsonc
+{
+  "character": "alan",
+  "reference": { "width": 2000, "height": 2800 },    // the model canvas
+  "background": "../../bg/vagastrom/Vagastrom_Alan_Room.png",
+  "stage": {                                          // framing, per orientation
+    "landscape": { "top": 66, "bottom": 1276, "centerX": 1000 },
+    "portrait":  { "top": 85, "bottom": 1667, "centerX": 1000 }
+  },
+  "defaultOutfit": "academy",
+  "outfits": {
+    "academy": {
+      "model": "academy/alan_academy.model3.json",
+      "dialogueVariant": "uniform",                   // the /meet variant roll it answers to (§11.5)
+      "parts": { "vest": ["ArtMesh134"], "pants": ["pants_R", "pants_L"] },
+      "hotspots": { "chest": { "part": "vest", "rect": [0.18, 0.02, 0.82, 0.4] } }
+    }
+  },
+  "parts": {                                          // id → Live2D drawable ids
+    "face_base": ["FaceSkin"],
+    "mouth": ["ArtMesh71"]
+  },
+  "hotspots": {
+    "lips": { "part": "mouth", "rect": [-0.25, -2, 1.25, 3] },
+    "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
+  },
+  "expressions": {
+    "fade": 0.2,                                      // crossfade, seconds
+    "moods": {
+      "smile": ["e_egao_00"],
+      "smile_blush": ["e_egao_00", "e_sekimen_00"],   // stacked
+      "upset": ["e_ikari_00", "e_ase_00"]
+    }
+  },
+  "reactionPoses": { "headPat": "m_kubi", "upset": "m_angry" },
+  "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
+  "motion": {
+    "idle":   { "amount": 0.35 },                     // share of the idle clip's sway kept
+    "breath": { "amount": 0.5 },
+    "bgPan":  { "speed": 0.022, "amount": 0.01 }
+  },
+  "sounds": { "headPat": "../../rig/alan/sfx/alan_default_1.wav" }
+}
+```
+
+- **Parts and hotspots.** A part is a list of the model's drawable ids; a
+  hotspot's `rect` is normalized to the combined bounds of the part's
+  visible drawables, read every tap, so it follows the art through poses.
+  Outfit `parts` and `hotspots` merge over the shared ones (the body
+  differs per outfit; the face doesn't).
+- **Outfits.** Each outfit names its `model3.json`; `defaultOutfit` picks
+  the one shown first. Which outfits each character gets is tracked in
+  [`live2d-outfits.md`](./live2d-outfits.md): academy plus one of
+  city / casual / work / roomwear.
+- **Not used:** the sprite rig's skeleton, `bones` limits, hand poses and
+  hand sets, blink timing, overlays and portrait hair. The model's own
+  poses carry the hands.
+
+### 3.2 Expressions
+
+Each mood is a stack of the model's own expression files (`exp3`), added
+together and crossfaded over `expressions.fade`. A mood the expression
+ladder can pick (§4.2) but the rig lacks shows `default`, and the validator
+lists it as a warning rather than a failure. **Upset** is `serious` +
+`sweat` where the model has no anger expression of its own.
+
+### 3.3 Reaction poses
+
+`reactionPoses` maps a reaction (§4.2) to one of the model's pose groups.
+A pose plays like the game's own Animator: the pose clip, then its looping
+`*_hold` clip (the converter writes it, pinned at the clip's last frame),
+then after `POSE_HOLD` (2.5 s) its `*_return` clip. A reaction with no pose
+is carried by the face, the line and the sound alone.
+
+### 3.4 Preview and tuning
+
+`activity/hangout-v2.html`, local only (never built or deployed): the scene
+over the character's room, plus a debug drawer with every mood, reaction,
+touch spot and pose, the relationship tier, and a hotspot overlay.
+`?character=<id>`, `?tier=<tier>`, `?pose=<group>`, `?room=0` (no room),
+`?mobile=1` (30 fps cap). Rigs are tuned by hand in rig.json against it.
+
+### 3.5 Pipeline tools (any character, any outfit)
+
+Order for a new character or outfit:
+
+1. **Pull the game's cache from BlueStacks.** The game downloads each
+   model's bundle the first time a scene needs it, so a character missing
+   from the cache has to be played to first. With BlueStacks running:
+   ```
+   hd-adb connect 127.0.0.1:5555
+   hd-adb -s 127.0.0.1:5555 pull /sdcard/Android/data/com.zigzagame.tokyodebunker <dir>
+   ```
+   (`hd-adb` is `/Applications/BlueStacks.app/Contents/MacOS/hd-adb`.) The
+   catalog, `files/com.unity.addressables/catalog_*.json`, names each model
+   bundle `dialogueactors_assets_<name><outfit>_<hash>.bundle` (game names:
+   `luca`, `sho`, `jou` for Jo). The cached copy is
+   `files/UnityCache/Shared/<x>/<hash>/__data`; no folder with that hash
+   means it isn't downloaded yet.
+2. **Start AssetRipper headless:** `AssetRipper.GUI.Premium --headless --port 54321`
+   (the Free build takes the same flags).
+3. **`live2d-convert.js <character> --bundle <__data>`**: AssetRipper's
+   Unity-project export, then the moc3 (the CubismMoc asset's bytes),
+   physics3 (from the prefab's CubismPhysicsController), exp3 and motion3
+   files (Unity Hermite curves turned back into exact beziers, infinite
+   slopes into stepped segments), a looping `*_hold` clip pinned at the last
+   frame of every pose that has a `*_return`, and model3.json. Files are
+   `<character>_<outfit>.*` after the repo's ids. `--assets` takes an
+   export made by hand. Converting Alan's bundle reproduces his committed
+   files.
+4. **`live2d-rig.js <character>`**: rig.json from Alan's as a template.
+   Hotspot parts are picked from the model's part tree at rest (face skin,
+   PartMouth, PartEar, the lowest arm pieces, the biggest torso piece, the
+   legs), the stage is Alan's framing shifted to the face, moods and
+   reaction poses are mapped onto the expressions and clips this model has,
+   and the background is the v1 rig's (`assets/rig/<id>/rig.json`), else the
+   character's room. The outfit gets a `dialogueVariant` (uniform for
+   academy, casual otherwise; §11.5). It reproduces the academy rigs it wrote (2026-10-30) byte for
+   byte, apart from Benkei, Elias, Jo and Shion's hand-tuned ears.
+
+   It writes a fresh rig.json with only the one outfit, so for a
+   character's **second outfit** run it with `--dry-run` and merge the
+   new `outfits.<outfit>` entry by hand. Outfit `parts` merge over the
+   shared ones, so where the second model's face, mouth, ear or hand
+   drawables have different ids (Jo's femacademy), they go in the outfit's
+   own `parts`. The shared moods and reaction poses are checked against
+   every outfit's model, so each expression and pose they name must exist
+   in both (Jo's annoyed/upset moved from `e_ikari_00` to `e_komari_00`,
+   which femacademy has). The preview has no outfit picker: it shows
+   `defaultOutfit`.
+5. **Check it** in `hangout-v2.html?character=<id>` with "show hotspots",
+   and tune rig.json by hand where the picks are off.
+6. **Validate:** `node --test test/hangout-v2-rig.test.js`.
+
+Every character has an academy model (2026-10-30; Benkei's is his
+default bundle, `benkei_`). Jo also has `femacademy` (`jofemacademy`); no
+other second outfits yet ([`live2d-outfits.md`](./live2d-outfits.md)).
+---
+
+## 4. The Activity
+
+### 4.1 Idle motion
+
+The model animates itself; rig.json only scales how much of it shows.
+
+| Motion | Implementation |
+|---|---|
+| Idle | the model's own idle clip, its sway scaled by `motion.idle.amount` (0–1) |
+| Breathing | the model's `m_breath` clip on its own layer, driving `ParamBreath` only so it never undoes a held pose; scaled by `motion.breath.amount` |
+| Blink, hair, physics | the model's own (eye blink and physics3), not set per rig |
+| Head/body sway | the Cubism plugin's own sway, which the game doesn't use: off unless `motion.sway.amount` is set |
+| Talking | the mouth flaps while a line types out (~7 syllables/s) and settles shut after it, or at once when the box is clicked to finish the line; no audio |
+| Background pan | the room (not the character) drifts on a slow wandering path, two mixed sines; `motion.bgPan` sets `speed` (cycles/s, default 0.022) and `amount` (fraction of the screen, default 0.01); the room is scaled up by twice `amount` so its edges never show; nothing to pan when no room is drawn |
+
+### 4.2 Interactions
+
+Touch faces come off the same expression ladder as call scenes
+(`SCENE_FACES` + `SCENE_FACE_OVERRIDES` in constants/sceneFaces.js,
+docs/public-encounters.md §17.4.1): each spot sits on a rung (2 = the face
+for a favorite response at that tier, 1 = a liked one, 0 = the least), and
+the tier picks the face on that rung. Overrides carry over, so Alan's flat
+face at new is `serious` and his spark fave is `smile_blush`.
+
+| Trigger | Rung | Alan (new/known · warm · spark · close/bound) |
+|---|---|---|
+| Head pat | 2 | close · surprise_blush · smile_blush · full_smile_blush; pose `m_kubi` |
+| Hand tap (L/R) | 2 | close · surprise_blush · smile_blush · full_smile_blush |
+| Cheek poke | 1 | sweat · surprise · surprise_blush · full_smile |
+| Ear (L/R) | 0, 1 from spark, 2 from close | serious · serious · surprise_blush · full_smile_blush; guarded like the lips; three taps fill the annoyance meter |
+| Lips | 0, 1 from spark, 2 from close | serious · serious · surprise_blush · full_smile_blush; three taps fill the annoyance meter |
+| Chest | 0, 1 from spark, 2 from close | serious · serious · surprise_blush · full_smile_blush; three taps fill the annoyance meter |
+| Belly | 0, 1 from warm, 2 from close | serious · surprise · surprise_blush · full_smile_blush; the spot between the chest and the hips; four taps fill the annoyance meter |
+| Hips | 0, 1 from spark, 2 from close | the most guarded spot: serious at new/known/warm, blush only from spark; pose `m_udekumi` (arms crossed); two taps fill the annoyance meter |
+| Spam-tapping | — | annoyance meter rises with fast repeated taps and decays over time; a run of quick normal taps fills it, fewer taps on the guarded spots (`SPOT_ANNOYANCE`); past the threshold → **upset** + pose `m_angry` + a line ("…stop that."), taps ignored briefly, then he settles |
+
+Every character has the same touch spots (`TOUCH_SPOTS` in
+activity/src/hangout/reactions.js): head, cheek, lips, ear_l/ear_r,
+hand_l/hand_r, chest, belly, hips. Left and right share one reaction; every other
+spot has its own. The rungs per tier live in `DEFAULT_REACTIONS`. A
+reaction also plays the pose rig.json `reactionPoses` gives it (§3.3); the
+poses above are Alan's, and each character's are mapped onto the clips
+their model has. (The sprite rig's arm `twitch` and `fist` clench have no
+Live2D counterpart; the model's poses carry the hands.) The preview's
+"Touch spots" row plays each spot.
+
+Hotspot reactions are cosmetic, unlimited and local, with no server call.
+Every reaction plays the line for that trigger in the dialogue box.
+
+A reaction can also play a short sound clip (activity/src/hangout/sounds.js).
+Sounds are opt-in per character: rig.json `sounds` maps a reaction name to a
+file under the rig's directory (`sfx/…`, WAV or Ogg), a list to pick one from at random,
+or `{ byTier: { <tier>: … } }`. It layers over the shared reaction, so faces
+don't have to be restated. A reaction's own `sound` wins. Clips are fetched
+with the rig, a missing one fails validation like a missing image, and they
+are decoded up front through Web Audio so a tap plays with no lag. Clips share a
+10-second cooldown (`SOUND_COOLDOWN` in hangout.js), counted from the clip
+that played: taps inside it, combos included, still react, silently, and
+don't extend it. This is a rule for every rig: the cooldown is shared code,
+not a rig.json setting, and no rig overrides it. Touch lines hold the same
+way: after a line types out it stays up for `LINE_HOLD` (1.5s), and taps
+before then still react but don't replace it. The upset line always
+speaks. Sound plays only on the tapper's device, not
+into the voice call, and the first tap unlocks audio. The ♪ button in the VN
+box mutes it (remembered in localStorage) and shows only for characters with
+sounds. Keep clips short, and export them mono at 22–24 kHz to keep the WAVs
+small.
+
+Starting values for the annoyance threshold and decay go in `rig.json`
+(`annoyance: { perTap, decayPerSec, threshold, recoverSec }`) and get tuned in
+the preview.
+
+### 4.3 Lines
+
+`constants/hangout/alan.js`, one pool per trigger: `headPat`, `cheekPoke`,
+`lipsTouch`, `earTouch`, `handTap`, `chestTouch`, `bellyTouch`, `hipsTouch`, `upset`,
+`greeting`. Claude drafts
+them in Alan's voice from `constants/dialogue/alan.js`. **The user approves
+them before release.** They're kept apart from the `/meet` dialogue files.
+
+### 4.4 UI
+
+The dialogue box and buttons match the bot's composited style in
+`imageComposition.js`: same fonts from `assets/fonts`, same palette. Layout
+works in portrait, so the character stays on screen on phones. The status line
+shows his name, his relationship level and heart bar.
+
+### 4.5 Runtime targets
+
+- One build: plain web page, or Discord Activity when it detects it's in the
+  Discord iframe (§6). Only then does it start the SDK and OAuth. Outside
+  Discord, data features are off (preview and dev only).
+- Discord desktop, web and mobile. Capped at 30 fps on mobile. Cubism Core
+  is served from `/assets/live2d/vendor/`, never a third-party CDN.
+
+---
+
+## 5. Data
+
+### 5.1 API (`/api/activity/*`, in `app.js` or a new `activityRoutes.js`)
+
+| Route | Does |
+|---|---|
+| `POST /api/activity/token` | exchanges the Discord OAuth `code`, calls `users/@me`, returns the Discord access token for `sdk.authenticate` and a signed session token |
+| `GET /api/activity/state?character=alan` | affinity, level, heart bar |
+
+Each route except `token` requires `Authorization: Bearer <session token>`.
+The `discord_user_id` comes **only** from the verified token, never from the
+request body.
+
+### 5.2 Analytics
+
+Opening the Activity logs `'hangout_open'` to `command_usage_log`, for usage
+tracking only. Answered encounters log as `'meet'` (§11.7).
+
+---
+
+## 6. Discord Activity setup
+
+- Enable Activities on the existing application (`APP_ID`).
+- Register `/hangout` as the **entry-point command**, in `commands.js` /
+  `npm run register`.
+- **Owner-only until release (milestone 4).** The way in is `/encdev hangout`,
+  which answers with `LAUNCH_ACTIVITY`. `/hangout` still has to be registered
+  (Discord rejects a bulk overwrite with no entry point once Activities are
+  on) but is hidden with `default_member_permissions: "0"`, and
+  `POST /api/activity/token` refuses anyone but `OWNER_DISCORD_ID` (403), so
+  someone joining the owner's session sees a refusal line, not the scene.
+  Release flips `OWNER_ONLY` in `activityRoutes.js` and drops the hiding.
+- **Rig version (until v1 is removed).** The Activity runs the Live2D rig
+  (`activity/src/hangout-v2/`, `assets/live2d/<id>/rig.json`). The sprite rig
+  stays reachable for comparison as `/encdev hangout version:v1` (or
+  `?version=v1` in a plain browser) until it's removed (§8).
+  `LAUNCH_ACTIVITY` can't pass the version to the page, so the handler
+  records it per user in memory (10 minutes) and the Activity reads it after
+  sign-in from `GET /api/activity/launch` (Bearer session).
+  **To do before release:** the code still treats v1 as the default and v2
+  as the opt-in (`HANGOUT_VERSIONS`, `hangoutLaunchFor`, `main.js`); flip
+  it so a launch with no version is Live2D, and drop v1's eager rig download
+  during sign-in. Once v1 is gone, the `version` option, the launch route
+  and the in-memory record go with it.
+- **URL mappings** in the Developer Portal: `/` → the Railway app (serving
+  `activity/dist`), plus `/api` and `/assets`. The client loads nothing from
+  third-party CDNs; PixiJS and the Live2D plugin are bundled by Vite, and
+  the Live2D code loads as its own chunk with Cubism Core.
+- Client flow: `new DiscordSDK(APP_ID)` → `ready()` → `authorize({ scope:
+  ['identify'] })` → `POST /api/activity/token` → `authenticate()`.
+- New env vars: `DISCORD_CLIENT_SECRET`, `ACTIVITY_SESSION_SECRET`. Add both
+  to `.env.sample` and Railway.
+- Session tokens are short-lived (1h) and signed, and are sent as Bearer
+  headers rather than cookies, since cookies are unreliable in the iframe.
+- Local Discord testing goes through the existing ngrok setup.
+
+---
+
+## 7. Layout in the repo
+
+```
+activity/
+  index.html          # Activity entry (Vite)
+  preview.html        # milestone-1 rig preview (dev only)
+  src/
+  hangout-v2.html     # Live2D rig preview (dev only, §3.4)
+  src/
+    main.js           # Activity entry: the scene + Discord sign-in
+    hangout-v2/       # Live2D rig: scene, live2dRig.js (model, moods, poses, talking),
+                      #   validate.js, preview
+    hangout/          # Hangout class, reactions, hotspots, annoyance meter, dialogue box,
+                      #   sounds; shared by both rigs
+    discord.js        # SDK init + auth (no-op outside Discord)
+  tools/
+    live2d-convert.js  live2d-rig.js   # Live2D models (§3.5)
+assets/live2d/
+  vendor/live2dcubismcore.min.js
+  <id>/rig.json  <id>/<outfit>/        # one per character; Cubism files per outfit
+constants/hangout/alan.js
+activityRoutes.js
+docs/hangout-activity.md
+```
+
+v1 only, removed with it (§8): `activity/preview.html`, `src/rig/`,
+`src/preview/`, the sprite tools in `tools/` (everything but the two
+`live2d-*` scripts) and `tools/lib/`, `assets/rig/<id>/` (Appendix A).
+
+Express serves `activity/dist` (built at deploy) at `/`; built files sit
+under `dist/static/` so they never collide with the repo's `/assets`.
+`npm run build:activity` is added to the Railway build.
+
+---
+
+## 8. Milestones
+
+1. **Rig preview (browser only).** Built first on the sprite rig (Appendix
+   A), then redone on Live2D (2026-10-30): converted models, rig.json,
+   moods, reaction poses, hotspots, annoyance meter, and `hangout-v2.html`.
+   No Discord, auth or data.
+   **Gate: the user signs off on the Live2D rig in the browser.**
+2. **Activity shell.** Discord detection and SDK, `/hangout` as the
+   entry-point command, the token route, URL mappings, the Railway build. The
+   rigged Alan running inside Discord on desktop and mobile.
+3. **Lines.** The user approves the drafted touch lines. Affinity comes
+   with `/meet` (§11.3), not a Hangout route of its own.
+4. **Release.** Live2D is the default launch (§6). Private, unlisted, on
+   the bot's servers.
+5. **Remove v1 (separate effort, after release).** Once Live2D has
+   launched, delete the sprite rig: the files listed under §7, its tests
+   (`test/hangout-rig-check.test.js` and the sprite `rig.json` loader
+   tests), `/encdev hangout`'s `version` option, and Appendix A. What
+   Live2D borrowed from v1 was moved out on 2026-10-30: the shared stage
+   helpers (`MOBILE_FPS`, `dialogueBox`, `loadTexture`, `stageFraming`) to
+   `src/hangout/stage.js`, Alan's reaction sound to
+   `assets/live2d/alan/sfx/`, `roomBackground` to
+   `tools/lib/backgrounds.js`, and the preview styles to
+   `src/hangout-v2/preview.css`. Still to drop at deletion: `main.js`'s
+   v1 path and version switch, `vite.config.js`'s `/__rig/save` plugin
+   and its `tools/lib/hand-fits.js` import, and `live2d-rig.js`'s lookup
+   of a v1 rig.json background (it falls back to `roomBackground`).
+   `test/hangout-rig.test.js` drives the shared Hangout class through a
+   sprite rig, so port its reaction and annoyance tests to a Live2D rig
+   before deleting it.
+
+---
+
+## 9. Testing
+
+`node --test` in `test/`:
+
+- routes: reject missing, bad or expired tokens; ignore any user id in the
+  body.
+- `test/hangout-v2-rig.test.js`: the Live2D rig validator's rules
+  (missing models, expressions and pose clips, hotspot parts, drawable ids,
+  each outfit's `dialogueVariant`), then every rig in
+  `assets/live2d/` against the files on disk.
+
+**Manual visual checklist** (preview, then Discord desktop and mobile):
+
+- every reaction pose plays, holds and returns cleanly
+- moods read correctly (stacked expressions, no stuck crossfade)
+- touch spots follow the art through poses
+- the annoyance meter triggers and recovers as expected
+- portrait layout correct
+- holds 30 fps on a mid-range phone
+
+---
+
+## 10. Open questions
+
+Not decided during the design review. These are defaults until someone says
+otherwise.
+
+- **PM backgrounds**: the first release always uses
+  `Vagastrom_Alan_Room.png`. Switching to `_PM` by `TZ` time of day is an
+  easy add.
+- **Outfit**: every Live2D rig has academy only so far; second outfits are
+  tracked in [`live2d-outfits.md`](./live2d-outfits.md). Until §11, the
+  Activity shows `defaultOutfit`. Once `/meet` moves into the Activity, the
+  outfit follows the background (§11.5).
+
+---
+
+## 11. Future: `/meet` as the Activity
+
+Status: **specced, deferred.** Not built until every character has a Live2D
+rig (§11.6); until then `/meet` stays the image message it is now. Designed
+2026-10-28, settled 2026-10-29.
+
+Once the roster is rigged, picking a character in `/meet` opens the Activity
+with them, and the encounter plays out there instead of as a composed image
+with buttons. `/roam` doesn't change.
+
+### 11.1 Launch and access
+
+- **`/meet` itself doesn't change.** It shows the same ephemeral message with
+  four names: errand targets seeded in, boost labels, the invoke throttle
+  and the cooldown check, all as today (`buildMeetPickMessage`).
+- **Clicking a name opens the Activity.** The `meet:pick` click answers with
+  `LAUNCH_ACTIVITY` (Discord allows it on button clicks) instead of
+  composing the image.
+- **The picker greys out after a pick**, as today: one encounter per `/meet`
+  message. A launch answer can't update the message, so the bot edits it
+  right after the launch. Discord's docs don't say whether that edit is
+  allowed after a launch: **test it.** If it isn't, the server enforces it
+  anyway: a second name on an already-picked message gets a short "already
+  picked" reply, not a second encounter.
+- **Cooldown is also checked at the click.** A name clicked on an older
+  `/meet` message after the user has already answered (cooldown stamped)
+  doesn't launch: the message shows the cooldown text and its buttons grey
+  out, like today's `/meet` cooldown reply. Nobody on `/meet` cooldown gets
+  into the Activity.
+- **Older pickers still work, as today.** Two `/meet`s a minute apart (the
+  invoke throttle allows the second after 1 minute) each give their own
+  encounter, and a name clicked on either launches with that character.
+  Only the first answer pays (§11.3).
+- **No `/hangout`.** It was for testing only. Discord's built-in "Launch"
+  entry-point command can't be removed (a bulk command overwrite without it
+  fails with error 50240), so it's set to `APP_HANDLER` and behaves exactly
+  like `/meet`: same cooldown check, same picker, same `meet` invoke
+  throttle, so it can't be used to get around it.
+- **Shared instances.** Everyone in a channel joins one Activity instance;
+  Discord can't restrict who joins. Each user signs in separately and sees
+  **only their own encounter**. Someone in the instance with no encounter of
+  their own (or on cooldown) sees a refusal line and nothing else: no
+  character, no touch spots.
+
+### 11.2 The encounter
+
+Each click saves its encounter on the server: background → outfit →
+dialogue variant → beat (§11.5), plus the mood flag and `beatKey`. The
+launch answer is sent with `with_response=true`, which returns the
+Activity's instance id, so the server ties each launch to the click that
+caused it and the Activity loads that encounter.
+
+In order:
+
+1. **The intro.** The line today's `/meet` message carries ("Alan Mido
+   agrees to meet you at **The Pit**.") shows as italic narration with no
+   name plate, with the mood notice (`moodNotice`) under it on mood beats.
+2. **The beat.** The drawn beat's `line` under the character's name plate.
+3. **Four response buttons.** The four choices (kind / playful / bold /
+   neutral, in `RESPONSE_TYPE_ORDER`) stack above the box with the beat's
+   labels, within the 30-character limit (the same pools `/roam` uses).
+   - **Type indicator.** The `RESPONSE_STYLES` colors (kind green, playful
+     blurple, bold red, neutral grey) as each button's edge, plus a small
+     glyph per type so the type never depends on color alone.
+4. **The pick.** The choices close and the answer route runs (§11.3).
+5. **The face.** The rig plays a mood for the outcome (love / like / flat,
+   from `getAffinityForResponse`), set per tier like the touch reactions in
+   §4.2. Flat never reads as hurt; it's "didn't resonate".
+6. **The reaction line.** The `getReactionLine` line from
+   `constants/reactions.js`, the same one `/roam` and `/meet` print today
+   ("That lights them up."), in italics with no name plate, since it's
+   narration.
+7. **The gain.** The same delta line `/roam` and `/meet` use today:
+   `+2 — 🤝 **Friend**`, with the boost suffix and the errand signature line
+   when they apply. A neutral pick shows `+0` the same way. A level-up sends
+   the bond-scene DM as usual. The bot also tries to edit the `/meet`
+   message to show the result, so Discord keeps a record like the image
+   flow does; if Discord doesn't allow the edit after a launch, it's
+   skipped.
+8. **The hangout carries on**: touch spots and the secret button (§11.4).
+
+**Touches before answering.** Touch spots and the secret button work any
+time. Before the answer, each one plays its reaction, mood and
+line, then the VN box returns to the beat's `line` and the four choices
+reappear. Nothing leaves the player without the choices while the answer is
+unrecorded.
+
+**Exiting before answering** costs nothing, like walking away from today's
+`/meet`: nothing is recorded, that picker is spent (its names are greyed
+out), and the next encounter is a new `/meet`.
+
+**Long visits.** The encounter waits as long as the Activity stays open; it
+has no timer. The session token (1h, §6) only matters until the answer is
+recorded, so while an answer is pending the Activity renews it before it
+runs out. If a renewal fails, the four choices stay up with a "try again"
+line; nothing is lost. Once the answer is recorded nothing else calls the
+server, so leaving the Activity open afterwards doesn't matter.
+
+### 11.3 Affinity: one payout per cooldown
+
+The answer to the four choices is the **only** affinity source in the
+Activity, behind the same two guards `/meet` has today:
+
+- **Invoke throttle** (`claimCommandInvoke`, in memory): stops rapid
+  rerolling of the picker. Unchanged, since typing `/meet` is unchanged. The
+  answer route calls `releaseCommandInvoke` when it commits, as the `resp`
+  handler does, and a failed launch releases it too, as a failed pick does.
+- **Reward gate** (`claimCommandUse(userId, 'meet')`): one atomic
+  decide-and-stamp of the 3h cooldown. The answer route calls it, then runs
+  `buildResponseResultMessage`'s logic: boosts, `recordResponse`,
+  `recordAnsweredBeat`, errand signature. Whichever encounter is answered
+  first pays; any other open encounter answered afterwards gets the
+  cooldown refusal, exactly like clicking an older message's response
+  button today.
+
+The saved encounter is never trusted from the client: the Activity is a
+browser page the user can edit, so the mood flag and `beatKey` stay on the
+server (a forged mood flag would raise the gain). Answering deletes the
+encounter, so it can only be answered once. Double clicks, two tabs and
+replayed requests can't pay twice. Unanswered encounters are cleaned up in
+the background after a day, as housekeeping (not a gameplay timer).
+
+Touch spots and the secret button never call the server, so there's
+nothing to farm.
+
+### 11.4 Secret button
+
+Each character has a **fixed, unique secret combo** with no hints in any
+line; players find it or share it.
+
+- **Shape:** 2–3 steps, each one touch spot tapped 1–3 times in a row, e.g.
+  head ×2 → cheek ×1 → hand ×2. No two characters share a combo.
+- **Wrong taps:** a tap that doesn't match the next step resets the combo
+  to the start and counts toward annoyance as normal. There's no time limit
+  between taps, so slow and gentle works.
+- **Annoyance:** taps that match the combo so far don't raise the meter. If
+  the character gets upset **at any point during the visit**, the secret is
+  locked until the next visit.
+- **Once found**, the button appears in the VN box and stays for the rest
+  of the visit; pressing it again replays the scene. It's gone when the
+  Activity closes, and the next visit needs the combo again. Nothing is
+  stored.
+- **The scene** is a special line or short exchange written to land the
+  character's **fave response type** (a tender scene for a kind-lover, a
+  teasing one for a playful-lover…). Cosmetic: no affinity, no milestone.
+- Combos and scenes live in the character's hangout data beside the line
+  pools (`constants/hangout/<id>.js`).
+
+### 11.5 Background and outfit
+
+**Background.** The same pool `/meet` draws from today, via `turfSpots`
+(`constants/backgrounds.js`): the character's house, their exclusive room
+and `additionalLocations`, plus signature spots weighted up (Alan: The Pit
+×1.5) and pinned in when they sit outside the house. `_PM` files only in
+the evening, at `EVENING_PM_WEIGHT`. A houseless character (Benkei) keeps
+`/meet`'s `TURF_PROBABILITY` split between his signature spot and a general
+location. This replaces §10's fixed `Vagastrom_Alan_Room.png` for `/meet`.
+
+**Outfit.** Two separate draws, exactly as `/meet` makes them today: the
+background above, and the uniform/casual roll (`getImageVariant`, with the
+`CASUAL_IMAGE_PROBABILITY_*` curve by level). Neither affects the other, so
+Alan can be in academy in his room or casual at The Pit, as today. No new
+picking logic:
+
+- each outfit in `assets/live2d/<id>/rig.json` names the variant it counts
+  as, `dialogueVariant: "uniform"` or `"casual"` (academy is uniform);
+- the roll picks the outfit with that `dialogueVariant` (one at random if
+  several share it). Where today's code falls back to the first image when
+  the rolled variant has none, this falls back to `defaultOutfit`, and the
+  variant becomes that outfit's, so the dialogue matches what's worn;
+- the variant still keys dialogue as today (Jo's pronouns change between
+  uniform and casual, `constants/dialogue/_shared.js`), and the beat is
+  drawn last, so it always matches what the character is wearing.
+
+Today every rig but Jo's has only academy (2026-10-30), so every roll
+lands on academy and uniform, the same as a character with no casual image
+today. Jo's `femacademy` is marked `"casual"` (the variant whose lines use she/her), so Jo's
+casual rolls land on it.
+A second outfit (casual, city, work or roomwear,
+[`live2d-outfits.md`](./live2d-outfits.md)) is marked `"casual"` and takes
+the casual rolls.
+
+**Placement.** One framing per character (`rig.json` `stage`), the same on
+every background; only the background pans behind them. No per-background
+framing.
+
+**Loading.** The Activity loads only the drawn outfit's images, not every
+outfit's, so it opens faster on phones.
+
+### 11.6 When §11 starts
+
+Every character has a Live2D rig (Benkei's since 2026-10-30).
+
+**Writing comes last**, after all the rigs exist: touch reaction lines per
+tier, secret scenes and combos, drafted one character at a time from their
+reference file (voice-check workflow) and approved by the user, like §4.3.
+
+### 11.7 Fallback and operations
+
+- **Fallback by timeout.** Discord tells the bot nothing when a launch
+  fails. If the Activity hasn't loaded the encounter within ~30s of the
+  click, the bot posts today's `/meet` result (image + four response
+  buttons) as a followup, and that encounter is answered the normal way.
+  Once the Activity has loaded the encounter, the fallback is cancelled;
+  taking your time afterwards never triggers it. If the image does arrive
+  and both get answered, only the first pays (same reward gate). Depends on
+  followups working after a launch: **test it.** If they don't, the backup
+  is a manual way to ask for the message version from the picker.
+- **`/meet`-only off switch.** A column in `app_settings` (the table
+  maintenance mode uses, db/migrations/024), flipped by hand in SQL and
+  cached for 60s like `maintenance.js`. When on, clicking a name gives
+  today's image flow for everyone; the rest of the bot keeps running. Unlike
+  maintenance mode, which takes the whole bot down. One small migration, no
+  redeploy to flip it.
+- **Analytics.** Completed `/meet`s log to `command_usage_log` as `'meet'`
+  as today, tagged with the path (`activity` or `fallback`), to see how
+  reliably the Activity opens.
+
+### 11.8 Open questions
+
+- **Outfits tied to backgrounds**: none for now; the outfit comes only from
+  the variant roll. Once characters have second outfits, an outfit may be
+  associated with backgrounds (roomwear with a room, say). If it is, it
+  should weight the outfit there, not force it, so Alan can still be in
+  academy in his room sometimes.
+- **Secret scene by tier**: one scene per character (the default), or three
+  versions in the `reactions.js` bands (early / mid / deep), each in the
+  fave type's register.
+
+---
+
+## Appendix A. Legacy: the sprite rig (v1)
+
+Status: **legacy.** The code-rigged PixiJS sprite rig the Hangout was
+first built on: `assets/rig/<character>/`, `activity/src/rig/`, the sprite
+tools in `activity/tools/`, `activity/preview.html`. Live2D (§3) replaced
+it on 2026-10-30. It still runs behind `/encdev hangout version:v1` (§6)
+for comparison until Live2D launches, and is removed as its own effort
+after that (§8). This appendix goes with it. Don't build new characters or
+outfits on it.
+
+What it did differently: parts cut from the game's texture atlas and
+assembled into a bone hierarchy in code; expressions from atlas part swaps
+or overlays diffed from the expression portraits; idle motion (breath,
+blink, head sway, hair locks, arm sway, the hand-tap arm twitch) and hand
+poses driven by `rig/motion.js`.
+
+### A.1 Slice
 
 `slice-atlas.js` splits the atlas into one PNG per part by alpha-connected
 regions, trims each, and writes `parts/<id>.png` plus `parts.json`
@@ -95,10 +770,10 @@ rects with helper shapes rather than art (Yuri's flat magenta/green/orange
 masks and blurred purple blob); ignored regions are dropped before ids are
 assigned, so they never shift ids or show up as parts.
 
-### 3.2 `rig.json`
+### A.2 `rig.json`
 
 One file per character, authored by Claude against `alan_academy.png` as
-the reference, then tuned in the preview (§3.4). Shape:
+the reference, then tuned in the preview (§A.4). Shape:
 
 ```jsonc
 {
@@ -192,7 +867,7 @@ screenshots were built and cut after review: they didn't match the rig or
 move. The body stays nearly still (minimal breath, slight head sway, no hair
 sway) and reactions are carried by expressions, lines, a short arm twitch
 and hand clenches (§4.2). Genuinely fluid motion would need a
-mesh-deforming rig (Live2D or Spine), which §1 rules out for now.
+mesh-deforming rig, which is what Live2D (§3) turned out to be.
 
 **Hair from the portrait (decided 2026-10-28).** Alan's atlas hair strands
 are warped in the finished art and won't sit rigidly, so the face is atlas
@@ -201,7 +876,7 @@ parts but the hair is cut from `expressions/alan/default.png` by
 a static base plus 4 sway locks (crown, front, both sides). Other characters
 can use either path.
 
-### 3.3 Expressions
+### A.3 Expressions
 
 Each mood resolves in this order:
 
@@ -228,7 +903,7 @@ overlay looks visibly off, it stays out until fixed.
 The same script runs for any character with a `default.png`, so Benkei, Elias
 and the rest have a path in later.
 
-### 3.4 Preview and tuning (milestone 1)
+### A.4 Preview and tuning (milestone 1)
 
 `activity/preview.html`, a local-only page (never deployed): Alan over his
 room background, plus:
@@ -245,7 +920,7 @@ room background, plus:
 
 Milestone 1 ends when the user signs off on the look and feel here.
 
-### 3.5 Pipeline tools (any character, any outfit)
+### A.5 Pipeline tools (any character, any outfit)
 
 Everything character- or outfit-specific is data: rig.json,
 `<outfit dir>/fit.json` (fitting), `part-names.json` (slicing),
@@ -258,7 +933,7 @@ Everything character- or outfit-specific is data: rig.json,
    fit.json template. Starting joints are measured from the character's own
    sprite (narrowest neck row, crotch), never copied from another rig; the
    first fit sets them from the fitted parts (fit.json `bones`).
-2. **`slice-atlas.js <character> --outfit <name>`** (§3.1).
+2. **`slice-atlas.js <character> --outfit <name>`** (§A.1).
 3. **`register-head.js <character> --outfit <name>`** (second+ outfit):
    ECC on the head box finds how the outfit's sprite draws the shared head
    (alan_room.png: 1.33% smaller, ~6 px lower at the neck), reports it, and
@@ -306,539 +981,3 @@ Everything character- or outfit-specific is data: rig.json,
    compares a mood with its own expression portrait, `--hotspots` outlines
    the touch points, `--grid` labels coordinates), and **`probe-rig.js`**
    for the parts drawn at a pixel, bottom to top.
-
-### 3.6 Hangout v2 models (Live2D, added 2026-10-30)
-
-v2 (§6, "Version") draws the game's own Live2D model instead of a sprite
-rig: `assets/live2d/<id>/<outfit>/` holds the Cubism files and
-`assets/live2d/<id>/rig.json` the v1-shaped keys `live2dRig.js` reads. The
-game's models share one 2000x2800 canvas. Order for a new character or
-outfit:
-
-1. **Pull the game's cache from BlueStacks.** The game downloads each
-   model's bundle the first time a scene needs it, so a character missing
-   from the cache has to be played to first. With BlueStacks running:
-   ```
-   hd-adb connect 127.0.0.1:5555
-   hd-adb -s 127.0.0.1:5555 pull /sdcard/Android/data/com.zigzagame.tokyodebunker <dir>
-   ```
-   (`hd-adb` is `/Applications/BlueStacks.app/Contents/MacOS/hd-adb`.) The
-   catalog, `files/com.unity.addressables/catalog_*.json`, names each model
-   bundle `dialogueactors_assets_<name><outfit>_<hash>.bundle` (game names:
-   `luca`, `sho`, `jou` for Jo). The cached copy is
-   `files/UnityCache/Shared/<x>/<hash>/__data`; no folder with that hash
-   means it isn't downloaded yet.
-2. **Start AssetRipper headless:** `AssetRipper.GUI.Premium --headless --port 54321`
-   (the Free build takes the same flags).
-3. **`live2d-convert.js <character> --bundle <__data>`**: AssetRipper's
-   Unity-project export, then the moc3 (the CubismMoc asset's bytes),
-   physics3 (from the prefab's CubismPhysicsController), exp3 and motion3
-   files (Unity Hermite curves turned back into exact beziers, infinite
-   slopes into stepped segments), a looping `*_hold` clip pinned at the last
-   frame of every pose that has a `*_return`, and model3.json. Files are
-   `<character>_<outfit>.*` after the repo's ids. `--assets` takes an
-   export made by hand. Converting Alan's bundle reproduces his committed
-   files.
-4. **`live2d-rig.js <character>`**: rig.json from Alan's as a template.
-   Hotspot parts are picked from the model's part tree at rest (face skin,
-   PartMouth, PartEar, the lowest arm pieces, the biggest torso piece, the
-   legs), the stage is Alan's framing shifted to the face, moods and
-   reaction poses are mapped onto the expressions and clips this model has,
-   and the background is v1's or the character's room. It reproduces the
-   20 academy rigs it wrote (2026-10-30) byte for byte.
-5. **Check it** in `hangout-v2.html?character=<id>` with "show hotspots",
-   and tune rig.json by hand where the picks are off.
-
----
-
-## 4. The Activity
-
-### 4.1 Idle motion
-
-| Motion | Implementation |
-|---|---|
-| Breathing | torso/shoulder scale on a slow sine |
-| Blink | randomized interval around `meanInterval`, ~120 ms close |
-| Head tilt/sway | `head` rotation, two mixed sines, within limits; one shared setting for every character (`motion.js` `HEAD_SWAY`), never per rig |
-| Hair | 2–4 grouped locks, rotation lagging the head |
-| Arms | small sway in step with the breath |
-| Twitch | on a hand tap (new/known): that forearm (with a little upper arm) eases in toward the body and settles, ~0.6 s; the hand rides along unchanged; `motion.twitch` sets `amount` (deg), `upper`, `peak` (s) |
-| Background pan | the room (not the character) drifts on a slow wandering path, two mixed sines; `motion.bgPan` sets `speed` (cycles/s, default 0.022) and `amount` (fraction of the screen, default 0.01); the room is scaled up by twice `amount` so its edges never show; nothing to pan when no room is drawn |
-
-### 4.2 Interactions
-
-Touch faces come off the same expression ladder as call scenes
-(`SCENE_FACES` + `SCENE_FACE_OVERRIDES` in constants/sceneFaces.js,
-docs/public-encounters.md §17.4.1): each spot sits on a rung (2 = the face
-for a favorite response at that tier, 1 = a liked one, 0 = the least), and
-the tier picks the face on that rung. Overrides carry over, so Alan's flat
-face at new is `serious` and his spark fave is `smile_blush`.
-
-| Trigger | Rung | Alan (new/known · warm · spark · close/bound) |
-|---|---|---|
-| Head pat | 2 | close · surprise_blush · smile_blush · full_smile_blush; no head movement (a moving flat head read as unnatural) |
-| Hand tap (L/R) | 2 | close · surprise_blush · smile_blush · full_smile_blush; the arm twitches at new/known |
-| Cheek poke | 1 | sweat · surprise · surprise_blush · full_smile |
-| Ear (L/R) | 1 | sweat · surprise · surprise_blush · full_smile |
-| Lips | 0, 1 from spark, 2 from close | serious · serious · surprise_blush · full_smile_blush |
-| Chest | 0, 1 from spark, 2 from close | serious · serious · surprise_blush · full_smile_blush |
-| Hips | 0, 1 from spark, 2 from close | the most guarded spot: serious with a clench at new, serious at known/warm, blush only from spark; two taps fill the annoyance meter (`SPOT_ANNOYANCE`) |
-| Spam-tapping | — | annoyance meter rises with fast repeated taps and decays over time; past the threshold → **upset** + a line ("…stop that."), taps ignored briefly, then he settles |
-| **Spend time** | — | full smile + blush, a special line, +1 affinity (§5) |
-
-Every character has the same touch spots (`TOUCH_SPOTS` in
-activity/src/hangout/reactions.js): head, cheek, lips, ear_l/ear_r,
-hand_l/hand_r, chest, hips. Left and right share one reaction; every other
-spot has its own. The rungs per tier live in `DEFAULT_REACTIONS`. A
-reaction can also `twitch` the arm (the tapped side for an L/R spot, both
-arms otherwise; by default only a hand tap twitches) and clench a `fist`
-for its duration (guarded spots at low tiers). The preview's "Touch spots"
-row plays each spot.
-
-Hotspot reactions are cosmetic, unlimited and local, with no server call.
-Every reaction plays the line for that trigger in the dialogue box.
-
-A reaction can also play a short sound clip (activity/src/hangout/sounds.js).
-Sounds are opt-in per character: rig.json `sounds` maps a reaction name to a
-file under the rig's directory (`sfx/…`, WAV or Ogg), a list to pick one from at random,
-or `{ byTier: { <tier>: … } }`. It layers over the shared reaction, so faces
-don't have to be restated. A reaction's own `sound` wins. Clips are fetched
-with the rig, a missing one fails validation like a missing image, and they
-are decoded up front through Web Audio so a tap plays with no lag. Clips share a
-10-second cooldown (`SOUND_COOLDOWN` in hangout.js), counted from the clip
-that played: taps inside it, combos included, still react, silently, and
-don't extend it. This is a rule for every rig: the cooldown is shared code,
-not a rig.json setting, and no rig overrides it. Sound plays only on the tapper's device, not
-into the voice call, and the first tap unlocks audio. The ♪ button in the VN
-box mutes it (remembered in localStorage) and shows only for characters with
-sounds. Keep clips short, and export them mono at 22–24 kHz to keep the WAVs
-small.
-
-The Spend time button is lit only when the cooldown is ready. Otherwise it
-shows the time left, and pressing it plays a cooldown-not-ready line.
-
-Starting values for the annoyance threshold and decay go in `rig.json`
-(`annoyance: { perTap, decayPerSec, threshold, recoverSec }`) and get tuned in
-the preview.
-
-### 4.3 Lines
-
-`constants/hangout/alan.js`, one pool per trigger: `headPat`, `cheekPoke`,
-`lipsTouch`, `earTouch`, `handTap`, `chestTouch`, `hipsTouch`, `upset`,
-`spendTime`, `cooldownNotReady`, `greeting`. Claude drafts
-them in Alan's voice from `constants/dialogue/alan.js`. **The user approves
-them before release.** They're kept apart from the `/meet` dialogue files.
-
-### 4.4 UI
-
-The dialogue box and buttons match the bot's composited style in
-`imageComposition.js`: same fonts from `assets/fonts`, same palette. Layout
-works in portrait, so the character stays on screen on phones. The status line
-shows his name, his relationship level and heart bar, and the Spend time
-cooldown.
-
-### 4.5 Runtime targets
-
-- One build: plain web page, or Discord Activity when it detects it's in the
-  Discord iframe (§6). Only then does it start the SDK and OAuth. Outside
-  Discord, data features are off (preview and dev only).
-- Discord desktop, web and mobile. Capped at 30 fps on mobile; textures at
-  2048 px or less.
-
----
-
-## 5. Data
-
-### 5.1 API (`/api/activity/*`, in `app.js` or a new `activityRoutes.js`)
-
-| Route | Does |
-|---|---|
-| `POST /api/activity/token` | exchanges the Discord OAuth `code`, calls `users/@me`, returns the Discord access token for `sdk.authenticate` and a signed session token |
-| `GET /api/activity/state?character=alan` | affinity, level, heart bar, hangout cooldown remaining |
-| `POST /api/activity/spend-time` | `{ character }` → calls `hangout_spend_time`, returns new state plus `leveledUp` |
-
-Each route except `token` requires `Authorization: Bearer <session token>`.
-The `discord_user_id` comes **only** from the verified token, never from the
-request body.
-
-### 5.2 `hangout_spend_time(discord_user_id, character_id)` (new migration)
-
-In one transaction:
-
-1. claim the `'hangout'` row in `command_limits`. Fail with `cooldown` and the
-   time remaining if it was used within 3h.
-2. `affinity = affinity + 1`, `last_interaction_at = now()` in
-   `character_relationships` (insert the row if it doesn't exist)
-3. return the new and previous affinity
-
-It does **not** touch `times_met`, which counts encounters.
-
-`'hangout'` is its **own** cooldown. It must **not** be added to
-`RATE_LIMITED_COMMANDS` in `commandLimits.js`, so the hangout and
-`/roam`/`/meet` never block each other. It's one timer across all characters.
-
-Because the check and the write are atomic, double-clicks, two tabs or a
-replayed request can't grant twice.
-
-### 5.3 Level-ups
-
-After the function returns, the route runs `levelChange` on the result. If
-`leveledUp`, it calls `deliverBondScene(userId, characterId, levelName)`, the
-same call site `/roam` uses, so crossing a level from the hangout sends the
-bond-scene DM exactly as `/meet` would.
-
-### 5.4 Analytics
-
-Each Spend time logs to `command_usage_log` and `character_engagement` with
-command `'hangout'`. Opening the Activity also logs `'hangout_open'`, for
-usage tracking only.
-
----
-
-## 6. Discord Activity setup
-
-- Enable Activities on the existing application (`APP_ID`).
-- Register `/hangout` as the **entry-point command**, in `commands.js` /
-  `npm run register`.
-- **Owner-only until release (milestone 4).** The way in is `/encdev hangout`,
-  which answers with `LAUNCH_ACTIVITY`. `/hangout` still has to be registered
-  (Discord rejects a bulk overwrite with no entry point once Activities are
-  on) but is hidden with `default_member_permissions: "0"`, and
-  `POST /api/activity/token` refuses anyone but `OWNER_DISCORD_ID` (403), so
-  someone joining the owner's session sees a refusal line, not the scene.
-  Release flips `OWNER_ONLY` in `activityRoutes.js` and drops the hiding.
-- **Version (added 2026-10-30).** `/encdev hangout version:v2` launches the
-  Live2D proof (`activity/src/hangout-v2/`, rig `assets/live2d/<id>/rig.json`)
-  instead of the sprite rig. `LAUNCH_ACTIVITY` can't pass it to the page, so
-  the handler records it per user in memory (10 minutes) and the Activity
-  reads it after sign-in from `GET /api/activity/launch` (Bearer session);
-  anything else is v1. v2 loads Cubism Core from
-  `/assets/live2d/vendor/` and its code as a separate chunk, only for a v2
-  launch. `?version=v2` does the same in a plain browser.
-- **URL mappings** in the Developer Portal: `/` → the Railway app (serving
-  `activity/dist`), plus `/api` and `/assets`. The client loads nothing from
-  third-party CDNs; PixiJS is bundled by Vite.
-- Client flow: `new DiscordSDK(APP_ID)` → `ready()` → `authorize({ scope:
-  ['identify'] })` → `POST /api/activity/token` → `authenticate()`.
-- New env vars: `DISCORD_CLIENT_SECRET`, `ACTIVITY_SESSION_SECRET`. Add both
-  to `.env.sample` and Railway.
-- Session tokens are short-lived (1h) and signed, and are sent as Bearer
-  headers rather than cookies, since cookies are unreliable in the iframe.
-- Local Discord testing goes through the existing ngrok setup.
-
----
-
-## 7. Layout in the repo
-
-```
-activity/
-  index.html          # Activity entry (Vite)
-  preview.html        # milestone-1 rig preview (dev only)
-  src/
-    main.js           # Activity entry: the scene + Discord sign-in
-    rig/              # rig.json loader, renderer, motion, expressions
-    hangout/          # scene (shared by both pages), hotspots, annoyance meter, dialogue box, Spend time
-    preview/          # the preview's debug drawer, HUD and editor
-    discord.js        # SDK init + auth (no-op outside Discord)
-  tools/
-    new-rig.js  slice-atlas.js  register-head.js  fit-outfit.js
-    match-hands.js  align-hands.js  build-sprite-skin.js  check-rig.js
-    render-rig.js  probe-rig.js  build-overlays.js  build-portrait-hair.js
-    live2d-convert.js  live2d-rig.js   # Hangout v2 models (§3.6)
-    lib/              # render (node-canvas, rig/fit files), match (template fits), png, skin-config
-  vite.config.js
-assets/rig/alan/
-  source/  overlays/  hair/  rig.json  checks.json
-  academy/  roomwear/   # parts/ skin/ derived/ parts.json fit.json fits.json
-constants/hangout/alan.js
-db/migrations/035_hangout.sql
-activityRoutes.js
-docs/hangout-activity.md
-```
-
-Express serves `activity/dist` (built at deploy) at `/`; built files sit
-under `dist/static/` so they never collide with the repo's `/assets`.
-`npm run build:activity` is added to the Railway build.
-
----
-
-## 8. Milestones
-
-1. **Rig preview (browser only).** Slice, `rig.json`, mood resolution
-   (atlas first, then overlays), all idle motion, the arm chains, hotspots, annoyance meter, and the preview page with debug
-   controls and the editor. No Discord, auth or data.
-   **Gate: the user signs off on the rig in the browser.**
-2. **Activity shell.** Discord detection and SDK, `/hangout` as the
-   entry-point command, the token route, URL mappings, the Railway build. The
-   rigged Alan running inside Discord on desktop and mobile.
-3. **Affinity.** Migration with `hangout_spend_time`, the state and spend-time
-   routes, cooldown UI, level-up handling, analytics. The user approves the
-   drafted lines.
-4. **Release.** Private, unlisted, on the bot's servers. Update the
-   affinity-source rule in the two specs named in §0.
-
----
-
-## 9. Testing
-
-`node --test` in `test/`:
-
-- `hangout_spend_time`: a first grant succeeds; a second within 3h returns
-  `cooldown` and leaves affinity unchanged; concurrent calls grant once;
-  `times_met` is unchanged; a missing relationship row gets created.
-- routes: reject missing, bad or expired tokens; ignore any user id in the
-  body; spend-time returns `leveledUp` across a level boundary and triggers
-  `deliverBondScene`.
-- `'hangout'` doesn't affect `/roam`/`/meet` cooldowns, and they don't affect
-  it.
-- the `rig.json` loader rejects unknown parents, cycles and missing images.
-
-**Manual visual checklist** (preview, then Discord desktop and mobile):
-
-- no visible seams at shoulder or elbow through the full arm range
-- overlays aligned and sharp at every head angle
-- blink and hair read naturally
-- the annoyance meter triggers and recovers as expected
-- portrait layout correct
-- holds 30 fps on a mid-range phone
-
----
-
-## 10. Open questions
-
-Not decided during the design review. These are defaults until someone says
-otherwise.
-
-- **Banked cooldown resets** from missions (`mission_log`): v1 does **not**
-  apply them to `'hangout'`.
-- **PM backgrounds**: v1 always uses `Vagastrom_Alan_Room.png`. Switching to
-  `_PM` by `TZ` time of day is an easy add.
-- **Outfit**: Alan has academy and roomwear rigs; the preview switches
-  between them. Which one the Activity shows (fixed, or following the
-  uniform/casual choice used by `/meet`) is for later. Once `/meet` moves
-  into the Activity, the outfit follows the background (§11.5).
-
----
-
-## 11. Future: `/meet` as the Activity
-
-Status: **specced, deferred.** Not built until every character has a rig
-(§11.6); until then `/meet` stays the image message it is now. Designed
-2026-10-28, settled 2026-10-29.
-
-Once the roster is rigged, picking a character in `/meet` opens the Activity
-with them, and the encounter plays out there instead of as a composed image
-with buttons. `/roam` doesn't change.
-
-### 11.1 Launch and access
-
-- **`/meet` itself doesn't change.** It shows the same ephemeral message with
-  four names: errand targets seeded in, boost labels, the invoke throttle
-  and the cooldown check, all as today (`buildMeetPickMessage`).
-- **Clicking a name opens the Activity.** The `meet:pick` click answers with
-  `LAUNCH_ACTIVITY` (Discord allows it on button clicks) instead of
-  composing the image.
-- **The picker greys out after a pick**, as today: one encounter per `/meet`
-  message. A launch answer can't update the message, so the bot edits it
-  right after the launch. Discord's docs don't say whether that edit is
-  allowed after a launch: **test it.** If it isn't, the server enforces it
-  anyway: a second name on an already-picked message gets a short "already
-  picked" reply, not a second encounter.
-- **Cooldown is also checked at the click.** A name clicked on an older
-  `/meet` message after the user has already answered (cooldown stamped)
-  doesn't launch: the message shows the cooldown text and its buttons grey
-  out, like today's `/meet` cooldown reply. Nobody on `/meet` cooldown gets
-  into the Activity.
-- **Older pickers still work, as today.** Two `/meet`s a minute apart (the
-  invoke throttle allows the second after 1 minute) each give their own
-  encounter, and a name clicked on either launches with that character.
-  Only the first answer pays (§11.3).
-- **No `/hangout`.** It was for testing only. Discord's built-in "Launch"
-  entry-point command can't be removed (a bulk command overwrite without it
-  fails with error 50240), so it's set to `APP_HANDLER` and behaves exactly
-  like `/meet`: same cooldown check, same picker, same `meet` invoke
-  throttle, so it can't be used to get around it.
-- **Shared instances.** Everyone in a channel joins one Activity instance;
-  Discord can't restrict who joins. Each user signs in separately and sees
-  **only their own encounter**. Someone in the instance with no encounter of
-  their own (or on cooldown) sees a refusal line and nothing else: no
-  character, no touch spots.
-
-### 11.2 The encounter
-
-Each click saves its encounter on the server: background → outfit →
-dialogue variant → beat (§11.5), plus the mood flag and `beatKey`. The
-launch answer is sent with `with_response=true`, which returns the
-Activity's instance id, so the server ties each launch to the click that
-caused it and the Activity loads that encounter.
-
-In order:
-
-1. **The intro.** The line today's `/meet` message carries ("Alan Mido
-   agrees to meet you at **The Pit**.") shows as italic narration with no
-   name plate, with the mood notice (`moodNotice`) under it on mood beats.
-2. **The beat.** The drawn beat's `line` under the character's name plate.
-3. **Four response buttons.** The four choices (kind / playful / bold /
-   neutral, in `RESPONSE_TYPE_ORDER`) stack above the box with the beat's
-   labels, within the 30-character limit (the same pools `/roam` uses).
-   - **Type indicator.** The `RESPONSE_STYLES` colors (kind green, playful
-     blurple, bold red, neutral grey) as each button's edge, plus a small
-     glyph per type so the type never depends on color alone.
-4. **The pick.** The choices close and the answer route runs (§11.3).
-5. **The face.** The rig plays a mood for the outcome (love / like / flat,
-   from `getAffinityForResponse`), set per tier like the touch reactions in
-   §4.2. Flat never reads as hurt; it's "didn't resonate".
-6. **The reaction line.** The `getReactionLine` line from
-   `constants/reactions.js`, the same one `/roam` and `/meet` print today
-   ("That lights them up."), in italics with no name plate, since it's
-   narration.
-7. **The gain.** The same delta line `/roam` and `/meet` use today:
-   `+2 — 🤝 **Friend**`, with the boost suffix and the errand signature line
-   when they apply. A neutral pick shows `+0` the same way. A level-up sends
-   the bond-scene DM as usual. The bot also tries to edit the `/meet`
-   message to show the result, so Discord keeps a record like the image
-   flow does; if Discord doesn't allow the edit after a launch, it's
-   skipped.
-8. **The hangout carries on**: touch spots, Spend time and the secret button
-   (§11.4).
-
-**Touches before answering.** Touch spots, Spend time and the secret button
-work any time. Before the answer, each one plays its reaction, mood and
-line, then the VN box returns to the beat's `line` and the four choices
-reappear. Nothing leaves the player without the choices while the answer is
-unrecorded.
-
-**Exiting before answering** costs nothing, like walking away from today's
-`/meet`: nothing is recorded, that picker is spent (its names are greyed
-out), and the next encounter is a new `/meet`.
-
-**Long visits.** The encounter waits as long as the Activity stays open; it
-has no timer. The session token (1h, §6) only matters until the answer is
-recorded, so while an answer is pending the Activity renews it before it
-runs out. If a renewal fails, the four choices stay up with a "try again"
-line; nothing is lost. Once the answer is recorded nothing else calls the
-server, so leaving the Activity open afterwards doesn't matter.
-
-### 11.3 Affinity: one payout per cooldown
-
-The answer to the four choices is the **only** affinity source in the
-Activity, behind the same two guards `/meet` has today:
-
-- **Invoke throttle** (`claimCommandInvoke`, in memory): stops rapid
-  rerolling of the picker. Unchanged, since typing `/meet` is unchanged. The
-  answer route calls `releaseCommandInvoke` when it commits, as the `resp`
-  handler does, and a failed launch releases it too, as a failed pick does.
-- **Reward gate** (`claimCommandUse(userId, 'meet')`): one atomic
-  decide-and-stamp of the 3h cooldown. The answer route calls it, then runs
-  `buildResponseResultMessage`'s logic: boosts, `recordResponse`,
-  `recordAnsweredBeat`, errand signature. Whichever encounter is answered
-  first pays; any other open encounter answered afterwards gets the
-  cooldown refusal, exactly like clicking an older message's response
-  button today.
-
-The saved encounter is never trusted from the client: the Activity is a
-browser page the user can edit, so the mood flag and `beatKey` stay on the
-server (a forged mood flag would raise the gain). Answering deletes the
-encounter, so it can only be answered once. Double clicks, two tabs and
-replayed requests can't pay twice. Unanswered encounters are cleaned up in
-the background after a day, as housekeeping (not a gameplay timer).
-
-Touch spots, Spend time and the secret button never call the server, so
-there's nothing to farm. **Spend time is unlimited and cosmetic**: a
-reaction and a line, no affinity, no cooldown. §5.2's
-`hangout_spend_time` and the `'hangout'` cooldown aren't needed for §11,
-and the "deliberate rule change" in §0 goes back to `/roam` and `/meet`
-being the only affinity sources.
-
-### 11.4 Secret button
-
-Each character has a **fixed, unique secret combo** with no hints in any
-line; players find it or share it.
-
-- **Shape:** 2–3 steps, each one touch spot tapped 1–3 times in a row, e.g.
-  head ×2 → cheek ×1 → hand ×2. No two characters share a combo.
-- **Wrong taps:** a tap that doesn't match the next step resets the combo
-  to the start and counts toward annoyance as normal. There's no time limit
-  between taps, so slow and gentle works.
-- **Annoyance:** taps that match the combo so far don't raise the meter. If
-  the character gets upset **at any point during the visit**, the secret is
-  locked until the next visit.
-- **Once found**, the button appears in the VN box and stays for the rest
-  of the visit; pressing it again replays the scene. It's gone when the
-  Activity closes, and the next visit needs the combo again. Nothing is
-  stored.
-- **The scene** is a special line or short exchange written to land the
-  character's **fave response type** (a tender scene for a kind-lover, a
-  teasing one for a playful-lover…). Cosmetic: no affinity, no milestone.
-- Combos and scenes live in the character's hangout data beside the line
-  pools (`constants/hangout/<id>.js`).
-
-### 11.5 Background and outfit
-
-**Background.** The same pool `/meet` draws from today, via `turfSpots`
-(`constants/backgrounds.js`): the character's house, their exclusive room
-and `additionalLocations`, plus signature spots weighted up (Alan: The Pit
-×1.5) and pinned in when they sit outside the house. `_PM` files only in
-the evening, at `EVENING_PM_WEIGHT`. A houseless character (Benkei) keeps
-`/meet`'s `TURF_PROBABILITY` split between his signature spot and a general
-location. This replaces §10's fixed `Vagastrom_Alan_Room.png` for `/meet`.
-
-**Outfit.** The uniform/casual draw (`getImageVariant` and the
-`CASUAL_IMAGE_PROBABILITY_*` curve) doesn't apply. The outfit comes from the
-rig's `outfits` and **fits the background**:
-
-- each outfit in `rig.json` lists the backgrounds it can appear in
-  (location keys, or files for a single spot), e.g. Alan's `roomwear` in
-  his room, `academy` in the Vagastrom garage spots and The Pit;
-- the background is drawn first, then one outfit at random among those
-  that allow it.
-
-**Dialogue variant.** The variant still keys dialogue (Jo's pronouns change
-between uniform and casual, `constants/dialogue/_shared.js`), so each
-outfit names the variant it counts as (`dialogueVariant: "uniform"` or
-`"casual"`). The beat is drawn last, so it always matches what the
-character is wearing.
-
-**Placement.** One framing per character (`rig.json` `stage`), the same on
-every background; only the background pans behind them. No per-background
-framing.
-
-**Loading.** The Activity loads only the drawn outfit's images, not every
-outfit's, so it opens faster on phones.
-
-### 11.6 When §11 starts
-
-Every character has a rig, **and** their outfits between them cover every
-background `/meet` can put them in. A test checks it for the whole roster,
-so no character can land somewhere with nothing to wear.
-
-**Writing comes last**, after all the rigs exist: touch reaction lines per
-tier, secret scenes and combos, drafted one character at a time from their
-reference file (voice-check workflow) and approved by the user, like §4.3.
-
-### 11.7 Fallback and operations
-
-- **Fallback by timeout.** Discord tells the bot nothing when a launch
-  fails. If the Activity hasn't loaded the encounter within ~30s of the
-  click, the bot posts today's `/meet` result (image + four response
-  buttons) as a followup, and that encounter is answered the normal way.
-  Once the Activity has loaded the encounter, the fallback is cancelled;
-  taking your time afterwards never triggers it. If the image does arrive
-  and both get answered, only the first pays (same reward gate). Depends on
-  followups working after a launch: **test it.** If they don't, the backup
-  is a manual way to ask for the message version from the picker.
-- **`/meet`-only off switch.** A column in `app_settings` (the table
-  maintenance mode uses, db/migrations/024), flipped by hand in SQL and
-  cached for 60s like `maintenance.js`. When on, clicking a name gives
-  today's image flow for everyone; the rest of the bot keeps running. Unlike
-  maintenance mode, which takes the whole bot down. One small migration, no
-  redeploy to flip it.
-- **Analytics.** Completed `/meet`s log to `command_usage_log` as `'meet'`
-  as today, tagged with the path (`activity` or `fallback`), to see how
-  reliably the Activity opens.
-
-### 11.8 Open questions
-
-- **Secret scene by tier**: one scene per character (the default), or three
-  versions in the `reactions.js` bands (early / mid / deep), each in the
-  fave type's register.
