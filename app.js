@@ -57,6 +57,7 @@ import { deleteInteractionMessage } from './discordRest.js';
 import {
   isMaintenanceModeActive,
   isMaintenanceBypassUser,
+  isMeetActivityOff,
   MAINTENANCE_MESSAGE,
 } from './maintenance.js';
 import {
@@ -72,9 +73,10 @@ import {
   trackCommandUsage,
 } from './db/supabase.js';
 import { validateContent } from './constants/validateContent.js';
-import { activityRouter } from './activityRoutes.js';
+import { activityOpenTo, activityRouter, clearHangoutLaunch } from './activityRoutes.js';
+import { handleMeetPickLaunch } from './meetActivity.js';
 import { startGateway } from './gateway.js';
-import { EPHEMERAL, optionValue } from './utils.js';
+import { EPHEMERAL, IS_TEST, optionValue } from './utils.js';
 
 // Time of day drives which backgrounds and dialogue are eligible (the `_PM`
 // evening cutoff — see constants/backgrounds.js). Discord never tells us a
@@ -218,8 +220,7 @@ async function getOriginalResponse(interactionToken, timeoutMs = 15000) {
 // `npm test`, where app.js is imported to exercise the HTTP routes: the gateway
 // and the encounter scheduler for the same reason at the bottom of this file,
 // and the two bond-scene triggers here. bondScenes.js itself is unit-tested
-// directly against a mocked discordRest.
-const IS_TEST = process.env.npm_lifecycle_event === 'test';
+// directly against a mocked discordRest. IS_TEST is utils.js's.
 
 // The interaction user's name as plain text — server nickname first, then the
 // global display name, then the @handle (the same order as publicEncounters.js
@@ -373,7 +374,10 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       return;
     }
 
-    if (name === 'meet') {
+    // `launch` is the Activity's entry-point command (commands.js), set to
+    // APP_HANDLER so it behaves exactly like /meet: same picker, same
+    // cooldown check, same invoke throttle (docs/hangout-activity.md §11.1).
+    if (name === 'meet' || name === 'launch') {
       // Same in-memory flood throttle as /roam, but on its own /meet window.
       const flood = claimCommandInvoke(userId, 'meet');
       if (!flood.allowed) {
@@ -828,6 +832,31 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     if (action === 'meet' && rest[0] === 'pick') {
       const characterId = rest[1];
 
+      // /meet as the Activity (docs/hangout-activity.md §11): the pick opens
+      // the Hangout Activity instead of composing the image, unless the
+      // /meet-only off switch is on or the Activity isn't open to this user
+      // yet. A refused launch falls through to the image flow below.
+      if (activityOpenTo(userId) && !(await isMeetActivityOff())) {
+        let launch;
+        try {
+          launch = await handleMeetPickLaunch(req.body, userId, characterId, { sendFollowup });
+        } catch (err) {
+          console.error(`[meetActivity] Pick for ${userId} failed before launching: ${err.message}`);
+          launch = { imageFlow: true };
+        }
+        if (launch.response) return res.send(launch.response);
+        if (launch.launched) {
+          // A /meet launch opens the encounter, not an earlier /encdev
+          // hangout's free scene.
+          clearHangoutLaunch(userId);
+          // Already answered through the callback endpoint (for the instance
+          // id), so the HTTP request just ends.
+          res.status(202).end();
+          launch.afterLaunch();
+          return;
+        }
+      }
+
       // Disable the character selection buttons by copying and modifying the original message
       res.send({
         type: InteractionResponseType.UPDATE_MESSAGE,
@@ -1102,7 +1131,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
     if (action === 'resp') {
       // origin ('meet' | 'roam') identifies the flow this response completes;
       // mood and beatKey are the answered beat (see parseResponseCustomId).
-      const { characterId, responseTypeId, origin: commandName, mood, beatKey } =
+      const { characterId, responseTypeId, origin: commandName, path, mood, beatKey } =
         parseResponseCustomId(rest);
 
       // Ack with a silent deferred-update FIRST, then do the real work. This
@@ -1184,7 +1213,9 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           // The flow completed — log it against the command that started it
           // ('meet' or 'roam'), not as a separate 'respond'.
           trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
-          trackCommandUsage(userId, commandName).catch(err => console.error('Error tracking command usage:', err));
+          // `path` is 'fallback' for the image a /meet Activity launch fell
+          // back to (docs/hangout-activity.md §11.7).
+          trackCommandUsage(userId, commandName, { path }).catch(err => console.error('Error tracking command usage:', err));
           trackCharacterEngagement(userId, characterId).catch(err => console.error('Error tracking character engagement:', err));
         } catch (err) {
           console.error('Error in /resp:', err);

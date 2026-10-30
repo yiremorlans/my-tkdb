@@ -2,8 +2,9 @@
 // way into the Hangout Activity until release (docs/hangout-activity.md):
 // the owner gets LAUNCH_ACTIVITY as the interaction's first response (it
 // can't follow a deferred ack), everyone else the same refusal as the rest
-// of /encdev, and the other /encdev subcommands keep their deferred ack. Its
-// `version` choice is recorded for the Activity (activityRoutes.js).
+// of /encdev, and the other /encdev subcommands keep their deferred ack. It
+// opens the free hangout, and its `version` choice (Live2D v2 by default, v1
+// the legacy sprite rig) is recorded for the Activity (activityRoutes.js).
 import { test, mock } from 'node:test';
 import assert from 'node:assert';
 import { createFakeSupabase } from './helpers/fakeSupabase.js';
@@ -56,17 +57,17 @@ test('the owner launches the Activity as the first response', async () => {
   assert.deepStrictEqual(body, { type: 12 }); // LAUNCH_ACTIVITY
 });
 
-test('version:v2 launches the same way and is remembered for the Activity to read', async () => {
+test('version:v1 launches the same way and is remembered for the Activity to read', async () => {
   const body = await post(encdev('hangout', 'the-owner', {
-    data: { name: 'encdev', options: [{ type: 1, name: 'hangout', options: [{ type: 3, name: 'version', value: 'v2' }] }] },
+    data: { name: 'encdev', options: [{ type: 1, name: 'hangout', options: [{ type: 3, name: 'version', value: 'v1' }] }] },
   }));
   assert.deepStrictEqual(body, { type: 12 });
-  assert.strictEqual(hangoutLaunchFor('the-owner'), 'v2');
+  assert.deepStrictEqual(hangoutLaunchFor('the-owner'), { version: 'v1', dev: true });
 });
 
-test('a launch without a version goes back to v1', async () => {
+test('a launch without a version is the Live2D free hangout', async () => {
   await post(encdev('hangout', 'the-owner'));
-  assert.strictEqual(hangoutLaunchFor('the-owner'), 'v1');
+  assert.deepStrictEqual(hangoutLaunchFor('the-owner'), { version: 'v2', dev: true });
 });
 
 test('anyone else gets the ephemeral /encdev refusal, not a launch', async () => {

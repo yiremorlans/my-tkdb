@@ -1,4 +1,4 @@
-import { getMaintenanceMode } from './db/supabase.js';
+import { getMaintenanceMode, getMeetActivityOff } from './db/supabase.js';
 
 // Global kill switch (db/migrations/024, app_settings.maintenance_mode).
 // Same operating model as guild_settings.locked (013): flipped by hand in
@@ -53,6 +53,31 @@ export function isMaintenanceBypassUser(userId) {
 // value from an earlier test.
 export function clearMaintenanceCache() {
   cached = { value: false, at: -Infinity };
+  meetOffCached = { value: false, at: -Infinity };
+}
+
+// The /meet-only off switch (app_settings.meet_activity_off, migration 035;
+// docs/hangout-activity.md §11.7). Same 60s cache and the same rule on a
+// read error as the maintenance flag above.
+let meetOffCached = { value: false, at: -Infinity };
+
+/**
+ * True while /meet picks should skip the Activity and give today's image
+ * flow. Read in app.js's meet:pick branch only; the rest of the bot is
+ * unaffected. Before the first successful read it's off (the Activity),
+ * like the column's DEFAULT FALSE.
+ */
+export async function isMeetActivityOff(now = Date.now()) {
+  if (now - meetOffCached.at < CACHE_MS) return meetOffCached.value;
+
+  try {
+    const value = await getMeetActivityOff();
+    meetOffCached = { value, at: now };
+    return value;
+  } catch (err) {
+    console.error(`[maintenance] isMeetActivityOff: serving cached value after read error: ${err.message}`);
+    return meetOffCached.value;
+  }
 }
 
 export const MAINTENANCE_MESSAGE = 'App under maintenance, please try again later.';

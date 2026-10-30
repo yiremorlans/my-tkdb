@@ -583,7 +583,10 @@ export async function getAnalyticsDashboard() {
 /**
  * Track individual command usage for analytics
  */
-export async function trackCommandUsage(userId, commandName) {
+// `path` tags a completed /meet with the way it went, 'activity' or
+// 'fallback' (migration 035, docs/hangout-activity.md §11.7); left off the
+// row entirely otherwise.
+export async function trackCommandUsage(userId, commandName, { path = null } = {}) {
   const { data, error } = await supabase
     .from('command_usage_log')
     .insert([
@@ -591,6 +594,7 @@ export async function trackCommandUsage(userId, commandName) {
         discord_user_id: userId,
         command_name: commandName,
         used_at: new Date().toISOString(),
+        ...(path ? { path } : {}),
       }
     ])
     .select()
@@ -773,6 +777,124 @@ export async function getMaintenanceMode() {
   }
 
   return data?.maintenance_mode ?? false;
+}
+
+/**
+ * The /meet-only off switch (app_settings.meet_activity_off, migration 035).
+ * Callers go through maintenance.js's isMeetActivityOff, which caches it.
+ */
+export async function getMeetActivityOff() {
+  const { data, error } = await supabase
+    .from('app_settings')
+    .select('meet_activity_off')
+    .eq('id', 1)
+    .single();
+
+  if (error) {
+    console.error(`[meetActivity] Error fetching the /meet Activity switch: ${error.message}`);
+    throw error;
+  }
+
+  return data?.meet_activity_off ?? false;
+}
+
+/**
+ * MEET ENCOUNTERS
+ *
+ * The encounter a /meet pick saves when it launches the Activity
+ * (migration 035, docs/hangout-activity.md §11). Read and answered only
+ * through meetActivity.js; nothing in a row ever comes from the client.
+ */
+
+/** Saves one encounter and returns the stored row (with its id). */
+export async function saveMeetEncounter(row) {
+  const { data, error } = await supabase
+    .from('meet_encounters')
+    .insert([row])
+    .select()
+    .single();
+
+  if (error) {
+    console.error(`[meetActivity] Error saving meet encounter: ${error.message}`);
+    throw error;
+  }
+
+  return data;
+}
+
+/** One encounter by id, or null. */
+export async function getMeetEncounter(id) {
+  const { data, error } = await supabase
+    .from('meet_encounters')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error && error.code !== 'PGRST116') {
+    console.error(`[meetActivity] Error fetching meet encounter: ${error.message}`);
+    throw error;
+  }
+
+  return data || null;
+}
+
+/** True when this /meet picker message already launched an encounter. */
+export async function meetPickerUsed(pickerMessageId) {
+  const { data, error } = await supabase
+    .from('meet_encounters')
+    .select('id')
+    .eq('picker_message_id', pickerMessageId)
+    .limit(1);
+
+  if (error) {
+    console.error(`[meetActivity] Error checking meet picker: ${error.message}`);
+    throw error;
+  }
+
+  return (data || []).length > 0;
+}
+
+/** This user's open encounters, newest first (a handful at most). */
+export async function getUserMeetEncounters(userId) {
+  const { data, error } = await supabase
+    .from('meet_encounters')
+    .select('*')
+    .eq('discord_user_id', userId)
+    .order('created_at', { ascending: false })
+    .limit(10);
+
+  if (error) {
+    console.error(`[meetActivity] Error fetching meet encounters: ${error.message}`);
+    throw error;
+  }
+
+  return data || [];
+}
+
+/** Stamps loaded_at the first time the Activity loads this encounter. */
+export async function markMeetEncounterLoaded(id, now = new Date()) {
+  const { error } = await supabase
+    .from('meet_encounters')
+    .update({ loaded_at: now.toISOString() })
+    .eq('id', id)
+    .is('loaded_at', null);
+
+  if (error) {
+    console.error(`[meetActivity] Error marking meet encounter loaded: ${error.message}`);
+    throw error;
+  }
+}
+
+export async function deleteMeetEncounter(id) {
+  const { error } = await supabase
+    .from('meet_encounters')
+    .delete()
+    .eq('id', id);
+
+  if (error) {
+    console.error(`[meetActivity] Error deleting meet encounter: ${error.message}`);
+    throw error;
+  }
 }
 
 /**

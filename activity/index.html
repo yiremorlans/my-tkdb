@@ -1,5 +1,5 @@
 <!doctype html>
-<!-- The Hangout Activity (docs/hangout-activity.md §4, §6). Built by
+<!-- The Hangout Activity (docs/hangout-activity.md §4, §6, §11). Built by
      `npm run build:activity` into activity/dist, which Express serves at /.
      Inside Discord it signs in through the Embedded App SDK; anywhere else
      it runs as a plain page. The dev preview is preview.html. -->
@@ -14,10 +14,13 @@
     <main id="stage" class="stage">
       <div class="meter" title="annoyance"><div id="meter-fill"></div></div>
 
+      <div id="choices" class="choices" hidden></div>
+
       <section class="vn-box" aria-live="polite">
         <div class="vn-name"><span id="vn-name"></span></div>
         <p id="vn-text" class="vn-text"></p>
         <nav class="vn-icons">
+          <button id="btn-next" class="vn-icon" title="Next" aria-label="Next" hidden>›</button>
           <button id="btn-mute" class="vn-icon" title="Sound" aria-label="Sound" aria-pressed="false" hidden>♪</button>
         </nav>
       </section>

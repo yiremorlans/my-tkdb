@@ -1,4 +1,5 @@
 import 'dotenv/config';
+import { InteractionResponseType } from 'discord-interactions';
 
 // Bot-initiated channel messages. Everything else in this app answers an
 // interaction (utils.js DiscordRequest, app.js sendFollowup); the public
@@ -117,6 +118,29 @@ export async function editInteractionMessage(interactionToken, messageId, body) 
 
   if (!res.ok) throw await readError(res);
   return res.json();
+}
+
+/**
+ * Answers an interaction with LAUNCH_ACTIVITY through the callback endpoint
+ * rather than the HTTP reply, with `with_response=true` so Discord returns
+ * the Activity instance it opened (docs/hangout-activity.md §11.2). Resolves
+ * to that instance id, or null if the response carries none. Throws on a
+ * refused launch; the interaction is then still unanswered. Interaction
+ * tokens need no bot auth.
+ */
+export async function launchActivityWithResponse(interactionId, interactionToken) {
+  const res = await fetch(
+    `${API_BASE}/interactions/${interactionId}/${interactionToken}/callback?with_response=true`,
+    {
+      method: 'POST',
+      headers: { 'User-Agent': USER_AGENT, 'Content-Type': 'application/json; charset=UTF-8' },
+      body: JSON.stringify({ type: InteractionResponseType.LAUNCH_ACTIVITY }),
+    },
+  );
+
+  if (!res.ok) throw await readError(res);
+  const json = await res.json().catch(() => null);
+  return json?.resource?.activity_instance?.id ?? json?.interaction?.activity_instance_id ?? null;
 }
 
 /**

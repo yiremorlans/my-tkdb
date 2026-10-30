@@ -28,9 +28,10 @@ export async function waitFor(predicate, { timeout = 2000, interval = 10 } = {})
 
 // Replaces global fetch: requests to the app under test on localhost:<port>
 // pass through, discord.com calls are recorded as { url, method,
-// isOriginalEdit, payload } and answered with `status(call)` (200 by default),
-// and anything else throws. Call restore() in test.after.
-export function stubDiscordFetch(port, { status = () => 200 } = {}) {
+// isOriginalEdit, payload } and answered with `status(call)` (200 by default)
+// and the JSON `body(call)` (a message stub by default), and anything else
+// throws. Call restore() in test.after.
+export function stubDiscordFetch(port, { status = () => 200, body = () => ({ id: 'stub-message' }) } = {}) {
   const originalFetch = globalThis.fetch;
   const calls = [];
 
@@ -54,7 +55,7 @@ export function stubDiscordFetch(port, { status = () => 200 } = {}) {
         payload,
       };
       calls.push(call);
-      return new Response(JSON.stringify({ id: 'stub-message' }), {
+      return new Response(JSON.stringify(body(call)), {
         status: status(call),
         headers: { 'Content-Type': 'application/json' },
       });

@@ -1,12 +1,13 @@
 // Hangout Activity API: /api/activity/*, the server side of the Discord
-// Activity (docs/hangout-activity.md §5.1, §6). For now the OAuth token
-// exchange and which hangout version a launch asked for; the state and
-// spend-time routes land with milestone 3.
+// Activity (docs/hangout-activity.md §5.1, §6, §11). The OAuth token
+// exchange and its renewal, which hangout a launch asked for, and /meet as
+// the Activity: the user's encounter and its one answer (the logic is in
+// meetActivity.js; these routes add the session).
 //
-// Until release (milestone 4) the hangout is owner-only: it's launched from
-// `/encdev hangout` (publicEncounters.js handleEncounterDevHangout), and this
-// route refuses a session to anyone but OWNER_DISCORD_ID, which also covers
-// someone joining the owner's running Activity from the voice channel.
+// Until release (milestone 4) the hangout is owner-only: this route refuses
+// a session to anyone but OWNER_DISCORD_ID, which also covers someone
+// joining the owner's running Activity from the voice channel, and
+// activityOpenTo keeps everyone else's /meet on the image flow.
 //
 // Sessions are a short-lived HMAC-signed token sent as a Bearer header, not a
 // cookie: cookies are unreliable inside Discord's Activity iframe. The
@@ -15,6 +16,7 @@
 
 import crypto from 'node:crypto';
 import express from 'express';
+import { answerMeetEncounter, loadMeetEncounter } from './meetActivity.js';
 
 const DISCORD_API = 'https://discord.com/api/v10';
 
@@ -25,6 +27,15 @@ export const SESSION_TTL_MS = 60 * 60 * 1000;
 const MAX_CODE_LENGTH = 512;
 
 const OWNER_ONLY = true;
+
+/**
+ * Whether `userId` may get the Activity at all: everyone once released,
+ * only the owner while OWNER_ONLY. app.js's meet:pick gives everyone else
+ * today's image flow, since the token route would refuse them anyway.
+ */
+export function activityOpenTo(userId, env = process.env) {
+  return !OWNER_ONLY || (Boolean(env.OWNER_DISCORD_ID) && userId === env.OWNER_DISCORD_ID);
+}
 
 const base64url = (value) => Buffer.from(value).toString('base64url');
 
@@ -143,37 +154,101 @@ export async function handleActivityToken(body, { fetchFn = fetch, env = process
   };
 }
 
+// The user a Bearer session token names, or null.
+function sessionUser(authorization, env, now) {
+  const token = /^Bearer (.+)$/.exec(authorization ?? '')?.[1];
+  return verifySessionToken(token, env.ACTIVITY_SESSION_SECRET, now);
+}
+
+const NO_SESSION = { status: 401, body: { error: 'no_session' } };
+
+// --- POST /api/activity/renew ---------------------------------------------
+
+/**
+ * A fresh session token for a session that's still valid, so an Activity
+ * with an answer pending outlasts SESSION_TTL_MS (§11.2). An expired token
+ * can't renew: the player reopens the Activity, and the encounter is still
+ * there.
+ */
+export function handleActivityRenew(authorization, { env = process.env } = {}, now = new Date()) {
+  const userId = sessionUser(authorization, env, now);
+  if (!userId) return NO_SESSION;
+  return {
+    status: 200,
+    body: {
+      session_token: signSessionToken(userId, env.ACTIVITY_SESSION_SECRET, now),
+      expires_in: SESSION_TTL_MS / 1000,
+    },
+  };
+}
+
 // --- GET /api/activity/launch ---------------------------------------------
 
-// `/encdev hangout version:<v>` picks v1 (the sprite rig) or v2 (the Live2D
-// proof, activity/src/hangout-v2/). LAUNCH_ACTIVITY can't carry a parameter
+// `/encdev hangout version:<v>` opens the free hangout (no /meet encounter)
+// as v2 (the Live2D rig, activity/src/hangout-v2/) or, for comparison until
+// it's removed, v1 (the sprite rig). LAUNCH_ACTIVITY can't carry a parameter
 // to the page, so the choice is kept here per user, in memory, for as long
-// as the launch takes to sign in; the Activity asks for it after sign-in.
-// A restart or an old choice falls back to v1.
+// as the launch takes to sign in; the Activity asks for it after sign-in. No
+// record (a /meet launch, a restart, an old one) means the /meet encounter,
+// in Live2D.
 export const HANGOUT_VERSIONS = ['v1', 'v2'];
 export const LAUNCH_TTL_MS = 10 * 60 * 1000;
 const launches = new Map(); // Discord user id → { version, at }
 
-/** Remembers the version `userId` just launched (publicEncounters.js handleEncounterDevHangout). */
+/** Remembers the dev launch `userId` just made (publicEncounters.js handleEncounterDevHangout). */
 export function recordHangoutLaunch(userId, version, now = new Date()) {
-  launches.set(userId, { version: HANGOUT_VERSIONS.includes(version) ? version : 'v1', at: now.getTime() });
+  launches.set(userId, { version: HANGOUT_VERSIONS.includes(version) ? version : 'v2', at: now.getTime() });
 }
 
-/** The version `userId` last launched within LAUNCH_TTL_MS, else v1. */
-export function hangoutLaunchFor(userId, now = new Date()) {
-  const launch = launches.get(userId);
-  return launch && now.getTime() - launch.at < LAUNCH_TTL_MS ? launch.version : 'v1';
+/** Forgets it, so a /meet launch right after a dev one opens the encounter. */
+export function clearHangoutLaunch(userId) {
+  launches.delete(userId);
 }
 
 /**
- * `{ status, body }` for GET /launch: the version the session's user last
- * launched. The user comes only from the Bearer session token.
+ * `{ version, dev }` for `userId`'s launch: their dev launch within
+ * LAUNCH_TTL_MS, else `{ version: 'v2', dev: false }`.
+ */
+export function hangoutLaunchFor(userId, now = new Date()) {
+  const launch = launches.get(userId);
+  return launch && now.getTime() - launch.at < LAUNCH_TTL_MS
+    ? { version: launch.version, dev: true }
+    : { version: 'v2', dev: false };
+}
+
+/**
+ * `{ status, body }` for GET /launch: hangoutLaunchFor the session's user.
+ * The user comes only from the Bearer session token.
  */
 export function handleActivityLaunch(authorization, { env = process.env } = {}, now = new Date()) {
-  const token = /^Bearer (.+)$/.exec(authorization ?? '')?.[1];
-  const userId = verifySessionToken(token, env.ACTIVITY_SESSION_SECRET, now);
-  if (!userId) return { status: 401, body: { error: 'no_session' } };
-  return { status: 200, body: { version: hangoutLaunchFor(userId, now) } };
+  const userId = sessionUser(authorization, env, now);
+  if (!userId) return NO_SESSION;
+  return { status: 200, body: hangoutLaunchFor(userId, now) };
+}
+
+// --- GET /api/activity/encounter, POST /api/activity/answer ----------------
+
+/**
+ * The session user's /meet encounter in this Activity instance
+ * (`?instance=`, the SDK's instanceId), or 404 when they have none of their
+ * own: the Activity then shows a refusal line and no scene (§11.1).
+ */
+export async function handleActivityEncounter(authorization, instanceId, { env = process.env } = {}, now = new Date()) {
+  const userId = sessionUser(authorization, env, now);
+  if (!userId) return NO_SESSION;
+  const instance = typeof instanceId === 'string' && instanceId.length <= 64 ? instanceId : null;
+  const encounter = await loadMeetEncounter(userId, instance, now);
+  return encounter ? { status: 200, body: encounter } : { status: 404, body: { error: 'no_encounter' } };
+}
+
+/**
+ * Answers the session user's encounter: `{ encounter, type }` in the body,
+ * nothing else read from it (meetActivity.js answerMeetEncounter).
+ */
+export async function handleActivityAnswer(authorization, body, { env = process.env } = {}, now = new Date()) {
+  const userId = sessionUser(authorization, env, now);
+  if (!userId) return NO_SESSION;
+  return answerMeetEncounter(userId, body?.encounter, body?.type, now);
 }
 
 // --- router ---------------------------------------------------------------
@@ -188,7 +263,38 @@ activityRouter.post('/token', async (req, res) => {
   res.status(status).json(body);
 });
 
+activityRouter.post('/renew', (req, res) => {
+  const { status, body } = handleActivityRenew(req.get('authorization'));
+  res.status(status).json(body);
+});
+
 activityRouter.get('/launch', (req, res) => {
   const { status, body } = handleActivityLaunch(req.get('authorization'));
   res.status(status).json(body);
+});
+
+// The two /meet routes touch the database; a failure there is a 500 with a
+// body the Activity can show as "try again", never an unhandled rejection.
+const SERVER_ERROR = { error: 'server_error' };
+
+activityRouter.get('/encounter', async (req, res) => {
+  try {
+    const { status, body } = await handleActivityEncounter(req.get('authorization'), req.query.instance);
+    res.status(status).json(body);
+  } catch (err) {
+    console.error(`[activity] Loading an encounter failed: ${err.message}`);
+    res.status(500).json(SERVER_ERROR);
+  }
+});
+
+activityRouter.post('/answer', async (req, res) => {
+  let result;
+  try {
+    result = await handleActivityAnswer(req.get('authorization'), req.body);
+  } catch (err) {
+    console.error(`[activity] Answering an encounter failed: ${err.message}`);
+    return res.status(500).json(SERVER_ERROR);
+  }
+  res.status(result.status).json(result.body);
+  result.afterReply?.().catch((err) => console.error(`[activity] Answer follow-up failed: ${err.message}`));
 });

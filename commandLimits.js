@@ -265,7 +265,10 @@ export async function claimCommandUse(userId, command, now = new Date()) {
     claimed = await claimCommandSlot(userId, command, Math.round(COOLDOWN_MS / 1000));
   } catch (err) {
     console.error('claimCommandUse: failing closed after claim error:', err);
-    return { allowed: false, reason: 'Something went wrong there. Try again?' };
+    // `failed` tells this apart from a real refusal, for a caller that keeps
+    // the encounter answerable after an error (meetActivity.js
+    // answerMeetEncounter).
+    return { allowed: false, failed: true, reason: 'Something went wrong there. Try again?' };
   }
 
   if (claimed) return { allowed: true };

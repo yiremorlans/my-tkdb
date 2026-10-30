@@ -113,13 +113,17 @@ async function getCharacterProgress(userId, character) {
 // recentBeatWindow). A failed read just draws from the full pool. Nothing is
 // written here: the beat only enters the recent list once it's answered (see
 // recordAnsweredBeat), so a dropped spawn leaves no trace.
-async function drawBeatFor(userId, character, ctx, draw) {
-  const [{ tier, variant }, recentBeats] = await Promise.all([
+// `dress` turns the rolled variant into what's worn, `{ variant, outfit }`,
+// before the beat is drawn (the Activity's rig outfit, meetActivity.js
+// dressForVariant); left out, the roll stands and there's no outfit.
+async function drawBeatFor(userId, character, ctx, draw, dress = (variant) => ({ variant, outfit: null })) {
+  const [{ tier, variant: rolled }, recentBeats] = await Promise.all([
     getCharacterProgress(userId, character),
     getRecentDialogueBeats(userId, character.id).catch(() => []),
   ]);
+  const { variant, outfit } = dress(rolled);
   const beat = draw(character, tier, variant, { ...ctx, recentBeats });
-  return { variant, beat };
+  return { tier, variant, outfit, beat };
 }
 
 // The response click's half of the recent-beat skip: the answered beat's key
@@ -168,13 +172,17 @@ function responseCustomId(characterId, responseType, origin, mood, beatKey) {
 
 // `parts` is the custom_id after 'resp:'. Older buttons may lack the origin
 // (read as 'meet'), carry 's' for the mood flag (from before moods were
-// renamed from swaps), or have no beat key.
+// renamed from swaps), or have no beat key. The origin 'fallback' is a /meet
+// whose Activity never loaded, answered on the image the bot posted instead
+// (meetActivity.js runMeetFallback): it completes /meet, and `path` tags it
+// for command_usage_log (docs/hangout-activity.md §11.7).
 export function parseResponseCustomId(parts) {
   const [characterId, responseTypeId, origin, moodFlag, beatKey] = parts;
   return {
     characterId,
     responseTypeId,
     origin: origin === 'roam' ? 'roam' : 'meet',
+    path: origin === 'fallback' ? 'fallback' : null,
     mood: moodFlag === 'm' || moodFlag === 's',
     beatKey: beatKey || null,
   };
@@ -673,14 +681,19 @@ export async function buildMeetPickMessage(userId = null, candidates = null, dis
   };
 }
 
-export async function buildMeetSpawnMessage(userId, characterId, now = new Date()) {
+/**
+ * Draws a /meet encounter in docs/hangout-activity.md §11.5's order: the
+ * place, then the outfit roll, then the beat, so the beat always matches
+ * what's worn. Returns null for an unknown character. `dress` maps the rolled
+ * variant to `{ variant, outfit }` (see drawBeatFor); the image flow leaves
+ * it out.
+ *
+ * `intro` is the line the /meet message carries ("Alan Mido agrees to meet
+ * you at **The Pit**."), `notice` the mood notice under it, or null.
+ */
+export async function drawMeetEncounter(userId, characterId, now = new Date(), dress = undefined) {
   const character = getCharacterById(characterId);
-  if (!character) {
-    return {
-      content: 'They seem to have wandered off already.',
-      flags: EPHEMERAL_FLAG,
-    };
-  }
+  if (!character) return null;
 
   // A housed character is always on their own turf, signature spots weighted
   // the same as /roam's turf branch (see getRandomBackgroundForCharacter). A
@@ -702,42 +715,82 @@ export async function buildMeetSpawnMessage(userId, characterId, now = new Date(
   // approach/greeting resolution /meet doesn't render — `line` and
   // `responses` come from the one drawn beat, never two independent draws
   // (see getRandomDialogueEntry).
-  const {
-    variant,
-    beat: { line: dialogue, responses: beatResponses, mood, beatKey },
-  } = await drawBeatFor(userId, character, dialogueCtx, getRandomDialogueEntry);
-
-  const charFilename = character.images[variant];
-
-  const imageBuffer = await composeEncounter(fallbackSpot.file, charFilename, dialogue);
+  const { tier, variant, outfit, beat } = await drawBeatFor(
+    userId, character, dialogueCtx, getRandomDialogueEntry, dress,
+  );
 
   const locationText = fallbackSpot ? ` at **${getLocationDisplayName(fallbackSpot)}**.` : '.';
-  const notice = moodNotice(character, mood);
 
   return {
-    content: `${getFullName(character)} agrees to meet you${locationText}${notice ? `\n${notice}` : ''}`,
+    characterId: character.id,
+    backgroundFile: fallbackSpot?.file ?? null,
+    tier,
+    variant,
+    outfit,
+    intro: `${getFullName(character)} agrees to meet you${locationText}`,
+    notice: moodNotice(character, beat.mood) || null,
+    line: beat.line,
+    // Resolved once here, so every place this encounter shows (the Activity,
+    // the image, the image fallback) offers the same four labels.
+    responses: Object.fromEntries(
+      Object.entries(generateCharacterResponses(character, beat.responses))
+        .map(([type, { label }]) => [type, label]),
+    ),
+    mood: Boolean(beat.mood),
+    beatKey: beat.beatKey ?? null,
+  };
+}
+
+/**
+ * Today's /meet result message for a drawn encounter (drawMeetEncounter, or a
+ * saved one in that shape): the composed image and the four response
+ * buttons. `origin` rides in their custom_id ('meet', or 'fallback' for the
+ * Activity's image fallback; see parseResponseCustomId).
+ */
+export async function buildMeetEncounterMessage(encounter, origin = 'meet') {
+  const character = getCharacterById(encounter.characterId);
+  const charFilename = character.images[encounter.variant] ?? Object.values(character.images)[0];
+  const imageBuffer = await composeEncounter(encounter.backgroundFile, charFilename, encounter.line);
+
+  return {
+    content: encounter.notice ? `${encounter.intro}\n${encounter.notice}` : encounter.intro,
     files: [{ attachment: imageBuffer, name: 'encounter.png' }],
-    components: responseActionRow(character.id, false, 'meet', beatResponses, mood, beatKey),
+    components: responseActionRow(
+      character.id, false, origin, encounter.responses, encounter.mood, encounter.beatKey,
+    ),
     flags: EPHEMERAL_FLAG,
   };
 }
 
-// --- dialogue response -------------------------------------------------------
-
-export async function buildResponseResultMessage(
-  userId,
-  characterId,
-  responseTypeId,
-  shownComponents = null,
-  { mood = false, beatKey = null } = {},
-) {
-  const character = getCharacterById(characterId);
-  if (!character) {
+export async function buildMeetSpawnMessage(userId, characterId, now = new Date()) {
+  const encounter = await drawMeetEncounter(userId, characterId, now);
+  if (!encounter) {
     return {
       content: 'They seem to have wandered off already.',
       flags: EPHEMERAL_FLAG,
     };
   }
+  return buildMeetEncounterMessage(encounter);
+}
+
+// --- dialogue response -------------------------------------------------------
+
+/**
+ * Scores and records one answer to an encounter: spends any /call boosts,
+ * writes the gain (recordResponse), remembers the beat and signs an errand
+ * target. Shared by the response buttons (buildResponseResultMessage) and the
+ * Activity's answer route (meetActivity.js answerMeetEncounter); the caller
+ * has already passed the cooldown claim. Returns null for an unknown
+ * character, else `{ baseGain, reaction, deltaLine, signatureLine, levelUp }`.
+ */
+export async function answerResponse(
+  userId,
+  characterId,
+  responseTypeId,
+  { mood = false, beatKey = null } = {},
+) {
+  const character = getCharacterById(characterId);
+  if (!character) return null;
 
   const baseGain = getAffinityForResponse(character, responseTypeId, { mood });
 
@@ -786,18 +839,45 @@ export async function buildResponseResultMessage(
   }
 
   return {
+    baseGain,
+    reaction,
+    deltaLine,
+    signatureLine,
+    // The crossing, for the caller to act on after its reply has gone out. A
+    // bond scene is a DM (docs/bond-scene-dms.md) and the interaction must
+    // not wait on Discord's DM endpoints, so this is deliberately data rather
+    // than a call made from in here. `level` is where the user landed, and
+    // since a single gain can never clear two bands that is always exactly
+    // one step above where they were.
+    levelUp: leveledUp ? { characterId, levelName: level.name } : null,
+  };
+}
+
+export async function buildResponseResultMessage(
+  userId,
+  characterId,
+  responseTypeId,
+  shownComponents = null,
+  { mood = false, beatKey = null } = {},
+) {
+  const result = await answerResponse(userId, characterId, responseTypeId, { mood, beatKey });
+  if (!result) {
+    return {
+      content: 'They seem to have wandered off already.',
+      flags: EPHEMERAL_FLAG,
+    };
+  }
+  const { reaction, deltaLine, signatureLine, levelUp } = result;
+
+  return {
     content: [`${reaction}\n${deltaLine}`, signatureLine].filter(Boolean).join('\n'),
     components: shownComponents?.length
       ? disableComponents(shownComponents)
       : responseActionRow(characterId, true),
     flags: EPHEMERAL_FLAG,
     // Not part of the message — the crossing, for app.js to act on after the
-    // reply has gone out. A bond scene is a DM (docs/bond-scene-dms.md) and the
-    // interaction must not wait on Discord's DM endpoints, so this is
-    // deliberately data rather than a call made from in here. `level` is where
-    // the user landed, and since a single gain can never clear two bands that
-    // is always exactly one step above where they were.
-    levelUp: leveledUp ? { characterId, levelName: level.name } : null,
+    // reply has gone out (see answerResponse).
+    levelUp,
   };
 }
 

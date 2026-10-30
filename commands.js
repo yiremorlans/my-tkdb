@@ -388,16 +388,16 @@ const ENCDEV_COMMAND = {
     {
       type: 1, // SUB_COMMAND
       name: "hangout",
-      description: "Launch the Hangout Activity here (docs/hangout-activity.md)",
+      description: "Launch the free Hangout Activity here, no /meet encounter (docs/hangout-activity.md)",
       options: [
         {
           name: "version",
-          description: "Which hangout to launch; v1 if omitted",
+          description: "Which hangout to launch; v2 (Live2D) if omitted",
           type: 3, // STRING
           required: false,
           choices: [
-            { name: "v1: sprite rig", value: "v1" },
-            { name: "v2: Live2D (proof)", value: "v2" },
+            { name: "v2: Live2D", value: "v2" },
+            { name: "v1: sprite rig (legacy)", value: "v1" },
           ],
         },
       ],
@@ -601,22 +601,19 @@ const WISHINGWELL_COMMAND = {
   contexts: [0, 1, 2],
 };
 
-// The Hangout Activity's entry point (docs/hangout-activity.md §6). Type 4
-// (PRIMARY_ENTRY_POINT) with handler 2 (DISCORD_LAUNCH_ACTIVITY): Discord
-// launches the Activity itself and never sends app.js an interaction for it.
-// Needs Activities enabled on the app first. Once they are, Discord insists
-// on an entry point and rejects any bulk overwrite without one, so it can't
-// just be left out. Until release the hangout is reached through
-// `/encdev hangout` only: this is hidden like /encdev
-// (default_member_permissions "0"), and the token route refuses everyone
-// but OWNER_DISCORD_ID (activityRoutes.js), so an admin who can still see
-// it, or someone joining the owner's session, gets no further than a
-// refusal.
-const HANGOUT_COMMAND = {
-  name: "hangout",
-  description: "Hang out with a character in their room",
+// The Hangout Activity's entry point (docs/hangout-activity.md §6, §11.1).
+// Type 4 (PRIMARY_ENTRY_POINT). Once Activities are on, Discord insists on
+// an entry point and rejects any bulk overwrite without one (error 50240),
+// so it can't be left out. Handler 1 (APP_HANDLER): Discord sends app.js an
+// interaction for it, answered exactly like /meet (same picker, cooldown and
+// invoke throttle), so it's no way around /meet. Until release it stays
+// hidden like /encdev (default_member_permissions "0"), and the token route
+// refuses everyone but OWNER_DISCORD_ID (activityRoutes.js).
+const LAUNCH_COMMAND = {
+  name: "launch",
+  description: "Pick someone to meet up with",
   type: 4,
-  handler: 2,
+  handler: 1,
   default_member_permissions: "0",
   integration_types: [0],
   contexts: [0],
@@ -638,7 +635,7 @@ const ALL_COMMANDS = [
   COUNTDOWN_COMMAND,
   EVENT_COMMAND,
   WISHINGWELL_COMMAND,
-  HANGOUT_COMMAND,
+  LAUNCH_COMMAND,
   ENCDEV_COMMAND,
   MISSIONDEV_COMMAND,
 ];

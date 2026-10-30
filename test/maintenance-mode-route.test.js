@@ -105,8 +105,11 @@ test('the owner can run /meet and use its buttons while maintenance is on', asyn
   const cmd = await (await postInteraction(command('meet', 'the-owner'))).json();
   assert.strictEqual(cmd.type, 5); // /meet's normal deferred ack, not the refusal
 
-  const btn = await (await postInteraction(component('meet:pick:kaito', 'the-owner'))).json();
-  assert.notStrictEqual(btn.data?.content, MAINTENANCE_MESSAGE);
+  // The owner's pick opens the /meet Activity (an empty 202 once launched
+  // through the callback endpoint) or answers inline; either way, not the
+  // maintenance refusal.
+  const btn = await (await postInteraction(component('meet:pick:kaito', 'the-owner'))).text();
+  assert.ok(!btn.includes(MAINTENANCE_MESSAGE));
 });
 
 test('the owner bypass does not extend to other users', async () => {

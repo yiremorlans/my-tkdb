@@ -8,6 +8,11 @@ import { getGuildRoles } from "./discordRest.js";
 // number 64) before this. Import this instead of adding another one.
 export const EPHEMERAL = InteractionResponseFlags.EPHEMERAL;
 
+// True under `npm test`, where app.js is imported to exercise the HTTP
+// routes. Anything that reaches out to Discord on its own initiative (the
+// gateway, the scheduler, bond-scene DMs) is held back while it's set.
+export const IS_TEST = process.env.npm_lifecycle_event === "test";
+
 // The opt-in ping on scheduled public posts (fresh encounters, mission
 // requests): whichever role in the guild is named PING_ROLE_NAME. Members give
 // themselves that role to be notified; a guild without one gets no ping.

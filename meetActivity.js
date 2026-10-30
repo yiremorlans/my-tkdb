@@ -1,0 +1,376 @@
+// /meet as the Activity (docs/hangout-activity.md §11): the server side of a
+// /meet pick that opens the Hangout Activity instead of composing an image.
+//
+//   handleMeetPickLaunch  the meet:pick click: cooldown, one encounter per
+//                         picker, the draw, the launch (app.js)
+//   loadMeetEncounter     what GET /api/activity/encounter shows
+//   answerMeetEncounter   POST /api/activity/answer, the one payout
+//   runMeetFallback       today's image, ~30s after a launch the Activity
+//                         never loaded
+//
+// The routes themselves, and the session that names the user, are in
+// activityRoutes.js. Everything that decides the payout (mood flag, beat key)
+// is saved in meet_encounters (migration 035) and never comes back from the
+// client: the Activity is a page the user can edit.
+//
+// Deliberately not here: which users get the Activity at all (the off switch,
+// maintenance.js isMeetActivityOff, and the owner gate, activityRoutes.js
+// activityOpenTo). app.js decides that before calling in.
+
+import fs from 'node:fs';
+import path from 'node:path';
+import { fileURLToPath } from 'node:url';
+import { InteractionResponseType } from 'discord-interactions';
+import { EPHEMERAL, IS_TEST } from './utils.js';
+import { backgroundPath } from './constants/backgrounds.js';
+import { getCharacterById } from './constants/characters.js';
+import { RESPONSE_TYPE_ORDER } from './constants/responseTypes.js';
+import {
+  answerResponse,
+  buildMeetEncounterMessage,
+  disableComponents,
+  drawMeetEncounter,
+} from './encounters.js';
+import { deliverBondScene } from './bondScenes.js';
+import { checkCommandLimit, claimCommandUse, releaseCommandInvoke } from './commandLimits.js';
+import { editInteractionMessage, launchActivityWithResponse } from './discordRest.js';
+import {
+  deleteMeetEncounter,
+  getMeetEncounter,
+  getUserMeetEncounters,
+  markMeetEncounterLoaded,
+  meetPickerUsed,
+  saveMeetEncounter,
+  trackCharacterEngagement,
+  trackCommandUsage,
+  trackUserActivity,
+} from './db/supabase.js';
+import { reportFailures } from './missions/shared.js';
+
+const LIVE2D_DIR = path.join(path.dirname(fileURLToPath(import.meta.url)), 'assets', 'live2d');
+
+export const ALREADY_PICKED = 'You already picked someone from this list. Use /meet again for someone new.';
+
+// --- outfit (§11.5) ---------------------------------------------------------
+
+const rigOutfits = new Map(); // character id → { outfits, defaultOutfit } | null
+
+function readRigOutfits(characterId) {
+  if (!rigOutfits.has(characterId)) {
+    try {
+      const rig = JSON.parse(fs.readFileSync(path.join(LIVE2D_DIR, characterId, 'rig.json'), 'utf8'));
+      rigOutfits.set(characterId, { outfits: rig.outfits ?? {}, defaultOutfit: rig.defaultOutfit });
+    } catch (err) {
+      console.error(`[meetActivity] No Live2D rig for ${characterId}: ${err.message}`);
+      rigOutfits.set(characterId, null);
+    }
+  }
+  return rigOutfits.get(characterId);
+}
+
+/** Forgets the cached rig outfits, so an edited rig.json is read again (tests). */
+export function clearRigOutfits() {
+  rigOutfits.clear();
+}
+
+/**
+ * What `characterId` wears for a rolled variant: an outfit whose rig.json
+ * `dialogueVariant` matches (one at random if several do), else the rig's
+ * `defaultOutfit`, and then the variant becomes that outfit's, so the
+ * dialogue matches what's worn. No rig keeps the roll with no outfit.
+ */
+export function dressForVariant(characterId, rolled, random = Math.random) {
+  const rig = readRigOutfits(characterId);
+  if (!rig) return { variant: rolled, outfit: null };
+  const matching = Object.keys(rig.outfits).filter((name) => rig.outfits[name].dialogueVariant === rolled);
+  if (matching.length) return { variant: rolled, outfit: matching[Math.floor(random() * matching.length)] };
+  const outfit = rig.outfits[rig.defaultOutfit] ? rig.defaultOutfit : Object.keys(rig.outfits)[0] ?? null;
+  return { variant: rig.outfits[outfit]?.dialogueVariant ?? rolled, outfit };
+}
+
+// --- the click (§11.1) ------------------------------------------------------
+
+// A saved row back in drawMeetEncounter's shape, for the image fallback.
+function encounterFromRow(row) {
+  return {
+    characterId: row.character_id,
+    backgroundFile: row.background_file,
+    variant: row.variant,
+    intro: row.intro,
+    notice: row.notice,
+    line: row.line,
+    responses: row.responses,
+    mood: row.mood,
+    beatKey: row.beat_key,
+  };
+}
+
+const update = (content, components) => ({
+  type: InteractionResponseType.UPDATE_MESSAGE,
+  data: { content, components: disableComponents(components), flags: EPHEMERAL },
+});
+
+/**
+ * The meet:pick click, when the Activity is open to this user. Returns one of:
+ *
+ * - `{ response }`: an ordinary interaction response for app.js to send (the
+ *   cooldown text with the picker greyed out, "already picked", an unknown
+ *   character). Nothing launched, nothing saved.
+ * - `{ launched: true, afterLaunch }`: the Activity is launching (answered
+ *   through the callback endpoint, so app.js only ends the HTTP request).
+ *   afterLaunch saves the encounter, greys out the picker and starts the
+ *   fallback timer; it never throws.
+ * - `{ imageFlow: true }`: Discord refused the launch, so the interaction is
+ *   still unanswered and app.js gives today's image flow instead.
+ *
+ * Everything before the launch has to fit in Discord's 3s (a launch can't
+ * follow a deferred ack), which is why the reads run together. A throw from
+ * here means nothing was launched.
+ */
+export async function handleMeetPickLaunch(body, userId, characterId, { sendFollowup }, now = new Date()) {
+  const shown = body.message?.components;
+  if (!getCharacterById(characterId)) return { response: update('They seem to have wandered off already.', shown) };
+
+  const pickerMessageId = body.message?.id ?? null;
+  // Independent: the cooldown, whether this picker already launched, and the
+  // draw (its own relationship and recent-beat reads).
+  const [limit, picked, encounter] = await Promise.all([
+    checkCommandLimit(userId, 'meet', now),
+    pickerMessageId ? meetPickerUsed(pickerMessageId) : false,
+    drawMeetEncounter(userId, characterId, now, (variant) => dressForVariant(characterId, variant)),
+  ]);
+
+  // Nobody on /meet cooldown gets into the Activity: an older picker clicked
+  // after an answer shows the cooldown text, buttons greyed, as an older
+  // response button does. No encounter, so nothing left to reroll: the
+  // invoke slot goes back, as at /meet itself.
+  if (!limit.allowed) {
+    releaseCommandInvoke(userId, 'meet');
+    return { response: update(limit.reason, shown) };
+  }
+  // One encounter per /meet message, even if Discord wouldn't let the bot
+  // grey the picker out after an earlier launch.
+  if (picked) {
+    return {
+      response: {
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: { content: ALREADY_PICKED, flags: EPHEMERAL },
+      },
+    };
+  }
+
+  let instanceId;
+  try {
+    instanceId = await launchActivityWithResponse(body.id, body.token);
+  } catch (err) {
+    console.error(`[meetActivity] Launch refused for ${userId}: ${err.message}`);
+    return { imageFlow: true };
+  }
+
+  return {
+    launched: true,
+    afterLaunch: () => saveLaunchedEncounter({ body, userId, encounter, instanceId, pickerMessageId, sendFollowup }),
+  };
+}
+
+async function saveLaunchedEncounter({ body, userId, encounter, instanceId, pickerMessageId, sendFollowup }) {
+  // A launch answer can't update the picker, so it's greyed out with an edit.
+  // Discord doesn't document whether that's allowed after a launch; if it
+  // isn't, handleMeetPickLaunch's picker check holds the line instead.
+  const greyOut = editInteractionMessage(body.token, '@original', {
+    components: disableComponents(body.message?.components),
+  }).catch((err) => console.warn(`[meetActivity] Could not grey out the picker for ${userId}: ${err.message}`));
+
+  let row;
+  try {
+    row = await saveMeetEncounter({
+      discord_user_id: userId,
+      character_id: encounter.characterId,
+      picker_message_id: pickerMessageId,
+      instance_id: instanceId,
+      interaction_token: body.token,
+      background_file: encounter.backgroundFile,
+      outfit: encounter.outfit,
+      variant: encounter.variant,
+      tier: encounter.tier,
+      intro: encounter.intro,
+      notice: encounter.notice,
+      line: encounter.line,
+      responses: encounter.responses,
+      mood: encounter.mood,
+      beat_key: encounter.beatKey,
+    });
+  } catch (err) {
+    // The Activity opened with nothing to load, so it shows its refusal;
+    // the image goes out now rather than in 30s.
+    console.error(`[meetActivity] Could not save the encounter for ${userId}: ${err.message}`);
+    await greyOut;
+    await postFallback(body.token, encounter, sendFollowup, userId);
+    return;
+  }
+
+  await greyOut;
+  scheduleMeetFallback(row.id, body.token, sendFollowup);
+}
+
+// --- fallback (§11.7) -------------------------------------------------------
+
+export const MEET_FALLBACK_MS = 30 * 1000;
+let fallbackMs = MEET_FALLBACK_MS;
+const fallbacks = new Map(); // encounter id → timeout
+
+function scheduleMeetFallback(encounterId, token, sendFollowup) {
+  const timer = setTimeout(() => {
+    fallbacks.delete(encounterId);
+    runMeetFallback(encounterId, token, sendFollowup);
+  }, fallbackMs);
+  timer.unref?.();
+  fallbacks.set(encounterId, timer);
+}
+
+async function postFallback(token, encounter, sendFollowup, userId) {
+  try {
+    // A composed PNG: the same 45s room as /meet's own image followup.
+    await sendFollowup(token, await buildMeetEncounterMessage(encounter, 'fallback'), 45000);
+  } catch (err) {
+    console.error(`[meetActivity] Image fallback failed for ${userId}: ${err.message}`);
+  }
+}
+
+/**
+ * Discord tells the bot nothing when a launch fails, so if the Activity
+ * hasn't loaded the encounter by now, post today's /meet result (image and
+ * four buttons, origin 'fallback') on the click's token. It's answered the
+ * normal way; if the Activity loads it later and both are answered, only the
+ * first pays (the same cooldown claim). Never throws.
+ */
+export async function runMeetFallback(encounterId, token, sendFollowup) {
+  let row;
+  try {
+    row = await getMeetEncounter(encounterId);
+  } catch (err) {
+    console.error(`[meetActivity] Fallback check failed for encounter ${encounterId}: ${err.message}`);
+    return;
+  }
+  // Loaded (the Activity works) or already answered: nothing to do.
+  if (!row || row.loaded_at) return;
+  await postFallback(token, encounterFromRow(row), sendFollowup, row.discord_user_id);
+}
+
+/** Test hook: the fallback delay (MEET_FALLBACK_MS when called with nothing). */
+export function setMeetFallbackDelay(ms = MEET_FALLBACK_MS) {
+  fallbackMs = ms;
+}
+
+/** Cancels every pending fallback (tests, shutdown). */
+export function clearMeetFallbacks() {
+  for (const timer of fallbacks.values()) clearTimeout(timer);
+  fallbacks.clear();
+}
+
+// --- the Activity's side (§11.2, §11.3) ------------------------------------
+
+/**
+ * The encounter the Activity shows `userId` in `instanceId`, or null when
+ * they have none of their own there (someone else's instance) or are on
+ * /meet cooldown (an older picker's encounter after another was answered):
+ * the Activity then shows its refusal, with no scene. A launch
+ * whose instance id Discord didn't return matches the user's newest
+ * encounter without one. Loading it stamps loaded_at, which cancels the
+ * image fallback for good.
+ */
+export async function loadMeetEncounter(userId, instanceId, now = new Date()) {
+  // Independent reads. The cooldown read fails open (checkCommandLimit), so
+  // a blip shows the scene and the answer's claim still gates the payout.
+  const [rows, limit] = await Promise.all([getUserMeetEncounters(userId), checkCommandLimit(userId, 'meet', now)]);
+  if (!limit.allowed) return null;
+  const row =
+    (instanceId && rows.find((r) => r.instance_id === instanceId)) ||
+    rows.find((r) => r.instance_id == null);
+  if (!row) return null;
+
+  await markMeetEncounterLoaded(row.id, now);
+  clearTimeout(fallbacks.get(row.id));
+  fallbacks.delete(row.id);
+
+  const character = getCharacterById(row.character_id);
+  return {
+    id: row.id,
+    character: row.character_id,
+    name: character?.firstName ?? row.character_id,
+    outfit: row.outfit,
+    tier: row.tier,
+    background: row.background_file ? `/assets/bg/${backgroundPath(row.background_file)}` : null,
+    intro: row.intro,
+    notice: row.notice,
+    line: row.line,
+    responses: row.responses,
+  };
+}
+
+// The result kept on the /meet message, like the image flow's, so Discord
+// has a record. Best effort: the token may be past its 15 minutes, or
+// Discord may not allow edits after a launch.
+function recordResultOnPicker(row, result) {
+  const content = [row.intro, `${result.reaction}\n${result.deltaLine}`, result.signatureLine]
+    .filter(Boolean)
+    .join('\n');
+  return editInteractionMessage(row.interaction_token, '@original', { content })
+    .catch((err) => console.warn(`[meetActivity] Could not edit the result onto /meet for ${row.discord_user_id}: ${err.message}`));
+}
+
+/**
+ * Answers one encounter: `{ status, body, afterReply }` for the route.
+ *
+ * The cooldown claim (claimCommandUse) is the gate, exactly as for a
+ * response button: whichever of a user's open encounters is answered first
+ * pays, any other gets the cooldown text (409). The mood flag and beat key
+ * come only from the saved row. Answering deletes the row, so a replay, a
+ * second tab or a double click finds nothing (404). A claim that errored
+ * keeps the row, so the player can try again.
+ */
+export async function answerMeetEncounter(userId, encounterId, responseType, now = new Date()) {
+  if (!RESPONSE_TYPE_ORDER.includes(responseType)) return { status: 400, body: { error: 'bad_response' } };
+  if (!['string', 'number'].includes(typeof encounterId)) return { status: 400, body: { error: 'bad_encounter' } };
+
+  const row = await getMeetEncounter(encounterId);
+  if (!row || row.discord_user_id !== userId) return { status: 404, body: { error: 'no_encounter' } };
+
+  const limit = await claimCommandUse(userId, 'meet', now);
+  if (limit.failed) return { status: 503, body: { error: 'try_again' } };
+
+  let result;
+  try {
+    if (!limit.allowed) return { status: 409, body: { error: 'cooldown', reason: limit.reason } };
+    result = await answerResponse(userId, row.character_id, responseType, { mood: row.mood, beatKey: row.beat_key });
+  } finally {
+    await deleteMeetEncounter(row.id)
+      .catch((err) => console.error(`[meetActivity] Could not delete answered encounter ${row.id}: ${err.message}`));
+    // A genuine commit ends the rerolling session the invoke throttle was
+    // escalating against, as the response button's does (app.js 'resp').
+    if (limit.allowed) releaseCommandInvoke(userId, 'meet');
+  }
+  if (!result) return { status: 404, body: { error: 'no_encounter' } };
+
+  return {
+    status: 200,
+    body: {
+      gain: result.baseGain,
+      reaction: result.reaction,
+      delta: result.deltaLine,
+      signature: result.signatureLine,
+    },
+    afterReply: async () => {
+      if (result.levelUp && !IS_TEST) {
+        deliverBondScene(userId, result.levelUp.characterId, result.levelUp.levelName)
+          .catch((err) => console.error(`[meetActivity] Bond scene for ${userId} failed: ${err.message}`));
+      }
+      await Promise.allSettled([
+        trackUserActivity(userId),
+        trackCommandUsage(userId, 'meet', { path: 'activity' }),
+        trackCharacterEngagement(userId, row.character_id),
+        recordResultOnPicker(row, result),
+      ]).then(reportFailures('meet answer', '[meetActivity]'));
+    },
+  };
+}

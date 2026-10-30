@@ -1,9 +1,9 @@
 // Hangout v2 preview (dev only): the v2 scene (hangout-v2/scene.js) plus a
 // debug drawer with a character picker, buttons for every mood, reaction,
 // touch spot and pose, the relationship tier, and a hotspot overlay. See
-// hangout-v2.html. The VN box plays a /meet encounter as §11.2 lays it out,
-// drawn by the dev server from the bot's own content (vite.config.js
-// /__meet).
+// hangout-v2.html. The VN box plays a /meet encounter with the Activity's
+// own flow (meet.js), drawn by the dev server from the bot's own content
+// (vite.config.js /__meet).
 //
 // ?character=<id> picks assets/live2d/<id>/rig.json; ?tier=<tier> the
 // reaction tier; ?pose=<group> starts a pose; ?room=0 hides the room;
@@ -14,8 +14,8 @@ import { Graphics } from "pixi.js";
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 import { loadLines } from "../hangout/lines.js";
 import { DEFAULT_REACTIONS, TOUCH_SPOTS } from "../hangout/reactions.js";
-import { RESPONSE_TYPE_ORDER } from "../../../constants/responseTypes.js";
-import { MOBILE_FPS, TYPE_MS } from "../hangout/stage.js";
+import { MOBILE_FPS } from "../hangout/stage.js";
+import { meetFlow } from "./meet.js";
 import { startScene } from "./scene.js";
 
 const params = new URLSearchParams(location.search);
@@ -44,7 +44,7 @@ async function main() {
     console.error(`[hangout-v2] ${err.stack ?? err.message}`);
     return;
   }
-  const { renderer, hangout, say, speak } = scene;
+  const { renderer, hangout, say } = scene;
 
   // --- frame loop: HUD and hotspot overlay ----------------------------------
   const overlay = new Graphics();
@@ -206,86 +206,26 @@ async function main() {
   });
 
   // --- /meet (docs/hangout-activity.md §11.2) --------------------------------
-  // The intro as narration, then the beat's line and its four labels. A pick
-  // plays the outcome's face, then the reaction and gain lines as narration,
-  // and the hangout carries on. A touch before the answer plays its line,
-  // then the beat and its choices come back.
-  // Same glyphs as the v1 preview: one per type, abstract so they don't give
-  // the type away.
-  const RESPONSE_GLYPHS = { kind: "☼", playful: "♪", bold: "⚡\uFE0E", neutral: "♢" };
-  const OUTCOME = { 2: "answerLove", 1: "answerLike", 0: "answerFlat" };
-  const box = $(".vn-box");
-  const choices = $("#choices");
-  const next = $("#btn-next");
-  const meet = { beat: null, step: null, back: null };
-  const plain = (text) => text.replace(/\*\*(.+?)\*\*/g, "$1");
-  const show = (text, { narration = false } = {}) => {
-    box.classList.toggle("narration", narration);
-    say(plain(text));
-  };
-  // Only touch lines come through here (Hangout's say), so only they move
-  // his mouth.
-  hangout.say = (line) => {
-    box.classList.remove("narration");
-    speak(line);
-    if (meet.step === "intro" || meet.step === "beat") {
-      choices.hidden = true;
-      clearTimeout(meet.back);
-      meet.back = setTimeout(showBeat, line.length * TYPE_MS + 2000);
-    }
-  };
+  // The Activity's own flow (meet.js), fed by the dev server's /__meet: the
+  // tier's first level, no boost or errand, nothing recorded.
+  const flow = meetFlow(scene, { box: $(".vn-box"), choices: $("#choices"), next: $("#btn-next") });
 
   async function newEncounter() {
-    clearTimeout(meet.back);
-    choices.hidden = true;
-    next.hidden = true;
-    meet.step = null;
+    flow.stop();
     const q = new URLSearchParams({ character, tier: hangout.tier, variant: renderer.rig.dialogueVariant ?? "uniform" });
     const res = await fetch(`/__meet/beat?${q}`);
     const beat = await res.json();
-    if (!res.ok) return show(`(no /meet encounter: ${beat.error})`, { narration: true });
-    meet.beat = beat;
+    if (!res.ok) return say(`(no /meet encounter: ${beat.error})`);
     if (beat.background) scene.setBackground(beat.background).catch((err) => console.error(`[hangout-v2] ${err.message}`));
-    meet.step = "intro";
-    show(beat.notice ? `${beat.intro}\n${beat.notice}` : beat.intro, { narration: true });
-    next.hidden = false;
+    flow.play(beat, async (type) => {
+      const a = new URLSearchParams({ character, tier: hangout.tier, type, mood: beat.mood ? "1" : "0" });
+      const answer = await fetch(`/__meet/answer?${a}`);
+      const result = await answer.json();
+      if (!answer.ok) throw new Error(result.error);
+      return result;
+    });
   }
 
-  function showBeat() {
-    clearTimeout(meet.back);
-    meet.step = "beat";
-    next.hidden = true;
-    show(meet.beat.line);
-    choices.replaceChildren(
-      ...RESPONSE_TYPE_ORDER.map((type) => {
-        const b = document.createElement("button");
-        b.className = "choice";
-        const glyph = document.createElement("span");
-        glyph.className = "choice-icon";
-        glyph.setAttribute("aria-hidden", "true");
-        glyph.textContent = RESPONSE_GLYPHS[type];
-        b.append(glyph, meet.beat.responses[type]);
-        b.onclick = () => answer(type);
-        return b;
-      }),
-    );
-    choices.hidden = false;
-  }
-
-  async function answer(type) {
-    meet.step = "done";
-    choices.hidden = true;
-    const q = new URLSearchParams({ character, tier: hangout.tier, type, mood: meet.beat.mood ? "1" : "0" });
-    const res = await fetch(`/__meet/answer?${q}`);
-    const result = await res.json();
-    if (!res.ok) return show(`(answer failed: ${result.error})`, { narration: true });
-    hangout.react(OUTCOME[Math.max(0, Math.min(2, result.gain))], scene.time);
-    show(`${result.reaction}\n${result.delta}`, { narration: true });
-  }
-
-  next.onclick = () => {
-    if (meet.step === "intro") showBeat();
-  };
   newEncounter();
   if (renderer.poses.includes(params.get("pose"))) renderer.playPose(params.get("pose"));
   window.__hangoutV2 = scene;

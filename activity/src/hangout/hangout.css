@@ -171,6 +171,15 @@ body {
   line-height: 1;
 }
 .choice:hover .choice-icon { border-color: var(--name); }
+/* The response type as each choice's edge, in RESPONSE_STYLES' colors
+   (constants/game.js: kind green, playful blurple, bold red, neutral grey);
+   the glyph carries it too, so it never depends on color alone. */
+.choice-kind { --type: #2d8f50; }
+.choice-playful { --type: #5865f2; }
+.choice-bold { --type: #da373c; }
+.choice-neutral { --type: #80848e; }
+.choice[class*="choice-"] { border-left: 4px solid var(--type); }
+.choice[class*="choice-"] .choice-icon { border-color: var(--type); }
 
 /* --- portrait phones ------------------------------------------------------- */
 @media (orientation: portrait) {

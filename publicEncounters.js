@@ -1186,21 +1186,23 @@ function isEncounterDevOwner(userId) {
 
 /**
  * `/encdev hangout`: launches the Hangout Activity (docs/hangout-activity.md)
- * in the channel it's run from, the only way in until release. Returns a
+ * in the channel it's run from, without a /meet encounter (a /meet pick opens
+ * it with one, §11). Returns a
  * complete interaction response, because LAUNCH_ACTIVITY has to be the
  * interaction's first response: it can't follow the deferred ack the rest of
  * /encdev uses. Owner-gated like the rest of /encdev; the token route
  * re-checks the owner, since anyone in the channel can join a launched
  * Activity.
  *
- * `version` (v1 unless set) picks the sprite rig or the Live2D proof (v2).
- * LAUNCH_ACTIVITY can't pass it to the page, so it's recorded for the
- * Activity to ask for after sign-in (activityRoutes.js GET /launch).
+ * It opens the free hangout, with no /meet encounter. `version` (v2 unless
+ * set) picks the Live2D rig or the legacy sprite rig (v1). LAUNCH_ACTIVITY
+ * can't pass it to the page, so it's recorded for the Activity to ask for
+ * after sign-in (activityRoutes.js GET /launch).
  */
 export function handleEncounterDevHangout(body) {
   const refusal = encounterDevRefusal(body);
   if (refusal) return ephemeralResponse(refusal);
-  recordHangoutLaunch(userIdOf(body), optionValue(body.data?.options?.[0]?.options, 'version') ?? 'v1');
+  recordHangoutLaunch(userIdOf(body), optionValue(body.data?.options?.[0]?.options, 'version') ?? 'v2');
   return { type: InteractionResponseType.LAUNCH_ACTIVITY };
 }
 
@@ -1226,7 +1228,7 @@ function encounterDevRefusal(body) {
  *   /encdev missions                      show this guild's mission slot times for today
  *   /encdev bond <character> <level>      fire a bond scene DM directly (docs/bond-scene-dms.md)
  *   /encdev reset [command]               wipe your own /roam+/meet 3h cooldown and invoke throttle
- *   /encdev hangout [version]             launch the Hangout Activity, v1 or v2 (handleEncounterDevHangout)
+ *   /encdev hangout [version]             launch the free Hangout Activity, v2 or v1 (handleEncounterDevHangout)
  *
  * A manual spawn passes `reanchor: false`, so it never writes guild_settings —
  * the real cadence anchor and the post-failure counter are left exactly as they

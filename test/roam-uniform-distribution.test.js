@@ -77,7 +77,7 @@ test('/roam draws the character before, and independently of, the setting', () =
 });
 
 test('/meet draws the character before the setting too', () => {
-  const code = codeOf('encounters.js', 'export async function buildMeetSpawnMessage');
+  const code = codeOf('encounters.js', 'export async function drawMeetEncounter');
   const atSpot = code.indexOf('getRandomBackgroundForCharacter(character');
   assert.notStrictEqual(atSpot, -1, '/meet resolves its setting from the chosen character');
   assert.ok(
@@ -244,7 +244,7 @@ test('/meet places a houseless character the way /roam does', () => {
   // of showing the store every time.
   const code = codeOf(
     'encounters.js',
-    'export async function buildMeetSpawnMessage',
+    'export async function drawMeetEncounter',
   );
   assert.match(
     code,

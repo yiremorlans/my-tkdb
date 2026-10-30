@@ -1,8 +1,9 @@
 # Spec: Hangout — Live2D Discord Activity
 
-Status: **in progress.** The Activity shell runs owner-only in Discord
-(milestone 2) on the Live2D rig. It is becoming the `/meet` interaction
-(§11).
+Status: **in progress.** The Activity runs owner-only in Discord on the
+Live2D rig, and the owner's `/meet` picks open it (§11, built 2026-10-30;
+migration 035 before deploy). Everyone else keeps the image `/meet` until
+release flips `OWNER_ONLY`.
 Last updated: 2026-10-30
 
 A new home for `/meet`; `/roam` stays exactly as it is. The Hangout is a **solo, private Discord Activity** where a character —
@@ -23,8 +24,8 @@ repo, for comparison only (`/encdev hangout version:v1`, §6), until Live2D
 has launched; removing it is a separate effort after that (§8). Where this spec
 says "the rig" it means the Live2D one.
 
-Launched from `/hangout` (the Activity's entry-point command) or the
-voice-channel Activity launcher. Private and unlisted: the bot's own servers
+Launched by picking a name in `/meet`, or from the Activity's `launch`
+entry-point command, which answers like `/meet` (§11.1). Private and unlisted: the bot's own servers
 only, no App Directory listing, no monetization.
 
 ---
@@ -357,7 +358,10 @@ shows his name, his relationship level and heart bar.
 | Route | Does |
 |---|---|
 | `POST /api/activity/token` | exchanges the Discord OAuth `code`, calls `users/@me`, returns the Discord access token for `sdk.authenticate` and a signed session token |
-| `GET /api/activity/state?character=alan` | affinity, level, heart bar |
+| `POST /api/activity/renew` | a fresh session token for a still-valid one, while a `/meet` answer is pending (§11.2) |
+| `GET /api/activity/launch` | what the launch opens: `{ version, dev }`, an `/encdev hangout` free hangout or a `/meet` encounter (§6) |
+| `GET /api/activity/encounter?instance=<id>` | the session user's own `/meet` encounter in that instance, or 404 (§11.2) |
+| `POST /api/activity/answer` | `{ encounter, type }`: the one payout (§11.3) |
 
 Each route except `token` requires `Authorization: Bearer <session token>`.
 The `discord_user_id` comes **only** from the verified token, never from the
@@ -373,12 +377,15 @@ tracking only. Answered encounters log as `'meet'` (§11.7).
 ## 6. Discord Activity setup
 
 - Enable Activities on the existing application (`APP_ID`).
-- Register `/hangout` as the **entry-point command**, in `commands.js` /
-  `npm run register`.
-- **Owner-only until release (milestone 4).** The way in is `/encdev hangout`,
-  which answers with `LAUNCH_ACTIVITY`. `/hangout` still has to be registered
-  (Discord rejects a bulk overwrite with no entry point once Activities are
-  on) but is hidden with `default_member_permissions: "0"`, and
+- Register the **entry-point command** (`launch`, `APP_HANDLER`, §11.1) in
+  `commands.js` / `npm run register`.
+- **Owner-only until release (milestone 4).** The ways in are the owner's
+  `/meet` picks (§11) and `/encdev hangout` (the free hangout, no
+  encounter), which answers with `LAUNCH_ACTIVITY`. Everyone else's `/meet`
+  stays the image (`activityOpenTo` in `activityRoutes.js`). The entry point
+  still has to be registered (Discord rejects a bulk overwrite with no entry
+  point once Activities are on) but is hidden with
+  `default_member_permissions: "0"`, and
   `POST /api/activity/token` refuses anyone but `OWNER_DISCORD_ID` (403), so
   someone joining the owner's session sees a refusal line, not the scene.
   Release flips `OWNER_ONLY` in `activityRoutes.js` and drops the hiding.
@@ -389,11 +396,9 @@ tracking only. Answered encounters log as `'meet'` (§11.7).
   `LAUNCH_ACTIVITY` can't pass the version to the page, so the handler
   records it per user in memory (10 minutes) and the Activity reads it after
   sign-in from `GET /api/activity/launch` (Bearer session).
-  **To do before release:** the code still treats v1 as the default and v2
-  as the opt-in (`HANGOUT_VERSIONS`, `hangoutLaunchFor`, `main.js`); flip
-  it so a launch with no version is Live2D, and drop v1's eager rig download
-  during sign-in. Once v1 is gone, the `version` option, the launch route
-  and the in-memory record go with it.
+  A launch with no version is Live2D, and v1's code and rig load only for
+  a v1 launch. Once v1 is gone, the `version` option and the version half
+  of the launch route go with it.
 - **URL mappings** in the Developer Portal: `/` → the Railway app (serving
   `activity/dist`), plus `/api` and `/assets`. The client loads nothing from
   third-party CDNs; PixiJS and the Live2D plugin are bundled by Vite, and
@@ -419,17 +424,18 @@ activity/
   src/
     main.js           # Activity entry: the scene + Discord sign-in
     hangout-v2/       # Live2D rig: scene, live2dRig.js (model, moods, poses, talking),
-                      #   validate.js, preview
+                      #   meet.js (the /meet flow), validate.js, preview
     hangout/          # Hangout class, reactions, hotspots, annoyance meter, dialogue box,
                       #   sounds; shared by both rigs
-    discord.js        # SDK init + auth (no-op outside Discord)
+    discord.js        # SDK init + auth, the /meet encounter calls (no-op outside Discord)
   tools/
     live2d-convert.js  live2d-rig.js   # Live2D models (§3.5)
 assets/live2d/
   vendor/live2dcubismcore.min.js
   <id>/rig.json  <id>/<outfit>/        # one per character; Cubism files per outfit
 constants/hangout/alan.js
-activityRoutes.js
+activityRoutes.js     # /api/activity/*
+meetActivity.js       # /meet as the Activity, server side (§11)
 docs/hangout-activity.md
 ```
 
@@ -515,9 +521,15 @@ otherwise.
 
 ## 11. Future: `/meet` as the Activity
 
-Status: **specced, deferred.** Not built until every character has a Live2D
-rig (§11.6); until then `/meet` stays the image message it is now. Designed
-2026-10-28, settled 2026-10-29.
+Status: **built 2026-10-30, owner-only until release.** Designed
+2026-10-28, settled 2026-10-29. Code: `meetActivity.js` (the click, the
+encounter, the answer, the fallback), `activityRoutes.js` (the routes),
+`activity/src/hangout-v2/meet.js` (the player's side), migration 035
+(`meet_encounters`, the off switch, the usage path). Still to do: the
+secret button (§11.4) and the per-tier touch lines, which are writing
+(§11.6). Not yet tested in Discord: greying out the picker and editing the
+result onto `/meet` after a launch, followups after a launch (the
+fallback), and the instance id from `with_response`.
 
 Once the roster is rigged, picking a character in `/meet` opens the Activity
 with them, and the encounter plays out there instead of as a composed image

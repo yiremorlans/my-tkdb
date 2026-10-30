@@ -17,6 +17,11 @@
 // DEFERRED_UPDATE_MESSAGE, then PATCH the result (or the cooldown refusal) over
 // the webhook.
 //
+// Also: a response from the /meet Activity's image fallback (origin
+// 'fallback', meetActivity.js runMeetFallback) completes /meet behind the
+// same gate and is tagged in command_usage_log (docs/hangout-activity.md
+// §11.7).
+//
 // Driven at a real running app.js instance with interactions signed the way
 // Discord signs them (see meet-pick-route.test.js), with global fetch stubbed
 // so the followup calls app.js makes to discord.com are captured, not sent.
@@ -166,6 +171,35 @@ test('a button rendered before beat keys still scores and records nothing', asyn
   await waitFor(() => originalEdits().length === 1);
   assert.notStrictEqual(affinityFor(userId, 'taiga'), null, 'the response should still land');
   assert.strictEqual(recentBeatsFor(userId, 'taiga'), null);
+});
+
+test("the Activity's image fallback answers as /meet, logged with path fallback, behind the same gate", async () => {
+  discordCalls.length = 0;
+  const userId = 'user-meet-fallback';
+
+  await postInteraction(respInteraction(userId, 'taiga', 'kind', 'fallback', '::cccccccccccc'));
+  await waitFor(() => (fake.tables.command_usage_log || []).some((r) => r.discord_user_id === userId));
+  const [logged] = fake.tables.command_usage_log.filter((r) => r.discord_user_id === userId);
+  assert.strictEqual(logged.command_name, 'meet');
+  assert.strictEqual(logged.path, 'fallback');
+  assert.ok(
+    fake.tables.command_limits.some((r) => r.discord_user_id === userId && r.command_name === 'meet'),
+    'it stamps the /meet cooldown, so the Activity answering the same encounter later is refused',
+  );
+  const paid = affinityFor(userId, 'taiga');
+
+  // A plain /meet image response in the same window: the gate refuses it.
+  await postInteraction(respInteraction(userId, 'taiga', 'kind', 'meet'));
+  await waitFor(() => originalEdits().length === 2);
+  assert.match(originalEdits()[1].payload.content, /again in/);
+  assert.strictEqual(affinityFor(userId, 'taiga'), paid);
+});
+
+test('an ordinary /meet or /roam response is logged without a path', async () => {
+  const userId = 'user-plain-path';
+  await postInteraction(respInteraction(userId, 'taiga', 'kind', 'roam'));
+  await waitFor(() => (fake.tables.command_usage_log || []).some((r) => r.discord_user_id === userId));
+  assert.ok(!('path' in fake.tables.command_usage_log.find((r) => r.discord_user_id === userId)));
 });
 
 test.after(() => {

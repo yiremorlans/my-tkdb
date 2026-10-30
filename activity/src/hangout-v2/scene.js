@@ -23,23 +23,28 @@ extensions.add(Live2DPlugin);
 /**
  * Loads `${base}/rig.json` (a v2 rig) and starts the scene in `stage`.
  * Options as v1's startScene: `tier`, `outfit`, `lines`, `room`, `background`, `maxFPS`.
+ * `place` is a background image URL to show instead of the rig's room (the
+ * /meet place, docs/hangout-activity.md §11.5); it loads with the rig.
  */
-export async function startScene(stage, { base, tier, outfit, lines, room = true, background = "#000", maxFPS = 0 } = {}) {
+export async function startScene(stage, { base, tier, outfit, lines, room = true, place = null, background = "#000", maxFPS = 0 } = {}) {
   const app = new Application();
-  const [{ rig, sounds: soundBytes, baseUrl }] = await Promise.all([
+  const [{ rig, sounds: soundBytes, baseUrl }, placeTexture] = await Promise.all([
     loadLive2DRig(base),
+    place ? loadTexture(place) : null,
     app.init({ resizeTo: stage, background, antialias: true, resolution: Math.min(devicePixelRatio, 2), autoDensity: true, preference: "webgl", autoStart: false }),
   ]);
   const frameCap = frameLoop(app, maxFPS);
   stage.prepend(app.canvas);
 
-  const bg = room && rig.background ? new Sprite(await loadTexture(`${base}/${rig.background}`)) : null;
+  const roomTexture = !placeTexture && room && rig.background ? await loadTexture(`${base}/${rig.background}`) : null;
+  let bg = placeTexture || roomTexture ? new Sprite(placeTexture ?? roomTexture) : null;
   if (bg) app.stage.addChild(bg);
 
-  /** Swaps the room for another background image (the /meet place, §11.5). */
+  /** Swaps the background for another image (the /meet place, §11.5). */
   async function setBackground(url) {
-    if (!bg) return;
-    bg.texture = await loadTexture(url);
+    const texture = await loadTexture(url);
+    if (bg) bg.texture = texture;
+    else app.stage.addChildAt((bg = new Sprite(texture)), 0);
     layout();
   }
 
