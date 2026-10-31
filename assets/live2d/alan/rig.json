@@ -16,8 +16,8 @@
         "pants": ["pants_R", "pants_L"]
       },
       "hotspots": {
-        "chest": { "part": "vest", "rect": [0.13, 0.02, 0.87, 0.47] },
-        "belly": { "part": "vest", "rect": [0.2, 0.47, 0.8, 0.82] },
+        "chest": { "part": "vest", "rect": [0.035, 0.02, 0.965, 0.507] },
+        "belly": { "part": "vest", "rect": [0.14, 0.507, 0.86, 0.819] },
         "hips": { "part": "pants", "rect": [0.08, -0.13, 0.92, 0.2] }
       }
     }

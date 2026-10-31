@@ -13,8 +13,8 @@
       "dialogueVariant": "uniform",
       "parts": { "chest": ["ArtMesh155"], "pants": ["ArtMesh202", "ArtMesh203"] },
       "hotspots": {
-        "chest": { "part": "chest", "rect": [0.13, 0.02, 0.87, 0.47] },
-        "belly": { "part": "chest", "rect": [0.2, 0.47, 0.8, 0.7] },
+        "chest": { "part": "chest", "rect": [-0.01, 0.02, 1.01, 0.476] },
+        "belly": { "part": "chest", "rect": [0.14, 0.476, 0.86, 0.708] },
         "hips": { "part": "pants", "rect": [0.08, -0.05, 0.92, 0.2] }
       }
     },
@@ -29,8 +29,8 @@
         "hand_l": ["ArtMesh228", "ArtMesh234", "ArtMesh229", "ArtMesh231"]
       },
       "hotspots": {
-        "chest": { "part": "chest", "rect": [0.13, 0.02, 0.87, 0.47] },
-        "belly": { "part": "chest", "rect": [0.2, 0.47, 0.8, 1.02] },
+        "chest": { "part": "chest", "rect": [0.069, 0.02, 0.931, 0.682] },
+        "belly": { "part": "chest", "rect": [0.14, 0.682, 0.86, 1.024] },
         "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
       }
     }

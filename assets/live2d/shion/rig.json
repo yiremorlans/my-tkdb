@@ -12,8 +12,8 @@
       "dialogueVariant": "uniform",
       "parts": { "chest": ["ArtMesh150"], "pants": ["ArtMesh173", "ArtMesh174"] },
       "hotspots": {
-        "chest": { "part": "chest", "rect": [0.13, 0.02, 0.87, 0.47] },
-        "belly": { "part": "chest", "rect": [0.2, 0.47, 0.8, 0.83] },
+        "chest": { "part": "chest", "rect": [0.01, 0.02, 0.99, 0.551] },
+        "belly": { "part": "chest", "rect": [0.14, 0.551, 0.86, 0.827] },
         "hips": { "part": "pants", "rect": [0.08, -0.11, 0.92, 0.2] }
       }
     }

@@ -15,8 +15,8 @@
         "pants": ["ArtMesh185", "ArtMesh183", "ArtMesh182", "ArtMesh184"]
       },
       "hotspots": {
-        "chest": { "part": "chest", "rect": [0.13, 0.02, 0.87, 0.47] },
-        "belly": { "part": "chest", "rect": [0.2, 0.47, 0.8, 1.62] },
+        "chest": { "part": "chest", "rect": [-0.101, 0.02, 1.101, 1.03] },
+        "belly": { "part": "chest", "rect": [0.14, 1.03, 0.86, 1.627] },
         "hips": { "part": "pants", "rect": [0.08, -0.03, 0.92, 0.2] }
       }
     }

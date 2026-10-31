@@ -356,6 +356,21 @@ const unionBox = (drawables, ids) => {
 };
 const r2 = (x) => Math.round(x * 100) / 100;
 
+// The chest spot in canvas px: at least this wide and tall, centered on the
+// chest part and starting near its top. Chest pieces vary (a short jacket
+// front, Jo's or Yuri's), so a fraction of the part would size it unevenly;
+// rects may run past the part (x < 0, x > 1). Shared spots (hands) are
+// listed first, so they still win where the chest overlaps them.
+const CHEST_PX = 400;
+
+/** The chest rect, in the chest part's space. */
+export function chestRect(drawables, chestIds) {
+  const [x0, y0, x1, y1] = unionBox(drawables, chestIds);
+  const w = x1 - x0, h = y1 - y0;
+  const r3 = (x) => Math.round(x * 1000) / 1000;
+  return [r3(0.5 - CHEST_PX / 2 / w), 0.02, r3(0.5 + CHEST_PX / 2 / w), r3(0.02 + CHEST_PX / h)];
+}
+
 // The hips spot starts this far below the belt line (and the belly ends
 // there), so a tap on the belt itself still reads as the belly.
 const HIP_DROP = 35;
@@ -367,7 +382,11 @@ const HIP_DROP = 35;
  */
 export function bellyRect(drawables, chestIds, pantsIds, chestRect) {
   const chest = unionBox(drawables, chestIds);
-  return [0.2, chestRect[3], 0.8, r2((beltLine(drawables, pantsIds) + HIP_DROP - chest[1]) / (chest[3] - chest[1]))];
+  // It ends where the hips spot's rounded start lands, rounded up to three
+  // places, so the two meet with no gap and under a pixel of overlap.
+  const pants = unionBox(drawables, pantsIds);
+  const hipsTop = pants[1] + hipsRect(drawables, pantsIds)[1] * (pants[3] - pants[1]);
+  return [0.14, chestRect[3], 0.86, Math.ceil(((hipsTop - chest[1]) / (chest[3] - chest[1])) * 1000) / 1000];
 }
 
 /**
@@ -405,12 +424,11 @@ export async function buildRig(character, outfit) {
   const parts = Object.fromEntries(["face_base", "mouth", "ear_r", "ear_l", "hand_r", "hand_l"].filter((k) => found[k]).map((k) => [k, found[k]]));
   const outfitParts = {};
   const outfitHotspots = {};
-  const alanOutfit = alan.outfits[alan.defaultOutfit].hotspots;
   if (found.chest) {
     outfitParts.chest = found.chest;
-    outfitHotspots.chest = { part: "chest", rect: alanOutfit.chest.rect };
+    outfitHotspots.chest = { part: "chest", rect: chestRect(m.drawables, found.chest) };
   }
-  if (found.chest && found.pants) outfitHotspots.belly = { part: "chest", rect: bellyRect(m.drawables, found.chest, found.pants, alanOutfit.chest.rect) };
+  if (found.chest && found.pants) outfitHotspots.belly = { part: "chest", rect: bellyRect(m.drawables, found.chest, found.pants, outfitHotspots.chest.rect) };
   if (found.pants) {
     outfitParts.pants = found.pants;
     outfitHotspots.hips = { part: "pants", rect: hipsRect(m.drawables, found.pants) };
