@@ -17,6 +17,22 @@
         "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 0.78] },
         "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
       }
+    },
+    "casual": {
+      "model": "casual/leo_casual.model3.json",
+      "dialogueVariant": "casual",
+      "parts": {
+        "chest": ["ArtMesh343"],
+        "pants": ["ArtMesh356", "ArtMesh358"],
+        "mouth": ["ArtMesh242", "ArtMesh241", "ArtMesh240", "ArtMesh239", "ArtMesh238", "ArtMesh237", "ArtMesh223", "ArtMesh211", "ArtMesh209", "ArtMesh207", "ArtMesh202"],
+        "hand_r": ["ArtMesh167"],
+        "hand_l": ["ArtMesh228"]
+      },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 1.02] },
+        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+      }
     }
   },
   "parts": {

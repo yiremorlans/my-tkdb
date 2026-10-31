@@ -17,6 +17,16 @@
         "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 0.87] },
         "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
       }
+    },
+    "casual": {
+      "model": "casual/shohei_casual.model3.json",
+      "dialogueVariant": "casual",
+      "parts": { "chest": ["ArtMesh352"], "pants": ["ArtMesh347", "ArtMesh349"], "hand_l": ["ArtMesh145", "ArtMesh373"] },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
+        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 0.92] },
+        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+      }
     }
   },
   "parts": {

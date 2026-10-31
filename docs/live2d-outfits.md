@@ -5,8 +5,9 @@ Hangout v2 (Live2D) is the default rig. Every character loads from two outfits:
 `assets/live2d/<id>/<outfit>/` and are registered under `outfits` in
 `assets/live2d/<id>/rig.json`.
 
-Status as of 2026-10-30: academy done for everyone. Second outfits done for
-Benkei (`work`), Mio (`work`) and Ren (`roomwear`). Jo also has `femacademy`
+Status as of 2026-10-31: academy done for everyone. Second outfits done for
+Benkei (`work`), Leo (`casual`), Mio (`work`), Ren (`roomwear`) and Shohei
+(`casual`). Jo also has `femacademy`
 (game bundle `jofemacademy`, `dialogueVariant: "casual"`), an extra outfit
 outside the four slots.
 
@@ -21,7 +22,7 @@ outside the four slots.
 - [ ] Edward `casual`
 - [x] Ren `roomwear` (game bundle `renroomwear`; old rig also had `diner` as a third)
 - [ ] Rui `casual`
-- [ ] Shohei `casual` (source art only, never added to the old rig.json)
+- [x] Shohei `casual` (game bundle `shocasual`)
 - [ ] Subaru `casual`
 - [ ] Taiga `city`
 - [ ] Tohma `city`
@@ -39,7 +40,7 @@ Pick city / casual / work / roomwear for each.
 - [ ] Jiro: slot ___
 - [ ] Jo: slot ___ (`femacademy` already added, see above)
 - [ ] Kaito: slot ___
-- [ ] Leo: slot ___
+- [x] Leo: slot `casual` (game bundle `leocasual`)
 - [ ] Lucas: slot ___
 - [ ] Lyca: slot ___
 - [ ] Ritsu: slot ___
