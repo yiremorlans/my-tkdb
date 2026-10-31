@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>My Tkdb Server Setup</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<meta name="description" content="How to add My Tkdb to a Discord server and turn on encounters and missions.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IM+Fell+English+SC&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one reading column styled as an inspector's case file; numbered steps run in order, side notes sit in tinted slips. */
+:root {
+  --bg: #f2f1f6;
+  --surface: #ffffff;
+  --sunk: #e8e6f0;
+  --fg: #1c1929;
+  --muted: #5b566e;
+  --line: #d6d2e3;
+  --accent: #5a3ea3;
+  --accent-soft: #ece6fa;
+  --gold: #8a6a1f;
+  --gold-soft: #f6efdc;
+  --ok: #2f7a4f;
+  --bad: #a3343f;
+  --font-display: "IM Fell English SC", "Iowan Old Style", Georgia, serif;
+  --font-body: "Atkinson Hyperlegible", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #13111b; --surface: #1c1928; --sunk: #0e0c15; --fg: #ebe8f4; --muted: #a39db8;
+    --line: #2f2a42; --accent: #b9a2f2; --accent-soft: #261f3d; --gold: #dcb860; --gold-soft: #2a2414;
+    --ok: #6fcf97; --bad: #f08a94; color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #13111b; --surface: #1c1928; --sunk: #0e0c15; --fg: #ebe8f4; --muted: #a39db8;
+  --line: #2f2a42; --accent: #b9a2f2; --accent-soft: #261f3d; --gold: #dcb860; --gold-soft: #2a2414;
+  --ok: #6fcf97; --bad: #f08a94; color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.6;
+  margin: 0;
+  padding-block: 40px 64px;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.wrap { max-width: 760px; margin: 0 auto; display: flex; flex-direction: column; gap: 28px; }
+
+header { display: flex; flex-direction: column; gap: 10px; padding-bottom: 24px; border-bottom: 1px solid var(--line); }
+.eyebrow { font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin: 0; }
+h1 { font-family: var(--font-display); font-weight: 400; font-size: clamp(34px, 6vw, 48px); line-height: 1.05; margin: 0; text-wrap: balance; }
+.lede { color: var(--muted); margin: 0; max-width: 62ch; }
+
+nav.toc { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 16px 20px; }
+nav.toc p { margin: 0 0 8px; font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+nav.toc ol { margin: 0; padding-left: 22px; columns: 2 220px; column-gap: 28px; }
+nav.toc li { break-inside: avoid; padding: 2px 0; }
+nav.toc a { color: var(--fg); text-decoration: none; border-bottom: 1px solid var(--line); }
+nav.toc a:hover, nav.toc a:focus-visible { color: var(--accent); border-color: var(--accent); }
+
+section { display: flex; flex-direction: column; gap: 14px; scroll-margin-top: 16px; }
+.step-head { display: flex; align-items: baseline; gap: 14px; }
+.num { font-family: var(--font-display); font-size: 40px; line-height: 1; color: var(--accent); min-width: 1.1ch; }
+h2 { font-family: var(--font-display); font-weight: 400; font-size: 30px; line-height: 1.15; margin: 0; text-wrap: balance; }
+h3 { font-size: 17px; margin: 10px 0 0; }
+.tag { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--gold); border-radius: 999px; padding: 1px 8px; align-self: center; white-space: nowrap; }
+p { margin: 0; max-width: 66ch; }
+ol.how, ul.plain { margin: 0; padding-left: 24px; display: flex; flex-direction: column; gap: 8px; max-width: 66ch; }
+ol.how li::marker { color: var(--accent); font-weight: 700; }
+strong { font-weight: 700; }
+a { color: var(--accent); }
+
+code, kbd {
+  font-family: var(--font-mono); font-size: 0.86em;
+  background: var(--sunk); border: 1px solid var(--line); border-radius: 5px; padding: 1px 6px;
+  white-space: nowrap;
+}
+.ui { font-weight: 700; } /* a Discord button or menu name */
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; min-width: 480px; font-size: 15px; }
+th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+tr:last-child td { border-bottom: 0; }
+th { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); font-weight: 600; background: var(--sunk); }
+td:first-child { font-weight: 700; white-space: nowrap; }
+.yes { color: var(--ok); font-weight: 700; white-space: nowrap; }
+.no { color: var(--bad); font-weight: 700; white-space: nowrap; }
+.opt { color: var(--gold); font-weight: 700; white-space: nowrap; }
+
+.slip { background: var(--accent-soft); border-radius: 10px; padding: 14px 18px; display: flex; flex-direction: column; gap: 6px; }
+.slip.warn { background: var(--gold-soft); }
+.slip-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
+.slip.warn .slip-label { color: var(--gold); }
+
+.copyrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
+.copyrow .big { font-family: var(--font-mono); font-size: 22px; font-weight: 600; letter-spacing: 0.02em; }
+.copyrow .what { color: var(--muted); font-size: 14px; flex: 1 1 200px; min-width: 0; }
+button.copy {
+  font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
+  background: transparent; color: var(--accent); border: 1px solid var(--accent); border-radius: 6px;
+  padding: 6px 12px; cursor: pointer;
+}
+button.copy:hover { background: var(--accent-soft); }
+button.copy:focus-visible, a:focus-visible, input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+.cmd { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.cmd code { font-size: 15px; padding: 4px 10px; white-space: normal; }
+
+.check { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 8px 6px; }
+.check label { display: flex; gap: 12px; align-items: flex-start; padding: 8px 12px; border-radius: 6px; cursor: pointer; }
+.check label:hover { background: var(--sunk); }
+.check input { margin-top: 5px; width: 18px; height: 18px; accent-color: var(--accent); flex: none; }
+.check input:checked + span { color: var(--muted); text-decoration: line-through; text-decoration-color: var(--line); }
+.progress { font-family: var(--font-mono); font-size: 13px; color: var(--muted); padding: 4px 12px 8px; }
+
+details { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 18px; }
+details + details { margin-top: -4px; }
+summary { cursor: pointer; font-weight: 700; }
+details > div { padding-top: 10px; display: flex; flex-direction: column; gap: 8px; color: var(--fg); }
+
+footer { border-top: 1px solid var(--line); padding-top: 18px; color: var(--muted); font-size: 14px; }
+
+@media (max-width: 480px) {
+  body { font-size: 16px; padding-block: 24px 48px; }
+  .num { font-size: 32px; }
+  h2 { font-size: 25px; }
+}
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">For server admins</p>
+    <h1>Setting up My Tkdb</h1>
+    <p class="lede">How to add the bot to your server, give it the right permissions, and turn on the two server features: call-out <strong>encounters</strong> and inspector <strong>missions</strong>. Takes about five minutes.</p>
+  </header>
+
+  <nav class="toc" aria-label="Steps">
+    <p>Steps</p>
+    <ol>
+      <li><a href="#before">Before you start</a></li>
+      <li><a href="#invite">Invite the bot</a></li>
+      <li><a href="#channel">Set up the channel</a></li>
+      <li><a href="#encounters">Turn on encounters</a></li>
+      <li><a href="#missions">Turn on missions</a></li>
+      <li><a href="#ping">Add a ping role</a></li>
+      <li><a href="#countdown">Countdown channels</a></li>
+      <li><a href="#trouble">If something's wrong</a></li>
+    </ol>
+  </nav>
+
+  <!-- 1 -->
+  <section id="before">
+    <div class="step-head"><span class="num">1</span><h2>Before you start</h2></div>
+    <ul class="plain">
+      <li>You need the <strong>Manage Server</strong> permission (or Administrator) in your Discord server. The setup commands only show up for people who have it.</li>
+      <li>Decide which text channel the bot will post in. One channel handles both encounters and missions. A new channel such as <code>#darkwick-board</code> works well.</li>
+      <li>Players don't need anything special. <code>/roam</code>, <code>/meet</code>, <code>/affinity</code> and the rest work anywhere once the bot is in the server.</li>
+    </ul>
+  </section>
+
+  <!-- 2 -->
+  <section id="invite">
+    <div class="step-head"><span class="num">2</span><h2>Invite the bot</h2></div>
+    <ol class="how">
+      <li>Open the bot's invite link and pick your server.</li>
+      <li>Make sure <strong>both</strong> of these are ticked on the invite screen: <code>bot</code> and <code>applications.commands</code>. Without <code>bot</code>, the bot can't post in channels and shows as offline.</li>
+      <li>Leave the permissions below ticked and press <span class="ui">Authorize</span>.</li>
+    </ol>
+
+    <h3>Bot permissions</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Permission</th><th>Needed?</th><th>What it's for</th></tr></thead>
+        <tbody>
+          <tr><td>View Channels</td><td class="yes">Yes</td><td>Seeing the encounter channel.</td></tr>
+          <tr><td>Send Messages</td><td class="yes">Yes</td><td>Posting encounters and mission requests.</td></tr>
+          <tr><td>Attach Files</td><td class="yes">Yes</td><td>Each encounter and mission post comes with a picture.</td></tr>
+          <tr><td>Embed Links</td><td class="yes">Yes</td><td>The reveal card that appears when someone wins.</td></tr>
+          <tr><td>Manage Channels</td><td class="opt">Only for countdowns</td><td>Renaming a countdown channel each day. Skip it if you won't use countdowns.</td></tr>
+          <tr><td>Administrator</td><td class="no">No</td><td>Not needed. Please don't grant it.</td></tr>
+          <tr><td>Manage Messages</td><td class="no">No</td><td>Not needed. The bot only edits its own posts.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="copyrow">
+      <span class="big" id="perm-basic">52224</span>
+      <span class="what">Permission number for the four required permissions. If you build your own invite link, use this in <code>permissions=</code>.</span>
+      <button class="copy" type="button" data-copy="52224">Copy</button>
+    </div>
+    <div class="copyrow">
+      <span class="big">52240</span>
+      <span class="what">Same, plus Manage Channels for countdowns.</span>
+      <button class="copy" type="button" data-copy="52240">Copy</button>
+    </div>
+
+    <div class="slip">
+      <span class="slip-label">Already invited it before?</span>
+      <p>Running the invite link again is safe. It won't add a second bot or reset anyone's progress. It only updates the permissions.</p>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section id="channel">
+    <div class="step-head"><span class="num">3</span><h2>Set up the channel</h2></div>
+    <p>Even if the bot has the right permissions server-wide, a channel can block it. Check the channel's own settings:</p>
+    <ol class="how">
+      <li>Right-click the channel (or long-press on mobile) and choose <span class="ui">Edit Channel</span>.</li>
+      <li>Go to <span class="ui">Permissions</span>. Under <span class="ui">Advanced permissions</span>, press <span class="ui">+</span> and add the bot's role (it has the bot's name).</li>
+      <li>Set the bot's permissions to match the first table below, then press <span class="ui">Save Changes</span>.</li>
+      <li>Check the <code>@everyone</code> row (or your member role) against the second table.</li>
+    </ol>
+
+    <h3>Bot's role in this channel</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Permission</th><th>Set to</th></tr></thead>
+        <tbody>
+          <tr><td>View Channel</td><td class="yes">✓ Allow</td></tr>
+          <tr><td>Send Messages</td><td class="yes">✓ Allow</td></tr>
+          <tr><td>Attach Files</td><td class="yes">✓ Allow</td></tr>
+          <tr><td>Embed Links</td><td class="yes">✓ Allow</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>Members in this channel</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Permission</th><th>Set to</th><th>Why</th></tr></thead>
+        <tbody>
+          <tr><td>View Channel</td><td class="yes">✓ Allow</td><td>So they can see the posts.</td></tr>
+          <tr><td>Read Message History</td><td class="yes">✓ Allow</td><td>So they can see a post that landed while they were away.</td></tr>
+          <tr><td>Use Application Commands</td><td class="yes">✓ Allow</td><td>Players answer encounters with <code>/call</code>, which only works in this channel.</td></tr>
+          <tr><td>Send Messages</td><td class="opt">Your choice</td><td>Not needed to play. Turn it off if you want a tidy, bot-only board.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="slip">
+      <span class="slip-label">Tip</span>
+      <p>A read-only channel works best: members can see posts, click buttons and use slash commands, but can't chat. Slash command replies are private, so nobody's guesses clutter the board.</p>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="encounters">
+    <div class="step-head"><span class="num">4</span><h2>Turn on encounters</h2></div>
+    <p>Encounters are the public guessing game. Every so often the bot posts a black silhouette of a character, and the first person to name them wins.</p>
+    <ol class="how">
+      <li>In any channel, type this and pick your encounter channel:
+        <div class="cmd"><code>/encounters channel channel:#your-channel</code><button class="copy" type="button" data-copy="/encounters channel">Copy</button></div>
+      </li>
+      <li>The bot sends a short test message in that channel. If you see it, you're done. If you don't, go back to <a href="#channel">step 3</a>.</li>
+      <li>Run <code>/encounters status</code> any time to check it's running.</li>
+    </ol>
+
+    <h3>What your members will see</h3>
+    <ul class="plain">
+      <li>A silhouette shows up at random, somewhere between <strong>45 minutes and 3 hours</strong> after the last one.</li>
+      <li>Each one stays open for <strong>2 minutes</strong>. Players guess with <code>/call</code>, for example <code>/call Sho</code>.</li>
+      <li>A wrong character name means a 10-second wait before guessing again. A typo costs nothing.</li>
+      <li>The winner gets a reveal card and a bonus point on their next <code>/roam</code> or <code>/meet</code> with that character. If nobody gets it, the post just says the moment has passed.</li>
+    </ul>
+
+    <h3>Encounter commands</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><code>/encounters channel</code></td><td>Turns encounters on in a channel. Run it again with a different channel to move them.</td></tr>
+          <tr><td><code>/encounters status</code></td><td>Shows whether encounters are running and if any posts failed.</td></tr>
+          <tr><td><code>/encounters disable</code></td><td>Turns encounters off for the server.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section id="missions">
+    <div class="step-head"><span class="num">5</span><h2>Turn on missions</h2></div>
+    <p>Missions are requests posted on a board with an <span class="ui">Accept</span> button. The first person to click takes the mission, and only they find out what it is.</p>
+    <ol class="how">
+      <li>Type:
+        <div class="cmd"><code>/missions enable</code><button class="copy" type="button" data-copy="/missions enable">Copy</button></div>
+        If you already set up encounters, that's all you need. Missions post in the same channel.
+      </li>
+      <li>To use a different channel instead, add it: <code>/missions enable channel:#other-channel</code>. Give the bot the same four permissions there (see <a href="#channel">step 3</a>).</li>
+      <li>The bot sends a test message: <em>"Mission requests will come through here."</em> If it appears, missions are on.</li>
+      <li>Run <code>/missions status</code> any time to check.</li>
+    </ol>
+
+    <h3>How missions work for members</h3>
+    <ul class="plain">
+      <li><strong>Six</strong> requests a day, at random times between 5 AM and midnight. The times change every day.</li>
+      <li>A request nobody accepts disappears after <strong>2 hours</strong>.</li>
+      <li>Each player can hold <strong>one</strong> mission at a time and accept up to <strong>two</strong> a day. They have 48 hours to finish it.</li>
+      <li>After accepting, the player runs <code>/mission</code> to see their instructions. It tells them which of the three types they got:</li>
+    </ul>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Type</th><th>What the player does</th><th>Finish with</th></tr></thead>
+        <tbody>
+          <tr><td>Riddle</td><td>Reads a report about a student and works out who it is.</td><td><code>/riddle</code></td></tr>
+          <tr><td>Errand</td><td>Meets a few students from one house through <code>/roam</code> or <code>/meet</code> to collect their signatures.</td><td><code>/docs</code></td></tr>
+          <tr><td>Co-op</td><td>Calls for help. The first other player to join finishes it with them.</td><td><code>/mission assist:true</code></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p>Rewards are <strong>house logs</strong> (which raise their rank in <code>/house</code>) and a saved <strong>cooldown reset</strong> they can spend when <code>/roam</code> or <code>/meet</code> asks them to wait.</p>
+
+    <h3>Mission commands</h3>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Command</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><code>/missions enable</code></td><td>Turns missions on. Uses the encounter channel unless you pick another.</td></tr>
+          <tr><td><code>/missions status</code></td><td>Shows whether missions are running and if any posts failed.</td></tr>
+          <tr><td><code>/missions disable</code></td><td>Turns missions off. Missions people already accepted still finish.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="ping">
+    <div class="step-head"><span class="num">6</span><h2>Add a ping role</h2><span class="tag">Optional</span></div>
+    <p>If you want members to get a notification when a new encounter or mission appears, make a role for it. The bot finds it by name, so there's nothing else to set up.</p>
+    <ol class="how">
+      <li>Go to <span class="ui">Server Settings</span> → <span class="ui">Roles</span> → <span class="ui">Create Role</span>.</li>
+      <li>Name it exactly <code>tkdb-inspectors</code> <button class="copy" type="button" data-copy="tkdb-inspectors">Copy</button> (capital letters don't matter).</li>
+      <li>Turn on <span class="ui">Allow anyone to @mention this role</span>. Without this, the bot can't ping it.</li>
+      <li>Let members give themselves the role, for example through <span class="ui">Onboarding</span> or <span class="ui">Channels &amp; Roles</span>.</li>
+    </ol>
+    <p>Only members with the role are pinged. No role means no pings, and the posts still go up as normal. It can take up to 10 minutes for the bot to notice a new role.</p>
+  </section>
+
+  <!-- 7 -->
+  <section id="countdown">
+    <div class="step-head"><span class="num">7</span><h2>Countdown channels</h2><span class="tag">Optional</span></div>
+    <p>A channel whose name counts down to the next Tokyo Debunker Wishing Well, like <em>💎 Wishing Well: in 6 days</em>, or to your own server events. This is separate from encounters and missions.</p>
+    <ol class="how">
+      <li>Pick a <strong>voice channel, stage channel or category</strong>. Text channels don't work because Discord changes their names to lowercase.</li>
+      <li>Give the bot <strong>View Channel</strong> and <strong>Manage Channels</strong> on that channel.</li>
+      <li>Run <code>/countdown wishingwell channel:</code> and pick the channel. For your own events, add them with <code>/event create</code>, then run <code>/countdown customevent channel:</code>.</li>
+      <li>Days flip at midnight US Pacific time. To change that, use <code>/countdown timezone</code>.</li>
+    </ol>
+  </section>
+
+  <!-- checklist -->
+  <section id="checklist">
+    <h2>Setup checklist</h2>
+    <div class="check" id="checklist-box">
+      <label><input type="checkbox" id="c1"><span>Bot invited with <code>bot</code> and <code>applications.commands</code></span></label>
+      <label><input type="checkbox" id="c2"><span>Bot has View Channel, Send Messages, Attach Files and Embed Links in the channel</span></label>
+      <label><input type="checkbox" id="c3"><span>Members can view the channel and use slash commands there</span></label>
+      <label><input type="checkbox" id="c4"><span>Ran <code>/encounters channel</code> and saw the test message</span></label>
+      <label><input type="checkbox" id="c5"><span>Ran <code>/missions enable</code> and saw the test message</span></label>
+      <label><input type="checkbox" id="c6"><span>(Optional) Made a mentionable <code>tkdb-inspectors</code> role</span></label>
+      <div class="progress" id="progress" aria-live="polite">0 of 6 done</div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section id="trouble">
+    <div class="step-head"><span class="num">8</span><h2>If something's wrong</h2></div>
+    <details>
+      <summary>I can't see <code>/encounters</code> or <code>/missions</code></summary>
+      <div><p>You need Manage Server. If you have it and still can't see them, open <span class="ui">Server Settings</span> → <span class="ui">Integrations</span> → the bot, and check nobody has hidden those commands from your role.</p></div>
+    </details>
+    <details>
+      <summary>No test message showed up</summary>
+      <div><p>The bot is missing a permission in that channel. Go through <a href="#channel">step 3</a> again. Look for a red ✗ on the bot's role, or on a category the channel belongs to, then rerun the setup command.</p></div>
+    </details>
+    <details>
+      <summary>Status says "Stopped" or "Running, with errors"</summary>
+      <div><p>After 3 failed posts in a row, the bot stops posting so it doesn't keep failing. Fix the channel permissions, then run <code>/encounters channel</code> or <code>/missions enable</code> again to restart.</p></div>
+    </details>
+    <details>
+      <summary>Members get "only works in the encounter channel" from <code>/call</code></summary>
+      <div><p>That's on purpose. <code>/call</code> only counts in the channel you picked in step 4. Make sure members have Use Application Commands there.</p></div>
+    </details>
+    <details>
+      <summary>The bot shows as offline</summary>
+      <div><p>It was probably added without the <code>bot</code> option. Use the invite link again with both <code>bot</code> and <code>applications.commands</code> ticked.</p></div>
+    </details>
+    <details>
+      <summary>A member isn't getting bond scene DMs</summary>
+      <div><p>They need DMs from server members turned on: click the server name → <span class="ui">Privacy Settings</span> → <span class="ui">Direct Messages</span>. They can also check <code>/bonds dms:on</code>.</p></div>
+    </details>
+    <details>
+      <summary>The ping role isn't pinging</summary>
+      <div><p>Check the name is exactly <code>tkdb-inspectors</code> and <span class="ui">Allow anyone to @mention this role</span> is on. Give it up to 10 minutes after creating or renaming the role.</p></div>
+    </details>
+  </section>
+
+  <footer><a href="../">← Back to My Tkdb</a> · A fan-made project. Not affiliated with or endorsed by ZigZaGame Inc.</footer>
+</div>
+
+<script>
+(function () {
+  document.querySelectorAll('button.copy').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var text = btn.getAttribute('data-copy');
+      var done = function () {
+        var old = btn.textContent;
+        btn.textContent = 'Copied';
+        setTimeout(function () { btn.textContent = old; }, 1400);
+      };
+      try {
+        navigator.clipboard.writeText(text).then(done, function () { selectFallback(btn); });
+      } catch (e) { selectFallback(btn); }
+    });
+  });
+  function selectFallback(btn) {
+    var target = btn.previousElementSibling;
+    if (!target) return;
+    var range = document.createRange();
+    range.selectNodeContents(target);
+    var sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    btn.textContent = 'Press Ctrl+C';
+  }
+
+  var KEY = 'tkdb-setup-checklist';
+  var boxes = Array.prototype.slice.call(document.querySelectorAll('#checklist-box input[type=checkbox]'));
+  var progress = document.getElementById('progress');
+  var saved = {};
+  try { saved = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { saved = {}; }
+  function update() {
+    var n = boxes.filter(function (b) { return b.checked; }).length;
+    progress.textContent = n + ' of ' + boxes.length + ' done';
+  }
+  boxes.forEach(function (b) {
+    if (saved[b.id]) b.checked = true;
+    b.addEventListener('change', function () {
+      saved[b.id] = b.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(saved)); } catch (e) {}
+      update();
+    });
+  });
+  update();
+})();
+</script>
+</body>
+</html>
