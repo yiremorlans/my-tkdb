@@ -162,8 +162,12 @@ export class Live2DRig {
   /** Mood names come from rig.expressions.moods; unknown ones show "default". */
   setMood(name) {
     const moods = this.rig.expressions?.moods ?? {};
-    const exprs = moods[name] ?? moods.default ?? [];
     this.moodName = moods[name] ? name : "default";
+    this.setExpressions(moods[name] ?? moods.default ?? []);
+  }
+
+  /** Stacks the model's expressions by name, outside any mood (the preview). */
+  setExpressions(exprs) {
     const target = new Map();
     for (const expr of exprs) {
       for (const p of this.expressionParams.get(expr) ?? []) target.set(p.Id, (target.get(p.Id) ?? 0) + p.Value);

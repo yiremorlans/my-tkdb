@@ -141,6 +141,25 @@ async function main() {
     button(moodRow, name, () => hangout.setBase({ mood: name }));
   }
 
+  // Every expression the model ships, moods or not; toggles stack, so a
+  // candidate mood (e_odoroki_00 + e_sekimen_00) can be tried before it goes
+  // into rig.json. A mood button or reaction replaces the stack.
+  const exprRow = section("All model expressions (toggles stack)");
+  const stack = new Set();
+  for (const name of renderer.expressionParams.keys()) {
+    const b = button(exprRow, name.replace(/^e_/, ""), () => {
+      stack.has(name) ? stack.delete(name) : stack.add(name);
+      b.classList.toggle("on", stack.has(name));
+      renderer.setExpressions([...stack]);
+      say(stack.size ? [...stack].join(" + ") : "(no expressions)");
+    });
+  }
+  button(exprRow, "clear", () => {
+    stack.clear();
+    exprRow.querySelectorAll("button").forEach((x) => x.classList.remove("on"));
+    renderer.setExpressions([]);
+  });
+
   const tierRow = section("Relationship tier");
   const tierPick = document.createElement("select");
   for (const tier of DIALOGUE_TIERS) tierPick.append(new Option(tier, tier));
