@@ -101,9 +101,6 @@ td:first-child { font-weight: 700; white-space: nowrap; }
 .slip-label { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); }
 .slip.warn .slip-label { color: var(--gold); }
 
-.copyrow { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; }
-.copyrow .big { font-family: var(--font-mono); font-size: 22px; font-weight: 600; letter-spacing: 0.02em; }
-.copyrow .what { color: var(--muted); font-size: 14px; flex: 1 1 200px; min-width: 0; }
 button.copy {
   font-family: var(--font-mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase;
   background: transparent; color: var(--accent); border: 1px solid var(--accent); border-radius: 6px;
@@ -144,7 +141,7 @@ footer { border-top: 1px solid var(--line); padding-top: 18px; color: var(--mute
   <header>
     <p class="eyebrow">For server admins</p>
     <h1>Setting up My Tkdb</h1>
-    <p class="lede">How to add the bot to your server, give it the right permissions, and turn on the two server features: call-out <strong>encounters</strong> and inspector <strong>missions</strong>. Takes about five minutes.</p>
+    <p class="lede">How to add the bot to your server, give it the right permissions, and turn on the two server features: call-out <strong>encounters</strong> and inspector <strong>missions</strong>.</p>
   </header>
 
   <nav class="toc" aria-label="Steps">
@@ -166,7 +163,7 @@ footer { border-top: 1px solid var(--line); padding-top: 18px; color: var(--mute
     <div class="step-head"><span class="num">1</span><h2>Before you start</h2></div>
     <ul class="plain">
       <li>You need the <strong>Manage Server</strong> permission (or Administrator) in your Discord server. The setup commands only show up for people who have it.</li>
-      <li>Decide which text channel the bot will post in. One channel handles both encounters and missions. A new channel such as <code>#darkwick-board</code> works well.</li>
+      <li>Decide which text channel the bot will post in. One channel handles both encounters and missions. A new channel such as <code>#darkwick-academy</code> works well.</li>
       <li>Players don't need anything special. <code>/roam</code>, <code>/meet</code>, <code>/affinity</code> and the rest work anywhere once the bot is in the server.</li>
     </ul>
   </section>
@@ -194,17 +191,6 @@ footer { border-top: 1px solid var(--line); padding-top: 18px; color: var(--mute
           <tr><td>Manage Messages</td><td class="no">No</td><td>Not needed. The bot only edits its own posts.</td></tr>
         </tbody>
       </table>
-    </div>
-
-    <div class="copyrow">
-      <span class="big" id="perm-basic">52224</span>
-      <span class="what">Permission number for the four required permissions. If you build your own invite link, use this in <code>permissions=</code>.</span>
-      <button class="copy" type="button" data-copy="52224">Copy</button>
-    </div>
-    <div class="copyrow">
-      <span class="big">52240</span>
-      <span class="what">Same, plus Manage Channels for countdowns.</span>
-      <button class="copy" type="button" data-copy="52240">Copy</button>
     </div>
 
     <div class="slip">
@@ -270,10 +256,9 @@ footer { border-top: 1px solid var(--line); padding-top: 18px; color: var(--mute
 
     <h3>What your members will see</h3>
     <ul class="plain">
-      <li>A silhouette shows up at random, somewhere between <strong>45 minutes and 3 hours</strong> after the last one.</li>
-      <li>Each one stays open for <strong>2 minutes</strong>. Players guess with <code>/call</code>, for example <code>/call Sho</code>.</li>
-      <li>A wrong character name means a 10-second wait before guessing again. A typo costs nothing.</li>
-      <li>The winner gets a reveal card and a bonus point on their next <code>/roam</code> or <code>/meet</code> with that character. If nobody gets it, the post just says the moment has passed.</li>
+      <li>Every so often, a silhouette of a character shows up in the channel.</li>
+      <li>Players guess who it is with <code>/call</code>, for example <code>/call Sho</code>.</li>
+      <li>The first correct guess wins a reveal card and a bonus with that character.</li>
     </ul>
 
     <h3>Encounter commands</h3>
@@ -305,9 +290,8 @@ footer { border-top: 1px solid var(--line); padding-top: 18px; color: var(--mute
 
     <h3>How missions work for members</h3>
     <ul class="plain">
-      <li><strong>Six</strong> requests a day, at random times between 5 AM and midnight. The times change every day.</li>
-      <li>A request nobody accepts disappears after <strong>2 hours</strong>.</li>
-      <li>Each player can hold <strong>one</strong> mission at a time and accept up to <strong>two</strong> a day. They have 48 hours to finish it.</li>
+      <li>Mission requests go up on the board throughout the day.</li>
+      <li>Each player can hold one mission at a time.</li>
       <li>After accepting, the player runs <code>/mission</code> to see their instructions. It tells them which of the three types they got:</li>
     </ul>
     <div class="table-wrap">
@@ -345,7 +329,7 @@ footer { border-top: 1px solid var(--line); padding-top: 18px; color: var(--mute
       <li>Turn on <span class="ui">Allow anyone to @mention this role</span>. Without this, the bot can't ping it.</li>
       <li>Let members give themselves the role, for example through <span class="ui">Onboarding</span> or <span class="ui">Channels &amp; Roles</span>.</li>
     </ol>
-    <p>Only members with the role are pinged. No role means no pings, and the posts still go up as normal. It can take up to 10 minutes for the bot to notice a new role.</p>
+    <p>Only members with the role are pinged. No role means no pings, and the posts still go up as normal. It can take a few minutes for the bot to notice a new role.</p>
   </section>
 
   <!-- 7 -->
@@ -387,7 +371,7 @@ footer { border-top: 1px solid var(--line); padding-top: 18px; color: var(--mute
     </details>
     <details>
       <summary>Status says "Stopped" or "Running, with errors"</summary>
-      <div><p>After 3 failed posts in a row, the bot stops posting so it doesn't keep failing. Fix the channel permissions, then run <code>/encounters channel</code> or <code>/missions enable</code> again to restart.</p></div>
+      <div><p>After several failed posts in a row, the bot stops posting so it doesn't keep failing. Fix the channel permissions, then run <code>/encounters channel</code> or <code>/missions enable</code> again to restart.</p></div>
     </details>
     <details>
       <summary>Members get "only works in the encounter channel" from <code>/call</code></summary>
@@ -403,7 +387,7 @@ footer { border-top: 1px solid var(--line); padding-top: 18px; color: var(--mute
     </details>
     <details>
       <summary>The ping role isn't pinging</summary>
-      <div><p>Check the name is exactly <code>tkdb-inspectors</code> and <span class="ui">Allow anyone to @mention this role</span> is on. Give it up to 10 minutes after creating or renaming the role.</p></div>
+      <div><p>Check the name is exactly <code>tkdb-inspectors</code> and <span class="ui">Allow anyone to @mention this role</span> is on. Give it a few minutes after creating or renaming the role.</p></div>
     </details>
   </section>
 
