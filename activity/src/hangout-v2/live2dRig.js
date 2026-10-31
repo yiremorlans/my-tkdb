@@ -9,7 +9,10 @@
 //   expressions.moods      mood -> Live2D expressions stacked to draw it
 //                          (smile_blush: smile + blush)
 //   reactionPoses          reaction -> Live2D pose group it also plays, or
-//                          { byTier: { <tier>: group } } (nearest lower tier)
+//                          { byTier: { <tier>: group } } (nearest lower tier);
+//                          `guarded` is the pose he holds once locked out
+//                          (Hangout LOCKOUT_TIERS), else m_udekumi, else
+//                          the tier's upset pose
 //   motion.idle.amount     how much of the idle clip's sway to keep (0-1)
 //   motion.breath.amount   how much of the breathing to keep (0-1)
 //   motion.sway.amount     the plugin's own head/body sway (CubismBreath),
@@ -140,9 +143,18 @@ export class Live2DRig {
     this.swayParams = sway ? Array.from({ length: sway.getSize() }, (_, i) => sway.at(i)) : [];
     this.swayPeaks = this.swayParams.map((p) => p.peak);
     this.setSway(this.rig.motion?.sway?.amount ?? 0);
+    // The plugin only blinks on frames where no motion plays, and the idle
+    // and breath layers always play, so the rig blinks the model itself,
+    // after the core saves its parameters (no clip writes the eyes, so
+    // scaling them any earlier would compound frame to frame).
+    this.eyeBlink = model.internalModel.eyeBlink;
+    model.internalModel.eyeBlink = undefined;
+    this.blinkIds = (settings.getEyeBlinkParameters?.() ?? []).map((id) => this.paramIndex.get(id)).filter((i) => i != null);
+    this.lastBlinkAt = performance.now();
     model.internalModel.on("afterMotionUpdate", () => this.dampIdle());
     model.internalModel.on("beforeModelUpdate", () => {
       this.dampBreath();
+      this.blink();
       this.applyMood();
       this.applyTalk();
     });
@@ -220,6 +232,19 @@ export class Live2DRig {
     for (const i of this.idleParams) values[i] = defaultValues[i] + (values[i] - defaultValues[i]) * k;
   }
 
+  // Scales the eyes by the blink's openness (0 shut, 1 open) instead of
+  // setting them, so a pose or clip that narrows the eyes keeps doing so.
+  blink() {
+    const now = performance.now();
+    const dt = (now - this.lastBlinkAt) / 1000;
+    this.lastBlinkAt = now;
+    if (!this.eyeBlink || !this.blinkIds.length) return;
+    let open = 1;
+    this.eyeBlink.updateParameters({ setParameterValueById: (_, v) => (open = v) }, dt);
+    const { values } = this.raw.parameters;
+    for (const i of this.blinkIds) values[i] *= open;
+  }
+
   /** Scales the plugin's own sway: 0 off, 1 as the plugin ships it. */
   setSway(amount) {
     this.swayParams.forEach((p, i) => (p.peak = this.swayPeaks[i] * amount));
@@ -285,7 +310,7 @@ export class Live2DRig {
     this.model.motion(name, 0, MotionPriority.FORCE);
     const end = this.durations.get(name);
     this.later(end - 0.05, () => this.model.motion(`${name}_hold`, 0, MotionPriority.FORCE, { loop: true }));
-    if (hold != null) this.later(end + hold, () => this.leavePose());
+    this.returnTimer = hold != null ? this.later(end + hold, () => this.leavePose()) : null;
     return true;
   }
 
@@ -304,8 +329,43 @@ export class Live2DRig {
     if (pose && this.posing !== pose) this.playPose(pose, POSE_HOLD);
   }
 
+  /** Holds the guarded pose with no return: he's locked out (Hangout LOCKOUT_TIERS). */
+  guard(tier) {
+    const pose = this.guardedPose(tier);
+    if (!pose) return;
+    if (this.posing === pose) this.keepPose(); // still in it from the upset: just stay
+    else this.playPose(pose);
+  }
+
+  /**
+   * Called as the lockout starts: if the upset left him in the guarded pose,
+   * he keeps holding it instead of returning and playing it again.
+   */
+  lockPose(tier) {
+    if (this.posing && this.posing === this.guardedPose(tier)) this.keepPose();
+  }
+
+  /** rig.json reactionPoses.guarded, else m_udekumi, else the tier's upset pose. */
+  guardedPose(tier) {
+    const poses = this.rig.reactionPoses ?? {};
+    return [forTier(poses.guarded, tier), "m_udekumi", forTier(poses.upset, tier)].find((p) => p && this.poses.includes(p)) ?? null;
+  }
+
+  /** Cancels the current pose's return, so it holds (its hold loop still starts). */
+  keepPose() {
+    clearTimeout(this.returnTimer);
+    this.returnTimer = null;
+  }
+
+  /** Leaves the guarded pose (the tier changed). */
+  unguard() {
+    this.leavePose();
+  }
+
   later(seconds, fn) {
-    this.poseTimers.push(setTimeout(fn, seconds * 1000));
+    const id = setTimeout(fn, seconds * 1000);
+    this.poseTimers.push(id);
+    return id;
   }
 
   clearPoseTimers() {

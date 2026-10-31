@@ -59,7 +59,7 @@ async function main() {
   scene.frame = (t, dt) => {
     hangout.frame(t, dt);
     drawSpots();
-    $("#meter-fill").style.width = `${Math.min(100, (hangout.meter.level(t) / hangout.meter.config.threshold) * 100)}%`;
+    $("#meter-fill").style.width = `${hangout.locked ? 100 : Math.min(100, (hangout.meter.level(t) / hangout.meter.config.threshold) * 100)}%`;
     frames++;
     const now = performance.now();
     if (now - fpsClock > 500) {

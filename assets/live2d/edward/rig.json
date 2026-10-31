@@ -74,7 +74,8 @@
     "chestTouch": "m_udekumi",
     "bellyTouch": "m_udekumi",
     "hipsTouch": "m_hidarikoshi",
-    "upset": { "byTier": { "new": "m_weak", "spark": "m_think" } }
+    "upset": { "byTier": { "new": "m_weak", "spark": "m_think" } },
+    "guarded": "m_weak"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {

@@ -68,7 +68,7 @@ function wireChrome(scene) {
   const meterFill = $("#meter-fill");
   scene.frame = (t, dt) => {
     hangout.frame(t, dt);
-    meterFill.style.width = `${Math.min(100, (hangout.meter.level(t) / hangout.meter.config.threshold) * 100)}%`;
+    meterFill.style.width = `${hangout.locked ? 100 : Math.min(100, (hangout.meter.level(t) / hangout.meter.config.threshold) * 100)}%`;
   };
   const mute = $("#btn-mute");
   if (sounds.enabled) {

@@ -72,7 +72,7 @@ async function main() {
     if (editor.on && editor.freeze) renderer.update({}, { blink: false });
     else hangout.frame(t, dt);
     drawOutline();
-    $("#meter-fill").style.width = `${Math.min(100, (hangout.meter.level(t) / hangout.meter.config.threshold) * 100)}%`;
+    $("#meter-fill").style.width = `${hangout.locked ? 100 : Math.min(100, (hangout.meter.level(t) / hangout.meter.config.threshold) * 100)}%`;
     frames++;
     const now = performance.now();
     if (now - fpsClock > 500) {

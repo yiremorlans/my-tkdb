@@ -35,7 +35,7 @@ export async function validateLive2DRig(rig, { readJson, fileExists = () => true
 
   const reactions = new Set([...Object.keys(DEFAULT_REACTIONS), ...Object.keys(rig.reactions ?? {})]);
   for (const name of Object.keys(rig.reactionPoses ?? {})) {
-    if (!reactions.has(name)) problems.push(`reactionPoses.${name}: unknown reaction`);
+    if (!reactions.has(name) && name !== "guarded") problems.push(`reactionPoses.${name}: unknown reaction`);
     for (const tier of Object.keys(rig.reactionPoses[name]?.byTier ?? {})) {
       if (!DIALOGUE_TIERS.includes(tier)) problems.push(`reactionPoses.${name}: unknown tier ${tier}`);
     }

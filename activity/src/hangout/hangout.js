@@ -13,6 +13,11 @@
 // still plays, just silently. Touch lines hold the same way: a tap while
 // one is still typing out or being read reacts without a new line, so
 // spam-tapping can't flip through the pool. The upset line always speaks.
+//
+// At the LOCKOUT_TIERS (new, known, warm) maxing the meter locks him: he plays the
+// upset as usual, then once it ends turns guarded (the `serious` face, and
+// the renderer's `guard` pose if it has one) and ignores every tap after,
+// until the tier changes.
 
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 
@@ -34,6 +39,12 @@ export const TYPE_MS = 28;
 // may replace it.
 export const LINE_HOLD = 1.5;
 
+// Tiers where maxing the annoyance meter locks him out for good.
+export const LOCKOUT_TIERS = ["new", "known", "warm"];
+
+// The face he holds once locked out.
+export const GUARDED_MOOD = "serious";
+
 export class Hangout {
   constructor({ renderer, motion, say = () => {}, play = () => {}, lines = PLACEHOLDER_LINES, random = Math.random, tier = "new" }) {
     this.renderer = renderer;
@@ -50,6 +61,8 @@ export class Hangout {
     this.baseMood = "default";
     this.baseHands = { ...renderer.handPose };
     this.handOverride = null; // { until, steps: [[at, pose]], sides }
+    this.locked = false; // maxed out at a LOCKOUT_TIERS tier: taps ignored
+    this.guardAt = null; // when the upset ends and he turns guarded
     this.setTier(tier);
   }
 
@@ -67,6 +80,12 @@ export class Hangout {
     if (!DIALOGUE_TIERS.includes(tier)) throw new Error(`unknown tier ${tier}`);
     this.tier = tier;
     this.baseMood = forTier(this.rig.restMood, tier) ?? "default";
+    if (this.locked || this.guardAt != null) {
+      this.locked = false;
+      this.guardAt = null;
+      this.meter.reset();
+      this.renderer.unguard?.();
+    }
   }
 
   /**
@@ -104,8 +123,16 @@ export class Hangout {
   tapAt(point, t) {
     const spot = hotspotAt(this.rig, this.renderer, point);
     if (!spot) return { spot: null, result: "miss" };
+    if (this.locked) return { spot, result: "ignored" };
     const result = this.meter.tap(t, this.rig.hotspots[spot].annoyance ?? SPOT_ANNOYANCE[spot]);
     if (result === "ignored") return { spot, result };
+    if (result === "upset" && LOCKOUT_TIERS.includes(this.tier)) {
+      this.locked = true;
+      this.react("upset", t, spot);
+      this.renderer.lockPose?.(this.tier);
+      this.guardAt = t + (resolveReaction(this.rig, "upset", this.tier)?.duration ?? DEFAULT_DURATION);
+      return { spot, result: "locked" };
+    }
     if (result === "upset") this.react("upset", t, spot);
     else this.react(this.rig.hotspots[spot].reaction ?? TOUCH_SPOTS[spot], t, spot);
     return { spot, result };
@@ -161,6 +188,13 @@ export class Hangout {
   }
 
   frame(t, dt) {
+    if (this.guardAt != null && t >= this.guardAt) {
+      this.guardAt = null;
+      this.baseMood = GUARDED_MOOD;
+      this.moodUntil = -Infinity;
+      this.pendingMood = null;
+      this.renderer.guard?.(this.tier);
+    }
     if (this.pendingMood && t >= this.pendingMood.at) {
       if (t < this.moodUntil) this.renderer.setMood(this.pendingMood.mood);
       this.pendingMood = null;
