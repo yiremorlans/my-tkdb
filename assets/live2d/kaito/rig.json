@@ -58,11 +58,15 @@
       "serious": ["e_magao_00"],
       "annoyed": ["e_fuman_00"],
       "upset": ["e_ikari_00", "e_ase_00"],
+      "flustered": ["e_tere_00", "e_sekimen_00", "e_ase_00"],
       "sad": ["e_cry_00"],
       "lovestruck": ["e_dere_00"]
     }
   },
-  "reactionPoses": { "headPat": "m_tere", "cheekPoke": "m_tere", "lipsTouch": "m_tere", "earTouch": "m_odoroki", "handTap": "m_gesture", "chestTouch": "m_odoroki", "bellyTouch": "m_odoroki", "hipsTouch": "m_migikoshi", "upset": "m_udekumi" },
+  "reactions": {
+    "upset": { "byTier": { "new": { "mood": "upset", "duration": 4 }, "spark": { "mood": "flustered", "duration": 4 } } }
+  },
+  "reactionPoses": { "headPat": "m_tere", "cheekPoke": "m_tere", "lipsTouch": "m_tere", "earTouch": "m_odoroki", "handTap": "m_gesture", "chestTouch": "m_odoroki", "bellyTouch": "m_odoroki", "hipsTouch": "m_migikoshi", "upset": { "byTier": { "new": "m_udekumi", "spark": "m_tere" } } },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
     "idle": { "amount": 0.35 },

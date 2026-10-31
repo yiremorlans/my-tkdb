@@ -58,9 +58,13 @@
       "serious": ["e_ikari_00"],
       "annoyed": ["e_fuman_00"],
       "upset": ["e_ikari_00", "e_ase_00"],
+      "flustered": ["e_odoroki_00", "e_sekimen_00", "e_ase_00"],
       "sad": ["e_kanashimi_00"],
       "away": ["e_tsujo_away_00"]
     }
+  },
+  "reactions": {
+    "upset": { "byTier": { "new": { "mood": "upset", "duration": 4 }, "spark": { "mood": "flustered", "duration": 4 } } }
   },
   "reactionPoses": {
     "headPat": "m_kubi",
@@ -71,7 +75,7 @@
     "chestTouch": "m_odoroki",
     "bellyTouch": "m_odoroki",
     "hipsTouch": "m_migikoshi",
-    "upset": "m_udekumi"
+    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kubi" } }
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {

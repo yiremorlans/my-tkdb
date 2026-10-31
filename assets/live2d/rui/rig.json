@@ -57,12 +57,16 @@
       "sweat": ["e_ase_00"],
       "serious": ["e_magao_00"],
       "annoyed": ["e_mu_00"],
-      "upset": ["e_komari_00", "e_ase_00"],
+      "upset": ["e_shinken_00", "e_ase_00"],
+      "flustered": ["e_kusho_00", "e_sekimen_00", "e_ase_00"],
       "sad": ["e_kanashimi_00"],
       "wink": ["e_wink_00"]
     }
   },
-  "reactionPoses": { "headPat": "m_odoroki", "cheekPoke": "m_odoroki", "lipsTouch": "m_odoroki", "earTouch": "m_odoroki", "handTap": "m_nagekiss", "chestTouch": { "byTier": { "new": "m_odoroki", "spark": "m_wink" } }, "bellyTouch": "m_odoroki", "hipsTouch": "m_migikoshi", "upset": "m_udekumi" },
+  "reactions": {
+    "upset": { "byTier": { "new": { "mood": "upset", "duration": 4 }, "spark": { "mood": "flustered", "duration": 4 } } }
+  },
+  "reactionPoses": { "headPat": "m_odoroki", "cheekPoke": "m_odoroki", "lipsTouch": "m_odoroki", "earTouch": "m_odoroki", "handTap": "m_nagekiss", "chestTouch": { "byTier": { "new": "m_odoroki", "spark": "m_wink" } }, "bellyTouch": "m_odoroki", "hipsTouch": "m_migikoshi", "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kubiita" } } },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
     "idle": { "amount": 0.35 },

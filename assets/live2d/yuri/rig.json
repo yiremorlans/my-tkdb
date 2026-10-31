@@ -60,10 +60,14 @@
       "serious": ["e_magao_00"],
       "annoyed": ["e_odoroki_00"],
       "upset": ["e_mad_00", "e_ase_00"],
+      "flustered": ["e_konwaku_00", "e_sekimen_00", "e_ase_00"],
       "sad": ["e_namida_00"]
     }
   },
   "restMood": { "byTier": { "new": "serious", "warm": "default" } },
+  "reactions": {
+    "upset": { "byTier": { "new": { "mood": "upset", "duration": 4 }, "spark": { "mood": "flustered", "duration": 4 } } }
+  },
   "reactionPoses": {
     "headPat": "m_atama",
     "cheekPoke": "m_gesture",
@@ -73,7 +77,7 @@
     "chestTouch": "m_odoroki",
     "bellyTouch": "m_odoroki",
     "hipsTouch": "m_ryoutekoshi",
-    "upset": "m_udekumi"
+    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_atama" } }
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
