@@ -231,14 +231,14 @@ footer { border-top: 1px solid var(--line); padding-top: 18px; color: var(--mute
           <tr><td>View Channel</td><td class="yes">✓ Allow</td><td>So they can see the posts.</td></tr>
           <tr><td>Read Message History</td><td class="yes">✓ Allow</td><td>So they can see a post that landed while they were away.</td></tr>
           <tr><td>Use Application Commands</td><td class="yes">✓ Allow</td><td>Players answer encounters with <code>/call</code>, which only works in this channel.</td></tr>
-          <tr><td>Send Messages</td><td class="opt">Your choice</td><td>Not needed to play. Turn it off if you want a tidy, bot-only board.</td></tr>
+          <tr><td>Send Messages</td><td class="yes">✓ Allow</td><td>Discord turns off the message box without it, and then nobody can type <code>/call</code>.</td></tr>
         </tbody>
       </table>
     </div>
 
     <div class="slip">
       <span class="slip-label">Tip</span>
-      <p>A read-only channel works best: members can see posts, click buttons and use slash commands, but can't chat. Slash command replies are private, so nobody's guesses clutter the board.</p>
+      <p>Don't make this channel read-only. Members need to type <code>/call</code> in it. The board stays tidy anyway: <code>/call</code> guesses and their replies are private, so only the bot's posts show up. If chatting gets in the way, turn on slowmode.</p>
     </div>
   </section>
 
