@@ -1439,12 +1439,12 @@ favorite or liked response, nothing for the least-liked one (revised
 
 ### 17.1 Trigger
 
-- After a correct `/call`, roll `CALL_SCENE_CHANCE = 0.07` (one global
+- After a correct `/call`, roll `CALL_SCENE_CHANCE = 0.05` (one global
   constant in `constants/publicEncounters.js`).
 - On a hit, `pickCallScene` draws one winner line with `pickRandom` from
   `winnerLinePool`, the same pool and the same draw as the normal reveal
   (daytime swap included). Every character winner line carries button labels
-  (§17.7), so the scene rate is 7% at every tier, whatever the pool's size.
+  (§17.7), so the scene rate is 5% at every tier, whatever the pool's size.
 - It falls back to the normal reveal when the drawn line has no labels (only
   the shared fallback pool, for a character with no authored line at that
   register) or when a face the map (§17.4.1) can produce for that tier is
@@ -1761,7 +1761,7 @@ from Discord.
 - **Unanswered scenes close when the next spawn happens**, and the winner
   quietly gets the boost instead. Ignoring a scene paying slightly more on
   average is accepted.
-- **Rate is 7%** (2026-10-07, down from the 10% design rate). Every register
+- **Rate is 5%** (2026-10-31; 7% from 2026-10-07, down from the 10% design rate). Every register
   is labeled, so every character win is eligible.
 - **Scenes live in `winnerLines` (2026-10-06):** one pool, with an object
   entry `{ line, responses }` marking a line that can open a scene.
