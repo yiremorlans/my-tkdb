@@ -2,7 +2,7 @@ export default {
   // The level-up DMs (docs/bond-scene-dms.md). Zenji is dead and can't so much
   // as hold a phone, so every one of these is dictated to Haku, who types it
   // out for him — established once (acquaintance), then referenced lightly.
-  // Haku isn't a random errand boy for this: per reference.md he's already
+  // Haku isn't a random errand boy for this: per the reference files he's already
   // Zenji's video-work manager, and his family's medium blood means he's one
   // of the vanishingly few people who can see and hear Zenji clearly at all,
   // which makes him the only real candidate. Once that's on the record, the
@@ -333,24 +333,27 @@ export default {
         line: "He lifts the instrument across his knee. \"What's this? Well, it's a biwa, of course. It's a biwa just as you are yourself.\"",
         approach: "Listen a while",
         greeting:
-          '"Come, sit a spell. The biwa\'s been dreadfully lonely for an audience."',
+          '"Come, lend an ear. The biwa\'s been dreadfully lonely for an audience."',
         responses: {
           kind: ["Ask to hear it played", "Say the biwa suits him"],
           playful: ["Ask what instrument you'd be", "Tease the comparison"],
           bold: ["Ask him to play it now", "Ask him to explain it"],
-          neutral: ["Sit and listen quietly", "Let the biwa rest"],
+          neutral: ["Listen without a word", "Let the biwa rest"],
         },
       },
       {
-        line: "He says your name like it's the best line he's been saving all week.",
-        approach: "Take the compliment",
+        line: '"Come now, let\'s depart in search of something sensational."',
+        approach: "Ask where to",
         greeting:
-          '"Ah, there you are, my dear. I\'ve had your name on the tip of my tongue all week."',
+          '"Wherever the verse leads us, my dear. I have a feeling about today."',
         responses: {
-          kind: ["Say his voice makes it special", "Say his name the same way"],
-          playful: ["Ask for an even better line", "Demand he say it again"],
-          bold: ["Say you know it's a good line", "Ask him to top it"],
-          neutral: ["Take it in stride", "Let the line pass"],
+          kind: ["Say you'd love to come", "Let him lead the way"],
+          playful: [
+            "Ask what counts as sensational",
+            "Ask if you'll know it on sight",
+          ],
+          bold: ["Say you'll find it first", "Pick the direction yourself"],
+          neutral: ["Follow along", "Fall in beside him"],
         },
       },
       {
@@ -359,7 +362,7 @@ export default {
         greeting:
           "\"Aw, you're a real pal. You've got a keen eye, my dear, and a kind one besides.\"",
         responses: {
-          kind: ["Say the outfit works", "Compliment him sincerely"],
+          kind: ["Say the outfit works", "Say he wears it well"],
           playful: ["Ask where he shops", "Tease the cat's pajamas line"],
           bold: ["Say he's not wrong", "Challenge him to prove it"],
           neutral: ["Nod at the outfit", "Say nothing, let him preen"],
@@ -370,37 +373,37 @@ export default {
         approach: "Finish his sentence",
         greeting: '"I\'ve saved a line for you. It wanted your opinion."',
         responses: {
-          kind: ["Fill in something gentle", "Thank him for the line"],
+          kind: ["Fill in something gentle", "Fill in something true"],
           playful: ["Fill in something silly", "Steal the ending for yourself"],
           bold: ["Finish it better than he would", "Take over the whole story"],
           neutral: ["Fill it in plainly", "Say the line, move on"],
         },
       },
       {
-        line: "You ask about his brother. His smile doesn't slip, not quite, but something behind it does, and he steers the conversation back to poetry before you can ask anything real.",
-        approach: "Let it go, for now",
+        line: "\"Come now, read those messages out, won't you? They're fan letters for me, aren't they?\"",
+        approach: "Read the first one out",
         greeting:
-          '"Now then! Where was I? Ah, yes. Romanticism. A much more cheerful subject."',
+          '"...They\'re not? Ah. Well. The postman must be running behind, my dear."',
         responses: {
-          kind: [
-            "Let the subject change",
-            "Say he doesn't have to explain",
+          kind: ["Say one might be, someday", "Read them all out anyway"],
+          playful: [
+            "Invent a fan letter for him",
+            "Read it in a swooning voice",
           ],
-          playful: ["Tease him for dodging", "Guess at the real story"],
-          bold: ["Ask about the brother anyway", "Push past the poetry"],
-          neutral: ["Let it drop entirely", "Follow him back to poetry"],
+          bold: ["Say you'll write him one", "Say his fans are shy"],
+          neutral: ["Scroll through them", "Read them to yourself"],
         },
       },
       {
-        line: 'He calls you "my dear" now without the theatrical pause that used to come before it.',
-        approach: "Let the nickname stick",
+        line: '"Every tool has its own knack you\'ve got to acquire to use it properly. Behold, my mastery with a fishing pole!"',
+        approach: "Watch him cast",
         greeting:
-          '"Twice is coincidence. Three times is a season. Welcome back."',
+          '"Ha! Not a nibble yet, but the form is impeccable, wouldn\'t you say?"',
         responses: {
-          kind: ["Say the name suits you now", "Say you'll keep coming back"],
-          playful: ["Ask when it became official", "Tease the missing pause"],
-          bold: ["Claim the nickname as yours", "Say you noticed the change"],
-          neutral: ["Let the nickname stand", "Not remark on it"],
+          kind: ["Say his form is perfect", "Wait with him for a bite"],
+          playful: ["Ask what he's fishing for", "Bet you catch one first"],
+          bold: ["Ask him to teach you", "Say the fish are doomed"],
+          neutral: ["Watch the line", "Watch the water"],
         },
       },
       {
@@ -409,9 +412,9 @@ export default {
         greeting:
           '"A sensational name befitting of my sensational sensibilities, wouldn\'t you say? ...Well? Go on."',
         responses: {
-          kind: ["Say it's a wonderful name", "Agree, kindly"],
+          kind: ["Say it's a wonderful name", "Say it suits him"],
           playful: ["Suggest a sillier name", "Ask for the lecture anyway"],
-          bold: ["Say the name is a bit much", "Demand the short version"],
+          bold: ["Say yours could rival it", "Say it out loud yourself"],
           neutral: ["Shrug, say it's fine", "Give a plain opinion"],
         },
       },
@@ -421,11 +424,8 @@ export default {
         greeting:
           "\"I wrote you into today's stanza. Don't fret, I changed your name. Slightly.\"",
         responses: {
-          kind: [
-            "Reassure him you're flattered",
-            "Say the character suits you",
-          ],
-          playful: ["Guess which one you are", "Demand a bigger role"],
+          kind: ["Say you're flattered", "Say the character suits you"],
+          playful: ["Guess which one you are", "Ask for a bigger role"],
           bold: [
             "Ask to read the whole stanza",
             "Say you don't need it changed",
@@ -450,7 +450,7 @@ export default {
         greeting:
           '"Tell me something true, my dear. I\'ve grown tired of my own inventions today."',
         responses: {
-          kind: ["Tell him something true", "Thank him for really asking"],
+          kind: ["Tell him something true", "Ask him the same back"],
           playful: [
             "Make up something absurd",
             "Test if he's really listening",
@@ -467,7 +467,7 @@ export default {
         responses: {
           kind: [
             "Say you're glad to inspire him",
-            "Take the compliment sweetly",
+            "Say you'll keep walking by",
           ],
           playful: ["Ask if that happens often", "Tease him for the excuse"],
           bold: ["Say of course it was you", "Claim credit outright"],
@@ -508,7 +508,7 @@ export default {
         greeting:
           '"Go on, drink up. Watching you enjoy it is enough food for my soul."',
         responses: {
-          kind: ["Say it's the best cup yet", "Enjoy it throughly"],
+          kind: ["Say it's the best cup yet", "Say it tastes like spring"],
           playful: ["Ask how long he saved it", "Ask what vintage this is"],
           bold: ["Drink it before he explains", "Ask what he gave up for it"],
           neutral: ["Take the tea, say nothing", "Sip it, let him watch"],
@@ -519,7 +519,7 @@ export default {
         approach: "Arrive like clockwork",
         greeting: '"You return like seasons turning. My heart is at ease."',
         responses: {
-          kind: ["Say the same about him", "Thank him for the verse"],
+          kind: ["Say the same about him", "Say he's a season too"],
           playful: ["Ask which season he means", "Ask to be a better season"],
           bold: ["Say you're the gift then", "Say he's the expected one"],
           neutral: ["Arrive, say little", "Accept the verse, move on"],
@@ -534,7 +534,7 @@ export default {
         ],
         responses: {
           kind: ["Tell him it's beautiful", "Ask what the rain became"],
-          playful: ["Demand to see even more", "Offer a terrible rhyme"],
+          playful: ["Beg for the next page", "Offer a terrible rhyme"],
           bold: ["Read it before he stops you", "Ask to keep a page"],
           neutral: ["Read quietly, say nothing", "Hand the pages back"],
         },
@@ -554,51 +554,68 @@ export default {
       {
         line: '"The moon is beautiful," he says, while Towa hums somewhere nearby. "I always look forward to nights like these, passing the hours with you both."',
         approach: "Sit out under the moon",
-        greeting: "\"Towa's been humming the same four notes for an hour. I've decided it's a masterpiece.\"",
+        greeting:
+          "\"Towa's been humming the same four notes for an hour. I've decided it's a masterpiece.\"",
         responses: {
           kind: ["Say you look forward to it too", "Ask him to stay till late"],
           playful: ["Hum the fifth note", "Ask what the song's called"],
-          bold: ["Ask why it's always the moon", "Stay out till it sets"],
+          bold: ["Say the moon is beautiful", "Stay out till it sets"],
           neutral: ["Look up at the moon", "Listen to Towa hum"],
         },
       },
       {
-        line: "\"Have you got any siblings, my dear?\" He's watching the sky, not you. \"No, I don't mean anything by it. Just a little conversation.\"",
+        line: '"Have you got any siblings, my dear?" He\'s watching the sky, not you. "No, I don\'t mean anything by it. Just a little conversation."',
         approach: "Answer his question",
-        greeting: "\"Is that so? ...How nice. Tell me more. I find I'd like to listen tonight.\"",
+        greeting:
+          '"Is that so? ...How nice. Tell me more. I find I\'d like to listen tonight."',
         responses: {
-          kind: ["Ask if he has any", "Tell him a family story"],
-          playful: ["Ask why he's really asking", "Say you're one of a kind"],
-          bold: ["Ask about Jiro", "Say he means something by it"],
+          kind: ["Say you'll tell him lots", "Tell him a family story"],
+          playful: [
+            "Count your siblings on fingers",
+            "Say you're one of a kind",
+          ],
+          bold: [
+            "Ask if he'd listen all night",
+            "Say you'll tell him every one",
+          ],
           neutral: ["Answer and leave it there", "Watch the sky with him"],
         },
       },
       {
-        line: "\"Are you going to Mortkranken, my dear?\" He hovers at your elbow. \"No reason. Are you hurt? I hope you'll take care.\"",
+        line: '"Are you going to Mortkranken, my dear?" He hovers at your elbow. "No reason. Are you hurt? I hope you\'ll take care."',
         approach: "Tell him you're all right",
-        greeting: "\"Truly? Then I'll stop fussing. ...After one more question. Only one.\"",
+        greeting:
+          '"Truly? Then I\'ll stop fussing. ...After one more question. Only one."',
         responses: {
-          kind: ["Let him ask his question", "Thank him for worrying"],
-          playful: ["Say it's a papercut, maybe", "Ask if he'll walk you there"],
-          bold: ["Say he fusses too much", "Ask who he knows there"],
+          kind: ["Let him ask his question", "Promise you'll take care"],
+          playful: [
+            "Say it's a papercut, maybe",
+            "Ask if he'll walk you there",
+          ],
+          bold: ["Ask him to come along", "Say you'll be back by dark"],
           neutral: ["Show him your hands", "Keep walking"],
         },
       },
       {
         line: "You're back from a mission. He's there the instant you return, looking you over. \"Ah, I'm so relieved you're all right, my dear.\"",
         approach: "Show him you're unhurt",
-        greeting: "\"I wondered if something had happened. I'm glad my fears had no teeth.\"",
+        greeting:
+          '"I wondered if something had happened. I\'m glad my fears had no teeth."',
         responses: {
           kind: ["Say you thought of him", "Say you're glad to be back"],
-          playful: ["Say his fears had tiny teeth", "Ask if he haunted the gate"],
-          bold: ["Ask how long he waited", "Tell him not to worry so"],
+          playful: [
+            "Say his fears had tiny teeth",
+            "Ask if he haunted the gate",
+          ],
+          bold: ["Ask how long he waited", "Say you'll take him next time"],
           neutral: ["Tell him how it went", "Let him look you over"],
         },
       },
       {
-        line: "\"Ordinarily my advice salon takes write-ins,\" he declares, \"but tonight I'm taking it into the field. You, my dear. What troubles you?\"",
+        line: '"Ordinarily my advice salon takes write-ins," he declares, "but tonight I\'m taking it into the field. You, my dear. What troubles you?"',
         approach: "Bring him a problem",
-        greeting: '"A matter of the heart? Of the stomach? Of the homework? I am qualified in all three."',
+        greeting:
+          '"A matter of the heart? Of the stomach? Of the homework? I am qualified in all three."',
         responses: {
           kind: ["Tell him something true", "Ask what troubles him"],
           playful: ["Ask for advice on a ghost", "Invent a dramatic problem"],
@@ -607,9 +624,10 @@ export default {
         },
       },
       {
-        line: "\"A swanky morning calls for swanky radio calisthenics!\" He's already mid-stretch, arms overhead, counting aloud.",
+        line: '"A swanky morning calls for swanky radio calisthenics!" He\'s already mid-stretch, arms overhead, counting aloud.',
         approach: "Join in the calisthenics",
-        greeting: '"One, two! Splendid form, my dear. ...Well. Enthusiastic form. That counts double."',
+        greeting:
+          '"One, two! Splendid form, my dear. ...Well. Enthusiastic form. That counts double."',
         responses: {
           kind: ["Keep pace with him", "Say he makes it fun"],
           playful: ["Add your own dance move", "Count in the wrong order"],
@@ -620,7 +638,8 @@ export default {
       {
         line: "He's gazing at a doll on a shelf. \"The moment I met him, I felt a destiny. I knew we couldn't be strangers.\"",
         approach: "Ask about the doll",
-        greeting: "\"He's a fine listener. Never interrupts. Though I'll admit you're better company.\"",
+        greeting:
+          "\"He's a fine listener. Never interrupts. Though I'll admit you're better company.\"",
         responses: {
           kind: ["Say the doll has good taste", "Ask the doll's name"],
           playful: ["Ask if the doll talks back", "Pretend to be jealous"],
@@ -631,7 +650,8 @@ export default {
       {
         line: "He's perched on a railing, watching students pass. \"What am I doing? ...I'm people-watching. They're all so talented, every one.\"",
         approach: "Watch with him",
-        greeting: "\"That one's a playwright, I'm sure of it. And that one? A heartbreaker. Your turn, my dear.\"",
+        greeting:
+          "\"That one's a playwright, I'm sure of it. And that one? A heartbreaker. Your turn, my dear.\"",
         responses: {
           kind: ["Say he sees the best in them", "Guess someone's kindness"],
           playful: ["Invent a wild backstory", "Say that one's a spy"],
@@ -640,20 +660,22 @@ export default {
         },
       },
       {
-        line: "\"Sorry, I didn't mean to sneak up on you.\" He looks sincerely puzzled. \"Apparently my footsteps give the general students the heebie-jeebies.\"",
+        line: '"Sorry, I didn\'t mean to sneak up on you." He looks sincerely puzzled. "Apparently my footsteps give the general students the heebie-jeebies."',
         approach: "Tell him he's not scary",
-        greeting: "\"There's a ghost in Hotarubi, they say. Floating biwa, footsteps in the hall. I'd love to meet him.\"",
+        greeting:
+          "\"There's a ghost in Hotarubi, they say. Floating biwa, footsteps in the hall. I'd love to meet him.\"",
         responses: {
           kind: ["Say the ghost sounds lonely", "Say you'd introduce them"],
           playful: ["Say you've met the ghost", "Ask if he's checked a mirror"],
-          bold: ["Tell him who the ghost is", "Say he knows exactly who"],
+          bold: ["Say the ghost is wonderful", "Say the ghost has good taste"],
           neutral: ["Keep a straight face", "Change the subject"],
         },
       },
       {
-        line: "\"Haku's busy today,\" he announces. \"Film me in his stead, won't you? A folktale. I'll do all the voices.\"",
+        line: '"Haku\'s busy today," he announces. "Film me in his stead, won\'t you? A folktale. I\'ll do all the voices."',
         approach: "Hold up your phone",
-        greeting: '"Rolling? Splendid. Ahem. Long ago, in a village much like this one..."',
+        greeting:
+          '"Rolling? Splendid. Ahem. Long ago, in a village much like this one..."',
         responses: {
           kind: ["Film the whole thing", "Say he's a natural"],
           playful: ["Say you forgot to hit record", "Ask for a second take"],
@@ -662,9 +684,10 @@ export default {
         },
       },
       {
-        line: "\"Trouble sleeping?\" He's by your window as if he's always been there. \"Then I'll tell you a story. How about Urashima Taro?\"",
+        line: '"Trouble sleeping?" He\'s by your window as if he\'s always been there. "Then I\'ll tell you a story. How about Urashima Taro?"',
         approach: "Ask for the story",
-        greeting: "\"A fisherman, a turtle, a palace under the sea. And a box he's told never to open. You know how it goes.\"",
+        greeting:
+          '"A fisherman, a turtle, a palace under the sea. And a box he\'s told never to open. You know how it goes."',
         responses: {
           kind: ["Ask him to take it slow", "Say you like his voice"],
           playful: ["Say you'd open the box", "Ask if there's a romance"],
@@ -673,20 +696,22 @@ export default {
         },
       },
       {
-        line: "\"You've a talent, you know,\" he says, apropos of nothing. \"Every student here does. Yours is making people feel less like ghosts.\"",
+        line: '"You\'ve a talent, you know," he says, apropos of nothing. "Every student here does. Yours is making people feel less like ghosts."',
         approach: "Ask what he means",
-        greeting: "\"Ha ha. A figure of speech, my dear. Mostly. Take the compliment, won't you?\"",
+        greeting:
+          '"Ha ha. A figure of speech, my dear. Mostly. Take the compliment, won\'t you?"',
         responses: {
           kind: ["Take the compliment", "Say he's easy to see"],
           playful: ["Ask what his talent is", "Call it a strange compliment"],
-          bold: ["Say he's not a ghost to you", "Ask if he's lonely"],
+          bold: ["Say he's not a ghost to you", "Say you see him fine"],
           neutral: ["Thank him", "Let the words sit"],
         },
       },
       {
-        line: "\"Girls, be ambitious!\" he proclaims as you pass. \"Dream big, my dear. What's the biggest dream you've got?\"",
+        line: '"Girls, be ambitious!" he proclaims as you pass. "Dream big, my dear. What\'s the biggest dream you\'ve got?"',
         approach: "Tell him your dream",
-        greeting: "\"Oh, that's the cat's pajamas. Bigger, though. Dream it bigger. I'll keep it safe in my head.\"",
+        greeting:
+          "\"Oh, that's the cat's pajamas. Bigger, though. Dream it bigger. I'll keep it safe in my head.\"",
         responses: {
           kind: ["Ask what his dream was", "Say you'll dream bigger"],
           playful: ["Say your dream is a nap", "Ask him to rate it"],
@@ -728,7 +753,7 @@ export default {
         responses: {
           kind: "Ask him to read it",
           playful: "Write him a terrible one back",
-          bold: "Tell him to skip the poem",
+          bold: "Ask him to read it twice",
           neutral: "Leave it in haiku",
         },
       },
@@ -752,7 +777,7 @@ export default {
         responses: {
           kind: "Ask him to say the rest",
           playful: "Guess which 'others' he means",
-          bold: "Say it plainly instead",
+          bold: "Give him the next line",
           neutral: "Watch the lanterns",
         },
       },
@@ -801,7 +826,7 @@ export default {
         responses: {
           kind: "Say you don't want it to end",
           playful: "Steal the last line",
-          bold: "Bold as poetry",
+          bold: "Say his name back the same way",
           neutral: "Watch the lanterns together",
         },
       },
@@ -851,7 +876,7 @@ export default {
         responses: {
           kind: "Say the plain version back",
           playful: "Tease him for trying at all",
-          bold: "Tell him to stop writing",
+          bold: "Kiss him before the next line",
           neutral: "Let the plain version stand",
         },
       },
@@ -863,7 +888,7 @@ export default {
         responses: {
           kind: "Let him hum a while longer",
           playful: "Hum it back at him, badly",
-          bold: "Ask him to say it instead",
+          bold: "Turn and face him",
           neutral: "Stay still, let him hum",
         },
       },
@@ -918,7 +943,7 @@ export default {
         responses: {
           kind: "Ask to hear one of his stories",
           playful: "Ask for his autograph",
-          bold: "Ask why others can't see him",
+          bold: "Say you'd know him anywhere",
         },
       },
     ],
@@ -940,7 +965,7 @@ export default {
         },
       },
       {
-        line: "**{name}** had {user}'s name on the tip of his tongue all week. They got there first.",
+        line: "**{name}** had {user}'s name on the tip of his tongue all week. They said his first.",
         responses: {
           kind: "Ask what he'd have said",
           playful: "Say you win this round",
@@ -970,7 +995,7 @@ export default {
         responses: {
           kind: "Listen to every word",
           playful: "Act out the gestures too",
-          bold: "Skip to the ending",
+          bold: "Ask for a second one",
         },
       },
     ],
@@ -984,7 +1009,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** finds himself briefly short of words.",
+        line: "{user} calls his name, and **{name}** finds himself briefly short of words.",
         responses: {
           kind: "Wait for his words",
           playful: "Offer him a rhyme",
@@ -1044,7 +1069,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** gives up the metaphor entirely.",
+        line: "{user} waves hello, and **{name}** gives up the metaphor entirely.",
         responses: {
           kind: "Say plain words are enough",
           playful: "Ask for one last metaphor",
