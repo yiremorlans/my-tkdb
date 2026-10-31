@@ -7,14 +7,14 @@ Status: **phase 1 shipped, phase 2 deferred** (as of 2026-09-20)
   Components V2 builders (`encounters.js`), the `ward:` click routing
   (`app.js`) and the owner-only `/encdev warding` preview all exist and work.
 - **Phase 2 — the pity system and the pull rates, deferred.** Nothing rolls
-  for a warding card during `/roam` or `/meet`, and no pity counter is stored
+  for a warding card during `/roam`, and no pity counter is stored
   or read anywhere. A player cannot encounter a warding card today; the
   preview is the only way to see one. §9 is that phase's task list.
 
-Last updated: 2026-09-20
+Last updated: 2026-10-31 (scope narrowed to `/roam` only)
 
-Warding cards are a rare reward that can surface at the end of a `/roam` or
-`/meet` encounter: instead of the normal background + character composite, the
+Warding cards are a rare reward that can surface at the end of a `/roam`
+encounter: instead of the normal background + character composite, the
 player is shown a piece of dedicated warding art for that character, with its
 own short scene and a three-way choice that always grants a flat affinity bump.
 The content is one inlined dialogue beat (`line` / `approach` / `greeting` /
@@ -29,10 +29,12 @@ pity system, the flat reward, and the soft-rollout gate.
 
 ## 1. Where it fits in the flow
 
-Both commands are unchanged up to the point the character is fixed:
+**Warding cards only ever show during `/roam`.** `/meet` never rolls for one,
+never shows one and never touches the pity counter: a `/meet` is always a
+normal encounter.
 
-- `/roam` draws one character uniformly from the roster (`buildRoamDialogueMessage`).
-- `/meet` shows a 4-character picker and the player chooses one (`buildMeetSpawnMessage`).
+`/roam` is unchanged up to the point the character is fixed: it draws one
+character uniformly from the roster (`buildRoamDialogueMessage`).
 
 After the character is fixed:
 
@@ -48,7 +50,9 @@ After the character is fixed:
 4. Render the card as the three-step exchange in §3.
 
 `/meet` and `/roam` share a single 3-hour cooldown (`commandLimits.js`), so a
-player completes at most 8 encounters/day, realistically 2–5.
+player completes at most 8 encounters/day, realistically 2–5. Only the `/roam`
+share of those can roll a card; every `/meet` spent is one fewer warding
+roll that day.
 
 ---
 
@@ -206,21 +210,22 @@ all, so the edit leaves the uploaded card image on the message.
 the caller — `character:` draws from that character's written cards, `card:`
 takes an exact key like `Rui_2`, neither draws at random. It grants nothing,
 writes nothing, claims no cooldown and ignores pity; it exists so the render
-can be looked at before the feature is wired into `/roam` and `/meet`.
+can be looked at before the feature is wired into `/roam`.
 
 ---
 
 ## 4. Pity system
 
-**One counter per player, shared across `/roam` and `/meet`.** Not per
-character — see §7.
+**One counter per player, fed only by `/roam`.** Not per character — see §7.
+`/meet` encounters never read or move it.
 
 | Event | Effect on the counter |
 |---|---|
 | Start / any warding card shown (roll or pity) | set to `WARDING_PITY` (25) |
 | Completed encounter, character had a live pool, no card shown | `-1` |
 | Encounter featuring a character with no live pool (Benkei; any not-yet-authored character) | no change |
-| Command invoked but not completed (picker opened, walked away) | no change |
+| Any `/meet` encounter | no change (never rolls) |
+| `/roam` invoked but not completed (approach never clicked, no response) | no change |
 | Counter at 0, next encounter with a live-pool character | **force a card**, then refill to 25 |
 | Roll said hit, but the card could not be rendered | treated as a miss: `-1`, and the player gets the normal encounter |
 
@@ -265,9 +270,10 @@ Lower N to ~20 for a tighter frustration ceiling; raise to ~30 for a guarantee
 that almost never visibly fires.
 
 Note: `/roam` picks the character randomly, so its real rate is
-`0.10 × (live characters / 26)` until coverage is complete (§5). `/meet` lets
-the player steer toward a covered character, so it trends to a flat 10% sooner.
-The pity counter is the same either way.
+`0.10 × (live characters / 26)` until coverage is complete (§5). The day
+figures above assume every encounter is a `/roam`; a player who splits the
+shared cooldown with `/meet` waits proportionally longer in days, but not in
+roams.
 
 ---
 
@@ -320,13 +326,12 @@ per-character counter would sit near zero forever and pity would never fire.
 The tail it exists to cap would stay uncapped.
 
 A global counter measures the thing that actually frustrates players — "many
-encounters, no warding card at all" — and a player chasing one specific
-character's card already has the lever: repeat `/meet` on them. The global pity
-then almost always pays out as that character anyway, because their encounters
-are the only warding rolls happening.
+roams, no warding card at all". Since cards are `/roam`-only, there is no way
+to steer toward one character's card; which card a pity hit pays out is as
+random as the roam that triggers it, and that is intended.
 
 Per-character pity only becomes worth it alongside explicit targeting (a focus
-pick, warding banners) or if `/meet` stopped sharing a cooldown with `/roam`.
+pick, warding banners).
 
 ---
 
@@ -344,8 +349,8 @@ code change.
 
 **This is the whole of what is left, and none of it is built.** Phase 1 gave
 warding cards content and a render; phase 2 is what makes them *happen* to a
-player — the roll during `/roam` and `/meet`, the pity counter behind it, and
-the affinity it pays out. Until it lands, `/roam` and `/meet` are untouched by
+player — the roll during `/roam`, the pity counter behind it, and the
+affinity it pays out. Until it lands, `/roam` is untouched by
 any of this, and a warding card is reachable only through `/encdev warding`.
 
 Deliberately deferred on 2026-09-20 rather than left half-wired: the roll and
@@ -366,7 +371,8 @@ player-facing commands reaches it.
    spot/character payload. **If `buildWardingDialogueMessage` returns `null`,
    carry on and build the normal encounter** — the hit is spent as a miss, and
    since pity only moves at the response write (§4) nothing else needs undoing.
-3. **`/meet` (`buildMeetSpawnMessage`):** same decision after the player picks.
+3. **`/meet`: no change.** It never rolls, never builds a warding message and
+   never reads or writes pity. Don't add a branch to `buildMeetSpawnMessage`.
 4. ~~**Warding message builders.**~~ **Done** — see §3a. The three builders,
    `composeWardingCard`, the `ward:` click routing in `app.js` and the
    `/encdev warding` preview all exist. What is NOT done is everything that
@@ -375,11 +381,12 @@ player-facing commands reaches it.
    where `buildWardingResultMessage`'s `deltaLine` is filled in.
 5. **Response handler:** a `custom_id` namespace for the warding choice (e.g.
    `ward:<characterId>:<key>`), granting `WARDING_AFFINITY_GAIN` flat, refilling
-   pity, and going through `claimCommandUse` on the same `roam`/`meet` cooldown
-   the normal `resp:` path uses. Errand signatures (`maybeSignErrandTarget`)
+   pity, and going through `claimCommandUse` on the `roam` cooldown the normal
+   `resp:` path uses. Errand signatures (`maybeSignErrandTarget`)
    should still fire — a warding encounter is still a meeting.
-6. **Miss path:** wherever a warding-capable encounter completes without a card,
-   decrement pity in the same response write.
+6. **Miss path:** wherever a warding-capable `/roam` completes without a card,
+   decrement pity in the same response write. A `/meet` response write never
+   touches pity.
 7. **Tests:** pool membership incl. shared cards; the written/`minLevel` gates;
    pity decrement / refill / forced-hit; flat reward; the 3-key validation
-   throwing on a 4th option.
+   throwing on a 4th option; `/meet` never rolls and leaves pity unchanged.
