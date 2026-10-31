@@ -12,19 +12,19 @@
       "dialogueVariant": "uniform",
       "parts": { "chest": ["ArtMesh128"], "pants": ["ArtMesh140", "ArtMesh141"] },
       "hotspots": {
-        "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
-        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 0.89] },
-        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+        "chest": { "part": "chest", "rect": [0.13, 0.02, 0.87, 0.47] },
+        "belly": { "part": "chest", "rect": [0.2, 0.47, 0.8, 0.75] },
+        "hips": { "part": "pants", "rect": [0.08, -0.1, 0.92, 0.2] }
       }
     },
     "work": {
       "model": "work/mio_work.model3.json",
       "dialogueVariant": "casual",
-      "parts": { "chest": ["ArtMesh8"], "pants": ["ArtMesh218", "ArtMesh219"], "hand_l": ["ArtMesh157"] },
+      "parts": { "chest": ["ArtMesh8"], "pants": ["ArtMesh218", "ArtMesh219"], "hand_l": ["ArtMesh157", "ArtMesh163", "ArtMesh159", "ArtMesh158"] },
       "hotspots": {
-        "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
-        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 1.22] },
-        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+        "chest": { "part": "chest", "rect": [0.13, 0.02, 0.87, 0.47] },
+        "belly": { "part": "chest", "rect": [0.2, 0.47, 0.8, 0.97] },
+        "hips": { "part": "pants", "rect": [0.08, -0.17, 0.92, 0.2] }
       }
     }
   },
@@ -33,8 +33,8 @@
     "mouth": ["ArtMesh73", "ArtMesh75", "ArtMesh76", "ArtMesh77", "ArtMesh79", "ArtMesh71", "ArtMesh72", "ArtMesh69", "ArtMesh70", "ArtMesh74"],
     "ear_r": ["ArtMesh90", "ArtMesh92", "ArtMesh80"],
     "ear_l": ["ArtMesh93", "ArtMesh81"],
-    "hand_r": ["ArtMesh147"],
-    "hand_l": ["ArtMesh172"]
+    "hand_r": ["ArtMesh147", "ArtMesh150", "ArtMesh151", "ArtMesh152", "ArtMesh154", "ArtMesh155", "ArtMesh156"],
+    "hand_l": ["ArtMesh172", "ArtMesh178", "ArtMesh174", "ArtMesh173"]
   },
   "hotspots": {
     "lips": { "part": "mouth", "rect": [-0.25, -0.5, 1.25, 1.5] },

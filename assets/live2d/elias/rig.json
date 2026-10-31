@@ -13,9 +13,9 @@
       "dialogueVariant": "uniform",
       "parts": { "chest": ["ArtMesh250"], "pants": ["ArtMesh260", "ArtMesh261"] },
       "hotspots": {
-        "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
-        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 1.58] },
-        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+        "chest": { "part": "chest", "rect": [0.13, 0.02, 0.87, 0.47] },
+        "belly": { "part": "chest", "rect": [0.2, 0.47, 0.8, 1.32] },
+        "hips": { "part": "pants", "rect": [0.08, -0.1, 0.92, 0.2] }
       }
     }
   },
@@ -24,8 +24,8 @@
     "mouth": ["ArtMesh79", "ArtMesh80", "ArtMesh81", "ArtMesh82", "ArtMesh83", "ArtMesh84", "ArtMesh85", "ArtMesh87", "ArtMesh88", "ArtMesh89", "ArtMesh86"],
     "ear_r": ["ArtMesh90", "ArtMesh101", "ArtMesh103"],
     "ear_l": ["ArtMesh91", "ArtMesh102", "ArtMesh104"],
-    "hand_r": ["ArtMesh155", "ArtMesh268"],
-    "hand_l": ["ArtMesh161", "ArtMesh276"]
+    "hand_r": ["ArtMesh155", "ArtMesh268", "ArtMesh156", "ArtMesh157", "ArtMesh269", "ArtMesh270", "ArtMesh12", "ArtMesh13", "ArtMesh14", "ArtMesh17", "ArtMesh159", "ArtMesh272", "ArtMesh11", "ArtMesh7", "ArtMesh6", "ArtMesh5", "ArtMesh4"],
+    "hand_l": ["ArtMesh161", "ArtMesh276", "ArtMesh110", "ArtMesh164", "ArtMesh162", "ArtMesh109", "ArtMesh286", "ArtMesh277"]
   },
   "hotspots": {
     "lips": { "part": "mouth", "rect": [-0.25, -0.5, 1.25, 1.5] },

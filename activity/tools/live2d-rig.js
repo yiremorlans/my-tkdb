@@ -27,6 +27,11 @@
 //   which /meet's variant roll picks it by (docs/hangout-activity.md §11.5).
 // Hotspots are a starting point: check them in the v2 preview's "show
 // hotspots" overlay (hangout-v2.html?character=<id>).
+//
+//   node activity/tools/live2d-rig.js <character> --pose-hands [--dry-run]
+//
+// adds only the pose hands (withPoseHands) to an existing rig's hand parts,
+// for rigs made before the generator measured poses.
 
 import fs from "node:fs";
 import path from "node:path";
@@ -141,10 +146,12 @@ function evalCurve(s, t) {
 }
 
 /**
- * The model at rest (the idle clip's first frame): every drawable's id,
- * ancestor part ids (nearest first), canvas-px bounds (y down) and opacity.
+ * A model posed by motion clips: frame(clip, t) sets every parameter and
+ * part opacity to the clip's value at t seconds (null: defaults only) and
+ * returns every drawable's id, ancestor part ids (nearest first), canvas-px
+ * bounds (y down) and opacity.
  */
-export async function measureModel(model3File) {
+async function loadModel(model3File) {
   const C = await cubismCore();
   const dir = path.dirname(model3File);
   const model3 = JSON.parse(fs.readFileSync(model3File, "utf8"));
@@ -153,38 +160,72 @@ export async function measureModel(model3File) {
   const { parameters: P, parts: PT, drawables: D, canvasinfo: info } = model;
   const pIndex = new Map(Array.from(P.ids, (id, i) => [id, i]));
   const partIds = Array.from(PT.ids);
-  for (let i = 0; i < P.count; i++) P.values[i] = P.defaultValues[i];
-  const idle = model3.FileReferences.Motions?.m_default?.[0];
-  if (idle) {
-    for (const c of JSON.parse(fs.readFileSync(path.join(dir, idle.File), "utf8")).Curves) {
-      if (c.Target === "Parameter" && pIndex.has(c.Id)) P.values[pIndex.get(c.Id)] = evalCurve(c.Segments, 0);
-      if (c.Target === "PartOpacity" && partIds.includes(c.Id)) PT.opacities[partIds.indexOf(c.Id)] = evalCurve(c.Segments, 0);
-    }
-  }
-  model.update();
+  const partOpacities = Float32Array.from(PT.opacities);
   const ancestors = (pi) => {
     const out = [];
     for (; pi >= 0; pi = PT.parentIndices[pi]) out.push(partIds[pi]);
     return out;
   };
-  const drawables = [];
-  for (let d = 0; d < D.count; d++) {
-    const v = D.vertexPositions[d];
-    let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
-    for (let k = 0; k < v.length; k += 2) {
-      const x = v[k] * info.PixelsPerUnit + info.CanvasOriginX;
-      const y = -v[k + 1] * info.PixelsPerUnit + info.CanvasOriginY;
-      x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y);
+  const parents = Array.from({ length: D.count }, (_, d) => ancestors(D.parentPartIndices[d]));
+  const frame = (clip, t) => {
+    for (let i = 0; i < P.count; i++) P.values[i] = P.defaultValues[i];
+    for (let i = 0; i < PT.count; i++) PT.opacities[i] = partOpacities[i];
+    for (const c of clip?.Curves ?? []) {
+      if (c.Target === "Parameter" && pIndex.has(c.Id)) P.values[pIndex.get(c.Id)] = evalCurve(c.Segments, t);
+      if (c.Target === "PartOpacity" && partIds.includes(c.Id)) PT.opacities[partIds.indexOf(c.Id)] = evalCurve(c.Segments, t);
     }
-    drawables.push({ id: D.ids[d], parts: ancestors(D.parentPartIndices[d]), box: [x0, y0, x1, y1].map(Math.round), opacity: D.opacities[d] });
-  }
+    model.update();
+    const drawables = [];
+    for (let d = 0; d < D.count; d++) {
+      const v = D.vertexPositions[d];
+      let x0 = Infinity, y0 = Infinity, x1 = -Infinity, y1 = -Infinity;
+      for (let k = 0; k < v.length; k += 2) {
+        const x = v[k] * info.PixelsPerUnit + info.CanvasOriginX;
+        const y = -v[k + 1] * info.PixelsPerUnit + info.CanvasOriginY;
+        x0 = Math.min(x0, x); x1 = Math.max(x1, x); y0 = Math.min(y0, y); y1 = Math.max(y1, y);
+      }
+      drawables.push({ id: D.ids[d], parts: parents[d], box: [x0, y0, x1, y1].map(Math.round), opacity: D.opacities[d] });
+    }
+    return drawables;
+  };
+  const clip = (file) => JSON.parse(fs.readFileSync(path.join(dir, file), "utf8"));
+  return { model3, info, frame, clip };
+}
+
+/**
+ * The model at rest (the idle clip's first frame): every drawable's id,
+ * ancestor part ids (nearest first), canvas-px bounds (y down) and opacity.
+ */
+export async function measureModel(model3File) {
+  const { model3, info, frame, clip } = await loadModel(model3File);
+  const idle = model3.FileReferences.Motions?.m_default?.[0];
   return {
     model3,
     canvas: [info.CanvasWidth, info.CanvasHeight],
-    drawables,
+    drawables: frame(idle ? clip(idle.File) : null, 0),
     expressions: (model3.FileReferences.Expressions ?? []).map((e) => e.Name),
     groups: Object.keys(model3.FileReferences.Motions ?? {}),
   };
+}
+
+/**
+ * The model through every pose: each motion clip but the idle and breath
+ * ones and the game's lettered variants (m_ago_B, m_default_C: Hangout
+ * plays none), sampled at its start, quarters and end (the drawables, per
+ * frame).
+ */
+export async function measurePoses(model3File) {
+  const { model3, frame, clip } = await loadModel(model3File);
+  const frames = [];
+  for (const [group, entries] of Object.entries(model3.FileReferences.Motions ?? {})) {
+    if (group === "Idle" || group === "m_default" || group === "m_breath" || /_[A-Z](_|$)/.test(group)) continue;
+    for (const { File } of entries) {
+      const c = clip(File);
+      const d = c.Meta?.Duration ?? 0;
+      for (const t of [0, 0.25, 0.5, 0.75, 1]) frames.push(frame(c, t * d));
+    }
+  }
+  return frames;
 }
 
 // --- hotspot parts ------------------------------------------------------------
@@ -233,6 +274,8 @@ export function pickParts(drawables) {
     if (low >= 1150) out[`hand_${s}`] = a.filter((x) => x.box[3] > low - 130).map((x) => x.id);
   }
 
+  // (Their pose hands are added by withPoseHands, which needs the poses.)
+
   // Chest: the biggest centered torso piece (a vest, Alan's), or for a
   // jacket cut in two down the middle, the biggest of each half.
   const body = under("PartUpperBody").filter((x) => Math.abs(midX(x.box) - 1000) < 60 && x.box[2] - x.box[0] > 300);
@@ -249,19 +292,94 @@ export function pickParts(drawables) {
   return { parts: out, face: fb };
 }
 
+const shown = (x) => x.opacity > 0.5 && x.box[0] < x.box[2];
+
+/**
+ * A hand pick (`ids`, drawables visible at rest) plus its pose hands, so
+ * the hotspot follows the hand through every pose. A pose swaps the hand
+ * art for other drawables, which sit in (by the first rule that finds any):
+ * - the same hand group, the part just inside the arm's outermost
+ *   PartArm/PartHand (PartHandR, Jin's Part16), even with the arms crossed;
+ * - for a PartHand* group, any PartHand* group in the same arm (Lyca's
+ *   PartHand7, Shohei's PartHandR3 raised to the head);
+ * - in a frame where none of those show, a group of the arm hidden at rest
+ *   whose pieces end lowest on the arm then, as the rest pick (Yuri's and
+ *   Rui's surprised hands).
+ * Only drawables hidden at rest and shown in some frame of `frames`
+ * (measurePoses) are added, so the rest bounds stay as picked. With a
+ * PartHand* group among several (a pick reaching into the forearm, Leo's),
+ * only those count.
+ */
+export function withPoseHands(rest, frames, ids) {
+  const byId = new Map(rest.map((x) => [x.id, x]));
+  const topOf = (x) => (x ? x.parts.findLastIndex((p) => /^Part(Arm|Hand)/.test(p)) : -1);
+  const groupOf = (x) => (topOf(x) > 0 ? x.parts[topOf(x) - 1] : null);
+  const picked = ids.map((id) => byId.get(id)).filter(Boolean);
+  const arm = picked.length ? picked[0].parts[topOf(picked[0])] : null;
+  let groups = [...new Set(picked.map(groupOf).filter(Boolean))];
+  const named = groups.some((g) => /^PartHand/.test(g));
+  if (named) groups = groups.filter((g) => /^PartHand/.test(g));
+  const inArm = (x) => arm && x.parts.includes(arm);
+  if (named) for (const x of rest) if (inArm(x) && /^PartHand/.test(groupOf(x) ?? "")) groups.push(groupOf(x));
+  const hiddenAtRest = new Set(rest.filter(inArm).map(groupOf).filter((g) => g && !rest.some((x) => groupOf(x) === g && shown(x))));
+  const add = new Set();
+  for (const f of frames) {
+    const hand = f.filter((x) => shown(x) && (ids.includes(x.id) || (!shown(byId.get(x.id)) && groups.some((g) => x.parts.includes(g)))));
+    for (const x of hand) if (!ids.includes(x.id)) add.add(x.id);
+    if (hand.length) continue;
+    const armNow = f.filter((x) => shown(x) && inArm(x));
+    if (!armNow.length) continue;
+    const low = Math.max(...armNow.map((x) => x.box[3]));
+    for (const x of armNow) if (hiddenAtRest.has(groupOf(x)) && x.box[3] > low - 130) add.add(x.id);
+  }
+  return [...ids, ...rest.filter((x) => add.has(x.id)).map((x) => x.id)];
+}
+
+/**
+ * The belt line, in canvas px: the top of the waistband. The pants part is
+ * the legs, which start lower, at the crotch; the waistband is the hip piece
+ * above them (a wide lower-body drawable ending above mid-thigh). Its mesh
+ * pads the art, so the belt sits about 25px below the mesh's top. With
+ * several, the lowest top wins (the others run up under a vest or shirt).
+ * Falls back to the pants top.
+ */
+export function beltLine(drawables, pantsIds) {
+  const legs = drawables.filter((x) => pantsIds.includes(x.id));
+  const pantsTop = Math.min(...legs.map((x) => x.box[1]));
+  const hip = drawables.filter((x) => x.opacity > 0.5 && !pantsIds.includes(x.id) && x.parts.some((p) => /Lower|Under/i.test(p)) && !x.parts.some((p) => /Arm|Hand/.test(p)) && x.box[0] < 1000 && x.box[2] > 1000 && x.box[2] - x.box[0] > 300 && x.box[3] - x.box[1] > 250 && x.box[1] < pantsTop && x.box[3] < pantsTop + 400);
+  return hip.length ? Math.max(...hip.map((x) => x.box[1])) + 25 : pantsTop;
+}
+
+const unionBox = (drawables, ids) => {
+  const bs = drawables.filter((x) => ids.includes(x.id)).map((x) => x.box);
+  return [Math.min(...bs.map((b) => b[0])), Math.min(...bs.map((b) => b[1])), Math.max(...bs.map((b) => b[2])), Math.max(...bs.map((b) => b[3]))];
+};
+const r2 = (x) => Math.round(x * 100) / 100;
+
+// The hips spot starts this far below the belt line (and the belly ends
+// there), so a tap on the belt itself still reads as the belly.
+const HIP_DROP = 35;
+
 /**
  * The belly, in the chest part's space: from the chest spot's bottom down to
- * the top of the pants, where the hips spot starts. A short jacket ends
- * above the pants, so the rect can run past the part (y > 1).
+ * the belt line, where the hips spot starts. A short jacket ends above the
+ * belt, so the rect can run past the part (y > 1).
  */
 export function bellyRect(drawables, chestIds, pantsIds, chestRect) {
-  const box = (ids) => {
-    const bs = drawables.filter((x) => ids.includes(x.id)).map((x) => x.box);
-    return [Math.min(...bs.map((b) => b[0])), Math.min(...bs.map((b) => b[1])), Math.max(...bs.map((b) => b[2])), Math.max(...bs.map((b) => b[3]))];
-  };
-  const chest = box(chestIds);
-  const bottom = (box(pantsIds)[1] - chest[1]) / (chest[3] - chest[1]);
-  return [0.2, chestRect[3], 0.8, Math.round(bottom * 100) / 100];
+  const chest = unionBox(drawables, chestIds);
+  return [0.2, chestRect[3], 0.8, r2((beltLine(drawables, pantsIds) + HIP_DROP - chest[1]) / (chest[3] - chest[1]))];
+}
+
+/**
+ * The hips, in the pants part's space: from the belt line (above the legs'
+ * top, so y < 0) down a fifth of the legs, and at least 350px below the
+ * belt for legs that start at the waist instead of the crotch (Haru's).
+ */
+export function hipsRect(drawables, pantsIds) {
+  const pants = unionBox(drawables, pantsIds);
+  const h = pants[3] - pants[1];
+  const belt = beltLine(drawables, pantsIds) + HIP_DROP;
+  return [0.08, r2((belt - pants[1]) / h), 0.92, r2(Math.max(0.2, (belt + 350 - pants[1]) / h))];
 }
 
 // --- rig.json -----------------------------------------------------------------
@@ -282,6 +400,8 @@ export async function buildRig(character, outfit) {
   const dy = face[1] - alanFace[1];
   const stage = Object.fromEntries(Object.entries(alan.stage).map(([k, v]) => [k, { top: v.top + dy, bottom: v.bottom + dy, centerX: v.centerX }]));
 
+  const poses = await measurePoses(path.join(dir, modelFile));
+  for (const k of ["hand_r", "hand_l"]) if (found[k]) found[k] = withPoseHands(m.drawables, poses, found[k]);
   const parts = Object.fromEntries(["face_base", "mouth", "ear_r", "ear_l", "hand_r", "hand_l"].filter((k) => found[k]).map((k) => [k, found[k]]));
   const outfitParts = {};
   const outfitHotspots = {};
@@ -293,7 +413,7 @@ export async function buildRig(character, outfit) {
   if (found.chest && found.pants) outfitHotspots.belly = { part: "chest", rect: bellyRect(m.drawables, found.chest, found.pants, alanOutfit.chest.rect) };
   if (found.pants) {
     outfitParts.pants = found.pants;
-    outfitHotspots.hips = { part: "pants", rect: alanOutfit.hips.rect };
+    outfitHotspots.hips = { part: "pants", rect: hipsRect(m.drawables, found.pants) };
   }
 
   const hotspots = {};
@@ -396,6 +516,72 @@ export function spliceOutfit(text, name, entry) {
   return text.slice(0, at) + insert + text.slice(at);
 }
 
+/** The [open, end) span of the object value of `"key": {` at or after `from`, before `before`. */
+function objectAt(text, key, from = 0, before = text.length) {
+  const k = text.indexOf(`${JSON.stringify(key)}: {`, from);
+  if (k < 0 || k >= before) return null;
+  const open = text.indexOf("{", k);
+  return [open, closeOf(text, open)];
+}
+
+/** `text` with `key`'s array in the object spanning [open, end) set to `ids` (added if missing). */
+function spliceArray(text, [open, end], key, ids) {
+  const value = `[${ids.map((x) => JSON.stringify(x)).join(", ")}]`;
+  const k = text.slice(open, end).indexOf(`${JSON.stringify(key)}: [`);
+  if (k >= 0) {
+    const a = text.indexOf("[", open + k);
+    return text.slice(0, a) + value + text.slice(closeOf(text, a));
+  }
+  const body = text.slice(open + 1, end - 1);
+  if (!body.trim()) return `${text.slice(0, open)}{ ${JSON.stringify(key)}: ${value} }${text.slice(end)}`;
+  const last = open + 1 + body.trimEnd().length;
+  const sep = body.includes("\n") ? `,\n${body.match(/\n(\s*)"/)[1]}` : ", ";
+  return text.slice(0, last) + sep + `${JSON.stringify(key)}: ${value}` + text.slice(last);
+}
+
+/**
+ * The rig.json with every hand part (shared, and each outfit's own) given
+ * its pose hands (withPoseHands), measured on the model that uses it. The
+ * existing picks stay first and as they are (some are hand trimmed). An
+ * outfit using the shared hands whose model finds different pose hands gets
+ * its own. Everything else stays byte for byte.
+ */
+export async function addPoseHands(character) {
+  const file = path.join(LIVE2D, character, "rig.json");
+  let text = fs.readFileSync(file, "utf8");
+  const rig = JSON.parse(text);
+  const changes = [];
+  const extend = async (outfit, ids) => {
+    const modelFile = path.join(LIVE2D, character, rig.outfits[outfit].model);
+    return withPoseHands((await measureModel(modelFile)).drawables, await measurePoses(modelFile), ids);
+  };
+  const same = (a, b) => a.length === b.length && a.every((x, i) => x === b[i]);
+  const shared = {};
+  for (const k of ["hand_r", "hand_l"]) {
+    if (!rig.parts?.[k]) continue;
+    shared[k] = await extend(rig.defaultOutfit, rig.parts[k]);
+    if (!same(shared[k], rig.parts[k])) {
+      const top = objectAt(text, "parts", text.indexOf('\n  "parts": {'));
+      text = spliceArray(text, top, k, shared[k]);
+      changes.push(`${k} +${shared[k].length - rig.parts[k].length}`);
+    }
+  }
+  for (const [outfit, entry] of Object.entries(rig.outfits)) {
+    for (const k of ["hand_r", "hand_l"]) {
+      const own = entry.parts?.[k];
+      if (!own && (outfit === rig.defaultOutfit || !shared[k])) continue;
+      const ids = await extend(outfit, own ?? rig.parts[k]);
+      if (own ? same(ids, own) : same(ids, shared[k])) continue;
+      const outfits = objectAt(text, "outfits");
+      const span = objectAt(text, outfit, outfits[0] + 1, outfits[1]);
+      const parts = objectAt(text, "parts", span[0], span[1]);
+      text = spliceArray(text, parts, k, ids);
+      changes.push(`${outfit}.${k} ${own ? `+${ids.length - own.length}` : "own"}`);
+    }
+  }
+  return { file, text, changes };
+}
+
 /** Alan's rig.json layout: objects open, short flat ones and arrays on one line. */
 export function formatRig(rig) {
   return formatValue(rig, 0) + "\n";
@@ -429,6 +615,13 @@ async function main() {
   if (!character) {
     console.error("usage: node activity/tools/live2d-rig.js <character> [--outfit academy] [--dry-run] [--force]");
     process.exit(1);
+  }
+  if (rest.includes("--pose-hands")) {
+    const { file, text, changes } = await addPoseHands(character);
+    if (rest.includes("--dry-run")) return process.stdout.write(text);
+    if (changes.length) fs.writeFileSync(file, text);
+    console.log(`[live2d-rig] ${character}: ${changes.length ? changes.join(", ") : "pose hands already in"}`);
+    return;
   }
   const outfit = opt("outfit", "academy");
   const rig = await buildRig(character, outfit);

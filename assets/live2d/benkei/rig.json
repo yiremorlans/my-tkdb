@@ -12,19 +12,19 @@
       "dialogueVariant": "uniform",
       "parts": { "chest": ["ArtMesh102"], "pants": ["ArtMesh111", "ArtMesh112"] },
       "hotspots": {
-        "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
-        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 1.13] },
-        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+        "chest": { "part": "chest", "rect": [0.13, 0.02, 0.87, 0.47] },
+        "belly": { "part": "chest", "rect": [0.2, 0.47, 0.8, 0.95] },
+        "hips": { "part": "pants", "rect": [0.08, -0.09, 0.92, 0.2] }
       }
     },
     "work": {
       "model": "work/benkei_work.model3.json",
       "dialogueVariant": "casual",
-      "parts": { "chest": ["ArtMesh104", "ArtMesh184"], "pants": ["ArtMesh111", "ArtMesh112"] },
+      "parts": { "chest": ["ArtMesh104", "ArtMesh184"], "pants": ["ArtMesh111", "ArtMesh112"], "hand_r": ["ArtMesh129", "ArtMesh130", "ArtMesh132"], "hand_l": ["ArtMesh151", "ArtMesh155", "ArtMesh153", "ArtMesh152"] },
       "hotspots": {
-        "chest": { "part": "chest", "rect": [0.18, 0.02, 0.82, 0.4] },
-        "belly": { "part": "chest", "rect": [0.2, 0.4, 0.8, 1.33] },
-        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+        "chest": { "part": "chest", "rect": [0.13, 0.02, 0.87, 0.47] },
+        "belly": { "part": "chest", "rect": [0.2, 0.47, 0.8, 1.12] },
+        "hips": { "part": "pants", "rect": [0.08, -0.09, 0.92, 0.2] }
       }
     }
   },
@@ -33,8 +33,8 @@
     "mouth": ["ArtMesh73", "ArtMesh74", "ArtMesh75", "ArtMesh76", "ArtMesh77", "ArtMesh78", "ArtMesh79", "ArtMesh80", "ArtMesh81"],
     "ear_r": ["ArtMesh46", "ArtMesh94", "ArtMesh92"],
     "ear_l": ["ArtMesh47", "ArtMesh93", "ArtMesh95"],
-    "hand_r": ["ArtMesh129"],
-    "hand_l": ["ArtMesh151"]
+    "hand_r": ["ArtMesh129", "ArtMesh130", "ArtMesh132", "ArtMesh188"],
+    "hand_l": ["ArtMesh151", "ArtMesh153", "ArtMesh152", "ArtMesh179", "ArtMesh180", "ArtMesh181", "ArtMesh182", "ArtMesh183", "ArtMesh184", "ArtMesh205", "ArtMesh204", "ArtMesh155", "ArtMesh187", "ArtMesh186", "ArtMesh185", "ArtMesh193", "ArtMesh194", "ArtMesh203", "ArtMesh199", "ArtMesh198", "ArtMesh197", "ArtMesh196", "ArtMesh195", "ArtMesh208", "ArtMesh207", "ArtMesh201", "ArtMesh200", "ArtMesh206", "ArtMesh209"]
   },
   "hotspots": {
     "lips": { "part": "mouth", "rect": [-0.25, -0.5, 1.25, 1.5] },

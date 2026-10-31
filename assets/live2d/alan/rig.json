@@ -16,9 +16,9 @@
         "pants": ["pants_R", "pants_L"]
       },
       "hotspots": {
-        "chest": { "part": "vest", "rect": [0.18, 0.02, 0.82, 0.4] },
-        "belly": { "part": "vest", "rect": [0.2, 0.4, 0.8, 0.99] },
-        "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
+        "chest": { "part": "vest", "rect": [0.13, 0.02, 0.87, 0.47] },
+        "belly": { "part": "vest", "rect": [0.2, 0.47, 0.8, 0.82] },
+        "hips": { "part": "pants", "rect": [0.08, -0.13, 0.92, 0.2] }
       }
     }
   },
@@ -62,16 +62,18 @@
     }
   },
   "reactions": {
+    "headPat": { "byTier": { "new": { "rank": 1, "duration": 2 }, "warm": { "rank": 2, "duration": 2.4 }, "spark": { "rank": 2, "duration": 2.6 }, "bound": { "rank": 2, "duration": 3 } } },
+    "earTouch": { "byTier": { "new": { "rank": 0, "duration": 2.4 }, "warm": { "rank": 1, "duration": 2.4 }, "spark": { "rank": 1, "duration": 2.6 }, "close": { "rank": 2, "duration": 2.6 }, "bound": { "rank": 2, "duration": 3 } } },
     "upset": { "byTier": { "new": { "mood": "upset", "duration": 4 }, "spark": { "mood": "flustered", "duration": 4 } } }
   },
   "reactionPoses": {
     "headPat": "m_kubi",
     "cheekPoke": "m_pocket",
-    "lipsTouch": "m_kubi",
+    "lipsTouch": { "byTier": { "new": "m_udekumi", "spark": "m_kubi" } },
     "earTouch": "m_migikoshi",
-    "handTap": "m_pocket",
-    "chestTouch": "m_udekumi",
-    "bellyTouch": "m_udekumi",
+    "handTap": { "byTier": { "new": "m_pocket", "spark": "m_kubi" } },
+    "chestTouch": { "byTier": { "new": "m_udekumi", "spark": "m_kubi", "close": "m_pocket" } },
+    "bellyTouch": { "byTier": { "new": "m_udekumi", "spark": "m_kubi", "close": "m_pocket" } },
     "hipsTouch": "m_migikoshi",
     "upset": { "byTier": { "new": "m_angry", "spark": "m_kubi" } }
   },

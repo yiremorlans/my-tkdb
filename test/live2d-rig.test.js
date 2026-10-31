@@ -1,8 +1,9 @@
-// live2d-rig.js adding an outfit to an existing, hand-tuned rig.json.
+// live2d-rig.js adding an outfit to an existing, hand-tuned rig.json, and
+// finding the hand art each pose swaps in.
 import { test } from 'node:test';
 import assert from 'node:assert';
 
-import { outfitEntry, spliceOutfit } from '../activity/tools/live2d-rig.js';
+import { outfitEntry, spliceOutfit, withPoseHands } from '../activity/tools/live2d-rig.js';
 
 // Hand-tuned layout formatRig wouldn't write: odd spacing, a string with braces.
 const TEXT = `{
@@ -47,4 +48,42 @@ test('outfitEntry overrides shared parts the new model lacks, keeps hand trims',
   assert.deepStrictEqual(overrides, ['hand_l']);
   assert.deepStrictEqual(e.parts, { chest: ['ArtMesh9'], hand_l: ['ArtMesh1'] });
   assert.deepStrictEqual(missing, ['e_komari_00']);
+});
+
+// A drawable: id, ancestor parts (nearest first), box, shown or hidden.
+const d = (id, parts, box, on = true) => ({ id, parts, box, opacity: on ? 1 : 0 });
+
+test('withPoseHands adds the hand art poses swap in, keeping the rest pick first', () => {
+  const rest = [
+    d('hand', ['PartHandR', 'PartArmR'], [600, 1300, 700, 1580]),
+    d('cuff', ['PartHandR', 'PartArmR'], [600, 1250, 700, 1320]), // trimmed off the pick
+    d('wave', ['PartHandR', 'PartArmR'], [0, 0, 0, 0], false),
+    d('point', ['PartHand7', 'PartArmR'], [0, 0, 0, 0], false),
+    d('never', ['PartHandR', 'PartArmR'], [0, 0, 0, 0], false),
+    d('forearm', ['PartArmR2', 'PartArmR'], [620, 1000, 720, 1300]),
+    d('other', ['PartHandL', 'PartArmL'], [0, 0, 0, 0], false),
+  ];
+  const frames = [
+    // Same hand group, raised: the arm's lowest piece is the forearm now.
+    [d('wave', ['PartHandR', 'PartArmR'], [500, 500, 700, 700]), d('forearm', ['PartArmR2', 'PartArmR'], [600, 700, 700, 1000])],
+    // Another PartHand* group in the same arm.
+    [d('point', ['PartHand7', 'PartArmR'], [500, 900, 700, 1100]), d('other', ['PartHandL', 'PartArmL'], [1300, 1300, 1400, 1500])],
+  ];
+  assert.deepStrictEqual(withPoseHands(rest, frames, ['hand']), ['hand', 'wave', 'point']);
+});
+
+test('withPoseHands falls back to a rest-hidden group ending lowest on the arm', () => {
+  // Yuri's surprised hand: unnamed groups, none of the hand group showing.
+  const rest = [
+    d('hand', ['Part17', 'PartArmL'], [1250, 1300, 1350, 1560]),
+    d('spread', ['Part22', 'PartArmL'], [0, 0, 0, 0], false),
+    d('elbow', ['Part29', 'PartArmL'], [0, 0, 0, 0], false),
+    d('sleeve', ['Part40', 'PartArmL'], [1150, 700, 1350, 1100]),
+  ];
+  const frames = [[
+    d('spread', ['Part22', 'PartArmL'], [1200, 1290, 1390, 1430]),
+    d('elbow', ['Part29', 'PartArmL'], [1250, 980, 1320, 1050]),
+    d('sleeve', ['Part40', 'PartArmL'], [1150, 700, 1350, 1100]),
+  ]];
+  assert.deepStrictEqual(withPoseHands(rest, frames, ['hand']), ['hand', 'spread']);
 });
