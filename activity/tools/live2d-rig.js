@@ -3,7 +3,15 @@
 // hand-tuned one (assets/live2d/alan/rig.json is the template).
 //
 //   node activity/tools/live2d-rig.js <character> [--outfit academy]
-//        [--dry-run]
+//        [--dry-run] [--force]
+//
+// A character with no rig.json gets a whole new one. With a rig.json
+// already there, the file is hand-tuned (moods, poses, reactions, trimmed
+// hotspots), so only the --outfit's entry under `outfits` is added or
+// replaced, spliced into the text so nothing else moves. Shared parts
+// whose drawables differ on the new model go in the outfit's own parts.
+// The default outfit can't be merged this way (the shared parts are its
+// model's): rewriting it, or the whole file, takes --force.
 //
 // Run it after live2d-convert.js. It measures the model at rest (Cubism
 // Core, the vendored copy, run under Node) and fills in:
@@ -323,8 +331,78 @@ export async function buildRig(character, outfit) {
   };
 }
 
+/**
+ * The `outfits` entry for adding `outfit` (built by buildRig) to the
+ * existing rig. A shared part is kept when all its drawables are in the new
+ * model's pick (the same part, or a hand trim of it: ears without hair);
+ * otherwise the pick goes in the outfit's own parts.
+ * Returns the entry, those overrides, and the expressions and poses the
+ * shared moods and reactionPoses name that the new model doesn't have.
+ */
+export function outfitEntry(existing, built, outfit, model3) {
+  const entry = structuredClone(built.outfits[outfit]);
+  const overrides = [];
+  for (const [k, ids] of Object.entries(built.parts)) {
+    const shared = existing.parts?.[k] ?? [];
+    if (!shared.every((id) => ids.includes(id))) {
+      entry.parts[k] = ids;
+      overrides.push(k);
+    }
+  }
+  const refs = model3.FileReferences;
+  const have = new Set([...(refs.Expressions ?? []).map((e) => e.Name), ...Object.keys(refs.Motions ?? {})]);
+  const named = JSON.stringify([existing.expressions?.moods, existing.reactionPoses]).match(/"[em]_[a-z0-9_]+"/g) ?? [];
+  const missing = [...new Set(named.map((s) => s.slice(1, -1)))].filter((n) => !have.has(n));
+  return { entry, overrides, missing };
+}
+
+/** Index just past the bracket matching the one at `open` (JSON text, string-aware). */
+function closeOf(text, open) {
+  let depth = 0;
+  for (let i = open; i < text.length; i++) {
+    const c = text[i];
+    if (c === '"') {
+      for (i++; text[i] !== '"'; i++) if (text[i] === "\\") i++;
+    } else if (c === "{" || c === "[") depth++;
+    else if (c === "}" || c === "]") {
+      if (--depth === 0) return i + 1;
+    }
+  }
+  throw new Error("rig.json: unbalanced brackets");
+}
+
+/** `text` (a rig.json) with outfits[`name`] set to `entry`; every other byte stays as written. */
+export function spliceOutfit(text, name, entry) {
+  const key = text.indexOf('"outfits": {');
+  if (key < 0) throw new Error('rig.json: no "outfits" object');
+  const open = text.indexOf("{", key);
+  const end = closeOf(text, open);
+  // The outfits object's own keys: walk its entries, skipping each value.
+  let last = null;
+  for (let i = open + 1; i < end - 1; ) {
+    const q = text.indexOf('"', i);
+    if (q < 0 || q >= end - 1) break;
+    const qEnd = text.indexOf('"', q + 1);
+    const valueStart = text.indexOf("{", qEnd);
+    const valueEnd = closeOf(text, valueStart);
+    if (text.slice(q + 1, qEnd) === name) {
+      return text.slice(0, valueStart) + formatValue(entry, 2) + text.slice(valueEnd);
+    }
+    last = valueEnd;
+    i = valueEnd;
+  }
+  const insert = `${last === null ? "\n" : ",\n"}    ${JSON.stringify(name)}: ${formatValue(entry, 2)}`;
+  const at = last ?? open + 1;
+  return text.slice(0, at) + insert + text.slice(at);
+}
+
 /** Alan's rig.json layout: objects open, short flat ones and arrays on one line. */
 export function formatRig(rig) {
+  return formatValue(rig, 0) + "\n";
+}
+
+/** formatRig's layout for one value nested `depth` levels in. */
+function formatValue(value, depth) {
   const flat = (v) => typeof v !== "object" || v === null || (Array.isArray(v) && v.every((x) => typeof x !== "object" || x === null));
   const one = (v) => {
     if (Array.isArray(v)) return `[${v.map((x) => JSON.stringify(x)).join(", ")}]`;
@@ -339,7 +417,7 @@ export function formatRig(rig) {
     const pad = "  ".repeat(depth + 1);
     return `{\n${Object.entries(v).map(([k, x]) => `${pad}${JSON.stringify(k)}: ${fmt(x, depth + 1)}`).join(",\n")}\n${"  ".repeat(depth)}}`;
   };
-  return fmt(rig, 0) + "\n";
+  return fmt(value, depth);
 }
 
 async function main() {
@@ -349,13 +427,32 @@ async function main() {
     return i >= 0 ? rest[i + 1] : fallback;
   };
   if (!character) {
-    console.error("usage: node activity/tools/live2d-rig.js <character> [--outfit academy] [--dry-run]");
+    console.error("usage: node activity/tools/live2d-rig.js <character> [--outfit academy] [--dry-run] [--force]");
     process.exit(1);
   }
-  const rig = await buildRig(character, opt("outfit", "academy"));
+  const outfit = opt("outfit", "academy");
+  const rig = await buildRig(character, outfit);
+  const file = path.join(LIVE2D, character, "rig.json");
+  if (fs.existsSync(file) && !rest.includes("--force")) {
+    const before = fs.readFileSync(file, "utf8");
+    const existing = JSON.parse(before);
+    if (outfit === existing.defaultOutfit) {
+      console.error(`[live2d-rig] ${file} exists and ${outfit} is its default outfit; --force rewrites the whole file (hand tuning is lost)`);
+      process.exit(1);
+    }
+    const model3 = JSON.parse(fs.readFileSync(path.join(LIVE2D, character, rig.outfits[outfit].model), "utf8"));
+    const { entry, overrides, missing } = outfitEntry(existing, rig, outfit, model3);
+    const text = spliceOutfit(before, outfit, entry);
+    if (rest.includes("--dry-run")) return process.stdout.write(text);
+    fs.writeFileSync(file, text);
+    console.log(`[live2d-rig] ${file}: ${existing.outfits[outfit] ? "replaced" : "added"} outfit ${outfit}`);
+    console.log(`[live2d-rig] outfit parts: ${Object.keys(entry.parts).join(", ")}${overrides.length ? ` (own ${overrides.join(", ")}: drawables differ from the shared ones)` : ""}`);
+    if (missing.length) console.log(`[live2d-rig] the ${outfit} model lacks ${missing.join(", ")}, which the shared moods/poses use: change them by hand`);
+    console.log(`[live2d-rig] next: check hangout-v2.html?character=${character}&outfit=${outfit} with "show hotspots"`);
+    return;
+  }
   const text = formatRig(rig);
   if (rest.includes("--dry-run")) return process.stdout.write(text);
-  const file = path.join(LIVE2D, character, "rig.json");
   fs.writeFileSync(file, text);
   const moodsMissing = ["default", ...MOODS].filter((k) => !rig.expressions.moods[k]);
   console.log(`[live2d-rig] ${file}`);
