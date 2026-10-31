@@ -76,14 +76,5 @@
     "idle": { "amount": 0.35 },
     "breath": { "amount": 0.5 },
     "bgPan": { "speed": 0.022, "amount": 0.01 }
-  },
-  "sounds": {
-    "headPat": "sfx/alan_default_1.wav",
-    "cheekPoke": "sfx/alan_default_1.wav",
-    "lipsTouch": "sfx/alan_default_1.wav",
-    "earTouch": "sfx/alan_default_1.wav",
-    "handTap": "sfx/alan_default_1.wav",
-    "chestTouch": "sfx/alan_default_1.wav",
-    "hipsTouch": "sfx/alan_default_1.wav"
   }
 }

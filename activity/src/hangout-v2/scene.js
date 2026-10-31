@@ -63,7 +63,7 @@ export async function startScene(stage, { base, tier, outfit, lines, room = true
     renderer.talk((line.length * TYPE_MS) / 1000);
   };
   box.addEventListener("click", (e) => {
-    if (!e.target.closest(".vn-icon")) renderer.stopTalking();
+    if (!e.target.closest(".vn-icon, .vn-next")) renderer.stopTalking();
   });
   const sounds = new Sounds(soundBytes);
   const play = (file) => sounds.play(file);

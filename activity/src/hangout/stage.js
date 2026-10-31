@@ -38,8 +38,13 @@ export { TYPE_MS };
 export function dialogueBox(box) {
   const text = box.querySelector(".vn-text");
   let typing = null;
+  // Publishes the box's height so .choices can sit just above it: a long
+  // line grows the box upward and would otherwise run under the choices.
+  new ResizeObserver(() => {
+    box.parentElement.style.setProperty("--vn-box-h", `${box.offsetHeight}px`);
+  }).observe(box);
   box.addEventListener("click", (e) => {
-    if (e.target.closest(".vn-icon")) return;
+    if (e.target.closest(".vn-icon, .vn-next")) return;
     clearInterval(typing);
     text.textContent = text.dataset.full ?? "";
   });

@@ -16,9 +16,6 @@
   font: 12px ui-monospace, monospace; color: #fff;
   text-shadow: 0 1px 2px #000; pointer-events: none;
 }
-/* The annoyance meter (styled in hangout.css) drops below the HUD. */
-.meter { top: calc(28px + var(--safe-top)); }
-
 /* The debug cog sits at the box's bottom left, apart from the scene's icons. */
 .vn-box { padding-left: 3.2em; }
 #btn-debug {

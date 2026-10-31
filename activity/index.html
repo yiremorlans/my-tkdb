@@ -12,17 +12,16 @@
   </head>
   <body>
     <main id="stage" class="stage">
-      <div class="meter" title="annoyance"><div id="meter-fill"></div></div>
-
       <div id="choices" class="choices" hidden></div>
 
       <section class="vn-box" aria-live="polite">
         <div class="vn-name"><span id="vn-name"></span></div>
+        <div class="meter" title="annoyance"><div id="meter-fill"></div></div>
         <p id="vn-text" class="vn-text"></p>
         <nav class="vn-icons">
-          <button id="btn-next" class="vn-icon" title="Next" aria-label="Next" hidden>›</button>
           <button id="btn-mute" class="vn-icon" title="Sound" aria-label="Sound" aria-pressed="false" hidden>♪</button>
         </nav>
+        <button id="btn-next" class="vn-next" title="Next" aria-label="Next" hidden>›</button>
       </section>
     </main>
     <script type="module" src="./src/main.js"></script>

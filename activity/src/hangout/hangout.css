@@ -53,12 +53,17 @@ body {
 .stage canvas { display: block; width: 100%; height: 100%; }
 
 /* --- Annoyance meter (fill width set per frame) ---------------------------- */
+/* Docked on the dialogue box's top edge, opposite the name plate: the
+   stage's top-left corner sits under Discord's Activity name pill. */
 .meter {
   position: absolute;
-  top: calc(10px + var(--safe-top));
-  left: calc(10px + var(--safe-left));
-  width: 90px; height: 5px;
-  background: rgba(0, 0, 0, 0.5); border-radius: 3px; overflow: hidden;
+  top: 0;
+  right: 1.4em;
+  transform: translateY(-50%);
+  width: 110px; height: 7px;
+  background: rgba(14, 15, 34, 0.94);
+  border: 1px solid var(--box-edge);
+  border-radius: 999px; overflow: hidden;
   pointer-events: none;
 }
 #meter-fill { height: 100%; width: 0; background: #e0573f; transition: width 80ms linear; }
@@ -126,12 +131,45 @@ body {
 .vn-icon:hover { opacity: 1; transform: scale(1.1); }
 .vn-icon[hidden] { display: none; }
 .vn-icon[aria-pressed="true"] { opacity: 0.4; text-decoration: line-through; }
+/* The › advance button: a small badge at the middle of the box's right
+   side, in the padding the text already keeps clear, nudging forward so
+   it's easy to spot. */
+.vn-next {
+  position: absolute;
+  right: 0.9em;
+  top: 50%;
+  transform: translateY(-50%);
+  display: grid;
+  place-items: center;
+  width: 1.5em;
+  height: 1.5em;
+  padding: 0 0 0.1em 0.06em;
+  border: 1px solid var(--box-edge);
+  border-radius: 50%;
+  background: rgba(14, 15, 34, 0.94);
+  color: var(--name);
+  font: inherit;
+  font-size: 1.35em;
+  line-height: 1;
+  cursor: pointer;
+  animation: vn-next-bob 1.4s ease-in-out infinite;
+}
+.vn-next:hover { border-color: var(--name); animation-play-state: paused; }
+.vn-next[hidden] { display: none; }
+@keyframes vn-next-bob {
+  0%, 100% { transform: translateY(-50%); }
+  50% { transform: translate(0.12em, -50%); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .vn-next { animation: none; }
+}
 
 /* --- response choices ----------------------------------------------------- */
 .choices {
   position: absolute;
   left: 50%;
-  bottom: calc(3.5% + 24% + var(--safe-bottom));
+  /* Rides the box's top edge (--vn-box-h, set by dialogueBox). */
+  bottom: calc(3.5% + var(--safe-bottom) + var(--vn-box-h, 22%) + 2%);
   transform: translateX(-50%);
   display: flex;
   flex-direction: column;
@@ -193,7 +231,7 @@ body {
   .vn-name { left: 1em; padding: 0.2em 1.8em; }
   .choices {
     width: calc(100% - 48px - var(--safe-left) - var(--safe-right));
-    bottom: calc(12px + 9.5em + var(--safe-bottom));
+    bottom: calc(12px + var(--safe-bottom) + var(--vn-box-h, 9.5em) + 0.8em);
   }
 }
 
