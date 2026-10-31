@@ -56,7 +56,7 @@ export default {
     ],
     lipsTouch: ["Ah. Careful.", "That's not a game I'd start, if I were you."],
     earTouch: [
-      "Ah ha ha. You've found a weak spot. Don't tell Rui.",
+      "Ah ha ha. A weak spot. Do be gentle with it.",
       "The earring stays where it is, I'm afraid.",
     ],
     handTap: [

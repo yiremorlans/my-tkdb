@@ -79,7 +79,7 @@ export default {
   warm: {
     headPat: [
       "...Tch. Fine. Just don't mess it up.",
-      "You're lucky I like you. Don't tell anyone.",
+      "You're lucky I like you. Tch.",
     ],
     cheekPoke: [
       "What are you grinning at? ...Tch.",

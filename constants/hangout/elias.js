@@ -62,13 +62,13 @@ export default {
     ],
   },
   warm: {
-    headPat: ["…That's nice. Don't tell Jo.", "Oh, I don't mind that at all."],
+    headPat: ["…That's nice.", "Oh, I don't mind that at all."],
     cheekPoke: [
       "Hm? Do I have candy on my face?",
       "Oh, I wasn't asleep. Just thinking.",
     ],
     lipsTouch: [
-      "…I'll have to say no to that one.",
+      "…I'll have to say no to that.",
       "That's not like you. …Let's not.",
     ],
     earTouch: [
@@ -103,7 +103,7 @@ export default {
     ],
     handTap: [
       "You can hold on, if you'd like.",
-      "…The last candy's yours. Don't tell anyone.",
+      "…The last candy's yours. I was saving it.",
     ],
     chestTouch: [
       "…Can you hear it? It's been doing that lately.",

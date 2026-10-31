@@ -84,7 +84,7 @@ export default {
   warm: {
     headPat: [
       "Ha ha... You know, I don't mind that.",
-      "Oh. That's nice, actually. Don't tell the cat.",
+      "Oh. That's nice, actually. I could get used to that.",
     ],
     cheekPoke: [
       "What? Was I smiling again?",

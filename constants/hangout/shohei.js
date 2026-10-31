@@ -48,7 +48,7 @@ export default {
       "Hey. Quit it. That's not a button.",
       "Pfft. What was that, Senpai? Some kinda test?",
     ],
-    hipsTouch: ["Hey. Cut that out.", "Nope. Not that one."],
+    hipsTouch: ["Hey. Cut that out.", "Nope. Not there."],
     upset: ["Geez, enough already.", "Okay, okay. I get it. Quit it."],
   },
   warm: {
@@ -88,7 +88,7 @@ export default {
     ],
     lipsTouch: [
       "...Senpai. You can't just do that.",
-      "Careful. I might not let that one go.",
+      "Careful. I might not let that go.",
     ],
     earTouch: ["...Hey. That's not fair.", "Quit it. ...Okay, once more."],
     handTap: [

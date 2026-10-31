@@ -82,7 +82,7 @@ export default {
   },
   warm: {
     headPat: [
-      "...Fine. Once. Don't tell anyone.",
+      "...Fine. Once. Don't get used to it.",
       "Huh. Nobody else would dare.",
     ],
     cheekPoke: [
@@ -109,7 +109,7 @@ export default {
       "Hey! ...Okay, that caught me off guard. Don't get used to it.",
       "Ugh, cut it out. I'm not laughing. ...I'm not.",
     ],
-    hipsTouch: ["Don't push it.", "Hey. You don't get that one."],
+    hipsTouch: ["Don't push it.", "Hey. You don't get to touch there."],
     upset: ["Okay, stop. I mean it.", "Ugh, you're so loud. Give it a rest."],
   },
   spark: {

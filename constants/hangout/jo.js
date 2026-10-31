@@ -73,9 +73,9 @@ export default {
       "Okay, okay. You've got my attention.",
       "What's that grin for, cutie?",
     ],
-    lipsTouch: ["...Hey. Careful.", "Not that one, cutie."],
+    lipsTouch: ["...Hey. Careful.", "Not there, cutie."],
     earTouch: [
-      "Hah... That tickles. Don't tell the others.",
+      "Hah... That tickles. Easy.",
       "You found a weak spot. Keep it to yourself.",
     ],
     handTap: [
@@ -140,8 +140,8 @@ export default {
       "...Do that again and I'm getting you back. Right here.",
     ],
     handTap: [
-      "There you are. I've been waiting all day for this one.",
-      "Hold on as long as you like. I cleared my schedule for you. Don't tell Mio.",
+      "There you are. I've been waiting all day for this.",
+      "Hold on as long as you like. Everything else can wait.",
     ],
     chestTouch: [
       "I stopped pretending to be calm around you, cutie. Feel for yourself.",

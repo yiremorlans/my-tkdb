@@ -66,9 +66,9 @@ export default {
       "Nobody does that for me, you know. ...Thanks.",
     ],
     cheekPoke: ["What? Do I look that tired?", "Ha. Okay, I'm awake now."],
-    lipsTouch: ["...Hey. Don't.", "That one's off limits. Sorry."],
+    lipsTouch: ["...Hey. Don't.", "That's off limits. Sorry."],
     earTouch: [
-      "That's ticklish. Don't tell Shion.",
+      "I'm ticklish. Stop that.",
       "Okay, you found it. Keep it to yourself.",
     ],
     handTap: [

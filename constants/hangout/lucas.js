@@ -119,7 +119,7 @@ export default {
   },
   spark: {
     headPat: [
-      "...That's rather nice. Don't tell Kaito.",
+      "...That's rather nice. Carry on.",
       "I'm meant to be the one looking after you. ...Just a moment longer, then.",
     ],
     cheekPoke: [

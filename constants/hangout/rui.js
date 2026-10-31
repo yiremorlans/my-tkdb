@@ -99,7 +99,7 @@ export default {
     ],
     lipsTouch: [
       "Hey. Not there, okay? I couldn't stand it if something happened.",
-      "...Please don't. I really mean that one.",
+      "...Please don't. I really mean it.",
     ],
     earTouch: [
       "Whoa! Admire the piercings all you want, just with your eyes.",
@@ -117,7 +117,7 @@ export default {
       "Ahaha! Hey, that tickles! Not fair!",
       "Whoa! Sneak attack! Where'd that come from, cutie?",
     ],
-    hipsTouch: ["Hey! Nope.", "Okay, that one's off-limits. Sorry, cutie."],
+    hipsTouch: ["Hey! Nope.", "Okay, that's off-limits. Sorry, cutie."],
     upset: [
       "Hey. I said enough. Please.",
       "Hey. Enough, okay? You're making me nervous.",
@@ -145,7 +145,7 @@ export default {
       "Is it weird that this is my favorite part of the day?",
     ],
     chestTouch: [
-      "Whoa, okay, my heart's going crazy. Don't tell anyone.",
+      "Whoa, okay, my heart's going crazy.",
       "Hey, careful... You'll find out how much I like you.",
     ],
     bellyTouch: [

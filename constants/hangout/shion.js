@@ -31,7 +31,7 @@ export default {
   known: {
     headPat: [
       "...You again. Fine.",
-      "Only you get to do that. Don't tell anyone.",
+      "Only you get to do that.",
     ],
     cheekPoke: ["Bored? Me too.", "My wife's getting cocky."],
     lipsTouch: ["Don't.", "...Not that. Not yet."],
@@ -102,7 +102,7 @@ export default {
       "Hold on. You're mine anyway.",
     ],
     chestTouch: [
-      "...Feel that? Don't tell Mio.",
+      "...Feel that? That's you.",
       "You're too close. ...Stay there.",
     ],
     bellyTouch: [

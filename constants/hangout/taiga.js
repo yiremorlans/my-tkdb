@@ -126,7 +126,7 @@ export default {
     ],
     chestTouch: [
       "...Feel that? Your fault, kitten.",
-      "...Don't tell Romeo. He'll never shut up about it.",
+      "...Hands right there, huh. Damn.",
     ],
     bellyTouch: [
       "...Shit. You're making me forget I'm hungry, kitten.",

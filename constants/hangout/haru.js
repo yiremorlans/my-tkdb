@@ -76,13 +76,13 @@ export default {
   warm: {
     headPat: [
       "Gahaha! Don't stop on my account.",
-      "Feels nice, that. ...Don't tell Ren.",
+      "Feels nice, that. ...Keep it between us, hey?",
     ],
     cheekPoke: [
       "What's that face? You're plannin' somethin'.",
       "Oi! That'll cost you. Mates' rates, though.",
     ],
-    lipsTouch: ["Whoa. Hang on. Let's not.", "Hey. ...Not that one."],
+    lipsTouch: ["Whoa. Hang on. Let's not.", "Hey. ...Not there."],
     earTouch: [
       "Ah, quit it! That's my ticklish spot. ...Forget I said that.",
       "You keep goin' for the earrings. Want a pair of your own?",

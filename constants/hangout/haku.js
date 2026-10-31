@@ -75,7 +75,7 @@ export default {
       "What? You've got that face again.",
       "Keep that up and I'll start poking back.",
     ],
-    lipsTouch: ["Hey. That one's off limits.", "...Don't. I mean it."],
+    lipsTouch: ["Hey. Those are off limits.", "...Don't. I mean it."],
     earTouch: [
       "That tickles. You knew it would, didn't you.",
       "Leave the ribbons alone and I'll think about forgiving you.",
@@ -125,7 +125,7 @@ export default {
     ],
     bellyTouch: [
       "Ha... Careful, princess. I'm not great at sitting still for that.",
-      "...Okay. That one got me. Don't tell Zenji.",
+      "...Okay. That one got me.",
     ],
     hipsTouch: [
       "...You're bold today, princess.",

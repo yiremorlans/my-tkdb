@@ -59,7 +59,7 @@ export default {
       "Hey! ...Heh. I'm getting you back next time.",
       "What? Is there food on my face?",
     ],
-    lipsTouch: ["...Don't. That one's weird.", "Hey. Not that, okay?"],
+    lipsTouch: ["...Don't. That's weird.", "Hey. Not that, okay?"],
     earTouch: [
       "Careful with that. It's important.",
       "Hey, that tickles! Quit it!",
@@ -81,7 +81,7 @@ export default {
   },
   spark: {
     headPat: [
-      "...I like that. Don't tell the blond gigolo.",
+      "...I like that. A lot.",
       "Do it more. ...I mean, if you want.",
     ],
     cheekPoke: [

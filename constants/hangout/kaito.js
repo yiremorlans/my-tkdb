@@ -61,7 +61,7 @@ export default {
       "Nope. Not happening. ...Sorry, that came out loud.",
     ],
     earTouch: [
-      "Silver on this side, gold on that one. Don't mix them up.",
+      "Silver on this side, gold on the other. Don't mix them up.",
       "Ah, careful! They snag.",
     ],
     handTap: [
@@ -108,11 +108,11 @@ export default {
     ],
     chestTouch: [
       "That's Gram's pendant. I'm careful with it, so you be careful too.",
-      "Hands off that one, okay? Anything else, fine.",
+      "Hands off there, okay? Anything else, fine.",
     ],
     bellyTouch: [
       "Pfft, hey! Okay, okay, that one got me.",
-      "W-Wait, I'm so not ready for that. Pat my head instead, that one's safe.",
+      "W-Wait, I'm so not ready for that. Pat my head instead, that's safe.",
     ],
     hipsTouch: [
       "Hey! Where are your hands going?",
