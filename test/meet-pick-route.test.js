@@ -54,7 +54,7 @@ mock.module('../imageComposition.js', {
 
 const { server } = await import('../app.js');
 const { clearMaintenanceCache } = await import('../maintenance.js');
-const { ALREADY_PICKED, setMeetFallbackDelay } = await import('../meetActivity.js');
+const { ALREADY_PICKED, rememberPickerToken, setMeetFallbackDelay } = await import('../meetActivity.js');
 const { clearHangoutLaunch, hangoutLaunchFor, recordHangoutLaunch } = await import('../activityRoutes.js');
 
 // The launch callback answers with the instance it opened (with_response);
@@ -157,6 +157,7 @@ function resetState() {
 test("the owner's pick launches the Activity and saves the encounter it'll load", async () => {
   resetState();
   recordHangoutLaunch('the-owner', 'v1'); // an earlier /encdev hangout
+  rememberPickerToken('picker-launch', 'meet-command-token'); // what /meet's send does
   const res = await postInteraction(pickClick('the-owner', 'alan', 'picker-launch'));
   assert.strictEqual(res.status, 202, 'answered through the callback, so the HTTP reply is empty');
 
@@ -177,9 +178,11 @@ test("the owner's pick launches the Activity and saves the encounter it'll load"
   assert.strictEqual(typeof row.mood, 'boolean');
   assert.match(row.intro, /^Alan .+ agrees to meet you/);
 
-  await waitFor(() => discordCalls.some((c) => c.isOriginalEdit));
-  const greyOut = discordCalls.find((c) => c.isOriginalEdit);
-  assert.strictEqual(greyOut.method, 'PATCH');
+  // Through /meet's token: the picker is ephemeral, so the pick's own token
+  // can't edit it at all (404, 10008).
+  const isPickerEdit = (c) => c.method === 'PATCH' && c.url.endsWith('/webhooks/app-under-test/meet-command-token/messages/@original');
+  await waitFor(() => discordCalls.some(isPickerEdit));
+  const greyOut = discordCalls.find(isPickerEdit);
   assert.ok(greyOut.payload.components[0].components.every((b) => b.disabled), 'the picker greys out after the launch');
   assert.deepStrictEqual(hangoutLaunchFor('the-owner'), { version: 'v2', dev: false }, 'a /meet launch opens the encounter, not the free hangout');
   assert.strictEqual(imageFollowups().length, 0, 'no image while the Activity has the encounter');

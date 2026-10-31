@@ -74,7 +74,7 @@ import {
 } from './db/supabase.js';
 import { validateContent } from './constants/validateContent.js';
 import { activityOpenTo, activityRouter, clearHangoutLaunch } from './activityRoutes.js';
-import { handleMeetPickLaunch } from './meetActivity.js';
+import { handleMeetPickLaunch, rememberPickerToken } from './meetActivity.js';
 import { startGateway } from './gateway.js';
 import { EPHEMERAL, IS_TEST, optionValue } from './utils.js';
 
@@ -422,7 +422,8 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           // (the meet/pick button below), not for opening the picker.
           // userId, because an errand holder's still-unsigned targets take
           // guaranteed slots in the pick list (docs/scheduled-missions.md §5).
-          await sendFollowup(req.body.token, await buildMeetPickMessage(userId), 15000, true);
+          const picker = await sendFollowup(req.body.token, await buildMeetPickMessage(userId), 15000, true);
+          rememberPickerToken(picker?.id, req.body.token);
           maybeSurfaceBondScene(userId, req.body.token);
         } catch (err) {
           console.error('Error in /meet:', err);
@@ -1375,10 +1376,11 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             // Say what was actually spent above the prompt. A 'both' reset
             // clears the command they didn't ask about too, and they'd have no
             // way to know that from a /roam prompt appearing on its own.
-            await sendFollowup(req.body.token, {
+            const sent = await sendFollowup(req.body.token, {
               ...messageData,
               content: `${spentLine}\n\n${messageData.content ?? ''}`.trim(),
             }, 15000, true);
+            if (openCommand === 'meet') rememberPickerToken(sent?.id, req.body.token);
           } catch (err) {
             // The reset is already spent and the cooldown really is clear, so
             // the reward is not lost — say so, and let them run the command.

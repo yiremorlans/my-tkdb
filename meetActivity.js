@@ -84,6 +84,32 @@ export function dressForVariant(characterId, rolled, random = Math.random) {
   return { variant: rig.outfits[outfit]?.dialogueVariant ?? rolled, outfit };
 }
 
+// --- the picker's token ----------------------------------------------------
+
+// The picker is /meet's own ephemeral reply, and Discord lets only the token
+// that sent an ephemeral message edit it: the pick's token 404s (10008) at
+// `@original` and at the picker's id alike. So whatever sends a picker hands
+// its token over here, keyed by the picker's id, for the grey-out. No result
+// goes onto the picker: the Activity already shows it. In memory, for a
+// token's 15 minutes: a miss (a restart, another instance) only skips the
+// edit, and handleMeetPickLaunch's picker check holds the line.
+const PICKER_TOKEN_MS = 15 * 60 * 1000;
+const pickerTokens = new Map(); // picker message id → { token, expires }
+
+export function rememberPickerToken(pickerMessageId, token, now = Date.now()) {
+  if (!pickerMessageId) return;
+  for (const [id, entry] of pickerTokens) if (entry.expires <= now) pickerTokens.delete(id);
+  pickerTokens.set(pickerMessageId, { token, expires: now + PICKER_TOKEN_MS });
+}
+
+function editPicker(pickerMessageId, body) {
+  const entry = pickerMessageId ? pickerTokens.get(pickerMessageId) : null;
+  if (!entry || entry.expires <= Date.now()) {
+    return Promise.reject(new Error('no live token for the /meet message (restart, or past 15 minutes)'));
+  }
+  return editInteractionMessage(entry.token, '@original', body);
+}
+
 // --- the click (§11.1) ------------------------------------------------------
 
 // A saved row back in drawMeetEncounter's shape, for the image fallback.
@@ -163,10 +189,9 @@ export async function handleMeetPickLaunch(body, userId, characterId, { sendFoll
 }
 
 async function saveLaunchedEncounter({ body, userId, encounter, instanceId, pickerMessageId, sendFollowup }) {
-  // A launch answer can't update the picker, so it's greyed out with an edit.
-  // Discord doesn't document whether that's allowed after a launch; if it
-  // isn't, handleMeetPickLaunch's picker check holds the line instead.
-  const greyOut = editInteractionMessage(body.token, '@original', {
+  // A launch answer can't update the picker, so it's greyed out with an edit,
+  // through the token that sent it (rememberPickerToken).
+  const greyOut = editPicker(pickerMessageId, {
     components: disableComponents(body.message?.components),
   }).catch((err) => console.warn(`[meetActivity] Could not grey out the picker for ${userId}: ${err.message}`));
 
@@ -286,14 +311,6 @@ export async function loadMeetEncounter(userId, instanceId, now = new Date()) {
   };
 }
 
-// The result kept on the /meet message, like the image flow's, so Discord
-// has a record. Best effort: the token may be past its 15 minutes, or
-// Discord may not allow edits after a launch.
-function recordResultOnPicker(row, result) {
-  return editInteractionMessage(row.interaction_token, '@original', { content: `${row.intro}\n${result.text}` })
-    .catch((err) => console.warn(`[meetActivity] Could not edit the result onto /meet for ${row.discord_user_id}: ${err.message}`));
-}
-
 /**
  * Answers one encounter: `{ status, body, afterReply }` for the route.
  *
@@ -349,7 +366,6 @@ export async function answerMeetEncounter(userId, encounterId, responseType, now
         trackUserActivity(userId),
         trackCommandUsage(userId, 'meet', { path: 'activity' }),
         trackCharacterEngagement(userId, row.character_id),
-        recordResultOnPicker(row, result),
       ]).then(reportFailures('meet answer', '[meetActivity]'));
     },
   };

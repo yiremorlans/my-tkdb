@@ -534,9 +534,9 @@ encounter, the answer, the fallback), `activityRoutes.js` (the routes),
 `activity/src/hangout-v2/meet.js` (the player's side), migration 035
 (`meet_encounters`, the off switch, the usage path). Still to do: the
 secret button (§11.4) and the per-tier touch lines, which are writing
-(§11.6). Not yet tested in Discord: greying out the picker and editing the
-result onto `/meet` after a launch, followups after a launch (the
-fallback), and the instance id from `with_response`.
+(§11.6). Not yet tested in Discord: greying out the picker after a launch
+(through `/meet`'s own token; the result stays in the Activity), followups
+after a launch (the fallback), and the instance id from `with_response`.
 
 Once the roster is rigged, picking a character in `/meet` opens the Activity
 with them, and the encounter plays out there instead of as a composed image
