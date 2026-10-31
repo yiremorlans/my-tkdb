@@ -60,3 +60,30 @@ test('an unknown character_id in the row set is skipped, not rendered', async ()
   assert.strictEqual(lines.length, 1);
   assert.match(lines[0], /^Ren /);
 });
+
+// --- Share (same button as /affinity; the click route is shared in app.js) ---
+
+test('shareButton adds the Share button under the private roster', async () => {
+  resetTable([{ discord_user_id: 'user-1', character_id: 'ren', affinity: 10 }]);
+  const message = await buildBondsMessage('user-1', { shareButton: true });
+  const button = message.components[0].components[0];
+  assert.strictEqual(button.label, 'Share');
+  assert.strictEqual(button.custom_id, 'bonds:share');
+  assert.strictEqual(message.flags, 64);
+});
+
+test('an empty roster has nothing to share: no button', async () => {
+  resetTable([]);
+  const message = await buildBondsMessage('user-1', { shareButton: true });
+  assert.strictEqual(message.components, undefined);
+});
+
+test('sharedBy makes the public repost: unflagged, plain-text name, no button', async () => {
+  resetTable([{ discord_user_id: 'user-1', character_id: 'ren', affinity: 10 }]);
+  const message = await buildBondsMessage('user-1', { sharedBy: 'Kanae', shareButton: true });
+  assert.match(message.content, /^\*\*Kanae shared their bonds\*\*\n/);
+  assert.match(message.content, /Ren /);
+  assert.strictEqual(message.flags, undefined);
+  assert.strictEqual(message.components, undefined);
+  assert.deepStrictEqual(message.allowed_mentions, { parse: [] });
+});

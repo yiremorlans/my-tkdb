@@ -231,6 +231,37 @@ function displayNameOf(body) {
   return body.member?.nick || u?.global_name || u?.username || 'Someone';
 }
 
+// The click half of every Share button (encounters.js shareButtonRow). The
+// button sits on an ephemeral message only its owner sees, so the clicker is
+// always the owner. Two steps: grey the button out on the private message so
+// it can't be shared twice, then post `build(sharerName)` as a public
+// (unflagged) followup.
+function shareToChannel(req, res, label, build) {
+  const userId = req.body.member?.user?.id || req.body.user?.id;
+  res.send({
+    type: InteractionResponseType.UPDATE_MESSAGE,
+    data: { components: disableComponents(req.body.message?.components) },
+  });
+
+  (async () => {
+    try {
+      const messageData = await build(displayNameOf(req.body));
+      await sendFollowup(req.body.token, messageData);
+      trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
+    } catch (err) {
+      console.error(`Error in ${label}:`, err);
+      try {
+        await sendFollowup(req.body.token, {
+          content: 'Something went wrong sharing that. Try again?',
+          flags: EPHEMERAL,
+        });
+      } catch (followupErr) {
+        console.error('Failed to send error followup:', followupErr);
+      }
+    }
+  })();
+}
+
 // A bond scene owed a beat it couldn't deliver (no shared server, DMs closed,
 // Discord down, a POST that failed mid-walk) waits on its row until the user's
 // next command, which offers a one-press button to put it back in their DMs.
@@ -572,7 +603,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
 
       // Text-only (no attachments), so respond in-band like /roam — no defer.
       try {
-        const messageData = await buildBondsMessage(userId);
+        const messageData = await buildBondsMessage(userId, { shareButton: true });
         res.send({
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: messageData,
@@ -1103,30 +1134,15 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       // the button on the private message so it can't be shared twice, then
       // post the status again as a public (unflagged) followup.
       const characterIds = (rest[1] || '').split('.').filter(Boolean);
+      return shareToChannel(req, res, 'affinity:share',
+        (sharedBy) => buildAffinityMessage(userId, characterIds, { sharedBy }));
+    }
 
-      res.send({
-        type: InteractionResponseType.UPDATE_MESSAGE,
-        data: { components: disableComponents(req.body.message?.components) },
-      });
-
-      (async () => {
-        try {
-          const messageData = await buildAffinityMessage(userId, characterIds, { sharedBy: displayNameOf(req.body) });
-          await sendFollowup(req.body.token, messageData);
-          trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
-        } catch (err) {
-          console.error('Error in affinity:share:', err);
-          try {
-            await sendFollowup(req.body.token, {
-              content: 'Something went wrong sharing that. Try again?',
-              flags: EPHEMERAL,
-            });
-          } catch (followupErr) {
-            console.error('Failed to send error followup:', followupErr);
-          }
-        }
-      })();
-      return;
+    if (action === 'bonds' && rest[0] === 'share') {
+      // The Share button under the ephemeral /bonds roster. Same flow as
+      // affinity:share; the roster is re-read so it's current as of the click.
+      return shareToChannel(req, res, 'bonds:share',
+        (sharedBy) => buildBondsMessage(userId, { sharedBy }));
     }
 
     if (action === 'resp') {

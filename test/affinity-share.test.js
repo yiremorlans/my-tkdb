@@ -98,6 +98,22 @@ test('clicking Share greys the button out on the private message (UPDATE_MESSAGE
   assert.strictEqual(body.data.components[0].components[0].disabled, true);
 });
 
+test('clicking Share on /bonds greys the button out too (shared route)', async () => {
+  const res = await postInteraction({
+    type: 3,
+    data: { custom_id: 'bonds:share' },
+    member: { user: { id: 'user-share-click' } },
+    message: {
+      components: [
+        { type: 1, components: [{ type: 2, style: 2, label: 'Share', custom_id: 'bonds:share' }] },
+      ],
+    },
+  });
+  const body = await res.json();
+  assert.strictEqual(body.type, 7);
+  assert.strictEqual(body.data.components[0].components[0].disabled, true);
+});
+
 test.after(() => {
   restoreFetch();
   server.close();

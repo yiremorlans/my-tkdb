@@ -1126,25 +1126,32 @@ export async function buildAffinityMessage(userId, characterIds, opts = {}) {
   // drops the button rather than emit an invalid component if that ever
   // stops holding.
   if (shareButton && !sharedBy) {
-    const customId = `affinity:share:${validCharacters.map((c) => c.id).join('.')}`;
-    if (customId.length <= 100) {
-      message.components = [
-        {
-          type: MessageComponentTypes.ACTION_ROW,
-          components: [
-            {
-              type: MessageComponentTypes.BUTTON,
-              style: ButtonStyleTypes.SECONDARY,
-              label: 'Share',
-              custom_id: customId,
-            },
-          ],
-        },
-      ];
-    }
+    const components = shareButtonRow(`affinity:share:${validCharacters.map((c) => c.id).join('.')}`);
+    if (components) message.components = components;
   }
 
   return message;
+}
+
+// The one Share button every private result uses (/affinity, /bonds). Clicking
+// it greys it out and reposts the result publicly; app.js's shareToChannel
+// handles that half. Returns null rather than an invalid component when the
+// custom_id would pass Discord's 100-char cap.
+export function shareButtonRow(customId) {
+  if (customId.length > 100) return null;
+  return [
+    {
+      type: MessageComponentTypes.ACTION_ROW,
+      components: [
+        {
+          type: MessageComponentTypes.BUTTON,
+          style: ButtonStyleTypes.SECONDARY,
+          label: 'Share',
+          custom_id: customId,
+        },
+      ],
+    },
+  ];
 }
 
 // --- /bonds --------------------------------------------------------------
@@ -1154,7 +1161,12 @@ export async function buildAffinityMessage(userId, characterIds, opts = {}) {
 // with the level's name emoji trailing (Stranger has none). Only characters
 // with at least 1 affinity point are listed; an unknown character_id in the
 // row set is skipped rather than shown as a broken line.
-export async function buildBondsMessage(userId) {
+//
+// `opts.shareButton` / `opts.sharedBy` work as in buildAffinityMessage: the
+// private roster carries a Share button (`bonds:share`), and the public repost
+// is unflagged, names the sharer in plain text and has no button.
+export async function buildBondsMessage(userId, opts = {}) {
+  const { shareButton = false, sharedBy = null } = opts;
   const relationships = await getUserRelationships(userId);
 
   const bonds = (relationships || [])
@@ -1181,8 +1193,17 @@ export async function buildBondsMessage(userId) {
     return `${name} — ${level.name}${emoji}`;
   });
 
-  return {
+  if (sharedBy) {
+    return {
+      content: `**${sharedBy} shared their bonds**\n${lines.join('\n')}`,
+      allowed_mentions: { parse: [] },
+    };
+  }
+
+  const message = {
     content: `**Your bonds**\n${lines.join('\n')}`,
     flags: EPHEMERAL_FLAG,
   };
+  if (shareButton) message.components = shareButtonRow('bonds:share');
+  return message;
 }
