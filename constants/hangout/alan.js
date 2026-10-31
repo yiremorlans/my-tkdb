@@ -20,36 +20,109 @@ export default {
     upset: ["...Stop that.", "Don't come any closer. I mean it."],
   },
   known: {
-    headPat: ["...You keep doing that.", "Huh. Didn't think you'd try that twice."],
+    headPat: [
+      "...You keep doing that.",
+      "Huh. Didn't think you'd try that twice.",
+    ],
     cheekPoke: ["What is it?", "...You're bored, aren't you."],
     lipsTouch: ["Don't.", "...That's not funny."],
-    earTouch: ["They're just earrings. Leave them be.", "...You're gonna pull one out."],
-    handTap: ["Gloves stay on. You'll get grease on you.", "...You okay? Need a hand with something?"],
+    earTouch: [
+      "They're just earrings. Leave them be.",
+      "...You're gonna pull one out.",
+    ],
+    handTap: [
+      "Gloves stay on. You'll get grease on you.",
+      "...You okay? Need a hand with something?",
+    ],
     chestTouch: ["Back up a little.", "...Too close."],
-    bellyTouch: ["Knock it off.", "...I ate already, if that's what you're checking."],
+    bellyTouch: [
+      "Knock it off.",
+      "...Yeah, it's solid. Now quit it.",
+    ],
     hipsTouch: ["Hey. Cut it out.", "Don't push your luck."],
     upset: ["...Stop that.", "Enough. Give me a minute."],
   },
   warm: {
-    headPat: ["...You're braver than most.", "Nobody does that. ...You're fine."],
+    headPat: [
+      "...You're braver than most.",
+      "Nobody does that. ...You're fine.",
+    ],
     cheekPoke: ["What? Something on my face?", "...You're in a good mood."],
     lipsTouch: ["...Don't.", "...Not that one."],
-    earTouch: ["...That tickles. Don't tell anyone.", "You like the earrings that much?"],
-    handTap: ["Still got grease on them. ...Doesn't bother you, huh.", "...I'm here. What's up?"],
+    earTouch: [
+      "...That tickles. Don't tell anyone.",
+      "You like the earrings that much?",
+    ],
+    handTap: [
+      "Still got grease on them. ...Doesn't bother you, huh.",
+      "...I'm here. What's up?",
+    ],
     chestTouch: ["...Back up. I mean it, a little.", "That's close."],
-    bellyTouch: ["...Hey. Warn me first.", "...You caught me off guard. Don't make it a habit."],
+    bellyTouch: [
+      "...Hey. Warn me first.",
+      "...You caught me off guard. Don't make it a habit.",
+    ],
     hipsTouch: ["Hey.", "Don't."],
     upset: ["...Stop that.", "Okay. That's enough for now."],
   },
   spark: {
     headPat: ["...That's my line.", "You're doing it back now? ...Fine."],
-    cheekPoke: ["...What's that face for?", "You keep poking. I'm not gonna break."],
-    lipsTouch: ["...Hey.", "Don't start something you're not gonna finish."],
-    earTouch: ["...That's not fair.", "Keep that up and I'll forget what I was doing."],
+    cheekPoke: [
+      "...What's that face for?",
+      "You keep poking. I'm not gonna break.",
+    ],
+    lipsTouch: ["...Hey.", "...Didn't see that coming. Give me a second."],
+    earTouch: [
+      "...That's not fair.",
+      "Keep that up and I'll forget what I was doing.",
+    ],
     handTap: ["...Here. I wiped them off.", "You can hold on. I don't mind."],
-    chestTouch: ["...You can hear that, can't you.", "Careful. I'm not used to this."],
-    bellyTouch: ["...Your hand's cold. No, leave it.", "Hey. ...You're gonna make me smile, doing that."],
+    chestTouch: [
+      "...You can hear that, can't you.",
+      "Careful. I'm not used to this.",
+    ],
+    bellyTouch: [
+      "...Your hand's cold. No, leave it.",
+      "Hey. ...You're gonna make me smile, doing that.",
+    ],
     hipsTouch: ["...You're getting bold.", "Hey. ...Not here."],
-    upset: ["...Stop that. I'll lose track of my own hands.", "Give me a second. I need to cool off."],
+    upset: [
+      "...Stop that. I'll lose track of my own hands.",
+      "Give me a second. I need to cool off.",
+    ],
+  },
+  close: {
+    headPat: [
+      "...Don't stop. I'll owe you one.",
+      "I'll get you back for that. Same spot.",
+    ],
+    cheekPoke: [
+      "...Yeah, I'm smiling. That's on you.",
+      "Again? ...Go ahead. I'm not going anywhere.",
+    ],
+    lipsTouch: [
+      "Don't start something you're not gonna finish.",
+      "...Do that again. I'm not stopping you this time.",
+    ],
+    earTouch: [
+      "...You know that spot now. Use it whenever.",
+      "Come closer. You don't have to reach.",
+    ],
+    handTap: [
+      "Took the gloves off. Figured you'd come for this one.",
+      "...Come here. I'll hold on this time.",
+    ],
+    chestTouch: [
+      "...Stay there. I'm used to you now.",
+      "Lean in. I'll be careful.",
+    ],
+    bellyTouch: [
+      "Go on. I'm not gonna flinch this time.",
+      "Keep that up and I'm pulling you in.",
+    ],
+    hipsTouch: [
+      "...Bold. Looks good on you.",
+      "Keep that up and you're not going back to your house.",
+    ],
   },
 };

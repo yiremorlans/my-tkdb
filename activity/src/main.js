@@ -85,7 +85,7 @@ function wireChrome(scene) {
 async function playEncounter(session, encounter) {
   $("#vn-name").textContent = encounter.name;
   // Independent fetches, so they go out together.
-  const [lines, { meetFlow }] = await Promise.all([loadLines(encounter.character), import("./hangout-v2/meet.js")]);
+  const [lines, { meetFlow }] = await Promise.all([loadLines(encounter.character, { daytime: encounter.daytime }), import("./hangout-v2/meet.js")]);
   const scene = await startSceneV2($("#stage"), encounter.character, {
     tier: encounter.tier,
     outfit: encounter.outfit,
@@ -105,11 +105,17 @@ async function playEncounter(session, encounter) {
 /** The free hangout: no encounter, the tier's greeting. */
 async function playFreeHangout(character, version) {
   $("#vn-name").textContent = capitalize(character);
-  const options = { tier: params.get("tier"), lines: await loadLines(character), maxFPS: isMobile ? MOBILE_FPS : 0 };
+  const options = { tier: params.get("tier"), lines: await loadLines(character, timeParam()), maxFPS: isMobile ? MOBILE_FPS : 0 };
   console.log(`[hangout] ${version}`);
   const scene = version === "v1" ? await startSceneV1($("#stage"), character, options) : await startSceneV2($("#stage"), character, options);
   wireChrome(scene);
   scene.say(scene.hangout.line("greeting") ?? "");
+}
+
+/** `?time=day|evening` overrides the hour for touch lines that swap by day. */
+function timeParam() {
+  const time = params.get("time");
+  return time === "day" || time === "evening" ? { daytime: time === "day" } : undefined;
 }
 
 async function main() {

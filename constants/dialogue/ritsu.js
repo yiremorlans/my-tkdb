@@ -52,8 +52,7 @@ export default {
         "So I have drafted cards for you. One hundred, on the same card stock as mine. Your name, your title as Inspector, and my number beneath it, so that anyone who calls about you reaches me first.",
       ],
       choice: {
-        prompt:
-          "I require your approval before they go to print.",
+        prompt: "I require your approval before they go to print.",
         options: [
           {
             key: "kind",
@@ -327,7 +326,7 @@ export default {
         greeting:
           '"Partner. Good. I need a second opinion, and yours is becoming reliable."',
         responses: {
-          kind: ["Say you're glad to help", "Thank him for the trust"],
+          kind: ["Say you're glad to help", "Say you'll stay reliable"],
           playful: ["Ask what the raise is", "Ask what 'becoming' means"],
           bold: ["Say it's been reliable a while", "Say he needed you sooner"],
           neutral: ["Ask to see the document", "Ask what the matter is"],
@@ -340,7 +339,7 @@ export default {
         responses: {
           kind: ["Say you'll find the flaw", "Ask what makes him sure"],
           playful: ["Guess the flaw before reading", "Ask if he planted it"],
-          bold: ["Name the flaw on page one", "Tell him it's fine, unread"],
+          bold: ["Name the flaw on page one", "Bet you find it first"],
           neutral: [
             "Ask which section worries him",
             "Mark the flaw and hand it back",
@@ -353,9 +352,12 @@ export default {
         greeting:
           '"By my model, there is a 29% chance he is at the baccarat table. We will begin there."',
         responses: {
-          kind: ["Offer to take the back tables", "Reassure him it's fine"],
+          kind: [
+            "Offer to take the back tables",
+            "Say you'll split the search",
+          ],
           playful: ["Ask about the other 71%", "Bet on the casino odds"],
-          bold: ["Drag Taiga back yourself", "Tell him to relax the model"],
+          bold: ["Drag Taiga back yourself", "Say you'll check the 29%"],
           neutral: ["Head for the baccarat table", "Ask where to look second"],
         },
       },
@@ -372,27 +374,30 @@ export default {
         },
       },
       {
-        line: "He asks for your honest assessment of his argument, and looks faintly betrayed when you actually give it.",
-        approach: "Give a second opinion",
+        line: '"I always have my business cards on hand. It should go without saying. Any lawyer who fails to gain their client\'s trust during the first meeting is not worth their salt."',
+        approach: "Ask for one of his cards",
         greeting:
-          '"You disagreed with me last time. You were half right. That\'s remarkable."',
+          '"You already have one. ...Very well. A second, for your records. Do not lose this one."',
         responses: {
-          kind: ["Say his half was good too", "Take remarkable as praise"],
-          playful: ["Ask which half was right", "Ask him to put it in writing"],
-          bold: ["Say you were fully right", "Say it's not that remarkable"],
-          neutral: ["Ask what he changed since", "Let the half stand"],
+          kind: ["Say he earned your trust", "Ask how many he carries"],
+          playful: ["Ask if you're a client now", "Ask if he hands out many"],
+          bold: ["Book a first meeting", "Say he still has to earn yours"],
+          neutral: ["Take the card", "Read the card over"],
         },
       },
       {
-        line: '"You disagree?" He looks personally offended, then visibly recalibrates. "...Go on, then. Convince me."',
-        approach: "Explain your position",
+        line: '"I\'ve read the Compendium of Laws countless times since I was a child. Memorizing its contents is a rite of passage for the eldest son of the Shinjo family."',
+        approach: "Ask him to quote it",
         greeting:
-          '"I am listening. Please be concise. I will be taking notes."',
+          '"Any section, any article. Choose one. I will not need to look."',
         responses: {
-          kind: ["Keep it to three points", "Reassure him it's not personal"],
-          playful: ["Make him work to be convinced", "Slow down for his notes"],
-          bold: ["Say he won't need notes", "Refuse to back down"],
-          neutral: ["Give him one sentence", "Wait for his pen to be ready"],
+          kind: ["Say that's impressive", "Ask which part he likes best"],
+          playful: [
+            "Pick the most obscure one",
+            "Ask if it was a bedtime story",
+          ],
+          bold: ["Bet he can't do the last page", "Quiz him on the spot"],
+          neutral: ["Take his word for it", "Let him recite"],
         },
       },
       {
@@ -414,7 +419,7 @@ export default {
         greeting:
           '"It is on that morning\'s recording. I have played it back more often than the matter requires."',
         responses: {
-          kind: ["Say you don't mind", "Ask what the matter was"],
+          kind: ["Say you remember it too", "Ask what the matter was"],
           playful: ["Ask how many times exactly", "Ask for a copy of the tape"],
           bold: [
             "Ask why he keeps replaying it",
@@ -424,15 +429,15 @@ export default {
         },
       },
       {
-        line: "He's filed you under a new heading in his notebook, one he doesn't let you read.",
-        approach: "Ask what heading",
+        line: '"At the end of each day, I compile information about every person I encountered in my notebook. It always proves useful eventually."',
+        approach: "Ask what he wrote on you",
         greeting:
-          '"Everyone I meet goes in the notebook. You have been moved to a heading of your own. Do not ask which."',
+          '"You have been moved to a heading of your own. Do not ask which."',
         responses: {
-          kind: ["Say you don't mind the file", "Ask if that's a good sign"],
-          playful: ["Guess the heading yourself", "Ask anyway"],
-          bold: ["Ask what got you moved", "Reach for the notebook"],
-          neutral: ["Don't ask which", "Ask where you were before"],
+          kind: ["Say you don't mind the notes", "Ask what yours says"],
+          playful: ["Guess what he wrote", "Ask for a peek"],
+          bold: ["Ask to read your entry", "Say you'll keep notes on him"],
+          neutral: ["Let him write", "Ask how full the notebook is"],
         },
       },
       {
@@ -451,18 +456,18 @@ export default {
         },
       },
       {
-        line: "He recites a Rulebook article at you that sounds suspiciously specific to whatever you're currently doing.",
-        approach: "Ask if that's a real rule",
+        line: "\"Darkwick Rulebook Article 183: 'For the protection of anomalies, unnecessary running indoors is prohibited.' This rule has been in place for over one hundred years.\"",
+        approach: "Say you weren't running",
         greeting:
-          '"It is entirely real. I can cite the article and subsection, if you like. You would not like."',
+          '"You were walking at a pace that suggested intent. I can cite the subsection, if you like. You would not like."',
         responses: {
-          kind: ["Take his word for it", "Stop what you're doing"],
+          kind: ["Slow down for him", "Take his word for it"],
           playful: [
-            "Say you'd like the subsection",
-            "Call his bluff on the rule",
+            "Ask what counts as necessary",
+            "Ask which anomaly it protects",
           ],
-          bold: ["Say the rule sounds made up", "Keep doing it anyway"],
-          neutral: ["Ask how old the rule is", "Ask for the article number"],
+          bold: ["Argue the article's scope", "Say you'll file an appeal"],
+          neutral: ["Ask who wrote the rule", "Walk the rest of the way"],
         },
       },
       {
@@ -471,7 +476,7 @@ export default {
         greeting:
           '"Your performance declines when your mind is not sharp. Additives would only interfere with the flavor."',
         responses: {
-          kind: ["Thank him for thinking of you", "Say black is fine by you"],
+          kind: ["Drink it black, no face", "Say black is fine by you"],
           playful: ["Ask for sugar anyway", "Ask about your performance"],
           bold: [
             "Say your mind is plenty sharp",
@@ -488,9 +493,9 @@ export default {
         greeting:
           "\"Sit. I've got a problem and you've got the better instincts.\"",
         responses: {
-          kind: ["Take the offered chair", "Ask what the problem is"],
+          kind: ["Say you'll take the case", "Ask what the problem is"],
           playful: ["Make him wait for it", "Ask what's in it for you"],
-          bold: ["Sit down like you own it", "Solve it before he finishes"],
+          bold: ["Name your fee first", "Solve it before he finishes"],
           neutral: ["Sit, hear the problem", "Sit, wait for details"],
         },
       },
@@ -513,7 +518,7 @@ export default {
         responses: {
           kind: ["Listen closely to the thought", "Say you're worth telling"],
           playful: ["Guess the thought first", "Make him work for it"],
-          bold: ["Demand he say it plainly", "Tell him to get to it"],
+          bold: ["Say you'll take notes too", "Say tell you over lunch"],
           neutral: ["Hear him out in silence", "Wait for the thought"],
         },
       },
@@ -547,12 +552,12 @@ export default {
         greeting:
           '"I record everything. That you were the subject of this particular entry is incidental."',
         responses: {
-          kind: ["Thank him for tracking it", "Say you owe him one"],
+          kind: ["Say his notes beat yours", "Say you owe him one"],
           playful: [
             "Ask what else he recorded",
             "Ask if you're in there a lot",
           ],
-          bold: ["Ask to read his notes", "Say that's a little much"],
+          bold: ["Ask to read his notes", "Ask to see the 9:04 entry"],
           neutral: ["Go get the notebook", "Check the photocopier"],
         },
       },
@@ -562,7 +567,7 @@ export default {
         greeting:
           '"Item four is yours. I\'ve allotted you six minutes. You may use seven, if the argument merits it."',
         responses: {
-          kind: ["Thank him for the extra minute", "Promise to prepare"],
+          kind: ["Say six minutes is plenty", "Promise to prepare"],
           playful: ["Ask what item five is", "Request a snack break item"],
           bold: ["Ask for ten minutes", "Add an item of your own"],
           neutral: ["Note down 3 PM", "Fold the agenda away"],
@@ -574,7 +579,7 @@ export default {
         greeting:
           '"Helping is a service. Services have value. You are undercutting the market, and me."',
         responses: {
-          kind: ["Say you like helping people", "Promise to be careful"],
+          kind: ["Say you like helping people", "Say you'll help him first"],
           playful: ["Offer to invoice them", "Ask his rate for boxes"],
           bold: ["Say you'll help who you want", "Ask if he's jealous"],
           neutral: ["Set the boxes down", "Hear him out"],
@@ -586,7 +591,7 @@ export default {
         greeting:
           '"Excellent. 6:45. I will call once. If you do not answer, I will call once more. That is the entire service."',
         responses: {
-          kind: ["Thank him for the offer", "Promise to pick up first ring"],
+          kind: ["Say 6:45 suits you", "Promise to pick up first ring"],
           playful: ["Haggle the price down", "Ask for a song with it"],
           bold: ["Say it should be free", "Ask him to make it 6:30"],
           neutral: ["Agree to 6:45", "Set a backup alarm"],
@@ -649,7 +654,7 @@ export default {
         greeting:
           '"Take your time. I have cleared fifteen minutes. ...Twenty. I have cleared twenty."',
         responses: {
-          kind: ["Thank him for noticing", "Say it's nothing big"],
+          kind: ["Say you'll tell him", "Say you'll take the twenty"],
           playful: ["Say one was a yawn", "Ask how many he sighed"],
           bold: ["Ask him to delete the tape", "Say he should ask more often"],
           neutral: ["Give him the short version", "Sit for a moment"],
@@ -673,9 +678,9 @@ export default {
         greeting:
           "\"'Jurisdiction.' Obviously. ...It is legible to the trained eye. I will read it aloud. All of it.\"",
         responses: {
-          kind: ["Say you'll learn to read it", "Thank him for sharing them"],
+          kind: ["Say you'll learn to read it", "Ask him to read them aloud"],
           playful: ["Guess the word wrong", "Say it looks like a map"],
-          bold: ["Tell him to type them", "Say it's barely writing"],
+          bold: ["Say you'll decode it anyway", "Copy them neater for him"],
           neutral: ["Listen as he reads", "Copy what you can"],
         },
       },
@@ -723,7 +728,7 @@ export default {
         greeting:
           '"Clause one: closer. Clause two: also closer. I haven\'t drafted the rest."',
         responses: {
-          kind: "Hear him out kindly",
+          kind: "Say both clauses pass",
           playful: "Make him argue for it",
           bold: "Amend the clause yourself",
           neutral: "Table the motion",
@@ -858,7 +863,7 @@ export default {
         greeting:
           '"Off the record. ...I find I have very little to say. I just wanted you here."',
         responses: {
-          kind: "Thank him for the silence",
+          kind: "Sit with him in it",
           playful: "Kill the recording",
           bold: "Take the silence as answer",
           neutral: "Say nothing",
@@ -902,19 +907,19 @@ export default {
   winnerLines: {
     new: [
       {
-        line: "{user} says the name, and **{name}** switches the recorder on.",
+        line: "{user} calls his name, and **{name}** switches the recorder on.",
         responses: {
           kind: "Speak clearly for the record",
           playful: "Wave at the recorder",
-          bold: "Ask him to turn it off",
+          bold: "Book him while it's recording",
         },
       },
       {
         line: '"Name, House, nature of the matter." **{name}** has his notebook open before {user} finishes.',
         responses: {
           kind: "Give him all three",
-          playful: "Give a fake name",
-          bold: "Ask him the same three",
+          playful: "Ask if nicknames count",
+          bold: "Say the matter is hiring him",
         },
       },
       {
@@ -926,7 +931,7 @@ export default {
         },
       },
       {
-        line: '**{name}** hands {user} his card. "Ritsu Shinjo. State your business. The first five minutes are complimentary."',
+        line: '**{name}** hands {user} his card. "State your business. The first five minutes are complimentary."',
         responses: {
           kind: "Say you'll keep his card",
           playful: "Ask what minute six costs",
@@ -936,15 +941,15 @@ export default {
     ],
     known: [
       {
-        line: '**{name}** looks up from his notebook at {user}. "You were next on my list. Sit."',
+        line: '**{name}** looks up from his notebook at {user}. "You were next on my list. Walk with me."',
         responses: {
-          kind: "Sit down as asked",
+          kind: "Fall into step with him",
           playful: "Ask who was first",
-          bold: "Stay standing",
+          bold: "Say you'll take ten minutes",
         },
       },
       {
-        line: '**{name}** slides a stack of copies across to {user}. "The originals stay with me. These are yours."',
+        line: '**{name}** hands {user} a set of copies on his way past. "The originals stay with me. These are yours."',
         responses: {
           kind: "Take the copies",
           playful: "Ask for the originals",
@@ -982,7 +987,7 @@ export default {
         responses: {
           kind: "Ask to read the draft",
           playful: "Ask how optimistic",
-          bold: "Sign it without reading",
+          bold: "Sign after one read",
         },
       },
     ],
@@ -1004,7 +1009,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** files it under nothing at all. There is no file.",
+        line: "{user} calls his name, and **{name}** files it under nothing at all. There is no file.",
         responses: {
           kind: "Say you don't need a file",
           playful: "Ask to see the file",
@@ -1056,7 +1061,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** clears the docket, and then the week.",
+        line: "{user} waves hello, and **{name}** clears the docket, and then the week.",
         responses: {
           kind: "Say you'll fill the week",
           playful: "Ask about next week",

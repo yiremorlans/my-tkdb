@@ -14,43 +14,143 @@ export default {
     cheekPoke: ["Did you just poke me?", "...Can I help you?"],
     lipsTouch: ["Whoa. No.", "Hands off. Seriously."],
     earTouch: ["Don't touch the earrings.", "...That's my ear. Why."],
-    handTap: ["Careful. My RSI's bad enough already.", "...I'm kind of in the middle of something."],
+    handTap: [
+      "Careful. My RSI's bad enough already.",
+      "...I'm kind of in the middle of something.",
+    ],
     chestTouch: ["Back up.", "Personal space. Look it up."],
-    bellyTouch: ["Hey. Hands off the stomach.", "...That's a whole new category of harassment."],
+    bellyTouch: [
+      "Hey. Hands off the stomach.",
+      "...That's a whole new category of harassment.",
+    ],
     hipsTouch: ["Hey. No.", "Okay, that's actual harassment."],
     upset: ["Stop. I'm reporting this.", "...Keep doing that and I'm leaving."],
   },
   known: {
-    headPat: ["You again. ...Why does everyone here touch people.", "I'm not one of the animals, you know."],
-    cheekPoke: ["What.", "Is there something on my face, or are you just bored?"],
+    headPat: [
+      "You again. ...Why does everyone here touch people.",
+      "I'm not one of the animals, you know.",
+    ],
+    cheekPoke: [
+      "What.",
+      "Is there something on my face, or are you just bored?",
+    ],
     lipsTouch: ["No. Absolutely not.", "...Don't. Just don't."],
     earTouch: ["Leave the studs alone.", "That tickles. Stop it."],
-    handTap: ["Watch the wrist, Senpai. That's my whole livelihood.", "...What? Do you need something?"],
+    handTap: [
+      "Watch the wrist, Senpai. That's my whole livelihood.",
+      "...What? Do you need something?",
+    ],
     chestTouch: ["Too close. Back up.", "Hey. What are you doing."],
-    bellyTouch: ["Senpai. Personal space. Look it up.", "Is this a bit? I'm not laughing."],
+    bellyTouch: [
+      "Senpai. Personal space. Look it up.",
+      "Is this a bit? I'm not laughing.",
+    ],
     hipsTouch: ["Senpai. No.", "Don't push it."],
-    upset: ["Okay, stop. That's enough.", "Is this a prank? Did that clown put you up to this?"],
+    upset: [
+      "Okay, stop. That's enough.",
+      "Is this a prank? Did that clown put you up to this?",
+    ],
   },
   warm: {
-    headPat: ["...Fine. Don't make it a thing.", "You're doing that again. ...Whatever. Keep going."],
-    cheekPoke: ["What. I'm busy losing this raid.", "Pfft. Did you seriously just poke me?"],
+    headPat: [
+      "...Fine. Don't make it a thing.",
+      "You're doing that again. ...Whatever. Keep going.",
+    ],
+    cheekPoke: [
+      "What. I'm busy losing this raid.",
+      "Pfft. Did you seriously just poke me?",
+    ],
     lipsTouch: ["Hey. ...Not funny.", "No. Don't."],
-    earTouch: ["Quit it. That tickles.", "Pull one out and you're buying the replacement."],
-    handTap: ["My hand's fine. ...Okay, it's a little sore. Thanks.", "You can leave it there. I can play one-handed."],
-    chestTouch: ["...That's close, Senpai.", "Hey. Hands. I'm not mad. Just, hands."],
-    bellyTouch: ["Whoa. ...Okay, that was a jump scare.", "Pfft. Hey. Don't. ...That doesn't count as a laugh."],
+    earTouch: [
+      "Quit it. That tickles.",
+      "Pull one out and you're buying the replacement.",
+    ],
+    handTap: [
+      "My hand's fine. ...Okay, it's a little sore. Thanks.",
+      "You can leave it there. I can play one-handed.",
+    ],
+    chestTouch: [
+      "...That's close, Senpai.",
+      "Hey. Hands. I'm not mad. Just, hands.",
+    ],
+    bellyTouch: [
+      "Whoa. ...Okay, that was a jump scare.",
+      "Pfft. Hey. Don't. ...That doesn't count as a laugh.",
+    ],
     hipsTouch: ["Senpai. Seriously.", "Nope. Not happening."],
-    upset: ["Okay, now that's harassment.", "Stop. I mean it. Give me a minute."],
+    upset: [
+      "Okay, now that's harassment.",
+      "Stop. I mean it. Give me a minute.",
+    ],
   },
   spark: {
-    headPat: ["...Okay. That's actually nice. Don't make it a thing.", "Keep doing that and I won't get anything done. Not that I was going to."],
-    cheekPoke: ["What. I'm not red. It's the lighting.", "...Why are you looking at me like that."],
-    lipsTouch: ["...Senpai. You can't just do that.", "Wait. I. ...Give me a second."],
+    headPat: [
+      "...Okay. That's actually nice. Don't make it a thing.",
+      "Keep doing that and I won't get anything done. Not that I was going to.",
+    ],
+    cheekPoke: [
+      "What. I'm not red. It's the lighting.",
+      "...Why are you looking at me like that.",
+    ],
+    lipsTouch: [
+      "...Senpai. You can't just do that.",
+      "Wait. I. ...Give me a second.",
+    ],
     earTouch: ["Hey. That's... unfair.", "Stop. My face is getting hot."],
-    handTap: ["...You can hold it. I guess. Whatever.", "I'll play one-handed. It's fine. Don't let go."],
-    chestTouch: ["...Don't. You'll hear it.", "My heart rate is none of your business. ...It's fine."],
-    bellyTouch: ["...Senpai. That's a critical hit. Not cool.", "Okay. I'm fine. That was nothing. ...Don't do it again."],
-    hipsTouch: ["Senpai. ...Seriously? Here?", "Whoa. Okay. I'm. Not ready for that."],
-    upset: ["Okay, stop. I can't think when you do that.", "Mercy. Seriously. My HP's at zero."],
+    handTap: [
+      "...You can hold it. I guess. Whatever.",
+      "I'll play one-handed. It's fine. Don't let go.",
+    ],
+    chestTouch: [
+      "...Don't. You'll hear it.",
+      "My heart rate is none of your business. ...It's fine.",
+    ],
+    bellyTouch: [
+      "...Senpai. That's a critical hit. Not cool.",
+      "Okay. I'm fine. That was nothing. ...Don't do it again.",
+    ],
+    hipsTouch: [
+      "Senpai. ...Seriously? Here?",
+      "Whoa. Okay. I'm. Not ready for that.",
+    ],
+    upset: [
+      "Okay, stop. I can't think when you do that.",
+      "Mercy. Seriously. My HP's at zero.",
+    ],
+  },
+  close: {
+    headPat: [
+      "You stopped. Why'd you stop.",
+      "This is my save point now. Don't move.",
+    ],
+    cheekPoke: [
+      "Poke me again. I'll pause the game for it.",
+      "Fine, I'm red. Happy? ...Do it again.",
+    ],
+    lipsTouch: [
+      "...Okay. Again. I wasn't ready that time.",
+      "That's harassment. ...I'm not filing a complaint, though.",
+    ],
+    earTouch: [
+      "Pfft. Okay, you found my weak spot. Go ahead, abuse it.",
+      "Keep that up and I'm muting my game.",
+    ],
+    handTap: [
+      "Keep holding on. My RSI can wait.",
+      "You've got my good hand. That's a big deal, you know.",
+    ],
+    chestTouch: [
+      "Go ahead, listen. It's been like that since you showed up.",
+      "Leave your hand there. I'm not embarrassed anymore. ...Mostly.",
+    ],
+    bellyTouch: [
+      "Pfft. Okay, you win this round. Go again.",
+      "I'm not even dodging anymore. Figure out what that means.",
+    ],
+    hipsTouch: [
+      "...Okay. I'm not saying no anymore.",
+      "You're doing that on purpose. ...Fine. Don't stop.",
+    ],
   },
 };

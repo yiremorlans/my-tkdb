@@ -39,3 +39,19 @@ for (const file of files) {
     }
   });
 }
+
+// A `daytime` set (Towa, who can't speak by day) covers the same tiers and
+// triggers, with no words in it: hums and sounds only, no letters at all.
+for (const file of files) {
+  test(`hangout daytime lines are wordless: ${file}`, async () => {
+    const { default: lines } = await import(new URL(file, DIR));
+    if (!lines.daytime) return;
+    for (const tier of TIERS) {
+      for (const trigger of TRIGGERS) {
+        const pool = lines.daytime[tier]?.[trigger];
+        assert.ok(Array.isArray(pool) && pool.length, `${file}: daytime.${tier}.${trigger} is empty`);
+        for (const line of pool) assert.ok(!/\p{L}/u.test(line), `${file}: daytime.${tier}.${trigger} "${line}" has words`);
+      }
+    }
+  });
+}

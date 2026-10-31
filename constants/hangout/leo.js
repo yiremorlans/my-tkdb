@@ -11,47 +11,177 @@
 
 export default {
   new: {
-    headPat: ["Did you just pat me? Like a dog? Bold.", "Hands off the hair, Honor Roll."],
-    cheekPoke: ["...Was that on purpose?", "Wow. Do that again and I'm filming it."],
+    headPat: [
+      "Did you just pat me? Like a dog? Bold.",
+      "Hands off the hair, Honor Roll.",
+    ],
+    cheekPoke: [
+      "...Was that on purpose?",
+      "Wow. Do that again and I'm filming it.",
+    ],
     lipsTouch: ["Gross. Who said you could do that?", "Nope. Denied."],
-    earTouch: ["Hey, careful with the earrings.", "Ugh, not by my ear. Everything's loud enough already."],
-    handTap: ["You need something? Make it quick.", "What, you want an autograph?"],
-    chestTouch: ["Back off. You don't get to do that.", "Hands off the headphones."],
-    bellyTouch: ["Did you just poke my stomach? Wow. Weird.", "Nope. Not you, not there."],
+    earTouch: [
+      "Hey, careful with the earrings.",
+      "Ugh, not by my ear. Everything's loud enough already.",
+    ],
+    handTap: [
+      "You need something? Make it quick.",
+      "What, you want an autograph?",
+    ],
+    chestTouch: [
+      "Back off. You don't get to do that.",
+      "Hands off the headphones.",
+    ],
+    bellyTouch: [
+      "Did you just poke my stomach? Wow. Weird.",
+      "Nope. Not you, not there.",
+    ],
     hipsTouch: ["Excuse me? Hands to yourself.", "Seriously? Back up."],
-    upset: ["Okay, stop. That's annoying.", "Keep it up and you're going on my story. Not the flattering kind."],
+    upset: [
+      "Okay, stop. That's annoying.",
+      "Keep it up and you're going on my story. Not the flattering kind.",
+    ],
   },
   known: {
-    headPat: ["You again? Who said you could pet me?", "...You're really testing your luck, huh."],
-    cheekPoke: ["What? Are you bored or something?", "Poke me again and I'm poking back."],
-    lipsTouch: ["Tch. Cute. No.", "Don't. I'm not in the mood for whatever this is."],
-    earTouch: ["Leave the earrings alone, I mean it.", "Not near my ears. You have no idea how loud you are."],
-    handTap: ["What, you want my hand? Ask nicely. ...Denied.", "Huh. You're braver than you look."],
-    chestTouch: ["Hey. Who said you could get that close?", "Back up. I'm not your pillow."],
-    bellyTouch: ["Wow. Bold move for someone with no permission.", "Do that again and you're the punchline of my next vid."],
-    hipsTouch: ["Nope. Not happening.", "You're really pushing it, Honor Roll."],
-    upset: ["Ugh, enough. You're so annoying.", "Stop, or I start telling people things about you. True or not."],
+    headPat: [
+      "You again? Who said you could pet me?",
+      "...You're really testing your luck, huh.",
+    ],
+    cheekPoke: [
+      "What? Are you bored or something?",
+      "Poke me again and I'm poking back.",
+    ],
+    lipsTouch: [
+      "Tch. Cute. No.",
+      "Don't. I'm not in the mood for whatever this is.",
+    ],
+    earTouch: [
+      "Leave the earrings alone, I mean it.",
+      "Not near my ears. You have no idea how loud you are.",
+    ],
+    handTap: [
+      "What, you want my hand? Ask nicely. ...Denied.",
+      "Huh. You're braver than you look.",
+    ],
+    chestTouch: [
+      "Hey. Who said you could get that close?",
+      "Back up. I'm not your pillow.",
+    ],
+    bellyTouch: [
+      "Wow. Bold move for someone with no permission.",
+      "Do that again and you're the punchline of my next vid.",
+    ],
+    hipsTouch: [
+      "Nope. Not happening.",
+      "You're really pushing it, Honor Roll.",
+    ],
+    upset: [
+      "Ugh, enough. You're so annoying.",
+      "Stop, or I start telling people things about you. True or not.",
+    ],
   },
   warm: {
-    headPat: ["...Fine. Once. Don't tell anyone.", "Huh. Nobody else would dare."],
-    cheekPoke: ["What's with the face? You want something?", "You're in a weird mood. I'm into it."],
-    lipsTouch: ["Don't. Seriously.", "Nope. I'm not the one who gets flustered here."],
-    earTouch: ["You're one of the few people who isn't loud. Don't ruin it.", "Careful with the earrings. ...Okay, you can stay there."],
-    handTap: ["You're getting comfortable, huh. ...I'll allow it.", "What? ...Fine. You can hold it for a second."],
-    chestTouch: ["Back up a little. I can't see my screen.", "Hey. Hands where I can see them."],
-    bellyTouch: ["Hey! ...Okay, that caught me off guard. Don't get used to it.", "Ugh, cut it out. I'm not laughing. ...I'm not."],
+    headPat: [
+      "...Fine. Once. Don't tell anyone.",
+      "Huh. Nobody else would dare.",
+    ],
+    cheekPoke: [
+      "What's with the face? You want something?",
+      "You're in a weird mood. I'm into it.",
+    ],
+    lipsTouch: [
+      "Don't. Seriously.",
+      "Nope. I'm not the one who gets flustered here.",
+    ],
+    earTouch: [
+      "You're one of the few people who isn't loud. Don't ruin it.",
+      "Careful with the earrings. ...Okay, you can stay there.",
+    ],
+    handTap: [
+      "You're getting comfortable, huh. ...I'll allow it.",
+      "What? ...Fine. You can hold it for a second.",
+    ],
+    chestTouch: [
+      "Back up a little. I can't see my screen.",
+      "Hey. Hands where I can see them.",
+    ],
+    bellyTouch: [
+      "Hey! ...Okay, that caught me off guard. Don't get used to it.",
+      "Ugh, cut it out. I'm not laughing. ...I'm not.",
+    ],
     hipsTouch: ["Don't push it.", "Hey. You don't get that one."],
     upset: ["Okay, stop. I mean it.", "Ugh, you're so loud. Give it a rest."],
   },
   spark: {
-    headPat: ["...Who said you could do that? Whatever. Keep going.", "You're getting cocky. I kind of like it."],
-    cheekPoke: ["Stop. ...I'm not blushing, it's just hot.", "Poke me all you want. You're the one turning red."],
-    lipsTouch: ["...You're playing with fire, Honor Roll.", "Curious about the piercing? ...Ask nicely."],
-    earTouch: ["...Hey. I can hear how fast your heart's going, you know.", "Not the ear. ...Okay. Maybe the ear."],
-    handTap: ["I can touch you, but you can't touch me. ...I'm making an exception.", "Fine. Hold on. Don't let go till I say."],
-    chestTouch: ["...Don't. My heart's being stupid right now.", "Okay, that's not fair. Back up before I do something about it."],
-    bellyTouch: ["...Careful, Honor Roll. You're touching the merchandise.", "Okay, that was kind of a cheap shot. ...Do it again and I'm doing it back."],
-    hipsTouch: ["...Wow. Look who got bold.", "Hands up. I'm the one who makes the moves here."],
-    upset: ["Okay, stop, before I forget I'm supposed to be annoyed.", "Enough. You're making it really hard to stay mad."],
+    headPat: [
+      "...Who said you could do that? Whatever. Keep going.",
+      "You're getting cocky. I kind of like it.",
+    ],
+    cheekPoke: [
+      "Stop. ...I'm not blushing, it's just hot.",
+      "Poke me all you want. You're the one turning red.",
+    ],
+    lipsTouch: [
+      "...You're playing with fire, Honor Roll.",
+      "Curious about the piercing? ...Ask nicely.",
+    ],
+    earTouch: [
+      "...Hey. I can hear how fast your heart's going, you know.",
+      "Not the ear. ...Okay. Maybe the ear.",
+    ],
+    handTap: [
+      "I can touch you, but you can't touch me. ...I'm making an exception.",
+      "Fine. Hold on. Don't let go till I say.",
+    ],
+    chestTouch: [
+      "...Don't. My heart's being stupid right now.",
+      "Okay, that's not fair. I wasn't ready.",
+    ],
+    bellyTouch: [
+      "...Careful, Honor Roll. That one's not going on camera.",
+      "Okay, that was kind of a cheap shot. ...Do it again and I'm doing it back.",
+    ],
+    hipsTouch: [
+      "...Wow. Look who got bold.",
+      "Hey. Who taught you that? ...Don't answer.",
+    ],
+    upset: [
+      "Okay, stop, before I forget I'm supposed to be annoyed.",
+      "Enough. You're making it really hard to stay mad.",
+    ],
+  },
+  close: {
+    headPat: [
+      "Look who's got me trained. ...Don't stop.",
+      "Mm. I'm keeping you. ...For the head pats, obviously.",
+    ],
+    cheekPoke: [
+      "Do that again. This time I'm not filming. ...Okay, I am.",
+      "Bored? Liar. You just wanted me to look at you, Honor Roll.",
+    ],
+    lipsTouch: [
+      "...You keep doing that. Either commit or I will.",
+      "Bold, Honor Roll. Now try it with something other than your finger.",
+    ],
+    earTouch: [
+      "Lean in and say something. You're the only noise I want right now.",
+      "Ugh. Making you squirm is my job.",
+    ],
+    handTap: [
+      "Hold on tight. I'm not letting go first, so that's on you.",
+      "Rules changed. You can touch me now too. Tell anyone and I'll deny it.",
+    ],
+    chestTouch: [
+      "Okay, that's not fair. Back up before I do something about it.",
+      "...Yeah, it's racing. Stay there and find out why.",
+    ],
+    bellyTouch: [
+      "...Careful, Honor Roll. You're touching the merchandise.",
+      "Bold. ...Keep going, Honor Roll. I dare you.",
+    ],
+    hipsTouch: [
+      "Hands up. I'm the one who makes the moves here.",
+      "...Okay. My move, then. Come here.",
+    ],
   },
 };

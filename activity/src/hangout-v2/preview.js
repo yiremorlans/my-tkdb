@@ -33,8 +33,11 @@ async function main() {
   try {
     scene = await startScene($("#stage"), {
       base: `assets/live2d/${character}`,
-      lines: await loadLines(character),
+      // ?time=day|evening overrides the hour (Towa's wordless daytime lines).
+      lines: await loadLines(character, ["day", "evening"].includes(params.get("time")) ? { daytime: params.get("time") === "day" } : undefined),
       tier: params.get("tier"),
+      // ?outfit=<name> picks a rig outfit; unknown names fall back to the default.
+      outfit: params.get("outfit"),
       room: params.get("room") !== "0",
       background: "#1b1824",
     });
@@ -113,9 +116,25 @@ async function main() {
     next.set("character", charPick.value);
     next.set("tier", hangout.tier);
     next.delete("pose");
+    next.delete("outfit");
     location.search = next;
   };
   charRow.append(charPick);
+
+  // Outfits reload too, so the /meet demo draws from that outfit's variant.
+  const outfitNames = Object.keys(renderer.source.outfits ?? {});
+  if (outfitNames.length > 1) {
+    const outfitPick = document.createElement("select");
+    for (const name of outfitNames) outfitPick.append(new Option(name, name));
+    outfitPick.value = renderer.outfit;
+    outfitPick.onchange = () => {
+      const next = new URLSearchParams(location.search);
+      next.set("outfit", outfitPick.value);
+      next.set("tier", hangout.tier);
+      location.search = next;
+    };
+    charRow.append(outfitPick);
+  }
 
   const moodRow = section("Moods (Live2D expressions)");
   for (const name of Object.keys(renderer.rig.expressions?.moods ?? {})) {

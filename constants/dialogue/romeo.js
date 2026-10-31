@@ -302,27 +302,27 @@ export default {
     ],
     known: [
       {
-        line: "He's stopped trying to put you to work. Mostly.",
-        approach: "Point out the exception",
+        line: "\"Hey! I'm talking to you, BB! If you've got time to wander around, you've got time to wipe the tables!\"",
+        approach: "Grab a rag",
         greeting:
-          '"Table seven. ...No. Not you. Tch. Force of habit. Sit somewhere."',
+          '"...Tch. Force of habit. Put that down, you\'re not on shift."',
         responses: {
-          kind: ["Say you don't mind helping", "Take a seat, as told"],
-          playful: ["Ask what table seven pays", "Ask if you're special now"],
-          bold: ["Call yourself the exception", "Demand he admit it"],
-          neutral: ["Note it, say nothing", "Let the exception stand"],
+          kind: ["Say you don't mind helping", "Ask how the night's going"],
+          playful: ["Ask what wiping pays", "Wipe a table with flair"],
+          bold: ["Say you'll work for a cut", "Say you're off the clock"],
+          neutral: ["Let him finish yelling", "Look around the floor"],
         },
       },
       {
-        line: '"Oh, it\'s YOU," at a volume that carries across the entire floor.',
-        approach: "Interrupt the yelling",
+        line: '"Fuji... Come out, come out, wherever you are... Tch, where did he go? Why is running away the only thing he\'s good at!?"',
+        approach: "Ask what Kaito did",
         greeting:
-          '"Tch. I wasn\'t looking for you. I looked up, you were there, and I said so. Loudly. It happens."',
+          '"He owes me. That\'s what he did. If you see him, you tell me first."',
         responses: {
-          kind: ["Say it's good to see him too", "Wave back across the floor"],
-          playful: ["Yell back just as loud", "Ask who else heard that"],
-          bold: ["Say he was looking for you", "Ask why he looked up"],
-          neutral: ["Walk over to him", "Let the volume go unremarked"],
+          kind: ["Say you haven't seen him", "Say he'll turn up"],
+          playful: ["Ask if Fuji's a nickname", "Say Kaito's quick, at least"],
+          bold: ["Say you won't rat Kaito out", "Ask what Kaito owes"],
+          neutral: ["Shrug, no idea", "Let him keep looking"],
         },
       },
       {
@@ -333,7 +333,7 @@ export default {
         responses: {
           kind: ["Listen to the whole complaint", "Say you like helping out"],
           playful: ["Add your own complaint too", "Egg the complaining on"],
-          bold: ["Tell him to stop complaining", "Ask to go on the payroll"],
+          bold: ["Take the worst table", "Ask to go on the payroll"],
           neutral: ["Nod along, say nothing", "Say someone has to"],
         },
       },
@@ -343,9 +343,9 @@ export default {
         greeting:
           '"I cannot deal with this WTWUT! Wall-To-Wall Useless Trash, obviously! ...Not you. You can stay."',
         responses: {
-          kind: ["Stay, since he asked", "Reassure him it's fine"],
+          kind: ["Stay, since he asked", "Say he's earned a break"],
           playful: ["Guess Ritsu's hiding spot", "Tease the new acronym"],
-          bold: ["Go drag Ritsu back yourself", "Tell him to calm down"],
+          bold: ["Go drag Ritsu back yourself", "Take the documents yourself"],
           neutral: ["Check the usual room first", "Search without comment"],
         },
       },
@@ -355,7 +355,7 @@ export default {
         greeting:
           '"Don\'t make that face. That shot costs more than your shoes. Drink."',
         responses: {
-          kind: ["Say you'll try anything once", "Thank him for the thought"],
+          kind: ["Say you'll try anything once", "Drink it in one go"],
           playful: ["Ask what's really in it", "Tease the diagnosis"],
           bold: ["Say your shoes are worth more", "Demand a better flavor"],
           neutral: [
@@ -370,7 +370,7 @@ export default {
         greeting:
           "\"You again! HDY walk into my office like it's a hallway. Sit down, I'm nearly finished.\"",
         responses: {
-          kind: ["Apologize for barging in", "Say you'll keep it short"],
+          kind: ["Ask if Taiga's costing him", "Say you'll keep it short"],
           playful: [
             "Sit like you own the chair",
             "Ask what Taiga did this time",
@@ -380,15 +380,12 @@ export default {
         },
       },
       {
-        line: '"Spit it out, I don\'t have all day," he snaps, then actually stops to listen.',
-        approach: "Say what you want, quickly",
+        line: "\"Tch... If you don't have any business for me, I'm leaving! You're wasting my precious time!\"",
+        approach: "Say you've got business",
         greeting: "\"...Well? I'm listening. Don't make me regret it.\"",
         responses: {
-          kind: ["Take your time anyway", "Thank him for listening"],
-          playful: [
-            "Drag it out just to annoy him",
-            "Watch him try to rush you",
-          ],
+          kind: ["Ask how his day's going", "Say it plain for him"],
+          playful: ["Drag it out just to annoy him", "Ask what his time costs"],
           bold: ["Say he won't regret it", "Cut straight to the point"],
           neutral: ["State it, then wait", "Ask plainly, no preamble"],
         },
@@ -412,23 +409,20 @@ export default {
         responses: {
           kind: ["Ask him what he'd change", "Stand still and turn"],
           playful: ["Ask for the full review", "Model it, badly, on purpose"],
-          bold: ["Cut off the critique first", "Say the outfit's fine as is"],
+          bold: ["Say turn him around next", "Say the outfit's fine as is"],
           neutral: ["Stand still, say nothing", "Let him finish looking"],
         },
       },
       {
-        line: '"Don\'t think this means anything," he says, of the seat he just pulled out for you. It means something.',
-        approach: "Take the seat anyway",
+        line: '"My drink is empty. Hey! I\'m talking to you! Go bring me a refill!"',
+        approach: "Bring him a refill",
         greeting:
-          "\"Sit there. That chair's reserved. It's reserved for you, obviously, keep up.\"",
+          '"...You actually got it right. Hmph. Maybe you\'re not useless."',
         responses: {
-          kind: ["Thank him for saving it", "Say you'll keep up"],
-          playful: [
-            "Ask what it means, out loud",
-            "Ask who else it's reserved for",
-          ],
-          bold: ["Say you'll reserve him one", "Call the gesture what it is"],
-          neutral: ["Settle in, say nothing", "Don't ask why it's yours"],
+          kind: ["Bring him two", "Ask what he's drinking"],
+          playful: ["Ask for a tip", "Salute and go"],
+          bold: ["Name your fee for it", "Say next round's on him"],
+          neutral: ["Take his glass", "Let him wait a minute"],
         },
       },
       {
@@ -437,12 +431,12 @@ export default {
         greeting:
           "\"Nothing's free, you know. Well. Almost nothing. Don't push it.\"",
         responses: {
-          kind: ["Pay whatever he asks", "Ask what he'd call fair"],
+          kind: ["Say it's worth it to you", "Ask what he'd call fair"],
           playful: [
             "Ask what's on the almost list",
             "Argue the price on principle",
           ],
-          bold: ["Refuse to pay at all", "Name your own price back"],
+          bold: ["Say put it on your tab", "Name your own price back"],
           neutral: ["Pay without comment", "Wait for the final number"],
         },
       },
@@ -463,9 +457,9 @@ export default {
         greeting:
           "\"Tch. Watch where you're going! ...You. You're fine? Good.\"",
         responses: {
-          kind: ["Tell him you're fine", "Thank him for checking"],
+          kind: ["Tell him you're fine", "Say his guy's forgiven"],
           playful: ["Watch him deal with it", "Egg on the confrontation"],
-          bold: ["Handle it yourself instead", "Ask him to ease off his guy"],
+          bold: ["Say you can take a bump", "Stare his guy down too"],
           neutral: ["Stay out of it, say nothing", "Let him deal with it"],
         },
       },
@@ -477,9 +471,9 @@ export default {
         greeting:
           "\"Oh, you're back! Actually... I'm kind of happy to see you. Don't tell anyone.\"",
         responses: {
-          kind: ["Hold back until he's done", "Say the operation matters"],
-          playful: ["Interrupt him right back", "Threaten to tell everyone"],
-          bold: ["Demand his full attention", "Step into the middle of it"],
+          kind: ["Say you're happy to see him", "Say you won't tell anyone"],
+          playful: ["Interrupt him right back", "Ask what it's worth to you"],
+          bold: ["Say you'll wait by his table", "Step into the middle of it"],
           neutral: ["Stand by, say nothing", "Wait for him to come over"],
         },
       },
@@ -488,9 +482,9 @@ export default {
         approach: "Let him order for you",
         greeting: '"You eaten? Don\'t answer, I already ordered."',
         responses: {
-          kind: ["Thank him for ordering", "Say you'll eat whatever"],
+          kind: ["Say he ordered right", "Say you'll eat whatever"],
           playful: ["Guess what he ordered", "Ask for an appointment slot"],
-          bold: ["Order something else instead", "Say you knew he'd want to"],
+          bold: ["Say you'll get the next one", "Say you knew he'd want to"],
           neutral: ["Take the food, say nothing", "Sit down and eat"],
         },
       },
@@ -502,7 +496,7 @@ export default {
         responses: {
           kind: ["Let the compliment stand", "Say he can keep complaining"],
           playful: ["Complain right back at him", "Complain louder than him"],
-          bold: ["Call out the backhanded praise", "Give him no name"],
+          bold: ["Say no one put it there now", "Give him no name"],
           neutral: ["Ride out the praise", "Let the audience listen"],
         },
       },
@@ -532,7 +526,7 @@ export default {
             "Point out the register drop",
             "Ask him to yell at you too",
           ],
-          bold: ["Call out the change directly", "Say everyone noticed"],
+          bold: ["Say you'll stay a while", "Say everyone noticed"],
           neutral: ["Let the moment pass quietly", "Take the welcome as given"],
         },
       },
@@ -554,7 +548,7 @@ export default {
         greeting:
           "\"Sit. You're getting the mask. Don't argue, your pores are a cry for help.\"",
         responses: {
-          kind: ["Let him do the mask", "Say he knows best"],
+          kind: ["Let him do the mask", "Ask which mask he uses"],
           playful: ["Ask which step is the neck", "Say your pores are fine"],
           bold: ["Ask what it all costs", "Put a mask on him too"],
           neutral: ["Hold still", "Lean back in the chair"],
@@ -567,7 +561,7 @@ export default {
           '"Again. With feeling. ...Better. You can keep saying it. Only you, though."',
         responses: {
           kind: ["Say it suits him", "Say it with a smile"],
-          playful: ["Call him Lulu instead", "Say it three times fast"],
+          playful: ["Salute and say Fico", "Say it three times fast"],
           bold: ["Ask what it means", "Say you'll call him Romeo"],
           neutral: ["Say it once", "Nod"],
         },
@@ -578,7 +572,7 @@ export default {
         greeting:
           "\"Don't touch. You can look. Looking's free. For you, anyway.\"",
         responses: {
-          kind: ["Keep your hands to yourself", "Say he's careful with it"],
+          kind: ["Ask how long it takes him", "Say he's careful with it"],
           playful: ["Ask if they have names", "Ask for the jewel appraisal"],
           bold: ["Ask him to teach you", "Pick up a cloth and help"],
           neutral: ["Watch in silence", "Sit across from him"],
@@ -590,7 +584,7 @@ export default {
         greeting:
           "\"Of course it does. It costs more than your wardrobe. ...I'll have him find you one. Don't make it weird.\"",
         responses: {
-          kind: ["Thank him for the offer", "Say you'd like that"],
+          kind: ["Say you'd wear it nightly", "Say you'd like that"],
           playful: ["Say Leo has him figured out", "Sniff again, louder"],
           bold: ["Ask him to pick it himself", "Say you'd rather borrow his"],
           neutral: ["Step back", "Nod at the bottle"],
@@ -626,9 +620,9 @@ export default {
         greeting:
           "\"Good. Your hands are worth more than the box. ...That's an insurance thing. Don't read into it.\"",
         responses: {
-          kind: ["Thank him for the help", "Say you were being careful"],
+          kind: ["Hand it to his guy", "Say his hands matter too"],
           playful: ["Pretend to fumble it", "Ask what your hands are worth"],
-          bold: ["Say you had it handled", "Pick it back up"],
+          bold: ["Say then he carries it", "Pick it back up"],
           neutral: ["Step back from it", "Let the guys take it"],
         },
       },
@@ -639,8 +633,8 @@ export default {
           '"Tch. Fine. You saw. Now help me look for more dust, since you\'re here."',
         responses: {
           kind: ["Help him check the corners", "Say the floor looks fine"],
-          playful: ["Point at imaginary dust", "Ask if he's got a white glove"],
-          bold: ["Tell him to yell less", "Say he missed a spot"],
+          playful: ["Hunt dust with him", "Ask if he's got a white glove"],
+          bold: ["Find the next hair first", "Say he missed a spot"],
           neutral: ["Look for dust", "Grab a cloth"],
         },
       },
@@ -664,7 +658,7 @@ export default {
         responses: {
           kind: ["Carry his water", "Say you'll keep him company"],
           playful: ["Ask if Mio charges him", "Say his posture is flawless"],
-          bold: ["Say he's stalling", "Call Mio for him"],
+          bold: ["Walk him to Mio's", "Call Mio for him"],
           neutral: ["Walk with him", "Wait outside"],
         },
       },
@@ -714,7 +708,7 @@ export default {
         greeting:
           "\"You've cost me something I can't put a number on. Do you have ANY idea how much that irritates me?\"",
         responses: {
-          kind: "Reassure him it's fine",
+          kind: "Say you'll make it up to him",
           playful: "Ask what it cost",
           bold: "Tell him what he's worth",
           neutral: "Wait for him to explain",
@@ -726,7 +720,7 @@ export default {
         greeting:
           "\"You're the only thing in this building that isn't for sale. That's the problem.\"",
         responses: {
-          kind: "Let him fix it, say thanks",
+          kind: "Let him fix it",
           playful: "Tease him for staying close",
           bold: "Fix his collar back",
           neutral: "Let him finish fixing it",
@@ -750,7 +744,7 @@ export default {
           '"Wear it. I bought it. Don\'t argue, just... just wear it for me."',
         responses: {
           kind: "Wear it for him",
-          playful: "Refuse to wear it",
+          playful: "Wear it backwards first",
           bold: "Wear it and own the moment",
           neutral: "Leave with the room",
         },
@@ -896,7 +890,7 @@ export default {
         },
       },
       {
-        line: "**{name}** doesn't look up from the count when {user} walks in. \"Name, business, and what it's worth to me. Go.\"",
+        line: "**{name}** doesn't look up from his phone when {user} stops him. \"Name, business, and what it's worth to me. Go.\"",
         responses: {
           kind: "Give him your name first",
           playful: "Say it's worth a fortune",
@@ -904,17 +898,17 @@ export default {
         },
       },
       {
-        line: '"Who let you up here?" **{name}** asks {user}, then answers himself. "Doesn\'t matter. You\'re here. Be useful."',
+        line: '"Who sent you?" **{name}** asks {user}, then answers himself. "Doesn\'t matter. You\'re here. Be useful."',
         responses: {
           kind: "Ask how you can help",
-          playful: "Say you let yourself up",
+          playful: "Say nobody sent you",
           bold: "Say you're always useful",
         },
       },
       {
-        line: '**{name}** checks his reflection before he turns to {user}. "Well? Are you here to spend money, or to waste my time?"',
+        line: '**{name}** looks {user} over from shoes to collar, unimpressed. "Well? Are you here to make me money, or to waste my time?"',
         responses: {
-          kind: "Compliment his skin",
+          kind: "Compliment his outfit",
           playful: "Say you're here to waste it",
           bold: "Say you're here to make some",
         },
@@ -922,11 +916,11 @@ export default {
     ],
     known: [
       {
-        line: '{user} says the name, and **{name}** snaps, "Spit it out, I don\'t have all day." Then he actually listens.',
+        line: '{user} calls his name, and **{name}** snaps, "Spit it out, I don\'t have all day." Then he actually listens.',
         responses: {
           kind: "Keep it quick for him",
           playful: "Take your time on purpose",
-          bold: "Spit it out",
+          bold: "Say he'll want to hear it",
         },
       },
       {
@@ -956,11 +950,11 @@ export default {
         },
       },
       {
-        line: '"Sit. The good seat. No, I didn\'t hold it. Shut up." **{name}** absolutely held it for {user}.',
+        line: '"Hot water, salt, lemon. My own blend." **{name}** pushes the bottle at {user}. "You look dried out."',
         responses: {
-          kind: "Take the good seat",
-          playful: "Point out he held it",
-          bold: "Sit like it's yours",
+          kind: "Drink it with him",
+          playful: "Ask if it's any good",
+          bold: "Say you're not dried out",
         },
       },
       {
@@ -982,7 +976,7 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** loses his thread entirely.",
+        line: "{user} says hi, and **{name}** loses his thread entirely.",
         responses: {
           kind: "Wait for him to find it",
           playful: "Ask what the thread was",
@@ -994,7 +988,7 @@ export default {
         responses: {
           kind: "Say hi to the three",
           playful: "Ask what they did",
-          bold: "Tell him to stop yelling",
+          bold: "Meet him halfway",
         },
       },
     ],
@@ -1042,11 +1036,11 @@ export default {
         },
       },
       {
-        line: "{user} says the name, and **{name}** claims them out loud.",
+        line: '{user} says hi, and **{name}** stops mid-insult to someone else. "Hold that thought. Not you. You stay."',
         responses: {
-          kind: "Say you're his",
-          playful: "Ask if he needs a megaphone",
-          bold: "Claim him back louder",
+          kind: "Say you're not going anywhere",
+          playful: "Ask who the insult was for",
+          bold: "Tell him to finish it later",
         },
       },
     ],

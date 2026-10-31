@@ -22,7 +22,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { InteractionResponseType } from 'discord-interactions';
 import { EPHEMERAL, IS_TEST } from './utils.js';
-import { backgroundPath } from './constants/backgrounds.js';
+import { backgroundPath, timeBucket } from './constants/backgrounds.js';
 import { getCharacterById } from './constants/characters.js';
 import { RESPONSE_TYPE_ORDER } from './constants/responseTypes.js';
 import {
@@ -304,6 +304,9 @@ export async function loadMeetEncounter(userId, instanceId, now = new Date()) {
     outfit: row.outfit,
     tier: row.tier,
     background: row.background_file ? `/assets/bg/${backgroundPath(row.background_file)}` : null,
+    // Judged at the spawn, like the line drawn then: Towa's touch lines stay
+    // wordless by day (activity/src/hangout/lines.js).
+    daytime: timeBucket(new Date(row.created_at)) === 'day',
     intro: row.intro,
     notice: row.notice,
     line: row.line,

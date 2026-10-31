@@ -774,6 +774,263 @@ export default {
           neutral: ["Wait for Jiro to appear", "Wait for him to step aside"],
         },
       },
+      {
+        line: "Two Frostheim students left his examination room laughing. His eyes are red, and he's daring you to mention it.",
+        approach: "Close the door behind them",
+        greeting:
+          '"Allergies. ...Mark my words, I\'ll have those pompous, preening parasites at Frostheim kneeling before me."',
+        responses: {
+          kind: [
+            "Say his work speaks for itself",
+            "Say you'd trust no one else",
+          ],
+          playful: ["Blame the allergies too", "Ask for an allergy remedy"],
+          bold: ["Say you'd have shown them out", "Stay until his eyes clear"],
+          neutral: ["Let the allergies stand", "Pretend you didn't notice"],
+        },
+      },
+      {
+        line: '"I\'m busy with my experiments. Go back to your dorm and ready yourself for your next appointment. Jiro, see her home." Jiro is barely on his feet before Yuri reaches for his own coat.',
+        approach: "Wait by the door",
+        greeting:
+          '"Jiro has a dosage to prepare. I happen to be going that way. The direction is... that way. Isn\'t it?"',
+        responses: {
+          kind: ["Say you're glad it's him", "Ask if he's warm enough"],
+          playful: ["Ask if he knows the way", "Offer to lead, just in case"],
+          bold: ["Say you'd rather he took you", "Take the long way with him"],
+          neutral: ["Point the right way", "Hold the door for him"],
+        },
+      },
+      {
+        line: 'The anomaly that nearly bit you on your last mission is under glass in his lab. "Even harmful anomalies can have use as medicinal ingredients..."',
+        approach: "Look at the specimen",
+        greeting:
+          '"This is the sort of immeasurable value my work provides. ...It will never touch you again. It is going into a tincture."',
+        responses: {
+          kind: ["Ask what the tincture treats", "Ask him to show you how"],
+          playful: ["Ask if it's still angry", "Ask to name the tincture"],
+          bold: ["Say it never stood a chance", "Say you'll bring him more"],
+          neutral: ["Keep back from the glass", "Watch it through the glass"],
+        },
+      },
+      {
+        line: "Jiro mentions, in passing, that his glasses were a gift from Yuri. Yuri drops an entire tray of slides.",
+        approach: "Help with the slides",
+        greeting:
+          '"They were a PRESCRIPTION! Corrective lenses are a medical necessity, Jiro, not a gift!"',
+        responses: {
+          kind: ["Say he chose them well", "Say they suit Jiro"],
+          playful: [
+            "Ask if you get a pair too",
+            "Ask for your own prescription",
+          ],
+          bold: [
+            "Ask Jiro for the full story",
+            "Say Jiro wears them every day",
+          ],
+          neutral: ["Stack the slides back up", "Leave it to the two of them"],
+        },
+      },
+      {
+        line: "He's planning his trip to Nihombashi Takashimaya for next season's clothes, and has asked your opinion on three coats in a row.",
+        // A sample of one is the giveaway: teasing that he only asked her
+        // flusters him more than a sincere pick does.
+        mood: true,
+        approach: "Give your opinion",
+        greeting:
+          '"Your opinion is a data point. A single data point. I simply require a larger sample."',
+        responses: {
+          kind: ["Pick the one he lingered on", "Say the teal one suits him"],
+          playful: ["Ask if you're the whole sample", "Ask who else he asked"],
+          bold: ["Say you're coming with him", "Pick one for him, no debate"],
+          neutral: ["Say they all look fine", "Point at one at random"],
+        },
+      },
+      {
+        line: "He's on the third volume of The Ace Doctor Wows Minds In Another World Thesis, and has stopped hiding the cover from you.",
+        // He's stopped hiding it from her: asking to share the secret
+        // flusters him more than taking the "research" at face value.
+        mood: true,
+        approach: "Ask how it's going",
+        greeting:
+          '"It is research. The protagonist\'s surgical technique is wildly inaccurate and I am... documenting the errors. Thoroughly."',
+        responses: {
+          kind: ["Ask what the hero gets wrong", "Ask him to read you a page"],
+          playful: ["Ask for volume one", "Ask to borrow it after him"],
+          bold: ["Read over his shoulder", "Ask what happens next"],
+          neutral: ["Leave him to his reading", "Let the excuse stand"],
+        },
+      },
+      {
+        line: '"Agnihaet." His stigma flares, and a page of equations resolves in a single breath. He looks up to see if you saw.',
+        approach: "Watch him work",
+        greeting:
+          '"Instantaneous processing. You may applaud, I won\'t stop you."',
+        responses: {
+          kind: ["Ask him to show you again", "Ask what he solved"],
+          playful: ["Applaud for far too long", "Ask him to do your homework"],
+          bold: ["Say you saw every second", "Say the world should see this"],
+          neutral: ["Look back at the page", "Wait for the result"],
+        },
+      },
+      {
+        line: "He's giving Jiro his evening shot, one of three a day, and narrating every step to you like a lecture.",
+        approach: "Pay attention",
+        greeting:
+          '"Observe. Nobody else can do this. Not safely. You are watching a singular procedure."',
+        responses: {
+          kind: ["Ask him to explain the dose", "Ask who looks after him"],
+          playful: ["Take notes like a student", "Ask if there's a quiz after"],
+          bold: ["Step closer to watch", "Stay for all three shots"],
+          neutral: [
+            "Watch the needle, not him",
+            "Wait for the procedure to end",
+          ],
+        },
+      },
+      {
+        line: "It's snowing. He has drawn every blind in the lab and is pretending the weather doesn't exist.",
+        approach: "Leave the blinds shut",
+        greeting:
+          '"I despise the snow. It brings nothing but revolting memories. ...We are not discussing it."',
+        responses: {
+          kind: ["Talk about anything else", "Stay in with him"],
+          playful: [
+            "Draw a sun on the whiteboard",
+            "Count the days until spring",
+          ],
+          bold: ["Say you'll keep him busy", "Close the last blind yourself"],
+          neutral: ["Get on with the checkup", "Glance at the window anyway"],
+        },
+      },
+      {
+        line: "Another mission came back with nothing intact for him to study. He's taking it as a personal attack from every other house.",
+        approach: "Ask what happened",
+        greeting:
+          '"Brutes! Every one of them! Not a single viable specimen. Do they think anomalies grow on trees!?"',
+        responses: {
+          kind: ["Ask what he'd have studied", "Say his work deserves better"],
+          playful: ["Ask if some grow on trees", "Volunteer as a stand-in"],
+          bold: ["Help him draft the complaint", "Say they'll regret it"],
+          neutral: ["Let him vent", "Wait out the tirade"],
+        },
+      },
+      {
+        line: "He's packing for an ingredient run into Jabberwock's mountains, and keeps glancing at the second pair of gloves he packed.",
+        // His sense of direction is the soft spot: teasing who navigates
+        // flusters him more than a plain yes to the trip.
+        mood: true,
+        approach: "Ask about the gloves",
+        greeting:
+          '"The mountains are uncharted. A second pair of hands is a sensible precaution. Yours happen to be available."',
+        responses: {
+          kind: ["Say you'll come along", "Ask what you'll look for"],
+          playful: ["Ask who's reading the map", "Offer to lead the way"],
+          bold: ["Put the gloves on now", "Pack your bag beside his"],
+          neutral: ["Check the weather first", "Ask when you'd leave"],
+        },
+      },
+      {
+        line: "Jiro is out, so he made his own wake-up tonic. He made it badly, and is drinking it with great dignity.",
+        approach: "Ask how it tastes",
+        greeting:
+          '"Jiro measures by eye. I measure by science. The results are... comparable."',
+        responses: {
+          kind: ["Offer to make the next one", "Ask how Jiro makes it"],
+          playful: ["Ask for a sip", "Ask for his honest rating"],
+          bold: ["Remake it for him", "Make him eat something with it"],
+          neutral: ["Let him drink it", "Watch him finish it"],
+        },
+      },
+      {
+        line: "Jiro is right there with nothing to do, and Yuri still hands the clipboard to you.",
+        approach: "Take the clipboard",
+        greeting:
+          '"Jiro is... recovering. From something. You\'ll assist me today. Be grateful."',
+        responses: {
+          kind: ["Ask what the first step is", "Say you'll do it properly"],
+          playful: ["Ask Jiro how he's feeling", "Salute the doctor"],
+          bold: [
+            "Ask for a lab coat of your own",
+            "Say you'll assist every day",
+          ],
+          neutral: ["Wait for instructions", "Read down the list"],
+        },
+      },
+      {
+        line: "You left something sweet on his desk. He's filed it as a 'low blood sugar intervention' and eaten it immediately.",
+        approach: "Ask if it helped",
+        greeting:
+          '"My blood sugar was dropping. You noticed. That\'s... adequate observational skill."',
+        responses: {
+          kind: ["Insist he eat a real meal", "Say you'll bring one tomorrow"],
+          playful: ["Ask if he'll prescribe more", "Ask for that in writing"],
+          bold: ["Say you'll keep checking", "Stock his desk drawer"],
+          neutral: ["Let the excuse stand", "Clear the wrapper away"],
+        },
+      },
+      {
+        line: "His new paper goes to print next week. He's asked you to read the acknowledgments, and only the acknowledgments.",
+        // He hid her in the acknowledgments: catching the name flusters him
+        // more than praising the paper does.
+        mood: true,
+        approach: "Read the acknowledgments",
+        greeting:
+          '"Read it. Out loud, if you must. And do not comment on the third name."',
+        responses: {
+          kind: ["Ask to read the whole thing", "Ask what the paper proves"],
+          playful: ["Read the third name twice", "Ask who the third name is"],
+          bold: ["Ask why you're in it", "Say you'll frame the page"],
+          neutral: ["Read it to yourself", "Hand the page back"],
+        },
+      },
+      {
+        line: "He's drawn your blood again and holds the vial up to the light longer than any test requires.",
+        approach: "Ask about the results",
+        greeting:
+          '"Your numbers held this week. Held. That is... that is a good result. I\'m allowed to look at a good result."',
+        responses: {
+          kind: ["Say that's his doing", "Ask what comes next"],
+          playful: ["Ask if he'll frame the vial", "Ask how long he'll look"],
+          bold: ["Hold out your arm for more", "Tell him to celebrate"],
+          neutral: ["Let him look", "Roll your sleeve down"],
+        },
+      },
+      {
+        line: 'He bursts out of the lab announcing a new formula from an anomalous plant that only grows in subzero temperatures, gets as far as "discovered by...!", and remembers who found it.',
+        approach: "Ask who discovered it",
+        greeting:
+          '"Eureka! Discovered by...! Jiro... A joint effort. Largely mine. Jiro held the plant."',
+        responses: {
+          kind: ["Ask what the formula treats", "Say the formula's still his"],
+          playful: ["Ask Jiro for his side", "Ask how well Jiro held it"],
+          bold: ["Ask to see it work", "Say it's big news either way"],
+          neutral: ["Let him rewrite the credits", "Wait for the full story"],
+        },
+      },
+      {
+        line: "There's a health charm from a shrine tucked into your file. He insists the lab came with it.",
+        approach: "Ask about the charm",
+        greeting:
+          '"Superstition has no place in medicine. It\'s... tradition. Traditions are harmless. Leave it there."',
+        responses: {
+          kind: ["Say you'll keep it with you", "Ask which shrine he went to"],
+          playful: ["Ask what the lab wished for", "Ask if he bought one too"],
+          bold: ["Tie it to your bag", "Ask to go along next year"],
+          neutral: ["Leave the charm where it is", "Open the file around it"],
+        },
+      },
+      {
+        line: "He laughed at something you said, a real one, not the mad-scientist kind, and now looks horrified by it.",
+        approach: "Tell the joke again",
+        greeting: '"That was a cough. A medical cough. I\'m monitoring it."',
+        responses: {
+          kind: ["Say you liked hearing it", "Let the cough stand"],
+          playful: ["Try for a second one", "Offer him a cough drop"],
+          bold: ["Say you'll do it again", "Tell the same joke louder"],
+          neutral: ["Move on with the topic", "Pretend you missed it"],
+        },
+      },
     ],
     close: [
       {
