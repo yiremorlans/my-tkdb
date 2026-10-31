@@ -109,3 +109,18 @@ export async function InstallGlobalCommands(appId, commands) {
     console.error(err);
   }
 }
+
+// Bulk-overwrites one guild's commands. Guild commands exist only in that
+// server, so nobody elsewhere (admins included) can see them. `contexts` and
+// `integration_types` are global-only fields, so they're stripped here.
+export async function InstallGuildCommands(appId, guildId, commands) {
+  const endpoint = `applications/${appId}/guilds/${guildId}/commands`;
+  const body = commands.map(({ contexts, integration_types, ...rest }) => rest);
+
+  try {
+    await DiscordRequest(endpoint, { method: "PUT", body });
+    console.log(`✅ Registered ${commands.length} dev commands in guild ${guildId}`);
+  } catch (err) {
+    console.error(err);
+  }
+}

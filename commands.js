@@ -1,5 +1,5 @@
 import "dotenv/config";
-import { InstallGlobalCommands } from "./utils.js";
+import { InstallGlobalCommands, InstallGuildCommands } from "./utils.js";
 import { HOUSES } from "./constants/backgrounds.js";
 import { EVENT_NAME_MAX } from "./constants/countdown.js";
 
@@ -636,8 +636,20 @@ const ALL_COMMANDS = [
   EVENT_COMMAND,
   WISHINGWELL_COMMAND,
   LAUNCH_COMMAND,
-  ENCDEV_COMMAND,
-  MISSIONDEV_COMMAND,
 ];
 
+// Owner-only tooling, installed only in DEV_GUILD_ID so it's invisible in
+// every other server (even to admins, who'd otherwise see a
+// default_member_permissions "0" command). The global overwrite above drops
+// them everywhere else. The handlers' OWNER_DISCORD_ID gate stays as a second
+// layer. LAUNCH_COMMAND can't move here: Discord requires the entry point to
+// be global.
+const DEV_COMMANDS = [ENCDEV_COMMAND, MISSIONDEV_COMMAND];
+
 InstallGlobalCommands(process.env.APP_ID, ALL_COMMANDS);
+
+if (process.env.DEV_GUILD_ID) {
+  InstallGuildCommands(process.env.APP_ID, process.env.DEV_GUILD_ID, DEV_COMMANDS);
+} else {
+  console.warn("DEV_GUILD_ID unset: /encdev and /missiondev not registered anywhere");
+}
