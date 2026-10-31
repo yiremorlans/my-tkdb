@@ -80,6 +80,10 @@
         "File": "expressions/e_suneru_00.exp3.json"
       },
       {
+        "Name": "e_surprise_00",
+        "File": "expressions/e_surprise_00.exp3.json"
+      },
+      {
         "Name": "e_tsujo_00",
         "File": "expressions/e_tsujo_00.exp3.json"
       }

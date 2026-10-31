@@ -54,7 +54,7 @@
       "blush": ["e_sekimen_00"],
       "smile_blush": ["e_manmen_00", "e_sekimen_00"],
       "full_smile_blush": ["e_manmen_00", "e_sekimen_00"],
-      "surprise": ["e_mad_00", "e_ase_00", "e_aozame_00"],
+      "surprise": ["e_surprise_00"],
       "surprise_blush": ["e_odoroki_00", "e_sekimen_00"],
       "sweat": ["e_ase_00"],
       "serious": ["e_magao_00"],
