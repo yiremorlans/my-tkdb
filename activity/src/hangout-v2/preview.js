@@ -233,6 +233,10 @@ async function main() {
   // --- VN chrome ------------------------------------------------------------
   $("#btn-debug").onclick = () => {
     panel.hidden = !panel.hidden;
+    document.body.classList.toggle("drawer-open", !panel.hidden);
+    // Pixi's resizeTo only watches the window, so nudge it to re-fit the
+    // canvas to the stage's new width.
+    dispatchEvent(new Event("resize"));
   };
   const toggleUi = () => {
     const hidden = document.body.classList.toggle("hide-ui");

@@ -13,7 +13,7 @@ export default {
     cheekPoke: ["...What.", "You poke everyone you meet like that?"],
     lipsTouch: ["Hands off.", "...Don't."],
     earTouch: ["Watch it. Those catch.", "Leave the earrings alone."],
-    handTap: ["Careful. There's grease on these.", "...You need something?"],
+    handTap: ["What is it?", "...You need something?"],
     chestTouch: ["Back up.", "Step back. Not a good idea."],
     bellyTouch: ["...Don't poke me there.", "That's my stomach. Leave it."],
     hipsTouch: ["Hey. Hands to yourself.", "That's enough."],
@@ -31,14 +31,11 @@ export default {
       "...You're gonna pull one out.",
     ],
     handTap: [
-      "Gloves stay on. You'll get grease on you.",
+      "Something on my hand?",
       "...You okay? Need a hand with something?",
     ],
     chestTouch: ["Back up a little.", "...Too close."],
-    bellyTouch: [
-      "Knock it off.",
-      "...Yeah, it's solid. Now quit it.",
-    ],
+    bellyTouch: ["Knock it off.", "...Yeah, it's solid. Now quit it."],
     hipsTouch: ["Hey. Cut it out.", "Don't push your luck."],
     upset: ["...Stop that.", "Enough. Give me a minute."],
   },
@@ -48,16 +45,13 @@ export default {
       "Nobody does that. ...You're fine.",
     ],
     cheekPoke: ["What? Something on my face?", "...You're in a good mood."],
-    lipsTouch: ["...Don't.", "...Not that one."],
-    earTouch: [
-      "...That tickles. Don't tell anyone.",
-      "You like the earrings that much?",
-    ],
+    lipsTouch: ["...Don't.", "...Not there."],
+    earTouch: ["...That tickles. Quit it.", "You like the earrings that much?"],
     handTap: [
-      "Still got grease on them. ...Doesn't bother you, huh.",
+      "Rough hands. ...Doesn't bother you, huh.",
       "...I'm here. What's up?",
     ],
-    chestTouch: ["...Back up. I mean it, a little.", "That's close."],
+    chestTouch: ["...Back up a little.", "That's close."],
     bellyTouch: [
       "...Hey. Warn me first.",
       "...You caught me off guard. Don't make it a habit.",
@@ -76,7 +70,7 @@ export default {
       "...That's not fair.",
       "Keep that up and I'll forget what I was doing.",
     ],
-    handTap: ["...Here. I wiped them off.", "You can hold on. I don't mind."],
+    handTap: ["...Here. Give me your hand.", "You can hold on. I don't mind."],
     chestTouch: [
       "...You can hear that, can't you.",
       "Careful. I'm not used to this.",
@@ -109,7 +103,7 @@ export default {
       "Come closer. You don't have to reach.",
     ],
     handTap: [
-      "Took the gloves off. Figured you'd come for this one.",
+      "...Yeah. I've got you.",
       "...Come here. I'll hold on this time.",
     ],
     chestTouch: [
@@ -122,7 +116,7 @@ export default {
     ],
     hipsTouch: [
       "...Bold. Looks good on you.",
-      "Keep that up and you're not going back to your house.",
+      "Keep that up and you're not going back to your dorm.",
     ],
   },
 };

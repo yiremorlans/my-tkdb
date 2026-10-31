@@ -4,6 +4,7 @@
 :root {
   --panel: #1d2027;
   --line: #2e333d;
+  --drawer-w: min(340px, 92vw);
 }
 
 /* --- HUD (debug readouts) -------------------------------------------------- */
@@ -37,7 +38,7 @@ body.hide-ui .vn-box, body.hide-ui .choices { display: none; }
 .drawer {
   position: fixed;
   top: 0; right: 0; bottom: 0;
-  width: min(340px, 92vw);
+  width: var(--drawer-w);
   overflow-y: auto;
   padding: calc(10px + var(--safe-top)) calc(12px + var(--safe-right))
     calc(10px + var(--safe-bottom)) 12px;
@@ -47,6 +48,12 @@ body.hide-ui .vn-box, body.hide-ui .choices { display: none; }
   z-index: 10;
 }
 .drawer[hidden] { display: none; }
+/* Open, the drawer docks beside the scene instead of covering it: the stage
+   gives up the drawer's width (the canvas re-fits on the resize event
+   preview.js sends). Phone widths keep the overlay. */
+@media (min-width: 700px) {
+  body.drawer-open .stage { right: var(--drawer-w); }
+}
 .drawer h3 {
   margin: 14px 0 6px; font-size: 11px; letter-spacing: 0.08em;
   text-transform: uppercase; color: var(--muted);
