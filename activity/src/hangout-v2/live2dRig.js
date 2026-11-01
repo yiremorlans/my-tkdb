@@ -226,6 +226,23 @@ export class Live2DRig {
     this.setupPartBlush();
     this.setMood(this.moodName);
     this.startBreath();
+    this.preloadPoses(motions);
+  }
+
+  // Clips otherwise load the first time they play, and playPose times the
+  // hand-off to *_hold from the call, so a cold fetch (first visit, or
+  // after a deploy changes the asset URLs) cut the pose short and snapped
+  // it. Every pose rig.json reactionPoses names, at any tier, and the
+  // guarded fallback, load in the background once the model is up. A
+  // destroyed manager (the outfit changed) just stops loading.
+  preloadPoses(motions) {
+    const named = Object.values(this.rig.reactionPoses ?? {}).flatMap((p) => (typeof p === "string" ? [p] : Object.values(p?.byTier ?? {})));
+    const poses = new Set([...named, "m_udekumi"].filter((p) => this.poses.includes(p)));
+    for (const pose of poses) {
+      for (const group of [pose, `${pose}_hold`, `${pose}_return`]) {
+        motions.loadMotion(group, 0).catch(() => {});
+      }
+    }
   }
 
   // The game breathes on its own animation layer. m_breath writes every
@@ -487,16 +504,33 @@ export class Live2DRig {
     return [...this.durations.keys()].filter((g) => this.durations.has(`${g}_hold`) && this.durations.has(`${g}_return`));
   }
 
-  /** Plays pose `name`; with `hold` (seconds), returns from it by itself. */
+  /**
+   * Plays pose `name`; with `hold` (seconds), returns from it by itself.
+   * The hand-offs are timed from when the clip starts, not from this call:
+   * a clip that isn't loaded yet starts once its fetch lands, and timing
+   * from the call cut it short and snapped it to its hold. Until then,
+   * leavesAt is the estimate from now.
+   */
   playPose(name, hold = null) {
     if (!this.poses.includes(name)) return false;
     this.clearPoseTimers();
+    const seq = this.poseSeq;
     this.posing = name;
-    this.model.motion(name, 0, MotionPriority.FORCE);
+    this.poseHold = hold;
     const end = this.durations.get(name);
-    this.later(end - 0.05, () => this.model.motion(`${name}_hold`, 0, MotionPriority.FORCE, { loop: true }));
-    this.returnTimer = hold != null ? this.later(end + hold, () => this.leavePose()) : null;
     this.leavesAt = hold != null ? performance.now() + (end + hold) * 1000 : null;
+    Promise.resolve(this.model.motion(name, 0, MotionPriority.FORCE)).then((started) => {
+      if (seq !== this.poseSeq) return; // left, or another pose took over, while it loaded
+      if (!started) {
+        this.posing = null;
+        this.leavesAt = null;
+        return;
+      }
+      this.later(end - 0.05, () => this.model.motion(`${name}_hold`, 0, MotionPriority.FORCE, { loop: true }));
+      if (this.poseHold == null) return; // kept (keepPose) while it loaded
+      this.returnTimer = this.later(end + this.poseHold, () => this.leavePose());
+      this.leavesAt = performance.now() + (end + this.poseHold) * 1000;
+    });
     return true;
   }
 
@@ -548,6 +582,7 @@ export class Live2DRig {
     clearTimeout(this.returnTimer);
     this.returnTimer = null;
     this.leavesAt = null;
+    this.poseHold = null; // a pose still loading doesn't schedule its return either
   }
 
   /** Leaves the guarded pose (the tier changed). */
@@ -561,9 +596,11 @@ export class Live2DRig {
     return id;
   }
 
+  // Also bumps poseSeq, so a pose still loading won't schedule its timers.
   clearPoseTimers() {
     this.poseTimers.forEach(clearTimeout);
     this.poseTimers = [];
+    this.poseSeq = (this.poseSeq ?? 0) + 1;
   }
 
   // --- what Hangout and the scene call --------------------------------------
