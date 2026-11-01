@@ -34,6 +34,14 @@ const POSE_HOLD = 2.5;
 const TALK_RATE = 7;
 const TALK_SETTLE = 0.12;
 
+// A touch's flinch (reactions.js `twitch`): the head and body pull away
+// from the touched side and the shoulders hitch, then ease back, over
+// whatever the mood and pose set. Shared by every rig, like the sprite
+// rig's twitch. Sizes are at twitch 1: head/body tilts in the parameter's
+// own units (degrees), shoulders as a share of their range. `peak` is the
+// seconds to the peak; it settles by ~6 peaks.
+const FLINCH = { peak: 0.14, head: 5, body: 2.5, recoil: 3, shoulders: 0.5 };
+
 /** Fetches `${baseUrl}/rig.json`, its sounds, and each outfit's expression files. */
 export async function loadLive2DRig(baseUrl) {
   const res = await fetch(`${baseUrl}/rig.json`);
@@ -156,6 +164,7 @@ export class Live2DRig {
       this.dampBreath();
       this.blink();
       this.applyMood();
+      this.applyFlinch();
       this.applyTalk();
     });
     this.setMood(this.moodName);
@@ -256,6 +265,38 @@ export class Live2DRig {
     const { values, defaultValues } = this.raw.parameters;
     const i = this.breathIndex;
     values[i] = defaultValues[i] + (values[i] - defaultValues[i]) * k;
+  }
+
+  // --- flinch ---------------------------------------------------------------
+
+  /** Flinches from a touch: `side` "l"/"r" for a side spot, else null. */
+  flinch(side, scale = 1) {
+    this.flinchState = { at: performance.now() / 1000, side, scale };
+  }
+
+  applyFlinch() {
+    const f = this.flinchState;
+    if (!f || !this.model) return;
+    const x = (performance.now() / 1000 - f.at) / FLINCH.peak;
+    if (x > 6) {
+      this.flinchState = null;
+      return;
+    }
+    // Same curve as rig/motion.js twitchPulse: 0, up to 1 at the peak, back.
+    const pulse = f.scale * x * x * Math.exp(2 * (1 - x));
+    const away = f.side === "l" ? 1 : f.side === "r" ? -1 : 0;
+    const { values, minimumValues, maximumValues } = this.raw.parameters;
+    const add = (id, delta) => {
+      const i = this.paramIndex.get(id);
+      if (i != null) values[i] = Math.min(maximumValues[i], Math.max(minimumValues[i], values[i] + delta));
+    };
+    add("ParamAngleZ", away * FLINCH.head * pulse);
+    add("ParamBodyAngleZ", away * FLINCH.body * pulse);
+    add("ParamBodyAngleY", -FLINCH.recoil * pulse);
+    for (const s of f.side ? [f.side] : ["l", "r"]) {
+      const i = this.paramIndex.get(s === "l" ? "ParamShoulderL" : "ParamShoulderR");
+      if (i != null) add(s === "l" ? "ParamShoulderL" : "ParamShoulderR", FLINCH.shoulders * maximumValues[i] * pulse);
+    }
   }
 
   // --- talking --------------------------------------------------------------
@@ -416,12 +457,17 @@ function curveValues(s) {
 
 /** Stands in for rig/motion.js Motion: the model blinks and idles itself. */
 export class Live2DMotion {
-  constructor() {
+  /** `renderer` is the Live2DRig a reaction's twitch flinches. */
+  constructor(renderer) {
+    this.renderer = renderer;
     this.enabled = {};
     this.nextBlinkAt = null;
   }
 
-  twitch() {}
+  /** One side ("l"/"r") flinches away from it; both arms is a center spot. */
+  twitch(sides, t, scale = 1) {
+    this.renderer?.flinch(sides.length === 1 ? sides[0] : null, scale);
+  }
 
   blinking() {
     return false;

@@ -20,9 +20,12 @@
 // and climb from spark. The belly is in between: guarded at first, a liked
 // face from warm.
 //
-// `twitch` (true, or a size multiplier) flinches the arm: the tapped side
-// for a side spot (hand_r, ear_l…), both arms otherwise. By default only a
-// hand tap twitches. `fist` clenches the same hands for the reaction's
+// `twitch` (true, or a size multiplier) flinches: the tapped side for a
+// side spot (hand_r, ear_l…), both sides otherwise (on Live2D the head and
+// body pull away and the shoulders hitch; live2dRig.js FLINCH). By default
+// the guarded spots flinch at new and known, scaled by sensitivity (chest
+// 0.4, ears and belly 0.6, lips 0.8, hips 1 at new, less at known), and the
+// lips and hips still a little at warm; hands and head pats don't. `fist` clenches the same hands for the reaction's
 // duration.
 //
 // `sound` plays a clip (a file under the rig's directory, or a list to pick
@@ -48,22 +51,32 @@ export const TOUCH_SPOTS = {
   hips: "hipsTouch",
 };
 
+// How sensitive each spot is, least to most: head, hands and cheek, then chest,
+// then ears and belly, then lips, then hips. A spot's rank raises how fast
+// taps fill the annoyance meter (SPOT_ANNOYANCE) and how long its face
+// holds (DEFAULT_REACTIONS durations); only the hips clench a fist. The lips
+// are very guarded, not aggressive.
+//
 // Spots that fill the annoyance meter faster than a normal tap: the share
-// of the threshold one tap adds, following how guarded the spot is. A
-// normal tap adds 0.2 of the default threshold, so it takes a run of quick
-// taps; at the default decay belly 0.3 fills it on the fourth tap (taps
-// under ~0.35s apart), lips, ears and chest 0.45 on the third (~1s apart), hips
-// 0.75 on the second (~2.8s apart). A rig hotspot's own `annoyance`
-// overrides this.
+// of the threshold one tap adds. A normal tap (head, hands, a friendly cheek poke) adds 0.2
+// of the default threshold, so it takes a run of quick taps; at the default
+// decay chest 0.3 fills it on the fourth tap (taps under ~0.35s apart), ears
+// and belly 0.45 on the third (~1s apart), lips 0.6 on the second (~1.1s
+// apart), hips 0.75 on the second (~2.8s apart). A rig hotspot's own
+// `annoyance` overrides this.
 export const SPOT_ANNOYANCE = {
-  belly: 0.3,
-  lips: 0.45,
+  chest: 0.3,
   ear_l: 0.45,
   ear_r: 0.45,
-  chest: 0.45,
+  belly: 0.45,
+  lips: 0.6,
   hips: 0.75,
 };
 
+// A touch's face holds past a head pat's at the same tier (2s new/known,
+// 2.4 warm, 2.6 spark/close, 3 bound) by the spot's sensitivity: chest
+// +0.2s, ears and belly +0.4, lips +0.6, hips +0.8; hands and head pats
+// don't. Rigs that restate a reaction keep these durations.
 export const DEFAULT_REACTIONS = {
   headPat: {
     byTier: {
@@ -73,62 +86,73 @@ export const DEFAULT_REACTIONS = {
       bound: { rank: 2, duration: 3 },
     },
   },
+  // A cheek poke is a friendly poke: as calm as a head pat, no flinch.
+  // Touch-averse characters may flinch where their lines startle.
   cheekPoke: {
     byTier: {
       new: { rank: 1, duration: 2 },
-      warm: { rank: 1, duration: 2.2 },
-      close: { rank: 1, duration: 2.4 },
-      bound: { rank: 1, duration: 2.6 },
+      warm: { rank: 1, duration: 2.4 },
+      spark: { rank: 1, duration: 2.6 },
+      bound: { rank: 1, duration: 3 },
     },
   },
   handTap: {
     byTier: {
-      new: { rank: 2, duration: 2, twitch: true },
+      new: { rank: 2, duration: 2 },
       warm: { rank: 2, duration: 2.4 },
-      close: { rank: 2, duration: 2.6 },
-      bound: { rank: 2, duration: 2.8 },
+      spark: { rank: 2, duration: 2.6 },
+      bound: { rank: 2, duration: 3 },
     },
   },
   chestTouch: {
     byTier: {
-      new: { rank: 0, duration: 2.4 },
-      spark: { rank: 1, duration: 2.6 },
-      close: { rank: 2, duration: 2.6 },
-      bound: { rank: 2, duration: 3 },
+      new: { rank: 0, duration: 2.2, twitch: 0.4 },
+      known: { rank: 0, duration: 2.2, twitch: 0.3 },
+      warm: { rank: 0, duration: 2.6 },
+      spark: { rank: 1, duration: 2.8 },
+      close: { rank: 2, duration: 2.8 },
+      bound: { rank: 2, duration: 3.2 },
     },
   },
   bellyTouch: {
     byTier: {
-      new: { rank: 0, duration: 2.4 },
-      warm: { rank: 1, duration: 2.4 },
-      close: { rank: 2, duration: 2.6 },
-      bound: { rank: 2, duration: 3 },
+      new: { rank: 0, duration: 2.4, twitch: 0.6 },
+      known: { rank: 0, duration: 2.4, twitch: 0.4 },
+      warm: { rank: 1, duration: 2.8 },
+      spark: { rank: 1, duration: 3 },
+      close: { rank: 2, duration: 3 },
+      bound: { rank: 2, duration: 3.4 },
     },
   },
   lipsTouch: {
     byTier: {
-      new: { rank: 0, duration: 2.4 },
-      spark: { rank: 1, duration: 2.6 },
-      close: { rank: 2, duration: 2.6 },
-      bound: { rank: 2, duration: 3 },
+      new: { rank: 0, duration: 2.6, twitch: 0.8 },
+      known: { rank: 0, duration: 2.6, twitch: 0.6 },
+      warm: { rank: 0, duration: 3, twitch: 0.3 },
+      spark: { rank: 1, duration: 3.2 },
+      close: { rank: 2, duration: 3.2 },
+      bound: { rank: 2, duration: 3.6 },
     },
   },
-  // Ears are as guarded as the lips.
+  // Ears are as sensitive as the belly, short of the lips.
   earTouch: {
     byTier: {
-      new: { rank: 0, duration: 2.4 },
-      spark: { rank: 1, duration: 2.6 },
-      close: { rank: 2, duration: 2.6 },
-      bound: { rank: 2, duration: 3 },
+      new: { rank: 0, duration: 2.4, twitch: 0.6 },
+      known: { rank: 0, duration: 2.4, twitch: 0.4 },
+      warm: { rank: 0, duration: 2.8 },
+      spark: { rank: 1, duration: 3 },
+      close: { rank: 2, duration: 3 },
+      bound: { rank: 2, duration: 3.4 },
     },
   },
   hipsTouch: {
     byTier: {
-      new: { rank: 0, duration: 2.6, fist: true },
-      known: { rank: 0, duration: 2.4 },
-      spark: { rank: 1, duration: 2.6 },
-      close: { rank: 2, duration: 2.6 },
-      bound: { rank: 2, duration: 3 },
+      new: { rank: 0, duration: 2.8, fist: true, twitch: 1 },
+      known: { rank: 0, duration: 2.8, fist: true, twitch: 0.7 },
+      warm: { rank: 0, duration: 3.2, twitch: 0.5 },
+      spark: { rank: 1, duration: 3.4 },
+      close: { rank: 2, duration: 3.4 },
+      bound: { rank: 2, duration: 3.8 },
     },
   },
   // The face for a /meet answer's outcome (docs/hangout-activity.md §11.2

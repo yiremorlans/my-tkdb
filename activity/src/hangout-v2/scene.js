@@ -49,7 +49,7 @@ export async function startScene(stage, { base, tier, outfit, lines, room = true
   }
 
   const renderer = await Live2DRig.create({ rig, baseUrl, outfit: rig.outfits?.[outfit] ? outfit : undefined });
-  const motion = new Live2DMotion();
+  const motion = new Live2DMotion(renderer);
   // He talks while a touch line types out; clicking the box to finish the
   // line (dialogueBox's own handler) shuts his mouth with it.
   const box = stage.querySelector(".vn-box");

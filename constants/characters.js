@@ -1,7 +1,7 @@
 // Reference data for every character in assets/chars, grouped by the house
 // they belong to (matched against character-named rooms in assets/bg where
 // possible). Characters with `house: null` are general encounters only —
-// they can turn up at any GENERAL_LOCATIONS spot (see constants/backgrounds.js),
+// they can turn up at any random general-location spot (see constants/backgrounds.js),
 // never inside another house.
 //
 // `house` is the single source of truth for house standing: every character

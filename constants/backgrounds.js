@@ -667,7 +667,7 @@ export const CHARACTER_SIGNATURE_SPOTS = {
 };
 
 // Fraction of /roam encounters set on the character's own turf; the rest are
-// general locations (Darkwick, Ultio, Galaxy Express, Clementia). Weighted
+// general locations (Darkwick, Galaxy Express, Clementia). Weighted
 // toward turf because public encounters already put everyone in the general
 // pool (Darkwick + Galaxy Express); /roam is where a character's own house
 // gets seen. (/meet keeps a housed character on turf every time; a houseless
@@ -774,9 +774,16 @@ export function turfSpots(character, now) {
   });
 }
 
-// Picks a random general-location background (any of Darkwick/Ultio/Galaxy Express/Clementia).
+// General locations a random background can come from. Ultio (the prison) stays listed in
+// GENERAL_LOCATIONS and BACKGROUNDS_BY_LOCATION so its files keep loading and
+// validating, but nothing draws it at random.
+const RANDOM_GENERAL_LOCATIONS = Object.values(GENERAL_LOCATIONS).filter(
+  (location) => location !== GENERAL_LOCATIONS.ULTIO,
+);
+
+// Picks a random general-location background (any of Darkwick/Galaxy Express/Clementia).
 export function getRandomGeneralBackground(now = new Date()) {
-  const pool = backgroundPool(Object.values(GENERAL_LOCATIONS), now);
+  const pool = backgroundPool(RANDOM_GENERAL_LOCATIONS, now);
   if (pool.length === 0) return null;
   return pool[Math.floor(Math.random() * pool.length)];
 }
