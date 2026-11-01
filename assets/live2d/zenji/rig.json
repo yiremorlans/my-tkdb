@@ -69,7 +69,7 @@
   "reactions": {
     "upset": {
       "byTier": {
-        "new": { "mood": "pained", "duration": 4 },
+        "new": { "mood": "upset", "duration": 4 },
         "spark": { "mood": "flustered", "duration": 4 }
       }
     },
@@ -145,8 +145,8 @@
     },
     "hipsTouch": {
       "byTier": {
-        "new": { "mood": "surprise", "duration": 2.8, "fist": true },
-        "known": { "mood": "surprise", "duration": 2.8, "fist": true },
+        "new": { "mood": "surprise", "duration": 2.8 },
+        "known": { "mood": "surprise", "duration": 2.8 },
         "warm": { "mood": "serious", "duration": 3.2 },
         "spark": { "rank": 1, "duration": 3.4 },
         "close": { "rank": 2, "duration": 3.4 },
@@ -157,11 +157,11 @@
   "reactionPoses": {
     "headPat": "m_ago",
     "cheekPoke": "m_gesture",
-    "lipsTouch": { "byTier": { "new": "m_odoroki", "known": "m_ago", "spark": "m_houyou" } },
-    "earTouch": { "byTier": { "new": "m_odoroki", "warm": "m_ago" } },
+    "lipsTouch": { "byTier": { "new": "m_odoroki", "known": "m_ago", "close": "m_houyou" } },
+    "earTouch": { "byTier": { "new": "m_gesture", "warm": "m_ago" } },
     "handTap": "m_gesture",
-    "chestTouch": "m_houyou",
-    "bellyTouch": "m_houyou",
+    "chestTouch": { "byTier": { "new": "m_hidarikoshi", "spark": "m_ago", "close": "m_houyou" } },
+    "bellyTouch": { "byTier": { "new": "m_gesture", "spark": "m_ago", "close": "m_houyou" } },
     "hipsTouch": { "byTier": { "new": "m_odoroki", "known": "m_hidarikoshi", "spark": "m_gesture" } },
     "upset": { "byTier": { "new": "m_hidarikoshi", "spark": "m_ago" } }
   },

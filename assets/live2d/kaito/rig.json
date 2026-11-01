@@ -62,13 +62,14 @@
       "sad": ["e_cry_00"],
       "lovestruck": ["e_dere_00"],
       "panic": ["e_panic_00"],
-      "shy": ["e_tere_00"]
+      "shy": ["e_tere_00"],
+      "pout_sweat": ["e_punpun_00", "e_ase_00"]
     }
   },
   "reactions": {
     "upset": {
       "byTier": {
-        "new": { "mood": "upset", "duration": 4 },
+        "new": { "mood": "pout_sweat", "duration": 4 },
         "spark": { "mood": "flustered", "duration": 4 }
       }
     },
@@ -156,7 +157,7 @@
   "reactionPoses": {
     "headPat": "m_tere",
     "cheekPoke": "m_tere",
-    "lipsTouch": { "byTier": { "new": "m_odoroki", "warm": "m_tere", "close": "m_gesture" } },
+    "lipsTouch": { "byTier": { "new": "m_odoroki", "spark": "m_tere", "close": "m_gesture" } },
     "earTouch": "m_odoroki",
     "handTap": "m_gesture",
     "chestTouch": { "byTier": { "new": "m_odoroki", "close": "m_gesture" } },

@@ -4,7 +4,8 @@
 // approval. Kept apart from constants/dialogue/ritsu.js.
 //
 // Formal, legalistic, few contractions; he records, objects and bills.
-// "Business partners" is his frame for warmth. Guarded spots (lips, chest,
+// "Business partners" is his frame for warmth; "Partner" as an address
+// from known on (user, 2026-10-31). Guarded spots (lips, chest,
 // hips) are objections until spark, where the formality starts to slip. No
 // stigma/artifact reveals.
 
@@ -18,7 +19,10 @@ export default {
       "Unprovoked contact. I am noting the time.",
       "Is there a matter you wish to raise? Then raise it.",
     ],
-    lipsTouch: ["Excuse me.", "That is wholly inappropriate. Step back."],
+    lipsTouch: [
+      "Excuse me.",
+      "Ah. ...That was unsolicited. Kindly keep a professional distance.",
+    ],
     earTouch: [
       "I can hear you perfectly well without that.",
       "Please keep your hands to yourself.",
@@ -53,12 +57,15 @@ export default {
       "What is it you want? Five seconds have elapsed.",
       "If you require my attention, there are more efficient methods.",
     ],
-    lipsTouch: ["No.", "I must object, in the strongest terms."],
+    lipsTouch: ["No.", "...Please. I would prefer this not go on the record."],
     earTouch: [
       "I am listening. There is no need for that.",
       "...Please do not touch my ears. It is distracting.",
     ],
-    handTap: ["The gloves stay on.", "Do you need something? Be concise."],
+    handTap: [
+      "The gloves stay on.",
+      "Do you need something, Partner? Be concise.",
+    ],
     chestTouch: [
       "My recorder is in that pocket. Please do not.",
       "Step back. You are inside my personal space.",
@@ -73,7 +80,7 @@ export default {
     ],
     upset: [
       "That will do. I am noting this.",
-      "I suggest you stop before I start billing for it.",
+      "I suggest you stop, Partner, before I file a complaint.",
     ],
   },
   warm: {
@@ -82,16 +89,16 @@ export default {
       "You are fortunate I find this tolerable.",
     ],
     cheekPoke: [
-      "Is something on my face? Tell me at once.",
+      "Is something on my face, Partner? Tell me at once.",
       "You are in high spirits. I will note it.",
     ],
-    lipsTouch: ["That is not a term I have agreed to.", "No. ...Please, no."],
+    lipsTouch: ["That is not a term I will agree to.", "No. ...Please, no."],
     earTouch: [
       "...That is ticklish. Strike it from the record.",
       "I heard you the first time.",
     ],
     handTap: [
-      "Yes, I am here. What do you need?",
+      "Yes, Partner, I am here. What do you need?",
       "Your hand is cold. You should be wearing gloves.",
     ],
     chestTouch: [
@@ -99,8 +106,8 @@ export default {
       "...Step back, please. I am asking politely.",
     ],
     bellyTouch: [
-      "Ah. I was not prepared for that. Kindly give notice.",
-      "That was... unexpected. Let the record show I did not flinch.",
+      "Objection. That was not on the agenda.",
+      "Kindly give notice before any further contact.",
     ],
     hipsTouch: ["Absolutely not.", "I am choosing to forget that happened."],
     upset: [
@@ -139,7 +146,7 @@ export default {
     ],
     hipsTouch: [
       "That is... I have no precedent for that.",
-      "Partner. Please. Not here.",
+      "Partner. Please. That is well beyond our terms.",
     ],
     upset: [
       "...Please. My notes are already illegible.",

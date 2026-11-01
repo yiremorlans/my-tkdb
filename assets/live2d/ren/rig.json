@@ -63,6 +63,7 @@
       "smile_blush": ["e_smile_00", "e_sekimen1_00"],
       "full_smile_blush": ["e_smile_00", "e_sekimen1_00"],
       "surprise": ["e_odoroki_00"],
+      "shock": ["e_shock_00"],
       "surprise_blush": ["e_odoroki_00", "e_sekimen1_00"],
       "sweat": ["e_ase_00"],
       "serious": ["e_ikari_00"],
@@ -127,8 +128,8 @@
         "known": { "rank": 0, "duration": 2.6, "twitch": 0.75 },
         "warm": { "rank": 0, "duration": 3, "twitch": 0.38 },
         "spark": { "mood": "flustered", "duration": 3.2 },
-        "close": { "rank": 2, "duration": 3.2 },
-        "bound": { "rank": 2, "duration": 3.6 }
+        "close": { "mood": "flustered", "duration": 3.2 },
+        "bound": { "mood": "flustered", "duration": 3.6 }
       }
     },
     "earTouch": {
@@ -143,12 +144,12 @@
     },
     "hipsTouch": {
       "byTier": {
-        "new": { "rank": 0, "duration": 2.8, "fist": true, "twitch": 1.25 },
-        "known": { "rank": 0, "duration": 2.8, "fist": true, "twitch": 0.88 },
+        "new": { "mood": "shock", "duration": 2.8, "fist": true, "twitch": 1.25 },
+        "known": { "mood": "shock", "duration": 2.8, "fist": true, "twitch": 0.88 },
         "warm": { "rank": 0, "duration": 3.2, "twitch": 0.63 },
         "spark": { "mood": "flustered", "duration": 3.4 },
-        "close": { "rank": 2, "duration": 3.4 },
-        "bound": { "rank": 2, "duration": 3.8 }
+        "close": { "mood": "flustered", "duration": 3.4 },
+        "bound": { "mood": "flustered", "duration": 3.8 }
       }
     },
     "bellyTouch": {
@@ -163,14 +164,14 @@
     }
   },
   "reactionPoses": {
-    "headPat": "m_kubi",
+    "headPat": { "byTier": { "new": "m_udekumi", "spark": "m_kubi" } },
     "cheekPoke": "m_aori",
     "lipsTouch": { "byTier": { "new": "m_odoroki", "known": "m_udekumi", "warm": "m_odoroki", "spark": "m_kubi" } },
-    "earTouch": "m_migikoshi",
-    "handTap": "m_phone",
+    "earTouch": { "byTier": { "new": "m_migikoshi", "spark": "m_kubi", "close": "m_migikoshi" } },
+    "handTap": { "byTier": { "new": "m_phone", "close": "m_migikoshi" } },
     "chestTouch": { "byTier": { "new": "m_odoroki", "close": "m_kubi" } },
     "bellyTouch": { "byTier": { "new": "m_odoroki", "close": "m_kubi" } },
-    "hipsTouch": { "byTier": { "new": "m_udekumi", "spark": "m_odoroki", "close": "m_kubi" } },
+    "hipsTouch": { "byTier": { "new": "m_odoroki", "warm": "m_udekumi", "spark": "m_odoroki", "close": "m_kubi" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kubi" } }
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },

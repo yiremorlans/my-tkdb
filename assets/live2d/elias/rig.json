@@ -155,12 +155,12 @@
   "reactionPoses": {
     "headPat": "m_ago",
     "cheekPoke": "m_gesture",
-    "lipsTouch": { "byTier": { "new": "m_odoroki", "known": "m_ame", "spark": "m_ago", "close": "m_amebite_B" } },
+    "lipsTouch": { "byTier": { "new": "m_odoroki", "spark": "m_ago", "close": "m_migikoshi" } },
     "earTouch": "m_migikoshi",
-    "handTap": "m_ame",
-    "chestTouch": { "byTier": { "new": "m_odoroki", "close": "m_ago" } },
-    "bellyTouch": { "byTier": { "new": "m_odoroki", "spark": "m_ago" } },
-    "hipsTouch": { "byTier": { "new": "m_udekumi", "spark": "m_odoroki", "close": "m_ago" } },
+    "handTap": { "byTier": { "new": "m_ame", "spark": "m_gesture" } },
+    "chestTouch": { "byTier": { "new": "m_odoroki", "close": "m_gesture" } },
+    "bellyTouch": { "byTier": { "new": "m_odoroki", "spark": "m_ago", "close": "m_gesture" } },
+    "hipsTouch": { "byTier": { "new": "m_udekumi", "spark": "m_odoroki", "close": "m_gesture" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_ago" } }
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },

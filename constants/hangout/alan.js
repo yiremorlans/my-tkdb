@@ -11,7 +11,7 @@ export default {
   new: {
     headPat: ["...What are you doing?", "Don't. You don't know me yet."],
     cheekPoke: ["...What.", "You poke everyone you meet like that?"],
-    lipsTouch: ["Hands off.", "...Don't."],
+    lipsTouch: ["...Hey. Not my lips.", "...Don't. That's personal."],
     earTouch: ["Watch it. Those catch.", "Leave the earrings alone."],
     handTap: ["What is it?", "...You need something?"],
     chestTouch: ["Back up.", "Step back. Not a good idea."],
@@ -25,7 +25,7 @@ export default {
       "Huh. Didn't think you'd try that twice.",
     ],
     cheekPoke: ["What is it?", "...You're bored, aren't you."],
-    lipsTouch: ["Don't.", "...That's not funny."],
+    lipsTouch: ["...Not the lips.", "...Leave that alone. Okay?"],
     earTouch: [
       "They're just earrings. Leave them be.",
       "...You're gonna pull one out.",
@@ -45,7 +45,7 @@ export default {
       "Nobody does that. ...You're fine.",
     ],
     cheekPoke: ["What? Something on my face?", "...You're in a good mood."],
-    lipsTouch: ["...Don't.", "...Not there."],
+    lipsTouch: ["...No. Leave those be.", "...You're close enough already."],
     earTouch: ["...That tickles. Quit it.", "You like the earrings that much?"],
     handTap: [
       "Rough hands. ...Doesn't bother you, huh.",

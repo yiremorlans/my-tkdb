@@ -6,7 +6,9 @@
 // Cheerful even as a stranger; guarded spots (lips, chest, hips) get a
 // laughing "Oi" rebuff, not warmth, until spark, where flirting that lands
 // makes him retreat into "Gahaha". The right arm is a prosthetic: a hand tap
-// may mention it lightly (Mio's work), never how it was broken.
+// may mention it lightly (Mio's work), never how it was broken. The belly
+// hotspot is Peekaboo in his sling, so bellyTouch lines react to MC petting
+// Peekaboo, not to touching Haru.
 
 export default {
   new: {
@@ -19,7 +21,7 @@ export default {
       "Gahaha! You're a forward one, hey?",
     ],
     lipsTouch: [
-      "Whoa there. Hands off, hey?",
+      "Whoa! Hang on, hang on. Not the lips, mate.",
       "Oi. That's not part of the tour.",
     ],
     earTouch: ["Careful, those go right through!", "Ow! ...Kiddin'. Mostly."],
@@ -32,8 +34,8 @@ export default {
       "Oi, personal space. Even Peekaboo knows that one.",
     ],
     bellyTouch: [
-      "Whoa! Tummy's off limits, mate.",
-      "Oi, oi. I'm not one of the critters, hey?",
+      "Whoa, careful! Peekaboo bites. Ask me how I know.",
+      "Easy! He's not used to you yet. Go slow, hey?",
     ],
     hipsTouch: ["Oi! Hands where I can see 'em.", "That's a no, mate."],
     upset: [
@@ -51,8 +53,8 @@ export default {
       "Oi! Poke me again and you're on cleanin' duty.",
     ],
     lipsTouch: [
-      "Hey, now. Hands off.",
-      "Oi. That's not how you get mates' rates.",
+      "Ah! Uh... Not the lips, hey?",
+      "Oi. Hands off those, Honor Roll.",
     ],
     earTouch: [
       "Like the earrings, hey? Just don't tug.",
@@ -64,8 +66,8 @@ export default {
     ],
     chestTouch: ["Whoa, steady. What's that for?", "Hey. Bit much, hey?"],
     bellyTouch: [
-      "Oi! That's not how you check if I've eaten.",
-      "Still a no, Honor Roll. Hands off the tummy.",
+      "Oi, Peekaboo! No nibblin' on Honor Roll!",
+      "Gentle scratch, that's it. He's partial to that.",
     ],
     hipsTouch: ["Oi! Watch the hands!", "Oi. Not funny, Honor Roll."],
     upset: [
@@ -82,7 +84,7 @@ export default {
       "What's that face? You're plannin' somethin'.",
       "Oi! That'll cost you. Mates' rates, though.",
     ],
-    lipsTouch: ["Whoa. Hang on. Let's not.", "Hey. ...Not there."],
+    lipsTouch: ["Whoa. Let's not, hey?", "Hey. ...Not those, mate."],
     earTouch: [
       "Ah, quit it! That's my ticklish spot. ...Forget I said that.",
       "You keep goin' for the earrings. Want a pair of your own?",
@@ -96,8 +98,8 @@ export default {
       "Steady on. You'll knock the wind out of me.",
     ],
     bellyTouch: [
-      "Whoa! Gahaha! Okay, you got me there.",
-      "Oi! Sneaky, that. You've been learnin' from Peekaboo.",
+      "He's sittin' still for you? He never sits still for me!",
+      "If Peekaboo lets you do that, you've passed. Tough critic, him.",
     ],
     hipsTouch: ["Oi! Hands, Honor Roll.", "Nope. No, no. Off you go."],
     upset: [
@@ -131,8 +133,8 @@ export default {
       "Uh... yeah. Ignore that. It's the energy drinks.",
     ],
     bellyTouch: [
-      "Gahaha... uh. Okay. That's a new one.",
-      "Ah! That's... Gahaha! Hang on, give me a sec.",
+      "Peekaboo gets all the attention. ...What about me, hey?",
+      "He's gettin' spoiled. ...Can't say I blame him. Gahaha!",
     ],
     hipsTouch: [
       "Whoa! Okay! ...Okay. Warn a bloke first.",
@@ -169,8 +171,8 @@ export default {
       "Stay there a sec. I like it when you're this close.",
     ],
     bellyTouch: [
-      "Gahaha! Okay, okay, you got me. Again?",
-      "Oi... keep that up and I'll forget my rounds.",
+      "Look at him. You're spoilin' the both of us, you know.",
+      "Peekaboo's decided you're stayin'. Guess I'm outvoted. Gahaha!",
     ],
     hipsTouch: [
       "Bold, hey? Keep that up and I'm pullin' you closer.",

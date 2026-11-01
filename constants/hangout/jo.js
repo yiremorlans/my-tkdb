@@ -19,8 +19,8 @@ export default {
       "You've got my attention. What can I do for you?",
     ],
     lipsTouch: [
-      "Ah, no. Let's not.",
-      "That's a little much for a first meeting, don't you think?",
+      "Whoa. ...Sorry, that's not on the program.",
+      "That's a little much, don't you think?",
     ],
     earTouch: ["That tickles. Careful.", "Hey, now. Are you okay?"],
     handTap: [
@@ -50,7 +50,7 @@ export default {
       "What is it, cutie?",
       "You're in a playful mood. Did something good happen?",
     ],
-    lipsTouch: ["Hey. Not that.", "Let's not, cutie."],
+    lipsTouch: ["Ah. ...No. Hands down, okay?", "Let's not, cutie."],
     earTouch: ["Careful, that tickles.", "You're getting brave, aren't you?"],
     handTap: [
       "Cold hands. Did you forget your coat again?",
@@ -73,7 +73,7 @@ export default {
       "Okay, okay. You've got my attention.",
       "What's that grin for, cutie?",
     ],
-    lipsTouch: ["...Hey. Careful.", "Not there, cutie."],
+    lipsTouch: ["...Hey. Not those. I mean it.", "Off limits, cutie."],
     earTouch: [
       "Hah... That tickles. Easy.",
       "You found a weak spot. Keep it to yourself.",

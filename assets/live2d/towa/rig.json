@@ -97,7 +97,7 @@
         "new": { "mood": "default", "duration": 2.6 },
         "known": { "mood": "default", "duration": 2.6 },
         "warm": { "mood": "full_smile", "duration": 3 },
-        "spark": { "rank": 1, "duration": 3.2 },
+        "spark": { "mood": "dreamy_blush", "duration": 3.2 },
         "close": { "mood": "dreamy_blush", "duration": 3.2 },
         "bound": { "mood": "dreamy_blush", "duration": 3.6 }
       }
@@ -144,10 +144,10 @@
     },
     "hipsTouch": {
       "byTier": {
-        "new": { "mood": "puzzled", "duration": 2.8, "fist": true },
-        "known": { "mood": "puzzled", "duration": 2.8, "fist": true },
-        "warm": { "mood": "puzzled", "duration": 3.2 },
-        "spark": { "rank": 1, "duration": 3.4 },
+        "new": { "mood": "dreamy", "duration": 2.8 },
+        "known": { "mood": "dreamy", "duration": 2.8 },
+        "warm": { "mood": "full_smile", "duration": 3.2 },
+        "spark": { "mood": "full_smile_blush", "duration": 3.4 },
         "close": { "rank": 2, "duration": 3.4 },
         "bound": { "rank": 2, "duration": 3.8 }
       }
@@ -157,7 +157,7 @@
     "headPat": "m_kuchimoto",
     "cheekPoke": "m_fusigi",
     "lipsTouch": { "byTier": { "new": "m_kuchimoto", "spark": "m_odoroki", "close": "m_migikoshi" } },
-    "earTouch": "m_odoroki",
+    "earTouch": { "byTier": { "new": "m_odoroki", "warm": "m_kuchimoto" } },
     "handTap": "m_fusigi",
     "chestTouch": { "byTier": { "new": "m_fusigi", "spark": "m_odoroki", "close": "m_kuchimoto" } },
     "bellyTouch": "m_odoroki",

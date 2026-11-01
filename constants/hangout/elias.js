@@ -15,7 +15,7 @@ export default {
       "…Was there something on my head?",
     ],
     cheekPoke: ["Oh, did you need something?", "Hm? I'm right here."],
-    lipsTouch: ["…Let's not do that.", "I think that's far enough."],
+    lipsTouch: ["Oh, please don't. Not my lips.", "I think that's far enough."],
     earTouch: [
       "Oh, that tickles. Please don't.",
       "…My ears are fine, thank you.",
@@ -41,7 +41,7 @@ export default {
       "Hm? Was I lost in thought again?",
       "…Bored? I have candy, if that helps.",
     ],
-    lipsTouch: ["…Let's not.", "That's a little much, don't you think?"],
+    lipsTouch: ["…Let's not.", "…That's a little private, I'm afraid."],
     earTouch: [
       "Oh, that tickles.",
       "…You're curious about the strangest things.",
@@ -67,10 +67,7 @@ export default {
       "Hm? Do I have candy on my face?",
       "Oh, I wasn't asleep. Just thinking.",
     ],
-    lipsTouch: [
-      "…I'll have to say no to that.",
-      "That's not like you. …Let's not.",
-    ],
+    lipsTouch: ["…I'll have to say no to that.", "…Please. Leave those alone."],
     earTouch: [
       "Hehe. That tickles.",
       "…You've found a weak spot. Please keep it to yourself.",

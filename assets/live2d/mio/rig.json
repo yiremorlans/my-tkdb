@@ -77,7 +77,7 @@
   "reactions": {
     "upset": {
       "byTier": {
-        "new": { "mood": "exasperated_sweat", "duration": 4 },
+        "new": { "mood": "upset", "duration": 4 },
         "spark": { "mood": "flustered", "duration": 4 }
       }
     },
@@ -170,7 +170,7 @@
     "handTap": "m_gesture",
     "chestTouch": { "byTier": { "new": "m_odoroki", "close": "m_kubi" } },
     "bellyTouch": { "byTier": { "new": "m_odoroki", "close": "m_ago" } },
-    "hipsTouch": { "byTier": { "new": "m_udekumi", "warm": "m_hidarikoshi", "spark": "m_kubi", "close": "m_gesture" } },
+    "hipsTouch": { "byTier": { "new": "m_udekumi", "spark": "m_kubi", "close": "m_gesture" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kubi" } }
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },

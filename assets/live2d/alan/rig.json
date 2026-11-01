@@ -68,8 +68,8 @@
         "known": { "rank": 1, "duration": 2 },
         "warm": { "rank": 2, "duration": 2.4 },
         "spark": { "rank": 2, "duration": 2.6 },
-        "close": { "rank": 2, "duration": 2.6 },
-        "bound": { "rank": 2, "duration": 3 }
+        "close": { "mood": "smile_blush", "duration": 2.6 },
+        "bound": { "mood": "smile_blush", "duration": 3 }
       }
     },
     "earTouch": {
@@ -94,8 +94,8 @@
         "known": { "mood": "default", "duration": 2 },
         "warm": { "rank": 2, "duration": 2.4 },
         "spark": { "rank": 2, "duration": 2.6 },
-        "close": { "rank": 2, "duration": 2.6 },
-        "bound": { "rank": 2, "duration": 3 }
+        "close": { "mood": "smile_blush", "duration": 2.6 },
+        "bound": { "mood": "smile_blush", "duration": 3 }
       }
     },
     "lipsTouch": {
@@ -154,9 +154,9 @@
     "cheekPoke": "m_pocket",
     "lipsTouch": { "byTier": { "new": "m_pocket", "spark": "m_kubi", "close": "m_migikoshi" } },
     "earTouch": "m_migikoshi",
-    "handTap": { "byTier": { "new": "m_pocket", "warm": "m_kubi" } },
-    "chestTouch": { "byTier": { "new": "m_udekumi", "spark": "m_kubi" } },
-    "bellyTouch": { "byTier": { "new": "m_udekumi", "spark": "m_kubi" } },
+    "handTap": { "byTier": { "new": "m_pocket", "warm": "m_kubi", "spark": "m_migikoshi" } },
+    "chestTouch": { "byTier": { "new": "m_udekumi", "spark": "m_kubi", "close": "m_migikoshi" } },
+    "bellyTouch": { "byTier": { "new": "m_udekumi", "spark": "m_kubi", "close": "m_migikoshi" } },
     "hipsTouch": { "byTier": { "new": "m_udekumi", "spark": "m_kubi", "close": "m_migikoshi" } },
     "upset": { "byTier": { "new": "m_angry", "spark": "m_kubi" } }
   },

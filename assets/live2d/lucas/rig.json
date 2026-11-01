@@ -66,13 +66,14 @@
       "troubled_sweat": ["e_konwaku_00", "e_ase_00"],
       "caring": ["e_oniisan_00"],
       "caring_blush": ["e_oniisan_00", "e_sekimen_00"],
-      "grin": ["e_yancha_00"]
+      "grin": ["e_yancha_00"],
+      "grit_sweat": ["e_grit_00", "e_ase_00"]
     }
   },
   "reactions": {
     "upset": {
       "byTier": {
-        "new": { "mood": "troubled_sweat", "duration": 4 },
+        "new": { "mood": "grit_sweat", "duration": 4 },
         "spark": { "mood": "flustered", "duration": 4 }
       }
     },
@@ -163,8 +164,8 @@
     "lipsTouch": { "byTier": { "new": "m_iyagari", "warm": "m_ago", "close": "m_gesture" } },
     "earTouch": "m_hidarikoshi",
     "handTap": "m_knight",
-    "chestTouch": { "byTier": { "new": "m_iyagari", "close": "m_hidarikoshi" } },
-    "bellyTouch": "m_iyagari",
+    "chestTouch": { "byTier": { "new": "m_iyagari", "spark": "m_ago", "close": "m_hidarikoshi" } },
+    "bellyTouch": { "byTier": { "new": "m_iyagari", "spark": "m_ago", "close": "m_gesture" } },
     "hipsTouch": { "byTier": { "new": "m_udekumi", "spark": "m_ago", "close": "m_knight" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_ago" } }
   },

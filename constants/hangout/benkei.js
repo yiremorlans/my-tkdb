@@ -21,7 +21,7 @@ export default {
       "Ha... You caught me off guard there.",
     ],
     lipsTouch: [
-      "Whoa, okay. Let's keep it to the shopping, yeah?",
+      "Oh! Ah, sorry. Not the lips, okay?",
       "Ah, sorry, that's a little much.",
     ],
     earTouch: [
@@ -55,7 +55,10 @@ export default {
       "Oh. You're the second one today. The first was the cat.",
     ],
     cheekPoke: ["Hey. What's that for?", "Ha ha. You're in a mood today, huh."],
-    lipsTouch: ["Ah, no. Sorry, not that.", "Hey, come on. Behave."],
+    lipsTouch: [
+      "Ah, no. Sorry, not that.",
+      "Whoa. Um... That's a little personal, yeah?",
+    ],
     earTouch: [
       "Ha ha, that tickles. Cut it out.",
       "Oh, sorry, was I zoning out? I'm listening.",
@@ -90,7 +93,10 @@ export default {
       "What? Was I smiling again?",
       "You're in a good mood. I like seeing that.",
     ],
-    lipsTouch: ["Ah... Not that. Sorry.", "Hey. Careful."],
+    lipsTouch: [
+      "Ah... Not that. Sorry.",
+      "Oh. Ha ha... Let's not, okay? That's a little close.",
+    ],
     earTouch: [
       "Ha ha, that tickles. You're doing that on purpose.",
       "You've got my attention. You always do.",

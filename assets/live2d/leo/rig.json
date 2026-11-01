@@ -81,6 +81,7 @@
       "tsun_blush": ["e_tsun_00", "e_sekimen_00"]
     }
   },
+  "restMood": { "byTier": { "new": "serious", "known": "default" } },
   "reactions": {
     "upset": {
       "byTier": {
@@ -110,8 +111,8 @@
     },
     "handTap": {
       "byTier": {
-        "new": { "mood": "full_smile", "duration": 2 },
-        "known": { "mood": "full_smile", "duration": 2 },
+        "new": { "mood": "serious", "duration": 2 },
+        "known": { "mood": "serious", "duration": 2 },
         "warm": { "mood": "tsun", "duration": 2.4 },
         "spark": { "mood": "tsun_blush", "duration": 2.6 },
         "close": { "rank": 2, "duration": 2.6 },
@@ -173,9 +174,9 @@
     "headPat": "m_kuchimoto",
     "cheekPoke": "m_wink",
     "lipsTouch": { "byTier": { "new": "m_kuchimoto", "warm": "m_udekumi", "spark": "m_hidarikoshi", "close": "m_gesture" } },
-    "earTouch": "m_phone",
-    "handTap": "m_fingerheart",
-    "chestTouch": "m_yubisashi",
+    "earTouch": { "byTier": { "new": "m_phone", "warm": "m_hidarikoshi", "spark": "m_kuchimoto", "close": "m_gesture" } },
+    "handTap": { "byTier": { "new": "m_phone", "warm": "m_fingerheart" } },
+    "chestTouch": { "byTier": { "new": "m_yubisashi", "spark": "m_kuchimoto", "close": "m_gesture" } },
     "bellyTouch": { "byTier": { "new": "m_odoroki", "close": "m_hidarikoshi" } },
     "hipsTouch": { "byTier": { "new": "m_yubisashi", "warm": "m_udekumi", "spark": "m_kuchimoto", "close": "m_hidarikoshi" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kuchimoto" } }

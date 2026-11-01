@@ -17,7 +17,10 @@ export default {
       "Something on my face? ...Or checking if I'm real?",
       "Ha ha. Okay. What was that for?",
     ],
-    lipsTouch: ["Whoa. Let's not.", "Hey. Hands down, okay?"],
+    lipsTouch: [
+      "Whoa. Let's not.",
+      "Ha... Hey, not the lips. Nice try, though.",
+    ],
     earTouch: [
       "The ribbons? Leave them be, would you?",
       "Ha... That's my ear. You lost?",
@@ -49,7 +52,10 @@ export default {
       "You've got that look. Bored?",
       "Poke all you want. I'm not a ghost, I promise.",
     ],
-    lipsTouch: ["Nope. Not that.", "...Don't push it."],
+    lipsTouch: [
+      "Hey. ...Not that, okay?",
+      "Ha... Nope. Those stay off limits.",
+    ],
     earTouch: ["You like the earrings, huh?", "That tickles. Cut it out."],
     handTap: [
       "Need something? I'm listening.",
@@ -75,7 +81,10 @@ export default {
       "What? You've got that face again.",
       "Keep that up and I'll start poking back.",
     ],
-    lipsTouch: ["Hey. Those are off limits.", "...Don't. I mean it."],
+    lipsTouch: [
+      "...Hey. Off limits. Even for you.",
+      "Ha... Easy. I'm not that easygoing.",
+    ],
     earTouch: [
       "That tickles. You knew it would, didn't you.",
       "Leave the ribbons alone and I'll think about forgiving you.",

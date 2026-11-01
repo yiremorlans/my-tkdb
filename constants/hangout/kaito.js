@@ -19,8 +19,8 @@ export default {
       "Did I break out? Don't tell me I broke out.",
     ],
     lipsTouch: [
-      "W-Whoa! Okay, nope. We just met.",
-      "Hey, hold on. That's way too fast.",
+      "W-Whoa! Okay, nope. Lips are off-limits.",
+      "Hey, hold on. Hands down, hands down.",
     ],
     earTouch: [
       "Careful! Those hoops snag on everything.",
@@ -57,8 +57,8 @@ export default {
       "Ow. Okay, I probably deserved that.",
     ],
     lipsTouch: [
-      "Hey! Too far, too far.",
-      "Nope. Not happening. ...Sorry, that came out loud.",
+      "Eek! H-Hey, my lips are not a fidget toy!",
+      "Nope. Not happening. ...Sorry. But no.",
     ],
     earTouch: [
       "Silver on this side, gold on the other. Don't mix them up.",
@@ -96,7 +96,7 @@ export default {
     ],
     lipsTouch: [
       "Hey. Not that. ...Seriously, not that.",
-      "W-Whoa. Okay. Friends don't do that, right?",
+      "W-Whoa. Okay. Lips are a no-go zone.",
     ],
     earTouch: [
       "Haha, that tickles! Stop!",

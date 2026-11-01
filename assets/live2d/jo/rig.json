@@ -81,13 +81,14 @@
       "wink": ["e_wink_00"],
       "gentle": ["e_bisho_00"],
       "gentle_blush": ["e_bisho_00", "e_sekimen_00"],
-      "wink_blush": ["e_wink_00", "e_sekimen_00"]
+      "wink_blush": ["e_wink_00", "e_sekimen_00"],
+      "pout_sweat": ["e_punpun_00", "e_ase_00"]
     }
   },
   "reactions": {
     "upset": {
       "byTier": {
-        "new": { "mood": "upset", "duration": 4 },
+        "new": { "mood": "pout_sweat", "duration": 4 },
         "spark": { "mood": "flustered", "duration": 4 }
       }
     },
@@ -133,7 +134,7 @@
     },
     "earTouch": {
       "byTier": {
-        "new": { "mood": "smile", "duration": 2.4 },
+        "new": { "mood": "surprise", "duration": 2.4 },
         "known": { "mood": "smile", "duration": 2.4 },
         "warm": { "mood": "smile", "duration": 2.8 },
         "spark": { "rank": 1, "duration": 3 },
@@ -178,8 +179,8 @@
     "lipsTouch": { "byTier": { "new": "m_odoroki", "warm": "m_fingerlips", "close": "m_gesture" } },
     "earTouch": "m_hidarikoshi",
     "handTap": "m_gesture",
-    "chestTouch": { "byTier": { "new": "m_odoroki", "close": "m_ago" } },
-    "bellyTouch": { "byTier": { "new": "m_odoroki", "close": "m_ago" } },
+    "chestTouch": { "byTier": { "new": "m_odoroki", "close": "m_gesture" } },
+    "bellyTouch": { "byTier": { "new": "m_odoroki", "close": "m_gesture" } },
     "hipsTouch": { "byTier": { "new": "m_udekumi", "spark": "m_ago", "close": "m_hidarikoshi" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_ago" } }
   },

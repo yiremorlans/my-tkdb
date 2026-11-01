@@ -161,8 +161,8 @@
     "lipsTouch": { "byTier": { "new": "m_ago2", "warm": "m_kakushi", "spark": "m_ago1", "close": "m_gesture" } },
     "earTouch": "m_hidarikoshi",
     "handTap": { "byTier": { "new": "m_pocket", "warm": "m_gesture" } },
-    "chestTouch": { "byTier": { "new": "m_kakushi", "close": "m_hidarikoshi" } },
-    "bellyTouch": "m_kakushi",
+    "chestTouch": { "byTier": { "new": "m_kakushi", "close": "m_gesture" } },
+    "bellyTouch": { "byTier": { "new": "m_kakushi", "close": "m_gesture" } },
     "hipsTouch": { "byTier": { "new": "m_udekumi", "warm": "m_hidarikoshi", "spark": "m_kakushi", "close": "m_hidarikoshi" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_ago1" } }
   },

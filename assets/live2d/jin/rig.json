@@ -76,7 +76,7 @@
     "headPat": {
       "byTier": {
         "new": { "mood": "displeased", "duration": 2 },
-        "known": { "mood": "smile", "duration": 2 },
+        "known": { "mood": "displeased", "then": [0.8, "default"], "duration": 2 },
         "warm": { "mood": "smile_blush", "duration": 2.4 },
         "spark": { "rank": 2, "duration": 2.6 },
         "close": { "rank": 2, "duration": 2.6 },
@@ -155,13 +155,13 @@
     }
   },
   "reactionPoses": {
-    "headPat": "m_kubi",
+    "headPat": { "byTier": { "new": "m_udekumi", "warm": "m_kubi" } },
     "cheekPoke": "m_migikoshi",
     "lipsTouch": { "byTier": { "new": "m_akire", "warm": "m_ago", "spark": "m_kubi", "close": "m_migikoshi" } },
     "earTouch": "m_migikoshi",
     "handTap": "m_gesture",
-    "chestTouch": { "byTier": { "new": "m_akire", "close": "m_ago" } },
-    "bellyTouch": { "byTier": { "new": "m_akire", "close": "m_ago" } },
+    "chestTouch": { "byTier": { "new": "m_akire", "close": "m_migikoshi" } },
+    "bellyTouch": { "byTier": { "new": "m_akire", "close": "m_migikoshi" } },
     "hipsTouch": { "byTier": { "new": "m_udekumi", "warm": "m_akire", "spark": "m_ago", "close": "m_migikoshi" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kubi" } }
   },

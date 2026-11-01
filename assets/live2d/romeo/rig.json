@@ -55,28 +55,30 @@
       "surprise_blush": ["e_odoroki_00", "e_sekimen_00"],
       "sweat": ["e_ase_00"],
       "serious": ["e_ikari_00"],
-      "annoyed": ["e_ikari_00"],
-      "upset": ["e_ikari_00", "e_ase_00"],
+      "annoyed": ["e_sakebu_00"],
+      "upset": ["e_sakebu_00", "e_ase_00"],
       "flustered": ["e_aseri_00", "e_sekimen_00", "e_ase_00"],
       "sad": ["e_cry_00"],
       "away": ["e_tsujo_away_00"],
       "shout": ["e_shout_00"],
+      "outraged": ["e_shout_00", "e_sakebu_00"],
       "smirk": ["e_warui_00"],
       "smirk_blush": ["e_warui_00", "e_sekimen_00"],
       "grumpy_blush": ["e_ikari_00", "e_sekimen_00"],
-      "fretting": ["e_aseri_00"]
+      "fretting": ["e_aseri_00"],
+      "soft_smile_blush": ["e_aware_00", "e_sekimen_00"]
     }
   },
   "reactions": {
     "upset": {
       "byTier": {
-        "new": { "mood": "upset", "duration": 4 },
+        "new": { "mood": "outraged", "duration": 4 },
         "spark": { "mood": "flustered", "duration": 4 }
       }
     },
     "headPat": {
       "byTier": {
-        "new": { "mood": "shout", "duration": 2 },
+        "new": { "mood": "outraged", "duration": 2 },
         "known": { "mood": "annoyed", "duration": 2 },
         "warm": { "mood": "grumpy_blush", "duration": 2.4 },
         "spark": { "mood": "grumpy_blush", "duration": 2.6 },
@@ -110,8 +112,8 @@
         "known": { "mood": "annoyed", "duration": 2.6, "twitch": 0.6 },
         "warm": { "mood": "annoyed", "duration": 3, "twitch": 0.3 },
         "spark": { "rank": 1, "duration": 3.2 },
-        "close": { "mood": "smirk_blush", "duration": 3.2 },
-        "bound": { "mood": "smirk_blush", "duration": 3.6 }
+        "close": { "mood": "soft_smile_blush", "duration": 3.2 },
+        "bound": { "mood": "soft_smile_blush", "duration": 3.6 }
       }
     },
     "earTouch": {
@@ -126,8 +128,8 @@
     },
     "chestTouch": {
       "byTier": {
-        "new": { "mood": "shout", "duration": 2.2, "twitch": 0.4 },
-        "known": { "mood": "shout", "duration": 2.2, "twitch": 0.3 },
+        "new": { "mood": "outraged", "duration": 2.2, "twitch": 0.4 },
+        "known": { "mood": "outraged", "duration": 2.2, "twitch": 0.3 },
         "warm": { "mood": "shout", "duration": 2.6 },
         "spark": { "mood": "flustered", "duration": 2.8 },
         "close": { "mood": "smirk_blush", "duration": 2.8 },
@@ -136,8 +138,8 @@
     },
     "bellyTouch": {
       "byTier": {
-        "new": { "mood": "shout", "duration": 2.4, "twitch": 0.6 },
-        "known": { "mood": "shout", "duration": 2.4, "twitch": 0.4 },
+        "new": { "mood": "outraged", "duration": 2.4, "twitch": 0.6 },
+        "known": { "mood": "outraged", "duration": 2.4, "twitch": 0.4 },
         "warm": { "rank": 1, "duration": 2.8 },
         "spark": { "rank": 1, "duration": 3 },
         "close": { "mood": "smirk_blush", "duration": 3 },
@@ -146,8 +148,8 @@
     },
     "hipsTouch": {
       "byTier": {
-        "new": { "mood": "shout", "duration": 2.8, "fist": true, "twitch": 1 },
-        "known": { "mood": "shout", "duration": 2.8, "fist": true, "twitch": 0.7 },
+        "new": { "mood": "outraged", "duration": 2.8, "fist": true, "twitch": 1 },
+        "known": { "mood": "outraged", "duration": 2.8, "fist": true, "twitch": 0.7 },
         "warm": { "mood": "shout", "duration": 3.2, "twitch": 0.5 },
         "spark": { "mood": "flustered", "duration": 3.4 },
         "close": { "mood": "smirk_blush", "duration": 3.4 },
@@ -156,13 +158,13 @@
     }
   },
   "reactionPoses": {
-    "headPat": "m_kuchi",
+    "headPat": { "byTier": { "new": "m_odoroki", "known": "m_udekumi", "warm": "m_kuchi", "close": "m_gesture" } },
     "cheekPoke": "m_gesture",
     "lipsTouch": { "byTier": { "new": "m_odoroki", "known": "m_udekumi", "warm": "m_kuchi", "close": "m_hidarikoshi" } },
     "earTouch": "m_hidarikoshi",
     "handTap": "m_gesture",
     "chestTouch": { "byTier": { "new": "m_odoroki", "close": "m_hidarikoshi" } },
-    "bellyTouch": "m_odoroki",
+    "bellyTouch": { "byTier": { "new": "m_odoroki", "close": "m_hidarikoshi" } },
     "hipsTouch": { "byTier": { "new": "m_udekumi", "known": "m_hidarikoshi", "spark": "m_odoroki", "close": "m_gesture" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kuchi" } }
   },

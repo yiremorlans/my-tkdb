@@ -60,7 +60,8 @@
       "upset": ["e_fukigen_00", "e_ase_00"],
       "flustered": ["e_komari_00", "e_sekimen_00", "e_ase_00"],
       "sad": ["e_kanashimi_00"],
-      "close_blush": ["e_close_00", "e_sekimen_00"]
+      "close_blush": ["e_close_00", "e_sekimen_00"],
+      "averted_blush": ["e_tsujo2_00", "e_sekimen_00"]
     }
   },
   "reactions": {
@@ -96,18 +97,18 @@
         "known": { "mood": "default", "duration": 2 },
         "warm": { "mood": "blush", "duration": 2.4 },
         "spark": { "mood": "blush", "duration": 2.6 },
-        "close": { "mood": "smile_blush", "duration": 2.6 },
-        "bound": { "mood": "smile_blush", "duration": 3 }
+        "close": { "mood": "blush", "duration": 2.6 },
+        "bound": { "mood": "blush", "duration": 3 }
       }
     },
     "earTouch": {
       "byTier": {
         "new": { "mood": "default", "duration": 2.4 },
         "known": { "mood": "default", "duration": 2.4 },
-        "warm": { "mood": "default", "duration": 2.8 },
+        "warm": { "mood": "blush", "duration": 2.8 },
         "spark": { "mood": "flustered", "duration": 3 },
-        "close": { "mood": "smile_blush", "duration": 3 },
-        "bound": { "mood": "smile_blush", "duration": 3.4 }
+        "close": { "mood": "blush", "duration": 3 },
+        "bound": { "mood": "blush", "duration": 3.4 }
       }
     },
     "chestTouch": {
@@ -116,8 +117,8 @@
         "known": { "mood": "default", "duration": 2.2 },
         "warm": { "mood": "default", "duration": 2.6 },
         "spark": { "mood": "blush", "duration": 2.8 },
-        "close": { "mood": "smile_blush", "duration": 2.8 },
-        "bound": { "mood": "smile_blush", "duration": 3.2 }
+        "close": { "mood": "blush", "duration": 2.8 },
+        "bound": { "mood": "blush", "duration": 3.2 }
       }
     },
     "bellyTouch": {
@@ -126,8 +127,8 @@
         "known": { "mood": "default", "duration": 2.4 },
         "warm": { "rank": 1, "duration": 2.8 },
         "spark": { "rank": 1, "duration": 3 },
-        "close": { "mood": "smile_blush", "duration": 3 },
-        "bound": { "mood": "smile_blush", "duration": 3.4 }
+        "close": { "mood": "averted_blush", "duration": 3 },
+        "bound": { "mood": "averted_blush", "duration": 3.4 }
       }
     },
     "lipsTouch": {
@@ -136,8 +137,8 @@
         "known": { "rank": 0, "duration": 2.6, "twitch": 0.6 },
         "warm": { "rank": 0, "duration": 3, "twitch": 0.3 },
         "spark": { "rank": 1, "duration": 3.2 },
-        "close": { "mood": "smile_blush", "duration": 3.2 },
-        "bound": { "mood": "smile_blush", "duration": 3.6 }
+        "close": { "mood": "averted_blush", "duration": 3.2 },
+        "bound": { "mood": "averted_blush", "duration": 3.6 }
       }
     },
     "hipsTouch": {
@@ -146,19 +147,19 @@
         "known": { "rank": 0, "duration": 2.8, "fist": true, "twitch": 0.7 },
         "warm": { "rank": 0, "duration": 3.2, "twitch": 0.5 },
         "spark": { "rank": 1, "duration": 3.4 },
-        "close": { "mood": "smile_blush", "duration": 3.4 },
-        "bound": { "mood": "smile_blush", "duration": 3.8 }
+        "close": { "mood": "averted_blush", "duration": 3.4 },
+        "bound": { "mood": "averted_blush", "duration": 3.8 }
       }
     }
   },
   "reactionPoses": {
     "headPat": "m_kubi",
     "cheekPoke": "m_gesture",
-    "lipsTouch": { "byTier": { "new": "m_ago", "known": "m_gesture", "warm": "m_ago", "spark": "m_kubi", "close": "m_ago" } },
+    "lipsTouch": { "byTier": { "new": "m_ago", "spark": "m_kubi", "close": "m_ago" } },
     "earTouch": "m_migikoshi",
     "handTap": "m_gesture",
-    "chestTouch": "m_hidarikoshi",
-    "bellyTouch": "m_hidarikoshi",
+    "chestTouch": { "byTier": { "new": "m_udekumi", "warm": "m_hidarikoshi", "spark": "m_kubi", "close": "m_hidarikoshi" } },
+    "bellyTouch": { "byTier": { "new": "m_udekumi", "warm": "m_hidarikoshi", "spark": "m_kubi", "close": "m_hidarikoshi" } },
     "hipsTouch": { "byTier": { "new": "m_udekumi", "spark": "m_kubi", "close": "m_hidarikoshi" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kubi" } }
   },

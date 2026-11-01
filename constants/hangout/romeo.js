@@ -3,8 +3,8 @@
 // tier with no pools uses the nearest lower one. Drafts, pending the user's
 // approval. Kept apart from constants/dialogue/romeo.js.
 //
-// Loud, vain, prices everything; acronyms are spelled out ("HDY. How Dare
-// You, obviously"). Kindness only sideways. No skincare/self-care before warm
+// Loud, vain, prices everything; canon acronyms only, used bare,
+// never spelled out (user, 2026-10-31). Kindness only sideways. No skincare/self-care before warm
 // (where it's done together). The prosthetic leg is never mentioned. Guarded
 // spots (lips, chest, hips) snap back until spark, where he flusters.
 
@@ -12,25 +12,25 @@ export default {
   new: {
     headPat: [
       "Excuse me!? Do you know how long this hair takes?",
-      "Tch. Hands off the merchandise.",
+      "Who said you could touch me?",
     ],
-    cheekPoke: ["HDY!? How Dare You, obviously!", "Tch. What do you want?"],
+    cheekPoke: ["HDY!?", "What do you want?"],
     lipsTouch: [
-      "Get your hands away from my face!",
-      "Do you have a death wish!?",
+      "Excuse me!? Hands off my lips!",
+      "Wh-What do you think you're doing!? ...Don't.",
     ],
     earTouch: [
       "Those earrings cost more than your whole wardrobe. Don't.",
       "Tch. Hands off the gold.",
     ],
     handTap: [
-      "If you're not paying, you're not touching.",
+      "I don't shake on bad deals.",
       "What? You want something? Spit it out.",
     ],
     chestTouch: ["Back off! You'll wrinkle the jacket!", "Get out of my way."],
     bellyTouch: [
       "Excuse me!? Who said you could poke me!?",
-      "Tch. That'll cost you. More than you've got.",
+      "You'll ruin my posture! Back off!",
     ],
     hipsTouch: [
       "Try that again and you'll be wiping tables for a month.",
@@ -38,7 +38,7 @@ export default {
     ],
     upset: [
       "Enough! You're wasting my precious time!",
-      "Tch... Keep it up and I'll deal with you.",
+      "Keep it up and I'll deal with you.",
     ],
   },
   known: {
@@ -48,15 +48,12 @@ export default {
     ],
     cheekPoke: [
       "What!? Is something on my face? Tell me!",
-      "Tch. You're bored. Go wipe a table.",
+      "You're bored. Go wipe a table.",
     ],
-    lipsTouch: [
-      "Absolutely not.",
-      "Excuse me!? LYP. Learn Your Place, obviously.",
-    ],
+    lipsTouch: ["Absolutely not.", "Tch... Don't even think about it."],
     earTouch: [
       "Careful with those, they're real gold.",
-      "Tch. If you scratch them, you're paying.",
+      "If you scratch them, you're paying.",
     ],
     handTap: [
       "What? You need something from Fico?",
@@ -66,26 +63,23 @@ export default {
       "Hands off the suit! Do you know what this cost!?",
       "Back up. Personal space, BB.",
     ],
-    bellyTouch: [
-      "What!? Keep your fingers to yourself, BB.",
-      "Tch. SIH. Shrivel In Hell, obviously.",
-    ],
+    bellyTouch: ["What!? Keep your fingers to yourself, BB.", "Tch. SIH."],
     hipsTouch: [
       "Hands where I can see them!",
       "Try that again. See what happens.",
     ],
-    upset: ["That's it! Out!", "Tch... You're giving me a headache. Stop."],
+    upset: ["That's it! Out!", "You're giving me a headache. Stop."],
   },
   warm: {
     headPat: [
-      "...Tch. Fine. Just don't mess it up.",
-      "You're lucky I like you. Tch.",
+      "...Fine. Just don't mess it up.",
+      "You're lucky I like you.",
     ],
     cheekPoke: [
       "What are you grinning at? ...Tch.",
       "Flawless, isn't it? You get one more.",
     ],
-    lipsTouch: ["Excuse me!? Not a chance.", "...Don't even think about it."],
+    lipsTouch: ["Excuse me!? Not a chance.", "...No. Not even for you."],
     earTouch: [
       "You've got an eye for quality. Still, hands off.",
       "They suit me, don't they? Obviously.",
@@ -102,15 +96,12 @@ export default {
       "Ah!? ...That did not tickle. Don't do it again.",
       "Hey! Do you know how much core work that took?",
     ],
-    hipsTouch: [
-      "HDY. How Dare You, obviously!",
-      "Don't push it. You're on thin ice.",
-    ],
-    upset: ["Enough! I'll put you on table duty!", "Tch. Stop. I mean it."],
+    hipsTouch: ["HDY!", "Don't push it. You're on thin ice."],
+    upset: ["Enough! I'll put you on table duty!", "Stop. I mean it."],
   },
   spark: {
     headPat: [
-      "...Tch. Only you get to do that.",
+      "...Only you get to do that.",
       "Don't stop. ...I didn't say anything!",
     ],
     cheekPoke: [
@@ -131,15 +122,15 @@ export default {
     ],
     chestTouch: [
       "...Don't listen to that. It's nothing!",
-      "Careful. My heart's not cheap, you know.",
+      "...It's the noni juice. Obviously.",
     ],
     bellyTouch: [
-      "...Tch. Don't do that while I'm trying to look composed.",
+      "...Don't do that while I'm trying to look composed.",
       "Hey! ...Stop smiling. That didn't get me.",
     ],
     hipsTouch: [
       "E-excuse me!? Not here!",
-      "...Bold. I'll bill you for that later.",
+      "...Bold. I'll deal with you later.",
     ],
     upset: [
       "Stop! I can't think when you do that!",
@@ -149,30 +140,30 @@ export default {
   close: {
     headPat: [
       "Mess it up if you want. I'll fix it later.",
-      "Tch. Keep going. You're getting good at this.",
+      "Keep going. You're getting good at this.",
     ],
     cheekPoke: [
-      "Fine, I'm blushing. Look all you want. It's free, today only.",
-      "Again? Tch. That's the third one. I'm keeping a tab.",
+      "Fine, I'm blushing. Look all you want. Just don't tell anyone.",
+      "Again? That's the third one. I'm counting.",
     ],
     lipsTouch: [
       "...You're serious, then. Good. So am I.",
       "Tch. That's priceless. Do it again before I change my mind.",
     ],
     earTouch: [
-      "Tch. Do that again and I won't answer for what happens.",
+      "Do that again and I won't answer for what happens.",
       "...Again. And this time, don't stop halfway.",
     ],
     handTap: [
       "Hold on. Your hands are mine to look after now.",
-      "Tch. Hold tighter. I didn't say you could loosen up.",
+      "Hold tighter. I didn't say you could loosen up.",
     ],
     chestTouch: [
-      "Feel that? That's your doing. I'm sending you the bill.",
-      "Stay there. I said stay, BB.",
+      "Feel that? That's your doing. Take responsibility.",
+      "Stay there. I said stay. Don't make me repeat myself.",
     ],
     bellyTouch: [
-      "Tch. You know exactly what you're doing. Keep doing it.",
+      "You know exactly what you're doing. Keep doing it.",
       "Ah! ...You'll pay for that. Do it again first.",
     ],
     hipsTouch: [

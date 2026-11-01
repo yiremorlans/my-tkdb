@@ -16,8 +16,8 @@ export default {
     ],
     cheekPoke: ["Have I something on my face?", "Hm? Can I help you?"],
     lipsTouch: [
-      "That's not appropriate. We've only just met.",
-      "Please don't. I'd rather we were properly introduced first.",
+      "Oh! I... Please don't. That isn't proper.",
+      "Hands down, please. I mean that.",
     ],
     earTouch: [
       "Careful. The piercings catch.",
@@ -55,7 +55,7 @@ export default {
     ],
     lipsTouch: [
       "Please don't. That's not something I take lightly.",
-      "No. I'd rather you didn't.",
+      "Ah. ...Forgive me, but no. Not my lips.",
     ],
     earTouch: [
       "Curious about the piercings? Fair enough. Gently, though.",

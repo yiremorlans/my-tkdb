@@ -159,7 +159,7 @@
     "lipsTouch": { "byTier": { "new": "m_kaote", "spark": "m_poripori", "close": "m_migikoshi" } },
     "earTouch": "m_migikoshi",
     "handTap": "m_gesture",
-    "chestTouch": "m_kaote",
+    "chestTouch": { "byTier": { "new": "m_kaote", "close": "m_gesture" } },
     "bellyTouch": "m_kaote",
     "hipsTouch": { "byTier": { "new": "m_udekumi", "warm": "m_migikoshi", "spark": "m_kaote", "close": "m_gesture" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_poripori" } }

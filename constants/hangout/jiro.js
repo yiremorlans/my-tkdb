@@ -18,7 +18,10 @@ export default {
       "Checking for swelling? There isn't any.",
       "Oh. Was that supposed to do something?",
     ],
-    lipsTouch: ["Please keep your hands away from my face.", "Don't."],
+    lipsTouch: [
+      "Please keep your hands away from my lips.",
+      "Don't. You haven't washed your hands.",
+    ],
     earTouch: [
       "The piercings are healed. You don't need to check.",
       "...Are you counting them?",
@@ -85,7 +88,10 @@ export default {
       "Your finger's warm. Good circulation.",
       "You're smiling. Was that the point?",
     ],
-    lipsTouch: ["That's still not hygienic. Please stop.", "No. Not that."],
+    lipsTouch: [
+      "That's still not hygienic. Please stop.",
+      "No. That stays mine.",
+    ],
     earTouch: [
       "You've counted them already. Still six.",
       "That tickles. I didn't know it would.",

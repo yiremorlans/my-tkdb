@@ -19,7 +19,7 @@ export default {
       "...Was that on purpose?",
       "Wow. Do that again and I'm filming it.",
     ],
-    lipsTouch: ["Gross. Who said you could do that?", "Nope. Denied."],
+    lipsTouch: ["Hey! ...What was that? Hands off the lips.", "Nope. Denied."],
     earTouch: [
       "Hey, careful with the earrings.",
       "Ugh, not by my ear. Everything's loud enough already.",
@@ -51,10 +51,7 @@ export default {
       "What? Are you bored or something?",
       "Poke me again and I'm poking back.",
     ],
-    lipsTouch: [
-      "Tch. Cute. No.",
-      "Don't. I'm not in the mood for whatever this is.",
-    ],
+    lipsTouch: ["Tch. Cute. No.", "Ugh, don't. That's not content."],
     earTouch: [
       "Leave the earrings alone, I mean it.",
       "Not near my ears. You have no idea how loud you are.",
@@ -90,7 +87,7 @@ export default {
       "You're in a weird mood. I'm into it.",
     ],
     lipsTouch: [
-      "Don't. Seriously.",
+      "...Hey. No. Those aren't up for grabs.",
       "Nope. I'm not the one who gets flustered here.",
     ],
     earTouch: [

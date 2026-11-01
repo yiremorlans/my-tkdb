@@ -79,8 +79,8 @@
     },
     "cheekPoke": {
       "byTier": {
-        "new": { "mood": "default", "duration": 2 },
-        "known": { "mood": "default", "duration": 2 },
+        "new": { "mood": "smile", "duration": 2 },
+        "known": { "mood": "smile", "duration": 2 },
         "warm": { "mood": "full_smile", "duration": 2.4 },
         "spark": { "mood": "smile", "duration": 2.6 },
         "close": { "mood": "full_smile", "duration": 2.6 },
@@ -89,8 +89,8 @@
     },
     "lipsTouch": {
       "byTier": {
-        "new": { "mood": "surprise", "then": [0.6, "smile"], "duration": 2.6 },
-        "known": { "mood": "surprise", "then": [0.6, "smile"], "duration": 2.6 },
+        "new": { "mood": "smile", "duration": 2.6 },
+        "known": { "mood": "smile", "duration": 2.6 },
         "warm": { "mood": "smile", "duration": 3, "twitch": 0.3 },
         "spark": { "mood": "surprise_blush", "then": [0.7, "sultry_blush"], "duration": 3.2 },
         "close": { "mood": "sultry_blush", "duration": 3.2 },

@@ -75,8 +75,8 @@
         "known": { "mood": "default", "duration": 2 },
         "warm": { "mood": "composed_blush", "duration": 2.4 },
         "spark": { "mood": "composed_blush", "duration": 2.6 },
-        "close": { "rank": 2, "duration": 2.6 },
-        "bound": { "rank": 2, "duration": 3 }
+        "close": { "mood": "composed_blush", "duration": 2.6 },
+        "bound": { "mood": "composed_blush", "duration": 3 }
       }
     },
     "cheekPoke": {
@@ -95,8 +95,8 @@
         "known": { "mood": "serious", "duration": 2 },
         "warm": { "mood": "blush", "duration": 2.4 },
         "spark": { "mood": "blush", "duration": 2.6 },
-        "close": { "rank": 2, "duration": 2.6 },
-        "bound": { "rank": 2, "duration": 3 }
+        "close": { "mood": "composed_blush", "duration": 2.6 },
+        "bound": { "mood": "composed_blush", "duration": 3 }
       }
     },
     "lipsTouch": {
@@ -135,8 +135,8 @@
         "known": { "mood": "serious", "duration": 2.4, "twitch": 0.4 },
         "warm": { "rank": 1, "duration": 2.8 },
         "spark": { "rank": 1, "duration": 3 },
-        "close": { "rank": 2, "duration": 3 },
-        "bound": { "rank": 2, "duration": 3.4 }
+        "close": { "mood": "composed_blush", "duration": 3 },
+        "bound": { "mood": "composed_blush", "duration": 3.4 }
       }
     },
     "hipsTouch": {
@@ -153,13 +153,13 @@
   "reactionPoses": {
     "headPat": "m_think",
     "cheekPoke": "m_gesture",
-    "lipsTouch": { "byTier": { "new": "m_chest", "known": "m_udekumi", "warm": "m_think", "close": "m_gesture" } },
+    "lipsTouch": { "byTier": { "new": "m_chest", "known": "m_udekumi", "spark": "m_think", "close": "m_gesture" } },
     "earTouch": "m_hidarikoshi",
     "handTap": "m_gesture",
     "chestTouch": "m_chest",
     "bellyTouch": { "byTier": { "new": "m_odoroki", "close": "m_hidarikoshi" } },
     "hipsTouch": { "byTier": { "new": "m_udekumi", "known": "m_gesture", "warm": "m_udekumi", "spark": "m_odoroki", "close": "m_hidarikoshi" } },
-    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_think" } }
+    "upset": { "byTier": { "new": "m_recorder", "warm": "m_udekumi", "spark": "m_think" } }
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {

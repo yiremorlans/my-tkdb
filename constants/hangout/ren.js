@@ -12,7 +12,10 @@ export default {
   new: {
     headPat: ["...What are you doing.", "Don't. That's harassment."],
     cheekPoke: ["Did you just poke me?", "...Can I help you?"],
-    lipsTouch: ["Whoa. No.", "Hands off. Seriously."],
+    lipsTouch: [
+      "Whoa. ...No. Those are my lips.",
+      "Okay. No. Hands down, Senpai.",
+    ],
     earTouch: ["Don't touch the earrings.", "...That's my ear. Why."],
     handTap: [
       "Careful. My RSI's bad enough already.",
@@ -35,7 +38,7 @@ export default {
       "What.",
       "Is there something on my face, or are you just bored?",
     ],
-    lipsTouch: ["No. Absolutely not.", "...Don't. Just don't."],
+    lipsTouch: ["Senpai. ...Why. Why the lips.", "...Don't. Just don't."],
     earTouch: ["Leave the studs alone.", "That tickles. Stop it."],
     handTap: [
       "Watch the wrist, Senpai. That's my whole livelihood.",
@@ -61,7 +64,10 @@ export default {
       "What. I'm busy losing this raid.",
       "Pfft. Did you seriously just poke me?",
     ],
-    lipsTouch: ["Hey. ...Not funny.", "No. Don't."],
+    lipsTouch: [
+      "Hey. ...Nope. Those aren't public property.",
+      "...Don't. I'm not built for this.",
+    ],
     earTouch: [
       "Quit it. That tickles.",
       "Pull one out and you're buying the replacement.",
@@ -80,7 +86,7 @@ export default {
     ],
     hipsTouch: ["Senpai. Seriously.", "Nope. Not happening."],
     upset: [
-      "Okay, now that's harassment.",
+      "Okay, that's it. Go poke that clown instead.",
       "Stop. I mean it. Give me a minute.",
     ],
   },

@@ -62,7 +62,7 @@ export default {
       "I know what that gesture means. I'll write it down and never publish it.",
     ],
     earTouch: [
-      "Whispering secrets? Ghosts are excellent at keeping them.",
+      "Whispering secrets? I'm a vault, I assure you.",
       "Leaning close to tell me something? Then I'm listening, my dear.",
     ],
     handTap: [
@@ -83,7 +83,7 @@ export default {
     ],
     upset: [
       "My dear, please! I've understood, I promise. You can stop.",
-      "Enough! Even a ghost has his limits.",
+      "Enough! Even a poet has his limits.",
     ],
   },
   warm: {
@@ -130,7 +130,7 @@ export default {
       "Do that again, my dear. I want to write down what it's like to be meant.",
     ],
     cheekPoke: [
-      "My dear, if I could blush, I'd be crimson to the ears.",
+      "My dear, I'm crimson to the ears. You've made a gentleman blush.",
       "You reach for me like I'm really here. You'll have me believing it.",
     ],
     lipsTouch: [
@@ -188,7 +188,7 @@ export default {
       "Stay, my dear. Whatever's left of my heart, you're holding it.",
     ],
     bellyTouch: [
-      "Ha ha! Mercy, my dear. Even a ghost is ticklish, it turns out.",
+      "Ha ha! Mercy, my dear. Who knew I was ticklish?",
       "Stay there. When you're this close, I almost forget what I am.",
     ],
     hipsTouch: [

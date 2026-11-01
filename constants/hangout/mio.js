@@ -14,7 +14,7 @@ export default {
       "Hm? Oh, did I nod off?",
       "...Do I have grease on my face or something?",
     ],
-    lipsTouch: ["Whoa. Hey, let's not.", "...Okay, that's a no."],
+    lipsTouch: ["Whoa. Hey, let's not.", "Hm?! ...Sorry. Not the lips."],
     earTouch: ["Hm? Sorry, I was miles away.", "Ha. That tickles. Don't."],
     handTap: [
       "Careful, my hands are covered in oil.",
@@ -40,7 +40,10 @@ export default {
       "Yaaawn... Hm? I'm awake. I'm awake.",
       "That's not how you wake someone up, you know.",
     ],
-    lipsTouch: ["Hey. Not that.", "...Let's pretend that didn't happen."],
+    lipsTouch: [
+      "...Huh. No. Those stay out of reach.",
+      "...Let's pretend that didn't happen.",
+    ],
     earTouch: [
       "Hah, that tickles. Quit it.",
       "Hm? Sorry, I was counting parts in my head.",
@@ -66,7 +69,7 @@ export default {
       "Nobody does that for me, you know. ...Thanks.",
     ],
     cheekPoke: ["What? Do I look that tired?", "Ha. Okay, I'm awake now."],
-    lipsTouch: ["...Hey. Don't.", "That's off limits. Sorry."],
+    lipsTouch: ["...Hey. Don't. Hands down.", "That's off limits. Sorry."],
     earTouch: [
       "I'm ticklish. Stop that.",
       "Okay, you found it. Keep it to yourself.",

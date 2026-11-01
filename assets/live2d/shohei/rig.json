@@ -125,7 +125,7 @@
       "byTier": {
         "new": { "rank": 0, "duration": 2.6, "twitch": 0.8 },
         "known": { "rank": 0, "duration": 2.6, "twitch": 0.6 },
-        "warm": { "rank": 0, "duration": 3, "twitch": 0.3 },
+        "warm": { "mood": "cocky", "duration": 3, "twitch": 0.3 },
         "spark": { "rank": 1, "duration": 3.2 },
         "close": { "mood": "cocky_blush", "duration": 3.2 },
         "bound": { "mood": "cocky_blush", "duration": 3.6 }
@@ -135,7 +135,7 @@
       "byTier": {
         "new": { "rank": 0, "duration": 2.2, "twitch": 0.4 },
         "known": { "rank": 0, "duration": 2.2, "twitch": 0.3 },
-        "warm": { "rank": 0, "duration": 2.6 },
+        "warm": { "mood": "cocky", "duration": 2.6 },
         "spark": { "rank": 1, "duration": 2.8 },
         "close": { "mood": "cocky_blush", "duration": 2.8 },
         "bound": { "mood": "cocky_blush", "duration": 3.2 }
@@ -165,12 +165,12 @@
   "reactionPoses": {
     "headPat": "m_atama",
     "cheekPoke": "m_aori",
-    "lipsTouch": { "byTier": { "new": "m_kuchimoto", "warm": "m_udekumi", "spark": "m_atama", "close": "m_aori" } },
+    "lipsTouch": { "byTier": { "new": "m_kuchimoto", "spark": "m_atama", "close": "m_aori" } },
     "earTouch": "m_migikoshi",
     "handTap": "m_aori",
-    "chestTouch": "m_atama",
-    "bellyTouch": "m_atama",
-    "hipsTouch": { "byTier": { "new": "m_udekumi", "warm": "m_migikoshi", "spark": "m_kuchimoto", "close": "m_migikoshi" } },
+    "chestTouch": { "byTier": { "new": "m_udekumi", "warm": "m_migikoshi", "spark": "m_atama" } },
+    "bellyTouch": { "byTier": { "new": "m_udekumi", "warm": "m_migikoshi", "spark": "m_atama" } },
+    "hipsTouch": { "byTier": { "new": "m_udekumi", "warm": "m_migikoshi", "spark": "m_kuchimoto", "close": "m_aori" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kuchimoto" } }
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },

@@ -25,7 +25,7 @@ export default {
       "Hey! Heh heh ♪ My turn next!",
     ],
     lipsTouch: [
-      "...? Why the lips, Dandelion? Is there a petal on them?",
+      "...? Why the lips? Is there a petal on them?",
       "Hm? Do humans poke lips to say hello? ♪",
     ],
     earTouch: [

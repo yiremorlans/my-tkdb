@@ -20,8 +20,8 @@ export default {
       "Why, hello there. Was there something you needed?",
     ],
     lipsTouch: [
-      "Ah. I'd advise against that.",
-      "My, how bold. We've barely met.",
+      "Oh. My. That's rather personal, isn't it?",
+      "My, how bold. Hands down, I think.",
     ],
     earTouch: [
       "Ah ha ha. You're a curious one.",
@@ -54,7 +54,10 @@ export default {
       "Is that meant to wake me? I wasn't asleep. Entirely.",
       "My, my. You're in a playful mood.",
     ],
-    lipsTouch: ["Ah. Careful.", "That's not a game I'd start, if I were you."],
+    lipsTouch: [
+      "Ah. Not my lips, if you please.",
+      "Goodness. I'd rather you kept your hands to yourself.",
+    ],
     earTouch: [
       "Ah ha ha. A weak spot. Do be gentle with it.",
       "The earring stays where it is, I'm afraid.",
@@ -86,10 +89,7 @@ export default {
       "Ah ha ha. Making sure I'm still among the living? Debatable.",
       "You're very attentive today. I don't mind.",
     ],
-    lipsTouch: [
-      "Ah. Not that, I think.",
-      "Careful. Some things are not so easily taken back.",
-    ],
+    lipsTouch: ["Ah. Not that, I think.", "Hm. ...Those I keep to myself."],
     earTouch: [
       "Ah ha ha. That tickles. Rui would be scandalized.",
       "Hm. I suppose I'll allow it. Just this once.",

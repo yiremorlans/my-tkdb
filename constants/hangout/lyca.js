@@ -16,7 +16,10 @@ export default {
       "...What're you doing? Stop it.",
     ],
     cheekPoke: ["Quit it! What's your deal?", "Tch... Why'd you poke me?"],
-    lipsTouch: ["Don't! Get your hand away from my face!", "Hey! Back off!"],
+    lipsTouch: [
+      "H-Hey! Not my lips! Quit it!",
+      "Hey! ...Don't. Back up a little.",
+    ],
     earTouch: ["Don't touch that! It's mine.", "Hands off my earring!"],
     handTap: [
       "...What. You want something?",
@@ -33,7 +36,7 @@ export default {
   known: {
     headPat: ["...Okay. Just a little.", "Huh. You're not scared of me?"],
     cheekPoke: ["Hey! What was that for?", "Quit poking! I'm not a toy."],
-    lipsTouch: ["Don't. That's weird.", "Hey! Not my mouth!"],
+    lipsTouch: ["Don't. That's weird.", "Wh-What?! N-Not my lips, dummy!"],
     earTouch: [
       "Not the earring. I've had it forever.",
       "Careful! You'll make my ears pop out.",
@@ -59,7 +62,10 @@ export default {
       "Hey! ...Heh. I'm getting you back next time.",
       "What? Is there food on my face?",
     ],
-    lipsTouch: ["...Don't. That's weird.", "Hey. Not that, okay?"],
+    lipsTouch: [
+      "...Don't. You'll get your smell all over it.",
+      "Hey. Not that, okay?",
+    ],
     earTouch: [
       "Careful with that. It's important.",
       "Hey, that tickles! Quit it!",

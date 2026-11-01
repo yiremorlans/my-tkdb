@@ -15,7 +15,10 @@ export default {
       "Tsk. Get your hand off my head.",
     ],
     cheekPoke: ["What?", "You've got some nerve, poking me."],
-    lipsTouch: ["Hands off.", "...Don't even think about it."],
+    lipsTouch: [
+      "Tsk... What do you think you're doing?",
+      "...Not my lips, peasant.",
+    ],
     earTouch: ["Tsk...", "What are you, a child? Hands down."],
     handTap: ["Get to the point.", "You want something? Spit it out."],
     chestTouch: ["Back off.", "Who do you think you are?"],
@@ -32,7 +35,10 @@ export default {
       "What? You got a problem? Spit it out.",
       "Quit poking. Say what you came to say.",
     ],
-    lipsTouch: ["Don't.", "...Watch it, servant."],
+    lipsTouch: [
+      "...Don't. Not that.",
+      "Tsk... You've got some nerve, servant.",
+    ],
     earTouch: [
       "Tsk... Cut that out.",
       "If you've got something to say, say it to my face.",
@@ -58,7 +64,7 @@ export default {
       "What's that look for?",
       "You're in a good mood. Don't push it.",
     ],
-    lipsTouch: ["...Don't.", "That's not a game, servant."],
+    lipsTouch: ["Tsk... Not that.", "...Don't give me that look. Hands down."],
     earTouch: ["...Cut it out. That's not funny.", "Tsk. Bold, aren't you?"],
     handTap: ["...What? You cold?", "You've got my attention. Happy?"],
     chestTouch: ["...Back off. A little.", "You're getting comfortable."],
