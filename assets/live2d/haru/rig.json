@@ -10,10 +10,14 @@
     "academy": {
       "model": "academy/haru_academy.model3.json",
       "dialogueVariant": "uniform",
-      "parts": { "chest": ["ArtMesh143"], "pants": ["ArtMesh246", "ArtMesh247"] },
+      "parts": {
+        "chest": ["ArtMesh143"],
+        "pants": ["ArtMesh246", "ArtMesh247"],
+        "peekaboo": ["ArtMesh121", "ArtMesh125", "ArtMesh77", "ArtMesh78", "ArtMesh113", "ArtMesh275"]
+      },
       "hotspots": {
+        "belly": { "part": "peekaboo" },
         "chest": { "part": "chest", "rect": [-0.031, 0.02, 1.031, 0.555] },
-        "belly": { "part": "chest", "rect": [0.14, 0.555, 0.86, 0.841] },
         "hips": { "part": "pants", "rect": [0.08, 0.06, 0.92, 0.32] }
       }
     }
