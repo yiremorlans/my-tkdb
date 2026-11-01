@@ -16,36 +16,33 @@ export default {
   new: {
     headPat: [
       "Oh! Is there something in my hair?",
-      "Ah! I wasn't expecting that.",
+      "May I ask what that was for?",
     ],
     cheekPoke: [
-      "Oh? Did I have something on my face?",
-      "Ha ha... You surprised me.",
+      "Did I have something on my face?",
+      "Ha ha... Was there a crumb? I had sweets with my tea.",
     ],
     lipsTouch: [
-      "Ah, please, I'd rather you didn't.",
-      "Oh... Excuse me. That's a little too close.",
+      "Please, I'd rather you didn't.",
+      "Oh... Excuse me. Not my lips.",
     ],
     earTouch: [
-      "Ah, the earring... Please be careful with it.",
+      "The earring... Please be careful with it.",
       "Oh! That tickles.",
     ],
     handTap: [
-      "Ah, the gloves stay on. It's better that way.",
+      "The gloves stay on. It's better that way.",
       "Oh, please be careful. I'd hate to... Never mind. I'm sorry.",
     ],
     chestTouch: [
-      "Oh, um... Could you step back a little?",
-      "Please, not there.",
+      "Could you step back a little?",
+      "That's a little close, I think.",
     ],
     bellyTouch: [
       "Ah! Um... Could you please not?",
-      "Oh... That startled me. Please don't.",
+      "I'm not sure what you were checking for.",
     ],
-    hipsTouch: [
-      "Ah! Please don't.",
-      "Oh, that's... That's troubling. Please don't.",
-    ],
+    hipsTouch: ["Ah! Please don't.", "Oh, that's... That's troubling."],
     upset: [
       "Please stop. I'd really like you to stop.",
       "Please... That's enough.",
@@ -53,34 +50,37 @@ export default {
   },
   known: {
     headPat: [
-      "Oh... Is my hair sticking up again?",
+      "Is my hair sticking up again?",
       "Ha ha... That's a little embarrassing.",
     ],
     cheekPoke: [
-      "Oh? Ha ha. Was I smiling again?",
-      "Ah... Was that to get my attention? You have it.",
+      "Was I smiling again?",
+      "Was that to get my attention? You have it.",
     ],
     lipsTouch: [
-      "Oh... No, please.",
-      "Ah, I don't think that's... Please don't.",
+      "Ah! Um... Not my lips, please.",
+      "I don't think that's... Please don't.",
     ],
     earTouch: [
-      "Ah, please mind the earring.",
+      "Careful. That earring is very dear to me.",
       "Oh, that tickles... I'm not used to it.",
     ],
     handTap: [
-      "Oh, careful. I keep the gloves on for a reason.",
-      "Ah... Do you need something? I'm right here.",
+      "I keep the gloves on for a reason.",
+      "Do you need something? I'm right here.",
     ],
     chestTouch: [
-      "Ah, um... That's a little close. Forgive me.",
-      "Please, step back a little.",
+      "Forgive me, but could you give me some room?",
+      "I'd feel better with a little space.",
     ],
     bellyTouch: [
-      "Ah, um... I did have some hot water, if that's what you were checking.",
-      "Oh, um... I'd appreciate it if you didn't.",
+      "I did have some hot water, if that's what you were checking.",
+      "I'd appreciate it if you didn't.",
     ],
-    hipsTouch: ["Oh! Please, don't.", "I'd really rather you didn't."],
+    hipsTouch: [
+      "Oh! No, please.",
+      "That isn't something I'm comfortable with.",
+    ],
     upset: [
       "Um... Could you stop, please? I'm sorry.",
       "Please, that's enough. I mean it.",
@@ -89,30 +89,33 @@ export default {
   warm: {
     headPat: [
       "Ha ha... I suppose I don't mind.",
-      "Oh... That's nice, actually. I'm sorry, is that strange?",
+      "That's nice, actually. I'm sorry, is that strange?",
     ],
     cheekPoke: [
-      "Oh? Ha ha. What is it?",
-      "You've caught me smiling again, haven't you.",
+      "What is it?",
+      "You're in a good mood today.",
     ],
-    lipsTouch: ["Ah... Please, not that.", "Oh... Not there."],
+    lipsTouch: ["Ah... Please, not that.", "Oh... Those are... No. Please."],
     earTouch: [
       "The wisteria? You like it? ...I'm glad.",
-      "Ha ha, that tickles. Please be gentle with the earring.",
+      "Ha ha... That tickles. Gently, please.",
     ],
     handTap: [
-      "Oh... Here. You can hold it, if you like.",
-      "Is something the matter? I'm right here.",
+      "Your hands are cold. Shall I make some tea?",
+      "Is something the matter? You can tell me.",
     ],
     chestTouch: [
-      "Ah, um... Please, a little further back.",
-      "Oh... That's a bit too close. Forgive me.",
+      "I'm sure you mean well, but please.",
+      "Please, a little room. Even for you.",
     ],
     bellyTouch: [
-      "Oh! Ha ha... You caught me completely off guard.",
+      "Oh! Ha ha... That's not fair at all.",
       "Ah! ...Was that to make me laugh? It worked, I'm afraid.",
     ],
-    hipsTouch: ["Oh! Please don't.", "That's... No. Please."],
+    hipsTouch: [
+      "No. That's not all right.",
+      "That's... Please. Anywhere else.",
+    ],
     upset: [
       "That's enough now. Please.",
       "I thought you knew better than this. Please stop.",
@@ -120,11 +123,11 @@ export default {
   },
   spark: {
     headPat: [
-      "Oh... I don't mind at all. Please, don't stop on my account.",
+      "I don't mind at all. Please, don't stop on my account.",
       "Ha ha... I'm sure my face is red now.",
     ],
     cheekPoke: [
-      "Ah... Please, I'm flustered enough already.",
+      "Please, I'm flustered enough already.",
       "You're teasing me. ...I don't mind.",
     ],
     lipsTouch: [
@@ -133,44 +136,44 @@ export default {
     ],
     earTouch: [
       "Ah... That's a little unfair.",
-      "Oh... Please, I can't think when you do that.",
+      "Please, I can't think when you do that.",
     ],
     handTap: [
       "Here. ...I took the glove off. Is that all right?",
-      "Oh... You can hold on, if you'd like.",
+      "You can hold on, if you'd like.",
     ],
     chestTouch: [
-      "Oh... Could you stay like that, just a moment?",
-      "Ah... Please, give me a moment.",
+      "Could you stay like that, just a moment?",
+      "I wasn't going to ask you to move.",
     ],
     bellyTouch: [
-      "Oh... Um. I've lost my train of thought.",
+      "Oh... Um. Ha ha... You know I'm ticklish now.",
       "Ha ha... Please don't look at me just now.",
     ],
     hipsTouch: [
       "Ah! ...You're very bold today.",
-      "Oh... I, um. Not here, please.",
+      "That's... Please, that's a little much.",
     ],
     upset: [
-      "Please... You're making it very hard to keep my composure.",
+      "I-I'm trying to stay calm, and you're not helping.",
       "Ha ha... All right. I surrender. Please stop.",
     ],
   },
   close: {
     headPat: [
       "Ha ha... Again, please. Just a little longer.",
-      "Mm... Leave my hair however you've made it. I'll keep it that way.",
+      "Leave my hair however you've made it. I'll keep it that way.",
     ],
     cheekPoke: [
       "You always find the same spot. Go on, then.",
-      "Ha ha... Hold still. It's my turn to poke you back.",
+      "Hold still. It's my turn to poke you back.",
     ],
     lipsTouch: [
       "...So you did mean it. Ha ha... Then please, don't stop at one.",
-      "Ah... If that was a question, the answer's yes.",
+      "If that was a question, the answer's yes.",
     ],
     earTouch: [
-      "Ah... You always go for the wisteria side. Ha ha. I've noticed.",
+      "You always go for the wisteria side. I've noticed.",
       "Mm... You can stay there. I'll hold still.",
     ],
     handTap: [
@@ -178,15 +181,15 @@ export default {
       "Your hand's cold. Here, let me keep it warm a while.",
     ],
     chestTouch: [
-      "Ha ha... It's very loud in there, isn't it? Stay anyway.",
-      "Mm... Lean in, if you like. I'm not going anywhere.",
+      "It's very loud in there, isn't it? Stay anyway.",
+      "Lean in, if you like. I'm not going anywhere.",
     ],
     bellyTouch: [
       "Ha ha... Keep that up and I'll have to return the favor.",
-      "Oh... Your hand's warm. Leave it there a little longer.",
+      "Your hand's warm. Leave it there a little longer.",
     ],
     hipsTouch: [
-      "Ah... Somewhere quieter, perhaps? Ha ha... Only if you'd like.",
+      "Somewhere quieter, perhaps? ...Only if you'd like.",
       "That wasn't an accident, was it? ...Good.",
     ],
   },

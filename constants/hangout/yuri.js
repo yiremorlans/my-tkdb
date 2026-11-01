@@ -19,8 +19,8 @@ export default {
       "N-Never touch a physician without warning, worm!",
     ],
     lipsTouch: [
-      "Unhand me this instant!",
-      "Wh-Wha... Have you no shame, worm!?",
+      "How dare you! My lips are not open for examination!",
+      "Who said you could!? I am the doctor here, worm!",
     ],
     earTouch: [
       "Ah! M-Mind the piercings, worm!",
@@ -35,7 +35,7 @@ export default {
       "Back! I am a very busy man.",
     ],
     bellyTouch: [
-      "Wh-Who said you could palpate a genius!?",
+      "Wh-Who gave you permission to palpate me!?",
       "Abdominal exams are my job, worm! Not yours!",
     ],
     hipsTouch: [
@@ -44,7 +44,7 @@ export default {
     ],
     upset: [
       "Enough! I am a very busy man!",
-      "Cease this at once! A genius has no time for this!",
+      "Cease this at once! I have patients waiting!",
     ],
   },
   known: {
@@ -57,8 +57,8 @@ export default {
       "Must you!? I am thinking!",
     ],
     lipsTouch: [
-      "Unhand me!",
-      "Wh-What sort of examination is that supposed to be!?",
+      "Ah! That is a highly personal area, worm!",
+      "What sort of examination is that supposed to be!?",
     ],
     earTouch: [
       "Wh-Why my ears!? Admiring the piercings, I suppose... Hmph.",
@@ -88,14 +88,14 @@ export default {
   warm: {
     headPat: [
       "Hmph. I s-suppose I've earned it... Don't make a habit of it.",
-      "...Y-You may continue. For research purposes. Briefly.",
+      "...Y-You may continue. Briefly. And tell no one.",
     ],
     cheekPoke: [
       "Wh-What!? Stop smiling like that!",
-      "Poking the genius again? Hmph.",
+      "Poking me again? Hmph. Have you no work to do?",
     ],
     lipsTouch: [
-      "Wh-Wha... Absolutely not!",
+      "Wh-Wha... N-Not there! Not yet... I mean, not ever!",
       "That is not a medical procedure, worm!",
     ],
     earTouch: [
@@ -111,12 +111,12 @@ export default {
       "Back! Who is the doctor here!?",
     ],
     bellyTouch: [
-      "Hah! Th-That was an involuntary reflex! Purely medical!",
+      "Hah! Th-That was an involuntary reflex! It means nothing!",
       "D-Don't do that without warning! My concentration!",
     ],
     hipsTouch: ["Unhand me this instant!", "Wh-Where is that hand going!?"],
     upset: [
-      "Enough! A genius is at work!",
+      "Enough! I have a surgery to prepare for!",
       "That's quite enough poking for one appointment!",
     ],
   },
@@ -131,7 +131,7 @@ export default {
     ],
     lipsTouch: [
       "Wh-Wh-What are you... You can't just...!",
-      "Th-That is highly unscientific!",
+      "Wh-Why my lips, of all places!? ...Hmph.",
     ],
     earTouch: [
       "Ah! That's... N-No, that was a cough!",
@@ -164,8 +164,8 @@ export default {
       "...Fine. I've decided this is good for my circulation. Do it again.",
     ],
     cheekPoke: [
-      "Y-You're doing that on purpose! ...Hmph. Then I shall allow it on purpose.",
-      "Poke me all you like. A genius can withstand... Ah! I-I can withstand it!",
+      "Y-You're doing that on purpose! ...Hmph. Then I shall allow it.",
+      "Poke me all you like. A physician is trained to withstand... Ah! I-I can withstand it!",
     ],
     lipsTouch: [
       "Th-That requires further study. Repeated trials. For accuracy!",

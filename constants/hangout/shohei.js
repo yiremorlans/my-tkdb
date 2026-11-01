@@ -13,12 +13,12 @@ export default {
       "Hey. Watch the bandana.",
       "What're you doing? I'm not a dog, Senpai.",
     ],
-    cheekPoke: ["...What was that for?", "Pfft. What, something on my face?"],
-    lipsTouch: ["Whoa. Hands off.", "Hey. Don't."],
+    cheekPoke: ["...What was that for?", "Huh? Something on my face?"],
+    lipsTouch: ["Whoa. ...Geez. Not the lips, Senpai.", "Hey. Don't."],
     earTouch: ["Easy on the piercings, Senpai.", "Huh? Quit it."],
     handTap: [
       "Don't. My hands smell like onions.",
-      "You need something? I'm on the clock.",
+      "You need something? I got an order going.",
     ],
     chestTouch: ["Back up. What's the idea?", "Hey. Personal space, Senpai."],
     bellyTouch: [
@@ -30,40 +30,43 @@ export default {
   },
   known: {
     headPat: [
-      "Pfft. You trying to make me shorter or something?",
-      "C'mon, not the bandana. Took me forever.",
+      "You trying to make me shorter or something?",
+      "Huh? What'd I do to earn that?",
     ],
-    cheekPoke: ["Huh? What's that for?", "Pfft. Bored already, Senpai?"],
-    lipsTouch: ["Hey. Not funny.", "Don't. I'm serious."],
+    cheekPoke: ["Huh? What's that for?", "Bored already, Senpai?"],
+    lipsTouch: ["Geez, outta nowhere? ...Don't.", "Don't. I'm serious."],
     earTouch: [
       "You keep going for the piercings. Want one?",
       "Geez, that tickles. Quit it.",
     ],
     handTap: [
-      "Careful, I just had them in the fryer. ...Kidding.",
+      "Hungry? I got leftovers from prep.",
       "What, you need a hand with something? Just ask.",
     ],
     chestTouch: ["Back up a little, Senpai.", "Whoa. Too close."],
     bellyTouch: [
       "Hey. Quit it. That's not a button.",
-      "Pfft. What was that, Senpai? Some kinda test?",
+      "What was that, Senpai? Some kinda test?",
     ],
     hipsTouch: ["Hey. Cut that out.", "Nope. Not there."],
     upset: ["Geez, enough already.", "Okay, okay. I get it. Quit it."],
   },
   warm: {
     headPat: [
-      "Pfft. What's that for? ...Whatever, I don't mind.",
-      "You're gonna mess up the bandana. ...Fine.",
+      "Huh. ...Whatever, I don't mind.",
+      "Geez. You do that to everybody, or just me?",
     ],
     cheekPoke: [
       "What? You got something to say, Senpai?",
-      "Pfft. Someone's in a mood.",
+      "Someone's in a mood.",
     ],
-    lipsTouch: ["Hey. Don't play like that.", "...Not funny, Senpai."],
+    lipsTouch: [
+      "Hey. Nice try, Senpai. Those are off-limits.",
+      "...Not funny, Senpai.",
+    ],
     earTouch: [
       "That tickles. Quit it. ...Or don't.",
-      "Keep that up and I'll have to get another one just so you can mess with it.",
+      "You're really into my ears, huh, Senpai?",
     ],
     handTap: [
       "Here. ...What, you just wanted to hold it?",
@@ -72,7 +75,7 @@ export default {
     chestTouch: ["Hey. Back up a little.", "...Don't. That's a weird spot."],
     bellyTouch: [
       "Whoa! Geez, Senpai, warn a guy first.",
-      "Pfft. Sneak attack, huh? I'll remember that.",
+      "Sneak attack, huh? I'll remember that.",
     ],
     hipsTouch: ["Whoa. No.", "Senpai. Hands."],
     upset: ["Geez. Enough, Senpai.", "Hey. Quit it. I mean it."],
@@ -80,7 +83,7 @@ export default {
   spark: {
     headPat: [
       "...Okay, that one actually got me.",
-      "Pfft. Keep doing that and I'm doing it back.",
+      "Keep doing that and I'm doing it back.",
     ],
     cheekPoke: [
       "What're you looking at? ...Don't answer that.",
@@ -119,14 +122,14 @@ export default {
     ],
     cheekPoke: [
       "Yeah, yeah, I'm red. You gonna do something about it, Senpai?",
-      "Pfft. Again? C'mon, at least make it count.",
+      "Again? C'mon, at least make it count.",
     ],
     lipsTouch: [
       "...Careful, Senpai. I'm gonna start asking for that.",
       "...Yeah? C'mere, then, Senpai.",
     ],
     earTouch: [
-      "Pfft. You found the spot. Now you're stuck with it, Senpai.",
+      "Yeah, that's the spot, Senpai.",
       "Keep going. I'll pretend I'm not into it.",
     ],
     handTap: [

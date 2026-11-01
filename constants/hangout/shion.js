@@ -4,7 +4,7 @@
 // approval. Kept apart from constants/dialogue/shion.js.
 //
 // Sparse, flat, childish and cruel; fear is "being happy". "My wife" from
-// known on, never new. No water/mermaid hints, no swap explained, no favors,
+// warm on, never new/known (user, 2026-10-31). No water/mermaid hints, no swap explained, no favors,
 // no hunting. Guarded spots (lips, chest, hips) stay serious until spark.
 
 export default {
@@ -17,11 +17,11 @@ export default {
       "Hm. Your face isn't scared yet.",
       "You poke. I poke back. Harder.",
     ],
-    lipsTouch: ["Don't.", "Put that finger near my teeth again. Go on."],
+    lipsTouch: ["...Stop that.", "...Why. What do you want with them."],
     earTouch: ["...What are you doing.", "Leave it."],
-    handTap: ["Gloves stay on.", "Oh. You're not running. Strange."],
+    handTap: ["...Hm? What.", "You want something? Say it, then."],
     chestTouch: ["Back.", "Who told you that was allowed?"],
-    bellyTouch: ["Hands off.", "Poke me there again. See how happy you get."],
+    bellyTouch: ["Hands off.", "...Why my stomach. You're weird."],
     hipsTouch: ["No.", "Touch me there again and I'll make you cry."],
     upset: [
       "Stop. Now I'm in a terrible mood.",
@@ -31,16 +31,16 @@ export default {
   known: {
     headPat: [
       "...You again. Fine.",
-      "Only you get to do that.",
+      "...Hm. Your hand's cold.",
     ],
-    cheekPoke: ["Bored? Me too.", "My wife's getting cocky."],
-    lipsTouch: ["Don't.", "...Not that. Not yet."],
+    cheekPoke: ["Bored? Me too.", "...You're getting cocky."],
+    lipsTouch: ["...Don't. I didn't say you could.", "...Leave my lips alone."],
     earTouch: [
       "Hm. Nothing in there for you.",
       "Leave it. ...Or don't. I'm deciding.",
     ],
     handTap: [
-      "Hold the glove, then. Not the hand.",
+      "...Hm. You keep doing that.",
       "...You want something. Say it.",
     ],
     chestTouch: ["Back. I said back.", "That's not yours to touch. Yet."],
@@ -60,14 +60,14 @@ export default {
       "Hehehe. You're in a mood.",
       "Poke me again and I'll scribble on your face.",
     ],
-    lipsTouch: ["...No.", "Not that. Not here."],
+    lipsTouch: ["...Not my lips. Pick somewhere else.", "...No. I said no."],
     earTouch: [
       "That tickles. I'm not happy about it.",
       "Whisper something, then. Something mean.",
     ],
     handTap: [
       "Hold on, then. Don't let go first.",
-      "You keep coming closer. Good.",
+      "...What now?",
     ],
     chestTouch: [
       "Careful. That's not a game.",
@@ -91,7 +91,7 @@ export default {
     ],
     lipsTouch: [
       "...You did that on purpose.",
-      "...Hm. You surprised me. Don't get used to it.",
+      "...Hm. I'll allow it. Once.",
     ],
     earTouch: [
       "...Hm. My wife learned something.",
@@ -103,7 +103,7 @@ export default {
     ],
     chestTouch: [
       "...Feel that? That's you.",
-      "You're too close. ...Stay there.",
+      "...That's not close enough. Closer.",
     ],
     bellyTouch: [
       "...Hm. Leave it there. Don't move.",

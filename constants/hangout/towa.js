@@ -25,8 +25,8 @@ export default {
       "Hey! Heh heh ♪ My turn next!",
     ],
     lipsTouch: [
-      "...? Do you want a bite? It was just a flower.",
-      "Hm? There's nothing in there. I already ate it.",
+      "...? Why the lips, Dandelion? Is there a petal on them?",
+      "Hm? Do humans poke lips to say hello? ♪",
     ],
     earTouch: [
       "Ah! That tickles. ~ ~ ♪",
@@ -57,8 +57,8 @@ export default {
       "Do it again and I'll poke back. ♪",
     ],
     lipsTouch: [
-      "...? Are you hungry, Dandelion? I can find you a flower.",
-      "Hm? I already ate it. You were too slow. ♪",
+      "...? Do my lips taste like flowers? I had clover today. ♪",
+      "Hm? Is that a game, Dandelion? Teach me the rules.",
     ],
     earTouch: [
       "Ah! That tickles. Heh heh ♪",
@@ -92,8 +92,8 @@ export default {
       "Heh heh ♪ My cheek's soft, right? Like petals.",
     ],
     lipsTouch: [
-      "...? Why there, Dandelion? Heh heh ♪",
-      "Hm? You're so quiet. Your heart isn't. ♪",
+      "...? You keep picking there. Do you know something I don't?",
+      "Hm? Are they soft? I never checked. ♪",
     ],
     earTouch: [
       "Ah! Heh heh ♪ I heard that. I hear everything.",

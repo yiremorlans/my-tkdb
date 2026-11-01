@@ -20,8 +20,8 @@ export default {
       "A poke! How playful. I'll pretend it landed, shall I?",
     ],
     lipsTouch: [
-      "My dear! I can see what you're aiming for. We've scarcely been introduced!",
-      "Ah, ah. A poet must be wooed with verse first.",
+      "My dear! I can see what you're aiming for. Kindly don't!",
+      "Ah, ah. Some verses aren't for reciting.",
     ],
     earTouch: [
       "Reaching for my ear? Then lend me yours. I have a story.",
@@ -58,7 +58,7 @@ export default {
       "A poke! You're keeping me on my toes. Ha ha, figuratively.",
     ],
     lipsTouch: [
-      "My dear, such boldness belongs in the last chapter, not the second.",
+      "My dear, such boldness! Even a romance knows where to stop.",
       "I know what that gesture means. I'll write it down and never publish it.",
     ],
     earTouch: [
@@ -112,7 +112,7 @@ export default {
       "My dear, I know what a hand there means. I'd rather you didn't mean it yet.",
     ],
     bellyTouch: [
-      "Oh! I... I think I flinched. How peculiar, for a ghost.",
+      "Oh! I... I think I flinched. How peculiar.",
       "Gracious, my dear! Tickling a poet without warning?",
     ],
     hipsTouch: [
@@ -130,7 +130,7 @@ export default {
       "Do that again, my dear. I want to write down what it's like to be meant.",
     ],
     cheekPoke: [
-      "My dear, my face is warm. Ghosts aren't supposed to blush.",
+      "My dear, if I could blush, I'd be crimson to the ears.",
       "You reach for me like I'm really here. You'll have me believing it.",
     ],
     lipsTouch: [
@@ -139,10 +139,10 @@ export default {
     ],
     earTouch: [
       "Whisper something, my dear. I'll keep it.",
-      "You leaned in like I'd feel it. ...I think I did.",
+      "You leaned in to tell me something. I'm all ears, my dear.",
     ],
     handTap: [
-      "Leave it there, my dear. It passes right through me, and I still don't want you to move.",
+      "Leave your hand there, my dear. I know what you're offering, and I accept.",
       "Your hand's resting where mine is. Let's call that holding hands.",
     ],
     chestTouch: [
@@ -151,7 +151,7 @@ export default {
     ],
     bellyTouch: [
       "Butterflies, my dear. I'd forgotten a fella could still get those.",
-      "Ha ha... Gracious. Give a poor ghost a moment to collect himself.",
+      "Ha ha... Gracious. Give a poor man a moment to collect himself.",
     ],
     hipsTouch: [
       "My dear! I'm... I'm a gentleman, you know!",

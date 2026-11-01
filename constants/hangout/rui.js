@@ -10,6 +10,8 @@
 // his gloved hands play as a normal touch. He never promises to keep his
 // hands to himself and never explains the gloves; the distance is a given.
 // Bright and forward, with the crack showing at warm+; "cutie" now and then.
+// Close is yearning: they can never be physically intimate, so he wants what
+// he refuses (user, 2026-10-31). Belly stays light and ticklish.
 
 export default {
   new: {
@@ -23,7 +25,7 @@ export default {
     ],
     lipsTouch: [
       "Nope nope nope! That's a really bad idea, trust me.",
-      "Whoa, hard no! You almost gave me a heart attack.",
+      "Whoa, hard no! Seriously, not the lips.",
     ],
     earTouch: [
       "Whoa, close call! Look, don't touch, okay?",
@@ -61,7 +63,7 @@ export default {
     ],
     lipsTouch: [
       "Nope, not happening. Not even a little.",
-      "Whoa! Okay, that one actually scared me.",
+      "Whoa! Okay, please don't do that. Ever.",
     ],
     earTouch: [
       "Checking out the piercings? Cool, right? Just look, though.",
@@ -95,7 +97,7 @@ export default {
     ],
     cheekPoke: [
       "Hey! I know my face is great, but come on.",
-      "...Okay. You're fine. You're fine. Just don't do that, okay?",
+      "...Wait. Are you okay? Nothing hurts? ...Just don't do that, okay?",
     ],
     lipsTouch: [
       "Hey. Not there, okay? I couldn't stand it if something happened.",
@@ -163,36 +165,36 @@ export default {
   },
   close: {
     headPat: [
-      "Hey! ...Ahaha. You really don't scare easy, huh? Still. Don't.",
+      "...Cutie. You have no idea how much I want to let you do that.",
       "Cutie... I know. Me too. But don't.",
     ],
     cheekPoke: [
-      "Ahaha, nope! Not the face, cutie. I need you around.",
-      "Hey... Don't. Who else is gonna come bug me at the bar?",
+      "Not the face, cutie. ...I wish it could be the face.",
+      "Hey... Don't. I need you around way more than I need that.",
     ],
     lipsTouch: [
-      "...Hey. Don't. I'm not losing you over that.",
-      "Ahaha... wow. You'd really try that? Don't. Please.",
+      "...Hey. Don't. I think about it too. All the time.",
+      "You'd really try that? ...Don't. I want it too much to risk you.",
     ],
     earTouch: [
-      "Whoa! Hands off, cutie. I like you alive.",
+      "Hands off, cutie. ...I'd let you, if I could. You know that, right?",
       "Ahaha... no. Not even you. Especially not you.",
     ],
     handTap: [
-      "Leave it there as long as you want. I've got nowhere to be.",
-      "Hey, you. Squeeze back? ...There. Now we're even.",
+      "Leave it there as long as you want. This much I can have.",
+      "My glove, your hand. It's the closest we get. I'll take it.",
     ],
     chestTouch: [
-      "Yep, that's my heart going crazy. It does that around you a lot.",
       "Stay right there, cutie. I like you this close.",
+      "...This close, and I still can't hold you. Stay anyway?",
     ],
     bellyTouch: [
       "Ahaha! Okay, you got me. Wanna go again?",
       "You know all my ticklish spots now, huh? That's dangerous info.",
     ],
     hipsTouch: [
-      "Whoa, bold! ...Okay, you can be bold. I'll allow it.",
-      "Keep that up and I'm mixing you a drink that's just for you.",
+      "Whoa, bold! ...You know what you do to me, right? Cruel, cutie.",
+      "Keep that up and I'm closing the bar early. Even if all we get is the same room.",
     ],
   },
 };

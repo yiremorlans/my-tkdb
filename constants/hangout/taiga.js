@@ -20,8 +20,8 @@ export default {
       "You wanna die or something?",
     ],
     lipsTouch: [
-      "Keep your fingers away from my teeth.",
-      "Hah? You lookin' to lose those?",
+      "Hah? Poke my lips again and I'm biting that finger.",
+      "...Don't. Who're you again?",
     ],
     earTouch: [
       "Hands off the gold.",
@@ -51,7 +51,10 @@ export default {
       "What, kitten? I'm hungry, not bored.",
       "Quit it. You got food on you or what?",
     ],
-    lipsTouch: ["Hah? Fingers away from my mouth.", "Don't. I haven't eaten."],
+    lipsTouch: [
+      "Hah? ...Don't. Not the lips.",
+      "...Tch. Fingers that close get bitten, kitten.",
+    ],
     earTouch: ["Hey. That's mine.", "Pull that and I'm pulling yours."],
     handTap: [
       "Left hand. Spread your fingers. ...Gyahaha! Kidding.",
@@ -69,7 +72,7 @@ export default {
       "Hey. Hands where I can see 'em.",
       "Don't push your luck, kitten.",
     ],
-    upset: ["Enough. You're getting annoying.", "Screw this! I'm going home!"],
+    upset: ["Enough. You're getting annoying.", "Quit it, kitten. I'm not in the mood."],
   },
   warm: {
     headPat: [
@@ -80,7 +83,7 @@ export default {
       "You poking for a reaction? Here. Gyahaha!",
       "Do that again and I'm eating your share.",
     ],
-    lipsTouch: ["Hey. Not that.", "...Watch the teeth, kitten. I mean it."],
+    lipsTouch: ["Hey. Not that.", "...Kitten. You want that finger bitten?"],
     earTouch: [
       "That tickles, damn it.",
       "Yank it and you're paying for a new one.",
@@ -91,7 +94,7 @@ export default {
     ],
     chestTouch: [
       "Go on, then. See how far you get before I bite.",
-      "Quit squirming, kitten. You started this.",
+      "Checking for a heartbeat, kitten? Still got one.",
     ],
     bellyTouch: [
       "Hey! Gyahaha! ...Do that slower, kitten.",

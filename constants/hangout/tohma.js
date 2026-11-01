@@ -18,10 +18,7 @@ export default {
       "Is there something on my face, or are you simply testing me?",
       "Well, well. Bold, for someone I've only just met.",
     ],
-    lipsTouch: [
-      "I'll ask you to keep your hands to yourself.",
-      "That will do. I don't believe we've been introduced.",
-    ],
+    lipsTouch: ["Ah. Not those.", "Honestly. That will do."],
     earTouch: [
       "I can hear you perfectly well. No need to come so close.",
       "Curious. Most people whisper into an ear rather than poke it.",
@@ -56,10 +53,7 @@ export default {
       "Testing whether I'm made of stone? I assure you I'm not.",
       "You're in a mischievous mood. Should I be concerned?",
     ],
-    lipsTouch: [
-      "Not that. I suggest you choose your next move more carefully.",
-      "I'll overlook that once.",
-    ],
+    lipsTouch: ["Not that, if you please.", "I'll overlook that once."],
     earTouch: [
       "I hear quite enough as it is, thank you.",
       "If you've something to whisper, by all means. Otherwise, hands down.",
@@ -95,7 +89,7 @@ export default {
       "You're in good spirits. I'm glad to see it.",
     ],
     lipsTouch: [
-      "Careful. That's not a game I'd let you win.",
+      "Mm. Those are mine to keep.",
       "No. I mean that kindly, but no.",
     ],
     earTouch: [
@@ -112,7 +106,7 @@ export default {
     ],
     bellyTouch: [
       "Ha... ha ha. Now that was unsporting.",
-      "You caught me off guard. I don't care for how rarely that happens.",
+      "Honestly. I'll be keeping score, you know.",
     ],
     hipsTouch: ["I'd stop there, if I were you.", "Now, now. Behave."],
     upset: [
@@ -155,7 +149,7 @@ export default {
     ],
     upset: [
       "Honestly. You'll undo all my composure if you keep that up.",
-      "Enough. I need a moment, and I'd prefer you didn't watch me take it.",
+      "Enough, enough. You're being terribly unfair.",
     ],
   },
   close: {
