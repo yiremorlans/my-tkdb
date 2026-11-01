@@ -35,6 +35,9 @@ import { validateLive2DRig } from "./validate.js";
 
 // Seconds a reaction's pose holds before its return clip plays.
 const POSE_HOLD = 2.5;
+// Seconds idle damping takes to ease in once a return lands, and out as a pose starts.
+const IDLE_DAMP_IN = 0.8;
+const IDLE_DAMP_OUT = 0.15;
 
 // Mouth flaps while a line types: syllables per second, and the seconds
 // the mouth takes to settle shut after the last one.
@@ -191,6 +194,11 @@ export class Live2DRig {
     // after, since physics doesn't read it.
     this.idleParams = manifest.idleParams.map((id) => this.paramIndex.get(id)).filter((i) => i != null);
     this.idleUntil = 0; // a pose or its return owns the body until then
+    // How much of the damping applies (0..1). It eases in as a pose's
+    // return lands and out as a pose starts: switched in one frame, it
+    // stepped the idle's arms toward rest (Tohma's flinched after every pose).
+    this.dampWeight = 1;
+    this.dampAt = performance.now();
     this.breathIndex = this.paramIndex.get("ParamBreath");
     // The plugin's CubismBreath: its peaks as shipped, scaled by setSway.
     const sway = model.internalModel.breath?.getParameters();
@@ -288,8 +296,16 @@ export class Live2DRig {
   // --- idle damping ---------------------------------------------------------
 
   dampIdle() {
-    const k = this.rig.motion?.idle?.amount ?? 1;
-    if (k >= 1 || this.posing || performance.now() < this.idleUntil) return;
+    const amount = this.rig.motion?.idle?.amount ?? 1;
+    const now = performance.now();
+    const dt = (now - this.dampAt) / 1000;
+    this.dampAt = now;
+    const idle = !this.posing && now >= this.idleUntil;
+    const step = dt / (idle ? IDLE_DAMP_IN : IDLE_DAMP_OUT);
+    this.dampWeight = Math.max(0, Math.min(1, this.dampWeight + (idle ? step : -step)));
+    if (amount >= 1 || !this.dampWeight) return;
+    const w = this.dampWeight * this.dampWeight * (3 - 2 * this.dampWeight); // smoothstep
+    const k = 1 - (1 - amount) * w;
     const { values, defaultValues } = this.raw.parameters;
     for (const i of this.idleParams) values[i] = defaultValues[i] + (values[i] - defaultValues[i]) * k;
   }
@@ -480,6 +496,7 @@ export class Live2DRig {
     const end = this.durations.get(name);
     this.later(end - 0.05, () => this.model.motion(`${name}_hold`, 0, MotionPriority.FORCE, { loop: true }));
     this.returnTimer = hold != null ? this.later(end + hold, () => this.leavePose()) : null;
+    this.leavesAt = hold != null ? performance.now() + (end + hold) * 1000 : null;
     return true;
   }
 
@@ -490,12 +507,18 @@ export class Live2DRig {
     this.model.motion(ret, 0, MotionPriority.FORCE);
     this.idleUntil = performance.now() + (this.durations.get(ret) ?? 0) * 1000;
     this.posing = null;
+    this.leavesAt = null;
   }
 
-  /** Plays the pose rig.json `reactionPoses` gives reaction `name` at `tier`, if any. */
+  /**
+   * Plays the pose rig.json `reactionPoses` gives reaction `name` at `tier`,
+   * if any. Returns the seconds until the pose it's in starts returning
+   * (null when it holds with no return, or there's no pose).
+   */
   reactPose(name, tier) {
     const pose = forTier(this.rig.reactionPoses?.[name], tier);
     if (pose && this.posing !== pose) this.playPose(pose, POSE_HOLD);
+    return pose && this.leavesAt != null ? Math.max(0, (this.leavesAt - performance.now()) / 1000) : null;
   }
 
   /** Holds the guarded pose with no return: he's locked out (Hangout LOCKOUT_TIERS). */
@@ -524,6 +547,7 @@ export class Live2DRig {
   keepPose() {
     clearTimeout(this.returnTimer);
     this.returnTimer = null;
+    this.leavesAt = null;
   }
 
   /** Leaves the guarded pose (the tier changed). */

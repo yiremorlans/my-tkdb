@@ -17,6 +17,21 @@
         "belly": { "part": "chest", "rect": [0.14, 0.484, 0.86, 0.782] },
         "hips": { "part": "pants", "rect": [0.08, -0.02, 0.92, 0.2] }
       }
+    },
+    "casual": {
+      "model": "casual/towa_casual.model3.json",
+      "dialogueVariant": "casual",
+      "parts": {
+        "chest": ["ArtMesh321"],
+        "pants": ["ArtMesh334", "ArtMesh335"],
+        "hand_r": ["ArtMesh141", "ArtMesh142", "ArtMesh143", "ArtMesh146", "ArtMesh147"],
+        "hand_l": ["ArtMesh149", "ArtMesh164", "ArtMesh153", "ArtMesh152"]
+      },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.059, 0.02, 0.941, 0.537] },
+        "belly": { "part": "chest", "rect": [0.14, 0.537, 0.86, 0.794] },
+        "hips": { "part": "pants", "rect": [0.08, -0.07, 0.92, 0.22] }
+      }
     }
   },
   "parts": {

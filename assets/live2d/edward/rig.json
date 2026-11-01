@@ -17,6 +17,20 @@
         "belly": { "part": "chest", "rect": [0.14, 0.536, 0.86, 0.815] },
         "hips": { "part": "pants", "rect": [0.08, -0.04, 0.92, 0.2] }
       }
+    },
+    "casual": {
+      "model": "casual/edward_casual.model3.json",
+      "dialogueVariant": "casual",
+      "parts": {
+        "chest": ["ArtMesh325"],
+        "pants": ["ArtMesh330", "ArtMesh331"],
+        "hand_l": ["ArtMesh179", "ArtMesh189", "ArtMesh182", "ArtMesh181", "ArtMesh180"]
+      },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [-0.049, 0.02, 1.049, 0.687] },
+        "belly": { "part": "chest", "rect": [0.14, 0.687, 0.86, 0.996] },
+        "hips": { "part": "pants", "rect": [0.08, -0.08, 0.92, 0.21] }
+      }
     }
   },
   "parts": {

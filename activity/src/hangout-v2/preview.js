@@ -314,7 +314,7 @@ async function main() {
   const react = hangout.react.bind(hangout);
   hangout.react = (name, t, spot) => {
     const out = react(name, t, spot);
-    if (spot || name === "upset") warmth.reaction(name);
+    warmth.reaction(name);
     return out;
   };
 
@@ -483,7 +483,6 @@ async function main() {
       const answer = await fetch(`/__meet/answer?${a}`);
       const result = await answer.json();
       if (!answer.ok) throw new Error(result.error);
-      warmth.answer(result.gain >= 2 ? "fave" : result.gain >= 1 ? "liked" : "flat");
       return result;
     });
   }

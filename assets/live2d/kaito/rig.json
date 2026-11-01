@@ -24,6 +24,7 @@
     "mouth": ["ArtMesh106", "ArtMesh107", "ArtMesh108", "ArtMesh109", "ArtMesh110", "ArtMesh111", "ArtMesh112", "ArtMesh113", "ArtMesh114", "mouth_area"],
     "ear_r": ["ArtMesh169", "ArtMesh324", "ArtMesh325", "ArtMesh326"],
     "ear_l": ["ArtMesh330", "ArtMesh327", "ArtMesh328", "ArtMesh329"],
+    "ear_skin": ["ArtMesh169", "ArtMesh325", "ArtMesh326", "ArtMesh330", "ArtMesh328", "ArtMesh329"],
     "hand_r": ["ArtMesh274", "ArtMesh275", "ArtMesh277", "ArtMesh280", "ArtMesh282"],
     "hand_l": ["ArtMesh292", "ArtMesh295", "ArtMesh296", "ArtMesh374", "ArtMesh372", "ArtMesh371", "ArtMesh369", "ArtMesh367", "ArtMesh304", "ArtMesh308", "ArtMesh115"]
   },
@@ -36,6 +37,7 @@
     "cheek": { "part": "face_base", "rect": [0.12, 0.55, 0.88, 0.82] },
     "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
   },
+  "partBlush": { "parts": ["ear_skin"], "color": [1, 0.88, 0.88] },
   "bones": {
     "arms": {
       "r": { },

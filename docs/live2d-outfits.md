@@ -24,15 +24,15 @@ the campus store, the Dionysia workshop and Ren's room. A new outfit gets
 ## Second outfit already chosen in the old rig
 
 - [ ] Alan `roomwear`
-- [ ] Edward `casual`
+- [x] Edward `casual` (game bundle `edwardcasual`)
 - [x] Ren `roomwear` (game bundle `renroomwear`; old rig also had `diner` as a third)
-- [ ] Rui `casual`
+- [x] Rui `casual` (game bundle `ruicasual`)
 - [x] Shohei `casual` (game bundle `shocasual`)
-- [ ] Subaru `casual`
-- [ ] Taiga `city`
-- [ ] Tohma `city`
-- [ ] Towa `casual` (source art only)
-- [ ] Yuri `casual_2` (a `casual` atlas also exists)
+- [x] Subaru `casual` (game bundle `subarucasual`)
+- [x] Taiga `city` (game bundle `taigacity`; `m_face` joined to `m_aori` as on academy)
+- [ ] Tohma `city` (on academy `m_ago1` is joined after `m_hidarikoshi` and `m_ago2` after `m_pocket`, returns likewise; do the same)
+- [x] Towa `casual` (game bundle `towacasual`)
+- [x] Yuri `casual_2` (game bundle `yuricasual2`; e_surprise_00 and e_shinken_00 copied from academy; chest/belly matched to academy in px)
 - [ ] Zenji `casual` (source art only)
 
 ## `_Casual` portrait exists, slot not decided

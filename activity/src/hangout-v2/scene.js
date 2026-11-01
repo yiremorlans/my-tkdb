@@ -70,11 +70,15 @@ export async function startScene(stage, { base, tier, outfit, lines, room = true
   const sounds = new Sounds(soundBytes);
   const play = (file) => sounds.play(file);
   const hangout = new Hangout({ renderer, motion, say: speak, play, lines, tier: DIALOGUE_TIERS.includes(tier) ? tier : "new" });
-  // Every reaction (taps, upset) also plays its pose, if any.
+  // Every reaction (taps, upset) also plays its pose, if any, and its face
+  // lasts at least until that pose starts returning, so it never resets mid-pose.
   const react = hangout.react.bind(hangout);
   hangout.react = (name, t, spot) => {
     react(name, t, spot);
-    renderer.reactPose(name, hangout.tier);
+    const left = renderer.reactPose(name, hangout.tier);
+    if (left != null && hangout.renderer.moodName !== hangout.baseMood) {
+      hangout.moodUntil = Math.max(hangout.moodUntil, t + left);
+    }
   };
   app.stage.addChild(renderer.view);
 

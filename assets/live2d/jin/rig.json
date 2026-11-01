@@ -36,6 +36,7 @@
     "cheek": { "part": "face_base", "rect": [0.12, 0.55, 0.88, 0.82] },
     "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
   },
+  "partBlush": { "color": [1, 0.93, 0.91] },
   "bones": {
     "arms": {
       "r": { },
@@ -98,7 +99,7 @@
       "byTier": {
         "new": { "mood": "away", "duration": 2 },
         "known": { "mood": "default", "duration": 2 },
-        "warm": { "rank": 2, "duration": 2.4 },
+        "warm": { "mood": "surprise_blush", "then": [0.6, "smile_blush"], "duration": 2.4 },
         "spark": { "rank": 2, "duration": 2.6 },
         "close": { "rank": 2, "duration": 2.6 },
         "bound": { "rank": 2, "duration": 3 }

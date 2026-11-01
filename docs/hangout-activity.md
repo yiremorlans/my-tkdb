@@ -998,8 +998,19 @@ the flinch is (§4.2).
   each character's moods and lines set them (Subaru's uneasy faces,
   Taiga's smirks). A model without `ParamCheek` skips the blush; the
   validator warns.
-- **Dates only** (settled 2026-11-01). Ordinary Hangouts keep the binary
-  moods at every tier.
+- **Ordinary Hangouts too, from spark up** (changed 2026-11-01; dates were
+  first). /meet encounters and the free Hangout run a milder profile
+  (`warmth.js` `hangout`): it starts at **0** at `spark`, `close` and
+  `bound` (off below spark), rises **+0.05** per touch, **+0.15** for a
+  fave answer and **+0.05** for a liked one, caps at **0.4 / 0.6 / 0.7**
+  by tier so a date still flushes him most, drifts down about **−0.05 per
+  10s**, and an **upset clears it**. Holds don't feed it.
+- **An answer is never a touch.** The /meet answer plays through the same
+  reactions as a tap (`answerLove` / `answerLike` / `answerFlat`); warmth
+  counts those as fave / liked / flat, so a flat answer never warms him.
+- **Ears follow.** A rig with `partBlush` reddens its ears with
+  `ParamCheek`, warmth included, so those characters flush at the ears as
+  warmth climbs.
 
 ### 12.8 `/album`
 

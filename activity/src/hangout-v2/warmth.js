@@ -1,6 +1,7 @@
 // Warmth (docs/hangout-activity.md §12.7), PROTOTYPE: a 0-1 value that
 // deepens the blush and quickens the breathing (live2dRig.js applyWarmth).
-// Only the preview drives it so far. Two profiles:
+// The Activity (main.js) runs "hangout" on /meet and the free Hangout; the
+// preview can pick either. Two profiles:
 //   date      the spec'd one (§12.7): starts at close 0.2 / bound 0.4,
 //             rises with answers, holds and strokes, drifts back to its start
 //   hangout   the proposal for ordinary Hangouts, spark and up only: starts
@@ -24,6 +25,10 @@ export const WARMTH_PROFILES = {
     upsetClears: true,
   },
 };
+
+// A /meet answer comes through Hangout.react under these names; it counts
+// as an answer, never as a touch.
+const ANSWER_REACTIONS = { answerLove: "fave", answerLike: "liked", answerFlat: "flat" };
 
 // How fast the shown value eases toward the target (per second, exponential).
 const EASE = 3;
@@ -56,9 +61,13 @@ export class Warmth {
     this.bump(this.profile?.gains[kind] ?? 0);
   }
 
-  /** A touch reaction by name (hangout.js react); "upset" may clear it. */
+  /**
+   * A reaction by name (hangout.js react): an answer* name is that answer,
+   * "upset" may clear it, anything else is a touch.
+   */
   reaction(name) {
     if (!this.on) return;
+    if (ANSWER_REACTIONS[name]) return this.answer(ANSWER_REACTIONS[name]);
     if (name === "upset") {
       if (this.profile.upsetClears) this.target = this.floor;
       return;
@@ -92,4 +101,27 @@ export class Warmth {
     this.value += (this.target - this.value) * (1 - Math.exp(-EASE * dt));
     return this.value;
   }
+}
+
+/**
+ * Runs warmth on `scene` (scene.js) with `profile`: every reaction feeds it
+ * and every frame draws it. Call after anything else replaces scene.frame.
+ * A renderer without setWarmth (the v1 sprite rig) is left alone.
+ */
+export function attachWarmth(scene, profile) {
+  const { hangout, renderer } = scene;
+  if (!renderer.setWarmth) return null;
+  const warmth = new Warmth(profile, hangout.tier);
+  const react = hangout.react.bind(hangout);
+  hangout.react = (name, t, spot) => {
+    const out = react(name, t, spot);
+    warmth.reaction(name);
+    return out;
+  };
+  const frame = scene.frame;
+  scene.frame = (t, dt) => {
+    frame(t, dt);
+    renderer.setWarmth(warmth.update(dt));
+  };
+  return warmth;
 }

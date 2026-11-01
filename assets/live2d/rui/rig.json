@@ -17,6 +17,20 @@
         "belly": { "part": "chest", "rect": [0.14, 0.607, 0.86, 0.967] },
         "hips": { "part": "pants", "rect": [0.08, 0.02, 0.92, 0.2] }
       }
+    },
+    "casual": {
+      "model": "casual/rui_casual.model3.json",
+      "dialogueVariant": "casual",
+      "parts": {
+        "chest": ["ArtMesh332"],
+        "pants": ["ArtMesh364", "ArtMesh365"],
+        "hand_l": ["ArtMesh403", "ArtMesh413", "ArtMesh445", "ArtMesh405", "ArtMesh415", "ArtMesh406", "ArtMesh407", "ArtMesh410", "ArtMesh412", "ArtMesh261", "ArtMesh273", "ArtMesh274", "ArtMesh275", "ArtMesh276", "ArtMesh354", "ArtMesh355", "ArtMesh356", "ArtMesh357", "ArtMesh358", "ArtMesh416", "ArtMesh417", "ArtMesh420", "ArtMesh422", "ArtMesh447", "ArtMesh448", "ArtMesh449", "ArtMesh452", "ArtMesh453", "ArtMesh455"]
+      },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.01, 0.02, 0.99, 0.659] },
+        "belly": { "part": "chest", "rect": [0.14, 0.659, 0.86, 1.032] },
+        "hips": { "part": "pants", "rect": [0.08, -0.06, 0.92, 0.22] }
+      }
     }
   },
   "parts": {

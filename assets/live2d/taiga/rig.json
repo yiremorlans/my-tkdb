@@ -17,6 +17,22 @@
         "belly": { "part": "chest", "rect": [0.14, 0.628, 0.86, 0.99] },
         "hips": { "part": "pants", "rect": [0.08, 0, 0.92, 0.2] }
       }
+    },
+    "city": {
+      "model": "city/taiga_city.model3.json",
+      "dialogueVariant": "casual",
+      "parts": {
+        "chest": ["ArtMesh207"],
+        "pants": ["ArtMesh236", "ArtMesh237"],
+        "ear_l": ["ArtMesh105", "ArtMesh115", "ArtMesh119"],
+        "hand_r": ["ArtMesh386", "ArtMesh94", "ArtMesh387"],
+        "hand_l": ["ArtMesh257", "ArtMesh259", "ArtMesh261", "ArtMesh262", "ArtMesh264"]
+      },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.043, 0.02, 0.957, 0.652] },
+        "belly": { "part": "chest", "rect": [0.14, 0.652, 0.86, 0.907] },
+        "hips": { "part": "pants", "rect": [0.08, -0.08, 0.92, 0.22] }
+      }
     }
   },
   "parts": {
@@ -67,11 +83,12 @@
       "leer": ["e_pero_00", "e_sekimen_00"]
     }
   },
+  "restMood": { "byTier": { "new": "serious", "warm": "default" } },
   "reactions": {
     "headPat": {
       "byTier": {
-        "new": { "mood": "smile", "duration": 2 },
-        "known": { "mood": "smile", "duration": 2 },
+        "new": { "mood": "surprise", "then": [0.5, "menace"], "duration": 2 },
+        "known": { "mood": "surprise", "then": [0.5, "smile"], "duration": 3.2 },
         "warm": { "mood": "full_smile", "duration": 2.4 },
         "spark": { "mood": "close", "then": [0.8, "smile_blush"], "duration": 2.6 },
         "close": { "mood": "close", "then": [0.8, "smile_blush"], "duration": 2.6 },
@@ -80,8 +97,8 @@
     },
     "cheekPoke": {
       "byTier": {
-        "new": { "mood": "smile", "duration": 2 },
-        "known": { "mood": "smile", "duration": 2 },
+        "new": { "mood": "menace", "duration": 2 },
+        "known": { "mood": "menace", "duration": 3.2 },
         "warm": { "mood": "full_smile", "duration": 2.4 },
         "spark": { "mood": "smile", "duration": 2.6 },
         "close": { "mood": "full_smile", "duration": 2.6 },
@@ -90,8 +107,8 @@
     },
     "lipsTouch": {
       "byTier": {
-        "new": { "mood": "smile", "duration": 2.6 },
-        "known": { "mood": "smile", "duration": 2.6 },
+        "new": { "mood": "surprise", "then": [0.5, "menace"], "duration": 2.6 },
+        "known": { "mood": "surprise", "then": [0.6, "menace"], "duration": 3.8 },
         "warm": { "mood": "smile", "duration": 3, "twitch": 0.3 },
         "spark": { "mood": "surprise_blush", "then": [0.7, "sultry_blush"], "duration": 3.2 },
         "close": { "mood": "sultry_blush", "duration": 3.2 },
@@ -100,8 +117,8 @@
     },
     "earTouch": {
       "byTier": {
-        "new": { "mood": "smile", "duration": 2.4, "twitch": 0.6 },
-        "known": { "mood": "smile", "duration": 2.4, "twitch": 0.4 },
+        "new": { "mood": "menace", "duration": 2.4, "twitch": 0.6 },
+        "known": { "mood": "menace", "duration": 3.6, "twitch": 0.4 },
         "warm": { "mood": "surprise", "then": [0.6, "full_smile"], "duration": 2.8 },
         "spark": { "mood": "smile_blush", "duration": 3 },
         "close": { "mood": "smile_blush", "then": [0.8, "sultry_blush"], "duration": 3 },
@@ -110,8 +127,8 @@
     },
     "handTap": {
       "byTier": {
-        "new": { "mood": "smile", "duration": 2 },
-        "known": { "mood": "full_smile", "duration": 2 },
+        "new": { "mood": "menace", "duration": 2 },
+        "known": { "mood": "menace", "then": [0.9, "smile"], "duration": 3.2 },
         "warm": { "mood": "smile", "duration": 2.4 },
         "spark": { "mood": "smile_blush", "duration": 2.6 },
         "close": { "mood": "smile_blush", "duration": 2.6 },
@@ -120,8 +137,8 @@
     },
     "chestTouch": {
       "byTier": {
-        "new": { "mood": "smile", "duration": 2.2 },
-        "known": { "mood": "smile", "duration": 2.2 },
+        "new": { "mood": "menace", "duration": 2.2 },
+        "known": { "mood": "surprise", "then": [0.5, "smile"], "duration": 3.4 },
         "warm": { "mood": "sultry", "duration": 2.6 },
         "spark": { "mood": "blush", "then": [0.9, "sultry_blush"], "duration": 2.8 },
         "close": { "mood": "leer", "then": [0.9, "sultry_blush"], "duration": 2.8 },
@@ -130,8 +147,8 @@
     },
     "bellyTouch": {
       "byTier": {
-        "new": { "mood": "smile", "duration": 2.4 },
-        "known": { "mood": "smile", "duration": 2.4 },
+        "new": { "mood": "surprise", "then": [0.5, "menace"], "duration": 2.4 },
+        "known": { "mood": "menace", "duration": 3.6 },
         "warm": { "mood": "full_smile", "then": [0.8, "sultry"], "duration": 2.8 },
         "spark": { "mood": "sultry_blush", "then": [1, "leer"], "duration": 3 },
         "close": { "mood": "sultry_blush", "then": [1, "leer"], "duration": 3 },
@@ -140,8 +157,8 @@
     },
     "hipsTouch": {
       "byTier": {
-        "new": { "mood": "smile", "duration": 2.8, "fist": true },
-        "known": { "mood": "smile", "duration": 2.8, "fist": true, "twitch": 0.7 },
+        "new": { "mood": "surprise", "then": [0.5, "menace"], "duration": 2.8, "fist": true },
+        "known": { "mood": "menace", "duration": 4, "fist": true, "twitch": 0.7 },
         "warm": { "mood": "smile", "duration": 3.2, "twitch": 0.5 },
         "spark": { "mood": "surprise", "then": [0.7, "smile_blush"], "duration": 3.4 },
         "close": { "mood": "sultry", "then": [1, "full_smile"], "duration": 3.4 },

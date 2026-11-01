@@ -90,7 +90,11 @@ function wireChrome(scene) {
 async function playEncounter(session, encounter) {
   $("#vn-name").textContent = encounter.name;
   // Independent fetches, so they go out together.
-  const [lines, { meetFlow }] = await Promise.all([loadLines(encounter.character, { daytime: encounter.daytime }), import("./hangout-v2/meet.js")]);
+  const [lines, { meetFlow }, { attachWarmth }] = await Promise.all([
+    loadLines(encounter.character, { daytime: encounter.daytime }),
+    import("./hangout-v2/meet.js"),
+    import("./hangout-v2/warmth.js"),
+  ]);
   const scene = await startSceneV2($("#stage"), encounter.character, {
     tier: encounter.tier,
     outfit: encounter.outfit,
@@ -99,6 +103,8 @@ async function playEncounter(session, encounter) {
     maxFPS: isMobile ? MOBILE_FPS : 0,
   });
   wireChrome(scene);
+  // Touches and the answer flush him a little more from spark up (§12.7).
+  attachWarmth(scene, "hangout");
   const flow = meetFlow(scene, { box: $(".vn-box"), choices: $("#choices"), next: $("#btn-next") });
   // Renewed only while the answer is pending: once it's recorded nothing
   // else calls the server, so the Activity can stay open as long as it likes.
@@ -114,6 +120,7 @@ async function playFreeHangout(character, version) {
   console.log(`[hangout] ${version}`);
   const scene = version === "v1" ? await startSceneV1($("#stage"), character, options) : await startSceneV2($("#stage"), character, options);
   wireChrome(scene);
+  if (version !== "v1") (await import("./hangout-v2/warmth.js")).attachWarmth(scene, "hangout");
   scene.say(scene.hangout.line("greeting") ?? "");
 }
 

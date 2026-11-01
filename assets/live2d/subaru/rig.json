@@ -17,6 +17,21 @@
         "belly": { "part": "chest", "rect": [0.14, 0.476, 0.86, 0.73] },
         "hips": { "part": "pants", "rect": [0.08, -0.04, 0.92, 0.2] }
       }
+    },
+    "casual": {
+      "model": "casual/subaru_casual.model3.json",
+      "dialogueVariant": "casual",
+      "parts": {
+        "chest": ["ArtMesh4"],
+        "pants": ["ArtMesh247", "ArtMesh248"],
+        "hand_r": ["ArtMesh503", "ArtMesh479", "ArtMesh512", "ArtMesh510", "ArtMesh509", "ArtMesh507", "ArtMesh505", "ArtMesh481", "ArtMesh483", "ArtMesh485", "ArtMesh486", "ArtMesh488"],
+        "hand_l": ["ArtMesh513", "ArtMesh489", "ArtMesh522", "ArtMesh521", "ArtMesh519", "ArtMesh518", "ArtMesh516", "ArtMesh514", "ArtMesh492", "ArtMesh494", "ArtMesh496", "ArtMesh497", "ArtMesh499", "ArtMesh500"]
+      },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.052, 0.02, 0.948, 0.457] },
+        "belly": { "part": "chest", "rect": [0.14, 0.457, 0.86, 0.752] },
+        "hips": { "part": "pants", "rect": [0.08, -0.09, 0.92, 0.21] }
+      }
     }
   },
   "parts": {
@@ -24,6 +39,7 @@
     "mouth": ["ArtMesh128", "ArtMesh129", "ArtMesh130", "ArtMesh116", "ArtMesh117", "ArtMesh118", "h", "ArtMesh119", "ArtMesh120", "ArtMesh121"],
     "ear_r": ["ArtMesh158", "ArtMesh153", "ArtMesh154", "ArtMesh155", "ArtMesh156"],
     "ear_l": ["ArtMesh157", "ArtMesh159"],
+    "ear_skin": ["ArtMesh158", "ArtMesh156", "ArtMesh157", "ArtMesh159"],
     "hand_r": ["ArtMesh214", "ArtMesh218", "ArtMesh222", "ArtMesh226", "ArtMesh228", "ArtMesh232"],
     "hand_l": ["ArtMesh252", "ArtMesh270", "ArtMesh268", "ArtMesh264", "ArtMesh262", "ArtMesh258", "ArtMesh254"]
   },
@@ -36,6 +52,7 @@
     "cheek": { "part": "face_base", "rect": [0.12, 0.55, 0.88, 0.82] },
     "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
   },
+  "partBlush": { "parts": ["ear_skin"], "color": [1, 0.93, 0.92] },
   "bones": {
     "arms": {
       "r": { },
