@@ -17,6 +17,12 @@
 //   motion.breath.amount   how much of the breathing to keep (0-1)
 //   motion.sway.amount     the plugin's own head/body sway (CubismBreath),
 //                          which the game doesn't use: 0 (off) unless set
+//   partBlush              { parts?, color? }: tints those parts' drawables
+//                          (default the ears, ear_r + ear_l) toward `color`
+//                          (RGB 0-1, multiplied; default PART_BLUSH.color)
+//                          as far as the face blushes (ParamCheek over its
+//                          max), so the ears redden with a model that only
+//                          blushes the cheeks. `{}` turns on the defaults
 // The model breathes, blinks and runs physics itself, so the sprite rig's
 // pose map and blink timing are ignored here.
 
@@ -54,6 +60,9 @@ const CLENCH_RELEASE = 0.15;
 // own units (degrees), shoulders as a share of their range. `peak` is the
 // seconds to the peak; it settles by ~6 peaks.
 const FLINCH = { peak: 0.14, head: 5, body: 2.5, recoil: 3, shoulders: 0.5 };
+
+// partBlush defaults: which parts redden, and the tint at a full blush.
+const PART_BLUSH = { parts: ["ear_r", "ear_l"], color: [1, 0.62, 0.62] };
 
 // Warmth (§12.7, prototype): the resting blush at full warmth, as a share of
 // ParamCheek, and how much faster he breathes at full warmth.
@@ -202,9 +211,11 @@ export class Live2DRig {
       this.blink();
       this.applyMood();
       this.applyWarmth();
+      this.applyPartBlush();
       this.applyFlinch();
       this.applyTalk();
     });
+    this.setupPartBlush();
     this.setMood(this.moodName);
     this.startBreath();
   }
@@ -339,6 +350,41 @@ export class Live2DRig {
       const sine = minimumValues[b] + ((maximumValues[b] - minimumValues[b]) * (1 - Math.cos(2 * Math.PI * this.breathPhase))) / 2;
       const quick = defaultValues[b] + (sine - defaultValues[b]) * k;
       values[b] += (quick - values[b]) * w;
+    }
+  }
+
+  // --- part blush -----------------------------------------------------------
+  // Runs after the mood and warmth, so it follows their blush as it fades.
+
+  setupPartBlush() {
+    const spec = this.rig.partBlush;
+    this.blushDrawables = [];
+    if (!spec) return;
+    const core = this.model.internalModel.coreModel;
+    for (const part of spec.parts ?? PART_BLUSH.parts) {
+      for (const id of this.rig.parts?.[part] ?? []) {
+        const i = this.drawableIndex.get(id);
+        if (i == null) continue;
+        if (core.setOverrideFlagForDrawableMultiplyColors) core.setOverrideFlagForDrawableMultiplyColors(i, true);
+        else core.setOverwriteFlagForDrawableMultiplyColors(i, true);
+        this.blushDrawables.push(i);
+      }
+    }
+    this.blushColor = spec.color ?? PART_BLUSH.color;
+    this.blushCheek = this.paramIndex.get("ParamCheek");
+  }
+
+  applyPartBlush() {
+    if (!this.blushDrawables?.length || this.blushCheek == null) return;
+    const { values, maximumValues } = this.raw.parameters;
+    const max = maximumValues[this.blushCheek] || 1;
+    const k = Math.min(1, Math.max(0, values[this.blushCheek] / max));
+    if (k === this.blushShown) return;
+    this.blushShown = k;
+    const [r, g, b] = this.blushColor;
+    const core = this.model.internalModel.coreModel;
+    for (const i of this.blushDrawables) {
+      core.setMultiplyColorByRGBA(i, 1 + (r - 1) * k, 1 + (g - 1) * k, 1 + (b - 1) * k, 1);
     }
   }
 

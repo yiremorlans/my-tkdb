@@ -106,7 +106,7 @@ async function outfitProblems(rig, name, { readJson, mocIds }) {
   const outfit = rig.outfits[name] ?? {};
   const parts = { ...rig.parts, ...outfit.parts };
   const hotspots = { ...rig.hotspots, ...outfit.hotspots };
-  const problems = [...hotspotProblems(hotspots, parts), ...variantProblems(outfit)];
+  const problems = [...hotspotProblems(hotspots, parts), ...variantProblems(outfit), ...partBlushProblems(rig.partBlush, parts)];
 
   if (typeof outfit.model !== "string") return [...problems, "`model` must name a model3.json"];
   let model = null;
@@ -156,6 +156,20 @@ function variantProblems(outfit) {
   return DIALOGUE_VARIANTS.includes(outfit.dialogueVariant)
     ? []
     : [`dialogueVariant must be one of ${DIALOGUE_VARIANTS.join(", ")}`];
+}
+
+function partBlushProblems(spec, parts) {
+  if (spec == null) return [];
+  const problems = [];
+  // Unset parts means the ears (live2dRig.js PART_BLUSH).
+  const names = spec.parts ?? ["ear_r", "ear_l"];
+  if (!Array.isArray(names) || !names.length) problems.push("partBlush.parts must list parts");
+  else for (const p of names) if (!parts[p]) problems.push(`partBlush: unknown part ${p}`);
+  const c = spec.color;
+  if (c != null && !(Array.isArray(c) && c.length === 3 && c.every((v) => typeof v === "number" && v >= 0 && v <= 1))) {
+    problems.push("partBlush.color must be 3 numbers between 0 and 1");
+  }
+  return problems;
 }
 
 function hotspotProblems(hotspots, parts) {

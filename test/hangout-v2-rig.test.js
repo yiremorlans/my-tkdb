@@ -134,6 +134,15 @@ test("a hotspot must name a shared or outfit part, and a rect is 4 numbers", asy
   assert.doesNotMatch(msg, /hotspots\.chest/);
 });
 
+test("partBlush names known parts and an RGB color between 0 and 1", async () => {
+  assert.strictEqual(await problems(rig({ partBlush: { parts: ['face_base'], color: [1, 0.6, 0.6] } })), '');
+  const msg = await problems(rig({ partBlush: { parts: ['ear_r'], color: [1, 0.6] } }));
+  assert.match(msg, /partBlush: unknown part ear_r/);
+  assert.match(msg, /partBlush\.color must be 3 numbers between 0 and 1/);
+  assert.match(await problems(rig({ partBlush: { parts: [] } })), /partBlush\.parts must list parts/);
+  assert.match(await problems(rig({ partBlush: {} })), /partBlush: unknown part ear_r/);
+});
+
 test("a part's drawables must be in the outfit's moc3", async () => {
   const r = rig();
   r.parts.mouth = ['ArtMesh71'];
