@@ -57,13 +57,110 @@
       "serious": ["e_magao_00"],
       "annoyed": ["e_ikari_00"],
       "upset": ["e_ikari_00", "e_ase_00"],
-      "flustered": ["e_odoroki_00", "e_sekimen_00", "e_ase_00"]
+      "flustered": ["e_odoroki_00", "e_sekimen_00", "e_ase_00"],
+      "composed": ["e_kogan_00"],
+      "composed_blush": ["e_kogan_00", "e_sekimen_00"]
     }
   },
   "reactions": {
-    "upset": { "byTier": { "new": { "mood": "upset", "duration": 4 }, "spark": { "mood": "flustered", "duration": 4 } } }
+    "upset": {
+      "byTier": {
+        "new": { "mood": "upset", "duration": 4 },
+        "spark": { "mood": "flustered", "duration": 4 }
+      }
+    },
+    "headPat": {
+      "byTier": {
+        "new": { "mood": "serious", "duration": 2 },
+        "known": { "mood": "default", "duration": 2 },
+        "warm": { "mood": "composed_blush", "duration": 2.4 },
+        "spark": { "mood": "composed_blush", "duration": 2.6 },
+        "close": { "rank": 2, "duration": 2.6 },
+        "bound": { "rank": 2, "duration": 3 }
+      }
+    },
+    "cheekPoke": {
+      "byTier": {
+        "new": { "mood": "composed", "duration": 2 },
+        "known": { "mood": "composed", "duration": 2 },
+        "warm": { "rank": 1, "duration": 2.4 },
+        "spark": { "mood": "flustered", "duration": 2.6 },
+        "close": { "mood": "composed_blush", "duration": 2.6 },
+        "bound": { "mood": "composed_blush", "duration": 3 }
+      }
+    },
+    "handTap": {
+      "byTier": {
+        "new": { "mood": "composed", "duration": 2 },
+        "known": { "mood": "serious", "duration": 2 },
+        "warm": { "mood": "blush", "duration": 2.4 },
+        "spark": { "mood": "blush", "duration": 2.6 },
+        "close": { "rank": 2, "duration": 2.6 },
+        "bound": { "rank": 2, "duration": 3 }
+      }
+    },
+    "lipsTouch": {
+      "byTier": {
+        "new": { "mood": "serious", "duration": 2.6, "twitch": 0.8 },
+        "known": { "mood": "serious", "duration": 2.6, "twitch": 0.6 },
+        "warm": { "mood": "serious", "duration": 3, "twitch": 0.3 },
+        "spark": { "mood": "flustered", "duration": 3.2 },
+        "close": { "mood": "composed_blush", "duration": 3.2 },
+        "bound": { "mood": "composed_blush", "duration": 3.6 }
+      }
+    },
+    "earTouch": {
+      "byTier": {
+        "new": { "mood": "serious", "duration": 2.4, "twitch": 0.6 },
+        "known": { "mood": "serious", "duration": 2.4, "twitch": 0.4 },
+        "warm": { "mood": "serious", "duration": 2.8 },
+        "spark": { "rank": 1, "duration": 3 },
+        "close": { "mood": "composed_blush", "duration": 3 },
+        "bound": { "mood": "composed_blush", "duration": 3.4 }
+      }
+    },
+    "chestTouch": {
+      "byTier": {
+        "new": { "mood": "serious", "duration": 2.2, "twitch": 0.4 },
+        "known": { "mood": "serious", "duration": 2.2, "twitch": 0.3 },
+        "warm": { "mood": "serious", "duration": 2.6 },
+        "spark": { "rank": 1, "duration": 2.8 },
+        "close": { "mood": "composed_blush", "duration": 2.8 },
+        "bound": { "mood": "composed_blush", "duration": 3.2 }
+      }
+    },
+    "bellyTouch": {
+      "byTier": {
+        "new": { "mood": "serious", "duration": 2.4, "twitch": 0.6 },
+        "known": { "mood": "serious", "duration": 2.4, "twitch": 0.4 },
+        "warm": { "rank": 1, "duration": 2.8 },
+        "spark": { "rank": 1, "duration": 3 },
+        "close": { "rank": 2, "duration": 3 },
+        "bound": { "rank": 2, "duration": 3.4 }
+      }
+    },
+    "hipsTouch": {
+      "byTier": {
+        "new": { "mood": "serious", "duration": 2.8, "fist": true, "twitch": 1 },
+        "known": { "mood": "serious", "duration": 2.8, "fist": true, "twitch": 0.7 },
+        "warm": { "mood": "serious", "duration": 3.2, "twitch": 0.5 },
+        "spark": { "rank": 1, "duration": 3.4 },
+        "close": { "mood": "composed_blush", "duration": 3.4 },
+        "bound": { "mood": "composed_blush", "duration": 3.8 }
+      }
+    }
   },
-  "reactionPoses": { "headPat": "m_think", "cheekPoke": "m_gesture", "lipsTouch": "m_think", "earTouch": "m_hidarikoshi", "handTap": "m_gesture", "chestTouch": "m_chest", "bellyTouch": "m_odoroki", "hipsTouch": "m_hidarikoshi", "upset": { "byTier": { "new": "m_udekumi", "spark": "m_think" } } },
+  "reactionPoses": {
+    "headPat": "m_think",
+    "cheekPoke": "m_gesture",
+    "lipsTouch": { "byTier": { "new": "m_chest", "known": "m_udekumi", "warm": "m_think", "close": "m_gesture" } },
+    "earTouch": "m_hidarikoshi",
+    "handTap": "m_gesture",
+    "chestTouch": "m_chest",
+    "bellyTouch": { "byTier": { "new": "m_odoroki", "close": "m_hidarikoshi" } },
+    "hipsTouch": { "byTier": { "new": "m_udekumi", "known": "m_gesture", "warm": "m_udekumi", "spark": "m_odoroki", "close": "m_hidarikoshi" } },
+    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_think" } }
+  },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
     "idle": { "amount": 0.35 },
