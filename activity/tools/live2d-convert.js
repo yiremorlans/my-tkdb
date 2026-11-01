@@ -1,7 +1,8 @@
 // Rebuilds a game Live2D model as plain Cubism files for Hangout v2
 // (docs/hangout-activity.md §3.6): moc3, model3.json, physics3.json, one
 // exp3.json per expression and one motion3.json per clip, plus a looping
-// *_hold clip for every pose that has a *_return.
+// *_hold clip for every pose that has a *_return, and the model's manifest
+// (hangout-v2/manifest.js).
 //
 //   node activity/tools/live2d-convert.js <character> [--outfit academy]
 //        (--bundle <file> | --assets <ExportedProject/Assets>)
@@ -21,6 +22,8 @@
 import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
+
+import { writeManifest } from "./live2d-manifest.js";
 
 const REPO = path.resolve(path.dirname(new URL(import.meta.url).pathname), "../..");
 
@@ -390,6 +393,7 @@ async function main() {
   const assets = opt("assets") ? path.resolve(opt("assets")) : await ripBundle(path.resolve(opt("bundle")), opt("ripper", "http://localhost:54321"));
   fs.rmSync(out, { recursive: true, force: true });
   const s = convertExport(assets, `${character}_${outfit}`, out);
+  await writeManifest(path.join(out, `${character}_${outfit}.model3.json`));
   console.log(`[live2d-convert] ${out}: moc3 ${s.moc} bytes, ${s.physics} physics settings, ${s.expressions} expressions, ${s.motions} motions`);
   console.log(`[live2d-convert] groups: ${s.groups.join("; ")}`);
   if (s.missingPhysicsIds.length) console.log(`[live2d-convert] physics parameters missing from the moc3: ${s.missingPhysicsIds.join(", ")}`);

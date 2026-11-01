@@ -226,7 +226,12 @@ Order for a new character or outfit:
    physics3 (from the prefab's CubismPhysicsController), exp3 and motion3
    files (Unity Hermite curves turned back into exact beziers, infinite
    slopes into stepped segments), a looping `*_hold` clip pinned at the last
-   frame of every pose that has a `*_return`, and model3.json. Files are
+   frame of every pose that has a `*_return`, model3.json, and the model's
+   manifest (`<base>.manifest.json`: expression deltas, clip lengths and
+   what the idle moves, so the rig loads one file instead of ~70; see
+   `hangout-v2/manifest.js`). After editing a motion or expression file by
+   hand, `live2d-manifest.js <character>` rebuilds it; a test fails while
+   one is stale. Files are
    `<character>_<outfit>.*` after the repo's ids. `--assets` takes an
    export made by hand. Converting Alan's bundle reproduces his committed
    files.
@@ -411,6 +416,15 @@ tracking only. Answered encounters log as `'meet'` (§11.7).
   `activity/dist`), plus `/api` and `/assets`. The client loads nothing from
   third-party CDNs; PixiJS and the Live2D plugin are bundled by Vite, and
   the Live2D code loads as its own chunk with Cubism Core.
+- **Asset caching:** the Activity loads repo assets through
+  `/assets/v/<build>/...` (`main.js` `versioned`), which `app.js` serves as
+  `/assets/...` with a one-year immutable cache, JSON and .moc3 gzipped
+  (`assetGzip.js`, gzipped once per file and kept in memory). `<build>` is
+  the deployed commit (`vite.config.js` ASSET_VERSION), so each deploy
+  makes players fetch fresh files once and reopening a hangout between
+  deploys loads nothing. The rig validator runs only under `vite serve`;
+  in a build it would cost a request per file, and the tests already check
+  every rig on disk.
 - Client flow: `new DiscordSDK(APP_ID)` → `ready()` → `authorize({ scope:
   ['identify'] })` → `POST /api/activity/token` → `authenticate()`.
 - New env vars: `DISCORD_CLIENT_SECRET`, `ACTIVITY_SESSION_SECRET`. Add both
@@ -437,18 +451,19 @@ activity/
                       #   sounds; shared by both rigs
     discord.js        # SDK init + auth, the /meet encounter calls (no-op outside Discord)
   tools/
-    live2d-convert.js  live2d-rig.js   # Live2D models (§3.5)
+    live2d-convert.js  live2d-rig.js  live2d-manifest.js   # Live2D models (§3.5)
 assets/live2d/
   vendor/live2dcubismcore.min.js
   <id>/rig.json  <id>/<outfit>/        # one per character; Cubism files per outfit
 constants/hangout/alan.js
 activityRoutes.js     # /api/activity/*
+assetGzip.js          # gzipped, cached /assets/v/<build>/ files (§6)
 meetActivity.js       # /meet as the Activity, server side (§11)
 docs/hangout-activity.md
 ```
 
 v1 only, removed with it (§8): `activity/preview.html`, `src/rig/`,
-`src/preview/`, the sprite tools in `tools/` (everything but the two
+`src/preview/`, the sprite tools in `tools/` (everything but the three
 `live2d-*` scripts) and `tools/lib/`, `assets/rig/<id>/` (Appendix A).
 
 Express serves `activity/dist` (built at deploy) at `/`; built files sit

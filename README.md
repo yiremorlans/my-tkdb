@@ -88,6 +88,7 @@ Below is a basic overview of the project structure:
 ├── missions/    -> scheduled missions: spawn, expiry, /mission, /docs, /riddle, /request, /house dossier, /missions (module map atop missions/player.js)
 ├── countdown.js -> countdown channels: /countdown, /event, /wishingwell and the rename pass
 ├── activityRoutes.js -> the Hangout Activity's API (/api/activity/*): sign-in, launch, the /meet encounter and its answer
+├── assetGzip.js -> gzips the Activity's versioned /assets/v/<build>/ files once and serves them from memory
 ├── meetActivity.js -> /meet as the Activity: the pick that launches it, the saved encounter, the one payout, the image fallback
 ├── encounterScheduler.js -> the per-guild tick loop: encounter spawns, mission slots, countdown renames
 ├── discordRest.js -> bot-initiated channel POST/PATCH and renames (everything else answers an interaction)

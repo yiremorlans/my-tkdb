@@ -2,7 +2,7 @@
 // validateRig. The rig format is documented at the top of live2dRig.js.
 // File access is injected, so the same checks run in the Node tests
 // (test/hangout-v2-rig.test.js, against the files on disk) and in the
-// browser (live2dRig.js loadLive2DRig, over fetch). No moc3 parsing here:
+// dev server (live2dRig.js loadLive2DRig, over fetch; a build skips it). No moc3 parsing here:
 // drawable ids are only checked when the caller can look them up.
 
 import { DEFAULT_REACTIONS } from "../hangout/reactions.js";

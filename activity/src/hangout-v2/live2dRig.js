@@ -24,6 +24,7 @@ import { Container } from "pixi.js";
 import { Live2DModel, MotionPriority } from "untitled-pixi-live2d-engine/cubism";
 
 import { forTier } from "../hangout/reactions.js";
+import { buildModelManifest, manifestPath } from "./manifest.js";
 import { validateLive2DRig } from "./validate.js";
 
 // Seconds a reaction's pose holds before its return clip plays.
@@ -42,7 +43,11 @@ const TALK_SETTLE = 0.12;
 // seconds to the peak; it settles by ~6 peaks.
 const FLINCH = { peak: 0.14, head: 5, body: 2.5, recoil: 3, shoulders: 0.5 };
 
-/** Fetches `${baseUrl}/rig.json`, its sounds, and each outfit's expression files. */
+/**
+ * Fetches `${baseUrl}/rig.json` and its sounds. The dev server also checks
+ * the rig against its files (validate.js); a build skips that, since the
+ * tests check every rig on disk and the check costs a request per file.
+ */
 export async function loadLive2DRig(baseUrl) {
   const res = await fetch(`${baseUrl}/rig.json`);
   if (!res.ok) throw new Error(`rig.json: HTTP ${res.status} at ${baseUrl}`);
@@ -52,6 +57,7 @@ export async function loadLive2DRig(baseUrl) {
     const r = await fetch(`${baseUrl}/${file}`);
     if (r.ok) sounds.set(file, await r.arrayBuffer());
   }));
+  if (!import.meta.env?.DEV) return { rig, sounds, baseUrl };
   // No mocIds: the .moc3 isn't fetched until the model loads.
   const warnings = await validateLive2DRig(rig, {
     readJson: async (file) => {
@@ -62,6 +68,18 @@ export async function loadLive2DRig(baseUrl) {
   });
   for (const w of warnings) console.warn(`[hangout-v2] ${rig.character}: ${w}`);
   return { rig, sounds, baseUrl };
+}
+
+/**
+ * The model's manifest (manifest.js), fetched beside its model3.json; built
+ * from the expression and motion files if it's missing, with a warning.
+ */
+async function loadManifest(modelUrl, model3) {
+  const base = new URL(modelUrl, location.href);
+  const res = await fetch(new URL(manifestPath(base.pathname.split("/").pop()), base)).catch(() => null);
+  if (res?.ok) return res.json();
+  console.warn(`[hangout-v2] no manifest beside ${base.pathname}; run node activity/tools/live2d-manifest.js`);
+  return buildModelManifest(model3, async (file) => (await fetch(new URL(file, base))).json());
 }
 
 /** Same shape as skeleton.js withOutfit: one outfit merged over the shared keys. */
@@ -121,12 +139,11 @@ export class Live2DRig {
     this.poseTimers = [];
     this.posing = null;
 
-    // Expression files by name, and each clip's length for timing poses.
+    // Expression deltas by name, and each clip's length for timing poses.
     const settings = model.internalModel.settings;
-    const modelUrl = new URL(url, location.href);
-    const fetchJson = async (file) => (await fetch(new URL(file, modelUrl))).json();
-    this.expressionParams = new Map(await Promise.all((settings.expressions ?? []).map(async (e) => [e.Name, (await fetchJson(e.File)).Parameters])));
-    this.durations = new Map(await Promise.all(Object.entries(settings.motions ?? {}).map(async ([group, [m]]) => [group, (await fetchJson(m.File)).Meta.Duration])));
+    const manifest = await loadManifest(url, settings.json);
+    this.expressionParams = new Map(Object.entries(manifest.expressions));
+    this.durations = new Map(Object.entries(manifest.durations));
 
     // Moods add their expressions' deltas after motions, blink and physics,
     // crossfading over `fade` seconds. The core restores its parameters
@@ -143,7 +160,7 @@ export class Live2DRig {
     // Idle damping: the parameters the idle clip animates, scaled toward
     // rest before physics runs (so the hair calms with the head); breathing
     // after, since physics doesn't read it.
-    this.idleParams = await this.animatedParams(settings, modelUrl, "Idle");
+    this.idleParams = manifest.idleParams.map((id) => this.paramIndex.get(id)).filter((i) => i != null);
     this.idleUntil = 0; // a pose or its return owns the body until then
     this.breathIndex = this.paramIndex.get("ParamBreath");
     // The plugin's CubismBreath: its peaks as shipped, scaled by setSway.
@@ -219,20 +236,6 @@ export class Live2DRig {
   }
 
   // --- idle damping ---------------------------------------------------------
-
-  /** Core indices of the parameters a motion group's first clip changes. */
-  async animatedParams(settings, modelUrl, group) {
-    const file = settings.motions?.[group]?.[0]?.File;
-    if (!file) return [];
-    const clip = await (await fetch(new URL(file, modelUrl))).json();
-    return clip.Curves
-      .filter((c) => {
-        const v = curveValues(c.Segments);
-        return Math.max(...v) - Math.min(...v) > 1e-3;
-      })
-      .map((c) => this.paramIndex.get(c.Id))
-      .filter((i) => i != null);
-  }
 
   dampIdle() {
     const k = this.rig.motion?.idle?.amount ?? 1;
@@ -441,18 +444,6 @@ export class Live2DRig {
   setHandPose() {}
   update() {}
   follow() {}
-}
-
-/** Every value a motion3 curve passes through (points and bezier handles). */
-function curveValues(s) {
-  const out = [s[1]];
-  for (let i = 2; i < s.length; ) {
-    const type = s[i];
-    const n = type === 1 ? 6 : 2;
-    for (let k = 2; k <= n; k += 2) out.push(s[i + k]);
-    i += 1 + n;
-  }
-  return out;
 }
 
 /** Stands in for rig/motion.js Motion: the model blinks and idles itself. */

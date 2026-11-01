@@ -31,7 +31,8 @@ function serveRepoAssets() {
     name: "serve-repo-assets",
     configureServer(server) {
       server.middlewares.use("/assets", (req, res, next) => {
-        const file = path.join(assetsDir, decodeURIComponent(req.url.split("?")[0]));
+        // /assets/v/<build>/... is the same file (app.js), uncached here too.
+        const file = path.join(assetsDir, decodeURIComponent(req.url.split("?")[0].replace(/^\/v\/[^/]+(?=\/)/, "")));
         if (!file.startsWith(assetsDir) || !fs.existsSync(file) || fs.statSync(file).isDirectory()) {
           return next();
         }
@@ -144,16 +145,21 @@ function meetPreview() {
   };
 }
 
-export default defineConfig(({ mode }) => {
+export default defineConfig(({ command, mode }) => {
   // The client id the SDK starts with is the bot's APP_ID, from .env locally
   // or the build environment on Railway.
   const env = { ...loadEnv(mode, repoRoot, ""), ...process.env };
+  // ASSET_VERSION: the <build> in the /assets/v/<build>/ URLs the Activity
+  // loads rigs and models from (app.js caches those for good). The deployed
+  // commit on Railway, so a redeploy of the same commit keeps players'
+  // caches and any new commit replaces them; "dev" under `vite serve`.
+  const assetVersion = command === "serve" ? "dev" : (env.RAILWAY_GIT_COMMIT_SHA?.slice(0, 12) || Date.now().toString(36));
   return {
     root: here,
     base: "./",
     publicDir: false,
     plugins: [serveRepoAssets(), saveRig(), meetPreview()],
-    define: { __DISCORD_CLIENT_ID__: JSON.stringify(env.APP_ID ?? "") },
+    define: { __DISCORD_CLIENT_ID__: JSON.stringify(env.APP_ID ?? ""), __ASSET_VERSION__: JSON.stringify(assetVersion) },
     build: {
       outDir: "dist",
       emptyOutDir: true,

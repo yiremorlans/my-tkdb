@@ -21,9 +21,14 @@ import { answerEncounter, discordPlatform, inDiscord, keepSessionAlive, launchIn
 import { loadLines } from "./hangout/lines.js";
 import { MOBILE_FPS } from "./hangout/stage.js";
 
+// Repo assets load through /assets/v/<build>/, which app.js serves as
+// /assets/ but caches for good: the build stamps a new <build> on every
+// deploy, so a player reopening a hangout loads nothing again until then.
+const versioned = (url) => url?.replace(/^\/assets\//, `/assets/v/${__ASSET_VERSION__}/`) ?? url;
+
 // Cubism Core defines a global (Live2DCubismCore), so it's a classic script,
 // served from /assets like the other repo assets: never a third-party CDN.
-const CUBISM_CORE = "/assets/live2d/vendor/live2dcubismcore.min.js";
+const CUBISM_CORE = versioned("/assets/live2d/vendor/live2dcubismcore.min.js");
 
 function loadScript(src) {
   return new Promise((resolve, reject) => {
@@ -38,7 +43,7 @@ function loadScript(src) {
 async function startSceneV2(stage, character, options) {
   await loadScript(CUBISM_CORE);
   const { startScene } = await import("./hangout-v2/scene.js");
-  return startScene(stage, { ...options, base: `/assets/live2d/${character}` });
+  return startScene(stage, { ...options, base: versioned(`/assets/live2d/${character}`) });
 }
 
 /** Starts the legacy sprite scene (v1). */
@@ -89,7 +94,7 @@ async function playEncounter(session, encounter) {
   const scene = await startSceneV2($("#stage"), encounter.character, {
     tier: encounter.tier,
     outfit: encounter.outfit,
-    place: encounter.background,
+    place: versioned(encounter.background),
     lines,
     maxFPS: isMobile ? MOBILE_FPS : 0,
   });

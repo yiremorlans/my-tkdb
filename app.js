@@ -76,6 +76,7 @@ import { validateContent } from './constants/validateContent.js';
 import { activityOpenTo, activityRouter, clearHangoutLaunch } from './activityRoutes.js';
 import { handleMeetPickLaunch, rememberPickerToken } from './meetActivity.js';
 import { startGateway } from './gateway.js';
+import { gzipStatic } from './assetGzip.js';
 import { EPHEMERAL, IS_TEST, optionValue } from './utils.js';
 
 // Time of day drives which backgrounds and dialogue are eligible (the `_PM`
@@ -105,6 +106,20 @@ const CACHED_ASSET_DIRS = ['cards', 'sprites', 'expressions'];
 for (const dir of CACHED_ASSET_DIRS) {
   app.use(`/assets/${dir}`, express.static(`assets/${dir}`, { maxAge: '30d' }));
 }
+
+// The Hangout Activity loads its rigs, models and backgrounds through
+// /assets/v/<build>/..., the same files as /assets/... (<build> is ignored
+// here). The Activity build stamps a new <build> into every URL on each
+// deploy (activity/vite.config.js ASSET_VERSION), so these never change
+// under a URL and are cached for good: a player reopening a hangout loads
+// nothing again until the next deploy. JSON and .moc3 go out gzipped
+// (assetGzip.js).
+const IMMUTABLE = 'public, max-age=31536000, immutable';
+app.use(
+  '/assets/v/:build',
+  gzipStatic('assets', { cacheControl: IMMUTABLE }),
+  express.static('assets', { immutable: true, maxAge: '1y' }),
+);
 
 // Serve character/background art so Discord can load it by URL in message components
 app.use('/assets', express.static('assets'));
