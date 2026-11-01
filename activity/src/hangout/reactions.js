@@ -156,11 +156,20 @@ export const DEFAULT_REACTIONS = {
     },
   },
   // The face for a /meet answer's outcome (docs/hangout-activity.md §11.2
-  // step 5): the rung its gain lands on, so love/like/flat match the faces a
-  // call scene shows for a favorite, liked and least response at that tier.
+  // step 5): the rung its gain lands on, so love/like match the faces a call
+  // scene shows for a favorite and liked response at that tier. A flat answer
+  // is indifference, never anger or annoyance: below spark the bottom rung is
+  // an annoyed or serious face, so it plays the rig's `indifferent` mood
+  // instead (a blank straight face or a look away); from spark the bottom
+  // rung is already calm.
   answerLove: { rank: 2, duration: 3.2 },
   answerLike: { rank: 1, duration: 3 },
-  answerFlat: { rank: 0, duration: 2.6 },
+  answerFlat: {
+    byTier: {
+      new: { mood: "indifferent", duration: 2.6 },
+      spark: { rank: 0, duration: 2.6 },
+    },
+  },
   upset: { mood: "upset", duration: 4 },
 };
 

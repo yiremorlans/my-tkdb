@@ -46,6 +46,7 @@
     "fade": 0.2,
     "moods": {
       "default": [],
+      "indifferent": ["e_magao_00"],
       "close": ["e_close_00"],
       "smile": ["e_egao_00"],
       "full_smile": ["e_manmen_00"],
