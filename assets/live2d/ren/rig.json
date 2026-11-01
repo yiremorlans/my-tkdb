@@ -94,7 +94,7 @@
     },
     "cheekPoke": {
       "byTier": {
-        "new": { "mood": "default", "duration": 2 },
+        "new": { "mood": "away", "duration": 2 },
         "known": { "mood": "default", "duration": 2 },
         "warm": { "mood": "smirk", "duration": 2.4 },
         "spark": { "mood": "blush", "duration": 2.6 },
@@ -104,7 +104,7 @@
     },
     "handTap": {
       "byTier": {
-        "new": { "mood": "default", "duration": 2 },
+        "new": { "mood": "away", "duration": 2 },
         "known": { "mood": "default", "duration": 2 },
         "warm": { "mood": "blush", "duration": 2.4 },
         "spark": { "mood": "blush", "duration": 2.6 },

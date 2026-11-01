@@ -35,6 +35,18 @@ const POSE_HOLD = 2.5;
 const TALK_RATE = 7;
 const TALK_SETTLE = 0.12;
 
+// A mood that grits the teeth (ParamMouthForm2 up, e.g. e_shinken_00) draws
+// a mouth the lip sync can't open. He holds the clench for CLENCH_LEAD
+// seconds into a line, then the mood lets go of the mouth over
+// CLENCH_RELEASE seconds and he talks; the mouth stays released until the
+// mood changes. A clench that also bares the teeth (ParamTooth01, e.g. Leo's
+// e_fukigen_02) lets go of them too, or they cover the flapping mouth;
+// grins that show teeth without clenching keep them while talking.
+const CLENCH_PARAM = "ParamMouthForm2";
+const CLENCH_TEETH = "ParamTooth01";
+const CLENCH_LEAD = 0.5;
+const CLENCH_RELEASE = 0.15;
+
 // A touch's flinch (reactions.js `twitch`): the head and body pull away
 // from the touched side and the shoulders hitch, then ease back, over
 // whatever the mood and pose set. Shared by every rig, like the sprite
@@ -157,6 +169,10 @@ export class Live2DRig {
     this.mouth = lipSync.map((id) => this.paramIndex.get(id)).filter((i) => i != null);
     this.talkStart = 0;
     this.talkUntil = 0;
+    // The mood deltas talking releases: the clench and the lip-sync
+    // parameters (a shout's open mouth would pin them open).
+    this.mouthHold = [CLENCH_PARAM, ...lipSync].filter((id) => this.paramIndex.has(id));
+    this.releaseAt = null;
     // Idle damping: the parameters the idle clip animates, scaled toward
     // rest before physics runs (so the hair calms with the head); breathing
     // after, since physics doesn't read it.
@@ -213,6 +229,21 @@ export class Live2DRig {
     this.from = this.blended();
     this.current = target;
     this.fadeStart = performance.now();
+    // A new mood holds its mouth until the next line; mid-line, it lets go
+    // as soon as the line's flaps start.
+    const now = performance.now() / 1000;
+    this.releaseAt = now < this.talkUntil + TALK_SETTLE ? Math.max(now, this.talkStart) : null;
+  }
+
+  /** Whether the mood on screen grits the teeth (see CLENCH_LEAD). */
+  get clenched() {
+    return (this.current.get(CLENCH_PARAM) ?? 0) > 0;
+  }
+
+  /** How far talking has released the mood's mouth (0 held, 1 let go). */
+  mouthRelease() {
+    if (this.releaseAt == null) return 0;
+    return Math.max(0, Math.min(1, (performance.now() / 1000 - this.releaseAt) / CLENCH_RELEASE));
   }
 
   /** The mood deltas on screen now, partway through any crossfade. */
@@ -228,8 +259,11 @@ export class Live2DRig {
 
   applyMood() {
     const { values, minimumValues, maximumValues } = this.raw.parameters;
-    for (const [id, delta] of this.blended()) {
+    const keep = 1 - this.mouthRelease();
+    for (const [id, full] of this.blended()) {
       const i = this.paramIndex.get(id);
+      const held = this.mouthHold.includes(id) || (id === CLENCH_TEETH && this.clenched);
+      const delta = held ? full * keep : full;
       if (i == null || !delta) continue;
       values[i] = Math.min(maximumValues[i], Math.max(minimumValues[i], values[i] + delta));
     }
@@ -306,10 +340,16 @@ export class Live2DRig {
   // Text-driven mouth flaps, no audio: the mouth opens and closes while a
   // line types out, over whatever the mood and motion set.
 
-  /** Flaps the mouth for `seconds` (how long the line takes to type). */
+  /**
+   * Flaps the mouth for `seconds` (how long the line takes to type). A
+   * clenched mood holds first (CLENCH_LEAD), so the flaps start that late.
+   */
   talk(seconds) {
     const now = performance.now() / 1000;
-    if (now >= this.talkUntil) this.talkStart = now;
+    if (now >= this.talkUntil + TALK_SETTLE) {
+      this.talkStart = now + (this.clenched && this.releaseAt == null ? CLENCH_LEAD : 0);
+      this.releaseAt ??= this.talkStart;
+    }
     this.talkUntil = now + seconds;
   }
 
@@ -319,7 +359,8 @@ export class Live2DRig {
   }
 
   get talking() {
-    return performance.now() / 1000 < this.talkUntil + TALK_SETTLE;
+    const now = performance.now() / 1000;
+    return now >= this.talkStart && now < this.talkUntil + TALK_SETTLE;
   }
 
   applyTalk() {

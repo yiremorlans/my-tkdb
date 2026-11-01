@@ -77,7 +77,7 @@ export default {
     ],
     hipsTouch: [
       "Hey! Hands to yourself.",
-      "Okay, no. The manager would not approve.",
+      "Whoa, no! You're a student. Absolutely not.",
     ],
     upset: [
       "Okay, that's enough. Sorry, but it is.",

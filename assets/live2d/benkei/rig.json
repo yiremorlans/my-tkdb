@@ -69,7 +69,8 @@
       "upset": ["e_shinken_00", "e_ase_00"],
       "flustered": ["e_kusho_00", "e_sekimen_00", "e_ase_00"],
       "sad": ["e_kanashimi_00"],
-      "troubled": ["e_konwaku_00"]
+      "troubled": ["e_konwaku_00"],
+      "alarmed": ["e_odoroki_00", "e_ase_00"]
     }
   },
   "reactions": {
@@ -151,8 +152,8 @@
     },
     "hipsTouch": {
       "byTier": {
-        "new": { "rank": 0, "duration": 2.8, "fist": true, "twitch": 1 },
-        "known": { "mood": "troubled", "duration": 2.8, "fist": true, "twitch": 0.7 },
+        "new": { "mood": "alarmed", "duration": 2.8, "fist": true, "twitch": 1 },
+        "known": { "mood": "alarmed", "duration": 2.8, "fist": true, "twitch": 0.85 },
         "warm": { "mood": "troubled", "duration": 3.2, "twitch": 0.5 },
         "spark": { "rank": 1, "duration": 3.4 },
         "close": { "mood": "smile_blush", "duration": 3.4 },

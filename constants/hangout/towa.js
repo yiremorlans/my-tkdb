@@ -9,8 +9,10 @@
 // wordless one. Daytime lines are hums and sounds only ("~ ~ ~ ♪", "...!"),
 // with no letters at all; "Heh heh" is a night voiceline, so it stays in the
 // evening pools. "Dandelion" starts at known. He likes being touched by the
-// MC from the start (a physical, cuddly type), so even guarded spots get a
-// puzzled "...?" rather than coldness until spark, where they fluster him.
+// MC from the start (a physical, cuddly type), but on his terms: through
+// known, lips/chest/belly/hips get a guarded "not there" (he hears her heart
+// and reads the touch as off), never cold; hips drop his voice a little.
+// From spark those spots fluster him.
 // Upset goes lower and flatter through warm (his voice drops), never cruel,
 // and is flustered from spark.
 
@@ -25,8 +27,8 @@ export default {
       "Hey! Heh heh ♪ My turn next!",
     ],
     lipsTouch: [
-      "...? Why the lips? Is there a petal on them?",
-      "Hm? Do humans poke lips to say hello? ♪",
+      "...? Hm. Not there.",
+      "Your heart just jumped. Why'd you do that?",
     ],
     earTouch: [
       "Ah! That tickles. ~ ~ ♪",
@@ -37,16 +39,16 @@ export default {
       "Your hand's small. Come play with me!",
     ],
     chestTouch: [
-      "...? What are you looking for?",
-      "Hm? My sweater's soft, right?",
+      "...? What are you looking for in there?",
+      "Hm? That's where my heart is. Don't poke it.",
     ],
     bellyTouch: [
-      "Hm? I'm not hungry. Well. A little.",
-      "...? Are you checking if I ate flowers? I did. ♪",
+      "...Hm? That's my belly. Why?",
+      "No. Pat my head instead.",
     ],
     hipsTouch: [
-      "...? Is something on my pants?",
-      "Hm? You're weird. ♪ I like weird.",
+      "...Hey. Not there.",
+      "I can hear your heart. You know that was weird, right?",
     ],
     upset: ["...Stop.", "I said stop. I don't like that."],
   },
@@ -57,8 +59,8 @@ export default {
       "Do it again and I'll poke back. ♪",
     ],
     lipsTouch: [
-      "...? Do my lips taste like flowers? I had clover today. ♪",
-      "Hm? Is that a game, Dandelion? Teach me the rules.",
+      "...? Dandelion. Why there?",
+      "Not there, Dandelion. Heads are better.",
     ],
     earTouch: [
       "Ah! That tickles. Heh heh ♪",
@@ -69,16 +71,16 @@ export default {
       "Your hand's warm. Come on, let's go play!",
     ],
     chestTouch: [
-      "...? You're looking for something. What is it?",
-      "Hm? There's nothing in my pocket. Except petals.",
+      "...? Dandelion's hands are curious.",
+      "Hm? Nothing in there for you, Dandelion.",
     ],
     bellyTouch: [
-      "Heh heh ♪ That tickles, Dandelion!",
-      "Hm? I only ate three flowers today. Four.",
+      "...Heh. No. Cuddle me properly or don't.",
+      "Hm? That's not how you ask for a cuddle.",
     ],
     hipsTouch: [
-      "...? Dandelion is strange. ♪",
-      "Hm? What's back there? A bug?",
+      "...Dandelion. Hands up here.",
+      "I heard your heart skip. That's not a head pat.",
     ],
     upset: ["...Dandelion. Stop it.", "I don't like that. Don't do it again."],
   },

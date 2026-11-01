@@ -98,7 +98,7 @@
     },
     "handTap": {
       "byTier": {
-        "new": { "mood": "annoyed", "duration": 2 },
+        "new": { "mood": "away", "duration": 2 },
         "known": { "mood": "smirk", "duration": 2 },
         "warm": { "mood": "grumpy_blush", "duration": 2.4 },
         "spark": { "mood": "grumpy_blush", "duration": 2.6 },

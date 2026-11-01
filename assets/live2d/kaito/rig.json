@@ -96,7 +96,7 @@
     "lipsTouch": {
       "byTier": {
         "new": { "mood": "panic", "duration": 2.6, "twitch": 0.8 },
-        "known": { "mood": "panic", "duration": 2.6, "twitch": 0.6 },
+        "known": { "mood": "panic", "then": [0.8, "sweat"], "duration": 2.6, "twitch": 0.6 },
         "warm": { "mood": "panic", "duration": 3, "twitch": 0.3 },
         "spark": { "rank": 1, "duration": 3.2 },
         "close": { "mood": "shy", "duration": 3.2 },
@@ -136,7 +136,7 @@
     "hipsTouch": {
       "byTier": {
         "new": { "mood": "panic", "duration": 2.8, "fist": true, "twitch": 1 },
-        "known": { "mood": "panic", "duration": 2.8, "fist": true, "twitch": 0.7 },
+        "known": { "mood": "panic", "then": [0.8, "sweat"], "duration": 2.8, "fist": true, "twitch": 0.7 },
         "warm": { "mood": "panic", "duration": 3.2, "twitch": 0.5 },
         "spark": { "rank": 1, "duration": 3.4 },
         "close": { "mood": "shy", "duration": 3.4 },

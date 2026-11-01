@@ -82,7 +82,7 @@ export default {
       "That isn't something I'm comfortable with.",
     ],
     upset: [
-      "Um... Could you stop, please? I'm sorry.",
+      "Um... Could you stop, please?",
       "Please, that's enough. I mean it.",
     ],
   },

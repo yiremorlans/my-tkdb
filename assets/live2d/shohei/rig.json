@@ -173,6 +173,7 @@
     "hipsTouch": { "byTier": { "new": "m_udekumi", "warm": "m_migikoshi", "spark": "m_kuchimoto", "close": "m_aori" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kuchimoto" } }
   },
+  "restMood": { "byTier": { "new": "serious", "known": "default" } },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
     "idle": { "amount": 0.35 },

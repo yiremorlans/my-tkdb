@@ -134,8 +134,8 @@
     },
     "bellyTouch": {
       "byTier": {
-        "new": { "mood": "full_smile", "duration": 2.4 },
-        "known": { "mood": "full_smile", "duration": 2.4 },
+        "new": { "mood": "default", "duration": 2.4 },
+        "known": { "mood": "smile", "duration": 2.4 },
         "warm": { "mood": "full_smile", "duration": 2.8 },
         "spark": { "rank": 1, "duration": 3 },
         "close": { "rank": 2, "duration": 3 },
@@ -144,8 +144,8 @@
     },
     "hipsTouch": {
       "byTier": {
-        "new": { "mood": "dreamy", "duration": 2.8 },
-        "known": { "mood": "dreamy", "duration": 2.8 },
+        "new": { "mood": "serious", "duration": 2.8 },
+        "known": { "mood": "serious", "duration": 2.8 },
         "warm": { "mood": "full_smile", "duration": 3.2 },
         "spark": { "mood": "full_smile_blush", "duration": 3.4 },
         "close": { "rank": 2, "duration": 3.4 },
@@ -161,7 +161,7 @@
     "handTap": "m_fusigi",
     "chestTouch": { "byTier": { "new": "m_fusigi", "spark": "m_odoroki", "close": "m_kuchimoto" } },
     "bellyTouch": "m_odoroki",
-    "hipsTouch": { "byTier": { "new": "m_fusigi", "spark": "m_odoroki", "close": "m_migikoshi" } },
+    "hipsTouch": { "byTier": { "new": "m_udekumi", "warm": "m_fusigi", "spark": "m_odoroki", "close": "m_migikoshi" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kuchimoto" } }
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },

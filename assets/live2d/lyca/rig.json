@@ -92,7 +92,7 @@
     },
     "handTap": {
       "byTier": {
-        "new": { "mood": "default", "duration": 2 },
+        "new": { "mood": "away", "duration": 2 },
         "known": { "mood": "smile", "duration": 2 },
         "warm": { "mood": "smile_blush", "duration": 2.4 },
         "spark": { "mood": "smile_blush", "duration": 2.6 },
@@ -152,15 +152,16 @@
     }
   },
   "reactionPoses": {
-    "headPat": { "byTier": { "new": "m_kubi", "spark": "m_kubi_C" } },
+    "headPat": "m_kubi",
     "cheekPoke": "m_atama",
     "lipsTouch": { "byTier": { "new": "m_odoroki", "warm": "m_udekumi", "spark": "m_atama", "close": "m_kubi" } },
     "earTouch": { "byTier": { "new": "m_odoroki", "spark": "m_odoroki_C" } },
     "handTap": "m_atama",
     "chestTouch": { "byTier": { "new": "m_odoroki", "close": "m_kubi" } },
     "bellyTouch": { "byTier": { "new": "m_odoroki", "close": "m_kubi" } },
-    "hipsTouch": { "byTier": { "new": "m_odoroki", "known": "m_udekumi", "spark": "m_atama", "close": "m_migikoshi" } },
-    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kubi" } }
+    "hipsTouch": { "byTier": { "new": "m_odoroki_C", "known": "m_udekumi", "spark": "m_atama", "close": "m_migikoshi" } },
+    "upset": { "byTier": { "new": "m_udekumi_C", "spark": "m_kubi_C" } },
+    "guarded": "m_udekumi_C"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
