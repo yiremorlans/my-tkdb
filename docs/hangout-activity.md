@@ -779,6 +779,23 @@ A second outfit (casual, city, work or roomwear,
 [`live2d-outfits.md`](./live2d-outfits.md)) is marked `"casual"` and takes
 the casual rolls.
 
+**Spot-bound outfits (2026-11-01).** An outfit with `spots` (background
+files) is the exception to "neither affects the other": at those spots it's
+worn every time, whatever the roll, and the variant becomes its
+`dialogueVariant`; anywhere else it's never worn and the roll picks among
+the other outfits. The default outfit can't be spot-bound (`validate.js`).
+`dress` gets the drawn background file from `drawBeatFor`, since the
+background is drawn first.
+
+- Benkei `work`: `Darkwick_Campus_Store` (+ `_PM`)
+- Mio `work`: `Dionysia_Workshop`, `Dionysia_Workshop_2`
+- Ren `roomwear`: `Jabberwock_Ren_Room` (+ `_PM`)
+
+Date and Gala outfits (`dateOnly`, `galaOnly`, [`live2d-outfits.md`](./live2d-outfits.md))
+are never `/meet`'s: `pickOutfit` drops them before the spot and roll
+checks. `validate.js` refuses one that's the default outfit, has `spots`, or
+is both.
+
 **Placement.** One framing per character (`rig.json` `stage`), the same on
 every background; only the background pans behind them. No per-background
 framing.

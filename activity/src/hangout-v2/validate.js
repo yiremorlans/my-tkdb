@@ -106,7 +106,7 @@ async function outfitProblems(rig, name, { readJson, mocIds }) {
   const outfit = rig.outfits[name] ?? {};
   const parts = { ...rig.parts, ...outfit.parts };
   const hotspots = { ...rig.hotspots, ...outfit.hotspots };
-  const problems = [...hotspotProblems(hotspots, parts), ...variantProblems(outfit), ...partBlushProblems(rig.partBlush, parts)];
+  const problems = [...hotspotProblems(hotspots, parts), ...variantProblems(outfit), ...spotsProblems(rig, name), ...onlyProblems(rig, name), ...partBlushProblems(rig.partBlush, parts)];
 
   if (typeof outfit.model !== "string") return [...problems, "`model` must name a model3.json"];
   let model = null;
@@ -156,6 +156,35 @@ function variantProblems(outfit) {
   return DIALOGUE_VARIANTS.includes(outfit.dialogueVariant)
     ? []
     : [`dialogueVariant must be one of ${DIALOGUE_VARIANTS.join(", ")}`];
+}
+
+// `spots` (optional): background files the outfit is worn at, always and
+// only there (meetActivity.js dressForVariant). The default outfit is the
+// fallback everywhere else, so it can't be spot-bound.
+function spotsProblems(rig, name) {
+  const spots = rig.outfits[name].spots;
+  if (spots == null) return [];
+  if (!Array.isArray(spots) || !spots.length || !spots.every((f) => typeof f === "string" && f.endsWith(".png"))) {
+    return ["`spots` must list background .png files"];
+  }
+  return name === rig.defaultOutfit ? ["the default outfit can't have `spots`"] : [];
+}
+
+// `dateOnly` / `galaOnly` (optional): the outfit is worn only on dates or
+// Gala night, never on /meet (meetActivity.js pickOutfit). The default
+// outfit is everyone's fallback, so it can't be either, and an outfit is one
+// occasion's: not both, and not spot-bound.
+function onlyProblems(rig, name) {
+  const o = rig.outfits[name];
+  const problems = [];
+  for (const key of ["dateOnly", "galaOnly"]) {
+    if (o[key] != null && typeof o[key] !== "boolean") problems.push(`\`${key}\` must be true or false`);
+  }
+  const only = o.dateOnly === true || o.galaOnly === true;
+  if (o.dateOnly === true && o.galaOnly === true) problems.push("an outfit can't be both `dateOnly` and `galaOnly`");
+  if (only && o.spots != null) problems.push("a date or Gala outfit can't have `spots`");
+  if (only && name === rig.defaultOutfit) problems.push("the default outfit can't be `dateOnly` or `galaOnly`");
+  return problems;
 }
 
 function partBlushProblems(spec, parts) {

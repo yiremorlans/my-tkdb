@@ -20,6 +20,7 @@
     "work": {
       "model": "work/mio_work.model3.json",
       "dialogueVariant": "casual",
+      "spots": ["Dionysia_Workshop.png", "Dionysia_Workshop_2.png"],
       "parts": { "chest": ["ArtMesh8"], "pants": ["ArtMesh218", "ArtMesh219"], "hand_l": ["ArtMesh157", "ArtMesh163", "ArtMesh159", "ArtMesh158"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [-0.015, 0.02, 1.015, 0.681] },

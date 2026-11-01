@@ -21,6 +21,7 @@
     "roomwear": {
       "model": "roomwear/ren_roomwear.model3.json",
       "dialogueVariant": "casual",
+      "spots": ["Jabberwock_Ren_Room.png", "Jabberwock_Ren_Room_PM.png"],
       "parts": { "chest": ["ArtMesh314"], "pants": ["ArtMesh326", "ArtMesh327"], "hand_l": ["ArtMesh162", "ArtMesh167", "ArtMesh166", "ArtMesh164", "ArtMesh161", "ArtMesh214"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [-0.005, 0.02, 1.005, 0.528] },
@@ -74,7 +75,13 @@
       "flustered": ["e_konwaku_00", "e_sekimen1_00", "e_ase_00"],
       "sad": ["e_kanasii_00"],
       "away": ["e_tsujo_away_00"],
-      "smirk": ["e_hinekure_00"]
+      "smirk": ["e_hinekure_00"],
+      "frown_sweat": ["e_ikari_00", "e_ase_00"],
+      "uneasy": ["e_konwaku_00"],
+      "uneasy_sweat": ["e_konwaku_00", "e_ase_00"],
+      "uneasy_blush": ["e_konwaku_00", "e_sekimen1_00"],
+      "away_sweat": ["e_tsujo_away_00", "e_ase_00"],
+      "shock_sweat": ["e_shock_00", "e_ase_00"]
     }
   },
   "reactions": {
@@ -86,8 +93,8 @@
     },
     "headPat": {
       "byTier": {
-        "new": { "mood": "annoyed", "duration": 2 },
-        "known": { "mood": "annoyed", "duration": 2 },
+        "new": { "mood": "frown_sweat", "duration": 2 },
+        "known": { "mood": "uneasy", "duration": 2 },
         "warm": { "mood": "blush", "duration": 2.4 },
         "spark": { "rank": 2, "duration": 2.6 },
         "close": { "rank": 2, "duration": 2.6 },
@@ -96,8 +103,8 @@
     },
     "cheekPoke": {
       "byTier": {
-        "new": { "mood": "away", "duration": 2 },
-        "known": { "mood": "default", "duration": 2 },
+        "new": { "mood": "away_sweat", "duration": 2 },
+        "known": { "mood": "sweat", "duration": 2 },
         "warm": { "mood": "smirk", "duration": 2.4 },
         "spark": { "mood": "blush", "duration": 2.6 },
         "close": { "mood": "full_smile_blush", "duration": 2.6 },
@@ -106,8 +113,8 @@
     },
     "handTap": {
       "byTier": {
-        "new": { "mood": "away", "duration": 2 },
-        "known": { "mood": "default", "duration": 2 },
+        "new": { "mood": "away_sweat", "duration": 2 },
+        "known": { "mood": "sweat", "duration": 2 },
         "warm": { "mood": "blush", "duration": 2.4 },
         "spark": { "mood": "blush", "duration": 2.6 },
         "close": { "rank": 2, "duration": 2.6 },
@@ -116,8 +123,8 @@
     },
     "chestTouch": {
       "byTier": {
-        "new": { "rank": 0, "duration": 2.2, "twitch": 0.5 },
-        "known": { "rank": 0, "duration": 2.2, "twitch": 0.38 },
+        "new": { "mood": "frown_sweat", "duration": 2.2, "twitch": 0.5 },
+        "known": { "mood": "frown_sweat", "duration": 2.2, "twitch": 0.38 },
         "warm": { "mood": "default", "duration": 2.6 },
         "spark": { "rank": 1, "duration": 2.8 },
         "close": { "rank": 2, "duration": 2.8 },
@@ -126,9 +133,9 @@
     },
     "lipsTouch": {
       "byTier": {
-        "new": { "rank": 0, "duration": 2.6, "twitch": 1 },
-        "known": { "rank": 0, "duration": 2.6, "twitch": 0.75 },
-        "warm": { "rank": 0, "duration": 3, "twitch": 0.38 },
+        "new": { "mood": "uneasy_sweat", "duration": 2.6, "twitch": 1 },
+        "known": { "mood": "uneasy_sweat", "duration": 2.6, "twitch": 0.75 },
+        "warm": { "mood": "uneasy_blush", "duration": 3, "twitch": 0.38 },
         "spark": { "mood": "flustered", "duration": 3.2 },
         "close": { "mood": "flustered", "duration": 3.2 },
         "bound": { "mood": "flustered", "duration": 3.6 }
@@ -136,9 +143,9 @@
     },
     "earTouch": {
       "byTier": {
-        "new": { "rank": 0, "duration": 2.4, "twitch": 0.75 },
-        "known": { "rank": 0, "duration": 2.4, "twitch": 0.5 },
-        "warm": { "rank": 0, "duration": 2.8 },
+        "new": { "mood": "uneasy_sweat", "duration": 2.4, "twitch": 0.75 },
+        "known": { "mood": "uneasy", "duration": 2.4, "twitch": 0.5 },
+        "warm": { "mood": "uneasy_blush", "duration": 2.8 },
         "spark": { "mood": "flustered", "duration": 3 },
         "close": { "rank": 2, "duration": 3 },
         "bound": { "rank": 2, "duration": 3.4 }
@@ -146,9 +153,9 @@
     },
     "hipsTouch": {
       "byTier": {
-        "new": { "mood": "shock", "duration": 2.8, "fist": true, "twitch": 1.25 },
-        "known": { "mood": "shock", "duration": 2.8, "fist": true, "twitch": 0.88 },
-        "warm": { "rank": 0, "duration": 3.2, "twitch": 0.63 },
+        "new": { "mood": "shock_sweat", "duration": 2.8, "fist": true, "twitch": 1.25 },
+        "known": { "mood": "shock_sweat", "duration": 2.8, "fist": true, "twitch": 0.88 },
+        "warm": { "mood": "uneasy_sweat", "duration": 3.2, "twitch": 0.63 },
         "spark": { "mood": "flustered", "duration": 3.4 },
         "close": { "mood": "flustered", "duration": 3.4 },
         "bound": { "mood": "flustered", "duration": 3.8 }
@@ -156,8 +163,8 @@
     },
     "bellyTouch": {
       "byTier": {
-        "new": { "rank": 0, "duration": 2.4, "twitch": 0.75 },
-        "known": { "rank": 0, "duration": 2.4, "twitch": 0.5 },
+        "new": { "mood": "uneasy_sweat", "duration": 2.4, "twitch": 0.75 },
+        "known": { "mood": "uneasy", "duration": 2.4, "twitch": 0.5 },
         "warm": { "rank": 1, "duration": 2.8 },
         "spark": { "rank": 1, "duration": 3 },
         "close": { "rank": 2, "duration": 3 },

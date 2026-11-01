@@ -116,15 +116,16 @@ async function getCharacterProgress(userId, character) {
 // recentBeatWindow). A failed read just draws from the full pool. Nothing is
 // written here: the beat only enters the recent list once it's answered (see
 // recordAnsweredBeat), so a dropped spawn leaves no trace.
-// `dress` turns the rolled variant into what's worn, `{ variant, outfit }`,
-// before the beat is drawn (the Activity's rig outfit, meetActivity.js
-// dressForVariant); left out, the roll stands and there's no outfit.
+// `dress` turns the rolled variant and the drawn background file
+// (ctx.backgroundFile) into what's worn, `{ variant, outfit }`, before the
+// beat is drawn (the Activity's rig outfit, meetActivity.js dressForVariant);
+// left out, the roll stands and there's no outfit.
 async function drawBeatFor(userId, character, ctx, draw, dress = (variant) => ({ variant, outfit: null })) {
   const [{ tier, variant: rolled }, recentBeats] = await Promise.all([
     getCharacterProgress(userId, character),
     getRecentDialogueBeats(userId, character.id).catch(() => []),
   ]);
-  const { variant, outfit } = dress(rolled);
+  const { variant, outfit } = dress(rolled, ctx.backgroundFile ?? null);
   const beat = draw(character, tier, variant, { ...ctx, recentBeats });
   return { tier, variant, outfit, beat };
 }

@@ -11,6 +11,11 @@ Benkei (`work`), Leo (`casual`), Mio (`work`), Ren (`roomwear`) and Shohei
 (game bundle `jofemacademy`, `dialogueVariant: "casual"`), an extra outfit
 outside the four slots.
 
+Benkei's `work`, Mio's `work` and Ren's `roomwear` are spot-bound
+(`spots` in rig.json, hangout-activity.md §11.5): worn always and only at
+the campus store, the Dionysia workshop and Ren's room. A new outfit gets
+`spots` only when it belongs to one place.
+
 ## Benkei
 
 - [x] Benkei `academy` (game bundle `benkei_`, his default)
@@ -57,7 +62,8 @@ Needs art first; uniform portrait only.
 ## Date outfits (`dateOnly`)
 
 Dates (hangout-activity.md §12.4) draw only from outfits marked
-`dateOnly: true` in rig.json. `/meet` never draws them. Each one still
+`dateOnly: true` in rig.json. `/meet` never draws them (meetActivity.js
+`pickOutfit`, built 2026-11-01). Each one still
 names a `dialogueVariant`. A character with none wears `defaultOutfit` on
 dates. Status as of 2026-11-01: none yet for anyone.
 
@@ -65,5 +71,5 @@ dates. Status as of 2026-11-01: none yet for anyone.
 
 Gala night (gala-reinstatement-arc.md §5.1.1) draws only from outfits marked
 `galaOnly: true`: formalwear for the Gala partner scene. `/meet` and dates
-never draw them. Each one still names a `dialogueVariant`. A character with
+never draw them (`/meet`'s exclusion built 2026-11-01). Each one still names a `dialogueVariant`. A character with
 none wears `defaultOutfit`. Status as of 2026-11-01: none yet for anyone.

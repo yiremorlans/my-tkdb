@@ -70,18 +70,36 @@ function readRigOutfits(characterId) {
 }
 
 /**
- * What `characterId` wears for a rolled variant: an outfit whose rig.json
- * `dialogueVariant` matches (one at random if several do), else the rig's
- * `defaultOutfit`, and then the variant becomes that outfit's, so the
- * dialogue matches what's worn. No rig keeps the roll with no outfit.
+ * What `characterId` wears for a rolled variant at background file `spot`
+ * (pickOutfit on their rig.json). No rig keeps the roll with no outfit.
  */
-export function dressForVariant(characterId, rolled, random = Math.random) {
+export function dressForVariant(characterId, rolled, spot = null, random = Math.random) {
   const rig = readRigOutfits(characterId);
   if (!rig) return { variant: rolled, outfit: null };
-  const matching = Object.keys(rig.outfits).filter((name) => rig.outfits[name].dialogueVariant === rolled);
-  if (matching.length) return { variant: rolled, outfit: matching[Math.floor(random() * matching.length)] };
-  const outfit = rig.outfits[rig.defaultOutfit] ? rig.defaultOutfit : Object.keys(rig.outfits)[0] ?? null;
-  return { variant: rig.outfits[outfit]?.dialogueVariant ?? rolled, outfit };
+  return pickOutfit(rig, rolled, spot, random);
+}
+
+/**
+ * The /meet outfit from a rig's `{ outfits, defaultOutfit }`. Date and Gala
+ * outfits (`dateOnly`, `galaOnly`) are never /meet's. An outfit with `spots`
+ * (background files) is worn always and only at those spots, whatever the
+ * roll: Benkei's work at the campus store, Ren's roomwear in his room.
+ * Anywhere else those are out too, and the rest go by the roll: an outfit
+ * whose `dialogueVariant` matches (one at random if several do), else
+ * `defaultOutfit`. Either way the variant becomes the worn outfit's, so the
+ * dialogue matches what's worn.
+ */
+export function pickOutfit(rig, rolled, spot = null, random = Math.random) {
+  const pick = (names) => names[Math.floor(random() * names.length)];
+  const dressed = (outfit) => ({ variant: rig.outfits[outfit]?.dialogueVariant ?? rolled, outfit });
+  const names = Object.keys(rig.outfits).filter((name) => !rig.outfits[name].dateOnly && !rig.outfits[name].galaOnly);
+  const atSpot = names.filter((name) => spot && rig.outfits[name].spots?.includes(spot));
+  if (atSpot.length) return dressed(pick(atSpot));
+  const free = names.filter((name) => !rig.outfits[name].spots);
+  const matching = free.filter((name) => rig.outfits[name].dialogueVariant === rolled);
+  if (matching.length) return { variant: rolled, outfit: pick(matching) };
+  const outfit = free.includes(rig.defaultOutfit) ? rig.defaultOutfit : free[0] ?? null;
+  return dressed(outfit);
 }
 
 // --- the picker's token ----------------------------------------------------
@@ -159,7 +177,7 @@ export async function handleMeetPickLaunch(body, userId, characterId, { sendFoll
   const [limit, picked, encounter] = await Promise.all([
     checkCommandLimit(userId, 'meet', now),
     pickerMessageId ? meetPickerUsed(pickerMessageId) : false,
-    drawMeetEncounter(userId, characterId, now, (variant) => dressForVariant(characterId, variant)),
+    drawMeetEncounter(userId, characterId, now, (variant, spot) => dressForVariant(characterId, variant, spot)),
   ]);
 
   // Nobody on /meet cooldown gets into the Activity: an older picker clicked

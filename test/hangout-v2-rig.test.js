@@ -90,6 +90,29 @@ test('a well-formed rig validates', async () => {
   assert.strictEqual(await problems(rig()), '');
 });
 
+// A second outfit on the fixture's own model, with `extra` merged in.
+const withSecond = (extra, top = {}) => {
+  const r = rig(top);
+  r.outfits.second = { ...r.outfits.academy, dialogueVariant: 'casual', ...extra };
+  return r;
+};
+
+test('spots, dateOnly and galaOnly validate when well-formed', async () => {
+  assert.strictEqual(await problems(withSecond({ spots: ['Room.png'] })), '');
+  assert.strictEqual(await problems(withSecond({ dateOnly: true })), '');
+  assert.strictEqual(await problems(withSecond({ galaOnly: true })), '');
+});
+
+test('bad spots, dateOnly and galaOnly are refused', async () => {
+  assert.match(await problems(withSecond({ spots: [] })), /`spots` must list background \.png files/);
+  assert.match(await problems(withSecond({ spots: 'Room.png' })), /`spots` must list/);
+  assert.match(await problems(withSecond({ dateOnly: 'yes' })), /`dateOnly` must be true or false/);
+  assert.match(await problems(withSecond({ dateOnly: true, galaOnly: true })), /can't be both/);
+  assert.match(await problems(withSecond({ galaOnly: true, spots: ['Room.png'] })), /Gala outfit can't have `spots`/);
+  assert.match(await problems(withSecond({ dateOnly: true }, { defaultOutfit: 'second' })), /default outfit can't be `dateOnly`/);
+  assert.match(await problems(withSecond({ spots: ['Room.png'] }, { defaultOutfit: 'second' })), /default outfit can't have `spots`/);
+});
+
 test("a missing model, or one that doesn't load, is rejected", async () => {
   assert.match(await problems(rig(), opts(files({ 'academy/test.model3.json': null }))), /outfits\.academy: model academy\/test\.model3\.json does not load/);
   const throwing = { ...opts(), readJson: () => { throw new SyntaxError('bad json'); } };

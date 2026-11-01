@@ -20,6 +20,7 @@
     "work": {
       "model": "work/benkei_work.model3.json",
       "dialogueVariant": "casual",
+      "spots": ["Darkwick_Campus_Store.png", "Darkwick_Campus_Store_PM.png"],
       "parts": { "chest": ["ArtMesh104", "ArtMesh184"], "pants": ["ArtMesh111", "ArtMesh112"], "hand_r": ["ArtMesh129", "ArtMesh130", "ArtMesh132"], "hand_l": ["ArtMesh151", "ArtMesh155", "ArtMesh153", "ArtMesh152"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [0.112, 0.02, 0.888, 0.739] },
