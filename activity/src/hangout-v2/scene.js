@@ -45,7 +45,9 @@ export async function startScene(stage, { base, tier, outfit, lines, room = true
     const texture = await loadTexture(url);
     if (bg) bg.texture = texture;
     else app.stage.addChildAt((bg = new Sprite(texture)), 0);
+    scene.backgroundUrl = url;
     layout();
+    scene.onBackground?.(url);
   }
 
   const renderer = await Live2DRig.create({ rig, baseUrl, outfit: rig.outfits?.[outfit] ? outfit : undefined });
@@ -84,6 +86,10 @@ export async function startScene(stage, { base, tier, outfit, lines, room = true
     onTap: null,
     layout,
     setBackground,
+    // The effects prototype (effects.js) reads these.
+    background: () => bg,
+    backgroundUrl: placeTexture ? place : roomTexture ? `${base}/${rig.background}` : null,
+    onBackground: null,
   };
 
   // Background pan, as v1 (rig.json motion.bgPan).

@@ -4,7 +4,10 @@ Status: **released 2026-10-31.** The Activity runs for everyone in Discord
 on the Live2D rig, and every `/meet` pick opens it (§11; migration 035
 before deploy, then `npm run register` to un-hide the entry point).
 `OWNER_ONLY` in `activityRoutes.js` stays as the switch back.
-Last updated: 2026-10-31
+Last updated: 2026-11-01
+
+**Dates (§12)** were designed on 2026-11-01 and aren't built yet: the `/call`
+scene's date button launches a three-beat date in this Activity.
 
 A new home for `/meet`; `/roam` stays exactly as it is. The Hangout is a **solo, private Discord Activity** where a character —
 Alan first — idles in their own room as their **Live2D model**, the same
@@ -41,12 +44,15 @@ only, no App Directory listing, no monetization.
 | `CHARACTER_ROOMS`, `backgroundPath` | `constants/backgrounds.js` | the room background (`Vagastrom_Alan_Room.png`) |
 | Dialogue box look, fonts | `imageComposition.js`, `assets/fonts` | the Activity's UI styling (§4.4) |
 | Alan's voice | `constants/dialogue/alan.js` | reference for drafting hangout lines (§4.3) |
+| `DATE_LOCATIONS`, `assets/bg/date/` | `constants/backgrounds.js` | the date spots (§12.4) |
+| Call scenes' date button | [`public-encounters.md`](./public-encounters.md) §17.3 | how a date starts (§12.1) |
 
 **Affinity sources.** [`bond-scene-dms.md`](./bond-scene-dms.md) and
 [`scheduled-missions.md`](./scheduled-missions.md) both state that `/roam` and
 `/meet` are the only things that move affinity. The Hangout keeps that rule:
 it moves affinity only as `/meet`, through the answer (§11.3). Touches are
-cosmetic.
+cosmetic. Dates (§12) are the second source: their answers pay, through
+their own guard, not `/meet`'s.
 
 ---
 
@@ -312,6 +318,28 @@ their model has. (The sprite rig's arm `twitch` and `fist` clench have no
 Live2D counterpart; the model's poses carry the hands.) The preview's
 "Touch spots" row plays each spot.
 
+#### Gestures (designed 2026-11-01, not built)
+
+Besides taps, two gestures. Each has its own line pool (§4.3), and its face
+and pose come off the same tier ladder as the spot it's on.
+
+- **Stroke**: a drag across the **head** or **cheek** (`headStroke`,
+  `cheekStroke`). Works in **every Hangout, at every tier**, on the spot's
+  own rung (head 2, cheek 1). It's gentler than poking: a stroke adds
+  **half** a tap's annoyance (`SPOT_ANNOYANCE` × 0.5).
+- **Hold**: pressing and holding a spot for **0.6s+**. Holds are
+  **date-only** (§12): `handHold` (hand) and `lipHold` (lips). Outside a
+  date a long press is an ordinary tap. A date always runs at `close` or
+  `bound`, so holds are written for those two tiers only and never need a
+  guarded or lockout path. On a date they raise **no annoyance**.
+  - `lipHold` is the **most intimate** gesture, above the hips on the
+    sensitivity ladder, so its face holds the longest.
+  - `handHold` carries Jin's stigma resonance (it only works holding the
+    MC's hand) as his canon payoff.
+  - Touch-averse characters (Yuri, Rui, Lyca, Ren, Subaru) read flustered,
+    never upset; Zenji's lines answer the intention, never the contact; Rui
+    wants what his curse refuses.
+
 Hotspot reactions are cosmetic, unlimited and local, with no server call.
 Every reaction plays the line for that trigger in the dialogue box.
 
@@ -342,7 +370,9 @@ the preview.
 
 `constants/hangout/alan.js`, one pool per trigger: `headPat`, `cheekPoke`,
 `lipsTouch`, `earTouch`, `handTap`, `chestTouch`, `bellyTouch`, `hipsTouch`, `upset`,
-`greeting`. Claude drafts
+`greeting`. Gestures (§4.2) add `headStroke` and `cheekStroke` (every
+tier) and `handHold` and `lipHold` (`close` and `bound` only, played on
+dates). Claude drafts
 them in Alan's voice from `constants/dialogue/alan.js`. **The user approves
 them before release.** They're kept apart from the `/meet` dialogue files.
 
@@ -360,6 +390,32 @@ shows his name, his relationship level and heart bar.
   Discord, data features are off (preview and dev only).
 - Discord desktop, web and mobile. Capped at 30 fps on mobile. Cubism Core
   is served from `/assets/live2d/vendor/`, never a third-party CDN.
+
+### 4.6 Camera (designed 2026-11-01, not built)
+
+The stage can push in on the character and ease back out. It works in
+**every Hangout**. It's a transform on the stage container (character and
+room together), so the rig, hotspots and hit tests don't change: pointer
+coordinates go through the same transform.
+
+- **Shots.** `wide` (the default framing, §3.1 `stage`) and `face` (the
+  face_base part's bounds plus a margin, centered). A push takes about 0.6s
+  in and 0.8s out, with an ease-in-out curve, and the room pan (§4.1) keeps
+  drifting underneath.
+- **When it pushes in:**
+  - the `/meet` answer's reaction (§11.2 steps 5–6), easing out once the
+    reaction line has typed out and held;
+  - on a date (§12): a hold gesture, for as long as it's held (§4.2), and
+    the parting beat's line.
+- **Not on taps.** Ordinary touches and strokes never move the camera, so
+  spam-tapping can't make it jitter. An upset eases back to `wide` at once.
+- **The photo** (§12.6) is always taken at `wide`.
+- **Bounds.** The push never shows past the room's edges: the zoom is
+  capped so the scaled room still covers the screen (portrait framing on
+  phones zooms less). With no room drawn, nothing caps it.
+- **Per rig:** rig.json `camera.face` can nudge the face shot's
+  `{ zoom, offsetY }` for a model whose face_base bounds frame badly. The
+  preview gets a "Camera" row to play each shot.
 
 ---
 
@@ -535,6 +591,19 @@ otherwise.
 - **PM backgrounds**: the first release always uses
   `Vagastrom_Alan_Room.png`. Switching to `_PM` by `TZ` time of day is an
   easy add.
+- **Lighting and effects (prototype first, 2026-11-01)**: candidates are a
+  tint on the rig matched to the background (warm for restaurants, cool and
+  dim for night streets and Obscuary), animated flicker for neon and
+  candlelight, particles (rain for Hotarubi, petals, sparkles on water),
+  background blur, and a vignette or soft shadow. Bloom is the heaviest on
+  phones at the 30 fps cap. For every Hangout, not dates only. A
+  throwaway toggle in the dev preview (`hangout-v2.html`) comes first;
+  nothing ships until the user has seen it. **Prototype built 2026-11-01**:
+  `activity/src/hangout-v2/effects.js`, the "Effects" rows in the preview
+  drawer. Its auto rules are the candidates to ship: Hotarubi rain (always),
+  a night grade from `isEveningHour` on day files only (`_PM` files are
+  already night), the Obscuary grade, Frostheim snow, and a light blur
+  (strength 2).
 - **Outfit**: every Live2D rig has academy only so far; second outfits are
   tracked in [`live2d-outfits.md`](./live2d-outfits.md). Until §11, the
   Activity shows `defaultOutfit`. Once `/meet` moves into the Activity, the
@@ -549,8 +618,7 @@ Status: **built 2026-10-30, released to everyone 2026-10-31.** Designed
 encounter, the answer, the fallback), `activityRoutes.js` (the routes),
 `activity/src/hangout-v2/meet.js` (the player's side), migration 035
 (`meet_encounters`, the off switch, the usage path). Still to do: the
-secret button (§11.4) and the per-tier touch lines, which are writing
-(§11.6). Not yet tested in Discord: greying out the picker after a launch
+per-tier touch lines, which are writing (§11.6). Not yet tested in Discord: greying out the picker after a launch
 (through `/meet`'s own token; the result stays in the Activity), followups
 after a launch (the fallback), and the instance id from `with_response`.
 
@@ -627,10 +695,9 @@ In order:
    message to show the result, so Discord keeps a record like the image
    flow does; if Discord doesn't allow the edit after a launch, it's
    skipped.
-8. **The hangout carries on**: touch spots and the secret button (§11.4).
+8. **The hangout carries on**: touch spots and gestures (§4.2).
 
-**Touches before answering.** Touch spots and the secret button work any
-time. Before the answer, each one plays its reaction, mood and
+**Touches before answering.** Touch spots and gestures work any time. Before the answer, each one plays its reaction, mood and
 line, then the VN box returns to the beat's `line` and the four choices
 reappear. Nothing leaves the player without the choices while the answer is
 unrecorded.
@@ -670,31 +737,13 @@ encounter, so it can only be answered once. Double clicks, two tabs and
 replayed requests can't pay twice. Unanswered encounters are cleaned up in
 the background after a day, as housekeeping (not a gameplay timer).
 
-Touch spots and the secret button never call the server, so there's
-nothing to farm.
+Touch spots and gestures never call the server, so there's nothing to
+farm.
 
-### 11.4 Secret button
+### 11.4 Secret button (cut)
 
-Each character has a **fixed, unique secret combo** with no hints in any
-line; players find it or share it.
-
-- **Shape:** 2–3 steps, each one touch spot tapped 1–3 times in a row, e.g.
-  head ×2 → cheek ×1 → hand ×2. No two characters share a combo.
-- **Wrong taps:** a tap that doesn't match the next step resets the combo
-  to the start and counts toward annoyance as normal. There's no time limit
-  between taps, so slow and gentle works.
-- **Annoyance:** taps that match the combo so far don't raise the meter. If
-  the character gets upset **at any point during the visit**, the secret is
-  locked until the next visit.
-- **Once found**, the button appears in the VN box and stays for the rest
-  of the visit; pressing it again replays the scene. It's gone when the
-  Activity closes, and the next visit needs the combo again. Nothing is
-  stored.
-- **The scene** is a special line or short exchange written to land the
-  character's **fave response type** (a tender scene for a kind-lover, a
-  teasing one for a playful-lover…). Cosmetic: no affinity, no milestone.
-- Combos and scenes live in the character's hangout data beside the line
-  pools (`constants/hangout/<id>.js`).
+Cut on 2026-11-01, never built: no secret combos or secret scenes. The
+heading stays so the section numbers don't shift.
 
 ### 11.5 Background and outfit
 
@@ -742,7 +791,7 @@ outfit's, so it opens faster on phones.
 Every character has a Live2D rig (Benkei's since 2026-10-30).
 
 **Writing comes last**, after all the rigs exist: touch reaction lines per
-tier, secret scenes and combos, drafted one character at a time from their
+tier and gesture lines (§4.3), drafted one character at a time from their
 reference file (voice-check workflow) and approved by the user, like §4.3.
 
 ### 11.7 Fallback and operations
@@ -773,9 +822,217 @@ reference file (voice-check workflow) and approved by the user, like §4.3.
   associated with backgrounds (roomwear with a room, say). If it is, it
   should weight the outfit there, not force it, so Alan can still be in
   academy in his room sometimes.
-- **Secret scene by tier**: one scene per character (the default), or three
-  versions in the `reactions.js` bands (early / mid / deep), each in the
-  fave type's register.
+## 12. Dates
+
+Status: **designed 2026-11-01, not built.** Settled in a design review with
+the user on 2026-11-01. A date is a short, three-beat encounter in this
+Activity at a date spot, started from a `/call` scene. It's the Live2D
+rig's own feature: there's no image version of it.
+
+### 12.1 Starting a date
+
+- **Only from the call scene's date button**
+  ([`public-encounters.md`](./public-encounters.md) §17.3): the scene's
+  winner, at **Confidant or above** (affinity ≥ 260), clicks
+  `Ask on a date`. Scenes fire on 5% of wins, so dates are rare and read as
+  a prize. `/meet` and `/roam` don't start dates.
+- **The click claims the scene** (one atomic claim, winner only, §17.4) and
+  gives up the scene's +1. It answers with `LAUNCH_ACTIVITY`, sent with
+  `with_response=true` so the date is tied to the Activity instance, like
+  §11.2.
+- **Every character, Benkei included.** No skip list. Each character's
+  limits live in their lines (Rui's curse, Zenji answering the intention,
+  Towa mute by day and so on), not in rules.
+- **No cap of its own.** The scene rate, the winner check and the Confidant
+  gate are enough.
+- **Separate from `/meet`.** A date doesn't check, use or stamp the `/meet`
+  cooldown. Someone on `/meet` cooldown can still go on a date, and a date
+  doesn't block the next `/meet`.
+- **The tier is fixed at launch:** `close` at Confidant, `bound` at
+  Devoted and Soulbound. A level-up mid-date sends the bond-scene DM as
+  usual, but the date's remaining beats stay on the tier it started with.
+
+### 12.2 The date
+
+In order:
+
+1. **Arrival beat.** Its `line` under the name plate, then the four response
+   buttons, as in §11.2 (types, colors, glyphs). The answer plays the face
+   and the `getReactionLine` reaction like §11.2 steps 5–6. It **pays
+   nothing**, so there's no gain line.
+2. **Middle beat.** Same flow. Fave or like **+1**, flat 0, with the gain
+   line from §11.2 step 7.
+3. **Parting beat.** Same flow and payout: fave or like **+1**, flat 0.
+   **A date pays at most +2.** The **Take a photo** button (§12.6)
+   appears with this beat.
+4. **Free time.** After the parting answer the date carries on as an
+   ordinary Hangout at the date spot, with the music still playing: touch
+   spots and gestures, holds included (§4.2), using the character's normal
+   tier touch lines. No date-specific touch pools for now; they can be
+   added later if dates feel flat.
+
+**Each beat pays on its own answer**, atomically, like §11.3: the server
+holds the drawn beats and their mood flags. Answering marks that beat
+answered, so double clicks, two tabs and replays can't pay twice. The
+client never sends a mood flag or beat key it could forge.
+
+**Touches between beats** work as in §11.2: a touch plays its reaction and
+line, then the VN box goes back to the current beat and its choices.
+
+**Leaving mid-date** keeps whatever was already paid. The unfinished date
+stays saved and can be reopened until every beat is answered. Unfinished
+dates are cleaned up after a day, as housekeeping, like `/meet` encounters.
+
+**A failed launch** (the Activity hasn't loaded the date within ~30s of
+the click) gets an ephemeral **Go on your date** button that launches the
+Activity again. The same button reopens a date the player left. There's no
+image fallback.
+
+### 12.3 Beats
+
+- In the character's dialogue file, beside the `/meet` pools:
+  `date: { close: { arrival, middle, parting }, bound: { … } }`. Each beat
+  has a `line` and four `responses` (kind / playful / bold / neutral, the
+  30-character limit).
+- **About 2 beats per stage per tier:** 26 characters × 2 tiers × 6 beats
+  ≈ 312 beats, drafted one character at a time from the reference file
+  (voice-check workflow) and approved by the user.
+- **Location-agnostic.** A beat never names or describes the spot, so any
+  beat works at any of the date backgrounds.
+- House rules apply as for encounters: no assumed time, the intimacy ladder
+  (`close` hints subtly, `bound` treats it as already happened), and a
+  tier's beats don't spend its bond scene's reveal.
+
+### 12.4 Spot, outfit, music
+
+**Spot.** A random draw from the 22 backgrounds in `DATE_LOCATIONS.DATE`
+(`assets/bg/date/`); the character picks, the player doesn't. A `_PM`
+file with a day counterpart follows `/meet`'s evening weighting
+(`EVENING_PM_WEIGHT`). A PM-only spot (`Bach_Luxury_Cottage_PM`,
+`Harajuku_Alley_PM`, `Harajuku_Takeshita_PM`, `Jiyuuno_megami_PM`,
+`Shinjuku_Hanamichi_Street_PM`, `Shinjuku_Ramen_PM`) is always eligible.
+This is the first thing to draw from `DATE_LOCATIONS`.
+
+**Outfit.** Outfits in `assets/live2d/<id>/rig.json` can be marked
+`dateOnly: true`. A date picks one of the character's date outfits at
+random. `/meet` never draws them. A character with no date outfit wears
+`defaultOutfit` until their art lands; the checklist is in
+[`live2d-outfits.md`](./live2d-outfits.md). A date outfit still names a
+`dialogueVariant`, so Jo's pronouns stay right, and the validator checks it.
+
+**Music.** One looping track per background family. It fades in at the
+arrival beat and plays through free time.
+
+| Family | Backgrounds |
+|---|---|
+| beach | `Bach_Beach`, `Bach_Cottage`, `Bach_Cottage_Pool`, `Bach_Island_Shore`, `Bach_Island_VIP`, `Bach_Luxury_Cottage_PM` |
+| café | `Cafe`, `Cafe_2`, `Shinjuku_Donut_Store` |
+| restaurant | `Chuka_Restaurant`, `Shinjuku_Ramen_PM` |
+| city | `Chuka_Sidestreet`, `Harajuku_Alley_PM`, `Harajuku_Takeshita_PM`, `Jiyuuno_megami_PM`, `Shinjuku`, `Shinjuku_Hanamichi_Street_PM`, `Tokyo_Bay` |
+
+(`_PM` files go with their day file's family.) The user supplies the
+tracks. They're served with the Activity's assets, never a third-party CDN,
+and fetched only for the drawn family. **The music has its own toggle**
+beside ♪, remembered in localStorage like ♪. Touch sounds and their shared
+10-second cooldown (§4.2) don't change.
+
+### 12.5 Gestures
+
+Strokes work in every Hangout. **Holds (`handHold`, `lipHold`) work only on
+dates**, at any point in the date, before or after the parting beat. See
+§4.2.
+
+### 12.6 Date photo
+
+- **Take a photo** appears with the parting beat and can be used **once per
+  date**, during the parting beat or free time.
+- Pressing it hides the VN box, blurs the background, plays a pose (rig.json
+  `reactionPoses.photo`, else the character's default idle), and captures
+  the canvas: rig plus background.
+- The Activity uploads the PNG to `POST /api/activity/photo` with the date.
+  The server checks the date belongs to the session user and hasn't been
+  photographed yet, stores the image (a Supabase Storage bucket plus a
+  `date_photos` row: user, character, background, created), and the bot
+  DMs it to the player as a keepsake.
+- No affinity, no milestone.
+
+### 12.7 Warmth (graded moods)
+
+On a date, the blush and breathing aren't on/off: they deepen over the date.
+The moods (§3.2) still pick the face; warmth is added on top of them,
+written straight to the model's parameters after the expressions, the way
+the flinch is (§4.2).
+
+- **Warmth** is a value from 0 to 1, local to the date and never sent to the
+  server. It starts at **0.2** at `close` and **0.4** at `bound`.
+- **It rises** with a fave answer (+0.2), a liked answer (+0.1), a hold
+  (+0.1 per second held, up to +0.3 per hold) and a stroke (+0.05). A flat
+  answer doesn't lower it. It eases toward its new value over about a
+  second rather than jumping.
+- **It drives:**
+  - `ParamCheek` (the blush every model's `e_sekimen_00` adds): a resting
+    blush at `warmth × 0.6`, so even a mood without blush shows some. A
+    blush mood adds on top, capped at the parameter's max.
+  - breathing speed: the `m_breath` layer plays up to 1.4× faster at full
+    warmth, and back to normal over a few seconds once nothing raises it.
+- **It drifts down** slowly in free time (about −0.02 per 10s with no
+  touch), never below its starting value.
+- **Character limits still win.** Warmth adds blush only; faces stay as
+  each character's moods and lines set them (Subaru's uneasy faces,
+  Taiga's smirks). A model without `ParamCheek` skips the blush; the
+  validator warns.
+- **Dates only** (settled 2026-11-01). Ordinary Hangouts keep the binary
+  moods at every tier.
+
+### 12.8 `/album`
+
+- An **ephemeral**, paged gallery of **every** date photo the user has
+  taken, across all characters, newest first, one per page.
+- **No cap** on how many photos are kept.
+- **Share** posts the photo on the current page publicly in the channel
+  `/album` ran in, captioned `📸 {user} with **Alan Mido**` (no spot, no
+  pronouns). One photo per click, no limit on shares.
+
+### 12.9 Data and routes
+
+- A saved date on the server, like a §11.2 encounter: user, character,
+  tier, spot, outfit, the three drawn beats with their mood flags, which
+  beats are answered, and whether the photo was taken. Plus `date_photos`
+  and the storage bucket. One new migration (036).
+- Routes, all behind the session token (§5.1):
+  `GET /api/activity/date?instance=<id>`, `POST /api/activity/date/answer`
+  `{ date, stage, type }`, `POST /api/activity/photo`.
+- `GET /api/activity/launch` learns a third kind: a date.
+- Analytics: each answered date beat logs to `command_usage_log` as
+  `'date'`.
+
+### 12.10 Gala night
+
+The Gala arc's finale ([`gala-reinstatement-arc.md`](./gala-reinstatement-arc.md)
+§5.1.1) is a one-time date variant: the arc's partner, any tier, a fixed
+venue, `galaOnly` formalwear, its own `gala` beat pools and no expiry. It
+shares this section's answer route, photo, `/album` and warmth. The
+differences are listed there, not here.
+
+### 12.11 Open questions
+
+- **Photo forgery.** The photo is drawn on the player's device, so the
+  server can't verify the pixels, and Share posts it publicly. Cheap
+  guards: PNG only, exact canvas dimensions, a size cap. Anything stronger
+  would mean rendering on the server.
+- **Deleting a photo** from `/album`: not decided.
+- **Intro narration** before the arrival beat (like `/meet`'s "agrees to
+  meet you" line): none by default, since date spots have no display names.
+
+---
+
+## 13. Future: two-character scenes
+
+Noted 2026-11-01, not designed. Two Live2D rigs on stage at once for canon
+pairs (Alan and Tohma behind the garage, Haru with Towa tagging along). A
+candidate home is a rare `/roam` variant with a "Join them" button that
+launches the Activity with both rigs. It's a different entry point and pulls
+in `/roam`'s public flow, so it gets its own design pass.
 
 ---
 

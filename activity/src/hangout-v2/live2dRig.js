@@ -55,6 +55,10 @@ const CLENCH_RELEASE = 0.15;
 // seconds to the peak; it settles by ~6 peaks.
 const FLINCH = { peak: 0.14, head: 5, body: 2.5, recoil: 3, shoulders: 0.5 };
 
+// Warmth (§12.7, prototype): the resting blush at full warmth, as a share of
+// ParamCheek, and how much faster he breathes at full warmth.
+const WARMTH = { blush: 0.6, breathRate: 1.4 };
+
 /**
  * Fetches `${baseUrl}/rig.json` and its sounds. The dev server also checks
  * the rig against its files (validate.js); a build skips that, since the
@@ -197,6 +201,7 @@ export class Live2DRig {
       this.dampBreath();
       this.blink();
       this.applyMood();
+      this.applyWarmth();
       this.applyFlinch();
       this.applyTalk();
     });
@@ -302,6 +307,39 @@ export class Live2DRig {
     const { values, defaultValues } = this.raw.parameters;
     const i = this.breathIndex;
     values[i] = defaultValues[i] + (values[i] - defaultValues[i]) * k;
+  }
+
+  // --- warmth (§12.7, prototype) --------------------------------------------
+  // warmth.js keeps the value; the rig draws it over the mood: a resting
+  // blush (ParamCheek, which every model's e_sekimen_00 adds), capped at the
+  // parameter's max so a blush mood can't overshoot, and breathing that
+  // quickens up to WARMTH.breathRate x by blending ParamBreath toward a
+  // faster sine (the plugin can't speed up the m_breath clip itself).
+
+  /** 0-1; 0 leaves the model exactly as the mood draws it. */
+  setWarmth(w) {
+    this.warmth = Math.min(1, Math.max(0, w));
+  }
+
+  applyWarmth() {
+    const now = performance.now() / 1000;
+    const dt = Math.min(0.1, now - (this.warmthAt ?? now));
+    this.warmthAt = now;
+    const w = this.warmth ?? 0;
+    const period = this.durations?.get("m_breath") ?? 3;
+    const rate = 1 + (WARMTH.breathRate - 1) * w;
+    this.breathPhase = ((this.breathPhase ?? 0) + (dt * rate) / period) % 1;
+    if (!w || !this.model) return;
+    const { values, minimumValues, maximumValues, defaultValues } = this.raw.parameters;
+    const cheek = this.paramIndex.get("ParamCheek");
+    if (cheek != null) values[cheek] = Math.min(maximumValues[cheek], values[cheek] + w * WARMTH.blush);
+    const b = this.breathIndex;
+    if (b != null) {
+      const k = this.rig.motion?.breath?.amount ?? 1;
+      const sine = minimumValues[b] + ((maximumValues[b] - minimumValues[b]) * (1 - Math.cos(2 * Math.PI * this.breathPhase))) / 2;
+      const quick = defaultValues[b] + (sine - defaultValues[b]) * k;
+      values[b] += (quick - values[b]) * w;
+    }
   }
 
   // --- flinch ---------------------------------------------------------------

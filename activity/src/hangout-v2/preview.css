@@ -73,3 +73,4 @@ body.hide-ui .vn-box, body.hide-ui .choices { display: none; }
 
 /* ?leak=1 (dev): only the character over flat magenta, no dialogue or HUD. */
 body.leak .vn-box, body.leak .choices, body.leak .hud, body.leak .meter { display: none; }
+.fx-why { font: 11px ui-monospace, monospace; color: var(--muted); margin: 4px 0 0; }

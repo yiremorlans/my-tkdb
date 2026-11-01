@@ -1491,7 +1491,7 @@ gallery one and dropped; gallery is the only layout.
 | answer | `responses.kind` (authored) | `scene:<encounterId>:kind` | enabled |
 | answer | `responses.playful` (authored) | `scene:<encounterId>:playful` | enabled |
 | answer | `responses.bold` (authored) | `scene:<encounterId>:bold` | enabled |
-| date | `Ask on a date` (fixed constant) | `scene:<encounterId>:date` | **always disabled** |
+| date | `Ask on a date` (fixed constant) | `scene:<encounterId>:date` | enabled at Confidant+, otherwise disabled |
 
 The three answers are shuffled on every post and share one style
 (`CALL_SCENE_BUTTON_STYLE`, primary), so the winner can't tell which type is
@@ -1501,14 +1501,23 @@ grey.
 The date button replaces `neutral` and is not authored per scene. Its lock
 is the button's `emoji` field, not part of the label:
 
-- winner below Close Friend (affinity < 150): `🔒` + `Ask on a date`, disabled
-- Close Friend and above (Close Friend, Confidant, Devoted, Soulbound): no
-  emoji, still disabled. It reads as "unlocked, coming soon".
+- winner below Confidant (affinity < 260): `🔒` + `Ask on a date`, disabled
+- Confidant and above (Confidant, Devoted, Soulbound): no emoji, enabled
 
-It isn't wired to anything yet, and it's shown at every tier, Stranger
-included, for every character. A skip list (e.g. Benkei) is a decision for
-when the date feature itself is designed. The handler rejects a `:date`
-click anyway in case the button is ever enabled by mistake.
+It's shown at every tier, Stranger included, for every character, Benkei
+too: there is no skip list (settled 2026-11-01). Dates run on the `close`
+and `bound` dialogue tiers, which is why the unlock is Confidant and not
+Close Friend (revised 2026-11-01 from Close Friend, when the button was a
+locked placeholder).
+
+**Clicking it starts a date in the Hangout Activity.** The click claims the
+scene exactly as an answer does (§17.4: one atomic claim, winner only), so
+the scene closes and **its +1 is given up**; the date pays instead. The
+click answers with `LAUNCH_ACTIVITY` and the Activity opens on the date.
+The whole date (beats, payout, spot, outfit, music, photo) is specified in
+[`hangout-activity.md`](./hangout-activity.md) §12. The handler re-checks
+the tier at the click and rejects a `:date` click below Confidant, in case a
+stale or forged button arrives.
 
 ### 17.4 Clicking
 
@@ -1546,7 +1555,8 @@ click anyway in case the button is ever enabled by mistake.
   - **the button row is removed**
   - there is no private follow-up: the `(+1)` is the whole report
 - **Tracking:** the chosen response type is recorded through the existing
-  engagement/command-usage helpers. Date-button impressions aren't tracked.
+  engagement/command-usage helpers. Date-button impressions aren't tracked;
+  a date's own answers are logged by the Activity (hangout-activity.md §12).
 
 ### 17.4.1 Face map
 
@@ -1592,8 +1602,8 @@ register → rank. Variants on top of it:
   | Leo, Jo | warm | fave → wink (`wink_girl` for Jo casual) |
   | Kaito | warm / spark | fave → blush / lovestruck |
   | Alan, Edward | spark | fave → smile_blush |
-- **Date button:** it has no face. It's disabled and never changes the
-  portrait.
+- **Date button:** it has no face and never changes the portrait. The
+  date's faces belong to the Live2D rig (hangout-activity.md §12).
 
 An unanswered scene closes on its opening face (§17.6).
 
@@ -1742,9 +1752,11 @@ from Discord.
   winner check enforces who can use them.
 - **The silhouette stays.** The text above it is cleared as today, it gets no
   embed, and the scene is a separate reply.
-- **Three authored responses plus a fixed date button**, which is always
-  disabled for now. The lock shows below Close Friend and is gone at Close
-  Friend and above.
+- **Three authored responses plus a fixed date button.** It's locked
+  (`🔒`, disabled) below Confidant and enabled from Confidant (revised
+  2026-11-01 from a Close Friend lock on an always-disabled button).
+  Clicking it gives up the scene's +1 and launches a date in the Hangout
+  Activity (hangout-activity.md §12). Every character, no skip list.
 - **One click, +1 for fave/like, 0 for flat** (revised 2026-10-06 from
   flavor only). It replaces the win's boost. The answers are shuffled and
   share one style, so the pick is blind. The reaction replaces the line with
@@ -1765,9 +1777,9 @@ from Discord.
   is labeled, so every character win is eligible.
 - **Scenes live in `winnerLines` (2026-10-06):** one pool, with an object
   entry `{ line, responses }` marking a line that can open a scene.
-- **Scope:** call scenes only. Date encounters belong to a later `/roam`
-  and `/meet` extension. Here the date button is only shown (locked), with
-  no face and no reaction.
+- **Scope:** call scenes only. The date itself is the Hangout Activity's
+  (hangout-activity.md §12); this section only owns the button, its lock,
+  and the claim. The button has no face and no reaction.
 
 - **Non-winner refusal (Q23, settled 2026-10-09):** `You're not part of
   this conversation.` Q22 (no label echo) and Q24 (the closeout keeps the

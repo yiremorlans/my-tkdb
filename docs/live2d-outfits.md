@@ -53,3 +53,17 @@ Needs art first; uniform portrait only.
 - [ ] Elias: slot ___
 - [x] Mio: `work` (game bundle `miowork`; the game had the art after all)
 - [ ] Shion: slot ___
+
+## Date outfits (`dateOnly`)
+
+Dates (hangout-activity.md §12.4) draw only from outfits marked
+`dateOnly: true` in rig.json. `/meet` never draws them. Each one still
+names a `dialogueVariant`. A character with none wears `defaultOutfit` on
+dates. Status as of 2026-11-01: none yet for anyone.
+
+## Gala outfits (`galaOnly`)
+
+Gala night (gala-reinstatement-arc.md §5.1.1) draws only from outfits marked
+`galaOnly: true`: formalwear for the Gala partner scene. `/meet` and dates
+never draw them. Each one still names a `dialogueVariant`. A character with
+none wears `defaultOutfit`. Status as of 2026-11-01: none yet for anyone.

@@ -1779,3 +1779,77 @@ completions and 55% of points, so they really are where the 💎 comes from.
 **What to watch:** errand-driven 💎 income against shop prices (the reset at
 💎 12 is meant to stay out of daily reach once launch seeds are spent,
 benkei-shop §2), and the co-op answer rate before touching its weight.
+
+---
+
+## 23. Expansion: search mission (designing)
+
+Status: **design in progress, paused 2026-11-01.** A fourth mission type: a
+hidden-object search played in the Hangout Activity. Settled in a design
+review with the user on 2026-11-01; the interaction mechanic is still open
+(§23.2). Nothing here is built.
+
+### 23.1 Settled
+
+- **Played in the Hangout Activity**, not in chat. No characters on screen:
+  just a background with something hidden in it.
+- **Hidden object for v1.** An evidence item sprite is composited at a
+  random one of the background's spots on each attempt. Anomaly scenes
+  (hand-edited "something is wrong" copies of a background) can come later
+  as a small authored pool inside the same type. Spot-the-difference is out.
+- **The hidden thing is evidence**: a small pool of item sprites (a note,
+  a key, a vial, a torn photo and so on), one drawn per attempt. The
+  completion line names what was found.
+- **A new, separate background collection**, not `assets/bg/`. Each
+  background is **tagged to one of the 8 houses**, and a mission draws only
+  from its own house's scenes (aim for at least ~3 per house at launch).
+- **Authored hide spots per background**: ~6-10 points, each with a scale
+  so the item sits right at that depth, in the shape of
+  `CHARACTER_SIGNATURE_SPOTS`. Never pure random placement.
+- **The server holds the answer.** The item's spot is drawn and kept
+  server-side; the client sends only where the player tapped.
+- **Misses:** 3 per attempt. The third miss moves the item to a new spot
+  and locks the player out for 20s, like a riddle's wrong answer. No
+  countdown timer.
+- **Reward, like a riddle:** 1 log point and a banked `both`-scope reset.
+  No affinity, even though it plays in the Hangout.
+- **Weight:** riddle 35 / errand 35 / search 20 / co-op 10.
+  *Open conflict:* §22 says a weight change should come from riddle so
+  errand's share of 💎 income doesn't drop. This split takes 10 from
+  errand. Settle it before building (e.g. riddle 25 / errand 45 /
+  search 20 / co-op 10).
+
+### 23.2 Open: making the search interactive
+
+"Look, then tap once you've found it" is too thin. Options on the table:
+
+1. **Flashlight.** A dark scene, lit only in a cone around the
+   finger/cursor. *Rejected on its own:* a player can just sweep the whole
+   screen methodically, so it adds time, not skill.
+2. **Decoys + brief.** The brief describes the evidence ("a brass key with
+   a red tag"); the scene holds 3-4 look-alikes made from the same art with
+   color or tag variations. Tapping a decoy is a miss. Procedural, no extra
+   art per background.
+3. **Searchable props.** Hide spots are things you open (drawers, cushions,
+   stacked books) with a small open/lift animation; most are empty. The
+   most physical, but every prop needs closed + open art per background.
+4. **Clue chain.** Finding A (a note) points to where B is. Leaning no:
+   it's a hint system, and riddle hints were cut on purpose.
+5. **Loupe.** Items are too small to tell apart at normal view; drag a
+   magnifier over a candidate to confirm before tapping. Pairs with decoys.
+
+Last recommendation before the pause: decoys + brief (2), with the loupe
+(5) as the way to tell decoys apart. Not yet agreed.
+
+### 23.3 Still to decide
+
+- **Launch and resume** (proposed, not answered): like dates
+  (hangout-activity §12.2). After Accept, `/mission` shows a
+  **Start the search** button that answers with `LAUNCH_ACTIVITY`; the same
+  button relaunches after a failed launch or leaving mid-search. No image
+  fallback. The attempt stays open until the mission's accept window
+  expires; misses and the item's spot persist server-side so a relaunch
+  can't reset them.
+- After §23.2: decoy count and how they differ, where the brief shows and
+  how it's worded, hit radius per device, item art pool size, mission
+  label/next-step strings (`MISSION_TYPE_LABEL`, `MISSION_NEXT_STEP`).

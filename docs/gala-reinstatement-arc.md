@@ -1,7 +1,7 @@
 # Spec: Gala Reinstatement Arc
 
 Status: **design / not implemented**
-Last updated: 2026-10-22
+Last updated: 2026-11-01
 
 A new mission type gated behind the top Inspector rank, **Chancellor's Right
 Hand** (`constants/missions.js` `INSPECTOR_RANKS`, 320 points). When a player
@@ -285,10 +285,70 @@ someone the reference doesn't support.
 ### 5.1 Gala partner
 
 At completion, the player picks one character **from the chosen house** to
-go to the Gala with. They get a one-time DM scene shaped like a bond scene,
-whose temperature comes from the player's tier with that character (spark+
-reads romantic), plus a keepsake. Since choices earn affinity, the pick can
-also grant a boost.
+go to the Gala with. The scene with them plays in the **Hangout Activity**
+(§5.1.1), not as a DM: the arc's finale is the player at the Gala with their
+partner's Live2D rig.
+
+#### 5.1.1 Gala night in the Activity (proposed 2026-11-01)
+
+Built on the date machinery in
+[`hangout-activity.md`](./hangout-activity.md) §12, so almost nothing is
+new. Stage 3's co-op is the guild's Gala night; this is the player's own
+part of it afterwards.
+
+**Starting it.**
+
+- The completion reply for the final stage carries a select of the chosen
+  house's roster (`getHouseRoster`). Picking one sets
+  `partner_character_id` and answers with `LAUNCH_ACTIVITY`
+  (`with_response=true`, tied to the instance like §12.1).
+- The pick is locked once made, like the house.
+- A failed launch, or leaving before the last beat, gets an ephemeral
+  **Go to the Gala** button that relaunches. `/mission gala:True` shows the
+  same button while the scene is unfinished (§1.5).
+- **No expiry.** Unlike dates (cleaned up after a day), this scene is
+  one-time and stays saved until every beat is answered.
+- **No image fallback**, as with dates. If the Activity is switched off,
+  the scene waits.
+
+**How it differs from a date (§12):**
+
+| | Date (§12) | Gala night |
+|---|---|---|
+| Entry | `/call` scene button, Confidant+ | Arc completion, once per player |
+| Who | the scene's character | the partner, from the chosen house |
+| Tier gate | Confidant+ (`close` / `bound`) | none: any tier |
+| Beat pools | `date.close`, `date.bound` | `gala.friend` (below spark), `gala.partner` (spark+) |
+| Beats | arrival / middle / parting | arrival / dance / parting |
+| Pays | 0 / +1 / +1, max +2 | same, max +2 |
+| Spot | random from `DATE_LOCATIONS.DATE` | one Gala venue background (open, §8) |
+| Outfit | `dateOnly` outfits | `galaOnly` formalwear, else `defaultOutfit` |
+| Music | per background family | one Gala track |
+| Holds | always | only at `close` / `bound` tiers, where hold lines exist |
+| Warmth (§12.7) | starts 0.2 / 0.4 | starts 0 (`friend`) / 0.2 (`partner`) |
+| Photo | once, to `/album` | once, to `/album`; it is the keepsake |
+| Free time | after parting | after parting, at the venue, music on |
+
+**Beats.** In the character's dialogue file, beside `date`:
+`gala: { friend: { arrival, dance, parting }, partner: { … } }`, one beat
+per stage per register, since the scene plays once. Every character with a
+house needs one (25, Benkei has none), about 150 beats. Rules:
+
+- `friend` reads as going together, not romantic. `partner` may be.
+- `[spark+]` lines and stigma/artifact reveals only in `partner` (§4.5).
+- Beats don't invent what the Gala is or how the Crown is judged (canon
+  basis above); they're about the two of them.
+- The per-character guardrails below apply to the lines; the rig's touch
+  reactions stay the character's normal tier pools.
+
+**Keepsake.** The Gala photo is the keepsake: one per player, captioned
+like any `/album` photo. This answers the old "keepsake emoji per
+character" question; a separate emoji isn't needed.
+
+**Data.** The saved scene is a §12.9 date row with a kind (`date` /
+`gala`) and no cleanup for `gala`. The answer and photo routes are shared;
+`GET /api/activity/launch` learns the Gala kind. `gala_arcs.completed_at`
+is set when the parting beat is answered, not at the partner pick.
 
 Callbacks to build the scene from:
 
@@ -310,8 +370,7 @@ Guardrails per character (existing rules):
 - **Elias**: commits to nothing, no promises kept.
 - **Subaru**: no stage showboating in public.
 
-Open: the keepsake emoji per character (must not reuse their bond-scene
-keepsakes), and whether characters the player has never met can be picked.
+Open: whether characters the player has never met can be picked.
 
 ### 5.2 The Laurel Crown title + public post
 
@@ -372,7 +431,7 @@ implementation time.
 | Stage shapes | Errand, riddle (§20) and co-op (§21) are all built; each gets a `GALA` case. |
 | Accept-time convert-in-place | New. `claim_mission` has no "wrong type for this accepter" path today. The one genuinely new mechanic. |
 | Arc state | New `gala_arcs` table (§6). |
-| Partner scene | Bond scene DM delivery (`docs/bond-scene-dms.md`) reused for a one-off scene. |
+| Partner scene | Hangout Activity date machinery (`hangout-activity.md` §12) with a Gala kind (§5.1.1). New: `galaOnly` outfits, a Gala track, the `gala` beat pools. |
 | Command surface | No new command: `gala` boolean on `/mission` (§1.5). |
 
 ---
@@ -383,8 +442,12 @@ implementation time.
 2. Case anchors for Frostheim, Hotarubi, Vagastrom, Mortkranken (§1.3).
 3. Everything in §3 (stage count, order, thresholds, what a gala completion
    pays).
-4. Partner keepsakes and whether unmet characters are pickable (§5.1).
+4. Whether unmet characters are pickable as partner (§5.1).
 5. Shop item list (§5.3) and where the ballroom record renders (§5.4).
+6. The Gala venue background for §5.1.1. `Frostheim_Ballroom_Party.png`
+   fits the look, but it would place the Gala at Frostheim, which canon
+   doesn't say. Options: that file, a neutral ballroom if one exists in
+   the game, or the chosen house's own turf.
 
 ---
 
@@ -398,4 +461,6 @@ All of it goes through the voice process; never invent canon.
 - Per-role signature lines (§4.1) and the friction beats (§4.2).
 - Sabotage riddles and culprit reveals (§4.3).
 - Gala night co-op post and debriefs (§4.4).
-- Completion post (§5.2) and a partner scene per eligible character (§5.1).
+- Completion post (§5.2).
+- `gala.friend` and `gala.partner` beats per character with a house
+  (§5.1.1), about 150.

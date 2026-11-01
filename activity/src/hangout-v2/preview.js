@@ -19,8 +19,10 @@ import {
   forTier,
 } from "../hangout/reactions.js";
 import { MOBILE_FPS } from "../hangout/stage.js";
+import { GRADES, PARTICLE_KINDS, autoEffects, createEffects } from "./effects.js";
 import { meetFlow } from "./meet.js";
 import { startScene } from "./scene.js";
+import { Warmth } from "./warmth.js";
 
 const params = new URLSearchParams(location.search);
 const character = /^[a-z0-9_-]+$/.test(params.get("character") ?? "")
@@ -32,6 +34,10 @@ const CHARACTERS = Object.keys(
   import.meta.glob("../../../assets/live2d/*/rig.json"),
 )
   .map((f) => f.split("/").at(-2))
+  .sort();
+// Every background, for the effects prototype's picker (paths only).
+const BACKGROUNDS = Object.keys(import.meta.glob("../../../assets/bg/**/*.png"))
+  .map((f) => f.replace(/^(\.\.\/)+/, ""))
   .sort();
 const $ = (sel) => document.querySelector(sel);
 
@@ -69,8 +75,18 @@ async function main() {
   let showSpots = params.has("spots");
   let frames = 0;
   let fpsClock = performance.now();
+  const effects = createEffects(scene);
+  scene.effects = effects;
+  // Warmth prototype (§12.7): off until the drawer's Warmth row picks a mode.
+  let warmth = new Warmth(null, hangout.tier);
+  let warmthManual = null; // the slider pins a value while dragged
   scene.frame = (t, dt) => {
     hangout.frame(t, dt);
+    effects.frame(t, dt);
+    const w = warmthManual ?? warmth.update(dt);
+    renderer.setWarmth(w);
+    const warmOut = $("#warmth-out");
+    if (warmOut) warmOut.textContent = warmth.on || warmthManual != null ? w.toFixed(2) : "off";
     drawSpots();
     $("#meter-fill").style.width =
       `${hangout.locked ? 100 : Math.min(100, (hangout.meter.level(t) / hangout.meter.config.threshold) * 100)}%`;
@@ -189,6 +205,7 @@ async function main() {
   tierPick.value = hangout.tier;
   tierPick.onchange = () => {
     hangout.setTier(tierPick.value);
+    warmth.setTier(tierPick.value);
     newEncounter();
   };
   tierRow.append(tierPick);
@@ -261,6 +278,46 @@ async function main() {
     idleRow.append(wrap);
   }
 
+  // --- warmth prototype (docs/hangout-activity.md §12.7) ---------------------
+  // "date" is the spec'd profile (close/bound only); "hangout" the proposal
+  // for ordinary Hangouts (spark+ only, lower cap, upset clears it). Taps
+  // and real /meet answers feed it; the buttons stand in for gestures that
+  // aren't built yet. Dragging the slider pins a value to judge the look.
+  const warmRow = section("Warmth (prototype, §12.7)");
+  const warmPick = document.createElement("select");
+  for (const [v, label] of [["", "off"], ["date", "date (close/bound)"], ["hangout", "ordinary Hangout (spark+)"]])
+    warmPick.append(new Option(label, v));
+  warmPick.onchange = () => {
+    warmth = new Warmth(warmPick.value || null, hangout.tier);
+    warmthManual = null;
+    if (warmPick.value && !warmth.on)
+      say(`(warmth "${warmPick.value}" is off at ${hangout.tier}: pick ${warmPick.value === "date" ? "close or bound" : "spark, close or bound"})`);
+  };
+  warmRow.append(warmPick);
+  const warmOut = Object.assign(document.createElement("output"), { id: "warmth-out" });
+  warmRow.append(warmOut);
+  button(warmRow, "fave answer", () => warmth.answer("fave"));
+  button(warmRow, "liked answer", () => warmth.answer("liked"));
+  button(warmRow, "stroke", () => warmth.stroke());
+  button(warmRow, "hold 1s", () => {
+    warmth.hold(1);
+    warmth.endHold();
+  });
+  button(warmRow, "reset", () => warmth.setTier(hangout.tier));
+  const pinWrap = document.createElement("label");
+  pinWrap.className = "slider";
+  const pin = Object.assign(document.createElement("input"), { type: "range", min: 0, max: 1, step: 0.05, value: 0 });
+  pin.oninput = () => (warmthManual = Number(pin.value));
+  pin.onchange = () => (warmthManual = null);
+  pinWrap.append("pin while dragging", pin);
+  warmRow.append(pinWrap);
+  const react = hangout.react.bind(hangout);
+  hangout.react = (name, t, spot) => {
+    const out = react(name, t, spot);
+    if (spot || name === "upset") warmth.reaction(name);
+    return out;
+  };
+
   // Phones run the Activity at MOBILE_FPS (main.js); this previews that.
   const perfRow = section("Performance");
   const capWrap = document.createElement("label");
@@ -273,6 +330,100 @@ async function main() {
   capWrap.append(cap, "cap 30fps (mobile)");
   perfRow.append(capWrap);
   if (cap.checked) scene.frameCap.maxFPS = MOBILE_FPS;
+
+  // --- effects prototype (docs/hangout-activity.md §10) ------------------------
+  // Throwaway: every candidate effect, live. "auto" applies the rules that
+  // would ship (Hotarubi rain, TZ night grade on day files, light blur).
+  const fx = effects.state;
+  const fxControls = [];
+  const fxRow = (title) => section(title);
+  const control = (row, label, el, read, write) => {
+    const wrap = document.createElement("label");
+    wrap.className = el.type === "checkbox" ? "toggle" : "slider";
+    const out = el.type === "range" ? document.createElement("output") : null;
+    const sync = () => {
+      write(el);
+      if (out) out.textContent = el.value;
+    };
+    el.oninput = el.onchange = () => {
+      effects.set(read(el));
+      if (out) out.textContent = el.value;
+    };
+    wrap.append(...(el.type === "checkbox" ? [el, label] : [label, el]), ...(out ? [out] : []));
+    row.append(wrap);
+    fxControls.push(sync);
+  };
+  const range = (min, max, step) => Object.assign(document.createElement("input"), { type: "range", min, max, step });
+  const check = () => Object.assign(document.createElement("input"), { type: "checkbox" });
+  const select = (options) => {
+    const el = document.createElement("select");
+    for (const o of options) el.append(new Option(o, o));
+    return el;
+  };
+  const refreshFx = () => fxControls.forEach((f) => f());
+
+  const placeRow = fxRow("Effects · background and auto rules (prototype)");
+  const bgPick = document.createElement("select");
+  const groups = {};
+  bgPick.append(new Option("(current)", ""));
+  for (const path of BACKGROUNDS) {
+    const dir = path.split("/").at(-2);
+    groups[dir] ??= bgPick.appendChild(Object.assign(document.createElement("optgroup"), { label: dir }));
+    groups[dir].append(new Option(path.split("/").pop().replace(/\.png$/, ""), path));
+  }
+  bgPick.onchange = () => bgPick.value && scene.setBackground(bgPick.value);
+  placeRow.append(bgPick);
+  const timePick = select(["auto", "day", "evening"]);
+  placeRow.append(timePick);
+  const why = document.createElement("p");
+  why.className = "fx-why";
+  const runAuto = () => {
+    const a = autoEffects(scene.backgroundUrl, new Date(), timePick.value);
+    effects.set({ rain: a.rain, particles: a.particles, grade: a.grade, gradeStrength: a.gradeStrength, blur: a.blur });
+    why.textContent = `auto: ${a.why.length ? a.why.join(" · ") : "no rule matched (day file, daytime)"} · blur 2`;
+    refreshFx();
+  };
+  timePick.onchange = runAuto;
+  button(placeRow, "apply auto rules", runAuto);
+  const autoOnChange = check();
+  autoOnChange.checked = true;
+  const autoWrap = document.createElement("label");
+  autoWrap.className = "toggle";
+  autoWrap.append(autoOnChange, "re-run auto when the background changes");
+  placeRow.append(autoWrap);
+  button(placeRow, "all off", () => {
+    effects.set({ rain: false, particles: null, grade: "none", rigLight: false, blur: 0, flicker: false, vignette: 0, grain: false });
+    why.textContent = "";
+    refreshFx();
+  });
+  placeRow.after(why);
+  scene.onBackground = () => {
+    effects.apply();
+    if (autoOnChange.checked) runAuto();
+  };
+
+  const weatherRow = fxRow("Effects · weather and particles");
+  control(weatherRow, "rain", check(), (el) => ({ rain: el.checked }), (el) => (el.checked = fx.rain));
+  control(weatherRow, "rain density", range(0.1, 2, 0.1), (el) => ({ rainDensity: Number(el.value) }), (el) => (el.value = fx.rainDensity));
+  control(weatherRow, "rain layer ", select(["both", "behind", "front"]), (el) => ({ rainLayer: el.value }), (el) => (el.value = fx.rainLayer));
+  control(weatherRow, "particles ", select(["none", ...PARTICLE_KINDS]), (el) => ({ particles: el.value === "none" ? null : el.value }), (el) => (el.value = fx.particles ?? "none"));
+  control(weatherRow, "particle density", range(0.1, 2, 0.1), (el) => ({ particleDensity: Number(el.value) }), (el) => (el.value = fx.particleDensity));
+  control(weatherRow, "particle layer ", select(["behind", "front", "both"]), (el) => ({ particleLayer: el.value }), (el) => (el.value = fx.particleLayer));
+
+  const lightRow = fxRow("Effects · color grade and light");
+  control(lightRow, "grade ", select(Object.keys(GRADES)), (el) => ({ grade: el.value }), (el) => (el.value = fx.grade));
+  control(lightRow, "grade strength", range(0, 1, 0.05), (el) => ({ gradeStrength: Number(el.value) }), (el) => (el.value = fx.gradeStrength));
+  control(lightRow, "light the rig too (touches the rig)", check(), (el) => ({ rigLight: el.checked }), (el) => (el.checked = fx.rigLight));
+  control(lightRow, "rig grade strength", range(0, 1, 0.05), (el) => ({ rigStrength: Number(el.value) }), (el) => (el.value = fx.rigStrength));
+  control(lightRow, "flicker (neon / candle)", check(), (el) => ({ flicker: el.checked }), (el) => (el.checked = fx.flicker));
+
+  const lensRow = fxRow("Effects · lens");
+  control(lensRow, "background blur", range(0, 10, 0.5), (el) => ({ blur: Number(el.value) }), (el) => (el.value = fx.blur));
+  control(lensRow, "vignette", range(0, 0.9, 0.05), (el) => ({ vignette: Number(el.value) }), (el) => (el.value = fx.vignette));
+  control(lensRow, "film grain (whole stage)", check(), (el) => ({ grain: el.checked }), (el) => (el.checked = fx.grain));
+
+  if (params.get("bg")) scene.setBackground(params.get("bg"));
+  runAuto();
 
   // --- VN chrome ------------------------------------------------------------
   $("#btn-debug").onclick = () => {
@@ -332,6 +483,7 @@ async function main() {
       const answer = await fetch(`/__meet/answer?${a}`);
       const result = await answer.json();
       if (!answer.ok) throw new Error(result.error);
+      warmth.answer(result.gain >= 2 ? "fave" : result.gain >= 1 ? "liked" : "flat");
       return result;
     });
   }
