@@ -1,10 +1,10 @@
 # Spec: Hangout — Live2D Discord Activity
 
-Status: **in progress.** The Activity runs owner-only in Discord on the
-Live2D rig, and the owner's `/meet` picks open it (§11, built 2026-10-30;
-migration 035 before deploy). Everyone else keeps the image `/meet` until
-release flips `OWNER_ONLY`.
-Last updated: 2026-10-30
+Status: **released 2026-10-31.** The Activity runs for everyone in Discord
+on the Live2D rig, and every `/meet` pick opens it (§11; migration 035
+before deploy, then `npm run register` to un-hide the entry point).
+`OWNER_ONLY` in `activityRoutes.js` stays as the switch back.
+Last updated: 2026-10-31
 
 A new home for `/meet`; `/roam` stays exactly as it is. The Hangout is a **solo, private Discord Activity** where a character —
 Alan first — idles in their own room as their **Live2D model**, the same
@@ -386,7 +386,8 @@ tracking only. Answered encounters log as `'meet'` (§11.7).
 - Enable Activities on the existing application (`APP_ID`).
 - Register the **entry-point command** (`launch`, `APP_HANDLER`, §11.1) in
   `commands.js` / `npm run register`.
-- **Owner-only until release (milestone 4).** The ways in are the owner's
+- **Owner-only until release (milestone 4; released 2026-10-31, the
+  hiding below is dropped and `OWNER_ONLY` is false).** The ways in are the owner's
   `/meet` picks (§11) and `/encdev hangout` (the free hangout, no
   encounter), which answers with `LAUNCH_ACTIVITY`. Everyone else's `/meet`
   stays the image (`activityOpenTo` in `activityRoutes.js`). The entry point
@@ -528,7 +529,7 @@ otherwise.
 
 ## 11. Future: `/meet` as the Activity
 
-Status: **built 2026-10-30, owner-only until release.** Designed
+Status: **built 2026-10-30, released to everyone 2026-10-31.** Designed
 2026-10-28, settled 2026-10-29. Code: `meetActivity.js` (the click, the
 encounter, the answer, the fallback), `activityRoutes.js` (the routes),
 `activity/src/hangout-v2/meet.js` (the player's side), migration 035

@@ -11,9 +11,8 @@
 // discord.com is captured instead of sent.
 //
 // Then the pick itself, as /meet as the Activity (docs/hangout-activity.md
-// §11): the owner's click launches the Activity and saves the encounter,
-// everyone else (until release) and everyone while the off switch is on get
-// today's image, and a launch the Activity never loads falls back to the
+// §11): a click launches the Activity and saves the encounter, everyone
+// while the off switch is on gets the image, and a launch the Activity never loads falls back to the
 // image.
 import { test, mock } from 'node:test';
 import assert from 'node:assert';
@@ -234,12 +233,13 @@ test('the off switch gives today\'s image flow, even to the owner', async () => 
   assert.strictEqual(encountersOf('the-owner').length, 0);
 });
 
-test('until release, everyone but the owner keeps the image flow', async () => {
+test("since release, anyone's pick launches the Activity, not just the owner's", async () => {
   resetState();
-  const body = await (await postInteraction(pickClick('not-the-owner', 'kaito', 'picker-public'))).json();
-  assert.strictEqual(body.type, 7);
-  await waitFor(() => imageFollowups().length === 1);
-  assert.ok(!discordCalls.some(isLaunch));
+  const res = await postInteraction(pickClick('not-the-owner', 'kaito', 'picker-public'));
+  assert.strictEqual(res.status, 202);
+  assert.ok(discordCalls.some(isLaunch));
+  await waitFor(() => encountersOf('not-the-owner').length === 1);
+  assert.strictEqual(imageFollowups().length, 0);
 });
 
 test('a launch Discord refuses falls back to the image flow on the same click', async () => {

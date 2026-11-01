@@ -135,10 +135,8 @@ async function main() {
     // SDK rejections are plain `{ code, message }` objects, not Errors.
     const reason = err?.message ?? JSON.stringify(err);
     console.error(`[discord] sign-in failed: ${reason}`);
-    // The reason is shown while the hangout is owner-only, so a failed
-    // sign-in can be diagnosed without devtools. Drop it at release.
     $("#vn-text").textContent =
-      err?.status === 403 ? "The hangout isn't open yet." : `Couldn't sign in. Try reopening it? (${reason})`;
+      err?.status === 403 ? "The hangout isn't open yet." : "Couldn't sign in. Try reopening it?";
     return;
   }
 

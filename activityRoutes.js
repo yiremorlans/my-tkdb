@@ -4,10 +4,10 @@
 // the Activity: the user's encounter and its one answer (the logic is in
 // meetActivity.js; these routes add the session).
 //
-// Until release (milestone 4) the hangout is owner-only: this route refuses
-// a session to anyone but OWNER_DISCORD_ID, which also covers someone
-// joining the owner's running Activity from the voice channel, and
-// activityOpenTo keeps everyone else's /meet on the image flow.
+// Released 2026-10-31 (milestone 4): open to everyone. OWNER_ONLY stays as
+// the switch back: while true, this route refuses a session to anyone but
+// OWNER_DISCORD_ID and activityOpenTo keeps everyone else's /meet on the
+// image flow.
 //
 // Sessions are a short-lived HMAC-signed token sent as a Bearer header, not a
 // cookie: cookies are unreliable inside Discord's Activity iframe. The
@@ -26,7 +26,7 @@ export const SESSION_TTL_MS = 60 * 60 * 1000;
 // forwarding to Discord.
 const MAX_CODE_LENGTH = 512;
 
-const OWNER_ONLY = true;
+const OWNER_ONLY = false;
 
 /**
  * Whether `userId` may get the Activity at all: everyone once released,

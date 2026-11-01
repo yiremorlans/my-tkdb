@@ -1,8 +1,8 @@
 // POST /api/activity/token, the Hangout Activity's sign-in
 // (activityRoutes.js handleActivityToken; docs/hangout-activity.md §5.1,
 // §6): bad or missing codes are rejected without a session, a good code
-// yields a session token that verifies to the Discord user, anyone but the
-// owner is refused while the hangout is owner-only, and the token itself
+// yields a session token that verifies to the Discord user, anyone gets one
+// now that the hangout is released, and the token itself
 // rejects tampering, the wrong secret and expiry.
 //
 // Also the rest of the session's life with a /meet encounter (§11.2,
@@ -116,7 +116,7 @@ test('the user id comes from Discord, never from the request body', async () => 
   assert.strictEqual(verifySessionToken(body.session_token, env.ACTIVITY_SESSION_SECRET, NOW), 'user-42');
 });
 
-test('anyone but the owner is refused a session while the hangout is owner-only', async () => {
+test('anyone, not just the owner, gets a session now that the hangout is released', async () => {
   for (const owner of ['someone-else', '']) {
     const discord = fakeDiscord();
     const { status, body } = await handleActivityToken(
@@ -124,8 +124,8 @@ test('anyone but the owner is refused a session while the hangout is owner-only'
       { fetchFn: discord.fetchFn, env: { ...env, OWNER_DISCORD_ID: owner } },
       NOW,
     );
-    assert.strictEqual(status, 403, `owner ${JSON.stringify(owner)}`);
-    assert.deepStrictEqual(body, { error: 'not_available' });
+    assert.strictEqual(status, 200, `owner ${JSON.stringify(owner)}`);
+    assert.strictEqual(verifySessionToken(body.session_token, env.ACTIVITY_SESSION_SECRET, NOW), 'user-42');
   }
 });
 

@@ -606,15 +606,13 @@ const WISHINGWELL_COMMAND = {
 // an entry point and rejects any bulk overwrite without one (error 50240),
 // so it can't be left out. Handler 1 (APP_HANDLER): Discord sends app.js an
 // interaction for it, answered exactly like /meet (same picker, cooldown and
-// invoke throttle), so it's no way around /meet. Until release it stays
-// hidden like /encdev (default_member_permissions "0"), and the token route
-// refuses everyone but OWNER_DISCORD_ID (activityRoutes.js).
+// invoke throttle), so it's no way around /meet. Visible to everyone since
+// release (2026-10-31).
 const LAUNCH_COMMAND = {
   name: "launch",
   description: "Pick someone to meet up with",
   type: 4,
   handler: 1,
-  default_member_permissions: "0",
   integration_types: [0],
   contexts: [0],
 };
