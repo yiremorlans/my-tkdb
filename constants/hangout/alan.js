@@ -6,6 +6,10 @@
 // No contact in his lines before spark (the player touches him; he doesn't
 // touch back until spark). Guarded spots (lips, chest, hips) stay serious
 // until spark.
+//
+// Holds (spark+): one line on letting go. Close hints and holds back;
+// bound treats intimacy as shared history. Not good with words, careful
+// with his own strength.
 
 export default {
   new: {
@@ -68,7 +72,7 @@ export default {
     lipsTouch: ["...Hey.", "...Didn't see that coming. Give me a second."],
     earTouch: [
       "...That's not fair.",
-      "Keep that up and I'll forget what I was doing.",
+      "...You found a weak spot. Don't tell anyone.",
     ],
     handTap: ["...Here. Give me your hand.", "You can hold on. I don't mind."],
     chestTouch: [
@@ -83,6 +87,18 @@ export default {
     upset: [
       "...Stop that. I'll lose track of my own hands.",
       "Give me a second. I need to cool off.",
+    ],
+    heartbeatHold: [
+      "...That's not from the run.",
+      "Yeah. It does that around you. ...Don't make a big deal of it.",
+    ],
+    lipHold: [
+      "...I stayed still. Figured you'd stop on your own.",
+      "...I don't know what to say to that. I'm no good with words.",
+    ],
+    handHold: [
+      "...Small hands. I'll be careful with them.",
+      "Warm. ...I'll walk you back like this, if you want.",
     ],
   },
   close: {
@@ -117,6 +133,44 @@ export default {
     hipsTouch: [
       "...Bold. Looks good on you.",
       "Keep that up and you're not going back to your dorm.",
+    ],
+    heartbeatHold: [
+      "Go ahead and count. It's not slowing down for you.",
+      "...Yeah. That's you. Every time.",
+    ],
+    lipHold: [
+      "...You're gonna keep me up, doing that.",
+      "...Next time I'm not standing still for it.",
+    ],
+    handHold: [
+      "Hold as tight as you want. I'll watch my grip.",
+      "I'd get lost on purpose, if it meant keeping this.",
+    ],
+    caughtTease: [
+      "...Not yet. I want to do this right.",
+      "Hey. ...Not like this. Give me a little longer.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "...You know what it does around you. Still checking?",
+      "It's yours. Count it whenever you want.",
+    ],
+    lipHold: [
+      "...I remember. You don't have to remind me.",
+      "...You know what that does to me now.",
+    ],
+    handHold: [
+      "Long as I've got this hand, I'm fine.",
+      "...Not scared of my own hands with you around.",
+    ],
+    breakAway: [
+      "...Hold on. Give me a second. I can't think straight.",
+      "...Damn. You don't play fair.",
+    ],
+    teaseLetGo: [
+      "...That's where you stop? ...Okay. I'll remember that.",
+      "...You did that on purpose. Later, then. I'm holding you to it.",
     ],
   },
 };

@@ -6,6 +6,9 @@
 // Polite and prompt, never stalling; he spooks the player, never the reverse.
 // No admitting he cares before warm. "Princess" is his bold register, held
 // for spark. Guarded spots (lips, chest, hips) stay serious until spark.
+//
+// Holds (spark+): one line on letting go. Close hints and holds back;
+// bound treats intimacy as shared history. "Princess" stays his register.
 
 export default {
   new: {
@@ -69,7 +72,7 @@ export default {
     hipsTouch: ["Okay. Hands off.", "Whoa. Not happening."],
     upset: [
       "Okay, that's enough. Seriously.",
-      "Stop. Something behind you doesn't like it either. I'm not kidding this time.",
+      "Stop. I already asked nicely once.",
     ],
   },
   warm: {
@@ -90,7 +93,7 @@ export default {
       "Leave the ribbons alone and I'll think about forgiving you.",
     ],
     handTap: [
-      "Here. Hold on if you want. I don't mind.",
+      "Ha. That a high five? Okay.",
       "Need something? You know I'll handle it.",
     ],
     chestTouch: [
@@ -114,14 +117,14 @@ export default {
     ],
     cheekPoke: [
       "Okay, okay. My face is warm. Happy?",
-      "Keep poking. See what happens, princess.",
+      "Keep poking. See what happens.",
     ],
     lipsTouch: [
-      "...Ha. Okay. You got me, princess.",
+      "...Ha. Okay. You got me.",
       "Hey. Do that and I'll lose the joke I had ready.",
     ],
     earTouch: [
-      "...That's a dirty trick, princess.",
+      "...That's a dirty trick.",
       "...Ha. You found it. Now I'm the one getting spooked.",
     ],
     handTap: [
@@ -133,7 +136,7 @@ export default {
       "Ha ha... That's not fair. I wasn't ready.",
     ],
     bellyTouch: [
-      "Ha... Careful, princess. I'm not great at sitting still for that.",
+      "Ha... Careful. I'm not great at sitting still for that.",
       "...Okay. That one got me.",
     ],
     hipsTouch: [
@@ -142,7 +145,19 @@ export default {
     ],
     upset: [
       "Okay, I surrender. Stop before I do something out of character.",
-      "Princess. Enough. My heart can't take it.",
+      "Hey. Enough. My heart can't take it.",
+    ],
+    heartbeatHold: [
+      "...Ha. Don't look so pleased with yourself, princess.",
+      "...Yeah, yeah. So much for looking laid-back.",
+    ],
+    lipHold: [
+      "...Ha. You're really not letting me talk, huh.",
+      "...Okay. You win that round. I've got nothing.",
+    ],
+    handHold: [
+      "Your fingertips are cold again. Here, I'll warm them.",
+      "...Ha. Guess I'm not getting my hand back. Fine by me.",
     ],
   },
   close: {
@@ -152,15 +167,15 @@ export default {
     ],
     cheekPoke: [
       "Again? Ha. It's a habit now, princess. I like it.",
-      "What? I'm just looking. You're worth looking at.",
+      "...Ha. You're the only one who gets away with that.",
     ],
     lipsTouch: [
       "...Careful. I'm not as good at behaving as I look.",
-      "Princess. I'm done pretending that was a joke.",
+      "I'm done pretending this is a game.",
     ],
     earTouch: [
       "Keep that up and I'm not responsible.",
-      "...Princess. Come a little closer and say that again.",
+      "...Come a little closer and say that again, princess.",
     ],
     handTap: [
       "Here. Stick it in my pocket. Yours is always cold.",
@@ -168,7 +183,7 @@ export default {
     ],
     chestTouch: [
       "...Yeah, it's loud. I stopped pretending otherwise.",
-      "Stay there. Nothing's sneaking up on you while you're here.",
+      "Stay there. You can listen as long as you want.",
     ],
     bellyTouch: [
       "Ha... Okay, you found my weak spot. Use it wisely, princess.",
@@ -177,6 +192,44 @@ export default {
     hipsTouch: [
       "...It's later now, princess. Go on.",
       "Careful. You're gonna make me actually try.",
+    ],
+    heartbeatHold: [
+      "...Yeah. That's what you do to me. No joke this time.",
+      "Checking up on me? Ha... It's all you, princess.",
+    ],
+    lipHold: [
+      "...Next time, I'm not letting you pull away that fast.",
+      "...Ha. You've got no idea how much I'm holding back.",
+    ],
+    handHold: [
+      "...Yeah. I'll hold on. Somebody's gotta keep you from wandering off.",
+      "Stay. I'll put off the rest of my day for this.",
+    ],
+    caughtTease: [
+      "Ha... Hey. Not yet, princess. Don't rush me.",
+      "...Easy. Not yet. Let me pretend I'm the patient one a little longer.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "Ha... You know exactly what it sounds like. You've heard it plenty.",
+      "Still checking? You already know the answer, princess.",
+    ],
+    lipHold: [
+      "You remember what happened last time you did that.",
+      "...Keep that up and neither of us is getting any sleep.",
+    ],
+    handHold: [
+      "...I know I'm being selfish. I'm not letting go.",
+      "...Ha. I don't even try to play it cool about this anymore.",
+    ],
+    breakAway: [
+      "Ha... Okay. Time out, princess. I can't breathe.",
+      "...Whoa. Give me a sec. That's not fair and you know it.",
+    ],
+    teaseLetGo: [
+      "...Ha. Seriously? You're stopping right there, princess?",
+      "...That's just mean. Don't think I won't get you back for it.",
     ],
   },
 };

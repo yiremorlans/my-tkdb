@@ -7,6 +7,10 @@
 // on content, never impatience. No PDA: affection shows in what he allows.
 // Guarded spots (lips, chest, hips) stay serious until spark. The hand-holding
 // resonance hint stays in spark.
+//
+// Holds (spark+): handHold carries the stigma resonance (dead since the
+// clash, alive only holding MC's hand): a hint at spark, "complete" kept
+// for bound. caughtTease is him deciding when, not refusing.
 
 export default {
   new: {
@@ -58,7 +62,7 @@ export default {
   warm: {
     headPat: [
       "...Nobody else would dare. You know that?",
-      "Tsk. Only you would try that.",
+      "Tsk. ...I'll allow it. This once.",
     ],
     cheekPoke: [
       "What's that look for?",
@@ -73,10 +77,7 @@ export default {
       "What the hell was that? ...Don't laugh.",
     ],
     hipsTouch: ["Careful. You're pushing it.", "...Don't."],
-    upset: [
-      "Enough. I'm not a toy.",
-      "Stop. You don't need to do that to keep my attention.",
-    ],
+    upset: ["Enough. I'm not a toy.", "Stop. I won't ask again."],
   },
   spark: {
     headPat: [
@@ -87,18 +88,18 @@ export default {
       "What? ...Stop staring.",
       "You've got guts. I'll give you that.",
     ],
-    lipsTouch: ["...Not here.", "Careful. You're starting something, servant."],
-    earTouch: ["...Shit. Cut that out.", "...Tsk. You found that on purpose."],
-    handTap: [
-      "...Don't let go yet.",
-      "Keep holding on. ...I feel like my old self.",
+    lipsTouch: ["...Not here.", "Careful. You're starting something."],
+    earTouch: [
+      "...Shit. Cut that out.",
+      "...Tsk. You're enjoying this, aren't you?",
     ],
+    handTap: ["...Don't let go yet.", "...Your hand. Give it here."],
     chestTouch: [
       "...Don't say a word about that.",
       "Tsk. Who taught you to be this bold?",
     ],
     bellyTouch: [
-      "...Careful, servant. I'm going to have to retrain you.",
+      "...Tsk. Careful where you put that hand.",
       "...Tsk. Your hand's cold. That's the only reason I flinched.",
     ],
     hipsTouch: [
@@ -108,6 +109,18 @@ export default {
     upset: [
       "Enough. ...This is throwing me off.",
       "Stop. I can't think straight like this.",
+    ],
+    heartbeatHold: [
+      "...You heard nothing.",
+      "Shit... Fine. Now you know. Don't push it.",
+    ],
+    lipHold: [
+      "...I could've stopped you. Don't make me regret it.",
+      "...Shit. You're bold. Don't get used to it.",
+    ],
+    handHold: [
+      "...Hm. Haven't felt that in a while.",
+      "You let go first. I'll remember that.",
     ],
   },
   close: {
@@ -124,21 +137,56 @@ export default {
       "Do that again and I'm not responsible for what happens.",
       "...Stay there. I'm not done with you.",
     ],
-    handTap: [
-      "You're late. Give me your hand.",
-      "Stay. Your schedule can arrange itself around me.",
-    ],
+    handTap: ["You're late. Give me your hand.", "Hold on. I'm in no hurry."],
     chestTouch: [
       "...Yeah. That's your fault. Stay there and own it.",
       "Tsk. Lean in, then. Nobody's coming up here.",
     ],
     bellyTouch: [
       "...Keep your hand there. I didn't say move.",
-      "Hell. ...Fine, you can stay. Retraining can wait.",
+      "Hell. ...Fine. You've earned that much.",
     ],
     hipsTouch: [
-      "Bold. ...You know what you're asking for, servant?",
+      "Bold. ...You know what you're asking for?",
       "Careful. Keep that up and you're not leaving this room.",
+    ],
+    heartbeatHold: [
+      "You wanted proof? There. Now quit gawking.",
+      "...It does that around you. I'm not apologizing for it.",
+    ],
+    lipHold: [
+      "...Next time, don't use your hand.",
+      "...Tsk. Good thing you stopped. I was done holding back.",
+    ],
+    handHold: [
+      "Your place is at my back. ...Your hand's fine too.",
+      "Stay. Tohma can handle the brats for an hour.",
+    ],
+    caughtTease: [
+      "...Tsk. Not yet. I decide when.",
+      "Shit... Hold it. ...Not yet. Don't look so disappointed.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "You know what that sound means by now. Don't make me say it.",
+      "It hasn't calmed down since you stayed the night. ...That's your fault.",
+    ],
+    lipHold: [
+      "...Fingers again? You know better than that by now.",
+      "Tsk. Quit teasing and come here.",
+    ],
+    handHold: [
+      "...With you, I'm complete. Don't make me say it twice.",
+      "It only works with you. ...I don't take that for granted.",
+    ],
+    breakAway: [
+      "Shit... Enough. Give me a second. ...Don't you dare look smug.",
+      "Hah... You've got some nerve. Wait until I can breathe.",
+    ],
+    teaseLetGo: [
+      "...Hah. That's where you stop? Come to my room later and finish it.",
+      "Tsk... Leaving me like this. You'll answer for that later.",
     ],
   },
 };

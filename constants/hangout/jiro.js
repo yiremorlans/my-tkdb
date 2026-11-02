@@ -7,6 +7,11 @@
 // No food in his lines before warm, no confections at all (closeFriend bond
 // scene). Chest scars and tearing wounds are canon; the Stigma stays out.
 // Guarded spots (lips, chest, hips) stay serious until spark.
+//
+// Holds (spark+): he reads the heartbeat hold as MC listening to his heart (his
+// job reversed); Yuri's care is the canon he leans on. His amnesia covers
+// one event only: he remembers everything now, so no "poor memory" lines.
+// The Stigma still stays out.
 
 export default {
   new: {
@@ -47,15 +52,15 @@ export default {
   known: {
     headPat: [
       "You did that last time too. I still don't know what it's for.",
-      "...Is that something people do? Okay.",
+      "...Is that how you say hello now? Okay.",
     ],
     cheekPoke: [
       "You keep doing that. My face is fine.",
-      "If you're testing my reflexes, I didn't flinch.",
+      "...Do I look unwell? Is that why?",
     ],
     lipsTouch: [
       "No. That's how contact infections spread.",
-      "Please don't. I'd have to disinfect you.",
+      "Please don't. Not there.",
     ],
     earTouch: [
       "There are six. You don't have to count them by touch.",
@@ -98,7 +103,7 @@ export default {
     ],
     handTap: [
       "I'll check your pulse while I have your hand.",
-      "...You can hold it. The gloves are clean.",
+      "...Something wrong with my glove?",
     ],
     chestTouch: [
       "Gently. That's where most of the scars are.",
@@ -106,7 +111,7 @@ export default {
     ],
     bellyTouch: [
       "...Oh. My muscles flinched. That doesn't happen during exams.",
-      "Lightly. Those sutures open easily. ...That's fine.",
+      "Lightly. Those sutures open easily.",
     ],
     hipsTouch: ["Please remove your hand. I'm asking politely.", "Not there."],
     upset: [
@@ -124,12 +129,15 @@ export default {
       "You're doing that on purpose. I don't mind.",
     ],
     lipsTouch: [
-      "...That isn't hygienic. I don't care right now.",
+      "...I should ask you to stop. I'm not going to.",
       "...I don't have a protocol for this.",
     ],
-    earTouch: ["...That's distracting.", "Please stop. ...No. Don't stop."],
+    earTouch: [
+      "...That's distracting.",
+      "...I can't remember what I was saying.",
+    ],
     handTap: [
-      "Take the glove off, if you want. I'll allow it.",
+      "You can hold on. I'll keep count of the minutes.",
       "Your hand fits here. I checked.",
     ],
     chestTouch: [
@@ -147,6 +155,18 @@ export default {
     upset: [
       "That's enough. I can't concentrate.",
       "Please stop. My pulse won't settle.",
+    ],
+    heartbeatHold: [
+      "You were listening to my heart. That's usually my job. ...What did you hear?",
+      "That's faster than it should be. ...I don't want it to slow down.",
+    ],
+    lipHold: [
+      "...You held that there a long time. I forgot to count.",
+      "...I don't have a clinical term for that. I'll look for one.",
+    ],
+    handHold: [
+      "Oh. You let go. ...I was in the middle of something.",
+      "Your hand's warm. I don't usually notice temperature unless it makes me sick.",
     ],
   },
   close: {
@@ -167,7 +187,7 @@ export default {
       "That makes my pulse jump. You've worked that out, haven't you?",
     ],
     handTap: [
-      "I took the glove off already. I thought you'd come back for it.",
+      "Hold on. I've stopped counting the minutes.",
       "Your pulse is fast too. Then we're even.",
     ],
     chestTouch: [
@@ -181,6 +201,44 @@ export default {
     hipsTouch: [
       "I said that was inappropriate once. I'm revising my position.",
       "...You may continue. I'll tell you when to stop. I don't think I will.",
+    ],
+    heartbeatHold: [
+      "It still does that for you. I've stopped looking for another cause.",
+      "You're learning my resting rate. That's more than most people know about me.",
+    ],
+    lipHold: [
+      "That was long enough to count as an examination. Was the result what you wanted?",
+      "I'd like to return that sometime. Not with my hand.",
+    ],
+    handHold: [
+      "It's been a long time since someone held on to me that long. I think I liked it.",
+      "Yuri's calling. ...I'll ignore it for now.",
+    ],
+    caughtTease: [
+      "Wait. ...Not yet. You'll have to teach me first.",
+      "...Stop there. Not yet. I'd like to remember it properly.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "It's faster than last time. I've been keeping records.",
+      "You've seen it go higher than that. You were there.",
+    ],
+    lipHold: [
+      "I remember how this goes now. I wrote it down so I wouldn't forget.",
+      "You're stalling. You already know what I want.",
+    ],
+    handHold: [
+      "Hold on a little longer. I like this part best.",
+      "Same rhythm as yours again. I've stopped checking whether that's normal.",
+    ],
+    breakAway: [
+      "...Stop. I need a moment. ...I'm fine. That wasn't a symptom.",
+      "Hah... I couldn't breathe. That isn't my condition. That was you.",
+    ],
+    teaseLetGo: [
+      "You stopped right there. ...I was close to something. I'd like to know what it was.",
+      "My breathing hasn't settled. ...Please don't leave it there. I'd like you to finish.",
     ],
   },
 };

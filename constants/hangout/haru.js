@@ -9,6 +9,10 @@
 // may mention it lightly (Mio's work), never how it was broken. The belly
 // hotspot is Peekaboo in his sling, so bellyTouch lines react to MC petting
 // Peekaboo, not to touching Haru.
+//
+// Holds (spark+): release lines own the racing pulse and stay cheerful;
+// caughtTease is a laughing "not yet"; bound treats the night as shared
+// history. Hand holds don't single out the prosthetic.
 
 export default {
   new: {
@@ -16,10 +20,7 @@ export default {
       "Gahaha! Usually I'm the one doin' that to the critters!",
       "Oi, oi! Have I got straw in my hair again?",
     ],
-    cheekPoke: [
-      "Hm? Somethin' on my face?",
-      "Gahaha! You're a forward one, hey?",
-    ],
+    cheekPoke: ["Hm? Somethin' on my face?", "Oi! You're a forward one, hey?"],
     lipsTouch: [
       "Whoa! Hang on, hang on. Not the lips, mate.",
       "Oi. That's not part of the tour.",
@@ -62,7 +63,7 @@ export default {
     ],
     handTap: [
       "Hm? Need somethin'? I'm all yours for a sec.",
-      "That's the prosthetic. Tap away, it won't bite. Unlike half the critters.",
+      "That's the prosthetic. Tap away, it can take it.",
     ],
     chestTouch: ["Whoa, steady. What's that for?", "Hey. Bit much, hey?"],
     bellyTouch: [
@@ -86,11 +87,11 @@ export default {
     ],
     lipsTouch: ["Whoa. Let's not, hey?", "Hey. ...Not those, mate."],
     earTouch: [
-      "Ah, quit it! That's my ticklish spot. ...Forget I said that.",
+      "Ah, quit it! That's my ticklish spot.",
       "You keep goin' for the earrings. Want a pair of your own?",
     ],
     handTap: [
-      "Want to hold onto that? Go on, it's sturdy.",
+      "Oi, a tap? Gimme a proper high five, then!",
       "Hey, you. Need somethin', or just sayin' hi?",
     ],
     chestTouch: [
@@ -104,16 +105,16 @@ export default {
     hipsTouch: ["Oi! Hands, Honor Roll.", "Nope. No, no. Off you go."],
     upset: [
       "Okay, I'm callin' time on that. Enough!",
-      "Argh! You're worse than the sparrows!",
+      "Oi, quit it! That's not funny, Honor Roll.",
     ],
   },
   spark: {
     headPat: [
-      "...Huh. Nobody does that to me. Keep goin'.",
-      "Gahaha... okay, that's nice. Really nice.",
+      "...Oi. You're gonna make me go soft, hey?",
+      "...Okay, that's nice. Really nice.",
     ],
     cheekPoke: [
-      "Am I red? I'm not red. Gahaha!",
+      "Am I red? I'm not red.",
       "Oi. Do that again and I'm pokin' back.",
     ],
     lipsTouch: [
@@ -126,7 +127,7 @@ export default {
     ],
     handTap: [
       "Go on, hold on. I'm not lettin' go first.",
-      "...You can keep that. The hand, I mean. Gahaha!",
+      "...Oh. Uh. Here. Hold on as long as you like, hey?",
     ],
     chestTouch: [
       "My heart's not usually this loud. Honest.",
@@ -134,20 +135,32 @@ export default {
     ],
     bellyTouch: [
       "Peekaboo gets all the attention. ...What about me, hey?",
-      "He's gettin' spoiled. ...Can't say I blame him. Gahaha!",
+      "He's gettin' spoiled. ...Can't say I blame him.",
     ],
     hipsTouch: [
-      "Whoa! Okay! ...Okay. Warn a bloke first.",
+      "Whoa! Okay! ...Okay. Warn me first, hey?",
       "Oi... not here. Gahaha... not here.",
     ],
     upset: [
       "All right, mercy! I can't think straight like this.",
       "Enough, enough! Any more and I'll go red for good.",
     ],
+    heartbeatHold: [
+      "That number's from runnin' rounds all day. ...You're not buyin' that, are you.",
+      "Caught red-handed, hey? ...Yeah. That's all you, that.",
+    ],
+    lipHold: [
+      "...Okay. I forgot what I was gonna say.",
+      "...Phew. Gimme a sec. My brain's still catchin' up.",
+    ],
+    handHold: [
+      "Already? ...Okay. Next time I'm holdin' on longer, hey?",
+      "I'd hold on all day if the rounds'd let me, hey.",
+    ],
   },
   close: {
     headPat: [
-      "Gahaha! Go on, I'll hold still. Peekaboo's gonna be jealous.",
+      "Go on, I'll hold still. Peekaboo's gonna be jealous.",
       "Keep goin'. Best part of my day, that.",
     ],
     cheekPoke: [
@@ -156,27 +169,65 @@ export default {
     ],
     lipsTouch: [
       "...Meant it, did you? Good. C'mere.",
-      "Gahaha... no runnin' off after that one, hey?",
+      "...No runnin' off after that one, hey?",
     ],
     earTouch: [
       "Ah! Still ticklish. Go on then, you've earned it.",
-      "Gahaha! You're the only one who knows that spot, hey?",
+      "Gahaha! You're the only one who knows that spot.",
     ],
     handTap: [
       "Grab on! Rounds go quicker with you along.",
       "There you are! Hold on tight. Next stop's wherever you like.",
     ],
     chestTouch: [
-      "Yeah, it's loud. Not the energy drinks this time. Gahaha!",
+      "Yeah, it's loud. Not the energy drinks this time.",
       "Stay there a sec. I like it when you're this close.",
     ],
     bellyTouch: [
       "Look at him. You're spoilin' the both of us, you know.",
-      "Peekaboo's decided you're stayin'. Guess I'm outvoted. Gahaha!",
+      "Peekaboo's decided you're stayin'. Good. So have I.",
     ],
     hipsTouch: [
       "Bold, hey? Keep that up and I'm pullin' you closer.",
       "Gahaha... Careful, mate. I'm not sayin' stop.",
+    ],
+    heartbeatHold: [
+      "Stamina's my strong suit, but that's not what's got it racin'.",
+      "There's your proof, hey? Not even gonna deny it this time.",
+    ],
+    lipHold: [
+      "...Phew. Gimme a sec. You've got me all turned around.",
+      "Mm. Next time, maybe not just your finger, hey?",
+    ],
+    handHold: [
+      "Phew. Best break I've had all week. Let's take another one soon.",
+      "That's it? C'mon, one more minute. The jobs'll wait.",
+    ],
+    caughtTease: [
+      "Hey, hey... I want to. Just... not yet, okay?",
+      "Ah! Easy there... I'd forget every job on the list.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "Racin' again, hey? You'd think I'd be used to you by now.",
+      "You know how loud it gets. You've heard it up close.",
+    ],
+    lipHold: [
+      "You're doin' that on purpose. You know what it does to me now.",
+      "Mm... Remember what happened last time you did that?",
+    ],
+    handHold: [
+      "Feels right, this. Like clockin' off after the last round.",
+      "Don't let go yet. The kids can manage five minutes without me. ...Probably.",
+    ],
+    breakAway: [
+      "Hah... hah... Okay. Time out. My legs aren't workin' right.",
+      "Phew... Gahaha... You're gonna be the death of me, you know that?",
+    ],
+    teaseLetGo: [
+      "Oi, you're stoppin' there? That's just cruel, that is. ...I'll get you back for it.",
+      "Hah... Right when it was gettin' good, too. Now I'll be thinkin' about you the whole round.",
     ],
   },
 };

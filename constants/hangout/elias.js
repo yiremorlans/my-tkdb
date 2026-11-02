@@ -7,6 +7,9 @@
 // No pet names, no dialect ("reckon", "folks", "ought", "rather"). Guarded
 // spots (lips, chest, hips) get courtly deflection until spark, where he turns
 // coy and insinuating. He invites; he never promises or escorts.
+//
+// Holds (spark+): one short line on letting go. Close hints and holds
+// back; bound treats intimacy as shared history.
 
 export default {
   new: {
@@ -21,7 +24,7 @@ export default {
       "…My ears are fine, thank you.",
     ],
     handTap: [
-      "Careful. I've been cleaning all day.",
+      "Oh, my hands might be dusty. I've been cleaning.",
       "Hm? …Would you like a candy?",
     ],
     chestTouch: ["…I'd prefer you didn't.", "Please step back a little."],
@@ -30,7 +33,7 @@ export default {
       "Oh, that's a little personal.",
     ],
     hipsTouch: ["…No. Not there.", "Please don't. I mean that."],
-    upset: ["…Please stop that.", "That's enough, I think."],
+    upset: ["…Please stop that.", "…I asked you not to."],
   },
   known: {
     headPat: [
@@ -48,7 +51,7 @@ export default {
     ],
     handTap: [
       "Here. Take one. They're from home.",
-      "…Sorry, they're cold. I've been working.",
+      "…Sorry, my hands are cold.",
     ],
     chestTouch: ["…That's close enough.", "Please, a little space."],
     bellyTouch: [
@@ -64,7 +67,7 @@ export default {
   warm: {
     headPat: ["…That's nice.", "Oh, I don't mind that at all."],
     cheekPoke: [
-      "Hm? Do I have candy on my face?",
+      "Hm? You have my attention.",
       "Oh, I wasn't asleep. Just thinking.",
     ],
     lipsTouch: ["…I'll have to say no to that.", "…Please. Leave those alone."],
@@ -118,15 +121,27 @@ export default {
       "…Please. You're making it hard to stay polite.",
       "All right. Give me a moment to collect myself.",
     ],
+    heartbeatHold: [
+      "…You noticed. I was hoping you wouldn't.",
+      "Oh, that. …It started when you came over.",
+    ],
+    lipHold: [
+      "…You kept it there a long time. I let you.",
+      "…I'll be thinking about that later.",
+    ],
+    handHold: [
+      "…I didn't want to be the one to let go.",
+      "…Would you walk with me a little? Like this.",
+    ],
   },
   close: {
     headPat: ["…Mm. Don't stop.", "You can do that whenever you like."],
     cheekPoke: [
-      "Hm? …I was hoping you'd come over.",
+      "Hm? …I like it when you do that.",
       "…Yes, I'm smiling. You did that.",
     ],
     lipsTouch: [
-      "Keep that up and I won't be the one to stop.",
+      "…Careful. You'll give me ideas.",
       "…I don't want you to stop.",
     ],
     earTouch: [
@@ -142,6 +157,41 @@ export default {
     hipsTouch: [
       "…Mm. Bad kid.",
       "Oh, so that's what you wanted. You only had to ask.",
+    ],
+    heartbeatHold: [
+      "…There's no point hiding it from you anymore.",
+      "Oh, still checking? …It hasn't calmed down once.",
+    ],
+    lipHold: [
+      "…You know what you're asking for, don't you?",
+      "…That's twice now. I'm keeping count.",
+    ],
+    handHold: [
+      "…Stay a little longer. Jo won't miss me yet.",
+      "…I'm not letting go first. You'll have to.",
+    ],
+    caughtTease: [
+      "Oh, …not yet. Not like this.",
+      "…Not yet. I'd like to take my time with you.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "…You already know what it does. You were there.",
+      "…It's still yours. It doesn't do that for anyone else.",
+    ],
+    lipHold: ["…You remember. So do I.", "…Would you keep me company a while?"],
+    handHold: [
+      "…This is enough. Really.",
+      "…Stay. The quiet's better with you in it.",
+    ],
+    breakAway: [
+      "…Wait. Wait, please. Let me breathe.",
+      "Oh, …you didn't let up at all. Give me a moment.",
+    ],
+    teaseLetGo: [
+      "…You stopped. That's a little unkind.",
+      "Oh, …just like that? Don't make me wait long.",
     ],
   },
 };

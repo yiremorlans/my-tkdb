@@ -8,6 +8,11 @@
 // is his deflection, never a threat. No "wicked girl" (gendered for a player
 // line). Guarded spots (lips, chest, hips) stay serious until spark, where he
 // is charged rather than flustered: he does the teasing.
+//
+// Holds (spark+): his pulse is very slow (the monitor rests at 24 bpm and
+// rises a third as far), so a heartbeat check catches it hurrying by his
+// standards. He's amused at being caught, never alarmed. Close hints and
+// holds back; bound treats intimacy as shared history.
 
 export default {
   new: {
@@ -27,10 +32,7 @@ export default {
       "Ah ha ha. You're a curious one.",
       "That tickles. Ears are rather sensitive at my age.",
     ],
-    handTap: [
-      "Ah, a handshake. How very proper of you.",
-      "Hm? Oh, it's you. What is it?",
-    ],
+    handTap: ["Ah, a handshake. How very proper of you.", "Hm? What is it?"],
     chestTouch: [
       "Now, now. Let's not get ahead of ourselves.",
       "Ah. I think that's quite far enough.",
@@ -51,7 +53,7 @@ export default {
       "Ah ha ha. Am I being humored?",
     ],
     cheekPoke: [
-      "Is that meant to wake me? I wasn't asleep. Entirely.",
+      "Is that meant to wake me? I wasn't asleep.",
       "My, my. You're in a playful mood.",
     ],
     lipsTouch: [
@@ -103,7 +105,7 @@ export default {
       "Oh! My. You caught me quite unawares.",
       "Ah ha ha. Stop, stop. That's hardly fair.",
     ],
-    hipsTouch: ["Hm. No.", "Not there, I think."],
+    hipsTouch: ["Hm. No.", "Ah. Let's keep this civilized, shall we?"],
     upset: [
       "That will do. Go and pester Rui for a while.",
       "Enough, now. You'll wear an old man out.",
@@ -146,6 +148,18 @@ export default {
       "Enough, enough. You'll undo me entirely.",
       "That will do. Even I have my limits.",
     ],
+    heartbeatHold: [
+      "Ah ha ha. Slow, I know. But it was slower before you came.",
+      "Ah. Caught. I had hoped you wouldn't look so pleased about it.",
+    ],
+    lipHold: [
+      "Mm. You're very patient. Fortunately, so am I.",
+      "My, my. And now you've no idea what to do next, have you?",
+    ],
+    handHold: [
+      "Cold, I know. You needn't let go on my account.",
+      "Mm. I've held a great many things over the years. This I'll keep.",
+    ],
   },
   close: {
     headPat: [
@@ -179,6 +193,44 @@ export default {
     hipsTouch: [
       "My, my. And here I thought I was the wicked one.",
       "Mm. Keep going and I'll stop pretending to be a gentleman.",
+    ],
+    heartbeatHold: [
+      "Ah ha ha. You may stop checking. It only does that for you.",
+      "There. You've made it hurry again. Few have managed that in four hundred years.",
+    ],
+    lipHold: [
+      "Such patience. I wonder what you're waiting for.",
+      "Mm. Keep it there. I'd like to see how long you last.",
+    ],
+    handHold: [
+      "Ah. I find I don't want to let go. How inconvenient.",
+      "Mm. Stay. My video can wait.",
+    ],
+    caughtTease: [
+      "Ah. ...Not yet, I think. Let me savor the wait.",
+      "My, my. Not yet. I've waited centuries. I can wait a little longer.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "Ah ha ha. You know full well it only hurries for you.",
+      "Count it, if you like. It's yours for as long as it beats.",
+    ],
+    lipHold: [
+      "Mm. You remember how this ends, don't you? So do I.",
+      "How wicked. You know exactly what that does to me now.",
+    ],
+    handHold: [
+      "Mm. An eternity like this. I'd ask for nothing else.",
+      "Don't let go. I've grown used to keeping you.",
+    ],
+    breakAway: [
+      "Ah... Mercy. I haven't been this out of breath in centuries.",
+      "Ha... Ah. Give me a moment. Then it's my turn with you.",
+    ],
+    teaseLetGo: [
+      "Ah... You'd stop there? I'll be collecting on that later.",
+      "Ha... Leaving me like this? Come back here and finish it. Go on.",
     ],
   },
 };
