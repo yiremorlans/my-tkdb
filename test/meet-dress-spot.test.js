@@ -8,6 +8,10 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { createFakeSupabase } from './helpers/fakeSupabase.js';
 
+// db/supabase.js throws without these; CI has no .env.
+process.env.SUPABASE_URL ??= 'http://fake.local';
+process.env.SUPABASE_SERVICE_ROLE_KEY ??= 'fake-service-role-key';
+
 const fake = createFakeSupabase({});
 mock.module('@supabase/supabase-js', { namedExports: { createClient: () => fake.client } });
 mock.module('../imageComposition.js', {
