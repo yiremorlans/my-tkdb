@@ -422,6 +422,47 @@ and pose come off the same tier ladder as the spot it's on.
   and is remembered per browser (localStorage). Strokes get their own hint
   once they're built.
 
+#### Removable articles (designed 2026-11-02, not built)
+
+Some characters wear or carry an article the player can take off with a
+**double-tap**. The first tap plays as a normal touch on the article; a
+second tap on it within ~0.35s removes it instead and adds **no
+annoyance**. Single taps everywhere stay instant (no waiting to tell a tap
+from a hold). Below the article's unlock tier a double-tap is just two
+taps. Removed articles stay off for the rest of that Hangout and are back
+next time. Double-tapping must not zoom the page on phones (the stage sets
+`touch-action` to rule it out).
+
+The rule for every article: **an article has its own touch spot and its
+own line pool; removing it reveals the character's normal spot** (head,
+belly, hand…), which then plays that spot's normal trigger and lines. The
+normal triggers (`headPat`, `bellyTouch`…) always mean touching *him*. While
+an article is on, the spot under it is off, so a tap on what shows around
+it still counts as the article. The article's spot borrows the covered
+spot's face and pose; only its lines are its own.
+
+Removal plays its own reaction and line (`<article>Off`, always spoken,
+like `upset`). The art fades out over a fraction of a second; there is no
+removal animation. An article can require another to be removed first.
+
+Per character, per outfit, in that outfit's rig.json entry: the art to hide
+(a model part, else a drawable list, since some models don't group the
+article into a part), the spot it covers, the unlock tier, the removal
+reaction, the article's own trigger, and any article it waits on. Hiding a
+part zeroes its opacity after motions and pose3 write theirs; hiding
+drawables needs its own path in live2dRig.js (drawable opacity is
+recomputed by the core each update). The v2 preview's "Model parts"
+toggles (`?hide=PartX`) show what a part covers.
+
+| Character | Article | Art | Covers | Notes |
+|---|---|---|---|---|
+| Shion | hat | `PartHat` (academy) | head | Unlocks at **spark**. Hat on: `hatPat` (the current hat-aware lines; spark/close hint at taking it off). Removal: `hatOff`. Hat off: `headPat` with bare-head lines ("...Hm. Your hand's cold.", "Keep going. You stop when I say."). Hair under the hat is drawn (checked in the preview). |
+| Haru | Peekaboo | the outfit's `peekaboo` drawables (academy, casual, house) | belly | Peekaboo **hops out**; Haru reacts to him leaving (Haru's line, not Peekaboo's). His current `bellyTouch` lines (about Peekaboo) move to `peekabooPat`. Unlock tier TBD. |
+| Haru | sling bag | drawables TBD, every outfit | belly | A **second** double-tap, only once Peekaboo is out. The empty sling has no pool: a tap on it is a plain `bellyTouch` on Haru. Sling off: same `bellyTouch`. `bellyTouch` becomes a new pool about Haru's own belly. Check what's drawn under the sling. Unlock tier TBD. |
+| Tohma | monocle | `PartMonocle` (academy) | eye/cheek area (spot TBD) | Unlock tier, lines and covered spot TBD. |
+| Jiro | glasses | `PartMegane` (academy, casual, casual_2, house) | eye/cheek area (spot TBD) | Unlock tier, lines and covered spot TBD. |
+| Ren | phone | drawables TBD (no named part; check which outfits hold it) | hand | **Taken away** by the player, not set down by him. Encounter labels never touch his phone/game (Ren responses rule), so this needs a tier late enough and lines that make it land. Unlock tier and lines TBD. |
+
 Hotspot reactions are cosmetic, unlimited and local, with no server call.
 Every reaction plays the line for that trigger in the dialogue box.
 
@@ -454,7 +495,8 @@ the preview.
 `lipsTouch`, `earTouch`, `handTap`, `chestTouch`, `bellyTouch`, `hipsTouch`, `upset`,
 `greeting`. Gestures (§4.2) add `headStroke` and `cheekStroke` (every
 tier) and `handHold` and `lipHold` (`close` and `bound` only, played on
-dates). Claude drafts
+dates). Removable articles (§4.2) add the article's own pool
+(`hatPat`, `peekabooPat`…) and its removal pool (`hatOff`…). Claude drafts
 them in Alan's voice from `constants/dialogue/alan.js`. **The user approves
 them before release.** They're kept apart from the `/meet` dialogue files.
 
