@@ -102,7 +102,7 @@ export default {
       "That tickles. I didn't know it would.",
     ],
     handTap: [
-      "I'll check your pulse while I have your hand.",
+      "...You keep tapping. Is that a signal?",
       "...Something wrong with my glove?",
     ],
     chestTouch: [

@@ -146,7 +146,7 @@ export default {
       "Enough, enough! Any more and I'll go red for good.",
     ],
     heartbeatHold: [
-      "That number's from runnin' rounds all day. ...You're not buyin' that, are you.",
+      "It's racin' from runnin' rounds all day. ...You're not buyin' that, are you.",
       "Caught red-handed, hey? ...Yeah. That's all you, that.",
     ],
     lipHold: [

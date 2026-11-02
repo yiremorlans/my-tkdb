@@ -8,6 +8,8 @@
 // physical. Sound sensitivity shows in the ear lines; the super-hearing
 // heartbeat beat waits for spark. Guarded spots (lips, chest, hips) stay
 // rebuffs until spark.
+// Holds (spark+): he deflects the heart monitor, then owns it; bound
+// handHold pays off the canon bet (LVL 25), and he still runs the rules.
 
 export default {
   new: {
@@ -17,16 +19,16 @@ export default {
     ],
     cheekPoke: [
       "...Was that on purpose?",
-      "Wow. Do that again and I'm filming it.",
+      "Did you seriously just poke me? Who does that?",
     ],
     lipsTouch: ["Hey! ...What was that? Hands off the lips.", "Nope. Denied."],
     earTouch: [
       "Hey, careful with the earrings.",
-      "Ugh, not by my ear. Everything's loud enough already.",
+      "Ugh, not by my ear. Everything's fucking loud enough already.",
     ],
     handTap: [
       "You need something? Make it quick.",
-      "What, you want an autograph?",
+      "Did I say you could do that? No? Then don't.",
     ],
     chestTouch: [
       "Back off. You don't get to do that.",
@@ -38,7 +40,7 @@ export default {
     ],
     hipsTouch: ["Excuse me? Hands to yourself.", "Seriously? Back up."],
     upset: [
-      "Okay, stop. That's annoying.",
+      "Okay, stop. That's fucking annoying.",
       "Keep it up and you're going on my story. Not the flattering kind.",
     ],
   },
@@ -51,30 +53,33 @@ export default {
       "What? Are you bored or something?",
       "Poke me again and I'm poking back.",
     ],
-    lipsTouch: ["Tch. Cute. No.", "Ugh, don't. That's not content."],
+    lipsTouch: [
+      "Ugh, yes, it's a piercing. Hands to yourself.",
+      "Seriously? My lips? Not a chance, Honor Roll.",
+    ],
     earTouch: [
       "Leave the earrings alone, I mean it.",
       "Not near my ears. You have no idea how loud you are.",
     ],
     handTap: [
-      "What, you want my hand? Ask nicely. ...Denied.",
+      "What? Use your words, Honor Roll.",
       "Huh. You're braver than you look.",
     ],
     chestTouch: [
-      "Hey. Who said you could get that close?",
+      "What the hell? Who said you could get that close?",
       "Back up. I'm not your pillow.",
     ],
     bellyTouch: [
       "Wow. Bold move for someone with no permission.",
-      "Do that again and you're the punchline of my next vid.",
+      "Ugh. Do I look like a stress ball to you?",
     ],
     hipsTouch: [
       "Nope. Not happening.",
       "You're really pushing it, Honor Roll.",
     ],
     upset: [
-      "Ugh, enough. You're so annoying.",
-      "Stop, or I start telling people things about you. True or not.",
+      "Ugh, stop. You're so annoying.",
+      "Stop, or I start telling people things about you.",
     ],
   },
   warm: {
@@ -84,19 +89,19 @@ export default {
     ],
     cheekPoke: [
       "What's with the face? You want something?",
-      "You're in a weird mood. I'm into it.",
+      "Again? You're lucky I'm used to you by now.",
     ],
     lipsTouch: [
       "...Hey. No. Those aren't up for grabs.",
       "Nope. I'm not the one who gets flustered here.",
     ],
     earTouch: [
-      "You're one of the few people who isn't loud. Don't ruin it.",
-      "Careful with the earrings. ...Okay, you can stay there.",
+      "Hey, easy. My ears are sensitive. Like, really sensitive.",
+      "Careful with the earrings.",
     ],
     handTap: [
       "You're getting comfortable, huh. ...I'll allow it.",
-      "What? ...Fine. You can hold it for a second.",
+      "What? ...You want something, or are you just bored?",
     ],
     chestTouch: [
       "Back up a little. I can't see my screen.",
@@ -104,10 +109,13 @@ export default {
     ],
     bellyTouch: [
       "Hey! ...Okay, that caught me off guard. Don't get used to it.",
-      "Ugh, cut it out. I'm not laughing. ...I'm not.",
+      "Shit, cut it out. I'm not laughing. ...I'm not.",
     ],
-    hipsTouch: ["Don't push it.", "Hey. You don't get to touch there."],
-    upset: ["Okay, stop. I mean it.", "Ugh, you're so loud. Give it a rest."],
+    hipsTouch: ["Don't push it.", "Wow. Getting brave, huh? Still no."],
+    upset: [
+      "Okay, stop. I mean it.",
+      "Seriously, quit it. I'm not in the mood.",
+    ],
   },
   spark: {
     headPat: [
@@ -124,18 +132,18 @@ export default {
     ],
     earTouch: [
       "...Hey. I can hear how fast your heart's going, you know.",
-      "Not the ear. ...Okay. Maybe the ear.",
+      "Ugh. You're gonna make me lose my train of thought.",
     ],
     handTap: [
-      "I can touch you, but you can't touch me. ...I'm making an exception.",
-      "Fine. Hold on. Don't let go till I say.",
+      "I can touch you, but you can't touch me.",
+      "Fine. Hold on. ...Don't make it weird.",
     ],
     chestTouch: [
-      "...Don't. My heart's being stupid right now.",
+      "...Don't. My heart's being fucking stupid right now.",
       "Okay, that's not fair. I wasn't ready.",
     ],
     bellyTouch: [
-      "...Careful, Honor Roll. That one's not going on camera.",
+      "...Hey. Who said that was allowed? ...Fine.",
       "Okay, that was kind of a cheap shot. ...Do it again and I'm doing it back.",
     ],
     hipsTouch: [
@@ -143,8 +151,20 @@ export default {
       "Hey. Who taught you that? ...Don't answer.",
     ],
     upset: [
-      "Okay, stop, before I forget I'm supposed to be annoyed.",
-      "Enough. You're making it really hard to stay mad.",
+      "Okay, okay! Time out. My face is literally on fire.",
+      "Ugh. You're making it really hard to stay mad.",
+    ],
+    heartbeatHold: [
+      "That's from yelling at chat all night. ...Ugh. Fine. It's not.",
+      "So now you know what I hear from you all day. Fun, right?",
+    ],
+    lipHold: [
+      "...You kept it there that long? Bold. Next time I'm not sitting still.",
+      "Wow. Okay. Not gonna lie, I didn't hate that.",
+    ],
+    handHold: [
+      "Who said you could let go? Not me.",
+      "Wait, no. My hand's gonna get cold. Get back here.",
     ],
   },
   close: {
@@ -153,15 +173,15 @@ export default {
       "Mm. I'm keeping you. ...For the head pats, obviously.",
     ],
     cheekPoke: [
-      "Do that again. This time I'm not filming. ...Okay, I am.",
+      "Again? You're obsessed with me. ...Same, honestly.",
       "Bored? Liar. You just wanted me to look at you, Honor Roll.",
     ],
     lipsTouch: [
       "...You keep doing that. Either commit or I will.",
-      "Bold, Honor Roll. Now try it with something other than your finger.",
+      "...Tease. You know exactly what you're doing, Honor Roll.",
     ],
     earTouch: [
-      "Lean in and say something. You're the only noise I want right now.",
+      "Careful. Keep that up and I'm returning the favor.",
       "Ugh. Making you squirm is my job.",
     ],
     handTap: [
@@ -169,16 +189,54 @@ export default {
       "Rules changed. You can touch me now too. Tell anyone and I'll deny it.",
     ],
     chestTouch: [
-      "Okay, that's not fair. Back up before I do something about it.",
+      "Back up before I do something about it.",
       "...Yeah, it's racing. Stay there and find out why.",
     ],
     bellyTouch: [
-      "...Careful, Honor Roll. You're touching the merchandise.",
+      "Hah. Keep that up and I'm pinning your hands.",
       "Bold. ...Keep going, Honor Roll. I dare you.",
     ],
     hipsTouch: [
       "Hands up. I'm the one who makes the moves here.",
       "...Okay. My move, then. Come here.",
+    ],
+    heartbeatHold: [
+      "Don't look so smug. You'd be racing too if you were me.",
+      "You keep checking like it's gonna slow down, but it's not.",
+    ],
+    lipHold: [
+      "...You know I'm counting how long you stay there. That was a new record.",
+      "Ugh. Stop looking at my mouth like that. ...Or come closer and make your move.",
+    ],
+    handHold: [
+      "That's it? I wasn't done with you yet, Honor Roll.",
+      "When people find out, it won't be like this. Fingers laced. My way.",
+    ],
+    caughtTease: [
+      "Hey. Not yet. ...I'm the one who decides when, remember?",
+      "Ha. Nice try. ...Not yet, Honor Roll. You'll know when.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "Still racing? Shocking. You'd think I'd have built up a tolerance to you by now.",
+      "You already know what you do to me. You don't need to listen for it.",
+    ],
+    lipHold: [
+      "Just your finger? After everything? You're getting shy on me, Honor Roll.",
+      "You know how this ends. ...Fine. Take your time.",
+    ],
+    handHold: [
+      "Lost the bet, by the way. I fell first. Worth it.",
+      "Go ahead, let go. You'll be back. You always are.",
+    ],
+    breakAway: [
+      "Fuck. Okay, stop. ...I can't even hear myself think.",
+      "Hah... Give me a second. You're the only one who gets to see me like this.",
+    ],
+    teaseLetGo: [
+      "Seriously? Right there? ...Wow. You're gonna pay for that later, Honor Roll.",
+      "Who said you could stop? ...Next time, you don't leave till I tell you to.",
     ],
   },
 };

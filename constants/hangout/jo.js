@@ -7,6 +7,10 @@
 // tap into "any trouble?". "Cutie" from known on. No gendered self-reference
 // (his stigma form is still him). Guarded spots (lips, chest, hips) stay
 // gently firm until spark.
+//
+// Holds (spark+): the caretaker on the receiving end; caughtTease is
+// "not yet, I want to do this properly"; bound leans on honey tea
+// (LVL 20) as shared history.
 
 export default {
   new: {
@@ -79,7 +83,7 @@ export default {
       "You found a weak spot. Keep it to yourself.",
     ],
     handTap: [
-      "You're freezing. Here, let me warm them up.",
+      "Your hands are freezing. Where are your gloves?",
       "I'm here. Did something happen?",
     ],
     chestTouch: ["...That's close.", "Hey. A little space, okay?"],
@@ -88,7 +92,7 @@ export default {
       "Hey, I wasn't braced for that. Sneaky, cutie.",
     ],
     hipsTouch: ["No. Let's not.", "Hey. Hands to yourself."],
-    upset: ["Okay. Enough. I mean it.", "Hey. Even I have limits, cutie."],
+    upset: ["Okay. Enough. I mean it.", "Hey. Even I have limits."],
   },
   spark: {
     headPat: [
@@ -121,6 +125,18 @@ export default {
       "Okay, enough. You're making it hard to stay calm.",
       "Stop, stop. I need a second.",
     ],
+    heartbeatHold: [
+      "Okay, you caught me. Keep that between us, cutie.",
+      "Ha... It only does that around you, you know.",
+    ],
+    lipHold: [
+      "...You held that there a while, cutie. I'm trying very hard to behave.",
+      "Hah... Okay. I'll need a minute before I go back to work.",
+    ],
+    handHold: [
+      "...I liked that more than I should admit.",
+      "Already? ...Okay. I'll take what I can get.",
+    ],
   },
   close: {
     headPat: [
@@ -148,12 +164,50 @@ export default {
       "...Leave your hand there. I like knowing you're close.",
     ],
     bellyTouch: [
-      "Cutie... Keep that up and I'll have to play a trick on you.",
+      "Keep that up and I'll have to play a trick on you.",
       "...Don't move. I like you right there.",
     ],
     hipsTouch: [
       "Bold, cutie. ...Fine. Two can play that game.",
       "Careful, cutie. A magician always has something up his sleeve.",
+    ],
+    heartbeatHold: [
+      "Every time. You'd think I'd be used to it by now.",
+      "Ha... You're the one person I can't fool, aren't you?",
+    ],
+    lipHold: [
+      "...Ha. I'm trying very hard to behave right now, cutie.",
+      "Mm. One of these days I'll stop being patient about that.",
+    ],
+    handHold: [
+      "I'd rather put you in the passenger seat and drive somewhere quiet.",
+      "Sorry, I'm not letting go yet. The budget can wait.",
+    ],
+    caughtTease: [
+      "Ah... Not yet, cutie. I want to do this properly.",
+      "Hey, hey. ...Not yet. Believe me, it isn't that I don't want to.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "You know that rhythm by now, cutie. You've fallen asleep to it.",
+      "Still loud. Some things don't settle down, even now.",
+    ],
+    lipHold: [
+      "Careful, cutie. You know where that leads now.",
+      "Keep that up and nobody's getting any work done. Least of all me.",
+    ],
+    handHold: [
+      "I used to work so I wouldn't have to think. Now I just think about you.",
+      "Stay over. I'll make honey tea, just the two of us.",
+    ],
+    breakAway: [
+      "Hah... Okay. Okay, cutie. You win this round. Let me breathe.",
+      "Whew... I'm supposed to be the magician here. Where did you learn that?",
+    ],
+    teaseLetGo: [
+      "Ah... Stopping there, cutie? That's cruel. ...I'll remember it when it's my turn.",
+      "Hah... You're leaving me like this? ...Okay. Then you'll have to take responsibility later.",
     ],
   },
 };

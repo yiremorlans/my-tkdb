@@ -98,7 +98,7 @@ export default {
     ],
     handTap: [
       "There you are. Come here, then.",
-      "Mm. Stay a moment. Your hands are so warm.",
+      "Mm. Your hands are so warm. Hardly fair to an old man.",
     ],
     chestTouch: ["Now, now. That's quite close.", "Ah. Mind yourself, now."],
     bellyTouch: [

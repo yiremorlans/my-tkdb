@@ -5,18 +5,20 @@
 //
 // He's a physical-touch person once he's comfortable, so head and hands warm
 // up fast; guarded spots (lips, chest, hips) stay a flustered no until spark.
-// The pendant on his chest is Gram's gift (no Ardici reveal). Max two "!" per
-// line, never "!!!".
+// The pendant on his chest is Gram's gift (no Ardici reveal); mention it in
+// new-warm only, never from spark up. Max two "!" per line, never "!!!".
+// Holds (spark+): the heartbeat lines are the caught-out denial that
+// collapses at once; bound pays off the knight voiceline (LVL 25).
 
 export default {
   new: {
     headPat: [
-      "Eek! Oh. Oh, okay. Hi?",
-      "Wait, are you patting me? Is something in my hair?!",
+      "Eek! Oh, okay. Hi?",
+      "Wait, are you patting me or theres something in my hair?!",
     ],
     cheekPoke: [
       "Hey! What was that for?",
-      "Did I break out? Don't tell me I broke out.",
+      "Whoa, what? Are you counting my freckles or something?",
     ],
     lipsTouch: [
       "W-Whoa! Okay, nope. Lips are off-limits.",
@@ -36,7 +38,7 @@ export default {
     ],
     bellyTouch: [
       "Hey! Hands off, hands off.",
-      "Eek! Okay, that's my stomach. Why is it my stomach?",
+      "Eek! Okay, nope. No poking there.",
     ],
     hipsTouch: [
       "W-What are you doing?! Okay, no.",
@@ -103,7 +105,7 @@ export default {
       "You're gonna knock a hoop loose, and I can't afford another one.",
     ],
     handTap: [
-      "Wanna hold on? I'm not gonna make it weird. ...Much.",
+      "Oh, hey! Need something? I'm all yours.",
       "Oh, hi. I was literally about to text you.",
     ],
     chestTouch: [
@@ -130,7 +132,7 @@ export default {
     ],
     cheekPoke: [
       "Don't look at my face right now! It's red, isn't it?",
-      "You're doing that on purpose. I can tell. ...Do it again.",
+      "You're doing that on purpose. I can tell...",
     ],
     lipsTouch: [
       "W-Wait. Wait. Is this happening? Is this a dream?",
@@ -160,6 +162,18 @@ export default {
       "Okay, stop, stop! I can't think when you do that.",
       "Mercy. My heart can't take this many.",
     ],
+    heartbeatHold: [
+      "It's not usually that fast. ...Okay, it is around you.",
+      "Okay, yes, it's racing. You don't have to look so happy about it.",
+    ],
+    lipHold: [
+      "...Wow. Okay. My lips are still tingling. Is that a thing?",
+      "Okay. Best moment of my life, and I'm not even exaggerating. ...Much.",
+    ],
+    handHold: [
+      "Wait, you're letting go already? ...Sorry. That came out super needy.",
+      "My hand's all sweaty now. Sorry! ...I'd hold it again in a second, though.",
+    ],
   },
   close: {
     headPat: [
@@ -183,7 +197,7 @@ export default {
       "Hey, look, our hands match. ...Okay, they don't. I just wanted an excuse.",
     ],
     chestTouch: [
-      "Careful with my pendant. ...But you can stay. You're the only one I'd say that to.",
+      "Still racing. It kinda just does that around you now.",
       "You can lean on me, you know. I can be the strong one sometimes.",
     ],
     bellyTouch: [
@@ -193,6 +207,44 @@ export default {
     hipsTouch: [
       "Heh. Okay, I'm not even pretending to be surprised anymore.",
       "If you're gonna be bold, I'm gonna be bold too. ...Gimme a sec to work up to it.",
+    ],
+    heartbeatHold: [
+      "Guess you know now. It does that every time you show up. Every single time.",
+      "Don't listen too hard. ...Okay, listen. It's all for you anyway.",
+    ],
+    lipHold: [
+      "...I really wanted to kiss you just now. I'm being good. Barely.",
+      "You know I'm gonna be thinking about that all night, right? Thanks a lot.",
+    ],
+    handHold: [
+      "You let go first again. I'm keeping score, you know.",
+      "Can we do that again? Like, right now? ...Okay, in a minute.",
+    ],
+    caughtTease: [
+      "W-Wait. Not yet. ...I want to. I really, really do. Just not yet.",
+      "Hey, hey. Slow down. ...I'm not saying no. I'm saying not yet, before I pass out.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "Yeah, yeah, it's racing. You'd think I'd be used to you by now. I'm so not.",
+      "It still does that. Even after everything. I kinda hope it never stops.",
+    ],
+    lipHold: [
+      "I used to freak out over that. Now I just want more. ...Is that bad?",
+      "Your finger again? Come on. We both know I like the real thing better.",
+    ],
+    handHold: [
+      "I'm still working on the knight thing. Holding your hand counts as training, right?",
+      "You let go and my hand gets all cold. Come back, I wasn't done.",
+    ],
+    breakAway: [
+      "O-Okay, time out! My heart's gonna explode. Gimme a sec.",
+      "I-I need a second. Or ten. Or a whole minute. ...Okay, maybe don't go far.",
+    ],
+    teaseLetGo: [
+      "Wait, you're stopping? Right there? ...That's so mean. I was finally getting brave.",
+      "Huh? That's it? ...I'm not whining. Okay, I'm totally whining. Five more minutes, please?",
     ],
   },
 };

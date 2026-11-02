@@ -7,6 +7,8 @@
 // politely. British spelling (canon UK transfer). Guarded spots (lips, chest,
 // hips) stay a firm, gentlemanly no until spark. No Stigma/Artifact/knife
 // material; biscuits and training are canon home-screen detail.
+// Holds (spark+): honest about the monitor (he can't keep secrets), and
+// "not yet" is wanting to do it properly, never reluctance.
 
 export default {
   new: {
@@ -154,6 +156,18 @@ export default {
       "All right, mercy. I can't think straight when you do that.",
       "Give me a moment. My composure's in pieces.",
     ],
+    heartbeatHold: [
+      "I train every morning for a steady pulse. Clearly I've a great deal more training to do.",
+      "So now you know. I'd rather you'd heard it from me, but my heart beat me to it.",
+    ],
+    lipHold: [
+      "I didn't move an inch. You've no idea how difficult that was.",
+      "A gentleman doesn't kiss someone's hand without asking. ...So consider this me asking.",
+    ],
+    handHold: [
+      "You let go first. I'll admit I was hoping you wouldn't.",
+      "Let me walk you back. I'd like to hold on a little longer, if that's all right.",
+    ],
   },
   close: {
     headPat: [
@@ -187,6 +201,44 @@ export default {
     hipsTouch: [
       "Bold. ...All right. Then allow me.",
       "Steady. If we're doing this, I'll lead. ...May I?",
+    ],
+    heartbeatHold: [
+      "Yes, it's racing. I'll not apologise for it.",
+      "That's what you do to me. I thought you ought to see it for yourself.",
+    ],
+    lipHold: [
+      "I'll be honest. I spent that entire time wanting to kiss you.",
+      "...You stopped. I'm relieved and disappointed in equal measure.",
+    ],
+    handHold: [
+      "Wherever the road goes from here, I'd like your hand in mine for it.",
+      "I'll keep you safe. That was always a promise. Now it's personal.",
+    ],
+    caughtTease: [
+      "Ah... Not yet. Not because I don't want to. Because I want to do this properly.",
+      "Steady. ...I'd like nothing more, honestly. But not yet.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "It's no calmer than it was the first time. I don't expect it ever will be.",
+      "You know it races for you. You've known for a while now.",
+    ],
+    lipHold: [
+      "You're allowed far more than your fingertip, you know. I'd have thought you'd remember.",
+      "You're making it very hard to be a gentleman. You always do.",
+    ],
+    handHold: [
+      "I'd like to show you the aurora over Frostheim one of these nights. Just like this.",
+      "I'm glad we met. I tell you that often, I know. I'll keep telling you.",
+    ],
+    breakAway: [
+      "Hold on. Give me a moment to breathe. ...You're quite unfair, you know that?",
+      "That's... I can't think. Steady, Lucas. ...Steady.",
+    ],
+    teaseLetGo: [
+      "You've stopped? Now? ...That's hardly sporting, you know. I was nearly undone.",
+      "I could ask you to keep going, but I suspect that's precisely what you're waiting for. ...Later, then. I'll hold you to it.",
     ],
   },
 };
