@@ -282,6 +282,7 @@ The model animates itself; rig.json only scales how much of it shows.
 |---|---|
 | Idle | the model's own idle clip, its sway scaled by `motion.idle.amount` (0–1) |
 | Breathing | the model's `m_breath` clip on its own layer, driving `ParamBreath` only so it never undoes a held pose; scaled by `motion.breath.amount` |
+| Eased parameters | `motion.ease` maps a parameter id to the seconds a full change takes; the rig ramps it toward whatever the clips want, before physics (Lyca's ears, `ParamBeastEarOnoff`, rise over 0.2s instead of the clips' 0.1s fade) |
 | Blink, hair, physics | the model's own (eye blink and physics3), not set per rig |
 | Head/body sway | the Cubism plugin's own sway, which the game doesn't use: off unless `motion.sway.amount` is set |
 | Talking | the mouth flaps while a line types out (~7 syllables/s) and settles shut after it, or at once when the box is clicked to finish the line; no audio |
@@ -339,6 +340,87 @@ and pose come off the same tier ladder as the spot it's on.
   - Touch-averse characters (Yuri, Rui, Lyca, Ren, Subaru) read flustered,
     never upset; Zenji's lines answer the intention, never the contact; Rui
     wants what his curse refuses.
+- **Hold feedback (preview prototype, 2026-11-01).** A held spot shows two
+  faint rings per heartbeat under the finger. A chest (heartbeat) hold also
+  shows a heart monitor: a beating heart, a scrolling ECG trace and his bpm,
+  docked on the dialogue box's top edge beside the annoyance meter. Nothing
+  goes at the stage's top, which Discord's Activity chrome covers.
+- **Heartbeat check (preview prototype, redesigned 2026-11-02).** Warmth is
+  built from taps and strokes; the chest hold reads it and adds none. He
+  acts cool (a glance down at the touch, then his own eyes, never
+  tease's soft lowered look; even breathing, closed lips, a faint flush)
+  while the monitor gives him away. The monitor reads his pulse as it
+  already is: it runs all the time (rest 60 bpm, plus up to 50 with
+  warmth, plus 25 at a crest, lagging like a real pulse: about 1.5s
+  rising, 5s settling), so a riled-up character reads high from the
+  first beat and a rested one reads 60. The hand on his chest nudges it
+  up a little (about +6 as the hold comes in), never a climb from rest. rig.json `heartRate: { resting, scale }` overrides it: Zenji (a
+  ghost) and Edward (a vampire) rest at 24 and rise a third as far.
+  The beat sways with his breathing (about ±3 bpm, faster on the inhale,
+  slower on the exhale), so on the trace and rings the beats bunch as his
+  chest rises; the number shows the steady pulse.
+- **Tease (preview prototype, secret, `bound` only).** From a chest hold,
+  drag down (half the chest spot's height, mostly downward) and the hold
+  becomes tease, crossfading over 2s from the check (the hold's level
+  carries on, and so does a glance in progress): the first heartbeat
+  hold's settings (quick deep breath, parted lips, full blush, 1.6×
+  warmth) plus, near the top of a long hold,
+  bliss: his brows give way and his eyes flutter shut now and then. A
+  rig.json `moods.tease` is his face for the whole tease, back to his rest
+  face when it ends (Haru's casual only: `e_kewashiikaigan_00`, the one
+  open-eyed face; academy and house have no open-eye art). An outfit's
+  own moods go in `outfits.<name>.expressions.moods`, added to the shared
+  ones and checked against that outfit's model alone. He
+  glances down every 3-6s (straight down, not at the touch), eyes open:
+  the heavy lids and flutter lift while he looks down, or on some art
+  (Haru's) the eyes vanish. Shy-gaze
+  characters (`holdGaze: "shy"`) do too, and still break eye contact
+  as on every hold.
+  - **Caught tease (`close`).** The same drag down at close is stopped:
+    he wants it and doesn't let it happen (close hints, nothing has
+    happened yet). He lets it go on 1.2s first (the check carrying on as
+    it is, no tease effects); let go sooner and the hold just ends. The
+    hold ends on his side with a small flinch and a gasp (his lips part
+    for about a second with a hint of surprise, brows up, eyes a touch
+    wider; `GASP`), a shy face (a soft smile or
+    smirk, flushed: `smile_blush`, or rig.json `moods.caught_shy` where
+    that's a grin or shuts the eyes: Haku, Edward, Ritsu, Shion, Tohma,
+    Yuri; Subaru and Romeo a blush alone; Haru's casual opens his eyes,
+    `e_kewashiikaigan_00`), a shy head shake ("not right now": a shared
+    procedural shake, `HEAD_SHAKE`, two small fading turns with the chin
+    dipped and eyes lowered; Towa plays his own `m_shakehead_noloop`
+    clip), his `reactionPoses.caughtTease` pose where set, and, 0.6s
+    after the gasp so his mouth moves with it, a "not yet"
+    line (one per character, placeholder until drafted; Zenji answers the
+    intention, Rui wants what his curse refuses). No bliss, no crest.
+    Poses set: `m_kubi` (hand to the neck) for Alan, Jin, Jiro, Lyca, Mio
+    and Ren; Kaito `m_tere`, Haku `m_kaote`, Tohma `m_kakushi`, Lucas
+    `m_iyagari`. The rest have the shake alone. With a pose, the
+    procedural shake plays over it.
+  - **Crest and break.** Tease peaks by overwhelming him, never a climax.
+    Held on 2.5s past full bliss, a crest builds over 1.5s: his breath
+    catches, the blush climbs past its cap into the ears, his eyes squeeze
+    shut and his pulse jumps. His eyes hold still as it builds: the
+    down-glances and a shy gaze's glances away fade out, and the shy
+    glances stay off through the comedown. 0.8s later he breaks away: the hold ends on
+    his side, he flinches back into his bound `chestTouch` pose with an
+    open-eyed `surprise_blush` face (some chestTouch faces close the eyes),
+    and says a break line (one per character, drafted from his reference
+    file; a placeholder until then). His squeezed eyes open at the break
+    (0.5s); the rest of the comedown is slow: the crest's caught breath and
+    deep blush ease off over 8s, the hold's blush, breath and bliss over
+    16s (a hold's usual is 4s), all falling together so the given-way brows
+    don't drop out ahead of the flush; his parted lips close sooner, over
+    3s, his heavy lids (and the flutter) lift over 4s, and he stops
+    glancing down once he breaks away; warmth stays at its cap and
+    drifts as usual, and the monitor stays up 20s while his pulse settles.
+    No hint or line mentions tease.
+- **Onboarding (preview prototype).** The first time a player is at a tier
+  where holds open, a pill above the dialogue box reads "New: press and hold
+  his hand, lips or chest" and a faint dot breathes on his hand. It goes
+  when a hold lands or after 9s, steps aside while response choices show,
+  and is remembered per browser (localStorage). Strokes get their own hint
+  once they're built.
 
 Hotspot reactions are cosmetic, unlimited and local, with no server call.
 Every reaction plays the line for that trigger in the dialogue box.
@@ -780,16 +862,28 @@ A second outfit (casual, city, work or roomwear,
 the casual rolls.
 
 **Spot-bound outfits (2026-11-01).** An outfit with `spots` (background
-files) is the exception to "neither affects the other": at those spots it's
-worn every time, whatever the roll, and the variant becomes its
-`dialogueVariant`; anywhere else it's never worn and the roll picks among
-the other outfits. The default outfit can't be spot-bound (`validate.js`).
-`dress` gets the drawn background file from `drawBeatFor`, since the
-background is drawn first.
+files) is worn only at those spots. There it joins the roll like any other
+outfit (a casual roll picks among the casual outfits allowed there, a
+uniform roll still gives academy); anywhere else it's never worn. With
+`"always": true` as well, it's worn every time at its spots, whatever the
+roll, and the variant becomes its `dialogueVariant`. The default outfit
+can't be spot-bound, and `always` needs `spots` (`validate.js`). `dress`
+gets the drawn background file from `drawBeatFor`, since the background is
+drawn first.
+
+Always there (`always: true`):
 
 - Benkei `work`: `Darkwick_Campus_Store` (+ `_PM`)
 - Mio `work`: `Dionysia_Workshop`, `Dionysia_Workshop_2`
 - Ren `roomwear`: `Jabberwock_Ren_Room` (+ `_PM`)
+- Ren's diner uniform (to come): `Darkwick_Mystery_Diner` files
+- Yuri `house` (lab coat) and Jiro `house`: `Mortkranken_Lab` (+ `_PM`),
+  `Mortkranken_Examination_Room`, `_2` (+ `_PM`)
+
+Only there, through the roll:
+
+- Haru, Towa and Ren `house` (the game's house jumpsuits): every Jabberwock
+  background except `Jabberwock_Ren_Room`
 
 Date and Gala outfits (`dateOnly`, `galaOnly`, [`live2d-outfits.md`](./live2d-outfits.md))
 are never `/meet`'s: `pickOutfit` drops them before the spot and roll

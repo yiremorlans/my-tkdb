@@ -82,10 +82,11 @@ export function dressForVariant(characterId, rolled, spot = null, random = Math.
 /**
  * The /meet outfit from a rig's `{ outfits, defaultOutfit }`. Date and Gala
  * outfits (`dateOnly`, `galaOnly`) are never /meet's. An outfit with `spots`
- * (background files) is worn always and only at those spots, whatever the
- * roll: Benkei's work at the campus store, Ren's roomwear in his room.
- * Anywhere else those are out too, and the rest go by the roll: an outfit
- * whose `dialogueVariant` matches (one at random if several do), else
+ * (background files) is worn only at those spots: there it joins the roll
+ * (Haru's house jumpsuit anywhere in Jabberwock), anywhere else it's out.
+ * With `always: true` as well it's worn every time at its spots, whatever the
+ * roll (Benkei's work at the campus store). The rest go by the roll: an
+ * outfit whose `dialogueVariant` matches (one at random if several do), else
  * `defaultOutfit`. Either way the variant becomes the worn outfit's, so the
  * dialogue matches what's worn.
  */
@@ -93,12 +94,13 @@ export function pickOutfit(rig, rolled, spot = null, random = Math.random) {
   const pick = (names) => names[Math.floor(random() * names.length)];
   const dressed = (outfit) => ({ variant: rig.outfits[outfit]?.dialogueVariant ?? rolled, outfit });
   const names = Object.keys(rig.outfits).filter((name) => !rig.outfits[name].dateOnly && !rig.outfits[name].galaOnly);
-  const atSpot = names.filter((name) => spot && rig.outfits[name].spots?.includes(spot));
-  if (atSpot.length) return dressed(pick(atSpot));
-  const free = names.filter((name) => !rig.outfits[name].spots);
-  const matching = free.filter((name) => rig.outfits[name].dialogueVariant === rolled);
+  const here = (name) => spot != null && rig.outfits[name].spots?.includes(spot);
+  const forced = names.filter((name) => rig.outfits[name].always === true && here(name));
+  if (forced.length) return dressed(pick(forced));
+  const allowed = names.filter((name) => !rig.outfits[name].spots || here(name));
+  const matching = allowed.filter((name) => rig.outfits[name].dialogueVariant === rolled);
   if (matching.length) return { variant: rolled, outfit: pick(matching) };
-  const outfit = free.includes(rig.defaultOutfit) ? rig.defaultOutfit : free[0] ?? null;
+  const outfit = allowed.includes(rig.defaultOutfit) ? rig.defaultOutfit : allowed[0] ?? null;
   return dressed(outfit);
 }
 

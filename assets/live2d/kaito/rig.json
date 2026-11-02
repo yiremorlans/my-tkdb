@@ -38,6 +38,7 @@
     "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
   },
   "partBlush": { "parts": ["ear_skin"], "color": [1, 0.88, 0.88] },
+  "holdGaze": "shy",
   "bones": {
     "arms": {
       "r": { },
@@ -158,6 +159,7 @@
     }
   },
   "reactionPoses": {
+    "caughtTease": "m_tere",
     "headPat": "m_tere",
     "cheekPoke": "m_tere",
     "lipsTouch": { "byTier": { "new": "m_odoroki", "spark": "m_tere", "close": "m_gesture" } },

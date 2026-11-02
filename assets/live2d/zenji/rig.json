@@ -36,6 +36,8 @@
     "cheek": { "part": "face_base", "rect": [0.12, 0.55, 0.88, 0.82] },
     "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
   },
+  "heartRate": { "resting": 24, "scale": 0.35 },
+  "holdGaze": "shy",
   "bones": {
     "arms": {
       "r": { },

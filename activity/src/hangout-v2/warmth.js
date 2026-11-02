@@ -21,7 +21,8 @@ export const WARMTH_PROFILES = {
     start: { spark: 0, close: 0, bound: 0 },
     cap: { spark: 0.4, close: 0.6, bound: 0.7 },
     driftPerSec: 0.005, // about -0.05 per 10s
-    gains: { fave: 0.15, liked: 0.05, flat: 0, touch: 0.05, stroke: 0.05, holdPerSec: 0, holdMax: 0 },
+    // Holds feed it like a date's (prototype: holds open from spark).
+    gains: { fave: 0.15, liked: 0.05, flat: 0, touch: 0.05, stroke: 0.05, holdPerSec: 0.1, holdMax: 0.3 },
     upsetClears: true,
   },
 };
@@ -79,11 +80,12 @@ export class Warmth {
     this.bump(this.profile?.gains.stroke ?? 0);
   }
 
-  /** `seconds` more of a hold; one hold adds at most holdMax. */
-  hold(seconds) {
+  /** `seconds` more of a hold; one hold adds at most holdMax. `scale`
+   * weights a hold (prototype: the heartbeat warms him most). */
+  hold(seconds, scale = 1) {
     if (!this.on) return;
     const g = this.profile.gains;
-    const add = Math.min(g.holdPerSec * seconds, g.holdMax - this.holdGained);
+    const add = Math.min(g.holdPerSec * seconds * scale, g.holdMax * scale - this.holdGained);
     if (add > 0) {
       this.holdGained += add;
       this.bump(add);

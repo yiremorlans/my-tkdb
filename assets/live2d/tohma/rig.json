@@ -44,6 +44,7 @@
   "expressions": {
     "fade": 0.2,
     "moods": {
+      "caught_shy": ["e_haraguro_00", "e_sekimen_00"],
       "default": [],
       "indifferent": ["e_magao_00"],
       "close": ["e_close_00"],
@@ -157,6 +158,7 @@
     }
   },
   "reactionPoses": {
+    "caughtTease": "m_kakushi",
     "headPat": "m_ago1",
     "cheekPoke": "m_gesture",
     "lipsTouch": { "byTier": { "new": "m_ago2", "warm": "m_kakushi", "spark": "m_ago1", "close": "m_gesture" } },

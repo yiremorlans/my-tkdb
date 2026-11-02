@@ -28,9 +28,25 @@
         "hand_l": ["ArtMesh149", "ArtMesh164", "ArtMesh153", "ArtMesh152"]
       },
       "hotspots": {
-        "chest": { "part": "chest", "rect": [0.059, 0.02, 0.941, 0.537] },
-        "belly": { "part": "chest", "rect": [0.14, 0.537, 0.86, 0.794] },
-        "hips": { "part": "pants", "rect": [0.08, -0.07, 0.92, 0.22] }
+        "chest": { "part": "chest", "rect": [0.059, -0.001, 0.941, 0.516] },
+        "belly": { "part": "chest", "rect": [0.117, 0.516, 0.883, 0.848] },
+        "hips": { "part": "pants", "rect": [0.121, -0.036, 0.895, 0.188] }
+      }
+    },
+    "house": {
+      "model": "house/towa_house.model3.json",
+      "dialogueVariant": "casual",
+      "spots": ["Jabberwock_Cave.png", "Jabberwock_Cave_2.png", "Jabberwock_Cave_PM.png", "Jabberwock_Dorm_Room.png", "Jabberwock_Dorm_Room_PM.png", "Jabberwock_Entrance.png", "Jabberwock_Field.png", "Jabberwock_Field_2.png", "Jabberwock_Field_2_PM.png", "Jabberwock_Field_PM.png", "Jabberwock_Forest.png", "Jabberwock_Forest_PM.png", "Jabberwock_Kitchen.png", "Jabberwock_Mountain.png", "Jabberwock_Mountain_PM.png", "Jabberwock_Tree.png", "Jabberwock_Tree_PM.png", "Jabberwock_Ushi-Oni_Pen.png", "Jabberwock_Ushi-Oni_Pen_PM.png"],
+      "parts": {
+        "chest": ["ArtMesh226", "ArtMesh203", "ArtMesh204"],
+        "pants": ["ArtMesh251", "ArtMesh255", "ArtMesh257"],
+        "hand_r": ["ArtMesh141", "ArtMesh142", "ArtMesh143", "ArtMesh146", "ArtMesh147"],
+        "hand_l": ["ArtMesh149", "ArtMesh167", "ArtMesh165", "ArtMesh164"]
+      },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.028, 0.071, 0.972, 0.733] },
+        "belly": { "part": "chest", "rect": [0.09, 0.733, 0.91, 1.159] },
+        "hips": { "part": "pants", "rect": [0.128, 0.007, 0.872, 0.266] }
       }
     }
   },

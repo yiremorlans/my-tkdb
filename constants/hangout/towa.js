@@ -42,15 +42,12 @@ export default {
       "...? What are you looking for in there?",
       "Hm? That's where my heart is. Don't poke it.",
     ],
-    bellyTouch: [
-      "...Hm? That's my belly. Why?",
-      "No. Pat my head instead.",
-    ],
+    bellyTouch: ["...Hm? That's my belly. Why?", "No. Pat my head instead."],
     hipsTouch: [
       "...Hey. Not there.",
-      "I can hear your heart. You know that was weird, right?",
+      "I can hear your heart. It's being weird. Why?",
     ],
-    upset: ["...Stop.", "I said stop. I don't like that."],
+    upset: ["...No. I don't like that.", "...? Why'd you do that? Don't."],
   },
   known: {
     headPat: ["Heh heh ♪ Dandelion's petting me!", "More! Right there. ♪"],
@@ -75,14 +72,17 @@ export default {
       "Hm? Nothing in there for you, Dandelion.",
     ],
     bellyTouch: [
-      "...Heh. No. Cuddle me properly or don't.",
-      "Hm? That's not how you ask for a cuddle.",
+      "...Hm? No. Cuddles are with arms, Dandelion.",
+      "Hm? Not my belly. You want a cuddle?",
     ],
     hipsTouch: [
-      "...Dandelion. Hands up here.",
+      "...Dandelion. Not there.",
       "I heard your heart skip. That's not a head pat.",
     ],
-    upset: ["...Dandelion. Stop it.", "I don't like that. Don't do it again."],
+    upset: [
+      "...Dandelion. I don't like that.",
+      "...No. I hate that, Dandelion.",
+    ],
   },
   warm: {
     headPat: [
@@ -94,7 +94,7 @@ export default {
       "Heh heh ♪ My cheek's soft, right? Like petals.",
     ],
     lipsTouch: [
-      "...? You keep picking there. Do you know something I don't?",
+      "...? You keep touching there. Why? Is it a secret?",
       "Hm? Are they soft? I never checked. ♪",
     ],
     earTouch: [
@@ -118,21 +118,21 @@ export default {
       "Hm? Do you want a cuddle? Just say so.",
     ],
     upset: [
-      "...Stop. I mean it, Dandelion.",
-      "That's enough. I don't like it.",
+      "...Why, Dandelion? I don't like it.",
+      "...No. I hate that. Even from you.",
     ],
   },
   spark: {
     headPat: [
       "Heh heh ♪ Only you get to do that, Dandelion.",
-      "Keep going. I hate waiting, but I'd wait for this.",
+      "Don't stop! I'll stay still for you. ♪",
     ],
     cheekPoke: [
       "Hey! ...Heh heh ♪ Do it again.",
       "Hm? My cheeks are hot. That's your fault, Dandelion.",
     ],
     lipsTouch: [
-      "...! D-Dandelion. Say something.",
+      "...! Dandelion! ...What was that?",
       "...! Heh heh... My heart's loud now. Can you hear it too?",
     ],
     earTouch: [
@@ -153,11 +153,11 @@ export default {
     ],
     hipsTouch: [
       "...! Dandelion! ...Heh heh. Do that again.",
-      "...! You're bold. I like bold. ♪",
+      "...! Heh heh ♪ Dandelion's being sneaky!",
     ],
     upset: [
-      "...! Okay, okay! That's too much, Dandelion.",
-      "Heh... Stop. My face is too hot.",
+      "...! Dandelion! My face is all hot now!",
+      "Heh... No more! My heart's too loud!",
     ],
   },
   close: {
@@ -171,7 +171,7 @@ export default {
     ],
     lipsTouch: [
       "...! Heh heh ♪ You want that, Dandelion? Me too.",
-      "...Again. Slower this time. ♪",
+      "...Heh heh ♪ It felt like lightning. Did you feel it too?",
     ],
     earTouch: [
       "Shh. Your heart's saying my name. Heh heh ♪",
@@ -187,10 +187,10 @@ export default {
     ],
     bellyTouch: [
       "Heh heh ♪ Dandelion! No fair! Cuddle instead!",
-      "Okay, that's it. Big squeeze! ♪",
+      "Heh heh ♪ Gotcha! Big squeeze!",
     ],
     hipsTouch: [
-      "...! Heh heh ♪ You're bold, Dandelion.",
+      "...! Heh heh ♪ Dandelion wants a cuddle. I can tell.",
       "Hm? Come closer, then. ♪",
     ],
   },

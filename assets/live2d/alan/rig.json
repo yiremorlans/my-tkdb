@@ -153,6 +153,7 @@
     }
   },
   "reactionPoses": {
+    "caughtTease": "m_kubi",
     "headPat": "m_kubi",
     "cheekPoke": "m_pocket",
     "lipsTouch": { "byTier": { "new": "m_pocket", "spark": "m_kubi", "close": "m_migikoshi" } },

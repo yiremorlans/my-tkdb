@@ -46,6 +46,7 @@
   "expressions": {
     "fade": 0.2,
     "moods": {
+      "caught_shy": ["e_sekimen_00"],
       "default": [],
       "indifferent": ["e_tsujo_away_00"],
       "close": ["e_close_00"],

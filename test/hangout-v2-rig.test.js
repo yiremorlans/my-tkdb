@@ -99,6 +99,7 @@ const withSecond = (extra, top = {}) => {
 
 test('spots, dateOnly and galaOnly validate when well-formed', async () => {
   assert.strictEqual(await problems(withSecond({ spots: ['Room.png'] })), '');
+  assert.strictEqual(await problems(withSecond({ spots: ['Room.png'], always: true })), '');
   assert.strictEqual(await problems(withSecond({ dateOnly: true })), '');
   assert.strictEqual(await problems(withSecond({ galaOnly: true })), '');
 });
@@ -106,6 +107,8 @@ test('spots, dateOnly and galaOnly validate when well-formed', async () => {
 test('bad spots, dateOnly and galaOnly are refused', async () => {
   assert.match(await problems(withSecond({ spots: [] })), /`spots` must list background \.png files/);
   assert.match(await problems(withSecond({ spots: 'Room.png' })), /`spots` must list/);
+  assert.match(await problems(withSecond({ always: true })), /`always` needs `spots`/);
+  assert.match(await problems(withSecond({ spots: ['Room.png'], always: 'yes' })), /`always` must be true or left out/);
   assert.match(await problems(withSecond({ dateOnly: 'yes' })), /`dateOnly` must be true or false/);
   assert.match(await problems(withSecond({ dateOnly: true, galaOnly: true })), /can't be both/);
   assert.match(await problems(withSecond({ galaOnly: true, spots: ['Room.png'] })), /Gala outfit can't have `spots`/);
@@ -126,6 +129,14 @@ test("a mood naming an expression the model lacks is rejected", async () => {
   const r = rig();
   r.expressions.moods.blush = ['e_sekimen_01'];
   assert.match(await problems(r), /moods\.blush: unknown expression e_sekimen_01/);
+});
+
+test("an outfit's own moods are checked against that outfit's model only", async () => {
+  assert.strictEqual(await problems(withSecond({ expressions: { moods: { tease: ['e_egao_00'] } } })), '');
+  assert.match(
+    await problems(withSecond({ expressions: { moods: { tease: ['e_kaigan_00'] } } })),
+    /outfits\.second: moods\.tease: unknown expression e_kaigan_00/,
+  );
 });
 
 test('a reaction pose needs its group, a _hold and a _return', async () => {
@@ -155,6 +166,11 @@ test("a hotspot must name a shared or outfit part, and a rect is 4 numbers", asy
   assert.match(msg, /hotspots\.hips: unknown part pants/);
   assert.match(msg, /hotspots\.hips: rect must be 4 numbers/);
   assert.doesNotMatch(msg, /hotspots\.chest/);
+});
+
+test('holdGaze is "steady" or "shy"', async () => {
+  assert.strictEqual(await problems(rig({ holdGaze: 'shy' })), '');
+  assert.match(await problems(rig({ holdGaze: 'bashful' })), /holdGaze must be "steady" or "shy"/);
 });
 
 test("partBlush names known parts and an RGB color between 0 and 1", async () => {

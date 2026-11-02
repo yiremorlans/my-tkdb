@@ -21,6 +21,7 @@
       "model": "work/mio_work.model3.json",
       "dialogueVariant": "casual",
       "spots": ["Dionysia_Workshop.png", "Dionysia_Workshop_2.png"],
+      "always": true,
       "parts": { "chest": ["ArtMesh8"], "pants": ["ArtMesh218", "ArtMesh219"], "hand_l": ["ArtMesh157", "ArtMesh163", "ArtMesh159", "ArtMesh158"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [-0.015, 0.02, 1.015, 0.681] },
@@ -167,6 +168,7 @@
     }
   },
   "reactionPoses": {
+    "caughtTease": "m_kubi",
     "headPat": "m_kubi",
     "cheekPoke": "m_gesture",
     "lipsTouch": { "byTier": { "new": "m_odoroki", "known": "m_ago", "spark": "m_kubi", "close": "m_ago" } },

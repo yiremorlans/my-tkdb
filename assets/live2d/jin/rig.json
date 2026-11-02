@@ -157,6 +157,7 @@
     }
   },
   "reactionPoses": {
+    "caughtTease": "m_kubi",
     "headPat": { "byTier": { "new": "m_udekumi", "warm": "m_kubi" } },
     "cheekPoke": "m_migikoshi",
     "lipsTouch": { "byTier": { "new": "m_akire", "warm": "m_ago", "spark": "m_kubi", "close": "m_migikoshi" } },

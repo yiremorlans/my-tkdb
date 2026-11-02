@@ -17,6 +17,51 @@
         "belly": { "part": "chest", "rect": [0.14, 0.507, 0.86, 0.802] },
         "hips": { "part": "pants", "rect": [0.08, -0.05, 0.92, 0.2] }
       }
+    },
+    "casual": {
+      "model": "casual/jiro_casual.model3.json",
+      "dialogueVariant": "casual",
+      "parts": {
+        "chest": ["ArtMesh288"],
+        "pants": ["ArtMesh310", "ArtMesh311"],
+        "hand_l": ["ArtMesh327", "ArtMesh328", "ArtMesh330", "ArtMesh332", "ArtMesh334"]
+      },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [-0.035, 0.031, 1.035, 0.642] },
+        "belly": { "part": "chest", "rect": [0.021, 0.642, 0.979, 1.012] },
+        "hips": { "part": "pants", "rect": [0.079, -0.044, 0.943, 0.242] }
+      }
+    },
+    "casual_2": {
+      "model": "casual_2/jiro_casual_2.model3.json",
+      "dialogueVariant": "casual",
+      "parts": {
+        "chest": ["ArtMesh260", "ArtMesh259"],
+        "pants": ["ArtMesh281", "ArtMesh282"],
+        "hand_l": ["ArtMesh295", "ArtMesh327", "ArtMesh331", "ArtMesh334", "ArtMesh332", "ArtMesh330", "ArtMesh328"]
+      },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.139, 0.023, 0.881, 0.432] },
+        "belly": { "part": "chest", "rect": [0.178, 0.432, 0.842, 0.68] },
+        "hips": { "part": "pants", "rect": [0.069, -0.047, 0.957, 0.241] }
+      }
+    },
+    "house": {
+      "model": "house/jiro_house.model3.json",
+      "dialogueVariant": "casual",
+      "spots": ["Mortkranken_Lab.png", "Mortkranken_Lab_PM.png", "Mortkranken_Examination_Room.png", "Mortkranken_Examination_Room_2.png", "Mortkranken_Examination_Room_PM.png"],
+      "always": true,
+      "parts": {
+        "chest": ["ArtMesh379", "ArtMesh381", "ArtMesh403", "ArtMesh409"],
+        "pants": ["ArtMesh463", "ArtMesh465"],
+        "ear_r": ["ArtMesh119", "ArtMesh272", "ArtMesh271"],
+        "hand_l": ["ArtMesh450", "ArtMesh451", "ArtMesh2", "ArtMesh5", "ArtMesh7", "ArtMesh8", "ArtMesh10"]
+      },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.065, -0.025, 0.935, 0.653] },
+        "belly": { "part": "chest", "rect": [0.111, 0.653, 0.889, 1.063] },
+        "hips": { "part": "pants", "rect": [0.085, 0.003, 0.937, 0.284] }
+      }
     }
   },
   "parts": {
@@ -154,6 +199,7 @@
     }
   },
   "reactionPoses": {
+    "caughtTease": "m_kubi",
     "headPat": "m_kubi",
     "cheekPoke": "m_gesture",
     "lipsTouch": { "byTier": { "new": "m_ago", "spark": "m_kubi", "close": "m_ago" } },

@@ -74,3 +74,50 @@ body.hide-ui .vn-box, body.hide-ui .choices { display: none; }
 /* ?leak=1 (dev): only the character over flat magenta, no dialogue or HUD. */
 body.leak .vn-box, body.leak .choices, body.leak .hud, body.leak .meter { display: none; }
 .fx-why { font: 11px ui-monospace, monospace; color: var(--muted); margin: 4px 0 0; }
+
+/* --- holds: heart monitor + first-time hint (preview.js) -------------------- */
+/* Nothing goes at the stage's top: Discord's Activity chrome covers it. The
+   monitor docks on the dialogue box's top edge, left of the annoyance meter
+   (hangout.css .meter: right 1.4em, 110px wide), and shows only while a
+   heartbeat hold runs, fading rather than popping. */
+.heart-monitor {
+  position: absolute;
+  top: 0;
+  right: calc(1.4em + 110px + 10px);
+  transform: translateY(-50%) scale(0.92);
+  display: flex; align-items: center; gap: 6px;
+  padding: 3px 10px;
+  background: rgba(14, 15, 34, 0.94);
+  border: 1px solid var(--box-edge);
+  border-radius: 999px;
+  color: #ff8fa8;
+  font: 600 12px ui-monospace, monospace;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.heart-monitor.on { opacity: 1; transform: translateY(-50%); }
+.heart-monitor .heart { width: 16px; height: 16px; fill: #ff6f8e; transform-origin: 50% 55%; }
+.heart-monitor canvas { width: 84px; height: 22px; display: block; }
+.heart-monitor #bpm { min-width: 3ch; text-align: right; }
+.heart-monitor #bpm::after { content: " bpm"; font-weight: 400; color: var(--muted); font-size: 10px; }
+
+/* The hint rides the box's top edge like the choices, and steps aside while
+   they're up. */
+.coach {
+  position: absolute;
+  left: 50%;
+  bottom: calc(3.5% + var(--safe-bottom) + var(--vn-box-h, 22%) + 2%);
+  transform: translateX(-50%);
+  max-width: calc(100% - 32px);
+  padding: 7px 14px;
+  background: var(--box);
+  border: 1px solid var(--box-edge);
+  border-radius: 999px;
+  color: var(--text);
+  font: 14px/1.3 -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  text-align: center;
+  pointer-events: none;
+  transition: opacity 0.5s ease;
+}
+.coach.fade, .choices:not([hidden]) ~ .coach { opacity: 0; }

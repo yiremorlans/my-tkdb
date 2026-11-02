@@ -29,9 +29,9 @@
         "hand_l": ["ArtMesh257", "ArtMesh259", "ArtMesh261", "ArtMesh262", "ArtMesh264"]
       },
       "hotspots": {
-        "chest": { "part": "chest", "rect": [0.043, 0.02, 0.957, 0.652] },
-        "belly": { "part": "chest", "rect": [0.14, 0.652, 0.86, 0.907] },
-        "hips": { "part": "pants", "rect": [0.08, -0.08, 0.92, 0.22] }
+        "chest": { "part": "chest", "rect": [0.023, -0.019, 0.977, 0.613] },
+        "belly": { "part": "chest", "rect": [0.057, 0.613, 0.943, 0.989] },
+        "hips": { "part": "pants", "rect": [0.062, -0.034, 0.941, 0.193] }
       }
     }
   },

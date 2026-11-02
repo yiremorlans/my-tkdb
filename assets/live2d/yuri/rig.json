@@ -34,6 +34,38 @@
         "belly": { "part": "chest", "rect": [0.237, 0.426, 0.752, 0.803] },
         "hips": { "part": "pants", "rect": [0.074, -0.057, 0.931, 0.208] }
       }
+    },
+    "casual": {
+      "model": "casual/yuri_casual.model3.json",
+      "dialogueVariant": "casual",
+      "parts": {
+        "chest": ["ArtMesh96"],
+        "pants": ["ArtMesh104", "ArtMesh105"],
+        "hand_r": ["ArtMesh134", "ArtMesh135", "ArtMesh136", "ArtMesh139", "ArtMesh137", "ArtMesh133"],
+        "hand_l": ["ArtMesh141", "ArtMesh146", "ArtMesh145", "ArtMesh129", "ArtMesh142", "ArtMesh140"]
+      },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [-0.013, 0.006, 1, 0.765] },
+        "belly": { "part": "chest", "rect": [0.192, 0.765, 0.795, 1.213] },
+        "hips": { "part": "pants", "rect": [0.084, -0.073, 0.926, 0.171] }
+      }
+    },
+    "house": {
+      "model": "house/yuri_house.model3.json",
+      "dialogueVariant": "casual",
+      "spots": ["Mortkranken_Lab.png", "Mortkranken_Lab_PM.png", "Mortkranken_Examination_Room.png", "Mortkranken_Examination_Room_2.png", "Mortkranken_Examination_Room_PM.png"],
+      "always": true,
+      "parts": {
+        "chest": ["ArtMesh164"],
+        "pants": ["ArtMesh185", "ArtMesh183"],
+        "hand_r": ["ArtMesh348", "ArtMesh349", "ArtMesh350", "ArtMesh352", "ArtMesh355", "ArtMesh359", "ArtMesh71", "ArtMesh351", "ArtMesh353", "ArtMesh356", "ArtMesh360", "ArtMesh72"],
+        "hand_l": ["ArtMesh402", "ArtMesh396", "ArtMesh99", "ArtMesh406", "ArtMesh2", "ArtMesh403", "ArtMesh61", "ArtMesh401", "ArtMesh399", "ArtMesh397", "ArtMesh386", "ArtMesh385"]
+      },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [-0.102, 0.013, 1.102, 0.661] },
+        "belly": { "part": "chest", "rect": [0.141, 0.661, 0.859, 1.044] },
+        "hips": { "part": "pants", "rect": [0.081, -0.03, 0.919, 0.2] }
+      }
     }
   },
   "parts": {
@@ -54,6 +86,7 @@
     "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
   },
   "partBlush": { "color": [0.99, 0.92, 0.93] },
+  "holdGaze": "shy",
   "bones": {
     "arms": {
       "r": { },
@@ -63,6 +96,7 @@
   "expressions": {
     "fade": 0.2,
     "moods": {
+      "caught_shy": ["e_kouman_00", "e_sekimen_00"],
       "default": [],
       "indifferent": ["e_magao_00"],
       "close": ["e_close_00"],

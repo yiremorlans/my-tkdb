@@ -16,6 +16,21 @@
         "belly": { "part": "chest", "rect": [0.14, 0.533, 0.86, 0.807] },
         "hips": { "part": "pants", "rect": [0.08, -0.05, 0.92, 0.2] }
       }
+    },
+    "casual": {
+      "model": "casual/haku_casual.model3.json",
+      "dialogueVariant": "casual",
+      "parts": {
+        "chest": ["ArtMesh260"],
+        "pants": ["ArtMesh268", "ArtMesh267"],
+        "hand_r": ["ArtMesh151", "ArtMesh152", "ArtMesh154", "ArtMesh161", "ArtMesh279", "ArtMesh282", "ArtMesh285"],
+        "hand_l": ["ArtMesh162", "ArtMesh172", "ArtMesh171", "ArtMesh170", "ArtMesh169", "ArtMesh168", "ArtMesh167", "ArtMesh166", "ArtMesh164", "ArtMesh315", "ArtMesh314", "ArtMesh313", "ArtMesh289"]
+      },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.029, 0.001, 1, 0.485] },
+        "belly": { "part": "chest", "rect": [0.138, 0.485, 0.891, 0.743] },
+        "hips": { "part": "pants", "rect": [0.049, -0.047, 0.946, 0.206] }
+      }
     }
   },
   "parts": {
@@ -46,6 +61,7 @@
   "expressions": {
     "fade": 0.2,
     "moods": {
+      "caught_shy": ["e_aniki_00", "e_sekimen_00"],
       "default": [],
       "indifferent": ["e_magao_00"],
       "close": ["e_close_00"],
@@ -157,6 +173,7 @@
     }
   },
   "reactionPoses": {
+    "caughtTease": "m_kaote",
     "headPat": "m_poripori",
     "cheekPoke": "m_poripori",
     "lipsTouch": { "byTier": { "new": "m_kaote", "spark": "m_poripori", "close": "m_migikoshi" } },

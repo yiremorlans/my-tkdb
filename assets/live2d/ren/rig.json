@@ -22,11 +22,28 @@
       "model": "roomwear/ren_roomwear.model3.json",
       "dialogueVariant": "casual",
       "spots": ["Jabberwock_Ren_Room.png", "Jabberwock_Ren_Room_PM.png"],
+      "always": true,
       "parts": { "chest": ["ArtMesh314"], "pants": ["ArtMesh326", "ArtMesh327"], "hand_l": ["ArtMesh162", "ArtMesh167", "ArtMesh166", "ArtMesh164", "ArtMesh161", "ArtMesh214"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [-0.005, 0.02, 1.005, 0.528] },
         "belly": { "part": "chest", "rect": [0.14, 0.528, 0.86, 0.797] },
         "hips": { "part": "pants", "rect": [0.08, -0.05, 0.92, 0.2] }
+      }
+    },
+    "house": {
+      "model": "house/ren_house.model3.json",
+      "dialogueVariant": "casual",
+      "spots": ["Jabberwock_Cave.png", "Jabberwock_Cave_2.png", "Jabberwock_Cave_PM.png", "Jabberwock_Dorm_Room.png", "Jabberwock_Dorm_Room_PM.png", "Jabberwock_Entrance.png", "Jabberwock_Field.png", "Jabberwock_Field_2.png", "Jabberwock_Field_2_PM.png", "Jabberwock_Field_PM.png", "Jabberwock_Forest.png", "Jabberwock_Forest_PM.png", "Jabberwock_Kitchen.png", "Jabberwock_Mountain.png", "Jabberwock_Mountain_PM.png", "Jabberwock_Tree.png", "Jabberwock_Tree_PM.png", "Jabberwock_Ushi-Oni_Pen.png", "Jabberwock_Ushi-Oni_Pen_PM.png"],
+      "parts": {
+        "chest": ["ArtMesh239"],
+        "pants": ["ArtMesh5", "ArtMesh6"],
+        "hand_r": ["ArtMesh190", "ArtMesh196", "ArtMesh238", "ArtMesh317", "ArtMesh318", "ArtMesh319"],
+        "hand_l": ["ArtMesh194", "ArtMesh191", "ArtMesh247", "ArtMesh322", "ArtMesh326", "ArtMesh11"]
+      },
+      "hotspots": {
+        "chest": { "part": "chest", "rect": [0.073, -0.165, 0.937, 0.637] },
+        "belly": { "part": "chest", "rect": [0.188, 0.637, 0.823, 1.098] },
+        "hips": { "part": "pants", "rect": [0.113, -0.039, 0.89, 0.19] }
       }
     }
   },
@@ -48,6 +65,7 @@
     "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
   },
   "partBlush": { "color": [0.96, 0.77, 0.82] },
+  "holdGaze": "shy",
   "bones": {
     "arms": {
       "r": { },
@@ -173,6 +191,7 @@
     }
   },
   "reactionPoses": {
+    "caughtTease": "m_kubi",
     "headPat": { "byTier": { "new": "m_udekumi", "spark": "m_kubi" } },
     "cheekPoke": "m_aori",
     "lipsTouch": { "byTier": { "new": "m_odoroki", "known": "m_udekumi", "warm": "m_odoroki", "spark": "m_kubi" } },

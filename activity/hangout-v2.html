@@ -21,10 +21,20 @@
         <span id="spot"></span>
       </div>
       <div id="choices" class="choices" hidden></div>
+      <!-- First-time hint for the holds (preview.js, remembered per browser);
+           after #choices so it can hide while they show. -->
+      <div id="coach" class="coach" role="status" hidden></div>
 
       <section class="vn-box" aria-live="polite">
         <div class="vn-name"><span id="vn-name"></span></div>
         <div class="meter" title="annoyance"><div id="meter-fill"></div></div>
+        <!-- Heartbeat hold: his pulse, beating heart + monitor trace (preview.js),
+               docked on the box's top edge beside the meter. -->
+        <div id="heart-monitor" class="heart-monitor" aria-hidden="true">
+          <svg class="heart" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 5 6.4 5c2 0 3.3 1.1 4.1 2.3h3C14.3 6.1 15.6 5 17.6 5 21 5 23.1 8.4 21.6 11.8 19.5 16.4 12 21 12 21z"/></svg>
+          <canvas id="ecg" width="168" height="44"></canvas>
+          <span id="bpm">--</span>
+        </div>
         <p id="vn-text" class="vn-text"></p>
         <button id="btn-next" class="vn-next" title="Next" aria-label="Next" hidden>›</button>
         <button id="btn-debug" class="vn-icon" title="Debug controls" aria-label="Debug controls">⚙</button>

@@ -25,6 +25,8 @@ const RANKS = [0, 1, 2];
  * - mocIds(path): a `{ has(id) }` lookup of the .moc3's drawable ids, or
  *   omitted to skip that check (the browser has no cheap way to list them)
  */
+const POSE_ONLY_KEYS = new Set(["guarded", "caughtTease"]);
+
 export async function validateLive2DRig(rig, { readJson, fileExists = () => true, mocIds } = {}) {
   if (!rig || typeof rig !== "object") throw new Error("rig.json: not an object");
   const problems = [...layoutProblems(rig), ...motionProblems(rig.motion)];
@@ -35,7 +37,9 @@ export async function validateLive2DRig(rig, { readJson, fileExists = () => true
 
   const reactions = new Set([...Object.keys(DEFAULT_REACTIONS), ...Object.keys(rig.reactions ?? {})]);
   for (const name of Object.keys(rig.reactionPoses ?? {})) {
-    if (!reactions.has(name) && name !== "guarded") problems.push(`reactionPoses.${name}: unknown reaction`);
+    // Two pose keys aren't reactions: `guarded` (the lockout pose) and
+    // `caughtTease` (the preview's caught tease at close: he stops your hand).
+    if (!reactions.has(name) && !POSE_ONLY_KEYS.has(name)) problems.push(`reactionPoses.${name}: unknown reaction`);
     for (const tier of Object.keys(rig.reactionPoses[name]?.byTier ?? {})) {
       if (!DIALOGUE_TIERS.includes(tier)) problems.push(`reactionPoses.${name}: unknown tier ${tier}`);
     }
@@ -97,6 +101,9 @@ function motionProblems(motion = {}) {
       problems.push(`motion.${key}.amount must be between 0 and 1`);
     }
   }
+  for (const [id, seconds] of Object.entries(motion.ease ?? {})) {
+    if (typeof seconds !== "number" || !(seconds > 0)) problems.push(`motion.ease.${id} must be a number of seconds above 0`);
+  }
   return problems;
 }
 
@@ -107,6 +114,12 @@ async function outfitProblems(rig, name, { readJson, mocIds }) {
   const parts = { ...rig.parts, ...outfit.parts };
   const hotspots = { ...rig.hotspots, ...outfit.hotspots };
   const problems = [...hotspotProblems(hotspots, parts), ...variantProblems(outfit), ...spotsProblems(rig, name), ...onlyProblems(rig, name), ...partBlushProblems(rig.partBlush, parts)];
+  if (rig.holdGaze != null && !["steady", "shy"].includes(rig.holdGaze)) problems.push('holdGaze must be "steady" or "shy"');
+  if (rig.heartRate != null) {
+    const { resting, scale } = rig.heartRate;
+    if (resting != null && !(resting > 0)) problems.push("heartRate.resting must be a positive bpm");
+    if (scale != null && !(scale >= 0)) problems.push("heartRate.scale must be 0 or more");
+  }
 
   if (typeof outfit.model !== "string") return [...problems, "`model` must name a model3.json"];
   let model = null;
@@ -119,7 +132,9 @@ async function outfitProblems(rig, name, { readJson, mocIds }) {
   if (!refs) return [...problems, `model ${outfit.model} does not load`];
 
   const expressions = new Set((refs.Expressions ?? []).map((e) => e.Name));
-  for (const [mood, exprs] of Object.entries(rig.expressions?.moods ?? {})) {
+  // Shared moods plus the outfit's own (outfits.<name>.expressions.moods).
+  const moods = { ...rig.expressions?.moods, ...outfit.expressions?.moods };
+  for (const [mood, exprs] of Object.entries(moods)) {
     if (!Array.isArray(exprs)) {
       problems.push(`moods.${mood} must be a list of expressions`);
       continue;
@@ -158,11 +173,14 @@ function variantProblems(outfit) {
     : [`dialogueVariant must be one of ${DIALOGUE_VARIANTS.join(", ")}`];
 }
 
-// `spots` (optional): background files the outfit is worn at, always and
-// only there (meetActivity.js dressForVariant). The default outfit is the
-// fallback everywhere else, so it can't be spot-bound.
+// `spots` (optional): background files the outfit is worn only at, through
+// the roll there; `always: true` makes it worn every time at them
+// (meetActivity.js pickOutfit). The default outfit is the fallback everywhere
+// else, so it can't be spot-bound.
 function spotsProblems(rig, name) {
-  const spots = rig.outfits[name].spots;
+  const { spots, always } = rig.outfits[name];
+  if (always != null && always !== true) return ["`always` must be true or left out"];
+  if (always && spots == null) return ["`always` needs `spots`"];
   if (spots == null) return [];
   if (!Array.isArray(spots) || !spots.length || !spots.every((f) => typeof f === "string" && f.endsWith(".png"))) {
     return ["`spots` must list background .png files"];

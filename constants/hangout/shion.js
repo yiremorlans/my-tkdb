@@ -6,6 +6,8 @@
 // Sparse, flat, childish and cruel; fear is "being happy". "My wife" from
 // warm on, never new/known (user, 2026-10-31). No water/mermaid hints, no swap explained, no favors,
 // no hunting. Guarded spots (lips, chest, hips) stay serious until spark.
+// Head pats land on his hat (the model has no hair under it): no hair,
+// scalp or hand-temperature lines. The hat never comes off (user, 2026-11-01).
 
 export default {
   new: {
@@ -31,7 +33,7 @@ export default {
   known: {
     headPat: [
       "...You again. Fine.",
-      "...Hm. Your hand's cold.",
+      "Hm. You like my hat that much?",
     ],
     cheekPoke: ["Bored? Me too.", "...You're getting cocky."],
     lipsTouch: ["...Don't. I didn't say you could.", "...Leave my lips alone."],
@@ -55,7 +57,10 @@ export default {
     ],
   },
   warm: {
-    headPat: ["...Again.", "Don't stop. That's an order."],
+    headPat: [
+      "...Tilt it back. I want to see your face.",
+      "Now it's crooked. Fix it. That's an order.",
+    ],
     cheekPoke: [
       "Hehehe. You're in a mood.",
       "Poke me again and I'll scribble on your face.",
@@ -84,7 +89,7 @@ export default {
     ],
   },
   spark: {
-    headPat: ["...Closer. Do it properly.", "Only you. Remember that."],
+    headPat: ["Hat's in the way? Good. Earn the rest.", "Only you. Remember that."],
     cheekPoke: [
       "Your face is red. I like it.",
       "Poke me again. I'm keeping count.",
@@ -117,8 +122,8 @@ export default {
   },
   close: {
     headPat: [
-      "Keep going. You stop when I say.",
-      "...Good. My wife's getting it right.",
+      "Want it off? ...Keep wanting. Hehehe.",
+      "Hat stays on. My wife can keep trying.",
     ],
     cheekPoke: [
       "Hehehe. Again. I'm not done.",

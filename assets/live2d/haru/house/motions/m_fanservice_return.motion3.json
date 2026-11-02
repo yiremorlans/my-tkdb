@@ -1,0 +1,994 @@
+{
+  "Version": 3,
+  "Meta": {
+    "Duration": 1.083,
+    "Fps": 60,
+    "Loop": false,
+    "AreBeziersRestricted": true,
+    "FadeInTime": 0.1,
+    "FadeOutTime": 0.1,
+    "CurveCount": 56,
+    "TotalSegmentCount": 116,
+    "TotalPointCount": 262,
+    "UserDataCount": 0,
+    "TotalUserDataSize": 0
+  },
+  "Curves": [
+    {
+      "Target": "Parameter",
+      "Id": "ParamAngleX",
+      "Segments": [
+        0,
+        0,
+        0,
+        0.333,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamAngleY",
+      "Segments": [
+        0,
+        0,
+        0,
+        0.333,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamAngleZ",
+      "Segments": [
+        0,
+        -30,
+        1,
+        0.111,
+        -30,
+        0.222,
+        0,
+        0.333,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmChange",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamBodyAngleX",
+      "Segments": [
+        0,
+        -10,
+        1,
+        0.139,
+        -10,
+        0.278,
+        0.2,
+        0.417,
+        0.2,
+        1,
+        0.53367,
+        0.2,
+        0.65033,
+        0,
+        0.767,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamBodyAngleY",
+      "Segments": [
+        0,
+        0,
+        1,
+        0.111,
+        0,
+        0.222,
+        1.466,
+        0.333,
+        1.466,
+        1,
+        0.39433,
+        1.466,
+        0.45567,
+        0.941,
+        0.517,
+        0.197,
+        1,
+        0.55567,
+        -0.276,
+        0.59433,
+        -0.4,
+        0.633,
+        -0.4,
+        1,
+        0.70533,
+        -0.4,
+        0.77767,
+        0,
+        0.85,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamBodyAngleZ",
+      "Segments": [
+        0,
+        10,
+        1,
+        0.13333,
+        10,
+        0.26667,
+        0,
+        0.4,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamUpperBody",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamShoulderL",
+      "Segments": [
+        0,
+        -0.474,
+        1,
+        0.10567,
+        -0.474,
+        0.21133,
+        0.097,
+        0.317,
+        0.097,
+        1,
+        0.439,
+        0.097,
+        0.561,
+        -0.067,
+        0.683,
+        -0.067,
+        1,
+        0.75533,
+        -0.067,
+        0.82767,
+        0,
+        0.9,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamShoulderR",
+      "Segments": [
+        0,
+        2,
+        1,
+        0.10567,
+        2,
+        0.21133,
+        0.261,
+        0.317,
+        0.098,
+        1,
+        0.439,
+        -0.091,
+        0.561,
+        -0.064,
+        0.683,
+        -0.064,
+        1,
+        0.75533,
+        -0.064,
+        0.82767,
+        0,
+        0.9,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamBreath",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLegR",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamLegL",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmR01",
+      "Segments": [
+        0,
+        -50,
+        1,
+        0.20567,
+        -50,
+        0.41133,
+        -13.58801,
+        0.617,
+        -2.825,
+        1,
+        0.70033,
+        2.15801,
+        0.78367,
+        0.076,
+        0.867,
+        0,
+        1,
+        0.939,
+        0,
+        1.011,
+        -0.046,
+        1.083,
+        -0.046
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmR02",
+      "Segments": [
+        0,
+        89.5,
+        1,
+        0.17233,
+        89.5,
+        0.34467,
+        5.875,
+        0.517,
+        2.137,
+        1,
+        0.65033,
+        -0.758,
+        0.78367,
+        0,
+        0.917,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmR03",
+      "Segments": [
+        0,
+        4.8,
+        1,
+        0.139,
+        4.8,
+        0.278,
+        -2.379,
+        0.417,
+        -2.379,
+        1,
+        0.567,
+        -2.379,
+        0.717,
+        0,
+        0.867,
+        0,
+        1,
+        0.939,
+        0.156,
+        1.011,
+        0.003,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmR3_1",
+      "Segments": [
+        0,
+        2.5,
+        1,
+        0.361,
+        2.5,
+        0.722,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmR04",
+      "Segments": [
+        0,
+        -11,
+        1,
+        0.261,
+        -11,
+        0.522,
+        0,
+        0.783,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmR05",
+      "Segments": [
+        0,
+        -4,
+        1,
+        0.05,
+        -4,
+        0.1,
+        -9.13399,
+        0.15,
+        -14.768,
+        1,
+        0.189,
+        -19.15001,
+        0.228,
+        -20,
+        0.267,
+        -20,
+        1,
+        0.37233,
+        -20,
+        0.47767,
+        0,
+        0.583,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmR06",
+      "Segments": [
+        0,
+        -1,
+        0,
+        1.083,
+        -1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmR07",
+      "Segments": [
+        0,
+        0,
+        0,
+        0.267,
+        0,
+        1,
+        0.41133,
+        0,
+        0.55567,
+        -1,
+        0.7,
+        -1,
+        0,
+        1.083,
+        -1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmR08",
+      "Segments": [
+        0,
+        -0.5,
+        0,
+        0.267,
+        -0.5,
+        1,
+        0.41133,
+        -0.5,
+        0.55567,
+        -1,
+        0.7,
+        -1,
+        0,
+        1.083,
+        -1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmR10",
+      "Segments": [
+        0,
+        0,
+        1,
+        0.089,
+        0,
+        0.178,
+        0,
+        0.267,
+        -0.114,
+        1,
+        0.41133,
+        -0.356,
+        0.55567,
+        -1,
+        0.7,
+        -1,
+        0,
+        1.083,
+        -1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamHandR01",
+      "Segments": [
+        0,
+        0,
+        2,
+        0.25,
+        0,
+        2,
+        0.267,
+        1,
+        2,
+        1.083,
+        1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamHandR02",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamHandR03",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamHandR04",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamHandR05",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamHandR06",
+      "Segments": [
+        0,
+        1,
+        2,
+        0.25,
+        1,
+        2,
+        0.267,
+        0,
+        2,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamHandR07",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmL01",
+      "Segments": [
+        0,
+        -19.5,
+        1,
+        0.189,
+        -19.5,
+        0.378,
+        -1.027,
+        0.567,
+        -0.414,
+        1,
+        0.739,
+        0.146,
+        0.911,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmL02",
+      "Segments": [
+        0,
+        17.553,
+        1,
+        0.2,
+        17.553,
+        0.4,
+        0,
+        0.6,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmL03",
+      "Segments": [
+        0,
+        5.44,
+        1,
+        0.12767,
+        5.44,
+        0.25533,
+        2.205,
+        0.383,
+        0.281,
+        1,
+        0.45533,
+        0.281,
+        0.52767,
+        -0.645,
+        0.6,
+        -0.645,
+        1,
+        0.67767,
+        -0.645,
+        0.75533,
+        0,
+        0.833,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmL3_1",
+      "Segments": [
+        0,
+        4.5,
+        1,
+        0.05567,
+        4.5,
+        0.11133,
+        4.626,
+        0.167,
+        3.96,
+        1,
+        0.239,
+        3.095,
+        0.311,
+        0,
+        0.383,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmL04",
+      "Segments": [
+        0,
+        0,
+        0,
+        0.6,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmL05",
+      "Segments": [
+        0,
+        0,
+        0,
+        0.6,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmL06",
+      "Segments": [
+        0,
+        -1,
+        0,
+        1.083,
+        -1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmL07",
+      "Segments": [
+        0,
+        0,
+        0,
+        0.417,
+        0,
+        1,
+        0.42033,
+        -0.00328,
+        0.42367,
+        -0.99672,
+        0.427,
+        -1,
+        0,
+        1.083,
+        -1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmL08",
+      "Segments": [
+        0,
+        -0.5,
+        0,
+        0.417,
+        -0.5,
+        1,
+        0.42033,
+        -0.50215,
+        0.42367,
+        -0.99785,
+        0.427,
+        -1,
+        0,
+        1.083,
+        -1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamArmL10",
+      "Segments": [
+        0,
+        -0.3,
+        1,
+        0.089,
+        -0.3,
+        0.178,
+        -0.433,
+        0.267,
+        -0.6,
+        1,
+        0.42233,
+        -0.892,
+        0.57767,
+        -1,
+        0.733,
+        -1,
+        0,
+        1.083,
+        -1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamHandL01",
+      "Segments": [
+        0,
+        0,
+        2,
+        0.25,
+        0,
+        2,
+        0.267,
+        1,
+        2,
+        1.083,
+        1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamHandL02",
+      "Segments": [
+        0,
+        1,
+        2,
+        0.25,
+        1,
+        2,
+        0.267,
+        0,
+        2,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamHandL03",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamHandL04",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamHandL05",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamHandL06",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamHandL07",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamKaiiAngleX",
+      "Segments": [
+        0,
+        0,
+        0,
+        0.267,
+        0,
+        0,
+        0.683,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamKaiiAngleY",
+      "Segments": [
+        0,
+        0,
+        0,
+        0.267,
+        0,
+        1,
+        0.339,
+        0,
+        0.411,
+        -30,
+        0.483,
+        -30,
+        1,
+        0.54967,
+        -30,
+        0.61633,
+        0,
+        0.683,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamMonsterBodyZ",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamKaiiBreath",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamSquash",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamKaiiEar",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamKaiiEar2",
+      "Segments": [
+        0,
+        0,
+        0,
+        1.083,
+        0
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamKaiiEyeLOpen",
+      "Segments": [
+        0,
+        1,
+        0,
+        1.083,
+        1
+      ]
+    },
+    {
+      "Target": "Parameter",
+      "Id": "ParamKaiiEyeROpen",
+      "Segments": [
+        0,
+        1,
+        0,
+        1.083,
+        1
+      ]
+    }
+  ]
+}

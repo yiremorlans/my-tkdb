@@ -7,7 +7,10 @@
 //   parts.<id>             Live2D drawable ids a hotspot's `part` names; its
 //                          rect is in their combined bounds, as they move
 //   expressions.moods      mood -> Live2D expressions stacked to draw it
-//                          (smile_blush: smile + blush)
+//                          (smile_blush: smile + blush); outfits.<name>.
+//                          expressions.moods adds moods only that outfit's
+//                          model can draw. `tease` (optional) is his face
+//                          while a tease hold runs (preview.js)
 //   reactionPoses          reaction -> Live2D pose group it also plays, or
 //                          { byTier: { <tier>: group } } (nearest lower tier);
 //                          `guarded` is the pose he holds once locked out
@@ -17,6 +20,10 @@
 //   motion.breath.amount   how much of the breathing to keep (0-1)
 //   motion.sway.amount     the plugin's own head/body sway (CubismBreath),
 //                          which the game doesn't use: 0 (off) unless set
+//   heartRate              { resting, scale }: the heart monitor's resting
+//                          bpm and how far holds raise it (PULSE)
+//   holdGaze               "steady" (default) or "shy": during a hold, a shy
+//                          gaze breaks eye contact now and then (SHY_GAZE)
 //   partBlush              { parts?, color? }: tints those parts' drawables
 //                          (default the ears, ear_r + ear_l) toward `color`
 //                          (RGB 0-1, multiplied; default PART_BLUSH.color)
@@ -64,12 +71,128 @@ const CLENCH_RELEASE = 0.15;
 // seconds to the peak; it settles by ~6 peaks.
 const FLINCH = { peak: 0.14, head: 5, body: 2.5, recoil: 3, shoulders: 0.5 };
 
+// A shy "not right now" (shakeHead; the preview's caught tease): `turns`
+// slow side-to-side turns of the head (ParamAngleX, `angle` degrees,
+// fading as they go; the body follows by `body` of that, 0 so it's just
+// the head), each `period`
+// seconds, with the chin dipped by `chin` degrees and the eyes lowered to
+// EyeBall Y `eyes`. The dip and lowered eyes come in over `in` seconds,
+// hold through the shake and ease back over `settle`. Shared by every rig,
+// like the flinch: only Towa's model has a head-shake clip of its own.
+// A small gasp (gasp(); the caught tease): the lips part to `open` of the
+// mouth's range with a hint of surprise, the brows up by `brow` and the
+// eyes a touch wider (`eyes` more of their range), over `in` seconds,
+// held `hold`, then eased shut over `out`. Talking owns the mouth, so a
+// line said after it flaps over whatever is left.
+const GASP = { open: 0.35, brow: 0.35, eyes: 0.12, in: 0.12, hold: 0.3, out: 0.55 };
+
+const HEAD_SHAKE = { turns: 2, period: 0.6, angle: 7, body: 0, chin: 5, eyes: -0.45, in: 0.25, settle: 0.8 };
+
 // partBlush defaults: which parts redden, and the tint at a full blush.
 const PART_BLUSH = { parts: ["ear_r", "ear_l"], color: [1, 0.62, 0.62] };
 
 // Warmth (§12.7, prototype): the resting blush at full warmth, as a share of
 // ParamCheek, and how much faster he breathes at full warmth.
-const WARMTH = { blush: 0.6, breathRate: 1.4 };
+// `curve` bends warmth's blush (warmth ^ curve) so a little warmth already
+// shows: the blush art is too soft to see below about a third.
+const WARMTH = { blush: 1, curve: 0.6, breathRate: 1.4 };
+
+// Past the blush cap (§12.7 prototype): warmth the cheeks can't show any
+// more deepens the blush patch itself (the drawables ParamCheek fades in,
+// found at load) toward DEEP.patch, and the ears (partBlush) by the same
+// factor on top of their full-blush tint, so the two stay one flush. `span`
+// is the overflow (in ParamCheek units over its max) at their deepest.
+const DEEP = { patch: [0.88, 0.62, 0.66], span: 0.6 };
+
+// Holds (prototype). A hold builds one level from 0 to 1 over `build`
+// seconds and lets it fall over `release` seconds once let go. Each effect
+// comes in over its own band of that level (`bands`, smoothstepped), scaled
+// by the hold's weight for it (setHold); let go, every effect falls
+// together from where it was (applyWarmth):
+//   look       the hold look (HOLD_LOOK); first, so his eyes lead
+//   blush      added to ParamCheek on top of warmth (overflow deepens it);
+//              it falls with the level, leaving warmth's blush behind
+//   heartbeat  breathing quickens up to HOLD.breathRate x, and his pulse
+//              (heartRate) climbs
+//   glance     just the glance at the touch (HOLD_LOOK glance*), then his
+//              eyes go back to his mood's: no lowered lids or upward look
+//   pulse      the heartbeat check: nothing shows on him (he keeps his
+//              breathing even and acts cool); the monitor reads his pulse
+//              (PULSE) as it already is, nudged up a little by the hand
+//   lips       last, near the top: the lips part with each breath, up to
+//              HOLD.lips of the mouth's range (wider with warmth), never
+//              while he talks, relaxing a smile to HOLD.smile so the gap
+//              shows
+//   bliss      tease only, past the top of a long hold: his brows give way
+//              (BLISS) and his eyes flutter shut now and then
+const HOLD = {
+  breathRate: 1.6,
+  lips: 0.6,
+  smile: 0.2,
+  build: 8,
+  // Seconds a mid-hold change of weights (the check sliding into tease)
+  // crossfades over, instead of switching in one frame.
+  blend: 2,
+  release: 4,
+  bands: { look: [0, 0.3], glance: [0, 0.05], blush: [0, 0.7], pulse: [0, 0.4], heartbeat: [0.15, 0.8], lips: [0.75, 1], bliss: [0.85, 1] },
+};
+
+// Tease's bliss at full strength: the brows give way (ParamBrow*Form toward
+// the soft, lifted-inner shape e_komari_00 uses, the brows themselves up a
+// little by `browUp`), the lids grow heavy by `lids`, and every `every`
+// seconds (a random span) the eyes fall shut for `blink` seconds, slower
+// than a blink, before they open again.
+const BLISS = { browForm: -0.8, browUp: 0.3, lids: 0.25, blink: [0.5, 0.8], every: [1.4, 3] };
+
+// Tease's crest (setCrest, 0-1; the preview drives it): it's too much. His
+// breath catches (breathing slows by up to `catch`), the blush climbs past
+// its cap by `blush` (ParamCheek units, so the ears and patch deepen) and
+// his eyes squeeze shut; his pulse climbs by `bpm`.
+const CREST = { catch: 0.85, blush: 0.6, bpm: 25 };
+
+// The heart monitor's pulse (heartRate): how riled up he is right now,
+// running all the time, so checking it shows that number at once. At
+// rest he's at `resting` (fit young men, below the textbook 72); warmth
+// (from taps, strokes, answers, tease) raises it by up to `warmth` bpm, a
+// hand on his chest (the check, tease) nudges it up by `held` as the hold
+// comes in, and a crest adds CREST.bpm. It lags its
+// target like a real pulse, rising over about `rise` seconds and settling
+// over `settle`. rig.json `heartRate: { resting, scale }` overrides it for
+// a character (Zenji, a ghost, and Edward, a vampire, run very slow);
+// `scale` multiplies the rise.
+const PULSE = { resting: 60, warmth: 50, held: 6, rise: 1.5, settle: 5, sway: 3 };
+// `sway`: the beat quickens by up to that many bpm as he breathes in and
+// slows as he breathes out (heartRate; the breathing's own phase), so the
+// beats bunch on the inhale like a real heart's. The monitor's number shows
+// the steady pulse (pulseBpm) under it. `scale` shrinks it too.
+
+// The hold look at full strength: eyes to the viewer (EyeBall toward 0,
+// lifted by `lookUp` so he looks up through his lashes, any crescent smile
+// undone), lids lowered by `lids`, chin dipped by `chin` degrees. When a
+// hold starts he first glances at where he's touched (setHold `glance`, in
+// EyeBall units) for `glanceHold` seconds, then lifts his eyes to yours
+// over `glanceLift` seconds; his eyes follow faster than the rest of the
+// look builds (`eyes` x its weight). The glance eases down over
+// `glanceIn` seconds (a one-frame snap read as the irises jumping) and the
+// head dips with it, up to `glanceChin` degrees for a glance straight down,
+// so the eyes don't do all the travel; the dip lifts with the eyes.
+export const HOLD_LOOK = {
+  lookUp: 0.4,
+  lids: 0.15,
+  chin: 5,
+  glanceIn: 0.35,
+  glanceHold: 1.1,
+  glanceLift: 1.1,
+  glanceChin: 6,
+  eyes: 1.6,
+  // A repeat glance (setHold glanceEvery) goes straight down, not to the touch.
+  glanceDown: [0, -0.7],
+};
+
+// rig.json `holdGaze`: "steady" (default) holds your eyes; "shy" breaks
+// contact now and then, glancing aside and down (`to`) for `away` seconds
+// every `every` seconds (a random span), easing over `ease` seconds.
+const SHY_GAZE = { to: [0.65, -0.35], away: [0.6, 1.1], every: [2.2, 4.2], ease: 0.18 };
 
 /**
  * Fetches `${baseUrl}/rig.json` and its sounds. The dev server also checks
@@ -121,6 +244,9 @@ function withOutfit(rig, name = rig.defaultOutfit) {
     outfit: name,
     parts: { ...shared.parts, ...outfit.parts },
     hotspots: { ...shared.hotspots, ...outfit.hotspots },
+    // An outfit's own moods (expressions only its model has: Haru's casual
+    // open eyes) are added to the shared ones, never replacing the set.
+    expressions: { ...shared.expressions, moods: { ...shared.expressions?.moods, ...outfit.expressions?.moods } },
   };
 }
 
@@ -213,15 +339,30 @@ export class Live2DRig {
     model.internalModel.eyeBlink = undefined;
     this.blinkIds = (settings.getEyeBlinkParameters?.() ?? []).map((id) => this.paramIndex.get(id)).filter((i) => i != null);
     this.lastBlinkAt = performance.now();
-    model.internalModel.on("afterMotionUpdate", () => this.dampIdle());
+    // Parameters rig.json motion.ease slows: { id: seconds } for a full
+    // min-to-max change. The clips switch them in one 0.1s fade (Lyca's
+    // ears pop out with ParamBeastEarOnoff); this ramps toward whatever the
+    // motions want, before physics so the ears still bounce as they rise.
+    this.eased = Object.entries(this.rig.motion?.ease ?? {})
+      .map(([id, seconds]) => ({ i: this.paramIndex.get(id), seconds, value: null }))
+      .filter((p) => p.i != null && p.seconds > 0);
+    this.easeAt = performance.now();
+    model.internalModel.on("afterMotionUpdate", () => {
+      this.dampIdle();
+      this.applyEase();
+    });
     model.internalModel.on("beforeModelUpdate", () => {
       this.dampBreath();
       this.blink();
       this.applyMood();
       this.applyWarmth();
       this.applyPartBlush();
+      this.applyLips();
       this.applyFlinch();
+      this.applyShake();
+      this.applyGasp();
       this.applyTalk();
+      this.applyHiddenParts();
     });
     this.setupPartBlush();
     this.setMood(this.moodName);
@@ -327,6 +468,20 @@ export class Live2DRig {
     for (const i of this.idleParams) values[i] = defaultValues[i] + (values[i] - defaultValues[i]) * k;
   }
 
+  applyEase() {
+    const now = performance.now();
+    const dt = Math.min(0.1, (now - this.easeAt) / 1000);
+    this.easeAt = now;
+    const { values, minimumValues, maximumValues } = this.raw.parameters;
+    for (const p of this.eased) {
+      const target = values[p.i];
+      if (p.value == null) p.value = target; // start where the model loads
+      const step = ((maximumValues[p.i] - minimumValues[p.i]) * dt) / p.seconds;
+      p.value += Math.max(-step, Math.min(step, target - p.value));
+      values[p.i] = p.value;
+    }
+  }
+
   // Scales the eyes by the blink's openness (0 shut, 1 open) instead of
   // setting them, so a pose or clip that narrows the eyes keeps doing so.
   blink() {
@@ -370,20 +525,352 @@ export class Live2DRig {
     const dt = Math.min(0.1, now - (this.warmthAt ?? now));
     this.warmthAt = now;
     const w = this.warmth ?? 0;
+    // Holds ease in and out rather than snapping (setHold). Building, each
+    // effect comes in over its own band of the level; letting go, they all
+    // fall together from where they were, so a late band (bliss's brows and
+    // lids, the parted lips) doesn't drop out seconds before the blush and
+    // breath and leave his idle face's brows under a still-flushed face.
+    const prevLevel = this.holdLevel ?? 0;
+    const level = prevLevel + (this.holding ? dt / HOLD.build : -dt / (this.holdRelease ?? HOLD.release));
+    this.holdLevel = Math.min(1, Math.max(0, level));
+    this.lidScale = 1;
+    if (this.holding || prevLevel <= 0) {
+      this.released = null;
+      this.hold = {};
+      for (const [key, [a, b]] of Object.entries(HOLD.bands)) {
+        const x = Math.min(1, Math.max(0, (this.holdLevel - a) / (b - a)));
+        this.hold[key] = (this.weightsNow()[key] ?? 0) * x * x * (3 - 2 * x);
+      }
+    } else {
+      this.released ??= { level: prevLevel, hold: { ...this.hold } };
+      const f = this.holdLevel / this.released.level;
+      const release = this.holdRelease ?? HOLD.release;
+      this.hold = {};
+      for (const [key, v] of Object.entries(this.released.hold)) {
+        // An effect with its own `fall` time gets there sooner.
+        const own = this.holdFall?.[key];
+        const fk = own ? Math.max(0, 1 - (1 - f) * (release / own)) : f;
+        this.hold[key] = v * fk * fk * (3 - 2 * fk);
+      }
+      // `fall.lids`: the heavy lids (the hold look's and bliss's, flutter
+      // included) lift on their own time, ahead of the brows and the rest.
+      const own = this.holdFall?.lids;
+      if (own) {
+        const fk = Math.max(0, 1 - (1 - f) * (release / own));
+        this.lidScale = f > 0 ? Math.min(1, (fk * fk * (3 - 2 * fk)) / (f * f * (3 - 2 * f))) : 0;
+      }
+    }
+    const hb = this.hold.heartbeat;
+    this.updatePulse(dt);
     const period = this.durations?.get("m_breath") ?? 3;
-    const rate = 1 + (WARMTH.breathRate - 1) * w;
+    const crest = this.crest ?? 0;
+    const rate = (1 + (WARMTH.breathRate - 1) * w) * (1 + (HOLD.breathRate - 1) * hb) * (1 - CREST.catch * crest);
     this.breathPhase = ((this.breathPhase ?? 0) + (dt * rate) / period) % 1;
-    if (!w || !this.model) return;
+    this.cheekOverflow = 0;
+    if (!this.model) return;
     const { values, minimumValues, maximumValues, defaultValues } = this.raw.parameters;
     const cheek = this.paramIndex.get("ParamCheek");
-    if (cheek != null) values[cheek] = Math.min(maximumValues[cheek], values[cheek] + w * WARMTH.blush);
+    if (!w && hb < 0.01 && this.hold.blush < 0.01 && crest < 0.01) return;
+    if (cheek != null) {
+      const want = values[cheek] + w ** WARMTH.curve * WARMTH.blush + this.hold.blush + CREST.blush * crest;
+      this.cheekOverflow = Math.max(0, want - maximumValues[cheek]) / (maximumValues[cheek] || 1);
+      values[cheek] = Math.min(maximumValues[cheek], want);
+    }
     const b = this.breathIndex;
     if (b != null) {
       const k = this.rig.motion?.breath?.amount ?? 1;
       const sine = minimumValues[b] + ((maximumValues[b] - minimumValues[b]) * (1 - Math.cos(2 * Math.PI * this.breathPhase))) / 2;
-      const quick = defaultValues[b] + (sine - defaultValues[b]) * k;
-      values[b] += (quick - values[b]) * w;
+      // A heartbeat hold breathes deeper as well as faster: past the rig's
+      // damping (motion.breath.amount) toward the full range, or a rig
+      // damped on a soft ParamBreath (Elias) shows no change at all.
+      const depth = k + (1 - k) * hb;
+      const quick = defaultValues[b] + (sine - defaultValues[b]) * depth;
+      values[b] += (quick - values[b]) * Math.max(w, hb);
     }
+  }
+
+  /**
+   * A hold in progress (prototype): { heartbeat, pulse, lips, look, peek,
+   * blush, bliss }, each 0-1, and `glance` [x, y], where he looks first; {}
+   * ends it. `peek` is the glance alone, without the hold look.
+   * `glanceEvery` [min, max] seconds: once a glance is done, he glances
+   * down (HOLD_LOOK.glanceDown) after a random span in that range, again
+   * and again (tease); without it he glances once, at the touch. A shy
+   * gaze (holdGaze) breaks eye contact on top of these.
+   * Calling it again mid-hold (the heartbeat check sliding into tease)
+   * keeps the level and crossfades to the new weights over HOLD.blend
+   * seconds; a glance in progress carries on.
+   * Ending it, `release` overrides HOLD.release: the seconds the effects
+   * take to fall (tease's comedown after the break is far slower); `fall`
+   * gives single effects their own, shorter time ({ lips: 8 }; `lids`
+   * is the heavy lids alone, out of the look and bliss); and
+   * `glances: false` ends the glancing at once.
+   */
+  setHold({ heartbeat = 0, pulse = 0, lips = 0, look = 0, peek = 0, blush = 0, bliss = 0, glance = null, glanceEvery = null } = {}, { release = null, fall = null, glances = true } = {}) {
+    this.holding = Boolean(heartbeat || pulse || lips || look || peek || blush || bliss);
+    this.holdRelease = this.holding ? null : release;
+    this.holdFall = this.holding ? null : fall;
+    // Ending with `glances: false` stops any glance (and its repeats) now.
+    if (!this.holding && !glances) this.glance = null;
+    this.glancesOff = !this.holding && !glances;
+    if (!this.holding) this.wasHolding = false;
+    // Letting go keeps the weights, so the effects fall with the level.
+    if (!this.holding) return;
+    const next = { heartbeat, pulse, lips, look, glance: peek, blush, bliss };
+    const now = performance.now() / 1000;
+    // Mid-hold, crossfade from where the weights are now (HOLD.blend), and
+    // the glance in progress carries on; a new hold starts both fresh.
+    const midHold = this.holdWeights && (this.holdLevel ?? 0) > 0 && this.wasHolding;
+    this.blend = midHold ? { from: this.weightsNow(), at: now } : null;
+    this.holdWeights = next;
+    this.wasHolding = true;
+    if (midHold && this.glance && (look || peek)) this.glance.every = glanceEvery;
+    else this.glance = look || peek ? { at: now, to: glance, every: glanceEvery } : null;
+  }
+
+  // The hold's weights this frame: holdWeights, or partway there from the
+  // last ones while a crossfade (setHold mid-hold) runs.
+  weightsNow() {
+    const to = this.holdWeights ?? {};
+    const b = this.blend;
+    if (!b) return to;
+    const x = Math.min(1, (performance.now() / 1000 - b.at) / HOLD.blend);
+    if (x >= 1) {
+      this.blend = null;
+      return to;
+    }
+    const k = x * x * (3 - 2 * x);
+    const out = {};
+    for (const key of new Set([...Object.keys(b.from), ...Object.keys(to)])) {
+      out[key] = (b.from[key] ?? 0) + ((to[key] ?? 0) - (b.from[key] ?? 0)) * k;
+    }
+    return out;
+  }
+
+  // 0-1, how far the glance has gone onto the touch: eases in, holds, eases
+  // back off; with `every`, the next one is scheduled once it's back.
+  glanceToward() {
+    const g = this.glance;
+    if (!g?.to) return 0;
+    const now = performance.now() / 1000;
+    const { glanceIn, glanceHold, glanceLift } = HOLD_LOOK;
+    if (g.every && now - g.at > glanceIn + glanceHold + glanceLift) {
+      const [a, b] = g.every;
+      g.at = now + a + Math.random() * (b - a);
+      g.to = HOLD_LOOK.glanceDown;
+    }
+    const ease = (x) => {
+      const c = Math.min(1, Math.max(0, x));
+      return c * c * (3 - 2 * c);
+    };
+    const t = now - g.at;
+    return ease(t / glanceIn) * (1 - ease((t - glanceIn - glanceHold) / glanceLift));
+  }
+
+  // The hold look: eye contact, lowered lids, a dipped chin. Over the mood,
+  // so whatever face plays, he looks at you while you hold.
+  applyHoldLook(h) {
+    const { values, minimumValues, maximumValues } = this.raw.parameters;
+    const set = (id, fn) => {
+      const i = this.paramIndex.get(id);
+      if (i != null) values[i] = Math.min(maximumValues[i], Math.max(minimumValues[i], fn(values[i])));
+    };
+    // Where the eyes go: the glance at the touch first, then up to you.
+    let gx = 0;
+    let gy = HOLD_LOOK.lookUp;
+    let eyes = Math.min(1, h * HOLD_LOOK.eyes);
+    let dip = 0;
+    const g = this.glance;
+    if (g?.to) {
+      // 0 -> 1 onto the touch, held, then eases back to 0
+      // A crest holds his eyes still: glances fade out as it builds.
+      const toward = this.glanceToward() * (1 - (this.crest ?? 0));
+      gx = g.to[0] * toward;
+      gy = g.to[1] * toward + HOLD_LOOK.lookUp * (1 - toward);
+      eyes = Math.max(eyes, toward);
+      dip = HOLD_LOOK.glanceChin * Math.max(0, -g.to[1]) * toward;
+      // Looking down, his eyes stay open: the heavy lids (this look's and
+      // bliss's) lift as far as he's glancing down, or on some art (Haru's)
+      // the lids, the dip and the lowered irises hide the eyes.
+      this.glanceDown = g.to[1] < 0 ? toward : 0;
+    } else {
+      this.glanceDown = 0;
+    }
+    // A shy gaze's glances away stop at a crest, and after a hold that
+    // ended with `glances: false` (the break).
+    const shy = this.glancesOff ? null : this.shyGlance(eyes);
+    if (shy) {
+      const k = shy.k * (1 - (this.crest ?? 0));
+      gx += (shy.dir * SHY_GAZE.to[0] - gx) * k;
+      gy += (SHY_GAZE.to[1] - gy) * k;
+    }
+    set("ParamEyeBallX", (v) => v + (gx - v) * eyes);
+    set("ParamEyeBallY", (v) => v + (gy - v) * eyes);
+    // A crescent smile (ParamEye*Smile) shuts the eyes; contact needs them open.
+    for (const id of ["ParamEyeLSmile", "ParamEyeRSmile"]) set(id, (v) => v * (1 - eyes));
+    const lidsUp = 1 - (this.glanceDown ?? 0);
+    for (const id of ["ParamEyeLOpen", "ParamEyeROpen"]) set(id, (v) => v * (1 - HOLD_LOOK.lids * h * (this.lidScale ?? 1) * lidsUp));
+    set("ParamAngleY", (v) => v - HOLD_LOOK.chin * h - dip);
+  }
+
+  // The glance alone (setHold `peek`): eyes and chin to the touch, held,
+  // then back to whatever his mood has, the same timing as the hold look's.
+  applyGlance(k) {
+    const g = this.glance;
+    if (!g?.to) return;
+    const toward = k * this.glanceToward();
+    if (toward < 0.001) return;
+    const { values, minimumValues, maximumValues } = this.raw.parameters;
+    const set = (id, fn) => {
+      const i = this.paramIndex.get(id);
+      if (i != null) values[i] = Math.min(maximumValues[i], Math.max(minimumValues[i], fn(values[i])));
+    };
+    set("ParamEyeBallX", (v) => v + (g.to[0] - v) * toward);
+    set("ParamEyeBallY", (v) => v + (g.to[1] - v) * toward);
+    for (const id of ["ParamEyeLSmile", "ParamEyeRSmile"]) set(id, (v) => v * (1 - toward));
+    set("ParamAngleY", (v) => v - HOLD_LOOK.glanceChin * Math.max(0, -g.to[1]) * toward);
+  }
+
+  // A shy gaze's glances away, once he's met your eyes: { dir, k } with k
+  // 0-1 how far away he's looking now, or null.
+  shyGlance(eyes) {
+    if (this.rig.holdGaze !== "shy" || eyes < 0.9) {
+      this.shy = null;
+      return null;
+    }
+    const now = performance.now() / 1000;
+    const span = ([a, b]) => a + Math.random() * (b - a);
+    this.shy ??= { from: now + span(SHY_GAZE.every), to: 0, dir: 1 };
+    const s = this.shy;
+    if (now >= s.to && now >= s.from) {
+      // start the next glance
+      s.to = s.from + span(SHY_GAZE.away);
+      s.dir = Math.random() < 0.5 ? -1 : 1;
+    }
+    if (now > s.to && s.to > 0) {
+      s.from = now + span(SHY_GAZE.every);
+      s.to = 0;
+    }
+    if (now < s.from || s.to === 0) return null;
+    const e = SHY_GAZE.ease;
+    const k = Math.min(1, (now - s.from) / e, (s.to - now) / e);
+    return { dir: s.dir, k: Math.max(0, k) };
+  }
+
+  /** His pulse (PULSE), steady: the monitor's number. */
+  get pulseBpm() {
+    return this.bpm ?? this.rig.heartRate?.resting ?? PULSE.resting;
+  }
+
+  /** His heart's rate this instant: the pulse, swaying with his breath (PULSE.sway). */
+  get heartRate() {
+    const sway = PULSE.sway * (this.rig.heartRate?.scale ?? 1);
+    return this.pulseBpm + sway * Math.sin(2 * Math.PI * (this.breathPhase ?? 0));
+  }
+
+  // Eases this.bpm toward where warmth and the crest put it (PULSE).
+  updatePulse(dt) {
+    const resting = this.rig.heartRate?.resting ?? PULSE.resting;
+    const scale = this.rig.heartRate?.scale ?? 1;
+    const h = this.hold ?? {};
+    const held = PULSE.held * Math.max(h.heartbeat ?? 0, h.pulse ?? 0);
+    const climb = PULSE.warmth * (this.warmth ?? 0) + held + CREST.bpm * (this.crest ?? 0);
+    const target = resting + scale * climb;
+    this.bpm ??= resting;
+    const tau = target > this.bpm ? PULSE.rise : PULSE.settle;
+    this.bpm += (target - this.bpm) * (1 - Math.exp(-dt / tau));
+  }
+
+  // Parted lips: the mouth opens a little with each inhale while a lip or
+  // heartbeat hold runs; talking owns the mouth, so it pauses then.
+  applyLips() {
+    if (!this.hold) return;
+    this.glanceDown = 0; // set by the hold look, if it runs
+    if (this.hold.look > 0.01) this.applyHoldLook(this.hold.look);
+    else if (this.hold.glance > 0.01) this.applyGlance(this.hold.glance);
+    this.applyBliss(this.hold.bliss ?? 0);
+    const part = this.hold.lips;
+    if (part < 0.01 || !this.mouth?.length || this.talking) return;
+    const inhale = (1 - Math.cos(2 * Math.PI * (this.breathPhase ?? 0))) / 2;
+    const open = part * HOLD.lips * (0.6 + 0.4 * (this.warmth ?? 0)) * (0.55 + 0.45 * inhale);
+    const { values, maximumValues } = this.raw.parameters;
+    for (const i of this.mouth) values[i] = Math.max(values[i], open * maximumValues[i]);
+    // A smile's mouth shape draws a small opening shut, so the smile relaxes
+    // toward HOLD.smile while the lips part.
+    const form = this.paramIndex.get("ParamMouthForm");
+    if (form != null && values[form] > HOLD.smile) values[form] += (HOLD.smile - values[form]) * part;
+  }
+
+  /**
+   * Tease's crest (CREST), 0-1; the caller eases it. `eyes` (default k) is
+   * how far his eyes are squeezed shut, apart so they can open at the break
+   * while the rest of the crest comes down slowly.
+   */
+  setCrest(k, eyes = k) {
+    const clamp = (v) => Math.min(1, Math.max(0, v));
+    this.crest = clamp(k);
+    this.crestEyes = clamp(eyes);
+  }
+
+  // Tease's bliss (BLISS): brows give way, lids grow heavy, and the eyes
+  // fall shut now and then. Over the hold look, so the flutter wins.
+  applyBliss(k) {
+    if (k < 0.01) {
+      this.flutter = null;
+      return;
+    }
+    const { values, minimumValues, maximumValues } = this.raw.parameters;
+    const set = (id, fn) => {
+      const i = this.paramIndex.get(id);
+      if (i != null) values[i] = Math.min(maximumValues[i], Math.max(minimumValues[i], fn(values[i])));
+    };
+    for (const id of ["ParamBrowLForm", "ParamBrowRForm"]) set(id, (v) => v + (BLISS.browForm - v) * k);
+    for (const id of ["ParamBrowLY", "ParamBrowRY"]) set(id, (v) => v + BLISS.browUp * k);
+    // The flutter: shut for a span, then open until the next.
+    const now = performance.now() / 1000;
+    const span = ([a, b]) => a + Math.random() * (b - a);
+    this.flutter ??= { from: now + span(BLISS.every) * 0.5, len: span(BLISS.blink) };
+    const f = this.flutter;
+    if (now > f.from + f.len) Object.assign(f, { from: now + span(BLISS.every), len: span(BLISS.blink) });
+    const t = (now - f.from) / f.len;
+    const shut = t >= 0 && t <= 1 ? Math.sin(Math.PI * t) : 0;
+    // A down-glance lifts the heavy lids and holds off the flutter (glanceDown).
+    const lidsUp = 1 - (this.glanceDown ?? 0);
+    const open = (1 - k * (this.lidScale ?? 1) * lidsUp * (BLISS.lids + (1 - BLISS.lids) * shut)) * (1 - (this.crestEyes ?? 0));
+    for (const id of ["ParamEyeLOpen", "ParamEyeROpen"]) set(id, (v) => v * open);
+  }
+
+  // --- hidden parts (preview only) -------------------------------------------
+  // The preview's "Model parts" toggles and ?hide=PartHat,PartX: zero a
+  // part's opacity every frame (after motions and pose3 have written theirs),
+  // for seeing what a layer covers. Children of a part hide with it.
+
+  get partIds() {
+    return Array.from(this.raw.parts.ids);
+  }
+
+  setPartHidden(id, hidden) {
+    this.hiddenParts ??= new Set();
+    this.partRest ??= new Map();
+    const { ids, opacities } = this.raw.parts;
+    const i = ids.indexOf(id);
+    if (i === -1) return;
+    if (hidden) {
+      // Nothing else writes most parts' opacity back, so keep what it was.
+      if (!this.hiddenParts.has(id)) this.partRest.set(id, opacities[i]);
+      this.hiddenParts.add(id);
+    } else {
+      this.hiddenParts.delete(id);
+      opacities[i] = this.partRest.get(id) ?? 1;
+    }
+  }
+
+  applyHiddenParts() {
+    if (!this.hiddenParts?.size) return;
+    // Straight into the core's part opacities: the framework's
+    // setPartOpacityById wants an id handle, not a string, and no-ops.
+    const { ids, opacities } = this.raw.parts;
+    for (let i = 0; i < ids.length; i++) if (this.hiddenParts.has(ids[i])) opacities[i] = 0;
   }
 
   // --- part blush -----------------------------------------------------------
@@ -392,8 +879,14 @@ export class Live2DRig {
   setupPartBlush() {
     const spec = this.rig.partBlush;
     this.blushDrawables = [];
-    if (!spec) return;
+    this.blushCheek = this.paramIndex.get("ParamCheek");
     const core = this.model.internalModel.coreModel;
+    this.patchDrawables = this.findBlushPatch();
+    for (const i of this.patchDrawables) {
+      if (core.setOverrideFlagForDrawableMultiplyColors) core.setOverrideFlagForDrawableMultiplyColors(i, true);
+      else core.setOverwriteFlagForDrawableMultiplyColors(i, true);
+    }
+    if (!spec) return;
     for (const part of spec.parts ?? PART_BLUSH.parts) {
       for (const id of this.rig.parts?.[part] ?? []) {
         const i = this.drawableIndex.get(id);
@@ -404,20 +897,47 @@ export class Live2DRig {
       }
     }
     this.blushColor = spec.color ?? PART_BLUSH.color;
-    this.blushCheek = this.paramIndex.get("ParamCheek");
+  }
+
+  /** The drawables ParamCheek fades in (the cheek blush art), found by
+   * updating the model once at no blush and once at full. */
+  findBlushPatch() {
+    const i = this.blushCheek;
+    if (i == null) return [];
+    const { values, minimumValues, maximumValues } = this.raw.parameters;
+    const saved = Float32Array.from(values);
+    values[i] = minimumValues[i];
+    this.raw.update();
+    const off = Float32Array.from(this.raw.drawables.opacities);
+    values[i] = maximumValues[i];
+    this.raw.update();
+    const on = this.raw.drawables.opacities;
+    const found = [];
+    for (let d = 0; d < on.length; d++) if (on[d] - off[d] > 0.2) found.push(d);
+    values.set(saved);
+    this.raw.update();
+    return found;
   }
 
   applyPartBlush() {
-    if (!this.blushDrawables?.length || this.blushCheek == null) return;
+    if (this.blushCheek == null) return;
     const { values, maximumValues } = this.raw.parameters;
     const max = maximumValues[this.blushCheek] || 1;
+    const deep = Math.min(1, (this.cheekOverflow ?? 0) / DEEP.span);
     const k = Math.min(1, Math.max(0, values[this.blushCheek] / max));
-    if (k === this.blushShown) return;
+    if (k === this.blushShown && deep === this.deepShown) return;
     this.blushShown = k;
-    const [r, g, b] = this.blushColor;
+    this.deepShown = deep;
     const core = this.model.internalModel.coreModel;
+    const [pr, pg, pb] = DEEP.patch;
+    for (const i of this.patchDrawables ?? []) {
+      core.setMultiplyColorByRGBA(i, 1 + (pr - 1) * deep, 1 + (pg - 1) * deep, 1 + (pb - 1) * deep, 1);
+    }
+    if (!this.blushDrawables?.length) return;
+    const [r, g, b] = this.blushColor;
+    const ear = (c, p) => (1 + (c - 1) * k) * (1 + (p - 1) * deep);
     for (const i of this.blushDrawables) {
-      core.setMultiplyColorByRGBA(i, 1 + (r - 1) * k, 1 + (g - 1) * k, 1 + (b - 1) * k, 1);
+      core.setMultiplyColorByRGBA(i, ear(r, pr), ear(g, pg), ear(b, pb), 1);
     }
   }
 
@@ -451,6 +971,81 @@ export class Live2DRig {
       const i = this.paramIndex.get(s === "l" ? "ParamShoulderL" : "ParamShoulderR");
       if (i != null) add(s === "l" ? "ParamShoulderL" : "ParamShoulderR", FLINCH.shoulders * maximumValues[i] * pulse);
     }
+  }
+
+  // --- head shake (HEAD_SHAKE) ----------------------------------------------
+
+  /** A shy head shake, over whatever the mood and pose set. */
+  shakeHead(scale = 1) {
+    this.shakeState = { at: performance.now() / 1000, scale };
+  }
+
+  applyShake() {
+    const st = this.shakeState;
+    if (!st || !this.model) return;
+    const { turns, period, angle, body, chin, eyes, in: rise, settle } = HEAD_SHAKE;
+    const t = performance.now() / 1000 - st.at;
+    const span = turns * period;
+    if (t > span + settle) {
+      this.shakeState = null;
+      return;
+    }
+    const ease = (x) => {
+      const c = Math.min(1, Math.max(0, x));
+      return c * c * (3 - 2 * c);
+    };
+    // The turns fade as they go; the dip and lowered eyes hold, then settle.
+    const sway = t < span ? Math.sin((2 * Math.PI * t) / period) * (1 - t / span) * ease(t / rise) : 0;
+    const dip = ease(t / rise) * (1 - ease((t - span) / settle)) * st.scale;
+    const { values, minimumValues, maximumValues } = this.raw.parameters;
+    const set = (id, fn) => {
+      const i = this.paramIndex.get(id);
+      if (i != null) values[i] = Math.min(maximumValues[i], Math.max(minimumValues[i], fn(values[i])));
+    };
+    set("ParamAngleX", (v) => v + angle * sway * st.scale);
+    set("ParamBodyAngleX", (v) => v + angle * body * sway * st.scale);
+    set("ParamAngleY", (v) => v - chin * dip);
+    set("ParamEyeBallY", (v) => v + (eyes - v) * dip);
+  }
+
+  /** A small gasp (GASP): parted lips and a hint of surprise. */
+  gasp(scale = 1) {
+    this.gaspState = { at: performance.now() / 1000, scale };
+  }
+
+  applyGasp() {
+    const st = this.gaspState;
+    if (!st || !this.model) return;
+    const t = performance.now() / 1000 - st.at;
+    if (t > GASP.in + GASP.hold + GASP.out) {
+      this.gaspState = null;
+      return;
+    }
+    const ease = (x) => {
+      const c = Math.min(1, Math.max(0, x));
+      return c * c * (3 - 2 * c);
+    };
+    const w = st.scale * ease(t / GASP.in) * (1 - ease((t - GASP.in - GASP.hold) / GASP.out));
+    const { values, minimumValues, maximumValues } = this.raw.parameters;
+    const set = (id, fn) => {
+      const i = this.paramIndex.get(id);
+      if (i != null) values[i] = Math.min(maximumValues[i], Math.max(minimumValues[i], fn(values[i], maximumValues[i] - minimumValues[i])));
+    };
+    for (const i of this.mouth ?? []) values[i] = Math.max(values[i], GASP.open * maximumValues[i] * w);
+    for (const id of ["ParamBrowLY", "ParamBrowRY"]) set(id, (v) => v + GASP.brow * w);
+    for (const id of ["ParamEyeLOpen", "ParamEyeROpen"]) set(id, (v, range) => v + GASP.eyes * range * w);
+  }
+
+  /**
+   * Plays a one-shot clip (no _hold/_return, e.g. Towa's
+   * m_shakehead_noloop) on the pose slot, if the model has it and no pose
+   * is on. Returns whether it played.
+   */
+  playClip(group) {
+    if (this.posing || !this.durations?.has(group)) return false;
+    this.model.motion(group, 0, MotionPriority.FORCE);
+    this.idleUntil = performance.now() + this.durations.get(group) * 1000;
+    return true;
   }
 
   // --- talking --------------------------------------------------------------

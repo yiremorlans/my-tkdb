@@ -1,0 +1,142 @@
+{
+  "Type": "Live2D Expression",
+  "FadeInTime": 0.2,
+  "FadeOutTime": 0.2,
+  "Parameters": [
+    {
+      "Id": "ParamBrowLY",
+      "Value": -0.002,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamBrowLX",
+      "Value": 0.058,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamBrowLAngle",
+      "Value": -0.232,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamBrowLForm",
+      "Value": -0.354,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamBrowRY",
+      "Value": -0.32,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamBrowRX",
+      "Value": -0.342,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamBrowRAngle",
+      "Value": -0.712,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamBrowRForm",
+      "Value": 0.132,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamBrowLine1",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamBrowLine2",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamEyeLOpen",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamEyeLSmile",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamEyeLForm",
+      "Value": -0.6,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamEyeROpen",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamEyeRSmile",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamEyeRForm",
+      "Value": -0.8,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamEyeBallX",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamEyeBallY",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamEyeBallHi",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamEyeBallForm",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamMouthForm2",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamMouthForm",
+      "Value": 0.3,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamTooth01",
+      "Value": -1,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamTooth02",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamMouthOnOff1",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamMouthOnOff2",
+      "Value": 0,
+      "Blend": "Add"
+    },
+    {
+      "Id": "ParamMouthOnOff3",
+      "Value": 0,
+      "Blend": "Add"
+    }
+  ]
+}

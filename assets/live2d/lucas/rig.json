@@ -160,6 +160,7 @@
     }
   },
   "reactionPoses": {
+    "caughtTease": "m_iyagari",
     "headPat": "m_ago",
     "cheekPoke": "m_gesture",
     "lipsTouch": { "byTier": { "new": "m_iyagari", "warm": "m_ago", "close": "m_gesture" } },

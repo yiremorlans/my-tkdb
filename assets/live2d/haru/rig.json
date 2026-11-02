@@ -20,6 +20,45 @@
         "chest": { "part": "chest", "rect": [-0.031, 0.02, 1.031, 0.555] },
         "hips": { "part": "pants", "rect": [0.08, 0.06, 0.92, 0.32] }
       }
+    },
+    "casual": {
+      "model": "casual/haru_casual.model3.json",
+      "dialogueVariant": "casual",
+      "parts": {
+        "chest": ["ArtMesh374"],
+        "pants": ["ArtMesh366", "ArtMesh367"],
+        "hand_r": ["ArtMesh177", "ArtMesh183", "ArtMesh184", "ArtMesh179", "ArtMesh181", "ArtMesh186", "ArtMesh11"],
+        "hand_l": ["ArtMesh404", "ArtMesh405", "ArtMesh408"],
+        "peekaboo": ["ArtMesh121", "ArtMesh125", "ArtMesh82", "ArtMesh83", "ArtMesh113", "ArtMesh275"]
+      },
+      "hotspots": {
+        "belly": { "part": "peekaboo" },
+        "chest": { "part": "chest", "rect": [0.106, 0.02, 0.894, 0.677] },
+        "hips": { "part": "pants", "rect": [0.08, -0.07, 0.92, 0.26] }
+      },
+      "expressions": {
+        "moods": {
+          "caught_shy": ["e_kewashiikaigan_00"],
+          "tease": ["e_kewashiikaigan_00"]
+        }
+      }
+    },
+    "house": {
+      "model": "house/haru_house.model3.json",
+      "dialogueVariant": "casual",
+      "spots": ["Jabberwock_Cave.png", "Jabberwock_Cave_2.png", "Jabberwock_Cave_PM.png", "Jabberwock_Dorm_Room.png", "Jabberwock_Dorm_Room_PM.png", "Jabberwock_Entrance.png", "Jabberwock_Field.png", "Jabberwock_Field_2.png", "Jabberwock_Field_2_PM.png", "Jabberwock_Field_PM.png", "Jabberwock_Forest.png", "Jabberwock_Forest_PM.png", "Jabberwock_Kitchen.png", "Jabberwock_Mountain.png", "Jabberwock_Mountain_PM.png", "Jabberwock_Tree.png", "Jabberwock_Tree_PM.png", "Jabberwock_Ushi-Oni_Pen.png", "Jabberwock_Ushi-Oni_Pen_PM.png"],
+      "parts": {
+        "chest": ["ArtMesh156"],
+        "pants": ["ArtMesh247", "ArtMesh246", "ArtMesh378", "ArtMesh375"],
+        "hand_r": ["ArtMesh177", "ArtMesh83", "ArtMesh148", "ArtMesh186", "ArtMesh181", "ArtMesh179", "ArtMesh138", "ArtMesh134", "ArtMesh133", "ArtMesh131", "ArtMesh183", "ArtMesh184"],
+        "hand_l": ["ArtMesh279", "ArtMesh149", "ArtMesh280", "ArtMesh153", "ArtMesh285", "ArtMesh287"],
+        "peekaboo": ["ArtMesh121", "ArtMesh125", "ArtMesh77", "ArtMesh78", "ArtMesh113", "ArtMesh275"]
+      },
+      "hotspots": {
+        "belly": { "part": "peekaboo" },
+        "chest": { "part": "chest", "rect": [0.084, 0.02, 0.916, 0.741] },
+        "hips": { "part": "pants", "rect": [0.076, 0.061, 0.924, 0.323] }
+      }
     }
   },
   "parts": {
