@@ -369,12 +369,18 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
   // While a hand hold runs the dialogue box fades back (hangout.css
   // body.hand-hold) so it doesn't sit over his hand and the hearts; it
   // comes back as the hold ends and his release line types out.
-  let boxDimmed = false;
+  // A tease, and a chest hold dragged down at close until he catches it
+  // (catchAt), fade it too (body.tease-hold), but his name plate stays: it
+  // carries the heart monitor. The box comes back for the let-go, break or
+  // "not yet" line.
+  let boxDimmed = null;
   function dimBox() {
-    const dim = Boolean(holding?.on && holding.kind === "hand");
+    const teasing = holding?.on && (holding.kind === "tease" || holding.catchAt != null);
+    const dim = teasing ? "tease-hold" : holding?.on && holding.kind === "hand" ? "hand-hold" : null;
     if (dim === boxDimmed) return;
+    if (boxDimmed) document.body.classList.remove(boxDimmed);
+    if (dim) document.body.classList.add(dim);
     boxDimmed = dim;
-    document.body.classList.toggle("hand-hold", dim);
   }
 
   function frame(dt) {
