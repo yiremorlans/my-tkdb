@@ -32,7 +32,8 @@
 // resting one over that long (eased in and out) instead of expressions.fade, where a strong
 // face (Elias's teaseLetGo smirk bends the brows hard) would snap back.
 // Every reaction already eases back over SETTLE_FADE (hangout.js), so set it
-// only to differ from that.
+// only to differ from that (Ren's hips shock keeps the quick 0.2s, so it's
+// gone as his body heads back to idle).
 //
 // `sound` plays a clip (a file under the rig's directory, or a list to pick
 // one from; sounds.js). A character adds clips through rig.json

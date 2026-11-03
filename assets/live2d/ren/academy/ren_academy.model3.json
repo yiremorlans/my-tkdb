@@ -60,6 +60,14 @@
         "File": "expressions/e_tsujo_00.exp3.json"
       },
       {
+        "Name": "e_tsujo_soft_00",
+        "File": "expressions/e_tsujo_soft_00.exp3.json"
+      },
+      {
+        "Name": "e_tsujo_smile_00",
+        "File": "expressions/e_tsujo_smile_00.exp3.json"
+      },
+      {
         "Name": "e_tsujo_away_00",
         "File": "expressions/e_tsujo_away_00.exp3.json"
       }
