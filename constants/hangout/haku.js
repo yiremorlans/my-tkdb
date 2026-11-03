@@ -191,7 +191,7 @@ export default {
     ],
     hipsTouch: [
       "...It's later now, princess. Go on.",
-      "Careful. You're gonna make me actually try.",
+      "...Hey. You're testing how chill I really am, huh?",
     ],
     heartbeatHold: [
       "...Yeah. That's what you do to me. No joke this time.",

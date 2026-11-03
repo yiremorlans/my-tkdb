@@ -6,6 +6,8 @@
 // Dry, kind, undercuts himself; leans on canon beats (yawns, Shion wrangling,
 // repairs, "safety first", the bug-on-your-head bit). Never "fragile".
 // Guarded spots (lips, chest, hips) stay serious until spark.
+// Holds (spark+): reads his own pulse like a gauge; bound flips the canon
+// "I get sleepy around you" (LVL 22) and keeps the music box (LVL 24).
 
 export default {
   new: {
@@ -40,13 +42,10 @@ export default {
       "Yaaawn... Hm? I'm awake. I'm awake.",
       "That's not how you wake someone up, you know.",
     ],
-    lipsTouch: [
-      "...Huh. No. Those stay out of reach.",
-      "...Let's pretend that didn't happen.",
-    ],
+    lipsTouch: ["...Hey. Hands off.", "...Let's pretend that didn't happen."],
     earTouch: [
       "Hah, that tickles. Quit it.",
-      "Hm? Sorry, I was counting parts in my head.",
+      "Hm? Sorry, my head was still on a repair job.",
     ],
     handTap: [
       "Hold still, there's a splinter. ...Nope, my mistake.",
@@ -60,7 +59,7 @@ export default {
     hipsTouch: ["Hey. No.", "That's a firm no."],
     upset: [
       "Okay, stop. I'm not in the mood.",
-      "Sigh... I get enough of this from Shion.",
+      "Knock it off. I have a lot of work to do.",
     ],
   },
   warm: {
@@ -105,10 +104,10 @@ export default {
     ],
     handTap: [
       "Your hands are cold. Here, take mine.",
-      "...I'll hold on. Safety first, right?",
+      "...I'll hold on. Just for a bit.",
     ],
     chestTouch: [
-      "...Yeah, it's running fast. Don't read into it.",
+      "...Yeah, it's running fast. Guess you're the reason.",
       "Careful. That's one thing I can't fix.",
     ],
     bellyTouch: [
@@ -120,11 +119,23 @@ export default {
       "Okay, stop, stop. My face is hot enough.",
       "Give me a minute. I need to cool down.",
     ],
+    heartbeatHold: [
+      "Huh. Thought I could keep that steady. Guess not around you.",
+      "...Okay. You caught me. Don't make me say it.",
+    ],
+    lipHold: [
+      "...Huh. My brain just went blank. That never happens.",
+      "Okay. That's going to keep me up. And I really don't need the help.",
+    ],
+    handHold: [
+      "Your hand's warmer now. ...Guess that's my doing.",
+      "That's the first time I've stood still all day. You should do that more.",
+    ],
   },
   close: {
     headPat: [
       "Mm. Keep going. I'm not asleep. ...Yet.",
-      "You're the only one who gets to do that. Don't tell Shion it's an option.",
+      "...That's nice. Feels like I'm actually off the clock for once.",
     ],
     cheekPoke: [
       "You're grinning. ...Okay, I'm grinning too. Happy?",
@@ -153,6 +164,44 @@ export default {
     hipsTouch: [
       "Hm. Bold. ...Lucky for you, I'm off the clock.",
       "...Okay. The workshop can wait. Come here.",
+    ],
+    heartbeatHold: [
+      "Fast again? Yeah. Hasn't slowed down since you got close.",
+      "You keep checking it like a gauge. The reading's the same every time, you know. It's you.",
+    ],
+    lipHold: [
+      "...Okay. I'm not getting any work done for the rest of the day.",
+      "Hm. You stopped right before I was gonna do something about it.",
+    ],
+    handHold: [
+      "You're the only call I don't mind getting at any hour.",
+      "Let me walk you back. ...Mostly so I can hold your hand a little longer.",
+    ],
+    caughtTease: [
+      "Hah... Okay, stop there. Not yet. I don't rush the things I want to get right.",
+      "Hey. Easy. ...Not yet. Don't look at me like that, I'm trying to be responsible.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "Still runs fast around you. I've stopped trying to fix it.",
+      "Don't need a gauge for that. You already know the reading.",
+    ],
+    lipHold: [
+      "Hm. You know that's not where you usually stop.",
+      "Careful. I don't get sleepy around you anymore. Not after that.",
+    ],
+    handHold: [
+      "That music box my dad gave me? Doesn't work half as well as this.",
+      "Mm. Stay. I still get sleepy around you. I just don't fight it now.",
+    ],
+    breakAway: [
+      "Okay. Okay. I need to cool down before something in here overheats. ...Me. It's me.",
+      "Hah... Give me a sec. You took me apart faster than I take apart a clock.",
+    ],
+    teaseLetGo: [
+      "Hah... You shut it off mid-cycle. That's bad for the parts, you know.",
+      "Hm. Fine. I'll be patient. ...For about five minutes.",
     ],
   },
 };
