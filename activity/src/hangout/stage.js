@@ -49,18 +49,27 @@ export function dialogueBox(box) {
     text.textContent = text.dataset.full ?? "";
   });
   // Rests at sentence and clause breaks (typeSchedule), so long lines read
-  // in beats; the Live2D rig's mouth follows the same schedule.
+  // in beats; the Live2D rig's mouth follows the same schedule. The untyped
+  // rest is laid out invisibly, so the box (sized to its text, hangout.css)
+  // takes the whole line's height at once and words don't jump lines.
+  const typed = document.createElement("span");
+  const rest = document.createElement("span");
+  rest.style.visibility = "hidden";
+  rest.setAttribute("aria-hidden", "true");
   return (line) => {
     clearTimeout(typing);
-    text.textContent = "";
     text.dataset.full = line;
+    typed.textContent = "";
+    rest.textContent = line;
+    text.replaceChildren(typed, rest);
     const at = typeSchedule(line);
     const start = performance.now();
     let i = 0;
     const step = () => {
       const now = performance.now() - start;
       while (i < at.length && at[i] <= now) i++;
-      text.textContent = line.slice(0, i);
+      typed.textContent = line.slice(0, i);
+      rest.textContent = line.slice(i);
       if (i < at.length) typing = setTimeout(step, at[i] - now);
     };
     typing = setTimeout(step, at[0] ?? 0);

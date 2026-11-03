@@ -146,6 +146,15 @@ export async function startScene(stage, { base, tier, outfit, lines, room = true
   });
   app.stage.on("pointermove", (e) => scene.onPointer?.("move", toRef(e), e));
   app.stage.on("pointerup", (e) => scene.onPointer?.("up", toRef(e), e));
+  // Released over the HTML on top (the VN box, the choices): Pixi calls that
+  // pointerupoutside, and a hold (holds.js) must still end.
+  app.stage.on("pointerupoutside", (e) => scene.onPointer?.("up", toRef(e), e));
+  // Pixi 8 doesn't listen for pointercancel (the browser taking the touch
+  // back: an iOS system gesture), so the canvas does; holds.js drops a hold
+  // that hadn't started and lets go of one that had.
+  app.canvas.addEventListener("pointercancel", (e) => scene.onPointer?.("cancel", null, e));
+  // Long press opens a context menu on Android and some WebViews.
+  stage.addEventListener("contextmenu", (e) => e.preventDefault());
 
   return scene;
 }

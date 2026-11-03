@@ -439,6 +439,40 @@ and pose come off the same tier ladder as the spot it's on.
   `heartbeatHold`, `lipHold`: no flinch, the lips face held longest),
   calibrated per character in rig.json `reactions` to the lines and his
   temperament (2026-11-02), and no pose.
+- **Hold face arc (preview prototype, 2026-11-03).** The lip and hand holds
+  change his face while they run, not only on release (holds.js `ARC`).
+  After the opening widen he goes `flustered` (about 1–1.6s in), then
+  settles into that hold's release face for the tier: spark 6–8s, close
+  4–5.5s, bound 3–4.5s, the lips 1.5s later. Settled, it catches up with
+  him now and then (every 4.5–7.5s on the hand, 3–5.5s on the lips): a
+  1–1.6s flustered flicker with a small widen and a puff of two hearts.
+  Moving the finger during the hold sets a flicker off at once (at most
+  every 1.5s), or puts off the settle if he's still flustered. Hearts come
+  quicker while he's flustered and slower once he's settled. Every timing
+  is a random span. No heavy lids, glance down or parted lips.
+- **Holds in the Activity (2026-11-03).** The holds above (rings, heart
+  monitor, hearts, face arc, tease and caught tease) and the first-time
+  hint live in hangout-v2/holds.js, which both the Activity (main.js, /meet
+  and the free hangout) and the preview attach; before this they were
+  preview-only, so a long press in Discord was just a tap. For phones: the
+  stage turns off text selection and iOS's long-press callout
+  (hangout.css), which otherwise fire around 0.5s, before the 0.6s hold,
+  and cancel the touch. Releasing over the VN box (pointerupoutside) ends
+  a hold. pointercancel, which Pixi 8 ignores, is caught on the canvas: it
+  drops a hold that hadn't started and lets go of one that had. Only the
+  finger that started a hold moves or ends it.
+- **Box fades during a hand hold (2026-11-03).** While a hand hold runs
+  (from the moment it starts, not on press), the VN box fades to 12%
+  opacity and stops taking pointer events, and the first-time hint hides,
+  so his hand and the hearts aren't covered (holds.js `dimBox`,
+  `body.hand-hold` in hangout.css). It fades back as the hold ends, in time
+  for his release line. The lip and heartbeat holds keep the box (the
+  heart monitor lives in its name plate).
+- **Box fits its text (2026-11-03).** The VN box no longer holds 22% of
+  the stage on wide screens: it's as tall as its line, one line at least,
+  with slightly tighter padding. A line lays out in full (the untyped rest
+  invisible) as it starts typing, so the box takes its final height at once
+  instead of growing mid-line.
 - **Blush fades gradually (2026-11-02).** A blush comes in as fast as its
   cause but never drops off with it: when the face that brought it ends, a
   hold is let go or warmth cools, the flush starts fading at once and
