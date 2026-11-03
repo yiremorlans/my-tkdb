@@ -333,7 +333,12 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
       hangout.react(HOLD_LINES[kind], scene.time);
       if (kind === "tease") hangout.moodUntil += TEASE_LINGER;
     } else if (cancelled) return;
-    else if (point) scene.onTap?.(hangout.tapAt(point, scene.time));
+    // Tap first: `onTap?.(tapAt(...))` skips the tap itself when onTap is
+    // unset (the Activity sets none; only the preview's HUD does).
+    else if (point) {
+      const tap = hangout.tapAt(point, scene.time);
+      scene.onTap?.(tap);
+    }
     else hangout.react(TAP_REACTION[spot], scene.time, spot);
   }
   // Only the finger that started a hold moves or ends it (pointerId), so a
