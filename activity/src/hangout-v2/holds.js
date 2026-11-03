@@ -18,7 +18,7 @@ import { Graphics } from "pixi.js";
 
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 import { forTier, resolveReaction } from "../hangout/reactions.js";
-import { typeDuration, UPSET_READ, UPSET_FADE } from "../hangout/hangout.js";
+import { typeDuration, UPSET_READ, SETTLE_FADE } from "../hangout/hangout.js";
 import { hotspotAt } from "../hangout/hotspots.js";
 
 const $ = (sel) => document.querySelector(sel);
@@ -114,9 +114,9 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
     hangout.pendingMood = null;
     const line = hangout.line("caughtTease") ?? CAUGHT_FALLBACK;
     // Like upset's: the face outlasts its line (typed out, then UPSET_READ to
-    // read it) and eases back over UPSET_FADE instead of snapping off.
+    // read it) and eases back over SETTLE_FADE instead of snapping off.
     hangout.moodUntil = t + Math.max(CAUGHT.face, CAUGHT.line + typeDuration(line) / 1000 + UPSET_READ);
-    hangout.moodFadeOut = UPSET_FADE;
+    hangout.moodFadeOut = SETTLE_FADE;
     const pose = forTier(renderer.rig.reactionPoses?.caughtTease, hangout.tier);
     if (pose) renderer.playPose(pose, CAUGHT.poseHold);
     if (pose || !renderer.playClip(CAUGHT_CLIP)) renderer.shakeHead();

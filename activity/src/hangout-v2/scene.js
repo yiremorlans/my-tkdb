@@ -70,8 +70,10 @@ export async function startScene(stage, { base, tier, outfit, lines, room = true
   const sounds = new Sounds(soundBytes);
   const play = (file) => sounds.play(file);
   const hangout = new Hangout({ renderer, motion, say: speak, play, lines, tier: DIALOGUE_TIERS.includes(tier) ? tier : "new" });
-  // Every reaction (taps, upset) also plays its pose, if any, and its face
-  // lasts at least until that pose starts returning, so it never resets mid-pose.
+  // Every reaction (taps, upset, answers) also plays its pose, if any, and
+  // its face lasts at least until that pose starts returning, so it never
+  // resets mid-pose. From there it eases back over SETTLE_FADE (hangout.js),
+  // carrying into the return and settling after the body.
   const react = hangout.react.bind(hangout);
   hangout.react = (name, t, spot) => {
     react(name, t, spot);

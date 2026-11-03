@@ -307,7 +307,7 @@ face at new is `serious` and his spark fave is `smile_blush`.
 | Chest | 0, 1 from spark, 2 from close | serious · serious · surprise_blush · full_smile_blush; the least sensitive guarded spot; four taps fill the annoyance meter |
 | Belly | 0, 1 from warm, 2 from close | serious · surprise · surprise_blush · full_smile_blush; as sensitive as the ears; three taps fill the annoyance meter |
 | Hips | 0, 1 from spark, 2 from close | the most guarded spot: serious at new/known/warm, blush only from spark; pose `m_udekumi` (arms crossed) at new–warm, `m_kubi` from spark, `m_migikoshi` from close; flinches hardest of every spot at new/known; two taps fill the annoyance meter |
-| Spam-tapping | — | annoyance meter rises with fast repeated taps and decays over time; a run of quick normal taps fills it, fewer taps the more sensitive the spot (`SPOT_ANNOYANCE`: head = hands < chest < ears = belly < lips < hips). The more sensitive the spot, the longer its face holds too; past the threshold → **upset** + pose `m_angry` + a line ("…stop that."). The upset face holds until its line has typed out plus `UPSET_READ` (2.5s), or its `duration` or pose if longer, then eases into the next face over `UPSET_FADE` (1.6s, smoothstepped) instead of the 0.2s crossfade (a rig's upset `fadeOut` overrides it). At new, known and warm (`LOCKOUT_TIERS`) he then locks out: once the upset face ends he holds the `serious` face and a guarded pose (rig.json `reactionPoses.guarded`, else `m_udekumi`, else his upset pose; Edward's is `m_weak`) and ignores every tap until the tier changes. From spark, taps are ignored briefly, then he settles |
+| Spam-tapping | — | annoyance meter rises with fast repeated taps and decays over time; a run of quick normal taps fills it, fewer taps the more sensitive the spot (`SPOT_ANNOYANCE`: head = hands < chest < ears = belly < lips < hips). The more sensitive the spot, the longer its face holds too; past the threshold → **upset** + pose `m_angry` + a line ("…stop that."). The upset face holds until its line has typed out plus `UPSET_READ` (2.5s), or its `duration` or pose if longer, then eases into the next face over `SETTLE_FADE` (1.6s, smoothstepped) instead of the 0.2s crossfade, as every reaction's face does (a reaction's `fadeOut` overrides it). At new, known and warm (`LOCKOUT_TIERS`) he then locks out: once the upset face ends he holds the `serious` face and a guarded pose (rig.json `reactionPoses.guarded`, else `m_udekumi`, else his upset pose; Edward's is `m_weak`) and ignores every tap until the tier changes. From spark, taps are ignored briefly, then he settles |
 
 Every character has the same touch spots (`TOUCH_SPOTS` in
 activity/src/hangout/reactions.js): head, cheek, lips, ear_l/ear_r,
@@ -402,7 +402,7 @@ and pose come off the same tier ladder as the spot it's on.
     line (one per character, placeholder until drafted; Zenji answers the
     intention, Rui wants what his curse refuses). The shy face holds 6s,
     or until the line has typed out plus `UPSET_READ` if that's longer,
-    then eases back over `UPSET_FADE`, as upset's does. No bliss, no crest.
+    then eases back over `SETTLE_FADE`, as every reaction's face does. No bliss, no crest.
     Poses set: `m_kubi` (hand to the neck) for Alan, Jin, Jiro, Lyca, Mio
     and Ren; Kaito `m_tere`, Haku `m_kaote`, Tohma `m_ago1_away` (his signature chin-in-hand), Lucas
     `m_iyagari`. The rest have the shake alone. With a pose, the

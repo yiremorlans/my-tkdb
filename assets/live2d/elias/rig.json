@@ -175,7 +175,7 @@
     },
     "teaseLetGo": {
       "byTier": {
-        "bound": { "mood": "smirk_blush", "duration": 4.4, "fadeOut": 2.2 }
+        "bound": { "mood": "smirk_blush", "duration": 4.4 }
       }
     }
   },

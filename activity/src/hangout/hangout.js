@@ -92,11 +92,14 @@ export const GUARDED_MOOD = "serious";
 
 // The upset face outlasts its line: it holds until the line has typed out
 // plus UPSET_READ seconds to read it (or the reaction's `duration`, or its
-// pose, if longer), then eases into the resting or guarded face over
-// UPSET_FADE seconds instead of the 0.2s mood crossfade, so the anger
-// settles rather than snapping off. A rig's upset `fadeOut` overrides it.
+// pose, if longer).
 export const UPSET_READ = 2.5;
-export const UPSET_FADE = 1.6;
+
+// Every reaction's face (taps, upset, hold releases, answers) eases back
+// into the resting or guarded face over SETTLE_FADE seconds, smoothstepped,
+// instead of the 0.2s mood crossfade: it carries into his pose's return and
+// settles after the body does. A reaction's `fadeOut` overrides it.
+export const SETTLE_FADE = 1.6;
 
 export class Hangout {
   constructor({ renderer, motion, say = () => {}, play = () => {}, lines = PLACEHOLDER_LINES, random = Math.random, tier = "new" }) {
@@ -210,7 +213,7 @@ export class Hangout {
       this.renderer.setMood(r.mood);
       this.moodUntil = t + duration;
       if (upset && text) this.moodUntil = Math.max(this.moodUntil, t + typeDuration(text) / 1000 + UPSET_READ);
-      this.moodFadeOut = r.fadeOut ?? (upset ? UPSET_FADE : null);
+      this.moodFadeOut = r.fadeOut ?? SETTLE_FADE;
     }
     if (r.then) this.pendingMood = { at: t + r.then[0], mood: r.then[1] };
     const sounds = [r.sound ?? []].flat();

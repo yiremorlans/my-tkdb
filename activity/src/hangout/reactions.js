@@ -31,6 +31,8 @@
 // `fadeOut` (seconds, Live2D only) eases the reaction's face back to his
 // resting one over that long (eased in and out) instead of expressions.fade, where a strong
 // face (Elias's teaseLetGo smirk bends the brows hard) would snap back.
+// Every reaction already eases back over SETTLE_FADE (hangout.js), so set it
+// only to differ from that.
 //
 // `sound` plays a clip (a file under the rig's directory, or a list to pick
 // one from; sounds.js). A character adds clips through rig.json
