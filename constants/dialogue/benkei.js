@@ -733,7 +733,7 @@ export default {
         responses: {
           kind: "Say you'd like that",
           playful: "Tease him for offering so fast",
-          bold: "Say the dark doesn't scare you",
+          bold: "Say you're not afraid of dark",
           neutral: "Say goodnight",
         },
       },
@@ -741,18 +741,18 @@ export default {
         line: "He starts a sentence three times and abandons it three times, each attempt a little redder than the last.",
         approach: "Wait out his nerve",
         greeting:
-          '"Okay. One more try. ...No, that one was worse."',
+          '"I keep starting that sentence and losing my nerve halfway through."',
         responses: {
           kind: "Let him find his nerve",
-          playful: "Ask how many drafts that was",
+          playful: "Make him say it again",
           bold: "Say the thing he won't",
           neutral: "Wait without pushing",
         },
       },
       {
         line: "He offers his arm like it's the most natural thing in the world, and immediately looks unsure it was.",
-        approach: "Ask what the arm's for",
-        greeting: "\"The ground's uneven out here. That's all this is.\"",
+        approach: "Take his arm",
+        greeting: "\"Take my arm, the ground's uneven. That's all this is.\"",
         responses: {
           kind: "Take his arm",
           playful: "Doubt the ground's uneven",
@@ -766,7 +766,7 @@ export default {
         greeting:
           '"I didn\'t mean to match your pace. Apparently I did anyway."',
         responses: {
-          kind: "Say you like walking with him",
+          kind: "Say the walk was worth it",
           playful: "Slow down to watch him",
           bold: "Match his pace back",
           neutral: "Walk on ahead",
@@ -775,19 +775,19 @@ export default {
       {
         line: "He steadies you by the elbow, and takes a long moment letting go.",
         approach: "Let him steady you",
-        greeting: '"You make me feel kind of silly, you know. I don\'t mind it."',
+        greeting: '"You make a grown man feel rather silly. I don\'t mind it."',
         responses: {
-          kind: "Let him hold on a moment",
-          playful: "Ask if he plans to let go",
+          kind: "Say he isn't silly to you",
+          playful: "Tease the blush",
           bold: "Close the distance first",
-          neutral: "Step back, steady now",
+          neutral: "Let the silence carry you",
         },
       },
       {
         line: "He trails off mid-sentence and busies himself with the till instead of finishing it.",
-        approach: "Wait for the rest of it",
+        approach: "Ask what he meant to say",
         greeting:
-          '"Never mind. Forget it. This till\'s a mess, I should sort it out."',
+          '"Never mind. It\'ll keep. I really must reorganize this till."',
         responses: {
           kind: "Tell him to take his time",
           playful: "Ask what the till did wrong",
@@ -804,7 +804,7 @@ export default {
           kind: "Say you'll be here for it",
           playful: "Get him to finish the thought",
           bold: "Tell him to just say it",
-          neutral: "Change the subject",
+          neutral: "Let it keep",
         },
       },
       {
@@ -813,15 +813,15 @@ export default {
         greeting:
           '"Give me a moment. I promise there\'s a sentence in here somewhere."',
         responses: {
-          kind: "Wait for him to get there",
-          playful: "Guess the sentence for him",
+          kind: "Wait for the sentence",
+          playful: "Make him lose his nerve",
           bold: "Take the last step yourself",
           neutral: "Let him take his time",
         },
       },
       {
         line: 'He\'s clearly rehearsed something. What comes out is "you look nice today."',
-        approach: "Raise an eyebrow at him",
+        approach: "Point out he's rehearsed this",
         greeting: '"You look... ah. Very nice. That\'s what I meant to say."',
         responses: {
           kind: "Tell him it landed just fine",
@@ -833,12 +833,12 @@ export default {
       {
         line: "He's rehearsed the compliment so many times it comes out stiff, and he winces at himself for it.",
         approach: "Let him say you look nice",
-        greeting: '"That came out wrong. Or right. I honestly can\'t tell anymore."',
+        greeting: '"That came out wrong. Or right. I\'ve truly lost track."',
         responses: {
           kind: "Tell him it was sweet anyway",
           playful: "Tell him to try it again",
-          bold: "Say he looks nice too",
-          neutral: "Let the moment pass",
+          bold: "Say it plainly back",
+          neutral: "Accept it quietly",
         },
       },
       {
@@ -847,7 +847,7 @@ export default {
         greeting:
           "\"The gate's this way. It's also that way. I chose the long one.\"",
         responses: {
-          kind: "Say you're in no hurry",
+          kind: "Let him take the long way",
           playful: "Ask why the detour",
           bold: "Take his hand at the gate",
           neutral: "Walk it without asking",
@@ -855,30 +855,30 @@ export default {
       },
       {
         line: "He's slowed his pace to something almost glacial, and doesn't seem to notice, or won't admit it.",
-        approach: "Slow down to match him",
+        approach: "Ask why he's walking so slow",
         greeting: '"Am I walking slowly? I hadn\'t noticed. ...I noticed."',
         responses: {
           kind: "Let him set the pace",
           playful: "Call out the glacial pace",
           bold: "Ask what he's stalling for",
-          neutral: "Keep your own pace",
+          neutral: "Match the slow pace",
         },
       },
       {
         line: "He walks you to the gate and finds three reasons to walk slower.",
-        approach: "Ask for his reasons",
+        approach: "Let him find a third reason",
         greeting:
           "\"There's a fourth one, if you're interested. I'm saving it for tomorrow.\"",
         responses: {
           kind: "Let him keep finding reasons",
-          playful: "Count the reasons out loud",
+          playful: "Point out the third reason",
           bold: "Call out the stalling",
           neutral: "Let him take the long way",
         },
       },
       {
         line: "He goes red to the ears and busies himself with something that needed no attention.",
-        approach: "Ask if he's feeling okay",
+        approach: "Watch him go red to the ears",
         greeting:
           '"I thought I\'d be over this kind of nervous by now, and here we are."',
         responses: {
@@ -890,7 +890,7 @@ export default {
       },
       {
         line: "He fumbles the till twice in a row and blames the register, not himself.",
-        approach: "Ask if the register's okay",
+        approach: "Let him recover, say nothing",
         greeting:
           '"The register\'s being difficult tonight. It has nothing to do with you standing there."',
         responses: {
@@ -902,9 +902,9 @@ export default {
       },
       {
         line: '"There\'s something I keep meaning to bring up," he says, and then brings up the weather instead.',
-        approach: "Wait for the real topic",
+        approach: "Ask what he means to say",
         greeting:
-          '"Nice weather, huh? ...That\'s not what I was going to say."',
+          '"Lovely weather we\'re having. That is not what I meant to say."',
         responses: {
           kind: "Let the weather talk slide",
           playful: "Play along about the weather",
@@ -914,7 +914,7 @@ export default {
       },
       {
         line: "His hand finds your arm to steady you and stays a beat longer than steadying requires.",
-        approach: "Steady yourself on him",
+        approach: "Let his hand rest on your arm",
         greeting:
           '"Steady now. There. You can let go of my sleeve. ...Or don\'t."',
         responses: {
@@ -926,24 +926,22 @@ export default {
       },
       {
         line: "He reaches to fix your collar, hand hovering, like he's asking permission without asking.",
-        // The collar is an excuse and he knows it: teasing the excuse lands, polite stillness doesn't.
-        mood: true,
-        approach: "Hold still for him",
+        approach: "Hold still for his nerve",
         greeting: '"Hold still, your collar\'s... may I? Thank you."',
         responses: {
           kind: "Let him fix it",
-          playful: "Say it was never crooked",
+          playful: "Ask if he's nervous, teasing",
           bold: "Say yes before he asks",
-          neutral: "Fix it yourself",
+          neutral: "Hold still, say nothing",
         },
       },
       {
-        line: "He's come up with four reasons you should stay a little longer, none of them convincing.",
-        approach: "Hear out his reasons",
+        line: "He's found four reasons the shop needs closing later tonight, none of them true.",
+        approach: "Stay past the usual time",
         greeting:
-          '"Reason four: the cat\'s doing inventory and she likes an audience. That one\'s real."',
+          '"The shop simply needed to stay open. For inventory reasons. Entirely."',
         responses: {
-          kind: "Stay as long as he likes",
+          kind: "Stay as long as he needs",
           playful: "Ask about the real reason",
           bold: "Say you're staying regardless",
           neutral: "Stay without asking why",
@@ -955,15 +953,15 @@ export default {
         greeting:
           "\"I don't often let a silence sit this long. I don't mind this one.\"",
         responses: {
-          kind: "Stay right where you are",
+          kind: "Let the quiet stay warm",
           playful: "Break it with a smile",
           bold: "Close the quiet distance",
-          neutral: "Look around the shop",
+          neutral: "Let quiet be enough",
         },
       },
       {
         line: "He circles the same unfinished thought for the third time this week.",
-        approach: "Ask what he's circling",
+        approach: "Ask him to just say it",
         greeting:
           "\"I've circled back to it again, haven't I. Give me one more moment.\"",
         responses: {
@@ -977,22 +975,22 @@ export default {
         line: "\"It's this way,\" he says, leading you the long way round for no reason he'll name.",
         approach: "Take the long way home",
         greeting:
-          "\"Yes, I know a shortcut. No, we're not taking it.\"",
+          "\"This isn't the shorter way. I'm aware. I chose it anyway.\"",
         responses: {
           kind: "Follow without question",
-          playful: "Ask if he's lost",
+          playful: "Ask why the detour, grinning",
           bold: "Ask him straight out why",
           neutral: "Follow, say nothing",
         },
       },
       {
         line: "He shortens his steps so you'll walk beside him instead of ahead.",
-        approach: "Ask why he slowed down",
+        approach: "Match his slower pace",
         greeting:
           '"Slow down with me a while. There\'s no rush I can think of."',
         responses: {
           kind: "Fall into step with him",
-          playful: "Race him to the corner",
+          playful: "Tease him for slowing down",
           bold: "Close the gap between you",
           neutral: "Walk beside him, quiet",
         },
@@ -1001,7 +999,7 @@ export default {
         line: "He loses his train of thought mid-sentence, staring at nothing in particular. At you, really.",
         approach: "Let him lose the thread",
         greeting:
-          '"Where was I? ...No, it\'s gone. That\'s on you, by the way."',
+          '"Where was I? ...No. It\'s gone. I blame you for that, kindly."',
         responses: {
           kind: "Let him stare a moment",
           playful: "Ask what he's staring at",
@@ -1011,21 +1009,21 @@ export default {
       },
       {
         line: "His hands aren't quite steady restocking the shelf, and it isn't the shelf's fault.",
-        approach: "Hand him the next box",
+        approach: "Ask if he's this nervous too",
         greeting:
           "\"My hands aren't usually this unsteady. I'll blame the cold.\"",
         responses: {
           kind: "Say you're nervous too",
           playful: "Doubt it's really the cold",
-          bold: "Ask what's got him nervous",
+          bold: "Ask if he's this nervous too",
           neutral: "Let his hands settle",
         },
       },
       {
         line: "He looks at you a beat longer than the conversation calls for, then catches himself doing it.",
-        approach: "Catch him looking",
+        approach: "Let him look a moment longer",
         greeting:
-          '"Sorry, I was staring. I\'ll stop. ...Eventually."',
+          '"Forgive me, I was looking a moment too long. I\'ll stop. ...Eventually."',
         responses: {
           kind: "Let him keep looking",
           playful: "Ask what he's looking at",
@@ -1039,7 +1037,7 @@ export default {
         greeting:
           "\"Thank you for waiting. I have the whole speech. It's the first word that's giving me trouble.\"",
         responses: {
-          kind: "Say you'll wait for it",
+          kind: "Say you'll wait for the word",
           playful: "Guess what he's building to",
           bold: "Tell him to just spit it out",
           neutral: "Wait, say nothing",
