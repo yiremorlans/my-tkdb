@@ -36,11 +36,12 @@ export async function validateLive2DRig(rig, { readJson, fileExists = () => true
   }
 
   const reactions = new Set([...Object.keys(DEFAULT_REACTIONS), ...Object.keys(rig.reactions ?? {})]);
-  for (const name of Object.keys(rig.reactionPoses ?? {})) {
+  const poseKeys = [rig.reactionPoses, ...Object.values(rig.outfits ?? {}).map((o) => o.reactionPoses)];
+  for (const [name, value] of poseKeys.flatMap((p) => Object.entries(p ?? {}))) {
     // Two pose keys aren't reactions: `guarded` (the lockout pose) and
     // `caughtTease` (the preview's caught tease at close: he stops your hand).
     if (!reactions.has(name) && !POSE_ONLY_KEYS.has(name)) problems.push(`reactionPoses.${name}: unknown reaction`);
-    for (const tier of Object.keys(rig.reactionPoses[name]?.byTier ?? {})) {
+    for (const tier of Object.keys(value?.byTier ?? {})) {
       if (!DIALOGUE_TIERS.includes(tier)) problems.push(`reactionPoses.${name}: unknown tier ${tier}`);
     }
   }
@@ -151,7 +152,8 @@ async function outfitProblems(rig, name, { readJson, mocIds }) {
 
   // A pose needs its hold and return clips (live2dRig.js playPose).
   const motions = refs.Motions ?? {};
-  for (const [reaction, value] of Object.entries(rig.reactionPoses ?? {})) {
+  const poses = { ...rig.reactionPoses, ...outfit.reactionPoses };
+  for (const [reaction, value] of Object.entries(poses)) {
     const groups = value?.byTier ? Object.values(value.byTier) : [value];
     for (const group of new Set(groups)) {
       for (const g of [group, `${group}_hold`, `${group}_return`]) {

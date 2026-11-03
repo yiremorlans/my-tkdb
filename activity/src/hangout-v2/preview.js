@@ -160,7 +160,7 @@ async function main() {
     // The lip and hand holds, every tier: the look with his eyes at their
     // normal opening (lids: 0; heavy lids are tease's and the caught
     // tease's) and a flush. No parted lips. The hand hold is affection, not
-    // pleasure; the lip hold opens with a brief widen (startHold).
+    // pleasure; both open with a brief widen, no glance (startHold).
     lips: { look: 1, lids: 0, blush: 0.7 },
     hand: { look: 1, lids: 0, blush: 0.4 },
     // The first heartbeat hold's settings, plus bliss past the top.
@@ -168,6 +168,8 @@ async function main() {
     // seconds (glanceEvery); a shy gaze also breaks eye contact.
     tease: { heartbeat: 1, lips: 1, look: 1, blush: 1, bliss: 1, glanceEvery: [3, 6] },
   };
+  // Holds that open with a brief widen instead of a glance at the touch.
+  const HOLD_WIDEN = new Set(["lips", "hand"]);
   // How much each hold warms him (warmth.hold scale): what's left on his
   // face once the hold's own blush falls away. The heartbeat check reads
   // warmth rather than adding to it.
@@ -336,10 +338,12 @@ async function main() {
     // The hold's own interaction: no tap reaction (no flinch, pose or tap
     // line); the hold look and its blush (live2dRig.js setHold) build over
     // his resting face and fall away after.
-    renderer.setHold({ ...HOLD_EFFECTS[holding.kind], glance: glanceAt(holding.point ?? spotCenter(holding.spot)) });
-    // The lip hold: his eyes go a little wider for a moment and settle back
-    // (live2dRig.js widen), a quick touch, not a long hold.
-    if (holding.kind === "lips") renderer.widen();
+    // The lip and hand holds don't glance at the touch: his eyes go a little
+    // wider for a moment and settle back (live2dRig.js widen), surprise
+    // rather than a look down. The others glance at the touch first.
+    const widens = HOLD_WIDEN.has(holding.kind);
+    renderer.setHold({ ...HOLD_EFFECTS[holding.kind], glance: widens ? null : glanceAt(holding.point ?? spotCenter(holding.spot)) });
+    if (widens) renderer.widen();
   }
   function endHold() {
     if (!holding) return;
@@ -420,6 +424,7 @@ async function main() {
     drawHint(dt);
     if (holding?.on || scene.time < afterglowUntil) beatClock = (beatClock + dt / (60 / renderer.heartRate)) % 1;
     drawMonitor(dt);
+    drawHearts(dt);
     if (!holding?.on) return;
     const [x, y] = holding.point ?? spotCenter(holding.spot);
     for (const [start, strength] of [[0, 1], [0.28, 0.6]]) {
@@ -428,6 +433,55 @@ async function main() {
       const k = p / 0.5;
       pulse.circle(x, y, 28 + 46 * k).stroke({ width: 2.5 * (1 - k) + 1, color: 0xff8fa8, alpha: 0.4 * strength * (1 - k) });
     }
+  }
+
+  // Small hearts (the lip and hand holds): while one runs, a heart floats up
+  // from under the finger every `every` seconds (a random span), drifting
+  // side to side, growing from `grow` to full size as it fades in, and
+  // fading out over the back half of its `life`. Hearts already up finish
+  // after you let go. Model reference units, like the rings.
+  const HEARTS = { kinds: new Set(["lips", "hand"]), every: [0.55, 0.95], first: 0.4, life: [1.6, 2.3], rise: [110, 160], size: [26, 38], drift: 22, grow: 0.5, alpha: 0.75, color: 0xff8fa8 };
+  const hearts = [];
+  let heartWait = null;
+  function drawHearts(dt) {
+    const rand = ([a, b]) => a + Math.random() * (b - a);
+    if (holding?.on && HEARTS.kinds.has(holding.kind)) {
+      heartWait ??= HEARTS.first;
+      heartWait -= dt;
+      if (heartWait <= 0) {
+        const [x, y] = holding.point ?? spotCenter(holding.spot);
+        hearts.push({ x: x + (Math.random() - 0.5) * 40, y: y - 20, age: 0, life: rand(HEARTS.life), rise: rand(HEARTS.rise), size: rand(HEARTS.size), phase: Math.random() * Math.PI * 2, tilt: (Math.random() - 0.5) * 0.5 });
+        heartWait = rand(HEARTS.every);
+      }
+    } else heartWait = null;
+    for (let i = hearts.length - 1; i >= 0; i--) {
+      const h = hearts[i];
+      h.age += dt;
+      const k = h.age / h.life;
+      if (k >= 1) {
+        hearts.splice(i, 1);
+        continue;
+      }
+      const cx = h.x + Math.sin(h.phase + h.age * 2.4) * HEARTS.drift * Math.min(1, k * 3);
+      const cy = h.y - h.rise * h.age;
+      const fadeIn = Math.min(1, h.age / 0.25);
+      const alpha = HEARTS.alpha * fadeIn * (k < 0.5 ? 1 : 1 - (k - 0.5) / 0.5);
+      const r = h.size * (HEARTS.grow + (1 - HEARTS.grow) * fadeIn);
+      heartPath(pulse, cx, cy, r, h.tilt).fill({ color: HEARTS.color, alpha });
+    }
+  }
+  // A heart of half-width `r` centered on (x, y), tilted by `tilt` radians.
+  function heartPath(g, x, y, r, tilt) {
+    const c = Math.cos(tilt);
+    const s = Math.sin(tilt);
+    const pt = (px, py) => [x + (px * c - py * s) * r, y + (px * s + py * c) * r];
+    g.moveTo(...pt(0, 0.95));
+    g.bezierCurveTo(...pt(-0.35, 0.6), ...pt(-1.05, 0.2), ...pt(-1, -0.35));
+    g.bezierCurveTo(...pt(-0.95, -0.9), ...pt(-0.25, -1.05), ...pt(0, -0.55));
+    g.bezierCurveTo(...pt(0.25, -1.05), ...pt(0.95, -0.9), ...pt(1, -0.35));
+    g.bezierCurveTo(...pt(1.05, 0.2), ...pt(0.35, 0.6), ...pt(0, 0.95));
+    g.closePath();
+    return g;
   }
 
   // --- heart monitor (heartbeat hold) ----------------------------------------
@@ -730,7 +784,7 @@ async function main() {
   // Press-and-hold buttons for the holds, without aiming at the model.
   // Live tuning of the hold look (live2dRig.js HOLD_LOOK); copy values you
   // like back into the constant.
-  for (const [key, max] of [["lookUp", 0.6], ["lids", 0.4], ["chin", 10], ["glanceIn", 1], ["glanceHold", 2.5], ["glanceLift", 2.5], ["glanceChin", 12]]) {
+  for (const [key, max] of [["lookUp", 0.6], ["lids", 0.4], ["chin", 10], ["glanceIn", 1], ["glanceHold", 2.5], ["glanceLift", 2.5], ["peekIn", 1], ["peekHold", 2.5], ["peekLift", 2.5], ["glanceChin", 12]]) {
     const wrap = document.createElement("label");
     wrap.className = "slider";
     const input = Object.assign(document.createElement("input"), { type: "range", min: 0, max, step: max / 40, value: HOLD_LOOK[key] });

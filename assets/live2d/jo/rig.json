@@ -20,6 +20,7 @@
     "femacademy": {
       "model": "femacademy/jo_femacademy.model3.json",
       "dialogueVariant": "casual",
+      "reactionPoses": { "handHold": "m_hairtouch" },
       "parts": {
         "chest": ["ArtMesh122"],
         "pants": ["ArtMesh133", "ArtMesh134"],
@@ -209,7 +210,9 @@
     "chestTouch": { "byTier": { "new": "m_odoroki", "close": "m_gesture" } },
     "bellyTouch": { "byTier": { "new": "m_odoroki", "close": "m_gesture" } },
     "hipsTouch": { "byTier": { "new": "m_udekumi", "spark": "m_ago", "close": "m_hidarikoshi" } },
-    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_ago" } }
+    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_ago" } },
+    "lipHold": "m_fingerlips",
+    "handHold": "m_ago"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {

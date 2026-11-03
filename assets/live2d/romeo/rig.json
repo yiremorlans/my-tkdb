@@ -70,9 +70,11 @@
       "smirk_blush": ["e_warui_00", "e_sekimen_00"],
       "grumpy_blush": ["e_ikari_00", "e_sekimen_00"],
       "fretting": ["e_aseri_00"],
-      "soft_smile_blush": ["e_aware_00", "e_sekimen_00"]
+      "soft_smile_blush": ["e_aware_00", "e_sekimen_00"],
+      "soft_smile": ["e_hohoemi_00"]
     }
   },
+  "restMood": { "byTier": { "close": "soft_smile" } },
   "reactions": {
     "upset": {
       "byTier": {

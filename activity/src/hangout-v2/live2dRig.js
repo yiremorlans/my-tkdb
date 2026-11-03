@@ -15,7 +15,9 @@
 //                          { byTier: { <tier>: group } } (nearest lower tier);
 //                          `guarded` is the pose he holds once locked out
 //                          (Hangout LOCKOUT_TIERS), else m_udekumi, else
-//                          the tier's upset pose
+//                          the tier's upset pose. outfits.<name>.
+//                          reactionPoses overrides keys for that outfit
+//                          (a pose only its model has: Jo's m_hairtouch)
 //   motion.idle.amount     how much of the idle clip's sway to keep (0-1)
 //   motion.breath.amount   how much of the breathing to keep (0-1)
 //   motion.sway.amount     the plugin's own head/body sway (CubismBreath),
@@ -96,9 +98,10 @@ const FLINCH = { peak: 0.14, head: 5, body: 2.5, recoil: 3, shoulders: 0.5 };
 // slow side-to-side turns of the head (ParamAngleX, `angle` degrees,
 // fading as they go; the body follows by `body` of that, 0 so it's just
 // the head), each `period`
-// seconds, with the chin dipped by `chin` degrees and the eyes lowered to
-// EyeBall Y `eyes`. The dip and lowered eyes come in over `in` seconds,
-// hold through the shake and ease back over `settle`. Shared by every rig,
+// seconds, with the chin dipped by `chin` degrees while his eyes stay on
+// yours (EyeBall pulled to center: no glancing down mid-shake, and any
+// glance from the hold is overridden). The dip and eye contact come in over
+// `in` seconds, hold through the shake and ease back over `settle`. Shared by every rig,
 // like the flinch: only Towa's model has a head-shake clip of its own.
 // A small gasp (gasp(); the caught tease): the lips part to `open` of the
 // mouth's range with a hint of surprise, the brows up by `brow` and the
@@ -106,12 +109,14 @@ const FLINCH = { peak: 0.14, head: 5, body: 2.5, recoil: 3, shoulders: 0.5 };
 // held `hold`, then eased shut over `out`. Talking owns the mouth, so a
 // line said after it flaps over whatever is left.
 const GASP = { open: 0.35, brow: 0.35, eyes: 0.12, in: 0.12, hold: 0.3, out: 0.55 };
-// A brief widen (widen(); the lip hold): the gasp's eyes and a touch
-// of its brows, no parted lips, on its own slower timing so it reads as a
-// moment's surprise that settles back to his normal eyes.
-const WIDEN = { brow: 0.15, eyes: 0.1, in: 0.18, hold: 0.35, out: 0.7 };
+// A brief widen (widen(); the lip and hand holds): a moment's surprise that
+// settles back to his normal eyes, no parted lips. `eyesAdd` opens the eyes
+// by the same amount the models' own surprised face (e_odoroki, +0.2) does,
+// in parameter units rather than a share of the range. Eyes only (`brow`
+// 0), no flinch.
+const WIDEN = { brow: 0, eyes: 0, eyesAdd: 0.2, in: 0.15, hold: 0.5, out: 0.7 };
 
-const HEAD_SHAKE = { turns: 2, period: 0.6, angle: 7, body: 0, chin: 5, eyes: -0.45, in: 0.25, settle: 0.8 };
+const HEAD_SHAKE = { turns: 2, period: 0.6, angle: 7, body: 0, chin: 5, in: 0.25, settle: 0.8 };
 
 // partBlush defaults: which parts redden, and the tint at a full blush.
 const PART_BLUSH = { parts: ["ear_r", "ear_l"], color: [1, 0.62, 0.62] };
@@ -168,8 +173,12 @@ const HOLD = {
   // Seconds a mid-hold change of weights (the check sliding into tease)
   // crossfades over, instead of switching in one frame.
   blend: 2,
+  // Effects that crossfade slower than `blend`: when a check turns into
+  // tease, the heavy lids come in first and the panting (quicker breath,
+  // parted lips) and bliss build after them, gradually.
+  blendSlow: { heartbeat: 4.5, lips: 4.5, bliss: 4.5 },
   release: 4,
-  bands: { look: [0, 0.3], glance: [0, 0.05], blush: [0, 0.7], pulse: [0, 0.4], heartbeat: [0.15, 0.8], lips: [0.75, 1], bliss: [0.85, 1] },
+  bands: { look: [0, 0.3], glance: [0, 0.05], blush: [0, 0.7], pulse: [0, 0.4], heartbeat: [0.3, 1], lips: [0.8, 1], bliss: [0.85, 1] },
 };
 
 // Tease's bliss at full strength: the brows give way (ParamBrow*Form toward
@@ -226,6 +235,12 @@ export const HOLD_LOOK = {
   glanceIn: 0.35,
   glanceHold: 1.1,
   glanceLift: 1.1,
+  // The heartbeat check's glance alone (setHold `peek`, no hold look)
+  // is a quick look down: shorter in, held only briefly, and back up to
+  // your eyes fast.
+  peekIn: 0.25,
+  peekHold: 0.6,
+  peekLift: 0.4,
   glanceChin: 6,
   eyes: 1.6,
   // A repeat glance (setHold glanceEvery) goes straight down, not to the touch.
@@ -295,6 +310,8 @@ function withOutfit(rig, name = rig.defaultOutfit) {
     // An outfit's own moods (expressions only its model has: Haru's casual
     // open eyes) are added to the shared ones, never replacing the set.
     expressions: { ...shared.expressions, moods: { ...shared.expressions?.moods, ...outfit.expressions?.moods } },
+    // Likewise an outfit's own poses override only the keys it names.
+    reactionPoses: { ...shared.reactionPoses, ...outfit.reactionPoses },
   };
 }
 
@@ -560,6 +577,9 @@ export class Live2DRig {
 
   // Scales the eyes by the blink's openness (0 shut, 1 open) instead of
   // setting them, so a pose or clip that narrows the eyes keeps doing so.
+  // No blinking through a wink (a mood that shuts one eye, e_wink_00): the
+  // open eye blinking with the other shut read badly. The blink weakens as
+  // the wink fades in and comes back as it fades out.
   blink() {
     const now = performance.now();
     const dt = (now - this.lastBlinkAt) / 1000;
@@ -567,8 +587,20 @@ export class Live2DRig {
     if (!this.eyeBlink || !this.blinkIds.length) return;
     let open = 1;
     this.eyeBlink.updateParameters({ setParameterValueById: (_, v) => (open = v) }, dt);
+    const wink = this.winking();
+    if (wink) open = 1 - (1 - open) * (1 - wink);
     const { values } = this.raw.parameters;
     for (const i of this.blinkIds) values[i] *= open;
+  }
+
+  // 0-1, how far the mood shuts one eye and not the other (a wink). Half
+  // the difference counts as a full wink: Rui's narrows the open eye a
+  // little too (0.8 apart), which would leave a faint blink.
+  winking() {
+    const mood = this.blended();
+    const l = mood.get("ParamEyeLOpen") ?? 0;
+    const r = mood.get("ParamEyeROpen") ?? 0;
+    return Math.min(1, Math.abs(l - r) / 0.5);
   }
 
   /** Scales the plugin's own sway: 0 off, 1 as the plugin ships it. */
@@ -716,9 +748,14 @@ export class Live2DRig {
     this.blend = midHold ? { from: this.weightsNow(), at: now } : null;
     this.holdWeights = next;
     this.wasHolding = true;
-    if (midHold && this.glance && (look || peek)) this.glance.every = glanceEvery;
-    else this.glance = look || peek ? { at: now, to: glance, every: glanceEvery } : null;
+    const peeks = peek && !look;
+    const liftFor = peeks ? HOLD_LOOK.peekLift : HOLD_LOOK.glanceLift;
+    const inFor = peeks ? HOLD_LOOK.peekIn : HOLD_LOOK.glanceIn;
+    const holdFor = peeks ? HOLD_LOOK.peekHold : HOLD_LOOK.glanceHold;
+    if (midHold && this.glance && (look || peek)) Object.assign(this.glance, { every: glanceEvery, liftFor, inFor, holdFor });
+    else this.glance = look || peek ? { at: now, to: glance, every: glanceEvery, liftFor, inFor, holdFor } : null;
   }
+
 
   // The hold's weights this frame: holdWeights, or partway there from the
   // last ones while a crossfade (setHold mid-hold) runs.
@@ -726,14 +763,15 @@ export class Live2DRig {
     const to = this.holdWeights ?? {};
     const b = this.blend;
     if (!b) return to;
-    const x = Math.min(1, (performance.now() / 1000 - b.at) / HOLD.blend);
-    if (x >= 1) {
+    const t = performance.now() / 1000 - b.at;
+    if (t >= Math.max(HOLD.blend, ...Object.values(HOLD.blendSlow))) {
       this.blend = null;
       return to;
     }
-    const k = x * x * (3 - 2 * x);
     const out = {};
     for (const key of new Set([...Object.keys(b.from), ...Object.keys(to)])) {
+      const x = Math.min(1, t / (HOLD.blendSlow[key] ?? HOLD.blend));
+      const k = x * x * (3 - 2 * x);
       out[key] = (b.from[key] ?? 0) + ((to[key] ?? 0) - (b.from[key] ?? 0)) * k;
     }
     return out;
@@ -745,7 +783,9 @@ export class Live2DRig {
     const g = this.glance;
     if (!g?.to) return 0;
     const now = performance.now() / 1000;
-    const { glanceIn, glanceHold, glanceLift } = HOLD_LOOK;
+    const glanceHold = g.holdFor ?? HOLD_LOOK.glanceHold;
+    const glanceIn = g.inFor ?? HOLD_LOOK.glanceIn;
+    const glanceLift = g.liftFor ?? HOLD_LOOK.glanceLift;
     if (g.every && now - g.at > glanceIn + glanceHold + glanceLift) {
       const [a, b] = g.every;
       g.at = now + a + Math.random() * (b - a);
@@ -1089,7 +1129,7 @@ export class Live2DRig {
   applyShake() {
     const st = this.shakeState;
     if (!st || !this.model) return;
-    const { turns, period, angle, body, chin, eyes, in: rise, settle } = HEAD_SHAKE;
+    const { turns, period, angle, body, chin, in: rise, settle } = HEAD_SHAKE;
     const t = performance.now() / 1000 - st.at;
     const span = turns * period;
     if (t > span + settle) {
@@ -1100,7 +1140,7 @@ export class Live2DRig {
       const c = Math.min(1, Math.max(0, x));
       return c * c * (3 - 2 * c);
     };
-    // The turns fade as they go; the dip and lowered eyes hold, then settle.
+    // The turns fade as they go; the dip and eye contact hold, then settle.
     const sway = t < span ? Math.sin((2 * Math.PI * t) / period) * (1 - t / span) * ease(t / rise) : 0;
     const dip = ease(t / rise) * (1 - ease((t - span) / settle)) * st.scale;
     const { values, minimumValues, maximumValues } = this.raw.parameters;
@@ -1111,7 +1151,8 @@ export class Live2DRig {
     set("ParamAngleX", (v) => v + angle * sway * st.scale);
     set("ParamBodyAngleX", (v) => v + angle * body * sway * st.scale);
     set("ParamAngleY", (v) => v - chin * dip);
-    set("ParamEyeBallY", (v) => v + (eyes - v) * dip);
+    set("ParamEyeBallX", (v) => v * (1 - dip));
+    set("ParamEyeBallY", (v) => v * (1 - dip));
   }
 
   /** A small gasp (GASP): parted lips and a hint of surprise. */
@@ -1145,7 +1186,7 @@ export class Live2DRig {
     };
     if (k.open) for (const i of this.mouth ?? []) values[i] = Math.max(values[i], k.open * maximumValues[i] * w);
     for (const id of ["ParamBrowLY", "ParamBrowRY"]) set(id, (v) => v + k.brow * w);
-    for (const id of ["ParamEyeLOpen", "ParamEyeROpen"]) set(id, (v, range) => v + k.eyes * range * w);
+    for (const id of ["ParamEyeLOpen", "ParamEyeROpen"]) set(id, (v, range) => v + ((k.eyes ?? 0) * range + (k.eyesAdd ?? 0)) * w);
   }
 
   /**
