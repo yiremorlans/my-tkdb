@@ -8,6 +8,8 @@
 // stay out (spoiler). Lips and hips stay serious until spark. Chest and
 // belly turn by tier from a warning to a dare to an invitation that still
 // bites; the meter maxing out is still a real threat.
+// Holds (spark+): his poor memory is the deflection; at bound, remembering
+// her is the payoff (he forgets names, never her).
 
 export default {
   new: {
@@ -143,6 +145,18 @@ export default {
       "Shit... Okay, okay. Gimme a sec, kitten.",
       "Gyahaha... Okay, you got me. Now quit it before I return the favor.",
     ],
+    heartbeatHold: [
+      "Gyahaha... That's not you. I just smelled food.",
+      "Shit. You saw that? ...Forget it. I already did.",
+    ],
+    lipHold: [
+      "...That long, huh? I almost bit. Almost.",
+      "...Hah. You're braver than you look, kitten.",
+    ],
+    handHold: [
+      "Hey, I wasn't done. That hand's mine till I say, kitten.",
+      "That's it? Fine. Ciao!",
+    ],
   },
   close: {
     headPat: [
@@ -180,6 +194,44 @@ export default {
     upset: [
       "Shit... Keep that up and I'm not letting you leave, kitten.",
       "...Shit. Now I forgot what I was mad about.",
+    ],
+    heartbeatHold: [
+      "Gyahaha! Busted. Don't tell Lulu, he'll start charging for the show.",
+      "Yeah, it's racing. Wanna see what happens if it keeps going, kitten?",
+    ],
+    lipHold: [
+      "Mm. Next time I'm keeping that finger. Gyahaha!",
+      "...Kitten. You're playing with your food.",
+    ],
+    handHold: [
+      "Feels like a winning streak. Don't break it, kitten.",
+      "Gimme that back. I don't remember saying you could go.",
+    ],
+    caughtTease: [
+      "Hah... Not yet, kitten. I'm the one who deals.",
+      "Ha... Greedy kitten. Not yet.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "Remember what it did last time? Gyahaha... Me too. For once.",
+      "Hear that? It only does that for you, kitten.",
+    ],
+    lipHold: [
+      "Just the finger? We're past that, kitten. Get over here.",
+      "Mm. Keep that up and I get a taste. ...Gyahaha! Again.",
+    ],
+    handHold: [
+      "Till death do us part, kitten. You let go, I follow.",
+      "Your hand's warm. Stay. I'll deal the cards later.",
+    ],
+    breakAway: [
+      "Shit... Shit. Okay. You win this hand, kitten.",
+      "Hah... Shit. Who's eating who here? ...Gimme a sec.",
+    ],
+    teaseLetGo: [
+      "Hah... Quitting while you're ahead, kitten? Smart. Doesn't save you, though.",
+      "That's where you stop? Mean. ...I'm collecting the rest later, kitten.",
     ],
   },
 };

@@ -7,11 +7,16 @@
 // others all day, but being touched rattles him every time, so he stammers,
 // re-arms, and tries to turn the touch into an examination. "Keep away" is arrogance, never germs. Guarded
 // spots (lips, chest, hips) are outrage until spark, where the outrage cracks.
+//
+// Holds (spark+): the heartbeat check flips his doctor role (he takes
+// pulses, he isn't read), so he sputters and re-arms. Still flustered at
+// bound, never calm about being touched; bound treats intimacy as shared
+// history.
 
 export default {
   new: {
     headPat: [
-      "Wh-What do you think you're doing, worm!?",
+      "Wh-What do you think you're doing!?",
       "D-Don't touch me! I examine, I am not examined!",
     ],
     cheekPoke: [
@@ -20,10 +25,10 @@ export default {
     ],
     lipsTouch: [
       "How dare you! My lips are not open for examination!",
-      "Who said you could!? I am the doctor here, worm!",
+      "Who said you could!? I am the doctor here!",
     ],
     earTouch: [
-      "Ah! M-Mind the piercings, worm!",
+      "Ah! M-Mind the piercings!",
       "Kindly keep your hands off a genius at work.",
     ],
     handTap: [
@@ -36,11 +41,11 @@ export default {
     ],
     bellyTouch: [
       "Wh-Who gave you permission to palpate me!?",
-      "Abdominal exams are my job, worm! Not yours!",
+      "Abdominal exams are my job! Not yours!",
     ],
     hipsTouch: [
       "Wh-Wh-What!? Unhand me!",
-      "Absolutely not! Keep your distance, worm!",
+      "Absolutely not! Keep your distance!",
     ],
     upset: [
       "Enough! I am a very busy man!",
@@ -57,12 +62,12 @@ export default {
       "Must you!? I am thinking!",
     ],
     lipsTouch: [
-      "Ah! That is a highly personal area, worm!",
+      "Ah! That is a highly personal area!",
       "What sort of examination is that supposed to be!?",
     ],
     earTouch: [
       "Wh-Why my ears!? Admiring the piercings, I suppose... Hmph.",
-      "Careful, worm! Those are not toys!",
+      "St-Stop that! My hearing is perfectly fine, thank you!",
     ],
     handTap: [
       "Your pulse is elevated. Hold still.",
@@ -81,13 +86,13 @@ export default {
       "Wh-Where do you think you're putting that hand!?",
     ],
     upset: [
-      "That's quite enough, worm!",
+      "That's quite enough!",
       "Stop that this instant! I have research to do!",
     ],
   },
   warm: {
     headPat: [
-      "Hmph. I s-suppose I've earned it... Don't make a habit of it.",
+      "Hmph. I suppose I've earned it... Don't make a habit of it.",
       "...Y-You may continue. Briefly. And tell no one.",
     ],
     cheekPoke: [
@@ -112,7 +117,7 @@ export default {
     ],
     bellyTouch: [
       "Hah! Th-That was an involuntary reflex! It means nothing!",
-      "D-Don't do that without warning! My concentration!",
+      "D-Don't do that without warning! I can't concentrate!",
     ],
     hipsTouch: ["Unhand me this instant!", "Wh-Where is that hand going!?"],
     upset: [
@@ -135,7 +140,7 @@ export default {
     ],
     earTouch: [
       "Ah! That's... N-No, that was a cough!",
-      "Must you find every weak point, worm!?",
+      "Must you find every weak point!?",
     ],
     handTap: [
       "Your pulse is... No, that's mine. Ignore it.",
@@ -151,11 +156,23 @@ export default {
     ],
     hipsTouch: [
       "Wh-Wh-What!? Have you no sense of propriety!?",
-      "N-Not here, worm! Have some decorum!",
+      "N-Not here! Have some decorum!",
     ],
     upset: [
       "Enough! I can't think straight!",
       "Stop! My concentration is in ruins!",
+    ],
+    heartbeatHold: [
+      "I-It was perfectly steady before you got here! ...That is merely an observation!",
+      "Elevated? A temporary anomaly. It only occurs under very specific conditions. D-Don't ask which!",
+    ],
+    lipHold: [
+      "Wh-What was that for!? I was in the middle of a sentence! ...What was I saying?",
+      "Hmph! If that was meant to quiet me, it worked. D-Don't let it go to your head!",
+    ],
+    handHold: [
+      "Hmph. That was... tolerable. Wh-Why are you smiling!?",
+      "Done already? I-I mean, good! ...I was only just getting used to it.",
     ],
   },
   close: {
@@ -169,11 +186,11 @@ export default {
     ],
     lipsTouch: [
       "Th-That requires further study. Repeated trials. For accuracy!",
-      "I-If you're going to do that, at least do it properly, worm!",
+      "I-If you're going to do that, at least do it properly!",
     ],
     earTouch: [
-      "Ah! Th-The piercings are... Fine. You may admire them. Up close.",
-      "Stay there. That is... a doctor's order, worm.",
+      "Ah! M-My ears are going red, aren't they?",
+      "Stay there. That is... a doctor's order.",
     ],
     handTap: [
       "Hmph. I don't let anyone hold these. ...You may.",
@@ -181,15 +198,53 @@ export default {
     ],
     chestTouch: [
       "Y-Yes, it's racing. I've diagnosed the cause, and the cause is you, worm.",
-      "Listen, then, if you must. ...Consider it a privilege, worm.",
+      "Listen, then, if you must. ...Consider it a privilege.",
     ],
     bellyTouch: [
       "Palpation, is it? Hmph. Your technique needs work. ...K-Keep practicing.",
-      "Wh-What are you smiling at? Your hand can stay. I-I've decided!",
+      "Ah! ...I am not ticklish. That was a reflex!",
     ],
     hipsTouch: [
       "Wh-Wha... Not in the lab! ...We'll continue this in private. Th-That is an order!",
-      "Have you no... Hmph. Very well. I'll allow it. For you, and no one else!",
+      "Bold. Very bold. ...I-I'm not objecting! I'm making a note of it!",
+    ],
+    heartbeatHold: [
+      "Well? What's your diagnosis? ...Hmph. Don't say it out loud.",
+      "Elevated, yes. Chronic, I suspect. I-I am not requesting treatment!",
+    ],
+    lipHold: [
+      "You've rendered me speechless. Do you know how rare that is? Be proud.",
+      "Mm... Hmph. A-A finger. Only a finger. ...I wasn't expecting anything else!",
+    ],
+    handHold: [
+      "My hands never shake in surgery. Explain why they're shaking now! ...No, don't.",
+      "Not like that. Lace your fingers through mine. I-It's better for circulation! Medically speaking!",
+    ],
+    caughtTease: [
+      "Ah...! N-Not yet! I haven't... prepared! I-I need a moment!",
+      "W-Wait. Not... not yet. ...I didn't say never.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "You've charted that pulse often enough to know it by heart. ...Don't look so pleased.",
+      "It climbs exactly as it did before. Consistent results. I-I am a very consistent man!",
+    ],
+    lipHold: [
+      "Only you are permitted there. You know that. You've... made very sure I know it too.",
+      "Mm... Don't start that unless you intend to finish it. You know I won't stop you.",
+    ],
+    handHold: [
+      "Your hand is warm. Good. I intend to keep it that way. For... medical reasons. Lifelong ones.",
+      "You're mine... N-No! I mean... Hmph. Yes. That is exactly what I mean.",
+    ],
+    breakAway: [
+      "Ha... ha... Give me one moment. Then you're mine.",
+      "Ha... ha... Don't look so smug. I-I'm merely catching my breath!",
+    ],
+    teaseLetGo: [
+      "Y-You stopped!? Now!? Of all the... Hmph! Come back here this instant, worm!",
+      "Ha... Fine. Walk away. You'll be back, and I'll be ready this time.",
     ],
   },
 };

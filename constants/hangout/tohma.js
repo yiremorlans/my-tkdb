@@ -7,6 +7,10 @@
 // never bluntness. No alprazolam/headache material at any tier; no
 // Stigma/Artifact. Guarded spots (lips, chest, hips) stay composed refusals
 // until spark.
+//
+// Holds (spark+): the heartbeat check finds the courtier out, and he keeps
+// it courtly ("it never happened", chess, patience). Bound treats intimacy
+// as shared history; breakAway is composure lost, never explicit.
 
 export default {
   new: {
@@ -151,6 +155,18 @@ export default {
       "Honestly. You'll undo all my composure if you keep that up.",
       "Enough, enough. You're being terribly unfair.",
     ],
+    heartbeatHold: [
+      "I trust that reading stays between us. As far as anyone knows, it never happened.",
+      "Well, well. My face gave nothing away. My pulse, apparently, has had no such training.",
+    ],
+    lipHold: [
+      "...You've made your point. I'd simply rather not admit how well.",
+      "Mm. If you meant to silence me, I'll have you know it's working.",
+    ],
+    handHold: [
+      "Such a patient grip. Perhaps I'll let you teach me something for once.",
+      "You held on longer than you needed to. Don't think I didn't notice.",
+    ],
   },
   close: {
     headPat: [
@@ -184,6 +200,44 @@ export default {
     hipsTouch: [
       "Careful. My intentions are entirely honorable. Yours, I'm beginning to doubt.",
       "Mm. I'd stop you, if I wanted to.",
+    ],
+    heartbeatHold: [
+      "Satisfied? I'd ask you not to share that figure with anyone. I have a reputation.",
+      "For a moment there I forgot I was meant to be composed. My heart, sadly, did not.",
+    ],
+    lipHold: [
+      "Hush, is it? Very well. For you, I'll keep quiet. Not for long.",
+      "Mm. I'm a patient man. You do test that rather beautifully.",
+    ],
+    handHold: [
+      "Do you know how rarely anyone looks after me? Ha ha... Don't stop now.",
+      "Stay a little longer. The work can finish itself for once.",
+    ],
+    caughtTease: [
+      "...Ha ha. Not here, and not yet. Do allow me a little dignity.",
+      "Ah, ah. Careful. A good player never rushes the endgame.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "I gave up pretending with you some time ago. My heart merely confirms it.",
+      "You know precisely what it does when you're near. You've heard it go faster.",
+    ],
+    lipHold: [
+      "You know very well where that leads. Keep it there a moment longer anyway.",
+      "Only you can quiet me like that. Even the king doesn't manage it.",
+    ],
+    handHold: [
+      "Forgetting everything I've got to do and be... With you, it's no longer once in a while.",
+      "I said I'd be there to keep you safe. I never said I'd let go.",
+    ],
+    breakAway: [
+      "...Ha... ha. Enough, enough. You've won. I'll need a moment to find my composure.",
+      "Honestly... Give me a moment. I can't think of a single clever thing to say.",
+    ],
+    teaseLetGo: [
+      "Stopping there? Honestly... That was quite deliberate, wasn't it? Well played.",
+      "Mm... Leave me like this, and I'll have to finish what you started. Later, of course.",
     ],
   },
 };

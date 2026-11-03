@@ -8,6 +8,12 @@
 // to whisper), not the hand passing through him. He takes the meaning as if
 // it landed. No contact at any tier, no object handling. Guarded spots
 // (lips, chest, hips) stay gentlemanly rebuffs until spark.
+//
+// Holds (spark+): she can't really check his heart, hush him or hold his
+// hand, so they pretend, and his lines wish it were real. Make-believe,
+// never contact (no hand passing through, no chill, no "I felt it"); he
+// never calls himself a ghost. Bound treats the pretending as their shared
+// history.
 
 export default {
   new: {
@@ -78,7 +84,7 @@ export default {
       "Horsefeathers! A poke in the middle? I know mischief when I see it.",
     ],
     hipsTouch: [
-      "Horsefeathers! My dear, have you no shame?",
+      "My dear, have you no shame?",
       "I can see what you're after, my dear, and the answer is no.",
     ],
     upset: [
@@ -161,6 +167,18 @@ export default {
       "My dear, mercy! You've made your feelings very clear.",
       "Enough, please. I can't keep up, and I want to.",
     ],
+    heartbeatHold: [
+      "Listening for my heart, my dear? Let's pretend you heard it.",
+      "I'd give anything for you to really hear it. Since I can't, take my word: it was all yours.",
+    ],
+    lipHold: [
+      "If only you could really hush me like that. ...Let's say you did. I'm hushed.",
+      "My dear, I wish that had been real. Pretend with me? I've already started.",
+    ],
+    handHold: [
+      "How I wish I could hold on back. Shall we pretend I did? I'm very convincing.",
+      "We'll play make-believe, you and I. In this version, I never let go.",
+    ],
   },
   close: {
     headPat: [
@@ -194,6 +212,44 @@ export default {
     hipsTouch: [
       "My dear... A gentleman would stop you. I'm finding I'd rather be a poet.",
       "Gracious. That's a scene I'd never let Haku film. ...Go on.",
+    ],
+    heartbeatHold: [
+      "You keep listening for it, my dear, so I keep pretending it's racing. It's the truest fib I tell.",
+      "I wish you could hear how it would be pounding. Close your eyes and imagine it. I am.",
+    ],
+    lipHold: [
+      "Pretend or not, my dear, I'll call it a kiss and blush accordingly.",
+      "We're getting awfully good at pretending, my dear. Some days I wish we weren't. I'd rather it were real.",
+    ],
+    handHold: [
+      "Pretend I squeezed back just now, my dear. I did, as hard as a fella can pretend.",
+      "If wishing made it real, you'd never get your hand back.",
+    ],
+    caughtTease: [
+      "My dear...! Not yet. Even pretending, a gentleman has to work up to that.",
+      "Ah, ah... Not yet. Let me wish for it a while longer. I'm very good at wishing.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "We both know the game by now. You listen, I pretend, and somehow it's true.",
+      "You've pretended to hear it so often, I've started to believe it beats for you.",
+    ],
+    lipHold: [
+      "My dear... We've pretended well past this before. I remember every line of it.",
+      "If I could have one real thing, my dear, it would be this. Pretend for me once more?",
+    ],
+    handHold: [
+      "In every version we pretend, my dear, I'm holding on. In the real one, I'm wishing I could.",
+      "I'd trade every poem I own for one real minute of this. Until then, pretend with me.",
+    ],
+    breakAway: [
+      "M-My dear...! Mercy. That was only pretend, and I've lost every word I own.",
+      "Ha... Gracious. If pretending does that to me, the real thing would leave me without a verse to my name.",
+    ],
+    teaseLetGo: [
+      "Ha... My dear! Stopping a fella mid-stanza? That's the cruelest cliffhanger in all of literature.",
+      "Very well, my dear. I'll keep wishing right where you left off. Pick it up again soon?",
     ],
   },
 };

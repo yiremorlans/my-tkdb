@@ -15,6 +15,10 @@
 // From spark those spots fluster him.
 // Upset goes lower and flatter through warm (his voice drops), never cruel,
 // and is flustered from spark.
+// Holds (spark+): he hears hearts anyway, so the heartbeat check is a
+// game he's in on. No scolding even at caughtTease ("Not yet" stays kid-like);
+// bound treats intimacy as shared history. `daytime.bound` holds only the
+// hold pools; its taps fall back to daytime.close.
 
 export default {
   new: {
@@ -28,26 +32,26 @@ export default {
     ],
     lipsTouch: [
       "...? Hm. Not there.",
-      "Your heart just jumped. Why'd you do that?",
+      "I heard your heart jump. Why'd you do that?",
     ],
     earTouch: [
       "Ah! That tickles. ~ ~ ♪",
-      "Careful! My ears are really good, you know.",
+      "Hm? Is it a secret? Tell me! Heh heh ♪",
     ],
     handTap: [
       "Are we going somewhere? Let's go!",
-      "Your hand's small. Come play with me!",
+      "Hm? Is that a game? What are the rules?",
     ],
     chestTouch: [
       "...? What are you looking for in there?",
       "Hm? That's where my heart is. Don't poke it.",
     ],
     bellyTouch: ["...Hm? That's my belly. Why?", "No. Pat my head instead."],
-    hipsTouch: [
-      "...Hey. Not there.",
-      "I can hear your heart. It's being weird. Why?",
+    hipsTouch: ["...Mm-mm. Not that.", "...Hm. I don't want that."],
+    upset: [
+      "...No. I don't like that.",
+      "I don't want to play anymore. Leave me alone.",
     ],
-    upset: ["...No. I don't like that.", "...? Why'd you do that? Don't."],
   },
   known: {
     headPat: ["Heh heh ♪ Dandelion's petting me!", "More! Right there. ♪"],
@@ -80,8 +84,8 @@ export default {
       "I heard your heart skip. That's not a head pat.",
     ],
     upset: [
-      "...Dandelion. I don't like that.",
-      "...No. I hate that, Dandelion.",
+      "...Hm. Not like that, Dandelion.",
+      "...Hmph. I'm not talking to you now, Dandelion.",
     ],
   },
   warm: {
@@ -94,7 +98,7 @@ export default {
       "Heh heh ♪ My cheek's soft, right? Like petals.",
     ],
     lipsTouch: [
-      "...? You keep touching there. Why? Is it a secret?",
+      "...? You keep touching there. Is it a secret?",
       "Hm? Are they soft? I never checked. ♪",
     ],
     earTouch: [
@@ -102,11 +106,11 @@ export default {
       "Shh. Do it again. I like how close you are.",
     ],
     handTap: [
-      "Found you, Dandelion! Now hold on. ♪",
-      "Don't let go. If you let go, I'll come find you.",
+      "Found you, Dandelion! Tag, you're it. ♪",
+      "Tap, tap. ♪ My turn next time.",
     ],
     chestTouch: [
-      "...? Are you listening to my heart? It's loud.",
+      "Hm? You're really close. ...I don't mind. ♪",
       "Hm? That's my sweater. You can borrow it. ♪",
     ],
     bellyTouch: [
@@ -118,8 +122,8 @@ export default {
       "Hm? Do you want a cuddle? Just say so.",
     ],
     upset: [
-      "...Why, Dandelion? I don't like it.",
-      "...No. I hate that. Even from you.",
+      "...Hm. I'm gonna go find Haru.",
+      "...Mm. I thought you were nicer than that.",
     ],
   },
   spark: {
@@ -145,7 +149,7 @@ export default {
     ],
     chestTouch: [
       "...! Dandelion. My heart's doing something weird.",
-      "...Heh heh. You found the loud part.",
+      "...Heh heh. Did you want a hug? You can just say so.",
     ],
     bellyTouch: [
       "...! Heh heh ♪ Stop! That's not fair!",
@@ -159,15 +163,27 @@ export default {
       "...! Dandelion! My face is all hot now!",
       "Heh... No more! My heart's too loud!",
     ],
+    heartbeatHold: [
+      "Heh heh ♪ You listened too long, Dandelion. Now you know.",
+      "...! It was quiet before you came. Now it's running around.",
+    ],
+    lipHold: [
+      "...Shh? Okay. I'll be quiet for you. ♪",
+      "...! Heh heh... That's our secret now, right?",
+    ],
+    handHold: [
+      "Heh heh ♪ You didn't let go. Not even once.",
+      "My hand smells like dandelions now. ♪",
+    ],
   },
   close: {
     headPat: [
       "Heh heh ♪ Promise you'll do this every day.",
-      "Dandelion's hand is the best one. ♪",
+      "Dandelion gives the best head pats. ♪",
     ],
     cheekPoke: [
       "Heh heh ♪ Caught you! Now you owe me a cuddle.",
-      "Do it again! I'll count. ♪",
+      "Heh heh ♪ Again! Both cheeks this time.",
     ],
     lipsTouch: [
       "...! Heh heh ♪ You want that, Dandelion? Me too.",
@@ -192,6 +208,44 @@ export default {
     hipsTouch: [
       "...! Heh heh ♪ Dandelion wants a cuddle. I can tell.",
       "Hm? Come closer, then. ♪",
+    ],
+    heartbeatHold: [
+      "Heh heh ♪ It does that every time you're here. Every single time.",
+      "Hear that? That's how much I like you, Dandelion. ♪",
+    ],
+    lipHold: [
+      "...! Dandelion... That's a secret spot. Only yours.",
+      "...! Heh heh ♪ Again! Do it again, Dandelion!",
+    ],
+    handHold: [
+      "Your hand's warm all the way through now. Heh heh ♪ I did that.",
+      "Let's go up high like this. I'll show you the stars. ♪",
+    ],
+    caughtTease: [
+      "...! Heh heh... Not yet, Dandelion. My heart's too loud already.",
+      "...! Hm-mm. Not yet. ...But don't go far, okay?",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "You know this sound, Dandelion. You've heard it up close.",
+      "It never slows down for you anymore. Heh heh ♪",
+    ],
+    lipHold: [
+      "...Heh heh ♪ You remember what comes after that? I do.",
+      "Mm... Your finger smells like flowers. My favorite ones.",
+    ],
+    handHold: [
+      "Soulmate. ♪ I knew it the first time. I always know.",
+      "Remember the night we didn't let go? Let's do that again. ♪",
+    ],
+    breakAway: [
+      "...! Ha... Dandelion... Too much! My heart's going to fly away!",
+      "...Ha... ha... Dandelion... Wait. I can't breathe right. ♪",
+    ],
+    teaseLetGo: [
+      "...Ha... Dandelion? You stopped? ...Come back. Come back here.",
+      "Heh heh ♪ Okay... Later, then. Promise? Pinky promise, Dandelion.",
     ],
   },
   daytime: {
@@ -238,6 +292,9 @@ export default {
       bellyTouch: ["...! ...! ~ ~ ♫", "♫ ...! ~ ~ . . . ~ ~ ~ ♪"],
       hipsTouch: ["...! ...! . . . ~ ~ ♫", "~ ~ . . . ...! ~ ~ ~?"],
       upset: ["~ ~ ~ . . . ~ ~ .", "...! ~ ~ . . . ~ ."],
+      heartbeatHold: ["...! . . . ~ ~ ~ ♪", "~ ~? ...! ~ ~ ~ ♫"],
+      lipHold: ["...! . . . ~ ~ .", ". . . ~ ~ ~ ♫ . . ."],
+      handHold: ["~ ~ ~ ♪ ~ ~ ~ ♪ ~ ~ ♫", "...! ~ ~ ~ ♫ ♫"],
     },
     close: {
       headPat: ["~ ~ ~ ♪ ~ ~ ~ ♪ ~ ~ ♫", "♫ ~ ~ ~ ♪ . . . ~ ~ ~ ♫"],
@@ -248,6 +305,17 @@ export default {
       chestTouch: ["~ ~ ~ ♪ . . . ~ ~ ~ ♫", "...! . . . ~ ~ ♫"],
       bellyTouch: ["~ ~ ♫ ~ ~ ~! ~ ~ ♪", "...! ~ ~ ~ ♪ ~ ~ ~ ♫"],
       hipsTouch: ["...! ~ ~ ♪ ~ ~ ~?", "~ ~ ~ ♫ . . . ~ ~! ♪"],
+      heartbeatHold: ["~ ~ ~ ♫ ~ ~ ~ ♫ ...!", "...? . . . ~ ~ ~ ♪ ♪"],
+      lipHold: ["...! ~ ~ ~ ♫ . . . ♪", ". . . ~ ~ ♪ ~ ~ ~?"],
+      handHold: ["♪ ~ ~ ~ ♫ ~ ~ ~ ♪ ~ ~ ~ ♫", "~ ~ ~! ~ ~ ~ ♪ . . . ♫"],
+      caughtTease: ["...! . . . ~ ~ . ~ ~ ♪", "...! ~ ~ ~ . . . ♫"],
+    },
+    bound: {
+      heartbeatHold: ["~ ~ ~ ♪ . . . ~ ~ ~ ♫ ♫", "...! ~ ~ ♫ ~ ~ ~ ♫ ~ ~ ♪"],
+      lipHold: [". . . ~ ~ ~ ♫ . . . ~ ~ ♪", "...! . . . ~ ~ ~ ♪"],
+      handHold: ["♫ ~ ~ ~ ♪ ~ ~ ~ ♫ . . . ♪", "~ ~ ~ ♪ ~ ~ ~ ♪ ~ ~ ~ ♫ ♫"],
+      breakAway: ["...! ...! . . . ~ ~ . . .", "...! ~ ~ . . . ...! ~ ♪"],
+      teaseLetGo: ["...! . . . ~ ~ ~?", "~ ~ . . . ~ ~ ~ ♪ ♫"],
     },
   },
 };

@@ -176,7 +176,7 @@ export default {
     ],
     cheekPoke: [
       "Yes, my face is warm. I concede the point.",
-      "Again, if you like. I have stopped keeping count.",
+      "Again, if you like. I find I do not mind it.",
     ],
     lipsTouch: [
       "...Again, please. I was not adequately prepared.",
