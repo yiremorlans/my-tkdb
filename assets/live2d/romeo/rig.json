@@ -159,7 +159,29 @@
         "close": { "mood": "smirk_blush", "duration": 3.4 },
         "bound": { "mood": "smirk_blush", "duration": 3.8 }
       }
-    }
+    },
+    "handHold": {
+      "byTier": {
+        "spark": { "mood": "grumpy_blush", "duration": 2.6 },
+        "close": { "mood": "soft_smile_blush", "duration": 2.6 },
+        "bound": { "mood": "smile_blush", "duration": 3 }
+      }
+    },
+    "heartbeatHold": {
+      "byTier": {
+        "spark": { "mood": "grumpy_blush", "duration": 2.8 },
+        "close": { "mood": "smirk_blush", "duration": 2.8 },
+        "bound": { "mood": "smirk_blush", "duration": 3.2 }
+      }
+    },
+    "lipHold": {
+      "byTier": {
+        "spark": { "mood": "flustered", "duration": 3.6 },
+        "close": { "mood": "soft_smile_blush", "duration": 3.6 },
+        "bound": { "mood": "smirk_blush", "duration": 4 }
+      }
+    },
+    "teaseLetGo": { "byTier": { "bound": { "mood": "grumpy_blush", "duration": 4.4 } } }
   },
   "reactionPoses": {
     "headPat": { "byTier": { "new": "m_odoroki", "known": "m_udekumi", "warm": "m_kuchi", "close": "m_gesture" } },

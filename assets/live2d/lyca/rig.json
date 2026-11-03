@@ -53,6 +53,7 @@
   },
   "partBlush": { "color": [1, 0.9, 0.89] },
   "holdGaze": "shy",
+  "crest": { "params": { "ParamBeastEarOnoff": 1 } },
   "bones": {
     "arms": {
       "r": { },
@@ -166,6 +167,32 @@
         "spark": { "rank": 1, "duration": 3 },
         "close": { "rank": 2, "duration": 3 },
         "bound": { "rank": 2, "duration": 3.4 }
+      }
+    },
+    "handHold": {
+      "byTier": {
+        "spark": { "rank": 2, "duration": 2.6 },
+        "close": { "mood": "smile_blush", "duration": 2.6 },
+        "bound": { "rank": 2, "duration": 3 }
+      }
+    },
+    "heartbeatHold": {
+      "byTier": {
+        "spark": { "rank": 1, "duration": 2.8 },
+        "close": { "mood": "smile_blush", "duration": 2.8 },
+        "bound": { "rank": 2, "duration": 3.2 }
+      }
+    },
+    "lipHold": {
+      "byTier": {
+        "spark": { "mood": "flustered", "duration": 3.6 },
+        "close": { "mood": "smile_blush", "duration": 3.6 },
+        "bound": { "rank": 2, "duration": 4 }
+      }
+    },
+    "teaseLetGo": {
+      "byTier": {
+        "bound": { "mood": "flustered", "duration": 4.4 }
       }
     }
   },

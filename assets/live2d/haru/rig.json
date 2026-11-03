@@ -20,6 +20,13 @@
         "chest": { "part": "chest", "rect": [-0.031, 0.02, 1.031, 0.555] },
         "hips": { "part": "pants", "rect": [0.08, 0.06, 0.92, 0.32] }
       }
+,
+      "expressions": {
+        "moods": {
+          "caught_shy": ["e_kirismile_00"],
+          "tease": ["e_kirismile_00"]
+        }
+      }
     },
     "casual": {
       "model": "casual/haru_casual.model3.json",
@@ -38,8 +45,8 @@
       },
       "expressions": {
         "moods": {
-          "caught_shy": ["e_kewashiikaigan_00"],
-          "tease": ["e_kewashiikaigan_00"]
+          "caught_shy": ["e_kaigan_yowaki_00"],
+          "tease": ["e_kaigan_yowaki_00"]
         }
       }
     },
@@ -58,6 +65,12 @@
         "belly": { "part": "peekaboo" },
         "chest": { "part": "chest", "rect": [0.084, 0.02, 0.916, 0.741] },
         "hips": { "part": "pants", "rect": [0.076, 0.061, 0.924, 0.323] }
+      },
+      "expressions": {
+        "moods": {
+          "caught_shy": ["e_kirismile_00"],
+          "tease": ["e_kirismile_00"]
+        }
       }
     }
   },
@@ -111,6 +124,32 @@
     }
   },
   "reactions": {
+    "handHold": {
+      "byTier": {
+        "spark": { "mood": "smile_blush", "duration": 2.6 },
+        "close": { "rank": 2, "duration": 2.6 },
+        "bound": { "rank": 2, "duration": 3 }
+      }
+    },
+    "heartbeatHold": {
+      "byTier": {
+        "spark": { "mood": "flustered", "duration": 2.8 },
+        "close": { "rank": 2, "duration": 2.8 },
+        "bound": { "rank": 2, "duration": 3.2 }
+      }
+    },
+    "lipHold": {
+      "byTier": {
+        "spark": { "rank": 1, "duration": 3.6 },
+        "close": { "mood": "smile_blush", "duration": 3.6 },
+        "bound": { "mood": "smile_blush", "duration": 4 }
+      }
+    },
+    "teaseLetGo": {
+      "byTier": {
+        "bound": { "mood": "smile_blush", "duration": 4.4 }
+      }
+    },
     "upset": {
       "byTier": {
         "new": { "mood": "upset", "duration": 4 },

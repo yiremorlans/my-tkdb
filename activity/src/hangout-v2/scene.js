@@ -15,7 +15,7 @@ import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 
 import { Hangout } from "../hangout/hangout.js";
 import { Sounds } from "../hangout/sounds.js";
-import { TYPE_MS, dialogueBox, frameLoop, loadTexture, stageFraming } from "../hangout/stage.js";
+import { dialogueBox, frameLoop, loadTexture, stageFraming } from "../hangout/stage.js";
 import { Live2DMotion, Live2DRig, loadLive2DRig } from "./live2dRig.js";
 
 extensions.add(Live2DPlugin);
@@ -62,7 +62,7 @@ export async function startScene(stage, { base, tier, outfit, lines, room = true
   };
   const speak = (line) => {
     typeLine(line);
-    renderer.talk((line.length * TYPE_MS) / 1000);
+    renderer.talk(line);
   };
   box.addEventListener("click", (e) => {
     if (!e.target.closest(".vn-icon, .vn-next")) renderer.stopTalking();

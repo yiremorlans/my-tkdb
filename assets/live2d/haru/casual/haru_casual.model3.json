@@ -28,6 +28,10 @@
         "File": "expressions/e_kewashiikaigan_00.exp3.json"
       },
       {
+        "Name": "e_kaigan_yowaki_00",
+        "File": "expressions/e_kaigan_yowaki_00.exp3.json"
+      },
+      {
         "Name": "e_kirismile_00",
         "File": "expressions/e_kirismile_00.exp3.json"
       },

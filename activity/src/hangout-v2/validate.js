@@ -115,6 +115,13 @@ async function outfitProblems(rig, name, { readJson, mocIds }) {
   const hotspots = { ...rig.hotspots, ...outfit.hotspots };
   const problems = [...hotspotProblems(hotspots, parts), ...variantProblems(outfit), ...spotsProblems(rig, name), ...onlyProblems(rig, name), ...partBlushProblems(rig.partBlush, parts)];
   if (rig.holdGaze != null && !["steady", "shy"].includes(rig.holdGaze)) problems.push('holdGaze must be "steady" or "shy"');
+  const crestParams = rig.crest?.params;
+  if (rig.crest != null && !(crestParams && typeof crestParams === "object" && Object.values(crestParams).every((v) => typeof v === "number" && Number.isFinite(v)))) {
+    problems.push("crest.params must map parameter ids to numbers");
+  }
+  if (rig.bliss != null && !(typeof rig.bliss === "object" && Object.entries(rig.bliss).every(([key, v]) => ["browForm", "browUp"].includes(key) && typeof v === "number" && Number.isFinite(v)))) {
+    problems.push("bliss may only set browForm and browUp, as numbers");
+  }
   if (rig.heartRate != null) {
     const { resting, scale } = rig.heartRate;
     if (resting != null && !(resting > 0)) problems.push("heartRate.resting must be a positive bpm");

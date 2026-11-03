@@ -7,7 +7,7 @@
 // Devoted/Soulbound → bound).
 //
 // A reaction is { mood | rank, then?: [seconds, mood], duration?, line?,
-// twitch?, fist? }, or
+// twitch?, fist?, fadeOut? }, or
 // { byTier: { <tier>: reaction } } to vary by tier. A tier with no entry
 // uses the nearest lower tier's. Moods a character lacks fall back to
 // "default".
@@ -27,6 +27,10 @@
 // 0.4, ears and belly 0.6, lips 0.8, hips 1 at new, less at known), and the
 // lips and hips still a little at warm; hands and head pats don't. `fist` clenches the same hands for the reaction's
 // duration.
+//
+// `fadeOut` (seconds, Live2D only) eases the reaction's face back to his
+// resting one over that long (eased in and out) instead of expressions.fade, where a strong
+// face (Elias's teaseLetGo smirk bends the brows hard) would snap back.
 //
 // `sound` plays a clip (a file under the rig's directory, or a list to pick
 // one from; sounds.js). A character adds clips through rig.json
@@ -155,6 +159,34 @@ export const DEFAULT_REACTIONS = {
       bound: { rank: 2, duration: 3.8 },
     },
   },
+  // Letting go of a hold (date-only, spark to bound; docs/hangout-activity.md
+  // §4.2) plays the hold's face with its release line (constants/hangout/
+  // <id>.js heartbeatHold / lipHold / handHold). No flinch: he let it happen.
+  // The lips hold is the most intimate gesture, so its face holds longest;
+  // the heartbeat check is a chest touch he played cool through.
+  handHold: {
+    byTier: {
+      spark: { rank: 2, duration: 2.6 },
+      bound: { rank: 2, duration: 3 },
+    },
+  },
+  heartbeatHold: {
+    byTier: {
+      spark: { rank: 1, duration: 2.8 },
+      close: { rank: 2, duration: 2.8 },
+      bound: { rank: 2, duration: 3.2 },
+    },
+  },
+  lipHold: {
+    byTier: {
+      spark: { rank: 1, duration: 3.6 },
+      close: { rank: 2, duration: 3.6 },
+      bound: { rank: 2, duration: 4 },
+    },
+  },
+  // Tease (bound only, secret) let go before its crest: he was close to the
+  // edge and you stopped. The longest-held face.
+  teaseLetGo: { byTier: { bound: { rank: 2, duration: 4.4 } } },
   // The face for a /meet answer's outcome (docs/hangout-activity.md §11.2
   // step 5): the rung its gain lands on, so love/like match the faces a call
   // scene shows for a favorite and liked response at that tier. A flat answer

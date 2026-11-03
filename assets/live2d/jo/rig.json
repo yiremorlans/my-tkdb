@@ -87,6 +87,32 @@
     }
   },
   "reactions": {
+    "handHold": {
+      "byTier": {
+        "spark": { "mood": "gentle_blush", "duration": 2.6 },
+        "close": { "mood": "gentle_blush", "duration": 2.6 },
+        "bound": { "mood": "gentle_blush", "duration": 3 }
+      }
+    },
+    "heartbeatHold": {
+      "byTier": {
+        "spark": { "mood": "smile_blush", "duration": 2.8 },
+        "close": { "mood": "smile_blush", "duration": 2.8 },
+        "bound": { "mood": "gentle_blush", "duration": 3.2 }
+      }
+    },
+    "lipHold": {
+      "byTier": {
+        "spark": { "mood": "flustered", "duration": 3.6 },
+        "close": { "mood": "wink_blush", "duration": 3.6 },
+        "bound": { "mood": "wink_blush", "duration": 4 }
+      }
+    },
+    "teaseLetGo": {
+      "byTier": {
+        "bound": { "mood": "wink_blush", "duration": 4.4 }
+      }
+    },
     "upset": {
       "byTier": {
         "new": { "mood": "pout_sweat", "duration": 4 },

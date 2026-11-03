@@ -35,6 +35,51 @@ export const SOUND_COOLDOWN = 10;
 // The VN box types a line at one character per TYPE_MS (scene.js).
 export const TYPE_MS = 28;
 
+// Extra ms the typing (and his mouth) rests after a break mid-line: a
+// sentence end or ellipsis ("...", "!?"), a comma-type clause break, and a
+// stammer's hyphen ("Wh-Wha"). Nothing rests after the line's last character.
+export const SENTENCE_PAUSE_MS = 340;
+export const CLAUSE_PAUSE_MS = 140;
+export const STAMMER_PAUSE_MS = 70;
+
+function pauseAfter(line, i) {
+  const c = line[i];
+  const next = line[i + 1];
+  if (next == null) return 0;
+  if (/\s/.test(next)) {
+    if (/[.!?…]/.test(c)) return SENTENCE_PAUSE_MS;
+    if (/[,;:]/.test(c)) return CLAUSE_PAUSE_MS;
+    return 0;
+  }
+  // "I...I": an ellipsis rests even with no space after it.
+  if ((c === "." && line.slice(i - 2, i + 1) === "...") || c === "…") {
+    if (next !== "." && /[\p{L}\d]/u.test(next)) return SENTENCE_PAUSE_MS;
+  }
+  // "Wh-Wha", "s-suppose": a hyphen after a short fragment that restarts.
+  if (c === "-") {
+    const frag = line.slice(0, i).match(/(\p{L}{1,3})$/u)?.[1];
+    if (frag && next.toLowerCase() === frag[0].toLowerCase()) return STAMMER_PAUSE_MS;
+  }
+  return 0;
+}
+
+/** Ms from the start of typing at which each character of `line` appears. */
+export function typeSchedule(line) {
+  const at = [];
+  let t = 0;
+  for (let i = 0; i < line.length; i++) {
+    t += TYPE_MS + (i > 0 ? pauseAfter(line, i - 1) : 0);
+    at.push(t);
+  }
+  return at;
+}
+
+/** Ms `line` takes to type out, pauses included. */
+export function typeDuration(line) {
+  const at = typeSchedule(line);
+  return at.length ? at[at.length - 1] : 0;
+}
+
 // Seconds a touch line stays up after it finishes typing before another tap
 // may replace it.
 export const LINE_HOLD = 1.5;
@@ -151,6 +196,7 @@ export class Hangout {
     if (r.mood) {
       this.renderer.setMood(r.mood);
       this.moodUntil = t + duration;
+      this.moodFadeOut = r.fadeOut ?? null;
     }
     if (r.then) this.pendingMood = { at: t + r.then[0], mood: r.then[1] };
     const sounds = [r.sound ?? []].flat();
@@ -162,7 +208,7 @@ export class Hangout {
     const text = this.line(r.line ?? name);
     if (!text) return;
     this.say(text);
-    this.lineReadyAt = t + (text.length * TYPE_MS) / 1000 + LINE_HOLD;
+    this.lineReadyAt = t + typeDuration(text) / 1000 + LINE_HOLD;
   }
 
   /**
@@ -200,7 +246,9 @@ export class Hangout {
       this.pendingMood = null;
     }
     if (t >= this.moodUntil && this.renderer.moodName !== this.baseMood) {
-      this.renderer.setMood(this.baseMood);
+      // A reaction's `fadeOut` eases its face back (Live2D; the sprite rig ignores it).
+      this.renderer.setMood(this.baseMood, this.moodFadeOut ?? undefined);
+      this.moodFadeOut = null;
     }
     const o = this.handOverride;
     if (o && t >= o.until) this.handOverride = null;

@@ -69,6 +69,25 @@
     }
   },
   "reactions": {
+    "heartbeatHold": {
+      "byTier": {
+        "spark": { "rank": 1, "duration": 2.8 },
+        "close": { "mood": "smile_blush", "duration": 2.8 },
+        "bound": { "mood": "smile_blush", "duration": 3.2 }
+      }
+    },
+    "lipHold": {
+      "byTier": {
+        "spark": { "mood": "smile_blush", "duration": 3.6 },
+        "close": { "mood": "cocky_blush", "duration": 3.6 },
+        "bound": { "mood": "cocky_blush", "duration": 4 }
+      }
+    },
+    "teaseLetGo": {
+      "byTier": {
+        "bound": { "mood": "cocky_blush", "duration": 4.4 }
+      }
+    },
     "upset": {
       "byTier": {
         "new": { "mood": "annoyed", "then": [0.7, "upset"], "duration": 4 },

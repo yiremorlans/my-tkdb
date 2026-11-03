@@ -367,15 +367,21 @@ and pose come off the same tier ladder as the spot it's on.
   warmth) plus, near the top of a long hold,
   bliss: his brows give way and his eyes flutter shut now and then. A
   rig.json `moods.tease` is his face for the whole tease, back to his rest
-  face when it ends (Haru's casual only: `e_kewashiikaigan_00`, the one
-  open-eyed face; academy and house have no open-eye art). An outfit's
+  face when it ends (Haru's casual only: `e_kaigan_yowaki_00`, a
+  hand-made copy of the game's one open-eyed face `e_kewashiikaigan_00`
+  with worried brows from `e_kanashimi_00`, softened; academy and house
+  have no open-eye art). An outfit's
   own moods go in `outfits.<name>.expressions.moods`, added to the shared
   ones and checked against that outfit's model alone. He
   glances down every 3-6s (straight down, not at the touch), eyes open:
   the heavy lids and flutter lift while he looks down, or on some art
   (Haru's) the eyes vanish. Shy-gaze
   characters (`holdGaze: "shy"`) do too, and still break eye contact
-  as on every hold.
+  as on every hold. Their glances away (Kaito, Lyca, Ritsu, Ren,
+  Subaru, Yuri; live2dRig.js `SHY_GAZE`, retimed 2026-11-02) come every
+  3-5.5s for 1-1.7s, the head turning a few degrees with the eyes, on a
+  smooth spring that eases out and back even when cut short; none starts
+  while he's glancing at the touch or down, or for 1s after.
   - **Caught tease (`close`).** The same drag down at close is stopped:
     he wants it and doesn't let it happen (close hints, nothing has
     happened yet). He lets it go on 1.2s first (the check carrying on as
@@ -386,7 +392,7 @@ and pose come off the same tier ladder as the spot it's on.
     smirk, flushed: `smile_blush`, or rig.json `moods.caught_shy` where
     that's a grin or shuts the eyes: Haku, Edward, Ritsu, Shion, Tohma,
     Yuri; Subaru and Romeo a blush alone; Haru's casual opens his eyes,
-    `e_kewashiikaigan_00`), a shy head shake ("not right now": a shared
+    `e_kaigan_yowaki_00`), a shy head shake ("not right now": a shared
     procedural shake, `HEAD_SHAKE`, two small fading turns with the chin
     dipped and eyes lowered; Towa plays his own `m_shakehead_noloop`
     clip), his `reactionPoses.caughtTease` pose where set, and, 0.6s
@@ -400,7 +406,10 @@ and pose come off the same tier ladder as the spot it's on.
   - **Crest and break.** Tease peaks by overwhelming him, never a climax.
     Held on 2.5s past full bliss, a crest builds over 1.5s: his breath
     catches, the blush climbs past its cap into the ears, his eyes squeeze
-    shut and his pulse jumps. His eyes hold still as it builds: the
+    shut and his pulse jumps. rig.json `crest.params` sets parameters
+    while it's up, popping in at their own `motion.ease` rate and back
+    once the comedown is mostly over (`CREST_PARAMS`): Lyca's wolf ears
+    pop out (`ParamBeastEarOnoff`). His eyes hold still as it builds: the
     down-glances and a shy gaze's glances away fade out, and the shy
     glances stay off through the comedown. 0.8s later he breaks away: the hold ends on
     his side, he flinches back into his bound `chestTouch` pose with an
@@ -415,6 +424,27 @@ and pose come off the same tier ladder as the spot it's on.
     glancing down once he breaks away; warmth stays at its cap and
     drifts as usual, and the monitor stays up 20s while his pulse settles.
     No hint or line mentions tease.
+- **Hold lines (preview prototype, 2026-11-02).** Letting go of a hold
+  that ran says one line from that hold's pool in
+  `constants/hangout/<id>.js`: `heartbeatHold` (chest), `lipHold` and
+  `handHold`, at
+  `spark`, `close` and `bound`. The caught tease says a close
+  `caughtTease` line and the break a bound `breakAway` line. Tease let go
+  before the crest says a bound `teaseLetGo` line (2026-11-02): he was
+  close to the edge and you stopped; like every line, it never names
+  tease. `bound`
+  holds only these pools; its touch triggers fall back to `close`. Towa's
+  `daytime` set has the same pools, wordless.
+  The line plays with that hold's face (reactions.js `handHold`,
+  `heartbeatHold`, `lipHold`: no flinch, the lips face held longest),
+  calibrated per character in rig.json `reactions` to the lines and his
+  temperament (2026-11-02), and no pose.
+- **Blush fades gradually (2026-11-02).** A blush comes in as fast as its
+  cause but never drops off with it: when the face that brought it ends, a
+  hold is let go or warmth cools, the flush starts fading at once and
+  dilutes slowly (live2dRig.js `BLUSH_FADE`, exponential, 4s time constant:
+  nearly gone by about 12s), ears and deep patch with it. It doesn't
+  linger and then drop.
 - **Onboarding (preview prototype).** The first time a player is at a tier
   where holds open, a pill above the dialogue box reads "New: press and hold
   his hand, lips or chest" and a faint dot breathes on his hand. It goes

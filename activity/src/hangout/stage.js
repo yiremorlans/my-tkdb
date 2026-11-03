@@ -4,7 +4,7 @@
 
 import { Texture } from "pixi.js";
 
-import { TYPE_MS } from "./hangout.js";
+import { TYPE_MS, typeDuration, typeSchedule } from "./hangout.js";
 
 // docs/hangout-activity.md §4.5: the frame cap on phones.
 export const MOBILE_FPS = 30;
@@ -33,7 +33,7 @@ export function frameLoop(app, maxFPS = 0) {
 
 // The VN box: each line types out (TYPE_MS a character, hangout.js); a
 // click on the box finishes it.
-export { TYPE_MS };
+export { TYPE_MS, typeDuration, typeSchedule };
 
 export function dialogueBox(box) {
   const text = box.querySelector(".vn-text");
@@ -45,18 +45,25 @@ export function dialogueBox(box) {
   }).observe(box);
   box.addEventListener("click", (e) => {
     if (e.target.closest(".vn-icon, .vn-next")) return;
-    clearInterval(typing);
+    clearTimeout(typing);
     text.textContent = text.dataset.full ?? "";
   });
+  // Rests at sentence and clause breaks (typeSchedule), so long lines read
+  // in beats; the Live2D rig's mouth follows the same schedule.
   return (line) => {
-    clearInterval(typing);
+    clearTimeout(typing);
     text.textContent = "";
     text.dataset.full = line;
+    const at = typeSchedule(line);
+    const start = performance.now();
     let i = 0;
-    typing = setInterval(() => {
-      text.textContent = line.slice(0, ++i);
-      if (i >= line.length) clearInterval(typing);
-    }, TYPE_MS);
+    const step = () => {
+      const now = performance.now() - start;
+      while (i < at.length && at[i] <= now) i++;
+      text.textContent = line.slice(0, i);
+      if (i < at.length) typing = setTimeout(step, at[i] - now);
+    };
+    typing = setTimeout(step, at[0] ?? 0);
   };
 }
 

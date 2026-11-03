@@ -11,7 +11,7 @@
 // it.
 
 import { RESPONSE_TYPE_ORDER } from "../../../constants/responseTypes.js";
-import { TYPE_MS } from "../hangout/stage.js";
+import { typeDuration } from "../hangout/stage.js";
 
 // One glyph per type, abstract so it doesn't give the type away, and so the
 // type never depends on color alone.
@@ -53,7 +53,7 @@ export function meetFlow(scene, { box, choices, next }) {
       choices.hidden = true;
       next.hidden = true;
       clearTimeout(meet.back);
-      meet.back = setTimeout(showBeat, line.length * TYPE_MS + 2000);
+      meet.back = setTimeout(showBeat, typeDuration(line) + 2000);
     }
   };
 

@@ -173,6 +173,12 @@ test('holdGaze is "steady" or "shy"', async () => {
   assert.match(await problems(rig({ holdGaze: 'bashful' })), /holdGaze must be "steady" or "shy"/);
 });
 
+test('crest.params maps parameter ids to numbers', async () => {
+  assert.strictEqual(await problems(rig({ crest: { params: { ParamBeastEarOnoff: 1 } } })), '');
+  assert.match(await problems(rig({ crest: { params: { ParamBeastEarOnoff: 'out' } } })), /crest.params must map parameter ids to numbers/);
+  assert.match(await problems(rig({ crest: {} })), /crest.params must map parameter ids to numbers/);
+});
+
 test("partBlush names known parts and an RGB color between 0 and 1", async () => {
   assert.strictEqual(await problems(rig({ partBlush: { parts: ['face_base'], color: [1, 0.6, 0.6] } })), '');
   const msg = await problems(rig({ partBlush: { parts: ['ear_r'], color: [1, 0.6] } }));

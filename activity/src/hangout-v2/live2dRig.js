@@ -22,6 +22,8 @@
 //                          which the game doesn't use: 0 (off) unless set
 //   heartRate              { resting, scale }: the heart monitor's resting
 //                          bpm and how far holds raise it (PULSE)
+//   crest                  { params: { id: value } } held while a tease
+//                          crest is up (CREST_PARAMS; Lyca's ears)
 //   holdGaze               "steady" (default) or "shy": during a hold, a shy
 //                          gaze breaks eye contact now and then (SHY_GAZE)
 //   partBlush              { parts?, color? }: tints those parts' drawables
@@ -36,6 +38,7 @@
 import { Container } from "pixi.js";
 import { Live2DModel, MotionPriority } from "untitled-pixi-live2d-engine/cubism";
 
+import { TYPE_MS, typeSchedule } from "../hangout/hangout.js";
 import { forTier } from "../hangout/reactions.js";
 import { buildModelManifest, manifestPath } from "./manifest.js";
 import { validateLive2DRig } from "./validate.js";
@@ -46,10 +49,28 @@ const POSE_HOLD = 2.5;
 const IDLE_DAMP_IN = 0.8;
 const IDLE_DAMP_OUT = 0.15;
 
-// Mouth flaps while a line types: syllables per second, and the seconds
-// the mouth takes to settle shut after the last one.
-const TALK_RATE = 7;
+// The mouth follows the line as it types (typeSchedule): each character
+// sets how far it wants open (open vowels wide, i/u narrow, m/b/p shut,
+// shut through the rests at sentence and clause breaks), and the mouth
+// eases toward it, faster opening than closing. TALK_SETTLE is the seconds
+// it takes to settle shut after the last character.
 const TALK_SETTLE = 0.12;
+const TALK_OPEN_TAU = 0.035;
+const TALK_CLOSE_TAU = 0.055;
+function mouthShape(c) {
+  if (/[aoáàâäåóòôö]/i.test(c)) return 1;
+  if (/[eéèêë]/i.test(c)) return 0.75;
+  if (/[iuyíìîïúùûü]/i.test(c)) return 0.5;
+  if (/[mbp]/i.test(c)) return 0.05;
+  if (/\p{L}|\d/u.test(c)) return 0.3;
+  if (c === " ") return 0.12;
+  return 0;
+}
+// Words vary a little in emphasis, so lines don't flap at one height.
+function wordGain(line, i) {
+  const n = (line.slice(0, i).match(/\s+/g)?.length ?? 0) + line.length;
+  return 0.8 + 0.2 * Math.abs(Math.sin(n * 12.9898) * 43758.5453 % 1);
+}
 
 // A mood that grits the teeth (ParamMouthForm2 up, e.g. e_shinken_00) draws
 // a mouth the lip sync can't open. He holds the clench for CLENCH_LEAD
@@ -85,6 +106,10 @@ const FLINCH = { peak: 0.14, head: 5, body: 2.5, recoil: 3, shoulders: 0.5 };
 // held `hold`, then eased shut over `out`. Talking owns the mouth, so a
 // line said after it flaps over whatever is left.
 const GASP = { open: 0.35, brow: 0.35, eyes: 0.12, in: 0.12, hold: 0.3, out: 0.55 };
+// A brief widen (widen(); the lip hold): the gasp's eyes and a touch
+// of its brows, no parted lips, on its own slower timing so it reads as a
+// moment's surprise that settles back to his normal eyes.
+const WIDEN = { brow: 0.15, eyes: 0.1, in: 0.18, hold: 0.35, out: 0.7 };
 
 const HEAD_SHAKE = { turns: 2, period: 0.6, angle: 7, body: 0, chin: 5, eyes: -0.45, in: 0.25, settle: 0.8 };
 
@@ -103,6 +128,16 @@ const WARMTH = { blush: 1, curve: 0.6, breathRate: 1.4 };
 // factor on top of their full-blush tint, so the two stay one flush. `span`
 // is the overflow (in ParamCheek units over its max) at their deepest.
 const DEEP = { patch: [0.88, 0.62, 0.66], span: 0.6 };
+
+// A blush comes in as fast as its cause (a mood's e_sekimen_00, warmth, a
+// hold, a crest) but never drops off with it: whenever what's on his cheeks
+// is above where they'd be now, it dilutes toward there, losing a share of
+// the difference every moment (exponential, time constant `tau` seconds:
+// about two-thirds gone after tau, nearly all after 3 tau). So a reaction
+// face ending, or a hold let go, leaves a flush that fades out slowly
+// instead of the mood's 0.2s crossfade. The ears (partBlush) and the deep
+// patch follow it, as they follow ParamCheek.
+const BLUSH_FADE = { tau: 4 };
 
 // Holds (prototype). A hold builds one level from 0 to 1 over `build`
 // seconds and lets it fall over `release` seconds once let go. Each effect
@@ -143,12 +178,20 @@ const HOLD = {
 // seconds (a random span) the eyes fall shut for `blink` seconds, slower
 // than a blink, before they open again.
 const BLISS = { browForm: -0.8, browUp: 0.3, lids: 0.25, blink: [0.5, 0.8], every: [1.4, 3] };
+// rig.json `bliss: { browForm, browUp }` overrides the brows for a
+// character who doesn't go soft (Edward keeps his sharp, knowing brows).
 
 // Tease's crest (setCrest, 0-1; the preview drives it): it's too much. His
 // breath catches (breathing slows by up to `catch`), the blush climbs past
 // its cap by `blush` (ParamCheek units, so the ears and patch deepen) and
 // his eyes squeeze shut; his pulse climbs by `bpm`.
 const CREST = { catch: 0.85, blush: 0.6, bpm: 25 };
+// rig.json `crest: { params: { <id>: value } }` sets parameters while a
+// crest is up (Lyca's wolf ears pop out: ParamBeastEarOnoff 1). Set over
+// the clips, before motion.ease, so an eased parameter pops at its own
+// rate. On once the crest passes `on`, off again once it falls below `off`
+// (through the break's slow comedown), so it doesn't flicker at the edge.
+const CREST_PARAMS = { on: 0.8, off: 0.3 };
 
 // The heart monitor's pulse (heartRate): how riled up he is right now,
 // running all the time, so checking it shows that number at once. At
@@ -191,8 +234,13 @@ export const HOLD_LOOK = {
 
 // rig.json `holdGaze`: "steady" (default) holds your eyes; "shy" breaks
 // contact now and then, glancing aside and down (`to`) for `away` seconds
-// every `every` seconds (a random span), easing over `ease` seconds.
-const SHY_GAZE = { to: [0.65, -0.35], away: [0.6, 1.1], every: [2.2, 4.2], ease: 0.18 };
+// every `every` seconds (a random span), his head turning a little with it
+// (`turn` degrees aside, `dip` down). The glance moves on a critically
+// damped spring (`settle`: seconds to about settle), so it eases out and
+// in however it's cut short, never snapping. None starts while he's
+// glancing at the touch or down (HOLD_LOOK glance), or within `gap`
+// seconds after one, so the two never collide.
+const SHY_GAZE = { to: [0.65, -0.35], away: [1, 1.7], every: [3, 5.5], settle: 0.55, turn: 5, dip: 2, gap: 1 };
 
 /**
  * Fetches `${baseUrl}/rig.json` and its sounds. The dev server also checks
@@ -311,6 +359,11 @@ export class Live2DRig {
     this.mouth = lipSync.map((id) => this.paramIndex.get(id)).filter((i) => i != null);
     this.talkStart = 0;
     this.talkUntil = 0;
+    this.talkLine = "";
+    this.talkAt = [];
+    this.talkLineStart = 0;
+    this.talkOpen = 0;
+    this.talkLast = 0;
     // The mood deltas talking releases: the clench and the lip-sync
     // parameters (a shout's open mouth would pin them open).
     this.mouthHold = [CLENCH_PARAM, ...lipSync].filter((id) => this.paramIndex.has(id));
@@ -349,6 +402,7 @@ export class Live2DRig {
     this.easeAt = performance.now();
     model.internalModel.on("afterMotionUpdate", () => {
       this.dampIdle();
+      this.applyCrestParams();
       this.applyEase();
     });
     model.internalModel.on("beforeModelUpdate", () => {
@@ -395,15 +449,19 @@ export class Live2DRig {
     await this.model.parallelMotion([{ group: "m_breath", index: 0, priority: MotionPriority.IDLE, loop: true, ignoreParamIds: ignore }]);
   }
 
-  /** Mood names come from rig.expressions.moods; unknown ones show "default". */
-  setMood(name) {
+  /**
+   * Mood names come from rig.expressions.moods; unknown ones show "default".
+   * `fade` (seconds) overrides expressions.fade for this change (a
+   * reaction's fadeOut).
+   */
+  setMood(name, fade) {
     const moods = this.rig.expressions?.moods ?? {};
     this.moodName = moods[name] ? name : "default";
-    this.setExpressions(moods[name] ?? moods.default ?? []);
+    this.setExpressions(moods[name] ?? moods.default ?? [], fade);
   }
 
   /** Stacks the model's expressions by name, outside any mood (the preview). */
-  setExpressions(exprs) {
+  setExpressions(exprs, fade) {
     const target = new Map();
     for (const expr of exprs) {
       for (const p of this.expressionParams.get(expr) ?? []) target.set(p.Id, (target.get(p.Id) ?? 0) + p.Value);
@@ -411,6 +469,7 @@ export class Live2DRig {
     this.from = this.blended();
     this.current = target;
     this.fadeStart = performance.now();
+    this.fadeLen = fade ?? null;
     // A new mood holds its mouth until the next line; mid-line, it lets go
     // as soon as the line's flaps start.
     const now = performance.now() / 1000;
@@ -430,8 +489,12 @@ export class Live2DRig {
 
   /** The mood deltas on screen now, partway through any crossfade. */
   blended() {
-    const fade = (this.rig.expressions?.fade ?? 0.2) * 1000;
-    const k = fade > 0 ? Math.min(1, (performance.now() - this.fadeStart) / fade) : 1;
+    const fade = (this.fadeLen ?? this.rig.expressions?.fade ?? 0.2) * 1000;
+    const x = fade > 0 ? Math.min(1, (performance.now() - this.fadeStart) / fade) : 1;
+    // A long fade (a reaction's fadeOut) eases in and out, so the brows set
+    // off and settle gently instead of at full speed; the short default
+    // stays linear.
+    const k = this.fadeLen != null ? x * x * (3 - 2 * x) : x;
     const out = new Map();
     for (const id of new Set([...this.from.keys(), ...this.current.keys()])) {
       out.set(id, (this.from.get(id) ?? 0) * (1 - k) + (this.current.get(id) ?? 0) * k);
@@ -466,6 +529,19 @@ export class Live2DRig {
     const k = 1 - (1 - amount) * w;
     const { values, defaultValues } = this.raw.parameters;
     for (const i of this.idleParams) values[i] = defaultValues[i] + (values[i] - defaultValues[i]) * k;
+  }
+
+  applyCrestParams() {
+    const params = this.rig.crest?.params;
+    if (!params) return;
+    const c = this.crest ?? 0;
+    this.crestParamsOn = this.crestParamsOn ? c > CREST_PARAMS.off : c >= CREST_PARAMS.on;
+    if (!this.crestParamsOn) return;
+    const { values, minimumValues, maximumValues } = this.raw.parameters;
+    for (const [id, v] of Object.entries(params)) {
+      const i = this.paramIndex.get(id);
+      if (i != null) values[i] = Math.min(maximumValues[i], Math.max(minimumValues[i], v));
+    }
   }
 
   applyEase() {
@@ -570,12 +646,16 @@ export class Live2DRig {
     if (!this.model) return;
     const { values, minimumValues, maximumValues, defaultValues } = this.raw.parameters;
     const cheek = this.paramIndex.get("ParamCheek");
-    if (!w && hb < 0.01 && this.hold.blush < 0.01 && crest < 0.01) return;
     if (cheek != null) {
-      const want = values[cheek] + w ** WARMTH.curve * WARMTH.blush + this.hold.blush + CREST.blush * crest;
+      // What his cheeks would show now, uncapped, then diluted (BLUSH_FADE).
+      const target = values[cheek] + w ** WARMTH.curve * WARMTH.blush + (this.hold.blush ?? 0) + CREST.blush * crest;
+      const shown = this.cheekShown ?? target;
+      this.cheekShown = target >= shown ? target : target + (shown - target) * Math.exp(-dt / BLUSH_FADE.tau);
+      const want = this.cheekShown;
       this.cheekOverflow = Math.max(0, want - maximumValues[cheek]) / (maximumValues[cheek] || 1);
       values[cheek] = Math.min(maximumValues[cheek], want);
     }
+    if (!w && hb < 0.01 && crest < 0.01) return;
     const b = this.breathIndex;
     if (b != null) {
       const k = this.rig.motion?.breath?.amount ?? 1;
@@ -593,6 +673,8 @@ export class Live2DRig {
    * A hold in progress (prototype): { heartbeat, pulse, lips, look, peek,
    * blush, bliss }, each 0-1, and `glance` [x, y], where he looks first; {}
    * ends it. `peek` is the glance alone, without the hold look.
+   * `lids` (default 1) scales the hold look's lowered lids: 0 keeps his
+   * eyes at their normal opening (the lip and hand holds).
    * `glanceEvery` [min, max] seconds: once a glance is done, he glances
    * down (HOLD_LOOK.glanceDown) after a random span in that range, again
    * and again (tease); without it he glances once, at the touch. A shy
@@ -606,7 +688,7 @@ export class Live2DRig {
    * is the heavy lids alone, out of the look and bliss); and
    * `glances: false` ends the glancing at once.
    */
-  setHold({ heartbeat = 0, pulse = 0, lips = 0, look = 0, peek = 0, blush = 0, bliss = 0, glance = null, glanceEvery = null } = {}, { release = null, fall = null, glances = true } = {}) {
+  setHold({ heartbeat = 0, pulse = 0, lips = 0, look = 0, peek = 0, blush = 0, bliss = 0, glance = null, glanceEvery = null, lids = 1 } = {}, { release = null, fall = null, glances = true } = {}) {
     this.holding = Boolean(heartbeat || pulse || lips || look || peek || blush || bliss);
     this.holdRelease = this.holding ? null : release;
     this.holdFall = this.holding ? null : fall;
@@ -614,9 +696,19 @@ export class Live2DRig {
     if (!this.holding && !glances) this.glance = null;
     this.glancesOff = !this.holding && !glances;
     if (!this.holding) this.wasHolding = false;
+    // Letting go, a glance (down, or at the touch) lifts from wherever it
+    // is now, over glanceLift, and no more are scheduled: left to run its
+    // hold, or a repeat landing mid-release, it was still dipping his head
+    // when the hold look ran out and snapped back in one frame.
+    if (!this.holding && this.glance?.to && !this.glance.lift) {
+      const from = this.glanceToward();
+      this.glance.every = null;
+      this.glance.lift = { at: performance.now() / 1000, from };
+    }
     // Letting go keeps the weights, so the effects fall with the level.
     if (!this.holding) return;
     const next = { heartbeat, pulse, lips, look, glance: peek, blush, bliss };
+    this.holdLids = lids;
     const now = performance.now() / 1000;
     // Mid-hold, crossfade from where the weights are now (HOLD.blend), and
     // the glance in progress carries on; a new hold starts both fresh.
@@ -663,6 +755,7 @@ export class Live2DRig {
       const c = Math.min(1, Math.max(0, x));
       return c * c * (3 - 2 * c);
     };
+    if (g.lift) return g.lift.from * (1 - ease((now - g.lift.at) / glanceLift));
     const t = now - g.at;
     return ease(t / glanceIn) * (1 - ease((t - glanceIn - glanceHold) / glanceLift));
   }
@@ -697,19 +790,22 @@ export class Live2DRig {
       this.glanceDown = 0;
     }
     // A shy gaze's glances away stop at a crest, and after a hold that
-    // ended with `glances: false` (the break).
-    const shy = this.glancesOff ? null : this.shyGlance(eyes);
+    // ended with `glances: false` (the break); they wait out his other glances.
+    const busy = g?.to ? this.glanceToward() > 0.02 : false;
+    const shy = this.shyGlance(eyes, busy || this.glancesOff || (this.crest ?? 0) > 0.01);
     if (shy) {
-      const k = shy.k * (1 - (this.crest ?? 0));
+      const k = shy.k;
       gx += (shy.dir * SHY_GAZE.to[0] - gx) * k;
       gy += (SHY_GAZE.to[1] - gy) * k;
+      set("ParamAngleX", (v) => v + shy.dir * SHY_GAZE.turn * k * eyes);
+      dip += SHY_GAZE.dip * k;
     }
     set("ParamEyeBallX", (v) => v + (gx - v) * eyes);
     set("ParamEyeBallY", (v) => v + (gy - v) * eyes);
     // A crescent smile (ParamEye*Smile) shuts the eyes; contact needs them open.
     for (const id of ["ParamEyeLSmile", "ParamEyeRSmile"]) set(id, (v) => v * (1 - eyes));
     const lidsUp = 1 - (this.glanceDown ?? 0);
-    for (const id of ["ParamEyeLOpen", "ParamEyeROpen"]) set(id, (v) => v * (1 - HOLD_LOOK.lids * h * (this.lidScale ?? 1) * lidsUp));
+    for (const id of ["ParamEyeLOpen", "ParamEyeROpen"]) set(id, (v) => v * (1 - HOLD_LOOK.lids * (this.holdLids ?? 1) * h * (this.lidScale ?? 1) * lidsUp));
     set("ParamAngleY", (v) => v - HOLD_LOOK.chin * h - dip);
   }
 
@@ -732,29 +828,38 @@ export class Live2DRig {
   }
 
   // A shy gaze's glances away, once he's met your eyes: { dir, k } with k
-  // 0-1 how far away he's looking now, or null.
-  shyGlance(eyes) {
-    if (this.rig.holdGaze !== "shy" || eyes < 0.9) {
-      this.shy = null;
-      return null;
-    }
+  // 0-1 how far away he's looking now, or null. `blocked` (another glance,
+  // a crest, the break) starts none and eases one in progress back; so does
+  // losing eye contact. k rides a spring, so cut short it still eases.
+  shyGlance(eyes, blocked) {
+    if (this.rig.holdGaze !== "shy") return null;
     const now = performance.now() / 1000;
     const span = ([a, b]) => a + Math.random() * (b - a);
-    this.shy ??= { from: now + span(SHY_GAZE.every), to: 0, dir: 1 };
-    const s = this.shy;
-    if (now >= s.to && now >= s.from) {
-      // start the next glance
-      s.to = s.from + span(SHY_GAZE.away);
-      s.dir = Math.random() < 0.5 ? -1 : 1;
+    const s = (this.shy ??= { next: now + span(SHY_GAZE.every), until: 0, dir: 1, k: 0, v: 0, at: now });
+    // A new hold (or the look back after a break) starts the wait afresh.
+    if (now - s.at > 0.5) Object.assign(s, { next: now + span(SHY_GAZE.every), until: 0, k: 0, v: 0 });
+    const dt = Math.min(0.1, now - s.at);
+    s.at = now;
+    const ok = eyes >= 0.9 && !blocked;
+    if (!ok) s.next = Math.max(s.next, now + SHY_GAZE.gap);
+    if (ok && now >= s.next && now >= s.until) {
+      s.until = now + span(SHY_GAZE.away);
+      s.next = s.until + span(SHY_GAZE.every);
+      // Mostly the side he looked to last, now and then the other.
+      if (Math.random() < 0.3) s.dir = -s.dir;
     }
-    if (now > s.to && s.to > 0) {
-      s.from = now + span(SHY_GAZE.every);
-      s.to = 0;
+    const target = ok && now < s.until ? 1 : 0;
+    if (!ok) s.until = Math.min(s.until, now);
+    // Critically damped spring toward the target (SHY_GAZE.settle).
+    const w = 4.6 / SHY_GAZE.settle;
+    s.v += (w * w * (target - s.k) - 2 * w * s.v) * dt;
+    s.k += s.v * dt;
+    if (s.k < 0.001 && target === 0) {
+      s.k = 0;
+      s.v = 0;
+      return null;
     }
-    if (now < s.from || s.to === 0) return null;
-    const e = SHY_GAZE.ease;
-    const k = Math.min(1, (now - s.from) / e, (s.to - now) / e);
-    return { dir: s.dir, k: Math.max(0, k) };
+    return { dir: s.dir, k: Math.min(1, Math.max(0, s.k)) };
   }
 
   /** His pulse (PULSE), steady: the monitor's number. */
@@ -824,8 +929,9 @@ export class Live2DRig {
       const i = this.paramIndex.get(id);
       if (i != null) values[i] = Math.min(maximumValues[i], Math.max(minimumValues[i], fn(values[i])));
     };
-    for (const id of ["ParamBrowLForm", "ParamBrowRForm"]) set(id, (v) => v + (BLISS.browForm - v) * k);
-    for (const id of ["ParamBrowLY", "ParamBrowRY"]) set(id, (v) => v + BLISS.browUp * k);
+    const brows = { ...BLISS, ...this.rig.bliss };
+    for (const id of ["ParamBrowLForm", "ParamBrowRForm"]) set(id, (v) => v + (brows.browForm - v) * k);
+    for (const id of ["ParamBrowLY", "ParamBrowRY"]) set(id, (v) => v + brows.browUp * k);
     // The flutter: shut for a span, then open until the next.
     const now = performance.now() / 1000;
     const span = ([a, b]) => a + Math.random() * (b - a);
@@ -1010,14 +1116,20 @@ export class Live2DRig {
 
   /** A small gasp (GASP): parted lips and a hint of surprise. */
   gasp(scale = 1) {
-    this.gaspState = { at: performance.now() / 1000, scale };
+    this.gaspState = { at: performance.now() / 1000, scale, k: GASP };
+  }
+
+  /** A brief widen (WIDEN): the eyes a little wider for a moment, lips closed. */
+  widen(scale = 1) {
+    this.gaspState = { at: performance.now() / 1000, scale, k: { ...WIDEN, open: 0 } };
   }
 
   applyGasp() {
     const st = this.gaspState;
     if (!st || !this.model) return;
     const t = performance.now() / 1000 - st.at;
-    if (t > GASP.in + GASP.hold + GASP.out) {
+    const k = st.k ?? GASP;
+    if (t > k.in + k.hold + k.out) {
       this.gaspState = null;
       return;
     }
@@ -1025,15 +1137,15 @@ export class Live2DRig {
       const c = Math.min(1, Math.max(0, x));
       return c * c * (3 - 2 * c);
     };
-    const w = st.scale * ease(t / GASP.in) * (1 - ease((t - GASP.in - GASP.hold) / GASP.out));
+    const w = st.scale * ease(t / k.in) * (1 - ease((t - k.in - k.hold) / k.out));
     const { values, minimumValues, maximumValues } = this.raw.parameters;
     const set = (id, fn) => {
       const i = this.paramIndex.get(id);
       if (i != null) values[i] = Math.min(maximumValues[i], Math.max(minimumValues[i], fn(values[i], maximumValues[i] - minimumValues[i])));
     };
-    for (const i of this.mouth ?? []) values[i] = Math.max(values[i], GASP.open * maximumValues[i] * w);
-    for (const id of ["ParamBrowLY", "ParamBrowRY"]) set(id, (v) => v + GASP.brow * w);
-    for (const id of ["ParamEyeLOpen", "ParamEyeROpen"]) set(id, (v, range) => v + GASP.eyes * range * w);
+    if (k.open) for (const i of this.mouth ?? []) values[i] = Math.max(values[i], k.open * maximumValues[i] * w);
+    for (const id of ["ParamBrowLY", "ParamBrowRY"]) set(id, (v) => v + k.brow * w);
+    for (const id of ["ParamEyeLOpen", "ParamEyeROpen"]) set(id, (v, range) => v + k.eyes * range * w);
   }
 
   /**
@@ -1049,23 +1161,28 @@ export class Live2DRig {
   }
 
   // --- talking --------------------------------------------------------------
-  // Text-driven mouth flaps, no audio: the mouth opens and closes while a
-  // line types out, over whatever the mood and motion set.
+  // Text-driven mouth, no audio: the mouth shapes each character of the line
+  // as it types out, over whatever the mood and motion set.
 
   /**
-   * Flaps the mouth for `seconds` (how long the line takes to type). A
-   * clenched mood holds first (CLENCH_LEAD), so the flaps start that late.
+   * Talks through `line` on the dialogue box's schedule (typeSchedule). A
+   * clenched mood holds first (CLENCH_LEAD), so the mouth starts that late.
    */
-  talk(seconds) {
+  talk(line) {
     const now = performance.now() / 1000;
     if (now >= this.talkUntil + TALK_SETTLE) {
       this.talkStart = now + (this.clenched && this.releaseAt == null ? CLENCH_LEAD : 0);
       this.releaseAt ??= this.talkStart;
+      this.talkOpen = 0;
     }
-    this.talkUntil = now + seconds;
+    this.talkLine = line;
+    this.talkAt = typeSchedule(line);
+    this.talkLineStart = Math.max(now, this.talkStart);
+    const ms = this.talkAt.length ? this.talkAt[this.talkAt.length - 1] : 0;
+    this.talkUntil = this.talkLineStart + ms / 1000;
   }
 
-  /** Stops flapping, e.g. when the player skips to the end of the line. */
+  /** Stops talking, e.g. when the player skips to the end of the line. */
   stopTalking() {
     this.talkUntil = Math.min(this.talkUntil, performance.now() / 1000);
   }
@@ -1075,15 +1192,33 @@ export class Live2DRig {
     return now >= this.talkStart && now < this.talkUntil + TALK_SETTLE;
   }
 
+  /** How far the line wants the mouth open at `now` (0 shut, 1 wide). */
+  talkTarget(now) {
+    if (now >= this.talkUntil) return 0;
+    const ms = (now - this.talkLineStart) * 1000;
+    const at = this.talkAt;
+    let i = 0;
+    while (i < at.length && at[i] <= ms) i++;
+    // i characters are out; the newest is the one being said. During a
+    // rest (the next character is more than a beat away) the mouth shuts.
+    if (i === 0) return 0;
+    if (i < at.length && at[i] - ms > TYPE_MS * 1.5 && ms - at[i - 1] > TYPE_MS) return 0;
+    return mouthShape(this.talkLine[i - 1]) * wordGain(this.talkLine, i - 1);
+  }
+
   applyTalk() {
-    if (!this.mouth.length || !this.talking) return;
     const now = performance.now() / 1000;
-    const t = now - this.talkStart;
-    // Uneven syllables: two rates beating against each other, never quite
-    // shut mid-line, then an ease to closed once the line is out.
-    const flap = Math.abs(Math.sin(Math.PI * TALK_RATE * t)) * (0.65 + 0.35 * Math.sin(Math.PI * 1.3 * t + 1));
-    const settle = now > this.talkUntil ? 1 - (now - this.talkUntil) / TALK_SETTLE : 1;
-    const open = Math.max(0, Math.min(1, (0.1 + 0.9 * flap) * settle));
+    const dt = Math.min(0.1, Math.max(0, now - this.talkLast));
+    this.talkLast = now;
+    if (!this.mouth.length || !this.talking) {
+      this.talkOpen = 0;
+      return;
+    }
+    const target = this.talkTarget(now);
+    const tau = target > this.talkOpen ? TALK_OPEN_TAU : TALK_CLOSE_TAU;
+    this.talkOpen += (target - this.talkOpen) * (1 - Math.exp(-dt / tau));
+    const settle = now > this.talkUntil ? Math.max(0, 1 - (now - this.talkUntil) / TALK_SETTLE) : 1;
+    const open = Math.max(0, Math.min(1, this.talkOpen * settle));
     const { values, maximumValues } = this.raw.parameters;
     for (const i of this.mouth) values[i] = Math.max(values[i], open * maximumValues[i]);
   }

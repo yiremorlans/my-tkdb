@@ -139,7 +139,8 @@ async function main() {
   // them, warmth climbs (warmth.hold), and a ring under the finger beats
   // with his heart rate. Below spark, or released
   // early, it's an ordinary tap. The drawer's buttons do the same without
-  // aiming. Preview only: no lines of its own yet.
+  // aiming. Letting go of a hold that ran says a line from his HOLD_LINES
+  // pool for that hold (constants/hangout/<id>.js, spark to bound).
   //
   // The chest hold is the heartbeat check: warmth comes from taps and
   // strokes, and the check reads it. He acts cool (his own eyes, steady
@@ -156,9 +157,12 @@ async function main() {
     // he glances down at the touch (peek), then his eyes go back to his
     // mood's, playing it cool.
     heartbeat: { pulse: 1, peek: 1, blush: 0.25 },
-    // No parted lips on the lips hold: the look and a flush.
-    lips: { look: 1, blush: 0.7 },
-    hand: { look: 1, blush: 0.4 },
+    // The lip and hand holds, every tier: the look with his eyes at their
+    // normal opening (lids: 0; heavy lids are tease's and the caught
+    // tease's) and a flush. No parted lips. The hand hold is affection, not
+    // pleasure; the lip hold opens with a brief widen (startHold).
+    lips: { look: 1, lids: 0, blush: 0.7 },
+    hand: { look: 1, lids: 0, blush: 0.4 },
     // The first heartbeat hold's settings, plus bliss past the top.
     // After the first glance at the touch, he glances down every few
     // seconds (glanceEvery); a shy gaze also breaks eye contact.
@@ -168,6 +172,14 @@ async function main() {
   // face once the hold's own blush falls away. The heartbeat check reads
   // warmth rather than adding to it.
   const HOLD_WARMTH = { heartbeat: 0, lips: 1.3, hand: 1, tease: 1.6 };
+  // Each hold's release pool (and reaction face). Tease let go before the
+  // crest has its own, `teaseLetGo`: he was close to the edge and you
+  // stopped. Nothing he says names tease.
+  const HOLD_LINES = { heartbeat: "heartbeatHold", lips: "lipHold", hand: "handHold", tease: "teaseLetGo" };
+  // Seconds the faces after a tease (the let-go, the caught tease, the
+  // break at the crest) hold past their usual time before his idle face:
+  // he's still caught up in it.
+  const TEASE_LINGER = 2;
   const TEASE_TIER = "bound";
   const TEASE_DRAG = 0.5;
 
@@ -184,19 +196,17 @@ async function main() {
   // is) before he catches it; let go sooner and it's just the hold ending.
   // `line`: seconds after the catch his line starts, once the gasp has
   // parted his lips, so his mouth moves with the words after it.
-  const CAUGHT = { after: 1.2, flinch: 0.4, poseHold: 2, face: 4, line: 0.6 };
+  const CAUGHT = { after: 1.2, flinch: 0.4, poseHold: 2, face: 4 + TEASE_LINGER, line: 0.6 };
   const CAUGHT_CLIP = "m_shakehead_noloop";
   // Shy about it: a soft smile or smirk, flushed. smile_blush where that
   // reads soft and keeps the eyes open; rig.json moods.caught_shy where it
-  // doesn't (Haku's is a grin; Edward, Ritsu, Shion, Tohma and Yuri's shut
-  // the eyes; Haru's casual opens his; Subaru and Romeo have no soft open-eyed smile, so a blush).
+  // doesn't (Haku's is a grin; Edward's is his sharp e_smirk_00 smirk,
+  // flushed; Ritsu, Shion, Tohma and Yuri's shut the eyes; Haru's casual opens his, his academy and house (no open-eye art) use e_kirismile_00; Subaru and Romeo have no soft open-eyed smile, so a blush).
   const CAUGHT_MOOD = "caught_shy";
   const CAUGHT_MOOD_DEFAULT = "smile_blush";
-  // Placeholder lines, one per character, drafted later from each
-  // reference/<id>.md; anyone without one says CAUGHT_FALLBACK. Zenji's
-  // answers the intention, never the contact; Rui's wants what his curse
-  // refuses.
-  const CAUGHT_LINES = {};
+  // His close `caughtTease` pool (constants/hangout/<id>.js); anyone
+  // without one says CAUGHT_FALLBACK. Zenji's answers the intention, never
+  // the contact; Rui's wants what his curse refuses.
   const CAUGHT_FALLBACK = "Not yet.";
   function catchTease() {
     holding = null;
@@ -213,7 +223,7 @@ async function main() {
     if (pose || !renderer.playClip(CAUGHT_CLIP)) renderer.shakeHead();
     // A small gasp, then the line.
     renderer.gasp();
-    const line = CAUGHT_LINES[character] ?? CAUGHT_FALLBACK;
+    const line = hangout.line("caughtTease") ?? CAUGHT_FALLBACK;
     setTimeout(() => hangout.say(line), CAUGHT.line * 1000);
   }
 
@@ -230,9 +240,8 @@ async function main() {
   // (and the flutter) over CREST.lidsFall, and no more glancing down. Warmth stays at its cap and drifts as usual, and the
   // monitor stays up for CREST.afterglow while his pulse settles.
   const CREST = { after: 2.5, build: 1.5, hold: 0.8, fall: 8, eyesOpen: 0.5, release: 16, lipsFall: 3, lidsFall: 4, afterglow: 20, flinch: 0.8 };
-  // Placeholder break lines, one per character, to be drafted from each
-  // reference/<id>.md; anyone without one says BREAK_FALLBACK.
-  const BREAK_LINES = {};
+  // His bound `breakAway` pool (constants/hangout/<id>.js); anyone without
+  // one says BREAK_FALLBACK.
   const BREAK_FALLBACK = "Okay. Okay, that's enough.";
   // His face as he breaks away: eyes open, caught out, flushed. Every rig
   // has this mood.
@@ -266,11 +275,12 @@ async function main() {
     renderer.flinch(null, CREST.flinch);
     hangout.moodUntil = scene.time; // lets go of TEASE_MOOD's hold
     hangout.react("chestTouch", scene.time, "chest");
+    hangout.moodUntil += TEASE_LINGER;
     // The chestTouch pose and timing, but his face is BREAK_MOOD: some bound
     // chestTouch faces close the eyes (Haku's e_egao_00 crescent smile),
     // which read as the crest's squeeze never letting go.
     renderer.setMood(BREAK_MOOD);
-    hangout.say(BREAK_LINES[character] ?? BREAK_FALLBACK);
+    hangout.say(hangout.line("breakAway") ?? BREAK_FALLBACK);
   }
   const TAP_REACTION = { chest: "chestTouch", lips: "lipsTouch", hand_l: "handTap", hand_r: "handTap" };
   const holdOpen = () => DIALOGUE_TIERS.indexOf(hangout.tier) >= DIALOGUE_TIERS.indexOf("spark");
@@ -298,8 +308,9 @@ async function main() {
     if (holding.on) renderer.setHold({ ...HOLD_EFFECTS.tease, glance: glanceAt(holding.point) });
     teaseFace();
   }
-  // TEASE_MOOD, where rig.json has one (Haru's casual open eyes), is his
-  // face for the whole tease: held until the hold ends, then his rest face.
+  // TEASE_MOOD, where rig.json has one (Haru's casual open eyes, his
+  // academy and house kirismile, Edward's smirk), is his face for the whole
+  // tease: held until the hold ends, then his rest face.
   // Without it the tease plays over his resting face.
   const TEASE_MOOD = "tease";
   function teaseFace() {
@@ -326,6 +337,9 @@ async function main() {
     // line); the hold look and its blush (live2dRig.js setHold) build over
     // his resting face and fall away after.
     renderer.setHold({ ...HOLD_EFFECTS[holding.kind], glance: glanceAt(holding.point ?? spotCenter(holding.spot)) });
+    // The lip hold: his eyes go a little wider for a moment and settle back
+    // (live2dRig.js widen), a quick touch, not a long hold.
+    if (holding.kind === "lips") renderer.widen();
   }
   function endHold() {
     if (!holding) return;
@@ -334,8 +348,13 @@ async function main() {
     renderer.setHold({});
     warmth.endHold();
     if (kind === "tease") hangout.moodUntil = scene.time;
-    if (!on && point) scene.onTap?.(hangout.tapAt(point, scene.time));
-    else if (!on) hangout.react(TAP_REACTION[spot], scene.time, spot);
+    // His release line, with that hold's face (reactions.js handHold /
+    // heartbeatHold / lipHold; rig.json `reactions` per character).
+    if (on) {
+      hangout.react(HOLD_LINES[kind], scene.time);
+      if (kind === "tease") hangout.moodUntil += TEASE_LINGER;
+    } else if (point) scene.onTap?.(hangout.tapAt(point, scene.time));
+    else hangout.react(TAP_REACTION[spot], scene.time, spot);
   }
   scene.onPointer = (type, point) => {
     if (type === "down") {
@@ -413,14 +432,17 @@ async function main() {
 
   // --- heart monitor (heartbeat hold) ----------------------------------------
   // A beating heart, a scrolling ECG trace and his bpm while a chest hold
-  // runs, docked on the dialogue box's top edge beside the meter (not the
-  // stage top: Discord's chrome covers it); it fades out on release. The
+  // runs, sliding out of his name plate (not the stage top: Discord's
+  // chrome covers it); it tucks back in on release. The
   // trace's spike lands on the ring's "lub" (beatClock 0) and the heart
   // thumps with both beats.
   const monitor = $("#heart-monitor");
   const heartIcon = monitor.querySelector(".heart");
   const ecg = $("#ecg").getContext("2d");
-  const ECG_SECONDS = 2; // trace width, in seconds of signal
+  // Full-length trace: 2 s of signal across 168 canvas px. The trace scales
+  // with the screen (preview.css), so a shorter one shows less time at the
+  // same speed rather than squashing the beats.
+  const ECG_STEP = 2 / 168; // seconds of signal per canvas px
   const trace = []; // recent y samples (0 = baseline), newest last
   let traceT = 0;
   // One beat of an ECG, phase 0-1 (spike at 0): small P before, the QRS
@@ -439,8 +461,14 @@ async function main() {
       trace.length = 0;
       return;
     }
+    // Match the backing store to the trace's on-screen size (2x, like the
+    // full-size 84px -> 168).
+    const cssW = Math.round(ecg.canvas.clientWidth * 2);
+    const cssH = Math.round(ecg.canvas.clientHeight * 2);
+    if (cssW && ecg.canvas.width !== cssW) ecg.canvas.width = cssW;
+    if (cssH && ecg.canvas.height !== cssH) ecg.canvas.height = cssH;
     const { width: w, height: h } = ecg.canvas;
-    const step = ECG_SECONDS / w;
+    const step = ECG_STEP;
     for (traceT += dt; traceT >= step; traceT -= step) trace.push(ecgAt(beatClock));
     if (trace.length > w) trace.splice(0, trace.length - w);
     ecg.clearRect(0, 0, w, h);

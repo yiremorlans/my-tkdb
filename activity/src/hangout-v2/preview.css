@@ -77,30 +77,36 @@ body.leak .vn-box, body.leak .choices, body.leak .hud, body.leak .meter { displa
 
 /* --- holds: heart monitor + first-time hint (preview.js) -------------------- */
 /* Nothing goes at the stage's top: Discord's Activity chrome covers it. The
-   monitor docks on the dialogue box's top edge, left of the annoyance meter
-   (hangout.css .meter: right 1.4em, 110px wide), and shows only while a
-   heartbeat hold runs, fading rather than popping. */
+   monitor lives inside his name plate (.vn-name) and slides out after the
+   name only while a heartbeat hold runs, so the pulse reads as his. */
+.vn-name { display: inline-flex; align-items: center; }
 .heart-monitor {
-  position: absolute;
-  top: 0;
-  right: calc(1.4em + 110px + 10px);
-  transform: translateY(-50%) scale(0.92);
-  display: flex; align-items: center; gap: 6px;
-  padding: 3px 10px;
-  background: rgba(14, 15, 34, 0.94);
-  border: 1px solid var(--box-edge);
-  border-radius: 999px;
+  display: inline-flex; align-items: center; gap: 5px;
+  max-width: 0;
+  margin-left: 0;
+  overflow: hidden;
   color: #ff8fa8;
   font: 600 12px ui-monospace, monospace;
+  letter-spacing: 0;
+  white-space: nowrap;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.4s ease, transform 0.4s ease;
+  transition: max-width 0.4s ease, margin-left 0.4s ease, opacity 0.3s ease;
 }
-.heart-monitor.on { opacity: 1; transform: translateY(-50%); }
-.heart-monitor .heart { width: 16px; height: 16px; fill: #ff6f8e; transform-origin: 50% 55%; }
-.heart-monitor canvas { width: 84px; height: 22px; display: block; }
+.heart-monitor.on { max-width: 220px; margin-left: 0.6em; opacity: 1; }
+/* Narration lines hide the plate (hangout.css); keep it while his pulse shows. */
+.vn-box.narration .vn-name:has(.heart-monitor.on) { visibility: visible; }
+.heart-monitor .heart { flex: none; width: 15px; height: 15px; fill: #ff6f8e; transform-origin: 50% 55%; }
+/* The trace shrinks with the screen (full 84px from ~560px wide up); the
+   heart and bpm keep their size. Its height stays inside the plate's line. */
+.heart-monitor canvas { flex: none; width: clamp(36px, 15vw, 84px); height: 18px; display: block; }
 .heart-monitor #bpm { min-width: 3ch; text-align: right; }
 .heart-monitor #bpm::after { content: " bpm"; font-weight: 400; color: var(--muted); font-size: 10px; }
+/* Phones: the widened plate needs the room the annoyance meter takes on the
+   same edge, so the meter gets shorter (v2 only; hangout.css is shared). */
+@media (max-width: 480px) {
+  .vn-box .meter { width: 64px; }
+}
 
 /* The hint rides the box's top edge like the choices, and steps aside while
    they're up. */
