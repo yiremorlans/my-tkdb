@@ -36,12 +36,24 @@
         "File": "expressions/e_egao_00.exp3.json"
       },
       {
+        "Name": "e_egao_calm_00",
+        "File": "expressions/e_egao_calm_00.exp3.json"
+      },
+      {
         "Name": "e_hanaji_00",
         "File": "expressions/e_hanaji_00.exp3.json"
       },
       {
         "Name": "e_haraguro_00",
         "File": "expressions/e_haraguro_00.exp3.json"
+      },
+      {
+        "Name": "e_haraguro_calm_00",
+        "File": "expressions/e_haraguro_calm_00.exp3.json"
+      },
+      {
+        "Name": "e_eyesmile_00",
+        "File": "expressions/e_eyesmile_00.exp3.json"
       },
       {
         "Name": "e_ikari_00",
@@ -54,6 +66,10 @@
       {
         "Name": "e_kusho_00",
         "File": "expressions/e_kusho_00.exp3.json"
+      },
+      {
+        "Name": "e_kusho_calm_00",
+        "File": "expressions/e_kusho_calm_00.exp3.json"
       },
       {
         "Name": "e_kushoclose_00",

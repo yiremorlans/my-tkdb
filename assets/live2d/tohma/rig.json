@@ -44,32 +44,50 @@
   "expressions": {
     "fade": 0.2,
     "moods": {
-      "caught_shy": ["e_haraguro_00", "e_sekimen_00"],
+      "caught_shy": ["e_kusho_calm_00", "e_sekimen_00"],
+      "tease": ["e_eyesmile_00"],
+      "eyesmile_blush": ["e_eyesmile_00", "e_sekimen_00"],
+      "break_away": ["e_kusho_calm_00", "e_sekimen_00"],
       "default": [],
       "indifferent": ["e_magao_00"],
       "close": ["e_close_00"],
-      "smile": ["e_egao_00"],
-      "full_smile": ["e_egao_00"],
+      "smile": ["e_egao_calm_00"],
+      "full_smile": ["e_egao_calm_00"],
       "blush": ["e_sekimen_00"],
-      "smile_blush": ["e_egao_00", "e_sekimen_00"],
-      "full_smile_blush": ["e_egao_00", "e_sekimen_00"],
+      "smile_blush": ["e_egao_calm_00", "e_sekimen_00"],
+      "full_smile_blush": ["e_egao_calm_00", "e_sekimen_00"],
       "surprise": ["e_odoroki_00"],
       "surprise_blush": ["e_odoroki_00", "e_sekimen_00"],
       "sweat": ["e_ase_00"],
       "serious": ["e_magao_00"],
       "annoyed": ["e_ikari_00"],
       "upset": ["e_ikari_00", "e_ase_00"],
-      "flustered": ["e_kusho_00", "e_sekimen_00", "e_ase_00"],
+      "flustered": ["e_kusho_calm_00", "e_sekimen_00", "e_ase_00"],
       "sad": ["e_komari_00"],
       "composed": ["e_tsujo_00"],
       "composed_blush": ["e_tsujo_00", "e_sekimen_00"],
       "stern": ["e_shinken2_00"],
-      "sly": ["e_haraguro_00"],
-      "sly_blush": ["e_haraguro_00", "e_sekimen_00"],
+      "sly": ["e_kusho_calm_00"],
+      "sly_blush": ["e_kusho_calm_00", "e_sekimen_00"],
       "exasperated": ["e_akire_00"]
     }
   },
   "reactions": {
+    "answerLove": {
+      "byTier": {
+        "new": { "mood": "smile", "duration": 3.2 }
+      }
+    },
+    "answerLike": {
+      "byTier": {
+        "new": { "mood": "sly", "duration": 3 }
+      }
+    },
+    "answerFlat": {
+      "byTier": {
+        "new": { "mood": "composed", "duration": 2.6 }
+      }
+    },
     "upset": {
       "byTier": {
         "new": { "mood": "upset", "duration": 4 },
@@ -100,7 +118,7 @@
       "byTier": {
         "new": { "mood": "serious", "duration": 2.6, "twitch": 0.8 },
         "known": { "mood": "serious", "duration": 2.6, "twitch": 0.6 },
-        "warm": { "mood": "serious", "duration": 3, "twitch": 0.3 },
+        "warm": { "mood": "composed", "duration": 3, "twitch": 0.3 },
         "spark": { "mood": "composed_blush", "duration": 3.2 },
         "close": { "mood": "sly_blush", "duration": 3.2 },
         "bound": { "mood": "sly_blush", "duration": 3.6 }
@@ -158,7 +176,7 @@
     },
     "handHold": {
       "byTier": {
-        "spark": { "mood": "sly_blush", "duration": 2.6 },
+        "spark": { "mood": "eyesmile_blush", "duration": 2.6 },
         "close": { "rank": 2, "duration": 2.6 },
         "bound": { "rank": 2, "duration": 3 }
       }
@@ -180,9 +198,15 @@
     "teaseLetGo": { "byTier": { "bound": { "mood": "sly_blush", "duration": 4.4 } } }
   },
   "reactionPoses": {
-    "caughtTease": "m_kakushi",
+    "heartbeatHold": {"byTier": {"spark": "m_ago2_away", "bound": "m_ago2"}},
+    "lipHold": {"byTier": {"spark": "m_kakushi", "close": "m_ago1"}},
+    "handHold": {"byTier": {"spark": "m_ago1", "close": "m_hidarikoshi"}},
+    "teaseLetGo": "m_ago1",
+    "caughtTease": "m_ago1_away",
     "headPat": "m_ago1",
-    "cheekPoke": "m_gesture",
+    "cheekPoke": { "byTier": { "new": "m_ago2_away", "close": "m_gesture" } },
+    "answerLove": "m_gesture",
+    "answerLike": "m_ago1_away",
     "lipsTouch": { "byTier": { "new": "m_ago2", "warm": "m_kakushi", "spark": "m_ago1", "close": "m_gesture" } },
     "earTouch": "m_hidarikoshi",
     "handTap": { "byTier": { "new": "m_pocket", "warm": "m_gesture" } },
