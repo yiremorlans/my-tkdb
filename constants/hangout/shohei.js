@@ -6,6 +6,7 @@
 // He teases her and never insults her; any bite lands on Leo, himself, or the
 // situation. "Senpai" is his standing address, capitalized when spoken.
 // Guarded spots (lips, chest, hips) stay rebuffs until spark.
+// Holds (spark+) keep his tell: bluster, then the accidental confession.
 
 export default {
   new: {
@@ -17,7 +18,7 @@ export default {
     lipsTouch: ["Whoa. ...Geez. Not the lips, Senpai.", "Hey. Don't."],
     earTouch: ["Easy on the piercings, Senpai.", "Huh? Quit it."],
     handTap: [
-      "Don't. My hands smell like onions.",
+      "Don't. I was cutting onions.",
       "You need something? I got an order going.",
     ],
     chestTouch: ["Back up. What's the idea?", "Hey. Personal space, Senpai."],
@@ -61,7 +62,7 @@ export default {
       "Someone's in a mood.",
     ],
     lipsTouch: [
-      "Hey. Nice try, Senpai. Those are off-limits.",
+      "Hey. You trying to get me in trouble?",
       "...Not funny, Senpai.",
     ],
     earTouch: [
@@ -69,8 +70,8 @@ export default {
       "You're really into my ears, huh, Senpai?",
     ],
     handTap: [
-      "Here. ...What, you just wanted to hold it?",
-      "What, you cold? C'mon, give it here.",
+      "What, you wanna hold hands, Senpai? ...Pff. I'm kidding.",
+      "What, you cold? Hands in your pockets, Senpai.",
     ],
     chestTouch: ["Hey. Back up a little.", "...Don't. That's a weird spot."],
     bellyTouch: [
@@ -83,24 +84,27 @@ export default {
   spark: {
     headPat: [
       "...Okay, that one actually got me.",
-      "Keep doing that and I'm doing it back.",
+      "My turn. C'mere. ...Good job today, Senpai.",
     ],
     cheekPoke: [
-      "What're you looking at? ...Don't answer that.",
+      "Hey. Quit it. ...You're doing that on purpose, huh.",
       "Geez, Senpai. My face is hot enough already.",
     ],
     lipsTouch: [
       "...Senpai. You can't just do that.",
       "Careful. I might not let that go.",
     ],
-    earTouch: ["...Hey. That's not fair.", "Quit it. ...Okay, once more."],
+    earTouch: [
+      "...Hey. That's not fair.",
+      "Ugh. I like that way too much. Don't let it go to your head, Senpai.",
+    ],
     handTap: [
-      "Your hands are freezing. Here, give 'em here.",
+      "Your hands are freezing. Give 'em here.",
       "You can hold on. I'm not letting go first.",
     ],
     chestTouch: [
-      "...Yeah, it's going fast. Don't make it a thing.",
-      "Geez. Back up before I do something stupid.",
+      "...Yeah, it's going fast. We don't have to talk about it.",
+      "You know what that does to me, right?",
     ],
     bellyTouch: [
       "Hey... Your hands are warm. Don't get any ideas.",
@@ -114,19 +118,31 @@ export default {
       "Okay, stop. You're making it real hard to act cool.",
       "Geez, enough. My heart can't take this.",
     ],
+    heartbeatHold: [
+      "That's from sparring. Mido's insane. ...Okay, it's not from sparring.",
+      "Yeah... yeah. I can't help it around you, Senpai.",
+    ],
+    lipHold: [
+      "...Geez. I forgot what I was saying.",
+      "...Okay. I'm gonna be thinking about that all through prep.",
+    ],
+    handHold: [
+      "Huh. Your hand fits pretty good. ...Forget I said that.",
+      "Pfft. You're holding on pretty tight there, Senpai.",
+    ],
   },
   close: {
     headPat: [
-      "Pfft. Keep that up and I'm gonna get spoiled, Senpai.",
+      "Keep that up and I'm gonna get spoiled, Senpai.",
       "...Yeah, okay. You can mess up the bandana. Just you.",
     ],
     cheekPoke: [
-      "Yeah, yeah, I'm red. You gonna do something about it, Senpai?",
+      "Yeah, yeah, I'm red. You gonna do something about it?",
       "Again? C'mon, at least make it count.",
     ],
     lipsTouch: [
       "...Careful, Senpai. I'm gonna start asking for that.",
-      "...Yeah? C'mere, then, Senpai.",
+      "...Yeah? C'mere, then.",
     ],
     earTouch: [
       "Yeah, that's the spot, Senpai.",
@@ -141,12 +157,50 @@ export default {
       "Stay there. ...Yeah, I like it. Happy?",
     ],
     bellyTouch: [
-      "Pfft. That tickles. ...Don't stop, though.",
-      "Careful, Senpai. Two can play that game.",
+      "Hah... That tickles, Senpai. You're lucky I like you.",
+      "Careful, Senpai. I know where you're ticklish too.",
     ],
     hipsTouch: [
       "Bold. ...C'mere, then. Your move, Senpai.",
       "Keep that up and you're staying over. Just saying.",
+    ],
+    heartbeatHold: [
+      "Yeah, yeah. You heard it. Now quit grinning, Senpai.",
+      "It's been like that since you walked up. Wasn't planning on you finding out.",
+    ],
+    lipHold: [
+      "...You're killing me, Senpai. I can't think about anything else now.",
+      "That's it? Geez, Senpai. You're gonna make me ask, huh.",
+    ],
+    handHold: [
+      "Don't go far. I'm cooking for two later.",
+      "Five more minutes, Senpai. The mission can wait.",
+    ],
+    caughtTease: [
+      "Whoa. ...Not yet, Senpai. Pfft... Don't make that face.",
+      "Hey. Easy. ...I'm trying to do this right, okay?",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "Still does that, huh. You'd think I'd be used to you by now, Senpai.",
+      "Pfft. You've heard it enough mornings to know what it does.",
+    ],
+    lipHold: [
+      "Just the finger? C'mere. I'm done playing that game, Senpai.",
+      "...Senpai. You know where that leads. Pfft... Fine by me.",
+    ],
+    handHold: [
+      "That's it? You know you can keep it, Senpai.",
+      "Hop on later. Anywhere you wanna go. Same as always.",
+    ],
+    breakAway: [
+      "Hah... Time out. Time out, Senpai. I can't think straight.",
+      "Geez... You don't play fair. Gimme a minute, then you're in trouble.",
+    ],
+    teaseLetGo: [
+      "Hah... That's where you stop? Geez, Senpai. ...Not gonna lie, I wanted more.",
+      "Pfft... Real cute, Senpai. Leaving me hanging like that. You know I'm getting you back.",
     ],
   },
 };

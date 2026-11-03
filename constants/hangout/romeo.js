@@ -7,6 +7,7 @@
 // never spelled out (user, 2026-10-31). Kindness only sideways. No skincare/self-care before warm
 // (where it's done together). The prosthetic leg is never mentioned. Guarded
 // spots (lips, chest, hips) snap back until spark, where he flusters.
+// Holds are spark+: no "BB" address, never pricing himself or a touch.
 
 export default {
   new: {
@@ -30,7 +31,7 @@ export default {
     chestTouch: ["Back off! You'll wrinkle the jacket!", "Get out of my way."],
     bellyTouch: [
       "Excuse me!? Who said you could poke me!?",
-      "You'll ruin my posture! Back off!",
+      "Tch! Do I look like a stress ball to you? Back off!",
     ],
     hipsTouch: [
       "Try that again and you'll be wiping tables for a month.",
@@ -55,15 +56,12 @@ export default {
       "Careful with those, they're real gold.",
       "If you scratch them, you're paying.",
     ],
-    handTap: [
-      "What? You need something from Fico?",
-      "Not bad, for you. Still, that's enough.",
-    ],
+    handTap: ["What? You need something from me?", "Hands off, BB."],
     chestTouch: [
       "Hands off the suit! Do you know what this cost!?",
       "Back up. Personal space, BB.",
     ],
-    bellyTouch: ["What!? Keep your fingers to yourself, BB.", "Tch. SIH."],
+    bellyTouch: ["What!? Keep your hands to yourself.", "Tch. SIH."],
     hipsTouch: [
       "Hands where I can see them!",
       "Try that again. See what happens.",
@@ -71,10 +69,7 @@ export default {
     upset: ["That's it! Out!", "You're giving me a headache. Stop."],
   },
   warm: {
-    headPat: [
-      "...Fine. Just don't mess it up.",
-      "You're lucky I like you.",
-    ],
+    headPat: ["...Fine. Just don't mess it up.", "You're lucky I like you."],
     cheekPoke: [
       "What are you grinning at? ...Tch.",
       "Flawless, isn't it? You get one more.",
@@ -82,7 +77,7 @@ export default {
     lipsTouch: ["Excuse me!? Not a chance.", "...No. Not even for you."],
     earTouch: [
       "You've got an eye for quality. Still, hands off.",
-      "They suit me, don't they? Obviously.",
+      "Go ahead, admire them. Just don't tug, BB.",
     ],
     handTap: [
       "...Here. Hand cream. Use it before you touch me again.",
@@ -94,16 +89,16 @@ export default {
     ],
     bellyTouch: [
       "Ah!? ...That did not tickle. Don't do it again.",
-      "Hey! Do you know how much core work that took?",
+      "Hey! One more poke and I'm filing a complaint with Shinjo.",
     ],
     hipsTouch: ["HDY!", "Don't push it. You're on thin ice."],
-    upset: ["Enough! I'll put you on table duty!", "Stop. I mean it."],
+    upset: [
+      "Enough! Keep it up and you're on table seven!",
+      "Stop. I mean it.",
+    ],
   },
   spark: {
-    headPat: [
-      "...Only you get to do that.",
-      "Don't stop. ...I didn't say anything!",
-    ],
+    headPat: ["...Only you get to do that.", "Tch. Now I have to fix it."],
     cheekPoke: [
       "My face is not red! It's the lighting!",
       "What!? ...Stop looking at me like that.",
@@ -117,34 +112,46 @@ export default {
       "Tch. That's not... Stop smirking!",
     ],
     handTap: [
-      "...Fine. Hold on. Don't make a scene of it.",
+      "Your hands are freezing. ...Give it here. Not a word.",
       "Your hands are softer. My cream's working.",
     ],
     chestTouch: [
-      "...Don't listen to that. It's nothing!",
-      "...It's the noni juice. Obviously.",
+      "W-what? My heart always sounds like that!",
+      "Tch. Don't look so pleased. ...Fine. It's you. Happy?",
     ],
     bellyTouch: [
-      "...Don't do that while I'm trying to look composed.",
-      "Hey! ...Stop smiling. That didn't get me.",
+      "...You're the only one who'd dare.",
+      "Ah! ...Do that in front of anyone and you're finished.",
     ],
     hipsTouch: [
-      "E-excuse me!? Not here!",
+      "E-excuse me!? Where do you think you're grabbing!?",
       "...Bold. I'll deal with you later.",
     ],
     upset: [
       "Stop! I can't think when you do that!",
-      "Tch... Give me a minute. My face is hot.",
+      "...Give me a minute. My face is hot.",
+    ],
+    heartbeatHold: [
+      "What are you smirking at? A man's pulse is his own business!",
+      "...Fine, so it's fast. I came straight from the gym. Obviously.",
+    ],
+    lipHold: [
+      "Tch... Do you have any idea what that does to my composure?",
+      "...That's enough. My face is going to stay this color.",
+    ],
+    handHold: [
+      "I'm only allowing this because you'd sulk otherwise.",
+      "Hm. I could get used to this.",
     ],
   },
   close: {
     headPat: [
-      "Mess it up if you want. I'll fix it later.",
-      "Keep going. You're getting good at this.",
+      "...Long day. That helps more than you think.",
+      "Keep going. ...I've gotten used to this.",
     ],
     cheekPoke: [
-      "Fine, I'm blushing. Look all you want. Just don't tell anyone.",
-      "Again? That's the third one. I'm counting.",
+      "Fine, I'm blushing. Look all you want.",
+      "Keep it up and I'm poking back. See how you like it.",
     ],
     lipsTouch: [
       "...You're serious, then. Good. So am I.",
@@ -156,19 +163,57 @@ export default {
     ],
     handTap: [
       "Hold on. Your hands are mine to look after now.",
-      "Hold tighter. I didn't say you could loosen up.",
+      "Don't be stingy. Take my hand.",
     ],
     chestTouch: [
       "Feel that? That's your doing. Take responsibility.",
       "Stay there. I said stay. Don't make me repeat myself.",
     ],
     bellyTouch: [
-      "You know exactly what you're doing. Keep doing it.",
-      "Ah! ...You'll pay for that. Do it again first.",
+      "You know exactly what you're doing.",
+      "Ah! ...You'll pay for that.",
     ],
     hipsTouch: [
-      "...Bold. I like that in my people.",
-      "Tch. ...Fine. You've earned that one.",
+      "...Bold. Not out here. My office, later.",
+      "...Tch. Your hands are getting confident. I'm not complaining.",
+    ],
+    heartbeatHold: [
+      "It's racing, and it's your fault. Obviously. Who else would it be?",
+      "Don't look so smug. ...All right, maybe a little. You earned it.",
+    ],
+    lipHold: [
+      "...Tch. You know I can't think straight when you do that.",
+      "Careful. I'll start expecting that every time.",
+    ],
+    handHold: [
+      "Don't let go yet. I'm not done looking after you.",
+      "Your grip's better. You learn fast, for once.",
+    ],
+    caughtTease: [
+      "Ah! ...Not yet. When it happens, it'll be done properly.",
+      "Tch... Not like this. You deserve better than rushed.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "Still checking? You already know what you do to me.",
+      "It never slows down for you. I've stopped being embarrassed about it.",
+    ],
+    lipHold: [
+      "Keep that up and I'm closing the casino early.",
+      "...You remember what happened the last time you did that. Good. So do I.",
+    ],
+    handHold: [
+      "Hold on to me where everyone can see. Let them talk.",
+      "I spent all day on the books. This is the part I was waiting for.",
+    ],
+    breakAway: [
+      "Ah... Enough! I can't... Give me a minute to pull myself together.",
+      "HDY... You did that on purpose. And you're not even sorry.",
+    ],
+    teaseLetGo: [
+      "Excuse me!? You're stopping now? ...Get back here. I'm not done with you.",
+      "Tch... Stopping right there? Cruel. I'll repay that a thousandfold. Later.",
     ],
   },
 };

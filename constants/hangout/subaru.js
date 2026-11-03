@@ -8,9 +8,10 @@
 // trailing off and asking. Upset is the one place he doesn't soften: no
 // laughing it off through warm. From spark it turns flustered instead (the
 // rig's upset face does too). His stigma reads belongings only, so touch lines never have him reading the player; the
-// gloves carry his wariness at new/known, and the glove coming off is the
-// spark detail. He doesn't name his feelings; the detail implies them.
+// new-tier gloves carry his wariness; no glove lines past new. He doesn't name his feelings; the detail implies them.
 // Guarded spots (lips, chest, hips) stay polite rebuffs until spark.
+// Holds (spark+) are flustered, never upset (touch-averse rule); the
+// one-"I'm sorry"-per-tier cap counts the hold pools too.
 
 export default {
   new: {
@@ -20,7 +21,7 @@ export default {
     ],
     cheekPoke: [
       "Did I have something on my face?",
-      "Ha ha... Was there a crumb? I had sweets with my tea.",
+      "Was there a crumb? I had sweets with my tea.",
     ],
     lipsTouch: [
       "Please, I'd rather you didn't.",
@@ -39,7 +40,7 @@ export default {
       "That's a little close, I think.",
     ],
     bellyTouch: [
-      "Ah! Um... Could you please not?",
+      "Um... Could you please not?",
       "I'm not sure what you were checking for.",
     ],
     hipsTouch: ["Ah! Please don't.", "Oh, that's... That's troubling."],
@@ -51,7 +52,7 @@ export default {
   known: {
     headPat: [
       "Is my hair sticking up again?",
-      "Ha ha... That's a little embarrassing.",
+      "Oh... That's a little embarrassing.",
     ],
     cheekPoke: [
       "Was I smiling again?",
@@ -66,7 +67,7 @@ export default {
       "Oh, that tickles... I'm not used to it.",
     ],
     handTap: [
-      "I keep the gloves on for a reason.",
+      "Oh! You caught me off guard.",
       "Do you need something? I'm right here.",
     ],
     chestTouch: [
@@ -74,7 +75,7 @@ export default {
       "I'd feel better with a little space.",
     ],
     bellyTouch: [
-      "I did have some hot water, if that's what you were checking.",
+      "Oh! Please, I'm ticklish there.",
       "I'd appreciate it if you didn't.",
     ],
     hipsTouch: [
@@ -88,14 +89,11 @@ export default {
   },
   warm: {
     headPat: [
-      "Ha ha... I suppose I don't mind.",
+      "Mm... I suppose I don't mind.",
       "That's nice, actually. I'm sorry, is that strange?",
     ],
-    cheekPoke: [
-      "What is it?",
-      "You're in a good mood today.",
-    ],
-    lipsTouch: ["Ah... Please, not that.", "Oh... Those are... No. Please."],
+    cheekPoke: ["What is it?", "You're in a good mood today."],
+    lipsTouch: ["Please, not that.", "Oh... Those are... No. Please."],
     earTouch: [
       "The wisteria? You like it? ...I'm glad.",
       "Ha ha... That tickles. Gently, please.",
@@ -110,7 +108,7 @@ export default {
     ],
     bellyTouch: [
       "Oh! Ha ha... That's not fair at all.",
-      "Ah! ...Was that to make me laugh? It worked, I'm afraid.",
+      "Was that to make me laugh? It worked, I'm afraid.",
     ],
     hipsTouch: [
       "No. That's not all right.",
@@ -124,7 +122,7 @@ export default {
   spark: {
     headPat: [
       "I don't mind at all. Please, don't stop on my account.",
-      "Ha ha... I'm sure my face is red now.",
+      "I'm sure my face is red now.",
     ],
     cheekPoke: [
       "Please, I'm flustered enough already.",
@@ -135,62 +133,112 @@ export default {
       "...Please don't do that unless you mean it.",
     ],
     earTouch: [
-      "Ah... That's a little unfair.",
+      "That's a little unfair, you know.",
       "Please, I can't think when you do that.",
     ],
     handTap: [
-      "Here. ...I took the glove off. Is that all right?",
-      "You can hold on, if you'd like.",
+      "Your hand's warmer than I expected.",
+      "You can hold my hand, if you'd like.",
     ],
     chestTouch: [
       "Could you stay like that, just a moment?",
-      "I wasn't going to ask you to move.",
+      "...Can you hear it?",
     ],
     bellyTouch: [
       "Oh... Um. Ha ha... You know I'm ticklish now.",
-      "Ha ha... Please don't look at me just now.",
+      "Um... Give me a moment.",
     ],
     hipsTouch: [
-      "Ah! ...You're very bold today.",
-      "That's... Please, that's a little much.",
+      "Oh! ...You're very bold today.",
+      "I... I think I need to sit down.",
     ],
     upset: [
       "I-I'm trying to stay calm, and you're not helping.",
-      "Ha ha... All right. I surrender. Please stop.",
+      "All right, all right. I surrender. Please stop.",
+    ],
+    heartbeatHold: [
+      "I'm sorry. I was trying very hard to look calm.",
+      "It always beats like that. ...Truly.",
+    ],
+    lipHold: [
+      "...Oh. That was... I've forgotten my line entirely.",
+      "Um... Please, let me find my words first.",
+    ],
+    handHold: [
+      "...I'm not letting go first. Just so you know.",
+      "Oh... Already? No, that's all right. Of course.",
     ],
   },
   close: {
     headPat: [
-      "Ha ha... Again, please. Just a little longer.",
-      "Leave my hair however you've made it. I'll keep it that way.",
+      "Again, please. Just a little longer.",
+      "Mm... I could get used to this.",
     ],
     cheekPoke: [
       "You always find the same spot. Go on, then.",
       "Hold still. It's my turn to poke you back.",
     ],
     lipsTouch: [
-      "...So you did mean it. Ha ha... Then please, don't stop at one.",
+      "...So you did mean it. Then please, don't stop at one.",
       "If that was a question, the answer's yes.",
     ],
     earTouch: [
-      "You always go for the wisteria side. I've noticed.",
+      "If you whisper something, I'll keep it to myself.",
       "Mm... You can stay there. I'll hold still.",
     ],
     handTap: [
-      "The glove's already off. ...I took it off when I saw you coming.",
+      "There you are. I was hoping you'd do that.",
       "Your hand's cold. Here, let me keep it warm a while.",
     ],
     chestTouch: [
-      "It's very loud in there, isn't it? Stay anyway.",
+      "Mm... This is nice. Just like this.",
       "Lean in, if you like. I'm not going anywhere.",
     ],
     bellyTouch: [
       "Ha ha... Keep that up and I'll have to return the favor.",
-      "Your hand's warm. Leave it there a little longer.",
+      "I'm still ticklish there, you know. ...I'm not stopping you.",
     ],
     hipsTouch: [
       "Somewhere quieter, perhaps? ...Only if you'd like.",
-      "That wasn't an accident, was it? ...Good.",
+      "That wasn't an accident, was it?",
+    ],
+    heartbeatHold: [
+      "So now you know. ...I'd hoped the smile would hide it.",
+      "It's been like that since you came in.",
+    ],
+    lipHold: [
+      "...You're very patient. I'm afraid I'm not, anymore.",
+      "Oh... I held my breath the whole time, I think.",
+    ],
+    handHold: [
+      "Mm... My hand feels very empty now.",
+      "Next time, I'll be the one who holds on longer.",
+    ],
+    caughtTease: [
+      "Ah...! Not yet. ...Please don't take that as a no.",
+      "O-oh... I'm sorry, I'm not quite ready. ...But I'd like to be.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "It still does that. Even now, after everything.",
+      "You know that sound better than anyone by now.",
+    ],
+    lipHold: [
+      "Only your finger? You've gone shy. That's supposed to be my part.",
+      "Please don't stop there. ...You know I mean it.",
+    ],
+    handHold: [
+      "Mm... I'd have held yours first, if you'd waited.",
+      "Stay a little longer? I'll put the kettle on in a while.",
+    ],
+    breakAway: [
+      "Ah...! Wait, please. I can't... Let me breathe.",
+      "Please... I've lost my composure completely. Just a moment.",
+    ],
+    teaseLetGo: [
+      "You stopped. ...That's a little cruel of you, you know.",
+      "Later, then. Please don't make me wait too long.",
     ],
   },
 };

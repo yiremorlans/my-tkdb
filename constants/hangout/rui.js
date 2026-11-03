@@ -12,6 +12,10 @@
 // Bright and forward, with the crack showing at warm+; "cutie" now and then.
 // Close is yearning: they can never be physically intimate, so he wants what
 // he refuses (user, 2026-10-31). Belly stays light and ticklish.
+// Holds: lips are a scare plus want, never welcome. Bound can't treat
+// physical intimacy as having happened for him (the curse), so its shared
+// history is nights he's stayed up beside the player, and the yearning
+// peaks instead.
 
 export default {
   new: {
@@ -79,7 +83,7 @@ export default {
     ],
     bellyTouch: [
       "Whoa! Easy! That's a no-fly zone.",
-      "Ahaha, nope! Not the stomach, Honor Roll.",
+      "Ahaha, whoa! Careful, Honor Roll. I'm ticklish there.",
     ],
     hipsTouch: [
       "Hey! Okay, that's a no.",
@@ -97,7 +101,7 @@ export default {
     ],
     cheekPoke: [
       "Hey! I know my face is great, but come on.",
-      "...Wait. Are you okay? Nothing hurts? ...Just don't do that, okay?",
+      "...Wait. Are you okay? ...Just don't do that, okay?",
     ],
     lipsTouch: [
       "Hey. Not there, okay? I couldn't stand it if something happened.",
@@ -140,10 +144,10 @@ export default {
     ],
     earTouch: [
       "Hey, that's not fair! You know I can't get you back.",
-      "Ahaha... okay, my ears are burning. Now hands off, cutie!",
+      "Whoa, close one! Ahaha... my heart can't take you being that brave, cutie.",
     ],
     handTap: [
-      "...Oh. Hey. You can leave it there a sec.",
+      "Oh? Holding hands now? Look at you. I'm not letting go first.",
       "Is it weird that this is my favorite part of the day?",
     ],
     chestTouch: [
@@ -162,30 +166,42 @@ export default {
       "Okay, okay! You win! Just give me a second to breathe.",
       "...Hey. Stop. My heart can't keep up with you.",
     ],
+    heartbeatHold: [
+      "Busted, huh? Ahaha... yeah. That's all you, cutie.",
+      "So much for playing it cool. Guess my heart didn't get the memo.",
+    ],
+    lipHold: [
+      "...Is that a glove? You came prepared, huh. Ahaha... okay. I can work with that.",
+      "Through a glove, and my heart's still doing laps. ...You're okay, right?",
+    ],
+    handHold: [
+      "Aw, you let go. I was getting used to that.",
+      "Ahaha, that's it? Let me walk you back, then.",
+    ],
   },
   close: {
     headPat: [
       "...Cutie. You have no idea how much I want to let you do that.",
-      "Cutie... I know. Me too. But don't.",
+      "I know. Me too, cutie. But don't.",
     ],
     cheekPoke: [
-      "Not the face, cutie. ...I wish it could be the face.",
+      "Not the face. ...I wish it could be the face, cutie.",
       "Hey... Don't. I need you around way more than I need that.",
     ],
     lipsTouch: [
       "...Hey. Don't. I think about it too. All the time.",
-      "You'd really try that? ...Don't. I want it too much to risk you.",
+      "...Don't. I want it, but I can't risk you.",
     ],
     earTouch: [
-      "Hands off, cutie. ...I'd let you, if I could. You know that, right?",
+      "Hands off. ...I'd let you if I could, cutie. You know that, right?",
       "Ahaha... no. Not even you. Especially not you.",
     ],
     handTap: [
       "Leave it there as long as you want. This much I can have.",
-      "My glove, your hand. It's the closest we get. I'll take it.",
+      "My glove, your hand. If that's the closest we get. I'll take it.",
     ],
     chestTouch: [
-      "Stay right there, cutie. I like you this close.",
+      "Stay right there. I like you this close, cutie.",
       "...This close, and I still can't hold you. Stay anyway?",
     ],
     bellyTouch: [
@@ -195,6 +211,44 @@ export default {
     hipsTouch: [
       "Whoa, bold! ...You know what you do to me, right? Cruel, cutie.",
       "Keep that up and I'm closing the bar early. Even if all we get is the same room.",
+    ],
+    heartbeatHold: [
+      "Feel that? That's all the stuff I can't do, cutie.",
+      "It races every time you're this close. The rest of the way's what I can't do.",
+    ],
+    lipHold: [
+      "Still wearing the glove? Good. ...Then I don't have to stop you yet.",
+      "You're killing me here. ...Bad choice of words. Still. Don't.",
+    ],
+    handHold: [
+      "Hold on a little longer? I've been looking forward to this all day.",
+      "You hold on like you're not scared of me at all...",
+    ],
+    caughtTease: [
+      "Whoa... hey. You know I want to. ...That's exactly why we can't.",
+      "Ahaha... don't, cutie. I'll always stop. Doesn't mean I want to.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "Still checking? It's been like this every night you've stayed over.",
+      "Every beat of that is yours. Wish I could give you the rest too.",
+    ],
+    lipHold: [
+      "You always bring the glove now. ...You never forget. That gets me every time.",
+      "You're way too brave with me, cutie. I love that. I hate that.",
+    ],
+    handHold: [
+      "Remember when this used to scare me? Now the scary part's you letting go.",
+      "Stay like this till you fall asleep? I'll be right here. Awake, obviously.",
+    ],
+    breakAway: [
+      "Whoa, okay, time out! Ahaha... you can't do that to a guy who can't touch you back.",
+      "Hah... I need a second. ...I want you so bad it actually hurts, cutie.",
+    ],
+    teaseLetGo: [
+      "Hah... Good call, stopping there. ...Still wish you hadn't.",
+      "Ahaha... you stopped. Is it bad I'm kinda sad about that?",
     ],
   },
 };

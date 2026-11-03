@@ -5,9 +5,13 @@
 //
 // Formal, legalistic, few contractions; he records, objects and bills.
 // "Business partners" is his frame for warmth; "Partner" as an address
-// from known on (user, 2026-10-31). Guarded spots (lips, chest,
+// from known through close (user, 2026-10-31); at bound she's his
+// significant other, so no address, the lines carry it (user,
+// 2026-11-02). Guarded spots (lips, chest,
 // hips) are objections until spark, where the formality starts to slip. No
-// stigma/artifact reveals.
+// stigma/artifact reveals. Holds (spark+) stay legalistic as he concedes:
+// the pulse is evidence he stops contesting; caught tease is "not yet,
+// properly"; bound is shared history he no longer records.
 
 export default {
   new: {
@@ -54,7 +58,7 @@ export default {
       "...I will allow it. Once.",
     ],
     cheekPoke: [
-      "What is it you want? Five seconds have elapsed.",
+      "What is it you want? That is unsolicited.",
       "If you require my attention, there are more efficient methods.",
     ],
     lipsTouch: ["No.", "...Please. I would prefer this not go on the record."],
@@ -63,7 +67,7 @@ export default {
       "...Please do not touch my ears. It is distracting.",
     ],
     handTap: [
-      "The gloves stay on.",
+      "Excuse me. I was about to take notes.",
       "Do you need something, Partner? Be concise.",
     ],
     chestTouch: [
@@ -117,12 +121,12 @@ export default {
   },
   spark: {
     headPat: [
-      "...This is outside business hours. I will allow it.",
-      "I had not modeled this outcome. ...Continue.",
+      "...For you, Partner, I will waive the objection.",
+      "I have no grounds to stop you.",
     ],
     cheekPoke: [
       "My face is not warm. That is the weather.",
-      "Whatever you are thinking, I object.",
+      "...It is not what you are thinking. I want that on the record.",
     ],
     lipsTouch: [
       "...I need a moment. Please do not record this.",
@@ -133,7 +137,7 @@ export default {
       "You have found a weakness. Do not exploit it.",
     ],
     handTap: [
-      "...You may hold it. I will take the glove off.",
+      "Your hand is cold. ...I will hold it until it warms.",
       "Your hand fits rather precisely. That is an observation.",
     ],
     chestTouch: [
@@ -146,17 +150,29 @@ export default {
     ],
     hipsTouch: [
       "That is... I have no precedent for that.",
-      "Partner. Please. That is well beyond our terms.",
+      "Please, Partner. That is well beyond our terms.",
     ],
     upset: [
       "...Please. My notes are already illegible.",
       "Enough. I am losing track of my own argument.",
     ],
+    heartbeatHold: [
+      "...Yes, it is racing. I am aware. That stays between us.",
+      "You may keep your hand there. I would only ask that you not count.",
+    ],
+    lipHold: [
+      "I have lost my place entirely. Kindly do not ask me to repeat it.",
+      "I had something to say, Partner. ...It can wait.",
+    ],
+    handHold: [
+      "...I had somewhere to be. I seem to have forgotten where.",
+      "You need not let go on my account. I am in no hurry.",
+    ],
   },
   close: {
     headPat: [
       "Continue. I have cleared my schedule for this.",
-      "No fee applies. You may consider yourself on retainer.",
+      "You are the only one I allow to do that. I trust you have noticed.",
     ],
     cheekPoke: [
       "Yes, my face is warm. I concede the point.",
@@ -171,7 +187,7 @@ export default {
       "...I will not object. Not this time.",
     ],
     handTap: [
-      "The glove is off. I removed it before you asked.",
+      "Take my hand. I would rather you did.",
       "Hold on as long as you like. I am not billing for this.",
     ],
     chestTouch: [
@@ -179,12 +195,50 @@ export default {
       "My pulse is your doing. I would testify to that.",
     ],
     bellyTouch: [
-      "...Proceed. I am off the clock, Partner.",
+      "...Proceed. I am off the clock.",
       "That was unfair. ...Do it again, so I can be ready.",
     ],
     hipsTouch: [
-      "...Partner. That is a bold motion. I am inclined to grant it.",
-      "We are not in public. ...You may continue.",
+      "...That is a bold motion, Partner. I am inclined to grant it.",
+      "...If I have gone rigid, that is not my stigma. Let us leave it there.",
+    ],
+    heartbeatHold: [
+      "You need not check. I will stipulate to the facts.",
+      "I have stopped contesting that evidence. You may keep collecting it.",
+    ],
+    lipHold: [
+      "...I find I have nothing prepared. For once, that does not trouble me.",
+      "If you are waiting for an objection, Partner, none is coming.",
+    ],
+    handHold: [
+      "Your hand is always cold. I have come to look forward to warming it.",
+      "Our arrangement has no clause for this. I would draft one that names only you.",
+    ],
+    caughtTease: [
+      "...Not yet, Partner. I would like to do this properly.",
+      "I must object. ...For now. Do not mistake that for a refusal.",
+    ],
+  },
+  bound: {
+    heartbeatHold: [
+      "You already have the full record on that. You were there.",
+      "It still does that. I have given up building a model for it.",
+    ],
+    lipHold: [
+      "I recall where that led last time. ...I have no objection.",
+      "You are making it very difficult to keep my schedule. I no longer care who knows why.",
+    ],
+    handHold: [
+      "I used to keep a record of everything. You, I would rather simply remember.",
+      "Whatever comes next, I would like to face it with this hand in mine.",
+    ],
+    breakAway: [
+      "Recess. I am calling a recess. ...Give me a moment to collect myself.",
+      "That was... I cannot argue with that. Stay close while I recover.",
+    ],
+    teaseLetGo: [
+      "Adjourned, just like that? I move that we resume. Without delay.",
+      "...You stopped there on purpose. I will be seeking redress, and you know exactly how.",
     ],
   },
 };
