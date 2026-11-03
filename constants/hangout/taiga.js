@@ -30,10 +30,13 @@ export default {
       "Touch the gold again and see what happens. Back off.",
     ],
     handTap: [
-      "Easy. I've got a gun in the other one.",
+      "Watch it. I got a gun in the other one.",
       "Wanna play five finger filet? No? Then let go.",
     ],
-    chestTouch: ["Back off before I shoot you.", "...Seriously. Hands off."],
+    chestTouch: [
+      "Back off before I shoot you.",
+      "Who the hell said you could touch me?",
+    ],
     bellyTouch: [
       "Hah? Get your hand off my stomach.",
       "Poke me there again and I'm shooting first.",
@@ -42,7 +45,7 @@ export default {
       "Hey. That's where the pistol lives.",
       "Try that again and see what happens.",
     ],
-    upset: ["Stop. I'm bored of you already.", "Screw this."],
+    upset: ["Ugh. You're boring me. Scram.", "Screw this."],
   },
   known: {
     headPat: [
@@ -50,12 +53,12 @@ export default {
       "...Huh. You're still around.",
     ],
     cheekPoke: [
-      "What, kitten? I'm hungry, not bored.",
+      "What? I'm hungry, not bored.",
       "Quit it. You got food on you or what?",
     ],
     lipsTouch: [
       "Hah? ...Don't. Not the lips.",
-      "...Tch. Fingers that close get bitten, kitten.",
+      "...Tch. Fingers that close get bitten.",
     ],
     earTouch: ["Hey. That's mine.", "Pull that and I'm pulling yours."],
     handTap: [
@@ -63,22 +66,25 @@ export default {
       "Heads or tails, kitten. Go on, pick.",
     ],
     chestTouch: [
-      "Hah? Feeling me up, kitten? Gutsy.",
-      "Keep that hand there and see if you get it back.",
+      "Hah? Feeling me up? Got a death wish or what?",
+      "Double or nothing you move that hand first.",
     ],
     bellyTouch: [
-      "Kitten. That's my stomach, not a card table.",
-      "Hah? You lookin' to feed me or something?",
+      "Hey. ...That's a cheap shot.",
+      "Do it again. Let's see who flinches first.",
     ],
     hipsTouch: [
       "Hey. Hands where I can see 'em.",
       "Don't push your luck, kitten.",
     ],
-    upset: ["Enough. You're getting annoying.", "Quit it, kitten. I'm not in the mood."],
+    upset: [
+      "Quit it. You're pissing me off.",
+      "Tch. Whatever. I'm outta here.",
+    ],
   },
   warm: {
     headPat: [
-      "...Huh. Don't make it a habit.",
+      "...Huh. Whatever. Do what you want.",
       "Gyahaha! You got some nerve, kitten. Keep going.",
     ],
     cheekPoke: [
@@ -96,15 +102,18 @@ export default {
     ],
     chestTouch: [
       "Go on, then. See how far you get before I bite.",
-      "Checking for a heartbeat, kitten? Still got one.",
+      "Hah? Still at it? ...Your funeral.",
     ],
     bellyTouch: [
-      "Hey! Gyahaha! ...Do that slower, kitten.",
+      "Hey! Gyahaha! ...Do that slower.",
       "Hungry hands, huh? Same.",
     ],
-    hipsTouch: ["Hey. Hands off the holster.", "Don't."],
+    hipsTouch: [
+      "Hey. Hands off the holster.",
+      "Wanna get shot? Keep reaching.",
+    ],
     upset: [
-      "Okay, that's enough. You're gonna get shot.",
+      "Okay, I'm done. Next one gets shot.",
       "Quit it. I'll forget your name on purpose.",
     ],
   },
@@ -114,8 +123,8 @@ export default {
       "C'mere, kitty-cat. My turn after.",
     ],
     cheekPoke: [
-      "Keep poking, kitten. I'll poke back.",
-      "What's that look? You wanna take a bite or what?",
+      "Keep poking. I'll poke back.",
+      "Gyahaha! Again? You must really like me.",
     ],
     lipsTouch: [
       "...Shit. Don't do that out of nowhere.",
@@ -134,81 +143,81 @@ export default {
       "...Hands right there, huh. Damn.",
     ],
     bellyTouch: [
-      "...Shit. You're making me forget I'm hungry, kitten.",
-      "Gyahaha... Hey. That tickles, kitten.",
+      "...Shit. You're making me forget I'm hungry.",
+      "Gyahaha... Hey. That tickles.",
     ],
     hipsTouch: [
-      "...Gutsy. Not here, though.",
-      "Hey. You're gonna get us both in trouble, kitten.",
+      "Hah? Here? ...Not here, dumbass.",
+      "Hey. You're gonna get us both in trouble.",
     ],
     upset: [
-      "Shit... Okay, okay. Gimme a sec, kitten.",
+      "Shit... Okay, okay. Gimme a sec.",
       "Gyahaha... Okay, you got me. Now quit it before I return the favor.",
     ],
     heartbeatHold: [
       "Gyahaha... That's not you. I just smelled food.",
-      "Shit. You saw that? ...Forget it. I already did.",
+      "Hah? It's racing? ...Huh. Forgot why already.",
     ],
     lipHold: [
-      "...That long, huh? I almost bit. Almost.",
+      "Huh? What were we doing? ...Oh. Right. Do it again.",
       "...Hah. You're braver than you look, kitten.",
     ],
     handHold: [
-      "Hey, I wasn't done. That hand's mine till I say, kitten.",
-      "That's it? Fine. Ciao!",
+      "Hey, I wasn't done. That hand's mine till I say.",
+      "Huh? We holding hands now? ...So what's that make us?",
     ],
   },
   close: {
     headPat: [
-      "Don't stop. I'm napping right here, so you're stuck with me, kitten.",
-      "Gyahaha... Somebody's spoiling me. Harder, kitten.",
+      "Don't stop. I'm napping right here, so you're stuck with me.",
+      "Gyahaha... Somebody's spoiling me. More, kitten.",
     ],
     cheekPoke: [
-      "Gyahaha! Again. I like you brave, kitten.",
+      "Gyahaha! Again. I like you brave.",
       "One more and I'm keeping you. ...Gyahaha! Too late.",
     ],
     lipsTouch: [
       "Fingers? That's it? C'mon, kitten. You can do better.",
-      "Mm. That's trouble. ...Lucky me.",
+      "Hey, lucky me. ...Do that again.",
     ],
     earTouch: [
-      "Shit. That spot again? You're cheating, kitten. ...Don't stop.",
+      "Shit. That spot again? You're cheating. ...Don't stop.",
       "Keep that up and I fold. ...Gyahaha! Worth it.",
     ],
     handTap: [
-      "No knife this time. I just want the hand, kitten.",
-      "Mine now. Want it back? You gotta win it off me.",
+      "No knife this time. I just want the hand.",
+      "Gimme. I'm holding this one hostage. Gyahaha!",
     ],
     chestTouch: [
-      "Keep going. I dare you. Just don't cry when I bite.",
-      "...Hear that? Close your eyes, kitten.",
+      "Going for the buttons? Gyahaha! They're already undone.",
+      "...Hear that? Close your eyes.",
     ],
     bellyTouch: [
       "Lower and I stop playing nice. ...Well? Go on.",
-      "...Feel that? Don't you dare stop now, kitten.",
+      "Quit squirming. You started this.",
     ],
     hipsTouch: [
       "There, huh? Fine. We're leaving. ...Gyahaha! Look at your face!",
-      "Keep wandering, kitten. See where it gets you.",
+      "Keep wandering. See where it gets you.",
     ],
     upset: [
-      "Shit... Keep that up and I'm not letting you leave, kitten.",
+      "Shit... Keep that up and I'm not letting you leave.",
       "...Shit. Now I forgot what I was mad about.",
     ],
     heartbeatHold: [
       "Gyahaha! Busted. Don't tell Lulu, he'll start charging for the show.",
-      "Yeah, it's racing. Wanna see what happens if it keeps going, kitten?",
+      "Yeah, it's racing. Wanna see what happens if it keeps going?",
     ],
     lipHold: [
-      "Mm. Next time I'm keeping that finger. Gyahaha!",
+      "Next time I'm keeping that finger. Gyahaha!",
       "...Kitten. You're playing with your food.",
     ],
     handHold: [
-      "Feels like a winning streak. Don't break it, kitten.",
+      "Feels like a winning streak. Don't break it.",
       "Gimme that back. I don't remember saying you could go.",
     ],
     caughtTease: [
-      "Hah... Not yet, kitten. I'm the one who deals.",
+      "Hah... Not yet. I'm the one who deals.",
       "Ha... Greedy kitten. Not yet.",
     ],
   },
@@ -218,20 +227,20 @@ export default {
       "Hear that? It only does that for you, kitten.",
     ],
     lipHold: [
-      "Just the finger? We're past that, kitten. Get over here.",
-      "Mm. Keep that up and I get a taste. ...Gyahaha! Again.",
+      "Just the finger? We're past that. Get over here.",
+      "Keep that up and I get a taste. ...Gyahaha! Again.",
     ],
     handHold: [
       "Till death do us part, kitten. You let go, I follow.",
-      "Your hand's warm. Stay. I'll deal the cards later.",
+      "All in on this hand. ...Gyahaha! Already was.",
     ],
     breakAway: [
-      "Shit... Shit. Okay. You win this hand, kitten.",
-      "Hah... Shit. Who's eating who here? ...Gimme a sec.",
+      "Shit... Shit. Okay. You win this hand.",
+      "Hah... I fold. Gimme a sec.",
     ],
     teaseLetGo: [
-      "Hah... Quitting while you're ahead, kitten? Smart. Doesn't save you, though.",
-      "That's where you stop? Mean. ...I'm collecting the rest later, kitten.",
+      "Hah... Quitting while you're ahead? Doesn't save you, though.",
+      "That's where you stop? Boring. ...I'm collecting the rest later.",
     ],
   },
 };

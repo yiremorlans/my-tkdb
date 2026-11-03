@@ -164,8 +164,8 @@ export default {
       "Mm. If you meant to silence me, I'll have you know it's working.",
     ],
     handHold: [
-      "Such a patient grip. Perhaps I'll let you teach me something for once.",
-      "You held on longer than you needed to. Don't think I didn't notice.",
+      "Mm. I'd meant to be the one to let go first. It seems you've outplayed me.",
+      "Patience is usually my game. You're rather better at it than I'd like.",
     ],
   },
   close: {
@@ -195,14 +195,14 @@ export default {
     ],
     bellyTouch: [
       "Ha ha... That spot again. You do enjoy watching me lose my dignity.",
-      "Careful. You keep finding my weak points, and I keep letting you.",
+      "Of all the secrets I keep, you would find the one that makes me laugh.",
     ],
     hipsTouch: [
-      "Careful. My intentions are entirely honorable. Yours, I'm beginning to doubt.",
-      "Mm. I'd stop you, if I wanted to.",
+      "My intentions are entirely honorable. Yours, I'm beginning to doubt.",
+      "...Bold. I'll allow it, provided no one ever hears how little I protested.",
     ],
     heartbeatHold: [
-      "Satisfied? I'd ask you not to share that figure with anyone. I have a reputation.",
+      "There. Now you know precisely what you do to me. Do use it wisely.",
       "For a moment there I forgot I was meant to be composed. My heart, sadly, did not.",
     ],
     lipHold: [
@@ -211,10 +211,10 @@ export default {
     ],
     handHold: [
       "Do you know how rarely anyone looks after me? Ha ha... Don't stop now.",
-      "Stay a little longer. The work can finish itself for once.",
+      "Stay a little longer. Frostheim can spare me a moment.",
     ],
     caughtTease: [
-      "...Ha ha. Not here, and not yet. Do allow me a little dignity.",
+      "...Ha ha. Not here, and not yet. I do prefer to choose the moment myself.",
       "Ah, ah. Careful. A good player never rushes the endgame.",
     ],
   },
@@ -224,7 +224,7 @@ export default {
       "You know precisely what it does when you're near. You've heard it go faster.",
     ],
     lipHold: [
-      "You know very well where that leads. Keep it there a moment longer anyway.",
+      "You know very well where that leads.",
       "Only you can quiet me like that. Even the king doesn't manage it.",
     ],
     handHold: [
