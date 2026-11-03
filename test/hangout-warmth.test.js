@@ -15,11 +15,18 @@ test('a flat answer leaves warmth where it was', () => {
 });
 
 test('love and like answers count as fave and liked, not as touches', () => {
-  const w = new Warmth('hangout', 'close');
+  const w = new Warmth('date', 'close');
+  const date = WARMTH_PROFILES.date.gains;
   w.reaction('answerLove');
-  assert.strictEqual(w.target, gains.fave);
+  assert.strictEqual(w.target, 0.2 + date.fave);
   w.reaction('answerLike');
-  assert.strictEqual(w.target, gains.fave + gains.liked);
+  assert.strictEqual(w.target, 0.2 + date.fave + date.liked);
+});
+
+test('a /meet answer never warms him: blush is earned by touches and holds', () => {
+  const w = new Warmth('hangout', 'close');
+  for (const name of ['answerLove', 'answerLike', 'answerFlat']) w.reaction(name);
+  assert.strictEqual(w.target, 0);
 });
 
 test('a touch reaction adds the touch gain; upset clears it', () => {
@@ -44,9 +51,9 @@ test('attachWarmth feeds reactions and draws warmth each frame', () => {
     frame: () => {},
   };
   const w = attachWarmth(scene, 'hangout');
-  scene.hangout.react('answerLove', 0);
-  assert.deepStrictEqual(reacted, ['answerLove']);
-  assert.strictEqual(w.target, gains.fave);
+  scene.hangout.react('headPat', 0);
+  assert.deepStrictEqual(reacted, ['headPat']);
+  assert.strictEqual(w.target, gains.touch);
   scene.frame(0, 1);
   assert.strictEqual(drawn.length, 1);
   assert.ok(drawn[0] > 0);

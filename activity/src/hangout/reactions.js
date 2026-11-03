@@ -188,18 +188,31 @@ export const DEFAULT_REACTIONS = {
   // edge and you stopped. The longest-held face.
   teaseLetGo: { byTier: { bound: { rank: 2, duration: 4.4 } } },
   // The face for a /meet answer's outcome (docs/hangout-activity.md §11.2
-  // step 5): the rung its gain lands on, so love/like match the faces a call
-  // scene shows for a favorite and liked response at that tier. A flat answer
-  // is indifference, never anger or annoyance: below spark the bottom rung is
-  // an annoyed or serious face, so it plays the rig's `indifferent` mood
-  // instead (a blank straight face or a look away); from spark the bottom
-  // rung is already calm.
-  answerLove: { rank: 2, duration: 3.2 },
-  answerLike: { rank: 1, duration: 3 },
+  // step 5). Set here rather than off the call-scene ladder, whose new/known
+  // liked rung is a sweat drop (reads as unease) and whose spark bottom rung
+  // is the closed-eyes face new/known answers love with. Each tier keeps
+  // fave > liked > flat and the fave face climbs tier to tier: a slight
+  // smile, beaming from spark. Answers never blush: blush is earned by
+  // touches and holds. A flat answer is indifference ("didn't resonate"),
+  // never anger, annoyance or hurt; from close it's a quiet, content look.
+  // A rig with its own register (a smirk, a composed face) overrides these
+  // in rig.json `reactions`.
+  answerLove: {
+    byTier: {
+      new: { mood: "smile", duration: 3.2 },
+      spark: { mood: "full_smile", duration: 3.2 },
+    },
+  },
+  answerLike: {
+    byTier: {
+      new: { mood: "close", duration: 3 },
+      spark: { mood: "smile", duration: 3 },
+    },
+  },
   answerFlat: {
     byTier: {
       new: { mood: "indifferent", duration: 2.6 },
-      spark: { rank: 0, duration: 2.6 },
+      close: { mood: "close", duration: 2.6 },
     },
   },
   upset: { mood: "upset", duration: 4 },

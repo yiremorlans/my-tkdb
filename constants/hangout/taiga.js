@@ -114,7 +114,7 @@ export default {
     ],
     upset: [
       "Okay, I'm done. Next one gets shot.",
-      "Quit it. I'll forget your name on purpose.",
+      "Tch. You just lost your seat at my table.",
     ],
   },
   spark: {

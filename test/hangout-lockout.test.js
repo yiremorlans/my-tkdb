@@ -78,3 +78,22 @@ test('changing tier lifts the lockout', () => {
   assert.strictEqual(renderer.moodName, 'default');
   assert.strictEqual(hangout.tapAt([0, 0], 6).result, 'ok');
 });
+
+test('a long upset line keeps the face up until it has been read, then eases out', async () => {
+  const { typeDuration, UPSET_READ, UPSET_FADE } = await import('../activity/src/hangout/hangout.js');
+  const { hangout, renderer, calls } = setup('new');
+  const line = 'I said stop. I mean it, I really do not like being poked like that, not at all.';
+  hangout.lines = { headPat: ['hi'], upset: [line] };
+  const fades = [];
+  const setMood = renderer.setMood;
+  renderer.setMood = function (name, fade) { fades.push([name, fade]); setMood.call(this, name); };
+  for (const t of [0, 0.1, 0.2]) hangout.tapAt([0, 0], t);
+  const end = 0.2 + typeDuration(line) / 1000 + UPSET_READ;
+  assert.ok(end > 4.2, 'the line outlasts the reaction duration');
+  hangout.frame(end - 0.1, 0.1);
+  assert.strictEqual(renderer.moodName, 'upset');
+  assert.ok(!calls.some(([c]) => c === 'guard'));
+  hangout.frame(end + 0.05, 0.1);
+  assert.strictEqual(renderer.moodName, GUARDED_MOOD);
+  assert.deepStrictEqual(fades.at(-1), [GUARDED_MOOD, UPSET_FADE]);
+});

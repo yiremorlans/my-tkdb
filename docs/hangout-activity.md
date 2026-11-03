@@ -307,7 +307,7 @@ face at new is `serious` and his spark fave is `smile_blush`.
 | Chest | 0, 1 from spark, 2 from close | serious · serious · surprise_blush · full_smile_blush; the least sensitive guarded spot; four taps fill the annoyance meter |
 | Belly | 0, 1 from warm, 2 from close | serious · surprise · surprise_blush · full_smile_blush; as sensitive as the ears; three taps fill the annoyance meter |
 | Hips | 0, 1 from spark, 2 from close | the most guarded spot: serious at new/known/warm, blush only from spark; pose `m_udekumi` (arms crossed) at new–warm, `m_kubi` from spark, `m_migikoshi` from close; flinches hardest of every spot at new/known; two taps fill the annoyance meter |
-| Spam-tapping | — | annoyance meter rises with fast repeated taps and decays over time; a run of quick normal taps fills it, fewer taps the more sensitive the spot (`SPOT_ANNOYANCE`: head = hands < chest < ears = belly < lips < hips). The more sensitive the spot, the longer its face holds too; past the threshold → **upset** + pose `m_angry` + a line ("…stop that."). At new, known and warm (`LOCKOUT_TIERS`) he then locks out: once the upset ends he holds the `serious` face and a guarded pose (rig.json `reactionPoses.guarded`, else `m_udekumi`, else his upset pose; Edward's is `m_weak`) and ignores every tap until the tier changes. From spark, taps are ignored briefly, then he settles |
+| Spam-tapping | — | annoyance meter rises with fast repeated taps and decays over time; a run of quick normal taps fills it, fewer taps the more sensitive the spot (`SPOT_ANNOYANCE`: head = hands < chest < ears = belly < lips < hips). The more sensitive the spot, the longer its face holds too; past the threshold → **upset** + pose `m_angry` + a line ("…stop that."). The upset face holds until its line has typed out plus `UPSET_READ` (2.5s), or its `duration` or pose if longer, then eases into the next face over `UPSET_FADE` (1.6s, smoothstepped) instead of the 0.2s crossfade (a rig's upset `fadeOut` overrides it). At new, known and warm (`LOCKOUT_TIERS`) he then locks out: once the upset face ends he holds the `serious` face and a guarded pose (rig.json `reactionPoses.guarded`, else `m_udekumi`, else his upset pose; Edward's is `m_weak`) and ignores every tap until the tier changes. From spark, taps are ignored briefly, then he settles |
 
 Every character has the same touch spots (`TOUCH_SPOTS` in
 activity/src/hangout/reactions.js): head, cheek, lips, ear_l/ear_r,
@@ -370,7 +370,9 @@ and pose come off the same tier ladder as the spot it's on.
   face when it ends (Haru's casual only: `e_kaigan_yowaki_00`, a
   hand-made copy of the game's one open-eyed face `e_kewashiikaigan_00`
   with worried brows from `e_kanashimi_00`, softened; academy and house
-  have no open-eye art). An outfit's
+  have no open-eye art; Tohma: `e_eyesmile_00`, a hand-made
+  faint smile in the lower lids only, no mouth or brows, so his serious
+  mouth and bliss's given-way brows and heavy lids stay). An outfit's
   own moods go in `outfits.<name>.expressions.moods`, added to the shared
   ones and checked against that outfit's model alone. He
   glances down every 3-6s (straight down, not at the touch), eyes open:
@@ -398,9 +400,11 @@ and pose come off the same tier ladder as the spot it's on.
     clip), his `reactionPoses.caughtTease` pose where set, and, 0.6s
     after the gasp so his mouth moves with it, a "not yet"
     line (one per character, placeholder until drafted; Zenji answers the
-    intention, Rui wants what his curse refuses). No bliss, no crest.
+    intention, Rui wants what his curse refuses). The shy face holds 6s,
+    or until the line has typed out plus `UPSET_READ` if that's longer,
+    then eases back over `UPSET_FADE`, as upset's does. No bliss, no crest.
     Poses set: `m_kubi` (hand to the neck) for Alan, Jin, Jiro, Lyca, Mio
-    and Ren; Kaito `m_tere`, Haku `m_kaote`, Tohma `m_kakushi`, Lucas
+    and Ren; Kaito `m_tere`, Haku `m_kaote`, Tohma `m_ago1_away` (his signature chin-in-hand), Lucas
     `m_iyagari`. The rest have the shake alone. With a pose, the
     procedural shake plays over it.
   - **Crest and break.** Tease peaks by overwhelming him, never a climax.
@@ -413,7 +417,9 @@ and pose come off the same tier ladder as the spot it's on.
     down-glances and a shy gaze's glances away fade out, and the shy
     glances stay off through the comedown. 0.8s later he breaks away: the hold ends on
     his side, he flinches back into his bound `chestTouch` pose with an
-    open-eyed `surprise_blush` face (some chestTouch faces close the eyes),
+    open-eyed `surprise_blush` face (some chestTouch faces close the eyes;
+    rig.json `moods.break_away` replaces it, open-eyed: Tohma's sly eyes,
+    flushed),
     and says a break line (one per character, drafted from his reference
     file; a placeholder until then). His squeezed eyes open at the break
     (0.5s); the rest of the comedown is slow: the crest's caught breath and
@@ -879,8 +885,15 @@ In order:
      glyph per type so the type never depends on color alone.
 4. **The pick.** The choices close and the answer route runs (§11.3).
 5. **The face.** The rig plays a mood for the outcome (love / like / flat,
-   from `getAffinityForResponse`), set per tier like the touch reactions in
-   §4.2. Flat never reads as hurt; it's "didn't resonate".
+   from `getAffinityForResponse`), set per tier in `DEFAULT_REACTIONS`
+   (`answerLove` / `answerLike` / `answerFlat`), not off the call-scene
+   ladder: love `smile` → `full_smile` from spark; like `close` → `smile`
+   from spark; flat `indifferent`, a content `close` from close. Answers
+   never blush: blush is earned by touches and holds. A rig overrides them
+   in its `reactions` with the character's own register (a smirk, a
+   composed face), and may give love and like a pose
+   (`reactionPoses.answerLove` / `answerLike`); flat stays still. Flat
+   never reads as hurt; it's "didn't resonate".
 6. **The reaction line.** The `getReactionLine` line from
    `constants/reactions.js`, the same one `/roam` and `/meet` print today
    ("That lights them up."), in italics with no name plate, since it's
@@ -1210,13 +1223,14 @@ the flinch is (§4.2).
 - **Ordinary Hangouts too, from spark up** (changed 2026-11-01; dates were
   first). /meet encounters and the free Hangout run a milder profile
   (`warmth.js` `hangout`): it starts at **0** at `spark`, `close` and
-  `bound` (off below spark), rises **+0.05** per touch, **+0.15** for a
-  fave answer and **+0.05** for a liked one, caps at **0.4 / 0.6 / 0.7**
+  `bound` (off below spark), rises **+0.05** per touch and nothing for an
+  answer (changed 2026-11-03: blush is earned by touches and holds), caps at **0.4 / 0.6 / 0.7**
   by tier so a date still flushes him most, drifts down about **−0.05 per
   10s**, and an **upset clears it**. Holds don't feed it.
 - **An answer is never a touch.** The /meet answer plays through the same
   reactions as a tap (`answerLove` / `answerLike` / `answerFlat`); warmth
-  counts those as fave / liked / flat, so a flat answer never warms him.
+  counts those as fave / liked / flat, so a flat answer never warms him
+  (and outside dates no answer does).
 - **Ears follow.** A rig with `partBlush` reddens its ears with
   `ParamCheek`, warmth included, so those characters flush at the ears as
   warmth climbs.

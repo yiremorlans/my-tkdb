@@ -18,6 +18,7 @@ import { Graphics } from "pixi.js";
 
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 import { forTier, resolveReaction } from "../hangout/reactions.js";
+import { typeDuration, UPSET_READ, UPSET_FADE } from "../hangout/hangout.js";
 import { hotspotAt } from "../hangout/hotspots.js";
 
 const $ = (sel) => document.querySelector(sel);
@@ -111,13 +112,16 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
     const face = renderer.rig.expressions?.moods?.[CAUGHT_MOOD] ? CAUGHT_MOOD : CAUGHT_MOOD_DEFAULT;
     renderer.setMood(face);
     hangout.pendingMood = null;
-    hangout.moodUntil = t + CAUGHT.face;
+    const line = hangout.line("caughtTease") ?? CAUGHT_FALLBACK;
+    // Like upset's: the face outlasts its line (typed out, then UPSET_READ to
+    // read it) and eases back over UPSET_FADE instead of snapping off.
+    hangout.moodUntil = t + Math.max(CAUGHT.face, CAUGHT.line + typeDuration(line) / 1000 + UPSET_READ);
+    hangout.moodFadeOut = UPSET_FADE;
     const pose = forTier(renderer.rig.reactionPoses?.caughtTease, hangout.tier);
     if (pose) renderer.playPose(pose, CAUGHT.poseHold);
     if (pose || !renderer.playClip(CAUGHT_CLIP)) renderer.shakeHead();
     // A small gasp, then the line.
     renderer.gasp();
-    const line = hangout.line("caughtTease") ?? CAUGHT_FALLBACK;
     setTimeout(() => hangout.say(line), CAUGHT.line * 1000);
   }
 
@@ -138,8 +142,11 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
   // one says BREAK_FALLBACK.
   const BREAK_FALLBACK = "Okay. Okay, that's enough.";
   // His face as he breaks away: eyes open, caught out, flushed. Every rig
-  // has this mood.
-  const BREAK_MOOD = "surprise_blush";
+  // has BREAK_MOOD_DEFAULT; rig.json moods.break_away replaces it where
+  // surprise reads too serious (Tohma's sly eyes, flushed). Keep it
+  // open-eyed: a shut-eye face reads as the crest's squeeze never letting go.
+  const BREAK_MOOD = "break_away";
+  const BREAK_MOOD_DEFAULT = "surprise_blush";
   let crest = 0; // 0-1, eased
   let squeeze = 0; // his eyes' share of the crest; drops fast at the break
   let crestClock = 0; // seconds at full bliss, then into the crest
@@ -173,7 +180,7 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
     // The chestTouch pose and timing, but his face is BREAK_MOOD: some bound
     // chestTouch faces close the eyes (Haku's e_egao_00 crescent smile),
     // which read as the crest's squeeze never letting go.
-    renderer.setMood(BREAK_MOOD);
+    renderer.setMood(renderer.rig.expressions?.moods?.[BREAK_MOOD] ? BREAK_MOOD : BREAK_MOOD_DEFAULT);
     hangout.say(hangout.line("breakAway") ?? BREAK_FALLBACK);
   }
   const TAP_REACTION = { chest: "chestTouch", lips: "lipsTouch", hand_l: "handTap", hand_r: "handTap" };
@@ -203,7 +210,7 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
     teaseFace();
   }
   // TEASE_MOOD, where rig.json has one (Haru's casual open eyes, his
-  // academy and house kirismile, Edward's smirk), is his face for the whole
+  // academy and house kirismile, Edward's smirk, Tohma's faint smile in the eyes alone), is his face for the whole
   // tease: held until the hold ends, then his rest face.
   // Without it the tease plays over his resting face.
   const TEASE_MOOD = "tease";

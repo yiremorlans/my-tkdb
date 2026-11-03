@@ -90,6 +90,14 @@ export const LOCKOUT_TIERS = ["new", "known", "warm"];
 // The face he holds once locked out.
 export const GUARDED_MOOD = "serious";
 
+// The upset face outlasts its line: it holds until the line has typed out
+// plus UPSET_READ seconds to read it (or the reaction's `duration`, or its
+// pose, if longer), then eases into the resting or guarded face over
+// UPSET_FADE seconds instead of the 0.2s mood crossfade, so the anger
+// settles rather than snapping off. A rig's upset `fadeOut` overrides it.
+export const UPSET_READ = 2.5;
+export const UPSET_FADE = 1.6;
+
 export class Hangout {
   constructor({ renderer, motion, say = () => {}, play = () => {}, lines = PLACEHOLDER_LINES, random = Math.random, tier = "new" }) {
     this.renderer = renderer;
@@ -175,7 +183,9 @@ export class Hangout {
       this.locked = true;
       this.react("upset", t, spot);
       this.renderer.lockPose?.(this.tier);
-      this.guardAt = t + (resolveReaction(this.rig, "upset", this.tier)?.duration ?? DEFAULT_DURATION);
+      // He turns guarded once the upset face ends (react and the v2 scene
+      // set how long that is: line, duration, pose).
+      this.guardAt = Math.max(this.moodUntil, t + (resolveReaction(this.rig, "upset", this.tier)?.duration ?? DEFAULT_DURATION));
       return { spot, result: "locked" };
     }
     if (result === "upset") this.react("upset", t, spot);
@@ -193,10 +203,14 @@ export class Hangout {
     const duration = r.duration ?? DEFAULT_DURATION;
     if (r.fist) this.clench(sides, t, duration);
     this.pendingMood = null;
+    const upset = name === "upset";
+    // The upset line always speaks; other touch lines wait out the current one.
+    const text = upset || !spot || t >= this.lineReadyAt ? this.line(r.line ?? name) : null;
     if (r.mood) {
       this.renderer.setMood(r.mood);
       this.moodUntil = t + duration;
-      this.moodFadeOut = r.fadeOut ?? null;
+      if (upset && text) this.moodUntil = Math.max(this.moodUntil, t + typeDuration(text) / 1000 + UPSET_READ);
+      this.moodFadeOut = r.fadeOut ?? (upset ? UPSET_FADE : null);
     }
     if (r.then) this.pendingMood = { at: t + r.then[0], mood: r.then[1] };
     const sounds = [r.sound ?? []].flat();
@@ -204,8 +218,6 @@ export class Hangout {
       this.play(sounds[Math.floor(this.random() * sounds.length)]);
       this.soundReadyAt = t + SOUND_COOLDOWN;
     }
-    if (spot && name !== "upset" && t < this.lineReadyAt) return;
-    const text = this.line(r.line ?? name);
     if (!text) return;
     this.say(text);
     this.lineReadyAt = t + typeDuration(text) / 1000 + LINE_HOLD;

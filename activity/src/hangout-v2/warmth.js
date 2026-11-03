@@ -22,7 +22,8 @@ export const WARMTH_PROFILES = {
     cap: { spark: 0.4, close: 0.6, bound: 0.7 },
     driftPerSec: 0.005, // about -0.05 per 10s
     // Holds feed it like a date's (prototype: holds open from spark).
-    gains: { fave: 0.15, liked: 0.05, flat: 0, touch: 0.05, stroke: 0.05, holdPerSec: 0.1, holdMax: 0.3 },
+    // Answers don't warm him here: blush is earned by touches and holds.
+    gains: { fave: 0, liked: 0, flat: 0, touch: 0.05, stroke: 0.05, holdPerSec: 0.1, holdMax: 0.3 },
     upsetClears: true,
   },
 };
