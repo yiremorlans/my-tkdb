@@ -137,6 +137,11 @@ body {
 .vn-icon:hover { opacity: 1; transform: scale(1.1); }
 .vn-icon[hidden] { display: none; }
 .vn-icon[aria-pressed="true"] { opacity: 0.4; text-decoration: line-through; }
+/* The close-up toggle is a mode, not a mute: lit when on, no strike. A
+   portrait screen always gets the full framing, so it hides there. */
+#btn-close-up[aria-pressed="false"] { opacity: 0.55; }
+#btn-close-up[aria-pressed="true"] { opacity: 1; text-decoration: none; }
+@media (orientation: portrait) { #btn-close-up { display: none; } }
 /* The › advance button: a small badge at the middle of the box's right
    side, in the padding the text already keeps clear, nudging forward so
    it's easy to spot. */

@@ -571,6 +571,15 @@ The dialogue box and buttons match the bot's composited style in
 works in portrait, so the character stays on screen on phones. The status line
 shows his name, his relationship level and heart bar.
 
+**Framing (2026-11-03).** Every screen gets the rig's `stage.portrait`
+framing by default, hands included, so desktop players can reach them too.
+Desktop only (Discord platform `desktop`, no coarse pointer) gets a
+close-up button (⛶) in the VN box that swaps in `stage.landscape`, the VN
+bust. It applies only while the stage is wide and is remembered per browser
+(`hangout.closeUp`). Phones and tablets never get it, and a phone turned
+sideways keeps the full framing. The v2 preview has the same switch under
+"Framing" in its drawer.
+
 ### 4.5 Runtime targets
 
 - One build: plain web page, or Discord Activity when it detects it's in the

@@ -89,6 +89,12 @@ export async function startScene(stage, { base, tier, outfit, lines, room = true
     onPointer: null,
     onTap: null,
     layout,
+    // The landscape bust in place of the default full framing (stageFraming).
+    closeUp: false,
+    setCloseUp(on) {
+      scene.closeUp = on;
+      layout();
+    },
     setBackground,
     // The effects prototype (effects.js) reads these.
     background: () => bg,
@@ -118,7 +124,7 @@ export async function startScene(stage, { base, tier, outfit, lines, room = true
       bgBase = { x: (width - bg.texture.width * s) / 2, y: (height - bg.texture.height * s) / 2 };
       bg.position.set(bgBase.x, bgBase.y);
     }
-    const { scale, x, y } = stageFraming(renderer.rig, width, height);
+    const { scale, x, y } = stageFraming(renderer.rig, width, height, { closeUp: scene.closeUp });
     renderer.view.scale.set(scale);
     renderer.view.position.set(x, y);
   }

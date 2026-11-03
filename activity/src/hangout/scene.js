@@ -74,6 +74,12 @@ export async function startScene(stage, { base, loaded, tier, outfit, lines, roo
     onPointer: null,
     onTap: null,
     layout,
+    // The landscape bust in place of the default full framing (stageFraming).
+    closeUp: false,
+    setCloseUp(on) {
+      scene.closeUp = on;
+      layout();
+    },
   };
 
   // Background pan (rig.json motion.bgPan): the room drifts slowly on a
@@ -101,7 +107,7 @@ export async function startScene(stage, { base, loaded, tier, outfit, lines, roo
       bgBase = { x: (width - bg.texture.width * s) / 2, y: (height - bg.texture.height * s) / 2 };
       bg.position.set(bgBase.x, bgBase.y);
     }
-    const { scale, x, y } = stageFraming(rig, width, height);
+    const { scale, x, y } = stageFraming(rig, width, height, { closeUp: scene.closeUp });
     renderer.view.scale.set(scale);
     renderer.view.position.set(x, y);
   }

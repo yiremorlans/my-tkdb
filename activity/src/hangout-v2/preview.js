@@ -391,6 +391,16 @@ async function main() {
   perfRow.append(capWrap);
   if (cap.checked) scene.frameCap.maxFPS = MOBILE_FPS;
 
+  // The Activity's desktop close-up button (main.js): the landscape bust in
+  // place of the default full framing, on a wide window only.
+  const frameRow = section("Framing");
+  const closeWrap = document.createElement("label");
+  closeWrap.className = "toggle";
+  const closeUp = Object.assign(document.createElement("input"), { type: "checkbox" });
+  closeUp.onchange = () => scene.setCloseUp(closeUp.checked);
+  closeWrap.append(closeUp, "close-up (desktop)");
+  frameRow.append(closeWrap);
+
   // --- effects prototype (docs/hangout-activity.md §10) ------------------------
   // Throwaway: every candidate effect, live. "auto" applies the rules that
   // would ship (Hotarubi rain, TZ night grade on day files, light blur).

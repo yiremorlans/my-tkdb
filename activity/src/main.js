@@ -19,7 +19,7 @@
 
 import { answerEncounter, discordPlatform, inDiscord, keepSessionAlive, launchInfo, loadEncounter, startDiscord } from "./discord.js";
 import { loadLines } from "./hangout/lines.js";
-import { MOBILE_FPS } from "./hangout/stage.js";
+import { closeUpPref, MOBILE_FPS } from "./hangout/stage.js";
 
 // Repo assets load through /assets/v/<build>/, which app.js serves as
 // /assets/ but caches for good: the build stamps a new <build> on every
@@ -82,6 +82,23 @@ function wireChrome(scene) {
     mute.onclick = () => {
       sounds.setMuted(!sounds.muted);
       mute.ariaPressed = String(sounds.muted);
+    };
+  }
+  // Desktop: the full framing (hands in reach) is the default; this swaps
+  // in the close-up bust and remembers it (stage.js closeUpPref). Phones
+  // never get it: a portrait screen always shows the full framing.
+  if (!isMobile) {
+    const closeUp = $("#btn-close-up");
+    closeUp.hidden = false;
+    const apply = (on) => {
+      scene.setCloseUp(on);
+      closeUp.ariaPressed = String(on);
+    };
+    apply(closeUpPref.get());
+    closeUp.onclick = () => {
+      const on = closeUp.ariaPressed !== "true";
+      closeUpPref.set(on);
+      apply(on);
     };
   }
 }

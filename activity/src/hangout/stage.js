@@ -91,15 +91,36 @@ export function loadTexture(url) {
  * How the rig's view sits on a width×height stage. rig.json `stage` picks
  * the reference rows that fill the stage height ({ top, bottom }) and the
  * column kept centered (centerX), so a crop is data, not code. `stage` may
- * instead hold `landscape` and `portrait` framings, chosen by the stage's
- * shape (a VN bust on a wide screen, more of him on a tall phone).
- * Without it the whole reference fits the height.
+ * instead hold `landscape` and `portrait` framings. The portrait one (more
+ * of him, hands included) is the default on every screen; `closeUp` picks
+ * the landscape VN bust instead, and only on a wide stage (the desktop
+ * toggle, closeUpPref below). Without either the whole reference fits the
+ * height.
  */
-export function stageFraming(rig, width, height) {
+export function stageFraming(rig, width, height, { closeUp = false } = {}) {
   const { width: refW, height: refH } = rig.reference;
   const stage = rig.stage ?? {};
-  const pick = width > height ? stage.landscape : stage.portrait;
+  const pick = closeUp && width > height ? stage.landscape : stage.portrait;
   const { top = 0, bottom = refH, centerX = refW / 2 } = pick ?? stage;
   const scale = height / (bottom - top);
   return { scale, x: width / 2 - centerX * scale, y: -top * scale };
 }
+
+// The desktop close-up toggle (stageFraming's `closeUp`), remembered per
+// browser. Storage can be missing or throw (private windows): it's off then.
+const CLOSE_UP_KEY = "hangout.closeUp";
+
+export const closeUpPref = {
+  get() {
+    try {
+      return localStorage.getItem(CLOSE_UP_KEY) === "1";
+    } catch {
+      return false;
+    }
+  },
+  set(on) {
+    try {
+      localStorage.setItem(CLOSE_UP_KEY, on ? "1" : "");
+    } catch {}
+  },
+};
