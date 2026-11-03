@@ -36,6 +36,10 @@
         "File": "expressions/e_manmen_00.exp3.json"
       },
       {
+        "Name": "e_manmen_open_00",
+        "File": "expressions/e_manmen_open_00.exp3.json"
+      },
+      {
         "Name": "e_odoroki_00",
         "File": "expressions/e_odoroki_00.exp3.json"
       },
