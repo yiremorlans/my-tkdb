@@ -134,6 +134,19 @@ const WARMTH = { blush: 1, curve: 0.6, breathRate: 1.4 };
 // is the overflow (in ParamCheek units over its max) at their deepest.
 const DEEP = { patch: [0.88, 0.62, 0.66], span: 0.6 };
 
+// Most models draw one blush, faded in over ParamCheek's whole range; Ren's
+// draws a normal blush halfway (0.5, his e_sekimen1_00) and a heavy one at
+// the top (e_sekimen2_00). Warmth, holds and the crest are tuned to the one
+// drawing, so they scale by the lowest nonzero ParamCheek keyform (1 on most
+// models, 0.5 on his): a full flush lands on his normal blush, and the heavy
+// one is left to his own faces and the very top of a tease.
+export function blushUnit(parameters, cheek) {
+  const keys = cheek == null ? null : parameters.keyValues?.[cheek];
+  const max = cheek == null ? 1 : parameters.maximumValues[cheek] || 1;
+  const first = keys ? Math.min(...Array.from(keys).filter((k) => k > 0)) : Infinity;
+  return Number.isFinite(first) ? first / max : 1;
+}
+
 // A blush comes in as fast as its cause (a mood's e_sekimen_00, warmth, a
 // hold, a crest) but never drops off with it: whenever what's on his cheeks
 // is above where they'd be now, it dilutes toward there, losing a share of
@@ -354,6 +367,7 @@ export class Live2DRig {
     motions.on("motionLoaded", (group, index, motion) => motion.setLoopFadeIn(false));
     (await motions.loadMotion(motions.groups.idle, 0))?.setLoopFadeIn(false);
     this.paramIndex = new Map(Array.from(this.raw.parameters.ids, (id, i) => [id, i]));
+    this.blushUnit = blushUnit(this.raw.parameters, this.paramIndex.get("ParamCheek"));
     this.drawableIndex = new Map(model.internalModel.getDrawableIDs().map((id, i) => [id, i]));
     this.poseTimers = [];
     this.posing = null;
@@ -680,7 +694,11 @@ export class Live2DRig {
     const cheek = this.paramIndex.get("ParamCheek");
     if (cheek != null) {
       // What his cheeks would show now, uncapped, then diluted (BLUSH_FADE).
-      const target = values[cheek] + w ** WARMTH.curve * WARMTH.blush + (this.hold.blush ?? 0) + CREST.blush * crest;
+      // Warmth, hold and crest blush count in blush drawings (blushUnit),
+      // so a model whose normal blush sits partway up the range (Ren's)
+      // isn't pushed into its heavy one by the same flush.
+      const added = w ** WARMTH.curve * WARMTH.blush + (this.hold.blush ?? 0) + CREST.blush * crest;
+      const target = values[cheek] + added * (this.blushUnit ?? 1);
       const shown = this.cheekShown ?? target;
       this.cheekShown = target >= shown ? target : target + (shown - target) * Math.exp(-dt / BLUSH_FADE.tau);
       const want = this.cheekShown;
