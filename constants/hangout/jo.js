@@ -60,9 +60,9 @@ export default {
       "Cold hands. Did you forget your coat again?",
       "I'm right here. What's up?",
     ],
-    chestTouch: ["Hey, a little space.", "That's close, cutie."],
+    chestTouch: ["Hey, a little space.", "That's close. Too close."],
     bellyTouch: [
-      "Hey. No poking there, cutie.",
+      "Hey. No poking there.",
       "Ah, not the stomach. Let's keep it friendly.",
     ],
     hipsTouch: ["No. Let's stop there.", "Hands up here, please."],
