@@ -78,6 +78,7 @@ export function createFakeSupabase(initialTables = {}) {
       order(col, opts) { state.order = { col, opts }; return builder; },
       limit(n) { state.limit = n; return builder; },
       single() { state.single = true; return builder; },
+      maybeSingle() { state.single = true; state.maybe = true; return builder; },
       then(resolve, reject) { return execute(state).then(resolve, reject); },
       catch(reject) { return execute(state).catch(reject); },
     };
@@ -106,6 +107,7 @@ export function createFakeSupabase(initialTables = {}) {
       if (state.limit != null) rows = rows.slice(0, state.limit);
       if (state.single) {
         if (rows.length === 0) {
+          if (state.maybe) return { data: null, error: null };
           return { data: null, error: { code: 'PGRST116', message: 'No rows found' } };
         }
         return { data: { ...rows[0] }, error: null };

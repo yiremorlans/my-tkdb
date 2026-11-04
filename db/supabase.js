@@ -811,9 +811,11 @@ export async function getMeetEncounter(id) {
     .from('meet_encounters')
     .select('*')
     .eq('id', id)
-    .single();
+    // maybeSingle, not single: a missing row (answered before the fallback
+    // check ran) is the normal case, and single() makes PostgREST log a 406.
+    .maybeSingle();
 
-  if (error && error.code !== 'PGRST116') {
+  if (error) {
     console.error(`[meetActivity] Error fetching meet encounter: ${error.message}`);
     throw error;
   }
