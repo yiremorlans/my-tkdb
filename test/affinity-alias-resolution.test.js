@@ -40,19 +40,19 @@ test('an alias resolves to the same character as its canonical id', async () => 
   );
 });
 
-test('a second alias (ed -> edward) resolves too', async () => {
-  reset();
-  const message = await buildAffinityMessage('user-1', ['ed']);
-  assert.strictEqual(message.embeds.length, 1);
-  assert.strictEqual(message.embeds[0].title, 'Edward Hart');
-});
-
-test('an alias is resolved case-insensitively and trimmed, like a canonical id', async () => {
-  reset();
-  const message = await buildAffinityMessage('user-1', ['  SHO  ']);
-  assert.strictEqual(message.embeds.length, 1);
-  assert.strictEqual(message.embeds[0].title, 'Shohei Haizono');
-});
+// A second alias, and an alias typed the way a player might: case-insensitive
+// and trimmed, like a canonical id.
+for (const [input, title] of [
+  ['ed', 'Edward Hart'],
+  ['  SHO  ', 'Shohei Haizono'],
+]) {
+  test(`"${input}" resolves to ${title}`, async () => {
+    reset();
+    const message = await buildAffinityMessage('user-1', [input]);
+    assert.strictEqual(message.embeds.length, 1);
+    assert.strictEqual(message.embeds[0].title, title);
+  });
+}
 
 test('an alias and its canonical id in the same command collapse to one embed', async () => {
   reset();

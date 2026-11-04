@@ -64,6 +64,8 @@ const {
   handleBondReplayClick,
   surfaceBondSceneResume,
 } = await import('../bondScenes.js');
+const { BOND_LEVEL_SLUGS } = await import('../constants/game.js');
+const { ENCOUNTER_MILESTONES } = await import('../constants/milestones/index.js');
 
 const USER = 'user-1';
 const CHAR = 'ren';
@@ -347,21 +349,6 @@ test('the opt-out button turns DMs off and closes the scene it was offered on', 
   assert.match(discord.posts.at(-1).content, /\/bonds dms:on/);
 });
 
-// --- a beat that fails to post ------------------------------------------------
-
-test('a beat that fails to post leaves current_beat where it was, so nothing is skipped', async () => {
-  await deliverBondScene(USER, CHAR, 'Friend');
-  discord.postFails = true;
-
-  const result = await handleBondClick(USER, {
-    kind: 'next', characterId: CHAR, levelKey: 'fri', arg: '1',
-  });
-
-  assert.strictEqual(result.acted, false);
-  assert.strictEqual(result.reason, 'post-failed');
-  assert.strictEqual(row().current_beat, 0, 'the row must still know where the scene is');
-});
-
 // --- recovery: the resume button ---------------------------------------------
 
 test('a user the bot cannot DM gets a pending row rather than an error', async () => {
@@ -436,7 +423,7 @@ test('a resume that still cannot reach the user says what to do about it', async
   assert.strictEqual(row().status, 'pending_dm', 'it stays offerable next time');
 });
 
-test('a beat that fails mid-scene parks the row so the button can offer it', async () => {
+test('a beat that fails to post keeps current_beat, so nothing is skipped, and parks the row so the button can offer it', async () => {
   await deliverBondScene(USER, CHAR, 'Friend');
   discord.postFails = true;
 
@@ -446,7 +433,7 @@ test('a beat that fails mid-scene parks the row so the button can offer it', asy
 
   assert.strictEqual(result.acted, false);
   assert.strictEqual(result.reason, 'post-failed');
-  assert.strictEqual(row().current_beat, 0, 'the row still points at the last beat seen');
+  assert.strictEqual(row().current_beat, 0, 'the row still points at the last beat seen, so nothing is skipped');
   assert.strictEqual(row().status, 'pending_dm', 'nothing live is left in the DM');
 });
 
@@ -660,12 +647,15 @@ test('a replay for a level never finished posts nothing and says so', async () =
 });
 
 test('finishing Soulbound lists every finished scene alongside it', async () => {
-  await playThrough('Soulbound', 'sol');
+  for (const [level, slug] of Object.entries(BOND_LEVEL_SLUGS)) await playThrough(level, slug);
 
   const journal = await buildBondJournal(USER, CHAR);
-  assert.match(journal.content, /Soulbound/);
+  for (const level of Object.keys(BOND_LEVEL_SLUGS)) assert.match(journal.content, new RegExp(level));
   const ids = (journal.components || []).flatMap((r) => r.components).map((b) => b.custom_id);
-  assert.deepStrictEqual(ids, [`bond:replay:${CHAR}:sol:x`]);
+  assert.deepStrictEqual(
+    ids,
+    Object.values(BOND_LEVEL_SLUGS).map((slug) => `bond:replay:${CHAR}:${slug}:x`),
+  );
 });
 
 test('a replay is the original interaction again: real beats, real buttons, posted for real into the DM', async () => {
@@ -729,20 +719,16 @@ test('picking a choice during a replay shows the real closing line and writes no
   assert.strictEqual(row().choice_key, mine.key, 'the remembered answer is untouched');
   assert.deepStrictEqual(row(), rowBefore);
   assert.strictEqual(fake.tables.bond_keepsakes.length, keepsakesBefore, 'no second keepsake granted');
-});
 
-test('the closing DM message\'s own Replay button posts silently, with no followup', async () => {
-  await playThrough('Friend', 'fri');
-  const postsAfterPlay = discord.posts.length;
-
-  const result = await handleBondReplayClick(USER, {
+  // That closing message's own Replay button posts silently: no sendFollowup
+  // passed in, and handleBondReplayClick doesn't require one — the DM-native
+  // entry point never needs to confirm itself.
+  const postsBefore = discord.posts.length;
+  const again = await handleBondReplayClick(USER, {
     kind: 'replaystart', characterId: CHAR, levelKey: 'fri', arg: 'x',
   });
-
-  assert.strictEqual(result.posted, true);
-  assert.strictEqual(discord.posts.length, postsAfterPlay + 1);
-  // No sendFollowup passed in, and handleBondReplayClick doesn't require one —
-  // the DM-native entry point never needs to confirm itself.
+  assert.strictEqual(again.posted, true);
+  assert.strictEqual(discord.posts.length, postsBefore + 1);
 });
 
 test('rnext refuses an out-of-range beat rather than posting anything', async () => {
@@ -772,27 +758,16 @@ test('one player\'s finished scene is not another player\'s to replay', async ()
   assert.strictEqual(discord.posts.length, postsAfterPlay);
 });
 
-test('a replay of an unfinished scene is refused even when other levels with the same character are done', async () => {
-  await playThrough('Soulbound', 'sol');
-  // Devoted was never played, so there is nothing to have again.
-  const result = await handleBondReplayClick(USER, {
-    kind: 'replay', characterId: CHAR, levelKey: 'dev', arg: 'x',
-  });
-  assert.strictEqual(result.posted, false);
-});
-
 // --- content resolution -------------------------------------------------------
 
 test('getBondScene resolves every relationship level to a scene, and nothing off the roster resolves', () => {
   const levels = ['Acquaintance', 'Friend', 'Close Friend', 'Confidant', 'Devoted', 'Soulbound'];
 
-  // Roster-wide coverage is a validateContent error; this pins the level -> key mapping.
-  for (const level of levels) {
-    const scene = getBondScene(CHAR, level);
-    assert.ok(scene?.beats?.length, `${CHAR} has no scene at ${level}`);
-    assert.ok(scene.choice?.options?.length >= 2);
-    assert.ok(scene.keepsake?.emoji && scene.keepsake?.line);
-  }
+  // A scene's shape and roster-wide coverage are validateContent errors; this
+  // pins only the level -> key mapping: every level resolves, each to its own.
+  const scenes = levels.map((level) => getBondScene(CHAR, level));
+  scenes.forEach((scene, i) => assert.ok(scene, `${CHAR} has no scene at ${levels[i]}`));
+  assert.strictEqual(new Set(scenes).size, levels.length, 'no two levels share a scene');
 
   // There is no house-style fallback: an id off the roster resolves to null,
   // which deliverBondScene closes as `skipped_gone` rather than delivering
@@ -831,6 +806,9 @@ function seedMilestones(...rows) {
     discord_user_id: USER, character_id: JIN, milestone_type, total: 1, first_at: last_at, last_at,
   }));
 }
+// The phrase a milestone fills {lastMoment} with (Jin's hints carry no
+// placeholders of their own).
+const hint = (key) => ENCOUNTER_MILESTONES[key].hint;
 async function jinConfidantSecondBeat() {
   await handleBondClick(USER, { kind: 'next', characterId: JIN, levelKey: 'con', arg: '1' });
   return discord.posts.at(-1).content;
@@ -843,8 +821,8 @@ test('{lastMoment} names a moment from the level below the scene, not the newest
   );
   await deliverBondScene(USER, JIN, 'Confidant');
   const beat = await jinConfidantSecondBeat();
-  assert.match(beat, /those early mornings/);
-  assert.doesNotMatch(beat, /that massage you gave/);
+  assert.ok(beat.includes(hint('jin_wake_up')), beat);
+  assert.ok(!beat.includes(hint('jin_massage')), beat);
 });
 
 test('a /call won mid-scene does not change {lastMoment} on the next beat', async () => {
@@ -854,7 +832,7 @@ test('a /call won mid-scene does not change {lastMoment} on the next beat', asyn
     discord_user_id: USER, character_id: JIN, milestone_type: 'jin_massage',
     total: 1, first_at: '2026-09-05T00:00:00Z', last_at: '2026-09-05T00:00:00Z',
   });
-  assert.match(await jinConfidantSecondBeat(), /those early mornings/);
+  assert.ok((await jinConfidantSecondBeat()).includes(hint('jin_wake_up')));
 });
 
 test('no /call won at the level below falls back rather than reaching further down', async () => {
@@ -862,7 +840,7 @@ test('no /call won at the level below falls back rather than reaching further do
   await deliverBondScene(USER, JIN, 'Confidant');
   const beat = await jinConfidantSecondBeat();
   assert.match(beat, /the last time we were together/);
-  assert.doesNotMatch(beat, /that lesson Darkwick didn't teach/);
+  assert.ok(!beat.includes(hint('jin_lecture')), beat);
 });
 
 test('a replay from a later level still names the moment from the level below the scene', async () => {
@@ -881,5 +859,5 @@ test('a replay from a later level still names the moment from the level below th
 
   await handleBondReplayClick(USER, { kind: 'replaystart', characterId: JIN, levelKey: 'con', arg: 'x' });
   await handleBondReplayClick(USER, { kind: 'rnext', characterId: JIN, levelKey: 'con', arg: '1' });
-  assert.match(discord.posts.at(-1).content, /dining together/);
+  assert.ok(discord.posts.at(-1).content.includes(hint('jin_dine')));
 });

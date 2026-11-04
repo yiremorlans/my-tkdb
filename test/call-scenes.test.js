@@ -46,43 +46,18 @@ describe('sceneFace', () => {
 
   it('maps each rank at each register through the face table', () => {
     // Yuri has no overrides, so he reads the table as-is.
-    const yuri = CHARACTERS.find((c) => c.id === 'yuri');
-    const yuriByRank = Object.fromEntries(
-      Object.entries(yuri.affinityByResponse).map(([type, rank]) => [rank, type]),
-    );
-    const expected = {
-      new: ['annoyed', 'sweat', 'close'],
-      known: ['annoyed', 'sweat', 'close'],
-      warm: ['serious', 'surprise', 'surprise_blush'],
-      spark: ['close', 'surprise_blush', 'blush'],
-      close: ['smile', 'full_smile', 'full_smile_blush'],
-      bound: ['smile', 'full_smile', 'full_smile_blush'],
-    };
-    for (const [bucket, faces] of Object.entries(expected)) {
-      faces.forEach((face, rank) => {
-        assert.equal(sceneFace('yuri', bucket, yuriByRank[rank]), `${face}.png`, `${bucket} rank ${rank}`);
-      });
+    for (const [bucket, faces] of Object.entries(SCENE_FACES)) {
+      for (const [rank, face] of Object.entries(faces)) {
+        assert.equal(sceneFace('yuri', bucket, rankOf('yuri', Number(rank))), `${face}.png`, `${bucket} rank ${rank}`);
+      }
     }
   });
 
   it('lets a character override a slot, keeping the table elsewhere', () => {
+    // Haku overrides his new-register least-liked face; Benkei does not.
+    assert.notEqual(SCENE_FACES.new[0], 'serious', 'fixture: the override must differ from the table');
     assert.equal(sceneFace('haku', 'new', rankOf('haku', 0)), 'serious.png');
-    assert.equal(sceneFace('haku', 'warm', rankOf('haku', 0)), 'serious.png');
-    assert.equal(sceneFace('benkei', 'warm', byRank[0]), 'surprise.png');
-    assert.equal(sceneFace('benkei', 'new', byRank[0]), 'annoyed.png');
-    assert.equal(sceneFace('rui', 'known', rankOf('rui', 2)), 'wink.png');
-    assert.equal(sceneFace('rui', 'known', rankOf('rui', 1)), 'smile.png');
-    assert.equal(sceneFace('rui', 'known', rankOf('rui', 0)), 'annoyed.png');
-    assert.equal(sceneFace('rui', 'new', rankOf('rui', 2)), 'close.png');
-    assert.equal(sceneFace('rui', 'warm', rankOf('rui', 2)), 'blush.png');
-    assert.equal(sceneFace('kaito', 'warm', rankOf('kaito', 2)), 'blush.png');
-    assert.equal(sceneFace('kaito', 'spark', rankOf('kaito', 2)), 'lovestruck.png');
-    assert.equal(sceneFace('alan', 'spark', rankOf('alan', 2)), 'smile_blush.png');
-    assert.equal(sceneFace('edward', 'spark', rankOf('edward', 2)), 'smile_blush.png');
-    assert.equal(sceneFace('edward', 'warm', rankOf('edward', 2)), 'blush.png');
-    assert.equal(sceneFace('leo', 'warm', rankOf('leo', 2)), 'wink.png');
-    assert.equal(sceneFace('jo', 'warm', rankOf('jo', 2)), 'wink.png');
-    assert.equal(sceneFace('kaito', 'spark', rankOf('kaito', 1)), 'surprise_blush.png');
+    assert.equal(sceneFace('benkei', 'new', byRank[0]), `${SCENE_FACES.new[0]}.png`);
   });
 
   it('uses the _girl set for Jo in casual, opening included', () => {

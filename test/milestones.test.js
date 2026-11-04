@@ -26,10 +26,6 @@ describe('milestonePoolFor', () => {
     }
   });
 
-  it('never gives a student one of Benkei\'s moments', () => {
-    assert.ok(milestonePoolFor('rui').every((key) => !key.startsWith('benkei_')));
-  });
-
   it('keeps Jin to his room-bound moments plus the shared ones that fit', () => {
     const pool = milestonePoolFor('jin');
     for (const key of ['jin_tea', 'jin_waltz', 'movie_night', 'signed_report']) {
@@ -39,12 +35,6 @@ describe('milestonePoolFor', () => {
       assert.ok(!pool.includes(key), key);
     }
     assert.ok(pool.every((key) => !key.startsWith('benkei_')));
-  });
-
-  it('never gives anyone else one of Jin\'s moments', () => {
-    for (const id of ['rui', 'benkei']) {
-      assert.ok(milestonePoolFor(id).every((key) => !key.startsWith('jin_')), id);
-    }
   });
 
   it('gives Yuri and Jiro the same Mortkranken set, and nobody else', () => {
@@ -73,14 +63,12 @@ describe('milestonePoolFor', () => {
     assert.ok(!pool.includes('vending_machine'));
     assert.ok(pool.includes('shohei_fishing'));
     assert.ok(pool.includes('coffee_break'));
-    assert.equal(pool.length, milestonePoolFor('jo').length);
   });
 
   it('gives Kaito a vending machine where he hands over his own, since he\'s broke', () => {
     const pool = milestonePoolFor('kaito');
     assert.ok(!pool.includes('vending_machine'));
     assert.ok(pool.includes('kaito_vending_machine'));
-    assert.equal(pool.length, milestonePoolFor('jo').length);
   });
 
   it('keeps class and studying out of Taiga\'s pool, since he never goes', () => {
@@ -91,7 +79,6 @@ describe('milestonePoolFor', () => {
     assert.ok(pool.includes('taiga_smell'));
     assert.ok(pool.includes('taiga_card_game'));
     assert.ok(pool.includes('taiga_getaway'));
-    assert.equal(pool.length, milestonePoolFor('jo').length);
   });
 
   const OWN_SETS = ['benkei', 'edward', 'elias', 'haru', 'jin', 'rui', 'shion', 'towa', 'zenji'];

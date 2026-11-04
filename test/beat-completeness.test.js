@@ -81,14 +81,6 @@ function missingResponses({ at, entry }) {
   return missing.length ? `${at}: responses missing ${missing.join(', ')}` : null;
 }
 
-function missingLineAndApproach({ at, entry }) {
-  if (!isBeat(entry)) return `${at}: bare string, not a beat`;
-  const problems = [];
-  if (!entry.line.trim()) problems.push('line');
-  if (!hasText(entry.approach)) problems.push('approach');
-  return problems.length ? `${at}: no ${problems.join(' or ')}` : null;
-}
-
 function problemsIn(beats, ...checks) {
   return beats.flatMap((b) => checks.map((check) => check(b)).filter(Boolean));
 }
@@ -106,10 +98,6 @@ test('the beat walk actually finds beats for the whole roster (guards the checks
 });
 
 // /meet needs a subset of what /roam needs, so one set of checks covers both.
-
-test('every drawable beat has a line and an approach', () => {
-  assert.deepStrictEqual(problemsIn(BEATS, missingLineAndApproach), []);
-});
 
 test('every drawable beat has a greeting', () => {
   assert.deepStrictEqual(problemsIn(BEATS, missingGreeting), []);

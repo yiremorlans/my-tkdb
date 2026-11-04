@@ -159,17 +159,11 @@ test('getRandomDialogueEntry returns `responses` from the exact same pick as `li
   }
 });
 
-test('a character with no dialogue content at all still returns a usable beat instead of throwing', () => {
-  const character = { id: EMPTY_ID };
-  const { line, approach } = getRandomDialogueBeat(character, 'new');
-  assert.strictEqual(line, '...');
-  assert.strictEqual(typeof approach, 'string');
-  assert.ok(approach.length > 0);
-});
-
-test('an unknown character id falls back the same way for both the line and the approach', () => {
-  const character = { id: 'no-such-character' };
-  const { line, approach } = getRandomDialogueBeat(character, 'new');
-  assert.strictEqual(line, '...');
-  assert.ok(approach.length > 0);
+test("a character with no dialogue content, or an unknown id, falls back to '...' with a usable approach instead of throwing", () => {
+  for (const id of [EMPTY_ID, 'no-such-character']) {
+    const { line, approach } = getRandomDialogueBeat({ id }, 'new');
+    assert.strictEqual(line, '...', id);
+    assert.strictEqual(typeof approach, 'string', id);
+    assert.ok(approach.length > 0, id);
+  }
 });

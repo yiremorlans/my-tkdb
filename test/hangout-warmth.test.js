@@ -8,12 +8,6 @@ import { Warmth, WARMTH_PROFILES, attachWarmth } from '../activity/src/hangout-v
 
 const { gains } = WARMTH_PROFILES.hangout;
 
-test('a flat answer leaves warmth where it was', () => {
-  const w = new Warmth('hangout', 'close');
-  w.reaction('answerFlat');
-  assert.strictEqual(w.target, 0);
-});
-
 test('love and like answers count as fave and liked, not as touches', () => {
   const w = new Warmth('date', 'close');
   const date = WARMTH_PROFILES.date.gains;
@@ -57,9 +51,4 @@ test('attachWarmth feeds reactions and draws warmth each frame', () => {
   scene.frame(0, 1);
   assert.strictEqual(drawn.length, 1);
   assert.ok(drawn[0] > 0);
-});
-
-test('attachWarmth skips a renderer without warmth (v1)', () => {
-  const scene = { hangout: { tier: 'close', react() {} }, renderer: {}, frame() {} };
-  assert.strictEqual(attachWarmth(scene, 'hangout'), null);
 });

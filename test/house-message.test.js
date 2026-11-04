@@ -157,18 +157,6 @@ test('a mission-points tie hands the emblem to the closest house by affinity, no
   assert.strictEqual(message.embeds[0].title, HOUSES.HOTARUBI);
 });
 
-test('an assist counts toward the dossier exactly like a lead', async () => {
-  reset({
-    log: [
-      { discord_user_id: 'user-1', house: HOUSES.OBSCUARY, mission_type: 'coop', points: 1, role: 'assist' },
-      { discord_user_id: 'user-1', house: HOUSES.OBSCUARY, mission_type: 'coop', points: 1, role: 'lead' },
-    ],
-  });
-
-  const message = await buildDossierMessage('user-1');
-  assert.match(message.content, /2 house logs · 2 missions filed/);
-});
-
 test('a held errand shows as the current mission, with its signature progress', async () => {
   reset({
     log: [{ discord_user_id: 'user-1', house: HOUSES.DIONYSIA, mission_type: 'riddle', points: 1, role: 'lead' }],

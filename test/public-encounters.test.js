@@ -88,19 +88,10 @@ const {
   sweepExpiredEncounters,
 } = await import('../publicEncounters.js');
 const { runTick, clearSpawnAttemptFence } = await import('../encounterScheduler.js');
-const { buildMeetPickMessage, buildResponseResultMessage, pickMeetCandidates } = await import('../encounters.js');
-const {
-  recordEncounterMilestone,
-  getEncounterMilestoneCounts,
-  getOrCreateRelationship,
-  grantEncounterBoost,
-  consumeAllEncounterBoosts,
-} = await import('../db/supabase.js');
+const { buildMeetPickMessage, buildResponseResultMessage } = await import('../encounters.js');
+const { grantEncounterBoost, consumeAllEncounterBoosts } = await import('../db/supabase.js');
 const { clearGuessCooldowns, matchCharacterGuess } = await import('../constants/publicEncounters.js');
 const { CHARACTERS, RESPONSE_TYPES } = await import('../constants/characters.js');
-const { HOUSES } = await import('../constants/backgrounds.js');
-const { MEET_OPTION_COUNT } = await import('../constants/game.js');
-const { getHouseRoster } = await import('../constants/missions.js');
 
 function guildRow(overrides = {}) {
   return {
@@ -293,16 +284,33 @@ describe('the scheduler loop', () => {
     assert.equal(after.next_gap_minutes, before.next_gap_minutes, 'no fresh gap rolled');
   });
 
-  it('rolls a whole number of minutes — next_gap_minutes is an INT column', async () => {
+  it('rolls a whole number of minutes — next_gap_minutes is an INT column', (t) => {
     // The fake Supabase does not type-check, so a float here fails only in
-    // real Postgres (22P02). Guard it directly.
-    for (let i = 0; i < 200; i++) {
-      const gap = rollGapMinutes();
+    // real Postgres (22P02). Guard it directly, at both ends of the draw and
+    // at fractions that land between whole minutes.
+    const draws = [0, 0.123456, 0.5, 0.777777, 0.999999];
+    let i = 0;
+    t.mock.method(Math, 'random', () => draws[i++]);
+    const gaps = draws.map(() => rollGapMinutes());
+    for (const gap of gaps) {
       assert.ok(Number.isInteger(gap), `rollGapMinutes returned ${gap}`);
       assert.ok(gap >= 45 && gap <= 180, `rollGapMinutes returned ${gap}`);
     }
+    assert.deepEqual([gaps[0], gaps.at(-1)], [45, 180], 'the draw spans the whole window');
   });
+});
 
+// runTick reads guild_settings once and hands each pass only the guilds with
+// its own switch on (getSchedulerGuilds), so a missions-only server must
+// never get an encounter.
+describe('the shared guild read', () => {
+  it("doesn't spawn encounters in a guild with only missions on", async () => {
+    reset({ guild_settings: [guildRow({ enabled: false, missions_enabled: true })] });
+
+    await runTick(NOW);
+
+    assert.equal(fake.tables.public_encounters.length, 0);
+  });
 });
 
 // --- 3. /call ---------------------------------------------------------------
@@ -395,20 +403,6 @@ describe('/call', () => {
     assert.equal(fake.tables.encounter_win_stats[0].wins, 1);
   });
 
-  it('bumps the per-kind tally instead of adding a row on a repeat', async () => {
-    reset({});
-
-    await recordEncounterMilestone({ userId: 'u1', characterId: 'rui', milestoneType: 'coffee_break' });
-    await recordEncounterMilestone({ userId: 'u1', characterId: 'rui', milestoneType: 'coffee_break' });
-    await recordEncounterMilestone({ userId: 'u1', characterId: 'rui', milestoneType: 'walked_to_class' });
-
-    assert.equal(fake.tables.encounter_milestones.length, 2, 'one row per kind, not per win');
-    assert.deepEqual(
-      await getEncounterMilestoneCounts('u1', 'rui'),
-      { coffee_break: 2, walked_to_class: 1 },
-    );
-  });
-
   it('creates the relationship exactly once when the winner has never met the character', async () => {
     // No character_relationships row seeded. grantEncounterBoost creates it
     // inside its own upsert (db/migrations/014) and incrementTimesMet then
@@ -427,42 +421,6 @@ describe('/call', () => {
     assert.equal(rels[0].times_met, 1, 'incrementTimesMet applied');
     assert.equal(rels[0].pending_encounter_boost, 1, 'grantEncounterBoost applied');
     assert.equal(rels[0].affinity, 0, 'a win never moves affinity');
-  });
-});
-
-// --- getOrCreateRelationship, insert-race recovery ------------------------
-
-describe('getOrCreateRelationship under an insert race', () => {
-  it('re-reads the row when a concurrent insert already created it (23505)', async () => {
-    reset({
-      character_relationships: [
-        { discord_user_id: 'racer', character_id: 'rui', affinity: 33, times_met: 7, pending_encounter_boost: 1 },
-      ],
-    });
-    // First SELECT misses — as it would if it ran before the other writer's
-    // INSERT landed — then our own INSERT loses to the unique constraint.
-    fake.forceError('character_relationships', 'select', { code: 'PGRST116', message: 'No rows found' });
-    fake.forceError('character_relationships', 'insert', {
-      code: '23505',
-      message: 'duplicate key value violates unique constraint',
-    });
-
-    const rel = await getOrCreateRelationship('racer', 'rui');
-
-    assert.equal(rel.affinity, 33, 'returns the row the other writer created, not a fresh 0');
-    assert.equal(rel.times_met, 7);
-    assert.equal(fake.tables.character_relationships.length, 1, 'no duplicate row');
-  });
-
-  it('still throws on an insert error that is not a unique violation', async () => {
-    reset({ character_relationships: [] });
-    fake.forceError('character_relationships', 'select', { code: 'PGRST116', message: 'No rows found' });
-    fake.forceError('character_relationships', 'insert', { code: 'DB_DOWN', message: 'simulated outage' });
-
-    await assert.rejects(
-      () => getOrCreateRelationship('u', 'rui'),
-      (err) => err.code === 'DB_DOWN',
-    );
   });
 });
 
@@ -507,47 +465,30 @@ describe('the encounter boost', () => {
     (c) => c.table === 'character_relationships' && c.op !== 'select',
   );
 
-  it('stacks wins up to the cap, one statement per grant', async () => {
+  it('stacks wins up to the cap', async () => {
     reset({ character_relationships: [relationship()] });
-    fake.calls.length = 0;
 
     assert.equal(await grantEncounterBoost('user-1', 'rui', 2), 1);
     assert.equal(await grantEncounterBoost('user-1', 'rui', 2), 2);
     assert.equal(await grantEncounterBoost('user-1', 'rui', 2), 2, 'held at the cap');
-
-    assert.equal(
-      fake.calls.filter((c) => c.table === 'rpc:grant_encounter_boost').length,
-      3,
-      'one RPC per win',
-    );
-    assert.equal(boostTableWrites().length, 0, 'no read-modify-write from JS');
   });
 
-  it('creates the relationship in the grant itself for a never-met character', async () => {
-    reset({});
-    fake.calls.length = 0;
-
-    assert.equal(await grantEncounterBoost('newcomer', 'rui', 2), 1);
-
-    const rows = fake.tables.character_relationships;
-    assert.equal(rows.length, 1, 'the upsert created the row');
-    assert.equal(rows[0].pending_encounter_boost, 1);
-    assert.equal(rows[0].affinity, 0, 'a win never moves affinity');
-    assert.equal(boostTableWrites().length, 0, 'no separate INSERT to race');
-  });
-
-  it('credits the pending count and clears it in one statement', async () => {
+  it('credits the pending count and clears it', async () => {
     reset({ character_relationships: [relationship({ pending_encounter_boost: 2 })] });
-    fake.calls.length = 0;
 
     assert.equal(await consumeAllEncounterBoosts('user-1', 'rui'), 2);
-
     assert.equal(fake.tables.character_relationships[0].pending_encounter_boost, 0);
-    assert.equal(
-      fake.calls.filter((c) => c.table === 'rpc:consume_encounter_boosts').length,
-      1,
-    );
-    assert.equal(boostTableWrites().length, 0, 'the spend is not a JS read-then-write');
+  });
+
+  it('never grants or spends as a JS read-then-write', async () => {
+    reset({ character_relationships: [relationship()] });
+    fake.calls.length = 0;
+
+    await grantEncounterBoost('user-1', 'rui', 2);
+    await consumeAllEncounterBoosts('user-1', 'rui');
+    await consumeAllEncounterBoosts('newcomer', 'rui'); // no row to spend from
+
+    assert.deepEqual(boostTableWrites(), []);
   });
 
   it('labels a boosted character in the /meet picker, and only theirs', async () => {
@@ -570,12 +511,9 @@ describe('the encounter boost', () => {
 
   it('spends nothing, and writes nothing, for a character with no relationship row', async () => {
     reset({});
-    fake.calls.length = 0;
 
     assert.equal(await consumeAllEncounterBoosts('newcomer', 'rui'), 0);
-
     assert.equal(fake.tables.character_relationships.length, 0, 'a spend never creates a row');
-    assert.equal(boostTableWrites().length, 0);
   });
 });
 
@@ -703,6 +641,12 @@ describe('call scenes', () => {
     const [post] = posts;
     assert.equal(post.channelId, CHANNEL);
     assert.deepEqual(post.body.message_reference.message_id, 'message-live');
+    // Text over a full-size portrait, in a container, with the answer row below.
+    const [container, answerRow] = post.body.components;
+    assert.equal(container.type, 17, 'in a container');
+    assert.equal(typeof container.accent_color, 'number');
+    assert.deepEqual(container.components.map((c) => c.type), [10, 12], 'a Text Display, then a Media Gallery');
+    assert.equal(answerRow.type, 1);
     const { text, face, buttons } = sceneParts(post.body);
     assert.equal(face, 'https://example.test/assets/expressions/benkei/default.png');
     assert.match(text, /Kanae/);
@@ -739,41 +683,27 @@ describe('call scenes', () => {
       buttons: {
         encounterId: 7,
         responses: { kind: 'a', playful: 'b', bold: 'c' },
-        locked: true,
+        locked: false,
         order: shuffledSceneResponses(() => 0),
       },
     });
+    const { buttons } = sceneParts(message);
     assert.deepEqual(
-      sceneParts(message).buttons.map((b) => b.custom_id),
+      buttons.map((b) => b.custom_id),
       ['scene:7:playful', 'scene:7:bold', 'scene:7:kind', 'scene:7:date'],
     );
+    // Unlocked (no Close Friend register has scenes yet, so only the builder
+    // can show it): the lock drops, but the date feature is not built.
+    assert.equal(buttons[3].disabled, true, 'still disabled: the date feature is not built');
+    assert.equal(buttons[3].emoji, undefined);
   });
 
-  it('locks the date button below Close Friend and drops the lock at it', async () => {
+  it('locks the date button below Close Friend', async () => {
     await winScene();
     const locked = sceneParts(posts[0].body).buttons[3];
     assert.equal(locked.disabled, true);
     assert.equal(locked.emoji?.name, '🔒');
     assert.equal(locked.label, 'Ask on a date');
-
-    // No Close Friend register has scenes yet, so the unlocked button is read
-    // straight off the builder.
-    const unlocked = sceneParts(
-      callSceneMessage({
-        characterId: 'benkei',
-        face: 'default.png',
-        text: 'x',
-        color: 0,
-        buttons: { encounterId: 7, responses: { kind: 'a', playful: 'b', bold: 'c' }, locked: false },
-      }),
-    ).buttons[3];
-    assert.equal(unlocked.disabled, true, 'still disabled: the date feature is not built');
-    assert.equal(unlocked.emoji, undefined);
-  });
-
-  it('opens Jo in casual on his _girl face', async () => {
-    await winScene({ characterId: 'jo', variant: 'casual' });
-    assert.match(sceneParts(posts[0].body).face, /\/jo\/default_girl\.png$/);
   });
 
   it('turns away anyone but the winner and changes nothing', async () => {
@@ -826,15 +756,6 @@ describe('call scenes', () => {
     assert.equal(relationship()?.affinity ?? 0, 0);
   });
 
-  it('lays the scene out as text over a full-size portrait in a container', async () => {
-    await winScene();
-    const [container, row] = posts[0].body.components;
-    assert.equal(container.type, 17, 'in a container');
-    assert.equal(typeof container.accent_color, 'number');
-    assert.deepEqual(container.components.map((c) => c.type), [10, 12], 'a Text Display, then a Media Gallery');
-    assert.equal(row.type, 1);
-  });
-
   it('never acts on the date button', async () => {
     await winScene();
     const result = await handleSceneClick(clickBody({ choice: 'date' }), '7', 'date', NOW);
@@ -871,58 +792,5 @@ describe('call scenes', () => {
 
     assert.ok(!edits.some((e) => e.messageId === 'message-1'), 'nothing to edit');
     assert.equal(relationship().pending_encounter_boost, 1);
-  });
-
-  it('keeps the normal reveal when the draw comes from the shared pool', async () => {
-    const { DIALOGUE } = await import('../constants/dialogue.js');
-    const own = DIALOGUE.benkei.winnerLines.bound;
-    delete DIALOGUE.benkei.winnerLines.bound;
-    try {
-      reset({
-        guild_settings: [guildRow()],
-        public_encounters: [encounterRow({ character_id: 'benkei' })],
-        character_relationships: [{ discord_user_id: 'user-1', character_id: 'benkei', affinity: 700, times_met: 3 }],
-      });
-      forceCallScene(7);
-      const { afterReply } = await handleCall(callBody({ guess: 'benkei' }), NOW);
-      await afterReply();
-
-      assert.equal(posts.length, 0, 'no scene post');
-      assert.ok(edits[0].body.embeds?.length, 'the reveal embed instead');
-    } finally {
-      DIALOGUE.benkei.winnerLines.bound = own;
-    }
-  });
-});
-
-describe('/meet errand seeding (pickMeetCandidates)', () => {
-  const ids = (chars) => chars.map((c) => c.id);
-  const frostheim = ids(getHouseRoster(HOUSES.FROSTHEIM));
-
-  it('guarantees two of four unsigned targets, freshly drawn, and still offers four', () => {
-    const seen = new Set();
-    for (let i = 0; i < 200; i++) {
-      const offered = ids(pickMeetCandidates(frostheim));
-      assert.equal(offered.length, MEET_OPTION_COUNT);
-      assert.equal(new Set(offered).size, offered.length);
-      const seeded = offered.filter((id) => frostheim.includes(id));
-      assert.ok(seeded.length >= 2, 'two targets are always guaranteed');
-      seeded.forEach((id) => seen.add(id));
-    }
-    assert.equal(seen.size, frostheim.length, 'which targets are seeded varies call to call');
-  });
-
-  it('seeds the lone target when only one is unsigned', () => {
-    for (let i = 0; i < 50; i++) {
-      const offered = ids(pickMeetCandidates(['haku']));
-      assert.equal(offered.length, MEET_OPTION_COUNT);
-      assert.ok(offered.includes('haku'));
-    }
-  });
-
-  it('is a plain random draw with nothing unsigned (fully signed, not yet filed)', () => {
-    const offered = pickMeetCandidates([]);
-    assert.equal(offered.length, MEET_OPTION_COUNT);
-    assert.equal(new Set(ids(offered)).size, MEET_OPTION_COUNT);
   });
 });

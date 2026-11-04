@@ -31,36 +31,30 @@ test("a beat offering several interchangeable labels draws one of them", () => {
   assert.deepStrictEqual([...drawn].sort(), [...options].sort());
 });
 
-test("a response type the beat leaves out falls through to the archetype default", () => {
-  const kuudere = { id: '__test_char_2__', archetype: ['Kuudere'] };
-  const responses = generateCharacterResponses(kuudere, { kind: 'Kind (beat label)' });
-  assert.strictEqual(responses[RESPONSE_TYPES.KIND].label, 'Kind (beat label)');
-  assert.strictEqual(responses[RESPONSE_TYPES.PLAYFUL].label, 'Exchange wit with them');
-  assert.strictEqual(responses[RESPONSE_TYPES.BOLD].label, 'Make a bold move');
-  assert.strictEqual(responses[RESPONSE_TYPES.NEUTRAL].label, 'Stay quiet');
-});
-
-test('a character drawn with no beat at all falls back to archetype defaults', () => {
+// The chain is pinned by shape, not by the default strings themselves, so a
+// copy edit to a fallback label doesn't break it.
+test('a type the beat leaves out falls back by archetype, then to a generic default', () => {
+  const labels = (character, beat) =>
+    Object.values(RESPONSE_TYPES).map((type) => generateCharacterResponses(character, beat)[type].label);
   const kuudere = { id: 'no-such-character', archetype: ['Kuudere'] };
-  const responses = generateCharacterResponses(kuudere);
-  assert.strictEqual(responses[RESPONSE_TYPES.KIND].label, 'Be honest with them');
-  assert.strictEqual(responses[RESPONSE_TYPES.PLAYFUL].label, 'Exchange wit with them');
-  assert.strictEqual(responses[RESPONSE_TYPES.BOLD].label, 'Make a bold move');
-  assert.strictEqual(responses[RESPONSE_TYPES.NEUTRAL].label, 'Stay quiet');
-});
-
-test('a different archetype yields a different fallback set', () => {
   const yandere = { id: 'no-such-character-2', archetype: ['Yandere'] };
-  const responses = generateCharacterResponses(yandere);
-  assert.strictEqual(responses[RESPONSE_TYPES.PLAYFUL].label, 'Play their game');
-  assert.strictEqual(responses[RESPONSE_TYPES.BOLD].label, 'Match their intensity');
-  assert.strictEqual(responses[RESPONSE_TYPES.NEUTRAL].label, 'Observe them carefully');
-});
 
-test('a character with no archetype at all falls back to the generic defaults', () => {
-  const responses = generateCharacterResponses(NO_ARCHETYPE);
-  assert.strictEqual(responses[RESPONSE_TYPES.KIND].label, 'Offer kind words');
-  assert.strictEqual(responses[RESPONSE_TYPES.PLAYFUL].label, 'Crack a joke');
-  assert.strictEqual(responses[RESPONSE_TYPES.BOLD].label, 'Flirt boldly');
-  assert.strictEqual(responses[RESPONSE_TYPES.NEUTRAL].label, 'Stay silent');
+  const generic = labels(NO_ARCHETYPE);
+  const kuudereDefaults = labels(kuudere);
+  const yandereDefaults = labels(yandere);
+  for (const set of [generic, kuudereDefaults, yandereDefaults]) {
+    for (const label of set) assert.ok(typeof label === 'string' && label.trim(), `empty label in ${set}`);
+  }
+  assert.notDeepStrictEqual(kuudereDefaults, generic, 'an archetype has its own defaults');
+  assert.notDeepStrictEqual(kuudereDefaults, yandereDefaults, 'a different archetype yields a different set');
+
+  // A beat that carries only `kind` keeps it, and the other types fall through
+  // to that archetype's defaults.
+  const partial = labels(kuudere, { kind: 'Kind (beat label)' });
+  const kindAt = Object.values(RESPONSE_TYPES).indexOf(RESPONSE_TYPES.KIND);
+  assert.strictEqual(partial[kindAt], 'Kind (beat label)');
+  assert.deepStrictEqual(
+    partial.filter((_, i) => i !== kindAt),
+    kuudereDefaults.filter((_, i) => i !== kindAt),
+  );
 });

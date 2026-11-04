@@ -292,14 +292,17 @@ describe('the scheduler pass', () => {
     assert.match(reply.content, /Stopped.*deleted/);
   });
 
-  it("doesn't count a Discord outage as a failure", async () => {
-    await configured();
-    renameErrors.set(VOICE, 503);
+  for (const [what, status] of [['a Discord outage', 503], ['a rate limit', 429]]) {
+    it(`doesn't count ${what} as a failure`, async () => {
+      await configured();
+      renameErrors.set(VOICE, status);
 
-    await runCountdownPass(later(60 * 24));
+      await runCountdownPass(later(60 * 24));
 
-    assert.equal(row('wishingwell').rename_failures, 0);
-  });
+      assert.equal(row('wishingwell').rename_failures, 0);
+      assert.equal(row('wishingwell').channel_id, VOICE);
+    });
+  }
 
   it('re-setup after an auto-disable keeps the real original name', async () => {
     await configured('wishingwell', VOICE);
@@ -314,16 +317,6 @@ describe('the scheduler pass', () => {
     await run(setChannel('wishingwell', VOICE));
 
     assert.equal(row('wishingwell').original_name, 'Lounge');
-  });
-
-  it("doesn't count a rate limit as a failure", async () => {
-    await configured();
-    renameErrors.set(VOICE, 429);
-
-    await runCountdownPass(later(60 * 24));
-
-    assert.equal(row('wishingwell').rename_failures, 0);
-    assert.equal(row('wishingwell').channel_id, VOICE);
   });
 
   it('skips a locked guild', async () => {

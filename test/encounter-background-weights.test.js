@@ -2,13 +2,10 @@
 // character-first order itself is guarded in
 // roam-uniform-distribution.test.js):
 // signature spots repeat in a character's turf pool, _PM files outweigh day
-// files after EVENING_HOUR, and the public (campus) encounter keeps drawing its
-// character first and its backdrop from the shared Darkwick pool regardless.
+// files after EVENING_HOUR, and the public (campus) encounter draws its
+// backdrop from the shared Darkwick pool regardless.
 import { test } from 'node:test';
 import assert from 'node:assert';
-import fs from 'fs';
-import path from 'path';
-import { fileURLToPath } from 'url';
 
 import { getCharacterById } from '../constants/characters.js';
 import {
@@ -25,8 +22,6 @@ import {
   ENCOUNTER_LOCATIONS,
   generateEncounter,
 } from '../constants/publicEncounters.js';
-
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 // Midday and late evening in America/Chicago (CDT, UTC-5).
 const DAY = new Date('2026-06-15T12:00:00-05:00');
@@ -106,21 +101,6 @@ test('after 6 PM a _PM turf background outweighs its day counterpart', () => {
   assert.strictEqual(
     counts.get('Frostheim_Entrance_PM.png'),
     EVENING_PM_WEIGHT * counts.get('Frostheim_Entrance.png'),
-  );
-});
-
-test('a public encounter draws its character before its background', () => {
-  const src = fs.readFileSync(
-    path.join(__dirname, '..', 'constants/publicEncounters.js'),
-    'utf8',
-  );
-  const body = src.slice(src.indexOf('export function generateEncounter'));
-  const atCharacter = body.indexOf('pickRandom(CHARACTERS)');
-  const atSpot = body.indexOf('pickEncounterBackground(now)');
-  assert.ok(atCharacter !== -1 && atSpot !== -1);
-  assert.ok(
-    atCharacter < atSpot,
-    'character must be drawn before the background',
   );
 });
 

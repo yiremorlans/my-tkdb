@@ -59,11 +59,19 @@ function encounterRow(overrides) {
 
 // --- GET /launch -------------------------------------------------------------
 
-test('no session, a bad one, or another secret gets 401 and nothing', () => {
-  for (const auth of BAD_SESSIONS) {
-    const { status, body } = handleActivityLaunch(auth, { env }, NOW);
-    assert.strictEqual(status, 401, String(auth));
-    assert.strictEqual(body.version, undefined);
+// No session, a bad one, or another secret gets 401 and nothing, on every
+// route that reads a session.
+test('both routes refuse a missing or bad session with 401 and nothing', async () => {
+  const routes = {
+    launch: (auth) => handleActivityLaunch(auth, { env }, NOW),
+    encounter: (auth) => handleActivityEncounter(auth, 'instance-1', { env }, NOW),
+  };
+  for (const [route, call] of Object.entries(routes)) {
+    for (const auth of BAD_SESSIONS) {
+      const { status, body } = await call(auth);
+      assert.strictEqual(status, 401, `${route}: ${String(auth)}`);
+      assert.strictEqual(body?.version, undefined, `${route}: ${String(auth)}`);
+    }
   }
 });
 
@@ -87,13 +95,6 @@ test('an unknown version records as v2, a launch expires, and a /meet launch cle
 });
 
 // --- GET /encounter ----------------------------------------------------------
-
-test('the encounter route needs a session', async () => {
-  for (const auth of BAD_SESSIONS) {
-    const { status } = await handleActivityEncounter(auth, 'instance-1', { env }, NOW);
-    assert.strictEqual(status, 401, String(auth));
-  }
-});
 
 test("a user sees only their own encounter, never the mood flag or beat key, and loading it is stamped", async () => {
   const row = encounterRow({ discord_user_id: 'user-own', instance_id: 'instance-1' });

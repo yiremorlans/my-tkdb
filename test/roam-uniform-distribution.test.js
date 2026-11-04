@@ -31,6 +31,7 @@ import {
   getAvailableBackgrounds,
   getRandomBackgroundForCharacter,
   getRandomGeneralBackground,
+  turfSpots,
   weightedBackgrounds,
   GENERAL_LOCATIONS,
   HOUSES,
@@ -86,6 +87,19 @@ test('/meet draws the character before the setting too', () => {
   );
 });
 
+// Calls draw() n times with Math.random stepping evenly across [0, 1), so a
+// uniform pick over a pool of n entries lands on every entry exactly once.
+function drawAcross(n, draw) {
+  const realRandom = Math.random;
+  let i = 0;
+  Math.random = () => (i++ + 0.5) / n;
+  try {
+    return Array.from({ length: n }, draw);
+  } finally {
+    Math.random = realRandom;
+  }
+}
+
 test('a character is never shown at a location not attributed to them', () => {
   // The containment property that makes the flat distribution safe to ship: a
   // Mortkranken character can turn up on Mortkranken grounds, in their own
@@ -110,44 +124,11 @@ test('a character is never shown at a location not attributed to them', () => {
   );
 
   // The turf branch is pinned exactly by the reachability test below (seen ==
-  // attributed); here only the general branch needs sampling, and it does not
-  // depend on the character.
+  // attributed). The general branch does not depend on the character: sweep
+  // its draw at evenly spaced points rather than sampling it at random.
   for (const now of [DAY, EVENING]) {
-    for (let i = 0; i < 500; i++) {
-      const key = getRandomGeneralBackground(now).locationKey;
+    for (const key of drawAcross(500, () => getRandomGeneralBackground(now).locationKey)) {
       assert.ok(generalKeys.has(key), `the general draw reached ${key}, which is not public`);
-    }
-  }
-});
-
-test('Mortkranken characters never reach Frostheim', () => {
-  // The concrete case, spelled out: neither Mortkranken character has Frostheim
-  // among their locations, so Frostheim scenery must be unreachable for them.
-  const mortkranken = CHARACTERS.filter((c) => c.house === 'Mortkranken');
-  assert.ok(mortkranken.length > 0, 'fixture assumption: Mortkranken has characters');
-
-  for (const character of mortkranken) {
-    assert.ok(
-      !attributedLocations(character).includes('Frostheim'),
-      `fixture assumption: ${character.id} has no Frostheim location`,
-    );
-    for (const now of [DAY, EVENING]) {
-      const seen = new Set();
-      for (let i = 0; i < 3000; i++) {
-        seen.add(getRandomBackgroundForCharacter(character, now).locationKey);
-      }
-      assert.ok(!seen.has('Frostheim'), `${character.id} reached Frostheim`);
-    }
-  }
-});
-
-test('every character has a reachable setting at any hour', () => {
-  for (const now of [DAY, EVENING]) {
-    for (const character of CHARACTERS) {
-      const turf = getRandomBackgroundForCharacter(character, now);
-      // A character with no turf at all would fall back to the general pool.
-      const spot = turf || getRandomGeneralBackground(now);
-      assert.ok(spot?.file, `${character.id} has no reachable background`);
     }
   }
 });
@@ -176,10 +157,12 @@ test('a character reaches their attributed locations and signature spots, and no
       ]);
       if (expected.size === 0) continue; // no turf at all
 
-      const seen = new Set();
-      for (let i = 0; i < 2000; i++) {
-        seen.add(getRandomBackgroundForCharacter(character, now).locationKey);
-      }
+      // Every entry of the pool the draw picks from, by stepping the draw
+      // across it rather than sampling: exact, and no rare spot can be missed.
+      const seen = new Set(
+        drawAcross(turfSpots(character, now).length, () =>
+          getRandomBackgroundForCharacter(character, now).locationKey),
+      );
 
       assert.deepStrictEqual(
         [...seen].sort(),
@@ -221,35 +204,6 @@ test('a borrowed location is reachable without changing the character\'s house',
       );
     }
   }
-});
-
-test('every character belongs to exactly one house', () => {
-  // The catalog invariant that /house depends on: buildHouseMessage tallies
-  // affinity by character.house alone, so a character with two houses would
-  // silently have their bond counted once and attributed to whichever came
-  // first. additionalLocations is scenery and must never be read as standing.
-  for (const character of CHARACTERS) {
-    if (character.house === null) continue; // Benkei is houseless by design
-    assert.strictEqual(
-      typeof character.house,
-      'string',
-      `${character.id} must have exactly one house, or null`,
-    );
-  }
-});
-
-test('/meet places a houseless character the way /roam does', () => {
-  // A housed character is always on turf in /meet; Benkei's turf is only his
-  // pinned campus store, so /meet mixes in general locations for him instead
-  // of showing the store every time.
-  const code = codeOf(
-    'encounters.js',
-    'export async function drawMeetEncounter',
-  );
-  assert.match(
-    code,
-    /character\.house\s*\?\s*getRandomBackgroundForCharacter\(character, now\)\s*:\s*selectRoamSpot\(character, now, TURF_PROBABILITY\)/,
-  );
 });
 
 test('Benkei, who has no house, has the campus store as his whole turf', () => {

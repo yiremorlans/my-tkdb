@@ -126,11 +126,14 @@ test('acks with a deferred update immediately, without waiting on the claim', as
   await waitFor(() => originalEdits().length > 0);
 });
 
-test('a win rewrites the shared post via the interaction webhook and disables the button', async () => {
+// Transport only: which webhook call carries which half of the result. The
+// message copy is owned by the handleMissionAccept unit tests
+// (missions-accept.test.js).
+test('a win PATCHes the shared post @original and POSTs the briefing as an ephemeral followup', async () => {
   resetHarness();
   fake.tables.missions.push(openMission('m-win'));
 
-  const res = await postInteraction(acceptClick('m-win', 'user-win', { nick: 'Ayaka' }));
+  const res = await postInteraction(acceptClick('m-win', 'user-win'));
   assert.equal((await res.json()).type, 6);
 
   await waitFor(() => originalEdits().length > 0 && followups().length > 0);
@@ -138,29 +141,18 @@ test('a win rewrites the shared post via the interaction webhook and disables th
   const edit = originalEdits()[0];
   assert.equal(edit.method, 'PATCH');
   assert.match(edit.url, /\/webhooks\/app-under-test\/token-\d+\/messages\/@original$/);
-  assert.match(edit.payload.embeds[0].description, /^\*\*Ayaka\*\* has picked up the mission/);
   assert.equal(edit.payload.components[0].components[0].disabled, true, 'the Accept button is greyed out');
+
+  const briefing = followups()[0];
+  assert.equal(briefing.method, 'POST', 'a new followup, not an edit to the post');
+  assert.equal(briefing.payload.flags, 64, 'ephemeral — only the clicker sees it');
 
   const row = fake.tables.missions.find((r) => r.id === 'm-win');
   assert.equal(row.status, 'accepted');
   assert.equal(row.accepted_by, 'user-win');
 });
 
-test('the winner still gets the ephemeral pickup briefing as a followup', async () => {
-  resetHarness();
-  fake.tables.missions.push(openMission('m-brief'));
-
-  await postInteraction(acceptClick('m-brief', 'user-brief'));
-  await waitFor(() => followups().length > 0);
-
-  const briefing = followups()[0];
-  assert.equal(briefing.method, 'POST');
-  assert.ok(!briefing.isOriginalEdit, 'a new followup, not an edit to the post');
-  assert.equal(briefing.payload.flags, 64, 'ephemeral — only the clicker sees it');
-  assert.match(briefing.payload.content, /MISSION BRIEFING|\/mission/);
-});
-
-test('a lost race disables the shared button and tells the clicker why', async () => {
+test('a lost race still PATCHes @original to disable the button, and POSTs the refusal', async () => {
   resetHarness();
   fake.tables.missions.push(openMission('m-race'));
 
@@ -183,7 +175,6 @@ test('a lost race disables the shared button and tells the clicker why', async (
   const refusal = followups()[0];
   assert.equal(refusal.method, 'POST');
   assert.equal(refusal.payload.flags, 64);
-  assert.match(refusal.payload.content, /Someone got there first/);
 
   assert.equal(
     fake.tables.missions.find((r) => r.id === 'm-race').accepted_by,

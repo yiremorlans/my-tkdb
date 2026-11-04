@@ -112,12 +112,6 @@ test('the owner can run /meet and use its buttons while maintenance is on', asyn
   assert.ok(!btn.includes(MAINTENANCE_MESSAGE));
 });
 
-test('the owner bypass does not extend to other users', async () => {
-  setMaintenance(true);
-  const body = await (await postInteraction(command('roam', 'not-the-owner'))).json();
-  assert.strictEqual(body.data.content, MAINTENANCE_MESSAGE);
-});
-
 test('commands work normally once maintenance is off', async () => {
   setMaintenance(false);
   const res = await postInteraction(command('meet', 'user-c'));

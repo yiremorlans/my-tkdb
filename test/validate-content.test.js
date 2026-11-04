@@ -7,7 +7,7 @@ import assert from 'node:assert';
 import { validateContent } from '../constants/validateContent.js';
 import { CHARACTERS } from '../constants/characters.js';
 import { DIALOGUE, SHARED_WINNER_LINES } from '../constants/dialogue.js';
-import { BOND_SCENE_KEYS, MAX_BUTTON_LABEL_LENGTH } from '../constants/game.js';
+import { MAX_BUTTON_LABEL_LENGTH } from '../constants/game.js';
 
 // validateContent() throws on any error, so returning at all means the real
 // catalog is clean of every rule it enforces (bond scenes at all six levels,
@@ -29,23 +29,10 @@ test('validateContent returns { errors: [], warnings } against the real catalog'
 // every level, and no line may appear twice anywhere in the roster. Both are
 // validateContent errors, covered by the test above.
 test('no character reuses a keepsake emoji across their own six scenes', () => {
-  const repeats = [];
-  for (const character of CHARACTERS) {
-    const pool = DIALOGUE[character.id]?.bondScenes || {};
-    const levelsByEmoji = new Map();
-    for (const key of BOND_SCENE_KEYS) {
-      const emoji = pool[key]?.keepsake?.emoji;
-      if (!emoji) continue;
-      if (!levelsByEmoji.has(emoji)) levelsByEmoji.set(emoji, []);
-      levelsByEmoji.get(emoji).push(key);
-    }
-    for (const [emoji, levels] of levelsByEmoji) {
-      if (levels.length > 1) repeats.push(`${character.id} ${emoji} ${levels.join('+')}`);
-    }
-  }
   // Sharing an emoji with another character is deliberate and widespread — a
   // player only ever sees one character's six at a time. Two of the same inside
-  // one journal is the case that reads as a bug.
+  // one journal is the case that reads as a bug, and validateContent warns on it.
+  const repeats = validateContent().warnings.filter((w) => w.includes('reuses the keepsake emoji'));
   assert.deepStrictEqual(repeats, []);
 });
 
@@ -66,71 +53,6 @@ test('the keepsake emoji check warns rather than errors, and names both levels',
   }
   const stillWarning = validateContent().warnings.filter((w) => w.includes('reuses the keepsake emoji'));
   assert.deepStrictEqual(stillWarning, [], 'and the catalog is clean again');
-});
-
-// Proves validateContent() would actually catch a violation instead of
-// silently passing one through, the same way the keepsake-emoji test above
-// pins the bondScenes check's own behavior rather than just today's data.
-test('validateContent flags an over-length beat approach — as a single string or inside an array', () => {
-  // validateContent() throws (not returns) once errors is non-empty — see its
-  // own tail — so this has to catch the throw and read its message, unlike
-  // the keepsake-emoji test above, which only ever produces warnings.
-  const beats = DIALOGUE.benkei.dialogue.known;
-  const target = beats.find((b) => b && typeof b === 'object' && typeof b.approach === 'string');
-  assert.ok(target, 'benkei.known should have at least one single-string-approach beat to mutate');
-  const original = target.approach;
-  try {
-    target.approach = 'A'.repeat(MAX_BUTTON_LABEL_LENGTH + 1);
-    assert.throws(
-      () => validateContent(),
-      new RegExp(`benkei dialogue\\[known\\] beat approach is ${MAX_BUTTON_LABEL_LENGTH + 1} chars \\(max ${MAX_BUTTON_LABEL_LENGTH}\\)`),
-    );
-  } finally {
-    target.approach = original;
-  }
-
-  // Same check, but the label lives inside an `approach: [...]` array.
-  const arrayTarget = beats.find((b) => b && typeof b === 'object' && Array.isArray(b.approach));
-  assert.ok(arrayTarget, 'benkei.known should have at least one array-approach beat to mutate');
-  const originalArray = arrayTarget.approach;
-  try {
-    arrayTarget.approach = [originalArray[0], 'B'.repeat(MAX_BUTTON_LABEL_LENGTH + 1)];
-    assert.throws(
-      () => validateContent(),
-      new RegExp(`benkei dialogue\\[known\\] beat approach is ${MAX_BUTTON_LABEL_LENGTH + 1} chars \\(max ${MAX_BUTTON_LABEL_LENGTH}\\)`),
-    );
-  } finally {
-    arrayTarget.approach = originalArray;
-  }
-
-  assert.doesNotThrow(() => validateContent(), 'and the catalog is clean again');
-});
-
-// Same as the approach-throws test above, but for a beat's `responses` —
-// proving validateContent() actually catches an over-length response label on
-// the beat itself, which is the only place response labels live.
-test('validateContent flags an over-length beat response — as a single string or inside an array', () => {
-  // Inject the responses rather than hunting the catalog for a beat of the
-  // right shape: which beats carry `responses`, and whether as strings or
-  // arrays, changes as content is authored, and the validator has to handle
-  // both shapes regardless.
-  const beat = DIALOGUE.benkei.dialogue.known.find((b) => b && typeof b === 'object');
-  assert.ok(beat, 'benkei.known should have at least one object beat to mutate');
-  const hadResponses = Object.prototype.hasOwnProperty.call(beat, 'responses');
-  const original = beat.responses;
-  const tooLong = new RegExp(`benkei dialogue\\[known\\] beat playful response is ${MAX_BUTTON_LABEL_LENGTH + 1} chars \\(max ${MAX_BUTTON_LABEL_LENGTH}\\)`);
-  try {
-    beat.responses = { ...original, playful: 'A'.repeat(MAX_BUTTON_LABEL_LENGTH + 1) };
-    assert.throws(() => validateContent(), tooLong);
-
-    beat.responses = { ...original, playful: ['Fine', 'B'.repeat(MAX_BUTTON_LABEL_LENGTH + 1)] };
-    assert.throws(() => validateContent(), tooLong);
-  } finally {
-    if (hadResponses) beat.responses = original;
-    else delete beat.responses;
-  }
-
-  assert.doesNotThrow(() => validateContent(), 'and the catalog is clean again');
 });
 
 test('validateContent flags a room background not named <House>_<Name>_', () => {
@@ -250,6 +172,52 @@ test('validateContent rejects mood below warm and any mood value but true', () =
 const benkeiScene = () => DIALOGUE.benkei.winnerLines.new.find((entry) => entry.responses);
 const sceneIndex = () => DIALOGUE.benkei.winnerLines.new.indexOf(benkeiScene());
 
+// Proves validateContent() would actually catch an over-length button label
+// instead of silently passing one through, in every slot checkLabelLength
+// guards: a beat's approach and responses (each a single string or inside an
+// array) and a call scene's answers. The labels are injected rather than
+// hunted for in the catalog, since which beats carry which shape changes as
+// content is authored. validateContent() throws (not returns) once errors is
+// non-empty, so each case reads the throw's message.
+test('validateContent flags an over-length button label in every slot, as a string or inside an array', () => {
+  const beat = DIALOGUE.benkei.dialogue.known.find((b) => b && typeof b === 'object');
+  assert.ok(beat, 'benkei.known should have at least one object beat to mutate');
+  const scene = benkeiScene();
+  const over = MAX_BUTTON_LABEL_LENGTH + 1;
+  const tooLong = (what) => new RegExp(`${what} is ${over} chars \\(max ${MAX_BUTTON_LABEL_LENGTH}\\)`);
+  const approach = tooLong('benkei dialogue\\[known\\] beat approach');
+  const response = tooLong('benkei dialogue\\[known\\] beat playful response');
+  const answer = new RegExp(`benkei winnerLines\\.new\\[${sceneIndex()}\\] bold label is ${over} chars`);
+
+  const snapshots = [beat, scene].map((obj) => [obj, structuredClone(obj)]);
+  const restore = () => {
+    for (const [obj, snapshot] of snapshots) {
+      for (const key of Object.keys(obj)) delete obj[key];
+      Object.assign(obj, structuredClone(snapshot));
+    }
+  };
+
+  const cases = [
+    [() => { beat.approach = 'A'.repeat(over); }, approach],
+    [() => { beat.approach = ['Fine', 'B'.repeat(over)]; }, approach],
+    [() => { beat.responses = { ...beat.responses, playful: 'A'.repeat(over) }; }, response],
+    [() => { beat.responses = { ...beat.responses, playful: ['Fine', 'B'.repeat(over)] }; }, response],
+    [() => { scene.responses.bold = 'A'.repeat(over); }, answer],
+  ];
+
+  try {
+    for (const [mutate, expected] of cases) {
+      mutate();
+      assert.throws(() => validateContent(), expected);
+      restore();
+    }
+  } finally {
+    restore();
+  }
+
+  assert.doesNotThrow(() => validateContent(), 'and the catalog is clean again');
+});
+
 test('validateContent flags every malformed call scene shape', () => {
   const scene = benkeiScene();
   const at = `benkei winnerLines\\.new\\[${sceneIndex()}\\]`;
@@ -265,10 +233,6 @@ test('validateContent flags every malformed call scene shape', () => {
     [() => { delete scene.responses.playful; }, new RegExp(`${at} responses is missing "playful"`)],
     [() => { scene.responses.neutral = 'Wait'; }, new RegExp(`${at} responses has unknown key "neutral"`)],
     [() => { scene.responses.date = 'Ask'; }, new RegExp(`${at} responses has unknown key "date"`)],
-    [
-      () => { scene.responses.bold = 'A'.repeat(MAX_BUTTON_LABEL_LENGTH + 1); },
-      new RegExp(`${at} bold label is ${MAX_BUTTON_LABEL_LENGTH + 1} chars`),
-    ],
     [() => { delete scene.line; }, new RegExp(`${at} has no line`)],
     // The line itself gets the ordinary winner-line checks.
     [() => { scene.line = scene.line.replaceAll('{user}', 'someone'); }, /benkei winnerLines\.new never mentions \{user\}/],

@@ -38,8 +38,9 @@ test('the window shrinks with the pool so at least 3 beats stay drawable', () =>
 
 test('a draw never returns a beat inside the window', () => {
   const pool = DIALOGUE.jin.dialogue.new;
-  assert.strictEqual(pool.length, 5, 'fixture assumes a 5-beat pool');
-  const recentBeats = pool.slice(0, 2).map((beat) => dialogueBeatKey(beat.line));
+  const window = recentBeatWindow(pool.length);
+  assert.ok(window > 0, 'jin.new must be big enough to have a skip window');
+  const recentBeats = pool.slice(0, window).map((beat) => dialogueBeatKey(beat.line));
   for (let i = 0; i < 200; i++) {
     const { beatKey } = getRandomDialogueBeat(jin, 'new', null, { now: DAY, recentBeats });
     assert.ok(!recentBeats.includes(beatKey), 'drew a beat it should have skipped');
@@ -48,7 +49,7 @@ test('a draw never returns a beat inside the window', () => {
 
 test('/meet skips recents too, from the same draw', () => {
   const pool = DIALOGUE.jin.dialogue.new;
-  const recentBeats = pool.slice(0, 2).map((beat) => dialogueBeatKey(beat.line));
+  const recentBeats = pool.slice(0, recentBeatWindow(pool.length)).map((beat) => dialogueBeatKey(beat.line));
   for (let i = 0; i < 200; i++) {
     const { line, beatKey } = getRandomDialogueEntry(jin, 'new', null, { now: DAY, recentBeats });
     assert.strictEqual(beatKey, dialogueBeatKey(line));
@@ -116,11 +117,20 @@ test('Confidant (close) mixes in spark beats about 10% of the time, skipping rec
 });
 
 test('when every spark beat is recent, the draw falls to warm instead of repeating', () => {
-  const spark = DIALOGUE.jin.dialogue.spark.map((b) => dialogueBeatKey(b.line));
-  assert.ok(spark.length <= RECENT_DIALOGUE_BEAT_WINDOW, 'fixture assumes a 5-beat spark pool');
-  for (let i = 0; i < 100; i++) {
-    const { beatKey } = getRandomDialogueBeat(jin, 'spark', null, { now: DAY, recentBeats: spark, rand: () => 0.9 });
-    assert.ok(!spark.includes(beatKey));
+  // Shrink spark to two beats so the whole pool fits inside the skip window,
+  // whatever size the real pool grows to.
+  const pools = DIALOGUE.jin.dialogue;
+  const original = pools.spark;
+  pools.spark = original.slice(0, 2);
+  try {
+    const spark = pools.spark.map((b) => dialogueBeatKey(b.line));
+    assert.ok(spark.length <= recentBeatWindow(spark.length + pools.warm.length), 'every spark beat sits inside the window');
+    for (let i = 0; i < 100; i++) {
+      const { beatKey } = getRandomDialogueBeat(jin, 'spark', null, { now: DAY, recentBeats: spark, rand: () => 0.9 });
+      assert.ok(!spark.includes(beatKey));
+    }
+  } finally {
+    pools.spark = original;
   }
 });
 

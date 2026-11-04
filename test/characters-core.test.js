@@ -15,11 +15,6 @@ const ren = getCharacterById('ren');
 const shohei = getCharacterById('shohei');
 const benkei = getCharacterById('benkei'); // has no lastName
 
-test('getCharacterById resolves canonical ids', () => {
-  assert.ok(ren, 'fixture assumption: "ren" exists in the catalog');
-  assert.strictEqual(ren.id, 'ren');
-});
-
 test('getCharacterById resolves an alias, case-insensitively and trimmed', () => {
   assert.ok(shohei, 'fixture assumption: "shohei" (alias "sho") exists in the catalog');
   assert.strictEqual(getCharacterById('sho')?.id, 'shohei');
@@ -70,18 +65,11 @@ test('getAffinityForResponse reads the character\'s own KIND/PLAYFUL/BOLD rankin
 });
 
 // Every mood beat tips the player off; any other beat says nothing.
-test('moodNotice flags mood beats only', () => {
+// The phrasing varies, but every variant names the character and bolds
+// "mood"; a beat that isn't a mood beat gets no notice at all.
+test('moodNotice flags mood beats only, every variant naming the character and bolding mood', () => {
   const jin = CHARACTERS.find((c) => c.id === 'jin');
-  assert.strictEqual(
-    moodNotice(jin, true, () => 0),
-    'Jin seems to be in a different **mood** today.',
-  );
   assert.strictEqual(moodNotice(jin, false), null);
-});
-
-// The phrasing varies, but every variant names the character and bolds "mood".
-test('moodNotice variants all name the character and bold mood', () => {
-  const jin = CHARACTERS.find((c) => c.id === 'jin');
   const seen = new Set();
   for (let i = 0; i < 20; i++) {
     const notice = moodNotice(jin, true, () => i / 20);

@@ -52,38 +52,39 @@ const ONLY_THERE = {
   ren: ['house', ...jabberwock],
 };
 
-for (const [id, [outfit, ...files]] of [...Object.entries(ALWAYS), ...Object.entries(ONLY_THERE)]) {
-  test(`${id}'s ${outfit} is bound to exactly its spots`, () => {
-    assert.deepStrictEqual([...rigSpots(id, outfit)].sort(), [...files].sort());
-  });
+// Each character's spot-bound outfits, gathered so there is one test per
+// character (Ren has one of each kind).
+const SPOT_BOUND = {};
+for (const [table, always] of [[ALWAYS, true], [ONLY_THERE, false]]) {
+  for (const [id, [outfit, ...files]] of Object.entries(table)) {
+    (SPOT_BOUND[id] ??= []).push({ outfit, files, always });
+  }
 }
 
-for (const [id, [outfit, ...files]] of Object.entries(ALWAYS)) {
-  test(`${id} wears ${outfit} at its spots on either roll`, () => {
-    for (const file of files) {
-      for (const rolled of ['uniform', 'casual']) {
-        assert.deepStrictEqual(dressForVariant(id, rolled, file, first), { variant: 'casual', outfit });
+for (const [id, outfits] of Object.entries(SPOT_BOUND)) {
+  test(`${id}: spot-bound outfits are worn at exactly their spots, and nowhere else`, () => {
+    for (const { outfit, files, always } of outfits) {
+      assert.deepStrictEqual([...rigSpots(id, outfit)].sort(), [...files].sort(), `${outfit} is bound to exactly its spots`);
+
+      for (const file of files) {
+        if (always) {
+          // Worn there on either roll.
+          for (const rolled of ['uniform', 'casual']) {
+            assert.deepStrictEqual(dressForVariant(id, rolled, file, first), { variant: 'casual', outfit }, `${outfit} at ${file}, ${rolled} roll`);
+          }
+        } else {
+          // Joins the casual roll there; a uniform roll is still academy.
+          const casuals = new Set([0, 0.5, 0.99].map((r) => dressForVariant(id, 'casual', file, () => r).outfit));
+          assert.ok(casuals.has(outfit), `${id} never draws ${outfit} at ${file}`);
+          assert.deepStrictEqual(dressForVariant(id, 'uniform', file, first), { variant: 'uniform', outfit: 'academy' });
+        }
       }
-    }
-  });
-}
 
-for (const [id, [outfit, ...files]] of Object.entries(ONLY_THERE)) {
-  test(`${id}'s ${outfit} joins the casual roll at its spots; a uniform roll is still academy`, () => {
-    for (const file of files) {
-      const casuals = new Set([0, 0.5, 0.99].map((r) => dressForVariant(id, 'casual', file, () => r).outfit));
-      assert.ok(casuals.has(outfit), `${id} never draws ${outfit} at ${file}`);
-      assert.deepStrictEqual(dressForVariant(id, 'uniform', file, first), { variant: 'uniform', outfit: 'academy' });
-    }
-  });
-}
-
-for (const [id, [outfit]] of [...Object.entries(ALWAYS), ...Object.entries(ONLY_THERE)]) {
-  test(`${id} never wears ${outfit} anywhere else`, () => {
-    for (const spot of ['Darkwick_Courtyard.png', null]) {
-      for (const rolled of ['uniform', 'casual']) {
-        for (const r of [0, 0.5, 0.99]) {
-          assert.notStrictEqual(dressForVariant(id, rolled, spot, () => r).outfit, outfit);
+      for (const spot of ['Darkwick_Courtyard.png', null]) {
+        for (const rolled of ['uniform', 'casual']) {
+          for (const r of [0, 0.5, 0.99]) {
+            assert.notStrictEqual(dressForVariant(id, rolled, spot, () => r).outfit, outfit, `${outfit} worn at ${spot}`);
+          }
         }
       }
     }

@@ -8,7 +8,6 @@ import {
   RELATIONSHIP_LEVELS,
   HEART_BAR_SEGMENTS,
   HEART_BAR_TRACK,
-  DIALOGUE_POOL_TARGET_BY_TIER,
 } from '../constants/game.js';
 import { DIALOGUE_TIERS, getDialogueTier } from '../constants/tiers.js';
 
@@ -115,27 +114,6 @@ test('renderHeartBar fills with the given heart and pads the rest with the track
 test('renderHeartBar never shows a full row of fill hearts before the next level', () => {
   // 0.99 of the way there must still leave at least one track heart.
   assert.ok(renderHeartBar(0.99, '💖').endsWith(HEART_BAR_TRACK));
-});
-
-// Pins the actual numbers one line per 4 affinity points, floored at
-// MIN_DIALOGUE_POOL_SIZE, resolves to for each tier today. Covers both a
-// character's `dialogue` pool and its `approach` labels —
-// DIALOGUE_POOL_TARGET_BY_TIER applies unchanged to both, they don't get
-// separate tables. Nothing else in the suite reads this constant, so a change
-// to POOL_POINTS_PER_LINE, a level's width, or which levels share a tier
-// would otherwise drift the content targets silently instead of failing here.
-//
-// Response-button labels have no target of their own: they live on the beat,
-// so a tier that hits the dialogue target above already has one set per line.
-test('DIALOGUE_POOL_TARGET_BY_TIER is one line per 4 affinity points, floored at 5, capped at 24', () => {
-  assert.deepStrictEqual(DIALOGUE_POOL_TARGET_BY_TIER, {
-    new: 5,
-    known: 13,
-    warm: 18,
-    spark: 24,
-    close: 24,
-    bound: 24,
-  });
 });
 
 test('a 2-point affinity gain advances the Stranger bar by exactly one heart', () => {

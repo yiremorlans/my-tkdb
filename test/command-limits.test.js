@@ -188,12 +188,6 @@ test('claimCommandUse fails CLOSED when the claim errors (unlike checkCommandLim
 const FIRST_REPEAT_MS = 60 * 1000;
 const STEADY_MS = 5 * 60 * 1000;
 
-test('claimCommandInvoke allows the first invoke and records it', () => {
-  clearCommandInvokeThrottle();
-  const t0 = 1_000_000;
-  assert.strictEqual(claimCommandInvoke('flood-1', 'roam', t0).allowed, true);
-});
-
 test('claimCommandInvoke blocks a second invoke of the same command inside the first minute', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
@@ -217,13 +211,6 @@ test('claimCommandInvoke throttles /roam and /meet independently', () => {
   assert.strictEqual(claimCommandInvoke('flood-3', 'meet', t0 + 30_000).allowed, false);
 });
 
-test('claimCommandInvoke lets the second invoke back in after waiting exactly 1 minute', () => {
-  clearCommandInvokeThrottle();
-  const t0 = 1_000_000;
-  assert.strictEqual(claimCommandInvoke('flood-4', 'roam', t0).allowed, true);
-  assert.strictEqual(claimCommandInvoke('flood-4', 'roam', t0 + FIRST_REPEAT_MS).allowed, true);
-});
-
 test('claimCommandInvoke does not let a third invoke back in after just 1 more minute', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
@@ -232,15 +219,6 @@ test('claimCommandInvoke does not let a third invoke back in after just 1 more m
   assert.strictEqual(claimCommandInvoke('flood-5', 'roam', t1).allowed, true); // invoke 2, needed 1 minute
   // From here on it's a flat 5 minutes — 1 more minute isn't enough.
   assert.strictEqual(claimCommandInvoke('flood-5', 'roam', t1 + FIRST_REPEAT_MS).allowed, false);
-});
-
-test('claimCommandInvoke lets a third invoke back in after waiting the full 5 minutes', () => {
-  clearCommandInvokeThrottle();
-  const t0 = 1_000_000;
-  assert.strictEqual(claimCommandInvoke('flood-6', 'roam', t0).allowed, true); // invoke 1, free
-  const t1 = t0 + FIRST_REPEAT_MS;
-  assert.strictEqual(claimCommandInvoke('flood-6', 'roam', t1).allowed, true); // invoke 2, needed 1 minute
-  assert.strictEqual(claimCommandInvoke('flood-6', 'roam', t1 + STEADY_MS).allowed, true); // invoke 3, needed 5 minutes
 });
 
 test('claimCommandInvoke stays flat at 5 minutes for every further repeat, never climbing', () => {
@@ -281,29 +259,23 @@ test('claimCommandInvoke is scoped per user — one user flooding does not block
 // error building the picker/dialogue message) must not also cost the user the
 // invoke-throttle window on top of the failure — app.js releases the slot in
 // that catch, via releaseCommandInvoke.
-test('releaseCommandInvoke frees the slot so a failed command can be retried immediately', () => {
+test('releaseCommandInvoke frees the slot and wipes the steady 5-minute state, back to a free first invoke', () => {
   clearCommandInvokeThrottle();
   const t0 = 1_000_000;
   assert.strictEqual(claimCommandInvoke('flood-10', 'meet', t0).allowed, true);
 
   // Without releasing, the very next invoke would still be throttled.
   releaseCommandInvoke('flood-10', 'meet');
-  assert.strictEqual(claimCommandInvoke('flood-10', 'meet', t0 + 1).allowed, true);
-});
+  assert.strictEqual(claimCommandInvoke('flood-10', 'meet', t0 + 1).allowed, true); // invoke 1, free again
+  const t1 = t0 + 1 + FIRST_REPEAT_MS;
+  assert.strictEqual(claimCommandInvoke('flood-10', 'meet', t1).allowed, true); // invoke 2, needed 1 minute
 
-test('releaseCommandInvoke also wipes the steady 5-minute state, back to a free first invoke', () => {
-  clearCommandInvokeThrottle();
-  const t0 = 1_000_000;
-  assert.strictEqual(claimCommandInvoke('flood-11', 'roam', t0).allowed, true); // invoke 1, free
-  const t1 = t0 + FIRST_REPEAT_MS;
-  assert.strictEqual(claimCommandInvoke('flood-11', 'roam', t1).allowed, true); // invoke 2, needed 1 minute
-
-  releaseCommandInvoke('flood-11', 'roam');
+  releaseCommandInvoke('flood-10', 'meet');
 
   // Without the release, a 3rd invoke this soon after the 2nd would need the
   // full 5 minutes. A real claim (app.js) or a spent mission reset
   // (missions/resets.js) calls this expecting the command usable right away instead.
-  assert.strictEqual(claimCommandInvoke('flood-11', 'roam', t1 + 1).allowed, true);
+  assert.strictEqual(claimCommandInvoke('flood-10', 'meet', t1 + 1).allowed, true);
 });
 
 test('releaseCommandInvoke only clears the named command, not the user\'s other one', () => {

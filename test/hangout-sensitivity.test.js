@@ -43,23 +43,21 @@ test('default faces hold longer on more sensitive spots, at every tier', () => {
 const AVERSE = ['yuri', 'rui', 'lyca', 'ren', 'subaru'];
 
 const dir = path.join(import.meta.dirname, '..', 'assets', 'live2d');
+// One test per rig: faces hold longer on more sensitive spots, and no spot
+// flinches harder than a more sensitive one, at every tier.
 for (const id of fs.readdirSync(dir).filter((d) => fs.existsSync(path.join(dir, d, 'rig.json')))) {
-  test(`${id}: faces hold longer on more sensitive spots, at every tier`, () => {
+  test(`${id}: faces hold longer and flinch no harder on less sensitive spots, at every tier`, () => {
     const rig = JSON.parse(fs.readFileSync(path.join(dir, id, 'rig.json'), 'utf8'));
+    const rank = (n) => ORDER.findIndex((g) => g.includes(n));
     for (const tier of DIALOGUE_TIERS) {
       const d = Object.fromEntries(ORDER.flat().map((n) => [n, resolveReaction(rig, n, tier)?.duration]));
       assertOrdered(d, `${id} durations at ${tier}`);
-    }
-  });
-  test(`${id}: no spot flinches harder than a more sensitive one`, () => {
-    const rig = JSON.parse(fs.readFileSync(path.join(dir, id, 'rig.json'), 'utf8'));
-    for (const tier of DIALOGUE_TIERS) {
+
       for (const n of ['headPat', 'handTap', ...(AVERSE.includes(id) ? [] : ['cheekPoke'])]) assert.ok(!resolveReaction(rig, n, tier)?.twitch, `${id} ${n} at ${tier} flinches`);
       const size = (n) => Number(resolveReaction(rig, n, tier)?.twitch ?? 0);
       const flat = ORDER.flat().slice(3);
       for (let i = 0; i < flat.length; i++) for (let j = i + 1; j < flat.length; j++) {
         const [a, b] = [flat[i], flat[j]];
-        const rank = (n) => ORDER.findIndex((g) => g.includes(n));
         if (rank(a) < rank(b) && size(a) && size(b)) assert.ok(size(a) < size(b), `${id} at ${tier}: ${a} ${size(a)} < ${b} ${size(b)}`);
       }
     }

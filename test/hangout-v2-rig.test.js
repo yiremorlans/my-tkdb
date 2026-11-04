@@ -299,10 +299,6 @@ const characters = fs
   .filter((d) => d.isDirectory() && d.name !== 'vendor')
   .map((d) => d.name);
 
-test('every character folder has a rig', () => {
-  assert.ok(characters.includes('alan'), 'alan is the reference rig');
-});
-
 for (const id of characters) {
   test(`${id}'s Live2D rig validates against the files on disk`, async (t) => {
     const dir = path.join(ROOT, id);

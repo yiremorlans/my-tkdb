@@ -22,9 +22,24 @@ test('every Live2D character has a touch-line file', () => {
   for (const id of rigged) assert.ok(files.includes(`${id}.js`), `${id} has no constants/hangout/${id}.js`);
 });
 
+// Holds (activity/src/hangout-v2/preview.js): a line on letting go of each
+// hold from spark to bound, the caught tease's line at close and the break
+// line at bound, and `teaseLetGo` (tease let go before its crest) at bound.
+// `bound` carries only these; its touch triggers fall back to close.
+const HOLD_POOLS = {
+  spark: ['heartbeatHold', 'lipHold', 'handHold'],
+  close: ['heartbeatHold', 'lipHold', 'handHold', 'caughtTease'],
+  bound: ['heartbeatHold', 'lipHold', 'handHold', 'breakAway', 'teaseLetGo'],
+};
+
+// One test per character file: its touch pools, its hold pools, and its
+// `daytime` set if it has one. A `daytime` set (Towa, who can't speak by day)
+// covers the same tiers, triggers and holds, with no words in it: hums and
+// sounds only, no letters at all.
 for (const file of files) {
   test(`hangout lines: ${file}`, async () => {
     const { default: lines } = await import(new URL(file, DIR));
+
     for (const tier of TIERS) {
       assert.ok(lines[tier], `${file}: no ${tier} tier`);
       for (const trigger of TRIGGERS) {
@@ -37,23 +52,8 @@ for (const file of files) {
         }
       }
     }
-  });
-}
 
-// Holds (activity/src/hangout-v2/preview.js): a line on letting go of each
-// hold from spark to bound, the caught tease's line at close and the break
-// line at bound, and `teaseLetGo` (tease let go before its crest) at bound. `bound` carries only these; its touch triggers fall back
-// to close.
-const HOLD_POOLS = {
-  spark: ['heartbeatHold', 'lipHold', 'handHold'],
-  close: ['heartbeatHold', 'lipHold', 'handHold', 'caughtTease'],
-  bound: ['heartbeatHold', 'lipHold', 'handHold', 'breakAway', 'teaseLetGo'],
-};
-for (const file of files) {
-  test(`hangout hold lines: ${file}`, async () => {
-    const { default: lines } = await import(new URL(file, DIR));
-    for (const set of lines.daytime ? [['', lines], ['daytime.', lines.daytime]] : [['', lines]]) {
-      const [prefix, tiers] = set;
+    for (const [prefix, tiers] of lines.daytime ? [['', lines], ['daytime.', lines.daytime]] : [['', lines]]) {
       for (const [tier, pools] of Object.entries(HOLD_POOLS)) {
         for (const trigger of pools) {
           const pool = tiers[tier]?.[trigger];
@@ -66,20 +66,14 @@ for (const file of files) {
         }
       }
     }
-  });
-}
 
-// A `daytime` set (Towa, who can't speak by day) covers the same tiers and
-// triggers, with no words in it: hums and sounds only, no letters at all.
-for (const file of files) {
-  test(`hangout daytime lines are wordless: ${file}`, async () => {
-    const { default: lines } = await import(new URL(file, DIR));
-    if (!lines.daytime) return;
-    for (const tier of TIERS) {
-      for (const trigger of TRIGGERS) {
-        const pool = lines.daytime[tier]?.[trigger];
-        assert.ok(Array.isArray(pool) && pool.length, `${file}: daytime.${tier}.${trigger} is empty`);
-        for (const line of pool) assert.ok(!/\p{L}/u.test(line), `${file}: daytime.${tier}.${trigger} "${line}" has words`);
+    if (lines.daytime) {
+      for (const tier of TIERS) {
+        for (const trigger of TRIGGERS) {
+          const pool = lines.daytime[tier]?.[trigger];
+          assert.ok(Array.isArray(pool) && pool.length, `${file}: daytime.${tier}.${trigger} is empty`);
+          for (const line of pool) assert.ok(!/\p{L}/u.test(line), `${file}: daytime.${tier}.${trigger} "${line}" has words`);
+        }
       }
     }
   });

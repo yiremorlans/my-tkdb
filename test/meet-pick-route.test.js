@@ -153,11 +153,13 @@ function resetState() {
   setMeetFallbackDelay();
 }
 
-test("the owner's pick launches the Activity and saves the encounter it'll load", async () => {
+// /meet is released (OWNER_ONLY = false in activityRoutes.js), so this is any
+// player, not the owner.
+test("a player's pick launches the Activity and saves the encounter it'll load", async () => {
   resetState();
-  recordHangoutLaunch('the-owner', 'v1'); // an earlier /encdev hangout
+  recordHangoutLaunch('a-player', 'v1'); // an earlier hangout launch
   rememberPickerToken('picker-launch', 'meet-command-token'); // what /meet's send does
-  const res = await postInteraction(pickClick('the-owner', 'alan', 'picker-launch'));
+  const res = await postInteraction(pickClick('a-player', 'alan', 'picker-launch'));
   assert.strictEqual(res.status, 202, 'answered through the callback, so the HTTP reply is empty');
 
   const launch = discordCalls.find(isLaunch);
@@ -165,8 +167,8 @@ test("the owner's pick launches the Activity and saves the encounter it'll load"
   assert.match(launch.url, /\/interactions\/interaction-\d+\/token-\d+\/callback\?with_response=true$/);
   assert.deepStrictEqual(launch.payload, { type: 12 });
 
-  await waitFor(() => encountersOf('the-owner').length === 1);
-  const [row] = encountersOf('the-owner');
+  await waitFor(() => encountersOf('a-player').length === 1);
+  const [row] = encountersOf('a-player');
   assert.strictEqual(row.character_id, 'alan');
   assert.strictEqual(row.instance_id, 'instance-xyz', 'tied to the instance the launch opened');
   assert.strictEqual(row.picker_message_id, 'picker-launch');
@@ -183,7 +185,7 @@ test("the owner's pick launches the Activity and saves the encounter it'll load"
   await waitFor(() => discordCalls.some(isPickerEdit));
   const greyOut = discordCalls.find(isPickerEdit);
   assert.ok(greyOut.payload.components[0].components.every((b) => b.disabled), 'the picker greys out after the launch');
-  assert.deepStrictEqual(hangoutLaunchFor('the-owner'), { version: 'v2', dev: false }, 'a /meet launch opens the encounter, not the free hangout');
+  assert.deepStrictEqual(hangoutLaunchFor('a-player'), { version: 'v2', dev: false }, 'a /meet launch opens the encounter, not the free hangout');
   assert.strictEqual(imageFollowups().length, 0, 'no image while the Activity has the encounter');
 });
 
@@ -221,7 +223,7 @@ test('a pick on /meet cooldown shows the cooldown text with the picker greyed, a
   assert.strictEqual(encountersOf('the-owner').length, 0);
 });
 
-test('the off switch gives today\'s image flow, even to the owner', async () => {
+test('the off switch gives today\'s image flow', async () => {
   resetState();
   setActivityOff(true);
   const body = await (await postInteraction(pickClick('the-owner', 'kaito', 'picker-off'))).json();
@@ -231,15 +233,6 @@ test('the off switch gives today\'s image flow, even to the owner', async () => 
   assert.ok(ids.every((id) => /^resp:kaito:\w+:meet\b/.test(id)), ids.join(', '));
   assert.ok(!discordCalls.some(isLaunch));
   assert.strictEqual(encountersOf('the-owner').length, 0);
-});
-
-test("since release, anyone's pick launches the Activity, not just the owner's", async () => {
-  resetState();
-  const res = await postInteraction(pickClick('not-the-owner', 'kaito', 'picker-public'));
-  assert.strictEqual(res.status, 202);
-  assert.ok(discordCalls.some(isLaunch));
-  await waitFor(() => encountersOf('not-the-owner').length === 1);
-  assert.strictEqual(imageFollowups().length, 0);
 });
 
 test('a launch Discord refuses falls back to the image flow on the same click', async () => {

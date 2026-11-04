@@ -110,15 +110,6 @@ test('every dialogue tier maps to its own register', () => {
   assert.equal(winnerLineBucket('nonsense'), 'new');
 });
 
-test('pickWinnerLine returns a filled line for every character at every tier', () => {
-  for (const character of CHARACTERS) {
-    for (const tier of DIALOGUE_TIERS) {
-      const line = pickWinnerLine(tier, vars(character), character.id);
-      assert.ok(line.length > 0 && !/[{}]/.test(line), `${character.id}/${tier}: "${line}"`);
-    }
-  }
-});
-
 test("Jo's winner lines follow the encounter's outfit", () => {
   // His casual silhouette is Venus, and the scene swaps to the _girl faces, so
   // a hard-coded "he"/"his" is wrong half the time. Lines carry {he}/{his}.

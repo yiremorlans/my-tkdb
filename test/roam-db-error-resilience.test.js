@@ -39,7 +39,7 @@ mock.module('@supabase/supabase-js', {
 // evening/_PM cutoff). The -05:00 offset is safe regardless of the host's
 // ambient TZ specifically because importing app.js below pins
 // process.env.TZ to America/Chicago before any Date math runs — see
-// preview-default-affinity.test.js's FIXED_NOW for what goes wrong without that
+// relationship-preview-read.test.js's FIXED_NOW for what goes wrong without that
 // pin in place.
 mock.timers.enable({ apis: ['Date'] });
 mock.timers.setTime(new Date('2026-06-15T12:00:00-05:00').getTime());

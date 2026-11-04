@@ -14,7 +14,7 @@ process.env.SUPABASE_SERVICE_ROLE_KEY ??= 'fake-service-role-key';
 const GUILD = 'guild-1';
 const CHANNEL = 'channel-1';
 
-const fake = createFakeSupabase({ guild_settings: [] });
+const fake = createFakeSupabase({ guild_settings: [], missions: [] });
 mock.module('@supabase/supabase-js', {
   namedExports: { createClient: () => fake.client },
 });
@@ -29,7 +29,7 @@ mock.module('../discordRest.js', {
   }),
 });
 
-const { handleMissionsAdmin } = await import('../missions/admin.js');
+const { handleMissionDev, handleMissionsAdmin } = await import('../missions/admin.js');
 const { MISSION_POST_FAILURE_LIMIT } = await import('../constants/missions.js');
 
 // '32' = MANAGE_GUILD. The command's default_member_permissions is only a
@@ -78,25 +78,25 @@ describe('the permission gate', () => {
     assert.equal(result.afterReply, null);
   });
 
-  it('refuses a member without Manage Server', async () => {
-    seed([guildRow()]);
-    const result = await handleMissionsAdmin(adminBody({ permissions: '0' }));
-    assert.match(result.reply.content, /Manage Server/);
-    assert.equal(result.afterReply, null);
-    assert.equal(fake.tables.guild_settings[0].missions_enabled, false, 'nothing was written');
-  });
+  // A malformed permission string is refused rather than throwing.
+  for (const [who, permissions] of [
+    ['a member without Manage Server', '0'],
+    ['a malformed permission string', 'not-a-number'],
+  ]) {
+    it(`refuses ${who}`, async () => {
+      seed([guildRow()]);
+      const result = await handleMissionsAdmin(adminBody({ sub: 'enable', permissions }));
+      assert.match(result.reply.content, /Manage Server/);
+      assert.equal(result.afterReply, null);
+      assert.equal(fake.tables.guild_settings[0].missions_enabled, false, 'nothing was written');
+    });
+  }
 
   it('accepts a member whose only relevant bit is Administrator', async () => {
     seed([guildRow()]);
     const result = await handleMissionsAdmin(adminBody({ permissions: ADMINISTRATOR }));
     // Got past the gate to the real status line rather than the refusal.
     assert.doesNotMatch(result.reply.content, /Manage Server/);
-  });
-
-  it('refuses a malformed permission string rather than throwing', async () => {
-    seed([guildRow()]);
-    const result = await handleMissionsAdmin(adminBody({ permissions: 'not-a-number' }));
-    assert.match(result.reply.content, /Manage Server/);
   });
 });
 
@@ -175,36 +175,26 @@ describe('/missions disable', () => {
 });
 
 describe('/missions status', () => {
-  it('reads as never-set-up when the guild has no row', async () => {
-    seed([]);
-    const result = await handleMissionsAdmin(adminBody({ sub: 'status' }));
-    assert.match(result.reply.content, /never been set up/i);
-  });
-
-  it('reads as running when enabled with a channel', async () => {
-    seed([guildRow({ missions_enabled: true, mission_channel_id: CHANNEL })]);
-    const result = await handleMissionsAdmin(adminBody({ sub: 'status' }));
-    assert.match(result.reply.content, /Running/);
-    assert.match(result.reply.content, new RegExp(`<#${CHANNEL}>`));
-  });
-
-  it('reads as off when disabled by hand', async () => {
-    seed([guildRow({ missions_enabled: false, mission_channel_id: CHANNEL })]);
-    const result = await handleMissionsAdmin(adminBody({ sub: 'status' }));
-    assert.match(result.reply.content, /Off/);
-  });
-
-  it('reads as stopped when disabled after repeated post failures', async () => {
-    seed([
-      guildRow({
-        missions_enabled: false,
-        mission_channel_id: CHANNEL,
-        mission_post_failures: MISSION_POST_FAILURE_LIMIT,
-      }),
-    ]);
-    const result = await handleMissionsAdmin(adminBody({ sub: 'status' }));
-    assert.match(result.reply.content, /Stopped/);
-  });
+  for (const [reads, rows, patterns] of [
+    ['never-set-up when the guild has no row', [], [/never been set up/i]],
+    [
+      'running when enabled with a channel',
+      [guildRow({ missions_enabled: true, mission_channel_id: CHANNEL })],
+      [/Running/, new RegExp(`<#${CHANNEL}>`)],
+    ],
+    ['off when disabled by hand', [guildRow({ missions_enabled: false, mission_channel_id: CHANNEL })], [/Off/]],
+    [
+      'stopped when disabled after repeated post failures',
+      [guildRow({ missions_enabled: false, mission_channel_id: CHANNEL, mission_post_failures: MISSION_POST_FAILURE_LIMIT })],
+      [/Stopped/],
+    ],
+  ]) {
+    it(`reads as ${reads}`, async () => {
+      seed(rows);
+      const result = await handleMissionsAdmin(adminBody({ sub: 'status' }));
+      for (const pattern of patterns) assert.match(result.reply.content, pattern);
+    });
+  }
 });
 
 // The owner's kill switch (migration 013) outranks the admin's switch and
@@ -240,5 +230,36 @@ describe('an unknown subcommand', () => {
     seed([guildRow()]);
     const result = await handleMissionsAdmin(adminBody({ sub: 'frobnicate' }));
     assert.match(result.reply.content, /Unknown subcommand/);
+  });
+});
+
+describe('/missiondev chancellor', () => {
+  it('previews the audience without touching anything', async () => {
+    process.env.OWNER_DISCORD_ID = 'owner';
+    process.env.BASE_URL = 'https://tkdb.test';
+    fake.tables.missions = [];
+    const dev = (options) => handleMissionDev({
+      member: { user: { id: 'owner' } },
+      data: { options: [{ name: 'chancellor', options }] },
+    });
+
+    try {
+      // No errand, no guild settings, no server.
+      const listening = await dev();
+      assert.equal(listening.flags, 64 | 32768);
+      const [section] = listening.components[0].components;
+      assert.match(section.components[0].content, /\/request/);
+      assert.match(section.accessory.media.url, /cornelius\/default\.png$/);
+
+      const granted = await dev([{ name: 'face', value: 'granted' }]);
+      const [grantedSection] = granted.components[0].components;
+      assert.match(grantedSection.accessory.media.url, /cornelius\/close\.png$/);
+      assert.doesNotMatch(grantedSection.components[0].content, /\{house\}/);
+
+      assert.equal(fake.tables.missions.length, 0);
+    } finally {
+      delete process.env.OWNER_DISCORD_ID;
+      delete process.env.BASE_URL;
+    }
   });
 });
