@@ -25,18 +25,21 @@ export default {
         "**{firstName}**: Hey, it's Benkei, from the shop. Hope you don't mind the message. My manager insisted, and when your manager's a cat, you learn not to argue.",
         "There's a shelf under the counter with a few things set aside on it. Nothing dramatic. All {timesMet} times you've been in, I noticed you actually read the labels instead of grabbing and going, and not many people do that.",
       ],
+      faces: { 0: "sweat", 1: "smile" },
       choice: {
         prompt:
           "Come by and grab it sometime? I'd rather it not just sit there.",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Say you'll come by soon",
             style: 3,
             close: "Oh, good. Good.\n\nI'll tidy the shelf before you come by.",
           },
           {
             key: "playful",
+            face: "sweat",
             label: "Ask what's on the shelf",
             style: 1,
             close:
@@ -44,6 +47,7 @@ export default {
           },
           {
             key: "bold",
+            face: "smile",
             label: "Ask why you got noticed",
             style: 4,
             close:
@@ -62,11 +66,13 @@ export default {
         "**{firstName}**: Can I just say something?",
         "You've got {favResponse} for me every time you come in, and you actually stop to talk to me, not just breeze past to see the cat like everybody else. I spent a long time being called \"Professor\" by people who mostly wanted something out of me. This is a different thing entirely, and I don't think you even realize you're doing anything unusual.",
       ],
+      faces: { 0: "sweat", 1: "close" },
       choice: {
         prompt: "There. You don't have to answer, I won't be offended.",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Say he's worth talking to",
             style: 3,
             close:
@@ -74,6 +80,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Say he beats 'Professor'",
             style: 1,
             close:
@@ -81,6 +88,7 @@ export default {
           },
           {
             key: "bold",
+            face: "default",
             label: "Ask if he misses the title",
             style: 4,
             close:
@@ -101,12 +109,14 @@ export default {
         "And those years were good. That's the part I want on the record. I had a lot of students worth the trouble, and one or two you'd know if I said the names. Haku came through Clementia his first year. He'd tell you he coasted the whole way. He did not coast.",
         "And now there's no Clementia and no Ultio. Both houses, gone. I've given up working out which part of it was mine to stop, because that road doesn't come out anywhere useful.",
       ],
+      faces: { 0: "default", 1: "sweat", 2: "smile", 3: "close" },
       choice: {
         prompt:
           "Darkwick keeps its secrets, and it keeps this one buried. But you've given a lot to this place. I'd rather you heard it from me than not at all.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Ask about a good day",
             style: 3,
             close:
@@ -114,6 +124,7 @@ export default {
           },
           {
             key: "playful",
+            face: "sweat",
             label: "Ask if he had a favorite",
             style: 1,
             close:
@@ -121,6 +132,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Ask why no one talks about it",
             style: 4,
             close:
@@ -140,11 +152,13 @@ export default {
         "I used to be responsible for an entire house of people. Advising them, arguing with them, worrying over the ones who skipped breakfast. And now I'm responsible for a shelf of snacks and a schedule set by a cat, and most days I don't mind that at all, which is the part that troubles me.",
         "I've turned it over a great many times: whether it was a demotion or a mercy. I still don't know. I only know I've never said any of that aloud before, and I'm saying it to you because you're the one who actually asks how I'm doing, rather than what I've got in stock.",
       ],
+      faces: { 0: "sweat", 1: "default", 2: "close" },
       choice: {
         prompt: "There. Go on. I've braced myself and everything.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say it sounds like both",
             style: 3,
             close:
@@ -152,6 +166,7 @@ export default {
           },
           {
             key: "playful",
+            face: "full_smile",
             label: "Say the cat has good taste",
             style: 1,
             close:
@@ -159,6 +174,7 @@ export default {
           },
           {
             key: "bold",
+            face: "sweat",
             label: "Ask if he misses Professor",
             style: 4,
             close:
@@ -178,11 +194,13 @@ export default {
         "There was a guy in the shop at closing who shouldn't have been there, and he'd come in about you, and I asked him to leave. He didn't. So I stood in the doorway and used a voice I haven't needed since I stopped being anyone's advisor.",
         "He left. People generally do, when somebody won't move and means it. And I've been sitting in the back since, honestly surprised at myself, because I'd figured that part of me had gone quiet along with the title.",
       ],
+      faces: { 0: "default", 1: "annoyed", 2: "surprise" },
       choice: {
         prompt: "Now don't fuss. I've had quite enough fussing already today.",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Fuss anyway",
             style: 3,
             close:
@@ -190,6 +208,7 @@ export default {
           },
           {
             key: "playful",
+            face: "full_smile",
             label: "Ask if he did the stern voice",
             style: 1,
             close:
@@ -197,6 +216,7 @@ export default {
           },
           {
             key: "bold",
+            face: "default",
             label: "Tell him not to do it again",
             style: 4,
             close:
@@ -217,12 +237,14 @@ export default {
         "I'm not exactly smooth at this, and I'd like that said plainly before anything else, because I've spent a long while treating it as a reason to stay quiet rather than a reason to say something sooner.",
         "So here it is, and then I'll put the kettle on and let you think.\n\nI love you. I ran two houses into the ground, or watched them go, at any rate, and ended up answering to a cat, and I did not expect any part of that story to lead here. I'm glad it did. There's no expectation in this. I'd simply rather you knew than let another year pass with it unsaid.",
       ],
+      faces: { 0: "sweat", 1: "smile", 2: "close", 3: "blush" },
       choice: {
         prompt:
           "Take whatever time you need. The kettle's on and the shop isn't going anywhere, and neither am I.",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -230,6 +252,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

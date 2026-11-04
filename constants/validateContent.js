@@ -259,7 +259,7 @@ function validateSceneEntry(where, scene, errors) {
 // keepsake line has to be unique across the whole game: two characters sending
 // the same words at the same level would give away that the moment is not
 // really theirs, which is the one thing a private scene cannot survive.
-function validateBondScene(at, scene, errors, warnings, seenLines) {
+function validateBondScene(at, scene, errors, warnings, seenLines, characterId) {
   if (!scene || typeof scene !== "object" || Array.isArray(scene)) {
     errors.push(`${at} must be an object with beats, choice and keepsake`);
     return;
@@ -314,6 +314,26 @@ function validateBondScene(at, scene, errors, warnings, seenLines) {
         if (!fs.existsSync(join(STICKERS_DIR, filename))) {
           errors.push(`${at}.stickers[${key}] "${filename}" does not exist in assets/stickers`);
         }
+      }
+    }
+  }
+
+  // --- faces ---
+  // Optional: `faces[index]` names the portrait beside that beat's card
+  // (bondScenes.js sceneCard), a face in assets/expressions/<id> without the
+  // .png. A beat with none shows default. Checked against disk so a typo is a
+  // build error, not a portrait that silently falls back.
+  if (scene.faces !== undefined) {
+    if (typeof scene.faces !== "object" || scene.faces === null || Array.isArray(scene.faces)) {
+      errors.push(`${at}.faces must be an object keyed by beat index`);
+    } else {
+      for (const [key, face] of Object.entries(scene.faces)) {
+        const index = Number(key);
+        if (!Array.isArray(beats) || !Number.isInteger(index) || index < 0 || index >= beats.length) {
+          errors.push(`${at}.faces has key "${key}", which is not a beat index in this scene`);
+          continue;
+        }
+        checkSceneFace(`${at}.faces[${key}]`, characterId, face, errors);
       }
     }
   }
@@ -375,6 +395,9 @@ function validateBondScene(at, scene, errors, warnings, seenLines) {
         // alongside the close (bondScenes.js renderClosing) — same mechanism
         // as a beat's sticker, checked here so a typo'd filename is a build
         // error rather than an image that never shows up.
+        // Optional: `option.face`, the portrait beside the closing card.
+        if (option.face !== undefined) checkSceneFace(`${where}.face`, characterId, option.face, errors);
+
         if (option.sticker !== undefined) {
           if (typeof option.sticker !== "string" || option.sticker.trim() === "") {
             errors.push(`${where}.sticker must name a file in assets/stickers`);
@@ -424,6 +447,15 @@ function validateBondScene(at, scene, errors, warnings, seenLines) {
 // is required in both: a character because the scene has to be theirs, and the
 // shared pool because it is what a roster addition falls back to before anyone
 // has written for them.
+// A bond scene portrait: a face name (no .png) with a file on disk.
+function checkSceneFace(where, characterId, face, errors) {
+  if (typeof face !== "string" || face.trim() === "" || face.endsWith(".png")) {
+    errors.push(`${where} must name a face in assets/expressions/${characterId}, without .png`);
+  } else if (!expressionExists(characterId, `${face}.png`)) {
+    errors.push(`${where} "${face}" does not exist in assets/expressions/${characterId}`);
+  }
+}
+
 function validateBondScenes(at, pool, errors, warnings, seenLines) {
   if (pool === undefined) {
     errors.push(
@@ -447,7 +479,7 @@ function validateBondScenes(at, pool, errors, warnings, seenLines) {
       errors.push(`${at} has no "${key}" bond scene — that level-up would deliver nothing`);
       continue;
     }
-    validateBondScene(`${at} bondScenes.${key}`, pool[key], errors, warnings, seenLines);
+    validateBondScene(`${at} bondScenes.${key}`, pool[key], errors, warnings, seenLines, at);
   }
 
   // Keepsake emojis are checked for reuse within one character, not across the

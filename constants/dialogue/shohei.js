@@ -26,11 +26,13 @@ export default {
         "**{firstName}**: oi senpai\n\nu eat today? and don't say yeah if it was a vending machine\n\nthat's not eating, that's damage control",
         "look, I'm not being weird about it\n\nI do a big cook Thursdays and there's always way too much because I can't scale a recipe down, it's a whole thing, don't ask\n\nyou've been around {timesMet} times and every single time u look like you've been running on nothing\n\nit's bugging me, just come eat something",
       ],
+      faces: { 0: "smile", 1: "annoyed" },
       choice: {
         prompt: "and don't go making excuses about it either, just show up",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Say you'd like that",
             style: 3,
             close:
@@ -38,6 +40,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Defend the vending machine",
             style: 1,
             close:
@@ -45,6 +48,7 @@ export default {
           },
           {
             key: "bold",
+            face: "sweat",
             label: "Ask what he's making",
             style: 4,
             close:
@@ -64,11 +68,13 @@ export default {
         "then there's u\n\ndidn't even ask what we were getting into, just showed up and gave me {favResponse} the whole walk back like it was the best part of ur day",
         "so I gotta ask\n\nis this a u like me thing? cuz that'd explain a lot",
       ],
+      faces: { 0: "annoyed", 1: "smile", 2: "full_smile" },
       choice: {
         prompt: "lol relax, I'm kidding. thx for coming tho, for real",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Say you like his company",
             style: 3,
             close:
@@ -76,6 +82,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Say he owes you a meal",
             style: 1,
             close:
@@ -83,6 +90,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise_blush",
             label: "Ask if he wants it to be",
             style: 4,
             close:
@@ -102,11 +110,13 @@ export default {
         "*The food truck is shut, the shutter's down, and he's inside with one light on and something going on the burner that smells nothing like what he sells.*\n\n> This is the one I actually cook. Not the menu stuff. Menu stuff is for the money and the line out front and Leo's cut for building the app. This one's just mine.",
         "> It's not on any menu and it's not written down. Just something I've been making since before Darkwick, and I've never handed it to anybody.\n\n*He puts the bowl in front of you and immediately looks somewhere else.*\n\n> So, yeah. Don't say anything nice or I'm throwing you out. Just eat it while it's hot, Senpai. I've been keeping it warm twenty minutes waiting on you.",
       ],
+      faces: { 0: "serious", 1: "close", 2: "sweat" },
       choice: {
         prompt: "...Well? Say something. Not that. Something else.",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Tell him it's the best thing",
             style: 3,
             close:
@@ -114,6 +124,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask for the recipe",
             style: 1,
             close:
@@ -121,6 +132,7 @@ export default {
           },
           {
             key: "bold",
+            face: "serious",
             label: "Ask why you get this one",
             style: 4,
             close:
@@ -140,11 +152,13 @@ export default {
         "everybody knows. has since day one, and they all do the same thing, that little recalculation where they work out how to talk to me now\n\nhalf this house thinks I'm here on his name, other half thinks I'm here to spy for him\n\nI cook, I get in fights, I show up when people need something, and none of it counts because of the surname",
         "u never did that, not once\n\nfirst person who didn't, and I'd been waiting on it for two years, so I noticed the exact second it didn't happen\n\nthat's it, that's the message\n\nsorry it's a downer, I'm normally way more fun than this",
       ],
+      faces: { 0: "serious", 1: "annoyed", 2: "sweat" },
       choice: {
         prompt: "alright, say something so this stops being weird",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Say it's his own name",
             style: 3,
             close:
@@ -152,6 +166,7 @@ export default {
           },
           {
             key: "playful",
+            face: "full_smile",
             label: "Say you forgot he had one",
             style: 1,
             close:
@@ -159,6 +174,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Ask who he'd be without it",
             style: 4,
             close:
@@ -178,11 +194,13 @@ export default {
         "*You ask. He caves in about four seconds, because he always does.*\n\nLeo said something about u, in front of people\n\nand I've let him say a thousand things about me and never once cared, so I know exactly how this looks\n\nbut that one wasn't about me, was it",
         "Mido already got me for it\n\nweek off the truck, which… fine, whatever\n\nwould do it again tho, wouldn't even think about it\n\ndidn't think about it the first time, that's the whole problem, hands were already moving",
       ],
+      faces: { 0: "sweat", 1: "annoyed", 2: "serious" },
       choice: {
         prompt: "go on then, chew me out, everybody else has",
         options: [
           {
             key: "kind",
+            face: "full_smile",
             label: "Ask to see the damage",
             style: 3,
             close:
@@ -190,6 +208,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask if Leo looks worse",
             style: 1,
             close:
@@ -197,6 +216,7 @@ export default {
           },
           {
             key: "bold",
+            face: "blush",
             label: "Say you'd have done it too",
             style: 4,
             close:
@@ -217,11 +237,13 @@ export default {
         "and I know what I am, all right\n\nmouth on me, I get in fights, I'm loud, got a surname that walks into every room ahead of me. there's easier people to pick\n\nbut u keep asking if I've eaten. two years here and ur the only one who ever has\n\nit's such a stupid small thing to fall apart over and I did anyway, ages ago, and I've been pretending I didn't",
         "I've called u senpai about four thousand times\n\nstarted because ur a year up on me and it was funny. stopped being funny a long time ago\n\nkept saying it anyway because it was the only way I had of saying the other thing without saying it\n\nso: I love u, senpai. no clever version. since about the third bowl\n\nI've been cooking at u instead of telling u because that was easier. I'm a coward about exactly one thing",
       ],
+      faces: { 0: "sweat", 1: "smile", 2: "close", 3: "blush" },
       choice: {
         prompt: "say whatever, I'll be fine, I'm always fine",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -229,6 +251,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

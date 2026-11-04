@@ -36,11 +36,13 @@ export default {
         "Alas, My Eyesight Is Not What It Used To Be. 👓😔\n\nNo. You Would See Through That. You Always Do.",
         "I Once Performed A Cough For You In The Hall. Tragic, Consumptive, The Full Performance. You Told Me To Find Rui. 😷🎭\n\nYou Look Me In The Eye. 👀✨ I Have Begun Arranging My Evenings Around It. 🌇🖤",
       ],
+      faces: { 0: "default", 1: "smile", 2: "sweat", 3: "smile_blush" },
       choice: {
         prompt: "Your Turn. I Am In No Hurry, But I Am Curious. 😏🖤",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Ask why it matters to him",
             style: 3,
             close:
@@ -48,6 +50,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Offer to look away next time",
             style: 1,
             close:
@@ -55,6 +58,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise_blush",
             label: "Say you like looking at him",
             style: 4,
             close:
@@ -74,11 +78,13 @@ export default {
         "With Me, You Lead With {favResponse} Every Time. 🖤🖤\n\nNever With Rui Or Lyca. I Have Watched Closely. 👀🕯️",
         "As Your Love Advisor, This Is Very Inconvenient. I Had Rui Down As The Favorite. 💌😩\n\nSo I Will Ask Properly, At Last. 🙏🕯️",
       ],
+      faces: { 0: "smile", 1: "default", 2: "sweat" },
       choice: {
         prompt: "Rui, Or Lyca? Or Some Third Name I Have Not Thought Of. 🤔😌\n\nOne Name Will Do. 🖤🖤",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say they're all special to you",
             style: 3,
             close:
@@ -86,6 +92,7 @@ export default {
           },
           {
             key: "playful",
+            face: "surprise",
             label: "Say Rui, then take it back",
             style: 1,
             close:
@@ -93,6 +100,7 @@ export default {
           },
           {
             key: "bold",
+            face: "smile_blush",
             label: "Admit you like him best",
             style: 4,
             close:
@@ -112,11 +120,13 @@ export default {
         "*The room is exactly as ancient and theatrical as advertised, and in the middle of it is a laptop on a velvet cushion, playing a video about the shady cabal of elites secretly governing human society. 🕵️*\n\n> I am aware.\n\n> I have watched a great deal of this particular channel. He is *magnificently* wrong, and he is wrong at three in the morning, which is when I want company and have none. 😔",
         "> A very long life. Do you know what a life this long is, one night after another? It is not romantic. It is a very great deal of sitting.\n\n> This is what I do with the nights. Not blood, not brooding, not whatever anybody imagines. Somebody in a video, magnificently wrong about the cabal, at length.\n\n> You are the first person I have ever admitted that to, and I would take it as a kindness if you sat down. 🙏",
       ],
+      faces: { 0: "blush", 1: "sweat", 2: "close" },
       choice: {
         prompt: "Well? Sit, or flee. 🏃🚪 Both are perfectly reasonable.",
         options: [
           {
             key: "kind",
+            face: "smile_blush",
             label: "Sit down and watch it",
             style: 3,
             close:
@@ -124,6 +134,7 @@ export default {
           },
           {
             key: "playful",
+            face: "sweat",
             label: "Ask who's in the cabal",
             style: 1,
             close:
@@ -131,6 +142,7 @@ export default {
           },
           {
             key: "bold",
+            face: "default",
             label: "Ask why you're the first",
             style: 4,
             close:
@@ -150,12 +162,14 @@ export default {
         "Her name is not the point and I am not going to give it to you. I am not going to give you any of it, in truth. The place, the dates, how it ended. I have found that grief kept vague is grief kept portable. 🥀\n\nYou remind me a little of her. That is the whole of what I can say plainly, and it has taken me until now to say that much.",
         "I have said for a very long time that the living die so quickly. I say it languidly, at parties; people find it chilling and I let them. It is the only sentence I have built that holds the whole fact without making me feel it.\n\nThey also call me the most powerful vampire who ever lived. 🧛🦇 Rumors, I tell the first-years, and I leave it there. The ambiguity does more work than a straight answer would.\n\nWhat I will tell you is the dull part. A humble, forgettable existence in Eastern Europe, quiet as a shut drawer, that nobody repeats because it makes a poor story. You strike me as someone worth being dull with. 🫖📖",
       ],
+      faces: { 0: "serious", 1: "close", 2: "smile" },
       choice: {
         prompt:
           "There. You may say something now, and I would very much rather it were not sympathy. 🙏🥀",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Ask what she was like",
             style: 3,
             close:
@@ -163,6 +177,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Change the subject for him",
             style: 1,
             close:
@@ -170,6 +185,7 @@ export default {
           },
           {
             key: "bold",
+            face: "blush",
             label: "Say you'll die quickly too",
             style: 4,
             close:
@@ -189,12 +205,14 @@ export default {
         "I have spent a very long time being languid at people. It is not an affectation; it is a discipline. What I am, unmanaged, is not something anybody in this academy has ever seen, and I have taken a very great deal of care that they should not.\n\nRui saw it tonight. He will not say anything. He went rather white 😨😰 and he will not say anything.",
         "I will not describe what happened. Only what came after: I stood there some minutes, certain of one thing.\n\nWhatever the sun takes from me by day, the dark gives back with interest, and tonight I was more myself than usual by a wide margin.\n\nI Would Do It Again. Without the discipline, in front of anybody. That is not romantic. It is a warning, from someone fond of you, about someone you should be careful of. ⚠️🩸",
       ],
+      faces: { 0: "sweat", 1: "default", 2: "serious" },
       choice: {
         prompt:
           "Now you may be frightened. It is quite the correct response and I will not think less of you. 😰💔",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Say you're not frightened",
             style: 3,
             close:
@@ -202,6 +220,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask if the discipline's ruined",
             style: 1,
             close:
@@ -209,6 +228,7 @@ export default {
           },
           {
             key: "bold",
+            face: "serious",
             label: "Tell him to bite you",
             style: 4,
             close:
@@ -229,12 +249,14 @@ export default {
         "I told you I would try to tell you about her, and then not again. One more thing, and then the subject is closed for good.\n\nThe worst of that grief is not the missing. It is knowing I had every elegant reason ready, and used them, and never once simply said the plain thing while it could still be heard.\n\nI have had a long time to call that restraint. It was not. It was cowardice with excellent manners. 🎭🥀",
         "So.\n\nI love you. ❤️❤️ Said plainly, no elegant construction anywhere near it, which for me is like standing in a doorway with no clothes on.\n\nYou will die quickly. I know it, you know it, I am saying it anyway. I stayed quiet once and called it kindness. A creature who does that twice deserves every long year he gets. 🖤⏳",
       ],
+      faces: { 0: "sweat", 1: "smile_blush", 2: "close", 3: "blush" },
       choice: {
         prompt:
           "Take whatever time you like. I have a certain amount of it. ⏳🖤",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -242,6 +264,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

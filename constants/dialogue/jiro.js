@@ -10,11 +10,13 @@ export default {
         "**{firstName}**: This is Jiro from Mortkranken. Your number is on the patient list.\n\nYour last examination left one reading I want to take again. Not urgent, but I'm making a follow-up slot for this week. Please reply with your preferred day and time.",
         "I run the health check-ups here. Yuri is too busy to manage scheduling, so I do it.\n\nYou have {timesMet} visits on file. One reading from the last one doesn't agree with the others. I'd like to take it again. I could have flagged this the next time you were in, but this is more efficient.",
       ],
+      faces: { 0: "default", 1: "serious" },
       choice: {
         prompt: "Pick a day and the slot is yours.",
         options: [
           {
             key: "kind",
+            face: "default",
             label: "Pick a day right away",
             style: 3,
             close:
@@ -22,6 +24,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask if you're dying",
             style: 1,
             close:
@@ -29,6 +32,7 @@ export default {
           },
           {
             key: "bold",
+            face: "default",
             label: "Ask why he texted instead",
             style: 4,
             close:
@@ -48,11 +52,13 @@ export default {
         "I redid it. It had closed badly and would've scarred.\n\nYou were on campus, not far from Mortkranken, and treated it yourself anyway. That was a decision, not a mission constraint. The wrong one.\n\nI don't need to know why. Please don't do it again. Redressing a badly wrapped wound is inconvenient.",
         "You apologized for not coming in, which is the least relevant part of it.\n\nYou usually answer me with {favResponse}. Not about this. You treat your own condition as a footnote.\n\nI'd like that changed.",
       ],
+      faces: { 0: "serious", 1: "annoyed", 2: "serious" },
       choice: {
         prompt: "Tell me if that's something you can manage.",
         options: [
           {
             key: "kind",
+            face: "default",
             label: "Promise to be more careful",
             style: 3,
             close:
@@ -60,6 +66,7 @@ export default {
           },
           {
             key: "playful",
+            face: "default",
             label: "Ask if he'd notice",
             style: 1,
             close:
@@ -67,6 +74,7 @@ export default {
           },
           {
             key: "bold",
+            face: "serious",
             label: "Point out he does it too",
             style: 4,
             close:
@@ -86,11 +94,13 @@ export default {
         "I've changed the recipe four times since we met in {sinceMet}. I don't eat them, so the changes are based on which ones you finish.\n\nLess sugar in the second batch. You left half. More in the third. You finished it and took another.",
         "I've never adjusted a formula for someone's preference before. Only for tolerance.",
       ],
+      faces: { 0: "default", 1: "serious", 2: "close" },
       choice: {
         prompt: "The fourth batch is ready. Tell me if you're coming.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say you'll come right now",
             style: 3,
             close:
@@ -98,6 +108,7 @@ export default {
           },
           {
             key: "playful",
+            face: "default",
             label: "Ask if he'll try one too",
             style: 1,
             close:
@@ -105,6 +116,7 @@ export default {
           },
           {
             key: "bold",
+            face: "blush",
             label: "Say it isn't about the data",
             style: 4,
             close:
@@ -124,11 +136,13 @@ export default {
         "The captain's treatments are also experiments. I'm aware. I've been aware since the first one.\n\nI permit them because they keep me upright, because the data is genuinely valuable, and because he doesn't have anybody else. Those are three reasons and I've never needed a fourth.",
         "I'm telling you because you've begun looking at my arms and stopping yourself from asking. The not-asking has gone on for eleven days, and it's having an effect on me I haven't experienced before and can't name.\n\nThe effect isn't distress. I want to be clear. I have no word for what it is. I'm hoping saying it out loud resolves the ambiguity. I don't think it's going to.",
       ],
+      faces: { 0: "serious", 1: "default", 2: "blush" },
       choice: {
         prompt: "You may ask now. You've plainly wanted to for some time.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Ask if it hurts",
             style: 3,
             close:
@@ -136,6 +150,7 @@ export default {
           },
           {
             key: "playful",
+            face: "annoyed",
             label: "Say eleven days is impressive",
             style: 1,
             close:
@@ -143,6 +158,7 @@ export default {
           },
           {
             key: "bold",
+            face: "serious",
             label: "Tell him to push back",
             style: 4,
             close:
@@ -162,12 +178,14 @@ export default {
         "I wasn't on that mission. I was told the outcome forty minutes after it resolved and I've spent the intervening period attempting to work normally.\n\nMy hands weren't steady. That's never happened. I've operated through worse information than that and my hands have never once been a problem.",
         "I've been at your bedside since the second check. You've been unconscious for most of it. I didn't want you to wake and find me here without an explanation, so this message is the explanation, written at the bedside. I recognize that's absurd.\n\nThe variable I couldn't name is you. The whole variable. I've been running a model with a term in it I refused to label for eight months.",
       ],
+      faces: { 0: "default", 1: "sweat", 2: "blush" },
       choice: {
         prompt:
           "You're awake now. I can see that you're reading this. Say something.",
         options: [
           {
             key: "kind",
+            face: "surprise_blush",
             label: "Tell him to put the phone down",
             style: 3,
             close:
@@ -175,6 +193,7 @@ export default {
           },
           {
             key: "playful",
+            face: "close",
             label: "Ask for the third check result",
             style: 1,
             close:
@@ -182,6 +201,7 @@ export default {
           },
           {
             key: "bold",
+            face: "smile",
             label: "Tell him to label the term",
             style: 4,
             close:
@@ -202,12 +222,14 @@ export default {
         "My brother used to say that a thing not said out loud hasn't happened. He said a great many things and most of them were nonsense. That one's been sitting in my head since he died like a splinter.\n\nI'm inclined to think he was right, which is intolerable, and which is why I'm doing this rather than continuing to be extremely comfortable.",
         "I love you.\n\nI have no supporting data. There's no measurement I could take that would demonstrate it and I've looked for one. I spent two months looking for one, which I'm telling you because it's the most honest thing I know about myself.\n\nIt's simply true and it's not going to stop being true, and I've said it out loud, so now it's happened.",
       ],
+      faces: { 0: "default", 1: "serious", 2: "close", 3: "blush" },
       choice: {
         prompt:
           "Take whatever time you require. I'm extremely good at intervals.",
         options: [
           {
             key: "answered",
+            face: "surprise_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -215,6 +237,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

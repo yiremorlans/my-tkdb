@@ -13,12 +13,14 @@ export default {
         "**{firstName}**: Is this you\n\nThe blond gigolo put your name in the thingy for me. I pressed it four times. Sorry if it went four times",
         "I don't mind classes. The teachers say cool stuff. Once I can read the blackboard its gonna be perfect\n\nYou listen like you're really getting it\n\nSometimes I smell somethin' sweet off you. Just for a second. Its different from everyone else\n\nI started sitting where I could see you in class. It was s'posed to be so I could copy how you write stuff down. But...\n\nI want to learn about you. Not just what the teachers say. That's what I wanted to say the last {timesMet} times. I didn't know how",
       ],
+      faces: { 0: "sweat", 1: "blush" },
       choice: {
         prompt:
           "Is that a rude thing to say? The blond gigolo says half the things I say are rude.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say it's not rude at all",
             style: 3,
             close:
@@ -26,6 +28,7 @@ export default {
           },
           {
             key: "playful",
+            face: "blush",
             label: "Ask what you smell like",
             style: 1,
             close:
@@ -33,6 +36,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise",
             label: "Say you want to know him too",
             style: 4,
             close:
@@ -51,11 +55,13 @@ export default {
         "**{firstName}**: Your scent was all squeezy today. Somethings wrong",
         "You always give me {favResponse}. Your scent's what changes, so thats how I know.\n\nToday you still gave me {favResponse}. But under it you smelled squeezy. Like that time you cried and didn't tell me how come.\n\nNobody else can smell it on you. I can.\n\nIf somebody did somethin' to you, tell me who.",
       ],
+      faces: { 0: "serious", 1: "annoyed" },
       choice: {
         prompt: "How come. You don't gotta say it nice",
         options: [
           {
             key: "kind",
+            face: "default",
             label: "Say he's right, you're tired",
             style: 3,
             close:
@@ -63,6 +69,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask if he's a detective now",
             style: 1,
             close:
@@ -70,6 +77,7 @@ export default {
           },
           {
             key: "bold",
+            face: "blush",
             label: "Tell him you need a hug",
             style: 4,
             close:
@@ -89,11 +97,13 @@ export default {
         "*The room is bare except for a bed and, folded on the end of it, a blanket that is filthy, threadbare, and clearly ancient. He is standing between you and it, which he does not seem to have decided to do.*\n\n> That's mine. It's from before. Before the campus, before the cage, before any of it.",
         "> The blond gigolo washed it once. Two years ago. He was being kind and it took the smell out and I didn't talk to him for six days.\n\n*He moves out of the way, which takes him a visible amount of effort.*\n\n> You can touch it. Not take it. Touch it.\n\n> I've never let anyone. That's what I'm doing right now, I want you to know that's what I'm doing.",
       ],
+      faces: { 0: "default", 1: "serious", 2: "sweat" },
       choice: {
         prompt: "Go on. I'll be fine. I've decided I'll be fine.",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Touch it and say nothing",
             style: 3,
             close:
@@ -101,6 +111,7 @@ export default {
           },
           {
             key: "playful",
+            face: "sweat",
             label: "Say it needs a wash",
             style: 1,
             close:
@@ -108,6 +119,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Ask what's from before",
             style: 4,
             close:
@@ -127,11 +139,13 @@ export default {
         "> The blond gigolo locks it. I ask him to. That's the arrangement. I ask, he locks, he doesn't say anything about it after.\n\n> It's not scary in here. Everyone thinks it's scary. It's just very long.",
         "*There's a rustling, and then he says something he has clearly been building up to.*\n\n> I want to show you my arms after. Not now. After, when it's over.\n\n> They're all bites. All of them are mine. I did all of them. When it gets bad I have to put it somewhere and the somewhere is me, because the other option is a person.\n\n> Nobody's seen them on purpose. The blond gigolo's seen them because he's the one with the key. That's different.",
       ],
+      faces: { 0: "serious", 1: "close", 2: "sweat" },
       choice: {
         prompt: "Is that all right? You can say no and I'll never bring it up.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say you'll be there after",
             style: 3,
             close:
@@ -139,6 +153,7 @@ export default {
           },
           {
             key: "playful",
+            face: "blush",
             label: "Ask what he does in there",
             style: 1,
             close:
@@ -146,6 +161,7 @@ export default {
           },
           {
             key: "bold",
+            face: "sweat",
             label: "Ask to sit outside the door",
             style: 4,
             close:
@@ -165,11 +181,13 @@ export default {
         "> There was a person near you in the courtyard and I got between. I didn't decide to. I was there and then I was there, and there wasn't any bit in the middle where I picked.\n\n> I growled. Out loud. At a student. In front of everyone.",
         "> They put me in a cage for two years for that. Not that exact thing. That sort of thing.\n\n> Suba had to come. He talked to them for an hour and now it's fine and nothing happens. But it was two years, before, for less.\n\n> And I've been sitting here since and the bad part isn't the cage. The bad part is I'd do it again and I know I would, so I've been trying to be sorry and it won't come.",
       ],
+      faces: { 0: "sweat", 1: "serious", 2: "annoyed" },
       choice: {
         prompt: "Tell me to be sorry. If you say it I might manage it.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Say you're not asking that",
             style: 3,
             close:
@@ -177,6 +195,7 @@ export default {
           },
           {
             key: "playful",
+            face: "full_smile",
             label: "Ask if it was a good growl",
             style: 1,
             close:
@@ -184,6 +203,7 @@ export default {
           },
           {
             key: "bold",
+            face: "smile",
             label: "Tell him you'd do it too",
             style: 4,
             close:
@@ -204,12 +224,14 @@ export default {
         "> Here's what I know about me. I hold on too hard. I go in front of people without picking. I bite my own arms so I don't bite anything else. I can't read most signs and I never will properly.\n\n> I was in a cage for two years and everyone here was kind about it and nobody ever asked me what it was like. You asked. On the third walk. You just asked, like it was a normal thing to ask about.",
         "*There is a long pause on the recording, and a deep breath.*\n\n> I love you. That's the thing. That's the one I was practicing.\n\n> The blond gigolo says you say it and then you stop and let the other person have a go. So I'm going to stop now.\n\n*The recording doesn't end. He just breathes, and waits, for eleven whole seconds before it cuts out.*",
       ],
+      faces: { 0: "sweat", 1: "smile", 2: "close", 3: "blush" },
       choice: {
         prompt:
           "That's me stopped. The blond gigolo says this is the bit where I wait.",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -217,6 +239,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

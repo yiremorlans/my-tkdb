@@ -16,11 +16,13 @@ export default {
         "**{firstName}**: Found your number.\n\nWasn't going to ask. You'd have said yes anyway so it's the same thing, isn't it.",
         "You've come by {timesMet} times. I count everything about you.\n\nMio says that's a lot. Mio says a lot of things.\n\nCome to the Heebie-Jeebie House tonight. It's dark and it's cold and people scream in there, which is the best bit. You wouldn't scream, though. I've watched. People go stiff and back off in there. You just walk in.",
       ],
+      faces: { 0: "default", 1: "smile" },
       choice: {
         prompt: "Say yes.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Say yes",
             style: 3,
             close:
@@ -28,6 +30,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask what else is in there",
             style: 1,
             close:
@@ -35,6 +38,7 @@ export default {
           },
           {
             key: "bold",
+            face: "annoyed",
             label: "Tell him to ask properly",
             style: 4,
             close:
@@ -54,11 +58,13 @@ export default {
         "A classmate. Talking about a lecture.\n\n...I see.\n\nI watched the whole thing. You were nice to him. Nodding. Laughing at the bit that wasn't funny.",
         "You don't do that with me. With me it's {favResponse}, every time. Straight in, like you want to see what I'll do.\n\nI like that one. That one's mine.\n\nDon't go giving it to him.",
       ],
+      faces: { 0: "serious", 1: "annoyed", 2: "serious" },
       choice: {
         prompt: "Say you won't.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say he was just a classmate",
             style: 3,
             close:
@@ -66,6 +72,7 @@ export default {
           },
           {
             key: "playful",
+            face: "annoyed",
             label: "Ask if he's jealous",
             style: 1,
             close:
@@ -73,6 +80,7 @@ export default {
           },
           {
             key: "bold",
+            face: "smile",
             label: "Say only he gets that side",
             style: 4,
             close:
@@ -92,11 +100,13 @@ export default {
         "*It's the back garden, which nobody knows about, and there is a small dreadful creature in a box that he has clearly been keeping alive for some time.*\n\n> That's mine. Been mine two years. Doesn't have a name because names are for things that leave.",
         "*He sits down on the wet ground next to the box without checking whether you'll follow, and you do, and he goes very still about it.*\n\n> Mio doesn't come out here. Jo doesn't. Elias knows and pretends he doesn't, which is the nicest thing anyone's done for me.\n\n> You're sitting in it. In the wet. Didn't even flinch about the wet.\n\n*After a while, without looking over:*\n\n> You can name it. If you want. Then it'll be a thing that stays.",
       ],
+      faces: { 0: "default", 1: "serious", 2: "close" },
       choice: {
         prompt: "Go on then. Name it.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Give it a name",
             style: 3,
             close:
@@ -104,6 +114,7 @@ export default {
           },
           {
             key: "playful",
+            face: "full_smile",
             label: "Say it's got too many bits",
             style: 1,
             close:
@@ -111,6 +122,7 @@ export default {
           },
           {
             key: "bold",
+            face: "serious",
             label: "Ask why names mean leaving",
             style: 4,
             close:
@@ -130,11 +142,13 @@ export default {
         "Nobody knows that. They think I like the dark because of the House. I don't. I'm in the House because it's the only place the night's got a door on it and I'm the one holding the door.\n\nMio thinks I'm asleep. I let him think it. He's been carrying me since he was little and he'd carry that too and I won't let him.",
         "Blood's a shackle. Family's the ones that stay when they've no cause to. Mio's family. Jo is. Elias is, mostly.\n\nYou didn't have to be. That's the bit I keep chewing on. Everyone else got put next to me. You just kept turning up.\n\nI've been awake since two thinking about that and it's better than thinking about the night, so.",
       ],
+      faces: { 0: "sweat", 1: "serious", 2: "close" },
       choice: {
         prompt: "Talk at me till it's light. Don't care what about.",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Stay up and talk to him",
             style: 3,
             close:
@@ -142,6 +156,7 @@ export default {
           },
           {
             key: "playful",
+            face: "annoyed",
             label: "Threaten him with a lullaby",
             style: 1,
             close:
@@ -149,6 +164,7 @@ export default {
           },
           {
             key: "bold",
+            face: "serious",
             label: "Tell him to tell Mio",
             style: 4,
             close:
@@ -168,11 +184,13 @@ export default {
         "*You tell him. It's nothing. It was nothing.*\n\nFine. Alright.\n\n*Then, four minutes later:*\n\nI won't forget him, though. I don't forget them. Got a whole lot of them up here and none of them know it.",
         "Here's the part I'm not supposed to say, so I'm saying it.\n\nI'd do something about it. I want to. I've thought about the exact shape of it, sitting here, for about an hour, and it's a good shape.\n\nAnd I'm not going to. Because you'd look at me different after and I've figured out that's the one thing I can't take. So you tell me to leave it and I'll leave it, and that's the first time in my life a thing's ever stopped because somebody said.",
       ],
+      faces: { 0: "annoyed", 1: "smile", 2: "serious" },
       choice: {
         prompt: "Go on. Tell me to leave it.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Tell him to leave it",
             style: 3,
             close:
@@ -180,6 +198,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask about the lovely shape",
             style: 1,
             close:
@@ -187,6 +206,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise_blush",
             label: "Say you'd still look at him",
             style: 4,
             close:
@@ -207,11 +227,13 @@ export default {
         "You haven't stopped.\n\nSo I've had to learn a whole new thing, which is that I might have to be worth it on purpose instead of just holding on tight enough. That's been horrible. I've hated every minute.\n\nMio says it's good for me. Mio can shut up.",
         "Right. Here's the actual one, and I'm only doing it once, so read it properly.\n\nI love you. Not the way I say things. The other way. The one where I'd let you go if you wanted to go, which I've never been able to say about anything in my whole life and it's taken me a year to be able to say it about you.\n\nYou might never have to. But you could. That's the thing I'm giving you. It's the only thing I've got that's worth anything.",
       ],
+      faces: { 0: "serious", 1: "default", 2: "annoyed", 3: "blush" },
       choice: {
         prompt: "Now say. Whatever it is. I'll take it.",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -219,6 +241,7 @@ export default {
           },
           {
             key: "held",
+            face: "close",
             label: "Ask him to give you time",
             style: 2,
             close:

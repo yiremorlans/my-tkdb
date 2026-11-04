@@ -20,11 +20,13 @@ export default {
         "**{firstName}**: Its Alan\n\n*That's the whole message. It sits there for eleven minutes.*",
         "Not good at this\n\n*Another gap.*\n\nYouve been around {timesMet} times now\n\nBandana says I shoulda said something by now\n\nHe's right\n\nNot telling him that\n\nGlad you keep coming by\n\nShoulda said it sooner",
       ],
+      faces: { 0: "default", 1: "sweat" },
       choice: {
         prompt: "That's it",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Tell him it's a good start",
             style: 3,
             close:
@@ -32,6 +34,7 @@ export default {
           },
           {
             key: "playful",
+            face: "default",
             label: "Ask if that took long",
             style: 1,
             close:
@@ -39,6 +42,7 @@ export default {
           },
           {
             key: "bold",
+            face: "serious",
             label: "Tell him to say more",
             style: 4,
             close:
@@ -58,11 +62,13 @@ export default {
         "I run missions the same way every time\n\nCount everyone in, check it twice\n\nYou're always on the list\n\nStopped checking you twice a while back\n\nPut you next to me now instead",
         "Dont know when that started\n\nYou give me {favResponse} every time\n\nQuit bracing for it to change",
       ],
+      faces: { 0: "serious", 1: "default", 2: "close" },
       choice: {
         prompt: "Don't need anything back",
         options: [
           {
             key: "kind",
+            face: "smile_blush",
             label: "Say you plan around him too",
             style: 3,
             close:
@@ -70,6 +76,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask if you get a vote",
             style: 1,
             close:
@@ -77,6 +84,7 @@ export default {
           },
           {
             key: "bold",
+            face: "serious",
             label: "Ask if he'd notice you gone",
             style: 4,
             close: "Yeah\n\nDont make me find out",
@@ -95,11 +103,13 @@ export default {
         "Not asking as your captain\n\nAsking as me\n\nYou were right next to me\n\nThat thing went straight for you back there\n\nDidnt feel like a choice\n\nJust moved\n\nStill thinking about it now though",
         "Known you since {sinceMet}\n\nNever once done the math on how close that was till today\n\nDidn't like the answer\n\nGlad this is the version where you're fine",
       ],
+      faces: { 0: "serious", 1: "sweat", 2: "close" },
       choice: {
         prompt: "Anyway\n\nJust checking in",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Ask if he's good too",
             style: 3,
             close:
@@ -107,6 +117,7 @@ export default {
           },
           {
             key: "playful",
+            face: "blush",
             label: "Ask if he does that math often",
             style: 1,
             close:
@@ -114,6 +125,7 @@ export default {
           },
           {
             key: "bold",
+            face: "serious",
             label: "Tell him not to scare you",
             style: 4,
             close:
@@ -133,11 +145,13 @@ export default {
         "Bad one tonight\n\nDont need anything\n\nJust didn't want to sit with it on my own and you were the only name I could stand to look at",
         "They say I killed someone\n\nYou've heard it\n\nEveryone has\n\nNobody's ever asked me\n\nTwo years, nobody's asked\n\nThey just decide, and then they're careful around me, and I let them, because careful's easier than the conversation\n\nYou've never asked either\n\nDifference is I don't think you're being careful\n\nI think you're waiting on me\n\nBeen sitting with that a while",
       ],
+      faces: { 0: "sweat", 1: "close", 2: "serious" },
       choice: {
         prompt: "Ask me\n\nOr don't\n\nEither's fine\n\nI mean that",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Say you'll wait for it",
             style: 3,
             close:
@@ -145,6 +159,7 @@ export default {
           },
           {
             key: "playful",
+            face: "surprise",
             label: "Say you'd already decided",
             style: 1,
             close:
@@ -152,6 +167,7 @@ export default {
           },
           {
             key: "bold",
+            face: "sweat",
             label: "Ask him straight out",
             style: 4,
             close:
@@ -171,11 +187,13 @@ export default {
         "*You ask why. It takes him a while.*\n\nBecause I'd have to come find you, and I'd have to use it, and I've got a rule about using it\n\nRule's held three years\n\nFigure it'd last about four seconds where you're concerned\n\nThat scares me more than whatever's in the corridor does",
         "Only ever told one person what the rule is\n\nOnly if someone's about to die\n\nLast resort, nothing before it\n\nYou've gone and made yourself the last resort\n\nDon't know when\n\nNobody asked me about it first\n\nIncluding me",
       ],
+      faces: { 0: "serious", 1: "sweat", 2: "blush" },
       choice: {
         prompt: "So stay in\n\nPlease",
         options: [
           {
             key: "kind",
+            face: "default",
             label: "Tell him you'll stay in",
             style: 3,
             close:
@@ -183,6 +201,7 @@ export default {
           },
           {
             key: "playful",
+            face: "blush",
             label: "Ask if he's on the doorstep",
             style: 1,
             close:
@@ -190,6 +209,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Tell him to come up instead",
             style: 4,
             close:
@@ -210,12 +230,14 @@ export default {
         "I'm not a safe thing to be near\n\nThat's not me being modest\n\nI've had to be told to stop before\n\nBandana's seen it\n\nLeo's seen it\n\nNeither of them looks at me the same way after\n\nYou've seen it too\n\nYou came back the next day like nothing happened\n\nThen the day after that",
         "So here it is\n\nOnly doing this once\n\nI love you\n\nBeen true a long time\n\nWasnt going to say it, because saying it makes it yours to carry and I didn't want to put that on you\n\nPutting it on you anyway\n\nSorry",
       ],
+      faces: { 0: "sweat", 1: "close", 2: "serious", 3: "blush" },
       choice: {
         prompt:
           "Take your time\n\nI'm good at waiting\n\nHad a lot of practice",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -223,6 +245,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

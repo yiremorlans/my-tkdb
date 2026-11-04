@@ -18,11 +18,13 @@ export default {
         "**{firstName}**: Hey, Honor Roll! Big news.\n\nYou're crew on the boat tour. Made you a badge and everything. Didn't ask. Bit late to argue now, it's laminated (^_^;)",
         "You've come round {timesMet} times now. Reckon that makes you a regular. My favorite one, if I'm honest with you.\n\nAnyway! All you've gotta do is hand out life jackets and laugh at my jokes. Easy.\n\nAlso I bumped someone for that spot btw, which you didn't hear from me.",
       ],
+      faces: { 0: "full_smile", 1: "sweat" },
       choice: {
         prompt: "So you'll come, hey? Say you'll come.",
         options: [
           {
             key: "kind",
+            face: "full_smile",
             label: "Say you'd love to",
             style: 3,
             close:
@@ -30,6 +32,7 @@ export default {
           },
           {
             key: "playful",
+            face: "sweat",
             label: "Ask who got bumped",
             style: 1,
             close:
@@ -37,6 +40,7 @@ export default {
           },
           {
             key: "bold",
+            face: "blush",
             label: "Ask what he meant by that",
             style: 4,
             close:
@@ -56,11 +60,13 @@ export default {
         "One of the critters isn't doing great. Nothing dramatic, she's stable. But it's a two-person job and I've only got the one of me.\n\nCould rope in Ren or Towa, sure. Didn't want to.",
         "You, though! You're a real good sport, hey. Doesn't matter what mess I drag you into, you come back with {favResponse} and roll with it. Gahaha!\n\nSo I'm chancing it. Last minute, I know (^_^;) Reckon you could come lend us a hand? You'd be a real lifesaver.",
       ],
+      faces: { 0: "sweat", 1: "serious", 2: "smile" },
       choice: {
         prompt: "No pressure. Well. A bit of pressure. Can you come?",
         options: [
           {
             key: "kind",
+            face: "full_smile",
             label: "Say you're on your way",
             style: 3,
             close:
@@ -68,6 +74,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask if there's a tour discount",
             style: 1,
             close:
@@ -75,6 +82,7 @@ export default {
           },
           {
             key: "bold",
+            face: "blush",
             label: "Say he should've asked sooner",
             style: 4,
             close:
@@ -94,11 +102,13 @@ export default {
         "*It's the middle of the night and every enclosure light is off except one, and he's sitting on an upturned crate in front of it with two thermoses.*\n\n> This is the old girl. She came in eleven years ago and she's the reason there's a park at all. Doesn't do tours. Doesn't do visitors. Doesn't really do me most days.",
         "> I sit here about three nights a week. Have done since I got the captaincy. Nobody's ever come with me. I've never asked anyone, and I've had plenty of chances.\n\n*He hands you the second thermos without looking over.*\n\n> Brought two of these on the off chance for about a year, by the way. Just so you know the standard of pathetic we're operating at.",
       ],
+      faces: { 0: "default", 1: "close", 2: "blush" },
       choice: {
         prompt: "Say something. She's judging us both.",
         options: [
           {
             key: "kind",
+            face: "full_smile",
             label: "Say you'll come every week",
             style: 3,
             close:
@@ -106,6 +116,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask how long she'll judge",
             style: 1,
             close:
@@ -113,6 +124,7 @@ export default {
           },
           {
             key: "bold",
+            face: "blush",
             label: "Ask about the second thermos",
             style: 4,
             close:
@@ -132,11 +144,13 @@ export default {
         "First, so it's not weird: the arm's not a secret. You've watched me take the glove off to shift a fence post in front of a tour group. Mio built it, joints and all, and he'll corner anyone who stands still long enough to explain how it works.\n\nSo this isn't a big reveal. I'm not owed a gasp (^_^;)",
         "Here's the actual thing. That whole 'nothing slows me down, all stamina and bad luck' routine? I built it. On purpose, years back. So nobody would ever look at me and go, hey, d'you need a hand with that.\n\nAnd it worked for ages. Then you started turning up and doing half my rounds without being asked and leaving food where I'd trip over it, and I let you, and that's the nearest I've come to dropping the whole act since I started running it.\n\nSay something normal now. Or plug the tour, genuinely, I'd take the tour.",
       ],
+      faces: { 0: "serious", 1: "default", 2: "sweat" },
       choice: {
         prompt: "Go on then. Flat. You promised.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Say he's allowed a hand",
             style: 3,
             close:
@@ -144,6 +158,7 @@ export default {
           },
           {
             key: "playful",
+            face: "full_smile",
             label: "Plug the tour back at him",
             style: 1,
             close:
@@ -151,6 +166,7 @@ export default {
           },
           {
             key: "bold",
+            face: "smile",
             label: "Say you're not going to stop",
             style: 4,
             close:
@@ -170,12 +186,14 @@ export default {
         "There was a thing in the park tonight and it went for the small enclosure, and you were between it and the gate, and I made a call.\n\nI opened the small enclosure. On purpose. Let the whole lot out into the park so it'd have twenty things to chase instead of one thing to chase.\n\nTook us four hours to get them back in. Got them all. Every single one, I counted twice.",
         "Here's the bit I can't get straight in my head.\n\nEvery life in this park is mine. That's not a slogan, that's the actual job, I know all their names and I'd fight anyone in this academy over any one of them.\n\nAnd I put all of them at risk in about a second and a half because you were standing in the wrong place, and I'd do it again, and I don't know what that makes me.",
       ],
+      faces: { 0: "sweat", 1: "default", 2: "serious" },
       choice: {
         prompt:
           "You'll be right. You always say that to me. Say it back, I need to hear it off someone.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Tell him he got them all back",
             style: 3,
             close:
@@ -183,6 +201,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Call it the midnight tour",
             style: 1,
             close:
@@ -190,6 +209,7 @@ export default {
           },
           {
             key: "bold",
+            face: "blush",
             label: "Say it makes him yours",
             style: 4,
             close:
@@ -210,12 +230,14 @@ export default {
         "Here's my whole thing, right. I say the big stuff and then I bolt. Always have. Say something that means something, watch it land, and then immediately turn it into a bit so if it wasn't wanted I can pretend I never said it.\n\nI've done it to you about forty times. You've never once used the out. You've just stood there and waited for me to come back, and I always have, and that's... yeah. Nobody waits.",
         "So I'm not bolting.\n\nI love you. That's it. I'm not doing a bit after it, I'm not plugging anything, I'm not going to say something dumb about the aviary in three seconds to get out of it.\n\nI'm just going to sit here having said it. Which is the single hardest thing I've ever made myself do.",
       ],
+      faces: { 0: "serious", 1: "smile", 2: "close", 3: "blush" },
       choice: {
         prompt:
           "Take your time. I'm not going anywhere. That's sort of the whole point of tonight.",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -223,6 +245,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

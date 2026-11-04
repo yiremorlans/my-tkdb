@@ -11,11 +11,13 @@ export default {
         "You've passed me on campus {timesMet} times. I've been keeping track, apparently. Every time, you've said good evening to the man with the mop.\n\nMost people don't. They don't see the help, and usually I like it that way.",
         "You mentioned once you don't care for the east path after dark. I take a walk most evenings, nowhere in particular.\n\nOne path's as good as another to me, if you ever wanted the company.",
       ],
+      faces: { 0: "default", 1: "close", 2: "smile" },
       choice: {
         prompt: "That's all of it. More than I meant to say tonight.",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Say he's worth knowing",
             style: 3,
             close:
@@ -23,6 +25,7 @@ export default {
           },
           {
             key: "playful",
+            face: "sweat",
             label: "Ask what took so long",
             style: 1,
             close:
@@ -30,6 +33,7 @@ export default {
           },
           {
             key: "bold",
+            face: "smile",
             label: "Ask what he used to be",
             style: 4,
             close:
@@ -49,17 +53,20 @@ export default {
         "I told him the line at the shop was long. He gave me a look and let it slide. I didn't mention you.",
         "You led with {favResponse}, and I lost track of the time. I'm not sure why I kept that part to myself. It just felt like mine.",
       ],
+      faces: { 0: "sweat", 1: "smile", 2: "close" },
       choice: {
         prompt: "So now you're in on it.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say you liked the walk",
             style: 3,
             close: "Oh, good. So did I.\n\nMaybe my next errand runs long too.",
           },
           {
             key: "playful",
+            face: "sweat",
             label: "Offer to back up his story",
             style: 1,
             close:
@@ -67,6 +74,7 @@ export default {
           },
           {
             key: "bold",
+            face: "blush",
             label: "Ask why he left you out",
             style: 4,
             close:
@@ -86,11 +94,13 @@ export default {
         "*There's a record playing, something old and warm, nothing like what Dionysia usually puts on, and the whole hall smells like jambalaya.*\n\n> My mother's recipe. I import half the ingredients from home, and customs and I are on a first-name basis because of the rest. I make it once a year, at two in the morning, when nobody's awake to be polite about it.",
         "> It's my mother's music, and my mother's cooking, and this is the closest I get to New Orleans from here.\n\n*He sets the plate down in front of you and doesn't sit yet.*\n\n> I've done this alone for years. It wasn't a rule, exactly. It simply never occurred to me there was anyone I'd want in the room. Then it occurred to me, and it wouldn't stop occurring to me. So… here we are.",
       ],
+      faces: { 0: "default", 1: "smile", 2: "sweat" },
       choice: {
         prompt: "…Would you say something? I've made myself nervous.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Ask about his mother",
             style: 3,
             close:
@@ -98,6 +108,7 @@ export default {
           },
           {
             key: "playful",
+            face: "full_smile",
             label: "Ask about the customs man",
             style: 1,
             close:
@@ -105,6 +116,7 @@ export default {
           },
           {
             key: "bold",
+            face: "blush",
             label: "Ask him to dance to it",
             style: 4,
             close:
@@ -124,12 +136,14 @@ export default {
         "Captain of Dionysia. For a good while. It isn't a secret, exactly. It's simply something people have agreed to be tactful about, which is worse.\n\nI lost it. Not a scandal, nothing you could put in a report. I simply reached a point where I couldn't keep up, and I let it go on long enough that someone had to say so, out loud, in a room with other people in it.",
         "Jo took it over. He does it better than I ever did, and I mean that entirely.\n\nNow I run his errands. Now and then someone calls me Captain by accident, and the whole hall goes quiet for half a second while everyone decides not to look at me.\n\nI've never said any of this aloud before. A year ago I'd have made a joke of it instead.",
       ],
+      faces: { 0: "close", 1: "serious", 2: "default" },
       choice: {
         prompt:
           "Please, don't be gentle about it. Gentle is all I get from the rest of the house…",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Say you'd have followed him",
             style: 3,
             close:
@@ -137,6 +151,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Call him Captain on purpose",
             style: 1,
             close:
@@ -144,6 +159,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Ask if he wants it back",
             style: 4,
             close:
@@ -163,11 +179,13 @@ export default {
         "There was an incident in the lower hall tonight, and I went at it, and… I was slow. Not disastrously so. Slow. There was a time it would have taken me twenty seconds. Tonight it took four minutes, and I felt every one of them.\n\nThat's the fear I don't say aloud. Not dying. Being the man who used to be able to.",
         "And here is what I actually meant to tell you, plainly, and then I'll go to bed.\n\nI went at it anyway. Didn't weigh it, didn't count the odds, didn't think about my knees. You were on the other side of that hall, and three years of being careful went straight out the window.\n\nI'd been treasuring the quiet. Dreading the day it ended. It seems I'd take it ending over having you on the far side of a bad hall.",
       ],
+      faces: { 0: "close", 1: "sweat", 2: "serious" },
       choice: {
         prompt: "Tell me something true… It's been a long night.",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Tell him he wasn't slow",
             style: 3,
             close:
@@ -175,6 +193,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Say four minutes is a brag",
             style: 1,
             close:
@@ -182,6 +201,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Go down to the hall",
             style: 4,
             close:
@@ -202,11 +222,13 @@ export default {
         "I've spent three years treasuring quiet days and dreading the end of them. That isn't peace. That's only fear with the lights turned low. I've known that for a while, and I've done nothing about it, because doing something about it would mean wanting something, and anyone who wants something can lose it.",
         "So. Here is me, wanting something.\n\nI love you. I have for a long while now, since before that night in the kitchen, if I'm honest, and I've been meaning to be honest about it for months.\n\nI'm not asking you to do anything about it. I'm just done choosing nothing over the risk of losing something. That's the whole of my message, and it took me four cups of coffee to get here.",
       ],
+      faces: { 0: "sweat", 1: "smile", 2: "close", 3: "blush" },
       choice: {
         prompt: "Take your time. I have nothing but.",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -214,6 +236,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

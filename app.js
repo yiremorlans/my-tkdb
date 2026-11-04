@@ -1295,7 +1295,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             ? { type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE }
             : {
                 type: InteractionResponseType.UPDATE_MESSAGE,
-                data: { components: disableComponents(req.body.message?.components) },
+                data: { components: disableWardingButtons(req.body.message?.components) },
               },
         );
         handleBondReplayClick(userId, { kind, characterId: charId, levelKey, arg })
@@ -1322,12 +1322,15 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       }
 
       // ACK, which is the only thing here that uses the interaction. Every
-      // bond button — scene or resume — is greyed out via `disableComponents`
-      // rather than stripped; correct for a stale click too, which just greys
-      // a dead button and posts nothing.
+      // bond button — scene or resume — is greyed out rather than stripped;
+      // correct for a stale click too, which just greys a dead button and
+      // posts nothing. The recursive disable (disableWardingButtons) because
+      // scene beats are V2 messages, so the echoed tree holds the card as
+      // well as the button rows; it greys plain action rows just the same, so
+      // beats sent before the cards existed, and the resume button, still work.
       res.send({
         type: InteractionResponseType.UPDATE_MESSAGE,
-        data: { components: disableComponents(req.body.message?.components) },
+        data: { components: disableWardingButtons(req.body.message?.components) },
       });
 
       // Everything after the ACK is a plain bot-token POST into the DM channel

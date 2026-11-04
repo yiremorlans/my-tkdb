@@ -9,12 +9,14 @@ export default {
         "**{firstName}**: Hello. I don't suppose you've got a moment?\n\nI'd ordinarily say this in person, but the captain keeps me occupied by day, and some things are better said where nobody happens to overhear.",
         "I make it a point to know a little about everyone who comes through this house. You will find that unnerving, and you would be right to.\n\nWhat I have on you, after {timesMet} occasions, is remarkably thin. You say the same things about people whether or not they're in the room. Do you know how rare that is, in a building where I learn most of what I know by overhearing?\n\nSo this is not a file being opened. This is me putting the pen down, which I do rather less often.",
       ],
+      faces: { 0: "default", 1: "serious" },
       choice: {
         prompt:
           "Perhaps you could humor me, and ask me something you would not under typical circumstances.",
         options: [
           {
             key: "kind",
+            face: "surprise",
             label: "Ask if he ever rests",
             style: 3,
             close:
@@ -22,6 +24,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask what's in his file",
             style: 1,
             close:
@@ -29,6 +32,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Ask what he really wrote",
             style: 4,
             close:
@@ -49,12 +53,14 @@ export default {
         "You have never once come to me. You meet everything with {favResponse}, deal with your own trouble, and carry on as though there was none. It hasn't escaped my notice that lately there has been rather a lot of it.",
         "So consider this formal notice. Whatever you need, a hand with your work, a word in the right ear, a matter handled quietly, you may bring it to me. You won't need to explain, and you won't owe me anything for it.\n\nMy services are technically spoken for by our king. I assure you he won't miss an hour or two. I'm told I'm rather good at this.",
       ],
+      faces: { 0: "serious", 1: "default", 2: "serious", 3: "smile" },
       choice: {
         prompt:
           "Well? The next time you're in difficulty, I would much prefer to hear it from you than to happen to overhear it.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Say you'll come to him",
             style: 3,
             close:
@@ -62,6 +68,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask what the catch is",
             style: 1,
             close:
@@ -69,6 +76,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise",
             label: "Hand him a problem now",
             style: 4,
             close:
@@ -88,12 +96,14 @@ export default {
         "It is not a mission and you are not in trouble. It is a window.\n\nThere is a spot on that landing where, at eleven, the light comes through the east glass and lies across the floor in a particular way for about nine minutes. Then it is gone until the next clear day.",
         "I have been standing in it alone for two years and telling nobody about it, because the moment a thing like that is known about it becomes a place people go, and then it is not that any more.\n\nYou may consider that I have just handed over the only thing in this building that is mine. I would rather you did not make a great deal of it. I would rather you came.",
       ],
+      faces: { 0: "default", 1: "close", 2: "blush" },
       choice: {
         prompt:
           "Say yes or no. I shall be perfectly composed either way; I am always perfectly composed.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Tell him you'll be there",
             style: 3,
             close:
@@ -101,6 +111,7 @@ export default {
           },
           {
             key: "playful",
+            face: "blush",
             label: "Ask if this is a date",
             style: 1,
             close:
@@ -108,6 +119,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Ask why you get to know",
             style: 4,
             close:
@@ -127,12 +139,14 @@ export default {
         "They are not wrong that I benefited. They are not wrong that I was in a position to have arranged a good deal of it. What they have wrong is the part in between, where I am supposed to have actually done the arranging, and that is the part nobody has ever troubled to check.\n\nThose two facts have sat beside one another for two years and been enough for everybody. I have let them, because a house runs better on a vice-captain people are slightly afraid of. That is the whole strategy. It has worked beautifully, and it has cost me every friendship I might otherwise have had here.",
         "I am not asking you to believe me. I am telling you what happened and then leaving it with you, which is the single most dangerous thing I have done since I arrived.\n\nYou may do anything at all with it. That is rather the point of giving it to you.",
       ],
+      faces: { 0: "serious", 1: "default", 2: "sweat" },
       choice: {
         prompt:
           "So. What is your verdict? I find I am unable to predict it, which is novel and not entirely pleasant.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Say you believe him",
             style: 3,
             close:
@@ -140,6 +154,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Say you'll hold it over him",
             style: 1,
             close:
@@ -147,6 +162,7 @@ export default {
           },
           {
             key: "bold",
+            face: "serious",
             label: "Tell him to stop shielding",
             style: 4,
             close:
@@ -166,11 +182,13 @@ export default {
         "I have made a study of the small ways people here come apart, so that I can put them back before anyone important notices. It is my actual function in this house, whatever the title says.\n\nI have caught myself doing it for you for some months now, and doing it badly, because I keep wanting to be seen doing it. That is not how the work is meant to go. The work is meant to be invisible.",
         "I stood outside your door for rather longer than the delivery required. I have decided to tell you that instead of letting you assume the tea appeared by itself.\n\nHonestly. Years of being unreadable, undone by a cup going cold in a corridor.",
       ],
+      faces: { 0: "serious", 1: "default", 2: "blush" },
       choice: {
         prompt: "Say nothing kind. I am not equipped for it at this hour.",
         options: [
           {
             key: "kind",
+            face: "surprise_blush",
             label: "Say something kind anyway",
             style: 3,
             close:
@@ -178,6 +196,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask how he takes his",
             style: 1,
             close:
@@ -185,6 +204,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Tell him to come in and sit",
             style: 4,
             close:
@@ -205,12 +225,14 @@ export default {
         "{timesMet} occasions. I have the number because of course I have the number.\n\nOn every one of them, you have walked into a room where I was being useful to somebody, and some entirely unhelpful part of me has thought: ah. There. That is the one I would like to be useless in front of.",
         "So. I love you.\n\nI have no arrangement around that sentence and nothing to trade for it, and I have not left myself an exit, which you may take as the measure of how seriously I mean it.\n\nThis conversation, unlike every other one, did happen. I should like it on the record.",
       ],
+      faces: { 0: "serious", 1: "close", 2: "smile", 3: "blush" },
       choice: {
         prompt:
           "Take your time. I am extremely good at waiting and extremely poor at hoping, so do not mind either.",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -218,6 +240,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

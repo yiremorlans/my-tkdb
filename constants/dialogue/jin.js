@@ -13,17 +13,20 @@ export default {
         "**{firstName}**: Servant.\n\nTohma's decided I can't keep sending someone to fetch you. Says it's a waste of the staff. Fine. His way, then. Answer.",
         "You've been underfoot {timesMet} times now. I haven't had you thrown out. Make of that whatever you want. I'm not explaining it.\n\n...\n\nDon't get ideas. It's not a promotion.",
       ],
+      faces: { 0: "serious", 1: "annoyed" },
       choice: {
         prompt: "Well? You've got thumbs. Use them.",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Say you're glad he wrote",
             style: 3,
             close: "...Glad.\n\nHa. Whatever. Be glad, then. Costs me nothing.",
           },
           {
             key: "playful",
+            face: "annoyed",
             label: "Ask if that was praise",
             style: 1,
             close:
@@ -31,6 +34,7 @@ export default {
           },
           {
             key: "bold",
+            face: "smile",
             label: "Tell him you'll decide that",
             style: 4,
             close:
@@ -49,11 +53,13 @@ export default {
         "**{firstName}**: Why do you keep coming up here? Answer me.",
         "Half this school talks about me behind my back. Anyone who wants something from me goes through Tohma.\n\nYou? Whatever I throw at you, I get {favResponse} back. Then you stay and pick up whatever I left on the floor anyway.\n\nSo which is it: guts, or you're too dumb to know better?",
       ],
+      faces: { 0: "serious", 1: "annoyed" },
       choice: {
         prompt: "Pick one. I'm waiting.",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Say you like the company",
             style: 3,
             close:
@@ -61,6 +67,7 @@ export default {
           },
           {
             key: "playful",
+            face: "annoyed",
             label: "Say you came for the mess",
             style: 1,
             close:
@@ -68,6 +75,7 @@ export default {
           },
           {
             key: "bold",
+            face: "smile",
             label: "Say you're staying either way",
             style: 4,
             close:
@@ -87,11 +95,13 @@ export default {
         "Everyone's already decided I won't show. They'd have been right, once. That was before we met in {sinceMet}.\n\nLet them keep thinking it.",
         "You'll be there. Eight o'clock. Your schedule's not my problem. Arrange it around me.",
       ],
+      faces: { 0: "annoyed", 1: "smile", 2: "serious" },
       choice: {
         prompt: "I'm waiting on a yes. Anything else, keep it to yourself.",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Say you'll be there",
             style: 3,
             close:
@@ -99,6 +109,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask if he's finally going",
             style: 1,
             close:
@@ -106,6 +117,7 @@ export default {
           },
           {
             key: "bold",
+            face: "serious",
             label: "Say you'll go if he does",
             style: 4,
             close:
@@ -125,11 +137,13 @@ export default {
         "I kept losing my place. My head was on {lastMoment}.",
         "Somebody should be turning pages for me. Tohma's asleep.\n\nThat's all I'm going to say.",
       ],
+      faces: { 0: "close", 1: "blush", 2: "annoyed" },
       choice: {
         prompt: "The door's open. Quit dawdling.",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Ask him to play for you",
             style: 3,
             close:
@@ -137,6 +151,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask if you broke his focus",
             style: 1,
             close:
@@ -144,6 +159,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise_blush",
             label: "Say you're already outside",
             style: 4,
             close:
@@ -163,11 +179,13 @@ export default {
         "Since the clash, I've kept most of {house} out of this room. Somewhere along the way, I started looking forward to your visits. I don't care who knows it. Let them talk. I'm done pretending you're just here to clean up after me.",
         "There's a part of me I gave up on.\n\nWith you, I'm whole again. That's as plain as I'm going to say it.",
       ],
+      faces: { 0: "serious", 1: "smile", 2: "close" },
       choice: {
         prompt: "Come over tonight. Don't make me ask twice.",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Say you'll stay the night",
             style: 3,
             close:
@@ -175,6 +193,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask which side is yours",
             style: 1,
             close:
@@ -182,6 +201,7 @@ export default {
           },
           {
             key: "bold",
+            face: "full_smile",
             label: "Say you won't let him sleep",
             style: 4,
             close:
@@ -202,11 +222,13 @@ export default {
         "I was raised to make a good match. I can name you the families, the terms, the fucking seating charts. There's no version of that where someone like you turns up at all.\n\nAnd I don't care. Haven't for a while. I've just been managing it carefully enough not to notice.",
         "So.\n\n*The typing indicator holds for a long while.*\n\nI love you. I know exactly what it costs me to put that in writing. I wrote it anyway. No title in front of it, no order behind it.\n\nDo what you want with it. You always do. It's the single most infuriating thing about you and I wouldn't take it back.",
       ],
+      faces: { 0: "sweat", 1: "smile", 2: "serious", 3: "blush" },
       choice: {
         prompt: "Answer or don't. I can take either one.",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -214,6 +236,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

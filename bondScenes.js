@@ -45,6 +45,7 @@ import {
 } from './constants/publicEncounters.js';
 import { openDmChannel, postChannelMessage, postChannelTyping } from './discordRest.js';
 import { EPHEMERAL as EPHEMERAL_FLAG } from './utils.js';
+import { portraitUrl } from './missions/shared.js';
 import {
   advanceBondScene,
   completeBondScene,
@@ -96,6 +97,17 @@ const UNFINISHED = new Set(['queued', 'in_progress', 'pending_dm']);
 // have never changed.
 const ACTION_ROW = 1;
 const BUTTON = 2;
+const SECTION = 9;
+const TEXT_DISPLAY = 10;
+const THUMBNAIL = 11;
+const MEDIA_GALLERY = 12;
+const CONTAINER = 17;
+const IS_COMPONENTS_V2 = 1 << 15;
+
+// The portrait beside every scene message, where a mission post shows the
+// messenger cat: the face the scene names for that beat (`faces[index]`) or
+// closing (`option.face`), else the character's default.
+const SCENE_FACE = 'default';
 
 // --- content -----------------------------------------------------------------
 
@@ -223,6 +235,51 @@ async function resolveSceneVars(userId, character, levelName, now = new Date()) 
 
 // --- rendering ---------------------------------------------------------------
 
+/**
+ * A scene message laid out like a mission post (missions/shared.js
+ * portraitMessage): a container with the scene's relationship level color as
+ * its bar (RELATIONSHIP_LEVELS color), the first block of
+ * text beside the character's portrait, then any sticker and any further text.
+ *
+ * `blocks` is the message top to bottom: strings are text, a sticker
+ * attachment (loadSticker) is shown as a media gallery at that spot. Under
+ * IS_COMPONENTS_V2 an attachment only renders where a component references
+ * it, which is what lets a sticker sit above the text that follows it.
+ * `rows` (the buttons) go below the card, outside it, so the card holds only
+ * what the character sends.
+ *
+ * No `content`: Discord rejects it on a V2 message. The portrait is never
+ * load-bearing; with no usable URL the first text goes out on its own.
+ */
+function sceneCard(characterId, levelName, face, blocks, rows = []) {
+  const children = [];
+  const files = [];
+  let portraitPlaced = false;
+  for (const block of blocks) {
+    if (typeof block === 'string') {
+      if (!block.trim()) continue;
+      const text = { type: TEXT_DISPLAY, content: block };
+      const url = !portraitPlaced && portraitUrl(characterId, `${face || SCENE_FACE}.png`);
+      portraitPlaced = true;
+      children.push(url
+        ? { type: SECTION, components: [text], accessory: { type: THUMBNAIL, media: { url } } }
+        : text);
+    } else if (block) {
+      files.push(block);
+      children.push({ type: MEDIA_GALLERY, items: [{ media: { url: `attachment://${block.name}` } }] });
+    }
+  }
+
+  const accent = RELATIONSHIP_LEVELS.find((level) => level.name === levelName)?.color;
+  const card = { type: CONTAINER, accent_color: accent, components: children };
+  const message = {
+    flags: IS_COMPONENTS_V2,
+    components: [card, ...rows],
+  };
+  if (files.length) message.files = files;
+  return message;
+}
+
 // `kind` picks the custom_id namespace: 'next'/'choice' advance a live scene
 // and are checked against bond_scene_progress.current_beat; 'rnext'/'rchoice'
 // (§4.6) advance a replay and touch nothing in the database at all. Same
@@ -277,8 +334,10 @@ function optOutRow(characterId, levelName) {
 }
 
 /**
- * One beat as a Discord message body: the filled prose, plus whatever the
- * reader needs to get to the next one.
+ * One beat as the Discord message(s) to post, in order: the filled prose as a
+ * scene card (sceneCard), plus whatever the reader needs to get to the next
+ * one. A live scene's opening beat is two messages, the plain-text frame line
+ * and then the card; every other beat is the card alone.
  *
  * The closing beat carries the choice prompt appended to its own text — one
  * message, so the question and the buttons that answer it are never separated
@@ -304,12 +363,12 @@ export function renderBeat(scene, index, vars, { characterId, levelName, firstEv
   const parts = [fillTemplate(scene.beats[index], vars)];
 
   // A frame line on every scene's opening beat, so a message from a bot reads
-  // as the game rather than as a stranger.
-  if (index === 0 && !replay) {
-    parts.unshift(`*${vars.firstName} sent you a message.*`);
-  }
+  // as the game rather than as a stranger. It goes out as its own plain-text
+  // message ahead of the card: as the first message, it is what a phone's
+  // notification shows, rather than a peek at the card's contents.
+  const lead = index === 0 && !replay ? `*${vars.firstName} sent you a message.*` : null;
   // A sticker-only beat has no text of its own; drop it rather than leave a
-  // blank paragraph between the frame line and whatever follows.
+  // blank paragraph ahead of whatever follows.
   if (!parts.at(-1).trim()) parts.pop();
   if (isLast && scene.choice?.prompt) {
     parts.push(fillTemplate(scene.choice.prompt, vars));
@@ -332,22 +391,18 @@ export function renderBeat(scene, index, vars, { characterId, levelName, firstEv
   ];
   if (index === 0 && firstEver) components.push(optOutRow(characterId, levelName));
 
-  const message = { content: parts.join('\n\n'), components };
   const stickerFile = scene.stickers?.[index];
-  if (stickerFile) {
-    const sticker = loadSticker(stickerFile);
-    if (sticker) message.files = [sticker];
-  }
-  return message;
+  const sticker = stickerFile ? loadSticker(stickerFile) : null;
+  const card = sceneCard(characterId, levelName, scene.faces?.[index], [parts.join('\n\n'), sticker], components);
+  return lead ? [{ content: lead }, card] : [card];
 }
 
-// The last message(s) of a scene: the character's authored answer to the
-// pick, with the keepsake named after it. Showing the keepsake here is the
-// whole point of granting one — /bonds is where you go back to it, not where
-// you find out it exists — and it must always read last. Discord renders an
-// attachment below a message's text no matter what order the fields are sent
-// in, so a sticker sharing the keepsake's message would show above it; that's
-// why a closing with a sticker goes out as two messages instead of one.
+// The last message of a scene: the character's authored answer to the pick,
+// with the keepsake named after it. Showing the keepsake here is the whole
+// point of granting one — /bonds is where you go back to it, not where you
+// find out it exists — and it must always read last. The answer (and any
+// sticker) is the card; the keepsake is plain text under it, in the same
+// message.
 //
 // It also carries the one button that gets a player into the replay gallery
 // without typing /bonds character:<name> — see replayStartRow below.
@@ -356,21 +411,18 @@ export function renderBeat(scene, index, vars, { characterId, levelName, firstEv
 // conceit as a beat's sticker (renderBeat), for a character whose answer is a
 // picture rather than more words. A missing or unreadable file drops the
 // image quietly rather than losing the close (loadSticker).
-function renderClosing(option, keepsake, vars, { characterId, levelName }) {
+export function renderClosing(option, keepsake, vars, { characterId, levelName }) {
   const close = fillTemplate(option.close, vars);
   const line = fillTemplate(keepsake.line, vars);
   const replayRow = [replayStartRow(characterId, levelName)];
   const keepsakeContent = `${keepsake.emoji} *${line}*`;
   const sticker = option.sticker ? loadSticker(option.sticker) : null;
 
-  if (!sticker) {
-    return { content: `${close}\n\n${keepsakeContent}`, components: replayRow };
-  }
-
-  return [
-    { content: close, files: [sticker] },
-    { content: keepsakeContent, components: replayRow },
-  ];
+  // The keepsake sits below the card, outside it, so the card holds only the
+  // character's words; it still reads last, ahead of the replay button.
+  const message = sceneCard(characterId, levelName, option.face, [close, sticker], replayRow);
+  message.components.splice(1, 0, { type: TEXT_DISPLAY, content: keepsakeContent });
+  return message;
 }
 
 // Starts a replay of the scene just finished (§4.6): the same beats, the same
@@ -502,7 +554,7 @@ export async function deliverBondScene(userId, characterId, levelName, { already
     // posts to guild channels; `dmChannelId` is a private bot<->user DM channel
     // (openDmChannel), so nothing here is ever visible to another player.
     postChannelTyping(dmChannelId).catch(() => {});
-    await postChannelMessage(dmChannelId, beat);
+    for (const message of beat) await postChannelMessage(dmChannelId, message);
   } catch (err) {
     console.error('Error posting first bond scene beat:', err);
     await advanceBondScene(userId, character.id, levelName, { status: 'pending_dm' });
@@ -684,8 +736,8 @@ async function post(row, message) {
     // reach a guild channel.
     postChannelTyping(row.dm_channel_id).catch(() => {});
     for (const one of messages) {
-      // Awaited in sequence rather than Promise.all: order is the entire point
-      // when a closing splits into sticker-then-keepsake.
+      // Awaited in sequence rather than Promise.all: an opening beat is the
+      // frame line then the card, and order is the entire point.
       await postChannelMessage(row.dm_channel_id, one);
     }
     return true;

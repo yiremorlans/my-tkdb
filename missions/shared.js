@@ -169,7 +169,7 @@ export function ephemeralPortraitMessage(characterId, face, text) {
   return { ...message, flags: message.flags | EPHEMERAL };
 }
 
-function portraitUrl(characterId, face) {
+export function portraitUrl(characterId, face) {
   if (!expressionExists(characterId, face)) {
     console.error(`[assets] No portrait at expressions/${characterId}/${face} — sending without it`);
     return null;

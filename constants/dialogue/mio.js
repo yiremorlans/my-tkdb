@@ -11,11 +11,13 @@ export default {
         "**{firstName}**: It's Mio. From Dionysia. You already know who I am, so I'll skip the rest.",
         "We've talked {timesMet} times, and every one of them has been about something to fix. That's not on you. But it means I've only ever come by your room when something's broken.\n\nSo while I'm over next, anything you actually want me to look at?\n\nDoesn't have to be broken. If there's something that'd make your week easier, I can probably build it.\n\n...Your desk, though. The light's behind you. Every time I've been by, you're reading in your own shadow. I could build you a lamp that clips on and swings clear when you don't need it. Hour, maybe.",
       ],
+      faces: { 0: "default", 1: "smile" },
       choice: {
         prompt: "Yes or no on the lamp.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say yes, and thank him",
             style: 3,
             close:
@@ -23,6 +25,7 @@ export default {
           },
           {
             key: "playful",
+            face: "sweat",
             label: "Ask what else is broken",
             style: 1,
             close:
@@ -30,6 +33,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise",
             label: "Ask him to stay after",
             style: 4,
             close:
@@ -49,11 +53,13 @@ export default {
         "I saved you one. It's in a tin, but a lock wouldn't do anything against Shion. Remember my toolbox full of worms?\n\nSo I'm not letting it out of my sight until you get here.",
         "It's good cake. You'll like it.\n\nYou always have {favResponse} for me, even when I'm running between three jobs. Cake's the least I can do.\n\nTake a break when you get here. I'll keep Shion off you for it.",
       ],
+      faces: { 0: "default", 1: "annoyed", 2: "smile" },
       choice: {
         prompt: "So. You coming?",
         options: [
           {
             key: "kind",
+            face: "sweat",
             label: "Say he needs the break more",
             style: 3,
             close:
@@ -61,6 +67,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask if Shion's tried yet",
             style: 1,
             close:
@@ -68,6 +75,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Ask him to split it with you",
             style: 4,
             close:
@@ -87,12 +95,14 @@ export default {
         "*Three in the morning, and he clearly hasn't slept. The bench holds the same small mechanism built eleven times over, ten of them wrong.*\n\n> Shion had a bad night. I've been up with him since one, and now I can't stop, so I'm doing this instead.",
         "*He puts the file down.*\n\n> Everyone here thinks I've got it handled. Jo, Elias, Shion. And I have got it handled, I'm not complaining. I'd do it forever.\n\n> I just wanted one person to have seen the bench look like this. That's all. Go back to bed.",
       ],
+      faces: { 0: "default", 1: "serious", 2: "close" },
       choice: {
         prompt:
           "...That wasn't fair to send. Say something and I'll pretend I didn't.",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Sit down and stay",
             style: 3,
             close:
@@ -100,6 +110,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Count the failures for him",
             style: 1,
             close:
@@ -107,6 +118,7 @@ export default {
           },
           {
             key: "bold",
+            face: "serious",
             label: "Ask who looks after him",
             style: 4,
             close:
@@ -126,11 +138,13 @@ export default {
         "Shion calls me his little brother. Has for years. Blood doesn't come into it and he'd bite your head off if you asked, so don't.\n\nIt didn't used to run this way round. When we first knew each other he was the one who turned up for me, wherever I'd ended up, frightening about it even then. I never minded.",
         "Somewhere in the last few years it flipped. Now I'm the one who turns up, and he lets me, and we don't talk about the swap.\n\nI'd do it another sixty years, so don't hear this wrong. I just miss having a brother instead of a duty.\n\n(I've got a real kid brother and sister back home. I miss them the ordinary way. This isn't that.)",
       ],
+      faces: { 0: "serious", 1: "smile", 2: "close" },
       choice: {
         prompt: "Say something back.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say he's allowed to miss it",
             style: 3,
             close:
@@ -138,6 +152,7 @@ export default {
           },
           {
             key: "playful",
+            face: "full_smile",
             label: "Say you'd have guessed older",
             style: 1,
             close:
@@ -145,6 +160,7 @@ export default {
           },
           {
             key: "bold",
+            face: "serious",
             label: "Tell him to say it to Shion",
             style: 4,
             close:
@@ -164,11 +180,13 @@ export default {
         "*The photo is his forearm, bandaged wrist to elbow. Behind it on the bench, something bent badly out of true.*\n\nThe gantry in the lower hall was coming down and you were under it. No time to do it properly, so I did it improperly. I had about four seconds. It held for six.\n\nNormally I'd tell you to spit on it and it'll heal. I've told Shion that more times than I can count. Not this time.",
         "Here's the honest part. I run the numbers on everything before anyone moves. Every load, every risk. That's the job, and it's most of me.\n\nThis time I didn't run anything. I looked up, saw where you were standing, and my hands were already on the gantry.\n\nSix years, and that has not happened once.",
       ],
+      faces: { 0: "sweat", 1: "serious", 2: "blush" },
       choice: {
         prompt: "You can be angry. I'd honestly prefer it.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Ask to see the arm",
             style: 3,
             close:
@@ -176,6 +194,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Say six over four is a brag",
             style: 1,
             close:
@@ -183,6 +202,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise_blush",
             label: "Give the thing a name for him",
             style: 4,
             close:
@@ -203,12 +223,14 @@ export default {
         "I've made you a lamp, fixed your latch, guarded a slice of cake from Shion, and done forty other things. Every one of them stood in for something I hadn't said.\n\nMy dad gave me a wind-up music box when I was small. No words on it, and I still knew. That's probably where all of this started.\n\nYou kept every piece. I noticed that too.",
         "So. The second dial.\n\nI love you. Since roughly the hinge. I built around it for a year because that's how I say things. The blank dial was always where the sentence went. I just hadn't put it there.\n\nThere it is, in words. Sending it before I take the dial off the box.",
       ],
+      faces: { 0: "sweat", 1: "smile", 2: "close", 3: "blush" },
       choice: {
         prompt:
           "There. You don't have to do anything with that. It's just out of the box now.",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -216,6 +238,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

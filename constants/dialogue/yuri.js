@@ -13,11 +13,13 @@ export default {
         "**{firstName}**: SPECIMEN. You'll attend to this message immediately. It comes from the genius and visionary Dr. Yuri Isami, and is therefore of considerable historical importance.",
         "You've entered my facility {timesMet} times and walked out on your own feet every occasion. Do you understand the significance!? No. Of course you don't.\n\nEvery other student treats Mortkranken as a place one is carried into. You walk in. Unprompted. Repeatedly.\n\nIt's either bravery or a diagnosable condition, worm, and as your physician I intend to establish which.",
       ],
+      faces: { 0: "smile", 1: "annoyed" },
       choice: {
         prompt: "Well!? Answer! I haven't got all night. I am a very busy man.",
         options: [
           {
             key: "kind",
+            face: "full_smile",
             label: "Say the facility's impressive",
             style: 3,
             close:
@@ -25,6 +27,7 @@ export default {
           },
           {
             key: "playful",
+            face: "sweat",
             label: "Ask for the diagnosis",
             style: 1,
             close:
@@ -32,6 +35,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise_blush",
             label: "Say you walk in for him",
             style: 4,
             close:
@@ -51,12 +55,14 @@ export default {
         "EVERY patient under my care is required to inform me of any absence! Treatment schedules depend on it. Vitals depend on it. I'm the physician assigned to your case, worm, and I was left to work out your whereabouts by inference, like some common detective!\n\nI want to be perfectly clear that I was NOT worried! And do not think you can smooth this over with {favResponse}, as you always do! It has no bearing on the matter!",
         "This is a professional matter, and it is not up for debate. You will report to my lab immediately so I can examine you myself.",
       ],
+      faces: { 0: "annoyed", 1: "sweat", 2: "serious" },
       choice: {
         prompt:
           "Have you nothing to say for yourself!? Next time, you inform me in advance. Is that understood!?",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Apologize for not telling him",
             style: 3,
             close:
@@ -64,6 +70,7 @@ export default {
           },
           {
             key: "playful",
+            face: "blush",
             label: "Ask if he missed you",
             style: 1,
             close:
@@ -71,6 +78,7 @@ export default {
           },
           {
             key: "bold",
+            face: "annoyed",
             label: "Tell him to come and get you",
             style: 4,
             close:
@@ -90,11 +98,13 @@ export default {
         "He's right, of course. Jiro protects me, and I keep him alive. Neither of us has ever needed to make a speech about it.",
         "Your case is no different. It's been mine since we met in {sinceMet}, and I'll say this once: nobody else can cure you. Not Frostheim, and not any resource Darkwick General has to offer. It takes a mind like mine.\n\nSo you'll keep your appointments and you'll stay put. Losing you would go down as a failure on my record, and I don't intend to have one! That is the only reason.",
       ],
+      faces: { 0: "default", 1: "close", 2: "serious" },
       choice: {
         prompt: "That's my prognosis. You may respond.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say you're glad it's him",
             style: 3,
             close:
@@ -102,6 +112,7 @@ export default {
           },
           {
             key: "playful",
+            face: "annoyed",
             label: "Ask for a second opinion",
             style: 1,
             close:
@@ -109,6 +120,7 @@ export default {
           },
           {
             key: "bold",
+            face: "blush",
             label: "Ask if that's the only reason",
             style: 4,
             close:
@@ -128,12 +140,14 @@ export default {
         "Your file hasn't left my desk all week. I've stopped putting it away. There's no point.",
         "I have the finest mind at this academy, and yet there's a shelf of failed protocols with your name on every one. Today I couldn't make myself start the next.\n\nI've spent more of today on {lastMoment} than on your file, which is a gross misallocation of a genius's time. The fix is obvious. You come here, I examine you in person, and then I have no reason to keep going over it. Tomorrow. After your lessons.",
       ],
+      faces: { 0: "serious", 1: "close", 2: "sweat" },
       choice: {
         prompt:
           "It's routine. I'm only asking because I miss... I'm missing data! I need more data.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Say he can run every test",
             style: 3,
             close:
@@ -141,6 +155,7 @@ export default {
           },
           {
             key: "playful",
+            face: "blush",
             label: "Ask what he misses",
             style: 1,
             close:
@@ -148,6 +163,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise_blush",
             label: "Ask if you'll have to undress",
             style: 4,
             close:
@@ -167,12 +183,14 @@ export default {
         "People keep asking why you're always in my facility. For months I've told them they'd misunderstood. A stubborn case. Routine follow-up.\n\nThis time I told them the truth. You aren't my patient. You're mine. Anyone with an objection may bring it to me directly.",
         "I've tried to explain away what I feel for you. Gratitude. Habit. Professional interest. I ruled out every one. What's left is you, and I'm through pretending otherwise!",
       ],
+      faces: { 0: "smile", 1: "serious", 2: "blush" },
       choice: {
         prompt:
           "Which means I'm done inventing reasons to get you here. Come and stay the night. I might even sleep, for once.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Say you'll make sure he sleeps",
             style: 3,
             close:
@@ -180,6 +198,7 @@ export default {
           },
           {
             key: "playful",
+            face: "blush",
             label: "Ask which side he sleeps on",
             style: 1,
             close:
@@ -187,6 +206,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise_blush",
             label: "Say he's not getting any sleep",
             style: 4,
             close:
@@ -207,12 +227,14 @@ export default {
         "I've called myself a genius since I was seventeen years old. It isn't modesty I lack: it's that if I stop saying it for one minute I'm a man who lost his laboratory in a fire and has been shouting to cover the sound of it ever since.\n\nYou've never once required me to shout. That is the thing. In my entire life, one person, and it was you, and I didn't deserve it and accepted it anyway because I'm greedy and always have been.",
         "So.\n\nI love you. There. Said at conversational volume, which cost me more than the fire did.\n\nI'm not going to dress it up. I have no experiment to hide it behind and no diagnosis to file it under. I love you, Yuri Isami loves you, and it's the only claim I've ever made that I have absolutely no evidence for and complete confidence in.",
       ],
+      faces: { 0: "sweat", 1: "close", 2: "serious", 3: "blush" },
       choice: {
         prompt:
           "Answer. Or don't. I shall be magnificent about it either way. I shall be *devastated* and magnificent.",
         options: [
           {
             key: "answered",
+            face: "surprise_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -220,6 +242,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

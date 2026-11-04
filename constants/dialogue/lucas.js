@@ -11,11 +11,13 @@ export default {
         "About the east corridor today. I was on my way over to deal with those Frostheim third-years, and by the time I got there you'd already sorted it. Nobody raised their voice, and nobody was made a fool of.\n\nI'm usually the one stepping in. Watching you settle it like that was genuinely impressive.",
         "So here's my proposal. I train in the yard at six every morning. We've crossed paths {timesMet} times now, purely by chance.\n\nI keep a training log, and the partners column has been empty since Emrys. I'd like to put a name in it.",
       ],
+      faces: { 0: "full_smile", 1: "surprise", 2: "default" },
       choice: {
         prompt: "Six sharp. I'll bring biscuits. Is that a yes?",
         options: [
           {
             key: "kind",
+            face: "full_smile",
             label: "Say yes, you'll be there",
             style: 3,
             close:
@@ -23,6 +25,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Call six in the morning cruel",
             style: 1,
             close:
@@ -30,6 +33,7 @@ export default {
           },
           {
             key: "bold",
+            face: "smile",
             label: "Say you hope he keeps up",
             style: 4,
             close:
@@ -49,11 +53,13 @@ export default {
         "Is a \"pajama party\" some sort of important event? He's been insisting for a week that we invite you to one. I can't tell if he's serious.",
         "You're the one I always ask. You answer me with {favResponse} every time, no matter how odd the question.\n\nEveryone else tells me that's simply how it's done here. You tell me why. You really are very kind. I'm lucky to count you as a friend.",
       ],
+      faces: { 0: "serious", 1: "sweat", 2: "smile" },
       choice: {
         prompt: "So. Pajama party. Real, or is Kaito having me on?",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say it's real, and you'll come",
             style: 3,
             close:
@@ -61,6 +67,7 @@ export default {
           },
           {
             key: "playful",
+            face: "full_smile",
             label: "Say he's being had, completely",
             style: 1,
             close:
@@ -68,6 +75,7 @@ export default {
           },
           {
             key: "bold",
+            face: "smile",
             label: "Say you'll go if he does",
             style: 4,
             close:
@@ -87,12 +95,14 @@ export default {
         "I have a brother. Had. No. Have. I won't use the other word, and I haven't used it since the day he disappeared.\n\nHis name is Nox. He's the reason I came here, and the reason I train past the point where it helps, and the reason I'm poor company after a mission. I've let everyone think it's duty. It isn't. It's a search, and it isn't going well.",
         "I shouldn't have put that on you. I've been told I'm hopeless at keeping things to myself, and there I've gone and proved it again.\n\nBut I didn't tell Jin, and I didn't tell Kaito, and I've had plenty of chances. I told you. I wanted you to know I noticed myself choosing.",
       ],
+      faces: { 0: "sweat", 1: "serious", 2: "close" },
       choice: {
         prompt:
           "Tell me this hasn't changed how you see me. That's the only thing I want to hear tonight, and I'd rather hear it from you than from anyone.",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Tell him you think more",
             style: 3,
             close:
@@ -100,6 +110,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Say he's a terrible liar",
             style: 1,
             close:
@@ -107,6 +118,7 @@ export default {
           },
           {
             key: "bold",
+            face: "serious",
             label: "Ask to help him look",
             style: 4,
             close:
@@ -126,12 +138,14 @@ export default {
         "There's a version of me I keep at arm's length, and I don't always manage it. It came very close tonight, and I've been sat on the floor of my room since, waiting for it to settle back down.\n\nI've never written that to anyone. I've practised saying it out loud a few times and my voice won't do it.",
         "I'm not afraid of it hurting me. I'm afraid of what it would do with the fact that I love...\n\n*The message stops there. Another one comes straight after.*\n\nThat it would use what I care about. That's all I meant. I should stop writing at this hour.",
       ],
+      faces: { 0: "serious", 1: "sweat", 2: "blush" },
       choice: {
         prompt:
           "If this is too much, tell me and I'll stop. I promise I won't hold it against you. Part of me is even hoping you will.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Tell him to keep going",
             style: 3,
             close:
@@ -139,6 +153,7 @@ export default {
           },
           {
             key: "playful",
+            face: "blush",
             label: "Say he didn't finish that word",
             style: 1,
             close:
@@ -146,6 +161,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Ask him to open the door",
             style: 4,
             close:
@@ -165,12 +181,14 @@ export default {
         "I wasn't there. That's the whole of it. There was something in the west wing and I was two floors away being useful to someone else, and I've been stood outside your door a while now without knocking, because it occurred to me I might not have the right to.",
         "I was always told that strength carries a duty. I've believed it since I was a boy, and I was rather proud of how well I carried the idea of it.\n\nIt's stopped being an idea. That's what I came to say. It has a name now, and the name is yours, and I don't know what to do with a duty that keeps me awake.",
       ],
+      faces: { 0: "sweat", 1: "serious", 2: "blush" },
       choice: {
         prompt:
           "May I come in? I'll go if you say no, and I'll be completely all right about it.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Tell him to come in",
             style: 3,
             close:
@@ -178,6 +196,7 @@ export default {
           },
           {
             key: "playful",
+            face: "sweat",
             label: "Ask how long he's been there",
             style: 1,
             close:
@@ -185,6 +204,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise_blush",
             label: "Open the door yourself",
             style: 4,
             close:
@@ -205,12 +225,14 @@ export default {
         "{timesMet} times. I know the number because I never stopped keeping the log. I only stopped calling it training.\n\nEvery page of it is you being kind to me with nothing in it for you, and me deciding not to look straight at what I felt, in case it made me useless.",
         "It hasn't made me useless. It's made me a great deal more careful about coming home.\n\nI love you. I've loved you longer than is decent, and I've been terribly well-mannered about it, and I'd like, very much, to stop pretending otherwise.\n\nThere. It's copied across. I didn't lose my nerve after all.",
       ],
+      faces: { 0: "sweat", 1: "serious", 2: "close", 3: "blush" },
       choice: {
         prompt:
           "Whatever you answer, I'll be glad I wrote it. Please be honest. I couldn't bear kindness here.",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -218,6 +240,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

@@ -38,7 +38,12 @@ mock.module('@supabase/supabase-js', {
 
 // Every outbound Discord call, recorded rather than made. `dmFails` flips
 // openDmChannel into the 403 that a user sharing no guild with the bot produces.
-const discord = { posts: [], typing: [], dmFails: false, postFails: false };
+// `posts` is the scene's cards and notices; the plain-text "sent you a
+// message" frame that precedes a live scene's first card is kept apart in
+// `frames` (with everything, in order, in `sent`), so counts and indexes below
+// stay about the scene itself.
+const discord = { posts: [], frames: [], sent: [], typing: [], dmFails: false, postFails: false };
+const isFrame = (message) => !message.components && /sent you a message\.\*$/.test(message.content || '');
 mock.module('../discordRest.js', {
   namedExports: fakeDiscordRest({
     openDmChannel: async (userId) => {
@@ -47,7 +52,12 @@ mock.module('../discordRest.js', {
     },
     postChannelMessage: async (channelId, message) => {
       if (discord.postFails) throw new Error('Discord API error: 500');
-      discord.posts.push({ channelId, ...message });
+      // `raw` is the payload as sent; `content` is the readable text either
+      // way, so assertions don't care whether a message is a V2 scene card
+      // (text in TEXT_DISPLAY components) or a plain system notice.
+      const record = { channelId, ...message, raw: message, content: message.content ?? textOf(message.components) };
+      discord.sent.push(record);
+      (isFrame(message) ? discord.frames : discord.posts).push(record);
       return { id: `msg-${discord.posts.length}` };
     },
     postChannelTyping: async (channelId) => {
@@ -58,6 +68,8 @@ mock.module('../discordRest.js', {
 
 const {
   buildBondJournal,
+  renderBeat,
+  renderClosing,
   deliverBondScene,
   getBondScene,
   handleBondClick,
@@ -65,6 +77,25 @@ const {
   surfaceBondSceneResume,
 } = await import('../bondScenes.js');
 const { BOND_LEVEL_SLUGS } = await import('../constants/game.js');
+
+// Walk a V2 component tree (or plain action rows) for its text and buttons.
+function walk(components, visit) {
+  for (const c of components || []) {
+    visit(c);
+    if (c.accessory) visit(c.accessory);
+    walk(c.components, visit);
+  }
+}
+function textOf(components) {
+  const texts = [];
+  walk(components, (c) => { if (c.type === 10) texts.push(c.content); });
+  return texts.join('\n\n');
+}
+function buttonIds(components) {
+  const ids = [];
+  walk(components, (c) => { if (c.type === 2) ids.push(c.custom_id); });
+  return ids;
+}
 const { ENCOUNTER_MILESTONES } = await import('../constants/milestones/index.js');
 
 const USER = 'user-1';
@@ -79,6 +110,8 @@ function reset() {
   fake.tables.user_activity = [{ discord_user_id: USER, bond_dms_enabled: true }];
   fake.tables.encounter_milestones = [];
   discord.posts = [];
+  discord.frames = [];
+  discord.sent = [];
   discord.typing = [];
   discord.dmFails = false;
   discord.postFails = false;
@@ -99,7 +132,7 @@ function assertBeatPosted(content, rawBeat) {
 // The button ids on the last message posted, so a test can walk the scene the
 // way a user does rather than by guessing indexes.
 const lastButtons = () =>
-  (discord.posts.at(-1)?.components || []).flatMap((r) => r.components).map((b) => b.custom_id);
+  buttonIds(discord.posts.at(-1)?.components);
 
 beforeEach(reset);
 
@@ -172,17 +205,20 @@ test('a user who has opted out is marked and never messaged', async () => {
 test('the first bond DM a user ever gets carries the frame line and the opt-out button', async () => {
   await deliverBondScene(USER, CHAR, 'Friend');
 
-  assert.match(discord.posts[0].content, /sent you a message/);
+  assert.strictEqual(discord.frames.length, 1);
+  assert.match(discord.frames[0].content, /sent you a message/);
   assert.ok(lastButtons().some((id) => id.startsWith('bond:optout:')));
 });
 
 test('a later scene with another character keeps the frame line but drops the opt-out button', async () => {
   await deliverBondScene(USER, CHAR, 'Friend');
   discord.posts = [];
+  discord.frames = [];
 
   await deliverBondScene(USER, 'haru', 'Acquaintance');
 
-  assert.match(discord.posts[0].content, /sent you a message/);
+  assert.strictEqual(discord.frames.length, 1);
+  assert.match(discord.frames[0].content, /sent you a message/);
   assert.ok(!lastButtons().some((id) => id.startsWith('bond:optout:')));
 });
 
@@ -266,7 +302,7 @@ test('the closing choice posts its authored line, records the pick, and grants t
   assert.ok(discord.posts.at(-1).content.includes(scene.keepsake.emoji));
   // The scene ends with exactly one button: a replay of the scene just
   // finished, so looking back doesn't require /bonds character:<name>.
-  const ids = (discord.posts.at(-1).components || []).flatMap((r) => r.components).map((b) => b.custom_id);
+  const ids = buttonIds(discord.posts.at(-1).components);
   assert.deepStrictEqual(ids, [`bond:replaystart:${CHAR}:fri:x`]);
 
   assert.strictEqual(row().status, 'complete');
@@ -275,7 +311,7 @@ test('the closing choice posts its authored line, records the pick, and grants t
   assert.strictEqual(fake.tables.bond_keepsakes[0].emoji, scene.keepsake.emoji);
 });
 
-test('a closing option with a sticker sends it ahead of the keepsake, in its own message', async () => {
+test('a closing option with a sticker shows it in the card, with the keepsake under it', async () => {
   // Towa's Acquaintance "kind" pick is the one authored option that carries a
   // sticker (Happy.png) on its close — the keepsake must still read last.
   await deliverBondScene(USER, 'towa', 'Acquaintance');
@@ -289,21 +325,75 @@ test('a closing option with a sticker sends it ahead of the keepsake, in its own
   });
 
   assert.strictEqual(result.acted, true);
-  assert.strictEqual(discord.posts.length, 3, 'beat 0 plus the split sticker + keepsake close');
+  assert.strictEqual(discord.posts.length, 2, 'beat 0 plus a single closing card');
 
-  const stickerMessage = discord.posts.at(-2);
-  const keepsakeMessage = discord.posts.at(-1);
+  const closing = discord.posts.at(-1);
+  assert.ok(closing.files?.some((f) => f.name === option.sticker), 'the sticker rides the closing card');
 
-  // option.close here is empty (the sticker is the whole reply), so compare
-  // directly rather than through assertBeatPosted's literal-stretch matching.
-  assert.strictEqual(stickerMessage.content, option.close);
-  assert.ok(stickerMessage.files?.some((f) => f.name === option.sticker), 'sticker rides its own message');
-  assert.ok(!stickerMessage.content.includes(scene.keepsake.emoji), 'the keepsake has not appeared yet');
+  // Order inside the card: the sticker's gallery comes before the keepsake text.
+  const order = [];
+  walk(closing.components, (c) => {
+    if (c.type === 12) order.push('sticker');
+    if (c.type === 10 && c.content.includes(scene.keepsake.emoji)) order.push('keepsake');
+  });
+  assert.deepStrictEqual(order, ['sticker', 'keepsake'], 'the keepsake reads last');
+  const [card, keepsake] = closing.raw.components;
+  assert.ok(!textOf(card.components).includes(scene.keepsake.emoji), 'the keepsake is not in the card');
+  assert.strictEqual(keepsake.type, 10);
+  assert.ok(keepsake.content.includes(scene.keepsake.emoji), 'the keepsake sits right under the card');
+  assert.deepStrictEqual(buttonIds(closing.components), ['bond:replaystart:towa:acq:x']);
+});
 
-  assert.ok(keepsakeMessage.content.includes(scene.keepsake.emoji), 'the keepsake reads last, on its own message');
-  assert.ok(!keepsakeMessage.files, 'the sticker does not also ride the keepsake message');
-  const ids = (keepsakeMessage.components || []).flatMap((r) => r.components).map((b) => b.custom_id);
-  assert.deepStrictEqual(ids, ['bond:replaystart:towa:acq:x'], 'the replay button sits on the final message');
+test('scene beats go out as V2 cards with the character portrait, never with content', async () => {
+  const prev = process.env.BASE_URL;
+  process.env.BASE_URL = 'https://example.test';
+  try {
+    await deliverBondScene(USER, CHAR, 'Friend');
+  } finally {
+    if (prev === undefined) delete process.env.BASE_URL; else process.env.BASE_URL = prev;
+  }
+
+  // Beat 0 is two messages: the frame line as plain text first, then the card.
+  assert.strictEqual(discord.sent.length, 2);
+  assert.deepStrictEqual(Object.keys(discord.sent[0].raw), ['content'], 'the frame is a plain-text message');
+  assert.match(discord.sent[0].raw.content, /sent you a message/);
+
+  const { raw } = discord.sent[1];
+  assert.ok(raw.flags & (1 << 15), 'IS_COMPONENTS_V2 not set');
+  assert.strictEqual(raw.content, undefined, 'a V2 message must not carry content');
+  const [card] = raw.components;
+  assert.strictEqual(card.type, 17);
+  assert.strictEqual(card.accent_color, 0xf7a8c4, "the bar is the Friend level's color");
+  assert.ok(!textOf(card.components).includes('sent you a message'), 'the frame is not in the card');
+  const [section] = card.components;
+  assert.strictEqual(section.type, 9);
+  assert.strictEqual(section.accessory.media.url, `https://example.test/assets/expressions/${CHAR}/default.png`);
+  assert.deepStrictEqual(buttonIds(card.components), [], 'no buttons inside the card');
+  assert.ok(buttonIds(raw.components.slice(1)).length, 'the buttons sit below the card');
+});
+
+test("a scene's faces pick each card's portrait, and default fills the gaps", () => {
+  const prev = process.env.BASE_URL;
+  process.env.BASE_URL = 'https://example.test';
+  try {
+    const portrait = (message) => {
+      let url = null;
+      walk(message.components, (c) => { if (c.type === 11) url = c.media.url; });
+      return url;
+    };
+    const scene = {
+      beats: ['First beat.', 'Second beat.'],
+      faces: { 0: 'serious' },
+      choice: { prompt: 'Pick.', options: [{ key: 'kind', label: 'Kind', close: 'Close.', face: 'blush' }] },
+      keepsake: { emoji: '❄️', line: 'A keepsake.' },
+    };
+    const opts = { characterId: 'jin', levelName: 'Friend' };
+    assert.match(portrait(renderBeat(scene, 0, { firstName: 'Jin' }, opts).at(-1)), /\/jin\/serious\.png$/);
+    assert.match(portrait(renderBeat(scene, 1, { firstName: 'Jin' }, opts).at(-1)), /\/jin\/default\.png$/);
+    assert.match(portrait(renderClosing(scene.choice.options[0], scene.keepsake, {}, opts)), /\/jin\/blush\.png$/);
+  } finally {
+    if (prev === undefined) delete process.env.BASE_URL; else process.env.BASE_URL = prev;
+  }
 });
 
 test('a second choice click grants no second keepsake and posts nothing', async () => {

@@ -17,11 +17,13 @@ export default {
         "**{firstName}**: Hey, it's Haku. Got your number the boring way, before you ask.\n\nI do actually have a reason for this. I also just wanted an excuse to text you. The reason came first. Barely.",
         "Okay, real reason. There's something in the middle of the Hotarubi hall floor, been there for years. Everyone walks straight through it and blames the headache on the weather.\n\nExcept you. {timesMet} times here, and you're the only one I've watched go around it instead of through. Could be nothing. I've been curious ever since tbh, so I'm asking.",
       ],
+      faces: { 0: "smile", 1: "default" },
       choice: {
         prompt: "Well? Was that just a coincidence?",
         options: [
           {
             key: "kind",
+            face: "serious",
             label: "Say it just felt wrong",
             style: 3,
             close:
@@ -29,6 +31,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask if you passed the test",
             style: 1,
             close:
@@ -36,6 +39,7 @@ export default {
           },
           {
             key: "bold",
+            face: "sweat",
             label: "Ask if the excuse came first",
             style: 4,
             close:
@@ -54,11 +58,13 @@ export default {
         "**{firstName}**: Been thinking about your first week here.",
         "Wanting to go home that bad, and staying anyway. I know that wasn't easy. You made the right call. I mean that, even on the days it doesn't feel like it.\n\nAll that going on, and somehow you've still got {favResponse} for me every time. Most people figure I'm a slacker and don't ask much of me tbh.\n\nCan't really pull that with you, though. Your curse, the missions, all of it. Not gonna half-ass this one.",
       ],
+      faces: { 0: "close", 1: "serious" },
       choice: {
         prompt: "Not to pry, but... you still think about leaving sometimes?",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Say you're glad you stayed",
             style: 3,
             close:
@@ -66,6 +72,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Say only on Mondays",
             style: 1,
             close:
@@ -73,6 +80,7 @@ export default {
           },
           {
             key: "bold",
+            face: "blush",
             label: "Ask if he'd come after you",
             style: 4,
             close:
@@ -91,11 +99,13 @@ export default {
         "The veranda off the guest room is my spot. Tea, the garden, the rain.\n\nI don't bring people out here. Not because it's a secret. It's the one spot that's always felt calm. Can't explain it better than that.",
         "Since {sinceMet}, I keep catching myself out here thinking you'd like the view. Got tired of just thinking it.\n\nSo come see it.",
       ],
+      faces: { 0: "smile", 1: "close", 2: "blush" },
       choice: {
         prompt: "Tea's getting cold. That's a hint, by the way.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say you'll be right there",
             style: 3,
             close:
@@ -103,6 +113,7 @@ export default {
           },
           {
             key: "playful",
+            face: "default",
             label: "Ask if the spot's haunted",
             style: 1,
             close:
@@ -110,6 +121,7 @@ export default {
           },
           {
             key: "bold",
+            face: "smile",
             label: "Say you're coming for him",
             style: 4,
             close:
@@ -129,12 +141,14 @@ export default {
         "Kusanagi shrine. Long line of mediums, big house, lot of expectations. I was the strongest one they'd produced in a long time and they were *thrilled* to see the back of me.\n\nNot disappointed. Thrilled. I saw the wrong things and said so out loud, and it turns out a family business runs better when the medium tells people what they want tbh.",
         "So they sent me here and told everyone it was an honor, and the letter's asking when I'm coming back to be useful.\n\nI've read it eleven times. I keep waiting to feel something about it. Nothing's arriving, and that's worse than if it did.\n\nAnyway. That's the most I've ever said about myself in one go. I'd like to formally blame you for it.",
       ],
+      faces: { 0: "sweat", 1: "serious", 2: "smile" },
       choice: {
         prompt:
           "Don't tell me to burn it. Everyone tells me to burn it. I like having it, that's the embarrassing part.",
         options: [
           {
             key: "kind",
+            face: "surprise",
             label: "Say you'll read it with him",
             style: 3,
             close:
@@ -142,6 +156,7 @@ export default {
           },
           {
             key: "playful",
+            face: "sweat",
             label: "Offer to write the reply",
             style: 1,
             close:
@@ -149,6 +164,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Tell him he's not going back",
             style: 4,
             close:
@@ -168,11 +184,13 @@ export default {
         "There was something following you back from the east wing tonight. Not a big one, it wasn't going to do anything, they mostly don't, but it had picked you and it was prob going to keep picking you.\n\nSo I dealt with it. Properly, the shrine way, the way I swore I was never doing again because of who taught it to me.",
         "It took about four hours and it hurt in a way I'd genuinely forgotten about, and I'd have done it if it took four days.\n\nI'm telling you because I don't want to be someone who quietly does things for you and lets you think the world is easier than it is. That's my dad's whole personality and I'd rather die.\n\nAlso I'm exhausted and slightly emotional and it's five in the morning tbh, so, you know. Grain of salt.",
       ],
+      faces: { 0: "sweat", 1: "serious", 2: "close" },
       choice: {
         prompt: "Go on then. Have a go at me. I've earned at least one.",
         options: [
           {
             key: "kind",
+            face: "surprise",
             label: "Ask if he's okay",
             style: 3,
             close:
@@ -180,6 +198,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Say that sounds like effort",
             style: 1,
             close:
@@ -187,6 +206,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Go out to the veranda",
             style: 4,
             close:
@@ -207,12 +227,14 @@ export default {
         "Here's the thing about being the only one who sees. Everyone thinks it's frightening. It's not frightening, it's lonely: you're in a room full of people and there's a whole other room and you're the only one in it.\n\nYou came into the other room. You didn't even make a thing of it. You just started stepping around stuff on the floor and drinking tea on a freezing veranda like you'd always had a spot there.",
         "So: I love you.\n\nNo bit. No door. I've loved you since the veranda, probably before it, and I've spent every conversation since half-assing it, because half-assing it is the only way I know how to survive meaning something.\n\nI keep going back over what I let slide. Walking you home and cracking a joke at your door instead of saying this. The morning you answered half asleep in your pajamas and I decided I wasn't allowed to notice. C'mon. Stupid things to miss. I miss them anyway.\n\nThat's the whole message. God, this is awful.",
       ],
+      faces: { 0: "sweat", 1: "serious", 2: "close", 3: "blush" },
       choice: {
         prompt:
           "Take your time. I'm extremely lazy, I'll wait forever, it's genuinely no effort tbh.",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -220,6 +242,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

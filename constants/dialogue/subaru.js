@@ -17,12 +17,14 @@ export default {
         "**{firstName}**: Hello Honor Roll, is now an alright time?",
         "You've helped Hotarubi more times than most people would ever bother counting. {timesMet}, by my count, and I don't say that enough.\n\nHaku and I keep a pot of tea going most evenings, nothing formal, and I've wanted to ask you to join us for longer than I'll admit. I just kept finding a reason it wasn't quite the right moment. I know you're busy, and you don't owe us the visit just because you've done so much for the house already. I only wanted you to know I'd like it very much, if you said yes.",
       ],
+      faces: { 0: "default", 1: "sweat" },
       choice: {
         prompt:
           "Please don't feel you have to say yes on our account. I mean that.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Tell him you'd love to come",
             style: 3,
             close:
@@ -30,6 +32,7 @@ export default {
           },
           {
             key: "playful",
+            face: "sweat",
             label: "Tease him for the long delay",
             style: 1,
             close:
@@ -37,6 +40,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise_blush",
             label: "Tell him you'd been waiting",
             style: 4,
             close:
@@ -56,11 +60,13 @@ export default {
         "I went back over everything I said the last time. People have always said my manner is a little peculiar. I've been on a stage since I was four, so maybe that's why. I worried it bothered you too.\n\nThen I remembered you've answered me with {favResponse} every time I've ever asked you anything, and I felt a bit silly.",
         "The tea room has been very quiet. I keep setting out one cup too many.",
       ],
+      faces: { 0: "default", 1: "sweat", 2: "close" },
       choice: {
         prompt: "I'm worrying over nothing, aren't I?",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say it wasn't anything he did",
             style: 3,
             close:
@@ -68,6 +74,7 @@ export default {
           },
           {
             key: "playful",
+            face: "blush",
             label: "Ask if Haku noticed",
             style: 1,
             close:
@@ -75,6 +82,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise_blush",
             label: "Say you missed him too",
             style: 4,
             close:
@@ -94,11 +102,13 @@ export default {
         "*The room is dark. A fan, a comb, and a folded haori are laid out on the low table with a precision that is clearly ritual.*\n\n> These are from the first role I ever danced. I was four. Once a year I hold them and read what's left on them, and it's the only time I've been glad of this stigma.",
         "> I've never brought anyone. I thought it would spoil it. It hasn't.\n\n*He holds the fan out, hesitates, then puts it in your hands anyway.*\n\n> Now there'll be some of you on it, and next year I'll read that too. I've made you part of a very old thing without asking. I'm not sorry.",
       ],
+      faces: { 0: "serious", 1: "close", 2: "sweat" },
       choice: {
         prompt: "...Say something. My hands are shaking a bit.",
         options: [
           {
             key: "kind",
+            face: "full_smile_blush",
             label: "Ask about the first dance",
             style: 3,
             close:
@@ -106,6 +116,7 @@ export default {
           },
           {
             key: "playful",
+            face: "blush",
             label: "Ask what the fan says now",
             style: 1,
             close:
@@ -113,6 +124,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Take his hand instead",
             style: 4,
             close:
@@ -132,12 +144,14 @@ export default {
         "They ask when I'm going back to the stage. Every letter, every visit. The hiatus is \"temporary\", and it's been three years of temporary.\n\nThe truth is I stopped being able to do it. A stage is a hundred years of other people's hands on every rope and rail and prop, and it all comes through the moment I touch anything. Somewhere along the way I lost the knack of shutting it out.",
         "So I'm here instead, a kabuki actor who doesn't act, filling the days with the house and other people's errands. Good at making everyone else comfortable, bad at doing it for myself.\n\nI've told nobody. Haku suspects. Zenji would understand, and I can't bear the thought of him being gentle about it.\n\nYou get it because you're the one person I don't have to be anything in front of. That's not a small thing to hand someone. Be careful with it.",
       ],
+      faces: { 0: "sweat", 1: "close", 2: "serious" },
       choice: {
         prompt:
           "Now. Say something before I talk myself out of having sent it.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Tell him he's allowed to stop",
             style: 3,
             close:
@@ -145,6 +159,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask if Haku wrote this",
             style: 1,
             close:
@@ -152,6 +167,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise",
             label: "Offer to go with him",
             style: 4,
             close:
@@ -171,11 +187,13 @@ export default {
         "I read it. Not on purpose, it doesn't ask me first.\n\nThere was a great deal of me on it. More than I expected. You've been thinking about me at times when there was no reason to.",
         "I should have put it down. I held it for nearly an hour instead, in an empty room, like a thief.\n\nI've spent my whole life reading what people never meant to tell me and being ashamed of it. This is the first time I haven't been ashamed, and that frightens me more than the reading ever did.",
       ],
+      faces: { 0: "sweat", 1: "blush", 2: "serious" },
       choice: {
         prompt: "So. Am I forgiven, or ought I to be?",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Tell him you don't mind",
             style: 3,
             close:
@@ -183,6 +201,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask what else it told him",
             style: 1,
             close:
@@ -190,6 +209,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Tell him he read it right",
             style: 4,
             close:
@@ -210,12 +230,14 @@ export default {
         "I was raised to be watched. Thousands of people, and none of them could see me at all. That's rather the point of the paint.\n\nYou've never seen the paint. Only the boy who fusses and reads doorframes and can't go near a theater, and you keep coming back to *that*. That has never once happened to me.",
         "I love you.\n\nI've kept that on a shelf a long time, telling myself it was improper, or unfair to you, or a burden. Every one of those was a way of not saying it.\n\nSo it's said. Badly rehearsed and entirely honest, and the only thing in this message I'm sure of.",
       ],
+      faces: { 0: "sweat", 1: "serious", 2: "close", 3: "blush" },
       choice: {
         prompt:
           "Take all the time you want. I've been patient for three years about far less important things.",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -223,6 +245,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

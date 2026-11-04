@@ -20,11 +20,13 @@ export default {
         "**{firstName}**: Don't get excited\n\nI message a lot of people\n\nUr not special, ur like extremely not special",
         "So there's a thread going around about u\n\nNothing too bad, which is honestly boring, I was hoping for something I could use\n\nAnyway I killed it, ur welcome\n\ndidn't like the guy who started it and this was cheaper than dealing with him\n\n{timesMet} times we've hung out and nobody's got anything on u\n\nkind of impressive and I'm annoyed about it",
       ],
+      faces: { 0: "smile", 1: "annoyed" },
       choice: {
         prompt: "go ahead, thank me",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Just say thank you",
             style: 3,
             close:
@@ -32,6 +34,7 @@ export default {
           },
           {
             key: "playful",
+            face: "wink",
             label: "Ask how he even found it",
             style: 1,
             close:
@@ -39,6 +42,7 @@ export default {
           },
           {
             key: "bold",
+            face: "smile",
             label: "Say you didn't ask him to",
             style: 4,
             close:
@@ -57,11 +61,13 @@ export default {
         "**{firstName}**: Asked Sho to do fireworks with me again\n\nthat's like the fifth time he's said no, I'm literally offering him a good time and he acts like I asked him to commit a crime",
         "so I'm doing it without him and I need someone who'll actually show up\n\nCap's out, he'd just say \"it's dangerous\" and confiscate them\n\nur the only one who meets my ideas with {favResponse}\n\nthat's why I'm asking u, don't make it weird",
       ],
+      faces: { 0: "annoyed", 1: "default" },
       choice: {
         prompt: "so are u in or are u gonna be boring about it",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Offer to keep watch",
             style: 3,
             close:
@@ -69,6 +75,7 @@ export default {
           },
           {
             key: "playful",
+            face: "wink",
             label: "Say you're telling Sho",
             style: 1,
             close:
@@ -76,6 +83,7 @@ export default {
           },
           {
             key: "bold",
+            face: "full_smile",
             label: "Ask when and where",
             style: 4,
             close:
@@ -95,11 +103,13 @@ export default {
         "do u ever look at the pics I post of u\n\nlike do u actually like them or do u just scroll past\n\nasking bc those are the only ones I let out",
         "the rest are in a folder, started right after we met in {sinceMet} and I just never stopped adding to it\n\nthose don't go up\n\n600k ppl get plenty of me already\n\nthey don't need everything",
       ],
+      faces: { 0: "serious", 1: "sweat", 2: "blush" },
       choice: {
         prompt: "and no, u don't get to ask about the rest of them, I asked first",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say you like the ones he posts",
             style: 3,
             close:
@@ -107,6 +117,7 @@ export default {
           },
           {
             key: "playful",
+            face: "blush",
             label: "Ask what else is in there",
             style: 1,
             close:
@@ -114,6 +125,7 @@ export default {
           },
           {
             key: "bold",
+            face: "wink",
             label: "Ask why he's hoarding them",
             style: 4,
             close:
@@ -133,11 +145,13 @@ export default {
         "here's the bit nobody gets\n\nit's not vanity, vanity would be fine, vanity's cheap\n\nit's that if the numbers go, there's nothing under them\n\nCap's got the strength, Sho's got… whatever Sho's got, the food thing, people love him for free\n\nI've got a follower count and a very good jawline and both of those depreciate",
         "I'm the vice-captain of a house where everyone would pick him over me in a heartbeat, including me\n\nand I've built an entire personality out of not letting that land\n\nanyway don't be nice about it\n\nif ur nice about it I'll have to block u, that's just how I'm built",
       ],
+      faces: { 0: "default", 1: "annoyed", 2: "serious" },
       choice: {
         prompt: "go on, worst thing you've got, I've earned it",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Be nice about it anyway",
             style: 3,
             close:
@@ -145,6 +159,7 @@ export default {
           },
           {
             key: "playful",
+            face: "full_smile",
             label: "Insult the jawline",
             style: 1,
             close:
@@ -152,6 +167,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Tell him you'd pick him",
             style: 4,
             close:
@@ -171,11 +187,13 @@ export default {
         "he's done\n\nnot like… nothing dramatic, I'm not Cap, I don't hit people\n\nhe's just going to find that everyone's suddenly very busy for about a month and he's never going to work out why the fuck that is\n\nthat's the version of me people know better than to test\n\nyou've never seen it pointed anywhere near u and u never will",
         "and yeah, I know that's not a nice thing about me, I'm aware, I've got a whole list\n\nbut u looked at the floor when he said it, and I've spent two years making sure nobody ever makes me look at the floor, so\n\nso nobody gets to do it to u either\n\nthat's it, that's the rule now",
       ],
+      faces: { 0: "annoyed", 1: "smile", 2: "serious" },
       choice: {
         prompt: "don't tell me not to Honor Roll, I've already done it",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Tell him you didn't need it",
             style: 3,
             close:
@@ -183,6 +201,7 @@ export default {
           },
           {
             key: "playful",
+            face: "sweat",
             label: "Ask if that's a declaration",
             style: 1,
             close:
@@ -190,6 +209,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Tell him to come here",
             style: 4,
             close:
@@ -210,12 +230,14 @@ export default {
         "here's the actual thing\n\nI'm not a nice person and I'm not going to become one\n\nI gossip, I'm petty, I keep score, and I will absolutely ruin someone's month over a look they gave u. none of that's changing\n\nwhat changed is I stopped wanting to point any of it at u and started wanting to point all of it *for* u, and I don't know what to call that except the obvious",
         "I love u, Honor Roll\n\nthere, typed it, not deleting it, which is genuinely the hardest thing I've done this year\n\nand before u say anything, I know exactly what I am and I know exactly what u could have instead, and I've done the math on that at 3am more times than I'm going to admit\n\nsay whatever u want, I've survived worse crowds",
       ],
+      faces: { 0: "sweat", 1: "close", 2: "serious", 3: "blush" },
       choice: {
         prompt:
           "come on then, I'm not going to break, I'm probably not going to break",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -223,6 +245,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

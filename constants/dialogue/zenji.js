@@ -17,12 +17,14 @@ export default {
         "**{firstName}**: My dear! Forgive the intrusion, and forgive Haku, who agreed to manage my little video empire and finds himself my secretary too.\n\nHe is one of vanishingly few who can see me at all, bless the Kusanagi blood for it. But we have discovered something swanky between us: a message passed through a capable pair of hands carries my words at full volume, however thin the speaker.\n\nDo you know what that makes me, here of all places? Not a rumor. A correspondent!",
         "Zenji Kotodama, inspired man of the quill, at your service and in your pocket\n\n{timesMet} times I have watched you cross the Hotarubi courtyard, and each time you looked toward the music room. Not through it. *Toward* it. I have had a year to learn the difference.\n\nSo I thought: here is a person who might not mind hearing from a draft.",
       ],
+      faces: { 0: "full_smile", 1: "smile" },
       choice: {
         prompt:
           "Speak, and be as unkind as you like; I am immune to most things, being already dead.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Say you were looking for him",
             style: 3,
             close:
@@ -30,6 +32,7 @@ export default {
           },
           {
             key: "playful",
+            face: "sweat",
             label: "Say the ghost rumors are true",
             style: 1,
             close:
@@ -37,6 +40,7 @@ export default {
           },
           {
             key: "bold",
+            face: "full_smile",
             label: "Ask him to say more",
             style: 4,
             close:
@@ -56,12 +60,14 @@ export default {
         "I confess an ulterior motive. The columnist has a letter of his own and nobody to send it to. Haku refuses to answer it. He says it is a conflict of interest.",
         "*Dear Salon,*\n\n*There is a person who goes off on missions and comes back in one piece, every time, and still I fret the whole while that they will get hurt. They have {favResponse} for me whenever we meet, which is more than a fella like me ever expected, and I should hate to lose it.*\n\n*How does one stop worrying?*\n\n*Signed, A Worrywart of Hotarubi*",
       ],
+      faces: { 0: "full_smile", 1: "smile", 2: "sweat" },
       choice: {
         prompt:
           "There. The salon awaits your reply. Be gentle with the letter writer, my dear. I hear he is very sensitive.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Say you'll check in after",
             style: 3,
             close:
@@ -69,6 +75,7 @@ export default {
           },
           {
             key: "playful",
+            face: "surprise",
             label: "Answer as the columnist",
             style: 1,
             close:
@@ -76,6 +83,7 @@ export default {
           },
           {
             key: "bold",
+            face: "blush",
             label: "Tell him to come with you",
             style: 4,
             close:
@@ -95,12 +103,14 @@ export default {
         "*The biwa lifts off its stand on its own, hangs a moment, and begins to play.*\n\n> You have heard the rumor, I expect. The haunted music room. The instrument that plays itself. That is this. That is the loudest I get to be.",
         "> Holding it takes a great deal out of me and I cannot keep it up for long, so I ration it. Twice a year, perhaps. Never with anyone in the room, so that nobody has to watch it give out.\n\n*The playing is unsteady, and somewhere under it is the sense of a voice.*\n\n> I have spent all of this year's on you. So that once, somebody was the audience for the whole of it, and knew who was playing.",
       ],
+      faces: { 0: "smile", 1: "close", 2: "blush" },
       choice: {
         prompt:
           "Well? Say it quickly, my dear. The strings are already tiring.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Tell him what you picture",
             style: 3,
             close:
@@ -108,6 +118,7 @@ export default {
           },
           {
             key: "playful",
+            face: "full_smile",
             label: "Say he dropped a note",
             style: 1,
             close:
@@ -115,6 +126,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise_blush",
             label: "Reach toward the sound",
             style: 4,
             close:
@@ -134,12 +146,14 @@ export default {
         "I have a brother. He is in Mortkranken with a scalpel in his hand and a face like a closed door, and he was younger, and not yet so closed-off, the last time he saw me alive.\n\nJiro Kirisaki. Yes. That one. I was Taro then. I have not corrected him. He has built something out of being the one who was left, and I do not know how to take that from him gently.\n\nThere is an old story about a fisherman with my name who wandered somewhere he oughtn't and came home to find the years gone on without him. I read it to Jiro at bedtime. I never thought I would end up living inside it.",
         "Everyone believes I bear this place no grudge. That is true and complete. I do not.\n\nBut I have never once said out loud that I mind. Not being dead. Being *unfinished*. Four hundred pages and no ending, and a boy downstairs who thinks I stopped loving him because I stopped arriving.\n\nThere. I have never written that down, and I write everything down.",
       ],
+      faces: { 0: "default", 1: "serious", 2: "close" },
       choice: {
         prompt:
           "Do not comfort me, my dear. Anything but that. Comfort would finish me off a second time.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say you'll listen instead",
             style: 3,
             close:
@@ -147,6 +161,7 @@ export default {
           },
           {
             key: "playful",
+            face: "blush",
             label: "Ask for the four hundred pages",
             style: 1,
             close:
@@ -154,6 +169,7 @@ export default {
           },
           {
             key: "bold",
+            face: "sweat",
             label: "Tell him to tell Jiro",
             style: 4,
             close:
@@ -173,12 +189,14 @@ export default {
         "There is something in that corridor which is not a rumor and not a draft, and I have spent the evening standing in front of it being enormously ineffective.\n\nI cannot lift a door. I cannot raise an alarm. I could not carry you three feet if the building came down. That is the arithmetic of what I am, and I have made my peace with it every day for a year.",
         "And then it turned toward the stairs you use, and I discovered I have made peace with nothing whatsoever.\n\nI stood in a doorway I cannot close, in front of a thing that cannot see me, all night, because it was the only thing I had to give. So I gave all of it.",
       ],
+      faces: { 0: "serious", 1: "sweat", 2: "close" },
       choice: {
         prompt:
           "Now scold me. I should very much like to be scolded by someone who noticed.",
         options: [
           {
             key: "kind",
+            face: "blush",
             label: "Tell him it was enough",
             style: 3,
             close:
@@ -186,6 +204,7 @@ export default {
           },
           {
             key: "playful",
+            face: "smile",
             label: "Ask if he wrote it up",
             style: 1,
             close:
@@ -193,6 +212,7 @@ export default {
           },
           {
             key: "bold",
+            face: "close",
             label: "Go to the music room instead",
             style: 4,
             close:
@@ -213,12 +233,14 @@ export default {
         "I have thought a great deal about what I am permitted to want. A dead man ought to want very little; it is only decent. One is a draft. One does not make demands of the living.\n\nI have kept to that. Complimented everybody, wanted nothing, been very charming about it. It has been the loneliest year of a life that had already ended.",
         "So here is the indecent thing, and I shall not say it again unless you ask.\n\nI love you. Not fondly. Not poetically. I love you in the ordinary, greedy, entirely alive way I have no business loving anyone, and I have been dressing it as verse for months because verse is permitted and this is not.\n\nThere. No flourish. The plainest sentence I have ever written, and I have never been so frightened of a full stop.",
       ],
+      faces: { 0: "sweat", 1: "smile", 2: "close", 3: "blush" },
       choice: {
         prompt:
           "Answer as you like, my dear. I have already had the impossible part: being asked a question back.",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -226,6 +248,7 @@ export default {
           },
           {
             key: "held",
+            face: "smile",
             label: "Ask him to give you time",
             style: 2,
             close:

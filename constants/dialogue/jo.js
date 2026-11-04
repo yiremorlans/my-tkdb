@@ -12,11 +12,13 @@ export default {
         "**{firstName}**: Is this an odd hour? I've stopped being able to tell.",
         "Quick thing, then I'll leave you be. You came through the hall Tuesday while I was dealing with three separate crises, and you didn't add a fourth. You took the clipboard out of my hand long enough for me to drink my coffee while it was still hot.\n\nThat's the whole compliment, cutie. {timesMet} times in this house and you're the first to hand me something instead of a problem. In Dionysia, that makes you rare.",
       ],
+      faces: { 0: "default", 1: "smile" },
       choice: {
         prompt: "Anyway. How are you? And answer properly, I'll know.",
         options: [
           {
             key: "kind",
+            face: "close",
             label: "Ask him back",
             style: 3,
             close:
@@ -24,6 +26,7 @@ export default {
           },
           {
             key: "playful",
+            face: "blush",
             label: "Offer to be crisis four",
             style: 1,
             close:
@@ -31,6 +34,7 @@ export default {
           },
           {
             key: "bold",
+            face: "wink",
             label: "Say you'd need something",
             style: 4,
             close:
@@ -49,11 +53,13 @@ export default {
         "**{firstName}**: Something's been bothering me and I've decided you're going to hear about it.",
         "I adapt. It's what I do. I read a room and I become the version of me that room needs, and I've been doing it so long I couldn't tell you where the seam is anymore. On stage, in the hall, with Shion, with the advisors. Different man...and woman, every time and all of them mine.\n\nYou come to me with {favResponse} no matter which one you're getting. Same every time. And it's started to feel like being addressed by name in a room where everyone else is calling me by a job.",
       ],
+      faces: { 0: "serious", 1: "close" },
       choice: {
         prompt: "So what am I supposed to do with that, cutie?",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say you'd like the real one",
             style: 3,
             close:
@@ -61,6 +67,7 @@ export default {
           },
           {
             key: "playful",
+            face: "wink",
             label: "Ask which one you're getting",
             style: 1,
             close:
@@ -68,6 +75,7 @@ export default {
           },
           {
             key: "bold",
+            face: "surprise",
             label: "Tell him to stop adapting",
             style: 4,
             close:
@@ -87,11 +95,13 @@ export default {
         "You know I jog every morning. I've told you to try it more than once. It's the only hour of the day nobody needs anything from me.",
         "Ever since we met in {sinceMet}, a good chunk of that hour has gone to thinking about you, which is terrible for my pace. So I figured I'd just bring you along.\n\nCall it training. I want an hour that isn't a job, or a mission, and doesn't end with either of us owing the other one a report.",
       ],
+      faces: { 0: "smile", 1: "close", 2: "blush" },
       choice: {
         prompt: "Well? I already set two alarms, cutie. Say you'll join me.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Say you'll be there",
             style: 3,
             close:
@@ -99,6 +109,7 @@ export default {
           },
           {
             key: "playful",
+            face: "wink",
             label: "Ask if this counts as a date",
             style: 1,
             close:
@@ -106,6 +117,7 @@ export default {
           },
           {
             key: "bold",
+            face: "serious",
             label: "Say he should've asked sooner",
             style: 4,
             close:
@@ -125,11 +137,13 @@ export default {
         "To save you the question, it can't be one of the storeroom artifacts. Those run one size for the whole cast and call it close enough. This one needs it exact, and I don't trust anyone else's hands near you for that part.\n\nWould you come alone? I'd rather it just be the two of us for this one.",
         "Also, if I'm honest...\n\nI've thought about {lastMoment} more than I've thought about the show this week. That's not a complaint. It's why I want this hour: nobody needing anything from me except you, standing still while I take my time with you. I don't intend to share a single minute of it.",
       ],
+      faces: { 0: "smile", 1: "serious", 2: "blush" },
       choice: {
         prompt: "So? Office, three o'clock, if that works for you, cutie.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Tell him you're coming",
             style: 3,
             close:
@@ -137,6 +151,7 @@ export default {
           },
           {
             key: "playful",
+            face: "wink",
             label: "Ask if you're the mannequin",
             style: 1,
             close:
@@ -144,6 +159,7 @@ export default {
           },
           {
             key: "bold",
+            face: "full_smile",
             label: "Ask for the whole afternoon",
             style: 4,
             close:
@@ -163,12 +179,14 @@ export default {
         "Somewhere between the morning jogs together and that afternoon in my office, you stopped being someone I fit into my schedule, and I started wanting to clear whole days just to spend them with you. I didn't plan for you, cutie. I'm glad I couldn't.",
         "I'm done keeping you to the hours nobody's watching. I want {house} to know about us, and if anyone asks, I'll tell them myself.",
       ],
+      faces: { 0: "wink", 1: "close", 2: "smile" },
       choice: {
         prompt:
           "Are you free tonight? I'd like to come see you.\n\nIf you'd like me to stay, you only have to ask.",
         options: [
           {
             key: "kind",
+            face: "smile",
             label: "Ask him to stay the night",
             style: 3,
             close:
@@ -176,6 +194,7 @@ export default {
           },
           {
             key: "playful",
+            face: "full_smile",
             label: "Ask who he'll tell first",
             style: 1,
             close:
@@ -183,6 +202,7 @@ export default {
           },
           {
             key: "bold",
+            face: "blush",
             label: "Say you're his",
             style: 4,
             close:
@@ -203,12 +223,14 @@ export default {
         "{timesMet} times with you, and I can't stand them anymore. I made hot milk for two again tonight, out of habit, and drank both. The other side of the bed has started to feel like a room I keep walking past.\n\nI lie here thinking about your hand with my ring on it, and how long I'd keep you if you were here. The answer keeps getting longer. That isn't something a captain should put in writing. I'm putting it in writing.",
         "So, plainly: I love you.\n\nNot the captain, not the Venus of Dionysia, not whichever version the room ordered. The man at one in the morning who's finished every task on the list and still can't sleep, because you're not in it.\n\nI want the quiet nights with you in them. All of them. Take this at whatever speed you like. I've made enough decisions for other people. This one's yours.",
       ],
+      faces: { 0: "serious", 1: "close", 2: "blush", 3: "smile" },
       choice: {
         prompt:
           "I thought I was done with feelings like this. So then. How are you going to take responsibility?",
         options: [
           {
             key: "answered",
+            face: "full_smile_blush",
             label: "Say it back",
             style: 3,
             close:
@@ -216,6 +238,7 @@ export default {
           },
           {
             key: "held",
+            face: "close",
             label: "Ask him to give you time",
             style: 2,
             close:
