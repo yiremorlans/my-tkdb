@@ -142,8 +142,11 @@ async function main() {
     },
     debug: say,
     showHint: params.get("hints") === "1",
+    // Tease past the crest (holds.js): preview only for now.
+    bliss: true,
   });
   const { TEASE_TIER, CAUGHT_TIER } = holds;
+  scene.holds = holds;
 
   // --- controls -------------------------------------------------------------
   const panel = $("#controls");
@@ -361,6 +364,16 @@ async function main() {
     };
     b.onpointerup = b.onpointerleave = () => holds.holding?.spot === spot && holds.endHold();
   }
+  // Past the crest (holds.js bliss): needs a lip and a hand hold this
+  // hangout at bound; these skip the setup.
+  button(warmRow, "bliss: mark lip + hand done", () => {
+    if (hangout.tier !== TEASE_TIER) return say(`(bliss is ${TEASE_TIER} only; this is ${hangout.tier})`);
+    holds.primeBliss();
+  });
+  button(warmRow, "bliss: jump to the edge", () => {
+    if (!holds.blissReady) return say(`(needs ${TEASE_TIER} and a lip + hand hold first)`);
+    holds.reachEdge();
+  });
   button(warmRow, "caught tease (close)", () =>
     hangout.tier === CAUGHT_TIER ? holds.catchTease() : say(`(the caught tease is ${CAUGHT_TIER} only; this is ${hangout.tier})`),
   );

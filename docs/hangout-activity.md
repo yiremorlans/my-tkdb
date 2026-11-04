@@ -430,6 +430,55 @@ and pose come off the same tier ladder as the spot it's on.
     glancing down once he breaks away; warmth stays at its cap and
     drifts as usual, and the monitor stays up 20s while his pulse settles.
     No hint or line mentions tease.
+  - **Past the crest: bliss (preview only, 2026-11-03).** At bound, once a
+    lip hold and a hand hold have both run in this hangout (any order, a
+    hold that started counts; no date needed; reset when the tier
+    changes), the crest doesn't break him away. He stops at the edge: the
+    crest eases back to 0.7 and holds there, the finger can let go, and a
+    beating heart shows over his chest for 4s. Taps on him do nothing.
+    Miss it and he breaks away as above. Click it and bliss runs. Redone
+    2026-11-03 (the first version did too much: a rose vignette, a
+    heartbeat sync, heart bursts, a whispered line, all cut). No vignette
+    or effects: the camera pushes in on his face over 2.2s (scene.js
+    `setPush`: up to 1.45x, his face eased to the upper middle) and stays
+    there; the heart monitor stays up. Two steps (holds.js `phase.step`):
+    1. **Plead.** The crest's strain lets go (down to 0.15, his squeezed
+       eyes open), he stops glancing down, his face goes soft (rig.json
+       `moods.bliss`, else `smile_blush`), and the rise (live2dRig.js
+       `setRise`) comes up to 0.45 over 2.5s: quicker breath, parted lips,
+       heavy lids that flutter shut now and then. He gasps out his bound
+       `blissPlead` lines in the box one after another, his mouth moving
+       with the words, each after a small gasp (`renderer.gasp`), and
+       never the same line twice running; each stays up 4s after it types
+       out before the next gasp. While he talks he meets your
+       eyes (live2dRig.js `CONTACT`: the heavy lids lift and the flutter
+       holds off), then they fall heavy again between lines. Once the first
+       line is out, three choices come up (`#bliss-choices`, his
+       `blissChoices` labels, one per response type, /meet's glyphs;
+       /meet's own choices hide meanwhile) and the lines keep coming until
+       one is picked.
+    2. **Peak, then the comedown** (seconds from the pick, holds.js
+       `PEAK`). The choices go and the box fades. The rise climbs to full
+       over 1.4s (his breath at its quickest), his eyes roll back under
+       heavy lids over 1.1s (live2dRig.js `setRoll`, `ROLL`: irises up,
+       lids lowered, brows lifted, no flutter), and at 2.6s they fall shut
+       (the crest's squeeze, the crest itself kept low so his breath
+       doesn't catch). At 5s the comedown starts: the rise eases off over
+       7s, the roll lets go behind his shut eyes, the camera eases out over
+       6s, and his eyes open slowly from 6.5s over 3s.
+    At 9.5s the hold falls away as slowly as after the break, warmth
+    stays capped, the monitor stays up 20s, and he says a `blissAfter`
+    line for the type picked (`blissAfter: { kind, playful, bold }`). The
+    pick changes only that line: no affinity. His soft face holds until
+    the line has typed out plus `UPSET_READ` (6s at least, plus
+    `TEASE_LINGER`), then eases back over `SETTLE_FADE`. The three pools
+    are optional (Hangout `pool()` reads the keyed ones) and use shared
+    placeholders until drafted per character; Ren's are the first draft.
+    No line names tease. Gated by `attachHolds(..., { bliss: true })`,
+    which only preview.js passes, so the Activity still breaks away at the
+    crest. The drawer's "bliss: mark lip + hand done" and "bliss: jump to
+    the edge" skip the setup. Timings live in holds.js `EDGE`, `BLISS`,
+    `PLEAD` and `PEAK`.
 - **Hold lines (preview prototype, 2026-11-02).** Letting go of a hold
   that ran says one line from that hold's pool in
   `constants/hangout/<id>.js`: `heartbeatHold` (chest), `lipHold` and
@@ -447,14 +496,17 @@ and pose come off the same tier ladder as the spot it's on.
   temperament (2026-11-02), and no pose.
 - **Hold face arc (preview prototype, 2026-11-03).** The lip and hand holds
   change his face while they run, not only on release (holds.js `ARC`).
-  After the opening widen he goes `flustered` (about 1–1.6s in), then
-  settles into that hold's release face for the tier: spark 6–8s, close
+  The opening widen is a subtle surprise over his own face (no `flustered`
+  step; cut 2026-11-03, it buried the surprise; the shy rigs, `holdGaze:
+  "shy"`, keep it, sooner: about 0.5–0.85s in, 2026-11-04), then he settles into that
+  hold's release face for the tier: spark 6–8s, close
   4–5.5s, bound 3–4.5s, the lips 1.5s later. Settled, it catches up with
   him now and then (every 4.5–7.5s on the hand, 3–5.5s on the lips): a
-  1–1.6s flustered flicker with a small widen and a puff of two hearts.
+  small widen and a puff of two hearts, his face staying settled (it used
+  to flicker back to `flustered`, which read as cycling; cut 2026-11-03).
   Moving the finger during the hold sets a flicker off at once (at most
-  every 1.5s), or puts off the settle if he's still flustered. Hearts come
-  quicker while he's flustered and slower once he's settled. Every timing
+  every 1.5s), or puts off the settle if he hasn't settled. Hearts come
+  quicker before he settles and slower once he's settled. Every timing
   is a random span. No heavy lids, glance down or parted lips.
 - **Holds in the Activity (2026-11-03).** The holds above (rings, heart
   monitor, hearts, face arc, tease and caught tease) and the first-time
@@ -517,7 +569,7 @@ removal animation. An article can require another to be removed first.
 
 Per character, per outfit, in that outfit's rig.json entry: the art to hide
 (a model part, else a drawable list, since some models don't group the
-article into a part), the spot it covers, the unlock tier, the removal
+article into a part, or a parameter to hold off, as with Elias's lollipop), the spot it covers, the unlock tier, the removal
 reaction, the article's own trigger, and any article it waits on. Hiding a
 part zeroes its opacity after motions and pose3 write theirs; hiding
 drawables needs its own path in live2dRig.js (drawable opacity is
@@ -532,6 +584,10 @@ toggles (`?hide=PartX`) show what a part covers.
 | Tohma | monocle | `PartMonocle` (academy) | eye/cheek area (spot TBD) | Unlock tier, lines and covered spot TBD. |
 | Jiro | glasses | `PartMegane` (academy, casual, casual_2, house) | eye/cheek area (spot TBD) | Unlock tier, lines and covered spot TBD. |
 | Ren | phone | drawables TBD (no named part; check which outfits hold it) | hand | **Taken away** by the player, not set down by him. Encounter labels never touch his phone/game (Ren responses rule), so this needs a tier late enough and lines that make it land. Unlock tier and lines TBD. |
+| Shohei | bandana | `PartBandana` (academy, casual; also a `ParamBandana`) | head | His current headPat lines already guard it ("Watch the bandana."; close: "You can mess up the bandana. Just you."), so those move to `bandanaPat`. Check the hair drawn under it in the preview. Unlock tier and lines TBD. |
+| Benkei | name tag | work outfit only; no named part (`Part14` is the work-only part, unconfirmed), else drawables TBD | chest | Not on the academy outfit. Unlock tier and lines TBD. |
+| Elias | lollipop | no part; driven by parameters (`ParamCandyOnOff`, `ParamHandCandyOff`; `e_candy_00` and the `m_ame*` motions use them) | lips (spot TBD) | Hiding it means holding the parameter off after motions and expressions write theirs, a third art path beside part and drawables; the `m_ame*` poses would bring it back, so they need excluding once it's off. Check whether he holds it at rest. Unlock tier and lines TBD. |
+| Leo | headphones | `PartHeadphone` (academy, casual; also a `ParamHeadphone`) | chest (worn around his neck) | His new-tier chestTouch already has "Hands off the headphones.", which moves to `headphonePat`. He's noise-sensitive (his ear lines; canon idle: "Ugh, everyone's so loud. I'm putting my headphones on"), so taking them is a real ask and wants a late tier. Check what the neck/collar looks like under them. Unlock tier and lines TBD. |
 
 Hotspot reactions are cosmetic, unlimited and local, with no server call.
 Every reaction plays the line for that trigger in the dialogue box.

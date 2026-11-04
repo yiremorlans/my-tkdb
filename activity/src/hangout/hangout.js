@@ -166,13 +166,22 @@ export class Hangout {
    * pool anywhere uses the placeholder.
    */
   line(trigger) {
-    let pool = this.lines[trigger];
-    if (DIALOGUE_TIERS.some((tier) => this.lines[tier])) {
-      pool = null;
-      for (let i = DIALOGUE_TIERS.indexOf(this.tier); i >= 0 && !pool; i--) pool = this.lines[DIALOGUE_TIERS[i]]?.[trigger];
+    const pool = this.pool(trigger) ?? PLACEHOLDER_LINES[trigger] ?? [];
+    return Array.isArray(pool) && pool.length ? pool[Math.floor(this.random() * pool.length)] : null;
+  }
+
+  /**
+   * `trigger`'s pool as authored, for the nearest tier that has it (see
+   * line), or null. Most are line arrays; bliss's `blissChoices` and
+   * `blissAfter` are keyed by response type.
+   */
+  pool(trigger) {
+    if (!DIALOGUE_TIERS.some((tier) => this.lines[tier])) return this.lines[trigger] ?? null;
+    for (let i = DIALOGUE_TIERS.indexOf(this.tier); i >= 0; i--) {
+      const pool = this.lines[DIALOGUE_TIERS[i]]?.[trigger];
+      if (pool) return pool;
     }
-    pool ??= PLACEHOLDER_LINES[trigger] ?? [];
-    return pool.length ? pool[Math.floor(this.random() * pool.length)] : null;
+    return null;
   }
 
   /** A tap at a reference-space point. Returns what happened, for the UI. */

@@ -201,5 +201,33 @@ export default {
       "...Seriously? You're stopping there? That's just mean.",
       "...Cool. Cool. So I'm just stuck like this now. Thanks a lot, Senpai.",
     ],
+    // Past the crest (holds.js bliss, preview only): gasped out one after
+    // another until a choice is picked; then his comedown line for the type
+    // picked. Labels stay under 30 characters.
+    blissPlead: [
+      "Hah... Senpai... You're driving me crazy...",
+      "Look what you're doing to me... Hah... This is so unfair...",
+      "I can't... think... Senpai, don't stop...",
+      "Hah... It's way too fast... You did this...",
+    ],
+    blissChoices: {
+      kind: "Tell him you've got him",
+      playful: "Call it a critical hit",
+      bold: "Pull him closer",
+    },
+    blissAfter: {
+      kind: [
+        "...Hah. Okay. You didn't let go. ...Don't tell anyone I needed that.",
+        "...I'm back. Mostly. Stay like this a little longer, Senpai.",
+      ],
+      playful: [
+        "...Critical hit. Yeah. Thanks for the commentary, Senpai.",
+        "...You're the worst. ...Do it again sometime.",
+      ],
+      bold: [
+        "...Okay. You don't get to look that pleased about it.",
+        "...Hah. Closer, huh. ...Yeah. I'm not complaining.",
+      ],
+    },
   },
 };

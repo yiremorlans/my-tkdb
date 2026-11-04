@@ -77,3 +77,7 @@ body.leak .vn-box, body.leak .choices, body.leak .hud, body.leak .meter { displa
 
 /* The hold styles (heart monitor, first-time hint) are in
    ../hangout/hangout.css: the Activity has them too. */
+
+/* Bliss (holds.js, preview only): its own choices (#bliss-choices) stand in
+   for /meet's while it runs. */
+body.bliss #choices { display: none; }

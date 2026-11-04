@@ -15,7 +15,7 @@ import { typeDuration } from "../hangout/stage.js";
 
 // One glyph per type, abstract so it doesn't give the type away, and so the
 // type never depends on color alone.
-const RESPONSE_GLYPHS = { kind: "☼", playful: "♪", bold: "⚡︎", neutral: "♢" };
+export const RESPONSE_GLYPHS = { kind: "☼", playful: "♪", bold: "⚡︎", neutral: "♢" };
 // The face for the outcome, by base gain (getAffinityForResponse).
 const OUTCOME = { 2: "answerLove", 1: "answerLike", 0: "answerFlat" };
 const RETRY_LINE = "Couldn't reach them. Try again?";

@@ -14,6 +14,8 @@
  * Only the counts are written, never Discord IDs.
  *
  * Reads Supabase with the service role key, so run it with the bot's .env.
+ * Players listed in REVIEW_EXCLUDE_USER_IDS (comma-separated Discord IDs,
+ * for the owner's test accounts) are left out entirely.
  *
  * Writes review-priority.json at the repo root (gitignored). If one is
  * already there, prints what changed since it before overwriting.
@@ -35,6 +37,12 @@ const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 const PAGE_SIZE = 1000;
 
 const OUT_PATH = new URL("../review-priority.json", import.meta.url);
+const EXCLUDED_USER_IDS = new Set(
+  (process.env.REVIEW_EXCLUDE_USER_IDS || "")
+    .split(",")
+    .map((id) => id.trim())
+    .filter(Boolean),
+);
 
 async function fetchRelationships() {
   const supabase = createClient(
@@ -48,7 +56,7 @@ async function fetchRelationships() {
       .select("discord_user_id, character_id, affinity, last_interaction_at")
       .range(from, from + PAGE_SIZE - 1);
     if (error) throw error;
-    rows.push(...data);
+    rows.push(...data.filter((r) => !EXCLUDED_USER_IDS.has(r.discord_user_id)));
     if (data.length < PAGE_SIZE) return rows;
   }
 }

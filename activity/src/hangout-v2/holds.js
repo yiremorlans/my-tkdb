@@ -11,6 +11,8 @@
 //   onStart   called as a hold starts (the preview turns warmth on)
 //   debug     (text) => void for dev-only notes (the preview's `say`)
 //   showHint  true shows the first-time hint even if it was seen (?hints=1)
+//   bliss     true lets tease go past the crest once the lip and hand holds
+//             have run (preview only for now; uses scene.setPush)
 // The page may have #heart-monitor (with .heart, #ecg, #bpm) and #coach;
 // without them the monitor and hint are skipped.
 
@@ -20,10 +22,12 @@ import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 import { forTier, resolveReaction } from "../hangout/reactions.js";
 import { typeDuration, UPSET_READ, SETTLE_FADE } from "../hangout/hangout.js";
 import { hotspotAt } from "../hangout/hotspots.js";
+import { RESPONSE_TYPE_ORDER } from "../../../constants/responseTypes.js";
+import { RESPONSE_GLYPHS } from "./meet.js";
 
 const $ = (sel) => document.querySelector(sel);
 
-export function attachHolds(scene, { warmth, onStart, debug, showHint = false }) {
+export function attachHolds(scene, { warmth, onStart, debug, showHint = false, bliss = false }) {
   const { renderer, hangout } = scene;
 
   // Press and hold the chest (heartbeat), lips or a hand for HOLD_PRESS
@@ -152,7 +156,238 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
   let crestClock = 0; // seconds at full bliss, then into the crest
   let afterglowUntil = 0;
 
+  // --- past the crest (preview only: options.bliss) ---------------------------
+  // At bound, once a lip hold and a hand hold have both run this hangout
+  // (`primed`, any order; cleared when the tier changes), the crest no
+  // longer breaks him away. He stops at the edge instead: the crest eases
+  // back to EDGE.crest and holds there, the finger can let go, and a beating
+  // heart shows over his chest for EDGE.window seconds. Click it and he goes
+  // on into bliss; miss it and he breaks away as before.
+  // Bliss has no vignette or effects: the camera pushes in on his face
+  // (scene.setPush, BLISS.push*, BLISS.zoom) and stays there, the heart
+  // monitor stays up, and it runs in two steps (phase.step):
+  //   plead  his face goes soft (rig.json moods.bliss, else
+  //          BLISS_MOOD_DEFAULT), the rise comes up to PLEAD.rise (quicker
+  //          breath, parted lips, heavy fluttering lids: renderer.setRise)
+  //          and he gasps out his `blissPlead` lines one after another, each
+  //          after a small gasp (renderer.gasp), meeting your eyes while he
+  //          talks (renderer.setContact; live2dRig.js CONTACT). Once the
+  //          first line is out, three choices come up (his `blissChoices`,
+  //          one label per response type, in #bliss-choices) and the lines
+  //          keep coming until one is picked.
+  //   peak   the pick: the box fades and the choices go, the rise climbs to
+  //          full (his breath at its quickest), his eyes roll back under
+  //          heavy lids (renderer.setRoll; live2dRig.js ROLL) and fall shut
+  //          (the crest's squeeze). Then the slow comedown: the rise eases
+  //          off over PEAK.riseFall, the roll lets go behind his shut eyes,
+  //          the eyes open slowly from PEAK.eyesAt and the camera eases out.
+  // Then the hold falls away as slowly as after the break and he says his
+  // `blissAfter` line for the type picked. The pick changes only that line:
+  // no affinity. Taps on him do nothing at the edge or in bliss.
+  const EDGE = { crest: 0.7, ease: 1.2, window: 4, fadeIn: 0.3, fadeOut: 0.8, radius: 58, hit: 120 };
+  const BLISS = { crest: 0.15, crestEase: 3, pushIn: 2.2, pushOut: 6, zoom: 1.45, face: 6 };
+  // The plead, in seconds: the rise comes up to `rise` over `riseIn`; the
+  // first line `first` after the click; each line's words `gasp` after its
+  // gasp; `gap` after a line ends before the next gasp; the choices
+  // `choices` after the first line ends.
+  const PLEAD = { rise: 0.45, riseIn: 2.5, first: 1, gasp: 0.35, gap: 4, choices: 0.3 };
+  // The peak, in seconds from the pick: the rise to full over `riseIn`, the
+  // roll in over `roll`, his eyes squeezed shut from `shutAt` over `shut`;
+  // at `downAt` the comedown starts (the rise falls over `riseFall`, the roll
+  // over `rollFall`), his eyes open from `eyesAt` over `eyesOpen`, and at
+  // `afterAt` his line.
+  const PEAK = { riseIn: 1.4, roll: 1.1, shutAt: 2.6, shut: 0.7, downAt: 5, riseFall: 7, rollFall: 1.5, eyesAt: 6.5, eyesOpen: 3, afterAt: 9.5 };
+  const BLISS_MOOD = "bliss";
+  const BLISS_MOOD_DEFAULT = "smile_blush";
+  // His bound `blissPlead` (lines), `blissChoices` ({ kind, playful, bold }
+  // labels) and `blissAfter` ({ kind, playful, bold } line pools); these
+  // stand in where he has none.
+  const BLISS_FALLBACK = {
+    blissPlead: ["Hah... You're driving me crazy...", "Look what you're doing to me... Hah..."],
+    blissChoices: { kind: "Hold him closer", playful: "Tell him he's cute like this", bold: "Tell him not to hold back" },
+    blissAfter: {
+      kind: ["...Okay. Give me a minute to come back down."],
+      playful: ["...You're enjoying this way too much."],
+      bold: ["...Okay. I didn't hold back. Happy?"],
+    },
+  };
+  const blissOn = Boolean(bliss);
+  const primed = new Set();
+  let primedTier = hangout.tier;
+  let phase = null; // { name: "edge" | "bliss", at, step, stepAt, ... }
+  let pushK = 0; // the camera push, eased
+  let riseK = 0; // the rise, 0-1
+  let rollK = 0; // the eye roll, 0-1
+  const choicesEl = $("#bliss-choices");
+  const ease = (x) => x * x * (3 - 2 * x);
+  const blissReady = () => blissOn && hangout.tier === TEASE_TIER && primed.has("lips") && primed.has("hand");
+  function prime(kind) {
+    if (!blissOn || hangout.tier !== TEASE_TIER || primed.has(kind)) return;
+    primed.add(kind);
+    if (primed.has("lips") && primed.has("hand")) debug?.("(lip + hand holds done: tease can go past the crest)");
+  }
+  const blissPool = (trigger) => hangout.pool(trigger) ?? BLISS_FALLBACK[trigger];
+  const softMood = () => (renderer.rig.expressions?.moods?.[BLISS_MOOD] ? BLISS_MOOD : BLISS_MOOD_DEFAULT);
+  function reachEdge() {
+    // The drawer's jump straight here has no tease running: start its look.
+    if (!(holding?.on && holding.kind === "tease")) {
+      renderer.setHold({ ...HOLD_EFFECTS.tease });
+      teaseFace();
+    }
+    holding = null;
+    crestClock = 0;
+    phase = { name: "edge", at: scene.time };
+  }
+  function step(name) {
+    phase.step = name;
+    phase.stepAt = scene.time;
+  }
+  function startBliss() {
+    phase = { name: "bliss", at: scene.time, nextLineAt: scene.time + PLEAD.first, lastLine: null };
+    step("plead");
+    // The tease's weights carry on, but no more glances down.
+    renderer.setHold({ ...HOLD_EFFECTS.tease, glanceEvery: null });
+    renderer.setContact(true);
+    renderer.setMood(softMood(), 1.2);
+    hangout.pendingMood = null;
+    hangout.moodUntil = Infinity;
+    document.body.classList.add("bliss");
+  }
+  // One plead line: a gasp, then the words, never the same line twice running.
+  function plead() {
+    const pool = blissPool("blissPlead");
+    const lines = pool.length > 1 ? pool.filter((l) => l !== phase.lastLine) : pool;
+    const line = lines[Math.floor(Math.random() * lines.length)];
+    phase.lastLine = line;
+    renderer.gasp();
+    const ends = scene.time + PLEAD.gasp + typeDuration(line) / 1000;
+    phase.nextLineAt = ends + PLEAD.gap;
+    phase.choicesAt ??= ends + PLEAD.choices;
+    setTimeout(() => phase?.step === "plead" && hangout.say(line), PLEAD.gasp * 1000);
+  }
+  function showChoices() {
+    phase.choicesUp = true;
+    if (!choicesEl) return pick(RESPONSE_TYPE_ORDER[0]);
+    const labels = blissPool("blissChoices");
+    choicesEl.replaceChildren(
+      ...RESPONSE_TYPE_ORDER.filter((type) => labels[type]).map((type) => {
+        const b = document.createElement("button");
+        b.className = `choice choice-${type}`;
+        const glyph = document.createElement("span");
+        glyph.className = "choice-icon";
+        glyph.setAttribute("aria-hidden", "true");
+        glyph.textContent = RESPONSE_GLYPHS[type];
+        b.append(glyph, labels[type]);
+        b.onclick = () => pick(type);
+        return b;
+      }),
+    );
+    choicesEl.hidden = false;
+  }
+  function pick(type) {
+    if (phase?.step !== "plead") return;
+    if (choicesEl) choicesEl.hidden = true;
+    renderer.setContact(false);
+    phase.type = type;
+    step("peak");
+  }
+  function endBliss() {
+    const type = phase.type;
+    phase = null;
+    document.body.classList.remove("bliss");
+    if (choicesEl) choicesEl.hidden = true;
+    renderer.setContact(false);
+    renderer.setHold({}, { release: CREST.release, fall: { lips: CREST.lipsFall, lids: CREST.lidsFall }, glances: false });
+    warmth()?.endHold();
+    warmth()?.bump(1);
+    afterglowUntil = scene.time + CREST.afterglow;
+    const pool = blissPool("blissAfter")?.[type] ?? BLISS_FALLBACK.blissAfter[type] ?? BLISS_FALLBACK.blissAfter.kind;
+    const line = pool[Math.floor(Math.random() * pool.length)];
+    hangout.moodUntil = scene.time + Math.max(BLISS.face, typeDuration(line) / 1000 + UPSET_READ) + TEASE_LINGER;
+    hangout.moodFadeOut = SETTLE_FADE;
+    hangout.say(line);
+  }
+  // Where the crest heads, how far his eyes are squeezed, and how fast, for
+  // the step he's in. Bliss keeps the crest low (it would catch his breath)
+  // and uses only its squeeze, to shut his eyes at the peak.
+  function crestTarget() {
+    if (phase.name === "edge") return [EDGE.crest, EDGE.crest, EDGE.ease, EDGE.ease];
+    if (phase.step !== "peak") return [BLISS.crest, 0, BLISS.crestEase, 1];
+    const u = scene.time - phase.stepAt;
+    if (u < PEAK.eyesAt) return [BLISS.crest, u >= PEAK.shutAt ? 1 : 0, BLISS.crestEase, PEAK.shut];
+    return [BLISS.crest, 0, BLISS.crestEase, PEAK.eyesOpen];
+  }
+  const toward = (x, target, over, dt) => (x > target ? Math.max(target, x - dt / over) : Math.min(target, x + dt / over));
+  // crestFrame while he's at the edge or in bliss.
+  function phaseFrame(dt) {
+    const t = scene.time - phase.at;
+    warmth()?.hold(dt, HOLD_WARMTH.tease);
+    const [to, eyesTo, rate, eyesRate] = crestTarget();
+    crest = toward(crest, to, rate, dt);
+    squeeze = toward(squeeze, eyesTo, eyesRate, dt);
+    renderer.setCrest(ease(crest), ease(squeeze));
+    if (phase.name === "edge") {
+      if (t > EDGE.window) {
+        phase = null;
+        breakAway();
+      }
+      return;
+    }
+    if (phase.step === "plead") {
+      riseK = toward(riseK, PLEAD.rise, PLEAD.riseIn, dt);
+      if (scene.time >= phase.nextLineAt) plead();
+      if (!phase.choicesUp && phase.choicesAt != null && scene.time >= phase.choicesAt) showChoices();
+      return;
+    }
+    const u = scene.time - phase.stepAt;
+    riseK = u < PEAK.downAt ? toward(riseK, 1, PEAK.riseIn, dt) : toward(riseK, 0, PEAK.riseFall, dt);
+    rollK = u < PEAK.downAt ? toward(rollK, 1, PEAK.roll, dt) : toward(rollK, 0, PEAK.rollFall, dt);
+    if (u >= PEAK.afterAt) endBliss();
+  }
+  // The heart over his chest while he's at the edge: fades in, beats with
+  // his pulse, fades out as the window runs out.
+  function drawEdgeHeart() {
+    if (phase?.name !== "edge") return;
+    const t = scene.time - phase.at;
+    const alpha = Math.min(1, t / EDGE.fadeIn) * Math.min(1, (EDGE.window - t) / EDGE.fadeOut);
+    const [x, y] = spotCenter("chest");
+    const thump = beatThump(10);
+    const r = EDGE.radius * (1 + 0.18 * thump);
+    pulse.circle(x, y, r * 1.9).fill({ color: 0xff8fa8, alpha: 0.12 * alpha * (0.6 + 0.4 * thump) });
+    heartPath(pulse, x, y, r, 0).fill({ color: 0xff6f8e, alpha: 0.92 * alpha });
+    heartPath(pulse, x, y, r, 0).stroke({ width: 4, color: 0xffffff, alpha: 0.5 * alpha });
+  }
+  function edgeHit([px, py]) {
+    const [x, y] = spotCenter("chest");
+    return Math.hypot(px - x, py - y) <= EDGE.hit;
+  }
+  // 0-1: how hard his heart is thumping this instant (lub, then a softer dub).
+  function beatThump(sharp) {
+    const after = (start) => (beatClock >= start ? Math.exp(-(beatClock - start) * sharp) : 0);
+    return Math.max(after(0), 0.6 * after(0.28));
+  }
+  function blissFrame(dt) {
+    if (hangout.tier !== primedTier) {
+      primed.clear();
+      primedTier = hangout.tier;
+    }
+    if (!blissOn) return;
+    const inBliss = phase?.name === "bliss";
+    // After bliss the rise and roll keep falling at the comedown's pace.
+    if (!inBliss) {
+      riseK = Math.max(0, riseK - dt / PEAK.riseFall);
+      rollK = Math.max(0, rollK - dt / PEAK.rollFall);
+    }
+    renderer.setRise?.(ease(riseK));
+    renderer.setRoll?.(ease(rollK));
+    // In for the whole scene; out from the comedown on.
+    const pushed = inBliss && !(phase.step === "peak" && scene.time - phase.stepAt >= PEAK.downAt);
+    pushK = pushed ? Math.min(1, pushK + dt / BLISS.pushIn) : Math.max(0, pushK - dt / BLISS.pushOut);
+    scene.setPush?.(ease(pushK), spotCenter("cheek"), BLISS.zoom);
+  }
+
   function crestFrame(dt) {
+    if (phase) return phaseFrame(dt);
     const teasing = holding?.on && holding.kind === "tease";
     const full = teasing && (renderer.hold?.bliss ?? 0) > 0.99;
     crestClock = full ? crestClock + dt : 0;
@@ -162,7 +397,7 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
     // Eased, so the comedown tapers rather than stopping on a line.
     const ease = (x) => x * x * (3 - 2 * x);
     renderer.setCrest(ease(crest), ease(squeeze));
-    if (full && crest >= 1 && crestClock > CREST.after + CREST.build + CREST.hold) breakAway();
+    if (full && crest >= 1 && crestClock > CREST.after + CREST.build + CREST.hold) (blissReady() ? reachEdge() : breakAway());
   }
   function breakAway() {
     holding = null;
@@ -246,26 +481,31 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
   }
 
   // The face arc (the lip and hand holds): his face moves while you hold,
-  // not only when you let go. The widen first (startHold), then he goes
-  // flustered (ARC_FLUSTER) at `fluster` seconds into the hold, then settles
+  // not only when you let go. The widen first (startHold): the subtle
+  // surprise, over his own face while the hold's blush builds. At `fluster`
+  // seconds he starts getting used to it. The shy ones (rig.json holdGaze
+  // "shy") go flustered (ARC_FLUSTER) sooner, at `flusterShy`, over `fadeIn`; everyone else
+  // keeps his own face (a flustered face on them buried the surprise; cut
+  // 2026-11-03, kept for the shy 2026-11-04). Then he settles
   // into the hold's release face (rig.json reactions handHold / lipHold at
   // that tier, so each character settles where his lines land) at `settle`,
   // later at lower tiers and later again on the lips (`lipsLater`): it takes
   // him longer to get used to it. Every timing is a random span, so no two
   // holds play the same.
   // Settled, he isn't done: now and then (`flutter`, seconds between, the
-  // lips more often) it catches up with him again and he flusters for
-  // `flutterFor` seconds, with a small widen and a puff of hearts, then
-  // settles back. Moving your finger (a thumb over his hand, tracing his
+  // lips more often) it catches up with him again for `flutterFor` seconds:
+  // a small widen and a puff of hearts. His face stays settled (swapping
+  // back to `flustered` read as the face cycling between two). Moving your finger (a thumb over his hand, tracing his
   // lips) by `move` reference units sets one off at once, at most every
-  // `moveGap` seconds; while he's still flustered it puts off the settle by
-  // `moveDelay`. Hearts come quicker while he's flustered (`heartsFast`) and
+  // `moveGap` seconds; before he settles it puts off the settle by
+  // `moveDelay`. Hearts come quicker before he settles (`heartsFast`) and
   // slower once he's settled (`heartsSlow`, HEARTS.every multipliers).
   // His face is held for the whole hold; letting go plays the release
   // reaction as before.
   const ARC_FLUSTER = "flustered";
   const ARC = {
     fluster: [0.9, 1.6],
+    flusterShy: [0.5, 0.85],
     settle: { byTier: { spark: [6, 8], close: [4, 5.5], bound: [3, 4.5] } },
     lipsLater: 1.5,
     flutter: { hand: [4.5, 7.5], lips: [3, 5.5] },
@@ -283,8 +523,8 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
   const arcRand = ([a, b]) => a + Math.random() * (b - a);
   function startArc() {
     const settle = arcRand(forTier(ARC.settle, hangout.tier) ?? ARC.settle.byTier.spark) + (holding.kind === "lips" ? ARC.lipsLater : 0);
-    const settleFace = resolveReaction(renderer.rig, HOLD_LINES[holding.kind], hangout.tier)?.mood ?? ARC_FLUSTER;
-    holding.arc = { phase: "surprise", flusterAt: arcRand(ARC.fluster), settleAt: settle, settleFace, moved: 0, movedAt: -Infinity };
+    const settleFace = resolveReaction(renderer.rig, HOLD_LINES[holding.kind], hangout.tier)?.mood ?? null;
+    holding.arc = { phase: "surprise", flusterAt: arcRand(renderer.rig.holdGaze === "shy" ? ARC.flusterShy : ARC.fluster), settleAt: settle, settleFace, moved: 0, movedAt: -Infinity };
     hangout.pendingMood = null;
     hangout.moodUntil = Infinity;
   }
@@ -297,18 +537,17 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
     const t = holding.held;
     if (a.phase === "surprise" && t >= a.flusterAt) {
       a.phase = "fluster";
-      arcFace(ARC_FLUSTER, ARC.fadeIn);
+      if (renderer.rig.holdGaze === "shy") arcFace(ARC_FLUSTER, ARC.fadeIn);
     } else if ((a.phase === "fluster" && t >= a.settleAt) || (a.phase === "flutter" && t >= a.until)) {
+      if (a.phase === "fluster" && a.settleFace) arcFace(a.settleFace, ARC.fadeSettle);
       a.phase = "settled";
       a.flutterAt = t + arcRand(ARC.flutter[holding.kind]);
-      arcFace(a.settleFace, ARC.fadeSettle);
     } else if (a.phase === "settled" && t >= a.flutterAt) flutter();
   }
   function flutter() {
     const a = holding.arc;
     a.phase = "flutter";
     a.until = holding.held + arcRand(ARC.flutterFor);
-    arcFace(ARC_FLUSTER, ARC.fadeIn);
     renderer.widen(ARC.flutterWiden);
     for (let i = 0; i < ARC.flutterHearts; i++) spawnHeart(i * 0.12);
   }
@@ -337,6 +576,7 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
     // His release line, with that hold's face (reactions.js handHold /
     // heartbeatHold / lipHold; rig.json `reactions` per character).
     if (on) {
+      if (HOLD_WIDEN.has(kind)) prime(kind);
       hangout.react(HOLD_LINES[kind], scene.time);
       if (kind === "tease") hangout.moodUntil += TEASE_LINGER;
     } else if (cancelled) return;
@@ -355,6 +595,12 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
   scene.onPointer = (type, point, e) => {
     const id = e?.pointerId;
     if (type === "down") {
+      // At the edge only the heart answers; in bliss nothing on him does
+      // (the choices are buttons over the stage).
+      if (phase) {
+        if (phase.name === "edge" && edgeHit(point)) startBliss();
+        return true;
+      }
       if (holding) return false;
       const spot = hotspotAt(renderer.rig, renderer, point);
       if (!HOLD_SPOTS[spot]) return false;
@@ -382,7 +628,7 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
   // "not yet" line.
   let boxDimmed = null;
   function dimBox() {
-    const teasing = holding?.on && (holding.kind === "tease" || holding.catchAt != null);
+    const teasing = (holding?.on && (holding.kind === "tease" || holding.catchAt != null)) || phase?.name === "edge" || phase?.step === "peak";
     const dim = teasing ? "tease-hold" : holding?.on && holding.kind === "hand" ? "hand-hold" : null;
     if (dim === boxDimmed) return;
     if (boxDimmed) document.body.classList.remove(boxDimmed);
@@ -401,6 +647,7 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
     dimBox();
     crestFrame(dt);
     drawPulse(dt);
+    blissFrame(dt);
   }
 
   // Where his eyes go first: toward the touch, as EyeBall x/y (down is -),
@@ -439,9 +686,10 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
   function drawPulse(dt) {
     pulse.clear();
     drawHint(dt);
-    if (holding?.on || scene.time < afterglowUntil) beatClock = (beatClock + dt / (60 / renderer.heartRate)) % 1;
+    if (holding?.on || phase || scene.time < afterglowUntil) beatClock = (beatClock + dt / (60 / renderer.heartRate)) % 1;
     drawMonitor(dt);
     drawHearts(dt);
+    drawEdgeHeart();
     if (!holding?.on) return;
     const [x, y] = holding.point ?? spotCenter(holding.spot);
     for (const [start, strength] of [[0, 1], [0.28, 0.6]]) {
@@ -535,7 +783,7 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
   };
   function drawMonitor(dt) {
     if (!monitor || !ecg) return;
-    const on = (holding?.on && (holding.kind === "heartbeat" || holding.kind === "tease")) || scene.time < afterglowUntil;
+    const on = (holding?.on && (holding.kind === "heartbeat" || holding.kind === "tease")) || phase || scene.time < afterglowUntil;
     monitor.classList.toggle("on", Boolean(on));
     if (!on) {
       trace.length = 0;
@@ -548,8 +796,7 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
     if (cssW && ecg.canvas.width !== cssW) ecg.canvas.width = cssW;
     if (cssH && ecg.canvas.height !== cssH) ecg.canvas.height = cssH;
     const { width: w, height: h } = ecg.canvas;
-    const step = ECG_STEP;
-    for (traceT += dt; traceT >= step; traceT -= step) trace.push(ecgAt(beatClock));
+    for (traceT += dt; traceT >= ECG_STEP; traceT -= ECG_STEP) trace.push(ecgAt(beatClock));
     if (trace.length > w) trace.splice(0, trace.length - w);
     ecg.clearRect(0, 0, w, h);
     ecg.lineWidth = 3;
@@ -629,6 +876,23 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false })
     endHold,
     catchTease,
     maybeShowHint,
+    // Preview drawer: mark the lip and hand holds done, or jump to the edge.
+    primeBliss() {
+      prime("lips");
+      prime("hand");
+    },
+    get blissReady() {
+      return blissReady();
+    },
+    reachEdge,
+    // For scripted checks (window.__hangoutV2.holds): his beat phase 0-1
+    // (0 is the lub) and where bliss is.
+    get beatPhase() {
+      return beatClock;
+    },
+    get blissStep() {
+      return phase?.step ?? phase?.name ?? null;
+    },
     TEASE_TIER,
     CAUGHT_TIER,
   };

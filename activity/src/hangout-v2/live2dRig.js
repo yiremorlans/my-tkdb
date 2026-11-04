@@ -109,12 +109,26 @@ const FLINCH = { peak: 0.14, head: 5, body: 2.5, recoil: 3, shoulders: 0.5 };
 // held `hold`, then eased shut over `out`. Talking owns the mouth, so a
 // line said after it flaps over whatever is left.
 const GASP = { open: 0.35, brow: 0.35, eyes: 0.12, in: 0.12, hold: 0.3, out: 0.55 };
-// A brief widen (widen(); the lip and hand holds): a moment's surprise that
-// settles back to his normal eyes, no parted lips. `eyesAdd` opens the eyes
-// by the same amount the models' own surprised face (e_odoroki, +0.2) does,
-// in parameter units rather than a share of the range. Eyes only (`brow`
-// 0), no flinch.
-const WIDEN = { brow: 0, eyes: 0, eyesAdd: 0.2, in: 0.15, hold: 0.5, out: 0.7 };
+// A brief widen (widen(); the lip and hand holds): the gasp's eyes and a
+// touch of its brows, no parted lips, on its own slower timing so it reads
+// as a moment's subtle surprise that settles back to his normal eyes.
+// Shared by every rig. (Restored 2026-11-03 from 80aaa9a; the eyes-only
+// `eyesAdd` version lost the surprise.)
+const WIDEN = { brow: 0.15, eyes: 0.1, in: 0.18, hold: 0.35, out: 0.7, catch: true };
+// The widen's catch (CATCH; widen() only, not the gasp): he goes still.
+// His idle sway and breath hold where they were (`still` of the way, in
+// over `in` seconds, held with the widen and let go over its `out`), then
+// the breath he was holding goes out: ParamBreath dips toward its bottom by
+// `exhale` of the range, peaking `exhaleAt` seconds after the widen starts
+// to ease and gone `exhaleFor` later; and one ordinary blink (`blinkClose`
+// shut, `blinkOpen` open again) at `blinkAt` of the way through the ease
+// back. With the widen itself, the head draws back: chin up `chin` degrees
+// (ParamAngleY), no body or shoulders (a shoulder lift read as too much
+// and added nothing; a body pull-back and lean-in didn't look good; both
+// cut 2026-11-04), on the widen's own timing. The flutter's half
+// widen (scale < 1) keeps the stillness, chin and exhale at its scale but
+// skips the blink.
+const CATCH = { still: 0.9, in: 0.12, chin: 4, exhale: 0.35, exhaleAt: 0.35, exhaleFor: 1.1, blinkAt: 0.45, blinkClose: 0.08, blinkOpen: 0.14 };
 
 const HEAD_SHAKE = { turns: 2, period: 0.6, angle: 7, body: 0, chin: 5, in: 0.25, settle: 0.8 };
 
@@ -208,6 +222,22 @@ const BLISS = { browForm: -0.8, browUp: 0.3, lids: 0.25, blink: [0.5, 0.8], ever
 // its cap by `blush` (ParamCheek units, so the ears and patch deepen) and
 // his eyes squeeze shut; his pulse climbs by `bpm`.
 const CREST = { catch: 0.85, blush: 0.6, bpm: 25 };
+// Bliss's rise (setRise, 0-1; holds.js drives it, preview only): it builds
+// in him. Breath quicker by `breath`, lips parted wider by `lips`, lids
+// heavier (bliss's `lids` toward RISE.lids) and the flutter coming `flutter`
+// times as often, chin up `chin` and head tilted `tilt` degrees (leaning
+// into it), his pulse up `bpm` more.
+const RISE = { breath: 0.7, lips: 0.7, lids: 0.6, flutter: 2.5, chin: 7, tilt: 5, bpm: 14 };
+// Bliss's peak (setRoll, 0-1; holds.js drives it): his eyes roll back under
+// heavy lids. The irises go up to `up` (EyeBall units) and in to the
+// middle, the lids close by `lids`, the brows lift by `brow`, and the
+// flutter stops: the eyes hold there until the crest's squeeze shuts them.
+const ROLL = { up: 0.9, lids: 0.45, brow: 0.25 };
+// Bliss's eye contact (holds.js plead): while he talks, his heavy lids lift
+// by `lids` of their weight and the flutter holds off, so he meets your eyes
+// as he gets the words out; between lines they fall heavy again. Eased in
+// over `in` seconds, out over `out`.
+const CONTACT = { lids: 0.7, in: 0.25, out: 0.6 };
 // rig.json `crest: { params: { <id>: value } }` sets parameters while a
 // crest is up (Lyca's wolf ears pop out: ParamBeastEarOnoff 1). Set over
 // the clips, before motion.ease, so an eased parameter pops at its own
@@ -433,6 +463,7 @@ export class Live2DRig {
     this.easeAt = performance.now();
     model.internalModel.on("afterMotionUpdate", () => {
       this.dampIdle();
+      this.applyCatchIdle();
       this.applyCrestParams();
       this.applyEase();
     });
@@ -603,6 +634,9 @@ export class Live2DRig {
     this.eyeBlink.updateParameters({ setParameterValueById: (_, v) => (open = v) }, dt);
     const wink = this.winking();
     if (wink) open = 1 - (1 - open) * (1 - wink);
+    // The widen's catch blinks once on its own (CATCH): none of his own
+    // through it.
+    if (this.gaspState?.k?.catch && this.gaspState.scale >= 1) open = 1;
     const { values } = this.raw.parameters;
     for (const i of this.blinkIds) values[i] *= open;
   }
@@ -686,7 +720,7 @@ export class Live2DRig {
     this.updatePulse(dt);
     const period = this.durations?.get("m_breath") ?? 3;
     const crest = this.crest ?? 0;
-    const rate = (1 + (WARMTH.breathRate - 1) * w) * (1 + (HOLD.breathRate - 1) * hb) * (1 - CREST.catch * crest);
+    const rate = (1 + (WARMTH.breathRate - 1) * w) * (1 + (HOLD.breathRate - 1) * hb) * (1 + RISE.breath * (this.rise ?? 0)) * (1 - CREST.catch * crest);
     this.breathPhase = ((this.breathPhase ?? 0) + (dt * rate) / period) % 1;
     this.cheekOverflow = 0;
     if (!this.model) return;
@@ -937,7 +971,7 @@ export class Live2DRig {
     const scale = this.rig.heartRate?.scale ?? 1;
     const h = this.hold ?? {};
     const held = PULSE.held * Math.max(h.heartbeat ?? 0, h.pulse ?? 0);
-    const climb = PULSE.warmth * (this.warmth ?? 0) + held + CREST.bpm * (this.crest ?? 0);
+    const climb = PULSE.warmth * (this.warmth ?? 0) + held + CREST.bpm * (this.crest ?? 0) + RISE.bpm * (this.rise ?? 0);
     const target = resting + scale * climb;
     this.bpm ??= resting;
     const tau = target > this.bpm ? PULSE.rise : PULSE.settle;
@@ -955,7 +989,7 @@ export class Live2DRig {
     const part = this.hold.lips;
     if (part < 0.01 || !this.mouth?.length || this.talking) return;
     const inhale = (1 - Math.cos(2 * Math.PI * (this.breathPhase ?? 0))) / 2;
-    const open = part * HOLD.lips * (0.6 + 0.4 * (this.warmth ?? 0)) * (0.55 + 0.45 * inhale);
+    const open = part * HOLD.lips * (0.6 + 0.4 * (this.warmth ?? 0)) * (0.55 + 0.45 * inhale) * (1 + RISE.lips * (this.rise ?? 0));
     const { values, maximumValues } = this.raw.parameters;
     for (const i of this.mouth) values[i] = Math.max(values[i], open * maximumValues[i]);
     // A smile's mouth shape draws a small opening shut, so the smile relaxes
@@ -975,6 +1009,21 @@ export class Live2DRig {
     this.crestEyes = clamp(eyes);
   }
 
+  /** Bliss's rise (RISE), 0-1; the caller eases it. Works through bliss. */
+  setRise(k) {
+    this.rise = Math.min(1, Math.max(0, k));
+  }
+
+  /** Bliss's eye roll (ROLL), 0-1; the caller eases it. Works through bliss. */
+  setRoll(k) {
+    this.roll = Math.min(1, Math.max(0, k));
+  }
+
+  /** Bliss's eye contact while he talks (CONTACT); on only while holds.js asks. */
+  setContact(on) {
+    this.contactOn = Boolean(on);
+  }
+
   // Tease's bliss (BLISS): brows give way, lids grow heavy, and the eyes
   // fall shut now and then. Over the hold look, so the flutter wins.
   applyBliss(k) {
@@ -990,18 +1039,40 @@ export class Live2DRig {
     const brows = { ...BLISS, ...this.rig.bliss };
     for (const id of ["ParamBrowLForm", "ParamBrowRForm"]) set(id, (v) => v + (brows.browForm - v) * k);
     for (const id of ["ParamBrowLY", "ParamBrowRY"]) set(id, (v) => v + brows.browUp * k);
-    // The flutter: shut for a span, then open until the next.
+    // The rise: chin up, head tilted, leaning into it.
+    const rise = this.rise ?? 0;
+    if (rise > 0.001) {
+      set("ParamAngleY", (v) => v + RISE.chin * rise * k);
+      set("ParamAngleZ", (v) => v + RISE.tilt * rise * k);
+    }
+    // The flutter: shut for a span, then open until the next; more often
+    // as the rise builds.
     const now = performance.now() / 1000;
-    const span = ([a, b]) => a + Math.random() * (b - a);
+    const span = ([a, b]) => (a + Math.random() * (b - a)) / (1 + (RISE.flutter - 1) * rise);
     this.flutter ??= { from: now + span(BLISS.every) * 0.5, len: span(BLISS.blink) };
     const f = this.flutter;
-    if (now > f.from + f.len) Object.assign(f, { from: now + span(BLISS.every), len: span(BLISS.blink) });
+    if (now > f.from + f.len) Object.assign(f, { from: now + span(BLISS.every), len: span(BLISS.blink) * (1 + (RISE.flutter - 1) * rise) });
     const t = (now - f.from) / f.len;
-    const shut = t >= 0 && t <= 1 ? Math.sin(Math.PI * t) : 0;
+    // Eye contact while he talks (CONTACT) and the roll (ROLL) both hold
+    // off the flutter; contact lifts the heavy lids too.
+    const dt = Math.min(0.1, Math.max(0, now - (this.contactAt ?? now)));
+    this.contactAt = now;
+    const talking = this.contactOn && this.talking;
+    this.contact = Math.max(0, Math.min(1, (this.contact ?? 0) + (talking ? dt / CONTACT.in : -dt / CONTACT.out)));
+    const contact = this.contact;
+    const roll = this.roll ?? 0;
+    const shut = (t >= 0 && t <= 1 ? Math.sin(Math.PI * t) : 0) * (1 - contact) * (1 - roll);
     // A down-glance lifts the heavy lids and holds off the flutter (glanceDown).
     const lidsUp = 1 - (this.glanceDown ?? 0);
-    const open = (1 - k * (this.lidScale ?? 1) * lidsUp * (BLISS.lids + (1 - BLISS.lids) * shut)) * (1 - (this.crestEyes ?? 0));
+    const lids = (BLISS.lids + (RISE.lids - BLISS.lids) * rise) * (1 - CONTACT.lids * contact);
+    const open = (1 - k * (this.lidScale ?? 1) * lidsUp * (lids + (1 - lids) * shut)) * (1 - ROLL.lids * roll * k) * (1 - (this.crestEyes ?? 0));
     for (const id of ["ParamEyeLOpen", "ParamEyeROpen"]) set(id, (v) => v * open);
+    if (roll > 0.001) {
+      const r = roll * k;
+      set("ParamEyeBallX", (v) => v * (1 - r));
+      set("ParamEyeBallY", (v) => v + (ROLL.up - v) * r);
+      for (const id of ["ParamBrowLY", "ParamBrowRY"]) set(id, (v) => v + ROLL.brow * r);
+    }
   }
 
   // --- hidden parts (preview only) -------------------------------------------
@@ -1188,7 +1259,9 @@ export class Live2DRig {
     if (!st || !this.model) return;
     const t = performance.now() / 1000 - st.at;
     const k = st.k ?? GASP;
-    if (t > k.in + k.hold + k.out) {
+    const easeAt = k.in + k.hold;
+    const end = k.catch ? Math.max(easeAt + k.out, easeAt + CATCH.exhaleAt + CATCH.exhaleFor) : easeAt + k.out;
+    if (t > end) {
       this.gaspState = null;
       return;
     }
@@ -1205,6 +1278,55 @@ export class Live2DRig {
     if (k.open) for (const i of this.mouth ?? []) values[i] = Math.max(values[i], k.open * maximumValues[i] * w);
     for (const id of ["ParamBrowLY", "ParamBrowRY"]) set(id, (v) => v + k.brow * w);
     for (const id of ["ParamEyeLOpen", "ParamEyeROpen"]) set(id, (v, range) => v + ((k.eyes ?? 0) * range + (k.eyesAdd ?? 0)) * w);
+    if (k.catch) {
+      set("ParamAngleY", (v) => v + CATCH.chin * w);
+      this.applyCatch(st, t, easeAt, k.out, ease);
+    }
+  }
+
+  // How still the widen's catch holds him now (0-1, CATCH), at its scale.
+  catchStill(st, t, easeAt, out, ease) {
+    return CATCH.still * st.scale * ease(t / CATCH.in) * (1 - ease((t - easeAt) / out));
+  }
+
+  // The catch on the idle clip's parameters (afterMotionUpdate, before
+  // physics so the hair stills with him): held toward where they were as
+  // the widen started.
+  applyCatchIdle() {
+    const st = this.gaspState;
+    if (!st?.k?.catch || !this.model) return;
+    const { values } = this.raw.parameters;
+    st.idleSnap ??= this.idleParams.map((i) => values[i]);
+    const t = performance.now() / 1000 - st.at;
+    const ease = (x) => {
+      const c = Math.min(1, Math.max(0, x));
+      return c * c * (3 - 2 * c);
+    };
+    const still = this.catchStill(st, t, st.k.in + st.k.hold, st.k.out, ease);
+    if (!still) return;
+    this.idleParams.forEach((i, n) => (values[i] += (st.idleSnap[n] - values[i]) * still));
+  }
+
+  // The catch on the breath and eyes (after warmth, which writes the
+  // breath while he's warm): the held breath, the breath out, the blink.
+  applyCatch(st, t, easeAt, out, ease) {
+    const { values, minimumValues, maximumValues } = this.raw.parameters;
+    const b = this.breathIndex;
+    if (b != null) {
+      st.breathSnap ??= values[b];
+      const still = this.catchStill(st, t, easeAt, out, ease);
+      values[b] += (st.breathSnap - values[b]) * still;
+      const x = (t - easeAt - CATCH.exhaleAt) / CATCH.exhaleFor; // -: rising, 0 peak, 1 gone
+      const rise = CATCH.exhaleAt / CATCH.exhaleFor;
+      const bump = x < 0 ? ease(1 + x / rise) : 1 - ease(x);
+      if (t > easeAt && bump > 0) values[b] = Math.max(minimumValues[b], values[b] - CATCH.exhale * st.scale * bump * (maximumValues[b] - minimumValues[b]));
+    }
+    if (st.scale < 1 || !this.blinkIds.length) return;
+    const from = easeAt + out * CATCH.blinkAt;
+    const bt = t - from;
+    if (bt < 0 || bt > CATCH.blinkClose + CATCH.blinkOpen) return;
+    const shut = bt < CATCH.blinkClose ? ease(bt / CATCH.blinkClose) : 1 - ease((bt - CATCH.blinkClose) / CATCH.blinkOpen);
+    for (const i of this.blinkIds) values[i] *= 1 - shut;
   }
 
   /**

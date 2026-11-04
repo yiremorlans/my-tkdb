@@ -59,8 +59,11 @@
   "expressions": {
     "fade": 0.2,
     "moods": {
-      "caught_shy": ["e_smirk_00", "e_sekimen_00"],
-      "tease": ["e_smirk_00", "e_sekimen_00"],
+      "caught_shy": ["e_tsujo_smile_00", "e_sekimen_00"],
+      "tease": ["e_mysterious_00"],
+      "smirk": ["e_smirk_00"],
+      "soft_smile": ["e_tsujo_smile_00"],
+      "soft_smile_blush": ["e_tsujo_smile_00", "e_sekimen_00"],
       "smirk_blush": ["e_smirk_00", "e_sekimen_00"],
       "default": [],
       "indifferent": ["e_magao_00"],
@@ -76,7 +79,7 @@
       "serious": ["e_magao_00"],
       "annoyed": ["e_komari_00"],
       "upset": ["e_komari_00", "e_ase_00"],
-      "flustered": ["e_kusho_00", "e_sekimen_00", "e_ase_00"],
+      "flustered": ["e_odoroki_00", "e_sekimen_00", "e_ase_00"],
       "sad": ["e_kanasimi_00"],
       "mysterious": ["e_mysterious_00"],
       "mysterious_blush": ["e_mysterious_00", "e_sekimen_00"]
@@ -94,7 +97,7 @@
         "new": { "mood": "mysterious", "duration": 2 },
         "known": { "mood": "smile", "duration": 2 },
         "warm": { "mood": "smile_blush", "duration": 2.4 },
-        "spark": { "rank": 2, "duration": 2.6 },
+        "spark": { "mood": "soft_smile_blush", "duration": 2.6 },
         "close": { "rank": 2, "duration": 2.6 },
         "bound": { "rank": 2, "duration": 3 }
       }
@@ -111,7 +114,7 @@
     },
     "lipsTouch": {
       "byTier": {
-        "new": { "rank": 0, "duration": 2.6, "twitch": 0.8 },
+        "new": { "mood": "surprise", "duration": 2.6, "twitch": 0.8 },
         "known": { "rank": 0, "duration": 2.6, "twitch": 0.6 },
         "warm": { "rank": 0, "duration": 3, "twitch": 0.3 },
         "spark": { "mood": "mysterious_blush", "duration": 3.2 },
@@ -131,10 +134,10 @@
     },
     "handTap": {
       "byTier": {
-        "new": { "mood": "smile", "duration": 2 },
-        "known": { "mood": "smile", "duration": 2 },
+        "new": { "mood": "mysterious", "duration": 2 },
+        "known": { "mood": "soft_smile", "duration": 2 },
         "warm": { "mood": "smile_blush", "duration": 2.4 },
-        "spark": { "mood": "smile_blush", "duration": 2.6 },
+        "spark": { "mood": "soft_smile_blush", "duration": 2.6 },
         "close": { "rank": 2, "duration": 2.6 },
         "bound": { "rank": 2, "duration": 3 }
       }
@@ -169,6 +172,12 @@
         "bound": { "rank": 2, "duration": 3.2 }
       }
     },
+    "handHold": {
+      "byTier": {
+        "spark": { "mood": "soft_smile_blush", "duration": 2.6 },
+        "bound": { "mood": "soft_smile_blush", "duration": 3 }
+      }
+    },
     "heartbeatHold": {
       "byTier": {
         "spark": { "mood": "caught_shy", "duration": 2.8 },
@@ -187,14 +196,17 @@
       "byTier": {
         "bound": { "mood": "smirk_blush", "duration": 4.4 }
       }
-    }
+    },
+    "answerLove": { "byTier": { "new": { "mood": "smirk", "duration": 3.2 } } },
+    "answerLike": { "byTier": { "new": { "mood": "soft_smile", "duration": 3 } } },
+    "answerFlat": { "byTier": { "new": { "mood": "close", "duration": 2.6 } } }
   },
   "bliss": { "browForm": 1, "browUp": -0.1 },
   "heartRate": { "resting": 24, "scale": 0.35 },
   "reactionPoses": {
     "headPat": "m_think",
     "cheekPoke": "m_gesture",
-    "lipsTouch": { "byTier": { "new": "m_think", "known": "m_weak", "warm": "m_think", "spark": "m_hidarikoshi", "close": "m_gesture" } },
+    "lipsTouch": { "byTier": { "new": "m_think", "spark": "m_hidarikoshi", "close": "m_gesture" } },
     "earTouch": "m_hidarikoshi",
     "handTap": "m_gesture",
     "chestTouch": { "byTier": { "new": "m_gesture", "spark": "m_weak", "close": "m_gesture" } },
@@ -202,7 +214,13 @@
     "hipsTouch": { "byTier": { "new": "m_weak", "warm": "m_hidarikoshi", "spark": "m_think", "close": "m_hidarikoshi" } },
     "upset": { "byTier": { "new": "m_weak", "spark": "m_think" } },
     "guarded": "m_weak",
-    "caughtTease": "m_hidarikoshi"
+    "heartbeatHold": "m_think",
+    "lipHold": "m_think",
+    "handHold": "m_hidarikoshi",
+    "teaseLetGo": "m_hidarikoshi",
+    "caughtTease": "m_think",
+    "answerLove": "m_gesture",
+    "answerLike": "m_hidarikoshi"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {

@@ -97,12 +97,40 @@ export async function startScene(stage, { base, tier, outfit, lines, room = true
       scene.closeUp = on;
       layout();
     },
+    // A push-in on top of the framing (holds.js bliss, preview only): `k`
+    // 0-1 zooms by up to `zoom` about `focus` (a reference-space point, his
+    // face), easing it toward the upper middle of the stage. 0 is the plain
+    // framing.
+    setPush(k, focus, zoom = 1.45) {
+      push = k > 0 && focus ? { k, focus, zoom } : null;
+      applyPush();
+    },
     setBackground,
     // The effects prototype (effects.js) reads these.
     background: () => bg,
     backgroundUrl: placeTexture ? place : roomTexture ? `${base}/${rig.background}` : null,
     onBackground: null,
   };
+
+  let framing = null; // layout's { scale, x, y }
+  let push = null;
+  function applyPush() {
+    if (!framing) return;
+    const { scale, x, y } = framing;
+    if (!push) {
+      renderer.view.scale.set(scale);
+      renderer.view.position.set(x, y);
+      return;
+    }
+    const { width, height } = app.screen;
+    const { k, focus: [fx, fy], zoom } = push;
+    const s = scale * (1 + (zoom - 1) * k);
+    // Where the focus sits on screen now, and where it goes: centered, 40% down.
+    const [px, py] = [x + fx * scale, y + fy * scale];
+    const [ax, ay] = [px + (width / 2 - px) * k, py + (height * 0.4 - py) * k];
+    renderer.view.scale.set(s);
+    renderer.view.position.set(ax - fx * s, ay - fy * s);
+  }
 
   // Background pan, as v1 (rig.json motion.bgPan).
   let bgBase = null;
@@ -126,9 +154,8 @@ export async function startScene(stage, { base, tier, outfit, lines, room = true
       bgBase = { x: (width - bg.texture.width * s) / 2, y: (height - bg.texture.height * s) / 2 };
       bg.position.set(bgBase.x, bgBase.y);
     }
-    const { scale, x, y } = stageFraming(renderer.rig, width, height, { closeUp: scene.closeUp });
-    renderer.view.scale.set(scale);
-    renderer.view.position.set(x, y);
+    framing = stageFraming(renderer.rig, width, height, { closeUp: scene.closeUp });
+    applyPush();
   }
   app.renderer.on("resize", layout);
   layout();
