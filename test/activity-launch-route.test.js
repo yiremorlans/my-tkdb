@@ -1,6 +1,6 @@
 // What a launch opens, read by the Activity after sign-in
 // (activityRoutes.js): GET /api/activity/launch says whether it's an
-// `/encdev hangout` free hangout (and in which version) or a /meet
+// `/encdev hangout` free hangout or a /meet
 // encounter, and GET /api/activity/encounter returns that user's own
 // encounter (docs/hangout-activity.md §6, §11). Only a valid session reads
 // either, the reader is always the session's user, and loading an encounter
@@ -70,28 +70,25 @@ test('both routes refuse a missing or bad session with 401 and nothing', async (
     for (const auth of BAD_SESSIONS) {
       const { status, body } = await call(auth);
       assert.strictEqual(status, 401, `${route}: ${String(auth)}`);
-      assert.strictEqual(body?.version, undefined, `${route}: ${String(auth)}`);
+      assert.strictEqual(body?.dev, undefined, `${route}: ${String(auth)}`);
     }
   }
 });
 
-test("a session reads its own user's launch; no dev launch means the Live2D /meet encounter", () => {
-  recordHangoutLaunch('user-2', 'v1', NOW);
-  assert.deepStrictEqual(handleActivityLaunch(bearer('user-2'), { env }, NOW), { status: 200, body: { version: 'v1', dev: true } });
-  assert.deepStrictEqual(handleActivityLaunch(bearer('user-3'), { env }, NOW).body, { version: 'v2', dev: false });
+test("a session reads its own user's launch; no dev launch means the /meet encounter", () => {
+  recordHangoutLaunch('user-2', NOW);
+  assert.deepStrictEqual(handleActivityLaunch(bearer('user-2'), { env }, NOW), { status: 200, body: { dev: true } });
+  assert.deepStrictEqual(handleActivityLaunch(bearer('user-3'), { env }, NOW).body, { dev: false });
 });
 
-test('an unknown version records as v2, a launch expires, and a /meet launch clears it', () => {
-  recordHangoutLaunch('user-4', 'v9', NOW);
-  assert.deepStrictEqual(hangoutLaunchFor('user-4', NOW), { version: 'v2', dev: true });
+test('a launch expires, and a /meet launch clears it', () => {
+  recordHangoutLaunch('user-5', NOW);
+  assert.deepStrictEqual(hangoutLaunchFor('user-5', new Date(NOW.getTime() + LAUNCH_TTL_MS - 1)), { dev: true });
+  assert.deepStrictEqual(hangoutLaunchFor('user-5', new Date(NOW.getTime() + LAUNCH_TTL_MS)), { dev: false });
 
-  recordHangoutLaunch('user-5', 'v1', NOW);
-  assert.deepStrictEqual(hangoutLaunchFor('user-5', new Date(NOW.getTime() + LAUNCH_TTL_MS - 1)), { version: 'v1', dev: true });
-  assert.deepStrictEqual(hangoutLaunchFor('user-5', new Date(NOW.getTime() + LAUNCH_TTL_MS)), { version: 'v2', dev: false });
-
-  recordHangoutLaunch('user-6', 'v1', NOW);
+  recordHangoutLaunch('user-6', NOW);
   clearHangoutLaunch('user-6');
-  assert.deepStrictEqual(hangoutLaunchFor('user-6', NOW), { version: 'v2', dev: false });
+  assert.deepStrictEqual(hangoutLaunchFor('user-6', NOW), { dev: false });
 });
 
 // --- GET /encounter ----------------------------------------------------------
@@ -146,11 +143,11 @@ test('the mounted routes answer over HTTP', async () => {
   process.env.ACTIVITY_SESSION_SECRET = env.ACTIVITY_SESSION_SECRET;
   try {
     const { port } = server.address();
-    recordHangoutLaunch('user-http', 'v1');
+    recordHangoutLaunch('user-http');
     const auth = { Authorization: `Bearer ${signSessionToken('user-http', env.ACTIVITY_SESSION_SECRET)}` };
     const ok = await fetch(`http://localhost:${port}/api/activity/launch`, { headers: auth });
     assert.strictEqual(ok.status, 200);
-    assert.deepStrictEqual(await ok.json(), { version: 'v1', dev: true });
+    assert.deepStrictEqual(await ok.json(), { dev: true });
     assert.strictEqual((await fetch(`http://localhost:${port}/api/activity/launch`)).status, 401);
 
     fake.tables.meet_encounters.push(encounterRow({ discord_user_id: 'user-http', instance_id: 'instance-http' }));

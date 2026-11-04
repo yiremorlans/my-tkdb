@@ -270,7 +270,7 @@ export class Hangout {
       this.pendingMood = null;
     }
     if (t >= this.moodUntil && this.renderer.moodName !== this.baseMood) {
-      // A reaction's `fadeOut` eases its face back (Live2D; the sprite rig ignores it).
+      // A reaction's `fadeOut` eases its face back.
       this.renderer.setMood(this.baseMood, this.moodFadeOut ?? undefined);
       this.moodFadeOut = null;
     }

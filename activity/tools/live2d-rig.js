@@ -22,7 +22,7 @@
 // - expressions.moods: each sceneFaces.js face mapped onto the expressions
 //   this model has (the vocabularies differ per character);
 // - reactionPoses: the closest pose clip to Alan's for each reaction;
-// - background: v1's rig.json background, else the character's room;
+// - background: the character's room;
 // - the outfit's dialogueVariant (uniform for academy, casual otherwise),
 //   which /meet's variant roll picks it by (docs/hangout-activity.md §11.5).
 // Hotspots are a starting point: check them in the v2 preview's "show
@@ -442,8 +442,7 @@ export async function buildRig(character, outfit) {
   hotspots.cheek = alan.hotspots.cheek;
   hotspots.head = alan.hotspots.head;
 
-  const v1 = path.join(REPO, "assets/rig", character, "rig.json");
-  const background = (fs.existsSync(v1) && JSON.parse(fs.readFileSync(v1, "utf8")).background) || roomBackground(character, dir);
+  const background = roomBackground(character, dir);
 
   return {
     character,

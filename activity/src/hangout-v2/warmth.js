@@ -109,7 +109,7 @@ export class Warmth {
 /**
  * Runs warmth on `scene` (scene.js) with `profile`: every reaction feeds it
  * and every frame draws it. Call after anything else replaces scene.frame.
- * A renderer without setWarmth (the v1 sprite rig) is left alone.
+ * A renderer without setWarmth is left alone.
  */
 export function attachWarmth(scene, profile) {
   const { hangout, renderer } = scene;

@@ -4,7 +4,7 @@
 // serves in production (app.js), so rig.json and its images load from one
 // URL in both.
 //
-// `npm run build:activity` builds index.html only (never preview.html) into
+// `npm run build:activity` builds index.html only (never the previews) into
 // activity/dist, which app.js serves at /. Inside Discord every request goes
 // through its proxy, so nothing may come from a third-party CDN (PixiJS and
 // the SDK are bundled) and every path has to land on a URL mapping:
@@ -18,7 +18,6 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { defineConfig, loadEnv } from "vite";
 
-import { writeHandFits } from "./tools/lib/hand-fits.js";
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const repoRoot = path.resolve(here, "..");
@@ -39,42 +38,6 @@ function serveRepoAssets() {
         res.setHeader("Content-Type", TYPES[path.extname(file)] ?? "application/octet-stream");
         res.setHeader("Cache-Control", "no-store");
         fs.createReadStream(file).pipe(res);
-      });
-    },
-  };
-}
-
-// Dev-only: the preview's part editor saves rig.json through this, plus
-// the hand poses it nudged into each outfit's hand-fits.json (so
-// fit-outfit.js keeps them; align-hands.js --write refits them). Only
-// `vite serve` runs configureServer, so it never exists in a build.
-function saveRig() {
-  return {
-    name: "save-rig",
-    configureServer(server) {
-      server.middlewares.use("/__rig/save", (req, res) => {
-        const character = new URL(req.url, "http://x").searchParams.get("character") ?? "";
-        if (req.method !== "POST" || !/^[a-z0-9_-]+$/.test(character)) {
-          res.statusCode = 400;
-          return res.end("bad request");
-        }
-        let body = "";
-        req.on("data", (chunk) => (body += chunk));
-        req.on("end", () => {
-          try {
-            // handFits: { <outfit>: { <side>: { <image>: pose entry } } }
-            const { rig, handFits = {} } = JSON.parse(body);
-            const dir = path.join(assetsDir, "rig", character);
-            fs.writeFileSync(path.join(dir, "rig.json"), JSON.stringify(rig, null, 2) + "\n");
-            for (const [outfit, fits] of Object.entries(handFits)) {
-              writeHandFits(path.join(dir, rig.outfits?.[outfit]?.dir ?? "."), fits);
-            }
-            res.end("saved");
-          } catch (err) {
-            res.statusCode = 400;
-            res.end(err.message);
-          }
-        });
       });
     },
   };
@@ -158,7 +121,7 @@ export default defineConfig(({ command, mode }) => {
     root: here,
     base: "./",
     publicDir: false,
-    plugins: [serveRepoAssets(), saveRig(), meetPreview()],
+    plugins: [serveRepoAssets(), meetPreview()],
     define: { __DISCORD_CLIENT_ID__: JSON.stringify(env.APP_ID ?? ""), __ASSET_VERSION__: JSON.stringify(assetVersion) },
     build: {
       outDir: "dist",

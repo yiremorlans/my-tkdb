@@ -1,12 +1,11 @@
-// Hangout v2 (proof): the v1 scene (hangout/scene.js) with the Live2D model
-// (live2dRig.js) in place of the sprite rig. Same room, background pan,
-// framing, VN box, frame loop and hotspot taps, and the same Hangout class,
-// so reactions, the annoyance meter, lines and sounds behave as in v1. A
-// reaction also plays the pose rig.json `reactionPoses` gives it, and his
-// mouth moves while its touch line types out. The scene's `say` shows any
-// other line (narration, the /meet beat) without moving it.
-// The v2 preview (hangout-v2/preview.js) adds its debug drawer through
-// the same hooks as v1's: frame, onPointer, onTap.
+// Hangout: the scene with the Live2D model (live2dRig.js): room, background
+// pan, framing, VN box, frame loop and hotspot taps, driven by the Hangout
+// class (reactions, the annoyance meter, lines and sounds). A reaction also
+// plays the pose rig.json `reactionPoses` gives it, and his mouth moves
+// while its touch line types out. The scene's `say` shows any other line
+// (narration, the /meet beat) without moving it.
+// The preview (hangout-v2/preview.js) adds its debug drawer through the
+// scene's hooks: frame, onPointer, onTap.
 
 import { Application, extensions, Sprite } from "pixi.js";
 import { Live2DPlugin } from "untitled-pixi-live2d-engine/cubism";
@@ -21,8 +20,8 @@ import { Live2DMotion, Live2DRig, loadLive2DRig } from "./live2dRig.js";
 extensions.add(Live2DPlugin);
 
 /**
- * Loads `${base}/rig.json` (a v2 rig) and starts the scene in `stage`.
- * Options as v1's startScene: `tier`, `outfit`, `lines`, `room`, `background`, `maxFPS`.
+ * Loads `${base}/rig.json` and starts the scene in `stage`.
+ * Options: `tier`, `outfit`, `lines`, `room`, `background`, `maxFPS`.
  * `place` is a background image URL to show instead of the rig's room (the
  * /meet place, docs/hangout-activity.md §11.5); it loads with the rig.
  */
@@ -132,7 +131,7 @@ export async function startScene(stage, { base, tier, outfit, lines, room = true
     renderer.view.position.set(ax - fx * s, ay - fy * s);
   }
 
-  // Background pan, as v1 (rig.json motion.bgPan).
+  // Background pan (rig.json motion.bgPan).
   let bgBase = null;
   function panBackground(time) {
     if (!bg || !bgBase) return;
@@ -144,7 +143,7 @@ export async function startScene(stage, { base, tier, outfit, lines, room = true
   }
 
   // Reference space is the model's canvas (rig.json `reference`), framed by
-  // its `stage` like v1.
+  // its `stage`.
   function layout() {
     const { width, height } = app.screen;
     if (bg) {

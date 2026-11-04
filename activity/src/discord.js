@@ -68,19 +68,19 @@ export async function startDiscord() {
 const bearer = (session) => ({ Authorization: `Bearer ${session.token}` });
 
 /**
- * What this launch opens (activityRoutes.js GET /launch): `{ version, dev }`.
- * `dev` is an `/encdev hangout` launch (the free hangout, in `version`);
- * otherwise it's a /meet encounter in Live2D. Falls back to the encounter if
+ * What this launch opens (activityRoutes.js GET /launch): `{ dev }`.
+ * `dev` is an `/encdev hangout` launch (the free hangout); otherwise it's
+ * a /meet encounter. Falls back to the encounter if
  * the route can't answer, so a launch never fails on it.
  */
 export async function launchInfo(session) {
   try {
     const res = await fetch("/api/activity/launch", { headers: bearer(session) });
-    const { version, dev } = res.ok ? await res.json() : {};
-    return { version: version === "v1" ? "v1" : "v2", dev: dev === true };
+    const { dev } = res.ok ? await res.json() : {};
+    return { dev: dev === true };
   } catch (err) {
     console.warn(`[discord] launch info unavailable: ${err.message}`);
-    return { version: "v2", dev: false };
+    return { dev: false };
   }
 }
 

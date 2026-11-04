@@ -1,7 +1,6 @@
-// Hangout v2 (proof): a Live2D model standing in for the sprite rig, so the
-// Hangout class (hangout/hangout.js) drives it unchanged. The rig is
-// assets/live2d/<character>/rig.json: the same keys Hangout and reactions.js
-// read from a v1 rig.json (character, annoyance, hotspots, expressions.moods,
+// Hangout: the Live2D model the Hangout class (hangout/hangout.js) drives.
+// The rig is assets/live2d/<character>/rig.json: the keys Hangout and
+// reactions.js read (character, annoyance, hotspots, expressions.moods,
 // sounds, bones.arms), plus
 //   outfits.<name>.model   the outfit's model3.json (converted from the game)
 //   parts.<id>             Live2D drawable ids a hotspot's `part` names; its
@@ -34,8 +33,7 @@
 //                          as far as the face blushes (ParamCheek over its
 //                          max), so the ears redden with a model that only
 //                          blushes the cheeks. `{}` turns on the defaults
-// The model breathes, blinks and runs physics itself, so the sprite rig's
-// pose map and blink timing are ignored here.
+// The model breathes, blinks and runs physics itself.
 
 import { Container } from "pixi.js";
 import { Live2DModel, MotionPriority } from "untitled-pixi-live2d-engine/cubism";
@@ -1191,7 +1189,7 @@ export class Live2DRig {
       this.flinchState = null;
       return;
     }
-    // Same curve as rig/motion.js twitchPulse: 0, up to 1 at the peak, back.
+    // 0, up to 1 at the peak, back.
     const pulse = f.scale * x * x * Math.exp(2 * (1 - x));
     const away = f.side === "l" ? 1 : f.side === "r" ? -1 : 0;
     const { values, minimumValues, maximumValues } = this.raw.parameters;
@@ -1543,7 +1541,7 @@ export class Live2DRig {
   follow() {}
 }
 
-/** Stands in for rig/motion.js Motion: the model blinks and idles itself. */
+/** The scene's motion hook: the model blinks and idles itself. */
 export class Live2DMotion {
   /** `renderer` is the Live2DRig a reaction's twitch flinches. */
   constructor(renderer) {

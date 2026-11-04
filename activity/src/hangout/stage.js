@@ -1,6 +1,6 @@
-// Hangout: the stage pieces every scene shares (the sprite rig's
-// hangout/scene.js and the Live2D one's hangout-v2/scene.js): the phone frame
-// cap, the VN box's typing, image loading and the stage framing.
+// Hangout: the stage pieces the scene (hangout-v2/scene.js) and the /meet
+// flow share: the phone frame cap, the VN box's typing, image loading and
+// the stage framing.
 
 import { Texture } from "pixi.js";
 

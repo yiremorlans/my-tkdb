@@ -389,18 +389,6 @@ const ENCDEV_COMMAND = {
       type: 1, // SUB_COMMAND
       name: "hangout",
       description: "Launch the free Hangout Activity here, no /meet encounter (docs/hangout-activity.md)",
-      options: [
-        {
-          name: "version",
-          description: "Which hangout to launch; v2 (Live2D) if omitted",
-          type: 3, // STRING
-          required: false,
-          choices: [
-            { name: "v2: Live2D", value: "v2" },
-            { name: "v1: sprite rig (legacy)", value: "v1" },
-          ],
-        },
-      ],
     },
   ],
 };

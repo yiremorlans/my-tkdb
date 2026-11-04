@@ -20,12 +20,9 @@ Cubism files (§3), rendered with PixiJS and a Cubism plugin. Nobody rigs by
 hand: the only hands-on step is tuning a character's `rig.json` (touch
 spots, moods, reaction poses) in a dev-only preview (§3.4).
 
-**Rig history (2026-10-30).** The Hangout was first built on a code-rigged
-sprite (v1): atlas parts on a bone hierarchy, nearly still by design
-(Appendix A). The Live2D models (v2) replaced it as the rig. v1 stays in the
-repo, for comparison only (`/encdev hangout version:v1`, §6), until Live2D
-has launched; removing it is a separate effort after that (§8). Where this spec
-says "the rig" it means the Live2D one.
+**Rig history.** The Hangout was first built on a code-rigged sprite (v1):
+atlas parts on a bone hierarchy, nearly still by design. The Live2D models
+replaced it as the rig on 2026-10-30, and v1 was deleted on 2026-11-04 (§8).
 
 Launched by picking a name in `/meet`, or from the Activity's `launch`
 entry-point command, which answers like `/meet` (§11.1). Private and unlisted: the bot's own servers
@@ -85,10 +82,7 @@ their own guard, not `/meet`'s.
 |---|---|---|
 | The game's model bundle per character and outfit (`dialogueactors_assets_<name><outfit>_<hash>.bundle`, from the game's cache) | The Live2D model the game's dialogue scenes use: moc3, textures, physics, expressions, pose clips | converted into `assets/live2d/<id>/<outfit>/` (§3.5) |
 | `assets/bg/vagastrom/Vagastrom_Alan_Room.png` | Alan's room | background |
-| `assets/rig/alan/sfx/*.wav` | Alan's reaction sounds | sounds (§4.2); move under `assets/live2d/` when v1 is removed |
-
-The sprite rig's sources (texture atlas, reference sprite, expression
-portraits) are only used by v1 (Appendix A).
+| `assets/live2d/alan/sfx/*.wav` | Alan's reaction sounds | sounds (§4.2) |
 
 **Rights.** This is Tokyo Debunker art, and the rig is the game's own model
 files, extracted from its cache. Keeping the Activity private and unlisted
@@ -107,10 +101,6 @@ top. Tooling lives in `activity/tools/` and runs with Node. Output goes to
 `assets/live2d/<character>/`: one folder per outfit with the Cubism files,
 and one `rig.json` for the character. The game's models share one 2000×2800
 canvas, which is every rig's reference space.
-
-The sprite rig this replaced (v1, `assets/rig/<character>/`) is kept until
-Live2D has launched and is then removed on its own (§8). Its pipeline is in
-Appendix A.
 
 ### 3.1 `rig.json`
 
@@ -173,9 +163,8 @@ checks it, in the browser on load and in
   the one shown first. Which outfits each character gets is tracked in
   [`live2d-outfits.md`](./live2d-outfits.md): academy plus one of
   city / casual / work / roomwear.
-- **Not used:** the sprite rig's skeleton, `bones` limits, hand poses and
-  hand sets, blink timing, overlays and portrait hair. The model's own
-  poses carry the hands.
+- The model's own poses carry the hands; there's no skeleton, hand poses
+  or blink timing in rig.json.
 
 ### 3.2 Expressions
 
@@ -246,8 +235,7 @@ Order for a new character or outfit:
    PartMouth, PartEar, the lowest arm pieces, the biggest torso piece, the
    legs), the stage is Alan's framing shifted to the face, moods and
    reaction poses are mapped onto the expressions and clips this model has,
-   and the background is the v1 rig's (`assets/rig/<id>/rig.json`), else the
-   character's room. The outfit gets a `dialogueVariant` (uniform for
+   and the background is the character's room. The outfit gets a `dialogueVariant` (uniform for
    academy, casual otherwise; §11.5). It reproduces the academy rigs it wrote (2026-10-30) byte for
    byte, apart from Benkei, Elias, Jo and Shion's hand-tuned ears.
 
@@ -315,8 +303,7 @@ hand_l/hand_r, chest, belly, hips. Left and right share one reaction; every othe
 spot has its own. The rungs per tier live in `DEFAULT_REACTIONS`. A
 reaction also plays the pose rig.json `reactionPoses` gives it (§3.3); the
 poses above are Alan's, and each character's are mapped onto the clips
-their model has. (The sprite rig's arm `twitch` and `fist` clench have no
-Live2D counterpart; the model's poses carry the hands.) The preview's
+their model has. The preview's
 "Touch spots" row plays each spot.
 
 #### Gestures (designed 2026-11-01, not built)
@@ -686,7 +673,7 @@ coordinates go through the same transform.
 |---|---|
 | `POST /api/activity/token` | exchanges the Discord OAuth `code`, calls `users/@me`, returns the Discord access token for `sdk.authenticate` and a signed session token |
 | `POST /api/activity/renew` | a fresh session token for a still-valid one, while a `/meet` answer is pending (§11.2) |
-| `GET /api/activity/launch` | what the launch opens: `{ version, dev }`, an `/encdev hangout` free hangout or a `/meet` encounter (§6) |
+| `GET /api/activity/launch` | what the launch opens: `{ dev }`, an `/encdev hangout` free hangout or a `/meet` encounter (§6) |
 | `GET /api/activity/encounter?instance=<id>` | the session user's own `/meet` encounter in that instance, or 404 (§11.2) |
 | `POST /api/activity/answer` | `{ encounter, type }`: the one payout (§11.3) |
 
@@ -717,16 +704,11 @@ tracking only. Answered encounters log as `'meet'` (§11.7).
   `POST /api/activity/token` refuses anyone but `OWNER_DISCORD_ID` (403), so
   someone joining the owner's session sees a refusal line, not the scene.
   Release flips `OWNER_ONLY` in `activityRoutes.js` and drops the hiding.
-- **Rig version (until v1 is removed).** The Activity runs the Live2D rig
-  (`activity/src/hangout-v2/`, `assets/live2d/<id>/rig.json`). The sprite rig
-  stays reachable for comparison as `/encdev hangout version:v1` (or
-  `?version=v1` in a plain browser) until it's removed (§8).
-  `LAUNCH_ACTIVITY` can't pass the version to the page, so the handler
-  records it per user in memory (10 minutes) and the Activity reads it after
-  sign-in from `GET /api/activity/launch` (Bearer session).
-  A launch with no version is Live2D, and v1's code and rig load only for
-  a v1 launch. Once v1 is gone, the `version` option and the version half
-  of the launch route go with it.
+- **Free hangout launch.** `/encdev hangout` opens the free hangout (no
+  `/meet` encounter). `LAUNCH_ACTIVITY` can't pass that to the page, so the
+  handler records the launch per user in memory (10 minutes) and the
+  Activity reads it after sign-in from `GET /api/activity/launch` (Bearer
+  session). No record means the `/meet` encounter.
 - **URL mappings** in the Developer Portal: `/` → the Railway app (serving
   `activity/dist`), plus `/api` and `/assets`. The client loads nothing from
   third-party CDNs; PixiJS and the Live2D plugin are bundled by Vite, and
@@ -755,18 +737,17 @@ tracking only. Answered encounters log as `'meet'` (§11.7).
 ```
 activity/
   index.html          # Activity entry (Vite)
-  preview.html        # milestone-1 rig preview (dev only)
-  src/
   hangout-v2.html     # Live2D rig preview (dev only, §3.4)
   src/
     main.js           # Activity entry: the scene + Discord sign-in
     hangout-v2/       # Live2D rig: scene, live2dRig.js (model, moods, poses, talking),
                       #   meet.js (the /meet flow), validate.js, preview
     hangout/          # Hangout class, reactions, hotspots, annoyance meter, dialogue box,
-                      #   sounds; shared by both rigs
+                      #   sounds, lines; the engine hangout-v2/ drives
     discord.js        # SDK init + auth, the /meet encounter calls (no-op outside Discord)
   tools/
     live2d-convert.js  live2d-rig.js  live2d-manifest.js   # Live2D models (§3.5)
+    lib/backgrounds.js                                   # roomBackground
 assets/live2d/
   vendor/live2dcubismcore.min.js
   <id>/rig.json  <id>/<outfit>/        # one per character; Cubism files per outfit
@@ -777,10 +758,6 @@ meetActivity.js       # /meet as the Activity, server side (§11)
 docs/hangout-activity.md
 ```
 
-v1 only, removed with it (§8): `activity/preview.html`, `src/rig/`,
-`src/preview/`, the sprite tools in `tools/` (everything but the three
-`live2d-*` scripts) and `tools/lib/`, `assets/rig/<id>/` (Appendix A).
-
 Express serves `activity/dist` (built at deploy) at `/`; built files sit
 under `dist/static/` so they never collide with the repo's `/assets`.
 `npm run build:activity` is added to the Railway build.
@@ -789,8 +766,8 @@ under `dist/static/` so they never collide with the repo's `/assets`.
 
 ## 8. Milestones
 
-1. **Rig preview (browser only).** Built first on the sprite rig (Appendix
-   A), then redone on Live2D (2026-10-30): converted models, rig.json,
+1. **Rig preview (browser only).** Built first on the sprite rig (v1), then
+   redone on Live2D (2026-10-30): converted models, rig.json,
    moods, reaction poses, hotspots, annoyance meter, and `hangout-v2.html`.
    No Discord, auth or data.
    **Gate: the user signs off on the Live2D rig in the browser.**
@@ -801,22 +778,16 @@ under `dist/static/` so they never collide with the repo's `/assets`.
    with `/meet` (§11.3), not a Hangout route of its own.
 4. **Release.** Live2D is the default launch (§6). Private, unlisted, on
    the bot's servers.
-5. **Remove v1 (separate effort, after release).** Once Live2D has
-   launched, delete the sprite rig: the files listed under §7, its tests
-   (`test/hangout-rig-check.test.js` and the sprite `rig.json` loader
-   tests), `/encdev hangout`'s `version` option, and Appendix A. What
-   Live2D borrowed from v1 was moved out on 2026-10-30: the shared stage
-   helpers (`MOBILE_FPS`, `dialogueBox`, `loadTexture`, `stageFraming`) to
-   `src/hangout/stage.js`, Alan's reaction sound to
-   `assets/live2d/alan/sfx/`, `roomBackground` to
-   `tools/lib/backgrounds.js`, and the preview styles to
-   `src/hangout-v2/preview.css`. Still to drop at deletion: `main.js`'s
-   v1 path and version switch, `vite.config.js`'s `/__rig/save` plugin
-   and its `tools/lib/hand-fits.js` import, and `live2d-rig.js`'s lookup
-   of a v1 rig.json background (it falls back to `roomBackground`).
-   `test/hangout-rig.test.js` drives the shared Hangout class through a
-   sprite rig, so port its reaction and annoyance tests to a Live2D rig
-   before deleting it.
+5. **Remove v1. Done 2026-11-04.** The sprite rig is deleted:
+   `activity/preview.html`, `src/rig/`, `src/preview/`,
+   `src/hangout/scene.js`, the sprite tools and their `tools/lib/` helpers,
+   `assets/rig/`, `vite.config.js`'s `/__rig/save` plugin, the `pngjs` dev
+   dependency, and `/encdev hangout`'s `version` option (the launch route
+   now answers `{ dev }`). What Live2D used from v1 had already moved out
+   on 2026-10-30 (the stage helpers to `src/hangout/stage.js`, Alan's sound
+   to `assets/live2d/alan/sfx/`, `roomBackground` to
+   `tools/lib/backgrounds.js`, the preview styles to
+   `src/hangout-v2/preview.css`).
 
 ---
 
@@ -1340,245 +1311,3 @@ pairs (Alan and Tohma behind the garage, Haru with Towa tagging along). A
 candidate home is a rare `/roam` variant with a "Join them" button that
 launches the Activity with both rigs. It's a different entry point and pulls
 in `/roam`'s public flow, so it gets its own design pass.
-
----
-
-## Appendix A. Legacy: the sprite rig (v1)
-
-Status: **legacy.** The code-rigged PixiJS sprite rig the Hangout was
-first built on: `assets/rig/<character>/`, `activity/src/rig/`, the sprite
-tools in `activity/tools/`, `activity/preview.html`. Live2D (§3) replaced
-it on 2026-10-30. It still runs behind `/encdev hangout version:v1` (§6)
-for comparison until Live2D launches, and is removed as its own effort
-after that (§8). This appendix goes with it. Don't build new characters or
-outfits on it.
-
-What it did differently: parts cut from the game's texture atlas and
-assembled into a bone hierarchy in code; expressions from atlas part swaps
-or overlays diffed from the expression portraits; idle motion (breath,
-blink, head sway, hair locks, arm sway, the hand-tap arm twitch) and hand
-poses driven by `rig/motion.js`.
-
-### A.1 Slice
-
-`slice-atlas.js` splits the atlas into one PNG per part by alpha-connected
-regions, trims each, and writes `parts/<id>.png` plus `parts.json`
-(id → source rect in the atlas). Tiny fragments (stray specks, pieces of a
-larger part split by a gap) are grouped by proximity; anything ambiguous is
-listed for a manual merge rather than guessed. The outfit's
-`part-names.json` holds manual merges, names and an `ignore` list of atlas
-rects with helper shapes rather than art (Yuri's flat magenta/green/orange
-masks and blurred purple blob); ignored regions are dropped before ids are
-assigned, so they never shift ids or show up as parts.
-
-### A.2 `rig.json`
-
-One file per character, authored by Claude against `alan_academy.png` as
-the reference, then tuned in the preview (§A.4). Shape:
-
-```jsonc
-{
-  "character": "alan",
-  "reference": { "width": 768, "height": 1366 },
-  "scale": 0.41,                       // atlas px → reference px
-  "parts": [
-    {
-      "id": "head",
-      "image": "parts/face_base.png",
-      "parent": "neck",
-      "position": [384, 210],          // in parent space
-      "pivot": [0.5, 0.92],            // normalized; rotation center
-      "z": 40,
-      "limits": { "rotation": [-6, 6] } // degrees
-    },
-    {
-      "id": "forearm_r",
-      "image": "parts/forearm_r.png",
-      "parent": "upper_arm_r",
-      "position": [12, 140],
-      "pivot": [0.5, 0.04],
-      "z": 22,
-      "limits": { "rotation": [-5, 30] },
-      "mesh": { "bend": true }          // optional mesh bend across the elbow
-    }
-  ],
-  "groups": {
-    "hair_locks": [["hair_front_l", "..."], ["hair_front_r", "..."], ["hair_side_l"], ["hair_back"]]
-  },
-  "hands": {
-    "r": { "default": "hand_r_relaxed", "poses": ["hand_r_open", "hand_r_fist", "..."] },
-    "l": { "default": "hand_l_relaxed", "poses": ["..."] }
-  },
-  "expressions": {
-    "head": "head",
-    "overlayScale": 0.62,
-    "overlayOffset": [-4, 18],
-    "moods": {
-      "blink":   { "source": "atlas",   "parts": ["eye_l_closed", "eye_r_closed"] },
-      "blush":   { "source": "overlay", "file": "overlays/blush.png" }
-    }
-  },
-  "hotspots": {
-    "head":  { "part": "head", "rect": [0.2, 0.0, 0.8, 0.45] },
-    "cheek": { "part": "head", "rect": [0.25, 0.55, 0.75, 0.8] },
-    "hand_l": { "part": "hand_l" },
-    "hand_r": { "part": "hand_r" }
-  },
-  "motion": {
-    "breath":  { "speed": 0.25, "amount": 0.012 },
-    "hair":    { "speed": 0.4,  "amount": 3 },
-    "arms":    { "speed": 0.25, "amount": 1.5 },
-    "blink":   { "meanInterval": 4.0 }
-  }
-}
-```
-
-The renderer reads only this file and the images it names, so no character is
-hard-coded.
-
-**Outfits (added 2026-10-28).** One `rig.json` per character holds every
-outfit. Top-level `parts` are shared (core bones, the head with its hair and
-face); `outfits.<name>` holds each outfit's body parts, `hands`,
-`spriteSkin`, `referenceImage`, `atlas`, `dir` (where its parts/ and skin/
-live) and optional `scale` and `hotspots` (merged over the shared ones).
-`defaultOutfit` picks the one shown first. `skeleton.js withOutfit()`
-flattens one outfit into the shape above, so the renderer and tools are
-otherwise unchanged; the loader validates every outfit, and the preview has
-an outfit picker (`?outfit=<name>`). Alan has `academy` and `roomwear`.
-Every outfit's assets live in its own folder (`academy/`, `roomwear/`:
-parts/, skin/, derived/, parts.json, fit.json); shared head art cut from an
-outfit's atlas keeps that outfit's path.
-
-**Hand sets (decided 2026-10-28).** An outfit's `hands` is one set
-(`{ r, l }`) or several on the same hand parts, for atlases with more than
-one pair (Yuri: white gloves, surgical gloves, bare):
-`"hands": { "defaultSet": "white", "sets": { "white": { "r", "l" }, "bare": { ... } } }`.
-`withOutfit(rig, outfit, { handSet })` flattens the chosen set into `hands`
-(and lists `handSets`), so the app can swap gloves at runtime
-(`RigRenderer`/`Hangout.setHandSet`, e.g. from a reaction) without another
-outfit. Only the set the sprite shows is fitted; the others are named by
-`match-hands.js` against it. Preview: `?hands=<set>` and a picker.
-
-**Hierarchy (Alan):** `root → hips → torso → { neck → head → { face layers,
-hair locks }, shoulder_l/r → upper_arm → forearm → hand }`, legs static. Arms
-layer behind the vest so the shoulder joint stays hidden.
-
-**No body poses (decided 2026-10-28).** Full-body poses cut from
-screenshots were built and cut after review: they didn't match the rig or
-move. The body stays nearly still (minimal breath, slight head sway, no hair
-sway) and reactions are carried by expressions, lines, a short arm twitch
-and hand clenches (§4.2). Genuinely fluid motion would need a
-mesh-deforming rig, which is what Live2D (§3) turned out to be.
-
-**Hair from the portrait (decided 2026-10-28).** Alan's atlas hair strands
-are warped in the finished art and won't sit rigidly, so the face is atlas
-parts but the hair is cut from `expressions/alan/default.png` by
-`activity/tools/build-portrait-hair.js` (config: `rig.json` `portraitHair`):
-a static base plus 4 sway locks (crown, front, both sides). Other characters
-can use either path.
-
-### A.3 Expressions
-
-Each mood resolves in this order:
-
-1. **Atlas parts first.** If the atlas has the pieces (e.g. a closed eye for
-   blink, an alternate mouth or brow), the mood swaps those parts.
-2. **Overlay fallback** — only when the atlas lacks the mood.
-   `build-overlays.js` subtracts `expressions/<name>/default.png` from each
-   expression file, keeping only the changed pixels (brows, eyes, mouth,
-   blush), and writes transparent `overlays/<mood>.png`. Overlays attach to the
-   `head` part, scaled and offset by `expressions.overlayScale` /
-   `overlayOffset`, so they tilt with the head.
-
-The slice step reports which moods the atlas covers, so `rig.json` records
-the real source for each.
-
-**v1 moods:** default, blink, smile, full smile, blush, smile + blush,
-surprise, surprise + blush, sweat, and **upset** (`serious` + `sweat`; Alan has
-no `annoyed` file).
-
-**Known risk:** the expression portraits look slightly softer than the atlas
-art. Check sharpness and alignment first thing in milestone 1. If a fallback
-overlay looks visibly off, it stays out until fixed.
-
-The same script runs for any character with a `default.png`, so Benkei, Elias
-and the rest have a path in later.
-
-### A.4 Preview and tuning (milestone 1)
-
-`activity/preview.html`, a local-only page (never deployed): Alan over his
-room background, plus:
-
-- every hotspot and the annoyance meter, working, with no data writes
-- buttons to trigger each mood, reaction and hand pose
-- a toggle and speed/amount sliders per idle motion, and per-arm angle limits
-- the optional part editor: drag or nudge parts over a faded copy of
-  `alan_academy.png`, then export changed values back into `rig.json`.
-  A hand part moves/turns only the pose on screen (its `pivot` and
-  `artRotation`), never the wrist bone every pose shares; saving also
-  writes those poses to the outfit's `hand-fits.json` so `fit-outfit.js`
-  keeps them (`align-hands.js --write` refits the non-default ones)
-
-Milestone 1 ends when the user signs off on the look and feel here.
-
-### A.5 Pipeline tools (any character, any outfit)
-
-Everything character- or outfit-specific is data: rig.json,
-`<outfit dir>/fit.json` (fitting), `part-names.json` (slicing),
-`checks.json` (quality baselines). Order for a new character or outfit:
-
-1. **`new-rig.js <character> [--hair atlas|portrait]`** (new character):
-   starting rig.json with the standard skeleton (root → hips → torso → neck
-   → head; shoulder → upper_arm → forearm per side), `bones`, motion and
-   annoyance defaults, one outfit, the atlas sliced into its folder, and a
-   fit.json template. Starting joints are measured from the character's own
-   sprite (narrowest neck row, crotch), never copied from another rig; the
-   first fit sets them from the fitted parts (fit.json `bones`).
-2. **`slice-atlas.js <character> --outfit <name>`** (§A.1).
-3. **`register-head.js <character> --outfit <name>`** (second+ outfit):
-   ECC on the head box finds how the outfit's sprite draws the shared head
-   (alan_room.png: 1.33% smaller, ~6 px lower at the neck), reports it, and
-   writes the registered sprite as the outfit's `referenceImage`.
-4. **`fit-outfit.js <character> --outfit <name> [--propose]`**: fit.json
-   lists candidate atlas parts, approximate centers, front-to-back order,
-   parent bone, z, optional `rotate`, and overrides/pins for mostly hidden
-   or hand-refined parts. Front-to-back peeling with the shared head
-   covering the neck; scales in a narrow band around the outfit's scale;
-   centers from the fitted template size. `--propose` estimates the scale
-   and rough centers with a coarse whole-image search for a human to
-   confirm. `lines` binds a line-art layer to its fill. Hand poses take
-   their per-side pivot/scale from the outfit's hand-fits.json (step 5b).
-   A `head` section fits the shared head instead: it registers the
-   expression portrait onto the sprite and fits `shared: true` parts on the
-   portrait (Yuri), writing `overlayScale`/`overlayOffset` from it. `clip`
-   cuts a part's art to the sprite's silhouette at rest
-   (`derived/<id>_clip.png`). Rerunning it on
-   Alan reproduces rig.json byte for byte (academy is pinned to its
-   refined values and reports how close the search lands).
-5. **`match-hands.js <character> --outfit <new> [--from <outfit>] [--set <set>]`**:
-   names hand poses by silhouette against an existing outfit's (or set's),
-   and flags poses with no counterpart (roomwear has no "open").
-5b. **`align-hands.js <character> --outfit <name> [--set <set>] [--turn <deg>] [--write]`**:
-   lines every non-default hand pose's wrist up with the forearm, per side:
-   the forearm's edges are traced above the default hand and each drawing's
-   wrist is scaled and shifted onto them (optionally turned, `artRotation`).
-   `--write` saves `<outfit>/hand-fits.json` (read by fit-outfit.js) and
-   applies it to rig.json. Rerun it after a hand fit or new hand art.
-6. **`build-sprite-skin.js`**: one skin group per bone with art; the
-   character's shared `spriteSkin` holds the neck fixes (underlays, neck
-   shade, jaw patch); an outfit's lists only overrides (academy: the
-   front/back torso split, mesh-bent lower sleeves; roomwear: the jaw patch
-   down to row 256).
-7. **`check-rig.js <character> --outfit <name> [--record]`**: rest-pose leak
-   (sprite opaque, rig empty: magenta in `?leak=1`) and spill, enclosed
-   holes at each bone's rotation limits (plus checks.json `angles`, split
-   into tears and walled-in background), and the mean diff vs the
-   reference, each naming the parts involved. `test/hangout-rig-check.test.js`
-   fails when an outfit gets worse than its recorded numbers. Alan's
-   baselines include academy's boot leaks, its 870 px elbow gap at forearm
-   ±60° (mostly background walled in by the bent arm), and the 17 px
-   hair-crown leak both outfits share.
-8. **`render-rig.js`** for a side-by-side with the reference (`--portrait`
-   compares a mood with its own expression portrait, `--hotspots` outlines
-   the touch points, `--grid` labels coordinates), and **`probe-rig.js`**
-   for the parts drawn at a pixel, bottom to top.

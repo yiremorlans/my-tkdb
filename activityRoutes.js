@@ -184,20 +184,17 @@ export function handleActivityRenew(authorization, { env = process.env } = {}, n
 
 // --- GET /api/activity/launch ---------------------------------------------
 
-// `/encdev hangout version:<v>` opens the free hangout (no /meet encounter)
-// as v2 (the Live2D rig, activity/src/hangout-v2/) or, for comparison until
-// it's removed, v1 (the sprite rig). LAUNCH_ACTIVITY can't carry a parameter
-// to the page, so the choice is kept here per user, in memory, for as long
-// as the launch takes to sign in; the Activity asks for it after sign-in. No
-// record (a /meet launch, a restart, an old one) means the /meet encounter,
-// in Live2D.
-export const HANGOUT_VERSIONS = ['v1', 'v2'];
+// `/encdev hangout` opens the free hangout (no /meet encounter).
+// LAUNCH_ACTIVITY can't carry a parameter to the page, so the launch is kept
+// here per user, in memory, for as long as it takes to sign in; the Activity
+// asks for it after sign-in. No record (a /meet launch, a restart, an old
+// one) means the /meet encounter.
 export const LAUNCH_TTL_MS = 10 * 60 * 1000;
-const launches = new Map(); // Discord user id → { version, at }
+const launches = new Map(); // Discord user id → launch time (ms)
 
 /** Remembers the dev launch `userId` just made (publicEncounters.js handleEncounterDevHangout). */
-export function recordHangoutLaunch(userId, version, now = new Date()) {
-  launches.set(userId, { version: HANGOUT_VERSIONS.includes(version) ? version : 'v2', at: now.getTime() });
+export function recordHangoutLaunch(userId, now = new Date()) {
+  launches.set(userId, now.getTime());
 }
 
 /** Forgets it, so a /meet launch right after a dev one opens the encounter. */
@@ -206,14 +203,12 @@ export function clearHangoutLaunch(userId) {
 }
 
 /**
- * `{ version, dev }` for `userId`'s launch: their dev launch within
- * LAUNCH_TTL_MS, else `{ version: 'v2', dev: false }`.
+ * `{ dev }` for `userId`'s launch: true for their dev launch within
+ * LAUNCH_TTL_MS.
  */
 export function hangoutLaunchFor(userId, now = new Date()) {
-  const launch = launches.get(userId);
-  return launch && now.getTime() - launch.at < LAUNCH_TTL_MS
-    ? { version: launch.version, dev: true }
-    : { version: 'v2', dev: false };
+  const at = launches.get(userId);
+  return { dev: at != null && now.getTime() - at < LAUNCH_TTL_MS };
 }
 
 /**

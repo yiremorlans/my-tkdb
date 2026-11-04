@@ -1,5 +1,4 @@
-// The character's room, as a rig.json `background`: shared by the sprite
-// rig's new-rig.js and the Live2D rig's live2d-rig.js.
+// The character's room, as a rig.json `background` (live2d-rig.js).
 
 import path from "node:path";
 

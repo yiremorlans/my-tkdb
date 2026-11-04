@@ -12,7 +12,7 @@
 const MUTE_KEY = "hangout:muted";
 
 export class Sounds {
-  /** `buffers`: file → ArrayBuffer, as loadRig fetched them. */
+  /** `buffers`: file → ArrayBuffer, as loadLive2DRig fetched them. */
   constructor(buffers = new Map()) {
     this.decoded = new Map();
     this.playing = null;

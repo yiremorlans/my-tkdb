@@ -275,7 +275,7 @@ body {
 .heart-monitor #bpm { min-width: 3ch; text-align: right; }
 .heart-monitor #bpm::after { content: " bpm"; font-weight: 400; color: var(--muted); font-size: 10px; }
 /* Phones: the widened plate needs the room the annoyance meter takes on the
-   same edge, so the meter gets shorter (the v1 sprite scene has no monitor). */
+   same edge, so the meter gets shorter. */
 @media (max-width: 480px) {
   .vn-box .meter { width: 64px; }
 }

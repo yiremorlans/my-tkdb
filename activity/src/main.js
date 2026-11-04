@@ -10,12 +10,10 @@
 // - a /meet pick: that user's own encounter (§11.2), in Live2D, with the
 //   drawn outfit, place and tier. Someone with no encounter of their own in
 //   this instance gets a refusal line and no scene.
-// - `/encdev hangout`: the free hangout, no encounter, in the version it
-//   asked for (v2 Live2D unless version:v1, the legacy sprite rig).
+// - `/encdev hangout`: the free hangout, no encounter.
 //
 // In a plain browser it's the free hangout: ?character=<id> picks the rig,
-// ?tier=<tier> the reaction tier, ?version=v1 the sprite rig. Nothing loads
-// before the version is known, and v1's code only for a v1 launch.
+// ?tier=<tier> the reaction tier.
 
 import { answerEncounter, discordPlatform, inDiscord, keepSessionAlive, launchInfo, loadEncounter, startDiscord } from "./discord.js";
 import { loadLines } from "./hangout/lines.js";
@@ -39,18 +37,11 @@ function loadScript(src) {
   });
 }
 
-/** Starts the Live2D scene: Cubism Core first, then the v2 code. */
-async function startSceneV2(stage, character, options) {
+/** Starts the Live2D scene: Cubism Core first, then the scene code. */
+async function startScene(stage, character, options) {
   await loadScript(CUBISM_CORE);
-  const { startScene } = await import("./hangout-v2/scene.js");
-  return startScene(stage, { ...options, base: versioned(`/assets/live2d/${character}`) });
-}
-
-/** Starts the legacy sprite scene (v1). */
-async function startSceneV1(stage, character, options) {
-  const [{ startScene }, { loadRig }] = await Promise.all([import("./hangout/scene.js"), import("./rig/loader.js")]);
-  const base = `/assets/rig/${character}`;
-  return startScene(stage, { ...options, base, loaded: loadRig(base) });
+  const scene = await import("./hangout-v2/scene.js");
+  return scene.startScene(stage, { ...options, base: versioned(`/assets/live2d/${character}`) });
 }
 
 // The free hangout's character when none is given.
@@ -113,7 +104,7 @@ async function playEncounter(session, encounter) {
     import("./hangout-v2/warmth.js"),
     import("./hangout-v2/holds.js"),
   ]);
-  const scene = await startSceneV2($("#stage"), encounter.character, {
+  const scene = await startScene($("#stage"), encounter.character, {
     tier: encounter.tier,
     outfit: encounter.outfit,
     place: versioned(encounter.background),
@@ -134,17 +125,14 @@ async function playEncounter(session, encounter) {
 }
 
 /** The free hangout: no encounter, the tier's greeting. */
-async function playFreeHangout(character, version) {
+async function playFreeHangout(character) {
   $("#vn-name").textContent = capitalize(character);
   const options = { tier: params.get("tier"), lines: await loadLines(character, timeParam()), maxFPS: isMobile ? MOBILE_FPS : 0 };
-  console.log(`[hangout] ${version}`);
-  const scene = version === "v1" ? await startSceneV1($("#stage"), character, options) : await startSceneV2($("#stage"), character, options);
+  const scene = await startScene($("#stage"), character, options);
   wireChrome(scene);
-  if (version !== "v1") {
-    const [{ attachWarmth }, { attachHolds }] = await Promise.all([import("./hangout-v2/warmth.js"), import("./hangout-v2/holds.js")]);
-    const warmth = attachWarmth(scene, "hangout");
-    attachHolds(scene, { warmth: () => warmth });
-  }
+  const [{ attachWarmth }, { attachHolds }] = await Promise.all([import("./hangout-v2/warmth.js"), import("./hangout-v2/holds.js")]);
+  const warmth = attachWarmth(scene, "hangout");
+  attachHolds(scene, { warmth: () => warmth });
   scene.say(scene.hangout.line("greeting") ?? "");
 }
 
@@ -156,7 +144,7 @@ function timeParam() {
 
 async function main() {
   const character = /^[a-z0-9_-]+$/.test(params.get("character") ?? "") ? params.get("character") : DEFAULT_CHARACTER;
-  if (!inDiscord()) return playFreeHangout(character, params.get("version") === "v1" ? "v1" : "v2");
+  if (!inDiscord()) return playFreeHangout(character);
 
   let session;
   let launch;
@@ -176,7 +164,7 @@ async function main() {
     return;
   }
 
-  if (launch.dev) return playFreeHangout(DEFAULT_CHARACTER, launch.version);
+  if (launch.dev) return playFreeHangout(DEFAULT_CHARACTER);
   if (!encounter) {
     // Someone else's instance, or nothing open: a line, no character, no
     // touch spots (§11.1).

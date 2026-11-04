@@ -157,7 +157,7 @@ function resetState() {
 // player, not the owner.
 test("a player's pick launches the Activity and saves the encounter it'll load", async () => {
   resetState();
-  recordHangoutLaunch('a-player', 'v1'); // an earlier hangout launch
+  recordHangoutLaunch('a-player'); // an earlier hangout launch
   rememberPickerToken('picker-launch', 'meet-command-token'); // what /meet's send does
   const res = await postInteraction(pickClick('a-player', 'alan', 'picker-launch'));
   assert.strictEqual(res.status, 202, 'answered through the callback, so the HTTP reply is empty');
@@ -185,7 +185,7 @@ test("a player's pick launches the Activity and saves the encounter it'll load",
   await waitFor(() => discordCalls.some(isPickerEdit));
   const greyOut = discordCalls.find(isPickerEdit);
   assert.ok(greyOut.payload.components[0].components.every((b) => b.disabled), 'the picker greys out after the launch');
-  assert.deepStrictEqual(hangoutLaunchFor('a-player'), { version: 'v2', dev: false }, 'a /meet launch opens the encounter, not the free hangout');
+  assert.deepStrictEqual(hangoutLaunchFor('a-player'), { dev: false }, 'a /meet launch opens the encounter, not the free hangout');
   assert.strictEqual(imageFollowups().length, 0, 'no image while the Activity has the encounter');
 });
 
