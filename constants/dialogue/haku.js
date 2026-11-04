@@ -69,7 +69,7 @@ export default {
             label: "Say only on Mondays",
             style: 1,
             close:
-              "Fair. Mondays are rough here.\n\nI'll come find you on Mondays, then. I'll bring tea.",
+              "Fair. Mondays are rough here.\n\nI'll come find you on Mondays, then. Consider me on call.",
           },
           {
             key: "bold",
@@ -85,42 +85,41 @@ export default {
         line: "The first week you almost left, and didn't.",
       },
     },
-
     closeFriend: {
       beats: [
-        "**{firstName}**: You free? C'mon, bring a coat. It's the back veranda and it's freezing and I'm not explaining over text.",
-        "*He's already out there with two cans and a blanket he clearly brought for you, and he's looking at the far end of the veranda rather than at you.*\n\n> So there's a kid out here. Been here since before I arrived. Sits on the edge every night and won't go, and I've tried everything and I'm out of ideas, and I come out and sit with her because that's all that's left.",
-        "> Every night. Since I moved in here. Nobody knows.\n\n*He finally looks over.*\n\n> That's the actual thing about me, by the way. Not the medium stuff, not the shrine family, not the ghosts. It's that I come out here every night because if I don't, nobody does.\n\n> You're the first person I've told. I'd like it on record that I told you sober, so I can't take it back later.",
+        "**{firstName}**: You free? Come have tea with me. Hotarubi guest room, kettle's on.",
+        "The veranda off the guest room is my spot. Tea, the garden, the rain.\n\nI don't bring people out here. Not because it's a secret. It's the one spot that's always felt calm. Can't explain it better than that.",
+        "Since {sinceMet}, I keep catching myself out here thinking you'd like the view. Got tired of just thinking it.\n\nSo come see it.",
       ],
       choice: {
-        prompt: "Right. Say something lazy so we can move on.",
+        prompt: "Tea's getting cold. That's a hint, by the way.",
         options: [
           {
             key: "kind",
-            label: "Ask if you can come too",
+            label: "Say you'll be right there",
             style: 3,
             close:
-              "*He doesn't answer for a while. Just drinks.*\n\n> ...Yeah.\n\n*he says eventually, out at the garden rather than at you.*\n\n> Yeah, come. She won't know. But I'll know.\n\n*You go, most nights, after that. He never once thanks you for it, which is how you know it matters.*",
+              "Cool. I've had this spot to myself a long time. Pretty sure it's better shared. With you, specifically.",
           },
           {
             key: "playful",
-            label: "Point out he brought a blanket",
+            label: "Ask if the spot's haunted",
             style: 1,
             close:
-              "> That's mine.\n\n> ...It's not mine, I bought it Tuesday, it's still got the tag on. Shut up. Put it on, princess, you're shaking.",
+              "The veranda? Nah.\n\nWell. Not by anything that minds company. Kidding. Come anyway.",
           },
           {
             key: "bold",
-            label: "Ask why he never gave up",
+            label: "Say you're coming for him",
             style: 4,
             close:
-              "> Because everyone in my family gave up on the ones that were hard.\n\n*Flat. No performance in it at all, which for Haku is unheard of.*\n\n> That's the whole answer. I'm not a good person, I'm just a really stubborn one about exactly one thing.",
+              "I had a feeling. Nice to know I wasn't imagining it.\n\nCome on, then, princess. Don't keep me waiting.",
           },
         ],
       },
       keepsake: {
-        emoji: "🧣",
-        line: "A blanket bought on Tuesday with the tag still on.",
+        emoji: "🍵",
+        line: "A view he got tired of only thinking you'd like.",
       },
     },
 
@@ -139,7 +138,7 @@ export default {
             label: "Say you'll read it with him",
             style: 3,
             close:
-              "...That's not one of the options I'd prepared for.\n\n*A long pause.*\n\nThe veranda. Bring the blanket. I'll read it out loud and you can tell me if I'm allowed to feel anything about it, because apparently I've stopped being able to tell.",
+              "...That's not one of the options I'd prepared for.\n\n*A long pause.*\n\nThe veranda. Bring a coat. I'll read it out loud and you can tell me if I'm allowed to feel anything about it, because apparently I've stopped being able to tell.",
           },
           {
             key: "playful",
@@ -205,7 +204,7 @@ export default {
       beats: [
         "**{firstName}**: I'm going to say this badly and I'm not going to make a joke at the end of it, which is going to take everything I've got.",
         "{timesMet} times. And I've had the deflection ready every single one of them: the door, the bit, the thing behind you. It's automatic. It's been automatic since I was nine.\n\nIt stopped working on you somewhere around the middle and I've been running it anyway, out of pure cowardice, which you've very kindly pretended not to notice.",
-        "Here's the thing about being the only one who sees. Everyone thinks it's frightening. It's not frightening, it's lonely: you're in a room full of people and there's a whole other room and you're the only one in it.\n\nYou came into the other room. You didn't even make a thing of it. You just started stepping around stuff on the floor and sitting on a freezing veranda with a kid you can't see.",
+        "Here's the thing about being the only one who sees. Everyone thinks it's frightening. It's not frightening, it's lonely: you're in a room full of people and there's a whole other room and you're the only one in it.\n\nYou came into the other room. You didn't even make a thing of it. You just started stepping around stuff on the floor and drinking tea on a freezing veranda like you'd always had a spot there.",
         "So: I love you.\n\nNo bit. No door. I've loved you since the veranda, probably before it, and I've spent every conversation since half-assing it, because half-assing it is the only way I know how to survive meaning something.\n\nI keep going back over what I let slide. Walking you home and cracking a joke at your door instead of saying this. The morning you answered half asleep in your pajamas and I decided I wasn't allowed to notice. C'mon. Stupid things to miss. I miss them anyway.\n\nThat's the whole message. God, this is awful.",
       ],
       choice: {
