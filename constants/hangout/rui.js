@@ -90,7 +90,7 @@ export default {
       "Ahaha... no. Seriously, back up a little.",
     ],
     upset: [
-      "Okay, enough. I mean it, hands off.",
+      "Okay, no more. Hands off.",
       "Hey. I mean it. Stop, okay?",
     ],
   },
@@ -125,8 +125,8 @@ export default {
     ],
     hipsTouch: ["Hey! Nope.", "Okay, that's off-limits. Sorry, cutie."],
     upset: [
-      "Hey. I said enough. Please.",
-      "Hey. Enough, okay? You're making me nervous.",
+      "Hey. I asked you to stop. Please.",
+      "Stop, okay? You're making me nervous.",
     ],
   },
   spark: {

@@ -42,7 +42,7 @@ export default {
     ],
     hipsTouch: ["Whoa. Okay, no.", "Hands to yourself, huh? I mean it."],
     upset: [
-      "Okay, okay. That's enough.",
+      "Okay, okay. Let's call it there.",
       "Hey. Hands down. I'm asking nicely, for now.",
     ],
   },
@@ -71,7 +71,7 @@ export default {
     ],
     hipsTouch: ["Okay. Hands off.", "Whoa. Not happening."],
     upset: [
-      "Okay, that's enough. Seriously.",
+      "Okay, time out. Seriously.",
       "Stop. I already asked nicely once.",
     ],
   },
@@ -107,7 +107,7 @@ export default {
     hipsTouch: ["Hey. Nope.", "...You lost? That's not my hand."],
     upset: [
       "Okay. Stop. I'm not in the mood for this.",
-      "Hey. Enough. I'm right here, you don't have to keep poking.",
+      "Hey. I'm right here, you don't have to keep poking.",
     ],
   },
   spark: {
@@ -145,7 +145,7 @@ export default {
     ],
     upset: [
       "Okay, I surrender. Stop before I do something out of character.",
-      "Hey. Enough. My heart can't take it.",
+      "Hey, hey. Give my heart a break.",
     ],
     heartbeatHold: [
       "...Ha. Don't look so pleased with yourself, princess.",

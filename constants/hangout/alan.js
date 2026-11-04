@@ -20,7 +20,7 @@ export default {
     handTap: ["What is it?", "...You need something?"],
     chestTouch: ["Back up.", "Step back. Not a good idea."],
     bellyTouch: ["...Don't poke me there.", "That's my stomach. Leave it."],
-    hipsTouch: ["Hey. Hands to yourself.", "That's enough."],
+    hipsTouch: ["Hey. Hands to yourself.", "...Move your hand."],
     upset: ["...Stop that.", "Don't come any closer. I mean it."],
   },
   known: {
@@ -41,7 +41,7 @@ export default {
     chestTouch: ["Back up a little.", "...Too close."],
     bellyTouch: ["Knock it off.", "...Yeah, it's solid. Now quit it."],
     hipsTouch: ["Hey. Cut it out.", "Don't push your luck."],
-    upset: ["...Stop that.", "Enough. Give me a minute."],
+    upset: ["...Stop that.", "...I said stop. Give me a minute."],
   },
   warm: {
     headPat: [
@@ -61,7 +61,7 @@ export default {
       "...You caught me off guard. Don't make it a habit.",
     ],
     hipsTouch: ["Hey.", "Don't."],
-    upset: ["...Stop that.", "Okay. That's enough for now."],
+    upset: ["...Stop that.", "...Okay. Give me some room."],
   },
   spark: {
     headPat: ["...That's my line.", "You're doing it back now? ...Fine."],

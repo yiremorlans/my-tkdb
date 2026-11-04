@@ -31,7 +31,7 @@ export default {
     ],
     chestTouch: [
       "I'll ask you to keep your hands to yourself.",
-      "That's quite enough. Step back, please.",
+      "Step back, please. That's out of line.",
     ],
     bellyTouch: [
       "Excuse me. I don't know you nearly well enough for that.",
@@ -80,7 +80,7 @@ export default {
       "I'd thank you to stop there.",
     ],
     upset: [
-      "All right, that's enough. Is something the matter?",
+      "All right, stop there. Is something the matter?",
       "Please stop. If something's wrong, just tell me.",
     ],
   },
@@ -116,7 +116,7 @@ export default {
     hipsTouch: ["Hey. Not there.", "I'd rather you didn't. Truly."],
     upset: [
       "All right, that's enough. I won't ask again.",
-      "Enough now. You'll have Kaito thinking we've fallen out.",
+      "Stop that, please. You'll have Kaito thinking we've fallen out.",
     ],
   },
   spark: {

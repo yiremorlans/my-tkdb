@@ -191,7 +191,7 @@ export default {
     ],
     chestTouch: [
       "No need to check. It's been like this since you walked in.",
-      "Lean on me, then. I'm rather sturdier than I look.",
+      "Lean on me, then. I'm sturdier than I look.",
     ],
     bellyTouch: [
       "Ha ha... That spot again. You do enjoy watching me lose my dignity.",

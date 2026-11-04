@@ -106,7 +106,7 @@ export default {
             label: "Ask if the spot's haunted",
             style: 1,
             close:
-              "The veranda? Nah.\n\nWell. Not by anything that minds company. Kidding. Come anyway.",
+              "The veranda? Nah.\n\nWell. Not by anything that minds company. \n\nKidding. Come anyway.",
           },
           {
             key: "bold",
