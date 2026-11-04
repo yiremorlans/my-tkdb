@@ -15,7 +15,7 @@
 // spam-tapping can't flip through the pool. The upset line always speaks.
 //
 // At the LOCKOUT_TIERS (new, known, warm) maxing the meter locks him: he plays the
-// upset as usual, then once it ends turns guarded (the `serious` face, and
+// upset as usual, then once it ends turns guarded (his `guarded` face, else `serious`, and
 // the renderer's `guard` pose if it has one) and ignores every tap after,
 // until the tier changes.
 
@@ -87,7 +87,9 @@ export const LINE_HOLD = 1.5;
 // Tiers where maxing the annoyance meter locks him out for good.
 export const LOCKOUT_TIERS = ["new", "known", "warm"];
 
-// The face he holds once locked out.
+// The face he holds once locked out: rig.json `expressions.moods.guarded`,
+// a face he can hold until the tier changes (no sweat, no open mouth), for a
+// character whose upset isn't a stronger `serious`; else GUARDED_MOOD.
 export const GUARDED_MOOD = "serious";
 
 // The upset face outlasts its line: it holds until the line has typed out
@@ -260,7 +262,7 @@ export class Hangout {
   frame(t, dt) {
     if (this.guardAt != null && t >= this.guardAt) {
       this.guardAt = null;
-      this.baseMood = GUARDED_MOOD;
+      this.baseMood = this.rig.expressions?.moods?.guarded ? "guarded" : GUARDED_MOOD;
       this.moodUntil = -Infinity;
       this.pendingMood = null;
       this.renderer.guard?.(this.tier);

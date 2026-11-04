@@ -72,6 +72,7 @@
       "sweat": ["e_ase_00"],
       "serious": ["e_magao_00"],
       "annoyed": ["e_mu_00"],
+      "guarded": ["e_shinken_00"],
       "upset": ["e_shinken_00", "e_ase_00"],
       "flustered": ["e_kusho_00", "e_sekimen_00", "e_ase_00"],
       "sad": ["e_kanashimi_00"],

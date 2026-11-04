@@ -110,6 +110,7 @@
       "sweat": ["e_ase_00"],
       "serious": ["e_magao_00"],
       "annoyed": ["e_odoroki_00"],
+      "guarded": ["e_suneru_00"],
       "upset": ["e_suneru_00", "e_ase_00"],
       "flustered": ["e_konwaku_00", "e_sekimen_00", "e_ase_00"],
       "sad": ["e_namida_00"],

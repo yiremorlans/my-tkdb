@@ -97,3 +97,14 @@ test('a long upset line keeps the face up until it has been read, then eases out
   assert.strictEqual(renderer.moodName, GUARDED_MOOD);
   assert.deepStrictEqual(fades.at(-1), [GUARDED_MOOD, SETTLE_FADE]);
 });
+
+test('a rig with its own guarded mood holds that instead of serious once locked out', () => {
+  const { hangout, renderer } = setup('new');
+  renderer.rig.expressions.moods.guarded = {};
+  for (const t of [0, 0.1, 0.2]) hangout.tapAt([0, 0], t);
+  hangout.frame(30, 0.1);
+  assert.strictEqual(renderer.moodName, 'guarded');
+  hangout.setTier('known');
+  hangout.frame(30.1, 0.1);
+  assert.strictEqual(renderer.moodName, 'default');
+});

@@ -58,6 +58,7 @@
       "sweat": ["e_ase_00"],
       "serious": ["e_magao_00"],
       "annoyed": ["e_fukigen_00"],
+      "guarded": ["e_fukigen_00"],
       "upset": ["e_fukigen_00", "e_ase_00"],
       "flustered": ["e_bisho_00", "e_sekimen_00", "e_ase_00"],
       "leer": ["e_gesu_00"],

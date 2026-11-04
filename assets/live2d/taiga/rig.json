@@ -75,6 +75,7 @@
       "serious": ["e_magao_00"],
       "annoyed": ["e_kire_00"],
       "menace": ["e_kowai_00"],
+      "guarded": ["e_ikari_00"],
       "upset": ["e_dada_00"],
       "flustered": ["e_adult_00", "e_sekimen_00", "e_ase_00"],
       "sad": ["e_shobokure_00"],
