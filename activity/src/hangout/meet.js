@@ -6,12 +6,12 @@
 // unrecorded.
 //
 // Shared by the Activity (main.js, answering through POST
-// /api/activity/answer) and the v2 preview (preview.js, the dev server's
+// /api/activity/answer) and the preview (preview.js, the dev server's
 // /__meet). The server decides everything about the payout; this only shows
 // it.
 
 import { RESPONSE_TYPE_ORDER } from "../../../constants/responseTypes.js";
-import { typeDuration } from "../hangout/stage.js";
+import { typeDuration } from "./stage.js";
 
 // One glyph per type, abstract so it doesn't give the type away, and so the
 // type never depends on color alone.

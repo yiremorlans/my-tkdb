@@ -1,11 +1,10 @@
-// Hangout v2 rig.json validation: the Live2D counterpart of skeleton.js
-// validateRig. The rig format is documented at the top of live2dRig.js.
+// Hangout rig.json validation (validateLive2DRig). The rig format is documented at the top of live2dRig.js.
 // File access is injected, so the same checks run in the Node tests
-// (test/hangout-v2-rig.test.js, against the files on disk) and in the
+// (test/hangout-rig.test.js, against the files on disk) and in the
 // dev server (live2dRig.js loadLive2DRig, over fetch; a build skips it). No moc3 parsing here:
 // drawable ids are only checked when the caller can look them up.
 
-import { DEFAULT_REACTIONS } from "../hangout/reactions.js";
+import { DEFAULT_REACTIONS } from "./reactions.js";
 import { rankFace } from "../../../constants/sceneFaces.js";
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 

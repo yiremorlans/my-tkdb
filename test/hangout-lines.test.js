@@ -22,7 +22,7 @@ test('every Live2D character has a touch-line file', () => {
   for (const id of rigged) assert.ok(files.includes(`${id}.js`), `${id} has no constants/hangout/${id}.js`);
 });
 
-// Holds (activity/src/hangout-v2/preview.js): a line on letting go of each
+// Holds (activity/src/hangout/preview.js): a line on letting go of each
 // hold from spark to bound, the caught tease's line at close and the break
 // line at bound, and `teaseLetGo` (tease let go before its crest) at bound.
 // `bound` carries only these; its touch triggers fall back to close.

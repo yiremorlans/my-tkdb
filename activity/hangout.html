@@ -1,17 +1,17 @@
 <!doctype html>
 <!-- Hangout preview (dev only, never deployed): the Live2D Hangout scene
      with the debug drawer. Run: npm run dev:activity, then open
-     /hangout-v2.html -->
+     /hangout.html -->
 <html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <title>Hangout v2 Preview</title>
+    <title>Hangout Preview</title>
     <!-- A classic script (it defines the global Live2DCubismCore), served
          from /assets like the other repo assets, before the module. -->
     <script src="assets/live2d/vendor/live2dcubismcore.min.js"></script>
     <link rel="stylesheet" href="./src/hangout/hangout.css" />
-    <link rel="stylesheet" href="./src/hangout-v2/preview.css" />
+    <link rel="stylesheet" href="./src/hangout/preview.css" />
   </head>
   <body>
     <main id="stage" class="stage">
@@ -42,6 +42,6 @@
       <button id="btn-hide-ui" class="vn-icon" title="Hide dialogue (H)" aria-label="Hide dialogue" aria-pressed="false">◉</button>
     </main>
     <aside id="controls" class="drawer" hidden></aside>
-    <script type="module" src="./src/hangout-v2/preview.js"></script>
+    <script type="module" src="./src/hangout/preview.js"></script>
   </body>
 </html>

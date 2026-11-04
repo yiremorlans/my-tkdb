@@ -40,7 +40,7 @@ function loadScript(src) {
 /** Starts the Live2D scene: Cubism Core first, then the scene code. */
 async function startScene(stage, character, options) {
   await loadScript(CUBISM_CORE);
-  const scene = await import("./hangout-v2/scene.js");
+  const scene = await import("./hangout/scene.js");
   return scene.startScene(stage, { ...options, base: versioned(`/assets/live2d/${character}`) });
 }
 
@@ -100,9 +100,9 @@ async function playEncounter(session, encounter) {
   // Independent fetches, so they go out together.
   const [lines, { meetFlow }, { attachWarmth }, { attachHolds }] = await Promise.all([
     loadLines(encounter.character, { daytime: encounter.daytime }),
-    import("./hangout-v2/meet.js"),
-    import("./hangout-v2/warmth.js"),
-    import("./hangout-v2/holds.js"),
+    import("./hangout/meet.js"),
+    import("./hangout/warmth.js"),
+    import("./hangout/holds.js"),
   ]);
   const scene = await startScene($("#stage"), encounter.character, {
     tier: encounter.tier,
@@ -130,7 +130,7 @@ async function playFreeHangout(character) {
   const options = { tier: params.get("tier"), lines: await loadLines(character, timeParam()), maxFPS: isMobile ? MOBILE_FPS : 0 };
   const scene = await startScene($("#stage"), character, options);
   wireChrome(scene);
-  const [{ attachWarmth }, { attachHolds }] = await Promise.all([import("./hangout-v2/warmth.js"), import("./hangout-v2/holds.js")]);
+  const [{ attachWarmth }, { attachHolds }] = await Promise.all([import("./hangout/warmth.js"), import("./hangout/holds.js")]);
   const warmth = attachWarmth(scene, "hangout");
   attachHolds(scene, { warmth: () => warmth });
   scene.say(scene.hangout.line("greeting") ?? "");

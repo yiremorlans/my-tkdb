@@ -1,4 +1,4 @@
-// Writes a Hangout v2 rig (docs/hangout-activity.md §3) for a converted
+// Writes a Hangout rig (docs/hangout-activity.md §3) for a converted
 // Live2D model: assets/live2d/<character>/rig.json, modeled on Alan's
 // hand-tuned one (assets/live2d/alan/rig.json is the template).
 //
@@ -25,8 +25,8 @@
 // - background: the character's room;
 // - the outfit's dialogueVariant (uniform for academy, casual otherwise),
 //   which /meet's variant roll picks it by (docs/hangout-activity.md §11.5).
-// Hotspots are a starting point: check them in the v2 preview's "show
-// hotspots" overlay (hangout-v2.html?character=<id>).
+// Hotspots are a starting point: check them in the preview's "show
+// hotspots" overlay (hangout.html?character=<id>).
 //
 //   node activity/tools/live2d-rig.js <character> --pose-hands [--dry-run]
 //
@@ -658,7 +658,7 @@ async function main() {
     console.log(`[live2d-rig] ${file}: ${existing.outfits[outfit] ? "replaced" : "added"} outfit ${outfit}`);
     console.log(`[live2d-rig] outfit parts: ${Object.keys(entry.parts).join(", ")}${overrides.length ? ` (own ${overrides.join(", ")}: drawables differ from the shared ones)` : ""}`);
     if (missing.length) console.log(`[live2d-rig] the ${outfit} model lacks ${missing.join(", ")}, which the shared moods/poses use: change them by hand`);
-    console.log(`[live2d-rig] next: check hangout-v2.html?character=${character}&outfit=${outfit} with "show hotspots"`);
+    console.log(`[live2d-rig] next: check hangout.html?character=${character}&outfit=${outfit} with "show hotspots"`);
     return;
   }
   const text = formatRig(rig);
@@ -670,7 +670,7 @@ async function main() {
   console.log(`[live2d-rig] poses: ${JSON.stringify(rig.reactionPoses)}`);
   if (moodsMissing.length) console.log(`[live2d-rig] no expression for: ${moodsMissing.join(", ")} (shown as default)`);
   if (!rig.background) console.log("[live2d-rig] no background: set rig.json `background` by hand");
-  console.log(`[live2d-rig] next: check hangout-v2.html?character=${character} with "show hotspots"`);
+  console.log(`[live2d-rig] next: check hangout.html?character=${character} with "show hotspots"`);
 }
 
 if (import.meta.url === `file://${process.argv[1]}`) main();

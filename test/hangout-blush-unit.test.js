@@ -1,4 +1,4 @@
-// Live2DRig blushUnit (activity/src/hangout-v2/live2dRig.js): warmth, hold
+// Live2DRig blushUnit (activity/src/hangout/live2dRig.js): warmth, hold
 // and crest blush scale by the model's lowest nonzero ParamCheek keyform, so
 // Ren's model (a normal blush drawn at 0.5, a heavy one at 1) flushes like
 // the one-drawing models instead of jumping to his heavy blush.
@@ -7,7 +7,7 @@ import assert from 'node:assert';
 
 mock.module('pixi.js', { namedExports: { Container: class {} } });
 mock.module('untitled-pixi-live2d-engine/cubism', { namedExports: { Live2DModel: {}, MotionPriority: { FORCE: 3, IDLE: 1 } } });
-const { blushUnit } = await import('../activity/src/hangout-v2/live2dRig.js');
+const { blushUnit } = await import('../activity/src/hangout/live2dRig.js');
 
 const params = (keys, max = 1) => ({ keyValues: [Float32Array.from(keys)], maximumValues: [max] });
 

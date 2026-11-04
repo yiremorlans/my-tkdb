@@ -4,7 +4,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
 
-import { Warmth, WARMTH_PROFILES, attachWarmth } from '../activity/src/hangout-v2/warmth.js';
+import { Warmth, WARMTH_PROFILES, attachWarmth } from '../activity/src/hangout/warmth.js';
 
 const { gains } = WARMTH_PROFILES.hangout;
 

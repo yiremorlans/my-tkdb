@@ -4,7 +4,7 @@
 // plays the pose rig.json `reactionPoses` gives it, and his mouth moves
 // while its touch line types out. The scene's `say` shows any other line
 // (narration, the /meet beat) without moving it.
-// The preview (hangout-v2/preview.js) adds its debug drawer through the
+// The preview (hangout/preview.js) adds its debug drawer through the
 // scene's hooks: frame, onPointer, onTap.
 
 import { Application, extensions, Sprite } from "pixi.js";
@@ -12,9 +12,9 @@ import { Live2DPlugin } from "untitled-pixi-live2d-engine/cubism";
 
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 
-import { Hangout } from "../hangout/hangout.js";
-import { Sounds } from "../hangout/sounds.js";
-import { dialogueBox, frameLoop, loadTexture, stageFraming } from "../hangout/stage.js";
+import { Hangout } from "./hangout.js";
+import { Sounds } from "./sounds.js";
+import { dialogueBox, frameLoop, loadTexture, stageFraming } from "./stage.js";
 import { Live2DMotion, Live2DRig, loadLive2DRig } from "./live2dRig.js";
 
 extensions.add(Live2DPlugin);

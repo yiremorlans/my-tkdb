@@ -1,4 +1,4 @@
-// Rebuilds Hangout v2 model manifests (activity/src/hangout-v2/manifest.js):
+// Rebuilds Hangout model manifests (activity/src/hangout/manifest.js):
 // the expression deltas, clip lengths and idle parameters live2dRig.js
 // loads in one request. live2d-convert.js writes one with every model; run
 // this after editing a motion or expression file by hand.
@@ -11,7 +11,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-import { buildModelManifest, manifestPath } from "../src/hangout-v2/manifest.js";
+import { buildModelManifest, manifestPath } from "../src/hangout/manifest.js";
 
 const REPO = path.resolve(path.dirname(new URL(import.meta.url).pathname), "../..");
 export const LIVE2D_DIR = path.join(REPO, "assets/live2d");

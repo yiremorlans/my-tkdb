@@ -19,9 +19,9 @@
 import { Graphics } from "pixi.js";
 
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
-import { forTier, resolveReaction } from "../hangout/reactions.js";
-import { typeDuration, UPSET_READ, SETTLE_FADE } from "../hangout/hangout.js";
-import { hotspotAt } from "../hangout/hotspots.js";
+import { forTier, resolveReaction } from "./reactions.js";
+import { typeDuration, UPSET_READ, SETTLE_FADE } from "./hangout.js";
+import { hotspotAt } from "./hotspots.js";
 import { RESPONSE_TYPE_ORDER } from "../../../constants/responseTypes.js";
 import { RESPONSE_GLYPHS } from "./meet.js";
 

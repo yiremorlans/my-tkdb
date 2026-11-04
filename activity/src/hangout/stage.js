@@ -1,4 +1,4 @@
-// Hangout: the stage pieces the scene (hangout-v2/scene.js) and the /meet
+// Hangout: the stage pieces the scene (hangout/scene.js) and the /meet
 // flow share: the phone frame cap, the VN box's typing, image loading and
 // the stage framing.
 

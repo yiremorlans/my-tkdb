@@ -49,7 +49,7 @@ body {
   height: 100dvh;
   overflow: hidden;
   touch-action: none;
-  /* A long press is a hold (hangout-v2/holds.js), not iOS's text selection
+  /* A long press is a hold (hangout/holds.js), not iOS's text selection
      or its callout menu, which would also cancel the touch. */
   -webkit-user-select: none;
   user-select: none;
@@ -247,7 +247,7 @@ body {
 }
 
 
-/* --- holds: heart monitor + first-time hint (hangout-v2/holds.js) -------------------- */
+/* --- holds: heart monitor + first-time hint (hangout/holds.js) -------------------- */
 /* Nothing goes at the stage's top: Discord's Activity chrome covers it. The
    monitor lives inside his name plate (.vn-name) and slides out after the
    name only while a heartbeat hold runs, so the pulse reads as his. */

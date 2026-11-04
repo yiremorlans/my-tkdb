@@ -2,7 +2,7 @@
 <!-- The Hangout Activity (docs/hangout-activity.md §4, §6, §11). Built by
      `npm run build:activity` into activity/dist, which Express serves at /.
      Inside Discord it signs in through the Embedded App SDK; anywhere else
-     it runs as a plain page. The dev preview is hangout-v2.html. -->
+     it runs as a plain page. The dev preview is hangout.html. -->
 <html lang="en">
   <head>
     <meta charset="utf-8" />
@@ -13,13 +13,13 @@
   <body>
     <main id="stage" class="stage">
       <div id="choices" class="choices" hidden></div>
-      <!-- First-time hint for the holds (hangout-v2/holds.js, remembered per
+      <!-- First-time hint for the holds (hangout/holds.js, remembered per
            browser); after #choices so it can hide while they show. -->
       <div id="coach" class="coach" role="status" hidden></div>
 
       <section class="vn-box" aria-live="polite">
         <!-- Heartbeat hold: his pulse (beating heart, monitor trace, bpm;
-             hangout-v2/holds.js) slides out of his name plate while it runs. -->
+             hangout/holds.js) slides out of his name plate while it runs. -->
         <div class="vn-name"><span id="vn-name"></span><span id="heart-monitor" class="heart-monitor" aria-hidden="true">
           <svg class="heart" viewBox="0 0 24 24"><path d="M12 21s-7.5-4.6-9.6-9.2C.9 8.4 3 5 6.4 5c2 0 3.3 1.1 4.1 2.3h3C14.3 6.1 15.6 5 17.6 5 21 5 23.1 8.4 21.6 11.8 19.5 16.4 12 21 12 21z"/></svg>
           <canvas id="ecg" width="168" height="36"></canvas>

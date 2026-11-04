@@ -1,8 +1,8 @@
-// Rebuilds a game Live2D model as plain Cubism files for Hangout v2
+// Rebuilds a game Live2D model as plain Cubism files for the Hangout
 // (docs/hangout-activity.md §3.6): moc3, model3.json, physics3.json, one
 // exp3.json per expression and one motion3.json per clip, plus a looping
 // *_hold clip for every pose that has a *_return, and the model's manifest
-// (hangout-v2/manifest.js).
+// (hangout/manifest.js).
 //
 //   node activity/tools/live2d-convert.js <character> [--outfit academy]
 //        (--bundle <file> | --assets <ExportedProject/Assets>)

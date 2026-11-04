@@ -1,5 +1,5 @@
-// rig.json validation for Hangout v2, the Live2D hangout
-// (activity/src/hangout-v2/validate.js validateLive2DRig): each rule against
+// rig.json validation for the Live2D hangout
+// (activity/src/hangout/validate.js validateLive2DRig): each rule against
 // small inline fixtures, then every character's rig in assets/live2d/
 // against the files on disk.
 import { test } from 'node:test';
@@ -7,7 +7,7 @@ import assert from 'node:assert';
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { validateLive2DRig } from '../activity/src/hangout-v2/validate.js';
+import { validateLive2DRig } from '../activity/src/hangout/validate.js';
 
 // --- fixtures ---------------------------------------------------------------
 

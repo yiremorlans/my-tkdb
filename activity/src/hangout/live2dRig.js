@@ -38,8 +38,8 @@
 import { Container } from "pixi.js";
 import { Live2DModel, MotionPriority } from "untitled-pixi-live2d-engine/cubism";
 
-import { TYPE_MS, typeSchedule } from "../hangout/hangout.js";
-import { forTier } from "../hangout/reactions.js";
+import { TYPE_MS, typeSchedule } from "./hangout.js";
+import { forTier } from "./reactions.js";
 import { buildModelManifest, manifestPath } from "./manifest.js";
 import { validateLive2DRig } from "./validate.js";
 
@@ -321,7 +321,7 @@ export async function loadLive2DRig(baseUrl) {
     },
     fileExists: (file) => sounds.has(file) || fetch(`${baseUrl}/${file}`, { method: "HEAD" }).then((r) => r.ok, () => false),
   });
-  for (const w of warnings) console.warn(`[hangout-v2] ${rig.character}: ${w}`);
+  for (const w of warnings) console.warn(`[hangout] ${rig.character}: ${w}`);
   return { rig, sounds, baseUrl };
 }
 
@@ -333,7 +333,7 @@ async function loadManifest(modelUrl, model3) {
   const base = new URL(modelUrl, location.href);
   const res = await fetch(new URL(manifestPath(base.pathname.split("/").pop()), base)).catch(() => null);
   if (res?.ok) return res.json();
-  console.warn(`[hangout-v2] no manifest beside ${base.pathname}; run node activity/tools/live2d-manifest.js`);
+  console.warn(`[hangout] no manifest beside ${base.pathname}; run node activity/tools/live2d-manifest.js`);
   return buildModelManifest(model3, async (file) => (await fetch(new URL(file, base))).json());
 }
 

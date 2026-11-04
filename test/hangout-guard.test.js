@@ -1,4 +1,4 @@
-// Live2DRig guarded pose (activity/src/hangout-v2/live2dRig.js): when the
+// Live2DRig guarded pose (activity/src/hangout/live2dRig.js): when the
 // upset pose is the guarded pose, the lockout keeps holding it instead of
 // returning and playing it again. Pose hand-offs are timed from when the
 // clip starts (it may still be loading when playPose is called).
@@ -8,7 +8,7 @@ import assert from 'node:assert';
 mock.module('pixi.js', { namedExports: { Container: class {} } });
 mock.module('untitled-pixi-live2d-engine/cubism', { namedExports: { Live2DModel: {}, MotionPriority: { FORCE: 3, IDLE: 1 } } });
 mock.timers.enable({ apis: ['setTimeout'] });
-const { Live2DRig } = await import('../activity/src/hangout-v2/live2dRig.js');
+const { Live2DRig } = await import('../activity/src/hangout/live2dRig.js');
 
 function fakeRig(reactionPoses) {
   const r = Object.create(Live2DRig.prototype);

@@ -104,10 +104,10 @@ canvas, which is every rig's reference space.
 
 ### 3.1 `rig.json`
 
-`activity/src/hangout-v2/live2dRig.js` documents the format (including each
+`activity/src/hangout/live2dRig.js` documents the format (including each
 outfit's `dialogueVariant`, §11.5) and `validate.js`
 checks it, in the browser on load and in
-`test/hangout-v2-rig.test.js` against every rig on disk. Alan's, trimmed:
+`test/hangout-rig.test.js` against every rig on disk. Alan's, trimmed:
 
 ```jsonc
 {
@@ -191,7 +191,7 @@ is carried by the face, the line and the sound alone.
 
 ### 3.4 Preview and tuning
 
-`activity/hangout-v2.html`, local only (never built or deployed): the scene
+`activity/hangout.html`, local only (never built or deployed): the scene
 over the character's room, plus a debug drawer with every mood, reaction,
 touch spot and pose, the relationship tier, and a hotspot overlay.
 `?character=<id>`, `?tier=<tier>`, `?pose=<group>`, `?room=0` (no room),
@@ -224,7 +224,7 @@ Order for a new character or outfit:
    frame of every pose that has a `*_return`, model3.json, and the model's
    manifest (`<base>.manifest.json`: expression deltas, clip lengths and
    what the idle moves, so the rig loads one file instead of ~70; see
-   `hangout-v2/manifest.js`). After editing a motion or expression file by
+   `hangout/manifest.js`). After editing a motion or expression file by
    hand, `live2d-manifest.js <character>` rebuilds it; a test fails while
    one is stale. Files are
    `<character>_<outfit>.*` after the repo's ids. `--assets` takes an
@@ -249,9 +249,9 @@ Order for a new character or outfit:
    in both (Jo's annoyed/upset moved from `e_ikari_00` to `e_komari_00`,
    which femacademy has). The preview has no outfit picker: it shows
    `defaultOutfit`.
-5. **Check it** in `hangout-v2.html?character=<id>` with "show hotspots",
+5. **Check it** in `hangout.html?character=<id>` with "show hotspots",
    and tune rig.json by hand where the picks are off.
-6. **Validate:** `node --test test/hangout-v2-rig.test.js`.
+6. **Validate:** `node --test test/hangout-rig.test.js`.
 
 Every character has an academy model (2026-10-30; Benkei's is his
 default bundle, `benkei_`). Second outfits so far: Benkei `work`
@@ -497,7 +497,7 @@ and pose come off the same tier ladder as the spot it's on.
   is a random span. No heavy lids, glance down or parted lips.
 - **Holds in the Activity (2026-11-03).** The holds above (rings, heart
   monitor, hearts, face arc, tease and caught tease) and the first-time
-  hint live in hangout-v2/holds.js, which both the Activity (main.js, /meet
+  hint live in hangout/holds.js, which both the Activity (main.js, /meet
   and the free hangout) and the preview attach; before this they were
   preview-only, so a long press in Discord was just a tap. For phones: the
   stage turns off text selection and iOS's long-press callout
@@ -560,7 +560,7 @@ article into a part, or a parameter to hold off, as with Elias's lollipop), the 
 reaction, the article's own trigger, and any article it waits on. Hiding a
 part zeroes its opacity after motions and pose3 write theirs; hiding
 drawables needs its own path in live2dRig.js (drawable opacity is
-recomputed by the core each update). The v2 preview's "Model parts"
+recomputed by the core each update). The preview's "Model parts"
 toggles (`?hide=PartX`) show what a part covers.
 
 | Character | Article | Art | Covers | Notes |
@@ -626,7 +626,7 @@ Desktop only (Discord platform `desktop`, no coarse pointer) gets a
 close-up button (⛶) in the VN box that swaps in `stage.landscape`, the VN
 bust. It applies only while the stage is wide and is remembered per browser
 (`hangout.closeUp`). Phones and tablets never get it, and a phone turned
-sideways keeps the full framing. The v2 preview has the same switch under
+sideways keeps the full framing. The preview has the same switch under
 "Framing" in its drawer.
 
 ### 4.5 Runtime targets
@@ -737,13 +737,12 @@ tracking only. Answered encounters log as `'meet'` (§11.7).
 ```
 activity/
   index.html          # Activity entry (Vite)
-  hangout-v2.html     # Live2D rig preview (dev only, §3.4)
+  hangout.html        # Live2D rig preview (dev only, §3.4)
   src/
     main.js           # Activity entry: the scene + Discord sign-in
-    hangout-v2/       # Live2D rig: scene, live2dRig.js (model, moods, poses, talking),
-                      #   meet.js (the /meet flow), validate.js, preview
-    hangout/          # Hangout class, reactions, hotspots, annoyance meter, dialogue box,
-                      #   sounds, lines; the engine hangout-v2/ drives
+    hangout/          # scene, live2dRig.js (model, moods, poses, talking), the Hangout
+                      #   class, reactions, hotspots, annoyance meter, dialogue box,
+                      #   sounds, lines, meet.js (the /meet flow), validate.js, preview
     discord.js        # SDK init + auth, the /meet encounter calls (no-op outside Discord)
   tools/
     live2d-convert.js  live2d-rig.js  live2d-manifest.js   # Live2D models (§3.5)
@@ -768,7 +767,7 @@ under `dist/static/` so they never collide with the repo's `/assets`.
 
 1. **Rig preview (browser only).** Built first on the sprite rig (v1), then
    redone on Live2D (2026-10-30): converted models, rig.json,
-   moods, reaction poses, hotspots, annoyance meter, and `hangout-v2.html`.
+   moods, reaction poses, hotspots, annoyance meter, and `hangout.html`.
    No Discord, auth or data.
    **Gate: the user signs off on the Live2D rig in the browser.**
 2. **Activity shell.** Discord detection and SDK, `/hangout` as the
@@ -787,7 +786,7 @@ under `dist/static/` so they never collide with the repo's `/assets`.
    on 2026-10-30 (the stage helpers to `src/hangout/stage.js`, Alan's sound
    to `assets/live2d/alan/sfx/`, `roomBackground` to
    `tools/lib/backgrounds.js`, the preview styles to
-   `src/hangout-v2/preview.css`).
+   `src/hangout/preview.css`).
 
 ---
 
@@ -797,7 +796,7 @@ under `dist/static/` so they never collide with the repo's `/assets`.
 
 - routes: reject missing, bad or expired tokens; ignore any user id in the
   body.
-- `test/hangout-v2-rig.test.js`: the Live2D rig validator's rules
+- `test/hangout-rig.test.js`: the Live2D rig validator's rules
   (missing models, expressions and pose clips, hotspot parts, drawable ids,
   each outfit's `dialogueVariant`), then every rig in
   `assets/live2d/` against the files on disk.
@@ -827,9 +826,9 @@ otherwise.
   candlelight, particles (rain for Hotarubi, petals, sparkles on water),
   background blur, and a vignette or soft shadow. Bloom is the heaviest on
   phones at the 30 fps cap. For every Hangout, not dates only. A
-  throwaway toggle in the dev preview (`hangout-v2.html`) comes first;
+  throwaway toggle in the dev preview (`hangout.html`) comes first;
   nothing ships until the user has seen it. **Prototype built 2026-11-01**:
-  `activity/src/hangout-v2/effects.js`, the "Effects" rows in the preview
+  `activity/src/hangout/effects.js`, the "Effects" rows in the preview
   drawer. Its auto rules are the candidates to ship: Hotarubi rain (always),
   a night grade from `isEveningHour` on day files only (`_PM` files are
   already night), the Obscuary grade, Frostheim snow, and a light blur
@@ -846,7 +845,7 @@ otherwise.
 Status: **built 2026-10-30, released to everyone 2026-10-31.** Designed
 2026-10-28, settled 2026-10-29. Code: `meetActivity.js` (the click, the
 encounter, the answer, the fallback), `activityRoutes.js` (the routes),
-`activity/src/hangout-v2/meet.js` (the player's side), migration 035
+`activity/src/hangout/meet.js` (the player's side), migration 035
 (`meet_encounters`, the off switch, the usage path). Still to do: the
 per-tier touch lines, which are writing (§11.6). Not yet tested in Discord: greying out the picker after a launch
 (through `/meet`'s own token; the result stays in the Activity), followups

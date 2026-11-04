@@ -1,6 +1,6 @@
 # Live2D outfits checklist
 
-Hangout v2 (Live2D) is the default rig. Every character loads from two outfits:
+The Hangout runs on Live2D. Every character loads from two outfits:
 `academy` plus one of `city` / `casual` / `work` / `roomwear`. Models live in
 `assets/live2d/<id>/<outfit>/` and are registered under `outfits` in
 `assets/live2d/<id>/rig.json`.

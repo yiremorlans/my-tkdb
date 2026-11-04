@@ -1,4 +1,4 @@
-// Hangout v2 model manifests (activity/src/hangout-v2/manifest.js): the
+// Hangout model manifests (activity/src/hangout/manifest.js): the
 // builder against a small fixture, then every model under assets/live2d/
 // has a manifest matching its files. Stale after a hand edit? Run
 // node activity/tools/live2d-manifest.js <character>.
@@ -7,7 +7,7 @@ import assert from 'node:assert';
 import fs from 'node:fs';
 import path from 'node:path';
 
-import { buildModelManifest, manifestPath } from '../activity/src/hangout-v2/manifest.js';
+import { buildModelManifest, manifestPath } from '../activity/src/hangout/manifest.js';
 import { manifestText, modelFiles } from '../activity/tools/live2d-manifest.js';
 
 test('manifestPath sits beside the model3.json', () => {

@@ -1,7 +1,7 @@
-// Hangout v2 preview (dev only): the v2 scene (hangout-v2/scene.js) plus a
+// Hangout preview (dev only): the scene (scene.js) plus a
 // debug drawer with a character picker, buttons for every mood, reaction,
 // touch spot and pose, the relationship tier, and a hotspot overlay. See
-// hangout-v2.html. The VN box plays a /meet encounter with the Activity's
+// hangout.html. The VN box plays a /meet encounter with the Activity's
 // own flow (meet.js), drawn by the dev server from the bot's own content
 // (vite.config.js /__meet).
 //
@@ -12,13 +12,13 @@
 import { Graphics } from "pixi.js";
 
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
-import { loadLines } from "../hangout/lines.js";
+import { loadLines } from "./lines.js";
 import {
   DEFAULT_REACTIONS,
   TOUCH_SPOTS,
   forTier,
-} from "../hangout/reactions.js";
-import { MOBILE_FPS } from "../hangout/stage.js";
+} from "./reactions.js";
+import { MOBILE_FPS } from "./stage.js";
 import { GRADES, PARTICLE_KINDS, autoEffects, createEffects } from "./effects.js";
 import { meetFlow } from "./meet.js";
 import { attachHolds } from "./holds.js";
@@ -66,7 +66,7 @@ async function main() {
   } catch (err) {
     $("#controls").textContent = err.message;
     $("#controls").hidden = false;
-    console.error(`[hangout-v2] ${err.stack ?? err.message}`);
+    console.error(`[hangout] ${err.stack ?? err.message}`);
     return;
   }
   const { renderer, hangout, say } = scene;
@@ -555,7 +555,7 @@ async function main() {
     if (beat.background)
       scene
         .setBackground(beat.background)
-        .catch((err) => console.error(`[hangout-v2] ${err.message}`));
+        .catch((err) => console.error(`[hangout] ${err.message}`));
     flow.play(beat, async (type) => {
       const a = new URLSearchParams({
         character,
@@ -577,6 +577,6 @@ async function main() {
 }
 
 main().catch((err) => {
-  $("#controls").textContent = `hangout v2 failed: ${err.message}`;
-  console.error(`[hangout-v2] ${err.stack ?? err.message}`);
+  $("#controls").textContent = `hangout failed: ${err.message}`;
+  console.error(`[hangout] ${err.stack ?? err.message}`);
 });
