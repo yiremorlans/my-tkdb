@@ -50,6 +50,20 @@ const TICK_INTERVAL_MS = 45 * 1000;
 const SPAWN_RETRY_FLOOR_MS = 5 * 60 * 1000;
 const spawnAttemptAt = new Map(); // guild_id -> epoch ms of the last spawn attempt
 
+// The mission sweep (two expiry UPDATEs plus the reconcile read) runs at most
+// this often rather than every tick: it was about half the tick's steady query
+// load, for the free-tier reason TICK_INTERVAL_MS gives. Mission windows are
+// hours long, so a few minutes' lag finalizing one is invisible. The one place
+// lag would cost something, a due slot finding an expired post still "open",
+// sweeps that guild on the spot (runGuildMissionPass in missions/posts.js).
+const MISSION_SWEEP_INTERVAL_MS = 5 * 60 * 1000;
+let lastMissionSweepAt = -Infinity;
+
+/** Lets the next tick's mission sweep run regardless of when the last one did. */
+export function clearMissionSweepClock() {
+  lastMissionSweepAt = -Infinity;
+}
+
 let timer = null;
 let ticking = false;
 
@@ -125,10 +139,15 @@ async function runMissionPass(guilds, now) {
   // Same reasoning as the encounter sweep: finalize every guild's expired
   // missions, not just the enabled ones, so an admin running `/missions
   // disable` mid-flight doesn't strand a request on the board forever.
-  try {
-    await sweepExpiredMissions(null, now);
-  } catch (err) {
-    console.error('[encounterScheduler] Mission sweep failed:', err.message);
+  // Throttled by MISSION_SWEEP_INTERVAL_MS; the clock only advances on
+  // success, so a failed sweep retries on the next tick.
+  if (now.getTime() - lastMissionSweepAt >= MISSION_SWEEP_INTERVAL_MS) {
+    try {
+      await sweepExpiredMissions(null, now);
+      lastMissionSweepAt = now.getTime();
+    } catch (err) {
+      console.error('[encounterScheduler] Mission sweep failed:', err.message);
+    }
   }
 
   if (!guilds) return;
@@ -173,8 +192,11 @@ async function runEncounterPass(guilds, now) {
     return;
   }
 
-  // Sequential: at fewer than five guilds, concurrency buys nothing and would
-  // only make the Discord rate-limit picture harder to reason about.
+  // Sequential: only the rare due guild does any real work (a composite and a
+  // Discord post), so at a few dozen guilds concurrency buys little and would
+  // make the Discord rate-limit picture harder to reason about. If several due
+  // spawns ever push a tick past TICK_INTERVAL_MS, cap concurrency with
+  // mapLimit (as sweepExpiredMissions does) rather than going fully parallel.
   for (const guild of guilds) {
     if (!guild.encounter_channel_id) continue;
 

@@ -359,7 +359,17 @@ export async function runGuildMissionPass(guild, now = new Date()) {
     }
 
     // Never two live requests. The board holds one folder at a time.
-    const open = await getOpenMission(guild.guild_id);
+    let open = await getOpenMission(guild.guild_id);
+
+    // The global sweep is throttled (MISSION_SWEEP_INTERVAL_MS in
+    // encounterScheduler.js), so a post whose TTL just ran out can still read
+    // as open here. Finalize this guild's expired rows now rather than spend
+    // the slot on a request that's already over.
+    if (open && new Date(open.post_expires_at) < now) {
+      await sweepExpiredMissions(guild.guild_id, now);
+      open = await getOpenMission(guild.guild_id);
+    }
+
     if (open) {
       console.log(
         `[missions] Guild ${guild.guild_id} still has mission ${open.id} open — spending slot ${slot.index}`,

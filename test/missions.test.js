@@ -361,6 +361,35 @@ describe('spawning a mission request', () => {
     assert.deepEqual(fake.tables.guild_settings[0].mission_slots_fired, [0], 'the slot is still spent');
   });
 
+  // The scheduler's global sweep is throttled (MISSION_SWEEP_INTERVAL_MS), so
+  // a due slot can find a post whose TTL ran out but hasn't been swept yet.
+  // That request is over; the slot must post a new one, not be spent on it.
+  it('sweeps an expired-but-unswept request rather than spending the slot on it', async () => {
+    fake.tables.missions.push(
+      missionRow({ id: 1, status: 'open', post_expires_at: new Date(Date.now() - 60_000).toISOString() }),
+    );
+
+    const now = new Date();
+    const guild = guildRow({
+      mission_slots_day: `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`,
+      mission_slots_today: [new Date(now.getTime() - 60_000).toISOString()],
+      mission_slots_fired: [],
+    });
+    fake.tables.guild_settings.push({ ...guild });
+
+    await runGuildMissionPass(guild, now);
+
+    const old = fake.tables.missions.find((m) => m.id === 1);
+    assert.equal(old.status, 'expired', 'the stale request is withdrawn');
+    assert.ok(
+      edits.some((e) => e.messageId === 'message-1'),
+      'its post is edited down like any swept request',
+    );
+    assert.equal(posts.length, 1, 'the slot posts a fresh request');
+    assert.ok(fake.tables.missions.some((m) => m.id !== 1), 'and records it as a new mission');
+    assert.deepEqual(fake.tables.guild_settings[0].mission_slots_fired, [0]);
+  });
+
   it('withdraws an unaccepted request once its post TTL runs out', async () => {
     fake.tables.missions.push(
       missionRow({ status: 'open', post_expires_at: new Date(Date.now() - 1000).toISOString() }),

@@ -726,7 +726,7 @@ export async function getCommandUsageStats(days = 30) {
  * what its admins do with `/encounters channel` or `/missions enable`.
  *
  * The switches are filtered here rather than in the query: the table has a
- * row per configured server, so the unlocked rows are already a handful.
+ * row per configured server, so the unlocked rows are a few dozen at most.
  */
 export async function getSchedulerGuilds() {
   const { data, error } = await withGatewayRetry(() =>
