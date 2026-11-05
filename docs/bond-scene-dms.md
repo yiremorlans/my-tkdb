@@ -62,7 +62,7 @@ user a **keepsake** — a small memento in the character's voice — and a
 | Component router (`custom_id` prefix dispatch) | `app.js` line 377 | a new `bond:` namespace for the Continue / choice buttons |
 | Level resolution (`getRelationshipLevel`, `RELATIONSHIP_LEVELS`) | `constants/game.js` | detecting the crossing |
 | `fillTemplate` + placeholder set | `constants/publicEncounters.js` | scene lines that name `times_met`, house, the latest encounter milestone |
-| Per-character content files | `constants/dialogue/<id>.js` | the new `bondScenes` pool lives here, next to `dialogue` / `approach` / `responses` |
+| Per-character content files | `constants/bondScenes/<id>.js` | the `bondScenes` pool, one file per character, imported by `constants/dialogue/<id>.js` as its `bondScenes` key |
 | Volatile-character tone | [`negative-affinity-enemies-to-lovers.md`](./negative-affinity-enemies-to-lovers.md) | Leo, Shion, Taiga, Romeo, Yuri, Ritsu get thorny scenes; if that spec ships, its negative crossings get their own rift scenes (§4.8) |
 
 No new dependencies. No new privileged intents — a bot DM needs none; it needs
@@ -622,8 +622,9 @@ a Discord-ToS-safe posture: bot DMs must be wanted.
 
 ### 5.1 Where it lives
 
-A new pool on each `constants/dialogue/<id>.js` default export, beside
-`dialogue` / `approach` / `responses`:
+A `bondScenes` key on each `constants/dialogue/<id>.js` default export, beside
+`dialogue` / `approach` / `responses`. Its content lives in its own file,
+`constants/bondScenes/<id>.js`, which the dialogue file imports:
 
 ```js
 bondScenes: {
@@ -946,7 +947,7 @@ record of what the player has seen and earned, not analytics. Nothing to add to
 | `bondScenes.js` | new — `deliverBondScene`, `getBondScene`, beat rendering, var resolution |
 | `app.js` | `resp` handler fires `deliverBondScene`; new `bond:` branch in the component router (ACK + bot-token post, §3.2); `/bonds` gains `character` arg (recap + "▸ Continue") + `dms on\|off` (§4.6, §4.9) |
 | `commands.js` | `/bonds` option + subcommands |
-| `constants/dialogue/<id>.js` | `bondScenes` pool (beats + `choice` + `keepsake`) — 26 files, all six levels each |
+| `constants/bondScenes/<id>.js` | `bondScenes` pool (beats + `faces` + `choice` + `keepsake`) — 26 files, all six levels each |
 | `constants/publicEncounters.js` | freeze the §5.2 placeholder list |
 | `constants/validateContent.js` | `bondScenes` validation pass (§5.4) |
 | `constants/characters.js` | — (§4.3's `DIALOGUE_WHEN_DIMENSIONS` hook is gone with the `when` layer; see the note there) |
@@ -992,7 +993,7 @@ the resume button (§2.4), validation, tests.
 
 **Phase 2 — per-character scenes (content-bound).** 156 scenes — 1–4 beats plus
 a choice and a keepsake line each, from `reference/`. Each is an isolated edit
-to one `constants/dialogue/<id>.js` and needs no code change. This is the bulk
+to one `constants/bondScenes/<id>.js` and needs no code change. This is the bulk
 of the total effort and it's writing, not engineering. Landed in full before
 release, which is why §5.3 has no fallback in it.
 

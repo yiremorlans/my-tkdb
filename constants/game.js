@@ -234,7 +234,7 @@ for (const tier of Object.keys(DIALOGUE_POOL_TARGET_BY_TIER)) {
 export const BOND_SCENE_LEVELS = RELATIONSHIP_LEVELS.slice(1).map((l) => l.name);
 
 // Content key: camelCase of the level name. This is the key a character's
-// `bondScenes` pool (constants/dialogue/<id>.js) is written under.
+// `bondScenes` pool (constants/bondScenes/<id>.js) is written under.
 export function bondSceneKey(levelName) {
   const words = String(levelName || '').trim().split(/\s+/);
   return words

@@ -255,7 +255,7 @@ What finishing a scene leaves behind — an emoji and one line in that character
 - The tangible collectible in a game that otherwise hides progression behind a heart bar
 - Shown in the scene's own closing message, and readable later per character
 
-> The emoji and line are **copied in at the moment they are earned** rather than looked up from `constants/dialogue/<id>.js` later, so re-authoring a character's scene never rewrites a keepsake somebody already has.
+> The emoji and line are **copied in at the moment they are earned** rather than looked up from `constants/bondScenes/<id>.js` later, so re-authoring a character's scene never rewrites a keepsake somebody already has.
 
 > `user_activity` also gains `bond_dms_enabled BOOLEAN NOT NULL DEFAULT TRUE` in migration 015 — the opt-out behind the button on a user's first bond DM, and behind `/bonds dms:on|off`. Only an explicit `false` counts as an opt-out, so rows written before the column existed still get their scenes.
 
