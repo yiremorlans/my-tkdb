@@ -84,6 +84,12 @@ export function typeDuration(line) {
 // may replace it.
 export const LINE_HOLD = 1.5;
 
+// A `then: ["line", mood]` face comes in AFTER_LINE_SETTLE seconds after the
+// line types out (once the mouth has shut; live2dRig.js TALK_SETTLE) and
+// shows at least AFTER_LINE_HOLD seconds.
+export const AFTER_LINE_SETTLE = 0.15;
+export const AFTER_LINE_HOLD = 1.2;
+
 // Tiers where maxing the annoyance meter locks him out for good.
 export const LOCKOUT_TIERS = ["new", "known", "warm"];
 
@@ -226,7 +232,16 @@ export class Hangout {
       if (upset && text) this.moodUntil = Math.max(this.moodUntil, t + typeDuration(text) / 1000 + UPSET_READ);
       this.moodFadeOut = r.fadeOut ?? SETTLE_FADE;
     }
-    if (r.then) this.pendingMood = { at: t + r.then[0], mood: r.then[1] };
+    if (r.then) {
+      // `then: ["line", mood]` waits for the line to finish typing (and his
+      // mouth to settle), for a face that can't share the mouth with
+      // talking (Taiga's tongue-out leer), then holds it AFTER_LINE_HOLD.
+      if (r.then[0] === "line") {
+        const at = t + (text ? typeDuration(text) / 1000 + AFTER_LINE_SETTLE : 0);
+        this.pendingMood = { at, mood: r.then[1] };
+        if (r.mood) this.moodUntil = Math.max(this.moodUntil, at + AFTER_LINE_HOLD);
+      } else this.pendingMood = { at: t + r.then[0], mood: r.then[1] };
+    }
     const sounds = [r.sound ?? []].flat();
     if (sounds.length && t >= this.soundReadyAt) {
       this.play(sounds[Math.floor(this.random() * sounds.length)]);

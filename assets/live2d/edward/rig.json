@@ -200,7 +200,7 @@
     },
     "answerLove": { "byTier": { "new": { "mood": "smirk", "duration": 3.2 } } },
     "answerLike": { "byTier": { "new": { "mood": "soft_smile", "duration": 3 } } },
-    "answerFlat": { "byTier": { "new": { "mood": "close", "duration": 2.6 } } }
+    "answerFlat": { "byTier": { "new": { "mood": "indifferent", "duration": 2.6 } } }
   },
   "bliss": { "browForm": 1, "browUp": -0.1 },
   "heartRate": { "resting": 24, "scale": 0.35 },

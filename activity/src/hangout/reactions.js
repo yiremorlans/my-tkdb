@@ -20,6 +20,10 @@
 // and climb from spark. The belly is in between: guarded at first, a liked
 // face from warm.
 //
+// `then` switches to a second mood that many seconds in; `then: ["line",
+// mood]` switches once the line has typed out instead, for a face whose
+// mouth can't talk (Taiga's tongue-out leer; hangout.js AFTER_LINE_HOLD).
+//
 // `twitch` (true, or a size multiplier) flinches: the tapped side for a
 // side spot (hand_r, ear_l…), both sides otherwise (on Live2D the head and
 // body pull away and the shoulders hitch; live2dRig.js FLINCH). By default
@@ -32,8 +36,11 @@
 // resting one over that long (eased in and out) instead of expressions.fade, where a strong
 // face (Elias's teaseLetGo smirk bends the brows hard) would snap back.
 // Every reaction already eases back over SETTLE_FADE (hangout.js), so set it
-// only to differ from that (Ren's hips shock keeps the quick 0.2s, so it's
-// gone as his body heads back to idle).
+// only to differ from that. A face that shuts his eyes or swaps the eye art
+// (full smile, wink, Ren's shock, Kaito's lovestruck) needs no fadeOut: the renderer cuts its
+// fade back short for every rig, and leaving a tongue or open grin (Taiga's
+// leer, his big grin e_choshi_02) it cuts just the mouth's (live2dRig.js
+// SNAP_BACK).
 //
 // `sound` plays a clip (a file under the rig's directory, or a list to pick
 // one from; sounds.js). A character adds clips through rig.json

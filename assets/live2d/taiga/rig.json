@@ -82,6 +82,7 @@
       "sultry": ["e_adult_00"],
       "sultry_blush": ["e_adult_00", "e_sekimen_00"],
       "leer": ["e_pero_00", "e_sekimen_00"],
+      "tongue": ["e_pero_00"],
       "tease": ["e_adult_00"],
       "half_smirk": ["e_choshi_half_00"]
     }
@@ -102,10 +103,10 @@
       "byTier": {
         "new": { "mood": "menace", "duration": 2 },
         "known": { "mood": "menace", "duration": 3.2 },
-        "warm": { "mood": "full_smile", "duration": 2.4 },
-        "spark": { "mood": "smile", "duration": 2.6 },
-        "close": { "mood": "full_smile", "duration": 2.6 },
-        "bound": { "mood": "full_smile", "duration": 3 }
+        "warm": { "mood": "full_smile", "then": ["line", "tongue"], "duration": 2.4 },
+        "spark": { "mood": "smile", "then": ["line", "tongue"], "duration": 2.6 },
+        "close": { "mood": "full_smile", "then": ["line", "tongue"], "duration": 2.6 },
+        "bound": { "mood": "full_smile", "then": ["line", "tongue"], "duration": 3 }
       }
     },
     "lipsTouch": {
@@ -144,8 +145,8 @@
         "known": { "mood": "surprise", "then": [0.5, "smile"], "duration": 3.4 },
         "warm": { "mood": "sultry", "duration": 2.6 },
         "spark": { "mood": "blush", "then": [0.9, "sultry_blush"], "duration": 2.8 },
-        "close": { "mood": "leer", "then": [0.9, "sultry_blush"], "duration": 2.8 },
-        "bound": { "mood": "leer", "then": [0.9, "sultry_blush"], "duration": 3.2 }
+        "close": { "mood": "sultry_blush", "duration": 2.8 },
+        "bound": { "mood": "sultry_blush", "duration": 3.2 }
       }
     },
     "bellyTouch": {
@@ -153,9 +154,9 @@
         "new": { "mood": "surprise", "then": [0.5, "menace"], "duration": 2.4 },
         "known": { "mood": "menace", "duration": 3.6 },
         "warm": { "mood": "full_smile", "then": [0.8, "sultry"], "duration": 2.8 },
-        "spark": { "mood": "sultry_blush", "then": [1, "leer"], "duration": 3 },
-        "close": { "mood": "sultry_blush", "then": [1, "leer"], "duration": 3 },
-        "bound": { "mood": "sultry_blush", "then": [1, "leer"], "duration": 3.4 }
+        "spark": { "mood": "sultry_blush", "duration": 3 },
+        "close": { "mood": "sultry_blush", "duration": 3 },
+        "bound": { "mood": "sultry_blush", "duration": 3.4 }
       }
     },
     "hipsTouch": {
@@ -191,7 +192,7 @@
     "lipHold": {
       "byTier": {
         "spark": { "mood": "sultry_blush", "duration": 3.6 },
-        "close": { "mood": "leer", "duration": 3.6 },
+        "close": { "mood": "sultry_blush", "duration": 3.6 },
         "bound": { "mood": "sultry_blush", "duration": 4 }
       }
     },

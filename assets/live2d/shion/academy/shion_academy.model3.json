@@ -54,6 +54,10 @@
       {
         "Name": "e_tsujo_00",
         "File": "expressions/e_tsujo_00.exp3.json"
+      },
+      {
+        "Name": "e_manmen_smile_00",
+        "File": "expressions/e_manmen_smile_00.exp3.json"
       }
     ],
     "Motions": {

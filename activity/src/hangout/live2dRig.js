@@ -57,6 +57,13 @@ const IDLE_DAMP_OUT = 0.15;
 const TALK_SETTLE = 0.12;
 const TALK_OPEN_TAU = 0.035;
 const TALK_CLOSE_TAU = 0.055;
+// A smile's mouth shape (ParamMouthForm up, e.g. Elias's e_sadist_00) draws
+// the opening thin, so short lines barely show. While he talks the smile
+// eases down to TALK_SMILE (only if it sits above it) over TALK_SMILE_TAU
+// seconds, and back up as he settles; it follows the whole line, not each
+// letter, so the smile doesn't pulse with the flaps.
+const TALK_SMILE = 0.3;
+const TALK_SMILE_TAU = 0.08;
 function mouthShape(c) {
   if (/[aoáàâäåóòôö]/i.test(c)) return 1;
   if (/[eéèêë]/i.test(c)) return 0.75;
@@ -84,10 +91,41 @@ const CLENCH_TEETH = "ParamTooth01";
 const CLENCH_LEAD = 0.5;
 const CLENCH_RELEASE = 0.15;
 
+// A face that shuts his eyes (a full smile's e_manmen_00, a wink, e_close_00:
+// ParamEye[LR]Open at or below `shut`) or swaps the eye art (Ren's
+// e_shock_00: any ParamEyeChange*; Kaito's lovestruck e_dere_00: ParamDere)
+// doesn't ease back over a long fade: a
+// slow reopen reads as drowsy, and the swap pops halfway through. Leaving
+// one, a fade longer than `fade` (SETTLE_FADE, a reaction's fadeOut) is cut
+// to `fade`, for every rig, with no per-reaction fadeOut.
+//
+// A face that sticks the tongue out (Taiga's e_pero_00: any *tongue*
+// parameter) or grins open-mouthed (Taiga's e_choshi_02: ParamMouthOpenY and
+// ParamMouthForm both up; an open frown or shout, Leo's e_fukigen_02, Yuri's
+// e_odoroki_02, keeps the long fade) cuts just the mouth's fade (`mouth`
+// parameters) to `fade`, so the tongue or grin doesn't creep shut; the brows
+// and eyes still ease back over the long fade.
+const SNAP_BACK = { shut: -0.5, fade: 0.25, mouth: /Mouth|Tooth|tongue/i };
+
+/** Whether expression deltas `params` (Id -> value) shut an eye or swap the eye art. */
+export function closesEyes(params) {
+  for (const [id, v] of params) {
+    if ((id === "ParamEyeLOpen" || id === "ParamEyeROpen") && v <= SNAP_BACK.shut) return true;
+    if ((id.startsWith("ParamEyeChange") || id === "ParamDere") && v) return true;
+  }
+  return false;
+}
+
+/** Whether expression deltas `params` show the tongue or grin open-mouthed. */
+export function opensMouth(params) {
+  if ((params.get("ParamMouthOpenY") ?? 0) > 0 && (params.get("ParamMouthForm") ?? 0) > 0) return true;
+  for (const [id, v] of params) if (/tongue/i.test(id) && v) return true;
+  return false;
+}
+
 // A touch's flinch (reactions.js `twitch`): the head and body pull away
 // from the touched side and the shoulders hitch, then ease back, over
-// whatever the mood and pose set. Shared by every rig, like the sprite
-// rig's twitch. Sizes are at twitch 1: head/body tilts in the parameter's
+// whatever the mood and pose set. Shared by every rig. Sizes are at twitch 1: head/body tilts in the parameter's
 // own units (degrees), shoulders as a share of their range. `peak` is the
 // seconds to the peak; it settles by ~6 peaks.
 const FLINCH = { peak: 0.14, head: 5, body: 2.5, recoil: 3, shoulders: 0.5 };
@@ -423,6 +461,7 @@ export class Live2DRig {
     this.talkLineStart = 0;
     this.talkOpen = 0;
     this.talkLast = 0;
+    this.talkRelax = 0;
     // The mood deltas talking releases: the clench and the lip-sync
     // parameters (a shout's open mouth would pin them open).
     this.mouthHold = [CLENCH_PARAM, ...lipSync].filter((id) => this.paramIndex.has(id));
@@ -526,7 +565,11 @@ export class Live2DRig {
     for (const expr of exprs) {
       for (const p of this.expressionParams.get(expr) ?? []) target.set(p.Id, (target.get(p.Id) ?? 0) + p.Value);
     }
+    const long = fade > SNAP_BACK.fade && this.current;
+    if (long && closesEyes(this.current)) fade = SNAP_BACK.fade;
     this.from = this.blended();
+    // Leaving a tongue or open grin: the mouth fades fast, the rest as asked.
+    this.fastMouth = Boolean(long && fade > SNAP_BACK.fade && opensMouth(this.current));
     this.current = target;
     this.fadeStart = performance.now();
     this.fadeLen = fade ?? null;
@@ -555,9 +598,12 @@ export class Live2DRig {
     // off and settle gently instead of at full speed; the short default
     // stays linear.
     const k = this.fadeLen != null ? x * x * (3 - 2 * x) : x;
+    const xm = Math.min(1, (performance.now() - this.fadeStart) / (SNAP_BACK.fade * 1000));
+    const km = xm * xm * (3 - 2 * xm);
     const out = new Map();
     for (const id of new Set([...this.from.keys(), ...this.current.keys()])) {
-      out.set(id, (this.from.get(id) ?? 0) * (1 - k) + (this.current.get(id) ?? 0) * k);
+      const w = this.fastMouth && SNAP_BACK.mouth.test(id) ? km : k;
+      out.set(id, (this.from.get(id) ?? 0) * (1 - w) + (this.current.get(id) ?? 0) * w);
     }
     return out;
   }
@@ -1389,7 +1435,12 @@ export class Live2DRig {
     const now = performance.now() / 1000;
     const dt = Math.min(0.1, Math.max(0, now - this.talkLast));
     this.talkLast = now;
-    if (!this.mouth.length || !this.talking) {
+    const { values, maximumValues } = this.raw.parameters;
+    const talking = this.mouth.length > 0 && this.talking;
+    this.talkRelax += ((talking ? 1 : 0) - this.talkRelax) * (1 - Math.exp(-dt / TALK_SMILE_TAU));
+    const form = this.paramIndex.get("ParamMouthForm");
+    if (form != null && values[form] > TALK_SMILE) values[form] += (TALK_SMILE - values[form]) * this.talkRelax;
+    if (!talking) {
       this.talkOpen = 0;
       return;
     }
@@ -1398,7 +1449,6 @@ export class Live2DRig {
     this.talkOpen += (target - this.talkOpen) * (1 - Math.exp(-dt / tau));
     const settle = now > this.talkUntil ? Math.max(0, 1 - (now - this.talkUntil) / TALK_SETTLE) : 1;
     const open = Math.max(0, Math.min(1, this.talkOpen * settle));
-    const { values, maximumValues } = this.raw.parameters;
     for (const i of this.mouth) values[i] = Math.max(values[i], open * maximumValues[i]);
   }
 

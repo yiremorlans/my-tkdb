@@ -78,9 +78,12 @@
       "soft_smile": ["e_manmen_open_00"],
       "soft_smile_blush": ["e_manmen_open_00", "e_sekimen_00"],
       "smug_blush": ["e_doya_00", "e_sekimen_00"],
-      "tease": ["e_sekimen_00"]
+      "tease": ["e_sekimen_00"],
+      "soft_mouth": ["e_tsujo_soft_00"],
+      "small_smile": ["e_tsujo_smile_00"]
     }
   },
+  "restMood": { "byTier": { "new": "soft_mouth", "close": "small_smile" } },
   "reactions": {
     "upset": {
       "byTier": {
@@ -212,7 +215,9 @@
     "teaseLetGo": "m_udekumi",
     "caughtTease": "m_hidarikoshi",
     "answerLove": "m_fight",
-    "answerLike": "m_hidarikoshi"
+    "answerLike": "m_hidarikoshi",
+    "handHold": "m_udekumi",
+    "heartbeatHold": "m_udekumi"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {

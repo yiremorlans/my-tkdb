@@ -179,8 +179,8 @@
     },
     "hipsTouch": {
       "byTier": {
-        "new": { "mood": "shock_sweat", "duration": 2.8, "fist": true, "twitch": 1.25, "fadeOut": 0.2 },
-        "known": { "mood": "shock_sweat", "duration": 2.8, "fist": true, "twitch": 0.88, "fadeOut": 0.2 },
+        "new": { "mood": "shock_sweat", "duration": 2.8, "fist": true, "twitch": 1.25 },
+        "known": { "mood": "shock_sweat", "duration": 2.8, "fist": true, "twitch": 0.88 },
         "warm": { "mood": "uneasy_sweat", "duration": 3.2, "twitch": 0.63 },
         "spark": { "mood": "flustered", "duration": 3.4 },
         "close": { "mood": "flustered", "duration": 3.4 },

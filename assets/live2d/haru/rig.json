@@ -120,9 +120,12 @@
       "smile_peekaboo_mouth_open": ["e_kusho_00", "e_usagi_kuchiake_00"],
       "soft_smile_peekaboo_smile": ["e_toraware_00", "e_usagi_egao_00"],
       "flustered_peekaboo_happy": ["e_kusho_00", "e_sekimen_00", "e_ase_00", "e_usagi_yorokobi_00"],
-      "full_smile_blush_peekaboo_happy": ["e_manmen_00", "e_sekimen_00", "e_usagi_yorokobi_00"]
+      "full_smile_blush_peekaboo_happy": ["e_manmen_00", "e_sekimen_00", "e_usagi_yorokobi_00"],
+      "soft_mouth": ["e_tsujo_soft_00"],
+      "plain_smile": ["e_tsujo_smile_00"]
     }
   },
+  "restMood": "soft_mouth",
   "reactions": {
     "handHold": {
       "byTier": {
@@ -235,7 +238,10 @@
         "close": { "rank": 2, "duration": 3.4 },
         "bound": { "rank": 2, "duration": 3.8 }
       }
-    }
+    },
+    "answerLove": { "byTier": { "new": { "mood": "full_smile", "duration": 3.2 } } },
+    "answerLike": { "byTier": { "new": { "mood": "plain_smile", "duration": 3 } } },
+    "answerFlat": { "byTier": { "new": { "mood": "indifferent", "duration": 2.6 } } }
   },
   "reactionPoses": {
     "headPat": "m_fanservice",
@@ -246,7 +252,14 @@
     "chestTouch": { "byTier": { "new": "m_odoroki", "close": "m_hidarikoshi" } },
     "bellyTouch": { "byTier": { "new": "m_odoroki", "known": "m_gesture", "warm": "m_ryoutekoshi", "spark": "m_ago", "close": "m_hidarikoshi" } },
     "hipsTouch": { "byTier": { "new": "m_ryoutekoshi", "spark": "m_odoroki", "close": "m_gesture" } },
-    "upset": { "byTier": { "new": "m_hidarikoshi", "spark": "m_gesture" } }
+    "upset": { "byTier": { "new": "m_hidarikoshi", "spark": "m_gesture" } },
+    "answerLove": "m_fanservice",
+    "answerLike": "m_ryoutekoshi",
+    "handHold": "m_ago",
+    "heartbeatHold": { "byTier": { "spark": "m_hidarikoshi", "close": "m_ryoutekoshi" } },
+    "lipHold": { "byTier": { "spark": "m_hidarikoshi", "close": "m_ago" } },
+    "caughtTease": "m_ago",
+    "teaseLetGo": "m_ryoutekoshi"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {

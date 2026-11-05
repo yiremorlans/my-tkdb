@@ -69,9 +69,13 @@
       "caring": ["e_oniisan_00"],
       "caring_blush": ["e_oniisan_00", "e_sekimen_00"],
       "grin": ["e_yancha_00"],
-      "grit_sweat": ["e_grit_00", "e_ase_00"]
+      "grit_sweat": ["e_grit_00", "e_ase_00"],
+      "soft_mouth": ["e_tsujo_soft_00"],
+      "small_smile": ["e_tsujo_smile_00"],
+      "plain_smile": ["e_tsujo_pleased_00"]
     }
   },
+  "restMood": { "byTier": { "new": "soft_mouth", "close": "small_smile" } },
   "reactions": {
     "upset": {
       "byTier": {
@@ -184,7 +188,10 @@
       "byTier": {
         "bound": { "mood": "earnest_blush", "duration": 4.4 }
       }
-    }
+    },
+    "answerLove": { "byTier": { "new": { "mood": "grin", "duration": 3.2 } } },
+    "answerLike": { "byTier": { "new": { "mood": "plain_smile", "duration": 3 } } },
+    "answerFlat": { "byTier": { "new": { "mood": "indifferent", "duration": 2.6 } } }
   },
   "reactionPoses": {
     "caughtTease": "m_iyagari",
@@ -196,7 +203,13 @@
     "chestTouch": { "byTier": { "new": "m_iyagari", "spark": "m_ago", "close": "m_hidarikoshi" } },
     "bellyTouch": { "byTier": { "new": "m_iyagari", "spark": "m_ago", "close": "m_gesture" } },
     "hipsTouch": { "byTier": { "new": "m_udekumi", "spark": "m_ago", "close": "m_knight" } },
-    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_ago" } }
+    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_ago" } },
+    "answerLove": "m_gesture",
+    "answerLike": "m_ago",
+    "handHold": { "byTier": { "spark": "m_hidarikoshi", "close": "m_kabau", "bound": "m_gesture" } },
+    "heartbeatHold": "m_gesture",
+    "lipHold": { "byTier": { "spark": "m_hidarikoshi", "close": "m_ago" } },
+    "teaseLetGo": "m_ago"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {

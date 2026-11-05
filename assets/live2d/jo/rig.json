@@ -97,7 +97,7 @@
   },
   "restMood": { "byTier": { "new": "default", "warm": "soft_mouth", "close": "small_smile" } },
   "reactions": {
-    "answerLove": { "byTier": { "new": { "mood": "full_smile", "duration": 3.2, "fadeOut": 0.25 } } },
+    "answerLove": { "byTier": { "new": { "mood": "full_smile", "duration": 3.2 } } },
     "answerLike": { "byTier": { "new": { "mood": "smile", "duration": 3 } } },
     "answerFlat": { "byTier": { "new": { "mood": "indifferent", "duration": 2.6 } } },
     "handHold": {
@@ -138,8 +138,8 @@
         "known": { "mood": "gentle", "duration": 2 },
         "warm": { "mood": "gentle_blush", "duration": 2.4 },
         "spark": { "mood": "gentle_blush", "duration": 2.6 },
-        "close": { "rank": 2, "duration": 2.6, "fadeOut": 0.25 },
-        "bound": { "rank": 2, "duration": 3, "fadeOut": 0.25 }
+        "close": { "rank": 2, "duration": 2.6 },
+        "bound": { "rank": 2, "duration": 3 }
       }
     },
     "cheekPoke": {
@@ -148,8 +148,8 @@
         "known": { "mood": "gentle", "duration": 2 },
         "warm": { "mood": "gentle", "duration": 2.4 },
         "spark": { "rank": 1, "duration": 2.6 },
-        "close": { "mood": "wink", "duration": 2.6, "fadeOut": 0.25 },
-        "bound": { "mood": "wink", "duration": 3, "fadeOut": 0.25 }
+        "close": { "mood": "wink", "duration": 2.6 },
+        "bound": { "mood": "wink", "duration": 3 }
       }
     },
     "handTap": {
@@ -158,8 +158,8 @@
         "known": { "mood": "gentle", "duration": 2 },
         "warm": { "mood": "gentle", "duration": 2.4 },
         "spark": { "rank": 2, "duration": 2.6 },
-        "close": { "rank": 2, "duration": 2.6, "fadeOut": 0.25 },
-        "bound": { "rank": 2, "duration": 3, "fadeOut": 0.25 }
+        "close": { "rank": 2, "duration": 2.6 },
+        "bound": { "rank": 2, "duration": 3 }
       }
     },
     "lipsTouch": {
@@ -168,8 +168,8 @@
         "known": { "mood": "serious", "duration": 2.6, "twitch": 0.6 },
         "warm": { "mood": "serious", "duration": 3, "twitch": 0.3 },
         "spark": { "rank": 1, "duration": 3.2 },
-        "close": { "mood": "wink_blush", "duration": 3.2, "fadeOut": 0.25 },
-        "bound": { "mood": "wink_blush", "duration": 3.6, "fadeOut": 0.25 }
+        "close": { "mood": "wink_blush", "duration": 3.2 },
+        "bound": { "mood": "wink_blush", "duration": 3.6 }
       }
     },
     "earTouch": {
@@ -208,8 +208,8 @@
         "known": { "mood": "serious", "duration": 2.8, "fist": true, "twitch": 0.7 },
         "warm": { "mood": "serious", "duration": 3.2, "twitch": 0.5 },
         "spark": { "rank": 1, "duration": 3.4 },
-        "close": { "mood": "wink_blush", "duration": 3.4, "fadeOut": 0.25 },
-        "bound": { "mood": "wink_blush", "duration": 3.8, "fadeOut": 0.25 }
+        "close": { "mood": "wink_blush", "duration": 3.4 },
+        "bound": { "mood": "wink_blush", "duration": 3.8 }
       }
     }
   },

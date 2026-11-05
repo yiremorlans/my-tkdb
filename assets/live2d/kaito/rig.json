@@ -67,9 +67,12 @@
       "lovestruck": ["e_dere_00"],
       "panic": ["e_panic_00"],
       "shy": ["e_tere_00"],
-      "pout_sweat": ["e_punpun_00", "e_ase_00"]
+      "pout_sweat": ["e_punpun_00", "e_ase_00"],
+      "soft_mouth": ["e_tsujo_soft_00"],
+      "plain_smile": ["e_tsujo_smile_00"]
     }
   },
+  "restMood": { "byTier": { "new": "default", "warm": "soft_mouth" } },
   "reactions": {
     "handHold": {
       "byTier": {
@@ -182,7 +185,10 @@
         "close": { "rank": 2, "duration": 2.8 },
         "bound": { "rank": 2, "duration": 3.2 }
       }
-    }
+    },
+    "answerLove": { "byTier": { "new": { "mood": "full_smile", "duration": 3.2 } } },
+    "answerLike": { "byTier": { "new": { "mood": "plain_smile", "duration": 3 } } },
+    "answerFlat": { "byTier": { "new": { "mood": "indifferent", "duration": 2.6 } } }
   },
   "reactionPoses": {
     "caughtTease": "m_tere",
@@ -194,7 +200,13 @@
     "chestTouch": { "byTier": { "new": "m_odoroki", "close": "m_gesture" } },
     "bellyTouch": "m_odoroki",
     "hipsTouch": { "byTier": { "new": "m_odoroki", "known": "m_udekumi", "spark": "m_nageki", "close": "m_migikoshi" } },
-    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_tere" } }
+    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_tere" } },
+    "answerLove": "m_gesture",
+    "answerLike": "m_migikoshi",
+    "handHold": { "byTier": { "spark": "m_tere_away", "close": "m_migikoshi" } },
+    "heartbeatHold": "m_tere",
+    "lipHold": "m_tere_away",
+    "teaseLetGo": "m_nageki"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {

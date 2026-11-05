@@ -65,7 +65,8 @@
       "taunt": ["e_aori_00"],
       "taunt_blush": ["e_aori_00", "e_sekimen_00"],
       "pout": ["e_muku_00"],
-      "pout_blush": ["e_muku_00", "e_sekimen_00"]
+      "pout_blush": ["e_muku_00", "e_sekimen_00"],
+      "beam": ["e_manmen_smile_00"]
     }
   },
   "restMood": { "byTier": { "new": "serious", "known": "default" } },
@@ -177,7 +178,10 @@
         "bound": { "mood": "taunt_blush", "duration": 3 }
       }
     },
-    "teaseLetGo": { "byTier": { "bound": { "mood": "pout_blush", "duration": 4.4 } } }
+    "teaseLetGo": { "byTier": { "bound": { "mood": "pout_blush", "duration": 4.4 } } },
+    "answerLove": { "byTier": { "new": { "mood": "beam", "duration": 3.2 } } },
+    "answerLike": { "byTier": { "new": { "mood": "leer", "duration": 3 } } },
+    "answerFlat": { "byTier": { "new": { "mood": "indifferent", "duration": 2.6 } } }
   },
   "reactionPoses": {
     "headPat": "m_kao",
@@ -188,7 +192,14 @@
     "chestTouch": { "byTier": { "new": "m_card", "spark": "m_kao", "close": "m_gesture" } },
     "bellyTouch": { "byTier": { "new": "m_card", "spark": "m_kao", "close": "m_migikoshi" } },
     "hipsTouch": { "byTier": { "new": "m_card", "warm": "m_migikoshi", "spark": "m_ago", "close": "m_gesture" } },
-    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_ago" } }
+    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_ago" } },
+    "answerLove": "m_gesture",
+    "answerLike": "m_ago",
+    "handHold": { "byTier": { "spark": "m_migikoshi", "close": "m_udekumi", "bound": "m_migikoshi" } },
+    "heartbeatHold": { "byTier": { "spark": "m_udekumi", "close": "m_migikoshi" } },
+    "lipHold": { "byTier": { "spark": "m_ago", "close": "m_kao" } },
+    "caughtTease": "m_kao",
+    "teaseLetGo": "m_migikoshi"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {

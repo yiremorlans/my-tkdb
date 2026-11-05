@@ -183,7 +183,10 @@
         "bound": { "mood": "smirk_blush", "duration": 4 }
       }
     },
-    "teaseLetGo": { "byTier": { "bound": { "mood": "grumpy_blush", "duration": 4.4 } } }
+    "teaseLetGo": { "byTier": { "bound": { "mood": "grumpy_blush", "duration": 4.4 } } },
+    "answerLove": { "byTier": { "new": { "mood": "smile", "duration": 3.2 } } },
+    "answerLike": { "byTier": { "new": { "mood": "smirk", "duration": 3 } } },
+    "answerFlat": { "byTier": { "new": { "mood": "indifferent", "duration": 2.6 } } }
   },
   "reactionPoses": {
     "headPat": { "byTier": { "new": "m_odoroki", "known": "m_udekumi", "warm": "m_kuchi", "close": "m_gesture" } },
@@ -194,7 +197,14 @@
     "chestTouch": { "byTier": { "new": "m_odoroki", "close": "m_hidarikoshi" } },
     "bellyTouch": { "byTier": { "new": "m_odoroki", "close": "m_hidarikoshi" } },
     "hipsTouch": { "byTier": { "new": "m_udekumi", "known": "m_hidarikoshi", "spark": "m_odoroki", "close": "m_gesture" } },
-    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kuchi" } }
+    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kuchi" } },
+    "answerLove": "m_gesture",
+    "answerLike": "m_hidarikoshi",
+    "handHold": { "byTier": { "spark": "m_udekumi", "close": "m_hidarikoshi" } },
+    "heartbeatHold": { "byTier": { "spark": "m_udekumi", "bound": "m_gesture" } },
+    "lipHold": { "byTier": { "spark": "m_hidarikoshi", "close": "m_kuchi" } },
+    "caughtTease": "m_kuchi",
+    "teaseLetGo": "m_udekumi"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {

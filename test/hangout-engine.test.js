@@ -6,7 +6,7 @@ import { test } from 'node:test';
 import assert from 'node:assert';
 
 import { AnnoyanceMeter } from '../activity/src/hangout/annoyance.js';
-import { Hangout, LINE_HOLD, SOUND_COOLDOWN, TYPE_MS } from '../activity/src/hangout/hangout.js';
+import { AFTER_LINE_HOLD, AFTER_LINE_SETTLE, Hangout, LINE_HOLD, SOUND_COOLDOWN, TYPE_MS, typeDuration } from '../activity/src/hangout/hangout.js';
 import { DEFAULT_REACTIONS, forTier, resolveReaction } from '../activity/src/hangout/reactions.js';
 import { rankFace } from '../constants/sceneFaces.js';
 
@@ -65,6 +65,26 @@ test('a head pat smiles, then blushes, then returns to the resting mood', () => 
   assert.strictEqual(renderer.moodName, 'smile_blush');
   hangout.frame(12.1, 1.6);
   assert.strictEqual(renderer.moodName, 'default');
+});
+
+test('then: ["line", mood] waits for the line to type out', () => {
+  const r = rig({
+    hotspots: {},
+    expressions: { head: 'head', moods: { default: {}, sultry: {}, leer: {} } },
+    reactions: { headPat: { mood: 'sultry', then: ['line', 'leer'], duration: 1 } },
+  });
+  const renderer = { rig: r, moodName: 'default', handPose: {}, setMood(name) { this.moodName = name; }, update() {} };
+  const motion = { blinking: () => false, pose: () => ({}) };
+  const line = 'Quit squirming. You started this.';
+  const hangout = new Hangout({ renderer, motion, lines: { headPat: [line] }, random: () => 0 });
+  hangout.react('headPat', 10);
+  const typed = 10 + typeDuration(line) / 1000;
+  hangout.frame(typed - 0.05, 0.1);
+  assert.strictEqual(renderer.moodName, 'sultry');
+  hangout.frame(typed + AFTER_LINE_SETTLE + 0.01, 0.1);
+  assert.strictEqual(renderer.moodName, 'leer');
+  hangout.frame(typed + AFTER_LINE_SETTLE + AFTER_LINE_HOLD - 0.05, 0.1);
+  assert.strictEqual(renderer.moodName, 'leer');
 });
 
 test('restMood picks the resting mood by tier', () => {

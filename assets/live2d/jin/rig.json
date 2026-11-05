@@ -65,9 +65,12 @@
       "away": ["e_tsujo_away_00"],
       "displeased": ["e_fukigen_00"],
       "cocky": ["e_ora_00"],
-      "cocky_blush": ["e_ora_00", "e_sekimen_00"]
+      "cocky_blush": ["e_ora_00", "e_sekimen_00"],
+      "soft_mouth": ["e_tsujo_soft_00"],
+      "slight_smile": ["e_tsujo_smile_00"]
     }
   },
+  "restMood": { "byTier": { "new": "default", "close": "soft_mouth" } },
   "reactions": {
     "heartbeatHold": {
       "byTier": {
@@ -173,19 +176,28 @@
         "close": { "mood": "cocky_blush", "duration": 3.4 },
         "bound": { "mood": "cocky_blush", "duration": 3.8 }
       }
-    }
+    },
+    "answerLove": { "byTier": { "new": { "mood": "cocky", "duration": 3.2 } } },
+    "answerLike": { "byTier": { "new": { "mood": "slight_smile", "duration": 3 } } },
+    "answerFlat": { "byTier": { "new": { "mood": "indifferent", "duration": 2.6 } } }
   },
   "reactionPoses": {
     "caughtTease": "m_kubi",
     "headPat": { "byTier": { "new": "m_udekumi", "warm": "m_kubi" } },
     "cheekPoke": "m_migikoshi",
-    "lipsTouch": { "byTier": { "new": "m_akire", "warm": "m_ago", "spark": "m_kubi", "close": "m_migikoshi" } },
-    "earTouch": "m_migikoshi",
+    "lipsTouch": { "byTier": { "new": "m_akire", "warm": "m_ago", "spark": "m_kubi", "close": "m_migikoshi_away" } },
+    "earTouch": { "byTier": { "new": "m_akire_away", "warm": "m_migikoshi", "close": "m_kubi" } },
     "handTap": "m_gesture",
-    "chestTouch": { "byTier": { "new": "m_akire", "close": "m_migikoshi" } },
+    "chestTouch": { "byTier": { "new": "m_akire", "close": "m_gesture" } },
     "bellyTouch": { "byTier": { "new": "m_akire", "close": "m_migikoshi" } },
-    "hipsTouch": { "byTier": { "new": "m_udekumi", "warm": "m_akire", "spark": "m_ago", "close": "m_migikoshi" } },
-    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kubi" } }
+    "hipsTouch": { "byTier": { "new": "m_udekumi", "warm": "m_akire", "spark": "m_ago" } },
+    "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kubi" } },
+    "answerLove": "m_ago",
+    "answerLike": "m_migikoshi_away",
+    "handHold": { "byTier": { "spark": "m_ago_away", "close": "m_kubi" } },
+    "heartbeatHold": { "byTier": { "spark": "m_udekumi_away", "close": "m_udekumi" } },
+    "lipHold": { "byTier": { "spark": "m_migikoshi_away", "close": "m_ago" } },
+    "teaseLetGo": "m_ago_away"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {
