@@ -6,9 +6,15 @@
 // Cheerful even as a stranger; guarded spots (lips, chest, hips) get a
 // laughing "Oi" rebuff, not warmth, until spark, where flirting that lands
 // makes him retreat into "Gahaha". The right arm is a prosthetic: a hand tap
-// may mention it lightly (Mio's work), never how it was broken. The belly
-// hotspot is Peekaboo in his sling, so bellyTouch lines react to MC petting
-// Peekaboo, not to touching Haru.
+// may mention it lightly (Mio's work), never how it was broken.
+//
+// Removable articles (docs/hangout-activity.md §4.2): Peekaboo rides in the
+// sling over the belly spot, so peekabooPat reacts to MC petting Peekaboo.
+// From warm a double-tap has him hop out (peekabooOff is Haru reacting to
+// him leaving, not Peekaboo's line); a second double-tap takes the empty
+// sling (slingOff). The empty sling has no pool of its own: a tap on it is a
+// plain bellyTouch, which from warm is Haru's own belly (bound falls back to
+// close).
 //
 // Holds (spark+): release lines own the racing pulse and stay cheerful;
 // caughtTease is a laughing "not yet"; bound treats the night as shared
@@ -34,7 +40,7 @@ export default {
       "Whoa. Bit close for a first meetin', hey?",
       "Oi, personal space. Even Peekaboo knows that one.",
     ],
-    bellyTouch: [
+    peekabooPat: [
       "Whoa, careful! Peekaboo bites. Ask me how I know.",
       "Easy! He's not used to you yet. Go slow, hey?",
     ],
@@ -66,7 +72,7 @@ export default {
       "That's the prosthetic. Tap away, it can take it.",
     ],
     chestTouch: ["Whoa, steady. What's that for?", "Hey. Bit much, hey?"],
-    bellyTouch: [
+    peekabooPat: [
       "Oi, Peekaboo! No nibblin' on Honor Roll!",
       "Gentle scratch, that's it. He's partial to that.",
     ],
@@ -98,9 +104,21 @@ export default {
       "...Hey. That's a bit close.",
       "Steady on. You'll knock the wind out of me.",
     ],
-    bellyTouch: [
+    peekabooPat: [
       "He's sittin' still for you? He never sits still for me!",
       "If Peekaboo lets you do that, you've passed. Tough critic, him.",
+    ],
+    peekabooOff: [
+      "Oi! Peekaboo! ...And he's off. Don't wander far, hey?",
+      "There he goes! Gahaha! You've got the knack, coaxin' him out like that.",
+    ],
+    slingOff: [
+      "Oi, wait, that's Peekaboo's ride. ...How'm I meant to carry him now?",
+      "Uh... Hang onto that for me, hey? I'll need it when he comes back.",
+    ],
+    bellyTouch: [
+      "Oi, oi! Peekaboo's barely gone and you're after me? Cheeky.",
+      "Oi, I've eaten, promise! ...Bit of bread. It counts.",
     ],
     hipsTouch: ["Oi! Hands, Honor Roll.", "Nope. No, no. Off you go."],
     upset: [
@@ -133,9 +151,21 @@ export default {
       "My heart's not usually this loud. Honest.",
       "Uh... yeah. Ignore that. It's the energy drinks.",
     ],
-    bellyTouch: [
+    peekabooPat: [
       "Peekaboo gets all the attention. ...What about me, hey?",
       "He's gettin' spoiled. ...Can't say I blame him.",
+    ],
+    peekabooOff: [
+      "Oi! Not too far, hey? ...Gahaha. Fine. Just leave me with Honor Roll.",
+      "Peekaboo! ...Gahaha. Reckon he's givin' us a minute.",
+    ],
+    slingOff: [
+      "Gahaha... You're makin' it awful hard to look busy, Honor Roll.",
+      "Takin' my sling now? You're gettin' bold, Honor Roll.",
+    ],
+    bellyTouch: [
+      "...Oh. Uh. Gahaha... Bit warm under there, hey? That's all Peekaboo. ...Mostly.",
+      "Hey, hey. ...Gahaha. Give a guy some warnin' next time.",
     ],
     hipsTouch: [
       "Whoa! Okay! ...Okay. Warn me first, hey?",
@@ -183,9 +213,21 @@ export default {
       "Yeah, it's loud. Not the energy drinks this time.",
       "Stay there a sec. I like it when you're this close.",
     ],
-    bellyTouch: [
+    peekabooPat: [
       "Look at him. You're spoilin' the both of us, you know.",
       "Peekaboo's decided you're stayin'. Good. So have I.",
+    ],
+    peekabooOff: [
+      "Oi, he's off! Gahaha... Smart critter. Knows when to make himself scarce.",
+      "Off you pop, Peekaboo. ...So. Just the two of us, then.",
+    ],
+    slingOff: [
+      "Sling and all, hey? ...Go on. I'm not stoppin' you.",
+      "First Peekaboo, now the sling. Gahaha... You've got a plan, don't you.",
+    ],
+    bellyTouch: [
+      "Oi! Sneaky! ...Gahaha. Do that again and I'm pokin' back.",
+      "Oi, oi! You've been savin' that one up, haven't you?",
     ],
     hipsTouch: [
       "Bold, hey? Keep that up and I'm pullin' you closer.",
@@ -209,6 +251,18 @@ export default {
     ],
   },
   bound: {
+    peekabooPat: [
+      "Look at him melt. Pair of us are hopeless about you.",
+      "He used to nip at you. Now he's sulkin' if you don't come by.",
+    ],
+    peekabooOff: [
+      "Off he goes. He's learned the routine by now.",
+      "Peekaboo knows that look. He's not stickin' around for it. Gahaha!",
+    ],
+    slingOff: [
+      "You've got quick at that. ...Gahaha. Too quick, maybe.",
+      "Sling off already? Gahaha... Not even pretendin' you're here for Peekaboo anymore.",
+    ],
     heartbeatHold: [
       "Racin' again, hey? You'd think I'd be used to you by now.",
       "You know how loud it gets. You've heard it up close.",

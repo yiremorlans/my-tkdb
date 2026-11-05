@@ -291,6 +291,58 @@ test('reaction moods the rig lacks are warnings, not failures', async () => {
   assert.ok(own.some((w) => w.includes('no wink ')));
 });
 
+// --- removable articles (articles.js) ----------------------------------------
+
+function withArticles(articles) {
+  const r = rig();
+  r.outfits.academy.articles = articles;
+  return r;
+}
+const articleFiles = () => files({ 'academy/test.moc3': new Set(['FaceSkin', 'ArtMesh1', 'PartHat', 'ParamCandy']) });
+
+test('a valid article passes, with its pools', async () => {
+  const r = withArticles({
+    hat: { part: 'PartHat', covers: 'head' },
+    bag: { drawables: ['ArtMesh1'], params: { ParamCandy: 0 }, covers: { byTier: { new: 'head', spark: 'cheek' } }, requires: 'hat', pool: false },
+  });
+  const lines = { new: { hatPat: ['a'] }, warm: { hatOff: ['b'], bagOff: ['c'] } };
+  assert.strictEqual(await problems(r, { ...opts(articleFiles()), lines }), '');
+});
+
+test("an article's art, spot and order are checked", async () => {
+  const msg = await problems(
+    withArticles({
+      sling: { part: 'PartBag', drawables: ['Nope'], rest: { ParamGone: 1 }, covers: 'belly', requires: 'peekaboo', shownOnly: 'yes', color: 1 },
+      peekaboo: { covers: 'head', poses: '(' },
+    }),
+    opts(articleFiles()),
+  );
+  for (const p of [
+    'articles.sling: unknown part PartBag',
+    'articles.sling: unknown drawable Nope',
+    'articles.sling.rest: unknown parameter ParamGone',
+    'articles.sling.covers: no hotspot belly',
+    'articles.sling.requires: list peekaboo before sling',
+    'articles.sling.shownOnly must be true or false',
+    'articles.sling: unknown key color',
+    'articles.peekaboo: needs a part or drawables',
+    'articles.peekaboo.poses must be a regular expression',
+  ]) assert.ok(msg.includes(p), `${p}\n${msg}`);
+});
+
+test("with lines, an article's Pat and Off pools must exist", async () => {
+  const r = withArticles({ hat: { part: 'PartHat', covers: 'head' } });
+  const msg = await problems(r, { ...opts(articleFiles()), lines: { spark: { hatOff: ['late'] } } });
+  assert.ok(msg.includes('no hatPat lines'));
+  assert.ok(msg.includes('no hatOff lines at warm'));
+});
+
+test("an article's removal is a reaction a pose can name", async () => {
+  const r = withArticles({ hat: { part: 'PartHat', covers: 'head' } });
+  r.reactionPoses = { hatOff: 'm_kubi' };
+  assert.strictEqual(await problems(r, opts(articleFiles())), '');
+});
+
 // --- every character's rig --------------------------------------------------
 
 const ROOT = 'assets/live2d';
@@ -313,10 +365,14 @@ for (const id of characters) {
     const dir = path.join(ROOT, id);
     const r = JSON.parse(fs.readFileSync(path.join(dir, 'rig.json'), 'utf8'));
     assert.strictEqual(r.character, id, 'rig.json character matches its folder');
+    // Its Hangout lines, so removable articles' pools are checked too.
+    const linesFile = path.resolve('constants/hangout', `${id}.js`);
+    const lines = fs.existsSync(linesFile) ? (await import(linesFile)).default : undefined;
     const warnings = await validateLive2DRig(r, {
       readJson: (f) => JSON.parse(fs.readFileSync(path.join(dir, f), 'utf8')),
       fileExists: (f) => fs.existsSync(path.join(dir, f)),
       mocIds: (f) => mocIds(path.join(dir, f)),
+      lines,
     });
     for (const w of warnings) t.diagnostic(w);
   });

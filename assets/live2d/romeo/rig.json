@@ -55,26 +55,30 @@
       "blush": ["e_sekimen_00"],
       "smile_blush": ["e_egao_00", "e_sekimen_00"],
       "full_smile_blush": ["e_manmen_00", "e_sekimen_00"],
-      "surprise": ["e_odoroki_00"],
-      "surprise_blush": ["e_odoroki_00", "e_sekimen_00"],
+      "surprise": ["e_odoroki_level_00"],
+      "surprise_blush": ["e_odoroki_level_00", "e_sekimen_00"],
       "sweat": ["e_ase_00"],
       "serious": ["e_ikari_00"],
-      "annoyed": ["e_sakebu_00"],
-      "upset": ["e_sakebu_00", "e_ase_00"],
+      "annoyed": ["e_sakebu_calm_00"],
+      "upset": ["e_sakebu_calm_00", "e_ase_00"],
       "flustered": ["e_aseri_00", "e_sekimen_00", "e_ase_00"],
       "sad": ["e_cry_00"],
       "away": ["e_tsujo_away_00"],
-      "shout": ["e_shout_00"],
-      "outraged": ["e_shout_00", "e_sakebu_00"],
-      "smirk": ["e_warui_00"],
-      "smirk_blush": ["e_warui_00", "e_sekimen_00"],
-      "grumpy_blush": ["e_ikari_00", "e_sekimen_00"],
+      "shout": ["e_shout_calm_00"],
+      "outraged": ["e_shout_calm_00", "e_sakebu_calm_00"],
+      "smirk": ["e_warui_level_00"],
+      "mild_smirk": ["e_warui_calm_00"],
+      "slight_smirk": ["e_warui_slight_00"],
+      "smirk_blush": ["e_warui_level_00", "e_sekimen_00"],
+      "mild_smirk_blush": ["e_warui_calm_00", "e_sekimen_00"],
+      "grumpy_blush": ["e_ikari_level_00", "e_sekimen_00"],
       "fretting": ["e_aseri_00"],
-      "soft_smile_blush": ["e_aware_00", "e_sekimen_00"],
-      "soft_smile": ["e_hohoemi_00"]
+      "soft_smile_blush": ["e_aware_calm_00", "e_sekimen_00"],
+      "soft_smile": ["e_hohoemi_00"],
+      "warm_smile_blush": ["e_hohoemi_00", "e_sekimen_00"]
     }
   },
-  "restMood": { "byTier": { "close": "soft_smile" } },
+  "restMood": { "byTier": { "spark": "soft_smile" } },
   "reactions": {
     "upset": {
       "byTier": {
@@ -88,8 +92,8 @@
         "known": { "mood": "annoyed", "duration": 2 },
         "warm": { "mood": "grumpy_blush", "duration": 2.4 },
         "spark": { "mood": "grumpy_blush", "duration": 2.6 },
-        "close": { "mood": "full_smile_blush", "duration": 2.6 },
-        "bound": { "mood": "full_smile_blush", "duration": 3 }
+        "close": { "mood": "warm_smile_blush", "duration": 2.6 },
+        "bound": { "mood": "warm_smile_blush", "duration": 3 }
       }
     },
     "cheekPoke": {
@@ -105,11 +109,11 @@
     "handTap": {
       "byTier": {
         "new": { "mood": "away", "duration": 2 },
-        "known": { "mood": "smirk", "duration": 2 },
+        "known": { "mood": "annoyed", "duration": 2 },
         "warm": { "mood": "grumpy_blush", "duration": 2.4 },
         "spark": { "mood": "grumpy_blush", "duration": 2.6 },
-        "close": { "mood": "full_smile_blush", "duration": 2.6 },
-        "bound": { "mood": "full_smile_blush", "duration": 3 }
+        "close": { "mood": "mild_smirk_blush", "duration": 2.6 },
+        "bound": { "mood": "mild_smirk_blush", "duration": 3 }
       }
     },
     "lipsTouch": {
@@ -166,7 +170,7 @@
       "byTier": {
         "spark": { "mood": "grumpy_blush", "duration": 2.6 },
         "close": { "mood": "soft_smile_blush", "duration": 2.6 },
-        "bound": { "mood": "smile_blush", "duration": 3 }
+        "bound": { "mood": "warm_smile_blush", "duration": 3 }
       }
     },
     "heartbeatHold": {
@@ -178,14 +182,14 @@
     },
     "lipHold": {
       "byTier": {
-        "spark": { "mood": "flustered", "duration": 3.6 },
+        "spark": { "mood": "grumpy_blush", "duration": 3.6 },
         "close": { "mood": "soft_smile_blush", "duration": 3.6 },
         "bound": { "mood": "smirk_blush", "duration": 4 }
       }
     },
     "teaseLetGo": { "byTier": { "bound": { "mood": "grumpy_blush", "duration": 4.4 } } },
-    "answerLove": { "byTier": { "new": { "mood": "smile", "duration": 3.2 } } },
-    "answerLike": { "byTier": { "new": { "mood": "smirk", "duration": 3 } } },
+    "answerLove": { "byTier": { "new": { "mood": "mild_smirk", "duration": 3.2 } } },
+    "answerLike": { "byTier": { "new": { "mood": "slight_smirk", "duration": 3 } } },
     "answerFlat": { "byTier": { "new": { "mood": "indifferent", "duration": 2.6 } } }
   },
   "reactionPoses": {

@@ -197,7 +197,8 @@ export class Hangout {
     const spot = hotspotAt(this.rig, this.renderer, point);
     if (!spot) return { spot: null, result: "miss" };
     if (this.locked) return { spot, result: "ignored" };
-    const result = this.meter.tap(t, this.rig.hotspots[spot].annoyance ?? SPOT_ANNOYANCE[spot]);
+    const info = this.spotInfo(spot);
+    const result = this.meter.tap(t, info.annoyance);
     if (result === "ignored") return { spot, result };
     if (result === "upset" && LOCKOUT_TIERS.includes(this.tier)) {
       this.locked = true;
@@ -209,12 +210,41 @@ export class Hangout {
       return { spot, result: "locked" };
     }
     if (result === "upset") this.react("upset", t, spot);
-    else this.react(this.rig.hotspots[spot].reaction ?? TOUCH_SPOTS[spot], t, spot);
+    else this.react(info.reaction, t, spot, info.line ? { line: info.line } : undefined);
     return { spot, result };
   }
 
-  /** Plays reaction `name`; `spot` is the touch spot that set it off, if any. */
-  react(name, t, spot) {
+  /**
+   * What a tap on `spot` adds to the meter and plays: { annoyance, reaction,
+   * line? }. `line` names the pool, when it isn't the reaction's own.
+   *
+   * Removable articles (rig.json `articles`; docs/hangout-activity.md §4.2)
+   * can only come off where articles.js is attached (the preview). Without
+   * it every article stays on, so a spot one covers draws that article's
+   * `<article>Pat` lines (Shion's head pats land on his hat), keeping the
+   * face and pose of the spot. Articles that are only out in some poses
+   * (`shownOnly`) leave the spot alone. articles.js passes `worn: false`
+   * and decides itself.
+   */
+  spotInfo(spot, { worn = true } = {}) {
+    const hotspot = this.rig.hotspots[spot] ?? {};
+    const info = { annoyance: hotspot.annoyance ?? SPOT_ANNOYANCE[spot], reaction: hotspot.reaction ?? TOUCH_SPOTS[spot] };
+    if (!worn) return info;
+    for (const [name, a] of Object.entries(this.rig.articles ?? {})) {
+      if (a.shownOnly || a.blocks === false || forTier(a.covers, this.tier) !== spot) continue;
+      if (a.pool !== false && this.pool(`${name}Pat`)) info.line = `${name}Pat`;
+      break;
+    }
+    return info;
+  }
+
+  /**
+   * Plays reaction `name`; `spot` is the touch spot that set it off, if any.
+   * `line` draws the line from that pool instead of the reaction's own;
+   * `fade` (seconds) eases the mood in over that instead of the rig's
+   * default (a hold's release face, holds.js endHold).
+   */
+  react(name, t, spot, { line, fade } = {}) {
     const r = resolveReaction(this.rig, name, this.tier);
     if (!r) return;
     const side = spot?.match(/_([lr])$/)?.[1];
@@ -225,9 +255,9 @@ export class Hangout {
     this.pendingMood = null;
     const upset = name === "upset";
     // The upset line always speaks; other touch lines wait out the current one.
-    const text = upset || !spot || t >= this.lineReadyAt ? this.line(r.line ?? name) : null;
+    const text = upset || !spot || t >= this.lineReadyAt ? this.line(line ?? r.line ?? name) : null;
     if (r.mood) {
-      this.renderer.setMood(r.mood);
+      this.renderer.setMood(r.mood, fade);
       this.moodUntil = t + duration;
       if (upset && text) this.moodUntil = Math.max(this.moodUntil, t + typeDuration(text) / 1000 + UPSET_READ);
       this.moodFadeOut = r.fadeOut ?? SETTLE_FADE;

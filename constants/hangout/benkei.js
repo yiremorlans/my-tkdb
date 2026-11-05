@@ -11,6 +11,12 @@
 // why Clementia/Ultio ended. Guarded spots (lips, chest, hips) stay polite
 // refusals until spark.
 //
+// Removable article (docs/hangout-activity.md §4.2): the name tag on his
+// campus-store apron, work outfit only (the academy outfit has none). It
+// covers the chest spot, so nametagPat borrows chest's guarded register
+// early; from warm a double-tap takes it off (nametagOff). chestTouch is
+// shared by both outfits and never mentions the tag.
+//
 // Holds (spark+): one line on letting go. Close hints and holds back;
 // bound treats intimacy as shared history. Still flustered, still on shift.
 
@@ -44,6 +50,10 @@ export default {
       "Oh! Uh, that's my stomach. Sorry, could you not?",
       "Ha ha... Let's keep the poking to the snack aisle, yeah?",
     ],
+    nametagPat: [
+      "Oh, the tag? Yep, that's me. Need help finding something?",
+      "Ah, careful, it's only pinned on. Sorry, did you need something?",
+    ],
     hipsTouch: ["Whoa! Hey, I'm working here.", "Ah, no, sorry. Not okay."],
     upset: [
       "Okay, that's enough. Hands to yourself, please.",
@@ -76,6 +86,10 @@ export default {
       "Hey, no poking. I'm not the bread.",
       "Ah, sorry. Not there, okay?",
     ],
+    nametagPat: [
+      "You know my name by now, I hope. ...You do, right?",
+      "Ha ha... It's crooked again, isn't it?",
+    ],
     hipsTouch: [
       "Hey! Hands to yourself.",
       "Whoa, no! You're a student. Absolutely not.",
@@ -102,10 +116,7 @@ export default {
       "Ha ha, that tickles. You're doing that on purpose.",
       "You've got my attention. You always do.",
     ],
-    handTap: [
-      "Here. What's up?",
-      "Oh, just saying hi? Okay.",
-    ],
+    handTap: ["Here. What's up?", "Oh, just saying hi? Okay."],
     chestTouch: [
       "Ah, that's a little close. Sorry.",
       "Hey, easy. I'm still on shift.",
@@ -113,6 +124,14 @@ export default {
     bellyTouch: [
       "Whoa! Ha ha... Okay, you got me.",
       "Ha... Sneaky. Warn me next time, yeah?",
+    ],
+    nametagPat: [
+      "It hasn't changed, I promise. Still me.",
+      "Ha ha... If you're after a tag, I can get you an application.",
+    ],
+    nametagOff: [
+      "Hey! I need that. ...Okay, just don't lose it, yeah?",
+      "Oh! Ha ha... Now nobody'll know who to ask for.",
     ],
     hipsTouch: ["Whoa. Hey.", "Okay, not that. Sorry."],
     upset: [
@@ -148,6 +167,14 @@ export default {
     bellyTouch: [
       "Oh... Ha ha. My stomach's doing a whole thing now.",
       "Ah... Okay. You can leave it there. I'll manage.",
+    ],
+    nametagPat: [
+      "Yep, still Benkei. Ha ha... Still flustered, too.",
+      "Oh, was that crooked? ...Thanks.",
+    ],
+    nametagOff: [
+      "Ha ha... Without that, I'm technically just some guy.",
+      "Ah... You're really not making this job easy, you know.",
     ],
     hipsTouch: [
       "Whoa... You're bold today.",
@@ -199,6 +226,14 @@ export default {
       "Ha ha... That tickles. Do it again.",
       "Okay, you win. I'm all yours till the next customer.",
     ],
+    nametagPat: [
+      "Mm. Go ahead. Nobody fusses over me like you do.",
+      "Ha ha... You know, I've started leaving it crooked for you to fix.",
+    ],
+    nametagOff: [
+      "Go ahead. No customers right now anyway. ...Just you.",
+      "Off the clock, then. Ha ha... Don't tell anyone.",
+    ],
     hipsTouch: [
       "Hey... The store's empty right now. Just so you know.",
       "Keep that up and I'm putting up the 'back in thirty' sign.",
@@ -221,6 +256,14 @@ export default {
     ],
   },
   bound: {
+    nametagPat: [
+      "Mm. Some things never get old. You fussing over me is one.",
+      "Mm. I pin it on every morning and think of you. Is that silly?",
+    ],
+    nametagOff: [
+      "Again? Ha ha... You always start with that.",
+      "Ha ha... Don't lose it. I'd have a hard time explaining that one.",
+    ],
     heartbeatHold: [
       "Still checking? You know exactly what you do to me.",
       "It's never once calmed down around you. Not even after.",

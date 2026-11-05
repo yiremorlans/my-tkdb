@@ -208,7 +208,7 @@ export default {
     ],
     lipHold: [
       "...You're very patient. I'm afraid I'm not, anymore.",
-      "Oh... I held my breath the whole time, I think.",
+      "Oh... I had something to say. I don't think I need it now.",
     ],
     handHold: [
       "Mm... My hand feels very empty now.",

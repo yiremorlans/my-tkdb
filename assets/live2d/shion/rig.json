@@ -10,6 +10,9 @@
     "academy": {
       "model": "academy/shion_academy.model3.json",
       "dialogueVariant": "uniform",
+      "articles": {
+        "hat": { "part": "PartHat", "covers": "head" }
+      },
       "parts": { "chest": ["ArtMesh150"], "pants": ["ArtMesh173", "ArtMesh174"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [0.01, 0.02, 0.99, 0.551] },
@@ -59,7 +62,7 @@
       "serious": ["e_magao_00"],
       "annoyed": ["e_fukigen_00"],
       "guarded": ["e_fukigen_00"],
-      "upset": ["e_fukigen_00", "e_ase_00"],
+      "upset": ["e_fukigen_calm_00", "e_ase_00"],
       "flustered": ["e_bisho_00", "e_sekimen_00", "e_ase_00"],
       "leer": ["e_gesu_00"],
       "taunt": ["e_aori_00"],
@@ -69,8 +72,16 @@
       "beam": ["e_manmen_smile_00"]
     }
   },
-  "restMood": { "byTier": { "new": "serious", "known": "default" } },
+  "restMood": { "byTier": { "new": "serious", "warm": "default" } },
   "reactions": {
+    "hatOff": {
+      "byTier": {
+        "warm": { "mood": "upset", "duration": 4 },
+        "spark": { "mood": "pout_blush", "duration": 3 },
+        "close": { "mood": "smile_blush", "duration": 3 },
+        "bound": { "mood": "full_smile_blush", "duration": 3.4 }
+      }
+    },
     "upset": {
       "byTier": {
         "new": { "mood": "upset", "duration": 4 },
@@ -193,6 +204,7 @@
     "bellyTouch": { "byTier": { "new": "m_card", "spark": "m_kao", "close": "m_migikoshi" } },
     "hipsTouch": { "byTier": { "new": "m_card", "warm": "m_migikoshi", "spark": "m_ago", "close": "m_gesture" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_ago" } },
+    "hatOff": { "byTier": { "warm": "m_udekumi", "spark": "m_ago" } },
     "answerLove": "m_gesture",
     "answerLike": "m_ago",
     "handHold": { "byTier": { "spark": "m_migikoshi", "close": "m_udekumi", "bound": "m_migikoshi" } },

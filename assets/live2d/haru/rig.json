@@ -10,6 +10,10 @@
     "academy": {
       "model": "academy/haru_academy.model3.json",
       "dialogueVariant": "uniform",
+      "articles": {
+        "peekaboo": { "part": "Part25", "drawables": ["ArtMesh77", "ArtMesh78", "ArtMesh79"], "covers": "belly", "hotspots": { "belly": { "part": "chest", "rect": [0.14, 0.555, 0.86, 0.83] } } },
+        "sling": { "part": "Part24a", "drawables": ["ArtMesh128", "ArtMesh145", "ArtMesh146", "ArtMesh159", "ArtMesh166", "ArtMesh167"], "covers": "belly", "requires": "peekaboo", "pool": false, "hit": false }
+      },
       "parts": {
         "chest": ["ArtMesh143"],
         "pants": ["ArtMesh246", "ArtMesh247"],
@@ -31,6 +35,10 @@
     "casual": {
       "model": "casual/haru_casual.model3.json",
       "dialogueVariant": "casual",
+      "articles": {
+        "peekaboo": { "part": "Part25", "drawables": ["ArtMesh82", "ArtMesh83", "ArtMesh85"], "covers": "belly", "hotspots": { "belly": { "part": "chest", "rect": [0.14, 0.677, 0.86, 1] } } },
+        "sling": { "part": "Part24a", "drawables": ["ArtMesh128", "ArtMesh145", "ArtMesh146", "ArtMesh166", "ArtMesh167"], "covers": "belly", "requires": "peekaboo", "pool": false, "hit": false }
+      },
       "parts": {
         "chest": ["ArtMesh374"],
         "pants": ["ArtMesh366", "ArtMesh367"],
@@ -53,6 +61,10 @@
     "house": {
       "model": "house/haru_house.model3.json",
       "dialogueVariant": "casual",
+      "articles": {
+        "peekaboo": { "part": "Part25", "drawables": ["ArtMesh2", "ArtMesh77", "ArtMesh78", "ArtMesh79", "ArtMesh82"], "covers": "belly", "hotspots": { "belly": { "part": "chest", "rect": [0.14, 0.741, 0.86, 1.06] } } },
+        "sling": { "part": "Part4", "drawables": ["ArtMesh128", "ArtMesh145", "ArtMesh146", "ArtMesh150", "ArtMesh151", "ArtMesh154", "ArtMesh155"], "covers": "belly", "requires": "peekaboo", "pool": false, "hit": false }
+      },
       "spots": ["Jabberwock_Cave.png", "Jabberwock_Cave_2.png", "Jabberwock_Cave_PM.png", "Jabberwock_Dorm_Room.png", "Jabberwock_Dorm_Room_PM.png", "Jabberwock_Entrance.png", "Jabberwock_Field.png", "Jabberwock_Field_2.png", "Jabberwock_Field_2_PM.png", "Jabberwock_Field_PM.png", "Jabberwock_Forest.png", "Jabberwock_Forest_PM.png", "Jabberwock_Kitchen.png", "Jabberwock_Mountain.png", "Jabberwock_Mountain_PM.png", "Jabberwock_Tree.png", "Jabberwock_Tree_PM.png", "Jabberwock_Ushi-Oni_Pen.png", "Jabberwock_Ushi-Oni_Pen_PM.png"],
       "parts": {
         "chest": ["ArtMesh156"],

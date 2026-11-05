@@ -6,14 +6,16 @@
 // Sparse, flat, childish and cruel; fear is "being happy". "My wife" from
 // warm on, never new/known (user, 2026-10-31). No water/mermaid hints, no swap explained, no favors,
 // no hunting. Guarded spots (lips, chest, hips) stay serious until spark.
-// Head pats land on his hat (the model has no hair under it): no hair,
-// scalp or hand-temperature lines. The hat never comes off (user, 2026-11-01).
+// While the hat is on, head taps land on it (hatPat): no hair, scalp or
+// hand-temperature lines there. From warm a double-tap takes it off (hatOff,
+// docs/hangout-activity.md §4.2; user, 2026-11-05). At warm that makes him
+// properly upset (rig hatOff: upset face); he only starts allowing it at spark. headPat is his bare head, warm and up only.
 // Holds (spark+): the heartbeat line denies by saying the opposite, his
 // canon habit; the bound break turns "being happy" back on himself.
 
 export default {
   new: {
-    headPat: [
+    hatPat: [
       "...Who said you could touch my hat?",
       "Do that again. I'll remember your face.",
     ],
@@ -45,7 +47,7 @@ export default {
     ],
   },
   known: {
-    headPat: ["...You again. Fine.", "Hm. You like my hat that much?"],
+    hatPat: ["...You again. Fine.", "Hm. You like my hat that much?"],
     cheekPoke: ["Bored? Me too.", "...You're getting cocky."],
     lipsTouch: ["...Don't. I didn't say you could.", "...Leave my lips alone."],
     earTouch: [
@@ -68,9 +70,14 @@ export default {
     ],
   },
   warm: {
+    hatPat: ["Now it's crooked.", "Don't even think about taking it."],
+    hatOff: [
+      "...That's mine. Give it back. Now.",
+      "Give it back. Or I'll make you cry.",
+    ],
     headPat: [
-      "...Tilt it back. I want to see your face.",
-      "Now it's crooked. Fix it.",
+      "...You think patting me fixes it? ...Hm. Keep going.",
+      "...What's that for? I didn't do anything.",
     ],
     cheekPoke: [
       "Hehehe. You're in a mood.",
@@ -100,7 +107,15 @@ export default {
     ],
   },
   spark: {
-    headPat: ["Hat's in the way?", "Only you. Remember that."],
+    hatPat: ["Hat's in the way?", "You're thinking about it. I can see it on your face."],
+    hatOff: [
+      "...You took it. Now what? Don't just stand there.",
+      "...Don't lose it. Or you'll be punished.",
+    ],
+    headPat: [
+      "...Closer. Do it properly.",
+      "Hm. My hair's a mess now. Your fault.",
+    ],
     cheekPoke: [
       "Your face is red. I like it.",
       "Poke me again. I'm keeping count.",
@@ -147,9 +162,17 @@ export default {
     ],
   },
   close: {
-    headPat: [
+    hatPat: [
       "I love this hat. ...Almost as much as my wife.",
-      "Go on. Try taking the hat. I dare you.",
+      "Don't take my hat. ...I said don't.",
+    ],
+    hatOff: [
+      "Hm. Now you owe me. I'll think of something.",
+      "My wife steals things now. ...I like it.",
+    ],
+    headPat: [
+      "Keep going. You stop when I say.",
+      "...Good. My wife's getting it right.",
     ],
     cheekPoke: [
       "Hehehe. Again. I'm not done.",
@@ -197,6 +220,18 @@ export default {
     ],
   },
   bound: {
+    hatPat: [
+      "You've taken it off plenty of times. Why so polite now?",
+      "Leave it on. ...You can take it off later.",
+    ],
+    hatOff: [
+      "Hm. You don't even ask anymore.",
+      "Fine. Keep it. You keep everything of mine anyway.",
+    ],
+    headPat: [
+      "Hm. I'm being good, aren't I? Keep going.",
+      "Hehehe. I'd let you do this all day.",
+    ],
     heartbeatHold: [
       "You've heard it closer than that. Don't act surprised.",
       "Hear that? Come closer. ...Closer.",

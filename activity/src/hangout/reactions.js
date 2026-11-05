@@ -224,14 +224,29 @@ export const DEFAULT_REACTIONS = {
     },
   },
   upset: { mood: "upset", duration: 4 },
+  // Taking off a removable article (articles.js, warm up): every
+  // `<article>Off` reaction a rig doesn't set (rig.json `reactions.hatOff`)
+  // plays this. Caught off guard at warm, warmer from spark.
+  articleOff: {
+    byTier: {
+      warm: { mood: "surprise", duration: 3 },
+      spark: { mood: "surprise_blush", duration: 3 },
+      close: { mood: "smile_blush", duration: 3 },
+      bound: { mood: "full_smile_blush", duration: 3.4 },
+    },
+  },
 };
+
+// `<article>Off` (hatOff, peekabooOff…) falls back to articleOff.
+const ARTICLE_OFF = /^[a-z][A-Za-z]*Off$/;
 
 /**
  * The reaction `name` plays at `tier` for this rig, or null. Falls back to
  * the nearest lower tier, and to "default" for moods the rig lacks.
  */
 export function resolveReaction(rig, name, tier) {
-  const picked = forTier(rig.reactions?.[name] ?? DEFAULT_REACTIONS[name], tier);
+  const fallback = DEFAULT_REACTIONS[name] ?? (ARTICLE_OFF.test(name) ? DEFAULT_REACTIONS.articleOff : undefined);
+  const picked = forTier(rig.reactions?.[name] ?? fallback, tier);
   if (!picked) return null;
   const moods = rig.expressions?.moods ?? {};
   const moodOrDefault = (m) => (m && !moods[m] ? "default" : m);

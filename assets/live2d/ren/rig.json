@@ -11,6 +11,9 @@
     "academy": {
       "model": "academy/ren_academy.model3.json",
       "dialogueVariant": "uniform",
+      "articles": {
+        "phone": { "drawables": ["ArtMesh214"], "covers": "hand_l", "shownOnly": true, "poses": "^m_phone", "offPose": "m_migikoshi" }
+      },
       "parts": { "chest": ["ArtMesh131"], "pants": ["ArtMesh142", "ArtMesh144"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [0.01, 0.02, 0.99, 0.504] },
@@ -21,6 +24,9 @@
     "roomwear": {
       "model": "roomwear/ren_roomwear.model3.json",
       "dialogueVariant": "casual",
+      "articles": {
+        "phone": { "drawables": ["ArtMesh214"], "covers": "hand_l", "shownOnly": true, "poses": "^m_phone", "offPose": "m_migikoshi" }
+      },
       "spots": ["Jabberwock_Ren_Room.png", "Jabberwock_Ren_Room_PM.png"],
       "always": true,
       "parts": { "chest": ["ArtMesh314"], "pants": ["ArtMesh326", "ArtMesh327"], "hand_l": ["ArtMesh162", "ArtMesh167", "ArtMesh166", "ArtMesh164", "ArtMesh161", "ArtMesh214"] },
@@ -33,6 +39,9 @@
     "house": {
       "model": "house/ren_house.model3.json",
       "dialogueVariant": "casual",
+      "articles": {
+        "phone": { "drawables": ["ArtMesh11"], "covers": "hand_l", "shownOnly": true, "poses": "^m_phone", "offPose": "m_migikoshi" }
+      },
       "spots": ["Jabberwock_Cave.png", "Jabberwock_Cave_2.png", "Jabberwock_Cave_PM.png", "Jabberwock_Dorm_Room.png", "Jabberwock_Dorm_Room_PM.png", "Jabberwock_Entrance.png", "Jabberwock_Field.png", "Jabberwock_Field_2.png", "Jabberwock_Field_2_PM.png", "Jabberwock_Field_PM.png", "Jabberwock_Forest.png", "Jabberwock_Forest_PM.png", "Jabberwock_Kitchen.png", "Jabberwock_Mountain.png", "Jabberwock_Mountain_PM.png", "Jabberwock_Tree.png", "Jabberwock_Tree_PM.png", "Jabberwock_Ushi-Oni_Pen.png", "Jabberwock_Ushi-Oni_Pen_PM.png"],
       "parts": {
         "chest": ["ArtMesh239"],
@@ -111,6 +120,14 @@
     }
   },
   "reactions": {
+    "phoneOff": {
+      "byTier": {
+        "warm": { "mood": "annoyed", "duration": 3 },
+        "spark": { "mood": "surprise_blush", "duration": 3 },
+        "close": { "mood": "smile_blush", "duration": 3 },
+        "bound": { "mood": "full_smile_blush", "duration": 3.4 }
+      }
+    },
     "upset": {
       "byTier": {
         "new": { "mood": "upset", "duration": 4 },
@@ -232,6 +249,7 @@
     "hipsTouch": { "byTier": { "new": "m_odoroki", "close": "m_kubi" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kubi" } },
     "handHold": "m_kubi",
+    "phoneOff": { "byTier": { "warm": "m_udekumi", "spark": "m_kubi", "close": "m_migikoshi" } },
     "heartbeatHold": { "byTier": { "spark": "m_udekumi", "bound": "m_migikoshi" } },
     "lipHold": { "byTier": { "spark": "m_phone_away", "bound": "m_migikoshi" } },
     "teaseLetGo": "m_udekumi",

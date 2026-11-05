@@ -28,6 +28,10 @@
         "File": "expressions/e_fukigen_00.exp3.json"
       },
       {
+        "Name": "e_fukigen_calm_00",
+        "File": "expressions/e_fukigen_calm_00.exp3.json"
+      },
+      {
         "Name": "e_gesu_00",
         "File": "expressions/e_gesu_00.exp3.json"
       },

@@ -8,6 +8,10 @@
 // physical. Sound sensitivity shows in the ear lines; the super-hearing
 // heartbeat beat waits for spark. Guarded spots (lips, chest, hips) stay
 // rebuffs until spark.
+// His headphones sit around his neck over the chest spot as their own touch
+// area: a tap on them is headphonePat, a tap on his chest is chestTouch. From warm a double-tap takes them
+// (headphoneOff, docs/hangout-activity.md §4.2), a real ask for someone this
+// noise-sensitive: at warm he's properly annoyed (irritated face), not won over.
 // Holds (spark+): he deflects the heart monitor, then owns it; bound
 // handHold pays off the canon bet (LVL 25), and he still runs the rules.
 
@@ -30,9 +34,13 @@ export default {
       "You need something? Make it quick.",
       "Did I say you could do that? No? Then don't.",
     ],
+    headphonePat: [
+      "Hands off the headphones.",
+      "Hey. Fingerprints. Those are expensive.",
+    ],
     chestTouch: [
       "Back off. You don't get to do that.",
-      "Hands off the headphones.",
+      "What, is my shirt that interesting? Hands off.",
     ],
     bellyTouch: [
       "Did you just poke my stomach? Wow. Weird.",
@@ -64,6 +72,10 @@ export default {
     handTap: [
       "What? Use your words, Honor Roll.",
       "Huh. You're braver than you look.",
+    ],
+    headphonePat: [
+      "Seriously? Leave the headphones alone.",
+      "Those stay on my neck. Not in your hands, Honor Roll.",
     ],
     chestTouch: [
       "What the hell? Who said you could get that close?",
@@ -103,6 +115,14 @@ export default {
       "You're getting comfortable, huh. ...I'll allow it.",
       "What? ...You want something, or are you just bored?",
     ],
+    headphonePat: [
+      "You're eyeing my headphones again. Don't even think about it.",
+      "Hands off. Those are basically life support for my ears.",
+    ],
+    headphoneOff: [
+      "Hey! Give those back. Now. ...Ugh, everything's so loud.",
+      "Ugh, seriously? Give them back before I put you on blast to my whole stream.",
+    ],
     chestTouch: [
       "Back up a little. I can't see my screen.",
       "Hey. Hands where I can see them.",
@@ -136,7 +156,15 @@ export default {
     ],
     handTap: [
       "I can touch you, but you can't touch me.",
-      "Fine. Hold on. ...Don't make it weird.",
+      "Fine. Just don't make it weird.",
+    ],
+    headphonePat: [
+      "Want them? Ask nicely. Maybe.",
+      "Again? Is this a bit, or do you just want an excuse to touch me?",
+    ],
+    headphoneOff: [
+      "Hey! ...Ugh, fine. But you're staying right here till I get them back.",
+      "Wow. You know I'm gonna make you pay for that, right?",
     ],
     chestTouch: [
       "...Don't. My heart's being fucking stupid right now.",
@@ -188,6 +216,14 @@ export default {
       "Hold on tight. I'm not letting go first, so that's on you.",
       "Rules changed. You can touch me now too. Tell anyone and I'll deny it.",
     ],
+    headphonePat: [
+      "...You keep reaching for them. Just say you want my attention, Honor Roll.",
+      "Want them? ...Ugh, you already know I'm not gonna stop you.",
+    ],
+    headphoneOff: [
+      "New rule. You took them, so now I take what I want.",
+      "You just wanted me listening to you, huh? Wow. Needy.",
+    ],
     chestTouch: [
       "Back up before I do something about it.",
       "...Yeah, it's racing. Stay there and find out why.",
@@ -218,6 +254,14 @@ export default {
     ],
   },
   bound: {
+    headphonePat: [
+      "Ha. You've stolen them so many times, they're basically half yours.",
+      "You can just ask for me, Honor Roll. You don't need the excuse anymore.",
+    ],
+    headphoneOff: [
+      "Ha. You always go for those first. I'm noticing a pattern, Honor Roll.",
+      "Now it's just you. Your voice, all of it. ...Don't you dare leave.",
+    ],
     heartbeatHold: [
       "Still racing? Shocking. You'd think I'd have built up a tolerance to you by now.",
       "You already know what you do to me. You don't need to listen for it.",

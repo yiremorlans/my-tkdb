@@ -24,6 +24,10 @@
         "File": "expressions/e_aware_00.exp3.json"
       },
       {
+        "Name": "e_aware_calm_00",
+        "File": "expressions/e_aware_calm_00.exp3.json"
+      },
+      {
         "Name": "e_hohoemi_00",
         "File": "expressions/e_hohoemi_00.exp3.json"
       },
@@ -44,6 +48,10 @@
         "File": "expressions/e_ikari_00.exp3.json"
       },
       {
+        "Name": "e_ikari_level_00",
+        "File": "expressions/e_ikari_level_00.exp3.json"
+      },
+      {
         "Name": "e_manmen_00",
         "File": "expressions/e_manmen_00.exp3.json"
       },
@@ -52,8 +60,16 @@
         "File": "expressions/e_odoroki_00.exp3.json"
       },
       {
+        "Name": "e_odoroki_level_00",
+        "File": "expressions/e_odoroki_level_00.exp3.json"
+      },
+      {
         "Name": "e_sakebu_00",
         "File": "expressions/e_sakebu_00.exp3.json"
+      },
+      {
+        "Name": "e_sakebu_calm_00",
+        "File": "expressions/e_sakebu_calm_00.exp3.json"
       },
       {
         "Name": "e_sekimen_00",
@@ -62,6 +78,10 @@
       {
         "Name": "e_shout_00",
         "File": "expressions/e_shout_00.exp3.json"
+      },
+      {
+        "Name": "e_shout_calm_00",
+        "File": "expressions/e_shout_calm_00.exp3.json"
       },
       {
         "Name": "e_tsujo_00",
@@ -74,6 +94,18 @@
       {
         "Name": "e_warui_00",
         "File": "expressions/e_warui_00.exp3.json"
+      },
+      {
+        "Name": "e_warui_level_00",
+        "File": "expressions/e_warui_level_00.exp3.json"
+      },
+      {
+        "Name": "e_warui_calm_00",
+        "File": "expressions/e_warui_calm_00.exp3.json"
+      },
+      {
+        "Name": "e_warui_slight_00",
+        "File": "expressions/e_warui_slight_00.exp3.json"
       },
       {
         "Name": "e_warui_away_00",

@@ -162,7 +162,7 @@ export default {
     ],
     lipHold: [
       "You've no idea how difficult that was.",
-      "A gentleman doesn't kiss someone's hand without asking. ...So consider this me asking.",
+      "That was hardly fair. I'll have to think of a way to return it.",
     ],
     handHold: [
       "You let go first. I'll admit I was hoping you wouldn't.",

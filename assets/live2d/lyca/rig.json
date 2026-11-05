@@ -80,10 +80,13 @@
       "flustered": ["e_odoroki_00", "e_sekimen_00", "e_ase_00"],
       "sad": ["e_kanashimi_00"],
       "away": ["e_tsujo_away_00"],
-      "soft_mouth": ["e_tsujo_soft_00"]
+      "soft_mouth": ["e_tsujo_soft_00"],
+      "wary": ["e_tsujo_wary_00"],
+      "soft_smile": ["e_tsujo_warm_00"],
+      "wide_smile": ["e_smile_wide_00"]
     }
   },
-  "restMood": { "byTier": { "new": "default", "warm": "soft_mouth" } },
+  "restMood": { "byTier": { "new": "wary", "known": "default", "warm": "soft_smile" } },
   "reactions": {
     "upset": {
       "byTier": {
@@ -198,7 +201,7 @@
       }
     },
     "answerLove": { "byTier": { "new": { "mood": "full_smile", "duration": 3.2 } } },
-    "answerLike": { "byTier": { "new": { "mood": "smile", "duration": 3 } } },
+    "answerLike": { "byTier": { "new": { "mood": "wide_smile", "duration": 3 } } },
     "answerFlat": { "byTier": { "new": { "mood": "indifferent", "duration": 2.6 } } }
   },
   "reactionPoses": {
@@ -213,8 +216,8 @@
     "hipsTouch": { "byTier": { "new": "m_odoroki_C", "known": "m_udekumi", "spark": "m_atama", "close": "m_migikoshi" } },
     "upset": { "byTier": { "new": "m_udekumi_C", "spark": "m_kubi_C" } },
     "guarded": "m_udekumi_C",
-    "answerLove": "m_fist",
-    "answerLike": "m_migikoshi",
+    "answerLove": "m_migikoshi",
+    "answerLike": "m_atama",
     "handHold": { "byTier": { "spark": "m_kubi", "bound": "m_fist" } },
     "heartbeatHold": { "byTier": { "spark": "m_udekumi", "close": "m_migikoshi" } },
     "lipHold": { "byTier": { "spark": "m_kubi", "close": "m_migikoshi" } },

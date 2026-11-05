@@ -8,6 +8,11 @@
 // scene). Chest scars and tearing wounds are canon; the Stigma stays out.
 // Guarded spots (lips, chest, hips) stay serious until spark.
 //
+// Glasses (removable, §4.2): every outfit; they borrow his cheekPoke face
+// and pose. Yuri gave them to him (wiki trivia, Episode 22); that stays at
+// spark+. He doesn't need them to see (user, 2026-11-05), so no line implies
+// he needs them, and losing them doesn't upset him.
+//
 // Holds (spark+): he reads the heartbeat hold as MC listening to his heart (his
 // job reversed); Yuri's care is the canon he leans on. His amnesia covers
 // one event only: he remembers everything now, so no "poor memory" lines.
@@ -48,6 +53,10 @@ export default {
       "That's inappropriate, isn't it? Even I know that.",
     ],
     upset: ["This is annoying.", "Please stop. I'm busy."],
+    glassesPat: [
+      "Please don't touch the lenses. They smudge.",
+      "...Is something wrong with my glasses?",
+    ],
   },
   known: {
     headPat: [
@@ -83,6 +92,10 @@ export default {
       "This is annoying.",
       "That's enough. I'd like to get back to work.",
     ],
+    glassesPat: [
+      "Fingerprints. I'll have to clean them again.",
+      "They're on straight. You don't need to adjust them.",
+    ],
   },
   warm: {
     headPat: [
@@ -117,6 +130,14 @@ export default {
     upset: [
       "This is annoying. Even from you.",
       "That's enough. You can just stay, you know.",
+    ],
+    glassesPat: [
+      "You keep doing that. Do you want to try them on?",
+      "...You smudged the lens. That's okay.",
+    ],
+    glassesOff: [
+      "Oh. You took them. ...I can see fine without them, you know.",
+      "...Was that an experiment? What were you testing?",
     ],
   },
   spark: {
@@ -156,12 +177,20 @@ export default {
       "That's enough. I can't concentrate.",
       "Please stop. My pulse won't settle.",
     ],
+    glassesPat: [
+      "...You keep touching them. Do they suit me?",
+      "Do you need to adjust them every time?",
+    ],
+    glassesOff: [
+      "Oh. ...Be careful with those. Yuri gave them to me.",
+      "...Okay. Now what were you planning to do?",
+    ],
     heartbeatHold: [
       "Usually I'm the one checking. ...What did you hear?",
       "Faster than my chart says. ...I'm leaving it off the record.",
     ],
     lipHold: [
-      "...I meant to time that. I forgot.",
+      "...I was waiting to see what you'd do next.",
       "...I don't have a clinical term for that. I'll look for one.",
     ],
     handHold: [
@@ -218,8 +247,24 @@ export default {
       "Wait. ...Not yet. You'll have to teach me first.",
       "...Stop there. Not yet. I'd like to remember it properly.",
     ],
+    glassesPat: [
+      "You can take them off. I won't stop you.",
+      "Leave them for now. Yuri would notice if they went missing.",
+    ],
+    glassesOff: [
+      "Put them somewhere safe.",
+      "...You like my face better without them? Okay.",
+    ],
   },
   bound: {
+    glassesPat: [
+      "You always do this first. I know what comes next.",
+      "...Go ahead. You know where to put them.",
+    ],
+    glassesOff: [
+      "You keep taking them. Yuri's going to start asking questions.",
+      "Oh. ...You can keep them a while. I don't need them.",
+    ],
     heartbeatHold: [
       "It's faster than last time. I've been keeping records.",
       "You've seen it go higher than that. You were there.",

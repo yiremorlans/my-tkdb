@@ -304,6 +304,8 @@ body {
 .vn-box { transition: opacity 0.35s ease; }
 body.hand-hold .vn-box { opacity: 0.12; pointer-events: none; transition-duration: 0.6s; }
 body.hand-hold .coach, body.tease-hold .coach { opacity: 0; }
+/* The edge's chip (coach.js `keep`) stays up while tease dims the box. */
+body.tease-hold .coach.keep:not(.fade) { opacity: 1; }
 /* Tease and the caught tease (holds.js): the box and its text fade but his
    name plate, with the heart monitor, stays. */
 .vn-box > * { transition: opacity 0.35s ease; }

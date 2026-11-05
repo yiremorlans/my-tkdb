@@ -78,10 +78,12 @@
       "softsmile_blush": ["e_bisho_00", "e_sekimen_00"],
       "exasperated_sweat": ["e_akire_00", "e_ase_00"],
       "rest_soft": ["e_rest_00", "e_tsujo_soft_00"],
-      "sleepy_smile": ["e_rest_00", "e_tsujo_smile_00"]
+      "sleepy_smile": ["e_rest_00", "e_tsujo_smile_00"],
+      "reserved": ["e_rest_00", "e_tsujo_reserved_00"],
+      "warm_rest": ["e_tsujo_warm_00"]
     }
   },
-  "restMood": { "byTier": { "new": "default", "close": "rest_soft" } },
+  "restMood": { "byTier": { "new": "reserved", "known": "default", "close": "warm_rest" } },
   "reactions": {
     "upset": {
       "byTier": {

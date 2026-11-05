@@ -200,7 +200,7 @@ export default {
     ],
     lipHold: [
       "Such patience. I wonder what you're waiting for.",
-      "Mm. Keep it there. I'd like to see how long you last.",
+      "My, my. You've quite stolen the last word from me.",
     ],
     handHold: [
       "Ah. I find I don't want to let go. How inconvenient.",

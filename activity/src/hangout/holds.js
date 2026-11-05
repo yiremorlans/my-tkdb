@@ -10,11 +10,12 @@
 //             preview swaps its Warmth when the drawer's picker changes
 //   onStart   called as a hold starts (the preview turns warmth on)
 //   debug     (text) => void for dev-only notes (the preview's `say`)
-//   showHint  true shows the first-time hint even if it was seen (?hints=1)
+//   coach     the tutorial chips (coach.js attachCoach); one is made if
+//             none is passed. The preview shares its own with articles.js.
 //   bliss     true lets tease go past the crest once the lip and hand holds
 //             have run (preview only for now; uses scene.setPush)
 // The page may have #heart-monitor (with .heart, #ecg, #bpm) and #coach;
-// without them the monitor and hint are skipped.
+// without them the monitor and chips are skipped.
 
 import { Graphics } from "pixi.js";
 
@@ -24,10 +25,11 @@ import { typeDuration, UPSET_READ, SETTLE_FADE } from "./hangout.js";
 import { hotspotAt } from "./hotspots.js";
 import { RESPONSE_TYPE_ORDER } from "../../../constants/responseTypes.js";
 import { RESPONSE_GLYPHS } from "./meet.js";
+import { attachCoach } from "./coach.js";
 
 const $ = (sel) => document.querySelector(sel);
 
-export function attachHolds(scene, { warmth, onStart, debug, showHint = false, bliss = false }) {
+export function attachHolds(scene, { warmth, onStart, debug, coach = attachCoach(scene), bliss = false }) {
   const { renderer, hangout } = scene;
 
   // Press and hold the chest (heartbeat), lips or a hand for HOLD_PRESS
@@ -42,10 +44,14 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false, b
   // The chest hold is the heartbeat check: warmth comes from taps and
   // strokes, and the check reads it. He acts cool (his own eyes, steady
   // breath, closed lips, a faint flush) while the monitor shows how worked up he is.
-  // Tease (secret, bound only): from a chest hold, drag down (TEASE_DRAG of
-  // the chest spot's height, mostly downward) and the hold turns into the
-  // old heartbeat hold plus bliss. Nothing on screen mentions it.
+  // Tease (bound only): from a chest hold, drag down (TEASE_DRAG of the
+  // chest spot's height, mostly downward) and the hold turns into the old
+  // heartbeat hold plus bliss. The slide chip (HINTS.slide) teaches the
+  // drag; no line names tease.
   const HOLD_PRESS = 0.6;
+  // The tutorial chips' localStorage keys (coach.js). The hold chip keeps
+  // its first key so players who saw it don't see it again.
+  const HINTS = { hold: "hangout.holdHintSeen", slide: "hangout.hint.slide", bliss: "hangout.hint.bliss", edge: "hangout.hint.edge" };
   const HOLD_SPOTS = { chest: "heartbeat", lips: "lips", hand_l: "hand", hand_r: "hand" };
   // What each hold does (live2dRig.js setHold). The hand hold has no parted
   // lips or quickened breath: just the look and a gentler flush.
@@ -224,7 +230,10 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false, b
   function prime(kind) {
     if (!blissOn || hangout.tier !== TEASE_TIER || primed.has(kind)) return;
     primed.add(kind);
-    if (primed.has("lips") && primed.has("hand")) debug?.("(lip + hand holds done: tease can go past the crest)");
+    if (primed.has("lips") && primed.has("hand")) {
+      debug?.("(lip + hand holds done: tease can go past the crest)");
+      coach.done(HINTS.bliss);
+    }
   }
   const blissPool = (trigger) => hangout.pool(trigger) ?? BLISS_FALLBACK[trigger];
   const softMood = () => (renderer.rig.expressions?.moods?.[BLISS_MOOD] ? BLISS_MOOD : BLISS_MOOD_DEFAULT);
@@ -237,6 +246,9 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false, b
     holding = null;
     crestClock = 0;
     phase = { name: "edge", at: scene.time };
+    // The heart is its own pointer; the chip stays up while the box is
+    // dimmed (keep) and, missed, shows again at the next edge.
+    coach.offer({ key: HINTS.edge, now: true, keep: true, text: "Tap the heart before it fades", seconds: EDGE.window, markOnTimeout: false });
   }
   function step(name) {
     phase.step = name;
@@ -245,6 +257,7 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false, b
   function startBliss() {
     phase = { name: "bliss", at: scene.time, nextLineAt: scene.time + PLEAD.first, lastLine: null };
     step("plead");
+    coach.done(HINTS.edge);
     // The tease's weights carry on, but no more glances down.
     renderer.setHold({ ...HOLD_EFFECTS.tease, glanceEvery: null });
     renderer.setContact(true);
@@ -436,6 +449,7 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false, b
     if (holding?.kind !== "heartbeat" || (tier !== TEASE_TIER && tier !== CAUGHT_TIER) || !holding.start) return;
     const [dx, dy] = [holding.point[0] - holding.start[0], holding.point[1] - holding.start[1]];
     if (dy < TEASE_DRAG * spotHeight("chest") || dy < Math.abs(dx)) return;
+    coach.done(HINTS.slide);
     if (tier === CAUGHT_TIER) {
       holding.catchAt ??= holding.held + CAUGHT.after;
       return;
@@ -458,13 +472,21 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false, b
   function startHold() {
     if (!holdOpen()) {
       debug?.(`(${holding.kind} hold opens at spark; this is a tap at ${hangout.tier})`);
-      const { spot } = holding;
+      const { spot, point, article } = holding;
       holding = null;
-      hangout.react(TAP_REACTION[spot], scene.time, spot);
+      // Over an article, the tap is the article's (articles.js).
+      if (article) scene.onTap?.(hangout.tapAt(point, scene.time));
+      else hangout.react(TAP_REACTION[spot], scene.time, spot);
       return;
     }
     onStart?.();
     holding.on = true;
+    coach.done(HINTS.hold);
+    // A chest hold where the slide down does something (caught at close,
+    // tease at bound): the slide chip, a chevron drifting down from the finger.
+    if (holding.kind === "heartbeat" && (hangout.tier === CAUGHT_TIER || hangout.tier === TEASE_TIER)) {
+      coach.offer({ key: HINTS.slide, now: true, text: "Checking his heartbeat? Try sliding down", style: "down", point: () => holding?.point ?? spotCenter("chest") });
+    }
     beatClock = 0;
     // The hold's own interaction: no tap reaction (no flinch, pose or tap
     // line); the hold look and its blush (live2dRig.js setHold) build over
@@ -570,14 +592,18 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false, b
     if (!holding) return;
     const { on, spot, point, kind } = holding;
     holding = null;
+    coach.drop(HINTS.slide);
     renderer.setHold({});
     warmth()?.endHold();
     if (kind === "tease" || HOLD_WIDEN.has(kind)) hangout.moodUntil = scene.time; // lets go of the arc's held face
     // His release line, with that hold's face (reactions.js handHold /
-    // heartbeatHold / lipHold; rig.json `reactions` per character).
+    // heartbeatHold / lipHold; rig.json `reactions` per character). Let go
+    // before the arc settled, the release face eases in over the settle's
+    // own fade: at the default 0.2s a strong brow (Elias's e_sadist_00)
+    // snapped in like a twitch.
     if (on) {
       if (HOLD_WIDEN.has(kind)) prime(kind);
-      hangout.react(HOLD_LINES[kind], scene.time);
+      hangout.react(HOLD_LINES[kind], scene.time, undefined, HOLD_WIDEN.has(kind) ? { fade: ARC.fadeSettle } : undefined);
       if (kind === "tease") hangout.moodUntil += TEASE_LINGER;
     } else if (cancelled) return;
     // Tap first: `onTap?.(tapAt(...))` skips the tap itself when onTap is
@@ -602,10 +628,15 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false, b
         return true;
       }
       if (holding) return false;
-      const spot = hotspotAt(renderer.rig, renderer, point);
+      // An article worn over a hold spot (articles.js `holdThrough`: Leo's
+      // headphones, Benkei's tag) lets the hold through; a press that ends
+      // as a tap is still a tap on the article (endHold's tapAt).
+      const hit = hotspotAt(renderer.rig, renderer, point);
+      const spot = HOLD_SPOTS[hit] ? hit : renderer.articleHoldSpot?.(hit);
       if (!HOLD_SPOTS[spot]) return false;
       beginHold(spot, point);
       holding.pointerId = id;
+      holding.article = spot !== hit;
       return true;
     }
     if (!holding || (holding.pointerId != null && id != null && id !== holding.pointerId)) return false;
@@ -685,7 +716,6 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false, b
   // the heart monitor carries the heartbeat, the rings just say "held".
   function drawPulse(dt) {
     pulse.clear();
-    drawHint(dt);
     if (holding?.on || phase || scene.time < afterglowUntil) beatClock = (beatClock + dt / (60 / renderer.heartRate)) % 1;
     drawMonitor(dt);
     drawHearts(dt);
@@ -812,52 +842,29 @@ export function attachHolds(scene, { warmth, onStart, debug, showHint = false, b
     $("#bpm").textContent = Math.round(renderer.pulseBpm);
   }
 
-  // --- onboarding: first-time hold hint ---------------------------------------
-  // The first time a player is at spark or above, a pill above the box says
-  // the holds exist, and a faint dot breathes on his hand to show where. It goes
-  // once a hold lands (remembered in localStorage, so once per browser) or
-  // after HINT_SECONDS. ?hints=1 shows it again. Strokes get a line here once
-  // they're built (§4.2).
-  const HINT_KEY = "hangout.holdHintSeen";
-  const HINT_SECONDS = 9;
-  const coach = $("#coach");
-  let hint = null; // { left } seconds until it fades
-  const hintSeen = () => {
-    if (showHint) return false;
-    try {
-      return localStorage.getItem(HINT_KEY) === "1";
-    } catch {
-      return false;
-    }
+  // --- tutorial chips (coach.js) --------------------------------------------
+  // Once per player each. Entry chips are offered as the tier opens (here,
+  // and the preview's tier change through maybeShowHint): the holds at
+  // spark (pointing at his chest: the heartbeat hold opens the monitor),
+  // and at bound, with bliss on, what bliss needs first. The slide
+  // (close and bound, mid chest hold) and the edge's heart (bound) show
+  // mid-gesture.
+  const tierRank = (tier) => DIALOGUE_TIERS.indexOf(tier);
+  const atHand = () => {
+    const id = renderer.rig.hotspots?.hand_r ? "hand_r" : renderer.rig.hotspots?.hand_l ? "hand_l" : null;
+    return id ? spotCenter(id) : null;
   };
-  function markHintSeen() {
-    try {
-      localStorage.setItem(HINT_KEY, "1");
-    } catch {}
-  }
   function maybeShowHint() {
-    if (!coach || hint || !holdOpen() || hintSeen()) return;
-    hint = { left: HINT_SECONDS };
-    coach.textContent = "New: press and hold his hand, lips or chest";
-    coach.classList.remove("fade");
-    coach.hidden = false;
-  }
-  function endHint() {
-    if (!hint) return;
-    hint = null;
-    markHintSeen();
-    coach.classList.add("fade");
-    setTimeout(() => (coach.hidden = true), 500);
-  }
-  function drawHint(dt) {
-    if (!hint) return;
-    hint.left -= dt;
-    if (hint.left <= 0 || holding?.on) return endHint();
-    const id = renderer.rig.hotspots?.hand_r ? "hand_r" : "hand_l";
-    if (!renderer.rig.hotspots?.[id]) return;
-    const [x, y] = spotCenter(id);
-    const k = (1 - Math.cos(scene.time * Math.PI)) / 2; // ~2s breath
-    pulse.circle(x, y, 14 + 10 * k).fill({ color: 0xffffff, alpha: 0.12 + 0.18 * k });
+    coach.offer({ key: HINTS.hold, rank: tierRank("spark"), text: "New: press and hold his hand, lips or chest", point: () => spotCenter("chest"), when: holdOpen });
+    if (blissOn) {
+      coach.offer({
+        key: HINTS.bliss,
+        rank: tierRank(TEASE_TIER),
+        text: "New: hold his hand and lips first, then his chest",
+        point: atHand,
+        when: () => hangout.tier === TEASE_TIER && !blissReady(),
+      });
+    }
   }
   maybeShowHint();
 

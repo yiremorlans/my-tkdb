@@ -7,7 +7,8 @@
 //
 // ?character=<id> picks assets/live2d/<id>/rig.json; ?tier=<tier> the
 // reaction tier (default spark); ?pose=<group> starts a pose; ?room=0 hides the room;
-// ?mobile=1 caps it at 30fps like a phone.
+// ?mobile=1 caps it at 30fps like a phone; ?articles=off starts the
+// removable articles (articles.js) taken off.
 
 import { Graphics } from "pixi.js";
 
@@ -22,6 +23,8 @@ import { MOBILE_FPS } from "./stage.js";
 import { GRADES, PARTICLE_KINDS, autoEffects, createEffects } from "./effects.js";
 import { meetFlow } from "./meet.js";
 import { attachHolds } from "./holds.js";
+import { attachArticles } from "./articles.js";
+import { attachCoach } from "./coach.js";
 import { HOLD_LOOK } from "./live2dRig.js";
 import { startScene } from "./scene.js";
 import { Warmth } from "./warmth.js";
@@ -133,6 +136,9 @@ async function main() {
   // --- holds (holds.js) -------------------------------------------------------
   // The drawer's buttons below run them without aiming; a hold turns the
   // warmth picker back on if it was off.
+  // The tutorial chips (coach.js), shared by holds and articles; ?hints=1
+  // shows them again.
+  const coach = attachCoach(scene, { replay: params.get("hints") === "1" });
   const holds = attachHolds(scene, {
     warmth: () => warmth,
     onStart: () => {
@@ -141,12 +147,23 @@ async function main() {
       warmPick.onchange();
     },
     debug: say,
-    showHint: params.get("hints") === "1",
+    coach,
     // Tease past the crest (holds.js): preview only for now.
     bliss: true,
   });
   const { TEASE_TIER, CAUGHT_TIER } = holds;
   scene.holds = holds;
+
+  // --- removable articles (articles.js) ---------------------------------------
+  // Double-tap an article to take it off (warm up). Attached after holds, so
+  // its tapAt wraps the one holds and the scene call.
+  let refreshArticles = () => {};
+  const articles = attachArticles(scene, {
+    startOff: params.get("articles") === "off",
+    onChange: () => refreshArticles(),
+    coach,
+  });
+  scene.articles = articles;
 
   // --- controls -------------------------------------------------------------
   const panel = $("#controls");
@@ -240,7 +257,10 @@ async function main() {
   tierPick.value = hangout.tier;
   tierPick.onchange = () => {
     hangout.setTier(tierPick.value);
+    // Articles come back on a tier change.
+    articles.reset();
     warmth.setTier(tierPick.value);
+    articles.offerHints();
     holds.maybeShowHint();
     newEncounter();
   };
@@ -270,10 +290,38 @@ async function main() {
       );
     });
   }
+  // Each article's touch and removal reactions (the removal one plays
+  // without taking it off; the Articles row below does that).
+  for (const { name } of articles.list()) {
+    button(spotRow, `${name} (pat)`, () => articles.pat(name));
+    button(spotRow, `${name} (off)`, () => articles.offReaction(name));
+  }
   const spotToggle = button(spotRow, "show hotspots", () => {
     showSpots = !showSpots;
     spotToggle.classList.toggle("on", showSpots);
   });
+
+  // Removable articles: each one's state, live (on/off, whether it's out
+  // right now and a double-tap would take it); click one to take it off.
+  const articleList = articles.list();
+  if (articleList.length) {
+    const articleRow = section(`Articles (double-tap, ${articles.DOUBLE_TAP}s; warm up)`);
+    const states = new Map();
+    for (const { name } of articleList) {
+      states.set(name, button(articleRow, name, () => articles.remove(name)));
+    }
+    button(articleRow, "reset", () => articles.reset());
+    refreshArticles = () => {
+      for (const a of articles.list()) {
+        const b = states.get(a.name);
+        const state = a.off ? "off" : !a.present ? "not out" : a.removable ? "on · removable" : "on";
+        b.textContent = `${a.name}: ${state}${a.requires && !a.off ? ` (after ${a.requires})` : ""} · ${a.covers}`;
+        b.classList.toggle("on", a.off);
+      }
+    };
+    setInterval(refreshArticles, 250);
+    refreshArticles();
+  }
 
   // A pose button plays and holds it; a second click plays its return.
   const poseRow = section("Poses (hold until clicked again)");
@@ -385,8 +433,8 @@ async function main() {
   pinWrap.append("pin while dragging", pin);
   warmRow.append(pinWrap);
   const react = hangout.react.bind(hangout);
-  hangout.react = (name, t, spot) => {
-    const out = react(name, t, spot);
+  hangout.react = (name, t, spot, opts) => {
+    const out = react(name, t, spot, opts);
     warmth.reaction(name);
     return out;
   };

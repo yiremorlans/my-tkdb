@@ -74,8 +74,8 @@ export async function startScene(stage, { base, tier, outfit, lines, room = true
   // resets mid-pose. From there it eases back over SETTLE_FADE (hangout.js),
   // carrying into the return and settling after the body.
   const react = hangout.react.bind(hangout);
-  hangout.react = (name, t, spot) => {
-    react(name, t, spot);
+  hangout.react = (name, t, spot, opts) => {
+    react(name, t, spot, opts);
     const left = renderer.reactPose(name, hangout.tier);
     if (left != null && hangout.renderer.moodName !== hangout.baseMood) {
       hangout.moodUntil = Math.max(hangout.moodUntil, t + left);

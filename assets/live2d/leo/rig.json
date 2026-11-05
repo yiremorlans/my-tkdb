@@ -11,6 +11,9 @@
     "academy": {
       "model": "academy/leo_academy.model3.json",
       "dialogueVariant": "uniform",
+      "articles": {
+        "headphone": { "part": "PartHeadphone", "covers": "chest", "blocks": false, "holdThrough": true }
+      },
       "parts": { "chest": ["ArtMesh155"], "pants": ["ArtMesh202", "ArtMesh203"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [-0.01, 0.02, 1.01, 0.476] },
@@ -21,6 +24,9 @@
     "casual": {
       "model": "casual/leo_casual.model3.json",
       "dialogueVariant": "casual",
+      "articles": {
+        "headphone": { "part": "PartHeadphone", "covers": "chest", "blocks": false, "holdThrough": true }
+      },
       "parts": {
         "chest": ["ArtMesh343"],
         "pants": ["ArtMesh356", "ArtMesh358"],
@@ -88,6 +94,14 @@
   },
   "restMood": { "byTier": { "new": "serious", "known": "default" } },
   "reactions": {
+    "headphoneOff": {
+      "byTier": {
+        "warm": { "mood": "irritated", "duration": 3.4 },
+        "spark": { "mood": "tsun_blush", "duration": 3 },
+        "close": { "mood": "smile_blush", "duration": 3 },
+        "bound": { "mood": "full_smile_blush", "duration": 3.4 }
+      }
+    },
     "upset": {
       "byTier": {
         "new": { "mood": "irritated", "duration": 4 },
@@ -207,6 +221,7 @@
     "bellyTouch": { "byTier": { "new": "m_odoroki", "close": "m_hidarikoshi" } },
     "hipsTouch": { "byTier": { "new": "m_yubisashi", "warm": "m_udekumi", "spark": "m_kuchimoto", "close": "m_hidarikoshi" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kuchimoto" } },
+    "headphoneOff": { "byTier": { "warm": "m_udekumi", "spark": "m_kuchimoto" } },
     "answerLove": "m_fingerheart",
     "answerLike": "m_phone",
     "handHold": { "byTier": { "spark": "m_udekumi", "close": "m_hidarikoshi" } },

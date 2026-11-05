@@ -8,6 +8,11 @@
 // Stigma/Artifact. Guarded spots (lips, chest, hips) stay composed refusals
 // until spark.
 //
+// Monocle (removable, §4.2): it borrows his cheekPoke face and pose. Canon
+// only says it masks the glint in his eye, so no reason for wearing it is
+// invented; taking it off is unguarding him, courtly at every tier. At warm he's
+// annoyed and keeps it restrained (rig monocleOff: straight face).
+//
 // Holds (spark+): the heartbeat check finds the courtier out, and he keeps
 // it courtly ("it never happened", chess, patience). Bound treats intimacy
 // as shared history; breakAway is composure lost, never explicit.
@@ -47,6 +52,10 @@ export default {
       "Honestly. That will do.",
       "I've been patient. I'd rather not stop being so.",
     ],
+    monoclePat: [
+      "Ah. Mind the monocle, if you please.",
+      "Careful. I'd rather not see the world through your fingerprint.",
+    ],
   },
   known: {
     headPat: [
@@ -82,6 +91,10 @@ export default {
       "Honestly. Are you quite finished?",
       "Enough. I have several matters to attend to, and you are making them wait.",
     ],
+    monoclePat: [
+      "Honestly. It's not a toy.",
+      "Fascinated by it? Most people prefer not to look too closely.",
+    ],
   },
   warm: {
     headPat: [
@@ -116,6 +129,14 @@ export default {
     upset: [
       "Honestly. If you have energy to spare, I can find you work.",
       "That will do. I'm patient, not endlessly so.",
+    ],
+    monoclePat: [
+      "Fingers off the glass, if you please. I've only just cleaned it.",
+      "Well, well. You'd like a closer look, I take it.",
+    ],
+    monocleOff: [
+      "Mm. And what do you plan to do with it, exactly?",
+      "Ah. I'd thank you to return that. ...Promptly.",
     ],
   },
   spark: {
@@ -154,6 +175,14 @@ export default {
     upset: [
       "Honestly. You'll undo all my composure if you keep that up.",
       "Enough, enough. You're being terribly unfair.",
+    ],
+    monoclePat: [
+      "You're fidgeting with it again. Something on your mind?",
+      "Is it the monocle you're after, or an excuse to be this close?",
+    ],
+    monocleOff: [
+      "...Ah. There goes my best defense. Well played.",
+      "Mm. You're the only one who'd get away with that.",
     ],
     heartbeatHold: [
       "I trust that reading stays between us. As far as anyone knows, it never happened.",
@@ -217,8 +246,24 @@ export default {
       "...Ha ha. Not here, and not yet. I do prefer to choose the moment myself.",
       "Ah, ah. Careful. A good player never rushes the endgame.",
     ],
+    monoclePat: [
+      "Go on. I've long since given up protecting it from you.",
+      "Fussing over it again. I'm beginning to find it rather endearing.",
+    ],
+    monocleOff: [
+      "Mm. Go on. There's no glint left I need to hide from you.",
+      "You do enjoy dismantling my defenses, one piece at a time.",
+    ],
   },
   bound: {
+    monoclePat: [
+      "Ha ha. Asking permission? You stopped needing it some time ago.",
+      "Mm. You only touch it when you mean to take it. I know you by now.",
+    ],
+    monocleOff: [
+      "Keep it, if you like. I know where to find it.",
+      "Set it with your things. It seems to end up there anyway.",
+    ],
     heartbeatHold: [
       "I gave up pretending with you some time ago. My heart merely confirms it.",
       "You know precisely what it does when you're near. You've heard it go faster.",

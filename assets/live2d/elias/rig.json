@@ -11,6 +11,9 @@
     "academy": {
       "model": "academy/elias_academy.model3.json",
       "dialogueVariant": "uniform",
+      "articles": {
+        "lollipop": { "drawables": ["ArtMesh14", "ArtMesh16", "ArtMesh107", "ArtMesh126"], "params": { "ParamCandyOnOff": 0, "ParamHandCandyOff": 1 }, "rest": { "byTier": { "spark": { "ParamCandyOnOff": 1 } } }, "covers": { "byTier": { "new": "hand_r", "spark": "lips" } }, "shownOnly": true, "poses": "^m_ame", "offPose": "m_ago" }
+      },
       "parts": { "chest": ["ArtMesh250"], "pants": ["ArtMesh260", "ArtMesh261"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [0.102, 0.02, 0.898, 0.857] },
@@ -199,10 +202,11 @@
     "answerLove": "m_gesture",
     "answerLike": "m_migikoshi",
     "handHold": "m_ago",
+    "lollipopOff": "m_gesture",
     "heartbeatHold": "m_migikoshi",
     "lipHold": "m_ame",
     "caughtTease": "m_ago",
-    "teaseLetGo": "m_ame"
+    "teaseLetGo": "m_ago"
   },
   "annoyance": { "perTap": 1, "decayPerSec": 0.9, "threshold": 5, "recoverSec": 4 },
   "motion": {

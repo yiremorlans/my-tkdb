@@ -11,6 +11,9 @@
     "academy": {
       "model": "academy/jiro_academy.model3.json",
       "dialogueVariant": "uniform",
+      "articles": {
+        "glasses": { "part": "PartMegane", "covers": "cheek", "blocks": false }
+      },
       "parts": { "chest": ["ArtMesh152"], "pants": ["ArtMesh173", "ArtMesh174"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [0.097, 0.02, 0.903, 0.507] },
@@ -21,6 +24,9 @@
     "casual": {
       "model": "casual/jiro_casual.model3.json",
       "dialogueVariant": "casual",
+      "articles": {
+        "glasses": { "part": "PartMegane", "covers": "cheek", "blocks": false }
+      },
       "parts": {
         "chest": ["ArtMesh288"],
         "pants": ["ArtMesh310", "ArtMesh311"],
@@ -35,6 +41,9 @@
     "casual_2": {
       "model": "casual_2/jiro_casual_2.model3.json",
       "dialogueVariant": "casual",
+      "articles": {
+        "glasses": { "part": "PartMegane", "covers": "cheek", "blocks": false }
+      },
       "parts": {
         "chest": ["ArtMesh260", "ArtMesh259"],
         "pants": ["ArtMesh281", "ArtMesh282"],
@@ -49,6 +58,9 @@
     "house": {
       "model": "house/jiro_house.model3.json",
       "dialogueVariant": "casual",
+      "articles": {
+        "glasses": { "part": "PartMegane", "covers": "cheek", "blocks": false }
+      },
       "spots": ["Mortkranken_Lab.png", "Mortkranken_Lab_PM.png", "Mortkranken_Examination_Room.png", "Mortkranken_Examination_Room_2.png", "Mortkranken_Examination_Room_PM.png"],
       "always": true,
       "parts": {

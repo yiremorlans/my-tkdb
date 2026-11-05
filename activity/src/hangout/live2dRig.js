@@ -394,6 +394,11 @@ function withOutfit(rig, name = rig.defaultOutfit) {
   };
 }
 
+// 0-1, how far a hidden part or drawable has faded out ({ at ms, fade s }).
+function hideProgress({ at, fade }, now) {
+  return fade > 0 ? Math.min(1, (now - at) / (fade * 1000)) : 1;
+}
+
 export class Live2DRig {
   /** Use `Live2DRig.create`; the model loads asynchronously. */
   constructor({ source, baseUrl }) {
@@ -515,8 +520,18 @@ export class Live2DRig {
       this.applyShake();
       this.applyGasp();
       this.applyTalk();
+      this.applyHeldParams();
       this.applyHiddenParts();
     });
+    // Drawable opacity is recomputed by the core on every update, so hidden
+    // drawables (articles.js) are faded after it, before the model draws.
+    this.hiddenDrawables = new Map();
+    const core = model.internalModel.coreModel;
+    const coreUpdate = core.update.bind(core);
+    core.update = () => {
+      coreUpdate();
+      this.applyHiddenDrawables();
+    };
     this.setupPartBlush();
     this.setMood(this.moodName);
     this.startBreath();
@@ -1119,17 +1134,19 @@ export class Live2DRig {
     }
   }
 
-  // --- hidden parts (preview only) -------------------------------------------
-  // The preview's "Model parts" toggles and ?hide=PartHat,PartX: zero a
-  // part's opacity every frame (after motions and pose3 have written theirs),
-  // for seeing what a layer covers. Children of a part hide with it.
+  // --- hidden parts, drawables and held parameters ---------------------------
+  // The preview's "Model parts" toggles and ?hide=PartHat,PartX zero a part's
+  // opacity every frame (after motions and pose3 have written theirs), for
+  // seeing what a layer covers. Children of a part hide with it. Removable
+  // articles (articles.js) hide the same way, faded out over `fade` seconds,
+  // and hide loose drawables and hold parameters too.
 
   get partIds() {
     return Array.from(this.raw.parts.ids);
   }
 
-  setPartHidden(id, hidden) {
-    this.hiddenParts ??= new Set();
+  setPartHidden(id, hidden, fade = 0) {
+    this.hiddenParts ??= new Map();
     this.partRest ??= new Map();
     const { ids, opacities } = this.raw.parts;
     const i = ids.indexOf(id);
@@ -1137,7 +1154,7 @@ export class Live2DRig {
     if (hidden) {
       // Nothing else writes most parts' opacity back, so keep what it was.
       if (!this.hiddenParts.has(id)) this.partRest.set(id, opacities[i]);
-      this.hiddenParts.add(id);
+      this.hiddenParts.set(id, { at: performance.now(), fade });
     } else {
       this.hiddenParts.delete(id);
       opacities[i] = this.partRest.get(id) ?? 1;
@@ -1149,7 +1166,97 @@ export class Live2DRig {
     // Straight into the core's part opacities: the framework's
     // setPartOpacityById wants an id handle, not a string, and no-ops.
     const { ids, opacities } = this.raw.parts;
-    for (let i = 0; i < ids.length; i++) if (this.hiddenParts.has(ids[i])) opacities[i] = 0;
+    const now = performance.now();
+    for (let i = 0; i < ids.length; i++) {
+      const h = this.hiddenParts.get(ids[i]);
+      if (h) opacities[i] = (this.partRest.get(ids[i]) ?? 1) * (1 - hideProgress(h, now));
+    }
+  }
+
+  /** Hides (or shows) drawables by id, fading over `fade` seconds. */
+  setDrawablesHidden(ids, hidden, fade = 0) {
+    for (const id of ids) {
+      const i = this.drawableIndex.get(id);
+      if (i == null) continue;
+      if (hidden) this.hiddenDrawables.set(i, { at: performance.now(), fade });
+      else this.hiddenDrawables.delete(i);
+    }
+  }
+
+  applyHiddenDrawables() {
+    if (!this.hiddenDrawables?.size) return;
+    const opacities = this.raw.drawables.opacities;
+    const now = performance.now();
+    for (const [i, h] of this.hiddenDrawables) opacities[i] *= 1 - hideProgress(h, now);
+  }
+
+  /**
+   * Parameters held at a value after motions, expressions and every other
+   * layer have written theirs ({ id: value }; articles.js). null clears.
+   */
+  setHeldParams(params) {
+    this.heldParams = params ? Object.entries(params).map(([id, v]) => [this.paramIndex.get(id), v]).filter(([i]) => i != null) : null;
+  }
+
+  applyHeldParams() {
+    if (!this.heldParams?.length) return;
+    const { values, minimumValues, maximumValues } = this.raw.parameters;
+    for (const [i, v] of this.heldParams) values[i] = Math.min(maximumValues[i], Math.max(minimumValues[i], v));
+  }
+
+  /** Every drawable under part `id`, its child parts included. */
+  drawablesUnderPart(id) {
+    const parts = Array.from(this.raw.parts.ids);
+    const parentOf = this.raw.parts.parentIndices;
+    const root = parts.indexOf(id);
+    if (root === -1) return [];
+    const owner = this.raw.drawables.parentPartIndices;
+    return Array.from(this.raw.drawables.ids).filter((_, d) => {
+      for (let j = owner[d]; j >= 0; j = parentOf[j]) if (j === root) return true;
+      return false;
+    });
+  }
+
+  /** Whether any of these drawables shows (opacity 0.5+, as partUV counts). */
+  drawablesShown(ids) {
+    const opacities = this.raw.drawables.opacities;
+    return ids.some((id) => opacities[this.drawableIndex.get(id)] >= 0.5);
+  }
+
+  /**
+   * A point on these drawables' art: the middle of the showing one whose
+   * middle sits inside the most of the others (the densest layering, ties
+   * to the bigger one), so a U-shaped article (Leo's headphones) points at
+   * an earcup, not the gap its band spans. null if none shows.
+   */
+  drawablesAnchor(ids) {
+    const opacities = this.raw.drawables.opacities;
+    const boxes = [];
+    for (const id of ids) {
+      const i = this.drawableIndex.get(id);
+      if (i != null && opacities[i] >= 0.5) boxes.push(this.model.internalModel.getDrawableBounds(i));
+    }
+    let best = null;
+    let score = -1;
+    for (const b of boxes) {
+      const x = b.x + b.width / 2;
+      const y = b.y + b.height / 2;
+      const inside = boxes.filter((o) => x >= o.x && x <= o.x + o.width && y >= o.y && y <= o.y + o.height).length;
+      const s = inside * 1e9 + b.width * b.height;
+      if (s > score) [score, best] = [s, [x, y]];
+    }
+    return best;
+  }
+
+  /** Whether a reference-space point is inside a showing drawable's bounds. */
+  drawablesHit(ids, [x, y]) {
+    const opacities = this.raw.drawables.opacities;
+    return ids.some((id) => {
+      const i = this.drawableIndex.get(id);
+      if (i == null || opacities[i] < 0.5) return false;
+      const b = this.model.internalModel.getDrawableBounds(i);
+      return x >= b.x && x <= b.x + b.width && y >= b.y && y <= b.y + b.height;
+    });
   }
 
   // --- part blush -----------------------------------------------------------
@@ -1472,6 +1579,15 @@ export class Live2DRig {
    */
   playPose(name, hold = null) {
     if (!this.poses.includes(name)) return false;
+    // Poses an article brought out (Elias's m_ame*, Ren's m_phone*) stay
+    // off once it's been taken (articles.js); its `offPose` plays instead,
+    // if it has one, and a tap while he's already in it just stays.
+    const blocked = this.blockedPoses?.find((b) => b.poses.test(name));
+    if (blocked) {
+      if (!blocked.offPose || blocked.poses.test(blocked.offPose) || !this.poses.includes(blocked.offPose)) return false;
+      name = blocked.offPose;
+      if (this.posing === name) return true;
+    }
     this.clearPoseTimers();
     const seq = this.poseSeq;
     this.posing = name;
@@ -1542,6 +1658,21 @@ export class Live2DRig {
     this.returnTimer = null;
     this.leavesAt = null;
     this.poseHold = null; // a pose still loading doesn't schedule its return either
+  }
+
+  /**
+   * Stays in the current pose for `hold` more seconds before it returns
+   * (articles.js: a tap on Ren's phone keeps the pose that has it out).
+   * Returns the seconds until it starts returning, or null.
+   */
+  extendPose(hold = POSE_HOLD) {
+    if (!this.posing || this.poseHold == null) return null;
+    this.poseHold = hold;
+    if (this.returnTimer == null) return hold; // still loading: it schedules the return itself
+    clearTimeout(this.returnTimer);
+    this.returnTimer = this.later(hold, () => this.leavePose());
+    this.leavesAt = performance.now() + hold * 1000;
+    return hold;
   }
 
   /** Leaves the guarded pose (the tier changed). */

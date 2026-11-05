@@ -348,7 +348,7 @@ and pose come off the same tier ladder as the spot it's on.
   The beat sways with his breathing (about ±3 bpm, faster on the inhale,
   slower on the exhale), so on the trace and rings the beats bunch as his
   chest rises; the number shows the steady pulse.
-- **Tease (preview prototype, secret, `bound` only).** From a chest hold,
+- **Tease (preview prototype, `bound` only).** From a chest hold,
   drag down (half the chest spot's height, mostly downward) and the hold
   becomes tease, crossfading over 2s from the check (the hold's level
   carries on, and so does a glance in progress): the first heartbeat
@@ -418,7 +418,7 @@ and pose come off the same tier ladder as the spot it's on.
     3s, his heavy lids (and the flutter) lift over 4s, and he stops
     glancing down once he breaks away; warmth stays at its cap and
     drifts as usual, and the monitor stays up 20s while his pulse settles.
-    No hint or line mentions tease.
+    No line names tease (a tutorial hint may teach the gesture, 2026-11-05).
   - **Past the crest: bliss (preview only, 2026-11-03).** At bound, once a
     lip hold and a hand hold have both run in this hangout (any order, a
     hold that started counts; no date needed; reset when the tier
@@ -526,20 +526,40 @@ and pose come off the same tier ladder as the spot it's on.
   dilutes slowly (live2dRig.js `BLUSH_FADE`, exponential, 4s time constant:
   nearly gone by about 12s), ears and deep patch with it. It doesn't
   linger and then drop.
-- **Onboarding (preview prototype).** The first time a player is at a tier
-  where holds open, a pill above the dialogue box reads "New: press and hold
-  his hand, lips or chest" and a faint dot breathes on his hand. It goes
-  when a hold lands or after 9s, steps aside while response choices show,
-  and is remembered per browser (localStorage). Strokes get their own hint
-  once they're built.
+- **Onboarding: tutorial chips (preview prototype, 2026-11-05).** A pill
+  above the dialogue box teaches one gesture the first time it opens up,
+  with a faint pointer on him where it applies (coach.js). Each chip shows
+  **once per player, not per character** (localStorage, per browser; a
+  server-side "hints seen" field is the plan once it reaches the
+  Activity), clears when the gesture lands or after 9s, and steps aside
+  while response choices show. `?hints=1` shows them again. The chips:
 
-#### Removable articles (designed 2026-11-02, not built)
+  | Tier | When | Pill | Pointer | Clears when |
+  |---|---|---|---|---|
+  | new, known | Hangout opens, he has an article | "Something of his reacts to a tap" | dot on the article | a tap on an article |
+  | warm+ | Hangout opens, he has an article | "New: something of his comes off. Double-tap it" | dot on the article | an article comes off |
+  | spark+ | Hangout opens | "New: press and hold his hand, lips or chest" | dot on his chest (the heartbeat hold opens the monitor) | a hold lands |
+  | close, bound | a chest hold starts | "Checking his heartbeat? Try sliding down" | chevron drifting down from the finger | the slide registers (caught or tease); hidden, not seen, if let go first |
+  | bound (bliss on) | Hangout opens | "New: hold his hand and lips first, then his chest" | dot on his hand | both holds have run |
+  | bound (bliss on) | the edge's heart appears | "Tap the heart before it fades" | the heart itself | the heart is tapped; missed, it shows at the next edge |
+
+  The article chips wait for a character who has an article (9 rigs) and
+  never name it; the dot sits on its densest piece of art
+  (live2dRig.js `drawablesAnchor`). Entry chips queue one at a time,
+  lowest tier first; the slide and edge chips take the pill mid-gesture.
+  The edge chip stays visible while tease dims the box (`.coach.keep`).
+
+#### Removable articles (designed 2026-11-02, built in the preview 2026-11-05)
 
 Some characters wear or carry an article the player can take off with a
 **double-tap**. The first tap plays as a normal touch on the article; a
 second tap on it within ~0.35s removes it instead and adds **no
 annoyance**. Single taps everywhere stay instant (no waiting to tell a tap
-from a hold). Below the article's unlock tier a double-tap is just two
+from a hold). Removal is **warm**'s new interaction (user, 2026-11-05):
+every article unlocks at **warm** and stays removable at every tier after.
+Its pools (`<article>Pat`, `<article>Off`) vary by tier like every touch
+pool (warm, spark, close, bound). New gestures beyond the head and cheek
+strokes wait. Below the article's unlock tier a double-tap is just two
 taps. Removed articles stay off for the rest of that Hangout and are back
 next time. Double-tapping must not zoom the page on phones (the stage sets
 `touch-action` to rule it out).
@@ -567,16 +587,57 @@ toggles (`?hide=PartX`) show what a part covers.
 
 | Character | Article | Art | Covers | Notes |
 |---|---|---|---|---|
-| Shion | hat | `PartHat` (academy) | head | Unlocks at **spark**. Hat on: `hatPat` (the current hat-aware lines; spark/close hint at taking it off). Removal: `hatOff`. Hat off: `headPat` with bare-head lines ("...Hm. Your hand's cold.", "Keep going. You stop when I say."). Hair under the hat is drawn (checked in the preview). |
-| Haru | Peekaboo | the outfit's `peekaboo` drawables (academy, casual, house) | belly | Peekaboo **hops out**; Haru reacts to him leaving (Haru's line, not Peekaboo's). His current `bellyTouch` lines (about Peekaboo) move to `peekabooPat`. Unlock tier TBD. |
-| Haru | sling bag | drawables TBD, every outfit | belly | A **second** double-tap, only once Peekaboo is out. The empty sling has no pool: a tap on it is a plain `bellyTouch` on Haru. Sling off: same `bellyTouch`. `bellyTouch` becomes a new pool about Haru's own belly. Check what's drawn under the sling. Unlock tier TBD. |
-| Tohma | monocle | `PartMonocle` (academy) | eye/cheek area (spot TBD) | Unlock tier, lines and covered spot TBD. |
-| Jiro | glasses | `PartMegane` (academy, casual, casual_2, house) | eye/cheek area (spot TBD) | Unlock tier, lines and covered spot TBD. |
-| Ren | phone | drawables TBD (no named part; check which outfits hold it) | hand | **Taken away** by the player, not set down by him. Encounter labels never touch his phone/game (Ren responses rule), so this needs a tier late enough and lines that make it land. Unlock tier and lines TBD. |
-| Shohei | bandana | `PartBandana` (academy, casual; also a `ParamBandana`) | head | His current headPat lines already guard it ("Watch the bandana."; close: "You can mess up the bandana. Just you."), so those move to `bandanaPat`. Check the hair drawn under it in the preview. Unlock tier and lines TBD. |
-| Benkei | name tag | work outfit only; no named part (`Part14` is the work-only part, unconfirmed), else drawables TBD | chest | Not on the academy outfit. Unlock tier and lines TBD. |
-| Elias | lollipop | no part; driven by parameters (`ParamCandyOnOff`, `ParamHandCandyOff`; `e_candy_00` and the `m_ame*` motions use them) | lips (spot TBD) | Hiding it means holding the parameter off after motions and expressions write theirs, a third art path beside part and drawables; the `m_ame*` poses would bring it back, so they need excluding once it's off. Check whether he holds it at rest. Unlock tier and lines TBD. |
-| Leo | headphones | `PartHeadphone` (academy, casual; also a `ParamHeadphone`) | chest (worn around his neck) | His new-tier chestTouch already has "Hands off the headphones.", which moves to `headphonePat`. He's noise-sensitive (his ear lines; canon idle: "Ugh, everyone's so loud. I'm putting my headphones on"), so taking them is a real ask and wants a late tier. Check what the neck/collar looks like under them. Unlock tier and lines TBD. |
+| Shion | hat | `PartHat` (academy) | head | Unlocks at **warm** (moved from spark, 2026-11-05). Hat on: `hatPat` (the current hat-aware lines; the hints at taking it off need re-tiering now that it comes off at warm). Removal: `hatOff`. Hat off: `headPat` with bare-head lines ("...Hm. Your hand's cold.", "Keep going. You stop when I say."). Hair under the hat is drawn (checked in the preview). |
+| Haru | Peekaboo | the outfit's `peekaboo` drawables (academy, casual, house) | belly | Peekaboo **hops out**; Haru reacts to him leaving (Haru's line, not Peekaboo's). His current `bellyTouch` lines (about Peekaboo) move to `peekabooPat`. Unlocks at **warm**. |
+| Haru | sling bag | drawables TBD, every outfit | belly | A **second** double-tap, only once Peekaboo is out. The empty sling has no pool: a tap on it is a plain `bellyTouch` on Haru. Sling off: same `bellyTouch`. `bellyTouch` becomes a new pool about Haru's own belly. Check what's drawn under the sling. Unlocks at **warm**. |
+| Tohma | monocle | `PartMonocle` (academy) | eye/cheek area (spot TBD) | Unlocks at **warm**. Lines and covered spot TBD. |
+| Jiro | glasses | `PartMegane` (academy, casual, casual_2, house) | eye/cheek area (spot TBD) | Unlocks at **warm**. Lines and covered spot TBD. |
+| Ren | phone | drawables TBD (no named part; check which outfits hold it) | hand | **Taken away** by the player, not set down by him. Encounter labels never touch his phone/game (Ren responses rule), so the lines have to make it land, tier by tier. Unlocks at **warm**. Lines TBD. |
+| Shohei | bandana | `PartBandana` (academy, casual; also a `ParamBandana`) | head | His current headPat lines already guard it ("Watch the bandana."; close: "You can mess up the bandana. Just you."), so those move to `bandanaPat`. Check the hair drawn under it in the preview. Unlocks at **warm**. Lines TBD. |
+| Benkei | name tag | work outfit only; no named part (`Part14` is the work-only part, unconfirmed), else drawables TBD | chest | Not on the academy outfit. Unlocks at **warm**. Lines TBD. |
+| Elias | lollipop | no part; driven by parameters (`ParamCandyOnOff`, `ParamHandCandyOff`; `e_candy_00` and the `m_ame*` motions use them) | hand at warm, lips from spark | Unlocks at **warm**, where it can only be snatched while a pose shows it in his hand (the `m_ame*` poses); from **spark** it rests in his mouth and is taken from there (user, 2026-11-05). Hiding it means holding the parameter off after motions and expressions write theirs, a third art path beside part and drawables; the `m_ame*` poses would bring it back, so they need excluding once it's off. Lines TBD. |
+| Leo | headphones | `PartHeadphone` (academy, casual; also a `ParamHeadphone`) | chest (worn around his neck) | His new-tier chestTouch already has "Hands off the headphones.", which moves to `headphonePat`. He's noise-sensitive (his ear lines; canon idle: "Ugh, everyone's so loud. I'm putting my headphones on"), so taking them is a real ask the lines carry, tier by tier. Unlocks at **warm**. Check what the neck/collar looks like under them. Lines TBD. |
+
+**Build (preview only, 2026-11-05).** `activity/src/hangout/articles.js`
+(`attachArticles(scene)`), attached by preview.js alone; the Activity
+doesn't remove anything yet. It wraps `hangout.tapAt` (which the scene and
+holds.js both call, so holds chain through it) and `hangout.spotInfo`.
+Config is rig.json `outfits.<name>.articles` (keys documented at the top of
+articles.js: `part`, `drawables`, `params`, `rest`, `covers`, `blocks`,
+`shownOnly`, `poses`, `requires`, `pool`, `hit`, `hotspots`, `tier`),
+checked by validate.js against the outfit's moc3 and, in the tests, the
+character's pools. The art fades out over 0.3s (`FADE`): parts through
+`setPartHidden(id, hidden, fade)`, drawables after the core's update
+(`setDrawablesHidden`), parameters held after every other layer
+(`setHeldParams`). Removal blocks the poses that bring the article out
+(`renderer.blockedPoses`). A spot's own hit area comes first; where no spot
+is, the article's art is its touch area too (the monocle, the glasses, the
+hat's crown). `<article>Off` faces default to reactions.js `articleOff`
+(surprise at warm, blushing from spark), overridable per rig. Without
+articles.js (the Activity) every article stays on, and a spot it covers
+draws its `<article>Pat` lines (Hangout `spotInfo`), so moving Shion's hat
+lines out of `headPat` doesn't put bare-head lines on his hat there. The
+preview drawer has an "Articles" row (state, click to take off, reset),
+`<article> (pat)` / `(off)` buttons in "Touch spots", resets them on a tier
+change, and `?articles=off` starts them removed.
+
+What each covers, as built: Shion `PartHat` (head); Haru `Part25` plus
+Peekaboo's shadow meshes (belly; once he's out the belly spot moves onto
+the chest part), then the sling (`Part24a`, house `Part4`, plus its shadow
+meshes; no own touch area, it crosses his chest); Tohma `PartMonocle` and
+Jiro `PartMegane` borrow the cheek's face and pose without taking the cheek
+(`blocks: false`); Ren's phone (academy/roomwear `ArtMesh214`, house
+`ArtMesh11`) covers `hand_l` and is only out in `m_phone*`; Shohei
+`PartBandana` (head); Benkei's tag is drawables `ID` + `ArtMesh98` (work
+only; `Part14` is the apron ties); Elias's lollipop is `ArtMesh14` (hand),
+`ArtMesh16` (mouth) and the bitten `ArtMesh107`/`126`, `hand_r` while an
+`m_ame*` pose shows it below spark, resting in his mouth from spark
+(`ParamCandyOnOff` 1, paused during `m_ame*`), and off it holds
+`ParamCandyOnOff` 0 and `ParamHandCandyOff` 1; Leo `PartHeadphone` (chest).
+Leo's headphones and Benkei's tag let the heartbeat check through
+(`holdThrough`, user 2026-11-05): a hold on them is the chest hold, and a
+press that ends as a tap is still the article's. The lollipop in Elias's
+mouth doesn't: a press on his lips is a lollipop tap until it's off.
 
 Hotspot reactions are cosmetic, unlimited and local, with no server call.
 Every reaction plays the line for that trigger in the dialogue box.

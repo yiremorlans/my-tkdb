@@ -9,6 +9,11 @@
 // flat no until spark, where he gets flustered and loses his footing.
 // Holds (spark+): flustered, never upset; the monitor is a stat he can't
 // fake. Bound treats intimacy as shared history (the padlocked door).
+//
+// Removable article (docs/hangout-activity.md §4.2): his phone, out only in
+// his m_phone poses, held over the left hand spot. phonePat is a tap on it in
+// his hand; from warm a double-tap takes it away (phoneOff). The phone is his
+// sanctuary, so warm carries the reluctance and later tiers let it go.
 
 export default {
   new: {
@@ -24,6 +29,10 @@ export default {
     bellyTouch: [
       "Hey. Hands off the stomach.",
       "...That's a whole new category of harassment.",
+    ],
+    phonePat: [
+      "Hey. Hands off the phone. I'm mid-raid.",
+      "...You're going to smudge the screen.",
     ],
     hipsTouch: ["Hey. No.", "Okay, that's actual harassment."],
     upset: ["Stop. I'm reporting this.", "...Keep doing that and I'm leaving."],
@@ -47,6 +56,10 @@ export default {
     bellyTouch: [
       "Senpai. Personal space. Look it up.",
       "Is this a bit? I'm not laughing.",
+    ],
+    phonePat: [
+      "Senpai. If I lose this run, it's on you.",
+      "Don't. It's loading. ...Okay, fine. You can watch.",
     ],
     hipsTouch: ["Senpai. No.", "Don't push it."],
     upset: [
@@ -73,12 +86,20 @@ export default {
     ],
     handTap: [
       "My hand's fine. ...Okay, it's a little sore. Thanks.",
-      "What. Don't make me pause.",
+      "...What. Is this a new bit?",
     ],
     chestTouch: ["...That's close, Senpai.", "Personal space. Look it up."],
     bellyTouch: [
       "Whoa. ...Okay, that was a jump scare.",
       "Pfft. Hey. Don't. ...That doesn't count as a laugh.",
+    ],
+    phonePat: [
+      "You want to do it? Okay. Ten-pull. If it's trash, I'm blaming you.",
+      "Don't even think about it, Senpai. I know that look.",
+    ],
+    phoneOff: [
+      "Hey. Give that back. That's theft, Senpai. Theft and harassment.",
+      "Senpai. My streak. Hand it over before it resets.",
     ],
     hipsTouch: ["Senpai. Seriously.", "Nope. Not happening."],
     upset: [
@@ -102,12 +123,20 @@ export default {
     earTouch: ["Hey. That's... unfair.", "Stop. My face is getting hot."],
     handTap: [
       "...You can hold it. I guess. Whatever.",
-      "I'll play one-handed. It's fine. Don't let go.",
+      "I'll play one-handed. It's fine.",
     ],
     chestTouch: ["...Don't. You'll hear it.", "Yeah, it's fast. Happy now?"],
     bellyTouch: [
       "...Senpai. That's a critical hit. Not cool.",
       "Okay. I'm fine. That was nothing. ...Don't do it again.",
+    ],
+    phonePat: [
+      "Okay, okay. It's going away. ...Happy?",
+      "You want my attention that bad? ...Okay. One sec.",
+    ],
+    phoneOff: [
+      "...You're really not giving that back, huh.",
+      "Hey. ...Whatever. It was a bad run anyway.",
     ],
     hipsTouch: [
       "Senpai. ...Seriously? Here?",
@@ -159,6 +188,14 @@ export default {
       "Pfft. Okay, you win this round. Go again.",
       "I'm not even dodging anymore. Figure out what that means.",
     ],
+    phonePat: [
+      "Relax. I'm not even playing. It's just open.",
+      "It's just the menu screen. I wasn't playing. I was waiting on you.",
+    ],
+    phoneOff: [
+      "...Okay. Just you and me, then.",
+      "Fine. But if you break my streak, you're making it up to me.",
+    ],
     hipsTouch: [
       "...Okay. I'm not saying no anymore.",
       "You're doing that on purpose. ...Fine.",
@@ -181,6 +218,14 @@ export default {
     ],
   },
   bound: {
+    phonePat: [
+      "You already know the passcode. ...You changed it last time, actually.",
+      "I wasn't playing. I just wanted you to come over here.",
+    ],
+    phoneOff: [
+      "Every time. ...I'm not even mad anymore.",
+      "Phone's gone. So what are you gonna do with me?",
+    ],
     heartbeatHold: [
       "You already know what it sounds like. Why are you still checking?",
       "Still fast. Even after everything. Kind of embarrassing, honestly.",

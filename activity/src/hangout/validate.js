@@ -18,11 +18,15 @@ import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
  *   doesn't load
  * - fileExists(path): whether the file is there (sync or async)
  * - mocIds(path): a `{ has(id) }` lookup of the .moc3's drawable ids, or
- *   omitted to skip that check (the browser has no cheap way to list them)
+ *   omitted to skip that check (the browser has no cheap way to list them).
+ *   It also answers part and parameter ids (they sit in the .moc3 the same
+ *   way), which the removable articles' check uses
+ * - lines: the character's Hangout lines (constants/hangout/<id>.js), or
+ *   omitted to skip checking that each article's pools exist
  */
 const POSE_ONLY_KEYS = new Set(["guarded", "caughtTease"]);
 
-export async function validateLive2DRig(rig, { readJson, fileExists = () => true, mocIds } = {}) {
+export async function validateLive2DRig(rig, { readJson, fileExists = () => true, mocIds, lines } = {}) {
   if (!rig || typeof rig !== "object") throw new Error("rig.json: not an object");
   const problems = [...layoutProblems(rig), ...motionProblems(rig.motion)];
 
@@ -30,7 +34,10 @@ export async function validateLive2DRig(rig, { readJson, fileExists = () => true
     if (file != null && !(await fileExists(file))) problems.push(`missing file ${file}`);
   }
 
-  const reactions = new Set([...Object.keys(DEFAULT_REACTIONS), ...Object.keys(rig.reactions ?? {})]);
+  // An article's removal is a reaction too (hatOff); its touch borrows the
+  // covered spot's pose, so it has no pose key of its own.
+  const articleNames = new Set(Object.values(rig.outfits ?? {}).flatMap((o) => Object.keys(o?.articles ?? {})));
+  const reactions = new Set([...Object.keys(DEFAULT_REACTIONS), ...Object.keys(rig.reactions ?? {}), ...[...articleNames].map((a) => `${a}Off`)]);
   const poseKeys = [rig.reactionPoses, ...Object.values(rig.outfits ?? {}).map((o) => o.reactionPoses)];
   for (const [name, value] of poseKeys.flatMap((p) => Object.entries(p ?? {}))) {
     // Two pose keys aren't reactions: `guarded` (the lockout pose) and
@@ -64,7 +71,7 @@ export async function validateLive2DRig(rig, { readJson, fileExists = () => true
   // outfit has is reported once, unprefixed, as validateRig does.
   const perOutfit = new Map();
   for (const name of names) {
-    perOutfit.set(name, await outfitProblems(rig, name, { readJson, mocIds }));
+    perOutfit.set(name, await outfitProblems(rig, name, { readJson, mocIds, lines }));
   }
   const everywhere = names.length > 1
     ? new Set([...perOutfit.values()].reduce((a, b) => a.filter((p) => b.includes(p))))
@@ -113,7 +120,7 @@ function motionProblems(motion = {}) {
 
 // --- one outfit -------------------------------------------------------------
 
-async function outfitProblems(rig, name, { readJson, mocIds }) {
+async function outfitProblems(rig, name, { readJson, mocIds, lines }) {
   const outfit = rig.outfits[name] ?? {};
   const parts = { ...rig.parts, ...outfit.parts };
   const hotspots = { ...rig.hotspots, ...outfit.hotspots };
@@ -165,11 +172,88 @@ async function outfitProblems(rig, name, { readJson, mocIds }) {
     }
   }
 
-  if (mocIds && refs.Moc) {
-    const ids = await mocIds(join(dirname(outfit.model), refs.Moc));
+  const ids = mocIds && refs.Moc ? await mocIds(join(dirname(outfit.model), refs.Moc)) : null;
+  problems.push(...articleProblems(outfit.articles, { hotspots, parts, ids, lines }));
+  for (const [name, a] of Object.entries(outfit.articles ?? {})) {
+    if (a?.offPose == null) continue;
+    for (const g of [a.offPose, `${a.offPose}_hold`, `${a.offPose}_return`]) {
+      if (!motions[g]) problems.push(`articles.${name}.offPose: no motion group ${g}`);
+    }
+  }
+  if (ids) {
     for (const [id, drawables] of Object.entries(parts)) {
       if (!Array.isArray(drawables)) continue; // hotspotProblems reports it
       for (const d of drawables) if (!ids.has(d)) problems.push(`parts.${id}: unknown drawable ${d}`);
+    }
+  }
+  return problems;
+}
+
+// Removable articles (articles.js): each names art the outfit's model has,
+// a touch spot it covers, and any article it waits on; with `lines`, its
+// pools exist: `<article>Pat` at some tier (unless `pool: false`) and
+// `<article>Off` from the unlock tier.
+const ARTICLE_KEYS = new Set(["part", "drawables", "params", "rest", "covers", "blocks", "shownOnly", "poses", "requires", "pool", "hit", "hotspots", "tier", "holdThrough", "offPose"]);
+
+function articleProblems(articles, { hotspots, parts, ids, lines }) {
+  if (articles == null) return [];
+  if (typeof articles !== "object" || Array.isArray(articles)) return ["articles must map article names to their config"];
+  const problems = [];
+  const names = Object.keys(articles);
+  const tiers = (v) => (v?.byTier ? Object.entries(v.byTier) : [[null, v]]);
+  for (const [name, a] of Object.entries(articles)) {
+    const at = `articles.${name}`;
+    if (!/^[a-z][A-Za-z]*$/.test(name)) problems.push(`${at}: name must be camelCase letters (its pools are ${name}Pat, ${name}Off)`);
+    if (!a || typeof a !== "object") {
+      problems.push(`${at} must be an object`);
+      continue;
+    }
+    for (const key of Object.keys(a)) if (!ARTICLE_KEYS.has(key)) problems.push(`${at}: unknown key ${key}`);
+    if (a.part == null && !a.drawables?.length) problems.push(`${at}: needs a part or drawables to hide`);
+    if (a.part != null && typeof a.part !== "string") problems.push(`${at}.part must be a part id`);
+    else if (a.part && ids && !ids.has(a.part)) problems.push(`${at}: unknown part ${a.part}`);
+    if (a.drawables != null && !(Array.isArray(a.drawables) && a.drawables.every((d) => typeof d === "string"))) problems.push(`${at}.drawables must list drawable ids`);
+    else for (const d of a.drawables ?? []) if (ids && !ids.has(d)) problems.push(`${at}: unknown drawable ${d}`);
+    for (const key of ["params", "rest"]) {
+      for (const [tier, params] of tiers(a[key])) {
+        if (params == null) continue;
+        if (tier && !DIALOGUE_TIERS.includes(tier)) problems.push(`${at}.${key}: unknown tier ${tier}`);
+        if (typeof params !== "object" || !Object.values(params).every((v) => typeof v === "number" && Number.isFinite(v))) {
+          problems.push(`${at}.${key} must map parameter ids to numbers`);
+          continue;
+        }
+        for (const id of Object.keys(params)) if (ids && !ids.has(id)) problems.push(`${at}.${key}: unknown parameter ${id}`);
+      }
+    }
+    if (a.covers == null) problems.push(`${at}: needs \`covers\`, the touch spot it covers`);
+    for (const [tier, spot] of a.covers == null ? [] : tiers(a.covers)) {
+      if (tier && !DIALOGUE_TIERS.includes(tier)) problems.push(`${at}.covers: unknown tier ${tier}`);
+      if (!hotspots[spot]) problems.push(`${at}.covers: no hotspot ${spot} on this outfit`);
+    }
+    for (const key of ["blocks", "shownOnly", "pool", "hit", "holdThrough"]) {
+      if (a[key] != null && typeof a[key] !== "boolean") problems.push(`${at}.${key} must be true or false`);
+    }
+    if (a.poses != null) {
+      try {
+        new RegExp(a.poses);
+      } catch {
+        problems.push(`${at}.poses must be a regular expression`);
+      }
+    }
+    if (a.requires != null && (!articles[a.requires] || a.requires === name)) problems.push(`${at}.requires: no article ${a.requires}`);
+    else if (a.requires != null && names.indexOf(a.requires) > names.indexOf(name)) problems.push(`${at}.requires: list ${a.requires} before ${name}`);
+    if (a.tier != null && !DIALOGUE_TIERS.includes(a.tier)) problems.push(`${at}.tier: unknown tier ${a.tier}`);
+    for (const [spot, h] of Object.entries(a.hotspots ?? {})) {
+      if (!parts[h?.part]) problems.push(`${at}.hotspots.${spot}: unknown part ${h?.part}`);
+      const rect = h?.rect;
+      if (rect != null && !(Array.isArray(rect) && rect.length === 4 && rect.every((v) => typeof v === "number" && Number.isFinite(v)))) {
+        problems.push(`${at}.hotspots.${spot}: rect must be 4 numbers`);
+      }
+    }
+    if (lines) {
+      const from = DIALOGUE_TIERS.indexOf(a.tier ?? "warm");
+      if (a.pool !== false && !DIALOGUE_TIERS.some((t) => lines[t]?.[`${name}Pat`]?.length)) problems.push(`${at}: no ${name}Pat lines`);
+      if (!DIALOGUE_TIERS.slice(0, from + 1).reverse().some((t) => lines[t]?.[`${name}Off`]?.length)) problems.push(`${at}: no ${name}Off lines at ${DIALOGUE_TIERS[from]}`);
     }
   }
   return problems;

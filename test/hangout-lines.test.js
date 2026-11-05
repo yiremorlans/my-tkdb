@@ -3,7 +3,9 @@
 // the house rules the dialogue validator checks for constants/dialogue/.
 import { test } from 'node:test';
 import assert from 'node:assert';
-import { readdirSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
+
+import { TOUCH_SPOTS } from '../activity/src/hangout/reactions.js';
 
 const DIR = new URL('../constants/hangout/', import.meta.url);
 const TIERS = ['new', 'known', 'warm', 'spark'];
@@ -12,6 +14,8 @@ const TRIGGERS = [
   'chestTouch', 'bellyTouch', 'hipsTouch', 'upset',
 ];
 const BANNED = [/—/, /\bdeadpan/i];
+// `tier` and the tiers below it, nearest first (a missing pool's fallback).
+const DIALOGUE_TIERS_UP_TO = (tier) => ['new', 'known', 'warm', 'spark', 'close', 'bound'].slice(0, ['new', 'known', 'warm', 'spark', 'close', 'bound'].indexOf(tier) + 1).reverse();
 
 const files = readdirSync(DIR).filter((f) => f.endsWith('.js'));
 
@@ -36,13 +40,41 @@ const HOLD_POOLS = {
 // `daytime` set if it has one. A `daytime` set (Towa, who can't speak by day)
 // covers the same tiers, triggers and holds, with no words in it: hums and
 // sounds only, no letters at all.
+// Removable articles (rig.json `outfits.<name>.articles`, articles.js): below
+// the unlock tier (warm) an article can't come off, so a trigger whose spot
+// it covers in every outfit (Shion's hat over his head, Peekaboo over Haru's
+// belly) can't play there and may be left out. The article's own
+// `<article>Pat` pool has to be there instead (checked like the rest below).
+const UNLOCK = ['new', 'known'];
+function coveredBelowUnlock(id) {
+  const file = new URL(`../assets/live2d/${id}/rig.json`, import.meta.url);
+  if (!existsSync(file)) return () => null;
+  const outfits = Object.values(JSON.parse(readFileSync(file, 'utf8')).outfits ?? {});
+  const at = (covers, tier) => (covers?.byTier ? covers.byTier[tier] ?? (tier === 'known' ? covers.byTier.new : undefined) : covers);
+  // The article covering `trigger`'s spot at `tier` in every outfit, or null.
+  return (trigger, tier) => {
+    if (!UNLOCK.includes(tier)) return null;
+    const names = outfits.map((o) => Object.entries(o.articles ?? {}).find(([, a]) => !a.shownOnly && a.blocks !== false && TOUCH_SPOTS[at(a.covers, tier)] === trigger)?.[0]);
+    return names.length && names.every((n) => n && n === names[0]) ? names[0] : null;
+  };
+}
+
 for (const file of files) {
   test(`hangout lines: ${file}`, async () => {
     const { default: lines } = await import(new URL(file, DIR));
+    const covered = coveredBelowUnlock(file.replace(/\.js$/, ''));
 
     for (const tier of TIERS) {
       assert.ok(lines[tier], `${file}: no ${tier} tier`);
-      for (const trigger of TRIGGERS) {
+      // Article pools (hatPat, peekabooOff...) follow the same house rules.
+      const articlePools = Object.keys(lines[tier]).filter((k) => /^[a-z]+(Pat|Off)$/.test(k));
+      for (const trigger of [...TRIGGERS, ...articlePools]) {
+        const article = covered(trigger, tier);
+        if (article && !lines[tier][trigger]) {
+          const pat = DIALOGUE_TIERS_UP_TO(tier).map((t) => lines[t]?.[`${article}Pat`]).find(Boolean);
+          assert.ok(pat?.length, `${file}: ${tier}.${trigger} is left to ${article}, but there's no ${article}Pat`);
+          continue;
+        }
         const pool = lines[tier][trigger];
         assert.ok(Array.isArray(pool) && pool.length, `${file}: ${tier}.${trigger} is empty`);
         for (const line of pool) {

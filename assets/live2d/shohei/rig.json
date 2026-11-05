@@ -11,6 +11,9 @@
     "academy": {
       "model": "academy/shohei_academy.model3.json",
       "dialogueVariant": "uniform",
+      "articles": {
+        "bandana": { "part": "PartBandana", "covers": "head", "blocks": false }
+      },
       "parts": { "chest": ["ArtMesh131"], "pants": ["ArtMesh197", "ArtMesh198"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [0.074, 0.02, 0.926, 0.502] },
@@ -21,6 +24,9 @@
     "casual": {
       "model": "casual/shohei_casual.model3.json",
       "dialogueVariant": "casual",
+      "articles": {
+        "bandana": { "part": "PartBandana", "covers": "head", "blocks": false }
+      },
       "parts": { "chest": ["ArtMesh352"], "pants": ["ArtMesh347", "ArtMesh349"], "hand_l": ["ArtMesh145", "ArtMesh373", "ArtMesh150", "ArtMesh104", "ArtMesh103", "ArtMesh102", "ArtMesh374", "ArtMesh376", "ArtMesh377", "ArtMesh379"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [0.111, 0.02, 0.889, 0.668] },
@@ -77,6 +83,14 @@
     }
   },
   "reactions": {
+    "bandanaOff": {
+      "byTier": {
+        "warm": { "mood": "serious", "duration": 3.4 },
+        "spark": { "mood": "surprise_blush", "duration": 3 },
+        "close": { "mood": "smile_blush", "duration": 3 },
+        "bound": { "mood": "full_smile_blush", "duration": 3.4 }
+      }
+    },
     "upset": {
       "byTier": {
         "new": { "mood": "upset", "duration": 4 },
@@ -85,8 +99,8 @@
     },
     "headPat": {
       "byTier": {
-        "new": { "mood": "cocky", "duration": 2 },
-        "known": { "mood": "cocky", "duration": 2 },
+        "new": { "mood": "guarded", "duration": 2 },
+        "known": { "mood": "surprise", "duration": 2 },
         "warm": { "mood": "cocky_blush", "duration": 2.4 },
         "spark": { "mood": "blush", "duration": 2.6 },
         "close": { "mood": "full_smile_blush", "duration": 2.6 },
@@ -127,7 +141,7 @@
       "byTier": {
         "new": { "mood": "annoyed", "duration": 2.6, "twitch": 0.8 },
         "known": { "mood": "annoyed", "duration": 2.6, "twitch": 0.6 },
-        "warm": { "mood": "cocky", "duration": 3, "twitch": 0.3 },
+        "warm": { "mood": "serious", "duration": 3, "twitch": 0.3 },
         "spark": { "mood": "surprise_blush", "duration": 3.2 },
         "close": { "mood": "cocky_blush", "duration": 3.2 },
         "bound": { "mood": "cocky_blush", "duration": 3.6 }
@@ -137,7 +151,7 @@
       "byTier": {
         "new": { "mood": "annoyed", "duration": 2.2, "twitch": 0.4 },
         "known": { "mood": "annoyed", "duration": 2.2, "twitch": 0.3 },
-        "warm": { "mood": "cocky", "duration": 2.6 },
+        "warm": { "mood": "serious", "duration": 2.6 },
         "spark": { "mood": "surprise_blush", "duration": 2.8 },
         "close": { "mood": "cocky_blush", "duration": 2.8 },
         "bound": { "mood": "cocky_blush", "duration": 3.2 }
@@ -185,7 +199,7 @@
       }
     },
     "teaseLetGo": { "byTier": { "bound": { "mood": "cocky_blush", "duration": 4.4 } } },
-    "answerLove": { "byTier": { "new": { "mood": "full_smile", "duration": 3.2 } } },
+    "answerLove": { "byTier": { "new": { "mood": "smile", "duration": 3.2 } } },
     "answerLike": { "byTier": { "new": { "mood": "cocky", "duration": 3 } } },
     "answerFlat": { "byTier": { "new": { "mood": "indifferent", "duration": 2.6 } } }
   },
@@ -199,7 +213,8 @@
     "bellyTouch": { "byTier": { "new": "m_udekumi", "warm": "m_migikoshi", "spark": "m_atama" } },
     "hipsTouch": { "byTier": { "new": "m_udekumi", "warm": "m_migikoshi", "spark": "m_kuchimoto", "close": "m_aori" } },
     "upset": { "byTier": { "new": "m_udekumi", "spark": "m_kuchimoto" } },
-    "answerLove": "m_kobushi",
+    "bandanaOff": { "byTier": { "warm": "m_udekumi", "spark": "m_kuchimoto" } },
+    "answerLove": "m_migikoshi",
     "answerLike": "m_aori",
     "handHold": { "byTier": { "spark": "m_atama", "close": "m_migikoshi" } },
     "heartbeatHold": { "byTier": { "spark": "m_kuchimoto", "close": "m_udekumi" } },

@@ -8,6 +8,11 @@
 // spots (lips, chest, hips) get courtly deflection until spark, where he turns
 // coy and insinuating. He invites; he never promises or escorts.
 //
+// Lollipop (removable, §4.2): new to warm it's in his hand during the m_ame
+// poses, and warm can snatch it from there; from spark it rests in his mouth
+// and is taken from there, coy at spark, a subtle hint at close, shared
+// history at bound.
+//
 // Holds (spark+): one short line on letting go. Close hints and holds
 // back; bound treats intimacy as shared history.
 
@@ -34,6 +39,10 @@ export default {
     ],
     hipsTouch: ["…No. Not there.", "Please don't. I mean that."],
     upset: ["…Please stop that.", "…I asked you not to."],
+    lollipopPat: [
+      "Hm? There's plenty more where this came from.",
+      "…Careful. It's a little sticky.",
+    ],
   },
   known: {
     headPat: [
@@ -63,6 +72,10 @@ export default {
       "…All right. That's enough now.",
       "Please stop. I'm asking nicely.",
     ],
+    lollipopPat: [
+      "Oh, this one's mine. I have another one for you.",
+      "…It's half gone already, I'm afraid.",
+    ],
   },
   warm: {
     headPat: ["…That's nice.", "Oh, I don't mind that at all."],
@@ -82,6 +95,14 @@ export default {
     upset: [
       "…All right, all right. That's enough.",
       "Please stop. I'll start to think you're upset with me.",
+    ],
+    lollipopPat: [
+      "…You want this one in particular, don't you?",
+      "Hm? There's another in my pocket, if you'd like.",
+    ],
+    lollipopOff: [
+      "Oh, you're quick. I didn't even see that.",
+      "…Well. I suppose it's yours now.",
     ],
   },
   spark: {
@@ -120,6 +141,14 @@ export default {
     upset: [
       "…Please. You're making it hard to stay polite.",
       "All right. Give me a moment to collect myself.",
+    ],
+    lollipopPat: [
+      "…Mm? You'll have to wait your turn.",
+      "…Curious what flavor it is?",
+    ],
+    lollipopOff: [
+      "Oh, my. That was just in my mouth, you know.",
+      "…Go on, then. I won't say a word.",
     ],
     heartbeatHold: [
       "…You noticed. I was hoping you wouldn't.",
@@ -174,8 +203,24 @@ export default {
       "Oh, …not yet. Not like this.",
       "…Not yet. I'd like to take my time with you.",
     ],
+    lollipopPat: [
+      "Oh, you have a sweet tooth. I should've guessed.",
+      "Want a taste? …Of the candy, I mean.",
+    ],
+    lollipopOff: [
+      "…That was keeping me out of trouble, you know.",
+      "…You'll have to give me something else, then.",
+    ],
   },
   bound: {
+    lollipopPat: [
+      "…You already know how it tastes.",
+      "…I know that look. Give me a moment.",
+    ],
+    lollipopOff: [
+      "…You never let me finish one anymore.",
+      "Oh, again? …I don't mind. I know why you do it.",
+    ],
     heartbeatHold: [
       "…You already know what it does. You were there.",
       "…It's still yours. It doesn't do that for anyone else.",

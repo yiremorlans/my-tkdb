@@ -6,13 +6,17 @@
 // He teases her and never insults her; any bite lands on Leo, himself, or the
 // situation. "Senpai" is his standing address, capitalized when spoken.
 // Guarded spots (lips, chest, hips) stay rebuffs until spark.
+// The bandana is its own touch area: a tap on it is bandanaPat, a tap on his
+// hair is headPat, whether it's on or off. From warm a double-tap takes it
+// off (bandanaOff, docs/hangout-activity.md §4.2), which annoys him at warm.
 // Holds (spark+) keep his tell: bluster, then the accidental confession.
 
 export default {
   new: {
+    bandanaPat: ["Hey. Watch the bandana.", "Don't knock it crooked, Senpai."],
     headPat: [
-      "Hey. Watch the bandana.",
       "What're you doing? I'm not a dog, Senpai.",
+      "Huh? ...Hands off the hair.",
     ],
     cheekPoke: ["...What was that for?", "Huh? Something on my face?"],
     lipsTouch: ["Whoa. ...Geez. Not the lips, Senpai.", "Hey. Don't."],
@@ -30,6 +34,10 @@ export default {
     upset: ["Geez, cut it out.", "Okay, that's enough. Go bug Leo instead."],
   },
   known: {
+    bandanaPat: [
+      "Geez. I just fixed that.",
+      "Leave the bandana alone, Senpai. It's fine how it is.",
+    ],
     headPat: [
       "You trying to make me shorter or something?",
       "Huh? What'd I do to earn that?",
@@ -53,9 +61,17 @@ export default {
     upset: ["Geez, enough already.", "Okay, okay. I get it. Quit it."],
   },
   warm: {
+    bandanaPat: [
+      "What is it with you and the bandana?",
+      "You keep fussing with it like it's yours or something.",
+    ],
+    bandanaOff: [
+      "Hey! Give that back, Senpai. I'm serious.",
+      "Pfft. Real funny. C'mon, give it here.",
+    ],
     headPat: [
       "Huh. ...Whatever, I don't mind.",
-      "Geez. You do that to everybody, or just me?",
+      "Geez. Just don't do that in front of Leo.",
     ],
     cheekPoke: [
       "What? You got something to say, Senpai?",
@@ -82,9 +98,17 @@ export default {
     upset: ["Geez. Enough, Senpai.", "Hey. Quit it. I mean it."],
   },
   spark: {
+    bandanaPat: [
+      "You'd look weird in mine. ...I'll get you a better one.",
+      "You keep going for mine. I'll get you one, okay? Just leave this one.",
+    ],
+    bandanaOff: [
+      "Great. Hair's all in my face now. You happy?",
+      "...You look like you won something. Gimme that.",
+    ],
     headPat: [
-      "...Okay, that one actually got me.",
       "My turn. C'mere. ...Good job today, Senpai.",
+      "...Huh. Guess I'm doing something right.",
     ],
     cheekPoke: [
       "Hey. Quit it. ...You're doing that on purpose, huh.",
@@ -132,9 +156,17 @@ export default {
     ],
   },
   close: {
+    bandanaPat: [
+      "Go ahead. I gave up stopping you a while ago.",
+      "Still going for mine? I got you your own, Senpai.",
+    ],
+    bandanaOff: [
+      "Pfft... Again? You just like seeing me without it, huh.",
+      "Hang onto it, Senpai. I'll get it back later.",
+    ],
     headPat: [
       "Keep that up and I'm gonna get spoiled, Senpai.",
-      "...Yeah, okay. You can mess up the bandana. Just you.",
+      "You always know when I need that, huh.",
     ],
     cheekPoke: [
       "Yeah, yeah, I'm red. You gonna do something about it?",
@@ -182,6 +214,18 @@ export default {
     ],
   },
   bound: {
+    bandanaPat: [
+      "Wearing yours today? ...Then why're you after mine?",
+      "You don't even ask anymore, huh, Senpai.",
+    ],
+    bandanaOff: [
+      "There it goes. You'd think I'd stop wearing it around you.",
+      "Yeah, yeah. Hair in my face again. You like it like that, huh.",
+    ],
+    headPat: [
+      "...Hey. Proud of me or something?",
+      "Still the best part of my day, Senpai.",
+    ],
     heartbeatHold: [
       "Still does that, huh. You'd think I'd be used to you by now, Senpai.",
       "Pfft. You've heard it enough mornings to know what it does.",
