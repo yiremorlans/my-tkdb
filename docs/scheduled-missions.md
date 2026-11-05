@@ -1450,8 +1450,7 @@ them. Both replies keep the Chancellor's audience layout (§20.3).
 
 - Reply is ephemeral, in the thumbnail layout (§20.3), with the accused's
   `annoyed.png`. Alan, Edward and Haku have no `annoyed` drawing and show
-  `serious.png`, the same substitution `SCENE_FACE_OVERRIDES` makes for call
-  scenes.
+  `serious.png` instead.
 - The text is a `RIDDLE_WRONG_LINES` entry, unchanged. No accused dialogue, no
   printed name: the face says who was accused. Nothing new is authored.
 - Applies to any accused character: the culprit's housemates, other houses,
@@ -1475,8 +1474,7 @@ the ephemeral flag added, as the audience does.
 With no usable URL (`BASE_URL` unset, or the face file missing) the
 thumbnail is dropped and the text sends on its own, the existing fallback.
 
-Not the call scene gallery layout: that full-size portrait stays reserved for
-call scenes.
+Not the full-size gallery layout the call scenes used (removed 2026-11-04).
 
 ### 20.4 Culprit reveal (correct guess)
 
@@ -1556,7 +1554,7 @@ No migration: the boost reuses `grant_encounter_boost()` and
    and the generic wrong line, no accused dialogue.
 2. Culprit reveal has no buttons; the boost is automatic.
 3. Both replies are ephemeral and use the Chancellor's thumbnail layout, not
-   the call scene gallery.
+   the full-size gallery layout.
 4. Culprit face is a fixed `sweat`.
 5. Every solver gets the boost, capped at 1 per character; the boost line is
    always shown.
@@ -1650,8 +1648,8 @@ under `reportFailures`. No milestone, no direct affinity, same rules as §20.4.
 
 ### 21.4 The debrief reply
 
-Ephemeral, thumbnail layout (`portraitMessage`, §20.3; not the call scene
-gallery), the drawn student's
+Ephemeral, thumbnail layout (`portraitMessage`, §20.3; not the full-size
+gallery layout), the drawn student's
 `smile.png`. Missing file or no `BASE_URL` → the existing text-only fallback.
 **No buttons.** One message, a blank line between each part:
 

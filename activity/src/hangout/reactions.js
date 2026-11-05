@@ -6,19 +6,16 @@
 // Tiers are constants/tiers.js DIALOGUE_TIERS (Stranger → new …
 // Devoted/Soulbound → bound).
 //
-// A reaction is { mood | rank, then?: [seconds, mood], duration?, line?,
+// A reaction is { mood, then?: [seconds, mood], duration?, line?,
 // twitch?, fist?, fadeOut? }, or
 // { byTier: { <tier>: reaction } } to vary by tier. A tier with no entry
 // uses the nearest lower tier's. Moods a character lacks fall back to
 // "default".
 //
-// `rank` picks the mood off the expression ladder (constants/sceneFaces.js
-// rankFace): 2 the face a call scene shows for a favorite response at that
-// tier, 1 a liked one, 0 the least. So a touch draws the same faces as the
-// character's encounters, overrides included. Welcome spots (head, hands)
-// sit on the top rung; guarded ones (lips, ears, chest, hips) start on the bottom
-// and climb from spark. The belly is in between: guarded at first, a liked
-// face from warm.
+// `mood` names one of the rig's own moods (rig.json `expressions.moods`, each
+// a set of its Live2D expressions). Welcome spots (head, hands) start warm;
+// guarded ones (lips, ears, chest, hips) start annoyed and soften from spark.
+// The belly is in between: guarded at first, a surprised face from warm.
 //
 // `then` switches to a second mood that many seconds in; `then: ["line",
 // mood]` switches once the line has typed out instead, for a face whose
@@ -48,7 +45,6 @@
 // which layers over the reaction without restating its faces; a reaction's
 // own `sound` wins.
 
-import { rankFace } from "../../../constants/sceneFaces.js";
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 
 // Spot names every rig places, and the reaction each one triggers.
@@ -94,79 +90,82 @@ export const SPOT_ANNOYANCE = {
 export const DEFAULT_REACTIONS = {
   headPat: {
     byTier: {
-      new: { rank: 2, duration: 2 },
-      warm: { rank: 2, duration: 2.4 },
-      spark: { rank: 2, duration: 2.6 },
-      bound: { rank: 2, duration: 3 },
+      new: { mood: "close", duration: 2 },
+      warm: { mood: "surprise_blush", duration: 2.4 },
+      spark: { mood: "blush", duration: 2.6 },
+      close: { mood: "full_smile_blush", duration: 2.6 },
+      bound: { mood: "full_smile_blush", duration: 3 },
     },
   },
   // A cheek poke is a friendly poke: as calm as a head pat, no flinch.
   // Touch-averse characters may flinch where their lines startle.
   cheekPoke: {
     byTier: {
-      new: { rank: 1, duration: 2 },
-      warm: { rank: 1, duration: 2.4 },
-      spark: { rank: 1, duration: 2.6 },
-      bound: { rank: 1, duration: 3 },
+      new: { mood: "sweat", duration: 2 },
+      warm: { mood: "surprise", duration: 2.4 },
+      spark: { mood: "surprise_blush", duration: 2.6 },
+      close: { mood: "full_smile", duration: 2.6 },
+      bound: { mood: "full_smile", duration: 3 },
     },
   },
   handTap: {
     byTier: {
-      new: { rank: 2, duration: 2 },
-      warm: { rank: 2, duration: 2.4 },
-      spark: { rank: 2, duration: 2.6 },
-      bound: { rank: 2, duration: 3 },
+      new: { mood: "close", duration: 2 },
+      warm: { mood: "surprise_blush", duration: 2.4 },
+      spark: { mood: "blush", duration: 2.6 },
+      close: { mood: "full_smile_blush", duration: 2.6 },
+      bound: { mood: "full_smile_blush", duration: 3 },
     },
   },
   chestTouch: {
     byTier: {
-      new: { rank: 0, duration: 2.2, twitch: 0.4 },
-      known: { rank: 0, duration: 2.2, twitch: 0.3 },
-      warm: { rank: 0, duration: 2.6 },
-      spark: { rank: 1, duration: 2.8 },
-      close: { rank: 2, duration: 2.8 },
-      bound: { rank: 2, duration: 3.2 },
+      new: { mood: "annoyed", duration: 2.2, twitch: 0.4 },
+      known: { mood: "annoyed", duration: 2.2, twitch: 0.3 },
+      warm: { mood: "serious", duration: 2.6 },
+      spark: { mood: "surprise_blush", duration: 2.8 },
+      close: { mood: "full_smile_blush", duration: 2.8 },
+      bound: { mood: "full_smile_blush", duration: 3.2 },
     },
   },
   bellyTouch: {
     byTier: {
-      new: { rank: 0, duration: 2.4, twitch: 0.6 },
-      known: { rank: 0, duration: 2.4, twitch: 0.4 },
-      warm: { rank: 1, duration: 2.8 },
-      spark: { rank: 1, duration: 3 },
-      close: { rank: 2, duration: 3 },
-      bound: { rank: 2, duration: 3.4 },
+      new: { mood: "annoyed", duration: 2.4, twitch: 0.6 },
+      known: { mood: "annoyed", duration: 2.4, twitch: 0.4 },
+      warm: { mood: "surprise", duration: 2.8 },
+      spark: { mood: "surprise_blush", duration: 3 },
+      close: { mood: "full_smile_blush", duration: 3 },
+      bound: { mood: "full_smile_blush", duration: 3.4 },
     },
   },
   lipsTouch: {
     byTier: {
-      new: { rank: 0, duration: 2.6, twitch: 0.8 },
-      known: { rank: 0, duration: 2.6, twitch: 0.6 },
-      warm: { rank: 0, duration: 3, twitch: 0.3 },
-      spark: { rank: 1, duration: 3.2 },
-      close: { rank: 2, duration: 3.2 },
-      bound: { rank: 2, duration: 3.6 },
+      new: { mood: "annoyed", duration: 2.6, twitch: 0.8 },
+      known: { mood: "annoyed", duration: 2.6, twitch: 0.6 },
+      warm: { mood: "serious", duration: 3, twitch: 0.3 },
+      spark: { mood: "surprise_blush", duration: 3.2 },
+      close: { mood: "full_smile_blush", duration: 3.2 },
+      bound: { mood: "full_smile_blush", duration: 3.6 },
     },
   },
   // Ears are as sensitive as the belly, short of the lips.
   earTouch: {
     byTier: {
-      new: { rank: 0, duration: 2.4, twitch: 0.6 },
-      known: { rank: 0, duration: 2.4, twitch: 0.4 },
-      warm: { rank: 0, duration: 2.8 },
-      spark: { rank: 1, duration: 3 },
-      close: { rank: 2, duration: 3 },
-      bound: { rank: 2, duration: 3.4 },
+      new: { mood: "annoyed", duration: 2.4, twitch: 0.6 },
+      known: { mood: "annoyed", duration: 2.4, twitch: 0.4 },
+      warm: { mood: "serious", duration: 2.8 },
+      spark: { mood: "surprise_blush", duration: 3 },
+      close: { mood: "full_smile_blush", duration: 3 },
+      bound: { mood: "full_smile_blush", duration: 3.4 },
     },
   },
   hipsTouch: {
     byTier: {
-      new: { rank: 0, duration: 2.8, fist: true, twitch: 1 },
-      known: { rank: 0, duration: 2.8, fist: true, twitch: 0.7 },
-      warm: { rank: 0, duration: 3.2, twitch: 0.5 },
-      spark: { rank: 1, duration: 3.4 },
-      close: { rank: 2, duration: 3.4 },
-      bound: { rank: 2, duration: 3.8 },
+      new: { mood: "annoyed", duration: 2.8, fist: true, twitch: 1 },
+      known: { mood: "annoyed", duration: 2.8, fist: true, twitch: 0.7 },
+      warm: { mood: "serious", duration: 3.2, twitch: 0.5 },
+      spark: { mood: "surprise_blush", duration: 3.4 },
+      close: { mood: "full_smile_blush", duration: 3.4 },
+      bound: { mood: "full_smile_blush", duration: 3.8 },
     },
   },
   // Letting go of a hold (date-only, spark to bound; docs/hangout-activity.md
@@ -176,31 +175,30 @@ export const DEFAULT_REACTIONS = {
   // the heartbeat check is a chest touch he played cool through.
   handHold: {
     byTier: {
-      spark: { rank: 2, duration: 2.6 },
-      bound: { rank: 2, duration: 3 },
+      spark: { mood: "blush", duration: 2.6 },
+      close: { mood: "full_smile_blush", duration: 2.6 },
+      bound: { mood: "full_smile_blush", duration: 3 },
     },
   },
   heartbeatHold: {
     byTier: {
-      spark: { rank: 1, duration: 2.8 },
-      close: { rank: 2, duration: 2.8 },
-      bound: { rank: 2, duration: 3.2 },
+      spark: { mood: "surprise_blush", duration: 2.8 },
+      close: { mood: "full_smile_blush", duration: 2.8 },
+      bound: { mood: "full_smile_blush", duration: 3.2 },
     },
   },
   lipHold: {
     byTier: {
-      spark: { rank: 1, duration: 3.6 },
-      close: { rank: 2, duration: 3.6 },
-      bound: { rank: 2, duration: 4 },
+      spark: { mood: "surprise_blush", duration: 3.6 },
+      close: { mood: "full_smile_blush", duration: 3.6 },
+      bound: { mood: "full_smile_blush", duration: 4 },
     },
   },
   // Tease (bound only, secret) let go before its crest: he was close to the
   // edge and you stopped. The longest-held face.
-  teaseLetGo: { byTier: { bound: { rank: 2, duration: 4.4 } } },
+  teaseLetGo: { byTier: { bound: { mood: "full_smile_blush", duration: 4.4 } } },
   // The face for a /meet answer's outcome (docs/hangout-activity.md §11.2
-  // step 5). Set here rather than off the call-scene ladder, whose new/known
-  // liked rung is a sweat drop (reads as unease) and whose spark bottom rung
-  // is the closed-eyes face new/known answers love with. Each tier keeps
+  // step 5). Each tier keeps
   // fave > liked > flat and the fave face climbs tier to tier: a slight
   // smile, beaming from spark. Answers never blush: blush is earned by
   // touches and holds. A flat answer is indifference ("didn't resonate"),
@@ -237,12 +235,10 @@ export function resolveReaction(rig, name, tier) {
   if (!picked) return null;
   const moods = rig.expressions?.moods ?? {};
   const moodOrDefault = (m) => (m && !moods[m] ? "default" : m);
-  const { rank, ...reaction } = picked;
-  const mood = picked.mood ?? (rank != null ? rankFace(rig.character, tier, rank) : undefined);
   return {
-    ...reaction,
+    ...picked,
     sound: picked.sound ?? forTier(rig.sounds?.[name], tier) ?? undefined,
-    mood: moodOrDefault(mood),
+    mood: moodOrDefault(picked.mood),
     then: picked.then ? [picked.then[0], moodOrDefault(picked.then[1])] : undefined,
   };
 }

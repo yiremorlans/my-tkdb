@@ -4,9 +4,7 @@
 //   1. Name matching   — typing a name IS the game
 //   2. Spawn + expiry  — the scheduler loop that makes encounters exist
 //   3. /call outcomes  — winning, losing the race, guessing wrong
-//   4. The boost       — what a normal win grants
-//   5. Call scenes     — the rare interactive reveal (§17), whose click
-//                        grants +1 in place of the boost
+//   4. The boost       — what a win grants
 //
 // Guard rails, admin commands, leaderboard maths and content-pool shape are all
 // covered by reading the code; add tests here when something actually breaks.
@@ -47,14 +45,6 @@ mock.module('../discordRest.js', {
       edits.push({ channelId, messageId, body });
       return {};
     },
-    // Reads back what postChannelMessage recorded, as the /call scene closeout
-    // does. Discord adds read-only fields to what it returns; the closeout
-    // rebuilds rather than echoing them, so the stand-in adds one to prove it.
-    getChannelMessage: async (channelId, messageId) => {
-      const post = posts[Number(messageId.replace('message-', '')) - 1];
-      if (!post) throw new Error(`Discord API error: 404 unknown message ${messageId}`);
-      return { id: messageId, components: structuredClone(post.body.components).map((c) => ({ ...c, id: 1 })) };
-    },
     // Mirrors the real editChannelMessageSafe: skip with no messageId, record
     // otherwise. Nothing here exercises its failure-swallowing path.
     editChannelMessageSafe: async (channelId, messageId, body) => {
@@ -77,12 +67,8 @@ mock.module('../imageComposition.js', {
 });
 
 const {
-  callSceneMessage,
-  clearCallSceneForces,
-  forceCallScene,
   handleCall,
   handleEncountersAdmin,
-  handleSceneClick,
   rollGapMinutes,
   spawnEncounter,
   sweepExpiredEncounters,
@@ -145,7 +131,6 @@ function reset(tables = {}) {
   edits.length = 0;
   clearGuessCooldowns();
   clearSpawnAttemptFence();
-  clearCallSceneForces();
 }
 
 function callBody({ userId = 'user-1', guess = 'rui', nick = 'Kanae' } = {}) {
@@ -316,8 +301,7 @@ describe('the shared guild read', () => {
 // --- 3. /call ---------------------------------------------------------------
 
 describe('/call', () => {
-  // Every character has a Stranger scene, so an unpinned roll would turn one
-  // of these normal reveals into a scene about one run in ten.
+  // Pinned so the winner-line and milestone draws are the same every run.
   let random;
   beforeEach(() => { random = mock.method(Math, 'random', () => 0.99); });
   afterEach(() => random.mock.restore());
@@ -353,7 +337,6 @@ describe('/call', () => {
       handleCall(callBody({ userId: 'user-2' }), NOW),
     ]);
 
-    // A scene win (rolled at random) has no reply, so count afterReply.
     const winners = results.filter((r) => r.afterReply !== null);
     assert.equal(winners.length, 1, 'the atomic claim admits exactly one');
     assert.equal(results.filter((r) => r.afterReply === null).length, 1, 'the loser triggers nothing');
@@ -579,218 +562,5 @@ describe('a locked guild', () => {
     assert.match(result.reply.content, /aren't set up/);
     assert.equal(result.afterReply, null, 'no reward path runs');
     assert.equal(fake.tables.public_encounters[0].resolved_at, null, 'the encounter is not claimed');
-  });
-});
-
-// --- 5. call scenes ----------------------------------------------------------
-
-describe('call scenes', () => {
-  // A V2 message: the container holds the text over a gallery of the portrait.
-  function sceneParts(data) {
-    const [container, row] = data.components;
-    const [text, gallery] = container.components;
-    return {
-      accent: container.accent_color,
-      text: text.content,
-      face: gallery.items[0].media.url,
-      buttons: row?.components ?? null,
-    };
-  }
-
-  function clickBody({ userId = 'user-1', choice = 'kind', encounterId = 7 } = {}) {
-    return {
-      guild_id: GUILD,
-      channel_id: CHANNEL,
-      member: { user: { id: userId } },
-      data: { custom_id: `scene:${encounterId}:${choice}` },
-      // A component click carries the post it was made on.
-      message: posts[0]?.body,
-    };
-  }
-
-  async function winScene({ affinity = 0, characterId = 'benkei', variant = 'uniform' } = {}) {
-    reset({
-      guild_settings: [guildRow()],
-      public_encounters: [encounterRow({ character_id: characterId, variant })],
-      character_relationships: affinity
-        ? [{ discord_user_id: 'user-1', character_id: characterId, affinity, times_met: 3 }]
-        : [],
-    });
-    forceCallScene(7);
-    const { afterReply } = await handleCall(callBody({ guess: characterId }), NOW);
-    await afterReply();
-    return fake.tables.public_encounters[0];
-  }
-
-  function relationship(characterId = 'benkei') {
-    return fake.tables.character_relationships.find(
-      (r) => r.discord_user_id === 'user-1' && r.character_id === characterId,
-    );
-  }
-
-  it('posts a scene reply under the silhouette instead of the reveal embed', async () => {
-    reset({ guild_settings: [guildRow()], public_encounters: [encounterRow({ character_id: 'benkei' })] });
-    forceCallScene(7);
-    const { reply, afterReply } = await handleCall(callBody({ guess: 'benkei' }), NOW);
-    const lateReply = await afterReply();
-    const row = fake.tables.public_encounters[0];
-
-    assert.equal(reply, null, 'the scene names the character, so no ack');
-    assert.equal(lateReply, null, 'the placeholder is deleted, not filled');
-
-    const [post] = posts;
-    assert.equal(post.channelId, CHANNEL);
-    assert.deepEqual(post.body.message_reference.message_id, 'message-live');
-    // Text over a full-size portrait, in a container, with the answer row below.
-    const [container, answerRow] = post.body.components;
-    assert.equal(container.type, 17, 'in a container');
-    assert.equal(typeof container.accent_color, 'number');
-    assert.deepEqual(container.components.map((c) => c.type), [10, 12], 'a Text Display, then a Media Gallery');
-    assert.equal(answerRow.type, 1);
-    const { text, face, buttons } = sceneParts(post.body);
-    assert.equal(face, 'https://example.test/assets/expressions/benkei/default.png');
-    assert.match(text, /Kanae/);
-    assert.ok(!/[{}]/.test(text), 'no unfilled placeholder');
-
-    // Three answers in some order, one style, then the date button last.
-    assert.deepEqual(
-      buttons.slice(0, 3).map((b) => b.custom_id).sort(),
-      ['scene:7:bold', 'scene:7:kind', 'scene:7:playful'],
-    );
-    assert.equal(new Set(buttons.slice(0, 3).map((b) => b.style)).size, 1, 'answers are indistinguishable');
-    assert.equal(buttons[3].custom_id, 'scene:7:date');
-
-    const [edit] = edits;
-    assert.equal(edit.messageId, 'message-live');
-    assert.deepEqual(edit.body, { content: null }, 'silhouette text cleared, no embed added');
-
-    assert.equal(row.scene_message_id, 'message-1');
-    assert.equal(row.scene_resolved_at ?? null, null);
-
-    // The scene replaces the boost and the milestone.
-    assert.equal(relationship()?.pending_encounter_boost ?? 0, 0, 'no boost on a scene win');
-    assert.equal(fake.tables.encounter_milestones.length, 0, 'no milestone on a scene win');
-    assert.equal(relationship()?.times_met, 1, 'still counts as a meeting');
-  });
-
-  it('renders the answers in the order it is given', async () => {
-    const { shuffledSceneResponses } = await import('../constants/publicEncounters.js');
-    const message = callSceneMessage({
-      characterId: 'benkei',
-      face: 'default.png',
-      text: 'x',
-      color: 0,
-      buttons: {
-        encounterId: 7,
-        responses: { kind: 'a', playful: 'b', bold: 'c' },
-        locked: false,
-        order: shuffledSceneResponses(() => 0),
-      },
-    });
-    const { buttons } = sceneParts(message);
-    assert.deepEqual(
-      buttons.map((b) => b.custom_id),
-      ['scene:7:playful', 'scene:7:bold', 'scene:7:kind', 'scene:7:date'],
-    );
-    // Unlocked (no Close Friend register has scenes yet, so only the builder
-    // can show it): the lock drops, but the date feature is not built.
-    assert.equal(buttons[3].disabled, true, 'still disabled: the date feature is not built');
-    assert.equal(buttons[3].emoji, undefined);
-  });
-
-  it('locks the date button below Close Friend', async () => {
-    await winScene();
-    const locked = sceneParts(posts[0].body).buttons[3];
-    assert.equal(locked.disabled, true);
-    assert.equal(locked.emoji?.name, '🔒');
-    assert.equal(locked.label, 'Ask on a date');
-  });
-
-  it('turns away anyone but the winner and changes nothing', async () => {
-    await winScene();
-
-    const result = await handleSceneClick(clickBody({ userId: 'user-2' }), '7', 'kind', NOW);
-
-    assert.equal(result.response.data.flags, 64);
-    assert.match(result.response.data.content, /not part of this conversation/);
-    assert.equal(fake.tables.public_encounters[0].scene_resolved_at ?? null, null);
-  });
-
-  it('answers the winner once with the reaction and +1 for a favorite', async () => {
-    await winScene();
-    const { REACTION_LINES } = await import('../constants/reactions.js');
-
-    const first = await handleSceneClick(clickBody(), '7', 'kind', NOW);
-    assert.equal(first.response.type, 7, 'UPDATE_MESSAGE');
-    const { text, face, buttons } = sceneParts(first.response.data);
-    // Benkei ranks kind 2 (fave) -> close at Stranger.
-    assert.match(face, /\/benkei\/close\.png$/);
-    assert.equal(buttons, null, 'the button row is gone');
-    // The opening line stays (so the portrait doesn't shift) and the reaction
-    // stacks under it: the same love pool /roam draws for a favorite pick at
-    // Stranger, then the gain.
-    const opening = sceneParts(posts[0].body).text;
-    assert.ok(text.startsWith(`${opening}\n\n`), 'a blank line after the opening line');
-    const match = text.slice(opening.length + 2).match(/^\+1 — (.*)$/s);
-    assert.ok(match, `text: ${text}`);
-    assert.ok(REACTION_LINES.kind.early.love.includes(match[1]), `reaction: ${match[1]}`);
-    assert.equal(relationship().affinity, 1);
-    assert.ok(fake.tables.public_encounters[0].scene_resolved_at);
-
-    const second = await handleSceneClick(clickBody({ choice: 'playful' }), '7', 'playful', NOW);
-    assert.equal(second.response.data.flags, 64, 'a second click gets a quiet ephemeral');
-    assert.equal(relationship().affinity, 1, 'and grants nothing');
-  });
-
-  it('gives a liked answer +1 and the least-liked one nothing', async () => {
-    await winScene();
-    const liked = await handleSceneClick(clickBody({ choice: 'playful' }), '7', 'playful', NOW);
-    assert.match(sceneParts(liked.response.data).text, /\n\n\+1 — /);
-    assert.equal(relationship().affinity, 1);
-
-    await winScene();
-    const flat = await handleSceneClick(clickBody({ choice: 'bold' }), '7', 'bold', NOW);
-    const { text, face } = sceneParts(flat.response.data);
-    assert.ok(!/\n\n[+-]?\d/.test(text), 'no +0 on a least-liked pick');
-    assert.match(face, /\/benkei\/annoyed\.png$/);
-    assert.equal(relationship()?.affinity ?? 0, 0);
-  });
-
-  it('never acts on the date button', async () => {
-    await winScene();
-    const result = await handleSceneClick(clickBody({ choice: 'date' }), '7', 'date', NOW);
-    assert.equal(result.response.data.flags, 64);
-    assert.equal(fake.tables.public_encounters[0].scene_resolved_at ?? null, null);
-  });
-
-  it('closes an unanswered scene as it opened and grants the boost instead', async () => {
-    await winScene();
-    const opening = sceneParts(posts[0].body);
-    // The win resolved the encounter, so the guild is free to spawn again.
-    edits.length = 0;
-
-    await spawnEncounter(guildRow(), NOW, { reanchor: false });
-
-    const closeout = edits.find((e) => e.messageId === 'message-1');
-    assert.ok(closeout, 'the scene post was edited');
-    const { text, face, buttons, accent } = sceneParts(closeout.body);
-    assert.equal(text, opening.text, 'the opening line stays');
-    assert.equal(face, opening.face);
-    assert.equal(accent, opening.accent);
-    assert.equal(buttons, null);
-    assert.equal(closeout.body.components[0].id, undefined, 'nothing read-only echoed back');
-    assert.ok(fake.tables.public_encounters[0].scene_resolved_at);
-    assert.equal(relationship().pending_encounter_boost, 1, 'the fallback boost');
-  });
-
-  it('grants the fallback boost even when the scene post is gone', async () => {
-    await winScene();
-    posts.length = 0;
-    edits.length = 0;
-
-    await spawnEncounter(guildRow(), NOW, { reanchor: false });
-
-    assert.ok(!edits.some((e) => e.messageId === 'message-1'), 'nothing to edit');
-    assert.equal(relationship().pending_encounter_boost, 1);
   });
 });

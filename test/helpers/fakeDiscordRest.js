@@ -24,7 +24,6 @@ const DEFAULTS = {
   openDmChannel: async () => 'dm-1',
   getGuildRoles: async () => [],
   editChannelMessageSafe: async () => {},
-  deleteInteractionMessage: async () => {},
   postChannelTyping: async () => {},
 };
 

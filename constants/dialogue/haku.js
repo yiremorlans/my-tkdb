@@ -695,168 +695,35 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      {
-        line: '**{name}** gives {user} an easy smile. "Got it in one. Not bad."',
-        responses: {
-          kind: "Say he wasn't hard to find",
-          playful: "Ask for a prize",
-          bold: "Say you don't miss",
-        },
-      },
-      {
-        line: '{user} calls his name, and **{name}** glances at something just over their shoulder. "...Ignore that."',
-        responses: {
-          kind: "Keep your eyes on him",
-          playful: "Wave at whatever it is",
-          bold: "Ask what you're ignoring",
-        },
-      },
-      {
-        line: "\"Yep, that's me.\" **{name}** asks {user} if they need anything while they're here.",
-        responses: {
-          kind: "Ask for a quick hand",
-          playful: "Ask what's on offer",
-          bold: "Ask what he's doing here",
-        },
-      },
-      {
-        line: '**{name}** smiles at {user}, then his eyes flick to something just past their shoulder. "Hey. Don\'t turn around for a sec, okay?"',
-        responses: {
-          kind: "Wait for his all-clear",
-          playful: "Ask if it's a shadow imp",
-          bold: "Ask what's back there",
-        },
-      },
+      '**{name}** gives {user} an easy smile. "Got it in one. Not bad."',
+      '{user} calls his name, and **{name}** glances at something just over their shoulder. "...Ignore that."',
+      "\"Yep, that's me.\" **{name}** asks {user} if they need anything while they're here.",
+      '**{name}** smiles at {user}, then his eyes flick to something just past their shoulder. "Hey. Don\'t turn around for a sec, okay?"',
     ],
     known: [
-      {
-        line: '{user} calls, and **{name}** hands them the umbrella he was holding. "Rain\'s coming. Trust me on that one."',
-        responses: {
-          kind: "Ask if he has another",
-          playful: "Ask if he's a weatherman now",
-          bold: "Ask how he knows",
-        },
-      },
-      {
-        line: '**{name}** is sorting out a question Subaru passed his way when {user} calls his name. "Hotarubi stuff. Done now. What\'s up?"',
-        responses: {
-          kind: "Ask if he needs a break",
-          playful: "Ask if you're next on his list",
-          bold: "Say you need a favor",
-        },
-      },
-      {
-        line: '**{name}** is out chasing down late papers when {user} calls his name. "Good timing. Two names left. Want to help?"',
-        responses: {
-          kind: "Say you'll help find them",
-          playful: "Ask if your name's on it",
-          bold: "Take one name yourself",
-        },
-      },
+      '{user} calls, and **{name}** hands them the umbrella he was holding. "Rain\'s coming. Trust me on that one."',
+      '**{name}** is sorting out a question Subaru passed his way when {user} calls his name. "Hotarubi stuff. Done now. What\'s up?"',
+      '**{name}** is out chasing down late papers when {user} calls his name. "Good timing. Two names left. Want to help?"',
     ],
     warm: [
-      {
-        line: '**{name}** is mid-take on Zenji\'s latest video when {user} calls his name. He lowers the camera anyway. "...Zenji likes second takes."',
-        responses: {
-          kind: "Tell him to finish the take",
-          playful: "Wave at the camera",
-          bold: "Ask to be in the next take",
-        },
-      },
-      {
-        line: '**{name}** looks up as {user} calls. "Oh, good. Was just about to come find you." He doesn\'t say why.',
-        responses: {
-          kind: "Save him the trip",
-          playful: "Ask if he missed you",
-          bold: "Ask why he was coming",
-        },
-      },
-      {
-        line: "**{name}** turns around before {user} even says his name. \"Knew it'd be you. Don't ask how.\"",
-        responses: {
-          kind: "Let him keep his secret",
-          playful: "Ask if a ghost told him",
-          bold: "Ask how anyway",
-        },
-      },
+      '**{name}** is mid-take on Zenji\'s latest video when {user} calls his name. He lowers the camera anyway. "...Zenji likes second takes."',
+      '**{name}** looks up as {user} calls. "Oh, good. Was just about to come find you." He doesn\'t say why.',
+      "**{name}** turns around before {user} even says his name. \"Knew it'd be you. Don't ask how.\"",
     ],
     spark: [
-      {
-        line: "**{name}** hears his name and the unbothered act slips for about a second. {user} caught it.",
-        responses: {
-          kind: "Let it slide",
-          playful: "Say you caught that",
-          bold: "Ask what slipped",
-        },
-      },
-      {
-        line: '"Took you long enough, princess." **{name}** says it just loud enough for {user} to hear.',
-        responses: {
-          kind: "Say sorry for the wait",
-          playful: "Curtsy for him",
-          bold: "Say don't call you that",
-        },
-      },
-      {
-        line: "{user} calls his name, and **{name}** stops pretending to be asleep.",
-        responses: {
-          kind: "Say you knew he was awake",
-          playful: "Pretend to be asleep too",
-          bold: "Sit down beside him",
-        },
-      },
+      "**{name}** hears his name and the unbothered act slips for about a second. {user} caught it.",
+      '"Took you long enough, princess." **{name}** says it just loud enough for {user} to hear.',
+      "{user} calls his name, and **{name}** stops pretending to be asleep.",
     ],
     close: [
-      {
-        line: '"Yeah, yeah. Coming." **{name}** is already up for {user}.',
-        responses: {
-          kind: "Wait for him",
-          playful: "Ask if he's really coming",
-          bold: "Say he's quick for once",
-        },
-      },
-      {
-        line: "{user} calls, and **{name}** leaves the busted fixture exactly where it is.",
-        responses: {
-          kind: "Say it can wait",
-          playful: "Ask if it's haunted",
-          bold: "Say you'll fix it together",
-        },
-      },
-      {
-        line: "**{name}** starts a joke on reflex, looks at {user}, and lets it go unfinished.",
-        responses: {
-          kind: "Say he doesn't need it",
-          playful: "Ask for the punchline",
-          bold: "Ask why he stopped",
-        },
-      },
+      '"Yeah, yeah. Coming." **{name}** is already up for {user}.',
+      "{user} calls, and **{name}** leaves the busted fixture exactly where it is.",
+      "**{name}** starts a joke on reflex, looks at {user}, and lets it go unfinished.",
     ],
     bound: [
-      {
-        line: "{user} calls his name, and **{name}** doesn't deflect it. Not even a little.",
-        responses: {
-          kind: "Say you'll take it",
-          playful: "Ask if he's feeling okay",
-          bold: "Ask him to do it again",
-        },
-      },
-      {
-        line: "**{name}** is lazy about everything except getting to {user}.",
-        responses: {
-          kind: "Say you're glad he came",
-          playful: "Ask if it took effort",
-          bold: "Say he can hurry more",
-        },
-      },
-      {
-        line: '"Of course it\'s you." **{name}** moves over six inches for {user} without being asked.',
-        responses: {
-          kind: "Sit in the six inches",
-          playful: "Ask for seven",
-          bold: "Take more than six",
-        },
-      },
+      "{user} calls his name, and **{name}** doesn't deflect it. Not even a little.",
+      "**{name}** is lazy about everything except getting to {user}.",
+      '"Of course it\'s you." **{name}** moves over six inches for {user} without being asked.',
     ],
   },
 };

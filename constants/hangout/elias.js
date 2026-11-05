@@ -126,7 +126,7 @@ export default {
       "Oh, that. …It started when you came over.",
     ],
     lipHold: [
-      "…You kept it there a long time. I let you.",
+      "…Oh, my. I forgot what I was going to say.",
       "…I'll be thinking about that later.",
     ],
     handHold: [

@@ -165,12 +165,11 @@ One row per posted encounter. At most one per guild should be unresolved at any 
 | `resolved_at` | TIMESTAMP | Set on solve **or** expiry-finalize — also the winner-race arbiter |
 | `outcome` | TEXT | `solved` or `expired` |
 | `solved_by` | TEXT | Discord user id of the winner |
-| `scene_message_id` | TEXT | A call scene's post (migration 027, `docs/public-encounters.md` §17); NULL means the win used the normal reveal |
-| `scene_resolved_at` | TIMESTAMP | Set by the winner's click or the closeout on the next spawn; the one-click arbiter, so a scene grants its +1 (or the closeout's fallback boost) exactly once |
+
+The call-scene columns (`scene_message_id`, `scene_resolved_at`, migration 027) were dropped in migration 036 when call scenes were removed (`docs/public-encounters.md` §17).
 
 **Use cases:**
 - Decide the winner with one conditional `UPDATE ... WHERE resolved_at IS NULL` — no locking
-- Answer a call scene exactly once on `scene_resolved_at`
 - Let a restart finalize whatever expired while the process was down
 
 ### `encounter_milestones`

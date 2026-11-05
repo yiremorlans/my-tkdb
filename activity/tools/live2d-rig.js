@@ -19,7 +19,7 @@
 //   PartMouth, PartEar, PartUpperBody, PartArm*/PartHand*) and rest bounds;
 // - stage: Alan's framing, shifted so the face sits where his does (every
 //   game model shares the 2000x2800 canvas, so the scale carries over);
-// - expressions.moods: each sceneFaces.js face mapped onto the expressions
+// - expressions.moods: each MOODS name mapped onto the expressions
 //   this model has (the vocabularies differ per character);
 // - reactionPoses: the closest pose clip to Alan's for each reaction;
 // - background: the character's room;

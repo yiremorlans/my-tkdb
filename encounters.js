@@ -800,8 +800,7 @@ export async function answerResponse(
 
   const baseGain = getAffinityForResponse(character, responseTypeId, { mood });
 
-  // A /call win never moves affinity itself (a call scene's click aside, which
-  // replaces the boost) — it leaves a pending boost that the next authored
+  // A /call win never moves affinity itself — it leaves a pending boost that the next authored
   // response with that character spends. Consumed *before*
   // the write so the bonus folds into one affinity update: if that update
   // then fails the user is out the boost, which is far better than the other

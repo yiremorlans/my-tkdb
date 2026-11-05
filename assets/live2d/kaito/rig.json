@@ -77,20 +77,20 @@
     "handHold": {
       "byTier": {
         "spark": { "mood": "flustered", "duration": 2.6 },
-        "close": { "rank": 2, "duration": 2.6 },
-        "bound": { "rank": 2, "duration": 3 }
+        "close": { "mood": "full_smile_blush", "duration": 2.6 },
+        "bound": { "mood": "full_smile_blush", "duration": 3 }
       }
     },
     "heartbeatHold": {
       "byTier": {
         "spark": { "mood": "flustered", "duration": 2.8 },
         "close": { "mood": "shy", "duration": 2.8 },
-        "bound": { "rank": 2, "duration": 3.2 }
+        "bound": { "mood": "full_smile_blush", "duration": 3.2 }
       }
     },
     "lipHold": {
       "byTier": {
-        "spark": { "rank": 2, "duration": 3.6 },
+        "spark": { "mood": "lovestruck", "duration": 3.6 },
         "close": { "mood": "shy", "duration": 3.6 },
         "bound": { "mood": "shy", "duration": 4 }
       }
@@ -111,9 +111,9 @@
         "new": { "mood": "surprise", "duration": 2 },
         "known": { "mood": "smile", "duration": 2 },
         "warm": { "mood": "shy", "duration": 2.4 },
-        "spark": { "rank": 2, "duration": 2.6 },
-        "close": { "rank": 2, "duration": 2.6 },
-        "bound": { "rank": 2, "duration": 3 }
+        "spark": { "mood": "lovestruck", "duration": 2.6 },
+        "close": { "mood": "full_smile_blush", "duration": 2.6 },
+        "bound": { "mood": "full_smile_blush", "duration": 3 }
       }
     },
     "cheekPoke": {
@@ -131,19 +131,19 @@
         "new": { "mood": "panic", "duration": 2.6, "twitch": 0.8 },
         "known": { "mood": "panic", "then": [0.8, "sweat"], "duration": 2.6, "twitch": 0.6 },
         "warm": { "mood": "panic", "duration": 3, "twitch": 0.3 },
-        "spark": { "rank": 1, "duration": 3.2 },
+        "spark": { "mood": "surprise_blush", "duration": 3.2 },
         "close": { "mood": "shy", "duration": 3.2 },
         "bound": { "mood": "shy", "duration": 3.6 }
       }
     },
     "earTouch": {
       "byTier": {
-        "new": { "rank": 0, "duration": 2.4, "twitch": 0.6 },
-        "known": { "rank": 0, "duration": 2.4, "twitch": 0.4 },
+        "new": { "mood": "annoyed", "duration": 2.4, "twitch": 0.6 },
+        "known": { "mood": "annoyed", "duration": 2.4, "twitch": 0.4 },
         "warm": { "mood": "full_smile", "duration": 2.8 },
         "spark": { "mood": "flustered", "duration": 3 },
-        "close": { "rank": 2, "duration": 3 },
-        "bound": { "rank": 2, "duration": 3.4 }
+        "close": { "mood": "full_smile_blush", "duration": 3 },
+        "bound": { "mood": "full_smile_blush", "duration": 3.4 }
       }
     },
     "handTap": {
@@ -151,19 +151,19 @@
         "new": { "mood": "smile", "duration": 2 },
         "known": { "mood": "smile", "duration": 2 },
         "warm": { "mood": "shy", "duration": 2.4 },
-        "spark": { "rank": 2, "duration": 2.6 },
-        "close": { "rank": 2, "duration": 2.6 },
-        "bound": { "rank": 2, "duration": 3 }
+        "spark": { "mood": "lovestruck", "duration": 2.6 },
+        "close": { "mood": "full_smile_blush", "duration": 2.6 },
+        "bound": { "mood": "full_smile_blush", "duration": 3 }
       }
     },
     "bellyTouch": {
       "byTier": {
         "new": { "mood": "panic", "duration": 2.4, "twitch": 0.6 },
         "known": { "mood": "annoyed", "duration": 2.4, "twitch": 0.4 },
-        "warm": { "rank": 1, "duration": 2.8 },
-        "spark": { "rank": 1, "duration": 3 },
-        "close": { "rank": 2, "duration": 3 },
-        "bound": { "rank": 2, "duration": 3.4 }
+        "warm": { "mood": "surprise", "duration": 2.8 },
+        "spark": { "mood": "surprise_blush", "duration": 3 },
+        "close": { "mood": "full_smile_blush", "duration": 3 },
+        "bound": { "mood": "full_smile_blush", "duration": 3.4 }
       }
     },
     "hipsTouch": {
@@ -171,19 +171,19 @@
         "new": { "mood": "panic", "duration": 2.8, "fist": true, "twitch": 1 },
         "known": { "mood": "panic", "then": [0.8, "sweat"], "duration": 2.8, "fist": true, "twitch": 0.7 },
         "warm": { "mood": "panic", "duration": 3.2, "twitch": 0.5 },
-        "spark": { "rank": 1, "duration": 3.4 },
+        "spark": { "mood": "surprise_blush", "duration": 3.4 },
         "close": { "mood": "shy", "duration": 3.4 },
         "bound": { "mood": "shy", "duration": 3.8 }
       }
     },
     "chestTouch": {
       "byTier": {
-        "new": { "rank": 0, "duration": 2.2, "twitch": 0.4 },
-        "known": { "rank": 0, "duration": 2.2, "twitch": 0.3 },
-        "warm": { "rank": 0, "duration": 2.6 },
-        "spark": { "rank": 1, "duration": 2.8 },
-        "close": { "rank": 2, "duration": 2.8 },
-        "bound": { "rank": 2, "duration": 3.2 }
+        "new": { "mood": "annoyed", "duration": 2.2, "twitch": 0.4 },
+        "known": { "mood": "annoyed", "duration": 2.2, "twitch": 0.3 },
+        "warm": { "mood": "serious", "duration": 2.6 },
+        "spark": { "mood": "surprise_blush", "duration": 2.8 },
+        "close": { "mood": "full_smile_blush", "duration": 2.8 },
+        "bound": { "mood": "full_smile_blush", "duration": 3.2 }
       }
     },
     "answerLove": { "byTier": { "new": { "mood": "full_smile", "duration": 3.2 } } },

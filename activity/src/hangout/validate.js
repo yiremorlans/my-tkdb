@@ -4,17 +4,13 @@
 // dev server (live2dRig.js loadLive2DRig, over fetch; a build skips it). No moc3 parsing here:
 // drawable ids are only checked when the caller can look them up.
 
-import { DEFAULT_REACTIONS } from "./reactions.js";
-import { rankFace } from "../../../constants/sceneFaces.js";
+import { DEFAULT_REACTIONS, forTier } from "./reactions.js";
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
-
-// Response ranks the expression ladder has a rung for (sceneFaces.js).
-const RANKS = [0, 1, 2];
 
 /**
  * Checks `rig` and the files it names. Throws one Error listing every
- * problem; otherwise resolves to a list of warnings (moods the expression
- * ladder can pick that the rig lacks, which show "default" instead).
+ * problem; otherwise resolves to a list of warnings (moods a reaction names
+ * that the rig lacks, which show "default" instead).
  *
  * Paths handed to the callbacks are relative to the rig's folder (model
  * files resolved against their model3.json), e.g. "../../bg/x.png".
@@ -44,6 +40,14 @@ export async function validateLive2DRig(rig, { readJson, fileExists = () => true
       if (!DIALOGUE_TIERS.includes(tier)) problems.push(`reactionPoses.${name}: unknown tier ${tier}`);
     }
   }
+  // Reactions name their mood. `rank` (the old call-scene face ladder) was
+  // removed on 2026-11-04; a leftover one would quietly play nothing.
+  for (const [name, value] of Object.entries(rig.reactions ?? {})) {
+    const entries = value?.byTier ? Object.entries(value.byTier) : [[null, value]];
+    for (const [tier, entry] of entries) {
+      if (entry && "rank" in entry) problems.push(`reactions.${name}${tier ? `.${tier}` : ""}: rank is gone; name a mood`);
+    }
+  }
   const rest = rig.restMood;
   for (const [tier, mood] of rest?.byTier ? Object.entries(rest.byTier) : rest != null ? [[null, rest]] : []) {
     if (tier && !DIALOGUE_TIERS.includes(tier)) problems.push(`restMood: unknown tier ${tier}`);
@@ -71,7 +75,7 @@ export async function validateLive2DRig(rig, { readJson, fileExists = () => true
   }
 
   if (problems.length) throw new Error(`rig.json:\n  ${problems.join("\n  ")}`);
-  return ladderWarnings(rig);
+  return reactionMoodWarnings(rig);
 }
 
 // --- shared keys ------------------------------------------------------------
@@ -244,18 +248,22 @@ function hotspotProblems(hotspots, parts) {
 
 // --- warnings ---------------------------------------------------------------
 
-// Touch reactions pick their face off the ladder (reactions.js
-// resolveReaction), so a missing rung quietly shows "default".
-function ladderWarnings(rig) {
+// Every mood a reaction can play on this rig, at any tier (its own entry or
+// the default, then any `then` mood). One the rig lacks quietly shows
+// "default" (reactions.js resolveReaction).
+function reactionMoodWarnings(rig) {
   const moods = rig.expressions?.moods ?? {};
-  const missing = new Set();
-  for (const tier of DIALOGUE_TIERS) {
-    for (const rank of RANKS) {
-      const face = rankFace(rig.character, tier, rank);
-      if (face && !moods[face]) missing.add(face);
+  const missing = new Map();
+  const names = new Set([...Object.keys(DEFAULT_REACTIONS), ...Object.keys(rig.reactions ?? {})]);
+  for (const name of names) {
+    for (const tier of DIALOGUE_TIERS) {
+      const picked = forTier(rig.reactions?.[name] ?? DEFAULT_REACTIONS[name], tier);
+      for (const mood of [picked?.mood, picked?.then?.[1]]) {
+        if (mood && !moods[mood] && !missing.has(mood)) missing.set(mood, name);
+      }
     }
   }
-  return [...missing].map((face) => `expressions.moods: no ${face} (the expression ladder picks it; shows default)`);
+  return [...missing].map(([mood, name]) => `expressions.moods: no ${mood} (${name} plays it; shows default)`);
 }
 
 // --- paths ------------------------------------------------------------------

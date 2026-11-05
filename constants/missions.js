@@ -269,7 +269,7 @@ export const RIDDLE_WRONG_LINES = [
 
 // Faces in assets/expressions/<id>/ (docs/scheduled-missions.md §20, §21).
 // An accusation shows the accused annoyed. Anyone with no annoyed drawing
-// (Alan, Edward, Haku) gets serious, the same stand-in the call scenes use;
+// (Alan, Edward, Haku) gets serious, the same stand-in the face ladder's overrides use;
 // read off the art itself so there's no list of them to keep in step.
 export function accusedFace(characterId) {
   return expressionExists(characterId, "annoyed.png")

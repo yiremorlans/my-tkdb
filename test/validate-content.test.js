@@ -165,36 +165,25 @@ test('validateContent rejects mood below warm and any mood value but true', () =
   }
 });
 
-// --- call scenes (docs/public-encounters.md §17) -----------------------------
-
-// Benkei's scene-capable Stranger winner line: the one entry in his pool
-// carrying `responses`.
-const benkeiScene = () => DIALOGUE.benkei.winnerLines.new.find((entry) => entry.responses);
-const sceneIndex = () => DIALOGUE.benkei.winnerLines.new.indexOf(benkeiScene());
-
 // Proves validateContent() would actually catch an over-length button label
 // instead of silently passing one through, in every slot checkLabelLength
-// guards: a beat's approach and responses (each a single string or inside an
-// array) and a call scene's answers. The labels are injected rather than
-// hunted for in the catalog, since which beats carry which shape changes as
-// content is authored. validateContent() throws (not returns) once errors is
-// non-empty, so each case reads the throw's message.
+// guards on a beat: its approach and responses, each a single string or inside
+// an array. The labels are injected rather than hunted for in the catalog,
+// since which beats carry which shape changes as content is authored.
+// validateContent() throws (not returns) once errors is non-empty, so each case
+// reads the throw's message.
 test('validateContent flags an over-length button label in every slot, as a string or inside an array', () => {
   const beat = DIALOGUE.benkei.dialogue.known.find((b) => b && typeof b === 'object');
   assert.ok(beat, 'benkei.known should have at least one object beat to mutate');
-  const scene = benkeiScene();
   const over = MAX_BUTTON_LABEL_LENGTH + 1;
   const tooLong = (what) => new RegExp(`${what} is ${over} chars \\(max ${MAX_BUTTON_LABEL_LENGTH}\\)`);
   const approach = tooLong('benkei dialogue\\[known\\] beat approach');
   const response = tooLong('benkei dialogue\\[known\\] beat playful response');
-  const answer = new RegExp(`benkei winnerLines\\.new\\[${sceneIndex()}\\] bold label is ${over} chars`);
 
-  const snapshots = [beat, scene].map((obj) => [obj, structuredClone(obj)]);
+  const snapshot = structuredClone(beat);
   const restore = () => {
-    for (const [obj, snapshot] of snapshots) {
-      for (const key of Object.keys(obj)) delete obj[key];
-      Object.assign(obj, structuredClone(snapshot));
-    }
+    for (const key of Object.keys(beat)) delete beat[key];
+    Object.assign(beat, structuredClone(snapshot));
   };
 
   const cases = [
@@ -202,7 +191,6 @@ test('validateContent flags an over-length button label in every slot, as a stri
     [() => { beat.approach = ['Fine', 'B'.repeat(over)]; }, approach],
     [() => { beat.responses = { ...beat.responses, playful: 'A'.repeat(over) }; }, response],
     [() => { beat.responses = { ...beat.responses, playful: ['Fine', 'B'.repeat(over)] }; }, response],
-    [() => { scene.responses.bold = 'A'.repeat(over); }, answer],
   ];
 
   try {
@@ -218,59 +206,37 @@ test('validateContent flags an over-length button label in every slot, as a stri
   assert.doesNotThrow(() => validateContent(), 'and the catalog is clean again');
 });
 
-test('validateContent flags every malformed call scene shape', () => {
-  const scene = benkeiScene();
-  const at = `benkei winnerLines\\.new\\[${sceneIndex()}\\]`;
-  const snapshot = JSON.parse(JSON.stringify(scene));
-  const restore = () => {
-    for (const key of Object.keys(scene)) delete scene[key];
-    Object.assign(scene, JSON.parse(JSON.stringify(snapshot)));
-  };
+// --- winner lines -----------------------------------------------------------
 
+test('validateContent flags every malformed winner line', () => {
+  const pool = DIALOGUE.benkei.winnerLines.new;
+  const original = pool[0];
   const cases = [
-    [() => { scene.face = 'smile.png'; }, new RegExp(`${at} has unknown key "face"`)],
-    [() => { scene.replies = { kind: 'Hi' }; }, new RegExp(`${at} has unknown key "replies"`)],
-    [() => { delete scene.responses.playful; }, new RegExp(`${at} responses is missing "playful"`)],
-    [() => { scene.responses.neutral = 'Wait'; }, new RegExp(`${at} responses has unknown key "neutral"`)],
-    [() => { scene.responses.date = 'Ask'; }, new RegExp(`${at} responses has unknown key "date"`)],
-    [() => { delete scene.line; }, new RegExp(`${at} has no line`)],
-    // The line itself gets the ordinary winner-line checks.
-    [() => { scene.line = scene.line.replaceAll('{user}', 'someone'); }, /benkei winnerLines\.new never mentions \{user\}/],
-    [() => { scene.line = scene.line.replace(/\{(name|firstName)\}/g, 'him'); }, /benkei winnerLines\.new never names the character/],
-    [() => { scene.line += ' {mood}'; }, /benkei winnerLines\.new uses unknown placeholder "\{mood\}"/],
+    // Call scenes are gone (docs/public-encounters.md §17): an object entry is
+    // no longer a valid line.
+    [{ line: original, responses: { kind: 'a', playful: 'b', bold: 'c' } }, /benkei winnerLines\.new has a non-string line/],
+    [original.replaceAll('{user}', 'someone'), /benkei winnerLines\.new never mentions \{user\}/],
+    [original.replace(/\{(name|firstName)\}/g, 'him'), /benkei winnerLines\.new never names the character/],
+    [`${original} {mood}`, /benkei winnerLines\.new uses unknown placeholder "\{mood\}"/],
   ];
 
   try {
-    for (const [mutate, expected] of cases) {
-      mutate();
+    for (const [entry, expected] of cases) {
+      pool[0] = entry;
       assert.throws(() => validateContent(), expected);
-      restore();
     }
   } finally {
-    restore();
+    pool[0] = original;
   }
 
   assert.doesNotThrow(() => validateContent(), 'and the catalog is clean again');
 });
 
-test('the shared fallback pool can carry no call scene', () => {
+test('the shared fallback pool takes plain strings only', () => {
   const pool = SHARED_WINNER_LINES.new;
   pool.push({ line: '**{name}** waves {user} over.', responses: { kind: 'a', playful: 'b', bold: 'c' } });
   try {
     assert.throws(() => validateContent(), /SHARED_WINNER_LINES winnerLines\.new has a non-string line/);
-  } finally {
-    pool.pop();
-  }
-});
-
-test('every character winner line must carry button labels', () => {
-  const pool = DIALOGUE.benkei.winnerLines.close;
-  pool.push('**{name}** waves {user} over.');
-  try {
-    assert.throws(
-      () => validateContent(),
-      new RegExp(`benkei winnerLines\\.close\\[${pool.length - 1}\\] has no button labels`),
-    );
   } finally {
     pool.pop();
   }

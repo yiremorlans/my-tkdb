@@ -724,168 +724,35 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      {
-        line: '{user} runs into **{name}** on his way out, toolbox in hand. "Oh, hey. About time for casino maintenance again."',
-        responses: {
-          kind: "Wish him a smooth job",
-          playful: "Ask if Romeo tips",
-          bold: "Say you'll go with him",
-        },
-      },
-      {
-        line: '{user} calls his name, and **{name}** waves without slowing down. "Got work before class. Go on ahead, I\'ll catch up."',
-        responses: {
-          kind: "Say you'll save him a seat",
-          playful: "Ask if that's a promise",
-          bold: "Walk with him to the job",
-        },
-      },
-      {
-        line: '**{name}** nearly walks into {user} on his way to class. "...School building, then the workshop... I\'ll barely make it on time. Oh, sorry. Didn\'t see you."',
-        responses: {
-          kind: "Tell him not to worry",
-          playful: "Ask if he's always this busy",
-          bold: "Say you'll walk him there",
-        },
-      },
-      {
-        line: '{user} passes **{name}** between classes. He nods as he goes by. "Nice work today. Let\'s get through this day too."',
-        responses: {
-          kind: "Wish him luck with his day",
-          playful: "Ask if that's a pep talk",
-          bold: "Say you'll hold him to it",
-        },
-      },
+      '{user} runs into **{name}** on his way out, toolbox in hand. "Oh, hey. About time for casino maintenance again."',
+      '{user} calls his name, and **{name}** waves without slowing down. "Got work before class. Go on ahead, I\'ll catch up."',
+      '**{name}** nearly walks into {user} on his way to class. "...School building, then the workshop... I\'ll barely make it on time. Oh, sorry. Didn\'t see you."',
+      '{user} passes **{name}** between classes. He nods as he goes by. "Nice work today. Let\'s get through this day too."',
     ],
     known: [
-      {
-        line: '"If this is a repair request, it\'s going on the list." **{name}** looks up and sees it\'s {user}. "Oh, it\'s just you. Good."',
-        responses: {
-          kind: "Say no repairs today",
-          playful: "Add yourself to the list",
-          bold: "Ask to skip the list",
-        },
-      },
-      {
-        line: '{user} says hi, and **{name}** holds something out to them. "Good timing. Hold this a sec."',
-        responses: {
-          kind: "Hold it for him",
-          playful: "Ask what it does",
-          bold: "Say a sec is never a sec",
-        },
-      },
-      {
-        line: '"You\'re busy again today? Yeah, same." **{name}** makes a minute for {user} anyway.',
-        responses: {
-          kind: "Say you'll take the minute",
-          playful: "Compare to-do lists",
-          bold: "Say he's busier than you",
-        },
-      },
+      '"If this is a repair request, it\'s going on the list." **{name}** looks up and sees it\'s {user}. "Oh, it\'s just you. Good."',
+      '{user} says hi, and **{name}** holds something out to them. "Good timing. Hold this a sec."',
+      '"You\'re busy again today? Yeah, same." **{name}** makes a minute for {user} anyway.',
     ],
     warm: [
-      {
-        line: '{user} calls his name, and **{name}** startles awake. "Crap... I nodded off. Been doing that a lot lately, even during the day."',
-        responses: {
-          kind: "Ask what's keeping him up",
-          playful: "Say you caught him napping",
-          bold: "Say he can nap on you",
-        },
-      },
-      {
-        line: '"Shion can wait five minutes." **{name}** pockets his phone and turns to {user}.',
-        responses: {
-          kind: "Say you'll keep it to five",
-          playful: "Ask what Shion broke now",
-          bold: "Ask for ten instead",
-        },
-      },
-      {
-        line: '{user} calls his name, and **{name}** waves. "Hey, you seen Elias around? Guess the warmer weather\'s got him going on more walks lately."',
-        responses: {
-          kind: "Say you'd take a walk too",
-          playful: "Say you're better company",
-          bold: "Ask him on a walk instead",
-        },
-      },
+      '{user} calls his name, and **{name}** startles awake. "Crap... I nodded off. Been doing that a lot lately, even during the day."',
+      '"Shion can wait five minutes." **{name}** pockets his phone and turns to {user}.',
+      '{user} calls his name, and **{name}** waves. "Hey, you seen Elias around? Guess the warmer weather\'s got him going on more walks lately."',
     ],
     spark: [
-      {
-        line: '"Hm? Looks like there\'s a bug on your head… Nope, my mistake." **{name}** just wanted a closer look at {user}.',
-        responses: {
-          kind: "Let him look",
-          playful: "Check for the bug anyway",
-          bold: "Say he just wanted to look",
-        },
-      },
-      {
-        line: "**{name}** answers {user} and forgets which pocket the screwdriver's in. Twice.",
-        responses: {
-          kind: "Help him find it",
-          playful: "Point at the right pocket",
-          bold: "Say you fluster him",
-        },
-      },
-      {
-        line: '"...Huh. It\'s you." **{name}** stops pretending to check his tool case and just looks at {user}.',
-        responses: {
-          kind: "Say hi to him",
-          playful: "Ask if the case is fine",
-          bold: "Say he wasn't checking it",
-        },
-      },
+      '"Hm? Looks like there\'s a bug on your head… Nope, my mistake." **{name}** just wanted a closer look at {user}.',
+      "**{name}** answers {user} and forgets which pocket the screwdriver's in. Twice.",
+      '"...Huh. It\'s you." **{name}** stops pretending to check his tool case and just looks at {user}.',
     ],
     close: [
-      {
-        line: '"Why do I always get sleepy around you?" **{name}** asks {user}, and doesn\'t wait for an answer.',
-        responses: {
-          kind: "Say you'll be his pillow",
-          playful: "Ask if you're boring",
-          bold: "Say it means he trusts you",
-        },
-      },
-      {
-        line: "**{name}** lets his phone ring out for {user}. Whoever's broken something can wait.",
-        responses: {
-          kind: "Say the call can wait",
-          playful: "Ask who broke what",
-          bold: "Tell him to answer it",
-        },
-      },
-      {
-        line: "\"Stay a sec. You're the only one who doesn't need something fixed.\" **{name}** says it to {user} like a complaint.",
-        responses: {
-          kind: "Stay a while with him",
-          playful: "Ask him to fix your hair",
-          bold: "Say he needs fixing too",
-        },
-      },
+      '"Why do I always get sleepy around you?" **{name}** asks {user}, and doesn\'t wait for an answer.',
+      "**{name}** lets his phone ring out for {user}. Whoever's broken something can wait.",
+      "\"Stay a sec. You're the only one who doesn't need something fixed.\" **{name}** says it to {user} like a complaint.",
     ],
     bound: [
-      {
-        line: "\"I love you. ...Okay, that's the sentence. Now tell me about your day.\" **{name}** doesn't let go of {user}'s hand.",
-        responses: {
-          kind: "Tell him about your day",
-          playful: "Make him say it twice",
-          bold: "Say it back first",
-        },
-      },
-      {
-        line: "**{name}** rests his forehead on {user}'s shoulder, yawns, and stays right there.",
-        responses: {
-          kind: "Let him rest there",
-          playful: "Count his yawns",
-          bold: "Tell him to go to bed",
-        },
-      },
-      {
-        line: '"I\'ll walk you back. I wanted to do an inspection anyway." **{name}** falls into step beside {user}.',
-        responses: {
-          kind: "Let him walk you",
-          playful: "Ask what he's inspecting",
-          bold: "Say you'll inspect him",
-        },
-      },
+      "\"I love you. ...Okay, that's the sentence. Now tell me about your day.\" **{name}** doesn't let go of {user}'s hand.",
+      "**{name}** rests his forehead on {user}'s shoulder, yawns, and stays right there.",
+      '"I\'ll walk you back. I wanted to do an inspection anyway." **{name}** falls into step beside {user}.',
     ],
   },
 };

@@ -83,8 +83,8 @@
         "known": { "mood": "gentle", "duration": 2 },
         "warm": { "mood": "gentle_blush", "duration": 2.4 },
         "spark": { "mood": "gentle_blush", "duration": 2.6 },
-        "close": { "rank": 2, "duration": 2.6 },
-        "bound": { "rank": 2, "duration": 3 }
+        "close": { "mood": "full_smile_blush", "duration": 2.6 },
+        "bound": { "mood": "full_smile_blush", "duration": 3 }
       }
     },
     "cheekPoke": {
@@ -92,9 +92,9 @@
         "new": { "mood": "shining", "duration": 2 },
         "known": { "mood": "shining", "duration": 2 },
         "warm": { "mood": "shining", "duration": 2.4 },
-        "spark": { "rank": 1, "duration": 2.6 },
-        "close": { "rank": 1, "duration": 2.6 },
-        "bound": { "rank": 1, "duration": 3 }
+        "spark": { "mood": "surprise_blush", "duration": 2.6 },
+        "close": { "mood": "full_smile", "duration": 2.6 },
+        "bound": { "mood": "full_smile", "duration": 3 }
       }
     },
     "lipsTouch": {
@@ -102,7 +102,7 @@
         "new": { "mood": "surprise", "duration": 2.6 },
         "known": { "mood": "surprise", "duration": 2.6 },
         "warm": { "mood": "serious", "duration": 3 },
-        "spark": { "rank": 1, "duration": 3.2 },
+        "spark": { "mood": "surprise_blush", "duration": 3.2 },
         "close": { "mood": "gentle_blush", "duration": 3.2 },
         "bound": { "mood": "gentle_blush", "duration": 3.6 }
       }
@@ -123,8 +123,8 @@
         "known": { "mood": "gentle", "duration": 2 },
         "warm": { "mood": "gentle_blush", "duration": 2.4 },
         "spark": { "mood": "gentle_blush", "duration": 2.6 },
-        "close": { "rank": 2, "duration": 2.6 },
-        "bound": { "rank": 2, "duration": 3 }
+        "close": { "mood": "full_smile_blush", "duration": 2.6 },
+        "bound": { "mood": "full_smile_blush", "duration": 3 }
       }
     },
     "chestTouch": {
@@ -132,7 +132,7 @@
         "new": { "mood": "surprise", "duration": 2.2 },
         "known": { "mood": "serious", "duration": 2.2 },
         "warm": { "mood": "serious", "duration": 2.6 },
-        "spark": { "rank": 1, "duration": 2.8 },
+        "spark": { "mood": "surprise_blush", "duration": 2.8 },
         "close": { "mood": "gentle_blush", "duration": 2.8 },
         "bound": { "mood": "gentle_blush", "duration": 3.2 }
       }
@@ -141,10 +141,10 @@
       "byTier": {
         "new": { "mood": "surprise", "duration": 2.4 },
         "known": { "mood": "surprise", "duration": 2.4 },
-        "warm": { "rank": 1, "duration": 2.8 },
-        "spark": { "rank": 1, "duration": 3 },
-        "close": { "rank": 2, "duration": 3 },
-        "bound": { "rank": 2, "duration": 3.4 }
+        "warm": { "mood": "surprise", "duration": 2.8 },
+        "spark": { "mood": "surprise_blush", "duration": 3 },
+        "close": { "mood": "full_smile_blush", "duration": 3 },
+        "bound": { "mood": "full_smile_blush", "duration": 3.4 }
       }
     },
     "hipsTouch": {
@@ -152,15 +152,15 @@
         "new": { "mood": "surprise", "duration": 2.8 },
         "known": { "mood": "surprise", "duration": 2.8 },
         "warm": { "mood": "serious", "duration": 3.2 },
-        "spark": { "rank": 1, "duration": 3.4 },
-        "close": { "rank": 2, "duration": 3.4 },
-        "bound": { "rank": 2, "duration": 3.8 }
+        "spark": { "mood": "surprise_blush", "duration": 3.4 },
+        "close": { "mood": "full_smile_blush", "duration": 3.4 },
+        "bound": { "mood": "full_smile_blush", "duration": 3.8 }
       }
     },
     "handHold": {
       "byTier": {
         "spark": { "mood": "gentle_blush", "duration": 2.6 },
-        "close": { "rank": 2, "duration": 2.6 },
+        "close": { "mood": "full_smile_blush", "duration": 2.6 },
         "bound": { "mood": "gentle_blush", "duration": 3 }
       }
     },

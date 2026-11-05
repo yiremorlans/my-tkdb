@@ -27,7 +27,6 @@ import {
   winnerLineBucket,
   winnerLinePool,
   winnerLinePronouns,
-  winnerLineText,
 } from '../constants/publicEncounters.js';
 import { CHARACTERS, getFullName } from '../constants/characters.js';
 
@@ -85,8 +84,7 @@ test('every line names the winner and the character once filled', () => {
   for (const character of CHARACTERS) {
     const filled = vars(character);
     for (const bucket of WINNER_LINE_BUCKETS) {
-      for (const entry of winnerLinePool(bucket, character.id)) {
-        const line = winnerLineText(entry);
+      for (const line of winnerLinePool(bucket, character.id)) {
         const out = fillTemplate(line, filled);
         assert.ok(out.includes(filled.user), `${character.id}.${bucket} lost the mention: "${line}"`);
         assert.ok(
@@ -111,18 +109,18 @@ test('every dialogue tier maps to its own register', () => {
 });
 
 test("Jo's winner lines follow the encounter's outfit", () => {
-  // His casual silhouette is Venus, and the scene swaps to the _girl faces, so
+  // His casual silhouette is Venus, so
   // a hard-coded "he"/"his" is wrong half the time. Lines carry {he}/{his}.
   const jo = CHARACTERS.find((character) => character.id === 'jo');
   for (const bucket of WINNER_LINE_BUCKETS) {
     for (const entry of DIALOGUE.jo.winnerLines[bucket]) {
-      const casual = fillTemplate(winnerLineText(entry), vars(jo, 'casual'));
+      const casual = fillTemplate(entry, vars(jo, 'casual'));
       assert.ok(!/\b(he|him|his|himself)\b/i.test(casual), `jo.${bucket}: "${casual}"`);
     }
   }
-  const tokened = DIALOGUE.jo.winnerLines.known.find((entry) => entry.line.includes('{his}'));
-  assert.match(fillTemplate(tokened.line, vars(jo, 'uniform')), /\bhis pen\b/);
-  assert.match(fillTemplate(tokened.line, vars(jo, 'casual')), /\bher pen\b/);
+  const tokened = DIALOGUE.jo.winnerLines.known.find((entry) => entry.includes('{his}'));
+  assert.match(fillTemplate(tokened, vars(jo, 'uniform')), /\bhis pen\b/);
+  assert.match(fillTemplate(tokened, vars(jo, 'casual')), /\bher pen\b/);
   // Only Jo's outfit swaps: anyone else's casual art keeps "he".
   assert.equal(winnerLinePronouns('jin', 'casual').he, 'he');
   assert.equal(winnerLinePronouns('jo', 'casual').He, 'She');
@@ -160,7 +158,7 @@ test('a pmOnly character reveals wordlessly by day, and speaks by night', (t) =>
       }
       assert.deepStrictEqual(day, content.daytimeWinnerLines[bucket], `${character.id}.${bucket}`);
       assert.deepStrictEqual(night, content.winnerLines[bucket], `${character.id}.${bucket}`);
-      for (const line of day.map(winnerLineText)) {
+      for (const line of day) {
         assert.ok(!line.includes('"'), `${character.id}.${bucket} speaks by day: "${line}"`);
       }
     }

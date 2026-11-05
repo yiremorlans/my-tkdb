@@ -122,9 +122,9 @@
         "new": { "mood": "frown_sweat", "duration": 2 },
         "known": { "mood": "annoyed_away", "duration": 2 },
         "warm": { "mood": "away_blush", "duration": 2.4 },
-        "spark": { "rank": 2, "duration": 2.6 },
-        "close": { "rank": 2, "duration": 2.6 },
-        "bound": { "rank": 2, "duration": 3 }
+        "spark": { "mood": "blush", "duration": 2.6 },
+        "close": { "mood": "full_smile_blush", "duration": 2.6 },
+        "bound": { "mood": "full_smile_blush", "duration": 3 }
       }
     },
     "cheekPoke": {
@@ -143,8 +143,8 @@
         "known": { "mood": "sweat", "duration": 2 },
         "warm": { "mood": "away_blush", "duration": 2.4 },
         "spark": { "mood": "blush", "duration": 2.6 },
-        "close": { "rank": 2, "duration": 2.6 },
-        "bound": { "rank": 2, "duration": 3 }
+        "close": { "mood": "full_smile_blush", "duration": 2.6 },
+        "bound": { "mood": "full_smile_blush", "duration": 3 }
       }
     },
     "chestTouch": {
@@ -153,8 +153,8 @@
         "known": { "mood": "frown_sweat", "duration": 2.2, "twitch": 0.38 },
         "warm": { "mood": "uneasy", "duration": 2.6 },
         "spark": { "mood": "uneasy_blush", "duration": 2.8 },
-        "close": { "rank": 2, "duration": 2.8 },
-        "bound": { "rank": 2, "duration": 3.2 }
+        "close": { "mood": "full_smile_blush", "duration": 2.8 },
+        "bound": { "mood": "full_smile_blush", "duration": 3.2 }
       }
     },
     "lipsTouch": {
@@ -191,8 +191,8 @@
       "byTier": {
         "new": { "mood": "uneasy_sweat", "duration": 2.4, "twitch": 0.75 },
         "known": { "mood": "uneasy", "duration": 2.4, "twitch": 0.5 },
-        "warm": { "rank": 1, "duration": 2.8 },
-        "spark": { "rank": 1, "duration": 3 },
+        "warm": { "mood": "surprise", "duration": 2.8 },
+        "spark": { "mood": "surprise_blush", "duration": 3 },
         "close": { "mood": "smirk_blush", "duration": 3 },
         "bound": { "mood": "smirk_blush", "duration": 3.4 }
       }
@@ -201,7 +201,7 @@
       "byTier": {
         "spark": { "mood": "away_blush", "duration": 2.8 },
         "close": { "mood": "smirk_blush", "duration": 2.8 },
-        "bound": { "rank": 2, "duration": 3.2 }
+        "bound": { "mood": "full_smile_blush", "duration": 3.2 }
       }
     },
     "lipHold": {

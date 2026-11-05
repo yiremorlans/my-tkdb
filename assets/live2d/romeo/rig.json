@@ -88,8 +88,8 @@
         "known": { "mood": "annoyed", "duration": 2 },
         "warm": { "mood": "grumpy_blush", "duration": 2.4 },
         "spark": { "mood": "grumpy_blush", "duration": 2.6 },
-        "close": { "rank": 2, "duration": 2.6 },
-        "bound": { "rank": 2, "duration": 3 }
+        "close": { "mood": "full_smile_blush", "duration": 2.6 },
+        "bound": { "mood": "full_smile_blush", "duration": 3 }
       }
     },
     "cheekPoke": {
@@ -108,8 +108,8 @@
         "known": { "mood": "smirk", "duration": 2 },
         "warm": { "mood": "grumpy_blush", "duration": 2.4 },
         "spark": { "mood": "grumpy_blush", "duration": 2.6 },
-        "close": { "rank": 2, "duration": 2.6 },
-        "bound": { "rank": 2, "duration": 3 }
+        "close": { "mood": "full_smile_blush", "duration": 2.6 },
+        "bound": { "mood": "full_smile_blush", "duration": 3 }
       }
     },
     "lipsTouch": {
@@ -117,15 +117,15 @@
         "new": { "mood": "shout", "duration": 2.6, "twitch": 0.8 },
         "known": { "mood": "annoyed", "duration": 2.6, "twitch": 0.6 },
         "warm": { "mood": "annoyed", "duration": 3, "twitch": 0.3 },
-        "spark": { "rank": 1, "duration": 3.2 },
+        "spark": { "mood": "surprise_blush", "duration": 3.2 },
         "close": { "mood": "soft_smile_blush", "duration": 3.2 },
         "bound": { "mood": "soft_smile_blush", "duration": 3.6 }
       }
     },
     "earTouch": {
       "byTier": {
-        "new": { "rank": 0, "duration": 2.4, "twitch": 0.6 },
-        "known": { "rank": 0, "duration": 2.4, "twitch": 0.4 },
+        "new": { "mood": "annoyed", "duration": 2.4, "twitch": 0.6 },
+        "known": { "mood": "annoyed", "duration": 2.4, "twitch": 0.4 },
         "warm": { "mood": "smirk", "duration": 2.8 },
         "spark": { "mood": "flustered", "duration": 3 },
         "close": { "mood": "smirk_blush", "duration": 3 },
@@ -146,8 +146,8 @@
       "byTier": {
         "new": { "mood": "outraged", "duration": 2.4, "twitch": 0.6 },
         "known": { "mood": "outraged", "duration": 2.4, "twitch": 0.4 },
-        "warm": { "rank": 1, "duration": 2.8 },
-        "spark": { "rank": 1, "duration": 3 },
+        "warm": { "mood": "surprise", "duration": 2.8 },
+        "spark": { "mood": "surprise_blush", "duration": 3 },
         "close": { "mood": "smirk_blush", "duration": 3 },
         "bound": { "mood": "smirk_blush", "duration": 3.4 }
       }

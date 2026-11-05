@@ -270,16 +270,25 @@ test('every problem is reported at once', async () => {
   for (const p of [/reference\.width/, /unknown reaction/, /no motion group m_nope/, /moods\.sad/]) assert.match(msg, p);
 });
 
-test('ladder moods the rig lacks are warnings, not failures', async () => {
+test('a reaction with a rank is rejected', async () => {
+  const msg = await problems(rig({ reactions: { headPat: { byTier: { new: { rank: 2, duration: 2 } } } } }));
+  assert.match(msg, /reactions\.headPat\.new: rank is gone/);
+});
+
+test('reaction moods the rig lacks are warnings, not failures', async () => {
   const warnings = await validateLive2DRig(rig(), opts());
-  // The fixture only has smile and smile_blush; the ladder also wants these.
+  // The fixture only has smile and smile_blush; the default reactions also
+  // play these.
   for (const face of ['close', 'sweat', 'annoyed', 'surprise_blush', 'blush', 'full_smile_blush']) {
     assert.ok(warnings.some((w) => w.includes(`no ${face} `)), face);
   }
   assert.ok(!warnings.some((w) => w.includes('no smile ')));
-  // Per-character overrides count: Rui's known tier winks.
-  const rui = await validateLive2DRig(rig({ character: 'rui' }), opts());
-  assert.ok(rui.some((w) => w.includes('no wink ')));
+  // A rig's own reactions count, `then` moods included.
+  const own = await validateLive2DRig(
+    rig({ reactions: { headPat: { mood: 'smile', then: [1, 'wink'] } } }),
+    opts(),
+  );
+  assert.ok(own.some((w) => w.includes('no wink ')));
 });
 
 // --- every character's rig --------------------------------------------------

@@ -6,8 +6,10 @@ before deploy, then `npm run register` to un-hide the entry point).
 `OWNER_ONLY` in `activityRoutes.js` stays as the switch back.
 Last updated: 2026-11-01
 
-**Dates (§12)** were designed on 2026-11-01 and aren't built yet: the `/call`
-scene's date button launches a three-beat date in this Activity.
+**Dates (§12)** were designed on 2026-11-01 and aren't built yet: a
+three-beat date in this Activity, started from the `/meet` picker (entry
+point not designed yet; the `/call` scene's date button went with call scenes
+on 2026-11-04).
 
 A new home for `/meet`; `/roam` stays exactly as it is. The Hangout is a **solo, private Discord Activity** where a character —
 Alan first — idles in their own room as their **Live2D model**, the same
@@ -42,7 +44,6 @@ only, no App Directory listing, no monetization.
 | Dialogue box look, fonts | `imageComposition.js`, `assets/fonts` | the Activity's UI styling (§4.4) |
 | Alan's voice | `constants/dialogue/alan.js` | reference for drafting hangout lines (§4.3) |
 | `DATE_LOCATIONS`, `assets/bg/date/` | `constants/backgrounds.js` | the date spots (§12.4) |
-| Call scenes' date button | [`public-encounters.md`](./public-encounters.md) §17.3 | how a date starts (§12.1) |
 
 **Affinity sources.** [`bond-scene-dms.md`](./bond-scene-dms.md) and
 [`scheduled-missions.md`](./scheduled-missions.md) both state that `/roam` and
@@ -169,9 +170,9 @@ checks it, in the browser on load and in
 ### 3.2 Expressions
 
 Each mood is a stack of the model's own expression files (`exp3`), added
-together and crossfaded over `expressions.fade`. A mood the expression
-ladder can pick (§4.2) but the rig lacks shows `default`, and the validator
-lists it as a warning rather than a failure. **Upset** is `serious` +
+together and crossfaded over `expressions.fade`. A mood a reaction
+names (§4.2) but the rig lacks shows `default`, and the validator lists it
+as a warning rather than a failure. **Upset** is `serious` +
 `sweat` where the model has no anger expression of its own.
 
 Between reactions he rests on `default`, or on `restMood` (a mood, or
@@ -278,23 +279,24 @@ The model animates itself; rig.json only scales how much of it shows.
 
 ### 4.2 Interactions
 
-Touch faces come off the same expression ladder as call scenes
-(`SCENE_FACES` + `SCENE_FACE_OVERRIDES` in constants/sceneFaces.js,
-docs/public-encounters.md §17.4.1): each spot sits on a rung (2 = the face
-for a favorite response at that tier, 1 = a liked one, 0 = the least), and
-the tier picks the face on that rung. Overrides carry over, so Alan's flat
-face at new is `serious` and his spark fave is `smile_blush`.
+Every touch face is a **mood named per tier**: `DEFAULT_REACTIONS` in
+`activity/src/hangout/reactions.js` sets the shared defaults, a rig's
+`reactions` override them, and each mood is the rig's own set of Live2D
+expressions (`expressions.moods`). Poses are separate (`reactionPoses`).
+(Until 2026-11-04 a reaction could give a `rank` instead, picked off the
+call scenes' PNG face ladder. Every rank was replaced with the mood it
+resolved to, with no visible change, and the ladder was deleted.)
 
-| Trigger | Rung | Alan (new/known · warm · spark · close/bound) |
+| Trigger | Default register | Alan (new/known · warm · spark · close/bound) |
 |---|---|---|
-| Head pat | 2 | close · surprise_blush · smile_blush · full_smile_blush; pose `m_kubi` |
-| Hand tap (L/R) | 2 | close · surprise_blush · smile_blush · full_smile_blush |
-| Cheek poke | 1 | sweat · surprise · surprise_blush · full_smile |
-| Ear (L/R) | 0, 1 from spark, 2 from close | serious · serious · surprise_blush · full_smile_blush; as sensitive as the belly; three taps fill the annoyance meter |
-| Lips | 0, 1 from spark, 2 from close | serious · serious · surprise_blush · full_smile_blush; very guarded, not aggressive: second only to the hips; pose `m_pocket` at new–warm, `m_kubi` from spark, `m_migikoshi` from close; two quick taps fill the annoyance meter |
-| Chest | 0, 1 from spark, 2 from close | serious · serious · surprise_blush · full_smile_blush; the least sensitive guarded spot; four taps fill the annoyance meter |
-| Belly | 0, 1 from warm, 2 from close | serious · surprise · surprise_blush · full_smile_blush; as sensitive as the ears; three taps fill the annoyance meter |
-| Hips | 0, 1 from spark, 2 from close | the most guarded spot: serious at new/known/warm, blush only from spark; pose `m_udekumi` (arms crossed) at new–warm, `m_kubi` from spark, `m_migikoshi` from close; flinches hardest of every spot at new/known; two taps fill the annoyance meter |
+| Head pat | welcome | close · surprise_blush · smile_blush · full_smile_blush; pose `m_kubi` |
+| Hand tap (L/R) | welcome | close · surprise_blush · smile_blush · full_smile_blush |
+| Cheek poke | friendly | sweat · surprise · surprise_blush · full_smile |
+| Ear (L/R) | guarded, softens from spark | serious · serious · surprise_blush · full_smile_blush; as sensitive as the belly; three taps fill the annoyance meter |
+| Lips | guarded, softens from spark | serious · serious · surprise_blush · full_smile_blush; very guarded, not aggressive: second only to the hips; pose `m_pocket` at new–warm, `m_kubi` from spark, `m_migikoshi` from close; two quick taps fill the annoyance meter |
+| Chest | guarded, softens from spark | serious · serious · surprise_blush · full_smile_blush; the least sensitive guarded spot; four taps fill the annoyance meter |
+| Belly | guarded, softens from warm | serious · surprise · surprise_blush · full_smile_blush; as sensitive as the ears; three taps fill the annoyance meter |
+| Hips | guarded, softens from spark | the most guarded spot: serious at new/known/warm, blush only from spark; pose `m_udekumi` (arms crossed) at new–warm, `m_kubi` from spark, `m_migikoshi` from close; flinches hardest of every spot at new/known; two taps fill the annoyance meter |
 | Spam-tapping | — | annoyance meter rises with fast repeated taps and decays over time; a run of quick normal taps fills it, fewer taps the more sensitive the spot (`SPOT_ANNOYANCE`: head = hands < chest < ears = belly < lips < hips). The more sensitive the spot, the longer its face holds too; past the threshold → **upset** + pose `m_angry` + a line ("…stop that."). The upset face holds until its line has typed out plus `UPSET_READ` (2.5s), or its `duration` or pose if longer, then eases into the next face over `SETTLE_FADE` (1.6s, smoothstepped) instead of the 0.2s crossfade, as every reaction's face does (a reaction's `fadeOut` overrides it; a face that shuts the eyes or swaps the eye art, such as a full smile, a wink or Ren's `e_shock_00`, fades back over 0.25s instead, and leaving a tongue or open grin, such as Taiga's `e_pero_00` or his big grin `e_choshi_02`, just the mouth does, for every rig: live2dRig.js `SNAP_BACK`). At new, known and warm (`LOCKOUT_TIERS`) he then locks out: once the upset face ends he holds his `guarded` face (rig.json `expressions.moods.guarded`, a face he can hold indefinitely: no sweat, no open mouth; set where his upset isn't a stronger `serious`), else `serious`, and a guarded pose (rig.json `reactionPoses.guarded`, else `m_udekumi`, else his upset pose; Edward's is `m_weak`) and ignores every tap until the tier changes. From spark, taps are ignored briefly, then he settles |
 
 Every character has the same touch spots (`TOUCH_SPOTS` in
@@ -912,8 +914,7 @@ In order:
 4. **The pick.** The choices close and the answer route runs (§11.3).
 5. **The face.** The rig plays a mood for the outcome (love / like / flat,
    from `getAffinityForResponse`), set per tier in `DEFAULT_REACTIONS`
-   (`answerLove` / `answerLike` / `answerFlat`), not off the call-scene
-   ladder: love `smile` → `full_smile` from spark; like `close` → `smile`
+   (`answerLove` / `answerLike` / `answerFlat`): love `smile` → `full_smile` from spark; like `close` → `smile`
    from spark; flat `indifferent`, a content `close` from close. Answers
    never blush: blush is earned by touches and holds. A rig overrides them
    in its `reactions` with the character's own register (a smirk, a
@@ -1091,28 +1092,35 @@ reference file (voice-check workflow) and approved by the user, like §4.3.
 
 Status: **designed 2026-11-01, not built.** Settled in a design review with
 the user on 2026-11-01. A date is a short, three-beat encounter in this
-Activity at a date spot, started from a `/call` scene. It's the Live2D
-rig's own feature: there's no image version of it.
+Activity at a date spot, started from the `/meet` picker (revised
+2026-11-04, when call scenes and their date button were removed). It's the
+Live2D rig's own feature: there's no image version of it.
 
 ### 12.1 Starting a date
 
-- **Only from the call scene's date button**
-  ([`public-encounters.md`](./public-encounters.md) §17.3): the scene's
-  winner, at **Confidant or above** (affinity ≥ 260), clicks
-  `Ask on a date`. Scenes fire on 5% of wins, so dates are rare and read as
-  a prize. `/meet` and `/roam` don't start dates.
-- **The click claims the scene** (one atomic claim, winner only, §17.4) and
-  gives up the scene's +1. It answers with `LAUNCH_ACTIVITY`, sent with
+- **From the `/meet` picker** (revised 2026-11-04). A date is asked for on
+  a `/meet` picker, with a character drawn into it whom the player is at
+  **Confidant or above** with (affinity ≥ 260). **The button isn't designed
+  yet:** for now nothing in the picker starts a date, so dates have no entry
+  point. `/roam` doesn't start dates.
+- **No locked teasers.** A drawn character below Confidant shows no date
+  option at all, locked or otherwise.
+- **The launch** answers with `LAUNCH_ACTIVITY`, sent with
   `with_response=true` so the date is tied to the Activity instance, like
-  §11.2.
+  §11.2, and greys out the picker like a name click (one launch per `/meet`
+  message).
 - **Every character, Benkei included.** No skip list. Each character's
   limits live in their lines (Rui's curse, Zenji answering the intention,
   Towa mute by day and so on), not in rules.
-- **No cap of its own.** The scene rate, the winner check and the Confidant
-  gate are enough.
-- **Separate from `/meet`.** A date doesn't check, use or stamp the `/meet`
-  cooldown. Someone on `/meet` cooldown can still go on a date, and a date
-  doesn't block the next `/meet`.
+- **It is that `/meet`.** A date shares the `/meet` 3h cooldown: the
+  arrival answer calls `claimCommandUse(userId, 'meet')` and stamps it, so
+  the picker's other names then get the cooldown refusal, as after a `/meet`
+  answer. Leaving before the arrival answer costs nothing, like leaving a
+  `/meet` unanswered. (Revised 2026-11-04 from "separate from `/meet`": with
+  dates on the picker, a separate cooldown would make every Confidant+ draw
+  a free extra +2.)
+- **Errands.** If the character is an unsigned errand target, the arrival
+  answer signs the errand, as a `/meet` answer does.
 - **The tier is fixed at launch:** `close` at Confidant, `bound` at
   Devoted and Soulbound. A level-up mid-date sends the bond-scene DM as
   usual, but the date's remaining beats stay on the tier it started with.
@@ -1275,7 +1283,8 @@ the flinch is (§4.2).
 - A saved date on the server, like a §11.2 encounter: user, character,
   tier, spot, outfit, the three drawn beats with their mood flags, which
   beats are answered, and whether the photo was taken. Plus `date_photos`
-  and the storage bucket. One new migration (036).
+  and the storage bucket. One new migration (the next free number; 036 went
+  to dropping the call-scene columns).
 - Routes, all behind the session token (§5.1):
   `GET /api/activity/date?instance=<id>`, `POST /api/activity/date/answer`
   `{ date, stage, type }`, `POST /api/activity/photo`.
@@ -1292,6 +1301,15 @@ shares this section's answer route, photo, `/album` and warmth. The
 differences are listed there, not here.
 
 ### 12.11 Open questions
+
+- **Rarity** (stashed 2026-11-04). With dates on the picker, how often one is
+  offered comes from the draw (a given Confidant+ character is in about 4/26
+  of pickers, errand seeds aside). Whether that needs an extra chance roll or
+  a cap isn't decided. The old 5% scene rate no longer applies.
+- **The picker button** (deferred 2026-11-04): its layout and label. A second
+  Action Row of `💞 <First name>` buttons was proposed and not taken.
+- **`/call` boosts.** Whether a pending boost on the character applies to a
+  date beat (and is spent) the way it applies to a `/meet` answer.
 
 - **Photo forgery.** The photo is drawn on the player's device, so the
   server can't verify the pixels, and Share posts it publicly. Cheap

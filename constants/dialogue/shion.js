@@ -630,168 +630,35 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      {
-        line: '**{name}**\'s eyes track over first, then his head, slow. "...You knew my name." {user} did.',
-        responses: {
-          kind: "Say it's a nice name",
-          playful: "Say you'll forget it later",
-          bold: "Say his name, slower",
-        },
-      },
-      {
-        line: '"Come closer." **{name}** says it to {user} like it isn\'t a request.',
-        responses: {
-          kind: "Say you're fine right here",
-          playful: "Lean in, feet planted",
-          bold: "Walk up nose to nose",
-        },
-      },
-      {
-        line: "{user} says hi, and **{name}** looks pleased in a way that isn't reassuring.",
-        responses: {
-          kind: "Ask why he looks pleased",
-          playful: "Ask what he's plotting",
-          bold: "Say you said it on purpose",
-        },
-      },
-      {
-        line: '**{name}** tilts his head at {user} and smiles, slow. "Hm? Most people keep their distance."',
-        responses: {
-          kind: "Say you don't mind him",
-          playful: "Keep your distance, barely",
-          bold: "Say you're not most people",
-        },
-      },
+      '**{name}**\'s eyes track over first, then his head, slow. "...You knew my name." {user} did.',
+      '"Come closer." **{name}** says it to {user} like it isn\'t a request.',
+      "{user} says hi, and **{name}** looks pleased in a way that isn't reassuring.",
+      '**{name}** tilts his head at {user} and smiles, slow. "Hm? Most people keep their distance."',
     ],
     known: [
-      {
-        line: "**{name}**'s eyes are already on {user}. He doesn't look away when they notice.",
-        responses: {
-          kind: "Smile at him",
-          playful: "Look away, then peek back",
-          bold: "Hold his stare until he blinks",
-        },
-      },
-      {
-        line: '"You\'re still alive, then." **{name}** looks {user} over. "I looked everywhere."',
-        responses: {
-          kind: "Say you're glad he looked",
-          playful: "Play dead for a second",
-          bold: "Say you wanted him to look",
-        },
-      },
-      {
-        line: '"Hurry up already." **{name}** has been waiting on {user}, and acts like that\'s their fault.',
-        responses: {
-          kind: "Say you're here now",
-          playful: "Stop to tie your shoe",
-          bold: "Say you're worth the wait",
-        },
-      },
+      "**{name}**'s eyes are already on {user}. He doesn't look away when they notice.",
+      '"You\'re still alive, then." **{name}** looks {user} over. "I looked everywhere."',
+      '"Hurry up already." **{name}** has been waiting on {user}, and acts like that\'s their fault.',
     ],
     warm: [
-      {
-        line: "**{name}** had been waiting in this exact spot for {user}.",
-        responses: {
-          kind: "Ask how long he waited",
-          playful: "Pretend you got lost",
-          bold: "Say you came straight to him",
-        },
-      },
-      {
-        line: '"My wife." **{name}** greets {user} with it, like it\'s already settled.',
-        responses: {
-          kind: "Greet him back politely",
-          playful: "Ask when the wedding was",
-          bold: "Say he's yours, too",
-        },
-      },
-      {
-        line: "**{name}** was in a foul mood right up until {user} showed up.",
-        responses: {
-          kind: "Ask what soured his mood",
-          playful: "Ask whose day he'll ruin",
-          bold: "Say that's your job now",
-        },
-      },
+      "**{name}** had been waiting in this exact spot for {user}.",
+      '"My wife." **{name}** greets {user} with it, like it\'s already settled.',
+      "**{name}** was in a foul mood right up until {user} showed up.",
     ],
     spark: [
-      {
-        line: "\"You're not scared of me.\" **{name}** can't decide whether that disappoints him about {user}.",
-        responses: {
-          kind: "Say you never were",
-          playful: "Pretend to be scared now",
-          bold: "Ask if that disappoints him",
-        },
-      },
-      {
-        line: "{user} calls his name, and **{name}** closes the distance immediately. All of it.",
-        responses: {
-          kind: "Stay where you are",
-          playful: "Ask if he left any room",
-          bold: "Stand your ground",
-        },
-      },
-      {
-        line: '"Closer." **{name}** has said it to {user} before.',
-        responses: {
-          kind: "Take a small step",
-          playful: "Ask how close is close",
-          bold: "Step all the way in",
-        },
-      },
+      "\"You're not scared of me.\" **{name}** can't decide whether that disappoints him about {user}.",
+      "{user} calls his name, and **{name}** closes the distance immediately. All of it.",
+      '"Closer." **{name}** has said it to {user} before.',
     ],
     close: [
-      {
-        line: "**{name}** takes {user}'s hand and does not give it back.",
-        responses: {
-          kind: "Let him keep it",
-          playful: "Ask for it back",
-          bold: "Hold his hand tighter",
-        },
-      },
-      {
-        line: '"Who else was out here?" **{name}** asks {user}, already deciding to remember their faces.',
-        responses: {
-          kind: "Say no one important",
-          playful: "Make up a name",
-          bold: "Say that's your business",
-        },
-      },
-      {
-        line: "\"Where are you going? ...Hmm. Then I'll come with you.\" **{name}** doesn't give {user} a vote.",
-        responses: {
-          kind: "Say you'd like that",
-          playful: "Ask for a vote anyway",
-          bold: "Say you were going to ask",
-        },
-      },
+      "**{name}** takes {user}'s hand and does not give it back.",
+      '"Who else was out here?" **{name}** asks {user}, already deciding to remember their faces.',
+      "\"Where are you going? ...Hmm. Then I'll come with you.\" **{name}** doesn't give {user} a vote.",
     ],
     bound: [
-      {
-        line: '"My wife," **{name}** breathes, and means every letter of it to {user}.',
-        responses: {
-          kind: "Say his name back",
-          playful: "Ask for the vows",
-          bold: "Say husband",
-        },
-      },
-      {
-        line: "**{name}** tucks {user} under the jacket draped over his shoulders, like he's hiding them from everyone else.",
-        responses: {
-          kind: "Stay under the jacket",
-          playful: "Ask who you're hiding from",
-          bold: "Pull him under too",
-        },
-      },
-      {
-        line: "{user} meets **{name}** halfway, and he decides, again, that forever is the plan.",
-        responses: {
-          kind: "Say forever sounds right",
-          playful: "Ask what's after forever",
-          bold: "Say you decided first",
-        },
-      },
+      '"My wife," **{name}** breathes, and means every letter of it to {user}.',
+      "**{name}** tucks {user} under the jacket draped over his shoulders, like he's hiding them from everyone else.",
+      "{user} meets **{name}** halfway, and he decides, again, that forever is the plan.",
     ],
   },
 };

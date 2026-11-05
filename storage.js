@@ -7,8 +7,7 @@ import { updateAffinity, incrementTimesMet, updateLastResponseType } from './db/
  * Where an updateAffinity result left the user: `level` now, `previousLevel` a
  * moment ago, and `leveledUp`, the crossing the bond-scene DM hangs off
  * (docs/bond-scene-dms.md §1.1). updateAffinity hands back the affinity it read
- * before writing, so the crossing is free. Shared by /roam's reply and the
- * /call scene click.
+ * before writing, so the crossing is free. Used by /roam's reply.
  *
  * Compared by ladder position rather than by name so the check is directional:
  * only a move *up* the ladder is a level-up. Levels are never skipped — the

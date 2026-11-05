@@ -27,7 +27,6 @@ import {
   handleEncounterDev,
   handleEncounterDevHangout,
   handleEncountersAdmin,
-  handleSceneClick,
 } from './publicEncounters.js';
 import { buildDossierMessage } from './missions/dossier.js';
 import { handleMissionDev, handleMissionsAdmin } from './missions/admin.js';
@@ -53,7 +52,6 @@ import {
 } from './bondScenes.js';
 import { countdownAutocomplete, handleCountdownAdmin, handleEvent, handleWishingWell } from './countdown.js';
 import { startEncounterScheduler } from './encounterScheduler.js';
-import { deleteInteractionMessage } from './discordRest.js';
 import {
   isMaintenanceModeActive,
   isMaintenanceBypassUser,
@@ -662,31 +660,14 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           result = { reply: { content: 'Something went wrong there. Try again?' }, afterReply: null };
         }
 
-        if (result.reply) {
-          try {
-            await sendFollowup(req.body.token, result.reply, 15000, true);
-          } catch (followupErr) {
-            console.error('Failed to send /call followup:', followupErr);
-          }
-          // Runs regardless of the followup: the reward grant and public reveal
-          // must not hinge on the winner's ephemeral ack landing.
-          result.afterReply?.().catch(err => console.error('Error in /call follow-up:', err));
-          return;
-        }
-
-        // A call-scene win: no ack, the scene names the character. afterReply
-        // resolves to the boost ack only when the scene failed to post;
-        // otherwise the "thinking…" placeholder is deleted.
         try {
-          const lateReply = await result.afterReply();
-          if (lateReply) {
-            await sendFollowup(req.body.token, lateReply, 15000, true);
-          } else {
-            await deleteInteractionMessage(req.body.token, '@original');
-          }
-        } catch (err) {
-          console.error('Error in /call scene follow-up:', err);
+          await sendFollowup(req.body.token, result.reply, 15000, true);
+        } catch (followupErr) {
+          console.error('Failed to send /call followup:', followupErr);
         }
+        // Runs regardless of the followup: the reward grant and public reveal
+        // must not hinge on the winner's ephemeral ack landing.
+        result.afterReply?.().catch(err => console.error('Error in /call follow-up:', err));
       })();
       return;
     }
@@ -959,44 +940,15 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
       return;
     }
 
-    // scene:<encounterId>:<kind|playful|bold|date> — the winner answers a /call
-    // scene (docs/public-encounters.md §17). Ack with a silent deferred update
-    // first, since the winner check and the one-click claim are two Supabase
-    // round trips, then PATCH @original with the closed scene, or send a
-    // refusal as an ephemeral followup and leave the post alone.
+    // scene:<encounterId>:<choice> — a button on an old /call scene post. Call
+    // scenes were removed on 2026-11-04 (docs/public-encounters.md §17); posts
+    // still in channels keep their buttons, so a click gets this and nothing
+    // else. Safe to delete once those posts have scrolled out of sight.
     if (action === 'scene') {
-      const [encounterId, choice] = rest;
-      res.send({ type: InteractionResponseType.DEFERRED_UPDATE_MESSAGE });
-
-      let result;
-      try {
-        result = await handleSceneClick(req.body, encounterId, choice);
-      } catch (err) {
-        console.error(`[scene] Click on encounter ${encounterId} failed:`, err.message);
-        result = {
-          response: {
-            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-            data: { content: 'Something went wrong there. Try again?', flags: EPHEMERAL },
-          },
-        };
-      }
-
-      const { response } = result;
-      try {
-        await sendFollowup(
-          req.body.token,
-          response.data,
-          15000,
-          response.type === InteractionResponseType.UPDATE_MESSAGE,
-        );
-      } catch (err) {
-        // The claim already committed, so the scene can't be answered again;
-        // the next spawn's closeout skips it too. The post keeps its opening.
-        console.error(`[scene] Could not apply the click on encounter ${encounterId}:`, err.message);
-      }
-
-      result.afterReply?.().catch(err => console.error(`[scene] Follow-up for encounter ${encounterId} failed:`, err.message));
-      return;
+      return res.send({
+        type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+        data: { content: 'That moment has passed.', flags: EPHEMERAL },
+      });
     }
 
     // ward:spawn:<encounterId>  — reveal the card art

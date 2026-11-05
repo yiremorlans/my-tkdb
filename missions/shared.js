@@ -106,7 +106,6 @@ export function missionEmbed(missionId, description) {
 
 // `${BASE_URL}/assets/<relPath>`, or null (logged) when BASE_URL isn't an
 // absolute http(s) URL: Discord rejects a whole message whose image URL isn't.
-// Shared with the /call scenes (publicEncounters.js).
 export function absoluteAssetUrl(relPath, what) {
   const url = `${process.env.BASE_URL || ""}/assets/${relPath}`;
   if (/^https?:\/\//i.test(url)) return url;

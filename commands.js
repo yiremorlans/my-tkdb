@@ -303,12 +303,6 @@ const ENCDEV_COMMAND = {
             { name: "casual", value: "casual" },
           ],
         },
-        {
-          name: "scene",
-          description: "Make this encounter's win a call scene (if the character has one at your tier)",
-          type: 5, // BOOLEAN
-          required: false,
-        },
       ],
     },
     {

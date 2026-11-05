@@ -682,168 +682,35 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      {
-        line: '{user} flags **{name}** down on his way back to the dorm. He slows, barely. "Yeah, that\'s me. You need something or what?"',
-        responses: {
-          kind: "Say you just wanted to say hi",
-          playful: "Say you need a ride",
-          bold: "Ask what's cooking tonight",
-        },
-      },
-      {
-        line: "{user} calls his name, and **{name}** waves them over before deciding anything else.",
-        responses: {
-          kind: "Head right over",
-          playful: "Wave back from here",
-          bold: "Ask what he decided",
-        },
-      },
-      {
-        line: '{user} catches **{name}** swinging off his motorcycle. He tugs his helmet off. "What\'re you looking at?"',
-        responses: {
-          kind: "Say the bike's beautiful",
-          playful: "Point out his helmet hair",
-          bold: "Ask to take it for a spin",
-        },
-      },
-      {
-        line: '**{name}** shifts a takeout box to his other hand and looks {user} over. "You hungry, or just staring?"',
-        responses: {
-          kind: "Say it smells really good",
-          playful: "Say you're just staring",
-          bold: "Ask if you can have it free",
-        },
-      },
+      '{user} flags **{name}** down on his way back to the dorm. He slows, barely. "Yeah, that\'s me. You need something or what?"',
+      "{user} calls his name, and **{name}** waves them over before deciding anything else.",
+      '{user} catches **{name}** swinging off his motorcycle. He tugs his helmet off. "What\'re you looking at?"',
+      '**{name}** shifts a takeout box to his other hand and looks {user} over. "You hungry, or just staring?"',
     ],
     known: [
-      {
-        line: '"Oh, it\'s you." **{name}** leans out the truck window at {user}. "Hungry, Senpai, or just bored?"',
-        responses: {
-          kind: "Say you're starving",
-          playful: "Say bored, but still hungry",
-          bold: "Order the biggest thing",
-        },
-      },
-      {
-        line: '{user} calls his name, and **{name}** is already heading over. "Yeah, yeah. I heard you the first time."',
-        responses: {
-          kind: "Meet him halfway",
-          playful: "Call him one more time",
-          bold: "Say he was slow anyway",
-        },
-      },
-      {
-        line: '**{name}** turns at the sound of {user}\'s voice, already grinning. "Pfft. Knew it was you, Senpai."',
-        responses: {
-          kind: "Say you came to find him",
-          playful: "Ask how he always knows",
-          bold: "Say you could've been anyone",
-        },
-      },
+      '"Oh, it\'s you." **{name}** leans out the truck window at {user}. "Hungry, Senpai, or just bored?"',
+      '{user} calls his name, and **{name}** is already heading over. "Yeah, yeah. I heard you the first time."',
+      '**{name}** turns at the sound of {user}\'s voice, already grinning. "Pfft. Knew it was you, Senpai."',
     ],
     warm: [
-      {
-        line: '**{name}** spots {user} across the courtyard and whistles them over. "C\'mon, Senpai. What took you so long?"',
-        responses: {
-          kind: "Say you came straight here",
-          playful: "Whistle back at him",
-          bold: "Make him come to you",
-        },
-      },
-      {
-        line: "\"What're you yelling for, Senpai? I'm right here.\" **{name}** doesn't bother hiding the grin from {user}.",
-        responses: {
-          kind: "Say you wanted to see him",
-          playful: "Yell his name once more",
-          bold: "Say he's hard to find",
-        },
-      },
-      {
-        line: "**{name}** was closing up. He is now, somehow, cooking for {user}.",
-        responses: {
-          kind: "Offer to help him close",
-          playful: "Ask for the secret menu",
-          bold: "Say you'll stay till it's done",
-        },
-      },
+      '**{name}** spots {user} across the courtyard and whistles them over. "C\'mon, Senpai. What took you so long?"',
+      "\"What're you yelling for, Senpai? I'm right here.\" **{name}** doesn't bother hiding the grin from {user}.",
+      "**{name}** was closing up. He is now, somehow, cooking for {user}.",
     ],
     spark: [
-      {
-        line: '"What\'re you looking at, Senpai?" **{name}** is grinning at {user} like he won something.',
-        responses: {
-          kind: "Say you're glad to see him",
-          playful: "Say you like his smile",
-          bold: "Reach up and fix his collar",
-        },
-      },
-      {
-        line: "{user} calls his name from the bus stop, and **{name}** swings Bonnie around in a tight turn to pull up right beside them.",
-        responses: {
-          kind: "Ask where he was headed",
-          playful: "Ask if Bonnie's showing off",
-          bold: "Steal his helmet",
-        },
-      },
-      {
-        line: "{user} calls his name, and **{name}** kicks his skateboard up into his hand and jogs the rest of the way over.",
-        responses: {
-          kind: "Say you'll walk with him",
-          playful: "Ask to see a trick",
-          bold: "Take his free hand",
-        },
-      },
+      '"What\'re you looking at, Senpai?" **{name}** is grinning at {user} like he won something.',
+      "{user} calls his name from the bus stop, and **{name}** swings Bonnie around in a tight turn to pull up right beside them.",
+      "{user} calls his name, and **{name}** kicks his skateboard up into his hand and jogs the rest of the way over.",
     ],
     close: [
-      {
-        line: "**{name}** hears {user} and leaves the truck running. Somebody else's problem.",
-        responses: {
-          kind: "Say you'll wait by the truck",
-          playful: "Ask who's driving it",
-          bold: "Tell him to turn it off",
-        },
-      },
-      {
-        line: "\"Don't move, Senpai. I'm coming to you.\" **{name}** is already halfway to {user}.",
-        responses: {
-          kind: "Stay put for him",
-          playful: "Take one step anyway",
-          bold: "Walk to him instead",
-        },
-      },
-      {
-        line: "{user} calls, and **{name}** kisses their temple on the way past without thinking about it.",
-        responses: {
-          kind: "Smile after him",
-          playful: "Ask if he meant to",
-          bold: "Stop him for another",
-        },
-      },
+      "**{name}** hears {user} and leaves the truck running. Somebody else's problem.",
+      "\"Don't move, Senpai. I'm coming to you.\" **{name}** is already halfway to {user}.",
+      "{user} calls, and **{name}** kisses their temple on the way past without thinking about it.",
     ],
     bound: [
-      {
-        line: "\"Order's already going, Senpai. Started the second I saw you.\" **{name}** tells {user} he isn't sorry about it.",
-        responses: {
-          kind: "Say it smells perfect",
-          playful: "Ask what you ordered",
-          bold: "Say make it two",
-        },
-      },
-      {
-        line: "**{name}** was humming. {user} calling his name made it considerably worse.",
-        responses: {
-          kind: "Hum along with him",
-          playful: "Ask what song it is",
-          bold: "Hum louder than him",
-        },
-      },
-      {
-        line: "{user} calls his name, and **{name}** decides the **{house}** shift can run itself.",
-        responses: {
-          kind: "Say the shift will survive",
-          playful: "Ask who's in charge now",
-          bold: "Steal him for the hour",
-        },
-      },
+      "\"Order's already going, Senpai. Started the second I saw you.\" **{name}** tells {user} he isn't sorry about it.",
+      "**{name}** was humming. {user} calling his name made it considerably worse.",
+      "{user} calls his name, and **{name}** decides the **{house}** shift can run itself.",
     ],
   },
 };

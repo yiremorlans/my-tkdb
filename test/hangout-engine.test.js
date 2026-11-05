@@ -8,7 +8,6 @@ import assert from 'node:assert';
 import { AnnoyanceMeter } from '../activity/src/hangout/annoyance.js';
 import { AFTER_LINE_HOLD, AFTER_LINE_SETTLE, Hangout, LINE_HOLD, SOUND_COOLDOWN, TYPE_MS, typeDuration } from '../activity/src/hangout/hangout.js';
 import { DEFAULT_REACTIONS, forTier, resolveReaction } from '../activity/src/hangout/reactions.js';
-import { rankFace } from '../constants/sceneFaces.js';
 
 function rig(overrides = {}) {
   return {
@@ -147,9 +146,9 @@ test('a rig.json reaction overrides the shared default', () => {
 });
 
 test('rig.json sounds layer over a shared reaction by tier, keeping its faces', () => {
-  // The face the shared ladder gives a warm head pat, read off the ladder so a
+  // The shared default's warm head-pat mood, read off DEFAULT_REACTIONS so a
   // face retune there doesn't break this.
-  const warmHeadPat = rankFace('test', 'warm', forTier(DEFAULT_REACTIONS.headPat, 'warm').rank);
+  const warmHeadPat = forTier(DEFAULT_REACTIONS.headPat, 'warm').mood;
   const moods = Object.fromEntries(['default', 'close', warmHeadPat].map((m) => [m, {}]));
   const r = rig({
     expressions: { head: 'head', moods },

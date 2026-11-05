@@ -665,168 +665,35 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      {
-        line: '"Make it quick." **{name}** doesn\'t turn around, but {user} has his attention.',
-        responses: {
-          kind: "Say it in one sentence",
-          playful: "Say it's a one-liner",
-          bold: "Wait until he turns around",
-        },
-      },
-      {
-        line: "{user} names him, and **{name}** looks over, unimpressed that it took this long.",
-        responses: {
-          kind: "Say you're glad you found him",
-          playful: "Say you took the scenic route",
-          bold: "Say it was worth the wait",
-        },
-      },
-      {
-        line: '"You know who I am. Good." **{name}** allows {user} one step closer.',
-        responses: {
-          kind: "Say you're glad to meet him",
-          playful: "Ask who doesn't know him",
-          bold: "Close the gap yourself",
-        },
-      },
-      {
-        line: "**{name}** looks {user} over like he's deciding whether they're worth his time. \"Well? Say something.\"",
-        responses: {
-          kind: "Say a polite hello",
-          playful: "Bow like a servant",
-          bold: "Say you're worth it",
-        },
-      },
+      '"Make it quick." **{name}** doesn\'t turn around, but {user} has his attention.',
+      "{user} names him, and **{name}** looks over, unimpressed that it took this long.",
+      '"You know who I am. Good." **{name}** allows {user} one step closer.',
+      "**{name}** looks {user} over like he's deciding whether they're worth his time. \"Well? Say something.\"",
     ],
     known: [
-      {
-        line: '"What? You got a problem?" **{name}** stops for {user} anyway.',
-        responses: {
-          kind: "Say you only came to see him",
-          playful: "Say only a small one",
-          bold: "Say he'll want to hear this",
-        },
-      },
-      {
-        line: '"I\'m not wasting my time on those brats today." **{name}** stays put for {user}, though.',
-        responses: {
-          kind: "Say you'll keep it brief",
-          playful: "Ask if you're a brat",
-          bold: "Say you're not one of them",
-        },
-      },
-      {
-        line: '"Kneel!" **{name}** catches sight of {user}. "...Tsk. Not you. Get over here."',
-        responses: {
-          kind: "Go over to him",
-          playful: "Kneel anyway",
-          bold: "Say you knew it wasn't you",
-        },
-      },
+      '"What? You got a problem?" **{name}** stops for {user} anyway.',
+      '"I\'m not wasting my time on those brats today." **{name}** stays put for {user}, though.',
+      '"Kneel!" **{name}** catches sight of {user}. "...Tsk. Not you. Get over here."',
     ],
     warm: [
-      {
-        line: '"Walk with me, then. Keep up." **{name}** doesn\'t break stride, but he slows just enough for {user}.',
-        responses: {
-          kind: "Fall in beside him",
-          playful: "Race a step ahead",
-          bold: "Say you were coming anyway",
-        },
-      },
-      {
-        line: '"You again." **{name}** says it to {user} like a verdict he has stopped appealing.',
-        responses: {
-          kind: "Say he'd miss it otherwise",
-          playful: "Appeal the verdict",
-          bold: "Say get used to it",
-        },
-      },
-      {
-        line: '"Ha. Took you long enough." **{name}** lets {user} fall in at his back.',
-        responses: {
-          kind: "Take the place at his back",
-          playful: "Say you were fashionably late",
-          bold: "Say he'd have waited longer",
-        },
-      },
+      '"Walk with me, then. Keep up." **{name}** doesn\'t break stride, but he slows just enough for {user}.',
+      '"You again." **{name}** says it to {user} like a verdict he has stopped appealing.',
+      '"Ha. Took you long enough." **{name}** lets {user} fall in at his back.',
     ],
     spark: [
-      {
-        line: '"Ha. Guess I\'ll give you some attention." **{name}** turns fully to {user} this time.',
-        responses: {
-          kind: "Say you'll take all of it",
-          playful: "Ask if it's rationed",
-          bold: "Say you'd earned it already",
-        },
-      },
-      {
-        line: "Nobody else gets a word in before {user}. **{name}** notices, and looks far too pleased.",
-        responses: {
-          kind: "Let him enjoy it",
-          playful: "Ask what he's grinning at",
-          bold: "Say you'll always be first",
-        },
-      },
-      {
-        line: "**{name}** does not summon {user} over. He simply stops, and waits.",
-        responses: {
-          kind: "Go to him",
-          playful: "Ask if he's waiting for you",
-          bold: "Say you knew he'd wait",
-        },
-      },
+      '"Ha. Guess I\'ll give you some attention." **{name}** turns fully to {user} this time.',
+      "Nobody else gets a word in before {user}. **{name}** notices, and looks far too pleased.",
+      "**{name}** does not summon {user} over. He simply stops, and waits.",
     ],
     close: [
-      {
-        line: "The **{house}** dispatch goes to Tohma. **{name}** goes to {user}.",
-        responses: {
-          kind: "Say Tohma can manage",
-          playful: "Ask if Tohma knows",
-          bold: "Say you outrank the dispatch",
-        },
-      },
-      {
-        line: '"Where the hell have you been?" **{name}** is already at {user}\'s side.',
-        responses: {
-          kind: "Say you're here now",
-          playful: "Say you were hiding from him",
-          bold: "Say you came straight here",
-        },
-      },
-      {
-        line: "**{name}** drops the court voice the second it's {user} saying his name.",
-        responses: {
-          kind: "Say you like this voice",
-          playful: "Ask for the court voice",
-          bold: "Ask him to keep it for you",
-        },
-      },
+      "The **{house}** dispatch goes to Tohma. **{name}** goes to {user}.",
+      '"Where the hell have you been?" **{name}** is already at {user}\'s side.',
+      "**{name}** drops the court voice the second it's {user} saying his name.",
     ],
     bound: [
-      {
-        line: '"Never learn, do you?" **{name}** says it to {user} like the best news he\'s had all day.',
-        responses: {
-          kind: "Say you never will",
-          playful: "Ask what you're failing at",
-          bold: "Say he doesn't want you to",
-        },
-      },
-      {
-        line: "**{name}** lets the **{house}** business wait. {user} called; that ends it.",
-        responses: {
-          kind: "Say the business can wait",
-          playful: "Ask if Tohma will mind",
-          bold: "Say you'll call more often",
-        },
-      },
-      {
-        line: "\"Your house is too far. You're staying at **{house}** tonight.\" **{name}** doesn't lower his voice for {user}.",
-        responses: {
-          kind: "Say you'll stay, then",
-          playful: "Ask how far is too far",
-          bold: "Say you'd already decided",
-        },
-      },
+      '"Never learn, do you?" **{name}** says it to {user} like the best news he\'s had all day.',
+      "**{name}** lets the **{house}** business wait. {user} called; that ends it.",
+      "\"Your house is too far. You're staying at **{house}** tonight.\" **{name}** doesn't lower his voice for {user}.",
     ],
   },
 };

@@ -74,7 +74,7 @@ Below is a basic overview of the project structure:
 │   ├── countdown.js   -> countdown day counting, channel names, /event input checks
 │   ├── game.js        -> response options, affinity values, relationship levels
 │   ├── missions.js    -> mission teasers/riddles/ranks, slot + type rolls, riddle cooldown
-│   ├── publicEncounters.js -> teasers/winner lines/call scenes/milestones, name matching, guess cooldown
+│   ├── publicEncounters.js -> teasers/winner lines/milestones, name matching, guess cooldown
 │   └── wishingWell.js -> Wishing Well dates, updated by hand
 ├── db/
 │   └── schema.sql -> Postgres schema for future migration
@@ -84,7 +84,7 @@ Below is a basic overview of the project structure:
 ├── encounters.js -> builds the slash-command message payloads (/roam, /meet, /affinity, /bonds), handles dialogue responses
 ├── storage.js   -> Supabase-backed relationship storage (affinity, times met, response type)
 ├── commandLimits.js -> per-command rolling 3-hour cooldown for /roam and /meet (Supabase-backed, anchored to last completed encounter)
-├── publicEncounters.js -> public call-out encounters: spawn, expiry, /call, call scenes and /encounters handlers
+├── publicEncounters.js -> public call-out encounters: spawn, expiry, /call and /encounters handlers
 ├── missions/    -> scheduled missions: spawn, expiry, /mission, /docs, /riddle, /request, /house dossier, /missions (module map atop missions/player.js)
 ├── countdown.js -> countdown channels: /countdown, /event, /wishingwell and the rename pass
 ├── activityRoutes.js -> the Hangout Activity's API (/api/activity/*): sign-in, launch, the /meet encounter and its answer

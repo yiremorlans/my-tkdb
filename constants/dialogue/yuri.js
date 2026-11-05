@@ -682,168 +682,35 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      {
-        line: '"A test subject, wandering in of its own accord." **{name}** looks {user} over, delighted.',
-        responses: {
-          kind: "Volunteer, sleeve already up",
-          playful: "Ask what the pay is",
-          bold: "Say you came to find him",
-        },
-      },
-      {
-        line: '{user} calls his name, and **{name}** draws himself up. "You should feel honored to have some of my attention."',
-        responses: {
-          kind: "Say you've heard of his work",
-          playful: "Curtsy for the doctor",
-          bold: "Say you came for his attention",
-        },
-      },
-      {
-        line: '"You know of me. Of course you do." **{name}** informs {user} of this at considerable length.',
-        responses: {
-          kind: "Ask him to keep going",
-          playful: "Applaud at the end",
-          bold: "Say that's why you came",
-        },
-      },
-      {
-        line: '**{name}** draws himself up at {user}. "You stand before a genius and visionary. Consider yourself fortunate. Are you ill, by any chance?"',
-        responses: {
-          kind: "Ask about his research",
-          playful: "Fake a dramatic cough",
-          bold: "Say you came for a check-up",
-        },
-      },
+      '"A test subject, wandering in of its own accord." **{name}** looks {user} over, delighted.',
+      '{user} calls his name, and **{name}** draws himself up. "You should feel honored to have some of my attention."',
+      '"You know of me. Of course you do." **{name}** informs {user} of this at considerable length.',
+      '**{name}** draws himself up at {user}. "You stand before a genius and visionary. Consider yourself fortunate. Are you ill, by any chance?"',
     ],
     known: [
-      {
-        line: '"...Ah. It\'s you." **{name}** stops shouting for Jiro long enough to deal with {user}.',
-        responses: {
-          kind: "Offer to find Jiro",
-          playful: "Shout for Jiro too",
-          bold: "Say you'll do instead of Jiro",
-        },
-      },
-      {
-        line: '{user} waves hello, and **{name}** looks almost pleased. "You\'re less useless than the last one."',
-        responses: {
-          kind: "Take the compliment",
-          playful: "Ask what the last one did",
-          bold: "Ask for a proper ranking",
-        },
-      },
-      {
-        line: '"You turn up with zero notice, and now I have to rearrange my schedule." **{name}** rearranges it for {user} anyway.',
-        responses: {
-          kind: "Take the slot he made",
-          playful: "Ask what you bumped",
-          bold: "Say you'll come without notice",
-        },
-      },
+      '"...Ah. It\'s you." **{name}** stops shouting for Jiro long enough to deal with {user}.',
+      '{user} waves hello, and **{name}** looks almost pleased. "You\'re less useless than the last one."',
+      '"You turn up with zero notice, and now I have to rearrange my schedule." **{name}** rearranges it for {user} anyway.',
     ],
     warm: [
-      {
-        line: '"Where on earth have you been, worm?" **{name}** demands of {user}, then looks annoyed at himself for asking.',
-        responses: {
-          kind: "Report in for your check-up",
-          playful: "Ask if he missed his worm",
-          bold: "Say you came straight to him",
-        },
-      },
-      {
-        line: '{user} calls out, and **{name}** startles so badly his notes scatter. "Y-you could warn a person!"',
-        responses: {
-          kind: "Gather his research for him",
-          playful: "Offer to announce yourself",
-          bold: "Say you came looking for him",
-        },
-      },
-      {
-        line: '**{name}** waves {user} over. "You\'re late. Not that I was waiting... N-never mind!"',
-        responses: {
-          kind: "Say sorry you kept him",
-          playful: "Ask how long he wasn't waiting",
-          bold: "Say you hurried here",
-        },
-      },
+      '"Where on earth have you been, worm?" **{name}** demands of {user}, then looks annoyed at himself for asking.',
+      '{user} calls out, and **{name}** startles so badly his notes scatter. "Y-you could warn a person!"',
+      '**{name}** waves {user} over. "You\'re late. Not that I was waiting... N-never mind!"',
     ],
     spark: [
-      {
-        line: '"Wh-Where did you come from!?" **{name}** knows exactly where {user} came from.',
-        responses: {
-          kind: "Say you came to see him",
-          playful: "Say you came from nowhere",
-          bold: "Say he knows where",
-        },
-      },
-      {
-        line: "{user} says hi, and **{name}** goes an interesting color.",
-        responses: {
-          kind: "Say it's a nice color",
-          playful: "Name the color",
-          bold: "Ask why he's that color",
-        },
-      },
-      {
-        line: "**{name}** re-arms the bravado twice on the way to {user}. Neither attempt survives.",
-        responses: {
-          kind: "Let him drop the act",
-          playful: "Applaud the attempt",
-          bold: "Say try a third time",
-        },
-      },
+      '"Wh-Where did you come from!?" **{name}** knows exactly where {user} came from.',
+      "{user} says hi, and **{name}** goes an interesting color.",
+      "**{name}** re-arms the bravado twice on the way to {user}. Neither attempt survives.",
     ],
     close: [
-      {
-        line: '"You\'re mine to save," **{name}** informs {user}, loudly, as though that settles the matter.',
-        responses: {
-          kind: "Say you trust him to",
-          playful: "Ask what you need saving from",
-          bold: "Say you'll save him back",
-        },
-      },
-      {
-        line: "**{name}** abandons whatever he was striding off to do, mid-stride, because {user} called his name.",
-        responses: {
-          kind: "Say whatever it was can wait",
-          playful: "Ask where he was striding",
-          bold: "Ask him to finish first",
-        },
-      },
-      {
-        line: "{user} calls, and **{name}** shouts for Jiro to cover the **{house}** ward. Jiro already was.",
-        responses: {
-          kind: "Wave to Jiro",
-          playful: "Say Jiro beat him to it",
-          bold: "Say you'll cover too",
-        },
-      },
+      '"You\'re mine to save," **{name}** informs {user}, loudly, as though that settles the matter.',
+      "**{name}** abandons whatever he was striding off to do, mid-stride, because {user} called his name.",
+      "{user} calls, and **{name}** shouts for Jiro to cover the **{house}** ward. Jiro already was.",
     ],
     bound: [
-      {
-        line: '"You are indispensable. To the research. And... and to me. Obviously to me." **{name}** announces it to {user} at volume, then urgently requires a distraction.',
-        responses: {
-          kind: "Say he's indispensable too",
-          playful: "Ask him to repeat that",
-          bold: "Make him look at you",
-        },
-      },
-      {
-        line: "**{name}** is furious about how hard it is to walk past {user}, and crosses to them anyway.",
-        responses: {
-          kind: "Say you're glad he didn't",
-          playful: "Ask why he's so angry",
-          bold: "Say don't walk past, then",
-        },
-      },
-      {
-        line: "{user} says hello, and **{name}** catches himself smiling and clears his throat behind his hand.",
-        responses: {
-          kind: "Say you like him like this",
-          playful: "Ask where the genius went",
-          bold: "Say you'll keep both",
-        },
-      },
+      '"You are indispensable. To the research. And... and to me. Obviously to me." **{name}** announces it to {user} at volume, then urgently requires a distraction.',
+      "**{name}** is furious about how hard it is to walk past {user}, and crosses to them anyway.",
+      "{user} says hello, and **{name}** catches himself smiling and clears his throat behind his hand.",
     ],
   },
 };

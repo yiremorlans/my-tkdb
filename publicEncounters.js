@@ -1,24 +1,13 @@
 // Public "call out" encounters — the I/O half (docs/public-encounters.md).
 // Content pools and pure helpers live in constants/publicEncounters.js; the
 // tick loop that drives spawnEncounter/sweepExpiredEncounters lives in
-// encounterScheduler.js. Call scenes (§17), the rare interactive reveal, post,
-// answer and close out from the "call scenes" section below.
+// encounterScheduler.js.
 
-import {
-  InteractionResponseFlags,
-  InteractionResponseType,
-  MessageComponentTypes,
-} from 'discord-interactions';
+import { InteractionResponseType } from 'discord-interactions';
 import { EPHEMERAL, optionValue, pingRole } from './utils.js';
 import {
   buildEncounterContent,
-  baseRank,
-  CALL_SCENE_BUTTON_STYLE,
-  CALL_SCENE_GAIN,
-  CALL_SCENE_RESPONSES,
   clearGuessCooldowns,
-  DATE_BUTTON_LABEL,
-  dateButtonLocked,
   ENCOUNTER_BOOST_CAP,
   ENCOUNTER_MAX_MINUTES,
   ENCOUNTER_MIN_MINUTES,
@@ -27,14 +16,11 @@ import {
   generateEncounter,
   getGuessCooldownRemaining,
   getMilestone,
-  pickCallScene,
   pickMissedLine,
   pickMilestone,
   POST_FAILURE_LIMIT,
   pickRandom,
   pickWinnerLine,
-  sceneFace,
-  shuffledSceneResponses,
   startGuessCooldown,
   matchCharacterGuess,
   winnerLineBucket,
@@ -49,11 +35,9 @@ import {
 import {
   bondLevelFromSlug,
   getRelationshipLevel,
-  RESPONSE_STYLES,
 } from './constants/game.js';
 import { getDialogueTier } from './constants/tiers.js';
 import { timeBucket } from './constants/backgrounds.js';
-import { getReactionLine } from './constants/reactions.js';
 import { missionSlotsLine } from './constants/missions.js';
 import { composeSilhouetteEncounter } from './imageComposition.js';
 import { buildWardingDialogueMessage } from './encounters.js';
@@ -65,7 +49,6 @@ import {
 import {
   editChannelMessage,
   editChannelMessageSafe,
-  getChannelMessage,
   postChannelMessage,
 } from './discordRest.js';
 import { deliverBondScene } from './bondScenes.js';
@@ -74,15 +57,12 @@ import { devResetCommandLimits } from './commandLimits.js';
 import { isMaintenanceModeActive } from './maintenance.js';
 import {
   bumpGuildPostFailure,
-  claimCallScene,
   claimPublicEncounter,
-  closeOpenCallScenes,
   createPublicEncounter,
   expirePublicEncounter,
   finalizeExpiredEncounters,
   getActivePublicEncounter,
   getGuildSettings,
-  getPublicEncounter,
   getRelationship,
   grantEncounterBoost,
   incrementTimesMet,
@@ -92,20 +72,15 @@ import {
   recordGuildSpawn,
   setPublicEncounterLocation,
   setPublicEncounterMessageId,
-  setPublicEncounterScene,
   upsertGuildChannel,
   trackCharacterEngagement,
   trackCommandUsage,
   trackUserActivity,
-  updateAffinity,
 } from './db/supabase.js';
 import {
-  absoluteAssetUrl,
   ephemeralResponse,
-  reportFailures,
   userIdOf,
 } from './missions/shared.js';
-import { levelChange } from './storage.js';
 
 // Composite the silhouette and post it — the shared shape behind a fresh
 // spawn and a moved-channel re-post (spawnEncounter / moveEncounterToChannel).
@@ -226,13 +201,6 @@ export async function spawnEncounter(guild, now = new Date(), { characterId, var
   // Another instance already has one live for this guild (the partial unique
   // index caught it). Stand down without posting or touching the cadence.
   if (!row) return null;
-
-  // A scene still waiting on its click closes before the next silhouette
-  // posts, so two encounters never sit live together. Best-effort: a failure
-  // here must not cost the guild its spawn.
-  await closeOutCallScenes(guild.guild_id, now).catch((e) =>
-    console.error(`[publicEncounters] Could not close open call scenes for guild ${guild.guild_id}:`, e.message),
-  );
 
   // The compose + POST. A failure anywhere in here means the encounter never
   // became visible: close the row out and let the guild's failure counter climb
@@ -652,10 +620,7 @@ export async function handleEncountersAdmin(body) {
  * Handle a `/call` interaction.
  *
  * Returns `{ reply, afterReply }` — the caller sends `reply` (always
- * ephemeral) and then runs `afterReply`, which is null except on a win. A
- * call-scene win has a null `reply`: the caller awaits `afterReply` and sends
- * what it resolves to (the boost ack, when the scene failed to post), or
- * deletes the deferred placeholder when it resolves to null. The
+ * ephemeral) and then runs `afterReply`, which is null except on a win. The
  * split keeps the interaction inside Discord's 3s budget: the reward grant,
  * the milestone, the public message edit and analytics all happen after the
  * user already has their answer.
@@ -745,17 +710,6 @@ export async function handleCall(body, now = new Date()) {
   const spawnedAt = encounter.created_at ? new Date(encounter.created_at) : now;
   const daytime = timeBucket(spawnedAt) === 'day';
 
-  // Rolled here, not in afterReply, so /encdev's force flag is spent by the
-  // win it was set for. A scene replies under the silhouette, so a post that
-  // never landed can't have one.
-  const forced = takeCallSceneForce(encounter.id);
-  const scene = encounter.message_id
-    ? pickCallScene(tier, encounter.character_id, { daytime, force: forced })
-    : null;
-
-  // A scene win sends no ack: the scene's own line names the character, so the
-  // winner's placeholder is deleted once the scene posts. The boost ack is
-  // held back for a scene that fails to post, which falls back to a boost.
   const boostReply = ephemeral([
     `That was **${getFullName(character)}**.`,
     // Spell out the reward rather than hint at it: a pending boost, redeemed
@@ -765,18 +719,6 @@ export async function handleCall(body, now = new Date()) {
   ].join('\n'));
 
   const afterReply = async () => {
-    // A scene replaces the boost, the milestone and the reveal embed. Posted
-    // first so a failed post can fall back to all three: the winner keeps a
-    // reward and the channel still gets a reveal.
-    const sceneShown = scene
-      ? await postCallScene(encounter, scene, {
-          userId,
-          vars,
-          color: level.color,
-          locked: dateButtonLocked(relationship?.affinity),
-        })
-      : false;
-
     // Run these in series, not concurrently. grantEncounterBoost is atomic
     // (db/migrations/014) and creates the row for a never-met character;
     // incrementTimesMet is still a read-then-write, so letting it start first
@@ -784,21 +726,17 @@ export async function handleCall(body, now = new Date()) {
     // read a counter the other write is about to change. Grant first, and it
     // finds the row waiting. Each catches independently so one failing doesn't
     // skip the other or the reveal.
-    if (!sceneShown) {
-      await grantEncounterBoost(userId, encounter.character_id, ENCOUNTER_BOOST_CAP)
-        .catch((err) => console.error('[publicEncounters] grantEncounterBoost failed:', err?.message));
-    }
+    await grantEncounterBoost(userId, encounter.character_id, ENCOUNTER_BOOST_CAP)
+      .catch((err) => console.error('[publicEncounters] grantEncounterBoost failed:', err?.message));
     await incrementTimesMet(userId, encounter.character_id)
       .catch((err) => console.error('[publicEncounters] incrementTimesMet failed:', err?.message));
 
     await Promise.allSettled([
-      sceneShown
-        ? null
-        : recordEncounterMilestone({
-            userId,
-            characterId: encounter.character_id,
-            milestoneType,
-          }),
+      recordEncounterMilestone({
+        userId,
+        characterId: encounter.character_id,
+        milestoneType,
+      }),
       // The durable monthly tally — the only per-user record this feature
       // keeps, and the reason public_encounters can be pruned at 90 days.
       recordEncounterWin(userId, guildId),
@@ -813,9 +751,7 @@ export async function handleCall(body, now = new Date()) {
       }
     });
 
-    // The late ack for a scene that never posted (see boostReply).
-    const lateReply = scene && !sceneShown ? boostReply : null;
-    if (!encounter.message_id || sceneShown) return lateReply;
+    if (!encounter.message_id) return;
 
     // The public reveal: the catch (this character's own winner line, in the
     // register their relationship with the caller has reached — the generic
@@ -865,310 +801,9 @@ export async function handleCall(body, now = new Date()) {
       // costs the channel its reveal.
       console.error(`[publicEncounters] Could not edit solved encounter ${encounter.id}:`, err.message);
     }
-    return lateReply;
   };
 
-  return { reply: scene ? null : boostReply, afterReply };
-}
-
-// --- call scenes -------------------------------------------------------------
-//
-// docs/public-encounters.md §17. A rare win posts a public V2 reply under the
-// silhouette: the character's portrait, an authored line, and three answer
-// buttons only the winner can use (shuffled, all one style), plus a date button
-// that is always disabled. A scene win gets no boost and no milestone: one
-// click is the reward, +1 for the character's favorite or liked response and
-// nothing for the least-liked one. An unanswered scene closes when the next
-// encounter spawns, and its winner gets the boost back then.
-
-// A scene's body, laid out like a /roam or /meet: `text` above the full-size
-// portrait at `url` (or the bare text when there's no usable URL), in a
-// container carrying the winner's level color.
-function sceneBody(url, text, color) {
-  return [{
-    type: MessageComponentTypes.CONTAINER,
-    accent_color: color,
-    components: [
-      { type: MessageComponentTypes.TEXT_DISPLAY, content: text },
-      ...(url ? [{ type: MessageComponentTypes.MEDIA_GALLERY, items: [{ media: { url } }] }] : []),
-    ],
-  }];
-}
-
-/**
- * A call scene post. `text` is the opening line, or once answered the opening
- * line and the reaction, which render a blank line apart. `buttons`
- * (`{ encounterId, responses, locked, order }`) adds the answer row in
- * `order`; null renders the answered scene with no row at all.
- */
-export function callSceneMessage({ characterId, face, text, color, buttons = null }) {
-  const url = absoluteAssetUrl(`expressions/${characterId}/${face}`, `${characterId}'s scene portrait`);
-  const components = sceneBody(url, [text].flat().join('\n\n'), color);
-
-  if (buttons) {
-    const { encounterId, responses, locked, order = CALL_SCENE_RESPONSES } = buttons;
-    components.push({
-      type: MessageComponentTypes.ACTION_ROW,
-      components: [
-        ...order.map((type) => ({
-          type: MessageComponentTypes.BUTTON,
-          style: CALL_SCENE_BUTTON_STYLE,
-          label: responses[type],
-          custom_id: `scene:${encounterId}:${type}`,
-        })),
-        {
-          type: MessageComponentTypes.BUTTON,
-          style: RESPONSE_STYLES.neutral,
-          label: DATE_BUTTON_LABEL,
-          custom_id: `scene:${encounterId}:date`,
-          // Disabled at every tier until the date feature exists; the lock
-          // only says whether the winner would qualify.
-          disabled: true,
-          ...(locked ? { emoji: { name: '🔒' } } : {}),
-        },
-      ],
-    });
-  }
-
-  return { flags: InteractionResponseFlags.IS_COMPONENTS_V2, components };
-}
-
-/**
- * A posted scene's parts as Discord hands it back: every Text Display's
- * content, the portrait URL and the accent color. Only these are read, so
- * nothing read-only on the fetched components reaches a PATCH. Null when the
- * post isn't a scene this code would recognize.
- */
-function scenePartsFromPost(message) {
-  const container = message?.components?.find((c) => c.type === MessageComponentTypes.CONTAINER);
-  const parts = container?.components ?? [];
-  const texts = parts
-    .filter((c) => c.type === MessageComponentTypes.TEXT_DISPLAY && c.content)
-    .map((c) => c.content);
-  if (!texts.length) return null;
-  const gallery = parts.find((c) => c.type === MessageComponentTypes.MEDIA_GALLERY);
-  return { texts, url: gallery?.items?.[0]?.media?.url ?? null, color: container.accent_color };
-}
-
-// A posted scene rebuilt with no button row: the closeout's edit.
-function closedSceneFromPost(message) {
-  const parts = scenePartsFromPost(message);
-  if (!parts) return null;
-  return {
-    flags: InteractionResponseFlags.IS_COMPONENTS_V2,
-    components: sceneBody(parts.url, parts.texts.join('\n\n'), parts.color),
-  };
-}
-
-// The scene a win replaced pays out as the boost after all: the closeout's
-// quiet fallback for an unanswered scene, and the same for one whose row never
-// stored (§17.6).
-function grantSceneFallbackBoost(userId, characterId, encounterId) {
-  return grantEncounterBoost(userId, characterId, ENCOUNTER_BOOST_CAP).catch((err) =>
-    console.error(`[publicEncounters] Fallback boost for encounter ${encounterId} failed:`, err?.message),
-  );
-}
-
-/**
- * Post a won encounter's scene as a reply to its silhouette, clear the
- * silhouette's text, and store the post's id on the row. Returns false if the
- * scene never posted, so the caller falls back to the normal reveal.
- */
-async function postCallScene(encounter, { bucket, scene }, { userId, vars, color, locked }) {
-  const data = callSceneMessage({
-    characterId: encounter.character_id,
-    face: sceneFace(encounter.character_id, bucket, null, { variant: encounter.variant }),
-    text: fillTemplate(scene.line, vars),
-    color,
-    buttons: {
-      encounterId: encounter.id,
-      responses: scene.responses,
-      locked,
-      order: shuffledSceneResponses(),
-    },
-  });
-
-  let message;
-  try {
-    message = await postChannelMessage(encounter.channel_id, {
-      ...data,
-      message_reference: { message_id: encounter.message_id, fail_if_not_exists: false },
-      // The winner is named in bold plain text, never tagged, but a reply can
-      // still ping: keep it silent like the reveal it replaces.
-      allowed_mentions: { parse: [], replied_user: false },
-    });
-  } catch (err) {
-    console.error(`[publicEncounters] Could not post call scene for encounter ${encounter.id}:`, err.message);
-    return false;
-  }
-
-  // Independent writes: the silhouette edit is Discord, the row is Postgres.
-  const [, stored] = await Promise.allSettled([
-    // The silhouette stays, with no embed: the scene below it is the reveal.
-    editChannelMessage(encounter.channel_id, encounter.message_id, { content: null }),
-    setPublicEncounterScene(encounter.id, message.id),
-  ]).then(reportFailures(`call scene post for encounter ${encounter.id}`, '[publicEncounters]'));
-
-  // Without the row the buttons can't be answered or closed out (a click gets
-  // the quiet "moment has passed"), so the winner gets the boost the closeout
-  // would have given an unanswered scene.
-  if (stored.status === 'rejected') {
-    await grantSceneFallbackBoost(userId, encounter.character_id, encounter.id);
-  }
-
-  return true;
-}
-
-/**
- * `scene:<encounterId>:<kind|playful|bold|date>` — the winner answers their
- * scene. Returns `{ response, afterReply }`: an UPDATE_MESSAGE that swaps the
- * portrait, stacks the reaction (and its +1) under the opening line and removes
- * the buttons, or an ephemeral refusal that changes nothing.
- */
-export async function handleSceneClick(body, encounterId, choice, now = new Date()) {
-  const userId = userIdOf(body);
-
-  // The date button is disabled on every post; this only guards against one
-  // ever being enabled by mistake.
-  if (!CALL_SCENE_RESPONSES.includes(choice)) {
-    return { response: ephemeralResponse("That isn't open yet."), afterReply: null };
-  }
-
-  // custom_id parts are strings; the row id is a BIGSERIAL.
-  const id = Number(encounterId);
-  if (!Number.isSafeInteger(id)) {
-    return { response: ephemeralResponse('The moment has passed.'), afterReply: null };
-  }
-
-  // The claim is what makes the +1 a one-time grant, and it only matches the
-  // winner's own open scene, so the winner's click is one round trip. Anything
-  // else (a double-click, a click racing the closeout, or someone else
-  // clicking the public post) gets nothing, and only then is the row read to
-  // say which.
-  const row = await claimCallScene(id, userId, now);
-  if (!row) {
-    const existing = await getPublicEncounter(id);
-    const notTheirs = existing?.scene_message_id && existing.solved_by !== userId;
-    return {
-      response: ephemeralResponse(notTheirs ? "You're not part of this conversation." : 'The moment has passed.'),
-      afterReply: null,
-    };
-  }
-
-  const character = getCharacterById(row.character_id);
-  const rank = baseRank(row.character_id, choice);
-  let gain = rank >= 1 ? CALL_SCENE_GAIN : 0;
-
-  // Where the winner lands sets the reaction's register, the face and the
-  // accent, the same post-gain read /roam's reply makes.
-  let level = null;
-  let leveledUp = false;
-  if (gain > 0) {
-    try {
-      ({ level, leveledUp } = levelChange(await updateAffinity(userId, row.character_id, gain)));
-    } catch (err) {
-      // The claim already committed, so the point is lost; the scene still
-      // answers, just without the (+1) it didn't grant.
-      console.error(`[publicEncounters] Scene gain on encounter ${row.id} failed:`, err.message);
-      gain = 0;
-    }
-  }
-  if (!level) {
-    const relationship = await readRelationshipOrNull(userId, row.character_id);
-    level = getRelationshipLevel(relationship?.affinity ?? 0);
-  }
-
-  const tier = getDialogueTier(level.name);
-  const reaction = getReactionLine(character, tier, choice, rank);
-  // A least-liked pick shows no (+0): the missing (+1) says enough in a
-  // public channel.
-  const reactionText = gain > 0 ? `+${gain} — ${reaction}` : reaction;
-  // The opening line stays and the reaction goes under it. The click carries
-  // the post, so the line is read off it.
-  const opening = scenePartsFromPost(body.message)?.texts[0];
-
-  return {
-    response: {
-      type: InteractionResponseType.UPDATE_MESSAGE,
-      data: callSceneMessage({
-        characterId: row.character_id,
-        face: sceneFace(row.character_id, winnerLineBucket(tier), choice, { variant: row.variant }),
-        text: [opening, reactionText].filter(Boolean),
-        color: level.color,
-      }),
-    },
-    afterReply: async () => {
-      // The bond scene for a level this +1 crossed into, as /roam sends it.
-      // Errand signatures stay with /roam and /meet.
-      if (leveledUp) {
-        deliverBondScene(userId, row.character_id, level.name)
-          .catch((err) => console.error('[publicEncounters] Error delivering bond scene:', err.message));
-      }
-      await Promise.allSettled([
-        trackUserActivity(userId),
-        trackCommandUsage(userId, `call_scene_${choice}`),
-      ]).then(reportFailures(`scene click on encounter ${row.id}`, '[publicEncounters]'));
-    },
-  };
-}
-
-/**
- * Close every scene in this guild still waiting on a click: the post is read
- * back from Discord and saved again with its opening line and face but no
- * button row, and the winner gets the boost the scene win replaced. Called
- * from spawnEncounter before the next silhouette posts.
- */
-async function closeOutCallScenes(guildId, now = new Date()) {
-  const rows = await closeOpenCallScenes(guildId, now);
-  // Sequential on purpose: a guild has at most one open scene (the previous
-  // win), so there's no fan-out to cap.
-  for (const row of rows) {
-    // The boost and the post are independent. The boost is never mentioned
-    // anywhere: a quiet safety net, granted even if the post can't be found.
-    await Promise.all([
-      grantSceneFallbackBoost(row.solved_by, row.character_id, row.id),
-      stripSceneButtons(row),
-    ]);
-  }
-}
-
-// Read an open scene's post back and save it without its button row. Logs and
-// gives up on a post that's gone or isn't a scene.
-async function stripSceneButtons(row) {
-  let message;
-  try {
-    message = await getChannelMessage(row.channel_id, row.scene_message_id);
-  } catch (err) {
-    console.error(`[publicEncounters] Could not read call scene for encounter ${row.id}:`, err.message);
-    return;
-  }
-  const closed = closedSceneFromPost(message);
-  if (!closed) {
-    console.error(`[publicEncounters] Call scene post for encounter ${row.id} has no scene to close`);
-    return;
-  }
-  await editChannelMessageSafe(
-    row.channel_id,
-    row.scene_message_id,
-    closed,
-    `[publicEncounters] Could not close call scene for encounter ${row.id}`,
-  );
-}
-
-// /encdev spawn scene:true — encounter ids whose win skips the scene roll.
-// Dev tooling, so losing it on a restart is fine.
-const forcedCallScenes = new Set();
-
-export function forceCallScene(encounterId) {
-  forcedCallScenes.add(String(encounterId));
-}
-
-function takeCallSceneForce(encounterId) {
-  return forcedCallScenes.delete(String(encounterId));
-}
-
-export function clearCallSceneForces() {
-  forcedCallScenes.clear();
+  return { reply: boostReply, afterReply };
 }
 
 // --- /encdev (owner-only test tooling) -------------------------------------
@@ -1222,7 +857,7 @@ function encounterDevRefusal(body) {
  * only to exercise the spawn / reveal / expiry path on demand instead of
  * waiting out the 45–180 minute cadence.
  *
- *   /encdev spawn [character] [variant] [scene]   force one encounter now
+ *   /encdev spawn [character] [variant]   force one encounter now
  *   /encdev clear                         expire this guild's live encounter
  *   /encdev missions                      show this guild's mission slot times for today
  *   /encdev bond <character> <level>      fire a bond scene DM directly (docs/bond-scene-dms.md)
@@ -1408,7 +1043,6 @@ export async function handleEncounterDev(body) {
 
     const rawCharacter = optionValue(sub.options, 'character');
     const variant = optionValue(sub.options, 'variant') || undefined;
-    const scene = optionValue(sub.options, 'scene') === true;
 
     let characterId;
     if (rawCharacter) {
@@ -1424,12 +1058,8 @@ export async function handleEncounterDev(body) {
       };
     }
 
-    // Skips only the roll: a character with no scene at the winner's register
-    // still gets the normal reveal.
-    if (scene) forceCallScene(row.id);
-
     return {
-      content: `Spawned **${getFullName(getCharacterById(row.character_id))}** (${row.variant}) as encounter #${row.id} in <#${guild.encounter_channel_id}>.${scene ? ' Its win will be a call scene if one exists at your tier.' : ''}`,
+      content: `Spawned **${getFullName(getCharacterById(row.character_id))}** (${row.variant}) as encounter #${row.id} in <#${guild.encounter_channel_id}>.`,
     };
   }
 

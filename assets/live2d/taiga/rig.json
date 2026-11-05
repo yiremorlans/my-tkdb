@@ -185,7 +185,7 @@
     "heartbeatHold": {
       "byTier": {
         "spark": { "mood": "smile_blush", "duration": 2.8 },
-        "close": { "rank": 2, "duration": 2.8 },
+        "close": { "mood": "full_smile_blush", "duration": 2.8 },
         "bound": { "mood": "smile_blush", "duration": 3.2 }
       }
     },

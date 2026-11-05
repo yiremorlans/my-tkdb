@@ -40,14 +40,13 @@ async function readError(res) {
  * `components` matter for bond scenes (docs/bond-scene-dms.md): every beat of a
  * scene is posted here, with the bot token, rather than through an interaction
  * webhook — which is exactly why a scene's Continue button never expires.
- * `flags` carries IS_COMPONENTS_V2 and `message_reference` makes the post a
- * reply, both for /call scenes (docs/public-encounters.md §17).
+ * `flags` carries IS_COMPONENTS_V2 for a V2 post.
  */
 export async function postChannelMessage(
   channelId,
-  { content, files, embeds, components, allowed_mentions, flags, message_reference } = {},
+  { content, files, embeds, components, allowed_mentions, flags } = {},
 ) {
-  const payload = { content, embeds, components, allowed_mentions, flags, message_reference };
+  const payload = { content, embeds, components, allowed_mentions, flags };
   for (const key of Object.keys(payload)) {
     if (payload[key] === undefined) delete payload[key];
   }
@@ -62,20 +61,6 @@ export async function postChannelMessage(
     method: 'POST',
     headers: authHeaders(),
     body: form,
-  });
-
-  if (!res.ok) throw await readError(res);
-  return res.json();
-}
-
-/**
- * GET a message the bot can see. The /call scene closeout reads its post back
- * rather than storing what it would need to redraw it
- * (docs/public-encounters.md §17.6).
- */
-export async function getChannelMessage(channelId, messageId) {
-  const res = await fetch(`${API_BASE}/channels/${channelId}/messages/${messageId}`, {
-    headers: authHeaders(),
   });
 
   if (!res.ok) throw await readError(res);
@@ -141,20 +126,6 @@ export async function launchActivityWithResponse(interactionId, interactionToken
   if (!res.ok) throw await readError(res);
   const json = await res.json().catch(() => null);
   return json?.resource?.activity_instance?.id ?? json?.interaction?.activity_instance_id ?? null;
-}
-
-/**
- * DELETE a message an interaction sent, through that interaction's webhook
- * token. With `@original` this clears a deferred interaction's "thinking…"
- * placeholder when there is nothing to answer with.
- */
-export async function deleteInteractionMessage(interactionToken, messageId) {
-  const res = await fetch(
-    `${API_BASE}/webhooks/${process.env.APP_ID}/${interactionToken}/messages/${messageId}`,
-    { method: 'DELETE', headers: { 'User-Agent': USER_AGENT } },
-  );
-
-  if (!res.ok) throw await readError(res);
 }
 
 /**

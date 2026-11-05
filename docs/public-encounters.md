@@ -1,8 +1,9 @@
 # Spec: Public "call out" encounters
 
 Status: **implemented** (code merged; the §1 prerequisites are still a manual,
-one-time setup step per deployment). §17 (call scenes) is built (2026-10-06).
-Last updated: 2026-10-07
+one-time setup step per deployment). §17 (call scenes) was built on 2026-10-06
+and removed on 2026-11-04.
+Last updated: 2026-11-04
 
 ### Where the implementation departs from this document
 
@@ -1425,362 +1426,41 @@ if the boost should ever feel like content rather than a number.
 
 ---
 
-## 17. Call scenes (built 2026-10-06)
+## 17. Call scenes (removed 2026-11-04)
 
-A rare variant of the win reveal. On a scene hit the channel gets a public,
-interactive moment instead of the usual reveal embed: the character's
-expression portrait, a line, and response buttons only the winner can press.
-Everything here is public. There is no private step.
+Built on 2026-10-06, removed on 2026-11-04. On 5% of wins a scene replaced the
+reveal: a public reply under the silhouette with the character's expression
+portrait, the winner line, three blind-shuffled answer buttons only the winner
+could press (+1 affinity for a fave or like answer, 0 for flat) and an
+`Ask on a date` button. A scene win got no boost and no milestone.
 
-A scene replaces the win's reward. It grants no boost and picks no milestone.
-The winner's one click is the reward instead: +1 affinity for the character's
-favorite or liked response, nothing for the least-liked one (revised
-2026-10-06; this was flavor only at first).
+**Why it was removed:**
 
-### 17.1 Trigger
+- **Faces out of sync.** The scene portraits were the PNG expression set, and
+  their face map no longer matched the Live2D rigs' expressions, which have
+  been aligned per character since.
+- **Affinity where a boost belongs.** A `/call` win is meant to leave a boost
+  for the next `/roam` or `/meet`, never to move affinity. The scene's click
+  wrote affinity directly.
 
-- After a correct `/call`, roll `CALL_SCENE_CHANCE = 0.05` (one global
-  constant in `constants/publicEncounters.js`).
-- On a hit, `pickCallScene` draws one winner line with `pickRandom` from
-  `winnerLinePool`, the same pool and the same draw as the normal reveal
-  (daytime swap included). Every character winner line carries button labels
-  (§17.7), so the scene rate is 5% at every tier, whatever the pool's size.
-- It falls back to the normal reveal when the drawn line has no labels (only
-  the shared fallback pool, for a character with no authored line at that
-  register) or when a face the map (§17.4.1) can produce for that tier is
-  missing from `assets/expressions/<id>/` (plus the `_girl` files for Jo's
-  casual variant, and `blush_2.png` where it's an alternate).
-- All 26 encounter characters have the full face set as of 2026-10-06, so
-  the art check only guards characters added later.
+**What changed:**
 
-### 17.2 What the channel sees
-
-1. **The silhouette post** is edited exactly as it is today to clear the
-   text above the attachment (`content: null`), but **no reveal embed is
-   added**. The silhouette image stays as it is.
-2. **A new public message** (the scene) is posted in the encounter
-   channel as a reply to the silhouette post (`message_reference`). It is a
-   Components V2 message that reads like a `/roam` or `/meet`:
-   - one Container with `accent_color: level.color`, holding `line` as a
-     Text Display over a Media Gallery of the full-size opening face
-     (`default.png`, see §17.4.1; `media.url` =
-     `${BASE_URL}/assets/expressions/<id>/<face>`, already served by the
-     `/assets` static route, so no attachment is uploaded). A non-absolute
-     URL (`BASE_URL` unset) drops the gallery and keeps the text.
-   - one Action Row of four buttons: kind, playful and bold in a fresh
-     random order on every post, all in one style, then date last
-   The portrait shows who it was, so the post reads as solved without a
-   "That was X" line.
-
-A scene win sends no ephemeral `/call` ack: the scene's line already names
-the character. `handleCall` returns a null `reply`, and app.js deletes the
-deferred "thinking…" placeholder once `afterReply` has posted the scene. A
-scene win promises no boost, and the closeout's fallback boost (§17.6) is
-never mentioned anywhere. If the scene fails to post, the win falls back to a
-boost and `afterReply` resolves to the usual `That was **X**.` + boost ack,
-which app.js sends in place of the placeholder.
-
-**Layout (2026-10-07).** A thumbnail layout (the Chancellor's audience: a
-Section with the face as a Thumbnail accessory) was trialed against the
-gallery one and dropped; gallery is the only layout.
-
-### 17.3 Buttons
-
-| Slot | Label | Custom ID | State |
-|---|---|---|---|
-| answer | `responses.kind` (authored) | `scene:<encounterId>:kind` | enabled |
-| answer | `responses.playful` (authored) | `scene:<encounterId>:playful` | enabled |
-| answer | `responses.bold` (authored) | `scene:<encounterId>:bold` | enabled |
-| date | `Ask on a date` (fixed constant) | `scene:<encounterId>:date` | enabled at Confidant+, otherwise disabled |
-
-The three answers are shuffled on every post and share one style
-(`CALL_SCENE_BUTTON_STYLE`, primary), so the winner can't tell which type is
-which and the gain is a blind pick. The date button stays last, in the neutral
-grey.
-
-The date button replaces `neutral` and is not authored per scene. Its lock
-is the button's `emoji` field, not part of the label:
-
-- winner below Confidant (affinity < 260): `🔒` + `Ask on a date`, disabled
-- Confidant and above (Confidant, Devoted, Soulbound): no emoji, enabled
-
-It's shown at every tier, Stranger included, for every character, Benkei
-too: there is no skip list (settled 2026-11-01). Dates run on the `close`
-and `bound` dialogue tiers, which is why the unlock is Confidant and not
-Close Friend (revised 2026-11-01 from Close Friend, when the button was a
-locked placeholder).
-
-**Clicking it starts a date in the Hangout Activity.** The click claims the
-scene exactly as an answer does (§17.4: one atomic claim, winner only), so
-the scene closes and **its +1 is given up**; the date pays instead. The
-click answers with `LAUNCH_ACTIVITY` and the Activity opens on the date.
-The whole date (beats, payout, spot, outfit, music, photo) is specified in
-[`hangout-activity.md`](./hangout-activity.md) §12. The handler re-checks
-the tier at the click and rejects a `:date` click below Confidant, in case a
-stale or forged button arrives.
-
-### 17.4 Clicking
-
-- **One click, winner only:** the click claims the scene atomically, and
-  only the winner's own open scene matches (`UPDATE ... SET
-  scene_resolved_at = now() WHERE id = $1 AND solved_by = $2 AND
-  scene_resolved_at IS NULL RETURNING ...`), so the winner's click is a
-  single round trip. Only when the claim matches nothing is the row read, to
-  pick the refusal: anyone but the winner gets an ephemeral
-  `You're not part of this conversation.`, and a losing race or a click on a closed scene gets a quiet
-  `The moment has passed.` Neither edits the post.
-- **The gain:** the click grants `CALL_SCENE_GAIN = 1` when the choice's rank
-  in the character's **base** `affinityByResponse` is fave (2) or like (1),
-  and nothing for flat (0). `swap` never applies. It goes straight through
-  `updateAffinity`, not `recordResponse`: the win already counted the meeting
-  in `times_met`. This is the one place `/call` moves affinity directly (a
-  deliberate change to the 2026-09-03 farming audit), and the one-click claim
-  caps it at +1 per win.
-- **Level-up:** if the +1 crosses a level, the bond scene DM goes out the
-  same way `/roam` sends it (`deliverBondScene`). Errand signatures stay with
-  `/roam` and `/meet`.
-- **The edit** (an `UPDATE_MESSAGE` response to the click):
-  - the reaction **goes under** `line`, a blank line apart in the same Text
-    Display; the opening line stays, read back off the clicked post
-    (`body.message`). A post with no readable line shows the reaction alone.
-    The reaction is the shared `/roam` pool
-    (`getReactionLine` in `constants/reactions.js`) for the chosen type, with
-    the choice's base rank as the outcome (2 love, 1 like, 0 flat), led by
-    `+1 — ` when a point was granted, the way `/roam` and `/meet` write a
-    gain. A flat pick shows the reaction alone, with no `+0`. The chosen
-    label isn't echoed.
-  - the gallery image swaps to the face map's face for the choice (§17.4.1)
-  - the register (reaction and face) and the accent color come from where the
-    winner lands after the gain, the same post-gain read `/roam` makes
-  - **the button row is removed**
-  - there is no private follow-up: the `(+1)` is the whole report
-- **Tracking:** the chosen response type is recorded through the existing
-  engagement/command-usage helpers. Date-button impressions aren't tracked;
-  a date's own answers are logged by the Activity (hangout-activity.md §12).
-
-### 17.4.1 Face map
-
-The scene's faces are derived, never authored. Every scene opens on
-`default.png`. A click swaps to the face for the chosen response's rank in
-the character's **base** `affinityByResponse` (fave = 2, like = 1, flat = 0;
-`swap` never applies) at the register the winner reaches after the click's
-gain:
-
-| Response | Stranger (`new`) | Acquaintance (`known`) | Friend (`warm`) | Close Friend (`spark`) | Confidant (`close`) | Devoted / Soulbound (`bound`) |
-|---|---|---|---|---|---|---|
-| *opening line* | default | default | default | default | default | default |
-| fave (2) | close | close | surprise_blush | blush | full_smile_blush | full_smile_blush |
-| like (1) | sweat | sweat | surprise | surprise_blush | full_smile | full_smile |
-| flat (0) | annoyed | annoyed | serious | close | smile | smile |
-
-One `SCENE_FACES` table in `constants/sceneFaces.js` (shared with the
-Hangout Activity's touch reactions), keyed
-register → rank. Variants on top of it:
-
-- **Jo, casual:** when the encounter row's `variant` is `casual` (silhouette
-  `Jo_Kongoza_Casual.png`), every face, the opening included, uses its
-  `_girl` file (`default_girl.png`, `smile_girl.png`, ...). It is read off
-  the row, so a scene carries no flag for it. Jo's scenes share one pool
-  across both looks, so his lines must read with either face set: pronouns
-  in a line are `{he}`/`{his}` tokens, filled "she"/"her" on a casual row
-  (`winnerLinePronouns`), and labels stay pronoun-free.
-- **`blush_2` (Ren, Romeo):** wherever the map gives `blush.png`, a 50/50
-  roll picks `blush_2.png` instead.
-- **Overrides (`SCENE_FACE_OVERRIDES`):** a sparse per-character table keyed
-  like `SCENE_FACES` (register → rank) that replaces the table's face for
-  that slot outright; an unlisted slot keeps the table's face. The art check
-  and `validateContent` read the overridden faces. Files are named for the
-  drawing (`annoyed`, `wink`), never for the response type, since one drawing
-  fills different ranks at different registers. Current set:
-
-  | Character | Register | Slot → face |
-  |---|---|---|
-  | Alan, Edward, Haku | new, known | flat → serious |
-  | Benkei | warm | flat → surprise |
-  | Rui | known | fave → wink, like → smile |
-  | Edward, Haku, Haru, Lucas, Mio, Rui, Shohei, Subaru, Towa, Zenji | warm | fave → blush |
-  | Leo, Jo | warm | fave → wink (`wink_girl` for Jo casual) |
-  | Kaito | warm / spark | fave → blush / lovestruck |
-  | Alan, Edward | spark | fave → smile_blush |
-- **Date button:** it has no face and never changes the portrait. The
-  date's faces belong to the Live2D rig (hangout-activity.md §12).
-
-An unanswered scene closes on its opening face (§17.6).
-
-### 17.5 Milestone
-
-None. A scene win picks, records and shows no milestone, so it never adds to
-`/affinity`'s Moments together. A win that falls back to the normal reveal
-(the scene post failed) gets its milestone as usual.
-
-### 17.6 Unanswered scenes
-
-When the next encounter spawns in a guild, any earlier scene in that guild
-with `scene_message_id` set and `scene_resolved_at` null is closed out
-before the new silhouette posts:
-
-- `scene_resolved_at` is set, so a late click gets the quiet "moment has
-  passed".
-- The winner (`solved_by`) gets the boost the scene replaced
-  (`grantEncounterBoost`, still capped at `ENCOUNTER_BOOST_CAP`). It's a
-  quiet safety net that no copy mentions. It's granted even if the post can't
-  be read back.
-- The post is read back from Discord (`getChannelMessage`) and saved again
-  without its button row, keeping the opening line, face and accent. Only
-  the text, portrait URL and accent are copied, so read-only fields on the
-  fetched components never reach the PATCH.
-
-There's no timer of its own. A guild whose encounters are disabled keeps its
-last scene open until encounters resume, which is acceptable.
-
-**Accepted trade-off:** ignoring a scene is worth slightly more on average
-than answering it (a sure +1 boost against a 2-in-3 chance at +1). Kept on
-purpose: the gap is one point, the fallback is never advertised, and the
-click is the fun part.
-
-If the scene's row write fails after the post lands, the buttons can't be
-answered or closed out, so the winner gets the fallback boost right away.
-
-### 17.7 Content: every winner line is a scene
-
-Scenes have no pool of their own (merged 2026-10-06; they were a separate
-`callScenes` export at first). Every entry in a character's `winnerLines`
-(and a pmOnly character's `daytimeWinnerLines`) is a `{ line, responses }`
-object, at every register (all labeled 2026-10-06):
-
-```js
-winnerLines: {
-  new: [
-    {
-      line: "**{name}** ... {user} ...",
-      responses: { kind: "...", playful: "...", bold: "..." },
-    },                                      // no face fields: see §17.4.1
-  ],
-},
-```
-
-- **Both reveals draw the same way.** The normal reveal (`pickWinnerLine`)
-  and the scene (`pickCallScene`) both `pickRandom` from `winnerLinePool`.
-  The reveal uses only the text (`winnerLineText`), so any line can show up
-  as a plain reveal one day and a scene another.
-- **Every line gets labels** (user decision 2026-10-06), even a finished
-  moment; its buttons answer it.
-- **The shared fallback pool stays plain strings** and never opens a scene.
-
-Writing rules:
-
-- `line` is a winner line and follows every winner-line rule in
-  `_shared.js`. That includes ending with the character staying with the
-  caller, because the normal reveal may still draw it with a milestone after
-  it. In a scene, the click's reaction replaces `line`.
-- The three labels answer `line` directly (no restated approach, no
-  trailing adverbs, no default "Thank him"), and each is at most 30
-  characters.
-- The answer to a click is not authored: it comes from the shared reaction
-  pool and stands alone in place of `line`, under the portrait. The usual
-  house rules and the voice-check skill apply to `line` and the labels.
-- A pmOnly character (Towa) draws his **daytime scenes from his wordless
-  `daytimeWinnerLines`** (revised 2026-10-06; at first he had none by day),
-  the same swap the normal reveal makes. Those lines carry labels too, and
-  stay wordless.
-
-`validateContent.js`:
-
-- the line gets the ordinary winner-line checks with the rest of its pool
-  (`{user}`, the character's name, known placeholders, repeats)
-- a scene entry errors on any key besides `line` / `responses` (so a stray
-  face or answer field is caught), no `line`, a missing
-  `kind`/`playful`/`bold`, any other label key (`neutral`, `date`), or a
-  label over 30 characters
-- a plain string in a character's `winnerLines` or `daytimeWinnerLines`
-  errors as having no button labels
-- an object entry in the shared fallback pool errors as a non-string line
-- a character register errors when the face map needs a file missing from
-  the character's art (including Jo's `_girl` files)
-- a `callScenes` export is rejected like any other unknown pool key
-
-### 17.8 Data model
-
-Migration `027_call_scenes.sql`, two nullable columns on `public_encounters`:
-
-| Column | Type | Purpose |
-|---|---|---|
-| `scene_message_id` | TEXT | The scene post. Null means the win used the normal reveal. |
-| `scene_resolved_at` | TIMESTAMPTZ | Set by the click or the closeout. It's the one-click arbiter, so the +1 or the fallback boost is granted exactly once. |
-
-Partial index on `(guild_id) WHERE scene_message_id IS NOT NULL AND
-scene_resolved_at IS NULL` for the closeout lookup. These columns are pruned
-with the row at 90 days like everything else.
-
-Nothing else is stored (trimmed 2026-10-06 from an earlier draft that kept
-the register, pool index, milestone, winner name and color). The click
-recomputes the register, face and color from the relationship after its gain
-and replaces the text with the reaction, and the closeout reads its post back
-from Discord.
-
-### 17.9 Code touch points
-
-- `constants/publicEncounters.js`: `CALL_SCENE_CHANCE`, `DATE_BUTTON_LABEL`,
-  `winnerLineText`, and the scene draw (`pickCallScene` returns
-  `{ bucket, scene }`, drawn with `pickRandom` from `winnerLinePool`).
-- `publicEncounters.js` `handleCall`: roll and draw before `afterReply`. In
-  `afterReply`, on a hit, do the silhouette edit with no embed, post the
-  scene, and store the columns. Add a new `handleSceneClick(body)` and a
-  closeout step in `spawnEncounter`.
-- `app.js`: route the `scene:` custom_id prefix next to `ward:`.
-- `discordRest.js`: `message_reference` on `postChannelMessage`, and
-  `getChannelMessage` for the closeout.
-- `db/`: migration plus the claim, store and closeout queries.
-- `commands.js` + `handleEncounterDev`: a `scene` boolean on
-  `/encdev spawn`. The force flag lives in an in-memory Map keyed by
-  encounter id (dev tooling, so losing it on restart is fine) and makes that
-  encounter's win skip the roll.
-- `constants/dialogue/<id>.js`: scene entries in `winnerLines` (and Towa's
-  `daytimeWinnerLines`). Every line at every register carries labels as of
-  2026-10-06 (§17.7); the first pass, one Stranger (`new`) scene per
-  character, was moved over unchanged from the old `callScenes` export.
-- Tests: roll gating (no scenes / missing art means a normal reveal), the
-  face map (each rank at each register, Jo casual -> `_girl`, `blush_2`
-  alternate), the lock state at 149/150, no boost or milestone on a scene
-  win, the answer order and shared style, the winner check, one-click claim
-  with +1 for fave/like and nothing for flat, the closeout on spawn with its
-  fallback boost, and the validator cases above.
-
-### 17.10 Decisions locked in
-
-- **Public, not ephemeral:** the buttons are on the public scene, and the
-  winner check enforces who can use them.
-- **The silhouette stays.** The text above it is cleared as today, it gets no
-  embed, and the scene is a separate reply.
-- **Three authored responses plus a fixed date button.** It's locked
-  (`🔒`, disabled) below Confidant and enabled from Confidant (revised
-  2026-11-01 from a Close Friend lock on an always-disabled button).
-  Clicking it gives up the scene's +1 and launches a date in the Hangout
-  Activity (hangout-activity.md §12). Every character, no skip list.
-- **One click, +1 for fave/like, 0 for flat** (revised 2026-10-06 from
-  flavor only). It replaces the win's boost. The answers are shuffled and
-  share one style, so the pick is blind. The reaction replaces the line with
-  `(+1)` after it, there's no follow-up, and the button row is removed.
-- **No milestone on a scene win.**
-- **Level-ups from a click** send the bond scene DM, as `/roam` does.
-- **Faces are derived (2026-10-06):** the opening is always `default`, and
-  a click's face follows the §17.4.1 map by base rank and register.
-- **Answers are reactions (2026-10-06):** a click shows a line from the
-  shared reaction pool for its type and base rank, not an authored reply. Scenes carry no
-  face data. Jo casual uses the `_girl` set, and Ren/Romeo get `blush_2` as
-  a 50/50 alternate. Character-specific faces (`wink` etc.) come from
-  `SCENE_FACE_OVERRIDES` (§17.4.1).
-- **Unanswered scenes close when the next spawn happens**, and the winner
-  quietly gets the boost instead. Ignoring a scene paying slightly more on
-  average is accepted.
-- **Rate is 5%** (2026-10-31; 7% from 2026-10-07, down from the 10% design rate). Every register
-  is labeled, so every character win is eligible.
-- **Scenes live in `winnerLines` (2026-10-06):** one pool, with an object
-  entry `{ line, responses }` marking a line that can open a scene.
-- **Scope:** call scenes only. The date itself is the Hangout Activity's
-  (hangout-activity.md §12); this section only owns the button, its lock,
-  and the claim. The button has no face and no reaction.
-
-- **Non-winner refusal (Q23, settled 2026-10-09):** `You're not part of
-  this conversation.` Q22 (no label echo) and Q24 (the closeout keeps the
-  opening) were settled on 2026-10-06 with the reaction-replaces-line design.
+- Every correct `/call` takes the normal reveal, the boost and the milestone.
+- `winnerLines` and Towa's `daytimeWinnerLines` are plain strings again. The
+  labels are gone and the line text is unchanged. validateContent rejects an
+  object entry.
+- The scene's face map (`SCENE_FACES`, `SCENE_FACE_OVERRIDES`, `rankFace` in
+  `constants/sceneFaces.js`) is gone too. Hangout reactions that used it
+  through `rank` now name their Live2D mood directly (hangout-activity.md
+  §4.2).
+- Migration 036 drops `scene_message_id`, `scene_resolved_at` and
+  `idx_public_encounters_open_scene` (reversing 027). The `call_scene_*` rows in
+  `command_usage_log` stay as history.
+- Old scene posts in channels keep their buttons. `app.js` answers a
+  `scene:` click with an ephemeral `That moment has passed.` that grants
+  nothing. Scenes still open at deploy lapse without their closeout boost.
+  The stub can be deleted once those posts are out of sight.
+- `/encdev spawn` lost its `scene` option. Run `npm run register` to update
+  the command.
+- **Dates** no longer start here. Their entry point is the `/meet` picker
+  (hangout-activity.md §12.1), not designed yet.

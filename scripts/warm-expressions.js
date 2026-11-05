@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 /**
  * warm-expressions — pre-warms Discord's media proxy for the expression art,
- * so a player's first /call scene portrait comes from Discord's CDN instead of
- * a cold fetch from our server. The proxy caches by source URL no matter who
- * triggered the fetch, so the bot DMs the URLs to you in media galleries (the
- * same component the scenes use), waits for them to load, then deletes them.
+ * so a player's first portrait (mission portraits, bond-scene faces) comes from
+ * Discord's CDN instead of a cold fetch from our server. The proxy caches by
+ * source URL no matter who triggered the fetch, so the bot DMs the URLs to you
+ * in media galleries, waits for them to load, then deletes them.
  *
  * Discord never confirms the proxy finished fetching, so WAIT_MS is a guess.
  * The proxy may also evict art nobody views for a while; rerun after adding or

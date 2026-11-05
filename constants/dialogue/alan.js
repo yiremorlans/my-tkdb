@@ -675,168 +675,35 @@ export default {
   // WINNER_LINES pool.
   winnerLines: {
     new: [
-      {
-        line: '**{name}** looks {user} over once. "...Yeah. That\'s me."',
-        responses: {
-          kind: "Say it's nice to meet him",
-          playful: "Ask if he's sure",
-          bold: "Say you knew it was",
-        },
-      },
-      {
-        line: "**{name}** had been at that corner a while, working out which way it went. {user} comes over to help.",
-        responses: {
-          kind: "Say you're going that way too",
-          playful: "Ask if he's touring campus",
-          bold: "Walk him there yourself",
-        },
-      },
-      {
-        line: '{user} trips on a loose step walking toward **{name}**. "...You okay?"',
-        responses: {
-          kind: "Say you're okay now",
-          playful: "Play it cool",
-          bold: "Ask him to walk with you",
-        },
-      },
-      {
-        line: '**{name}** stops mid-stride and turns to {user}. After a pause: "...You lost?"',
-        responses: {
-          kind: "Admit you are, a little",
-          playful: "Say he's the one who's lost",
-          bold: "Say you came looking for him",
-        },
-      },
+      '**{name}** looks {user} over once. "...Yeah. That\'s me."',
+      "**{name}** had been at that corner a while, working out which way it went. {user} comes over to help.",
+      '{user} trips on a loose step walking toward **{name}**. "...You okay?"',
+      '**{name}** stops mid-stride and turns to {user}. After a pause: "...You lost?"',
     ],
     known: [
-      {
-        line: "**{name}** knows {user}'s voice by now. He doesn't need to check who it is.",
-        responses: {
-          kind: "Say you'd know his too",
-          playful: "Ask how he knew it was you",
-          bold: "Stand where he'll see you",
-        },
-      },
-      {
-        line: '{user} stops by to say hi, and **{name}** looks up. "...Still around. Good."',
-        responses: {
-          kind: "Say you're not going anywhere",
-          playful: "Ask if that's a compliment",
-          bold: "Say you were looking for him",
-        },
-      },
-      {
-        line: "**{name}** is out on a run, and slows to a stop when {user} calls out.",
-        responses: {
-          kind: "Ask how far he's going",
-          playful: "Ask if he knows the way back",
-          bold: "Say you'll race him",
-        },
-      },
+      "**{name}** knows {user}'s voice by now. He doesn't need to check who it is.",
+      '{user} stops by to say hi, and **{name}** looks up. "...Still around. Good."',
+      "**{name}** is out on a run, and slows to a stop when {user} calls out.",
     ],
     warm: [
-      {
-        line: "{user} calls out, and **{name}** stops walking.",
-        responses: {
-          kind: "Catch up to him",
-          playful: "Ask if he was waiting for that",
-          bold: "Ask where he's off to",
-        },
-      },
-      {
-        line: "{user} runs into **{name}** at lunch, and the food is forgotten.",
-        responses: {
-          kind: "Tell him to keep eating",
-          playful: "Ask if he's sharing",
-          bold: "Sit down across from him",
-        },
-      },
-      {
-        line: "**{name}** doesn't say much when {user} shows up, but he seems happy to see them.",
-        responses: {
-          kind: "Say you're glad to see him too",
-          playful: "Ask if he's happy to see you",
-          bold: "Ask if he missed you",
-        },
-      },
+      "{user} calls out, and **{name}** stops walking.",
+      "{user} runs into **{name}** at lunch, and the food is forgotten.",
+      "**{name}** doesn't say much when {user} shows up, but he seems happy to see them.",
     ],
     spark: [
-      {
-        line: '{user} calls out, and **{name}** comes over and pats them on the head. That\'s his hello now.',
-        responses: {
-          kind: "Lean into his hand",
-          playful: "Ask if you get one every time",
-          bold: "Tell him not to stop",
-        },
-      },
-      {
-        line: '"...Thought that was you." **{name}** says it low, standing closer to {user} than he needs to.',
-        responses: {
-          kind: "Say you wanted to see him",
-          playful: "Ask who else it'd be",
-          bold: "Close the last step",
-        },
-      },
-      {
-        line: "**{name}** doesn't say anything when {user} reaches him. He tips his head toward the quiet end of the courtyard and waits.",
-        responses: {
-          kind: "Follow him there",
-          playful: "Ask what's at the quiet end",
-          bold: "Lead the way there",
-        },
-      },
+      '{user} calls out, and **{name}** comes over and pats them on the head. That\'s his hello now.',
+      '"...Thought that was you." **{name}** says it low, standing closer to {user} than he needs to.',
+      "**{name}** doesn't say anything when {user} reaches him. He tips his head toward the quiet end of the courtyard and waits.",
     ],
     close: [
-      {
-        line: "**{name}** was already walking {user}'s way before the name finished.",
-        responses: {
-          kind: "Walk to meet him",
-          playful: "Ask if he heard the first part",
-          bold: "Say you knew he'd come",
-        },
-      },
-      {
-        line: "{user} calls, and **{name}** puts a hand at their back, steering them out of the crowd.",
-        responses: {
-          kind: "Let him steer you",
-          playful: "Ask where he's taking you",
-          bold: "Steer him right back",
-        },
-      },
-      {
-        line: "**{name}** says nothing. He stays where {user} can reach him.",
-        responses: {
-          kind: "Reach for him",
-          playful: "Ask if he's waiting on you",
-          bold: "Stay right there too",
-        },
-      },
+      "**{name}** was already walking {user}'s way before the name finished.",
+      "{user} calls, and **{name}** puts a hand at their back, steering them out of the crowd.",
+      "**{name}** says nothing. He stays where {user} can reach him.",
     ],
     bound: [
-      {
-        line: '"Come here. Don\'t need a reason anymore, do I." **{name}** says it low, only to {user}.',
-        responses: {
-          kind: "Go to him",
-          playful: "Ask for a reason anyway",
-          bold: "Say he never did",
-        },
-      },
-      {
-        line: "**{name}** hears {user}, and his shoulders finally come down.",
-        responses: {
-          kind: "Say you're here now",
-          playful: "Ask what he was bracing for",
-          bold: "Say he can rest now",
-        },
-      },
-      {
-        line: "**{name}** crosses the courtyard to {user} without once checking which way he's going.",
-        responses: {
-          kind: "Meet him in the middle",
-          playful: "Say he didn't get lost",
-          bold: "Say he knows the way now",
-        },
-      },
+      '"Come here. Don\'t need a reason anymore, do I." **{name}** says it low, only to {user}.',
+      "**{name}** hears {user}, and his shoulders finally come down.",
+      "**{name}** crosses the courtyard to {user} without once checking which way he's going.",
     ],
   },
 };

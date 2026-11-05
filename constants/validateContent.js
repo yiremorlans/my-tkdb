@@ -29,13 +29,9 @@ import {
 } from "./game.js";
 import {
   BOND_SCENE_PLACEHOLDERS,
-  CALL_SCENE_RESPONSES,
-  callSceneArtReady,
   expressionExists,
-  sceneFaceFiles,
   WINNER_LINE_BUCKETS,
   WINNER_LINE_PLACEHOLDERS,
-  winnerLineText,
 } from "./publicEncounters.js";
 import {
   accusedFace,
@@ -83,8 +79,8 @@ function collectLabels(value) {
   return [];
 }
 
-// The one length cap every button label carries: call scene responses, bond
-// scene options, beat approaches and beat responses. `what` names the slot in
+// The one length cap every button label carries: bond scene options, beat
+// approaches and beat responses. `what` names the slot in
 // the error ("<what> is N chars (max M)").
 function checkLabelLength(what, label, errors) {
   if (label.length > MAX_BUTTON_LABEL_LENGTH) {
@@ -130,13 +126,7 @@ function tierCoversResponse(poolData, type) {
 }
 
 function validateWinnerLines(at, winnerLines, errors, warnings, opts = {}) {
-  // `scenes: true` for a character's own winner lines (and a pmOnly
-  // character's daytime ones): every entry there is a `{ line, responses }`
-  // call scene, so pickCallScene can draw from the same pool as the reveal.
-  // `scenes: false` (the shared fallback pool): every entry is a plain line.
-  // `characterId` names whose art a scene needs when `at` is a label rather
-  // than the id ("towa daytime").
-  const { required = false, extraBuckets = [], scenes = false, characterId = at } = opts;
+  const { required = false, extraBuckets = [] } = opts;
   if (winnerLines === undefined) {
     const message = `${at} has no winnerLines`;
     if (required) errors.push(message);
@@ -169,28 +159,14 @@ function validateWinnerLines(at, winnerLines, errors, warnings, opts = {}) {
       );
       continue;
     }
-    const texts = lines.map(winnerLineText);
-    if (new Set(texts).size !== texts.length) {
+    if (new Set(lines).size !== lines.length) {
       warnings.push(`${at} repeats a winner line at "${bucket}"`);
     }
-    lines.forEach((entry, i) => {
-      if (!scenes) {
-        if (typeof entry !== "string") errors.push(`${at} winnerLines.${bucket} has a non-string line`);
-      } else if (entry && typeof entry === "object") {
-        validateSceneEntry(`${at} winnerLines.${bucket}[${i}]`, entry, errors);
-      } else {
-        errors.push(`${at} winnerLines.${bucket}[${i}] has no button labels; write it as { line, responses }`);
+    for (const line of lines) {
+      if (typeof line !== "string") {
+        errors.push(`${at} winnerLines.${bucket} has a non-string line`);
+        continue;
       }
-    });
-    // The roll checks this too and quietly keeps the normal reveal; here it
-    // fails the build, so a scene is never authored for art that isn't there.
-    if (scenes && !callSceneArtReady(characterId, bucket)) {
-      errors.push(
-        `${at} winnerLines.${bucket} has call scenes but faces are missing from assets/expressions/${characterId}/ (one of ${sceneFaceFiles(characterId, bucket).join(", ")})`,
-      );
-    }
-    for (const line of texts) {
-      if (typeof line !== "string") continue;
       const used = [...line.matchAll(/\{(\w+)\}/g)].map((m) => m[1]);
       for (const key of used) {
         if (!WINNER_LINE_PLACEHOLDERS.includes(key)) {
@@ -208,41 +184,6 @@ function validateWinnerLines(at, winnerLines, errors, warnings, opts = {}) {
       if (!used.includes("name") && !used.includes("firstName")) {
         errors.push(`${at} winnerLines.${bucket} never names the character: "${line}"`);
       }
-    }
-  }
-}
-
-// A winner line that can also open a call scene (docs/public-encounters.md
-// §17.7): `{ line, responses }` and nothing else. The face is derived from the
-// character's ranking (sceneFace) and the answer is the shared reaction pool
-// (constants/reactions.js), so neither is authored here, and the date button is
-// fixed. The line itself gets the winner-line checks with the rest of its pool.
-const CALL_SCENE_KEYS = ["line", "responses"];
-
-function validateSceneEntry(where, scene, errors) {
-  for (const key of Object.keys(scene)) {
-    if (!CALL_SCENE_KEYS.includes(key)) errors.push(`${where} has unknown key "${key}"`);
-  }
-  if (typeof scene.line !== "string" || !scene.line.trim()) {
-    errors.push(`${where} has no line`);
-  }
-
-  const labels = scene.responses;
-  if (!labels || typeof labels !== "object") {
-    errors.push(`${where} has no responses`);
-    return;
-  }
-  for (const key of Object.keys(labels)) {
-    if (!CALL_SCENE_RESPONSES.includes(key)) {
-      errors.push(`${where} responses has unknown key "${key}"`);
-    }
-  }
-  for (const type of CALL_SCENE_RESPONSES) {
-    const label = labels[type];
-    if (typeof label !== "string" || !label.trim()) {
-      errors.push(`${where} responses is missing "${type}"`);
-    } else {
-      checkLabelLength(`${where} ${type} label`, label, errors);
     }
   }
 }
@@ -704,7 +645,7 @@ export function validateContent() {
       errors.push(`${id} is pmOnly but has daytimeDialogue lines with no approach — nothing left to label them`);
     }
 
-    validateWinnerLines(id, content.winnerLines, errors, warnings, { scenes: true });
+    validateWinnerLines(id, content.winnerLines, errors, warnings);
 
     // The /call reveal's version of the daytime swap: a pmOnly character can't
     // speak by day, so his daytime reveals need a wordless pool at every
@@ -713,8 +654,6 @@ export function validateContent() {
     if (character.pmOnly) {
       validateWinnerLines(`${id} daytime`, content.daytimeWinnerLines, errors, warnings, {
         required: true,
-        scenes: true,
-        characterId: id,
       });
     } else if (content.daytimeWinnerLines !== undefined) {
       warnings.push(`${id} has daytimeWinnerLines but isn't pmOnly — never picked`);

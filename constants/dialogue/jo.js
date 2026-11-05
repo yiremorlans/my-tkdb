@@ -1060,168 +1060,35 @@ export default {
   // response labels stay pronoun-free.
   winnerLines: {
     new: [
-      {
-        line: '"A new face." **{name}** looks up from the budget for {user} and doesn\'t look back down.',
-        responses: {
-          kind: "Ask how you can help",
-          playful: "Ask if you're in the budget",
-          bold: "Pull up a chair",
-        },
-      },
-      {
-        line: "{user} calls {his} name, and **{name}** turns the charisma on like a stage light.",
-        responses: {
-          kind: "Smile back, give your name",
-          playful: "Shield your eyes from it",
-          bold: "Look right past the spotlight",
-        },
-      },
-      {
-        line: '"Come on over, cutie." **{name}** greets {user} as though their schedule weren\'t already full.',
-        responses: {
-          kind: "Ask when the last break was",
-          playful: "Call the captain cutie back",
-          bold: "Clear a spot on the schedule",
-        },
-      },
-      {
-        line: '**{name}** looks up from a stack of schedules and smiles at {user}. "Hey there, cutie. What can I do for you?"',
-        responses: {
-          kind: "Offer to sort the schedules",
-          playful: "Start a round of applause",
-          bold: "Ask for ten free minutes",
-        },
-      },
+      '"A new face." **{name}** looks up from the budget for {user} and doesn\'t look back down.',
+      "{user} calls {his} name, and **{name}** turns the charisma on like a stage light.",
+      '"Come on over, cutie." **{name}** greets {user} as though their schedule weren\'t already full.',
+      '**{name}** looks up from a stack of schedules and smiles at {user}. "Hey there, cutie. What can I do for you?"',
     ],
     known: [
-      {
-        line: '"Twice now, cutie." **{name}** isn\'t the least bit surprised to see {user} again.',
-        responses: {
-          kind: "Say twice isn't enough",
-          playful: "Ask for a punch card",
-          bold: "Say you're making it a habit",
-        },
-      },
-      {
-        line: "{user} waves hello, and **{name}** sets {his} pen down like {he}'d been looking for an excuse.",
-        responses: {
-          kind: "Be the excuse",
-          playful: "Ask if you're the excuse",
-          bold: "Take the rest of the hour",
-        },
-      },
-      {
-        line: "\"You're here again. That's dangerous for my schedule.\" **{name}** makes time for {user} anyway.",
-        responses: {
-          kind: "Offer to help catch up after",
-          playful: "Ask how dangerous",
-          bold: "Say the schedule can lose",
-        },
-      },
+      '"Twice now, cutie." **{name}** isn\'t the least bit surprised to see {user} again.',
+      "{user} waves hello, and **{name}** sets {his} pen down like {he}'d been looking for an excuse.",
+      "\"You're here again. That's dangerous for my schedule.\" **{name}** makes time for {user} anyway.",
     ],
     warm: [
-      {
-        line: '"You\'re back!" **{name}** spots {user} and forgets whatever {he} was signing.',
-        responses: {
-          kind: "Ask how {his} day's been",
-          playful: "Ask what you just interrupted",
-          bold: "Say {he}'s done for today",
-        },
-      },
-      {
-        line: "{user} calls out, and **{name}** folds the schedule away mid-revision.",
-        responses: {
-          kind: "Say this counts as a break",
-          playful: "Ask if you're on it",
-          bold: "Ask for the whole evening",
-        },
-      },
-      {
-        line: "\"I'm heading out for a drive later. Want to come along, cutie?\" **{name}** asks {user} like the seat's already saved.",
-        responses: {
-          kind: "Say you'd love to come",
-          playful: "Ask who picks the music",
-          bold: "Call shotgun",
-        },
-      },
+      '"You\'re back!" **{name}** spots {user} and forgets whatever {he} was signing.',
+      "{user} calls out, and **{name}** folds the schedule away mid-revision.",
+      "\"I'm heading out for a drive later. Want to come along, cutie?\" **{name}** asks {user} like the seat's already saved.",
     ],
     spark: [
-      {
-        line: "**{name}** hears {his} name, and the professional smile becomes a real one for {user}.",
-        responses: {
-          kind: "Say you like the real smile",
-          playful: "Ask for the stage one",
-          bold: "Ask to see it more",
-        },
-      },
-      {
-        line: '**{name}** walks over to {user} anyway. "Proposal, schedule, budget... and yet here I am."',
-        responses: {
-          kind: "Offer to take one off {him}",
-          playful: "Say you'll take that as a win",
-          bold: "Say the budget can wait",
-        },
-      },
-      {
-        line: "{user} calls out early and catches **{name}** already looking {user}'s way.",
-        responses: {
-          kind: "Pretend you didn't notice",
-          playful: "Ask how long it's been",
-          bold: "Say you were looking too",
-        },
-      },
+      "**{name}** hears {his} name, and the professional smile becomes a real one for {user}.",
+      '**{name}** walks over to {user} anyway. "Proposal, schedule, budget... and yet here I am."',
+      "{user} calls out early and catches **{name}** already looking {user}'s way.",
     ],
     close: [
-      {
-        line: "**{name}** drops the stage presence for {user}, right there in the middle of everyone.",
-        responses: {
-          kind: "Say you like this better",
-          playful: "Ask for an encore",
-          bold: "Keep the audience out",
-        },
-      },
-      {
-        line: '"The rest can wait till tomorrow. You\'re with me." **{name}** says it to {user}, quietly firm.',
-        responses: {
-          kind: "Say yes to tomorrow",
-          playful: "Ask what the rest is",
-          bold: "Say you're not going anywhere",
-        },
-      },
-      {
-        line: "{user} calls, and **{name}** clocks out.",
-        responses: {
-          kind: "Say the night is free",
-          playful: "Ask for overtime pay",
-          bold: "Claim the whole evening",
-        },
-      },
+      "**{name}** drops the stage presence for {user}, right there in the middle of everyone.",
+      '"The rest can wait till tomorrow. You\'re with me." **{name}** says it to {user}, quietly firm.',
+      "{user} calls, and **{name}** clocks out.",
     ],
     bound: [
-      {
-        line: '"No audience," **{name}** murmurs, reaching {user}. "Only you."',
-        responses: {
-          kind: "Say that's all you need",
-          playful: "Applaud anyway",
-          bold: "Say make it always",
-        },
-      },
-      {
-        line: "**{name}** hands the **{house}** program to Mio without explaining. {user} called.",
-        responses: {
-          kind: "Wave to Mio",
-          playful: "Ask if Mio agreed",
-          bold: "Say the program can wait",
-        },
-      },
-      {
-        line: "{user} calls {his} name, and every version of **{name}** answers to it.",
-        responses: {
-          kind: "Say you love every version",
-          playful: "Ask which version this is",
-          bold: "Call for the real one",
-        },
-      },
+      '"No audience," **{name}** murmurs, reaching {user}. "Only you."',
+      "**{name}** hands the **{house}** program to Mio without explaining. {user} called.",
+      "{user} calls {his} name, and every version of **{name}** answers to it.",
     ],
   },
 };
