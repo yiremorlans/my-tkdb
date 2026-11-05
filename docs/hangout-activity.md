@@ -598,9 +598,10 @@ toggles (`?hide=PartX`) show what a part covers.
 | Elias | lollipop | no part; driven by parameters (`ParamCandyOnOff`, `ParamHandCandyOff`; `e_candy_00` and the `m_ame*` motions use them) | hand at warm, lips from spark | Unlocks at **warm**, where it can only be snatched while a pose shows it in his hand (the `m_ame*` poses); from **spark** it rests in his mouth and is taken from there (user, 2026-11-05). Hiding it means holding the parameter off after motions and expressions write theirs, a third art path beside part and drawables; the `m_ame*` poses would bring it back, so they need excluding once it's off. Lines TBD. |
 | Leo | headphones | `PartHeadphone` (academy, casual; also a `ParamHeadphone`) | chest (worn around his neck) | His new-tier chestTouch already has "Hands off the headphones.", which moves to `headphonePat`. He's noise-sensitive (his ear lines; canon idle: "Ugh, everyone's so loud. I'm putting my headphones on"), so taking them is a real ask the lines carry, tier by tier. Unlocks at **warm**. Check what the neck/collar looks like under them. Lines TBD. |
 
-**Build (preview only, 2026-11-05).** `activity/src/hangout/articles.js`
-(`attachArticles(scene)`), attached by preview.js alone; the Activity
-doesn't remove anything yet. It wraps `hangout.tapAt` (which the scene and
+**Build (2026-11-05).** `activity/src/hangout/articles.js`
+(`attachArticles(scene)`), attached by preview.js and, since 2026-11-05,
+by the Activity (main.js `attachTouch`, both /meet and the free hangout,
+sharing one coach with holds). It wraps `hangout.tapAt` (which the scene and
 holds.js both call, so holds chain through it) and `hangout.spotInfo`.
 Config is rig.json `outfits.<name>.articles` (keys documented at the top of
 articles.js: `part`, `drawables`, `params`, `rest`, `covers`, `blocks`,

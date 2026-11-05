@@ -1,6 +1,6 @@
 // Removable articles (docs/hangout-activity.md §4.2 "Removable articles"):
-// double-tap an article he wears or carries to take it off. Preview only for
-// now (preview.js attaches it; the Activity doesn't yet).
+// double-tap an article he wears or carries to take it off. Attached by the
+// Activity (main.js attachTouch) and the preview (preview.js).
 //
 // The first tap on an article plays at once as a touch on it (its own
 // `<article>Pat` lines, with the face and pose of the spot it covers). A

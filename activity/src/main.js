@@ -98,11 +98,11 @@ function wireChrome(scene) {
 async function playEncounter(session, encounter) {
   $("#vn-name").textContent = encounter.name;
   // Independent fetches, so they go out together.
-  const [lines, { meetFlow }, { attachWarmth }, { attachHolds }] = await Promise.all([
+  const [lines, { meetFlow }, { attachWarmth }, touch] = await Promise.all([
     loadLines(encounter.character, { daytime: encounter.daytime }),
     import("./hangout/meet.js"),
     import("./hangout/warmth.js"),
-    import("./hangout/holds.js"),
+    touchModules(),
   ]);
   const scene = await startScene($("#stage"), encounter.character, {
     tier: encounter.tier,
@@ -114,8 +114,7 @@ async function playEncounter(session, encounter) {
   wireChrome(scene);
   // Touches and the answer flush him a little more from spark up (§12.7).
   const warmth = attachWarmth(scene, "hangout");
-  // Press and hold his chest, lips or a hand, from spark (holds.js).
-  attachHolds(scene, { warmth: () => warmth });
+  attachTouch(scene, warmth, touch);
   const flow = meetFlow(scene, { box: $(".vn-box"), choices: $("#choices"), next: $("#btn-next") });
   // Renewed only while the answer is pending: once it's recorded nothing
   // else calls the server, so the Activity can stay open as long as it likes.
@@ -130,10 +129,32 @@ async function playFreeHangout(character) {
   const options = { tier: params.get("tier"), lines: await loadLines(character, timeParam()), maxFPS: isMobile ? MOBILE_FPS : 0 };
   const scene = await startScene($("#stage"), character, options);
   wireChrome(scene);
-  const [{ attachWarmth }, { attachHolds }] = await Promise.all([import("./hangout/warmth.js"), import("./hangout/holds.js")]);
+  const [{ attachWarmth }, touch] = await Promise.all([import("./hangout/warmth.js"), touchModules()]);
   const warmth = attachWarmth(scene, "hangout");
-  attachHolds(scene, { warmth: () => warmth });
+  attachTouch(scene, warmth, touch);
   scene.say(scene.hangout.line("greeting") ?? "");
+}
+
+/** holds.js, articles.js and coach.js, loaded together. */
+async function touchModules() {
+  const [{ attachHolds }, { attachArticles }, { attachCoach }] = await Promise.all([
+    import("./hangout/holds.js"),
+    import("./hangout/articles.js"),
+    import("./hangout/coach.js"),
+  ]);
+  return { attachHolds, attachArticles, attachCoach };
+}
+
+/**
+ * Holds (press and hold his chest, lips or a hand, from spark) and
+ * removable articles (double-tap one to take it off, from warm), sharing
+ * one set of tutorial chips. Articles go on after holds, so their tapAt
+ * wraps the one holds calls.
+ */
+function attachTouch(scene, warmth, { attachHolds, attachArticles, attachCoach }) {
+  const coach = attachCoach(scene);
+  attachHolds(scene, { warmth: () => warmth, coach });
+  attachArticles(scene, { coach });
 }
 
 /** `?time=day|evening` overrides the hour for touch lines that swap by day. */

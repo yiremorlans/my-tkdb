@@ -3,7 +3,7 @@
 // in that part's normalized image space ([x0, y0, x1, y1]; whole image if
 // absent). Listed order is priority, so put small spots before large ones.
 //
-// Removable articles (articles.js, preview only) hook in through
+// Removable articles (articles.js) hook in through
 // `renderer.articleSpot(spot)`, the article covering that spot or null, and
 // `renderer.articleAt(point)`, an article whose own art is under the point.
 // A covered spot answers with the article's name; a tap that lands on no

@@ -219,7 +219,8 @@ export class Hangout {
    * line? }. `line` names the pool, when it isn't the reaction's own.
    *
    * Removable articles (rig.json `articles`; docs/hangout-activity.md §4.2)
-   * can only come off where articles.js is attached (the preview). Without
+   * can only come off where articles.js is attached (the Activity and the
+   * preview). Without
    * it every article stays on, so a spot one covers draws that article's
    * `<article>Pat` lines (Shion's head pats land on his hat), keeping the
    * face and pose of the spot. Articles that are only out in some poses
