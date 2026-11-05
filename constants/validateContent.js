@@ -539,8 +539,14 @@ function validateTimedPool(label, pools, errors, warnings) {
 // winning line would reveal its culprit saying nothing, and a house student
 // with no debrief lines would break the draw for every co-op in that house.
 // Their portraits are checked here too: at runtime a missing face only drops
-// the thumbnail, which nobody would notice.
+// the thumbnail, which nobody would notice. So is their signature art: an
+// errand target with none renders a blank line on an otherwise signed /docs
+// report (Benkei has no house, so he is never a target).
 function validateMissionContent(errors) {
+  let signatures = new Set();
+  try {
+    signatures = new Set(fs.readdirSync(join(__dirname, "../assets/signatures")));
+  } catch {}
   for (const pool of Object.values(RIDDLES)) {
     for (const riddle of pool) {
       if (typeof riddle.winningLine !== "string" || !riddle.winningLine.trim()) {
@@ -549,7 +555,12 @@ function validateMissionContent(errors) {
     }
   }
   for (const house of MISSION_HOUSES) {
-    for (const { id } of getHouseRoster(house)) {
+    for (const { id, firstName, lastName } of getHouseRoster(house)) {
+      // Named the way missions/player.js's signatureFilename resolves it.
+      const signature = `${firstName}_${lastName.split(" ").pop()}.png`;
+      if (!signatures.has(signature)) {
+        errors.push(`${id} has no signature art assets/signatures/${signature}`);
+      }
       const lines = DEBRIEF_LINES[id];
       if (
         !Array.isArray(lines) ||

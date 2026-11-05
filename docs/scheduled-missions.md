@@ -592,7 +592,7 @@ export const RIDDLES = {
 - `answer` is a character id; the mission stores `riddle_id` at spawn so two
   accepters who drew different missions face different riddles.
 - Every student gets exactly two, so a house's pool never collapses to one
-  known report; `test/missions.test.js` holds the count at two.
+  known report; `test/missions-riddle.test.js` holds the count at two.
 - Non-character-answer riddles (buttons A/B/C, keyword) are a possible later
   variant; v1 is "name the student", matched by `matchCharacterGuess`.
 
@@ -1545,7 +1545,7 @@ win's.
 | `missions/shared.js` | `portraitMessage` (or equivalent), `chancellorMessage` wraps it |
 | `constants/missions.js` | `winningLine` on every riddle; boost line constant; accusation face table (`annoyed`, with the `serious` substitutes) |
 | `constants/validateContent.js` | require `winningLine` |
-| `test/missions.test.js` | accusation shows the accused's face; a miss shows none; reveal shows `sweat`, all four text lines, and grants the boost; boost line still shows when the grant is capped |
+| `test/missions-riddle.test.js` | accusation shows the accused's face; a miss shows none; reveal shows `sweat`, all four text lines, and grants the boost; boost line still shows when the grant is capped |
 
 No migration: the boost reuses `grant_encounter_boost()` and
 `character_relationships.pending_encounter_boost`.
@@ -1715,7 +1715,7 @@ No new table, no RPC.
 | `db/migrations/030_coop_debrief.sql` | columns, backfill, index |
 | `app.js` | route `mission:debrief:<id>` |
 | `constants/validateContent.js` | require debrief lines per house student |
-| `test/missions.test.js` | pings both; lead and helper each claim once; outsider refused; second click refused; draw skips held boosts and falls back when all are held; boost line shows when capped; reminder lists newest + count; expired co-op has no reminder |
+| `test/missions-accept.test.js` (co-op), `test/missions-debrief.test.js` | pings both; lead and helper each claim once; outsider refused; second click refused; draw skips held boosts and falls back when all are held; boost line shows when capped; reminder lists newest + count; expired co-op has no reminder |
 
 ### 21.9 Decisions locked in
 
