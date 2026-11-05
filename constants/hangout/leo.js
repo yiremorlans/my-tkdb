@@ -159,7 +159,7 @@ export default {
       "So now you know what I hear from you all day. Fun, right?",
     ],
     lipHold: [
-      "...You kept it there that long? Bold. Next time I'm not sitting still.",
+      "Don't think I won't return the favor.",
       "Wow. Okay. Not gonna lie, I didn't hate that.",
     ],
     handHold: [
@@ -205,7 +205,7 @@ export default {
       "You keep checking like it's gonna slow down, but it's not.",
     ],
     lipHold: [
-      "...You know I'm counting how long you stay there. That was a new record.",
+      "...That was a new record, Honor Roll. Don't get cocky.",
       "Ugh. Stop looking at my mouth like that. ...Or come closer and make your move.",
     ],
     handHold: [

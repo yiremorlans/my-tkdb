@@ -169,7 +169,7 @@ export default {
       "It's not scared, it's just squeezy. There's a difference.",
     ],
     lipHold: [
-      "You stayed there so long my ears almost popped out. ...I didn't mind.",
+      "My ears almost popped out. ...I didn't mind.",
       "...Next time, don't stop so fast. I wasn't gonna run.",
     ],
     handHold: [

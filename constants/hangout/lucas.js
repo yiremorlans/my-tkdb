@@ -161,7 +161,7 @@ export default {
       "So now you know. I'd rather you'd heard it from me, but my heart beat me to it.",
     ],
     lipHold: [
-      "I didn't move an inch. You've no idea how difficult that was.",
+      "You've no idea how difficult that was.",
       "A gentleman doesn't kiss someone's hand without asking. ...So consider this me asking.",
     ],
     handHold: [

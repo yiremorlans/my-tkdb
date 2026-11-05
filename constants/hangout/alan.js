@@ -93,7 +93,7 @@ export default {
       "Yeah. It does that around you. ...Don't make a big deal of it.",
     ],
     lipHold: [
-      "...I stayed still. Figured you'd stop on your own.",
+      "...Didn't think you'd go through with that.",
       "...I don't know what to say to that. I'm no good with words.",
     ],
     handHold: [
@@ -140,7 +140,7 @@ export default {
     ],
     lipHold: [
       "...You're gonna keep me up, doing that.",
-      "...Next time I'm not standing still for it.",
+      "...Do that again and I'm doing something about it.",
     ],
     handHold: [
       "Hold as tight as you want. I'll watch my grip.",

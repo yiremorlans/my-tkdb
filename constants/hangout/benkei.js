@@ -162,7 +162,7 @@ export default {
       "Ah... Don't look at me like that. I know.",
     ],
     lipHold: [
-      "Oh... I, um. I didn't move. I didn't want to.",
+      "Oh... I, um. Sorry. Where was I?",
       "My face is going to stay this red all shift.",
     ],
     handHold: [

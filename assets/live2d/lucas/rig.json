@@ -179,7 +179,7 @@
     },
     "lipHold": {
       "byTier": {
-        "spark": { "mood": "earnest_blush", "duration": 3.6 },
+        "spark": { "mood": "smile_blush", "duration": 3.6 },
         "close": { "mood": "earnest_blush", "duration": 3.6 },
         "bound": { "mood": "earnest_blush", "duration": 4 }
       }

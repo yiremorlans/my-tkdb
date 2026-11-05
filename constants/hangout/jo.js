@@ -130,7 +130,7 @@ export default {
       "Ha... It only does that around you, you know.",
     ],
     lipHold: [
-      "...You held that there a while, cutie. I'm trying very hard to behave.",
+      "Hah... Cutie. You're not making this easy.",
       "Hah... Okay. I'll need a minute before I go back to work.",
     ],
     handHold: [

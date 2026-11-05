@@ -121,7 +121,7 @@ export default {
   },
   spark: {
     headPat: [
-      "You can keep doing that. I don't know why I want you to.",
+      "I don't understand what it's for yet. Please keep going until I do.",
       "...Do it again. I'm observing something.",
     ],
     cheekPoke: [
@@ -157,11 +157,11 @@ export default {
       "Please stop. My pulse won't settle.",
     ],
     heartbeatHold: [
-      "You were listening to my heart. That's usually my job. ...What did you hear?",
-      "That's faster than it should be. ...I don't want it to slow down.",
+      "Usually I'm the one checking. ...What did you hear?",
+      "Faster than my chart says. ...I'm leaving it off the record.",
     ],
     lipHold: [
-      "...You held that there a long time. I forgot to count.",
+      "...I meant to time that. I forgot.",
       "...I don't have a clinical term for that. I'll look for one.",
     ],
     handHold: [
@@ -207,11 +207,11 @@ export default {
       "You're learning my resting rate. That's more than most people know about me.",
     ],
     lipHold: [
-      "That was long enough to count as an examination. Was the result what you wanted?",
+      "Was the result what you wanted? Mine was.",
       "I'd like to return that sometime. Not with my hand.",
     ],
     handHold: [
-      "It's been a long time since someone held on to me that long. I think I liked it.",
+      "It's been a long time since someone held on to me. I think I liked it.",
       "Yuri's calling. ...I'll ignore it for now.",
     ],
     caughtTease: [
