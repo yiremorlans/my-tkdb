@@ -24,8 +24,9 @@
 //   rest        { id: value } or { byTier } held while it's on: how he
 //               wears it at that tier (Elias's lollipop in his mouth from
 //               spark); paused while a `poses` pose has it out
-//   covers      the touch spot it covers (or { byTier }), whose face and
-//               pose its touches borrow
+//   covers      the touch spot it covers, or a list of them (Mio's apron:
+//               chest and belly), or { byTier } of either; a touch on it
+//               borrows the face and pose of the covered spot it landed in
 //   blocks      false: the covered spot stays his while it's on (only the
 //               art itself is the article's); default true
 //   shownOnly   true: it's only there while its art shows (Ren's phone and,
@@ -51,7 +52,7 @@
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 
 import { hotspotAt } from "./hotspots.js";
-import { forTier } from "./reactions.js";
+import { coveredSpots, forTier } from "./reactions.js";
 
 // Seconds between the two taps of a double-tap.
 export const DOUBLE_TAP = 0.35;
@@ -81,28 +82,37 @@ export function attachArticles(scene, { startOff = false, onChange, coach } = {}
     }),
   );
 
-  const covered = (a) => forTier(a.config.covers, hangout.tier);
+  const covered = (a) => coveredSpots(a.config.covers, hangout.tier);
+  // The covered spot the last hit on `a` landed in (hotspotAt), else its
+  // first: a list's touches borrow that spot's face and pose.
+  const spotOf = (a) => (a.hitSpot && covered(a).includes(a.hitSpot) ? a.hitSpot : covered(a)[0]);
   const present = (a) => !a.off && (!a.config.shownOnly || renderer.drawablesShown(a.art));
   const unlocked = (a) => atLeast(hangout.tier, a.config.tier ?? UNLOCK_TIER);
   const ready = (a) => !a.config.requires || articles.get(a.config.requires)?.off !== false;
 
   renderer.articleSpot = (spot) => {
     for (const a of articles.values()) {
-      if (a.config.blocks !== false && covered(a) === spot && present(a)) return a.name;
+      if (a.config.blocks !== false && covered(a).includes(spot) && present(a)) {
+        a.hitSpot = spot;
+        return a.name;
+      }
     }
     return null;
   };
   // holds.js: the hold spot under a `holdThrough` article, or null.
   renderer.articleHoldSpot = (name) => {
     const a = articles.get(name);
-    return a?.config.holdThrough && present(a) ? covered(a) : null;
+    return a?.config.holdThrough && present(a) ? spotOf(a) : null;
   };
   // `spot` given: only an article covering that spot (hotspots.js, for a
   // non-blocking article's art inside the spot it covers).
   renderer.articleAt = (point, spot) => {
     for (const a of articles.values()) {
-      if (spot && covered(a) !== spot) continue;
-      if (a.config.hit !== false && present(a) && renderer.drawablesHit(a.art, point)) return a.name;
+      if (spot && !covered(a).includes(spot)) continue;
+      if (a.config.hit !== false && present(a) && renderer.drawablesHit(a.art, point)) {
+        a.hitSpot = spot ?? null;
+        return a.name;
+      }
     }
     return null;
   };
@@ -113,7 +123,7 @@ export function attachArticles(scene, { startOff = false, onChange, coach } = {}
   hangout.spotInfo = (spot) => {
     const a = articles.get(spot);
     if (!a) return spotInfo(spot, { worn: false });
-    const info = spotInfo(covered(a), { worn: false });
+    const info = spotInfo(spotOf(a), { worn: false });
     const pat = `${a.name}Pat`;
     return a.config.pool === false || !hangout.pool(pat) ? info : { ...info, line: pat };
   };
@@ -172,6 +182,9 @@ export function attachArticles(scene, { startOff = false, onChange, coach } = {}
     Object.assign(rig.hotspots, a.config.hotspots);
     blockPoses();
     if (!silent) {
+      // Taken from his hand mid-pose (Ritsu's recorder, Ren's phone): the
+      // pose returns first, then the Off pose plays.
+      if (a.poses && renderer.posing && a.poses.test(renderer.posing)) renderer.returnFirst();
       hangout.react(`${name}Off`, t);
       coach?.done(HINTS.off);
     }
@@ -266,7 +279,7 @@ export function attachArticles(scene, { startOff = false, onChange, coach } = {}
         name: a.name,
         off: a.off,
         present: present(a),
-        covers: covered(a),
+        covers: covered(a).join(", "),
         removable: removable(a, scene.time),
         requires: a.config.requires ?? null,
       }));

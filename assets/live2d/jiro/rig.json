@@ -93,6 +93,7 @@
     "cheek": { "part": "face_base", "rect": [0.12, 0.55, 0.88, 0.82] },
     "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
   },
+  "holdGaze": "aloof",
   "bones": {
     "arms": {
       "r": { },
@@ -271,5 +272,5 @@
     "breath": { "amount": 0.5 },
     "bgPan": { "speed": 0.022, "amount": 0.01 }
   },
-  "restMood": { "byTier": { "new": "default", "spark": "smile" } }
+  "restMood": "default"
 }

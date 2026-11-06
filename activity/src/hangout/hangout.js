@@ -24,7 +24,7 @@ import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 import { AnnoyanceMeter } from "./annoyance.js";
 import { hotspotAt } from "./hotspots.js";
 import { PLACEHOLDER_LINES } from "./placeholderLines.js";
-import { SPOT_ANNOYANCE, TOUCH_SPOTS, forTier, resolveReaction } from "./reactions.js";
+import { SPOT_ANNOYANCE, TOUCH_SPOTS, coveredSpots, forTier, resolveReaction } from "./reactions.js";
 
 // Seconds a reaction holds when it doesn't set `duration`.
 const DEFAULT_DURATION = 2.4;
@@ -232,7 +232,7 @@ export class Hangout {
     const info = { annoyance: hotspot.annoyance ?? SPOT_ANNOYANCE[spot], reaction: hotspot.reaction ?? TOUCH_SPOTS[spot] };
     if (!worn) return info;
     for (const [name, a] of Object.entries(this.rig.articles ?? {})) {
-      if (a.shownOnly || a.blocks === false || forTier(a.covers, this.tier) !== spot) continue;
+      if (a.shownOnly || a.blocks === false || !coveredSpots(a.covers, this.tier).includes(spot)) continue;
       if (a.pool !== false && this.pool(`${name}Pat`)) info.line = `${name}Pat`;
       break;
     }

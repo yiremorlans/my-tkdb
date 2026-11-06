@@ -40,6 +40,14 @@
         "File": "expressions/e_konwaku_00.exp3.json"
       },
       {
+        "Name": "e_konwaku_soft_00",
+        "File": "expressions/e_konwaku_soft_00.exp3.json"
+      },
+      {
+        "Name": "e_konwaku_pout_00",
+        "File": "expressions/e_konwaku_pout_00.exp3.json"
+      },
+      {
         "Name": "e_kouman_00",
         "File": "expressions/e_kouman_00.exp3.json"
       },
@@ -54,6 +62,10 @@
       {
         "Name": "e_magao_00",
         "File": "expressions/e_magao_00.exp3.json"
+      },
+      {
+        "Name": "e_magao_rest_00",
+        "File": "expressions/e_magao_rest_00.exp3.json"
       },
       {
         "Name": "e_manmen_00",

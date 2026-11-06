@@ -47,7 +47,7 @@ import { validateAnnouncements } from "./announcements.js";
 import {
   DIALOGUE_POOL_CONFIG,
   DIALOGUE_POOL_KEYS,
-  SHARED_SPLIT_POOLS,
+  CHARACTER_DIALOGUE_SPLITS,
 } from "./dialoguePools.js";
 import fs from "fs";
 import { dirname, join } from "path";
@@ -107,9 +107,11 @@ function tierLines(poolData) {
 }
 
 // Interaction pools (constants/dialoguePools.js). The pools that split the
-// shared `dialogue` pool (/meet, /roam) take a tier over together: split in
+// character's `dialogue` pool (constants/dialogue/<id>.js) into /meet and
+// /roam take a tier over together: split in
 // only some of them, the rest keep drawing beats written to answer every
-// interaction at once. Once split, the shared tier is unreachable and has to
+// interaction at once. Once split, the character's dialogue.<tier> is
+// unreachable and has to
 // go. And a beat lives in one pool, never two.
 function validateInteractionPools(id, content, errors) {
   const pools = Object.fromEntries(
@@ -123,15 +125,15 @@ function validateInteractionPools(id, content, errors) {
     }
   }
   for (const tier of TIERS) {
-    const splitIn = SHARED_SPLIT_POOLS.filter((key) => pools[key][tier] !== undefined);
-    if (splitIn.length && splitIn.length < SHARED_SPLIT_POOLS.length) {
+    const splitIn = CHARACTER_DIALOGUE_SPLITS.filter((key) => pools[key][tier] !== undefined);
+    if (splitIn.length && splitIn.length < CHARACTER_DIALOGUE_SPLITS.length) {
       errors.push(
-        `${id} "${tier}" is split for ${splitIn.join("/")} only — split it in ${SHARED_SPLIT_POOLS.map((k) => `constants/${k}/`).join(" and ")} together`,
+        `${id} "${tier}" is split for ${splitIn.join("/")} only — split it in ${CHARACTER_DIALOGUE_SPLITS.map((k) => `constants/${k}/`).join(" and ")} together`,
       );
     }
     if (splitIn.length && content.dialogue?.[tier] !== undefined) {
       errors.push(
-        `${id} dialogue[${tier}] is split into ${SHARED_SPLIT_POOLS.join("/")} and never drawn — delete it from constants/dialogue/${id}.js`,
+        `${id} dialogue[${tier}] is split into ${CHARACTER_DIALOGUE_SPLITS.join("/")} and never drawn — delete it from constants/dialogue/${id}.js`,
       );
     }
   }
@@ -688,7 +690,7 @@ export function validateContent() {
 
     // A tier split into meet/roam pools no longer lives in `dialogue`.
     const isSplit = (tier) =>
-      SHARED_SPLIT_POOLS.some((key) => POOL_DIALOGUE[key]?.[id]?.[tier] !== undefined);
+      CHARACTER_DIALOGUE_SPLITS.some((key) => POOL_DIALOGUE[key]?.[id]?.[tier] !== undefined);
     if (!content.dialogue && !TIERS.every(isSplit)) {
       errors.push(`${id} has no dialogue`);
     } else {

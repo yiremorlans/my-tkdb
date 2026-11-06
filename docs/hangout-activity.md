@@ -368,11 +368,26 @@ and pose come off the same tier ladder as the spot it's on.
   the heavy lids and flutter lift while he looks down, or on some art
   (Haru's) the eyes vanish. Shy-gaze
   characters (`holdGaze: "shy"`) do too, and still break eye contact
-  as on every hold. Their glances away (Kaito, Lyca, Ritsu, Ren,
-  Subaru, Yuri; live2dRig.js `SHY_GAZE`, retimed 2026-11-02) come every
+  as on every hold. Their glances away (Kaito, Lyca, Ren,
+  Subaru, Yuri; live2dRig.js `HOLD_GAZE.shy`, retimed 2026-11-02) come every
   3-5.5s for 1-1.7s, the head turning a few degrees with the eyes, on a
   smooth spring that eases out and back even when cut short; none starts
   while he's glancing at the touch or down, or for 1s after.
+  Other presets in `HOLD_GAZE` (2026-11-05, on trial): `aloof` (Jin)
+  looks off to the side and a little down, every 5-8s for 1.6-2.6s;
+  `linger` (Rui) slowly drops his eyes toward your mouth and back, lids
+  softening a touch and brows lifting, every 3.5-6s, now and then a
+  slower sweep further down and back up, taking you in (the look down and
+  aside it had read as aloof; cut 2026-11-06). Each preset's first
+  glance comes sooner (`first`). A `lively` preset (eye flicks, darts,
+  double blinks) was tried on Towa and cut 2026-11-06. Since 2026-11-06
+  no rig is `steady` (eyes locked); the tests require every rig to pick
+  shy, aloof or linger.
+  Letting go of a hand or lip hold that started plays one flowing head
+  move by gaze (live2dRig.js `RELEASE_MOVE`, 2026-11-06, on trial),
+  added over the release face and pose like the caught tease's shake:
+  shy ducks (chin down, head turned aside, slowly back up), aloof turns
+  aside and back, level, linger tilts and leans in a little, held.
   - **Caught tease (`close`).** The same drag down at close is stopped:
     he wants it and doesn't let it happen (close hints, nothing has
     happened yet). He lets it go on 1.2s first (the check carrying on as
@@ -491,7 +506,8 @@ and pose come off the same tier ladder as the spot it's on.
   hold's release face for the tier: spark 6–8s, close
   4–5.5s, bound 3–4.5s, the lips 1.5s later. Settled, it catches up with
   him now and then (every 4.5–7.5s on the hand, 3–5.5s on the lips): a
-  small widen and a puff of two hearts, his face staying settled (it used
+  puff of two hearts (the small widen with it was cut 2026-11-06, it read
+  as a second surprise), his face staying settled (it used
   to flicker back to `flustered`, which read as cycling; cut 2026-11-03).
   Moving the finger during the hold sets a flicker off at once (at most
   every 1.5s), or puts off the settle if he hasn't settled. Hearts come
@@ -543,7 +559,7 @@ and pose come off the same tier ladder as the spot it's on.
   | bound (bliss on) | Hangout opens | "New: hold his hand and lips first, then his chest" | dot on his hand | both holds have run |
   | bound (bliss on) | the edge's heart appears | "Tap the heart before it fades" | the heart itself | the heart is tapped; missed, it shows at the next edge |
 
-  The article chips wait for a character who has an article (9 rigs) and
+  The article chips wait for a character who has an article (12 rigs) and
   never name it; the dot sits on its densest piece of art
   (live2dRig.js `drawablesAnchor`). Entry chips queue one at a time,
   lowest tier first; the slide and edge chips take the pill mid-gesture.
@@ -556,7 +572,7 @@ Some characters wear or carry an article the player can take off with a
 second tap on it within ~0.35s removes it instead and adds **no
 annoyance**. Single taps everywhere stay instant (no waiting to tell a tap
 from a hold). Removal is **warm**'s new interaction (user, 2026-11-05):
-every article unlocks at **warm** and stays removable at every tier after.
+every article unlocks at **warm** (except Mio's apron, spark) and stays removable at every tier after.
 Its pools (`<article>Pat`, `<article>Off`) vary by tier like every touch
 pool (warm, spark, close, bound). New gestures beyond the head and cheek
 strokes wait. Below the article's unlock tier a double-tap is just two
@@ -597,6 +613,9 @@ toggles (`?hide=PartX`) show what a part covers.
 | Benkei | name tag | work outfit only; no named part (`Part14` is the work-only part, unconfirmed), else drawables TBD | chest | Not on the academy outfit. Unlocks at **warm**. Lines TBD. |
 | Elias | lollipop | no part; driven by parameters (`ParamCandyOnOff`, `ParamHandCandyOff`; `e_candy_00` and the `m_ame*` motions use them) | hand at warm, lips from spark | Unlocks at **warm**, where it can only be snatched while a pose shows it in his hand (the `m_ame*` poses); from **spark** it rests in his mouth and is taken from there (user, 2026-11-05). Hiding it means holding the parameter off after motions and expressions write theirs, a third art path beside part and drawables; the `m_ame*` poses would bring it back, so they need excluding once it's off. Lines TBD. |
 | Leo | headphones | `PartHeadphone` (academy, casual; also a `ParamHeadphone`) | chest (worn around his neck) | His new-tier chestTouch already has "Hands off the headphones.", which moves to `headphonePat`. He's noise-sensitive (his ear lines; canon idle: "Ugh, everyone's so loud. I'm putting my headphones on"), so taking them is a real ask the lines carry, tier by tier. Unlocks at **warm**. Check what the neck/collar looks like under them. Lines TBD. |
+| Ritsu | voice recorder | `ArtMesh199` (academy; `ParamPhone` switches it, only in `m_recorder*`) | hand_r | Canon: carried in his left blazer pocket for evidence ("Start of recording." / "End of recording." chibi lines). Out only in `m_recorder`, which plays on his new/known upset and, from 2026-11-05, his warm and spark `bellyTouch` (in place of `m_odoroki`, which is the `offPose`). From close it stays pocketed (he no longer records her), so `recorderPat` / `recorderOff` are warm and spark only. Unlocks at **warm**. |
+| Kaito | phone | `ArtMesh115` (academy; `ParamPHONE`, only in `m_phone*`) | hand_l | Out only in `m_phone`, played by his `handTap` new through warm and his warm `cheekPoke` (2026-11-05; `offPose` `m_gesture`). From spark his hand lines are about holding hands, so the phone stays away. `phonePat` new through warm (TikTok, WickHive); `phoneOff` warm only. Unlocks at **warm**. |
+| Mio | apron | `ArtMesh8`, `6`, `207`–`209`, `211` (work only; also held off by `ParamParamApronOff: 0`, which is inverted: 1 is the apron on) | chest, belly | Unties to the white tank top. While it's on, a chest or belly tap is `apronPat` with that spot's face and pose (`covers` takes a list; user, 2026-11-06). `ArtMesh8` was the work outfit's chest/belly mesh, so removal swaps both spots onto the tank (`ArtMesh7`, part `tank`). Spark is surprised he let it happen; close hints; bound is routine. `apronPat` warm through bound, `apronOff` spark through bound. Unlocks at **spark** (user, 2026-11-05), the one article that doesn't unlock at warm. |
 
 **Build (2026-11-05).** `activity/src/hangout/articles.js`
 (`attachArticles(scene)`), attached by preview.js and, since 2026-11-05,
@@ -620,7 +639,7 @@ draws its `<article>Pat` lines (Hangout `spotInfo`), so moving Shion's hat
 lines out of `headPat` doesn't put bare-head lines on his hat there. The
 preview drawer has an "Articles" row (state, click to take off, reset),
 `<article> (pat)` / `(off)` buttons in "Touch spots", resets them on a tier
-change, and `?articles=off` starts them removed.
+change, and `?articles=off` starts them removed. `?param=Id:value,…` holds model parameters over everything else (preview only), to see art a switch shows or hides: Romeo's sunglasses are `?param=ParamSunGlassesON:1`; Mio's apron is inverted, `?outfit=work&param=ParamParamApronOff:0` takes it off.
 
 What each covers, as built: Shion `PartHat` (head); Haru `Part25` plus
 Peekaboo's shadow meshes (belly; once he's out the belly spot moves onto

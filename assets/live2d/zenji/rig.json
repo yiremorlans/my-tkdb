@@ -37,6 +37,7 @@
     "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
   },
   "heartRate": { "resting": 24, "scale": 0.35 },
+  "holdGaze": "linger",
   "bones": {
     "arms": {
       "r": { },
@@ -160,7 +161,7 @@
     "handHold": {
       "byTier": {
         "spark": { "mood": "gentle_blush", "duration": 2.6 },
-        "close": { "mood": "full_smile_blush", "duration": 2.6 },
+        "close": { "mood": "smile_blush", "duration": 2.6 },
         "bound": { "mood": "gentle_blush", "duration": 3 }
       }
     },

@@ -22,7 +22,10 @@
       "dialogueVariant": "casual",
       "spots": ["Dionysia_Workshop.png", "Dionysia_Workshop_2.png"],
       "always": true,
-      "parts": { "chest": ["ArtMesh8"], "pants": ["ArtMesh218", "ArtMesh219"], "hand_l": ["ArtMesh157", "ArtMesh163", "ArtMesh159", "ArtMesh158"] },
+      "articles": {
+        "apron": { "drawables": ["ArtMesh8", "ArtMesh6", "ArtMesh207", "ArtMesh208", "ArtMesh209", "ArtMesh211"], "params": { "ParamParamApronOff": 0 }, "covers": ["chest", "belly"], "tier": "spark", "hotspots": { "chest": { "part": "tank", "rect": [-0.015, 0.019, 1.015, 0.713] }, "belly": { "part": "tank", "rect": [0.14, 0.713, 0.86, 1.019] } } }
+      },
+      "parts": { "chest": ["ArtMesh8"], "tank": ["ArtMesh7"], "pants": ["ArtMesh218", "ArtMesh219"], "hand_l": ["ArtMesh157", "ArtMesh163", "ArtMesh159", "ArtMesh158"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [-0.015, 0.02, 1.015, 0.681] },
         "belly": { "part": "chest", "rect": [0.14, 0.681, 0.86, 0.974] },
@@ -34,8 +37,8 @@
     "face_base": ["ArtMesh89"],
     "mouth": ["ArtMesh73", "ArtMesh75", "ArtMesh76", "ArtMesh77", "ArtMesh79", "ArtMesh71", "ArtMesh72", "ArtMesh69", "ArtMesh70", "ArtMesh74"],
     "ear_r": ["ArtMesh90", "ArtMesh92", "ArtMesh80"],
-    "ear_l": ["ArtMesh93", "ArtMesh81"],
-    "ear_skin": ["ArtMesh92", "ArtMesh80", "ArtMesh93"],
+    "ear_l": ["ArtMesh93", "ArtMesh188", "ArtMesh81"],
+    "ear_skin": ["ArtMesh92", "ArtMesh80", "ArtMesh93", "ArtMesh188"],
     "hand_r": ["ArtMesh147", "ArtMesh150", "ArtMesh151", "ArtMesh152", "ArtMesh154", "ArtMesh155", "ArtMesh156"],
     "hand_l": ["ArtMesh172", "ArtMesh178", "ArtMesh174", "ArtMesh173"]
   },
@@ -49,6 +52,9 @@
     "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
   },
   "partBlush": { "parts": ["ear_skin"], "color": [1, 0.92, 0.93] },
+  "holdGaze": "linger",
+  "holdLookUp": 0,
+  "teaseLidsFall": 1.2,
   "bones": {
     "arms": {
       "r": { },
@@ -80,7 +86,9 @@
       "rest_soft": ["e_rest_00", "e_tsujo_soft_00"],
       "sleepy_smile": ["e_rest_00", "e_tsujo_smile_00"],
       "reserved": ["e_rest_00", "e_tsujo_reserved_00"],
-      "warm_rest": ["e_tsujo_warm_00"]
+      "warm_rest": ["e_tsujo_warm_00"],
+      "hold_soft_blush": ["e_tsujo_soft_00", "e_sekimen_00"],
+      "hold_smile_blush": ["e_tsujo_smile_00", "e_sekimen_00"]
     }
   },
   "restMood": { "byTier": { "new": "reserved", "known": "default", "close": "warm_rest" } },
@@ -173,9 +181,9 @@
     },
     "handHold": {
       "byTier": {
-        "spark": { "mood": "softsmile_blush", "duration": 2.6 },
-        "close": { "mood": "softsmile_blush", "duration": 2.6 },
-        "bound": { "mood": "full_smile_blush", "duration": 3 }
+        "spark": { "mood": "hold_soft_blush", "duration": 2.6 },
+        "close": { "mood": "hold_soft_blush", "duration": 2.6 },
+        "bound": { "mood": "hold_smile_blush", "duration": 3 }
       }
     },
     "heartbeatHold": {

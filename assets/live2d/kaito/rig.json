@@ -11,6 +11,9 @@
     "academy": {
       "model": "academy/kaito_academy.model3.json",
       "dialogueVariant": "uniform",
+      "articles": {
+        "phone": { "drawables": ["ArtMesh115"], "covers": "hand_l", "shownOnly": true, "poses": "^m_phone", "offPose": "m_gesture" }
+      },
       "parts": { "chest": ["vest"], "pants": ["ArtMesh320", "ArtMesh322", "ArtMesh321", "ArtMesh323"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [0, 0.02, 1, 0.539] },
@@ -77,8 +80,8 @@
     "handHold": {
       "byTier": {
         "spark": { "mood": "flustered", "duration": 2.6 },
-        "close": { "mood": "full_smile_blush", "duration": 2.6 },
-        "bound": { "mood": "full_smile_blush", "duration": 3 }
+        "close": { "mood": "smile_blush", "duration": 2.6 },
+        "bound": { "mood": "smile_blush", "duration": 3 }
       }
     },
     "heartbeatHold": {
@@ -193,10 +196,10 @@
   "reactionPoses": {
     "caughtTease": "m_tere",
     "headPat": "m_tere",
-    "cheekPoke": "m_tere",
+    "cheekPoke": { "byTier": { "new": "m_tere", "warm": "m_phone", "spark": "m_tere" } },
     "lipsTouch": { "byTier": { "new": "m_odoroki", "spark": "m_tere", "close": "m_gesture" } },
     "earTouch": "m_odoroki",
-    "handTap": "m_gesture",
+    "handTap": { "byTier": { "new": "m_phone", "spark": "m_gesture" } },
     "chestTouch": { "byTier": { "new": "m_odoroki", "close": "m_gesture" } },
     "bellyTouch": "m_odoroki",
     "hipsTouch": { "byTier": { "new": "m_odoroki", "known": "m_udekumi", "spark": "m_nageki", "close": "m_migikoshi" } },

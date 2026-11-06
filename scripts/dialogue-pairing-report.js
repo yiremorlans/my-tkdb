@@ -63,7 +63,7 @@ const rows = order.map((id) => {
   const content = DIALOGUE[id];
   const dialogueTiers = {};
   for (const tier of TIERS) {
-    // What /roam draws (its split tier, or the shared one): /meet has no
+    // What /roam draws (its split tier, or the character's dialogue tier): /meet has no
     // approach button to pair.
     dialogueTiers[tier] = analyzeTierValue(dialogueTierPool(id, DIALOGUE_POOL.ROAM, tier));
   }

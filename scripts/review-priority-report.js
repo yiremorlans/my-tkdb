@@ -74,7 +74,7 @@ function poolMoods(pool = []) {
 }
 
 // A split tier (constants/meet/ + constants/roam/) counts both halves against
-// the split targets; an unsplit one counts the shared pool once.
+// the split targets; an unsplit one counts the character's dialogue tier once.
 function moodBeats(characterId, tier) {
   const meet = dialogueTierPool(characterId, DIALOGUE_POOL.MEET, tier);
   const roam = dialogueTierPool(characterId, DIALOGUE_POOL.ROAM, tier);

@@ -28,6 +28,10 @@
         "File": "expressions/e_choshi_half_00.exp3.json"
       },
       {
+        "Name": "e_choshi_level_00",
+        "File": "expressions/e_choshi_level_00.exp3.json"
+      },
+      {
         "Name": "e_close_00",
         "File": "expressions/e_close_00.exp3.json"
       },

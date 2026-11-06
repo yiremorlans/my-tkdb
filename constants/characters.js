@@ -1251,25 +1251,26 @@ function resolvePoolTier(pool, tier, variant) {
 }
 
 // Interaction pools (DIALOGUE_POOL in constants/dialoguePools.js): a
-// character's tier can move out of the shared `dialogue` pool into one pool per
+// character's tier can move out of their `dialogue` pool
+// (constants/dialogue/<id>.js) into one pool per
 // interaction, each written for that interaction alone. Per tier, so tiers
 // convert one at a time.
 //
-// The pool object `poolKey` draws `tier` from. A pool that splitsShared
-// (/meet, /roam) uses its own tier when it has one and the shared `dialogue`
-// tier otherwise; a tier neither has falls back to 'new' (resolvePoolTier), so
+// The pool object `poolKey` draws `tier` from. A pool that splitsCharacterDialogue
+// (/meet, /roam) uses its own tier when it has one and the character's
+// `dialogue` tier (constants/dialogue/<id>.js) otherwise; a tier neither has falls back to 'new' (resolvePoolTier), so
 // that fallback looks at whichever still holds 'new'. A standalone pool draws
 // only its own beats. An unknown key throws: a typo'd pool would otherwise
-// draw the shared pool and look like it worked.
+// draw the character's dialogue pool and look like it worked.
 function interactionPool(id, poolKey, tier) {
   const config = DIALOGUE_POOL_CONFIG[poolKey];
   if (!config) throw new Error(`Unknown dialogue pool "${poolKey}"`);
   const own = POOL_DIALOGUE[poolKey]?.[id];
-  if (!config.splitsShared) return own;
-  const shared = DIALOGUE[id]?.dialogue;
+  if (!config.splitsCharacterDialogue) return own;
+  const characterDialogue = DIALOGUE[id]?.dialogue;
   if (own?.[tier] !== undefined) return own;
-  if (shared?.[tier] !== undefined) return shared;
-  return own?.new !== undefined ? own : shared;
+  if (characterDialogue?.[tier] !== undefined) return characterDialogue;
+  return own?.new !== undefined ? own : characterDialogue;
 }
 
 // The raw tier data (an array of beats, or Jo's variant map) that `poolKey`

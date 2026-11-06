@@ -62,7 +62,7 @@ function analyzeTier(value) {
   };
 }
 
-// Every beat /meet or /roam draws at `tier`: the shared tier once, or both
+// Every beat /meet or /roam draws at `tier`: the character's dialogue tier once, or both
 // halves of a split tier. Jo's variant maps aren't split, so they pass through.
 function drawnTier(id, tier) {
   const meet = dialogueTierPool(id, DIALOGUE_POOL.MEET, tier);

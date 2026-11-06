@@ -19,18 +19,21 @@ export const DIALOGUE_POOL = Object.freeze({
 //               button, then greeting), so each beat owes { approach,
 //               greeting }. False when it shows only the line and responses,
 //               so a beat carrying either would be written and never seen.
-//   splitsShared — true for the pools that the shared `dialogue` pool is
-//               split into (the tier-split skill). A tier it lacks draws the
-//               shared pool instead, and validateContent requires every
-//               splitsShared pool to split a tier together, then the shared
-//               tier to be deleted. False for a standalone pool (like a
-//               future 'date'): it only draws its own beats, with no fallback.
+//   splitsCharacterDialogue — true for the pools that a character's
+//               `dialogue` pool (constants/dialogue/<id>.js) is split into
+//               (the tier-split skill). A tier it lacks draws that character's
+//               dialogue.<tier> instead, and validateContent requires every
+//               such pool to split a tier together, then the character's
+//               dialogue.<tier> to be deleted. False for a standalone pool
+//               (like a future 'date'): it only draws its own beats, with no
+//               fallback.
 export const DIALOGUE_POOL_CONFIG = Object.freeze({
-  [DIALOGUE_POOL.MEET]: { scene: false, splitsShared: true },
-  [DIALOGUE_POOL.ROAM]: { scene: true, splitsShared: true },
+  [DIALOGUE_POOL.MEET]: { scene: false, splitsCharacterDialogue: true },
+  [DIALOGUE_POOL.ROAM]: { scene: true, splitsCharacterDialogue: true },
 });
 
 export const DIALOGUE_POOL_KEYS = Object.values(DIALOGUE_POOL);
-export const SHARED_SPLIT_POOLS = DIALOGUE_POOL_KEYS.filter(
-  (key) => DIALOGUE_POOL_CONFIG[key].splitsShared,
+// The pools a character's `dialogue` tier is split into (/meet, /roam).
+export const CHARACTER_DIALOGUE_SPLITS = DIALOGUE_POOL_KEYS.filter(
+  (key) => DIALOGUE_POOL_CONFIG[key].splitsCharacterDialogue,
 );

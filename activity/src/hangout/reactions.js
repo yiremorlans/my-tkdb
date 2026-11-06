@@ -268,3 +268,10 @@ export function forTier(value, tier) {
   }
   return null;
 }
+
+// The touch spots an article's `covers` names at a tier: one spot or a
+// list (Mio's apron covers chest and belly), either of them `{ byTier }`.
+export function coveredSpots(covers, tier) {
+  const value = forTier(covers, tier);
+  return value == null ? [] : [value].flat();
+}

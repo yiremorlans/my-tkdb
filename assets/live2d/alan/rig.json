@@ -40,6 +40,7 @@
     "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
   },
   "partBlush": { "color": [1, 0.92, 0.88] },
+  "holdGaze": "aloof",
   "bones": { "arms": { "r": {}, "l": {} } },
   "expressions": {
     "fade": 0.2,

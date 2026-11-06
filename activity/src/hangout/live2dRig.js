@@ -25,8 +25,8 @@
 //                          bpm and how far holds raise it (PULSE)
 //   crest                  { params: { id: value } } held while a tease
 //                          crest is up (CREST_PARAMS; Lyca's ears)
-//   holdGaze               "steady" (default) or "shy": during a hold, a shy
-//                          gaze breaks eye contact now and then (SHY_GAZE)
+//   holdGaze               "steady" (default), "shy", "aloof" or "linger": how his eyes move while he holds
+//                          yours (HOLD_GAZE)
 //   partBlush              { parts?, color? }: tints those parts' drawables
 //                          (default the ears, ear_r + ear_l) toward `color`
 //                          (RGB 0-1, multiplied; default PART_BLUSH.color)
@@ -150,7 +150,10 @@ const GASP = { open: 0.35, brow: 0.35, eyes: 0.12, in: 0.12, hold: 0.3, out: 0.5
 // as a moment's subtle surprise that settles back to his normal eyes.
 // Shared by every rig. (Restored 2026-11-03 from 80aaa9a; the eyes-only
 // `eyesAdd` version lost the surprise.)
-const WIDEN = { brow: 0.15, eyes: 0.1, in: 0.18, hold: 0.35, out: 0.7, catch: true };
+// Easing back, the parts don't move in lockstep: each starts `lag` seconds
+// after the eyes (brows, then the head) and drifts in on a soft ease-out
+// tail (easeOutTail) instead of the S-curve's dead stop (it read robotic).
+const WIDEN = { brow: 0.15, eyes: 0.14, in: 0.25, hold: 0.45, out: 0.85, catch: true, lag: { eyes: 0, brow: 0.1, chin: 0.2 } };
 // The widen's catch (CATCH; widen() only, not the gasp): he goes still.
 // His idle sway and breath hold where they were (`still` of the way, in
 // over `in` seconds, held with the widen and let go over its `out`), then
@@ -164,7 +167,57 @@ const WIDEN = { brow: 0.15, eyes: 0.1, in: 0.18, hold: 0.35, out: 0.7, catch: tr
 // cut 2026-11-04), on the widen's own timing. The flutter's half
 // widen (scale < 1) keeps the stillness, chin and exhale at its scale but
 // skips the blink.
-const CATCH = { still: 0.9, in: 0.12, chin: 4, exhale: 0.35, exhaleAt: 0.35, exhaleFor: 1.1, blinkAt: 0.45, blinkClose: 0.08, blinkOpen: 0.14 };
+const CATCH = { still: 0.9, in: 0.12, chin: 3, exhale: 0.35, exhaleAt: 0.35, exhaleFor: 1.1, blinkAt: 0.45, blinkClose: 0.08, blinkOpen: 0.14 };
+
+// While a pose plays (or returns), the holds' own head moves (the hold
+// look's chin, glance dips, gaze turns, the widen's draw back) shrink to
+// `head` of their size, so they don't bend a head the pose is already
+// moving; the eyes still do the looking. The widen's catch doesn't freeze
+// the pose's motion either (it froze a moving head, then let it jump).
+// Eases with the idle damping's weight, so it never steps.
+const HOLD_IN_POSE = { head: 0.2 };
+
+// The end of a hand or lip hold (releaseMove; holds.js endHold): one
+// flowing head move after it, by holdGaze, like the caught tease's shake
+// (added over the face and the release pose, shared by every rig). It
+// eases in over `in` seconds, holds `hold`, eases back over `out`; to a
+// random side. `turn` degrees aside (ParamAngleX), `tilt` degrees of head
+// tilt (ParamAngleZ), `chin` degrees down (ParamAngleY, - is up).
+//   shy     a bashful duck: chin down, head turned aside, slowly back up
+//   aloof   composing himself: one slow, level turn aside and back
+//   linger  reluctant to let go: a slow tilt, chin leaning in, held
+// Each part comes back `lag` seconds apart (the turn, then the tilt, then
+// the chin) on a spring released from rest (releaseSpring): it starts
+// gently, passes rest a little and floats back, so it settles like a head,
+// not a tween. `damping` sets the overshoot (0.7 is about 5%, 1 none).
+// The ease-out-back curve tried first started at full speed: snappy.
+export const RELEASE_LAG = { turn: 0, tilt: 0.06, chin: 0.12 };
+export const RELEASE_SPRING = { damping: 0.7 };
+
+// Ease-out with a long soft tail (cubic): quick at first, drifting the last
+// bit into place. 0 -> 1.
+export function easeOutTail(x) {
+  const c = Math.min(1, Math.max(0, x));
+  return 1 - (1 - c) ** 3;
+}
+
+// How far a released part still is from rest (1 -> 0), `x` of the way
+// through its return: an underdamped spring let go from rest at 1, so it
+// starts with no speed, dips a little below 0 and settles. Scaled so it's
+// within about 2% of rest by x = 1, then eased the rest of the way to 0.
+export function releaseSpring(x, damping = RELEASE_SPRING.damping) {
+  const c = Math.min(1, Math.max(0, x));
+  const w = 4 / damping; // natural frequency, in returns
+  const wd = w * Math.sqrt(1 - damping * damping);
+  const y = Math.exp(-damping * w * c) * (Math.cos(wd * c) + ((damping * w) / wd) * Math.sin(wd * c));
+  return y * (1 - c ** 8);
+}
+
+export const RELEASE_MOVE = {
+  shy: { turn: 8, tilt: 2, chin: 5, in: 0.25, hold: 0.4, out: 0.9 },
+  aloof: { turn: 7, tilt: 0, chin: 0, in: 0.4, hold: 0.3, out: 0.9 },
+  linger: { turn: 2, tilt: 6, chin: 2.5, in: 0.5, hold: 0.6, out: 0.9 },
+};
 
 const HEAD_SHAKE = { turns: 2, period: 0.6, angle: 7, body: 0, chin: 5, in: 0.25, settle: 0.8 };
 
@@ -204,8 +257,11 @@ export function blushUnit(parameters, cheek) {
 // about two-thirds gone after tau, nearly all after 3 tau). So a reaction
 // face ending, or a hold let go, leaves a flush that fades out slowly
 // instead of the mood's 0.2s crossfade. The ears (partBlush) and the deep
-// patch follow it, as they follow ParamCheek.
-const BLUSH_FADE = { tau: 4 };
+// patch follow it, as they follow ParamCheek. During a hold it also comes
+// in gradually (`holdRise`, the same kind of time constant): the hand and
+// lip holds' settle face (smile_blush and the like, ~4-5s in) flushed the
+// cheeks and ears in under a second, which looked abrupt.
+const BLUSH_FADE = { tau: 4, holdRise: 1.5 };
 
 // Holds (prototype). A hold builds one level from 0 to 1 over `build`
 // seconds and lets it fall over `release` seconds once let go. Each effect
@@ -326,15 +382,45 @@ export const HOLD_LOOK = {
   glanceDown: [0, -0.7],
 };
 
-// rig.json `holdGaze`: "steady" (default) holds your eyes; "shy" breaks
-// contact now and then, glancing aside and down (`to`) for `away` seconds
-// every `every` seconds (a random span), his head turning a little with it
-// (`turn` degrees aside, `dip` down). The glance moves on a critically
-// damped spring (`settle`: seconds to about settle), so it eases out and
-// in however it's cut short, never snapping. None starts while he's
-// glancing at the touch or down (HOLD_LOOK glance), or within `gap`
-// seconds after one, so the two never collide.
-const SHY_GAZE = { to: [0.65, -0.35], away: [1, 1.7], every: [3, 5.5], settle: 0.55, turn: 5, dip: 2, gap: 1 };
+// rig.json `holdGaze`: "steady" (default) holds your eyes; the others
+// move the eyes now and then while he holds them (HOLD_GAZE):
+//   shy     breaks contact, glancing aside and down
+//   aloof   looks off to the side and a little down, longer and rarer, as if taking
+//           in the room; no dip
+//   linger  slowly drops his eyes, softening, toward your mouth and back;
+//           now and then a slower sweep further down and back up, taking
+//           you in; he never looks aside
+// The first glance of a hold comes `first` seconds in (sooner than the
+// `every` after it). Each glance goes to `to` (EyeBall units; x mirrored by side; with
+// `relative`, an offset from his eyes on yours) for `away`
+// seconds every `every` seconds (random spans), his head turning a little
+// with it (`turn` degrees aside, `dip` down, `tilt` degrees of head tilt;
+// `brow` raises the brows, `soften` lowers the lids by that share); a
+// preset with `beats` does one of them, at random, each glance; `flip` is the chance it's
+// the other side from last time. The glance moves on a critically damped
+// spring (`settle`: seconds to about settle), so it eases out and in
+// however it's cut short, never snapping. None starts while he's glancing
+// at the touch or down (HOLD_LOOK glance), or within `gap` seconds after
+// one, so the two never collide.
+// The wait before a hold's first glance, once his eyes reach yours.
+const GAZE_FIRST_GAP = 0.3;
+
+export const HOLD_GAZE = {
+  shy: { to: [0.65, -0.35], away: [1, 1.7], first: [1, 2], every: [3, 5.5], settle: 0.55, turn: 5, dip: 2, gap: 1, flip: 0.3 },
+  // `tease: false`: none during tease (looking off at the room read wrong there).
+  aloof: { to: [0.6, -0.15], away: [1.6, 2.6], first: [2, 3.5], every: [5, 8], settle: 0.9, turn: 4, dip: 0, gap: 1, flip: 0.3, tease: false },
+  linger: {
+    to: [0, -0.6], relative: true, away: [1.4, 2.2], first: [1.5, 2.5], every: [3.5, 6], settle: 0.9, turn: 0, dip: 2.5, gap: 1, flip: 0.5,
+    beats: [
+      // eyes drift down to your mouth, softening, brows lifting a little
+      { soften: 0.05, brow: 0.2 },
+      { soften: 0.05, brow: 0.2 },
+      // taking you in: a slow sweep of the eyes further down, barely
+      // pausing, and slowly back up to yours; no look aside
+      { to: [0, -0.95], soften: 0.03, brow: 0.1, dip: 4.5, away: [0.3, 0.5], settle: 0.9 },
+    ],
+  },
+};
 
 /**
  * Fetches `${baseUrl}/rig.json` and its sounds. The dev server also checks
@@ -518,9 +604,11 @@ export class Live2DRig {
       this.applyLips();
       this.applyFlinch();
       this.applyShake();
+      this.applyReleaseMove();
       this.applyGasp();
       this.applyTalk();
       this.applyHeldParams();
+      this.applyHeldParams(this.previewParams);
       this.applyHiddenParts();
     });
     // Drawable opacity is recomputed by the core on every update, so hidden
@@ -650,6 +738,17 @@ export class Live2DRig {
     const k = 1 - (1 - amount) * w;
     const { values, defaultValues } = this.raw.parameters;
     for (const i of this.idleParams) values[i] = defaultValues[i] + (values[i] - defaultValues[i]) * k;
+  }
+
+  // 0-1, how far a pose owns the body now (the idle damping's weight, eased).
+  get poseShare() {
+    const w = 1 - (this.dampWeight ?? 1);
+    return w * w * (3 - 2 * w);
+  }
+
+  // The share of a hold's head move to apply now (HOLD_IN_POSE).
+  get holdHead() {
+    return 1 - (1 - HOLD_IN_POSE.head) * this.poseShare;
   }
 
   applyCrestParams() {
@@ -793,7 +892,8 @@ export class Live2DRig {
       const added = w ** WARMTH.curve * WARMTH.blush + (this.hold.blush ?? 0) + CREST.blush * crest;
       const target = values[cheek] + added * (this.blushUnit ?? 1);
       const shown = this.cheekShown ?? target;
-      this.cheekShown = target >= shown ? target : target + (shown - target) * Math.exp(-dt / BLUSH_FADE.tau);
+      const tau = target >= shown ? (this.holding ? BLUSH_FADE.holdRise : 0) : BLUSH_FADE.tau;
+      this.cheekShown = tau ? target + (shown - target) * Math.exp(-dt / tau) : target;
       const want = this.cheekShown;
       this.cheekOverflow = Math.max(0, want - maximumValues[cheek]) / (maximumValues[cheek] || 1);
       values[cheek] = Math.min(maximumValues[cheek], want);
@@ -820,8 +920,8 @@ export class Live2DRig {
    * eyes at their normal opening (the lip and hand holds).
    * `glanceEvery` [min, max] seconds: once a glance is done, he glances
    * down (HOLD_LOOK.glanceDown) after a random span in that range, again
-   * and again (tease); without it he glances once, at the touch. A shy
-   * gaze (holdGaze) breaks eye contact on top of these.
+   * and again (tease); without it he glances once, at the touch. A
+   * holdGaze's glances run on top of these (aloof's not during tease).
    * Calling it again mid-hold (the heartbeat check sliding into tease)
    * keeps the level and crossfades to the new weights over HOLD.blend
    * seconds; a glance in progress carries on.
@@ -921,7 +1021,10 @@ export class Live2DRig {
     };
     // Where the eyes go: the glance at the touch first, then up to you.
     let gx = 0;
-    let gy = HOLD_LOOK.lookUp;
+    // rig.json `holdLookUp` overrides it: on Mio's art the lift read as
+    // looking up rather than through his lashes.
+    const lookUp = this.rig.holdLookUp ?? HOLD_LOOK.lookUp;
+    let gy = lookUp;
     let eyes = Math.min(1, h * HOLD_LOOK.eyes);
     let dip = 0;
     const g = this.glance;
@@ -930,7 +1033,7 @@ export class Live2DRig {
       // A crest holds his eyes still: glances fade out as it builds.
       const toward = this.glanceToward() * (1 - (this.crest ?? 0));
       gx = g.to[0] * toward;
-      gy = g.to[1] * toward + HOLD_LOOK.lookUp * (1 - toward);
+      gy = g.to[1] * toward + lookUp * (1 - toward);
       eyes = Math.max(eyes, toward);
       dip = HOLD_LOOK.glanceChin * Math.max(0, -g.to[1]) * toward;
       // Looking down, his eyes stay open: the heavy lids (this look's and
@@ -943,21 +1046,35 @@ export class Live2DRig {
     // A shy gaze's glances away stop at a crest, and after a hold that
     // ended with `glances: false` (the break); they wait out his other glances.
     const busy = g?.to ? this.glanceToward() > 0.02 : false;
-    const shy = this.shyGlance(eyes, busy || this.glancesOff || (this.crest ?? 0) > 0.01);
+    let soften = 0;
+    // Tease is the only hold with bliss; a gaze with `tease: false` sits it out.
+    const teasing = (this.hold.bliss ?? 0) > 0.01 && HOLD_GAZE[this.rig.holdGaze]?.tease === false;
+    const shy = this.gazeGlance(eyes, busy || teasing || this.glancesOff || (this.crest ?? 0) > 0.01);
     if (shy) {
       const k = shy.k;
-      gx += (shy.dir * SHY_GAZE.to[0] - gx) * k;
-      gy += (SHY_GAZE.to[1] - gy) * k;
-      set("ParamAngleX", (v) => v + shy.dir * SHY_GAZE.turn * k * eyes);
-      dip += SHY_GAZE.dip * k;
+      const G = shy.gaze;
+      if (G.relative) {
+        // Off where his eyes already are (on yours), so small moves stay small.
+        gx += shy.dir * G.to[0] * k;
+        gy += G.to[1] * k;
+      } else {
+        gx += (shy.dir * G.to[0] - gx) * k;
+        gy += (G.to[1] - gy) * k;
+      }
+      set("ParamAngleX", (v) => v + shy.dir * G.turn * k * eyes * this.holdHead);
+      if (G.tilt) set("ParamAngleZ", (v) => v + shy.dir * G.tilt * k * eyes * this.holdHead);
+      if (G.brow) for (const id of ["ParamBrowLY", "ParamBrowRY"]) set(id, (v) => v + G.brow * k * eyes);
+      dip += G.dip * k;
+      // Lifts with the hold look's lids on a `fall.lids` release (lidScale).
+      soften = (G.soften ?? 0) * k * eyes * (this.lidScale ?? 1);
     }
     set("ParamEyeBallX", (v) => v + (gx - v) * eyes);
     set("ParamEyeBallY", (v) => v + (gy - v) * eyes);
     // A crescent smile (ParamEye*Smile) shuts the eyes; contact needs them open.
     for (const id of ["ParamEyeLSmile", "ParamEyeRSmile"]) set(id, (v) => v * (1 - eyes));
     const lidsUp = 1 - (this.glanceDown ?? 0);
-    for (const id of ["ParamEyeLOpen", "ParamEyeROpen"]) set(id, (v) => v * (1 - HOLD_LOOK.lids * (this.holdLids ?? 1) * h * (this.lidScale ?? 1) * lidsUp));
-    set("ParamAngleY", (v) => v - HOLD_LOOK.chin * h - dip);
+    for (const id of ["ParamEyeLOpen", "ParamEyeROpen"]) set(id, (v) => v * (1 - HOLD_LOOK.lids * (this.holdLids ?? 1) * h * (this.lidScale ?? 1) * lidsUp) * (1 - soften));
+    set("ParamAngleY", (v) => v - (HOLD_LOOK.chin * h + dip) * this.holdHead);
   }
 
   // The glance alone (setHold `peek`): eyes and chin to the touch, held,
@@ -975,42 +1092,59 @@ export class Live2DRig {
     set("ParamEyeBallX", (v) => v + (g.to[0] - v) * toward);
     set("ParamEyeBallY", (v) => v + (g.to[1] - v) * toward);
     for (const id of ["ParamEyeLSmile", "ParamEyeRSmile"]) set(id, (v) => v * (1 - toward));
-    set("ParamAngleY", (v) => v - HOLD_LOOK.glanceChin * Math.max(0, -g.to[1]) * toward);
+    set("ParamAngleY", (v) => v - HOLD_LOOK.glanceChin * Math.max(0, -g.to[1]) * toward * this.holdHead);
   }
 
-  // A shy gaze's glances away, once he's met your eyes: { dir, k } with k
-  // 0-1 how far away he's looking now, or null. `blocked` (another glance,
-  // a crest, the break) starts none and eases one in progress back; so does
-  // losing eye contact. k rides a spring, so cut short it still eases.
-  shyGlance(eyes, blocked) {
-    if (this.rig.holdGaze !== "shy") return null;
+  // A gaze's glances (holdGaze, HOLD_GAZE), once he's met your eyes:
+  // { gaze, dir, k } with k 0-1 how far he's glanced now, or null.
+  // `blocked` (another glance, a crest, the break) starts none and eases
+  // one in progress back; so does losing eye contact. k rides a spring, so
+  // cut short it still eases.
+  gazeGlance(eyes, blocked) {
+    const G = HOLD_GAZE[this.rig.holdGaze];
+    if (!G) return null;
     const now = performance.now() / 1000;
     const span = ([a, b]) => a + Math.random() * (b - a);
-    const s = (this.shy ??= { next: now + span(SHY_GAZE.every), until: 0, dir: 1, k: 0, v: 0, at: now });
+    // Each hold starts to a random side; after that it mostly keeps to it
+    // (`flip`). Starting on one fixed side, every hold's first glance went left.
+    const side = () => (Math.random() < 0.5 ? -1 : 1);
+    const s = (this.shy ??= { next: now + span(G.first ?? G.every), until: 0, dir: side(), k: 0, v: 0, at: now, fresh: true });
     // A new hold (or the look back after a break) starts the wait afresh.
-    if (now - s.at > 0.5) Object.assign(s, { next: now + span(SHY_GAZE.every), until: 0, k: 0, v: 0 });
+    if (now - s.at > 0.5) Object.assign(s, { next: now + span(G.first ?? G.every), until: 0, dir: side(), k: 0, v: 0, fresh: true });
     const dt = Math.min(0.1, now - s.at);
     s.at = now;
     const ok = eyes >= 0.9 && !blocked;
-    if (!ok) s.next = Math.max(s.next, now + SHY_GAZE.gap);
+    // Before the first glance only a short wait once his eyes reach yours.
+    if (!ok) s.next = Math.max(s.next, now + (s.fresh ? GAZE_FIRST_GAP : G.gap));
     if (ok && now >= s.next && now >= s.until) {
-      s.until = now + span(SHY_GAZE.away);
-      s.next = s.until + span(SHY_GAZE.every);
-      // Mostly the side he looked to last, now and then the other.
-      if (Math.random() < 0.3) s.dir = -s.dir;
+      // A preset with `beats` does one of them, at random, each time.
+      s.beat = G.beats ? G.beats[Math.floor(Math.random() * G.beats.length)] : null;
+      const B = { ...G, ...s.beat };
+      s.until = now + span(B.away);
+      s.next = s.until + span(B.every);
+      // Mostly the side he looked to last, now and then the other (not on
+      // the first, which already took a random side).
+      if (!s.fresh && Math.random() < B.flip) s.dir = -s.dir;
+      s.fresh = false;
     }
     const target = ok && now < s.until ? 1 : 0;
     if (!ok) s.until = Math.min(s.until, now);
-    // Critically damped spring toward the target (SHY_GAZE.settle).
-    const w = 4.6 / SHY_GAZE.settle;
-    s.v += (w * w * (target - s.k) - 2 * w * s.v) * dt;
-    s.k += s.v * dt;
+    // Critically damped spring toward the target (G.settle), in small
+    // steps: one big step on a slow frame overshoots without bound (a stiff
+    // spring went to NaN and shut Towa's eyes for good).
+    const w = 4.6 / (s.beat?.settle ?? G.settle);
+    const steps = Math.ceil(dt / 0.008);
+    for (let i = 0; i < steps; i++) {
+      s.v += (w * w * (target - s.k) - 2 * w * s.v) * (dt / steps);
+      s.k += s.v * (dt / steps);
+    }
+    if (!Number.isFinite(s.k) || !Number.isFinite(s.v)) Object.assign(s, { k: 0, v: 0 });
     if (s.k < 0.001 && target === 0) {
       s.k = 0;
       s.v = 0;
       return null;
     }
-    return { dir: s.dir, k: Math.min(1, Math.max(0, s.k)) };
+    return { gaze: { ...G, ...s.beat }, dir: s.dir, k: Math.min(1, Math.max(0, s.k)) };
   }
 
   /** His pulse (PULSE), steady: the monitor's number. */
@@ -1198,10 +1332,15 @@ export class Live2DRig {
     this.heldParams = params ? Object.entries(params).map(([id, v]) => [this.paramIndex.get(id), v]).filter(([i]) => i != null) : null;
   }
 
-  applyHeldParams() {
-    if (!this.heldParams?.length) return;
+  /** Preview only (?param=Id:value): held after the articles' params. */
+  setPreviewParams(params) {
+    this.previewParams = Object.entries(params).map(([id, v]) => [this.paramIndex.get(id), v]).filter(([i]) => i != null);
+  }
+
+  applyHeldParams(held = this.heldParams) {
+    if (!held?.length) return;
     const { values, minimumValues, maximumValues } = this.raw.parameters;
-    for (const [i, v] of this.heldParams) values[i] = Math.min(maximumValues[i], Math.max(minimumValues[i], v));
+    for (const [i, v] of held) values[i] = Math.min(maximumValues[i], Math.max(minimumValues[i], v));
   }
 
   /** Every drawable under part `id`, its child parts included. */
@@ -1366,6 +1505,37 @@ export class Live2DRig {
     this.shakeState = { at: performance.now() / 1000, scale };
   }
 
+  /** The head move after a hand or lip hold (RELEASE_MOVE), by rig.json holdGaze. */
+  releaseMove(style = this.rig.holdGaze) {
+    const m = RELEASE_MOVE[style];
+    if (m) this.releaseState = { at: performance.now() / 1000, m, dir: Math.random() < 0.5 ? -1 : 1 };
+  }
+
+  applyReleaseMove() {
+    const st = this.releaseState;
+    if (!st || !this.model) return;
+    const { m, dir } = st;
+    const t = performance.now() / 1000 - st.at;
+    const lagMax = Math.max(...Object.values(RELEASE_LAG));
+    if (t > m.in + m.hold + m.out + lagMax) {
+      this.releaseState = null;
+      return;
+    }
+    const ease = (x) => {
+      const c = Math.min(1, Math.max(0, x));
+      return c * c * (3 - 2 * c);
+    };
+    const part = (lag) => ease(t / m.in) * releaseSpring((t - m.in - m.hold - lag) / m.out);
+    const { values, minimumValues, maximumValues } = this.raw.parameters;
+    const set = (id, fn) => {
+      const i = this.paramIndex.get(id);
+      if (i != null) values[i] = Math.min(maximumValues[i], Math.max(minimumValues[i], fn(values[i])));
+    };
+    set("ParamAngleX", (v) => v + dir * m.turn * part(RELEASE_LAG.turn));
+    set("ParamAngleZ", (v) => v + dir * m.tilt * part(RELEASE_LAG.tilt));
+    set("ParamAngleY", (v) => v - m.chin * part(RELEASE_LAG.chin));
+  }
+
   applyShake() {
     const st = this.shakeState;
     if (!st || !this.model) return;
@@ -1400,9 +1570,12 @@ export class Live2DRig {
     this.gaspState = { at: performance.now() / 1000, scale, k: GASP };
   }
 
-  /** A brief widen (WIDEN): the eyes a little wider for a moment, lips closed. */
-  widen(scale = 1) {
-    this.gaspState = { at: performance.now() / 1000, scale, k: { ...WIDEN, open: 0 } };
+  /**
+   * A brief widen (WIDEN): the eyes a little wider for a moment, lips
+   * closed. `chin: false` keeps the head where it is (the flutter).
+   */
+  widen(scale = 1, { chin = true } = {}) {
+    this.gaspState = { at: performance.now() / 1000, scale, chin, k: { ...WIDEN, open: 0 } };
   }
 
   applyGasp() {
@@ -1411,7 +1584,8 @@ export class Live2DRig {
     const t = performance.now() / 1000 - st.at;
     const k = st.k ?? GASP;
     const easeAt = k.in + k.hold;
-    const end = k.catch ? Math.max(easeAt + k.out, easeAt + CATCH.exhaleAt + CATCH.exhaleFor) : easeAt + k.out;
+    const lagMax = k.lag ? Math.max(...Object.values(k.lag)) : 0;
+    const end = k.catch ? Math.max(easeAt + k.out + lagMax, easeAt + CATCH.exhaleAt + CATCH.exhaleFor) : easeAt + k.out;
     if (t > end) {
       this.gaspState = null;
       return;
@@ -1421,16 +1595,18 @@ export class Live2DRig {
       return c * c * (3 - 2 * c);
     };
     const w = st.scale * ease(t / k.in) * (1 - ease((t - k.in - k.hold) / k.out));
+    // The widen's parts each ease back on their own lag and soft tail (WIDEN.lag).
+    const wPart = (key) => (k.lag ? st.scale * ease(t / k.in) * (1 - easeOutTail((t - easeAt - (k.lag[key] ?? 0)) / k.out)) : w);
     const { values, minimumValues, maximumValues } = this.raw.parameters;
     const set = (id, fn) => {
       const i = this.paramIndex.get(id);
       if (i != null) values[i] = Math.min(maximumValues[i], Math.max(minimumValues[i], fn(values[i], maximumValues[i] - minimumValues[i])));
     };
     if (k.open) for (const i of this.mouth ?? []) values[i] = Math.max(values[i], k.open * maximumValues[i] * w);
-    for (const id of ["ParamBrowLY", "ParamBrowRY"]) set(id, (v) => v + k.brow * w);
-    for (const id of ["ParamEyeLOpen", "ParamEyeROpen"]) set(id, (v, range) => v + ((k.eyes ?? 0) * range + (k.eyesAdd ?? 0)) * w);
+    for (const id of ["ParamBrowLY", "ParamBrowRY"]) set(id, (v) => v + k.brow * wPart("brow"));
+    for (const id of ["ParamEyeLOpen", "ParamEyeROpen"]) set(id, (v, range) => v + ((k.eyes ?? 0) * range + (k.eyesAdd ?? 0)) * wPart("eyes"));
     if (k.catch) {
-      set("ParamAngleY", (v) => v + CATCH.chin * w);
+      if (st.chin !== false) set("ParamAngleY", (v) => v + CATCH.chin * wPart("chin") * this.holdHead);
       this.applyCatch(st, t, easeAt, k.out, ease);
     }
   }
@@ -1453,7 +1629,7 @@ export class Live2DRig {
       const c = Math.min(1, Math.max(0, x));
       return c * c * (3 - 2 * c);
     };
-    const still = this.catchStill(st, t, st.k.in + st.k.hold, st.k.out, ease);
+    const still = this.catchStill(st, t, st.k.in + st.k.hold, st.k.out, ease) * (1 - this.poseShare);
     if (!still) return;
     this.idleParams.forEach((i, n) => (values[i] += (st.idleSnap[n] - values[i]) * still));
   }
@@ -1609,6 +1785,18 @@ export class Live2DRig {
     return true;
   }
 
+  /**
+   * Returns from the current pose now, and makes the next reaction pose
+   * wait until the return is done (articles.js: an article taken from his
+   * hand lowers it before he moves on, instead of cutting pose to pose).
+   */
+  returnFirst() {
+    if (!this.posing) return false;
+    this.leavePose();
+    this.poseAfter = this.idleUntil;
+    return true;
+  }
+
   leavePose() {
     if (!this.posing) return;
     this.clearPoseTimers();
@@ -1626,6 +1814,16 @@ export class Live2DRig {
    */
   reactPose(name, tier) {
     const pose = forTier(this.rig.reactionPoses?.[name], tier);
+    // After returnFirst: the pose waits for the return to finish.
+    const wait = ((this.poseAfter ?? 0) - performance.now()) / 1000;
+    this.poseAfter = null;
+    if (pose && wait > 0) {
+      const seq = this.poseSeq;
+      this.later(wait, () => {
+        if (seq === this.poseSeq && !this.posing) this.playPose(pose, POSE_HOLD);
+      });
+      return wait + (this.durations.get(pose) ?? 0) + POSE_HOLD;
+    }
     if (pose && this.posing !== pose) this.playPose(pose, POSE_HOLD);
     return pose && this.leavesAt != null ? Math.max(0, (this.leavesAt - performance.now()) / 1000) : null;
   }

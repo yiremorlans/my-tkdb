@@ -148,6 +148,11 @@ export function attachHolds(scene, { warmth, onStart, debug, coach = attachCoach
   // (and the flutter) over CREST.lidsFall, and no more glancing down. Warmth stays at its cap and drifts as usual, and the
   // monitor stays up for CREST.afterglow while his pulse settles.
   const CREST = { after: 2.5, build: 1.5, hold: 0.8, fall: 8, eyesOpen: 0.5, release: 16, lipsFall: 3, lidsFall: 4, afterglow: 20, flinch: 0.8 };
+  // rig.json `teaseLidsFall` (seconds) overrides CREST.lidsFall for the
+  // break and lifts the heavy lids on that time after a tease let go too
+  // (otherwise the whole 4s release): Mio's sleepy eyes read as staying
+  // half shut over the shared time.
+  const teaseLidsFall = () => renderer.rig.teaseLidsFall ?? null;
   // His bound `breakAway` pool (constants/hangout/<id>.js); anyone without
   // one says BREAK_FALLBACK.
   const BREAK_FALLBACK = "Okay. Okay, that's enough.";
@@ -417,7 +422,7 @@ export function attachHolds(scene, { warmth, onStart, debug, coach = attachCoach
     crestClock = 0;
     // Once he's broken away he stops glancing down, and his lips close and
     // heavy lids lift sooner (CREST.lipsFall, lidsFall) than the rest.
-    renderer.setHold({}, { release: CREST.release, fall: { lips: CREST.lipsFall, lids: CREST.lidsFall }, glances: false });
+    renderer.setHold({}, { release: CREST.release, fall: { lips: CREST.lipsFall, lids: teaseLidsFall() ?? CREST.lidsFall }, glances: false });
     warmth()?.endHold();
     warmth()?.bump(1);
     afterglowUntil = scene.time + CREST.afterglow;
@@ -516,7 +521,7 @@ export function attachHolds(scene, { warmth, onStart, debug, coach = attachCoach
   // holds play the same.
   // Settled, he isn't done: now and then (`flutter`, seconds between, the
   // lips more often) it catches up with him again for `flutterFor` seconds:
-  // a small widen and a puff of hearts. His face stays settled (swapping
+  // a puff of hearts (no widen: it read as a second surprise). His face stays settled (swapping
   // back to `flustered` read as the face cycling between two). Moving your finger (a thumb over his hand, tracing his
   // lips) by `move` reference units sets one off at once, at most every
   // `moveGap` seconds; before he settles it puts off the settle by
@@ -532,7 +537,6 @@ export function attachHolds(scene, { warmth, onStart, debug, coach = attachCoach
     lipsLater: 1.5,
     flutter: { hand: [4.5, 7.5], lips: [3, 5.5] },
     flutterFor: [1, 1.6],
-    flutterWiden: 0.5,
     flutterHearts: 2,
     move: 70,
     moveGap: 1.5,
@@ -541,6 +545,7 @@ export function attachHolds(scene, { warmth, onStart, debug, coach = attachCoach
     heartsSlow: 1.5,
     fadeIn: 0.25,
     fadeSettle: 0.9,
+    lidsFall: 0.8,
   };
   const arcRand = ([a, b]) => a + Math.random() * (b - a);
   function startArc() {
@@ -570,7 +575,7 @@ export function attachHolds(scene, { warmth, onStart, debug, coach = attachCoach
     const a = holding.arc;
     a.phase = "flutter";
     a.until = holding.held + arcRand(ARC.flutterFor);
-    renderer.widen(ARC.flutterWiden);
+    // Hearts only: a widen here read as a second surprise (cut 2026-11-06).
     for (let i = 0; i < ARC.flutterHearts; i++) spawnHeart(i * 0.12);
   }
   // Finger travel during a hold (scene.onPointer "move").
@@ -593,7 +598,10 @@ export function attachHolds(scene, { warmth, onStart, debug, coach = attachCoach
     const { on, spot, point, kind } = holding;
     holding = null;
     coach.drop(HINTS.slide);
-    renderer.setHold({});
+    // The hand and lip holds' lowered lids lift over `lidsFall`, not the
+    // whole 4s release: they hung half shut past the release pose.
+    const lidsFall = HOLD_WIDEN.has(kind) ? ARC.lidsFall : kind === "tease" ? teaseLidsFall() : null;
+    renderer.setHold({}, lidsFall ? { fall: { lids: lidsFall } } : undefined);
     warmth()?.endHold();
     if (kind === "tease" || HOLD_WIDEN.has(kind)) hangout.moodUntil = scene.time; // lets go of the arc's held face
     // His release line, with that hold's face (reactions.js handHold /
@@ -603,6 +611,8 @@ export function attachHolds(scene, { warmth, onStart, debug, coach = attachCoach
     // snapped in like a twitch.
     if (on) {
       if (HOLD_WIDEN.has(kind)) prime(kind);
+      // A flowing head move as he lets go, by his gaze (live2dRig.js RELEASE_MOVE).
+      if (HOLD_WIDEN.has(kind)) renderer.releaseMove();
       hangout.react(HOLD_LINES[kind], scene.time, undefined, HOLD_WIDEN.has(kind) ? { fade: ARC.fadeSettle } : undefined);
       if (kind === "tease") hangout.moodUntil += TEASE_LINGER;
     } else if (cancelled) return;

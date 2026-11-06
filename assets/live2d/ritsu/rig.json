@@ -39,7 +39,7 @@
     "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
   },
   "partBlush": { "color": [1, 0.95, 0.96] },
-  "holdGaze": "shy",
+  "holdGaze": "aloof",
   "bones": {
     "arms": {
       "r": { },

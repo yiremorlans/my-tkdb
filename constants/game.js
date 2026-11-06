@@ -198,7 +198,7 @@ export const MOOD_BEAT_TARGET_BY_TIER = { warm: 3, spark: 4, close: 5, bound: 5 
 // so a beat shows up about twice per tier. Spark and up lean toward /meet:
 // players reach those characters by choosing them there, while /roam picks
 // from all 26 at random. Enforced per split tier by test/split-pools.test.js;
-// the unsplit shared pool keeps the targets above.
+// an unsplit tier in constants/dialogue/<id>.js keeps the targets above.
 // Keyed by DIALOGUE_POOL (constants/dialoguePools.js); a new pool adds its row.
 export const SPLIT_POOL_TARGET_BY_TIER = {
   [DIALOGUE_POOL.MEET]: { new: 5, known: 7, warm: 10, spark: 22, close: 24, bound: 24 },

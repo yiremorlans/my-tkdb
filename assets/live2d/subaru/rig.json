@@ -181,7 +181,7 @@
       "byTier": {
         "spark": { "mood": "blush", "duration": 2.6 },
         "close": { "mood": "soft_smile_blush", "duration": 2.6 },
-        "bound": { "mood": "full_smile_blush", "duration": 3 }
+        "bound": { "mood": "soft_smile_blush", "duration": 3 }
       }
     },
     "heartbeatHold": {

@@ -7,6 +7,8 @@
 import { DEFAULT_REACTIONS, forTier } from "./reactions.js";
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 
+const HOLD_GAZES = ["steady", "shy", "aloof", "linger"];
+
 /**
  * Checks `rig` and the files it names. Throws one Error listing every
  * problem; otherwise resolves to a list of warnings (moods a reaction names
@@ -125,7 +127,10 @@ async function outfitProblems(rig, name, { readJson, mocIds, lines }) {
   const parts = { ...rig.parts, ...outfit.parts };
   const hotspots = { ...rig.hotspots, ...outfit.hotspots };
   const problems = [...hotspotProblems(hotspots, parts), ...variantProblems(outfit), ...spotsProblems(rig, name), ...onlyProblems(rig, name), ...partBlushProblems(rig.partBlush, parts)];
-  if (rig.holdGaze != null && !["steady", "shy"].includes(rig.holdGaze)) problems.push('holdGaze must be "steady" or "shy"');
+  // The presets in live2dRig.js HOLD_GAZE, plus "steady" (none).
+  if (rig.holdGaze != null && !HOLD_GAZES.includes(rig.holdGaze)) problems.push(`holdGaze must be "steady" or one of ${HOLD_GAZES.slice(1).map((k) => `"${k}"`).join(", ")}`);
+  if (rig.holdLookUp != null && !(typeof rig.holdLookUp === "number" && Number.isFinite(rig.holdLookUp))) problems.push("holdLookUp must be a number (EyeBall units)");
+  if (rig.teaseLidsFall != null && !(typeof rig.teaseLidsFall === "number" && rig.teaseLidsFall > 0)) problems.push("teaseLidsFall must be a positive number of seconds");
   const crestParams = rig.crest?.params;
   if (rig.crest != null && !(crestParams && typeof crestParams === "object" && Object.values(crestParams).every((v) => typeof v === "number" && Number.isFinite(v)))) {
     problems.push("crest.params must map parameter ids to numbers");
@@ -191,7 +196,7 @@ async function outfitProblems(rig, name, { readJson, mocIds, lines }) {
 
 // Removable articles (articles.js): each names art the outfit's model has,
 // a touch spot it covers, and any article it waits on; with `lines`, its
-// pools exist: `<article>Pat` at some tier (unless `pool: false`) and
+// pools exist: `<article>Pat` from new (unless `pool: false`) and
 // `<article>Off` from the unlock tier.
 const ARTICLE_KEYS = new Set(["part", "drawables", "params", "rest", "covers", "blocks", "shownOnly", "poses", "requires", "pool", "hit", "hotspots", "tier", "holdThrough", "offPose"]);
 
@@ -226,9 +231,10 @@ function articleProblems(articles, { hotspots, parts, ids, lines }) {
       }
     }
     if (a.covers == null) problems.push(`${at}: needs \`covers\`, the touch spot it covers`);
-    for (const [tier, spot] of a.covers == null ? [] : tiers(a.covers)) {
+    for (const [tier, spots] of a.covers == null ? [] : tiers(a.covers)) {
       if (tier && !DIALOGUE_TIERS.includes(tier)) problems.push(`${at}.covers: unknown tier ${tier}`);
-      if (!hotspots[spot]) problems.push(`${at}.covers: no hotspot ${spot} on this outfit`);
+      if (Array.isArray(spots) && !spots.length) problems.push(`${at}.covers: an empty list covers nothing`);
+      for (const spot of [spots].flat()) if (!hotspots[spot]) problems.push(`${at}.covers: no hotspot ${spot} on this outfit`);
     }
     for (const key of ["blocks", "shownOnly", "pool", "hit", "holdThrough"]) {
       if (a[key] != null && typeof a[key] !== "boolean") problems.push(`${at}.${key} must be true or false`);
@@ -252,7 +258,8 @@ function articleProblems(articles, { hotspots, parts, ids, lines }) {
     }
     if (lines) {
       const from = DIALOGUE_TIERS.indexOf(a.tier ?? "warm");
-      if (a.pool !== false && !DIALOGUE_TIERS.some((t) => lines[t]?.[`${name}Pat`]?.length)) problems.push(`${at}: no ${name}Pat lines`);
+      // From new: a tier with none would fall back to placeholder lines.
+      if (a.pool !== false && !lines[DIALOGUE_TIERS[0]]?.[`${name}Pat`]?.length) problems.push(`${at}: no ${name}Pat lines at ${DIALOGUE_TIERS[0]}`);
       if (!DIALOGUE_TIERS.slice(0, from + 1).reverse().some((t) => lines[t]?.[`${name}Off`]?.length)) problems.push(`${at}: no ${name}Off lines at ${DIALOGUE_TIERS[from]}`);
     }
   }

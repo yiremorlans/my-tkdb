@@ -40,6 +40,10 @@
         "File": "expressions/e_jishin_00.exp3.json"
       },
       {
+        "Name": "e_jishin_soft_00",
+        "File": "expressions/e_jishin_soft_00.exp3.json"
+      },
+      {
         "Name": "e_kanashimi_00",
         "File": "expressions/e_kanashimi_00.exp3.json"
       },
@@ -70,6 +74,14 @@
       {
         "Name": "e_ora_02",
         "File": "expressions/e_ora_02.exp3.json"
+      },
+      {
+        "Name": "e_ora_calm_00",
+        "File": "expressions/e_ora_calm_00.exp3.json"
+      },
+      {
+        "Name": "e_ora_calm_small_00",
+        "File": "expressions/e_ora_calm_small_00.exp3.json"
       },
       {
         "Name": "e_sekimen_00",

@@ -37,6 +37,7 @@
     "head": { "part": "face_base", "rect": [0, -0.45, 1, 0.3] }
   },
   "partBlush": { "color": [1, 0.93, 0.91] },
+  "holdGaze": "aloof",
   "bones": {
     "arms": {
       "r": { },
@@ -49,11 +50,11 @@
       "default": [],
       "indifferent": ["e_tsujo_away_00"],
       "close": ["e_close_00"],
-      "smile": ["e_jishin_00"],
-      "full_smile": ["e_amae_00"],
+      "smile": ["e_jishin_soft_00"],
+      "full_smile": ["e_jishin_00"],
       "blush": ["e_sekimen_00"],
-      "smile_blush": ["e_jishin_00", "e_sekimen_00"],
-      "full_smile_blush": ["e_amae_00", "e_sekimen_00"],
+      "smile_blush": ["e_jishin_soft_00", "e_sekimen_00"],
+      "full_smile_blush": ["e_jishin_00", "e_sekimen_00"],
       "surprise": ["e_odoroki_00"],
       "surprise_blush": ["e_odoroki_00", "e_sekimen_00"],
       "sweat": ["e_ase_00"],
@@ -67,11 +68,21 @@
       "cocky": ["e_ora_00"],
       "cocky_blush": ["e_ora_00", "e_sekimen_00"],
       "soft_mouth": ["e_tsujo_soft_00"],
-      "slight_smile": ["e_tsujo_smile_00"]
+      "slight_smile": ["e_tsujo_smile_00"],
+      "cocky_soft": ["e_ora_calm_00"],
+      "soft_smirk": ["e_ora_calm_small_00"],
+      "slight_smile_blush": ["e_tsujo_smile_00", "e_sekimen_00"]
     }
   },
-  "restMood": { "byTier": { "new": "default", "close": "soft_mouth" } },
+  "restMood": { "byTier": { "new": "default", "spark": "cocky_soft", "close": "soft_smirk" } },
   "reactions": {
+    "handHold": {
+      "byTier": {
+        "spark": { "mood": "blush", "duration": 2.6 },
+        "close": { "mood": "slight_smile_blush", "duration": 2.6 },
+        "bound": { "mood": "smile_blush", "duration": 3 }
+      }
+    },
     "heartbeatHold": {
       "byTier": {
         "spark": { "mood": "surprise_blush", "duration": 2.8 },

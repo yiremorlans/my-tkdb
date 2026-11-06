@@ -54,7 +54,7 @@ function coveredBelowUnlock(id) {
   // The article covering `trigger`'s spot at `tier` in every outfit, or null.
   return (trigger, tier) => {
     if (!UNLOCK.includes(tier)) return null;
-    const names = outfits.map((o) => Object.entries(o.articles ?? {}).find(([, a]) => !a.shownOnly && a.blocks !== false && TOUCH_SPOTS[at(a.covers, tier)] === trigger)?.[0]);
+    const names = outfits.map((o) => Object.entries(o.articles ?? {}).find(([, a]) => !a.shownOnly && a.blocks !== false && [at(a.covers, tier)].flat().some((spot) => TOUCH_SPOTS[spot] === trigger))?.[0]);
     return names.length && names.every((n) => n && n === names[0]) ? names[0] : null;
   };
 }

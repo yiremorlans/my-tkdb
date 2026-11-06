@@ -168,9 +168,9 @@ test("a hotspot must name a shared or outfit part, and a rect is 4 numbers", asy
   assert.doesNotMatch(msg, /hotspots\.chest/);
 });
 
-test('holdGaze is "steady" or "shy"', async () => {
-  assert.strictEqual(await problems(rig({ holdGaze: 'shy' })), '');
-  assert.match(await problems(rig({ holdGaze: 'bashful' })), /holdGaze must be "steady" or "shy"/);
+test('holdGaze is "steady" or a HOLD_GAZE preset', async () => {
+  for (const g of ['steady', 'shy', 'aloof', 'linger']) assert.strictEqual(await problems(rig({ holdGaze: g })), '');
+  assert.match(await problems(rig({ holdGaze: 'bashful' })), /holdGaze must be "steady" or one of "shy"/);
 });
 
 test('crest.params maps parameter ids to numbers', async () => {
@@ -303,7 +303,7 @@ const articleFiles = () => files({ 'academy/test.moc3': new Set(['FaceSkin', 'Ar
 test('a valid article passes, with its pools', async () => {
   const r = withArticles({
     hat: { part: 'PartHat', covers: 'head' },
-    bag: { drawables: ['ArtMesh1'], params: { ParamCandy: 0 }, covers: { byTier: { new: 'head', spark: 'cheek' } }, requires: 'hat', pool: false },
+    bag: { drawables: ['ArtMesh1'], params: { ParamCandy: 0 }, covers: { byTier: { new: 'head', spark: ['cheek', 'head'] } }, requires: 'hat', pool: false },
   });
   const lines = { new: { hatPat: ['a'] }, warm: { hatOff: ['b'], bagOff: ['c'] } };
   assert.strictEqual(await problems(r, { ...opts(articleFiles()), lines }), '');
@@ -313,7 +313,7 @@ test("an article's art, spot and order are checked", async () => {
   const msg = await problems(
     withArticles({
       sling: { part: 'PartBag', drawables: ['Nope'], rest: { ParamGone: 1 }, covers: 'belly', requires: 'peekaboo', shownOnly: 'yes', color: 1 },
-      peekaboo: { covers: 'head', poses: '(' },
+      peekaboo: { covers: ['head', 'hips'], poses: '(' },
     }),
     opts(articleFiles()),
   );
@@ -322,6 +322,7 @@ test("an article's art, spot and order are checked", async () => {
     'articles.sling: unknown drawable Nope',
     'articles.sling.rest: unknown parameter ParamGone',
     'articles.sling.covers: no hotspot belly',
+    'articles.peekaboo.covers: no hotspot hips',
     'articles.sling.requires: list peekaboo before sling',
     'articles.sling.shownOnly must be true or false',
     'articles.sling: unknown key color',
@@ -335,6 +336,12 @@ test("with lines, an article's Pat and Off pools must exist", async () => {
   const msg = await problems(r, { ...opts(articleFiles()), lines: { spark: { hatOff: ['late'] } } });
   assert.ok(msg.includes('no hatPat lines'));
   assert.ok(msg.includes('no hatOff lines at warm'));
+});
+
+test("an article's Pat pool starts at new, so no tier falls back to placeholders", async () => {
+  const r = withArticles({ hat: { part: 'PartHat', covers: 'head' } });
+  const msg = await problems(r, { ...opts(articleFiles()), lines: { warm: { hatPat: ['a'], hatOff: ['b'] } } });
+  assert.ok(msg.includes('no hatPat lines at new'), msg);
 });
 
 test("an article's removal is a reaction a pose can name", async () => {
@@ -365,6 +372,8 @@ for (const id of characters) {
     const dir = path.join(ROOT, id);
     const r = JSON.parse(fs.readFileSync(path.join(dir, 'rig.json'), 'utf8'));
     assert.strictEqual(r.character, id, 'rig.json character matches its folder');
+    // Nobody just stares during a hold (2026-11-06): every rig picks a gaze.
+    assert.ok(['shy', 'aloof', 'linger'].includes(r.holdGaze), 'rig.json holdGaze is "shy", "aloof" or "linger"');
     // Its Hangout lines, so removable articles' pools are checked too.
     const linesFile = path.resolve('constants/hangout', `${id}.js`);
     const lines = fs.existsSync(linesFile) ? (await import(linesFile)).default : undefined;

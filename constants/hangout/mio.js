@@ -6,8 +6,16 @@
 // Dry, kind, undercuts himself; leans on canon beats (yawns, Shion wrangling,
 // repairs, "safety first", the bug-on-your-head bit). Never "fragile".
 // Guarded spots (lips, chest, hips) stay serious until spark.
-// Holds (spark+): reads his own pulse like a gauge; bound flips the canon
-// "I get sleepy around you" (LVL 22) and keeps the music box (LVL 24).
+// Holds (spark+): reads his own pulse like a gauge; the bound hand hold
+// isn't sleepy (user, 2026-11-06): his canon "One more push" (LVL 3)
+// given up for the MC, and the busy hands. No holiday voicelines.
+//
+// Removable article (docs/hangout-activity.md §4.2): his work apron, work
+// outfit only, over the chest and belly spots. apronPat is a tap on it
+// (every tier, so a tap never falls back to placeholder lines); from spark
+// (user, 2026-11-05) a double-tap unties it (apronOff), and chest and belly
+// move onto the tank top under it. Spark is surprised he let it happen;
+// close hints, bound treats it as routine.
 
 export default {
   new: {
@@ -29,6 +37,10 @@ export default {
     bellyTouch: [
       "Whoa. Hey, that's not a switch.",
       "Uh, hi. Hands to yourself, maybe?",
+    ],
+    apronPat: [
+      "Hm? The apron? It's for work. Nothing exciting.",
+      "Whoa. Never seen an apron before?",
     ],
     hipsTouch: ["Whoa. Hands off.", "Okay. That's enough of that."],
     upset: [
@@ -56,6 +68,10 @@ export default {
       "If you're checking whether I ate: yes. Once.",
       "Hey. Don't. I was almost awake.",
     ],
+    apronPat: [
+      "Curious? It's all scrap. Not worth the digging.",
+      "Hm? It's just spare parts. You'll be disappointed.",
+    ],
     hipsTouch: ["Hey. No.", "That's a firm no."],
     upset: [
       "Okay, stop. I'm not in the mood.",
@@ -81,6 +97,10 @@ export default {
     bellyTouch: [
       "Hah! Hey. Warn a guy first.",
       "...Huh. You startled me. That doesn't happen much.",
+    ],
+    apronPat: [
+      "Had this apron since first year. It's held up better than I have.",
+      "Don't tug too hard. That strap's been sewn back on more than once.",
     ],
     hipsTouch: ["Hey.", "Nope."],
     upset: ["Okay. That's enough for now.", "Sigh... You and Shion, I swear."],
@@ -113,6 +133,14 @@ export default {
     bellyTouch: [
       "...Hey. Now I'm wide awake. Thanks a lot.",
       "...Don't look so pleased. I'll recover.",
+    ],
+    apronPat: [
+      "Looking for something in my pockets? ...You could just ask.",
+      "Okay, now I'm the one who's curious. What are you doing?",
+    ],
+    apronOff: [
+      "Keep that up and I'm signing you up as an artisan. Apron included.",
+      "Huh. So that's how you get me to stop working.",
     ],
     hipsTouch: ["...You're bold today. Okay.", "Whoa. Hey. ...Not here."],
     upset: [
@@ -161,6 +189,14 @@ export default {
       "Hah. Okay, okay. I'm awake. Don't move, though.",
       "...You've got good hands. Should I put you on the crew?",
     ],
+    apronPat: [
+      "Find anything? ...Take your time looking.",
+      "Mm. You've got that look. ...Go on, then.",
+    ],
+    apronOff: [
+      "You're getting good at that. ...I'm not complaining.",
+      "Hah. And here I thought I'd get one more repair in.",
+    ],
     hipsTouch: [
       "Hm. Bold. ...Lucky for you, I'm off the clock.",
       "...Okay. The workshop can wait. Come here.",
@@ -183,17 +219,25 @@ export default {
     ],
   },
   bound: {
+    apronPat: [
+      "I know that tug. ...Give me five minutes to finish this, then I'm yours.",
+      "Mm. You don't have to ask anymore.",
+    ],
+    apronOff: [
+      "Hah. You don't even wait for me to finish the job anymore.",
+      "You're the only one who ever gets me out of this thing.",
+    ],
     heartbeatHold: [
       "Still runs fast around you. I've stopped trying to fix it.",
       "Don't need a gauge for that. You already know the reading.",
     ],
     lipHold: [
       "Hm. You know that's not where you usually stop.",
-      "Careful. I don't get sleepy around you anymore. Not after that.",
+      "Careful. Keep that up and I'll be awake all night.",
     ],
     handHold: [
-      "That music box my dad gave me? Doesn't work half as well as this.",
-      "Mm. Stay. I still get sleepy around you. I just don't fight it now.",
+      "The work can wait. ...Let's go for a walk. I'm not letting go, so you're coming too.",
+      "My hands are full all day. This is the only thing I never want to put down.",
     ],
     breakAway: [
       "Okay. Okay. I need to cool down before something in here overheats. ...Me. It's me.",

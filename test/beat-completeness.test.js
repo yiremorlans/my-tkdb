@@ -1,6 +1,6 @@
 // Every beat /meet or /roam can draw must be fully authored.
 //
-// /meet and /roam draw from the shared pool (pickDialogueEntry in
+// /meet and /roam draw from the character's `dialogue` pool (pickDialogueEntry in
 // characters.js: the tier's `dialogue`, or `daytimeDialogue` for a pmOnly
 // character in the daytime) unless the tier is split, in which case each
 // draws its own (constants/meet/, constants/roam/). So instead of sampling random draws and

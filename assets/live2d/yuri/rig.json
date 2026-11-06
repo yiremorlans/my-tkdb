@@ -109,10 +109,13 @@
       "surprise_blush": ["e_odoroki_00", "e_sekimen_00"],
       "sweat": ["e_ase_00"],
       "serious": ["e_magao_00"],
+      "serious_soft": ["e_magao_rest_00"],
       "annoyed": ["e_odoroki_00"],
       "guarded": ["e_suneru_00"],
       "upset": ["e_suneru_00", "e_ase_00"],
       "flustered": ["e_konwaku_00", "e_sekimen_00", "e_ase_00"],
+      "soft_flustered": ["e_konwaku_soft_00", "e_sekimen_00"],
+      "pout_flustered": ["e_konwaku_pout_00", "e_sekimen_00", "e_ase_00"],
       "sad": ["e_namida_00"],
       "arrogant": ["e_kouman_00"],
       "arrogant_hmph": ["e_kouman_hmph_00"],
@@ -128,7 +131,7 @@
       "shout_blush": ["e_odoroki_02", "e_sekimen_00"]
     }
   },
-  "restMood": { "byTier": { "new": "serious", "warm": "default" } },
+  "restMood": { "byTier": { "new": "serious", "warm": "serious_soft", "spark": "default" } },
   "reactions": {
     "upset": { "byTier": { "new": { "mood": "upset", "duration": 4 }, "spark": { "mood": "scowl_blush", "duration": 4 } } },
     "headPat": { "byTier": { "new": { "mood": "annoyed", "duration": 2 }, "known": { "mood": "annoyed", "duration": 2 }, "warm": { "mood": "arrogant_blush", "duration": 2.4 }, "spark": { "mood": "arrogant_blush", "duration": 2.6 }, "close": { "mood": "arrogant_blush", "duration": 2.6 }, "bound": { "mood": "arrogant_blush", "duration": 3 } } },
@@ -139,7 +142,7 @@
     "chestTouch": { "byTier": { "new": { "mood": "annoyed", "duration": 2.2, "twitch": 0.5 }, "known": { "mood": "annoyed", "duration": 2.2, "twitch": 0.38 }, "warm": { "mood": "annoyed", "duration": 2.6 }, "spark": { "mood": "shout_blush", "duration": 2.8 }, "close": { "mood": "earnest_blush", "duration": 2.8 }, "bound": { "mood": "earnest_blush", "duration": 3.2 } } },
     "bellyTouch": { "byTier": { "new": { "mood": "annoyed", "duration": 2.4, "twitch": 0.75 }, "known": { "mood": "annoyed", "duration": 2.4, "twitch": 0.5 }, "warm": { "mood": "scowl", "duration": 2.8 }, "spark": { "mood": "shout_blush", "duration": 3 }, "close": { "mood": "arrogant_blush", "duration": 3 }, "bound": { "mood": "arrogant_blush", "duration": 3.4 } } },
     "hipsTouch": { "byTier": { "new": { "mood": "startled_shout", "duration": 2.8, "fist": true, "twitch": 1.25 }, "known": { "mood": "startled_shout", "duration": 2.8, "fist": true, "twitch": 0.88 }, "warm": { "mood": "startled_shout", "duration": 3.2, "twitch": 0.63 }, "spark": { "mood": "shout_blush", "duration": 3.4 }, "close": { "mood": "arrogant_blush", "duration": 3.4 }, "bound": { "mood": "arrogant_blush", "duration": 3.8 } } },
-    "handHold": { "byTier": { "spark": { "mood": "earnest_blush", "duration": 2.6 }, "close": { "mood": "arrogant_blush", "duration": 2.6 }, "bound": { "mood": "earnest_blush", "duration": 3 } } },
+    "handHold": { "byTier": { "spark": { "mood": "pout_flustered", "duration": 2.6 }, "close": { "mood": "soft_flustered", "duration": 2.6 }, "bound": { "mood": "soft_flustered", "duration": 3 } } },
     "heartbeatHold": { "byTier": { "spark": { "mood": "earnest_blush", "duration": 2.8 }, "close": { "mood": "earnest_blush", "duration": 2.8 }, "bound": { "mood": "arrogant_blush", "duration": 3.2 } } },
     "lipHold": { "byTier": { "spark": { "mood": "earnest_blush", "duration": 3.6 }, "close": { "mood": "arrogant_blush", "duration": 3.6 }, "bound": { "mood": "earnest_blush", "duration": 4 } } },
     "teaseLetGo": { "byTier": { "bound": { "mood": "arrogant_blush", "duration": 4.4 } } },

@@ -227,6 +227,13 @@ async function main() {
     if (startHidden.has(id)) b.click();
   }
 
+  // ?param=ParamSunGlassesON:1,ParamX:0 holds model parameters at a value
+  // over everything else, to see art a switch shows or hides. Preview only.
+  const held = Object.fromEntries(
+    (params.get("param") ?? "").split(",").map((kv) => kv.split(":")).filter(([id, v]) => id && v !== undefined && !Number.isNaN(Number(v))).map(([id, v]) => [id, Number(v)]),
+  );
+  if (Object.keys(held).length) renderer.setPreviewParams(held);
+
   const moodRow = section("Moods (Live2D expressions)");
   for (const name of Object.keys(renderer.rig.expressions?.moods ?? {})) {
     button(moodRow, name, () => hangout.setBase({ mood: name }));

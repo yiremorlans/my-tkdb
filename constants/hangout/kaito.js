@@ -9,12 +9,19 @@
 // new-warm only, never from spark up. Max two "!" per line, never "!!!".
 // Holds (spark+): the heartbeat lines are the caught-out denial that
 // collapses at once; bound pays off the knight voiceline (LVL 25).
+//
+// Removable article (docs/hangout-activity.md §4.2): his phone, out only in
+// his m_phone poses (handTap new through warm, cheekPoke at warm), held over
+// the left hand spot; he's always on TikTok and WickHive. phonePat is a tap
+// on it in his hand; from warm a double-tap takes it (phoneOff). From spark
+// his hand lines are about holding hands, so the phone stays away and it has
+// no spark+ pools.
 
 export default {
   new: {
     headPat: [
       "Eek! Oh, okay. Hi?",
-      "Wait, are you patting me or theres something in my hair?!",
+      "Wait, are you patting me or is there something in my hair?!",
     ],
     cheekPoke: [
       "Hey! What was that for?",
@@ -31,6 +38,10 @@ export default {
     handTap: [
       "Huh? Oh, hi! Did you need something?",
       "You lost? I know where everything is. Mostly.",
+    ],
+    phonePat: [
+      "Whoa, hey! I'm mid-video. Hands off the phone.",
+      "Careful! If you like a post by accident, I'm done for.",
     ],
     chestTouch: [
       "Hey, not the necklace. Seriously.",
@@ -70,6 +81,10 @@ export default {
       "Huh? You want my attention? You've got it.",
       "That's my thumb ring. Cool, right?",
     ],
+    phonePat: [
+      "Hey, you wanna see? This one's all over TikTok.",
+      "Quit it! I'm checking WickHive. Someone leaked the cafeteria menu again.",
+    ],
     chestTouch: [
       "Hey, careful with the pendant. Gram gave me that.",
       "Not the necklace, okay? It's important.",
@@ -107,6 +122,14 @@ export default {
     handTap: [
       "Oh, hey! Need something? I'm all yours.",
       "Oh, hi. I was literally about to text you.",
+    ],
+    phonePat: [
+      "Hey, no swiping! I'm halfway through a WickHive thread.",
+      "Hey, it's at, like, five percent!",
+    ],
+    phoneOff: [
+      "Hey, my phone! ...Okay, fine. You've got my full attention.",
+      "Wait, I was gonna show you something! ...It can wait, I guess.",
     ],
     chestTouch: [
       "That's Gram's pendant. I'm careful with it, so you be careful too.",

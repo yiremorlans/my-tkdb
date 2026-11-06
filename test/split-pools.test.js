@@ -1,5 +1,6 @@
 // The meet/roam split (constants/meet/, constants/roam/): a tier can move out
-// of the shared `dialogue` pool into one pool per command. These prove the
+// of a character's `dialogue` pool (constants/dialogue/<id>.js) into one
+// pool per command. These prove the
 // draw reads the right pool for each command, the validator keeps the two
 // halves in step, and every split tier hits its size and mood targets.
 //
@@ -24,18 +25,18 @@ const TIERS = ['new', 'known', 'warm', 'spark', 'close', 'bound'];
 const DAY = new Date('2026-01-01T12:00:00');
 const jin = CHARACTERS.find((c) => c.id === 'jin');
 
-// A /meet beat made from a shared one: spoken line only, no approach/greeting.
+// A /meet beat made from one of his dialogue beats: spoken line only, no approach/greeting.
 const asMeet = (beat) => ({ line: `"Meet: ${beat.line}"`, responses: beat.responses });
 
-// Split Jin's `tier` the way the tier-split skill does: /roam keeps the shared
-// beats, /meet gets its own, and the shared tier is deleted. Returns undo.
+// Split Jin's `tier` the way the tier-split skill does: /roam keeps his
+// dialogue beats, /meet gets its own, and dialogue.<tier> is deleted. Returns undo.
 function splitJin(tier) {
-  const shared = DIALOGUE.jin.dialogue[tier];
-  ROAM_DIALOGUE.jin[tier] = shared;
-  MEET_DIALOGUE.jin[tier] = shared.map(asMeet);
+  const own = DIALOGUE.jin.dialogue[tier];
+  ROAM_DIALOGUE.jin[tier] = own;
+  MEET_DIALOGUE.jin[tier] = own.map(asMeet);
   delete DIALOGUE.jin.dialogue[tier];
   return () => {
-    DIALOGUE.jin.dialogue[tier] = shared;
+    DIALOGUE.jin.dialogue[tier] = own;
     delete ROAM_DIALOGUE.jin[tier];
     delete MEET_DIALOGUE.jin[tier];
   };
@@ -53,7 +54,7 @@ function withSplit(tiers, fn) {
 const keys = (beats) => new Set(beats.map((b) => dialogueBeatKey(b.line)));
 const times = (n, f) => Array.from({ length: n }, f);
 
-test('an unknown pool key throws instead of quietly drawing the shared pool', () => {
+test('an unknown pool key throws instead of quietly drawing the dialogue pool', () => {
   assert.throws(() => dialogueTierPool('jin', 'dat', 'new'), /Unknown dialogue pool "dat"/);
 });
 
@@ -73,11 +74,11 @@ test('a split tier draws /meet from constants/meet/ and /roam from constants/roa
   });
 });
 
-test('an unsplit tier still draws the shared pool for both commands', () => {
+test("an unsplit tier still draws the character's dialogue pool for both commands", () => {
   withSplit(['known'], () => {
-    const shared = keys(DIALOGUE.jin.dialogue.new);
-    assert.ok(shared.has(getRandomDialogueEntry(jin, 'new', null, { now: DAY }).beatKey));
-    assert.ok(shared.has(getRandomDialogueBeat(jin, 'new', null, { now: DAY }).beatKey));
+    const own = keys(DIALOGUE.jin.dialogue.new);
+    assert.ok(own.has(getRandomDialogueEntry(jin, 'new', null, { now: DAY }).beatKey));
+    assert.ok(own.has(getRandomDialogueBeat(jin, 'new', null, { now: DAY }).beatKey));
     assert.strictEqual(dialogueTierPool('jin', DIALOGUE_POOL.MEET, 'new'), DIALOGUE.jin.dialogue.new);
   });
 });
@@ -109,7 +110,7 @@ test('validateContent rejects a tier split for one command only', () => {
   });
 });
 
-test('validateContent rejects a split tier still left in the shared pool', () => {
+test('validateContent rejects a split tier still left in the dialogue pool', () => {
   withSplit(['known'], () => {
     DIALOGUE.jin.dialogue.known = ROAM_DIALOGUE.jin.known;
     try {
