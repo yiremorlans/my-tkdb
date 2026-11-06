@@ -1,10 +1,12 @@
 // /roam's own dialogue pools, one file per character (the tier-split skill
 // fills them). A beat is the full scene, { line, approach, greeting,
-// responses, mood? }, the same shape the shared dialogue pool uses.
+// responses, mood? }, the same shape as the character's
+// dialogue pool (constants/dialogue/<id>.js).
 //
 // A split is per tier: a tier present here (and in constants/meet/) is what
-// /roam draws at that tier, and the shared dialogue.<tier> it replaced is
-// deleted. A tier absent here still draws dialogue.<tier>. validateContent
+// /roam draws at that tier, and the character's dialogue.<tier>
+// (constants/dialogue/<id>.js) it replaced is deleted. A tier absent here
+// still draws that dialogue.<tier>. validateContent
 // keeps the two halves in step.
 import jin from "./jin.js";
 import kaito from "./kaito.js";

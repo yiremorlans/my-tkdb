@@ -3,8 +3,9 @@
 // so a beat here is { line, responses, mood? } with the line spoken on its own.
 //
 // A split is per tier: a tier present here (and in constants/roam/) is what
-// /meet draws at that tier, and the shared dialogue.<tier> it replaced is
-// deleted. A tier absent here still draws dialogue.<tier>. validateContent
+// /meet draws at that tier, and the character's dialogue.<tier>
+// (constants/dialogue/<id>.js) it replaced is deleted. A tier absent here
+// still draws that dialogue.<tier>. validateContent
 // keeps the two halves in step.
 import jin from "./jin.js";
 import kaito from "./kaito.js";
