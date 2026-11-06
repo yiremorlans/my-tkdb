@@ -10,6 +10,9 @@
     "academy": {
       "model": "academy/ritsu_academy.model3.json",
       "dialogueVariant": "uniform",
+      "articles": {
+        "recorder": { "drawables": ["ArtMesh199"], "covers": "hand_r", "shownOnly": true, "poses": "^m_recorder", "reach": [398, 1156], "offPose": "m_odoroki" }
+      },
       "parts": { "chest": ["ArtMesh159"], "pants": ["ArtMesh173", "ArtMesh174"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [-0.164, 0.02, 1.164, 1.003] },
@@ -177,18 +180,25 @@
       }
     },
     "teaseLetGo": { "byTier": { "bound": { "mood": "composed_blush", "duration": 4.4 } } },
+    "recorderOff": {
+      "byTier": {
+        "warm": { "mood": "annoyed", "duration": 3 },
+        "spark": { "mood": "surprise_blush", "duration": 3 },
+        "close": { "mood": "composed_blush", "duration": 3 }
+      }
+    },
     "answerLove": { "byTier": { "new": { "mood": "full_smile", "duration": 3.2 } } },
     "answerLike": { "byTier": { "new": { "mood": "composed", "duration": 3 } } },
     "answerFlat": { "byTier": { "new": { "mood": "indifferent", "duration": 2.6 } } }
   },
   "reactionPoses": {
     "headPat": "m_think",
-    "cheekPoke": "m_gesture",
+    "cheekPoke": { "byTier": { "new": "m_recorder", "known": "m_think", "warm": "m_gesture" } },
     "lipsTouch": { "byTier": { "new": "m_chest", "known": "m_udekumi", "spark": "m_think", "close": "m_gesture" } },
     "earTouch": "m_hidarikoshi",
     "handTap": "m_gesture",
     "chestTouch": "m_chest",
-    "bellyTouch": { "byTier": { "new": "m_odoroki", "close": "m_hidarikoshi" } },
+    "bellyTouch": { "byTier": { "new": "m_odoroki", "warm": "m_recorder" } },
     "hipsTouch": { "byTier": { "new": "m_udekumi", "known": "m_gesture", "warm": "m_udekumi", "spark": "m_odoroki", "close": "m_hidarikoshi" } },
     "upset": { "byTier": { "new": "m_recorder", "warm": "m_udekumi", "spark": "m_think" } },
     "answerLove": "m_gesture",
@@ -196,6 +206,7 @@
     "handHold": { "byTier": { "spark": "m_think", "bound": "m_chest" } },
     "heartbeatHold": { "byTier": { "spark": "m_udekumi", "close": "m_hidarikoshi" } },
     "lipHold": { "byTier": { "spark": "m_chest", "close": "m_think" } },
+    "recorderOff": { "byTier": { "warm": "m_udekumi", "spark": "m_think" } },
     "caughtTease": "m_think",
     "teaseLetGo": "m_hidarikoshi"
   },

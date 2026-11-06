@@ -12,6 +12,13 @@
 // stigma/artifact reveals. Holds (spark+) stay legalistic as he concedes:
 // the pulse is evidence he stops contesting; caught tease is "not yet,
 // properly"; bound is shared history he no longer records.
+//
+// Removable article (docs/hangout-activity.md §4.2): his voice recorder,
+// out only in his m_recorder poses (new cheekPoke, new/known upset,
+// bellyTouch from warm), held over the right hand spot. recorderPat is a
+// tap on it in his hand at any tier; from warm a double-tap takes it
+// (recorderOff). At close he'd rather it not hear them; at bound the
+// recordings are a shared, private interest he plays back later.
 
 export default {
   new: {
@@ -42,6 +49,10 @@ export default {
     bellyTouch: [
       "I do not recall consenting to that. Remove your hand.",
       "Contact with my person is not permitted. Step back.",
+    ],
+    recorderPat: [
+      "That is my property. Please do not handle it.",
+      "Hands off, please. That device is not for public use.",
     ],
     hipsTouch: [
       "Remove your hand. Now.",
@@ -78,6 +89,10 @@ export default {
       "Again with the unsolicited contact. Duly noted.",
       "That is not an area open to inquiry.",
     ],
+    recorderPat: [
+      "If you wish to hear the playback, you need only ask.",
+      "Please, Partner. That has a full day of notes on it.",
+    ],
     hipsTouch: [
       "Objection.",
       "I will not dignify that with a response. Hands off.",
@@ -113,6 +128,14 @@ export default {
       "Objection. That was not on the agenda.",
       "Kindly give notice before any further contact.",
     ],
+    recorderPat: [
+      "Do not touch the recorder. It is still running.",
+      "That device holds evidence, Partner. Hands off.",
+    ],
+    recorderOff: [
+      "Return that at once. ...Fine. I will commit the rest to memory.",
+      "You realize everything you just said is already on it.",
+    ],
     hipsTouch: ["Absolutely not.", "I am choosing to forget that happened."],
     upset: [
       "Please stop. You are disrupting my concentration.",
@@ -147,6 +170,14 @@ export default {
     bellyTouch: [
       "...You may not cite my reaction just now.",
       "Please. I am attempting to maintain a professional demeanor.",
+    ],
+    recorderPat: [
+      "If you want something off the record, Partner, you need only ask.",
+      "...You want it? May I ask on what grounds?",
+    ],
+    recorderOff: [
+      "You may hold on to it. I trust you with it.",
+      "Very well. You have my full attention, Partner.",
     ],
     hipsTouch: [
       "That is... I have no precedent for that.",
@@ -198,6 +229,14 @@ export default {
       "...Proceed. I am off the clock.",
       "That was unfair. ...Do it again, so I can be ready.",
     ],
+    recorderPat: [
+      "What happens next is not something I intend to have on tape.",
+      "It has caught more of my composure slipping than I care to admit.",
+    ],
+    recorderOff: [
+      "Take it. My hands will be occupied regardless.",
+      "Good. I would rather none of this be admissible.",
+    ],
     hipsTouch: [
       "...That is a bold motion, Partner. I am inclined to grant it.",
       "...If I have gone rigid, that is not my stigma. Let us leave it there.",
@@ -220,6 +259,14 @@ export default {
     ],
   },
   bound: {
+    recorderPat: [
+      "Leave it running. You know I will listen to this later.",
+      "You like knowing I replay these. I can tell.",
+    ],
+    recorderOff: [
+      "Turn it back on. I want to hear how you sound when I do this.",
+      "Fine. I will rely on memory. You will have to be thorough.",
+    ],
     heartbeatHold: [
       "You already have the full record on that. You were there.",
       "It still does that. I have given up building a model for it.",
