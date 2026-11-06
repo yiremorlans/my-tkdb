@@ -50,7 +50,6 @@ export const ANNOUNCEMENTS = [
     kind: "maintenance",
     showFrom: "2026-11-06T00:00:00-05:00",
     startsAt: "2026-11-08T13:00:00-05:00", // 1 PM Eastern (EST, after DST ends 11/1)
-    testOnly: true,
   },
 ];
 
