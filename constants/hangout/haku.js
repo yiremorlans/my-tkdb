@@ -148,7 +148,7 @@ export default {
       "Hey, hey. Give my heart a break.",
     ],
     heartbeatHold: [
-      "...Ha. Don't look so pleased with yourself, princess.",
+      "...Ha. Don't look so pleased with yourself.",
       "...Yeah, yeah. So much for looking laid-back.",
     ],
     lipHold: [
@@ -162,11 +162,11 @@ export default {
   },
   close: {
     headPat: [
-      "Ha ha. Keep that up and I'll nap right here, princess.",
+      "Ha ha. Keep that up and I'll nap right here.",
       "...Yeah, that's nice. Go on, I'm not stopping you.",
     ],
     cheekPoke: [
-      "Again? Ha. It's a habit now, princess. I like it.",
+      "Again? Ha. It's a habit now. I like it.",
       "...Ha. You're the only one who gets away with that.",
     ],
     lipsTouch: [
@@ -186,16 +186,16 @@ export default {
       "Stay there. You can listen as long as you want.",
     ],
     bellyTouch: [
-      "Ha... Okay, you found my weak spot. Use it wisely, princess.",
+      "Ha... Okay, you found my weak spot. Use it wisely.",
       "Careful. I tickle back.",
     ],
     hipsTouch: [
-      "...It's later now, princess. Go on.",
+      "...It's later now. Ask me properly and maybe.",
       "...Hey. You're testing how chill I really am, huh?",
     ],
     heartbeatHold: [
       "...Yeah. That's what you do to me. No joke this time.",
-      "Checking up on me? Ha... It's all you, princess.",
+      "Checking up on me? Ha... It's all you.",
     ],
     lipHold: [
       "...Next time, I'm not letting you pull away that fast.",
@@ -224,7 +224,7 @@ export default {
       "...Ha. I don't even try to play it cool about this anymore.",
     ],
     breakAway: [
-      "Ha... Okay. Time out, princess. I can't breathe.",
+      "Ha... Okay. Time out. I can't breathe.",
       "...Whoa. Give me a sec. That's not fair and you know it.",
     ],
     teaseLetGo: [

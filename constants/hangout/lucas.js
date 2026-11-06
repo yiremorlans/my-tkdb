@@ -196,11 +196,11 @@ export default {
     ],
     bellyTouch: [
       "Ha! You've found a weak spot. I'll trust you with it.",
-      "Mind yourself. I'll return fire, and I'm quicker than you.",
+      "Mind yourself. I do return fire, you know.",
     ],
     hipsTouch: [
-      "Bold. ...All right. Then allow me.",
-      "Steady. If we're doing this, I'll lead. ...May I?",
+      "Bold. ...You know full well what that does to me.",
+      "Steady. ...Ask me again once I've caught my breath.",
     ],
     heartbeatHold: [
       "Yes, it's racing. I'll not apologise for it.",

@@ -270,7 +270,7 @@ export default {
       "You've seen it go higher than that. You were there.",
     ],
     lipHold: [
-      "I remember how this goes now. I wrote it down so I wouldn't forget.",
+      "I remember how this goes now. I haven't forgotten a moment of it.",
       "You're stalling. You already know what I want.",
     ],
     handHold: [

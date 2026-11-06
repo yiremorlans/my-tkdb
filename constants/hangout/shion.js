@@ -243,7 +243,7 @@ export default {
     ],
     heartbeatHold: [
       "You've heard it closer than that. Don't act surprised.",
-      "Hear that? Come closer. ...Closer.",
+      "Listen. Come closer. ...Closer.",
     ],
     lipHold: [
       "Just the finger? You know better than that, my wife.",

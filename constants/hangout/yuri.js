@@ -10,8 +10,9 @@
 //
 // Holds (spark+): the heartbeat check flips his doctor role (he takes
 // pulses, he isn't read), so he sputters and re-arms. Still flustered at
-// bound, never calm about being touched; bound treats intimacy as shared
-// history.
+// bound on sensitive spots (lips), though high affinity has desensitized
+// him to MC's touch (only hers), so lower-stakes holds can stay composed;
+// bound treats intimacy as shared history.
 
 export default {
   new: {
@@ -232,7 +233,7 @@ export default {
     ],
     lipHold: [
       "Only you are permitted there. You know that. You've... made very sure I know it too.",
-      "Mm... Don't start that unless you intend to finish it. You know I won't stop you.",
+      "Mm... D-Don't start that unless you intend to finish it. ...You know full well I won't stop you.",
     ],
     handHold: [
       "Your hand is warm. Good. I intend to keep it that way. For... medical reasons. Lifelong ones.",
@@ -244,7 +245,7 @@ export default {
     ],
     teaseLetGo: [
       "Y-You stopped!? Now!? Of all the... Hmph! Come back here this instant, worm!",
-      "Ha... Fine. Walk away. You'll be back, and I'll be ready this time.",
+      "Ha... F-Fine. Walk away. You'll be back, and I'll be ready this time.",
     ],
   },
 };

@@ -169,7 +169,7 @@ export default {
     ],
     hipsTouch: [
       "Bold, cutie. ...Fine. Two can play that game.",
-      "Careful, cutie. A magician always has something up his sleeve.",
+      "Careful, cutie. I always keep a trick up my sleeve.",
     ],
     heartbeatHold: [
       "Every time. You'd think I'd be used to it by now.",

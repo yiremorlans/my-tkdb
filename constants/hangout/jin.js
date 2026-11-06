@@ -76,8 +76,11 @@ export default {
       "Hey. Warn me before you do that.",
       "What the hell was that? ...Don't laugh.",
     ],
-    hipsTouch: ["Careful. You're pushing it.", "...Don't."],
-    upset: ["Enough. I'm not a toy.", "Stop. I won't ask again."],
+    hipsTouch: ["Tsk. Quit pushing it.", "...Don't."],
+    upset: [
+      "Enough. I'm not a toy.",
+      "Tsk. Enough poking, servant. Hands down.",
+    ],
   },
   spark: {
     headPat: [
@@ -88,7 +91,7 @@ export default {
       "What? ...Stop staring.",
       "You've got guts. I'll give you that.",
     ],
-    lipsTouch: ["...Not here.", "Careful. You're starting something."],
+    lipsTouch: ["...Don't. Not until I say.", "Hey. You're starting something."],
     earTouch: [
       "...Shit. Cut that out.",
       "...Tsk. You're enjoying this, aren't you?",
@@ -99,11 +102,11 @@ export default {
       "Tsk. Who taught you to be this bold?",
     ],
     bellyTouch: [
-      "...Tsk. Careful where you put that hand.",
+      "...Tsk. Watch where you put that hand.",
       "...Tsk. Your hand's cold. That's the only reason I flinched.",
     ],
     hipsTouch: [
-      "...Not here. Know where we are.",
+      "...Hands off. You're testing me.",
       "Hey. ...You've got some nerve.",
     ],
     upset: [
@@ -148,7 +151,7 @@ export default {
     ],
     hipsTouch: [
       "Bold. ...You know what you're asking for?",
-      "Careful. Keep that up and you're not leaving this room.",
+      "...Tsk. You don't get to rush me.",
     ],
     heartbeatHold: [
       "You wanted proof? There. Now quit gawking.",

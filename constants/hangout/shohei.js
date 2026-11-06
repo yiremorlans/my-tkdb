@@ -86,7 +86,7 @@ export default {
       "You're really into my ears, huh, Senpai?",
     ],
     handTap: [
-      "What, you wanna hold hands, Senpai? ...Pff. I'm kidding.",
+      "What, you wanna hold hands, Senpai? ...Pfft. I'm kidding.",
       "What, you cold? Hands in your pockets, Senpai.",
     ],
     chestTouch: ["Hey. Back up a little.", "...Don't. That's a weird spot."],

@@ -211,4 +211,4 @@ Chibi 11	 Found you...
 Chibi 12	 Not bad, for you.
 
 ## Canon guardrails
-- his worth is money and looks, never usefulness (that's Subaru's or Kaito's insecurity). He prices things and coins acronyms he spells out ("WMOO. Wasted Month Of Opportunities, obviously").
+- his worth is money and looks, never usefulness (that's Subaru's or Kaito's insecurity). He prices things and drops his canon acronyms (Trivia list). He sometimes spells one out, but not every time; spelling out each one gets repetitive, and bare is the default. Never coin new ones.

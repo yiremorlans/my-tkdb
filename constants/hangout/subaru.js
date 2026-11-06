@@ -7,7 +7,8 @@
 // is capped at one per tier so it lands; the rest of his fretting shows in
 // trailing off and asking. Upset is the one place he doesn't soften: no
 // laughing it off through warm. From spark it turns flustered instead (the
-// rig's upset face does too). His stigma reads belongings only, so touch lines never have him reading the player; the
+// rig's upset face does too). His stigma reads people on contact and their
+// belongings, but touch lines never have him reading the player; the
 // new-tier gloves carry his wariness; no glove lines past new. He doesn't name his feelings; the detail implies them.
 // Guarded spots (lips, chest, hips) stay polite rebuffs until spark.
 // Holds (spark+) are flustered, never upset (touch-averse rule); the
@@ -122,10 +123,10 @@ export default {
   spark: {
     headPat: [
       "I don't mind at all. Please, don't stop on my account.",
-      "I'm sure my face is red now.",
+      "...That's lovely. I could stay like this for a long while.",
     ],
     cheekPoke: [
-      "Please, I'm flustered enough already.",
+      "Ah... You've made me lose my train of thought.",
       "You're teasing me. ...I don't mind.",
     ],
     lipsTouch: [
@@ -142,7 +143,7 @@ export default {
     ],
     chestTouch: [
       "Could you stay like that, just a moment?",
-      "...Can you hear it?",
+      "...Ah. You've found it, haven't you?",
     ],
     bellyTouch: [
       "Oh... Um. Ha ha... You know I'm ticklish now.",
@@ -153,11 +154,11 @@ export default {
       "I... I think I need to sit down.",
     ],
     upset: [
-      "I-I'm trying to stay calm, and you're not helping.",
+      "Please... I'll lose my words entirely if you keep on.",
       "All right, all right. I surrender. Please stop.",
     ],
     heartbeatHold: [
-      "I'm sorry. I was trying very hard to look calm.",
+      "...I never realized it raced like this around you. Now I can't stop noticing.",
       "It always beats like that. ...Truly.",
     ],
     lipHold: [

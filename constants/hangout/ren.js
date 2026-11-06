@@ -169,8 +169,8 @@ export default {
       "Fine, I'm red. ...It's your fault, you know.",
     ],
     lipsTouch: [
-      "...Okay. Again. I wasn't ready that time.",
-      "...Careful, Senpai. I might start doing it back.",
+      "...O-Okay. That was... Again. I wasn't ready that time.",
+      "...Careful, Senpai. I might, uh... start doing it back.",
     ],
     earTouch: [
       "Pfft. Okay, you found my weak spot. Go ahead, abuse it.",
@@ -197,8 +197,8 @@ export default {
       "Fine. But if you break my streak, you're making it up to me.",
     ],
     hipsTouch: [
-      "...Okay. I'm not saying no anymore.",
-      "You're doing that on purpose. ...Fine.",
+      "...S-Senpai. I'm not saying no. I'm just... not ready to say yes.",
+      "You're doing that on purpose. ...My face is hot.",
     ],
     heartbeatHold: [
       "Congrats. You found the one stat I can't fake.",

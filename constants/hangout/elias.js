@@ -26,55 +26,55 @@ export default {
     lipsTouch: ["Oh, please don't. Not my lips.", "I think that's far enough."],
     earTouch: [
       "Oh, that tickles. Please don't.",
-      "…My ears are fine, thank you.",
+      "My ears are fine, thank you.",
     ],
     handTap: [
       "Oh, my hands might be dusty. I've been cleaning.",
       "Hm? …Would you like a candy?",
     ],
-    chestTouch: ["…I'd prefer you didn't.", "Please step back a little."],
+    chestTouch: ["I'd prefer you didn't.", "Please step back a little."],
     bellyTouch: [
       "…Please don't poke me there.",
       "Oh, that's a little personal.",
     ],
-    hipsTouch: ["…No. Not there.", "Please don't. I mean that."],
+    hipsTouch: ["No. Not there.", "Please don't. I mean that."],
     upset: ["…Please stop that.", "…I asked you not to."],
     lollipopPat: [
       "Hm? There's plenty more where this came from.",
-      "…Careful. It's a little sticky.",
+      "Careful. It's a little sticky.",
     ],
   },
   known: {
     headPat: [
-      "…You're doing that again.",
+      "You're doing that again.",
       "Oh, I don't mind. It's just unexpected.",
     ],
     cheekPoke: [
       "Hm? Was I lost in thought again?",
       "…Bored? I have candy, if that helps.",
     ],
-    lipsTouch: ["…Let's not.", "…That's a little private, I'm afraid."],
+    lipsTouch: ["…Let's not.", "That's a little private, I'm afraid."],
     earTouch: [
       "Oh, that tickles.",
-      "…You're curious about the strangest things.",
+      "You're curious about the strangest things.",
     ],
     handTap: [
       "Here. Take one. They're from home.",
       "…Sorry, my hands are cold.",
     ],
-    chestTouch: ["…That's close enough.", "Please, a little space."],
+    chestTouch: ["That's close enough.", "Please, a little space."],
     bellyTouch: [
-      "…Still no, I'm afraid.",
+      "Still no, I'm afraid.",
       "…That's not where I keep the candy.",
     ],
     hipsTouch: ["…Not there.", "Let's keep this polite."],
     upset: [
-      "…All right. That's enough now.",
+      "All right. That's enough now.",
       "Please stop. I'm asking nicely.",
     ],
     lollipopPat: [
       "Oh, this one's mine. I have another one for you.",
-      "…It's half gone already, I'm afraid.",
+      "It's half gone already, I'm afraid.",
     ],
   },
   warm: {
@@ -83,26 +83,26 @@ export default {
       "Hm? You have my attention.",
       "Oh, I wasn't asleep. Just thinking.",
     ],
-    lipsTouch: ["…I'll have to say no to that.", "…Please. Leave those alone."],
+    lipsTouch: ["…I'll have to say no to that.", "Please. Leave those alone."],
     earTouch: [
       "Hehe. That tickles.",
       "…You've found a weak spot. Please keep it to yourself.",
     ],
     handTap: ["Take two. I won't count.", "…I'm here. Did you need something?"],
-    chestTouch: ["…That's a little close.", "Please. Just a little space."],
+    chestTouch: ["That's a little close.", "Please. Just a little space."],
     bellyTouch: ["Oh, you startled me.", "…Careful. I wasn't ready for that."],
     hipsTouch: ["…No.", "That's where I draw the line."],
     upset: [
-      "…All right, all right. That's enough.",
+      "All right, all right. That's enough.",
       "Please stop. I'll start to think you're upset with me.",
     ],
     lollipopPat: [
-      "…You want this one in particular, don't you?",
+      "You want this one in particular, don't you?",
       "Hm? There's another in my pocket, if you'd like.",
     ],
     lollipopOff: [
       "Oh, you're quick. I didn't even see that.",
-      "…Well. I suppose it's yours now.",
+      "Well. I suppose it's yours now.",
     ],
   },
   spark: {
@@ -115,51 +115,51 @@ export default {
       "Oh, did you want my attention? You have it.",
     ],
     lipsTouch: [
-      "…That's dangerous, you know.",
-      "Oh, …I wasn't ready for that.",
+      "That's dangerous, you know.",
+      "Oh, I wasn't ready for that.",
     ],
     earTouch: [
-      "…You remembered that spot. That's unfair.",
+      "You remembered that spot. That's unfair.",
       "Hm… Whisper something, while you're there.",
     ],
     handTap: [
       "You can hold on, if you'd like.",
-      "…The last candy's yours. I was saving it.",
+      "The last candy's yours. I was saving it.",
     ],
     chestTouch: [
-      "…Can you hear it? It's been doing that lately.",
+      "It's been doing that lately. I'm not sure what to make of it.",
       "Careful. I'm not as calm as I look.",
     ],
     bellyTouch: [
-      "…Your hands are warm. I don't mind.",
+      "Your hands are warm. I don't mind.",
       "Oh, you're getting comfortable. …So am I.",
     ],
     hipsTouch: [
-      "…Bold. I didn't think you had it in you.",
+      "Bold. I didn't think you had it in you.",
       "Oh, my. …Let's not get ahead of ourselves.",
     ],
     upset: [
-      "…Please. You're making it hard to stay polite.",
+      "Please. You're making it hard to stay polite.",
       "All right. Give me a moment to collect myself.",
     ],
     lollipopPat: [
       "…Mm? You'll have to wait your turn.",
-      "…Curious what flavor it is?",
+      "Curious what flavor it is?",
     ],
     lollipopOff: [
       "Oh, my. That was just in my mouth, you know.",
       "…Go on, then. I won't say a word.",
     ],
     heartbeatHold: [
-      "…You noticed. I was hoping you wouldn't.",
+      "You noticed. I was hoping you wouldn't.",
       "Oh, that. …It started when you came over.",
     ],
     lipHold: [
-      "…Oh, my. I forgot what I was going to say.",
+      "Oh, my. …I forgot what I was going to say.",
       "…I'll be thinking about that later.",
     ],
     handHold: [
-      "…I didn't want to be the one to let go.",
+      "I didn't want to be the one to let go.",
       "…Would you walk with me a little? Like this.",
     ],
   },
@@ -167,20 +167,20 @@ export default {
     headPat: ["…Mm. Don't stop.", "You can do that whenever you like."],
     cheekPoke: [
       "Hm? …I like it when you do that.",
-      "…Yes, I'm smiling. You did that.",
+      "Yes, I'm smiling. You did that.",
     ],
     lipsTouch: [
       "…Careful. You'll give me ideas.",
-      "…I don't want you to stop.",
+      "I don't want you to stop.",
     ],
     earTouch: [
-      "…You know that spot too well now.",
+      "You know that spot too well now.",
       "Closer. I can't hear you from there.",
     ],
     handTap: ["…Don't let go yet.", "Stay. The floors can wait."],
     chestTouch: ["…Stay like this a while.", "Careful. I might keep you here."],
     bellyTouch: [
-      "…Your hands again. I was hoping.",
+      "Your hands again. I was hoping.",
       "Oh, you're bold today. I don't mind at all.",
     ],
     hipsTouch: [
@@ -188,55 +188,55 @@ export default {
       "Oh, so that's what you wanted. You only had to ask.",
     ],
     heartbeatHold: [
-      "…There's no point hiding it from you anymore.",
+      "There's no point hiding it from you anymore.",
       "Oh, still checking? …It hasn't calmed down once.",
     ],
     lipHold: [
       "…You know what you're asking for, don't you?",
-      "…That's twice now. I'm keeping count.",
+      "That's twice now. I'm keeping count.",
     ],
     handHold: [
-      "…Stay a little longer. Jo won't miss me yet.",
+      "Stay a little longer. Jo won't miss me yet.",
       "…I'm not letting go first. You'll have to.",
     ],
     caughtTease: [
-      "Oh, …not yet. Not like this.",
-      "…Not yet. I'd like to take my time with you.",
+      "Oh, wait. …Not like this.",
+      "Not yet. I'd like to take my time with you.",
     ],
     lollipopPat: [
       "Oh, you have a sweet tooth. I should've guessed.",
       "Want a taste? …Of the candy, I mean.",
     ],
     lollipopOff: [
-      "…That was keeping me out of trouble, you know.",
+      "That was keeping me out of trouble, you know.",
       "…You'll have to give me something else, then.",
     ],
   },
   bound: {
     lollipopPat: [
-      "…You already know how it tastes.",
+      "You already know how it tastes.",
       "…I know that look. Give me a moment.",
     ],
     lollipopOff: [
-      "…You never let me finish one anymore.",
+      "You never let me finish one anymore.",
       "Oh, again? …I don't mind. I know why you do it.",
     ],
     heartbeatHold: [
       "…You already know what it does. You were there.",
-      "…It's still yours. It doesn't do that for anyone else.",
+      "It's still yours. It doesn't do that for anyone else.",
     ],
     lipHold: ["…You remember. So do I.", "…Would you keep me company a while?"],
     handHold: [
-      "…This is enough. Really.",
+      "This is enough. Really.",
       "…Stay. The quiet's better with you in it.",
     ],
     breakAway: [
       "…Wait. Wait, please. Let me breathe.",
-      "Oh, …you didn't let up at all. Give me a moment.",
+      "Oh, you didn't let up at all. …Give me a moment.",
     ],
     teaseLetGo: [
       "…You stopped. That's a little unkind.",
-      "Oh, …just like that? Don't make me wait long.",
+      "Oh, just like that? …Don't make me wait long.",
     ],
   },
 };

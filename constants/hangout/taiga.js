@@ -147,8 +147,8 @@ export default {
       "Gyahaha... Hey. That tickles.",
     ],
     hipsTouch: [
-      "Hah? Here? ...Not here, dumbass.",
-      "Hey. You're gonna get us both in trouble.",
+      "Hah? There? ...Gyahaha. Bold move.",
+      "Hey. You sure you can handle what comes next, kitten?",
     ],
     upset: [
       "Shit... Okay, okay. Gimme a sec.",
@@ -224,7 +224,7 @@ export default {
   bound: {
     heartbeatHold: [
       "Remember what it did last time? Gyahaha... Me too. For once.",
-      "Hear that? It only does that for you, kitten.",
+      "Racing again. It only does that for you, kitten.",
     ],
     lipHold: [
       "Just the finger? We're past that. Get over here.",

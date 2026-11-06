@@ -235,8 +235,8 @@ export default {
       "Off the clock, then. Ha ha... Don't tell anyone.",
     ],
     hipsTouch: [
-      "Hey... The store's empty right now. Just so you know.",
-      "Keep that up and I'm putting up the 'back in thirty' sign.",
+      "Hey... Careful. I'm only so good at keeping my cool.",
+      "Keep that up and I'm gonna forget I'm on the clock.",
     ],
     heartbeatHold: [
       "Yeah. I gave up hiding that a while ago.",
