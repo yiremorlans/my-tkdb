@@ -9,7 +9,8 @@
 // While the hat is on, head taps land on it (hatPat): no hair, scalp or
 // hand-temperature lines there. From warm a double-tap takes it off (hatOff,
 // docs/hangout-activity.md §4.2; user, 2026-11-05). At warm that makes him
-// properly upset (rig hatOff: upset face); he only starts allowing it at spark. headPat is his bare head, warm and up only.
+// properly upset (rig hatOff: upset face); he only starts allowing it at spark. headPat is his bare head. New and known have one only
+// so a head tap with the hat off never falls to the placeholder.
 // Holds (spark+): the heartbeat line denies by saying the opposite, his
 // canon habit; the bound break turns "being happy" back on himself.
 
@@ -18,6 +19,10 @@ export default {
     hatPat: [
       "...Who said you could touch my hat?",
       "Do that again. I'll remember your face.",
+    ],
+    headPat: [
+      "...Hands off my head.",
+      "Pat me again. See what happens to that hand.",
     ],
     cheekPoke: [
       "Hm. Your face isn't scared yet.",
@@ -48,6 +53,10 @@ export default {
   },
   known: {
     hatPat: ["...You again. Fine.", "Hm. You like my hat that much?"],
+    headPat: [
+      "...You'll regret that. Probably. Later.",
+      "...Hm. You're lucky I'm sleepy.",
+    ],
     cheekPoke: ["Bored? Me too.", "...You're getting cocky."],
     lipsTouch: ["...Don't. I didn't say you could.", "...Leave my lips alone."],
     earTouch: [
