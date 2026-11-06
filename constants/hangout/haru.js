@@ -13,8 +13,8 @@
 // From warm a double-tap has him hop out (peekabooOff is Haru reacting to
 // him leaving, not Peekaboo's line); a second double-tap takes the empty
 // sling (slingOff). The empty sling has no pool of its own: a tap on it is a
-// plain bellyTouch, which from warm is Haru's own belly (bound falls back to
-// close).
+// plain bellyTouch: Haru's own belly (bound falls back to close). New and
+// known have one too, for a tap there with Peekaboo not in the sling.
 //
 // Holds (spark+): release lines own the racing pulse and stay cheerful;
 // caughtTease is a laughing "not yet"; bound treats the night as shared
@@ -43,6 +43,10 @@ export default {
     peekabooPat: [
       "Whoa, careful! Peekaboo bites. Ask me how I know.",
       "Easy! He's not used to you yet. Go slow, hey?",
+    ],
+    bellyTouch: [
+      "Gahaha! Oi, that tickles! Bit forward for a first tour, hey?",
+      "Whoa, hang on! That's me, mate, not the critters.",
     ],
     hipsTouch: ["Oi! Hands where I can see 'em.", "That's a no, mate."],
     upset: [
@@ -75,6 +79,10 @@ export default {
     peekabooPat: [
       "Oi, Peekaboo! No nibblin' on Honor Roll!",
       "Gentle scratch, that's it. He's partial to that.",
+    ],
+    bellyTouch: [
+      "Oi! Gahaha! Don't go pokin' the captain, Honor Roll.",
+      "Whoa, ticklish! ...You didn't hear that, hey?",
     ],
     hipsTouch: ["Oi! Watch the hands!", "Oi. Not funny, Honor Roll."],
     upset: [
