@@ -42,6 +42,7 @@ import {
   MISSION_HOUSES,
   RIDDLES,
 } from "./missions.js";
+import { validateAnnouncements } from "./announcements.js";
 import fs from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
@@ -823,6 +824,7 @@ export function validateContent() {
 
   validateBackgrounds(errors);
   validateMissionContent(errors);
+  validateAnnouncements(errors, undefined, MAX_BUTTON_LABEL_LENGTH);
 
   for (const warning of warnings) {
     console.warn("[content]", warning);

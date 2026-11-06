@@ -2356,15 +2356,21 @@ export async function clearMissionPostReconcile(id) {
  * a small, indexed read regardless of how much history has aged out.
  */
 export async function getMissionLogStats(userId) {
-  const [{ data: progress, error: progressError }, { data: unspent, error: unspentError }] =
-    await Promise.all([
-      supabase.from('house_progress').select('*').eq('discord_user_id', userId),
-      supabase
-        .from('mission_log')
-        .select('id')
-        .eq('discord_user_id', userId)
-        .is('reset_spent_at', null),
-    ]);
+  // Independent reads: the rollup, the mission credits, and the announcement
+  // credits (migration 037) that spend_cooldown_reset spends alongside them.
+  const [
+    { data: progress, error: progressError },
+    { data: unspent, error: unspentError },
+    fromAnnouncements,
+  ] = await Promise.all([
+    supabase.from('house_progress').select('*').eq('discord_user_id', userId),
+    supabase
+      .from('mission_log')
+      .select('id')
+      .eq('discord_user_id', userId)
+      .is('reset_spent_at', null),
+    countAnnouncementResets(userId),
+  ]);
 
   if (progressError) {
     console.error('Error fetching house progress stats:', progressError);
@@ -2390,7 +2396,13 @@ export async function getMissionLogStats(userId) {
       : 0;
   }
 
-  return { points, filed, byHouse, latestByHouse, banked: (unspent || []).length };
+  return {
+    points,
+    filed,
+    byHouse,
+    latestByHouse,
+    banked: (unspent || []).length + fromAnnouncements,
+  };
 }
 
 /**
@@ -2435,18 +2447,82 @@ export async function spendCooldownReset(userId, command, cooldownSeconds) {
  * getMissionLogStats without a second query.
  */
 export async function countCooldownResets(userId) {
-  const { data, error } = await supabase
-    .from('mission_log')
-    .select('id')
-    .eq('discord_user_id', userId)
-    .is('reset_spent_at', null);
+  const [{ data, error }, fromAnnouncements] = await Promise.all([
+    supabase
+      .from('mission_log')
+      .select('id')
+      .eq('discord_user_id', userId)
+      .is('reset_spent_at', null),
+    countAnnouncementResets(userId),
+  ]);
 
   if (error) {
     console.error('Error counting cooldown resets:', error);
     throw error;
   }
 
+  return (data || []).length + fromAnnouncements;
+}
+
+// --- announcements (docs/announcements.md) ----------------------------------
+
+/**
+ * Claimed-but-unspent announcement resets (migration 037). Added into
+ * countCooldownResets and the dossier's `banked`, since spend_cooldown_reset
+ * spends them alongside mission credits.
+ */
+export async function countAnnouncementResets(userId) {
+  const { data, error } = await supabase
+    .from('announcement_views')
+    .select('announcement_id')
+    .eq('discord_user_id', userId)
+    .not('claimed_at', 'is', null)
+    .is('reset_spent_at', null);
+
+  if (error) {
+    console.error('[announcements] Error counting claimed resets:', error.message);
+    throw error;
+  }
+
   return (data || []).length;
+}
+
+/**
+ * Claim today's showing of each id (mark_announcements_shown, migration 037).
+ * Returns the ids this call claimed; the rest were already shown since
+ * `dayStart` (or are resets already claimed) and must not go out again.
+ */
+export async function markAnnouncementsShown(userId, ids, dayStart) {
+  const { data, error } = await supabase.rpc('mark_announcements_shown', {
+    p_user_id: userId,
+    p_ids: ids,
+    p_day_start: dayStart,
+  });
+
+  if (error) {
+    console.error(`[announcements] Error marking shown for user ${userId}:`, error.message);
+    throw error;
+  }
+
+  return data || [];
+}
+
+/**
+ * Bank one announcement's reset (claim_announcement_reset, migration 037).
+ * True when this call claimed it, false when the player already had.
+ */
+export async function claimAnnouncementReset(userId, announcementId) {
+  const { data, error } = await supabase.rpc('claim_announcement_reset', {
+    p_user_id: userId,
+    p_announcement_id: announcementId,
+  });
+
+  if (error) {
+    console.error(`[announcements] Error claiming ${announcementId} for user ${userId}:`, error.message);
+    throw error;
+  }
+
+  return data === true;
 }
 
 // --- countdown channels (docs/countdown.md) ---------------------------------

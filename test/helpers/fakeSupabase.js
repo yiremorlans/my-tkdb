@@ -622,13 +622,20 @@ export function createFakeSupabase(initialTables = {}) {
       // Cheapest sufficient credit first: a co-op's reset clears the longer
       // wait just as well, so spend it and leave the two-command one banked.
       // Oldest first within a scope.
+      // Announcement resets (migration 037) come after every mission credit.
+      tables.announcement_views = tables.announcement_views || [];
       const credit = tables.mission_log
         .filter((r) => r.discord_user_id === p_user_id && r.reset_spent_at == null)
         .sort(
           (a, b) =>
             (a.mission_type !== 'coop') - (b.mission_type !== 'coop')
             || new Date(a.completed_at || 0) - new Date(b.completed_at || 0),
-        )[0];
+        )[0]
+        ?? tables.announcement_views
+          .filter(
+            (r) => r.discord_user_id === p_user_id && r.claimed_at != null && r.reset_spent_at == null,
+          )
+          .sort((a, b) => new Date(a.claimed_at) - new Date(b.claimed_at))[0];
       if (!credit) return 'none';
 
       const spentOn = credit.mission_type === 'coop' ? cooling[0].command_name : 'both';
@@ -640,6 +647,47 @@ export function createFakeSupabase(initialTables = {}) {
       credit.reset_spent_at = rpcNow.toISOString();
       credit.reset_spent_on = spentOn;
       return spentOn;
+    },
+
+    // db/migrations/037: claim today's showing of each id. Returns the ids
+    // claimed: never shown, or last shown before p_day_start, and not a
+    // reset already claimed.
+    mark_announcements_shown({ p_user_id, p_ids, p_day_start }) {
+      tables.announcement_views = tables.announcement_views || [];
+      const dayStart = new Date(p_day_start).getTime();
+      const shown = [];
+      for (const id of p_ids) {
+        let row = tables.announcement_views.find(
+          (r) => r.discord_user_id === p_user_id && r.announcement_id === id,
+        );
+        if (!row) {
+          row = { discord_user_id: p_user_id, announcement_id: id, last_shown_at: null, claimed_at: null };
+          tables.announcement_views.push(row);
+        } else if (
+          row.claimed_at != null
+          || (row.last_shown_at != null && new Date(row.last_shown_at).getTime() >= dayStart)
+        ) {
+          continue;
+        }
+        row.last_shown_at = rpcNow.toISOString();
+        shown.push(id);
+      }
+      return shown;
+    },
+
+    // db/migrations/037: bank one announcement's reset, once per player.
+    claim_announcement_reset({ p_user_id, p_announcement_id }) {
+      tables.announcement_views = tables.announcement_views || [];
+      let row = tables.announcement_views.find(
+        (r) => r.discord_user_id === p_user_id && r.announcement_id === p_announcement_id,
+      );
+      if (row?.claimed_at != null) return false;
+      if (!row) {
+        row = { discord_user_id: p_user_id, announcement_id: p_announcement_id, last_shown_at: null };
+        tables.announcement_views.push(row);
+      }
+      row.claimed_at = rpcNow.toISOString();
+      return true;
     },
 
     // db/migrations/033 (complete_mission from 016, plus the completion): the

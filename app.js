@@ -50,6 +50,7 @@ import {
   setBondDmsEnabled,
   surfaceBondSceneResume,
 } from './bondScenes.js';
+import { handleAnnouncementClaim, surfaceAnnouncements } from './announcements.js';
 import { countdownAutocomplete, handleCountdownAdmin, handleEvent, handleWishingWell } from './countdown.js';
 import { startEncounterScheduler } from './encounterScheduler.js';
 import {
@@ -287,6 +288,16 @@ function maybeSurfaceBondScene(userId, interactionToken) {
     .catch((err) => console.error('Error surfacing bond scene:', err));
 }
 
+// Due notices (scheduled maintenance, a free cooldown reset offer;
+// docs/announcements.md) go out the same way: an ephemeral followup after the
+// real reply, fire-and-forget, never on a story moment. At most once a day
+// per player per notice.
+function maybeSurfaceAnnouncements(userId, interactionToken) {
+  if (IS_TEST) return;
+  surfaceAnnouncements(userId, (messageData) => sendFollowup(interactionToken, messageData))
+    .catch((err) => console.error(`[announcements] Error surfacing for user ${userId}: ${err.message}`));
+}
+
 /**
  * Interactions endpoint URL where Discord will send HTTP requests
  * Parse request body and verifies incoming requests using discord-interactions package
@@ -392,12 +403,14 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             // spend it, attached only when the user is actually being turned
             // away and actually has one (docs/scheduled-missions.md §13).
             await sendFollowup(req.body.token, await cooldownReplyWithReset(userId, 'roam', limit.reason), 15000, true);
+            maybeSurfaceAnnouncements(userId, req.body.token);
             return;
           }
           // User activity is only counted once an encounter actually loads
           // (the roam/spawn button below), not for opening the prompt.
           await sendFollowup(req.body.token, await buildRoamDialogueMessage(userId), 15000, true);
           maybeSurfaceBondScene(userId, req.body.token);
+          maybeSurfaceAnnouncements(userId, req.body.token);
         } catch (err) {
           console.error('Error in /roam:', err);
           // The invoke-throttle slot above was claimed before this failure,
@@ -460,6 +473,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             // spend it, attached only when the user is actually being turned
             // away and actually has one (docs/scheduled-missions.md §13).
             await sendFollowup(req.body.token, await cooldownReplyWithReset(userId, 'meet', limit.reason), 15000, true);
+            maybeSurfaceAnnouncements(userId, req.body.token);
             return;
           }
           // User activity is only counted once a character actually loads
@@ -469,6 +483,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           const picker = await sendFollowup(req.body.token, await buildMeetPickMessage(userId), 15000, true);
           rememberPickerToken(picker?.id, req.body.token);
           maybeSurfaceBondScene(userId, req.body.token);
+          maybeSurfaceAnnouncements(userId, req.body.token);
         } catch (err) {
           console.error('Error in /meet:', err);
           // Same reasoning as /roam's catch: the invoke-throttle slot above
@@ -524,6 +539,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           await sendFollowup(req.body.token, messageData, 15000, true);
 
           maybeSurfaceBondScene(userId, req.body.token);
+          maybeSurfaceAnnouncements(userId, req.body.token);
 
           // Track user activity and command usage
           trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
@@ -556,6 +572,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
         try {
           const messageData = await buildDossierMessage(userId);
           await sendFollowup(req.body.token, messageData, 15000, true);
+          maybeSurfaceAnnouncements(userId, req.body.token);
 
           // Track user activity and command usage
           trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
@@ -593,6 +610,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
             type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
             data: messageData,
           });
+          maybeSurfaceAnnouncements(userId, req.body.token);
           trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
           trackCommandUsage(userId, 'bonds').catch(err => console.error('Error tracking command usage:', err));
         } catch (err) {
@@ -621,6 +639,7 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
           type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
           data: messageData,
         });
+        maybeSurfaceAnnouncements(userId, req.body.token);
 
         trackUserActivity(userId).catch(err => console.error('Error tracking user activity:', err));
         trackCommandUsage(userId, 'bonds').catch(err => console.error('Error tracking command usage:', err));
@@ -856,6 +875,24 @@ app.post('/interactions', verifyKeyMiddleware(process.env.PUBLIC_KEY), async (re
   if (type === InteractionType.MESSAGE_COMPONENT) {
     const customId = data.custom_id;
     const [action, ...rest] = customId.split(':');
+
+    // notice:claim:<id> — bank the free cooldown reset an announcement offers
+    // (docs/announcements.md). One RPC round trip, so answered inline.
+    if (action === 'notice' && rest[0] === 'claim') {
+      let result;
+      try {
+        result = await handleAnnouncementClaim(req.body, rest[1]);
+      } catch (err) {
+        console.error(`[announcements] Error in notice:claim for user ${userId}: ${err.message}`);
+        result = {
+          response: {
+            type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+            data: { content: 'Something went wrong there. Try again?', flags: EPHEMERAL },
+          },
+        };
+      }
+      return res.send(result.response);
+    }
 
     if (action === 'meet' && rest[0] === 'pick') {
       const characterId = rest[1];

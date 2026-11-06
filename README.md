@@ -69,6 +69,7 @@ Below is a basic overview of the project structure:
 │   │              (plus darkwick/, festival/); served at /assets/bg
 │   └── chars/  -> character portrait art, served at /assets/chars
 ├── constants/
+│   ├── announcements.js -> maintenance / free-reset notices and their text, edited by hand
 │   ├── backgrounds.js -> houses, general locations, and PM/evening gating
 │   ├── characters.js  -> character roster, grouped by house
 │   ├── countdown.js   -> countdown day counting, channel names, /event input checks
@@ -86,6 +87,7 @@ Below is a basic overview of the project structure:
 ├── commandLimits.js -> per-command rolling 3-hour cooldown for /roam and /meet (Supabase-backed, anchored to last completed encounter)
 ├── publicEncounters.js -> public call-out encounters: spawn, expiry, /call and /encounters handlers
 ├── missions/    -> scheduled missions: spawn, expiry, /mission, /docs, /riddle, /request, /house dossier, /missions (module map atop missions/player.js)
+├── announcements.js -> the once-a-day notice after a command, and its free-reset claim button
 ├── countdown.js -> countdown channels: /countdown, /event, /wishingwell and the rename pass
 ├── activityRoutes.js -> the Hangout Activity's API (/api/activity/*): sign-in, launch, the /meet encounter and its answer
 ├── assetGzip.js -> gzips the Activity's versioned /assets/v/<build>/ files once and serves them from memory

@@ -29,6 +29,7 @@ export function createMissionsHarness() {
     house_progress: [],
     command_limits: [],
     character_relationships: [],
+    announcement_views: [],
   });
 
   const posts = [];
@@ -74,6 +75,7 @@ export function createMissionsHarness() {
     fake.tables.user_activity = [];
     fake.tables.command_limits = [];
     fake.tables.character_relationships = [];
+    fake.tables.announcement_views = [];
     posts.length = 0;
     edits.length = 0;
     interactionEdits.length = 0;

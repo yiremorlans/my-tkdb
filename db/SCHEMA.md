@@ -271,6 +271,18 @@ The memory behind the recent-beat skip (migration 031): a `/roam` or `/meet` dra
 
 > Kept off `character_relationships` on purpose: a spawn is only a preview and must never create a relationship row. How many of the stored keys a draw skips depends on the pool (`recentBeatWindow` in `constants/characters.js`). Writes go through the atomic `remember_dialogue_beat()` function (prepend, dedupe, cap in one statement), since the click carries only the beat's key, never the list: no read-then-write.
 
+### `announcement_views`
+The per-player side of announcements (migration 037, `docs/announcements.md`). The notices themselves are `constants/announcements.js`; this table records when each player last saw each one, so it goes out at most once per local day, and whether they claimed a reset offer.
+
+| Column | Type | Purpose |
+|--------|------|---------|
+| `discord_user_id` / `announcement_id` | TEXT (PK) | One row per player per notice |
+| `last_shown_at` | TIMESTAMP | Last showing; set by `mark_announcements_shown()` |
+| `claimed_at` | TIMESTAMP | Reset offer claimed; set once by `claim_announcement_reset()` |
+| `reset_spent_at` / `reset_spent_on` | TIMESTAMP / TEXT | Set by `spend_cooldown_reset()` when the banked reset is used |
+
+> A claimed, unspent row is a banked cooldown reset, like an unspent `mission_log` row. `spend_cooldown_reset()` spends mission credits first, then these, and either clears both clocks. Spent rows keep their claim, so an offer can't be claimed twice.
+
 ### `countdown_channels`
 Countdown channels (migration 034, `docs/countdown.md`): one row per (guild, kind), where kind is `wishingwell` or `customevent`. Independent of encounters and missions, so the scheduler finds these guilds here rather than through `guild_settings.enabled`. A guild with no `guild_settings` row uses the default timezone.
 
