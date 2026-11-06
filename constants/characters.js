@@ -16,7 +16,8 @@
 // not their affinity, not how often they show up.
 import { createHash } from "node:crypto";
 import { HOUSES, CHARACTER_ROOMS, timeBucket } from "./backgrounds.js";
-import { DIALOGUE } from "./dialogue.js";
+import { DIALOGUE, POOL_DIALOGUE } from "./dialogue.js";
+import { DIALOGUE_POOL, DIALOGUE_POOL_CONFIG } from "./dialoguePools.js";
 import { pickRandom } from "./random.js";
 import { RESPONSE_TYPES } from "./responseTypes.js";
 
@@ -144,9 +145,9 @@ export const CHARACTERS = [
     archetype: ["Dandere", "Pure Angel"],
     keywords: [
       "polite",
-      "soft-spoken",
+      "friendly and approachable",
       "old-world British courtesy",
-      "apologizes for taking up space",
+      "humble, never brags",
       "gentle",
       "sincere",
       "fiercely protective",
@@ -1249,6 +1250,36 @@ function resolvePoolTier(pool, tier, variant) {
   return [];
 }
 
+// Interaction pools (DIALOGUE_POOL in constants/dialoguePools.js): a
+// character's tier can move out of the shared `dialogue` pool into one pool per
+// interaction, each written for that interaction alone. Per tier, so tiers
+// convert one at a time.
+//
+// The pool object `poolKey` draws `tier` from. A pool that splitsShared
+// (/meet, /roam) uses its own tier when it has one and the shared `dialogue`
+// tier otherwise; a tier neither has falls back to 'new' (resolvePoolTier), so
+// that fallback looks at whichever still holds 'new'. A standalone pool draws
+// only its own beats. An unknown key throws: a typo'd pool would otherwise
+// draw the shared pool and look like it worked.
+function interactionPool(id, poolKey, tier) {
+  const config = DIALOGUE_POOL_CONFIG[poolKey];
+  if (!config) throw new Error(`Unknown dialogue pool "${poolKey}"`);
+  const own = POOL_DIALOGUE[poolKey]?.[id];
+  if (!config.splitsShared) return own;
+  const shared = DIALOGUE[id]?.dialogue;
+  if (own?.[tier] !== undefined) return own;
+  if (shared?.[tier] !== undefined) return shared;
+  return own?.new !== undefined ? own : shared;
+}
+
+// The raw tier data (an array of beats, or Jo's variant map) that `poolKey`
+// draws for this character at `tier`, or undefined. For reports and tests
+// that count or walk what an interaction can actually show.
+export function dialogueTierPool(id, poolKey, tier) {
+  const pool = interactionPool(id, poolKey, tier);
+  return pool?.[tier] ?? pool?.new;
+}
+
 // Recent-beat skip, every tier: a /roam or /meet draw leaves out the beats this
 // player most recently answered from this character (ctx.recentBeats, newest
 // first, stored per user+character by migration 031's remember_dialogue_beat on
@@ -1321,14 +1352,13 @@ function pickMixedBeat(own, extra, chance, recentBeats, rand = Math.random) {
 // (see below), so callers may pass those or not.
 //
 // Shared by getRandomDialogueBeat (/roam) and getRandomDialogueEntry (/meet):
-// the pmOnly daytime swap and the random pick from the character's own
-// `dialogue` pool, normalized to { line, approachOptions, greetingOptions,
-// responses }, or null if the character has no dialogue
-// content at all. Neither caller repeats this resolution, so /meet's line and
-// its response-button overrides always come from the exact same pick as
-// /roam's beat would — never two independent draws that could disagree about
-// which beat was shown.
-function pickDialogueEntry(character, tier, variant, ctx) {
+// the pmOnly daytime swap and the random pick from the character's pool for
+// `poolKey` (a DIALOGUE_POOL; see interactionPool),
+// normalized to { line, approachOptions, greetingOptions, responses }, or null
+// if the character has no dialogue content at all. /meet's line and its
+// response-button overrides always come from the one pick — never two
+// independent draws that could disagree about which beat was shown.
+function pickDialogueEntry(character, tier, variant, ctx, poolKey) {
   const content = DIALOGUE[character.id];
   if (!content) return null;
 
@@ -1337,7 +1367,7 @@ function pickDialogueEntry(character, tier, variant, ctx) {
   // cutoff as `_PM` backgrounds (timeBucket, off ctx.now) — not a separate
   // threshold. The only time-of-day branch left in the draw.
   let entries;
-  let pool = content.dialogue;
+  let pool = null;
   if (
     character.pmOnly &&
     content.daytimeDialogue &&
@@ -1354,12 +1384,22 @@ function pickDialogueEntry(character, tier, variant, ctx) {
     // Time-of-day flavor belongs on a character's own beats, written to read at
     // any hour. test/beat-completeness.test.js checks every beat any draw can
     // return, with nothing exempt.
-    entries = resolvePoolTier(content.dialogue, tier, variant);
+    entries = resolvePoolTier(
+      interactionPool(character.id, poolKey, tier),
+      tier,
+      variant,
+    );
   }
 
+  // The mixed-in tier comes from the same interaction's pool, so a split
+  // /meet spark never mixes in a /roam warm scene (or the reverse).
   const mix = TIER_MIX[tier];
+  const mixPool =
+    mix && (pool || interactionPool(character.id, poolKey, mix.from));
   const extra =
-    mix && pool?.[mix.from] ? resolvePoolTier(pool, mix.from, variant) : [];
+    mix && mixPool?.[mix.from]
+      ? resolvePoolTier(mixPool, mix.from, variant)
+      : [];
   if (entries.length === 0 && extra.length === 0) return null;
   const beat = pickMixedBeat(
     entries.map(normalizeBeat),
@@ -1371,9 +1411,10 @@ function pickDialogueEntry(character, tier, variant, ctx) {
   return { ...beat, beatKey: dialogueBeatKey(beat.line) };
 }
 
-// /meet's draw — the same single pick getRandomDialogueBeat makes for /roam,
-// minus the approach/greeting resolution /meet never renders (it has no
-// "step forward" stage; see buildMeetSpawnMessage). `responses` is the drawn
+// /meet's draw — the same pick getRandomDialogueBeat makes for /roam, from
+// /meet's pool (its split tier when there is one), minus the
+// approach/greeting resolution /meet never renders (it has no "step forward"
+// stage; see buildMeetSpawnMessage). `responses` is the drawn
 // beat's own { kind, playful, bold, neutral } overrides, or null if it has
 // none — always from the same pick as `line`, so the caption and the
 // response buttons can never end up answering different beats.
@@ -1383,7 +1424,7 @@ export function getRandomDialogueEntry(
   variant = null,
   ctx = {},
 ) {
-  const entry = pickDialogueEntry(character, tier, variant, ctx);
+  const entry = pickDialogueEntry(character, tier, variant, ctx, DIALOGUE_POOL.MEET);
   if (!entry)
     return { line: "...", responses: null, mood: false, beatKey: null };
   const { line, responses, mood, beatKey } = entry;
@@ -1446,7 +1487,7 @@ export function getRandomDialogueBeat(
   variant = null,
   ctx = {},
 ) {
-  const entry = pickDialogueEntry(character, tier, variant, ctx);
+  const entry = pickDialogueEntry(character, tier, variant, ctx, DIALOGUE_POOL.ROAM);
   if (!entry) {
     return {
       line: "...",

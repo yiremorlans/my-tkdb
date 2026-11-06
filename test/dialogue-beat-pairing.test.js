@@ -69,6 +69,10 @@ mock.module('../constants/dialogue.js', {
       },
       [EMPTY_ID]: {},
     },
+    // No split tiers: every draw here reads the shared `dialogue` pool.
+    MEET_DIALOGUE: {},
+    ROAM_DIALOGUE: {},
+    POOL_DIALOGUE: { meet: {}, roam: {} },
   },
 });
 

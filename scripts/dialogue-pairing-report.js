@@ -17,7 +17,8 @@
  */
 import { DIALOGUE } from "../constants/dialogue.js";
 import { DIALOGUE_POOL_TARGET_BY_TIER } from "../constants/game.js";
-import { CHARACTERS } from "../constants/characters.js";
+import { CHARACTERS, dialogueTierPool } from "../constants/characters.js";
+import { DIALOGUE_POOL } from "../constants/dialoguePools.js";
 
 const TIERS = ["new", "known", "warm", "spark", "close", "bound"];
 const jsonMode = process.argv.includes("--json");
@@ -62,7 +63,9 @@ const rows = order.map((id) => {
   const content = DIALOGUE[id];
   const dialogueTiers = {};
   for (const tier of TIERS) {
-    dialogueTiers[tier] = analyzeTierValue(content.dialogue?.[tier]);
+    // What /roam draws (its split tier, or the shared one): /meet has no
+    // approach button to pair.
+    dialogueTiers[tier] = analyzeTierValue(dialogueTierPool(id, DIALOGUE_POOL.ROAM, tier));
   }
   return {
     id,

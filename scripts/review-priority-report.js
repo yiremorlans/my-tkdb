@@ -25,11 +25,12 @@
  */
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { createClient } from "@supabase/supabase-js";
-import { DIALOGUE } from "../constants/dialogue.js";
-import { CHARACTERS } from "../constants/characters.js";
+import { DIALOGUE_POOL } from "../constants/dialoguePools.js";
+import { CHARACTERS, dialogueTierPool } from "../constants/characters.js";
 import {
   getRelationshipLevel,
   MOOD_BEAT_TARGET_BY_TIER,
+  SPLIT_MOOD_TARGET_BY_TIER,
 } from "../constants/game.js";
 import { DIALOGUE_TIERS as TIERS, getDialogueTier } from "../constants/tiers.js";
 
@@ -67,10 +68,22 @@ function countMoods(beats) {
 
 // Variant-keyed pools (Jo's uniform/casual) carry the same beats once per
 // outfit, so count one variant rather than summing them.
-function moodBeats(characterId, tier) {
-  const pool = DIALOGUE[characterId]?.dialogue?.[tier] || [];
+function poolMoods(pool = []) {
   if (Array.isArray(pool)) return countMoods(pool);
   return Math.max(0, ...Object.values(pool).map(countMoods));
+}
+
+// A split tier (constants/meet/ + constants/roam/) counts both halves against
+// the split targets; an unsplit one counts the shared pool once.
+function moodBeats(characterId, tier) {
+  const meet = dialogueTierPool(characterId, DIALOGUE_POOL.MEET, tier);
+  const roam = dialogueTierPool(characterId, DIALOGUE_POOL.ROAM, tier);
+  if (meet === roam) return { count: poolMoods(roam), target: MOOD_BEAT_TARGET_BY_TIER[tier] };
+  return {
+    count: poolMoods(meet) + poolMoods(roam),
+    target: SPLIT_MOOD_TARGET_BY_TIER[DIALOGUE_POOL.MEET][tier] +
+      SPLIT_MOOD_TARGET_BY_TIER[DIALOGUE_POOL.ROAM][tier],
+  };
 }
 
 // Per player, their top two characters by affinity (zero affinity doesn't count).
@@ -117,10 +130,11 @@ function buildRow(character, relationships, now) {
   row.active_7d = relationships.filter(
     (r) => now - new Date(r.last_interaction_at).getTime() <= WEEK_MS,
   ).length;
-  row.warm_moods = moodBeats(character.id, "warm");
-  row.warm_mood_target = MOOD_BEAT_TARGET_BY_TIER.warm;
-  row.spark_moods = moodBeats(character.id, "spark");
-  row.spark_mood_target = MOOD_BEAT_TARGET_BY_TIER.spark;
+  for (const tier of ["warm", "spark"]) {
+    const { count, target } = moodBeats(character.id, tier);
+    row[`${tier}_moods`] = count;
+    row[`${tier}_mood_target`] = target;
+  }
   return row;
 }
 

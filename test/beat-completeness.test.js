@@ -1,8 +1,9 @@
 // Every beat /meet or /roam can draw must be fully authored.
 //
-// /meet and /roam draw from the very same pool (pickDialogueEntry in
+// /meet and /roam draw from the shared pool (pickDialogueEntry in
 // characters.js: the tier's `dialogue`, or `daytimeDialogue` for a pmOnly
-// character in the daytime). So instead of sampling random draws and
+// character in the daytime) unless the tier is split, in which case each
+// draws its own (constants/meet/, constants/roam/). So instead of sampling random draws and
 // hoping to hit the one incomplete beat, this walks the whole catalog and
 // checks every beat that any draw could return.
 //
@@ -24,7 +25,12 @@ import {
   getRandomDialogueBeat,
   getRandomDialogueEntry,
 } from '../constants/characters.js';
-import { DIALOGUE } from '../constants/dialogue.js';
+import { DIALOGUE, POOL_DIALOGUE } from '../constants/dialogue.js';
+import { DIALOGUE_POOL_CONFIG, DIALOGUE_POOL_KEYS } from '../constants/dialoguePools.js';
+
+// Scene pools (/roam) render approach + greeting; line-only ones (/meet) don't.
+const SCENE_POOLS = DIALOGUE_POOL_KEYS.filter((k) => DIALOGUE_POOL_CONFIG[k].scene);
+const LINE_POOLS = DIALOGUE_POOL_KEYS.filter((k) => !DIALOGUE_POOL_CONFIG[k].scene);
 
 const TIERS = ['new', 'known', 'warm', 'spark', 'close', 'bound'];
 const RESPONSE_KINDS = Object.values(RESPONSE_TYPES);
@@ -61,6 +67,9 @@ function drawableBeats() {
     const content = DIALOGUE[character.id];
     if (!content) continue;
     out.push(...poolEntries(`${character.id}.dialogue`, content.dialogue));
+    for (const key of SCENE_POOLS) {
+      out.push(...poolEntries(`${character.id}.${key}`, POOL_DIALOGUE[key][character.id]));
+    }
     if (character.pmOnly && content.daytimeDialogue) {
       out.push(...poolEntries(`${character.id}.daytimeDialogue`, content.daytimeDialogue));
     }
@@ -85,7 +94,15 @@ function problemsIn(beats, ...checks) {
   return beats.flatMap((b) => checks.map((check) => check(b)).filter(Boolean));
 }
 
+// Line-only pools (/meet): only what they render (line + responses).
+function lineOnlyBeats() {
+  return CHARACTERS.flatMap((c) =>
+    LINE_POOLS.flatMap((key) => poolEntries(`${c.id}.${key}`, POOL_DIALOGUE[key][c.id])),
+  );
+}
+
 const BEATS = drawableBeats();
+const LINE_ONLY_BEATS = lineOnlyBeats();
 
 test('the beat walk actually finds beats for the whole roster (guards the checks below against passing on nothing)', () => {
   const characters = new Set(BEATS.map((b) => b.at.split('.')[0]));
@@ -104,7 +121,7 @@ test('every drawable beat has a greeting', () => {
 });
 
 test('every drawable beat has responses for all four kinds', () => {
-  assert.deepStrictEqual(problemsIn(BEATS, missingResponses), []);
+  assert.deepStrictEqual(problemsIn([...BEATS, ...LINE_ONLY_BEATS], missingResponses), []);
 });
 
 // --- the real draw functions, not just the data --------------------------

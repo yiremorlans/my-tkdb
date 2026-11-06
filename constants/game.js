@@ -1,5 +1,6 @@
 import { RESPONSE_TYPES } from './characters.js';
 import { getDialogueTier } from './tiers.js';
+import { DIALOGUE_POOL } from './dialoguePools.js';
 
 // How many characters /meet offers the user to pick from.
 export const MEET_OPTION_COUNT = 4;
@@ -192,6 +193,21 @@ export const POOL_POINTS_PER_LINE = 4;
 // a documented target, not enforced: add moods as a tier's pool grows toward
 // its target, so a short pool doesn't shift moods far more often than intended.
 export const MOOD_BEAT_TARGET_BY_TIER = { warm: 3, spark: 4, close: 5, bound: 5 };
+// Pool and mood targets once a tier is split into /meet and /roam pools
+// (constants/meet/, constants/roam/; the tier-split skill). Each pool is sized
+// so a beat shows up about twice per tier. Spark and up lean toward /meet:
+// players reach those characters by choosing them there, while /roam picks
+// from all 26 at random. Enforced per split tier by test/split-pools.test.js;
+// the unsplit shared pool keeps the targets above.
+// Keyed by DIALOGUE_POOL (constants/dialoguePools.js); a new pool adds its row.
+export const SPLIT_POOL_TARGET_BY_TIER = {
+  [DIALOGUE_POOL.MEET]: { new: 5, known: 7, warm: 10, spark: 22, close: 24, bound: 24 },
+  [DIALOGUE_POOL.ROAM]: { new: 5, known: 7, warm: 10, spark: 6, close: 8, bound: 8 },
+};
+export const SPLIT_MOOD_TARGET_BY_TIER = {
+  [DIALOGUE_POOL.MEET]: { new: 0, known: 0, warm: 2, spark: 2, close: 3, bound: 3 },
+  [DIALOGUE_POOL.ROAM]: { new: 0, known: 0, warm: 2, spark: 2, close: 3, bound: 3 },
+};
 export const MIN_DIALOGUE_POOL_SIZE = 5;
 export const MAX_DIALOGUE_POOL_SIZE = 24;
 

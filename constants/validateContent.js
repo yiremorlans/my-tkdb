@@ -11,6 +11,7 @@
 import { CHARACTERS, MOOD_TIERS, RESPONSE_TYPES } from "./characters.js";
 import {
   DIALOGUE,
+  POOL_DIALOGUE,
   SHARED_ENCOUNTER_TEASERS,
   SHARED_MISSED_LINES,
   SHARED_WINNER_LINES,
@@ -43,6 +44,11 @@ import {
   RIDDLES,
 } from "./missions.js";
 import { validateAnnouncements } from "./announcements.js";
+import {
+  DIALOGUE_POOL_CONFIG,
+  DIALOGUE_POOL_KEYS,
+  SHARED_SPLIT_POOLS,
+} from "./dialoguePools.js";
 import fs from "fs";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
@@ -91,6 +97,58 @@ function checkLabelLength(what, label, errors) {
   }
 }
 
+// Every beat line in one tier's data (an array, or Jo's variant map).
+function tierLines(poolData) {
+  if (Array.isArray(poolData)) return poolData.filter(isBeat).map((b) => b.line);
+  if (poolData && typeof poolData === "object") {
+    return Object.values(poolData).flatMap(tierLines);
+  }
+  return [];
+}
+
+// Interaction pools (constants/dialoguePools.js). The pools that split the
+// shared `dialogue` pool (/meet, /roam) take a tier over together: split in
+// only some of them, the rest keep drawing beats written to answer every
+// interaction at once. Once split, the shared tier is unreachable and has to
+// go. And a beat lives in one pool, never two.
+function validateInteractionPools(id, content, errors) {
+  const pools = Object.fromEntries(
+    DIALOGUE_POOL_KEYS.map((key) => [key, POOL_DIALOGUE[key]?.[id] || {}]),
+  );
+  for (const [key, pool] of Object.entries(pools)) {
+    for (const tier of Object.keys(pool)) {
+      if (!TIERS.includes(tier)) {
+        errors.push(`${id} ${key} has unknown tier "${tier}" — never drawn`);
+      }
+    }
+  }
+  for (const tier of TIERS) {
+    const splitIn = SHARED_SPLIT_POOLS.filter((key) => pools[key][tier] !== undefined);
+    if (splitIn.length && splitIn.length < SHARED_SPLIT_POOLS.length) {
+      errors.push(
+        `${id} "${tier}" is split for ${splitIn.join("/")} only — split it in ${SHARED_SPLIT_POOLS.map((k) => `constants/${k}/`).join(" and ")} together`,
+      );
+    }
+    if (splitIn.length && content.dialogue?.[tier] !== undefined) {
+      errors.push(
+        `${id} dialogue[${tier}] is split into ${SHARED_SPLIT_POOLS.join("/")} and never drawn — delete it from constants/dialogue/${id}.js`,
+      );
+    }
+  }
+  const owner = new Map();
+  for (const [key, pool] of Object.entries(pools)) {
+    for (const tier of TIERS) {
+      for (const line of tierLines(pool[tier])) {
+        const other = owner.get(line);
+        if (other && other !== key) {
+          errors.push(`${id} has the same beat in ${other} and ${key} — keep it in one: "${line}"`);
+        }
+        owner.set(line, key);
+      }
+    }
+  }
+}
+
 // A dialogue entry is a beat that pairs its line with the approach label(s)
 // that belong to it — { line, approach }, approach a string or an array of
 // interchangeable labels for that beat (see getRandomDialogueBeat in
@@ -109,6 +167,18 @@ function tierIsFullyPaired(poolData) {
   if (poolData && typeof poolData === "object") {
     const variants = Object.values(poolData);
     return variants.length > 0 && variants.every(tierIsFullyPaired);
+  }
+  return false;
+}
+
+// True when a tier (array or variant map) is non-empty and every entry is a
+// { line } beat. The /meet pool's version of tierIsFullyPaired: its beats
+// carry no approach.
+function tierIsBeats(poolData) {
+  if (Array.isArray(poolData)) return poolData.length > 0 && poolData.every(isBeat);
+  if (poolData && typeof poolData === "object") {
+    const variants = Object.values(poolData);
+    return variants.length > 0 && variants.every(tierIsBeats);
   }
   return false;
 }
@@ -584,9 +654,14 @@ export function validateContent() {
   // pool and all 26 characters below; see validateBondScene.
   const bondSceneLines = new Map();
 
-  for (const key of Object.keys(DIALOGUE)) {
-    if (!ids.has(key)) {
-      errors.push(`dialogue.js has "${key}", which is not a character id`);
+  for (const [file, pools] of [
+    ["dialogue.js", DIALOGUE],
+    ...DIALOGUE_POOL_KEYS.map((key) => [`${key}/index.js`, POOL_DIALOGUE[key] || {}]),
+  ]) {
+    for (const key of Object.keys(pools)) {
+      if (!ids.has(key)) {
+        errors.push(`${file} has "${key}", which is not a character id`);
+      }
     }
   }
 
@@ -611,15 +686,19 @@ export function validateContent() {
       continue;
     }
 
-    if (!content.dialogue) {
+    // A tier split into meet/roam pools no longer lives in `dialogue`.
+    const isSplit = (tier) =>
+      SHARED_SPLIT_POOLS.some((key) => POOL_DIALOGUE[key]?.[id]?.[tier] !== undefined);
+    if (!content.dialogue && !TIERS.every(isSplit)) {
       errors.push(`${id} has no dialogue`);
     } else {
       for (const tier of TIERS) {
-        if (!content.dialogue[tier]) {
+        if (!content.dialogue?.[tier] && !isSplit(tier)) {
           warnings.push(`${id} has no "${tier}" dialogue — falls back to "new"`);
         }
       }
     }
+    validateInteractionPools(id, content, errors);
 
     if (character.pmOnly && !content.daytimeDialogue) {
       errors.push(`${id} is pmOnly but has no daytimeDialogue`);
@@ -628,15 +707,31 @@ export function validateContent() {
     // Every beat must carry its own `approach`: an unpaired line renders
     // APPROACH_LABEL_FALLBACK's generic "Step forward" against a scene it
     // knows nothing about. (The label length cap is checked per beat below.)
-    const unpairedTiers = TIERS.filter(
-      (tier) =>
-        content.dialogue?.[tier] !== undefined &&
-        !tierIsFullyPaired(content.dialogue[tier]),
-    );
-    if (unpairedTiers.length) {
-      errors.push(
-        `${id} has lines with no approach at ${unpairedTiers.join("/")} — nothing left to label them`,
+    // A scene pool (/roam) owes the same; a line-only one (/meet) renders
+    // no approach, so its beats only have to be beats.
+    const scenePools = DIALOGUE_POOL_KEYS.filter((key) => DIALOGUE_POOL_CONFIG[key].scene);
+    const linePools = DIALOGUE_POOL_KEYS.filter((key) => !DIALOGUE_POOL_CONFIG[key].scene);
+    for (const [where, pool] of [
+      ["", content.dialogue],
+      ...scenePools.map((key) => [` ${key}`, POOL_DIALOGUE[key]?.[id]]),
+    ]) {
+      const unpairedTiers = TIERS.filter(
+        (tier) => pool?.[tier] !== undefined && !tierIsFullyPaired(pool[tier]),
       );
+      if (unpairedTiers.length) {
+        errors.push(
+          `${id}${where} has lines with no approach at ${unpairedTiers.join("/")} — nothing left to label them`,
+        );
+      }
+    }
+    for (const key of linePools) {
+      const pool = POOL_DIALOGUE[key]?.[id];
+      const nonBeats = TIERS.filter(
+        (tier) => pool?.[tier] !== undefined && !tierIsBeats(pool[tier]),
+      );
+      if (nonBeats.length) {
+        errors.push(`${id} ${key} has entries that aren't { line, responses } beats at ${nonBeats.join("/")}`);
+      }
     }
 
     if (
@@ -733,6 +828,7 @@ export function validateContent() {
     for (const [poolName, pool] of [
       ["dialogue", content.dialogue],
       ["daytimeDialogue", content.daytimeDialogue],
+      ...DIALOGUE_POOL_KEYS.map((key) => [key, POOL_DIALOGUE[key]?.[id]]),
     ]) {
       if (!pool) continue;
       for (const tier of TIERS) {
@@ -763,20 +859,30 @@ export function validateContent() {
                 );
               }
             }
-            const approachLabels = Array.isArray(entry.approach)
-              ? entry.approach
-              : [entry.approach];
-            if (
-              approachLabels.length === 0 ||
-              approachLabels.some((a) => typeof a !== "string" || !a.trim())
-            ) {
-              errors.push(
-                `${id} ${poolName}[${tier}] beat has no valid approach label: "${entry.line}"`,
-              );
-              continue;
-            }
-            for (const label of approachLabels) {
-              checkLabelLength(`${id} ${poolName}[${tier}] beat approach`, label, errors);
+            // A line-only pool (/meet) shows the line and the responses,
+            // nothing else: an approach or greeting would never be seen.
+            if (DIALOGUE_POOL_CONFIG[poolName]?.scene === false) {
+              for (const key of ["approach", "greeting"]) {
+                if (entry[key] !== undefined) {
+                  errors.push(`${id} ${poolName}[${tier}] beat has a ${key}, which /${poolName} never renders: "${entry.line}"`);
+                }
+              }
+            } else {
+              const approachLabels = Array.isArray(entry.approach)
+                ? entry.approach
+                : [entry.approach];
+              if (
+                approachLabels.length === 0 ||
+                approachLabels.some((a) => typeof a !== "string" || !a.trim())
+              ) {
+                errors.push(
+                  `${id} ${poolName}[${tier}] beat has no valid approach label: "${entry.line}"`,
+                );
+                continue;
+              }
+              for (const label of approachLabels) {
+                checkLabelLength(`${id} ${poolName}[${tier}] beat approach`, label, errors);
+              }
             }
             // A beat's `responses` carries the same button-label cap as its
             // approach, keyed by RESPONSE_TYPES. The beat is the only place
@@ -808,16 +914,20 @@ export function validateContent() {
     // shown — legal, but almost always an oversight, so name it. There is no
     // character-level pool behind the beat any more, so this is the last stop
     // before the archetype default.
-    for (const type of Object.values(RESPONSE_TYPES)) {
-      const gaps = TIERS.filter(
-        (tier) =>
-          content.dialogue?.[tier] !== undefined &&
-          !tierCoversResponse(content.dialogue[tier], type),
-      );
-      if (gaps.length) {
-        warnings.push(
-          `${id} has no "${type}" label at ${gaps.join("/")} — using archetype default`,
+    for (const [where, pool] of [
+      ["", content.dialogue],
+      ...DIALOGUE_POOL_KEYS.map((key) => [` ${key}`, POOL_DIALOGUE[key]?.[id]]),
+    ]) {
+      for (const type of Object.values(RESPONSE_TYPES)) {
+        const gaps = TIERS.filter(
+          (tier) =>
+            pool?.[tier] !== undefined && !tierCoversResponse(pool[tier], type),
         );
+        if (gaps.length) {
+          warnings.push(
+            `${id}${where} has no "${type}" label at ${gaps.join("/")} — using archetype default`,
+          );
+        }
       }
     }
   }

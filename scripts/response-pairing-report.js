@@ -15,7 +15,8 @@
  *   node scripts/response-pairing-report.js --json      # machine-readable, to stdout
  */
 import { DIALOGUE } from "../constants/dialogue.js";
-import { CHARACTERS } from "../constants/characters.js";
+import { CHARACTERS, dialogueTierPool } from "../constants/characters.js";
+import { DIALOGUE_POOL } from "../constants/dialoguePools.js";
 
 const TIERS = ["new", "known", "warm", "spark", "close", "bound"];
 const TYPES = ["kind", "playful", "bold", "neutral"];
@@ -61,6 +62,16 @@ function analyzeTier(value) {
   };
 }
 
+// Every beat /meet or /roam draws at `tier`: the shared tier once, or both
+// halves of a split tier. Jo's variant maps aren't split, so they pass through.
+function drawnTier(id, tier) {
+  const meet = dialogueTierPool(id, DIALOGUE_POOL.MEET, tier);
+  const roam = dialogueTierPool(id, DIALOGUE_POOL.ROAM, tier);
+  if (meet === roam) return roam;
+  if (Array.isArray(meet) && Array.isArray(roam)) return [...meet, ...roam];
+  return roam;
+}
+
 const nameById = Object.fromEntries(CHARACTERS.map((c) => [c.id, c.firstName || c.id]));
 const order = Object.keys(DIALOGUE);
 
@@ -68,7 +79,7 @@ const rows = order.map((id) => {
   const content = DIALOGUE[id];
   const tiers = {};
   for (const tier of TIERS) {
-    tiers[tier] = analyzeTier(content.dialogue?.[tier]);
+    tiers[tier] = analyzeTier(drawnTier(id, tier));
   }
   return { id, name: nameById[id] || id, tiers };
 });
