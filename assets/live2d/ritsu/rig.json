@@ -11,7 +11,7 @@
       "model": "academy/ritsu_academy.model3.json",
       "dialogueVariant": "uniform",
       "articles": {
-        "recorder": { "drawables": ["ArtMesh199"], "covers": "hand_r", "shownOnly": true, "poses": "^m_recorder", "reach": [398, 1156], "offPose": "m_odoroki" }
+        "recorder": { "drawables": ["ArtMesh199"], "covers": "hand_r", "shownOnly": true, "poses": "^m_recorder", "offPose": "m_odoroki" }
       },
       "parts": { "chest": ["ArtMesh159"], "pants": ["ArtMesh173", "ArtMesh174"] },
       "hotspots": {
