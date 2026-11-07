@@ -374,7 +374,7 @@ export const HOLD_LOOK = {
   // is a quick look down: shorter in, held only briefly, and back up to
   // your eyes fast.
   peekIn: 0.25,
-  peekHold: 0.6,
+  peekHold: 0.25,
   peekLift: 0.4,
   glanceChin: 6,
   eyes: 1.6,
@@ -410,14 +410,14 @@ export const HOLD_GAZE = {
   // `tease: false`: none during tease (looking off at the room read wrong there).
   aloof: { to: [0.6, -0.15], away: [1.6, 2.6], first: [2, 3.5], every: [5, 8], settle: 0.9, turn: 4, dip: 0, gap: 1, flip: 0.3, tease: false },
   linger: {
-    to: [0, -0.6], relative: true, away: [1.4, 2.2], first: [1.5, 2.5], every: [3.5, 6], settle: 0.9, turn: 0, dip: 2.5, gap: 1, flip: 0.5,
+    to: [0, -0.6], relative: true, away: [1.4, 2.2], first: [1.5, 2.5], every: [3.5, 6], settle: 0.75, turn: 0, dip: 2.5, gap: 1, flip: 0.5,
     beats: [
       // eyes drift down to your mouth, softening, brows lifting a little
       { soften: 0.05, brow: 0.2 },
       { soften: 0.05, brow: 0.2 },
       // taking you in: a slow sweep of the eyes further down, barely
       // pausing, and slowly back up to yours; no look aside
-      { to: [0, -0.95], soften: 0.03, brow: 0.1, dip: 4.5, away: [0.3, 0.5], settle: 0.9 },
+      { to: [0, -0.95], soften: 0.03, brow: 0.1, dip: 4.5, away: [0.3, 0.5], settle: 0.75 },
     ],
   },
 };

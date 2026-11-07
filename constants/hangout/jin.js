@@ -53,7 +53,7 @@ export default {
       "Tsk. What the hell was that, servant?",
       "Hey. I didn't say you could do that.",
     ],
-    hipsTouch: ["Know your place.", "Hey. Hands where I can see them."],
+    hipsTouch: ["Know your place.", "You've got guts. Don't push it."],
     upset: [
       "Enough. That's an order.",
       "Stop. You won't get anything out of me that way.",

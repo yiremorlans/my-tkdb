@@ -94,7 +94,7 @@ export default {
       "Hey, no poking there. That's off-limits, okay?",
     ],
     hipsTouch: [
-      "Whoa! Okay, hands where I can see them.",
+      "Whoa, whoa! That's a no-touch zone!",
       "That's... no. We're not there.",
     ],
     upset: [

@@ -84,7 +84,7 @@ export default {
       "Mm. Let's pretend that didn't happen, shall we?",
     ],
     hipsTouch: [
-      "Hands where I can see them, please.",
+      "I'll ask once, politely. Remove your hand.",
       "Now, that I won't overlook.",
     ],
     upset: [

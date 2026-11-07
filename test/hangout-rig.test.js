@@ -331,6 +331,14 @@ test("an article's art, spot and order are checked", async () => {
   ]) assert.ok(msg.includes(p), `${p}\n${msg}`);
 });
 
+test("an article's reactsAs must be a spot it covers", async () => {
+  const ok = withArticles({ hat: { part: 'PartHat', covers: ['head', 'cheek'], reactsAs: 'cheek' } });
+  assert.strictEqual(await problems(ok, opts(articleFiles())), '');
+  const bad = withArticles({ hat: { part: 'PartHat', covers: { byTier: { new: 'head', spark: ['head', 'cheek'] } }, reactsAs: 'cheek' } });
+  const msg = await problems(bad, opts(articleFiles()));
+  assert.ok(msg.includes("articles.hat.reactsAs: cheek isn't in covers at new"), msg);
+});
+
 test("with lines, an article's Pat and Off pools must exist", async () => {
   const r = withArticles({ hat: { part: 'PartHat', covers: 'head' } });
   const msg = await problems(r, { ...opts(articleFiles()), lines: { spark: { hatOff: ['late'] } } });

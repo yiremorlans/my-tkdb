@@ -63,7 +63,7 @@ export default {
     ],
     bellyTouch: ["What!? Keep your hands to yourself.", "Tch. SIH."],
     hipsTouch: [
-      "Hands where I can see them!",
+      "Excuse you!? Hands off, BB.",
       "Try that again. See what happens.",
     ],
     upset: ["That's it! Out!", "You're giving me a headache. Stop."],

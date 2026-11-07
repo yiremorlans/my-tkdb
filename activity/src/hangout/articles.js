@@ -48,6 +48,9 @@
 //               headphones and Benkei's tag still give the heartbeat check);
 //               a press that ends as a tap is still the article's
 //   tier        unlock tier, default warm
+//   reactsAs    the covered spot every touch on it borrows the face, pose
+//               and annoyance of, wherever in `covers` it lands (Yuri's
+//               stethoscope hangs into his hips spot but reacts as belly)
 
 import { DIALOGUE_TIERS } from "../../../constants/tiers.js";
 
@@ -83,9 +86,13 @@ export function attachArticles(scene, { startOff = false, onChange, coach } = {}
   );
 
   const covered = (a) => coveredSpots(a.config.covers, hangout.tier);
-  // The covered spot the last hit on `a` landed in (hotspotAt), else its
-  // first: a list's touches borrow that spot's face and pose.
-  const spotOf = (a) => (a.hitSpot && covered(a).includes(a.hitSpot) ? a.hitSpot : covered(a)[0]);
+  // Its `reactsAs` spot, else the covered spot the last hit on `a` landed
+  // in (hotspotAt), else its first: a list's touches borrow that spot's
+  // face and pose.
+  const spotOf = (a) => {
+    if (a.config.reactsAs && covered(a).includes(a.config.reactsAs)) return a.config.reactsAs;
+    return a.hitSpot && covered(a).includes(a.hitSpot) ? a.hitSpot : covered(a)[0];
+  };
   const present = (a) => !a.off && (!a.config.shownOnly || renderer.drawablesShown(a.art));
   const unlocked = (a) => atLeast(hangout.tier, a.config.tier ?? UNLOCK_TIER);
   const ready = (a) => !a.config.requires || articles.get(a.config.requires)?.off !== false;

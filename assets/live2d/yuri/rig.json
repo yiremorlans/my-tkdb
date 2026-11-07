@@ -65,6 +65,14 @@
         "chest": { "part": "chest", "rect": [-0.102, 0.013, 1.102, 0.661] },
         "belly": { "part": "chest", "rect": [0.141, 0.661, 0.859, 1.044] },
         "hips": { "part": "pants", "rect": [0.081, -0.03, 0.919, 0.2] }
+      },
+      "articles": {
+        "stethoscope": {
+          "drawables": ["ArtMesh278"],
+          "covers": ["belly", "hips"],
+          "reactsAs": "belly",
+          "blocks": false
+        }
       }
     }
   },

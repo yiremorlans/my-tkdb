@@ -17,7 +17,7 @@ export default {
       "Hey! Stay back. I don't even know you.",
       "...What're you doing? Stop it.",
     ],
-    cheekPoke: ["Quit it! What's your deal?", "Tch... Why'd you poke me?"],
+    cheekPoke: ["Quit it! What's your deal?", "Huh? Why'd you poke me?"],
     lipsTouch: [
       "H-Hey! Not my lips! Quit it!",
       "Hey! ...Don't. Back up a little.",
@@ -30,7 +30,7 @@ export default {
     chestTouch: ["Back off! I don't know you!", "Hey! Too close!"],
     bellyTouch: [
       "Hey! What're you poking me there for?!",
-      "Tch... Keep your hands where I can see 'em.",
+      "Get your hand off. Now.",
     ],
     hipsTouch: ["What the hell?!", "Don't! Stay back!"],
     upset: ["Stop it! Go away!", "Quit it already! I'm gonna get mad!"],
@@ -50,10 +50,10 @@ export default {
     chestTouch: ["Hey. Too close.", "Back off. I don't know you that well yet."],
     bellyTouch: [
       "Hey! Quit it. That's my stomach.",
-      "Tch. Don't poke me there.",
+      "Stop poking me.",
     ],
     hipsTouch: ["Hey! Don't do that!", "No. Quit it."],
-    upset: ["Stop! You're bugging me!", "Tch... I said quit it!"],
+    upset: ["Stop! You're bugging me!", "I said quit it! Back off!"],
   },
   warm: {
     headPat: [
@@ -200,7 +200,7 @@ export default {
     ],
     teaseLetGo: [
       "Hey... Why'd you stop? I wasn't done. ...Get back here.",
-      "Tch... That's mean. You did that on purpose.",
+      "That's mean... You did that on purpose.",
     ],
   },
 };

@@ -125,7 +125,7 @@ export default {
     ],
     chestTouch: [
       "Back up a little. I can't see my screen.",
-      "Hey. Hands where I can see them.",
+      "Hey. You lose a bet or something?",
     ],
     bellyTouch: [
       "Hey! ...Okay, that caught me off guard. Don't get used to it.",

@@ -13,6 +13,13 @@
 // bound on sensitive spots (lips), though high affinity has desensitized
 // him to MC's touch (only hers), so lower-stakes holds can stay composed;
 // bound treats intimacy as shared history.
+//
+// Removable article (docs/hangout-activity.md §4.2): the stethoscope on his
+// belt, house outfit only. stethoscopePat is a tap on it (every tier); from
+// warm (user, 2026-11-07) a double-tap takes it (stethoscopeOff). Not
+// blocking: belly and hips around it stay his. It hangs into the hips spot
+// but always reacts as belly (rig reactsAs). Warm is caught off guard and
+// guards his instrument; spark lends it; close hints; bound is routine.
 
 export default {
   new: {
@@ -43,6 +50,10 @@ export default {
     bellyTouch: [
       "Wh-Who gave you permission to palpate me!?",
       "Abdominal exams are my job! Not yours!",
+    ],
+    stethoscopePat: [
+      "D-Don't touch that! It is a precision instrument!",
+      "Hands off! A stethoscope is not a toy, worm!",
     ],
     hipsTouch: [
       "Wh-Wh-What!? Unhand me!",
@@ -82,6 +93,10 @@ export default {
       "What diagnosis do you expect to reach like that!?",
       "Wh-What!? Prodding me won't get you seen any faster!",
     ],
+    stethoscopePat: [
+      "M-Mind the tubing! Do you have any idea what that costs our budget!?",
+      "If you wish to be auscultated, make an appointment like everyone else!",
+    ],
     hipsTouch: [
       "Absolutely not!",
       "Wh-Where do you think you're putting that hand!?",
@@ -120,6 +135,14 @@ export default {
       "Hah! Th-That was an involuntary reflex! It means nothing!",
       "D-Don't do that without warning! I can't concentrate!",
     ],
+    stethoscopePat: [
+      "Fascinated by my instruments? Hmph. Your taste is improving.",
+      "If you're that curious, I could let you listen. ...To Jiro. Not me.",
+    ],
+    stethoscopeOff: [
+      "Wh-What are you doing with my stethoscope!? Give that back! ...At least don't drop it!",
+      "Th-That's mine! A physician without his stethoscope is...! Hmph. Be careful with it.",
+    ],
     hipsTouch: ["Unhand me this instant!", "Wh-Where is that hand going!?"],
     upset: [
       "Enough! I have a surgery to prepare for!",
@@ -152,12 +175,20 @@ export default {
       "D-Don't listen to that! It's a minor arrhythmia!",
     ],
     bellyTouch: [
-      "Wh-Why is your hand still there!? I-I'm not complaining, I'm asking!",
+      "Wh-Why would you poke me there!? I-I can't concentrate like this!",
       "My stomach is perfectly fine! Stop investigating it!",
+    ],
+    stethoscopePat: [
+      "Wh-What do you want with that!? ...N-No. Don't tell me.",
+      "Again with the stethoscope? I-If you want to borrow it, ask!",
+    ],
+    stethoscopeOff: [
+      "Y-You're taking it? Then hold it properly. Earpieces forward, worm.",
+      "Fine. Borrow it. Return it before Jiro notices, or I'll never hear the end of it.",
     ],
     hipsTouch: [
       "Wh-Wh-What!? Have you no sense of propriety!?",
-      "N-Not here! Have some decorum!",
+      "Th-That is... You can't just...! That is a breach of medical ethics!",
     ],
     upset: [
       "Enough! I can't think straight!",
@@ -205,6 +236,14 @@ export default {
       "Palpation, is it? Hmph. Your technique needs work. ...K-Keep practicing.",
       "Ah! ...I am not ticklish. That was a reflex!",
     ],
+    stethoscopePat: [
+      "Interested in medicine now? Hmph. I'll make an assistant out of you yet.",
+      "...I suppose you may borrow it. You and no one else.",
+    ],
+    stethoscopeOff: [
+      "Off my belt already? You're far too comfortable around me. ...I-I didn't say stop.",
+      "Go on, then. Listen to whatever you like. ...Within reason!",
+    ],
     hipsTouch: [
       "Wh-Wha... Not in the lab! ...We'll continue this in private. Th-That is an order!",
       "Bold. Very bold. ...I-I'm not objecting! I'm making a note of it!",
@@ -227,6 +266,10 @@ export default {
     ],
   },
   bound: {
+    stethoscopeOff: [
+      "There. Now you're the doctor. ...Be gentle with your patient.",
+      "Go on, listen. That rhythm is... yours. Th-That is a clinical observation! ...Mostly.",
+    ],
     heartbeatHold: [
       "You've charted that pulse often enough to know it by heart. ...Don't look so pleased.",
       "It climbs exactly as it did before. Consistent results. I-I am a very consistent man!",

@@ -198,7 +198,7 @@ async function outfitProblems(rig, name, { readJson, mocIds, lines }) {
 // a touch spot it covers, and any article it waits on; with `lines`, its
 // pools exist: `<article>Pat` from new (unless `pool: false`) and
 // `<article>Off` from the unlock tier.
-const ARTICLE_KEYS = new Set(["part", "drawables", "params", "rest", "covers", "blocks", "shownOnly", "poses", "requires", "pool", "hit", "hotspots", "tier", "holdThrough", "offPose"]);
+const ARTICLE_KEYS = new Set(["part", "drawables", "params", "rest", "covers", "blocks", "shownOnly", "poses", "requires", "pool", "hit", "hotspots", "tier", "holdThrough", "offPose", "reactsAs"]);
 
 function articleProblems(articles, { hotspots, parts, ids, lines }) {
   if (articles == null) return [];
@@ -249,6 +249,11 @@ function articleProblems(articles, { hotspots, parts, ids, lines }) {
     if (a.requires != null && (!articles[a.requires] || a.requires === name)) problems.push(`${at}.requires: no article ${a.requires}`);
     else if (a.requires != null && names.indexOf(a.requires) > names.indexOf(name)) problems.push(`${at}.requires: list ${a.requires} before ${name}`);
     if (a.tier != null && !DIALOGUE_TIERS.includes(a.tier)) problems.push(`${at}.tier: unknown tier ${a.tier}`);
+    if (a.reactsAs != null && a.covers != null) {
+      for (const [tier, spots] of tiers(a.covers)) {
+        if (![spots].flat().includes(a.reactsAs)) problems.push(`${at}.reactsAs: ${a.reactsAs} isn't in covers${tier ? ` at ${tier}` : ""}`);
+      }
+    }
     for (const [spot, h] of Object.entries(a.hotspots ?? {})) {
       if (!parts[h?.part]) problems.push(`${at}.hotspots.${spot}: unknown part ${h?.part}`);
       const rect = h?.rect;

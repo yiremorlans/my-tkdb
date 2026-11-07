@@ -658,6 +658,10 @@ Leo's headphones and Benkei's tag let the heartbeat check through
 (`holdThrough`, user 2026-11-05): a hold on them is the chest hold, and a
 press that ends as a tap is still the article's. The lollipop in Elias's
 mouth doesn't: a press on his lips is a lollipop tap until it's off.
+Yuri's stethoscope (house outfit, warm, user 2026-11-07) is drawable
+`ArtMesh278`, non-blocking over belly and hips: it hangs mostly into the
+hips spot, so `reactsAs: "belly"` makes every touch on it borrow belly's
+face, pose and annoyance instead of the hips reaction.
 
 Hotspot reactions are cosmetic, unlimited and local, with no server call.
 Every reaction plays the line for that trigger in the dialogue box.

@@ -48,7 +48,7 @@ export default {
       "Gahaha! Oi, that tickles! Bit forward for a first tour, hey?",
       "Whoa, hang on! That's me, mate, not the critters.",
     ],
-    hipsTouch: ["Oi! Hands where I can see 'em.", "That's a no, mate."],
+    hipsTouch: ["Oi! Watch the hands, hey?", "That's a no, mate."],
     upset: [
       "Argh! Give it a rest, hey?",
       "Okay, okay! I get it! That's enough!",
