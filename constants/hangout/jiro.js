@@ -13,6 +13,11 @@
 // spark+. He doesn't need them to see (user, 2026-11-05), so no line implies
 // he needs them, and losing them doesn't upset him.
 //
+// Mask (removable, §4.2): every outfit, worn pulled down to his chin; it
+// borrows his cheekPoke face and pose. Taking it off shows the mole by his
+// mouth (canon appearance). Calm like the glasses, never upset. maskPat
+// every tier, maskOff warm+ (user, 2026-11-07). Drafts.
+//
 // Holds (spark+): he reads the heartbeat hold as MC listening to his heart (his
 // job reversed); Yuri's care is the canon he leans on. His amnesia covers
 // one event only: he remembers everything now, so no "poor memory" lines.
@@ -57,6 +62,10 @@ export default {
       "Please don't touch the lenses. They smudge.",
       "...Is something wrong with my glasses?",
     ],
+    maskPat: [
+      "That's my mask. It doesn't need adjusting.",
+      "...Do you want me to put it on? You don't look contagious.",
+    ],
   },
   known: {
     headPat: [
@@ -95,6 +104,10 @@ export default {
     glassesPat: [
       "Fingerprints. I'll have to clean them again.",
       "They're on straight. You don't need to adjust them.",
+    ],
+    maskPat: [
+      "Your fingers were on it. I'll have to change it now.",
+      "It's down because no one here is coughing. You can stop checking.",
     ],
   },
   warm: {
@@ -138,6 +151,14 @@ export default {
     glassesOff: [
       "Oh. You took them. ...I can see fine without them, you know.",
       "...Was that an experiment? What were you testing?",
+    ],
+    maskPat: [
+      "You keep touching the mask. Do you want to see what's under it?",
+      "It's just a mask. ...You're looking at it like it's interesting.",
+    ],
+    maskOff: [
+      "Oh. You took it. ...Yes, that's a mole. It's benign.",
+      "It's been near my mouth. Please don't put it near yours.",
     ],
   },
   spark: {
@@ -184,6 +205,14 @@ export default {
     glassesOff: [
       "Oh. ...Be careful with those. Yuri gave them to me.",
       "...Okay. Now what were you planning to do?",
+    ],
+    maskPat: [
+      "You touch it every time. Is it the mask, or what's under it?",
+      "If you're checking whether I'm smiling, it doesn't cover that part.",
+    ],
+    maskOff: [
+      "...You wanted a better look? There's not much else to see. Just the mole.",
+      "Oh. ...I'm supposed to wear that when I examine someone this close.",
     ],
     heartbeatHold: [
       "Usually I'm the one checking. ...What did you hear?",
@@ -255,6 +284,14 @@ export default {
       "Put them somewhere safe.",
       "...You like my face better without them? Okay.",
     ],
+    maskPat: [
+      "Go on. I've stopped pretending I'd stop you.",
+      "It only gets in the way when you're this close. You know that.",
+    ],
+    maskOff: [
+      "Yuri would call that a breach of protocol. ...I won't tell him.",
+      "...Now I can feel how warm your hand is. I didn't expect to like that.",
+    ],
   },
   bound: {
     glassesPat: [
@@ -264,6 +301,14 @@ export default {
     glassesOff: [
       "You keep taking them. Yuri's going to start asking questions.",
       "Oh. ...You can keep them a while. I don't need them.",
+    ],
+    maskPat: [
+      "Still on? I thought you'd have it off by now.",
+      "You already know how it comes off. You've done it enough times.",
+    ],
+    maskOff: [
+      "There. Nothing in the way now.",
+      "I kept it on today so you'd have something to take off.",
     ],
     heartbeatHold: [
       "It's faster than last time. I've been keeping records.",

@@ -608,6 +608,7 @@ toggles (`?hide=PartX`) show what a part covers.
 | Haru | sling bag | drawables TBD, every outfit | belly | A **second** double-tap, only once Peekaboo is out. The empty sling has no pool: a tap on it is a plain `bellyTouch` on Haru. Sling off: same `bellyTouch`. `bellyTouch` becomes a new pool about Haru's own belly. Check what's drawn under the sling. Unlocks at **warm**. |
 | Tohma | monocle | `PartMonocle` (academy) | eye/cheek area (spot TBD) | Unlocks at **warm**. Lines and covered spot TBD. |
 | Jiro | glasses | `PartMegane` (academy, casual, casual_2, house) | eye/cheek area (spot TBD) | Unlocks at **warm**. Lines and covered spot TBD. |
+| Jiro | mask | `PartMask` (academy, casual, casual_2, house; also a `ParamMaskoff`, 1 = on) | cheek (worn pulled down to his chin) | Off shows his chin and the canon mole by his mouth. Calm like the glasses, not upset. `maskPat` new through bound, `maskOff` warm through bound. Unlocks at **warm** (user, 2026-11-07). |
 | Ren | phone | drawables TBD (no named part; check which outfits hold it) | hand | **Taken away** by the player, not set down by him. Encounter labels never touch his phone/game (Ren responses rule), so the lines have to make it land, tier by tier. Unlocks at **warm**. Lines TBD. |
 | Shohei | bandana | `PartBandana` (academy, casual; also a `ParamBandana`) | head | His current headPat lines already guard it ("Watch the bandana."; close: "You can mess up the bandana. Just you."), so those move to `bandanaPat`. Check the hair drawn under it in the preview. Unlocks at **warm**. Lines TBD. |
 | Benkei | name tag | work outfit only; no named part (`Part14` is the work-only part, unconfirmed), else drawables TBD | chest | Not on the academy outfit. Unlocks at **warm**. Lines TBD. |
@@ -646,7 +647,7 @@ Peekaboo's shadow meshes (belly; once he's out the belly spot moves onto
 the chest part), then the sling (`Part24a`, house `Part4`, plus its shadow
 meshes; no own touch area, it crosses his chest); Tohma `PartMonocle` and
 Jiro `PartMegane` borrow the cheek's face and pose without taking the cheek
-(`blocks: false`); Ren's phone (academy/roomwear `ArtMesh214`, house
+(`blocks: false`), and so does Jiro's `PartMask` (on his chin); Ren's phone (academy/roomwear `ArtMesh214`, house
 `ArtMesh11`) covers `hand_l` and is only out in `m_phone*`; Shohei
 `PartBandana` (head); Benkei's tag is drawables `ID` + `ArtMesh98` (work
 only; `Part14` is the apron ties); Elias's lollipop is `ArtMesh14` (hand),
