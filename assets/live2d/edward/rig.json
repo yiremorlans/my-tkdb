@@ -87,6 +87,7 @@
       "mysterious_blush": ["e_mysterious_00", "e_sekimen_00"]
     }
   },
+  "restMood": { "byTier": { "new": "mysterious", "warm": "default" } },
   "reactions": {
     "upset": {
       "byTier": {
