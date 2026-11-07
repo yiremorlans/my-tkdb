@@ -1049,7 +1049,10 @@ export class Live2DRig {
     let soften = 0;
     // Tease is the only hold with bliss; a gaze with `tease: false` sits it out.
     const teasing = (this.hold.bliss ?? 0) > 0.01 && HOLD_GAZE[this.rig.holdGaze]?.tease === false;
-    const shy = this.gazeGlance(eyes, busy || teasing || this.glancesOff || (this.crest ?? 0) > 0.01);
+    // Nor while the widen (or a gasp) is still playing: its head draw-back
+    // eases in late (WIDEN.lag), and a glance down over it moved the eyes
+    // and head out of step (Mio).
+    const shy = this.gazeGlance(eyes, busy || teasing || Boolean(this.gaspState) || this.glancesOff || (this.crest ?? 0) > 0.01);
     if (shy) {
       const k = shy.k;
       const G = shy.gaze;

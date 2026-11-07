@@ -144,7 +144,7 @@
     "hipsTouch": { "byTier": { "new": { "mood": "startled_shout", "duration": 2.8, "fist": true, "twitch": 1.25 }, "known": { "mood": "startled_shout", "duration": 2.8, "fist": true, "twitch": 0.88 }, "warm": { "mood": "startled_shout", "duration": 3.2, "twitch": 0.63 }, "spark": { "mood": "shout_blush", "duration": 3.4 }, "close": { "mood": "arrogant_blush", "duration": 3.4 }, "bound": { "mood": "arrogant_blush", "duration": 3.8 } } },
     "handHold": { "byTier": { "spark": { "mood": "pout_flustered", "duration": 2.6 }, "close": { "mood": "soft_flustered", "duration": 2.6 }, "bound": { "mood": "soft_flustered", "duration": 3 } } },
     "heartbeatHold": { "byTier": { "spark": { "mood": "earnest_blush", "duration": 2.8 }, "close": { "mood": "earnest_blush", "duration": 2.8 }, "bound": { "mood": "arrogant_blush", "duration": 3.2 } } },
-    "lipHold": { "byTier": { "spark": { "mood": "earnest_blush", "duration": 3.6 }, "close": { "mood": "arrogant_blush", "duration": 3.6 }, "bound": { "mood": "earnest_blush", "duration": 4 } } },
+    "lipHold": { "byTier": { "spark": { "mood": "soft_flustered", "duration": 3.6 }, "bound": { "mood": "soft_flustered", "duration": 4 } } },
     "teaseLetGo": { "byTier": { "bound": { "mood": "arrogant_blush", "duration": 4.4 } } },
     "answerLove": { "byTier": { "new": { "mood": "arrogant", "duration": 3.2 } } },
     "answerLike": { "byTier": { "new": { "mood": "arrogant_hmph", "duration": 3 } } },
