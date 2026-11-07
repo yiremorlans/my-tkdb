@@ -8,14 +8,28 @@
 // trailing off and asking. Upset is the one place he doesn't soften: no
 // laughing it off through warm. From spark it turns flustered instead (the
 // rig's upset face does too). His stigma reads people on contact and their
-// belongings, but touch lines never have him reading the player; the
-// new-tier gloves carry his wariness; no glove lines past new. He doesn't name his feelings; the detail implies them.
+// belongings, but touch lines never have him reading the player. Before
+// spark he won't hold hands or allow bare skin (spark is the first time,
+// matching his Close Friend bond scene); handTap never talks about the
+// gloves, and glovesPat mixes glove lines with hand ones. From spark, bare
+// skin costs him (canon: handling things bare drains him): handTap is dizzy
+// and drained and he'd rather hold hands gloved; it eases by bound but never
+// turns casual. handHold lines fit a gloved or bare hold (holdThrough), so
+// they never mention the cost. Both outfits: his gloves are a removable
+// article (docs/hangout-activity.md §4.2), a tap on them is glovesPat and from spark
+// (user, 2026-11-07: his Close Friend bond scene is the first bare-hand
+// contact) a double-tap takes both off (glovesOff), and then handTap is his
+// bare hand. He doesn't name his feelings; the detail implies them.
 // Guarded spots (lips, chest, hips) stay polite rebuffs until spark.
 // Holds (spark+) are flustered, never upset (touch-averse rule); the
 // one-"I'm sorry"-per-tier cap counts the hold pools too.
 
 export default {
   new: {
+    glovesPat: [
+      "Oh! Please, mind the gloves. They're there for a reason.",
+      "Ah... Did you need my hand for something?",
+    ],
     headPat: [
       "Oh! Is there something in my hair?",
       "May I ask what that was for?",
@@ -33,7 +47,7 @@ export default {
       "Oh! That tickles.",
     ],
     handTap: [
-      "The gloves stay on. It's better that way.",
+      "Oh! Please, not my hands.",
       "Oh, please be careful. I'd hate to... Never mind. I'm sorry.",
     ],
     chestTouch: [
@@ -51,6 +65,10 @@ export default {
     ],
   },
   known: {
+    glovesPat: [
+      "The gloves? Just a habit of mine.",
+      "I'd rather keep my hands to myself. It's nothing you did.",
+    ],
     headPat: [
       "Is my hair sticking up again?",
       "Oh... That's a little embarrassing.",
@@ -89,6 +107,10 @@ export default {
     ],
   },
   warm: {
+    glovesPat: [
+      "It's all right. With the gloves on, I don't mind.",
+      "Oh... Hello to you too.",
+    ],
     headPat: [
       "Mm... I suppose I don't mind.",
       "That's nice, actually. I'm sorry, is that strange?",
@@ -100,7 +122,7 @@ export default {
       "Ha ha... That tickles. Gently, please.",
     ],
     handTap: [
-      "Your hands are cold. Shall I make some tea?",
+      "Oh... That's all right. You only surprised me a little.",
       "Is something the matter? You can tell me.",
     ],
     chestTouch: [
@@ -121,6 +143,14 @@ export default {
     ],
   },
   spark: {
+    glovesPat: [
+      "...Were you hoping I'd take these off?",
+      "If you want them off, I won't stop you.",
+    ],
+    glovesOff: [
+      "Oh...! My gloves. I... No. It's all right. Leave them off.",
+      "Oh... They're yours to keep for now. Please don't lose them.",
+    ],
     headPat: [
       "I don't mind at all. Please, don't stop on my account.",
       "...That's lovely. I could stay like this for a long while.",
@@ -138,8 +168,8 @@ export default {
       "Please, I can't think when you do that.",
     ],
     handTap: [
-      "Your hand's warmer than I expected.",
-      "You can hold my hand, if you'd like.",
+      "Ah... Your hand. ...One moment. The room's tilting a little.",
+      "Ah... This is easier with my gloves on. ...I'll get used to it.",
     ],
     chestTouch: [
       "Could you stay like that, just a moment?",
@@ -166,11 +196,19 @@ export default {
       "Um... Please, let me find my words first.",
     ],
     handHold: [
-      "...I'm not letting go first. Just so you know.",
-      "Oh... Already? No, that's all right. Of course.",
+      "...Oh. You let go. I'd only just found the nerve.",
+      "That was... Thank you. For being patient with me.",
     ],
   },
   close: {
+    glovesPat: [
+      "I still need these, you know. ...But you can take them off. I'll manage.",
+      "They do help. ...Still, I'd rather feel your hand. I'll be all right.",
+    ],
+    glovesOff: [
+      "You make that look so easy. ...I suppose it is, with you.",
+      "Oh... All right. Go slowly with me, please.",
+    ],
     headPat: [
       "Again, please. Just a little longer.",
       "Mm... I could get used to this.",
@@ -188,8 +226,8 @@ export default {
       "Mm... You can stay there. I'll hold still.",
     ],
     handTap: [
-      "There you are. I was hoping you'd do that.",
-      "Your hand's cold. Here, let me keep it warm a while.",
+      "With a glove on, I'd hold it for hours. Like this, only a moment.",
+      "...There. That one didn't take as much out of me.",
     ],
     chestTouch: [
       "Mm... This is nice. Just like this.",
@@ -221,6 +259,14 @@ export default {
     ],
   },
   bound: {
+    glovesPat: [
+      "Ah... Is that a hint? I can take a hint, you know.",
+      "I still put them on every morning. Then you come along.",
+    ],
+    glovesOff: [
+      "You do that so neatly now. ...I've stopped bracing for it.",
+      "Mm. Hold on to them for me?",
+    ],
     heartbeatHold: [
       "It still does that. Even now, after everything.",
       "You know that sound better than anyone by now.",
@@ -228,6 +274,10 @@ export default {
     lipHold: [
       "Only your finger? You've gone shy. That's supposed to be my part.",
       "Please don't stop there. ...You know I mean it.",
+    ],
+    handTap: [
+      "I've gotten better at this. ...Gloves for the long walks, though.",
+      "Mm... Only a little dizzy now. You're easy to hold onto.",
     ],
     handHold: [
       "Mm... I'd have held yours first, if you'd waited.",

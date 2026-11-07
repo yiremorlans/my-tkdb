@@ -11,6 +11,9 @@
     "academy": {
       "model": "academy/subaru_academy.model3.json",
       "dialogueVariant": "uniform",
+      "articles": {
+        "gloves": { "drawables": ["ArtMesh214", "ArtMesh218", "ArtMesh222", "ArtMesh226", "ArtMesh228", "ArtMesh232", "ArtMesh252", "ArtMesh254", "ArtMesh258", "ArtMesh262", "ArtMesh264", "ArtMesh268", "ArtMesh270"], "params": { "ParamGlove": 1 }, "covers": ["hand_r", "hand_l"], "tier": "spark", "holdThrough": true }
+      },
       "parts": { "chest": ["ArtMesh183", "ArtMesh172"], "pants": ["ArtMesh241", "ArtMesh242"] },
       "hotspots": {
         "chest": { "part": "chest", "rect": [0.111, 0.02, 0.889, 0.476] },
@@ -21,6 +24,9 @@
     "casual": {
       "model": "casual/subaru_casual.model3.json",
       "dialogueVariant": "casual",
+      "articles": {
+        "gloves": { "drawables": ["ArtMesh503", "ArtMesh505", "ArtMesh507", "ArtMesh509", "ArtMesh510", "ArtMesh512", "ArtMesh513", "ArtMesh514", "ArtMesh516", "ArtMesh518", "ArtMesh519", "ArtMesh521", "ArtMesh522"], "params": { "ParamGloveROff": 0, "ParamGloveLOff": 0 }, "covers": ["hand_r", "hand_l"], "tier": "spark", "holdThrough": true }
+      },
       "parts": {
         "chest": ["ArtMesh4"],
         "pants": ["ArtMesh247", "ArtMesh248"],
@@ -40,8 +46,8 @@
     "ear_r": ["ArtMesh158", "ArtMesh153", "ArtMesh154", "ArtMesh155", "ArtMesh156"],
     "ear_l": ["ArtMesh157", "ArtMesh159"],
     "ear_skin": ["ArtMesh158", "ArtMesh156", "ArtMesh157", "ArtMesh159"],
-    "hand_r": ["ArtMesh214", "ArtMesh218", "ArtMesh222", "ArtMesh226", "ArtMesh228", "ArtMesh232"],
-    "hand_l": ["ArtMesh252", "ArtMesh270", "ArtMesh268", "ArtMesh264", "ArtMesh262", "ArtMesh258", "ArtMesh254"]
+    "hand_r": ["ArtMesh214", "ArtMesh215", "ArtMesh218", "ArtMesh219", "ArtMesh222", "ArtMesh223", "ArtMesh226", "ArtMesh227", "ArtMesh228", "ArtMesh229", "ArtMesh232", "ArtMesh233"],
+    "hand_l": ["ArtMesh252", "ArtMesh253", "ArtMesh254", "ArtMesh255", "ArtMesh258", "ArtMesh259", "ArtMesh262", "ArtMesh263", "ArtMesh264", "ArtMesh265", "ArtMesh268", "ArtMesh269", "ArtMesh270", "ArtMesh271"]
   },
   "hotspots": {
     "lips": { "part": "mouth", "rect": [-0.25, -0.5, 1.25, 1.5] },
@@ -86,7 +92,10 @@
       "distressed": ["e_kanashimi_00", "e_ase_00"],
       "soft_smile_blush": ["e_yandere_00", "e_sekimen_00"],
       "soft_mouth": ["e_tsujo_soft_00"],
-      "gentle_smile": ["e_tsujo_smile_00"]
+      "gentle_smile": ["e_tsujo_smile_00"],
+      "drained": ["e_nemui_00", "e_ase_00"],
+      "drained_blush": ["e_nemui_00", "e_ase_00", "e_sekimen_00"],
+      "drowsy_blush": ["e_nemui_00", "e_sekimen_00"]
     }
   },
   "restMood": { "byTier": { "new": "default", "warm": "soft_mouth" } },
@@ -138,6 +147,16 @@
       }
     },
     "handTap": {
+      "byTier": {
+        "new": { "mood": "uneasy", "duration": 2 },
+        "known": { "mood": "uneasy", "duration": 2 },
+        "warm": { "mood": "smile_blush", "duration": 2.4 },
+        "spark": { "mood": "drained_blush", "duration": 2.6 },
+        "close": { "mood": "drained_blush", "duration": 2.6 },
+        "bound": { "mood": "drowsy_blush", "duration": 3 }
+      }
+    },
+    "glovesPat": {
       "byTier": {
         "new": { "mood": "uneasy", "duration": 2 },
         "known": { "mood": "uneasy", "duration": 2 },
@@ -208,7 +227,7 @@
     "cheekPoke": "m_gesture",
     "lipsTouch": { "byTier": { "new": "m_kuchimoto", "known": "m_odoroki", "warm": "m_kuchimoto", "spark": "m_osaeru", "close": "m_gesture" } },
     "earTouch": { "byTier": { "new": "m_kuchimoto", "close": "m_hidarikoshi" } },
-    "handTap": "m_gesture",
+    "handTap": { "byTier": { "new": "m_gesture", "spark": "m_osaeru", "bound": "m_gesture" } }, "glovesPat": "m_gesture",
     "chestTouch": { "byTier": { "new": "m_odoroki", "spark": "m_kuchimoto", "close": "m_gesture" } },
     "bellyTouch": { "byTier": { "new": "m_odoroki", "close": "m_gesture" } },
     "hipsTouch": { "byTier": { "new": "m_tekumi", "spark": "m_kuchimoto", "close": "m_hidarikoshi" } },
