@@ -223,7 +223,7 @@ export class Hangout {
    * preview). Without
    * it every article stays on, so a spot one covers draws that article's
    * `<article>Pat` lines (Shion's head pats land on his hat), keeping the
-   * face and pose of the spot. Articles that are only out in some poses
+   * face and pose of the spot unless the rig sets a `<article>Pat` reaction. Articles that are only out in some poses
    * (`shownOnly`) leave the spot alone. articles.js passes `worn: false`
    * and decides itself.
    */
@@ -233,7 +233,10 @@ export class Hangout {
     if (!worn) return info;
     for (const [name, a] of Object.entries(this.rig.articles ?? {})) {
       if (a.shownOnly || a.blocks === false || !coveredSpots(a.covers, this.tier).includes(spot)) continue;
-      if (a.pool !== false && this.pool(`${name}Pat`)) info.line = `${name}Pat`;
+      if (a.pool !== false && this.pool(`${name}Pat`)) {
+        info.line = `${name}Pat`;
+        if (this.rig.reactions?.[info.line]) info.reaction = info.line;
+      }
       break;
     }
     return info;

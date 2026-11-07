@@ -572,7 +572,7 @@ Some characters wear or carry an article the player can take off with a
 second tap on it within ~0.35s removes it instead and adds **no
 annoyance**. Single taps everywhere stay instant (no waiting to tell a tap
 from a hold). Removal is **warm**'s new interaction (user, 2026-11-05):
-every article unlocks at **warm** (except Mio's apron, spark) and stays removable at every tier after.
+every article unlocks at **warm** (except Mio's apron and Subaru's gloves, spark) and stays removable at every tier after.
 Its pools (`<article>Pat`, `<article>Off`) vary by tier like every touch
 pool (warm, spark, close, bound). New gestures beyond the head and cheek
 strokes wait. Below the article's unlock tier a double-tap is just two
@@ -617,6 +617,7 @@ toggles (`?hide=PartX`) show what a part covers.
 | Ritsu | voice recorder | `ArtMesh199` (academy; `ParamPhone` switches it, only in `m_recorder*`) | hand_r | Canon: carried in his left blazer pocket for evidence ("Start of recording." / "End of recording." chibi lines). Out only in `m_recorder`, which plays on his new/known upset and, from 2026-11-05, his warm and spark `bellyTouch` (in place of `m_odoroki`, which is the `offPose`). From close it stays pocketed (he no longer records her), so `recorderPat` / `recorderOff` are warm and spark only. Unlocks at **warm**. |
 | Kaito | phone | `ArtMesh115` (academy; `ParamPHONE`, only in `m_phone*`) | hand_l | Out only in `m_phone`, played by his `handTap` new through warm and his warm `cheekPoke` (2026-11-05; `offPose` `m_gesture`). From spark his hand lines are about holding hands, so the phone stays away. `phonePat` new through warm (TikTok, WickHive); `phoneOff` warm only. Unlocks at **warm**. |
 | Mio | apron | `ArtMesh8`, `6`, `207`–`209`, `211` (work only; also held off by `ParamParamApronOff: 0`, which is inverted: 1 is the apron on) | chest, belly | Unties to the white tank top. While it's on, a chest or belly tap is `apronPat` with that spot's face and pose (`covers` takes a list; user, 2026-11-06). `ArtMesh8` was the work outfit's chest/belly mesh, so removal swaps both spots onto the tank (`ArtMesh7`, part `tank`). Spark is surprised he let it happen; close hints; bound is routine. `apronPat` warm through bound, `apronOff` spark through bound. Unlocks at **spark** (user, 2026-11-05), the one article that doesn't unlock at warm. |
+| Subaru | gloves (pair) | academy: glove drawables `ArtMesh214`–`232` (right) and `252`–`270` (left), bare hand drawn one id above each (`215`…), `ParamGlove` held at `1`; casual: `ArtMesh503`–`522` plus `ParamGloveROff` / `ParamGloveLOff` held at `0` (inverted there: `1` is gloved) | hand_r, hand_l | Both outfits (user, 2026-11-07); both come off together. The academy hand parts list glove and skin meshes so the spots still hit once the gloves are hidden. `holdThrough`, so a hand hold on a glove is still the hand hold. Unlocks at **spark** (user, 2026-11-07): his Close Friend bond scene is the first bare-hand contact. `glovesPat` new through bound, with its own `glovesPat` reaction (the calm faces); bare `handTap` from spark is drained (`drained_blush`, `m_osaeru`), easing to `drowsy_blush` at bound, since bare skin costs him; hold faces unchanged (hold face rules). `glovesOff` spark through bound. |
 
 **Build (2026-11-05).** `activity/src/hangout/articles.js`
 (`attachArticles(scene)`), attached by preview.js and, since 2026-11-05,
@@ -633,7 +634,7 @@ character's pools. The art fades out over 0.3s (`FADE`): parts through
 (`setHeldParams`). Removal blocks the poses that bring the article out
 (`renderer.blockedPoses`). A spot's own hit area comes first; where no spot
 is, the article's art is its touch area too (the monocle, the glasses, the
-hat's crown). `<article>Off` faces default to reactions.js `articleOff`
+hat's crown). A rig can give `<article>Pat` its own reaction (rig.json `reactions` and `reactionPoses`), else it borrows the covered spot's. `<article>Off` faces default to reactions.js `articleOff`
 (surprise at warm, blushing from spark), overridable per rig. Without
 articles.js (the Activity) every article stays on, and a spot it covers
 draws its `<article>Pat` lines (Hangout `spotInfo`), so moving Shion's hat

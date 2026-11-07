@@ -116,8 +116,9 @@ export function attachWarmth(scene, profile) {
   if (!renderer.setWarmth) return null;
   const warmth = new Warmth(profile, hangout.tier);
   const react = hangout.react.bind(hangout);
-  hangout.react = (name, t, spot) => {
-    const out = react(name, t, spot);
+  // Passes `opts` through: an article's `line` pool, a hold release's `fade`.
+  hangout.react = (name, t, spot, opts) => {
+    const out = react(name, t, spot, opts);
     warmth.reaction(name);
     return out;
   };

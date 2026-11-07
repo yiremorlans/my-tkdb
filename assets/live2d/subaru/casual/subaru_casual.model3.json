@@ -68,6 +68,10 @@
         "File": "expressions/e_yandere_00.exp3.json"
       },
       {
+        "Name": "e_yandere_calm_00",
+        "File": "expressions/e_yandere_calm_00.exp3.json"
+      },
+      {
         "Name": "e_tsujo_smile_00",
         "File": "expressions/e_tsujo_smile_00.exp3.json"
       },

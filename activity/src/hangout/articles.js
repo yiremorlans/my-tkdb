@@ -59,6 +59,10 @@ import { coveredSpots, forTier } from "./reactions.js";
 
 // Seconds between the two taps of a double-tap.
 export const DOUBLE_TAP = 0.35;
+// Reference units the second tap may land from the first and still count
+// on that article, even if it isn't under the finger anymore: the first
+// tap's pose can carry it away (Subaru's gloves ride his hands to his chin).
+export const DOUBLE_TAP_SLOP = 90;
 // Seconds the art takes to fade out.
 export const FADE = 0.3;
 export const UNLOCK_TIER = "warm";
@@ -125,14 +129,17 @@ export function attachArticles(scene, { startOff = false, onChange, coach } = {}
   };
 
   // An article's spot: the covered spot's annoyance, face and pose, its own
-  // lines. A missing pool falls back to the covered spot's lines.
+  // lines. A missing pool falls back to the covered spot's lines. A rig that
+  // sets a `<article>Pat` reaction gives it its own face and pose too
+  // (Subaru's gloved hand is calm where his bare one is drained).
   const spotInfo = hangout.spotInfo.bind(hangout);
   hangout.spotInfo = (spot) => {
     const a = articles.get(spot);
     if (!a) return spotInfo(spot, { worn: false });
     const info = spotInfo(spotOf(a), { worn: false });
     const pat = `${a.name}Pat`;
-    return a.config.pool === false || !hangout.pool(pat) ? info : { ...info, line: pat };
+    if (a.config.pool === false || !hangout.pool(pat)) return info;
+    return { ...info, line: pat, ...(rig.reactions?.[pat] ? { reaction: pat } : {}) };
   };
 
   // A tap on an article that's only out in its own poses (Ren's phone)
@@ -150,11 +157,13 @@ export function attachArticles(scene, { startOff = false, onChange, coach } = {}
     return reactPose(name, tier);
   };
 
-  let last = null; // { name, t } of the last tap on an article
+  let last = null; // { name, t, point } of the last tap on an article
   const tapAt = hangout.tapAt.bind(hangout);
   hangout.tapAt = (point, t) => {
     const spot = hotspotAt(rig, renderer, point);
-    const a = articles.get(spot);
+    let a = articles.get(spot);
+    const near = last && t - last.t <= DOUBLE_TAP && Math.hypot(point[0] - last.point[0], point[1] - last.point[1]) <= DOUBLE_TAP_SLOP;
+    if (near && a?.name !== last.name && removable(articles.get(last.name), t)) a = articles.get(last.name);
     if (a && last?.name === a.name && t - last.t <= DOUBLE_TAP && removable(a, t)) {
       last = null;
       remove(a.name, { t });
@@ -167,7 +176,7 @@ export function attachArticles(scene, { startOff = false, onChange, coach } = {}
     } finally {
       tapping = null;
     }
-    last = a && tap.result === "ok" ? { name: a.name, t } : null;
+    last = a && tap.result === "ok" ? { name: a.name, t, point } : null;
     if (last) coach?.done(HINTS.tap);
     return tap;
   };
