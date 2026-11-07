@@ -147,8 +147,8 @@ export default {
       "Curious what flavor it is?",
     ],
     lollipopOff: [
-      "Oh, my. That was just in my mouth, you know.",
-      "…Go on, then. I won't say a word.",
+      "Oh, my. Are you going to finish it for me?",
+      "…Well. I'd like to see what you do with it.",
     ],
     heartbeatHold: [
       "You noticed. I was hoping you wouldn't.",
@@ -218,7 +218,7 @@ export default {
       "…I know that look. Give me a moment.",
     ],
     lollipopOff: [
-      "You never let me finish one anymore.",
+      "I've stopped buying the flavors you don't like.",
       "Oh, again? …I don't mind. I know why you do it.",
     ],
     heartbeatHold: [
