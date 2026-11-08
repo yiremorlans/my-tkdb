@@ -4,69 +4,6 @@ export default {
   // Level-up DMs: constants/bondScenes/benkei.js.
   bondScenes,
   dialogue: {
-    new: [
-      {
-        line: 'He looks up from restocking, a little flustered, and gives you a warm, gentle smile. "Oh! Hello. Can I help you find something?"',
-        approach: "Say hello",
-        greeting: '"Didn\'t hear the bell. Sorry, come on in."',
-        responses: {
-          kind: ["Say no need to apologize", "Return his smile"],
-          playful: ["Offer to ring it again", "Blame your quiet shoes"],
-          bold: ["Ask him straight out", "Say you're just browsing"],
-          neutral: ["Let him restock in peace", "Nod and start looking around"],
-        },
-      },
-      {
-        line: '"That\'s my manager," he says, nodding at a cat asleep on the counter, like it explains everything. It somehow does.',
-        approach: "Say hi to the cat too",
-        greeting:
-          "\"That's the manager. Don't take it personally if she ignores you. She ignores me too.\"",
-        responses: {
-          kind: ["Say hello to the manager", "Compliment the cat"],
-          playful: ["Ask if the cat agrees", "Joke about taking cat orders"],
-          bold: ["Ask who's really in charge", "Say you trust the cat more"],
-          neutral: ["Watch the cat instead", "Let the cat sleep in peace"],
-        },
-      },
-      {
-        line: "He's rewriting a price tag by hand because the printed one had a typo.",
-        approach: "Wait for him to finish",
-        greeting:
-          "\"Sorry, one second. It said 'chocolat.' It's been bothering me all morning.\"",
-        responses: {
-          kind: ["Say the fix looks good", "Tell him it's worth fixing"],
-          playful: [
-            "Say 'chocolat' sounds fancier",
-            "Ask if it was on purpose",
-          ],
-          bold: ["Point out another typo", "Offer to write the next one"],
-          neutral: ["Wait while he finishes", "Pick out what you need"],
-        },
-      },
-      {
-        line: "He starts to say something, thinks better of it, and offers you a snack instead.",
-        approach: "Accept the snack",
-        greeting:
-          '"Please, go ahead. It\'s nothing special, just something from the back."',
-        responses: {
-          kind: ["Say you'll share it with him", "Ask which one he'd pick"],
-          playful: ["Ask if it's past its date", "Ask what else he's got"],
-          bold: ["Ask why he changed his mind", "Say you saw him stop"],
-          neutral: ["Say nothing, just nod", "Take it and smile"],
-        },
-      },
-      {
-        line: "There's a kindness to him that doesn't feel put on for the customers. It's just how he is.",
-        approach: "Reciprocate his kindness",
-        greeting: '"New around here? It\'s a strange school. It grows on you."',
-        responses: {
-          kind: ["Say you feel welcome already", "Say the shop feels friendly"],
-          playful: ["Tease him for being so nice", "Say you'll take his word"],
-          bold: ["Ask what grew on him", "Ask if he's ever not nice"],
-          neutral: ["Let the moment be quiet", "Just smile back"],
-        },
-      },
-    ],
     known: [
       {
         line: "He knows your name, and says it like he's glad of the chance to.",
