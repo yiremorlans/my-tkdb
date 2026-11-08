@@ -4,90 +4,6 @@ export default {
   // Level-up DMs: constants/bondScenes/elias.js.
   bondScenes,
   dialogue: {
-    new: [
-      {
-        line: "He's winding a string of festival lights around one arm, in no hurry about it. \"Oh, I don't think I've seen you around here before.\"",
-        approach: "Play along",
-        greeting:
-          '"You\'ve arrived at just the right time. Would you mind holding this end for me?"',
-        responses: {
-          kind: ["Offer to hold the other end", "Help him wind the lights"],
-          playful: [
-            "Ask if this is how he says hi",
-            "Ask if he'll remember you now",
-          ],
-          bold: [
-            "Take half the lights from him",
-            "Say he'll be seeing you more",
-          ],
-          neutral: ["Say you're new here", "Watch him wind them"],
-        },
-      },
-      {
-        line: 'His careful courtesy arrives a good second before he does. "Oh, are you lost? This part of campus is a little out of the way."',
-        approach: "Admit you're lost",
-        greeting: '"Keep left. You\'ll find your way back."',
-        responses: {
-          kind: ["Say you're glad it was him", "Ask if you can walk with him"],
-          playful: ["Ask if he gets lost too", "Say out of the way suits you"],
-          bold: ["Say you meant to find him", "Ask what he's doing out here"],
-          neutral: ["Nod and walk on", "Say nothing, keep going"],
-        },
-      },
-      {
-        line: "A lollipop stick shifts from one corner of his mouth to the other. He's leaning where he shouldn't be, doing nothing with real dedication.",
-        approach: "Ask if he could help you",
-        greeting:
-          '"I was just taking a walk around campus. For my health, of course."',
-        responses: {
-          kind: ["Keep him company a minute", "Say it's a good spot for it"],
-          playful: ["Ask what flavor it is", "Tease him about slacking"],
-          bold: ["Lean beside him", "Ask for a lollipop too"],
-          neutral: ["Leave him to it", "Ask if he's busy"],
-        },
-      },
-      {
-        line: "He's between errands, and in no particular rush to reach the next one.",
-        approach: "Ask who they're for",
-        greeting:
-          '"For Jo. Lights today, something else tomorrow. It keeps me out of trouble, mostly."',
-        responses: {
-          kind: [
-            "Say it's nice to run into him",
-            "Say you only want the company",
-          ],
-          playful: ["Bet he's taking the long way", "Ask how many he's done"],
-          bold: ["Ask where he's headed next", "Say you'll run one with him"],
-          neutral: ["Nod, file it away", "Let him get back to it"],
-        },
-      },
-      {
-        line: "The smile comes slow and lands just right, warm, unhurried, and a half-second too practiced.",
-        approach: "Let him go on ahead",
-        greeting:
-          '"Sorry… I\'m a little short on time. Would you mind if I went on ahead?"',
-        responses: {
-          kind: ["Return the smile", "Say you'll catch him later"],
-          playful: [
-            "Ask if that smile's for you",
-            "Ask if he's up to something",
-          ],
-          bold: ["Hold his gaze", "Ask what he's late for"],
-          neutral: ["Nod back at him", "Step aside for him"],
-        },
-      },
-      {
-        line: '"Sweep\'s already done, don\'t mind me." He\'s leaning on the broom instead of using it. "Old habit. Hard to break."',
-        approach: "Ask about the old habit",
-        greeting: '"Oh, it\'s nothing. I just like things tidy."',
-        responses: {
-          kind: ["Say the floor looks spotless", "Say he did a good job"],
-          playful: ["Ask if he does windows", "Book him for your room next"],
-          bold: ["Say the courtyard's next", "Say you've got a job for him"],
-          neutral: ["Let him talk", "Stand with him a while"],
-        },
-      },
-    ],
     known: [
       {
         line: "The charm's still running, just dialed down to something that costs him less.",
@@ -254,6 +170,18 @@ export default {
           playful: ["Ask for a circus trick", "Bet he's less rusty than that"],
           bold: ["Sign him up for the next one", "Say he'll keep up, period"],
           neutral: ["Let the doubt pass", "Say nothing, stay put"],
+        },
+      },
+      // candidate from new
+      {
+        line: 'His careful courtesy arrives a good second before he does. "Oh, are you lost? This part of campus is a little out of the way."', // ✓
+        approach: "Admit you're lost",
+        greeting: '"Keep left. You\'ll find your way back."',
+        responses: {
+          kind: ["Say you're glad it was him", "Ask if you can walk with him"],
+          playful: ["Ask if he gets lost too", "Say out of the way suits you"],
+          bold: ["Say you meant to find him", "Ask what he's doing out here"],
+          neutral: ["Nod and walk on", "Say nothing, keep going"],
         },
       },
     ],
