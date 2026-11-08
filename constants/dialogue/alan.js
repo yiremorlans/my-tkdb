@@ -4,69 +4,6 @@ export default {
   // Level-up DMs: constants/bondScenes/alan.js.
   bondScenes,
   dialogue: {
-    new: [
-      {
-        line: 'Gloves already on, he looks you over once. "Get back. It\'s dangerous."',
-        approach: "Stay out of his way",
-        greeting: '"Get back. Don\'t want you getting hurt."',
-        responses: {
-          kind: ["Say you'll be careful", "Trust his judgment"],
-          playful: ["Ask how far is far enough", "Call him overprotective"],
-          bold: ["Hold his gaze, then step back", "Say you're not going far"],
-          neutral: ["Step back without a word", "Give him the space"],
-        },
-      },
-      {
-        line: "He doesn't stop working. He just moves the toolbox so you won't trip over it.",
-        approach: "Step over the toolbox",
-        greeting: '"Watch your step. Keep meaning to clean this up."',
-        responses: {
-          kind: ["Offer to clear a path", "Say you don't mind the mess"],
-          playful: ["Bet he never cleans it up", "Tease him about the mess"],
-          bold: ["Say you're here to help", "Say you'll sort it with him"],
-          neutral: ["Let him finish", "Step where it's clear"],
-        },
-      },
-      {
-        line: "Nobody else in the garage stands this close to him. You haven't learned why yet.",
-        approach: "Stay close anyway",
-        greeting: '"...Don\'t get involved with me."',
-        responses: {
-          kind: ["Say you like it right here", "Say you'd miss the company"],
-          playful: ["Ask if this is too close", "Ask if standing here counts"],
-          bold: ["Tell him you're not leaving", "Say you're already involved"],
-          neutral: ["Don't move, don't answer", "Let him say his piece"],
-        },
-      },
-      {
-        line: '"Don\'t touch that," he says flatly. "It\'s hot." That\'s the whole greeting.',
-        approach: "Ask what he's building",
-        greeting: '"Bike part. Just came off the engine. Give it a minute."',
-        responses: {
-          kind: ["Ask if you can help instead", "Wait it out beside him"],
-          playful: [
-            "Blow on it to cool it",
-            "Ask how long his minute is",
-          ],
-          bold: ["Ask to see it once it cools", "Say you'll stay right there"],
-          neutral: [
-            "Keep your hands to yourself",
-            "Don't touch it, say nothing",
-          ],
-        },
-      },
-      {
-        line: "He's holding a campus map the wrong way up and won't admit he's lost. \"...What do you want?\"",
-        approach: "Flip his map around",
-        greeting: '"...Huh. That makes more sense."',
-        responses: {
-          kind: ["Point him the right way", "Offer to walk with him"],
-          playful: ["Tease him about the map", "Ask if he's ever not lost"],
-          bold: ["Ask straight where he's headed", "Say you'll lead from here"],
-          neutral: ["Let the moment pass", "Say nothing, just point"],
-        },
-      },
-    ],
     known: [
       {
         line: "You walk in on him doing pushups on the garage floor. He doesn't stop until he hits the count.",
