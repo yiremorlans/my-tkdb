@@ -5,199 +5,6 @@ export default {
   // Level-up DMs: constants/bondScenes/jo.js.
   bondScenes,
   dialogue: {
-    known: withPronounVariants([
-      {
-        line: '"You came back." {He} sets down the pen like {he}\'d been looking for an excuse.',
-        approach: "Interrupt the paperwork",
-        greeting: '"Sit anywhere. I was getting bored in here without you."',
-        responses: {
-          kind: ["Say you'll keep {him} company", "Ask if {he}'s had a break"],
-          playful: ["Say you rescued {him}", "Ask if you beat the budget"],
-          bold: ["Ask if {he} waited for you", "Tell {him} the pen stays down"],
-          neutral: ["Take the offered seat", "Sit and let {him} finish"],
-        },
-      },
-      {
-        line: '"I put out snacks for the dorm students after practice. Take some before Shion finds the tray, there\'s plenty."',
-        approach: "Take something from the tray",
-        greeting:
-          '"Eat, don\'t be polite about it. The tray exists to be emptied."',
-        responses: {
-          kind: ["Save {him} the last one", "Say the dorm's lucky"],
-          playful: ["Take two, for later", "Hide a share from Shion"],
-          bold: ["Ask who feeds the captain", "Take the tray over to {him}"],
-          neutral: ["Take one and say nothing", "Eat while {he} works"],
-        },
-      },
-      {
-        line: "{He} works something small you mentioned once into the conversation like it's nothing.",
-        approach: "Give an honest read",
-        greeting: '"Tell me honestly what you thought. No, actually honestly."',
-        responses: {
-          kind: ["Tell {him} it landed well", "Say it meant a lot"],
-          playful: ["Act surprised {he} remembered", "Ask if {he} took notes"],
-          bold: [
-            "Ask why {he} remembered that",
-            "Ask what else {he} remembers",
-          ],
-          neutral: ["Give the honest read plainly", "Answer it straight"],
-        },
-      },
-      {
-        line: '"Have you seen Elias, cutie? Asked him to do something and he\'s still not back..."',
-        approach: "Offer to help instead",
-        greeting:
-          '"You would? Lifesaver. When you find him, tell him I\'m not even mad. ...I am, a little."',
-        responses: {
-          kind: ["Take the last errand", "Ask what else is on {his} list"],
-          playful: ["Offer to impersonate Elias", "Promise a search party"],
-          bold: [
-            "Say you'll bring Elias back",
-            "Tell {him} to sit, you've got it",
-          ],
-          neutral: [
-            "Say you'll look for him too",
-            "Ask where Elias usually goes",
-          ],
-        },
-      },
-      {
-        line: '"Elias is back, so we\'re stealing a coffee break before I lose the afternoon to that budget. Join us, cutie."',
-        approach: "Join the coffee break",
-        greeting:
-          '"Sit with me a minute. I\'m losing this battle with the budget either way."',
-        responses: {
-          kind: ["Say the break is well earned", "Offer to fetch {his} coffee"],
-          playful: [
-            "Steal a sip of {his} coffee",
-            "Ask if the budget is winning",
-          ],
-          bold: [
-            "Say the budget can lose today",
-            "Tell {him} to skip the budget",
-          ],
-          neutral: ["Sit and drink in quiet", "Sit and let {him} vent"],
-        },
-      },
-      {
-        line: "{He} looks up from the desk and isn't the least bit surprised to see you again.",
-        approach: "Walk in like a regular",
-        greeting: '"Twice now, cutie. You\'re becoming a regular around here."',
-        responses: {
-          kind: ["Say you like coming by", "Say you come to check on {him}"],
-          playful: ["Ask if you get a punch card", "Ask if regulars get perks"],
-          bold: ["Ask if {he} was counting", "Say you'll make it three"],
-          neutral: ["Nod and take a seat", "Say you happened to pass by"],
-        },
-      },
-      {
-        line: '"Another fire at the circus tent. That\'s three now. I warned them about that fire act every single time."',
-        approach: "Ask about the fire act",
-        greeting: '"Small fire. I mean that literally, before you ask."',
-        responses: {
-          kind: ["Offer to help check the tent", "Ask if anyone got hurt"],
-          playful: ["Ask if three's a pattern", "Ask if the act is cursed"],
-          bold: [
-            "Say you'll take the next check",
-            "Say {he} can't watch every act",
-          ],
-          neutral: ["Let {him} vent about it", "Ask who runs the fire act"],
-        },
-      },
-      {
-        line: "{He} notices you've been running errands all morning, and quietly takes the last one off your list before you can grab it.",
-        approach: "Let {him} take the last errand",
-        greeting:
-          '"You handle the chaos here better than half my own house does."',
-        responses: {
-          kind: [
-            "Say you'll split it with {him}",
-            "Ask what's left on {his} list",
-          ],
-          playful: [
-            "Race {him} to the last errand",
-            "Ask if that's a favor owed",
-          ],
-          bold: ["Insist on carrying some", "Say you'll return the favor"],
-          neutral: ["Let {him} take this one", "Hand over the list"],
-        },
-      },
-      {
-        line: "\"The students here don't run on a normal clock. Neither do you, I've noticed. Works out.\"",
-        approach: "Answer to 'cutie'",
-        greeting:
-          '"I lost track of the time again. You\'re a bad influence on my schedule, cutie."',
-        responses: {
-          kind: ["Ask if {he}'s eaten yet", "Say you like the nickname"],
-          playful: ["Answer only to 'cutie' now", "Call {him} a bad influence"],
-          bold: ["Say {his} schedule can cope", "Tell {him} to say it again"],
-          neutral: ["Don't react to the nickname", "Ask what time it is"],
-        },
-      },
-      {
-        line: "\"Shion again. I'll go apologize, it's the dorm captain's job. Not the first time this week.\"",
-        approach: "Say you'll accompany {him}",
-        greeting:
-          "\"Shion nods, agrees, and does it again anyway. I've stopped counting how many times I've tried.\"",
-        responses: {
-          kind: ["Offer to smooth it over too", "Say you'll stand by {him}"],
-          playful: [
-            "Ask what Shion did this time",
-            "Ask if apologies come in bulk",
-          ],
-          bold: ["Say it's not {his} job", "Say you'll do the talking"],
-          neutral: ["Walk with {him} in silence", "Ask where Shion is now"],
-        },
-      },
-      {
-        line: "{He}'s mid-sentence about the program lineup when {he} notices you and just... stops rushing.",
-        approach: "Point out {he} stopped rushing",
-        greeting:
-          "\"You're here again. I'm starting to expect it, which is dangerous for my schedule.\"",
-        responses: {
-          kind: [
-            "Say the slower pace suits {him}",
-            "Say {he} looks better for it",
-          ],
-          playful: [
-            "Tease {him} for slowing down",
-            "Ask if the lineup can wait",
-          ],
-          bold: [
-            "Say {he} should stop more often",
-            "Say you're worth the delay",
-          ],
-          neutral: ["Let {him} finish at {his} pace", "Ask about the lineup"],
-        },
-      },
-      {
-        line: '"Sorry, I was somewhere else for a second there. Nothing serious. Where were we?"',
-        approach: "Ask where {his} head went",
-        greeting:
-          '"Nothing serious, I promise. Where were we before my head wandered off?"',
-        responses: {
-          kind: ["Say {he} can tell you later", "Say there's no pressure"],
-          playful: [
-            "Guess where {his} head went",
-            "Ask if {he} was daydreaming",
-          ],
-          bold: ["Tell {him} to sit a minute", "Stay till {he}'s back"],
-          neutral: ["Let it go unanswered", "Wait for {him} to continue"],
-        },
-      },
-      {
-        line: "\"You turn up around this hour most days. I've started leaving the door open around now, that's all.\"",
-        approach: "Ask if the door's for you",
-        greeting:
-          "\"It's open for anyone. It's just usually you who walks through it.\"",
-        responses: {
-          kind: ["Say you'll keep turning up", "Say you look forward to it"],
-          playful: ["Test it tomorrow, early", "Ask about opening hours"],
-          bold: ["Ask who else walks through", "Say the door's for you then"],
-          neutral: ["Take the open door as is", "Step through without asking"],
-        },
-      },
-    ]),
     warm: withPronounVariants([
       {
         line: "{He} lights up the moment {he} sees you, whatever {he} was signing forgotten.",
@@ -459,6 +266,19 @@ export default {
           playful: ["Knock and ask for advice", "Take a number and queue up"],
           bold: ["Ask who {he} goes to", "Tell {him} to say no once"],
           neutral: ["Let {him} get back to it", "Stay out of the queue"],
+        },
+      },
+      // candidate from known
+      {
+        line: "\"You turn up around this hour most days. I've started leaving the door open around now, that's all.\"",
+        approach: "Ask if the door's for you",
+        greeting:
+          "\"It's open for anyone. It's just usually you who walks through it.\"",
+        responses: {
+          kind: ["Say you'll keep turning up", "Say you look forward to it"],
+          playful: ["Test it tomorrow, early", "Ask about opening hours"],
+          bold: ["Ask who else walks through", "Say the door's for you then"],
+          neutral: ["Take the open door as is", "Step through without asking"],
         },
       },
     ]),
