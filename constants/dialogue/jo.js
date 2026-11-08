@@ -5,82 +5,6 @@ export default {
   // Level-up DMs: constants/bondScenes/jo.js.
   bondScenes,
   dialogue: {
-    new: withPronounVariants([
-      {
-        line: "{He}'s buried in paperwork: proposals, schedules, a budget that won't balance. {He} looks up anyway.",
-        approach: "Ask for a minute of {his} time",
-        greeting: '"A new face! Come on in, cutie. What\'s your name?"',
-        responses: {
-          kind: ["Give your name, keep it short", "Offer to help with it"],
-          playful: [
-            "Tease {him} about the papers",
-            "Give your name with a bow",
-          ],
-          bold: [
-            "Ask {him} to work less for you",
-            "Ask {him} to put the pen down",
-          ],
-          neutral: ["Sit while {he} works", "Wait without interrupting"],
-        },
-      },
-      {
-        line: '"Anything troubling you, cutie? If you run into any problems, just come talk to me."',
-        approach: "Ask if {he}'s free",
-        greeting:
-          '"Take your time. Everyone here moves at their own pace, and you don\'t have to rush for me."',
-        responses: {
-          kind: ["Say you'll keep it quick", "Ask what's on {his} plate"],
-          playful: [
-            "Call {him} 'cutie' right back",
-            "Ask if that goes for everyone",
-          ],
-          bold: ["Say that goes for {him} too", "Push straight to the point"],
-          neutral: ["Let {him} decide the pace", "Wait for {him} to lead"],
-        },
-      },
-      {
-        line: "The charisma lands before {he}'s said a word. Running Dionysia hasn't dulled it.",
-        approach: "Cut through the charisma",
-        greeting:
-          '"Pull up a chair. I\'ve got a budget to fight with, but I can talk and lose at the same time."',
-        responses: {
-          kind: ["Offer a second pair of eyes", "Ask if {he}'s eaten today"],
-          playful: ["Match the easy charm", "Call out the charm offensive"],
-          bold: ["Meet the charisma head-on", "Say to let the budget lose"],
-          neutral: ["Simply be present", "Let the charm pass by"],
-        },
-      },
-      {
-        line: '"You look pretty busy. I\'ll get some work done. Holler if you need anything."',
-        approach: "Wave {him} over",
-        greeting:
-          "\"Give me a second to put this down, and then you've got my full attention. What's going on?\"",
-        responses: {
-          kind: ["Ask how {his} day's going", "Say you came to see {him}"],
-          playful: ["Steal {his} coffee order", "Say you're the emergency"],
-          bold: ["Say {he} needs a break more", "Make {him} take a real break"],
-          neutral: ["Let the schedule wait", "Wait quietly nearby"],
-        },
-      },
-      {
-        line: "{He} glances up mid-signature, and somehow the whole room feels less busy for it.",
-        approach: "Pull up a chair",
-        greeting:
-          '"Sit, sit. Whatever this is, it can wait until you\'ve said your piece."',
-        responses: {
-          kind: ["Say you won't take long", "Ask how long {he}'s been at it"],
-          playful: [
-            "Tease {him} about signing",
-            "Ask what {he}'s signing away",
-          ],
-          bold: [
-            "Say your piece straight out",
-            "Take {his} attention outright",
-          ],
-          neutral: ["Watch {him} work in quiet", "Sit without a word"],
-        },
-      },
-    ]),
     known: withPronounVariants([
       {
         line: '"You came back." {He} sets down the pen like {he}\'d been looking for an excuse.',
@@ -1062,8 +986,8 @@ export default {
     new: [
       '"A new face." **{name}** looks up from the budget for {user} and doesn\'t look back down.',
       "{user} calls {his} name, and **{name}** turns the charisma on like a stage light.",
-      '"Come on over, cutie." **{name}** greets {user} as though their schedule weren\'t already full.',
-      '**{name}** looks up from a stack of schedules and smiles at {user}. "Hey there, cutie. What can I do for you?"',
+      '"Come on over." **{name}** greets {user} as though their schedule weren\'t already full.',
+      '**{name}** looks up from a stack of schedules and smiles at {user}. "Hey there. What can I do for you?"',
     ],
     known: [
       '"Twice now, cutie." **{name}** isn\'t the least bit surprised to see {user} again.',
