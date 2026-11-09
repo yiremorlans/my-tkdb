@@ -58,7 +58,7 @@ A voice, stage or category channel whose name counts down to the next event: `�
 - `/event create|edit|delete|list` — up to 24 custom events, date only. **Manage Server**, ephemeral.
 - `/wishingwell` — upcoming Wishing Well dates in each viewer's own timezone. Anyone, ephemeral.
 
-The bot needs **View Channel** and **Manage Channels** on the countdown channel. Full design notes are in [`docs/countdown.md`](docs/countdown.md).
+The bot needs **View Channel** and **Manage Channels** on the countdown channel, plus **Connect** on a voice or stage channel. Full design notes are in [`docs/countdown.md`](docs/countdown.md).
 
 ## Project structure
 Below is a basic overview of the project structure:

@@ -187,6 +187,7 @@ footer { border-top: 1px solid var(--line); padding-top: 18px; color: var(--mute
           <tr><td>Attach Files</td><td class="yes">Yes</td><td>Each encounter and mission post comes with a picture.</td></tr>
           <tr><td>Embed Links</td><td class="yes">Yes</td><td>The reveal card that appears when someone wins.</td></tr>
           <tr><td>Manage Channels</td><td class="opt">Only for countdowns</td><td>Renaming a countdown channel each day. Skip it if you won't use countdowns.</td></tr>
+          <tr><td>Connect</td><td class="opt">Only for voice or stage countdowns</td><td>Seeing a voice or stage countdown channel. It never joins.</td></tr>
           <tr><td>Administrator</td><td class="no">No</td><td>Not needed. Please don't grant it.</td></tr>
           <tr><td>Manage Messages</td><td class="no">No</td><td>Not needed. The bot only edits its own posts.</td></tr>
         </tbody>
@@ -338,7 +339,7 @@ footer { border-top: 1px solid var(--line); padding-top: 18px; color: var(--mute
     <p>A channel whose name counts down to the next Tokyo Debunker Wishing Well, like <em>💎 Wishing Well: in 6 days</em>, or to your own server events. This is separate from encounters and missions.</p>
     <ol class="how">
       <li>Pick a <strong>voice channel, stage channel or category</strong>. Text channels don't work because Discord changes their names to lowercase.</li>
-      <li>Give the bot <strong>View Channel</strong> and <strong>Manage Channels</strong> on that channel.</li>
+      <li>Give the bot <strong>View Channel</strong>, <strong>Connect</strong> and <strong>Manage Channels</strong> on that channel.</li>
       <li>Run <code>/countdown wishingwell channel:</code> and pick the channel. For your own events, add them with <code>/event create</code>, then run <code>/countdown customevent channel:</code>.</li>
       <li>Days flip at midnight US Pacific time. To change that, use <code>/countdown timezone</code>.</li>
     </ol>

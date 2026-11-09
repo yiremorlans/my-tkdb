@@ -127,11 +127,12 @@ Manage Server only (`default_member_permissions: "32"`), guild-only
 **Setting a channel** (`wishingwell` / `customevent`):
 1. Refuse if it's the other kind's current channel.
 2. Check the bot can see the channel and has Manage Channels on it. If not,
-   refuse and say what's missing.
+   refuse and say what's missing. On voice/stage, seeing it needs **Connect** too.
 3. Save the channel's **current name** (restored by `disable`).
 4. Rename it immediately.
 5. Reply with what it now shows plus recommended permissions for that type:
-   - voice / stage: @everyone **View Channel: allow**, **Connect: deny**
+   - voice / stage: @everyone **View Channel: allow**, **Connect: deny**;
+     allow **Connect** for the bot on the channel, or it can't see it.
    - category: @everyone **View Channel: allow**, nothing else. Don't deny
      Connect on a category: synced child voice channels inherit it.
 
@@ -348,7 +349,7 @@ uses, so there's one code path for "what should this channel say".
   `/countdown status`.
 - Bot picks an existing voice, stage or category channel only; never
   creates one or edits permissions. Recommends View allow / Connect deny for
-  @everyone (View allow only for a category). No text/announcement channels.
+  @everyone (View allow only for a category); the bot keeps its own Connect allow. No text/announcement channels.
 - `/countdown` and all of `/event` are Manage Server, ephemeral.
 - `/wishingwell` is public and ephemeral, Wishing Well dates only.
 - `/event list` never includes Wishing Well.

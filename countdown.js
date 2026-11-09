@@ -91,7 +91,7 @@ function takenByOtherKindReply(channelId, otherKind) {
 }
 
 function renameFailureReason(err) {
-  if (err.status === 403) return "I lost access to the channel or can't rename it (needs **View Channel** and **Manage Channels**).";
+  if (err.status === 403) return "I lost access to the channel or can't rename it (needs **View Channel**, **Connect** and **Manage Channels**).";
   if (err.status === 404) return 'The channel was deleted.';
   return `Discord refused the rename (${err.status}).`;
 }
@@ -360,7 +360,7 @@ async function setCountdownChannel(guildId, userId, kind, channelId, setup, now)
 }
 
 function cantSeeReply(channelId) {
-  return replyOnly(`I can't see <#${channelId}>. Give me **View Channel** there and try again.`);
+  return replyOnly(`I can't see <#${channelId}>. Give me **View Channel** and **Connect** there and try again.`);
 }
 
 // Setup's immediate rename, which doubles as the Manage Channels check: a 403
@@ -402,7 +402,7 @@ function setupReplyLines({ kind, channel, name, pending, movedFrom, noEvents, ti
   lines.push(
     channel.type === CHANNEL_TYPE_CATEGORY
       ? "Recommended for @everyone on this category: **View Channel** allow, nothing else. Don't deny Connect on a category: voice channels synced under it inherit that."
-      : 'Recommended for @everyone on this channel: **View Channel** allow, **Connect** deny, so it reads as a sign rather than a room.',
+      : "Recommended for @everyone on this channel: **View Channel** allow, **Connect** deny, so it reads as a sign rather than a room. Allow **Connect** for me here, or I can't see it.",
   );
   return lines;
 }
