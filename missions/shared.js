@@ -13,6 +13,7 @@ import { EPHEMERAL } from "../utils.js";
 import { errandTargets } from "../db/supabase.js";
 import {
   BANKED_RESET_LINE,
+  DEBRIEF_BUTTON_LABEL,
   MISSION_NEXT_STEP,
   STORE_CREDIT_LINE,
 } from "../constants/missions.js";
@@ -228,5 +229,18 @@ export function reportFailures(label, prefix = "[missions]") {
       }
     }
     return results;
+  };
+}
+
+// Every debrief button names its role, so a claim can grey out exactly that
+// player's. The completion post labels each with the player's name (a button
+// looks the same to everyone, so one shared button couldn't be greyed for just
+// one of them); /mission's reminder is only seen by its owner and stays bare.
+export function debriefButton(missionId, role, label = DEBRIEF_BUTTON_LABEL) {
+  return {
+    type: MessageComponentTypes.BUTTON,
+    style: ButtonStyleTypes.PRIMARY,
+    label,
+    custom_id: `mission:debrief:${missionId}:${role}`,
   };
 }

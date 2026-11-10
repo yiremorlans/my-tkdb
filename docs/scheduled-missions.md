@@ -1235,6 +1235,7 @@ admin-configurable.
 | `STALE_SLOT_MINUTES` | `90` | Skip a slot that comes due more than this late |
 | `POST_TTL_HOURS` | `2` | Unaccepted post → withdrawn |
 | `ACCEPT_WINDOW_HOURS` | `48` | Accepted-but-unfinished → expired, slot frees |
+| `SOLO_COOP_AFTER_HOURS` | `3` | Unanswered co-op call → completes for the lead alone (§24) |
 | `RIDDLE_WRONG_COOLDOWN_SECONDS` | `20` | Gap between wrong `/riddle` guesses (in-memory) |
 | `WEIGHT_RIDDLE` / `WEIGHT_ERRAND` / `WEIGHT_COOP` | `45` / `45` / `10` | Type roll at spawn (co-op cut to a 10 floor 2026-09; see §22) |
 | `DAILY_LEAD_CAP` | `2` | Missions taken per user per local day, accepts + assists (migration 029) |
@@ -1851,3 +1852,89 @@ Last recommendation before the pause: decoys + brief (2), with the loupe
 - After §23.2: decoy count and how they differ, where the brief shows and
   how it's worded, hit radius per device, item art pool size, mission
   label/next-step strings (`MISSION_TYPE_LABEL`, `MISSION_NEXT_STEP`).
+
+---
+
+## 24. Expansion: solo co-op (the house goes in with you)
+
+Status: **built 2026-11-10.** No migration. Settled with the user.
+
+On a server with one active player, nobody ever clicks **Join the mission**,
+and the lead's unanswered co-op held their only mission slot for the full 48h
+`ACCEPT_WINDOW_HOURS`. Now a co-op whose call for backup has gone unanswered
+for `SOLO_COOP_AFTER_HOURS` (3h) completes for the lead alone.
+
+### 24.1 Settled
+
+1. **Only answered-by-nobody assist calls.** The clock starts when the lead
+   runs `/mission assist:True`, read off the assist post's snowflake id (no
+   posted-at column). A lead who never posts the call still lapses at 48h
+   (§7). Every guild, whatever its size.
+2. **Same reward as a two-player co-op** for the lead: 1 house log, a banked
+   `single` reset, +1 💎, a debrief. No helper row is written.
+3. **Story: the house goes in with them.** A house mission involves the whole
+   house (several characters), never one student. No other inspector answered, so
+   the lead went in with the house. The debrief student is just the house
+   member who caught them afterward, so §21's lines fit, except the ones that
+   assume two inspectors ("you two", "both").
+4. **A Join click can still win.** Until the sweep closes it the post is a
+   normal assist post. The sweep's close is conditional on `status='accepted'
+   AND helper_user_id IS NULL`, which `join_coop_and_record` also requires
+   under its row lock; one wins, a late Join gets "That mission's already
+   covered."
+
+### 24.2 Sweep (`missions/posts.js`, `db/supabase.js`)
+
+`sweepExpiredMissions` (every `MISSION_SWEEP_INTERVAL_MS`, 5 min) first runs
+`getUnansweredCoops`: one read of accepted co-ops with an `assist_message_id`
+and no helper, filtered in JS to posts older than 3h. For each, rare,
+`completeSoloCoop`:
+
+- conditional `UPDATE` to `completed`, then `record_mission_completion(lead,
+  house, 'coop', id, 'lead', 1)`. Two calls, no RPC, by choice (no
+  migration).
+- If the reward write fails, the close is undone (back to `accepted`) so the
+  next sweep retries. If the undo fails too, the error log names the lead and
+  house for a manual grant.
+
+Then `finalizeSoloCoop` edits the assist post. A failed edit is only logged:
+the post keeps its Join button and a late click gets "already covered".
+
+### 24.3 The completion post (solo)
+
+- `content: <@lead>`, `allowed_mentions: { users: [lead] }`.
+- Embed, a blank line between each part: `No other inspector answered the call, so
+  <@lead> went in with {House}.` (`SOLO_COOP_LINE`; embeds render the mention
+  as a name) / `**Mission complete.**` / `You banked a cooldown reset.` /
+  `+1 💎`.
+- One button: **[ Debrief ]** (`mission:debrief:<id>:lead`).
+
+### 24.4 Debrief (solo)
+
+A completed co-op with no `helper_user_id` is solo. `handleMissionDebrief`
+draws with `pickDebriefStudent(house, held, { solo: true })`: only students
+with a solo-safe line, still skipping held boosts (falling back to all
+solo-safe students). The line comes from `soloDebriefLines(id)`.
+
+**Solo-safe lines** are a subset of the one `DEBRIEF_LINES` pool, listed by
+index in `SOLO_DEBRIEF_LINE_INDEXES`; no separate pool. Picked 2026-11-10 by
+reading every line for fit. Hotarubi and Mortkranken had none, so Haku and
+Jiro each got a third, count-neutral line, which two-player co-ops draw too.
+A line added to `DEBRIEF_LINES` is co-op only until it is listed.
+`validateContent()` fails when a house has no solo-safe student or an index
+points at nothing.
+
+`/mission`'s co-op instructions add: *"If nobody answers, the house goes in
+with you."* (no timer, per the public-pages rule).
+
+### 24.5 Code touch points
+
+| File | Change |
+|---|---|
+| `constants/missions.js` | `SOLO_COOP_AFTER_HOURS`, `SOLO_COOP_LINE`, `SOLO_DEBRIEF_LINE_INDEXES`, `soloDebriefLines`, `pickDebriefStudent` `{ solo }`, Haku/Jiro third debrief lines, co-op instructions |
+| `db/supabase.js` | `getUnansweredCoops`, `completeSoloCoop` |
+| `missions/posts.js` | solo pass in `sweepExpiredMissions` (returns `solo`), `finalizeSoloCoop` |
+| `missions/shared.js` | `debriefButton` moved here from player.js |
+| `missions/player.js` | debrief handles solo |
+| `constants/validateContent.js` | solo-safe coverage per house |
+| `test/missions-solo-coop.test.js` | eligibility, reward rows, post, late Join, undo on failure, debrief draw |

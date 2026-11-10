@@ -2,6 +2,7 @@
 // posting a request, the scheduler pass encounterScheduler.js drives, and the
 // expiry sweep and post reconcile that close posts out.
 
+import { MessageComponentTypes } from "discord-interactions";
 import { pingRole } from "../utils.js";
 import {
   ASSIST_LAPSED_LINES,
@@ -19,6 +20,9 @@ import {
   rollDailySlots,
   rollHouse,
   rollMissionType,
+  SOLO_COOP_AFTER_HOURS,
+  SOLO_COOP_LINE,
+  STORE_CREDIT_LINE,
   SWEEP_EDIT_CONCURRENCY,
 } from "../constants/missions.js";
 import { pickRandom } from "../constants/publicEncounters.js";
@@ -31,16 +35,23 @@ import {
   bumpGuildMissionPostFailure,
   clearGuildMissionPostFailures,
   clearMissionPostReconcile,
+  completeSoloCoop,
   createMission,
   expireMission,
   finalizeExpiredMissions,
   getMissionsNeedingPostReconcile,
   getOpenMission,
+  getUnansweredCoops,
   markMissionSlotFired,
   rollGuildMissionSlots,
   setMissionMessageId,
 } from "../db/supabase.js";
-import { acceptRow, missionEmbed, resolveMissionChannel } from "./shared.js";
+import {
+  acceptRow,
+  debriefButton,
+  missionEmbed,
+  resolveMissionChannel,
+} from "./shared.js";
 
 // --- spawn ------------------------------------------------------------------
 
@@ -220,6 +231,66 @@ export async function finalizeLapsedMission(row) {
 }
 
 /**
+ * A co-op nobody answered in SOLO_COOP_AFTER_HOURS, just completed for the
+ * lead alone (§24). Same shape as a two-player completion post, minus the
+ * helper: the lead is pinged (they've likely stepped away), and there is one
+ * debrief button, theirs. If this edit fails the post keeps its Join button,
+ * and a late click gets "That mission's already covered".
+ */
+export async function finalizeSoloCoop(row) {
+  clearRiddleCooldowns(row.id);
+  await editChannelMessageSafe(
+    row.channel_id,
+    row.assist_message_id,
+    {
+      content: `<@${row.accepted_by}>`,
+      attachments: [],
+      embeds: [
+        missionEmbed(
+          row.id,
+          `${SOLO_COOP_LINE(row.accepted_by, row.house)}\n\n**Mission complete.**\n\nYou banked a cooldown reset.\n\n${STORE_CREDIT_LINE(1)}`,
+        ),
+      ],
+      components: [
+        {
+          type: MessageComponentTypes.ACTION_ROW,
+          components: [debriefButton(row.id, "lead")],
+        },
+      ],
+      allowed_mentions: { users: [row.accepted_by] },
+    },
+    `[missions] Could not edit solo co-op ${row.id} post`,
+  );
+}
+
+/**
+ * Complete every co-op whose call for backup has gone unanswered too long, and
+ * edit each post. One read per sweep; the rest only runs when something is
+ * due, which is rare. A failure on one row is logged and left for the next
+ * sweep (completeSoloCoop undoes its close when the reward write fails).
+ */
+async function completeUnansweredCoops(guildId, now) {
+  let rows;
+  try {
+    rows = await getUnansweredCoops(SOLO_COOP_AFTER_HOURS * 60 * 60 * 1000, now);
+  } catch (err) {
+    console.error("[missions] Could not read unanswered co-ops:", err.message);
+    return [];
+  }
+  if (guildId) rows = rows.filter((row) => row.guild_id === guildId);
+
+  const completed = [];
+  for (const row of rows) {
+    try {
+      if (await completeSoloCoop(row)) completed.push(row);
+    } catch (err) {
+      console.error(`[missions] Could not complete solo co-op ${row.id}:`, err.message);
+    }
+  }
+  return completed;
+}
+
+/**
  * A mission whose claim committed but whose public post the bot never managed
  * to update in the moment — app.js's accept edit threw (the interaction token
  * had expired because a slow claim_mission ate Discord's ack window, a Discord
@@ -297,6 +368,9 @@ async function mapLimit(items, limit, fn) {
  * works from is entirely in Postgres.
  */
 export async function sweepExpiredMissions(guildId = null, now = new Date()) {
+  // Solo co-ops first: one closed here is no longer 'accepted', so the lapse
+  // below can't also catch it. (It couldn't anyway: 3h against 48h.)
+  const solo = await completeUnansweredCoops(guildId, now);
   const { withdrawn, lapsed } = await finalizeExpiredMissions(guildId, now);
 
   // Independent per-row Discord edits — each already catches and logs its own
@@ -307,6 +381,7 @@ export async function sweepExpiredMissions(guildId = null, now = new Date()) {
   const edits = [
     ...withdrawn.map((row) => () => finalizeWithdrawnMission(row)),
     ...lapsed.map((row) => () => finalizeLapsedMission(row)),
+    ...solo.map((row) => () => finalizeSoloCoop(row)),
   ];
 
   // reconcileMissionPosts retries a disjoint set of rows (the
@@ -318,7 +393,7 @@ export async function sweepExpiredMissions(guildId = null, now = new Date()) {
     reconcileMissionPosts(guildId),
   ]);
 
-  return { withdrawn, lapsed };
+  return { withdrawn, lapsed, solo };
 }
 
 // --- scheduler pass ---------------------------------------------------------

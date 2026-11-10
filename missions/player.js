@@ -38,6 +38,7 @@ import {
   DEBRIEF_REFUSAL_LINES,
   DEBRIEF_ROLE_FALLBACK_NAMES,
   debriefReminderLine,
+  soloDebriefLines,
   ERRAND_SIGNED_INSTRUCTIONS,
   formatNameList,
   getRiddle,
@@ -79,6 +80,7 @@ import {
 import {
   acceptRow,
   bankedRewardLine,
+  debriefButton,
   ephemeral,
   ephemeralPortraitMessage,
   ephemeralResponse,
@@ -409,19 +411,6 @@ function withDebriefReminder(message, reminder) {
   };
 }
 
-// Every debrief button names its role, so a claim can grey out exactly that
-// player's. The completion post labels each with the player's name (a button
-// looks the same to everyone, so one shared button couldn't be greyed for just
-// one of them); /mission's reminder is only seen by its owner and stays bare.
-function debriefButton(missionId, role, label = DEBRIEF_BUTTON_LABEL) {
-  return {
-    type: MessageComponentTypes.BUTTON,
-    style: ButtonStyleTypes.PRIMARY,
-    label,
-    custom_id: `mission:debrief:${missionId}:${role}`,
-  };
-}
-
 // Exempt from MAX_BUTTON_LABEL_LENGTH: a player's name is never cut short.
 // A 32-char nickname still lands well under Discord's 80-char limit, even if
 // a phone clips it on display.
@@ -714,7 +703,11 @@ export async function handleMissionDebrief(body, missionId, slot = null, now = n
   // Drawn before the claim, so a house with nobody to draw can't spend it.
   // Skips students they already hold a boost with, where the grant would be
   // capped to nothing.
-  const student = pickDebriefStudent(mission.house, Object.keys(boosts));
+  //
+  // A co-op with no helper completed solo (§24): the house went in with the
+  // lead, so the draw is limited to students whose line fits one inspector.
+  const solo = !mission.helper_user_id;
+  const student = pickDebriefStudent(mission.house, Object.keys(boosts), { solo });
   if (!student) {
     console.error(`[missions] Mission ${mission.id} has no students in ${mission.house} to debrief`);
     return { response: ephemeralResponse(MISSION_ERROR_LINE) };
@@ -744,7 +737,7 @@ export async function handleMissionDebrief(body, missionId, slot = null, now = n
   // Fixed before the grant resolves, so the boost line never depends on it.
   const text = [
     `**Debrief: ${getFullName(student)}**`,
-    `"${pickRandom(DEBRIEF_LINES[student.id])}"`,
+    `"${pickRandom(solo ? soloDebriefLines(student.id) : DEBRIEF_LINES[student.id])}"`,
     MISSION_BOOST_LINE(student.firstName),
   ].join("\n\n");
 

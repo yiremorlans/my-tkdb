@@ -2065,6 +2065,101 @@ export async function claimCoopHelper(id, userId, { dayStart = null, dailyLeadCa
   return data;
 }
 
+// Discord ids are snowflakes: the top 42 bits are milliseconds since the
+// Discord epoch (2015-01-01). Reading the assist post's age off its id is
+// what saves §24 a posted-at column.
+const DISCORD_EPOCH_MS = 1420070400000n;
+function snowflakeTime(id) {
+  return Number((BigInt(id) >> 22n) + DISCORD_EPOCH_MS);
+}
+
+/**
+ * Co-ops whose call for backup has been up for at least `olderThanMs` with
+ * nobody answering (§24). A co-op only gets an assist_message_id once its lead
+ * runs /mission assist, so the set is a handful of rows at most; the age is
+ * filtered here off the post's snowflake rather than in SQL.
+ */
+export async function getUnansweredCoops(olderThanMs, now = new Date()) {
+  const { data, error } = await withGatewayRetry(() =>
+    supabase
+      .from('missions')
+      .select('*')
+      .eq('status', 'accepted')
+      .eq('mission_type', 'coop')
+      .is('helper_user_id', null)
+      .not('assist_message_id', 'is', null),
+  );
+
+  if (error) {
+    console.error('Error fetching unanswered co-ops:', error);
+    throw error;
+  }
+
+  const cutoff = now.getTime() - olderThanMs;
+  return (data || []).filter((row) => {
+    try {
+      return snowflakeTime(row.assist_message_id) <= cutoff;
+    } catch {
+      return false;
+    }
+  });
+}
+
+/**
+ * Complete an unanswered co-op for its lead alone (§24): close the row, then
+ * record the lead's completion (1 house log, a banked reset, +1 💎), the same
+ * write a two-player co-op gives the lead. Returns true when this call closed
+ * it, false when a Join click (or another sweep) got there first.
+ *
+ * Two writes, not one transaction: there is no RPC for this, by choice. The
+ * close is conditional on the row still being an unanswered accepted co-op,
+ * which join_coop_and_record also requires under its row lock, so exactly one
+ * of them wins. If the completion write then fails, the close is undone so
+ * the next sweep retries; if the undo fails too, the lead is left without the
+ * reward and the error says so for a manual grant.
+ */
+export async function completeSoloCoop(mission) {
+  const { data, error } = await supabase
+    .from('missions')
+    .update({ status: 'completed', completed_at: new Date().toISOString() })
+    .eq('id', mission.id)
+    .eq('status', 'accepted')
+    .eq('mission_type', 'coop')
+    .is('helper_user_id', null)
+    .select();
+
+  if (error) {
+    console.error('Error closing solo co-op:', error);
+    throw error;
+  }
+  if (!data?.length) return false;
+
+  const { error: recordError } = await supabase.rpc('record_mission_completion', {
+    p_user_id: mission.accepted_by,
+    p_house: mission.house,
+    p_mission_type: 'coop',
+    p_mission_id: mission.id,
+    p_role: 'lead',
+    p_points: 1,
+  });
+  if (!recordError) return true;
+
+  console.error(`Error recording solo co-op ${mission.id}:`, recordError);
+  const { error: undoError } = await supabase
+    .from('missions')
+    .update({ status: 'accepted', completed_at: null })
+    .eq('id', mission.id)
+    .eq('status', 'completed')
+    .is('helper_user_id', null);
+  if (undoError) {
+    console.error(
+      `[missions] SOLO CO-OP ${mission.id} CLOSED WITHOUT A REWARD: grant ${mission.accepted_by} a ${mission.house} coop completion by hand.`,
+      undoError,
+    );
+  }
+  throw recordError;
+}
+
 // A co-op player's role -> the missions column naming them, and the column
 // stamped when they claim their debrief (migration 030).
 const DEBRIEF_COLUMNS = {

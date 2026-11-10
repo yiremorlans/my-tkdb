@@ -42,6 +42,8 @@ import {
   getHouseRoster,
   MISSION_HOUSES,
   RIDDLES,
+  SOLO_DEBRIEF_LINE_INDEXES,
+  soloDebriefLines,
 } from "./missions.js";
 import { validateAnnouncements } from "./announcements.js";
 import {
@@ -587,6 +589,18 @@ function validateMissionContent(errors) {
         if (!expressionExists(id, face)) {
           errors.push(`${id} has no mission portrait assets/expressions/${id}/${face}`);
         }
+      }
+    }
+    // A solo co-op (§24) draws only students with a solo-safe line, so a
+    // house with none would have no one to debrief.
+    if (!getHouseRoster(house).some(({ id }) => soloDebriefLines(id).length)) {
+      errors.push(`${house} has no student with a solo debrief line (SOLO_DEBRIEF_LINE_INDEXES)`);
+    }
+  }
+  for (const [id, indexes] of Object.entries(SOLO_DEBRIEF_LINE_INDEXES)) {
+    for (const i of indexes) {
+      if (typeof DEBRIEF_LINES[id]?.[i] !== "string") {
+        errors.push(`SOLO_DEBRIEF_LINE_INDEXES.${id} points at missing DEBRIEF_LINES.${id}[${i}]`);
       }
     }
   }

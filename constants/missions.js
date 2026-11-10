@@ -50,6 +50,11 @@ export const POST_TTL_HOURS = 2;
 // the accepter's slot. Passed into claim_mission rather than hard-coded in the
 // SQL, so this constant stays the single source of truth.
 export const ACCEPT_WINDOW_HOURS = 48;
+// A co-op whose call for backup has gone unanswered this long completes for
+// the lead alone: the house goes in with them (§24). Counted from the assist
+// post, never from the accept, so a lead who never called still lapses at
+// ACCEPT_WINDOW_HOURS.
+export const SOLO_COOP_AFTER_HOURS = 3;
 
 // How many withdrawn/lapsed post edits sweepExpiredMissions fires at once. A
 // long outage can expire missions across many guilds on the same tick, and
@@ -148,6 +153,12 @@ export const MISSION_WITHDRAWN_LINES = [
 // matters more than naming the winner.
 export const MISSION_POST_RECONCILED_LINE =
   "This request has already been picked up.";
+
+// Edited onto a co-op assist post nobody answered in SOLO_COOP_AFTER_HOURS
+// (§24). The lead is named by mention: embeds render it as a name and never
+// ping.
+export const SOLO_COOP_LINE = (leadId, house) =>
+  `No other inspector answered the call, so <@${leadId}> went in with ${house}.`;
 
 // Edited onto a co-op assist post whose mission lapsed with no partner.
 export const ASSIST_LAPSED_LINES = [
@@ -361,7 +372,7 @@ export const MISSION_INSTRUCTIONS = {
   [MISSION_TYPES.RIDDLE]:
     "Answer with `/riddle <your answer>`. Solve it for one house log, plus a banked cooldown reset that clears both.",
   [MISSION_TYPES.COOP]:
-    "Call a partner with `/mission assist:true`. The first inspector to back you up completes it for both of you. One house log each, plus a banked cooldown reset that clears whichever of `/roam` or `/meet` has the longer wait.",
+    "Call a partner with `/mission assist:true`. The first inspector to back you up completes it for both of you. If nobody answers, the house goes in with you. One house log each, plus a banked cooldown reset that clears whichever of `/roam` or `/meet` has the longer wait.",
 };
 
 // An errand's instruction block once every target has signed: the targets are
@@ -865,6 +876,7 @@ export const DEBRIEF_LINES = {
   haku: [
     "Appreciate the help, you two. Made my job easy, ha ha.",
     "Nice work today. Hotarubi's a handful. You both got out without picking up anything extra, right? ...Probably.",
+    "Phew, done. Hotarubi didn't fall down around us, so I'd call that a win. Go get some rest, yeah?",
   ],
   jo: [
     "Thank you both for helping Dionysia today. If anything came up, bring it straight to me.",
@@ -889,6 +901,7 @@ export const DEBRIEF_LINES = {
   jiro: [
     "You two finished your work in Mortkranken. Neither of you is bleeding. Good.",
     "That took longer than it needed to. ...You both kept up, though. That's rare.",
+    "It's done. Come by the exam room later, I'll check you over.",
   ],
   haru: [
     "Cheers, you two! Jabberwock's always short-handed, so a pair of inspectors is a godsend. Gahaha!",
@@ -928,6 +941,37 @@ export const DEBRIEF_LINES = {
   ],
 };
 
+// A solo co-op's debrief (§24) draws only from these: the lines above that
+// read right to a single inspector, by index into DEBRIEF_LINES. The rest say
+// "you two" or "both", which only a two-player co-op can carry. Every house
+// needs at least one student here (validateContent checks it). A line added
+// to DEBRIEF_LINES is co-op only until it is listed here.
+export const SOLO_DEBRIEF_LINE_INDEXES = {
+  tohma: [1],
+  lucas: [1],
+  kaito: [0],
+  alan: [1],
+  leo: [1],
+  shohei: [0],
+  haku: [2],
+  elias: [1],
+  mio: [1],
+  jiro: [2],
+  towa: [0, 1],
+  edward: [1],
+  lyca: [1],
+  taiga: [1],
+  ritsu: [0, 1],
+  romeo: [1],
+};
+
+/** A student's solo-safe debrief lines, or [] if they have none. */
+export function soloDebriefLines(characterId) {
+  return (SOLO_DEBRIEF_LINE_INDEXES[characterId] ?? [])
+    .map((i) => DEBRIEF_LINES[characterId]?.[i])
+    .filter(Boolean);
+}
+
 // --- shared -----------------------------------------------------------------
 
 function randInt(min, max) {
@@ -954,8 +998,12 @@ export const MISSION_HOUSES = Object.values(HOUSES);
  * boost with, where a new grant would be capped to nothing). With every
  * student held it draws from the whole house, so a debrief always has a face.
  */
-export function pickDebriefStudent(house, heldIds = []) {
-  const roster = getHouseRoster(house);
+export function pickDebriefStudent(house, heldIds = [], { solo = false } = {}) {
+  // A solo co-op (§24) only draws students with a line that fits one
+  // inspector.
+  const roster = getHouseRoster(house).filter(
+    (character) => !solo || soloDebriefLines(character.id).length,
+  );
   const held = new Set(heldIds);
   const open = roster.filter((character) => !held.has(character.id));
   return pickRandom(open.length ? open : roster) ?? null;
