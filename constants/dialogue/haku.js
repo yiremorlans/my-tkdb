@@ -414,14 +414,14 @@ export default {
     ],
     spark: [
       {
-        line: "You fall asleep against his shoulder. He stays put until his arm goes numb, and then a while longer.",
-        approach: "Stay leaned on him",
+        line: "You doze off against his shoulder. When you wake, his arm has gone numb and he still hasn't moved it.",
+        approach: "Ask how long you were out",
         greeting:
-          '"Don\'t let it go to your head, princess, but I cleared my whole evening for this."',
+          '"A while. Don\'t let it go to your head, princess, but I\'d already cleared the rest of my day."',
         responses: {
           kind: "Stay tucked against him",
           playful: "Fake-snore for effect",
-          bold: "Wake him with a kiss",
+          bold: "Say you'll take the whole day",
           neutral: "Let the quiet stretch",
         },
       },
@@ -429,7 +429,7 @@ export default {
         line: "He takes your hand to steady you over a loose board, and then just... keeps it.",
         approach: "Keep his hand",
         greeting:
-          '"If I lean any closer I\'ll have to explain myself. ...Want me to?"',
+          '"That board\'s been loose for months. Keep meaning to fix it." He doesn\'t let go. "...Guess it can wait a while longer."',
         responses: {
           kind: "Let him off the hook",
           playful: "Out-blank him",
@@ -438,10 +438,10 @@ export default {
         },
       },
       {
-        line: '"I had a whole thing I was going to say. You\'ve wrecked it. Again. ...Do that more often."',
-        approach: "Wreck his plans again",
+        line: '"It suits you." He catches himself staring and doesn\'t pretend he wasn\'t. "Sorry. Couldn\'t help myself."',
+        approach: "Ask what suits you",
         greeting:
-          '"Mind if I drop the polite act for a second? ...You look unfair tonight."',
+          '"All of it, honestly. That\'s the kind of thing guys think about. Don\'t know what else to tell you."',
         responses: {
           kind: "Say his plans deserved it",
           playful: "Make him say it again",
@@ -450,12 +450,10 @@ export default {
         },
       },
       {
-        line: "The joke he'd normally hide behind doesn't come. He lets you watch him mean it.",
-        approach: "Let him mean it",
-        greeting: [
-          '"Say something. You go quiet and I start saying things I actually mean."',
-          '"I\'ve spent years keeping everything light. Not really working right now."',
-        ],
+        line: 'He reaches past your shoulder and brushes at something you can\'t see. "Don\'t move." This time he doesn\'t say he was kidding.',
+        approach: "Hold still for him",
+        greeting:
+          '"Gone now. ...Some of them are jokes. I\'d rather you didn\'t find out which ones the hard way."',
         responses: {
           kind: "Say you're not going anywhere",
           playful: "Tease him for slipping",
@@ -464,10 +462,10 @@ export default {
         },
       },
       {
-        line: '"For what it\'s worth, I like you. You can take it or leave it, whatever you want."',
-        approach: "Sit in the quiet with him",
+        line: '"Just having someone you care about at your side is all you really need..." He hears himself and stops.',
+        approach: "Wait for the joke",
         greeting:
-          '"I\'m going to regret being this honest in about an hour. Let me have it now."',
+          '"Ha ha. That was a little out of character, huh? My bad." He doesn\'t take it back.',
         responses: {
           kind: "Say it back, low-key",
           playful: "Play along with the bit",
@@ -634,9 +632,9 @@ export default {
       "**{name}** turns around before {user} even says his name. \"Knew it'd be you. Don't ask how.\"",
     ],
     spark: [
-      "**{name}** hears his name and the unbothered act slips for about a second. {user} caught it.",
-      '"Took you long enough, princess." **{name}** says it just loud enough for {user} to hear.',
-      "{user} calls his name, and **{name}** stops pretending to be asleep.",
+      '"Oh, finally here, huh?" **{name}** drops what he was doing for {user}. "Was actually ready for you this time."',
+      "**{name}** looks up at his name and smiles before he can stop it. He falls into step with {user} like he'd been waiting to.",
+      '"Hey, princess." **{name}** says it without the usual joke after, and stays right beside {user}.',
     ],
     close: [
       '"Yeah, yeah. Coming." **{name}** is already up for {user}.',

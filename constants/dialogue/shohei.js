@@ -526,7 +526,7 @@ export default {
         responses: {
           kind: "Let him guide you closer",
           playful: "Rate his knife skills",
-          bold: "Kiss the flour off his cheek",
+          bold: "Say you think about him too",
           neutral: "Keep chopping",
         },
       },
