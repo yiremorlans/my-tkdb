@@ -107,8 +107,8 @@ export async function handleMissionsAdmin(body) {
         ].join("\n"),
       ),
       afterReply: async () => {
-        // Surfaces a permissions problem now, at setup, rather than burning
-        // three days of slots before the auto-disable notices.
+        // Surfaces a permissions problem now, at setup, rather than letting
+        // every slot fail quietly in the log.
         try {
           await postChannelMessage(channelId, {
             content:

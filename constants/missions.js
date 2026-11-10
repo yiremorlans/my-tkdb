@@ -1057,13 +1057,13 @@ function atLocalHour(now, hour) {
 }
 
 /**
- * The day's three slot times, as ISO strings: one uniform-random moment inside
- * each equal third of the active window, re-rolled if it would land less than
+ * The day's MISSIONS_PER_DAY slot times, as ISO strings: one uniform-random
+ * moment inside each equal band of the active window, re-rolled if it would land less than
  * MIN_GAP_MS after the previous one.
  *
- * The bands (~6h20m) comfortably absorb a 2h re-roll — the worst case still
- * leaves over four hours of the band to land in — so the loop terminates almost
- * immediately. The attempt cap is belt and braces: rather than spin, fall back
+ * The bands (~3h10m at 6/day) absorb a 2h re-roll — the worst case still
+ * leaves over an hour of the band to land in — so the loop terminates within a
+ * few attempts. The attempt cap is belt and braces: rather than spin, fall back
  * to "exactly one gap after the previous slot", which is always inside the band.
  */
 export function rollDailySlots(now = new Date()) {

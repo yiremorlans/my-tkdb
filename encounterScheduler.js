@@ -128,9 +128,9 @@ export async function runTick(now = new Date()) {
 /**
  * The scheduled-missions half of the tick (docs/scheduled-missions.md §3).
  *
- * Missions ride this loop rather than an interval of their own: at three posts
- * a day the work per tick is one indexed read plus, on the rare tick where a
- * slot has come due, one spawn. All of the schedule state — today's three slot
+ * Missions ride this loop rather than an interval of their own: at six posts
+ * a day (MISSIONS_PER_DAY) the work per tick is one indexed read plus, on the rare tick where a
+ * slot has come due, one spawn. All of the schedule state — today's slot
  * times and which have fired — lives on guild_settings, so this is restart-safe
  * for exactly the reason the encounter cadence is: nothing is held in memory,
  * and the first tick after boot re-derives everything from the row.

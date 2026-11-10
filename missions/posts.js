@@ -403,7 +403,7 @@ export async function sweepExpiredMissions(guildId = null, now = new Date()) {
  * slot that has come due.
  *
  * A slot is spent whether or not it produced a mission. That is what keeps the
- * feature to three requests a day even when the host was asleep, when a request
+ * feature to MISSIONS_PER_DAY requests a day even when the host was asleep, when a request
  * from the last band is still on the board, or when a post failed outright —
  * "the moment passed" is a real outcome here, not an error to retry.
  */

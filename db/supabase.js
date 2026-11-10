@@ -1728,7 +1728,7 @@ export async function setGuildMissionsEnabled(guildId, enabled) {
   return data?.[0] || null;
 }
 
-/** Write today's three slot times and reset the fired list. Once per local day. */
+/** Write today's slot times and reset the fired list. Once per local day. */
 export async function rollGuildMissionSlots(guildId, day, slots) {
   const { data, error } = await supabase
     .from('guild_settings')
