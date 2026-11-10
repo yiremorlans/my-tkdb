@@ -596,6 +596,34 @@ export const RIDDLES = {
 - Non-character-answer riddles (buttons A/B/C, keyword) are a possible later
   variant; v1 is "name the student", matched by `matchCharacterGuess`.
 
+### Enhancement: recent-riddle skip (not built)
+
+Reuse the /roam + /meet recent-beat skip so a player doesn't redraw a riddle
+they just solved. Today `pickRiddle(house)` is uniform, so repeats are common
+in small pools.
+
+- **Draw at accept.** The riddle is drawn at spawn, before anyone owns it, so
+  there is no player to skip for. The prompt only ever reaches the accepter
+  (`missionObjectiveLine`), so after `claimMission` succeeds
+  (`missions/player.js`), redraw with the accepter's recent list and overwrite
+  `missions.riddle_id` on that row. Keep the spawn draw: it is still the guard
+  that skips a house with no authored riddles.
+- **Record on solve.** In `handleRiddle`, after `solveRiddle` succeeds, add
+  `rememberDialogueBeat` to the `afterReply` batch. This matches the "recorded
+  when answered" rule. A riddle that lapses unsolved stays drawable, since
+  the player never cracked it.
+- **Key by `riddle.id`**, not a line hash: ids are stable, so editing a prompt
+  keeps the riddle's history.
+- **Storage: `recent_dialogue_beats`, no migration.** `character_id` is plain
+  TEXT, so the row goes under `riddle:<house>`. `remember_dialogue_beat()`
+  works unchanged. Update the table's comment and `db/SCHEMA.md` to say it
+  holds riddles too.
+- **Window:** `recentBeatWindow(pool)` as is: 8-riddle houses (Frostheim,
+  Dionysia) skip 5; 6-riddle houses skip 3; Mortkranken (4) skips 1 and will
+  still repeat until it gains a student.
+- **Test:** a recently solved riddle isn't redrawn at accept; the skip falls
+  back to the full pool when the read fails.
+
 ### `/riddle <answer>` (ephemeral)
 
 1. No pending mission / not a riddle mission → redirect line (mirror `/docs`).
