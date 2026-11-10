@@ -1946,8 +1946,10 @@ solo-safe students). The line comes from `soloDebriefLines(id)`.
 
 **Solo-safe lines** are a subset of the one `DEBRIEF_LINES` pool, listed by
 index in `SOLO_DEBRIEF_LINE_INDEXES`; no separate pool. Picked 2026-11-10 by
-reading every line for fit. Hotarubi and Mortkranken had none, so Haku and
-Jiro each got a third, count-neutral line, which two-player co-ops draw too.
+reading every line for fit, then every student without one got a third,
+count-neutral line ("you" only: no "you two", no "alone"), which two-player
+co-ops draw too. With every student eligible, the solo draw skips held boosts
+across the whole house, exactly like a two-player debrief.
 A line added to `DEBRIEF_LINES` is co-op only until it is listed.
 `validateContent()` fails when a house has no solo-safe student or an index
 points at nothing.

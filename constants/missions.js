@@ -840,6 +840,7 @@ export const DEBRIEF_LINES = {
   jin: [
     "So you're the ones Tohma had handling my house's business. Whatever. Nothing came back on me, so you can go.",
     "Heard there were inspectors downstairs. ...Next time, knock on my door first. I want to know who's in my house.",
+    "Tohma says the brats behaved themselves out there with you. ...Good. We're done here.",
   ],
   tohma: [
     "You two kept pace admirably today. Do stop by for tea before you leave. I believe we've all earned a cup.",
@@ -868,10 +869,12 @@ export const DEBRIEF_LINES = {
   zenji: [
     "Two inspectors in Hotarubi! I watched the whole thing, my dear. Such teamwork. Positively sensational.",
     "I tagged along behind you both the whole way. Don't worry, nobody saw me. Nobody ever does.",
+    "You're back in one piece, my dear! I fretted the whole way through, but you strode in like the hero of a romance. I've already begun the first chapter.",
   ],
   subaru: [
     "Thank you both for helping Hotarubi. I'm sorry if anyone was difficult... Would you like some tea before you go?",
     "You both did so well today. I'm so relieved we got through it. Please, sit and rest a while before you go.",
+    "I'm sorry if Hotarubi made that harder than it needed to be. We don't usually get difficult missions here...",
   ],
   haku: [
     "Appreciate the help, you two. Made my job easy, ha ha.",
@@ -881,6 +884,7 @@ export const DEBRIEF_LINES = {
   jo: [
     "Thank you both for helping Dionysia today. If anything came up, bring it straight to me.",
     "You two kept the show running with us today. The whole troupe owes you a round of applause.",
+    "Leave the report for the chancellor to me. You've earned a break.",
   ],
   elias: [
     "Oh, good work today. I was a little late getting there… but you two had it handled.",
@@ -893,19 +897,22 @@ export const DEBRIEF_LINES = {
   shion: [
     "Hehehe… You two weren't bad. Next time, I'll make it more fun.",
     "I watched you two the whole time. You never looked scared once. Boring.",
+    "Did you see Mio's face when that thing showed up? He went so pale. Hehehe… I want to see it again.",
   ],
   yuri: [
     "Hmph. Under my direction, the outcome was never in doubt. Adequate work, both of you. You may leave before I find a use for you.",
     "Not a single injury between you. Good. ...Though I do have a new formula ready, should either of you feel faint.",
+    "Hmph. You came back with every limb attached and not one specimen ruined. For an outsider in Mortkranken, that is nearly impressive.",
   ],
   jiro: [
     "You two finished your work in Mortkranken. Neither of you is bleeding. Good.",
     "That took longer than it needed to. ...You both kept up, though. That's rare.",
-    "It's done. Come by the exam room later, I'll check you over.",
+    "It's done. Come by the examination room later, I'll check you over.",
   ],
   haru: [
     "Cheers, you two! Jabberwock's always short-handed, so a pair of inspectors is a godsend. Gahaha!",
     "Thanks heaps for the help today! Stick around next time and I'll put you both to work feeding the critters.",
+    "Everyone made it out and nobody got eaten! In Jabberwock, that's a perfect day. Gahaha!",
   ],
   towa: [
     "~~~~ ♪ *Towa trails after you a few steps, humming, then drops a clover into your hand.*",
@@ -914,6 +921,7 @@ export const DEBRIEF_LINES = {
   ren: [
     "You two actually volunteered for that? ...Respect, I guess. I got dragged.",
     "Finally, it's over. You two did most of it, so... good work, I guess.",
+    "That was a horror B-movie with worse lighting, except I couldn't leave. ...You didn't run, Senpai. Guess that's kinda cool. ...Whatever, forget I said that.",
   ],
   edward: [
     "Ah, so you two were the inspectors bustling about Obscuary. Rui tells me you were splendid. I was asleep, I'm afraid.",
@@ -922,6 +930,7 @@ export const DEBRIEF_LINES = {
   rui: [
     "Thanks a ton for the help today, you two! Stop by the kitchen, I've got leftovers with your names on them.",
     "Ahaha, two inspectors at once! Ed slept through the whole thing, didn't he? Thanks for picking up the slack.",
+    "Whoa, hold up! You snagged your uniform in there, cutie. Drop it by the kitchen later, I'll fix it for you. Least I can do!",
   ],
   lyca: [
     "You two kept up today. ...You did good.",
@@ -947,18 +956,27 @@ export const DEBRIEF_LINES = {
 // needs at least one student here (validateContent checks it). A line added
 // to DEBRIEF_LINES is co-op only until it is listed here.
 export const SOLO_DEBRIEF_LINE_INDEXES = {
+  jin: [2],
   tohma: [1],
   lucas: [1],
   kaito: [0],
   alan: [1],
   leo: [1],
   shohei: [0],
+  zenji: [2],
+  subaru: [2],
   haku: [2],
+  jo: [2],
   elias: [1],
   mio: [1],
+  shion: [2],
+  yuri: [2],
   jiro: [2],
+  haru: [2],
   towa: [0, 1],
+  ren: [2],
   edward: [1],
+  rui: [2],
   lyca: [1],
   taiga: [1],
   ritsu: [0, 1],
