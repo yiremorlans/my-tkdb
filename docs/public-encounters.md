@@ -239,7 +239,7 @@ guild's live encounter so another can be spawned without waiting out the
 2-minute window. A manual spawn passes `reanchor: false` to `spawnEncounter`, so
 it never writes `guild_settings`: the real cadence anchor and the post-failure
 counter are untouched, and a test spawn neither moves nor masks the live
-schedule. Purely a testing aid — the cadence is otherwise 45–180 minutes.
+schedule. Purely a testing aid — the cadence is otherwise 70–200 minutes.
 
 
 A scheduled job posts a public, everyone-can-see encounter into a designated
@@ -401,7 +401,7 @@ crisper finalize, with the tick as the guaranteed backstop.
 ### Cadence (per guild)
 
 - `guild_settings.cadence_min_minutes` / `cadence_max_minutes`, defaulting to the
-  global `ENCOUNTER_MIN_MINUTES` / `ENCOUNTER_MAX_MINUTES` (45 / 180) when NULL.
+  global `ENCOUNTER_MIN_MINUTES` / `ENCOUNTER_MAX_MINUTES` (70 / 200) when NULL.
 - Gap for a guild = `cadence_min + random() * (cadence_max - cadence_min)` minutes.
 - Each guild rolls its own gap. Two guilds never share a spawn clock.
 
@@ -1058,8 +1058,8 @@ are **global defaults** only, used when a guild leaves a column NULL:
 
 | Var | Default | Purpose |
 |---|---|---|
-| `ENCOUNTER_MIN_MINUTES` | `45` | Default lower bound of the gap between a guild's encounters |
-| `ENCOUNTER_MAX_MINUTES` | `180` | Default upper bound of the gap between a guild's encounters |
+| `ENCOUNTER_MIN_MINUTES` | `70` | Default lower bound of the gap between a guild's encounters |
+| `ENCOUNTER_MAX_MINUTES` | `200` | Default upper bound of the gap between a guild's encounters |
 | `ENCOUNTER_WINDOW_MINUTES` | `2` | Default `/call` window before the moment passes |
 | `ENCOUNTER_BOOST_GAIN` | `1` | Extra affinity per pending boost, all redeemed together on the winner's next authored (`/roam` / `/meet`) response — see §16 |
 | `ENCOUNTER_BOOST_CAP` | `1` (was `2`, lowered 2026-09 — see §16.1) | Max unspent boosts a user can hold per character (so the combined redemption tops out at +1) |

@@ -33,8 +33,8 @@ import { pronounVars } from "./dialogue/_shared.js";
 // Bounds on the gap between one encounter and the next in a server. Each guild
 // rolls its own gap inside this range, so servers drift apart rather than
 // spawning in lockstep.
-export const ENCOUNTER_MIN_MINUTES = 45;
-export const ENCOUNTER_MAX_MINUTES = 180;
+export const ENCOUNTER_MIN_MINUTES = 70; // 1h10m
+export const ENCOUNTER_MAX_MINUTES = 200; // 3h20m
 
 // How long a posted encounter stays callable before the moment passes. The
 // scheduler tick must stay well under this — see encounterScheduler.js.

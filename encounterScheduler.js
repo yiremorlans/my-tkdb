@@ -40,7 +40,7 @@ const TICK_INTERVAL_MS = 45 * 1000;
 
 // Minimum wall time between spawn *attempts* for one guild, enforced in memory
 // and independently of the Postgres cadence anchor. Normally dead weight — a
-// successful spawn pushes last_encounter_at 45+ minutes out, so this floor
+// successful spawn pushes last_encounter_at 70+ minutes out, so this floor
 // expires long before the anchor says "due" again. It matters only in the
 // pathological case the anchor can't cover: a channel POST fails AND the
 // clock-advance write that follows it also fails, leaving the anchor reading

@@ -108,7 +108,7 @@ export function rollGapMinutes() {
   const min = Math.min(ENCOUNTER_MIN_MINUTES, ENCOUNTER_MAX_MINUTES);
   const max = Math.max(ENCOUNTER_MIN_MINUTES, ENCOUNTER_MAX_MINUTES);
   // guild_settings.next_gap_minutes is an INT column — round rather than hand
-  // Postgres a float. Sub-minute precision on a 45–180 minute gap is noise.
+  // Postgres a float. Sub-minute precision on a 70–200 minute gap is noise.
   return Math.round(min + Math.random() * (max - min));
 }
 
@@ -855,7 +855,7 @@ function encounterDevRefusal(body) {
 /**
  * `/encdev` — manual encounter tooling, restricted to OWNER_DISCORD_ID. Exists
  * only to exercise the spawn / reveal / expiry path on demand instead of
- * waiting out the 45–180 minute cadence.
+ * waiting out the 70–200 minute cadence.
  *
  *   /encdev spawn [character] [variant]   force one encounter now
  *   /encdev clear                         expire this guild's live encounter

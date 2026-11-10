@@ -76,7 +76,12 @@ const {
 const { runTick, clearSpawnAttemptFence } = await import('../encounterScheduler.js');
 const { buildMeetPickMessage, buildResponseResultMessage } = await import('../encounters.js');
 const { grantEncounterBoost, consumeAllEncounterBoosts } = await import('../db/supabase.js');
-const { clearGuessCooldowns, matchCharacterGuess } = await import('../constants/publicEncounters.js');
+const {
+  clearGuessCooldowns,
+  ENCOUNTER_MAX_MINUTES,
+  ENCOUNTER_MIN_MINUTES,
+  matchCharacterGuess,
+} = await import('../constants/publicEncounters.js');
 const { CHARACTERS, RESPONSE_TYPES } = await import('../constants/characters.js');
 
 function guildRow(overrides = {}) {
@@ -279,9 +284,9 @@ describe('the scheduler loop', () => {
     const gaps = draws.map(() => rollGapMinutes());
     for (const gap of gaps) {
       assert.ok(Number.isInteger(gap), `rollGapMinutes returned ${gap}`);
-      assert.ok(gap >= 45 && gap <= 180, `rollGapMinutes returned ${gap}`);
+      assert.ok(gap >= ENCOUNTER_MIN_MINUTES && gap <= ENCOUNTER_MAX_MINUTES, `rollGapMinutes returned ${gap}`);
     }
-    assert.deepEqual([gaps[0], gaps.at(-1)], [45, 180], 'the draw spans the whole window');
+    assert.deepEqual([gaps[0], gaps.at(-1)], [ENCOUNTER_MIN_MINUTES, ENCOUNTER_MAX_MINUTES], 'the draw spans the whole window');
   });
 });
 
