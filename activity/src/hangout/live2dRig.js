@@ -1365,31 +1365,6 @@ export class Live2DRig {
     return ids.some((id) => opacities[this.drawableIndex.get(id)] >= 0.5);
   }
 
-  /**
-   * A point on these drawables' art: the middle of the showing one whose
-   * middle sits inside the most of the others (the densest layering, ties
-   * to the bigger one), so a U-shaped article (Leo's headphones) points at
-   * an earcup, not the gap its band spans. null if none shows.
-   */
-  drawablesAnchor(ids) {
-    const opacities = this.raw.drawables.opacities;
-    const boxes = [];
-    for (const id of ids) {
-      const i = this.drawableIndex.get(id);
-      if (i != null && opacities[i] >= 0.5) boxes.push(this.model.internalModel.getDrawableBounds(i));
-    }
-    let best = null;
-    let score = -1;
-    for (const b of boxes) {
-      const x = b.x + b.width / 2;
-      const y = b.y + b.height / 2;
-      const inside = boxes.filter((o) => x >= o.x && x <= o.x + o.width && y >= o.y && y <= o.y + o.height).length;
-      const s = inside * 1e9 + b.width * b.height;
-      if (s > score) [score, best] = [s, [x, y]];
-    }
-    return best;
-  }
-
   /** Whether a reference-space point is inside a showing drawable's bounds. */
   drawablesHit(ids, [x, y]) {
     const opacities = this.raw.drawables.opacities;

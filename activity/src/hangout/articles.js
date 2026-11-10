@@ -255,13 +255,13 @@ export function attachArticles(scene, { startOff = false, onChange, coach } = {}
 
   // --- tutorial chips (coach.js) --------------------------------------------
   // Below warm, a tap on an article plays its own lines; from warm a
-  // double-tap takes it off. Each chip points at the first article that
-  // fits (a dot on its biggest piece of art) and is offered only where he has one, so it
-  // waits for a character who does. The text never names the article.
+  // double-tap takes it off. Each chip is offered only where he has an
+  // article that fits, so it waits for a character who does. No pointer:
+  // a dot sits only on motions and gestures (holds, the tease), never on
+  // an article. The text never names the article.
   const HINTS = { tap: "hangout.hint.articleTap", off: "hangout.hint.articleOff" };
   const tappable = () => [...articles.values()].find((a) => a.config.hit !== false && present(a)) ?? null;
   const takeable = () => [...articles.values()].find((a) => a.config.hit !== false && removable(a, scene.time)) ?? null;
-  const centerOf = (a) => (a ? renderer.drawablesAnchor(a.art) : null);
   const below = () => !atLeast(hangout.tier, UNLOCK_TIER);
   function offerHints() {
     if (!coach || !articles.size) return;
@@ -270,14 +270,12 @@ export function attachArticles(scene, { startOff = false, onChange, coach } = {}
       key: HINTS.tap,
       rank: rank - 1,
       text: "Something of his reacts to a tap",
-      point: () => centerOf(tappable()),
       when: () => below() && Boolean(tappable()),
     });
     coach.offer({
       key: HINTS.off,
       rank,
       text: "New: something of his comes off. Double-tap it",
-      point: () => centerOf(takeable()),
       when: () => !below() && Boolean(takeable()),
     });
   }

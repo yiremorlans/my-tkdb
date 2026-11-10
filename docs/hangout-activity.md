@@ -552,16 +552,17 @@ and pose come off the same tier ladder as the spot it's on.
 
   | Tier | When | Pill | Pointer | Clears when |
   |---|---|---|---|---|
-  | new, known | Hangout opens, he has an article | "Something of his reacts to a tap" | dot on the article | a tap on an article |
-  | warm+ | Hangout opens, he has an article | "New: something of his comes off. Double-tap it" | dot on the article | an article comes off |
+  | new, known | Hangout opens, he has an article | "Something of his reacts to a tap" | none | a tap on an article |
+  | warm+ | Hangout opens, he has an article | "New: something of his comes off. Double-tap it" | none | an article comes off |
   | spark+ | Hangout opens | "New: press and hold his hand, lips or chest" | dot on his chest (the heartbeat hold opens the monitor) | a hold lands |
   | close, bound | a chest hold starts | "Checking his heartbeat? Try sliding down" | chevron drifting down from the finger | the slide registers (caught or tease); hidden, not seen, if let go first |
   | bound (bliss on) | Hangout opens | "New: hold his hand and lips first, then his chest" | dot on his hand | both holds have run |
   | bound (bliss on) | the edge's heart appears | "Tap the heart before it fades" | the heart itself | the heart is tapped; missed, it shows at the next edge |
 
   The article chips wait for a character who has an article (12 rigs) and
-  never name it; the dot sits on its densest piece of art
-  (live2dRig.js `drawablesAnchor`). Entry chips queue one at a time,
+  never name it or point at it: pointers sit only on motions and
+  gestures (holds, the slide, the tease), never on an article (user,
+  2026-11-10). Entry chips queue one at a time,
   lowest tier first; the slide and edge chips take the pill mid-gesture.
   The edge chip stays visible while tease dims the box (`.coach.keep`).
 
