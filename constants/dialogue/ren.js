@@ -28,7 +28,7 @@ export default {
             "Haggle him down from maybe",
           ],
           bold: ["Say deal, he owes you", "Tell him maybe isn't a no"],
-          neutral: ["Nod, say nothing", "Shrug and let it go"],
+          neutral: ["Leave him to his break", "Shrug and let it go"],
         },
       },
       {
@@ -51,7 +51,7 @@ export default {
           kind: ["Say you're just checking in", "Say doing nothing is fine"],
           playful: ["Ask if you can join nothing", "Ask if nothing pays well"],
           bold: ["Sit and do nothing with him", "Claim the other end"],
-          neutral: ["Nod and leave him to it", "Lean on the wall, quiet"],
+          neutral: ["Nod and leave him to it", "Lean on the wall"],
         },
       },
       {
@@ -69,7 +69,7 @@ export default {
             "Say he owes you a diner round",
           ],
           bold: ["Plant yourself right there", "Take the spot next to him"],
-          neutral: ["Shrug, say nothing", "Say you'll think about it"],
+          neutral: ["Ask where the feed is", "Say you'll think about it"],
         },
       },
     ],
@@ -90,7 +90,7 @@ export default {
         approach: "Take the drink",
         greeting: '"It was already made. Would\'ve gone to waste otherwise."',
         responses: {
-          kind: ["Drink it, say nothing", "Say it was the right one"],
+          kind: ["Drink every drop", "Say it was the right one"],
           playful: [
             "Offer to rescue more drinks",
             "Call it suspiciously perfect",
@@ -110,7 +110,7 @@ export default {
             "Joke about actually signing up",
           ],
           bold: ["Say you'll open the next one", "Ask what it's actually for"],
-          neutral: ["Open it, say nothing", "Do it without comment"],
+          neutral: ["Open the link", "Do it without comment"],
         },
       },
       {
@@ -122,7 +122,7 @@ export default {
           kind: ["Say it wasn't just him", "Agree the ending was rough"],
           playful: ["Pitch an even worse ending", "Quote the worst line back"],
           bold: ["Say you already have thoughts", "Demand he go first"],
-          neutral: ["Say yes, keep it short", "Give a flat answer"],
+          neutral: ["Say you saw it", "Give a flat answer"],
         },
       },
       {
@@ -149,7 +149,7 @@ export default {
             "Make it weird, on purpose",
           ],
           bold: ["Take the seat, no ceremony", "Sit like it was always yours"],
-          neutral: ["Sit, say nothing", "Take the seat quietly"],
+          neutral: ["Plug your phone in", "Take the seat quietly"],
         },
       },
       {
@@ -164,7 +164,7 @@ export default {
             "Say your luck is legendary",
           ],
           bold: ["Press it, own the result", "Ask for the next pull too"],
-          neutral: ["Pull it, say nothing", "Take the phone quietly"],
+          neutral: ["Press the button", "Take the phone quietly"],
         },
       },
       {
@@ -188,7 +188,7 @@ export default {
           kind: ["Promise not to tell Haru", "Say it stays between you"],
           playful: ["Ask what silence is worth", "Offer to fake an alibi"],
           bold: ["Say you're coming back", "Say you'll knock quieter"],
-          neutral: ["Shrug, say nothing", "Let it go unremarked"],
+          neutral: ["Say you won't tell Haru", "Let it go unremarked"],
         },
       },
       {
@@ -214,7 +214,7 @@ export default {
           kind: ["Sit next to him anyway", "Sympathize with him"],
           playful: ["Say the fish won this round", "Call it a war wound"],
           bold: ["Stay close, smell and all", "Say you've smelled worse"],
-          neutral: ["Shrug, say it's fine", "Say nothing about the smell"],
+          neutral: ["Take a step back", "Say it's not that bad"],
         },
       },
       {
@@ -228,7 +228,7 @@ export default {
             "Pick the worse one on purpose",
           ],
           bold: ["Pick without hesitation", "Say your taste is better"],
-          neutral: ["Pick one, say nothing", "Point at one, unbothered"],
+          neutral: ["Pick the first one", "Point at the second one"],
         },
       },
       {
@@ -243,7 +243,7 @@ export default {
             "Say maybe you did sign him up",
             "Refuse to confirm either way",
           ],
-          neutral: ["Say nothing, let him wonder", "Shrug, keep walking"],
+          neutral: ["Let him wonder", "Keep walking"],
         },
       },
     ],
@@ -260,7 +260,7 @@ export default {
             "Ask if the phone's broken",
           ],
           bold: ["Say you earned it", "Say the level can wait"],
-          neutral: ["Settle in quietly", "Drop your bag, sit"],
+          neutral: ["Settle in quietly", "Drop your bag"],
         },
       },
       {
@@ -272,7 +272,7 @@ export default {
           kind: ["Get comfy for the shark", "Say it sounds perfect"],
           playful: ["Guess the budget", "Ask if the shark wins"],
           bold: ["Sit like it's expected", "Call dibs on the next pick"],
-          neutral: ["Sit without comment", "Take the space, no comment"],
+          neutral: ["Sit without comment", "Take the space"],
         },
       },
       {
@@ -300,7 +300,7 @@ export default {
             "Ask what your stats look like",
           ],
           bold: ["Say you knew he'd wait", "Say you'll lead the raid"],
-          neutral: ["Join, say nothing", "Open the game"],
+          neutral: ["Take the second slot", "Open the game"],
         },
       },
       {
@@ -323,7 +323,7 @@ export default {
           kind: ["Sit down and share them", "Save him the better half"],
           playful: ["Rate the snack selection", "Ask what else is up there"],
           bold: ["Take them without asking", "Raid the whole stash"],
-          neutral: ["Take a snack, say nothing", "Eat one, sit down"],
+          neutral: ["Take a snack", "Eat one with him"],
         },
       },
       {
@@ -378,7 +378,7 @@ export default {
           kind: ["Watch it twice", "Say the end cut landed"],
           playful: ["Ask for the blooper reel", "Ask for a director's cut"],
           bold: ["Say it's his best yet", "Tell him to post it"],
-          neutral: ["Nod, say it's fine", "Ask what he edits on"],
+          neutral: ["Say it's fine", "Ask what he edits on"],
         },
       },
       {
@@ -405,7 +405,7 @@ export default {
             "Bet he misses the next one too",
           ],
           bold: ["Take the long way, then", "Say he's walking you home"],
-          neutral: ["Let the venting run", "Keep walking, say nothing"],
+          neutral: ["Let the venting run", "Keep walking"],
         },
       },
       {
@@ -417,7 +417,7 @@ export default {
           kind: ["Dig in without comment", "Say he got it perfect"],
           playful: ["Ask for extra extra corn", "Ask for a surprise topping"],
           bold: ["Say of course he remembers", "Claim the bigger cup"],
-          neutral: ["Eat it, say nothing", "Eat what he makes"],
+          neutral: ["Eat the noodles", "Eat what he makes"],
         },
       },
       {
@@ -432,7 +432,7 @@ export default {
             "Ask for asylum from rounds",
           ],
           bold: ["Say you picked here tonight", "Say you'd rather hang here"],
-          neutral: ["Answer, leave it there", "Shrug, say it was fine"],
+          neutral: ["Say it was Haru", "Say the rounds were fine"],
         },
       },
       {
@@ -454,7 +454,7 @@ export default {
           kind: ["Ask what you missed", "Say you hurried"],
           playful: ["Blame the walk over", "Ask for the exact count"],
           bold: ["Sit like you always do", "Take the room he made"],
-          neutral: ["Sit, skip the apology", "Sit in the space left"],
+          neutral: ["Skip the apology", "Sit in the space left"],
         },
       },
       {
@@ -486,7 +486,7 @@ export default {
             "Rate the aquatic zone a zero",
           ],
           bold: ["Stick by him till he's dry", "Say you owe him one"],
-          neutral: ["Nod, let it go", "Hand him a towel, say nothing"],
+          neutral: ["Let it go", "Hand him a towel"],
         },
       },
     ],
@@ -557,7 +557,7 @@ export default {
           kind: ["Say you'd watch it again", "Settle in for the rewatch"],
           playful: ["Quote the best line first", "Ask if it's as good again"],
           bold: ["Say it's your movie now", "Take your spot, no ceremony"],
-          neutral: ["Watch along, say nothing", "Start it from the top"],
+          neutral: ["Watch it again", "Start it from the top"],
         },
       },
       {
@@ -607,7 +607,7 @@ export default {
           kind: "Say you'll take him up on it",
           playful: "Steal his hoodie",
           bold: "Name what this is",
-          neutral: "Stay, say nothing",
+          neutral: "Stay a while longer",
         },
       },
       {
@@ -619,7 +619,7 @@ export default {
           kind: "Let him win anyway",
           playful: "Beat him at his own game",
           bold: "Say it before he does",
-          neutral: "Play along, say nothing",
+          neutral: "Play the round out",
         },
       },
       {
@@ -627,7 +627,7 @@ export default {
         approach: "Notice the phone stays down",
         greeting: '"I don\'t do this with anybody else. You get that, right?"',
         responses: {
-          kind: "Notice, say nothing about it",
+          kind: "Say you get it",
           playful: "Ask if the phone's sulking",
           bold: "Say that means something",
           neutral: "Share the couch in silence",
@@ -701,7 +701,7 @@ export default {
           kind: "Say it back",
           playful: "Count how many times, out loud",
           bold: "Pull him back to bed",
-          neutral: "Let it be constant, unremarked",
+          neutral: "Let it stay ordinary",
         },
       },
     ],

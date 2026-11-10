@@ -25,7 +25,7 @@ export default {
           kind: ["Say it feels welcoming", "Ask if he keeps it lively"],
           playful: ["Say you'll bring the party", "Ask for the grand tour"],
           bold: ["Say you'll stay a while", "Say you expected coffins"],
-          neutral: ["Glance around, say nothing", "Say you expected quieter"],
+          neutral: ["Glance around the bar", "Say you expected quieter"],
         },
       },
       {
@@ -105,7 +105,7 @@ export default {
             "Say you'll bring the tissues",
           ],
           bold: ["Say you'll hold him to it", "Admit it's been a long day"],
-          neutral: ["Nod, say maybe later", "Take the offer, say nothing"],
+          neutral: ["Say maybe later", "Take a seat at the bar"],
         },
       },
       {
@@ -117,7 +117,7 @@ export default {
           kind: ["Offer him a cold drink", "Suggest somewhere cooler"],
           playful: ["Fan him from a distance", "Say he's hot either way"],
           bold: ["Say you'll keep him company", "Say the turtleneck suits him"],
-          neutral: ["Nod, say nothing", "Let it drop"],
+          neutral: ["Take his word for it", "Let it drop"],
         },
       },
       {
@@ -132,7 +132,7 @@ export default {
           ],
           playful: ["Ask for matching outfits", "Ask who's the older twin"],
           bold: ["Say you've got his back", "Ask if he means that"],
-          neutral: ["Smile, say nothing", "Just wave back"],
+          neutral: ["Smile back at him", "Just wave back"],
         },
       },
       {
@@ -144,7 +144,7 @@ export default {
           kind: ["Say his roses are beautiful", "Admire his patience with it"],
           playful: ["Cheer the rose on", "Claim you're fussy as well"],
           bold: ["Say you're not just anyone", "Demand it bloom for you too"],
-          neutral: ["Watch him coax it", "Say nothing, just watch"],
+          neutral: ["Watch him coax it", "Watch the rose open"],
         },
       },
       {
@@ -168,7 +168,7 @@ export default {
           kind: ["Say it's in good hands", "Ask what it'll grow into"],
           playful: ["Ask if you can name it", "Ask what the plants think"],
           bold: ["Ask to repot one with him", "Hand him the next pot"],
-          neutral: ["Watch him repot, say nothing", "Wait till he's done"],
+          neutral: ["Watch him repot it", "Wait till he's done"],
         },
       },
       {
@@ -194,7 +194,7 @@ export default {
             "Ask if he memorizes everyone's",
           ],
           bold: ["Test if he really remembers", "Order something new instead"],
-          neutral: ["Order the usual, say nothing", "Nod, take the drink"],
+          neutral: ["Watch him pour it", "Take the drink"],
         },
       },
       {
@@ -206,7 +206,7 @@ export default {
           kind: ["Say his worries count too", "Say he can tell you anytime"],
           playful: ["Say you'll trade answers", "Say that was a record dodge"],
           bold: ["Say you worry because you care", "Say you've got all night"],
-          neutral: ["Let him deflect, say nothing", "Drop it for now"],
+          neutral: ["Say you've been fine", "Drop it for now"],
         },
       },
       {
@@ -218,7 +218,7 @@ export default {
           kind: ["Say you're glad he's around", "Ask if Ed bugs him too"],
           playful: ["Ask about a restraining order", "Call him your bodyguard"],
           bold: ["Say you'll return the favor", "Say Ed doesn't scare you"],
-          neutral: ["Shrug, say nothing", "Let it go unremarked"],
+          neutral: ["Let him handle Edward", "Let it go unremarked"],
         },
       },
       {
@@ -230,7 +230,7 @@ export default {
           kind: ["Say you'll stop by the bar", "Wish him a good day"],
           playful: ["Bet he'll miss you first", "Ask what's on tonight's menu"],
           bold: ["Ask to tag along instead", "Say you'll find him after"],
-          neutral: ["Nod, head to class", "Wave and go"],
+          neutral: ["Head to class", "Wave and go"],
         },
       },
     ],
@@ -280,7 +280,7 @@ export default {
           kind: ["Say you'd come just for this", "Ask how his night's been"],
           playful: ["Ask what the worst part is", "Toast to every time"],
           bold: ["Ask what makes it the best", "Say he tells everyone that"],
-          neutral: ["Take the drink, listen", "Drink it, say nothing"],
+          neutral: ["Take the drink", "Try the first sip"],
         },
       },
       {
@@ -350,7 +350,7 @@ export default {
             "Say you came for his cooking",
             "Say you'll cook for him next",
           ],
-          neutral: ["Sit and eat, say nothing", "Eat what he puts down"],
+          neutral: ["Wait for the food", "Eat what he puts down"],
         },
       },
       {
@@ -362,7 +362,7 @@ export default {
           kind: ["Say Lyca's working hard", "Say he sounds proud"],
           playful: ["Say Lyca learned from the best", "Ask for the full story"],
           bold: ["Say you saw it coming", "Ask if Lyca knows he's proud"],
-          neutral: ["Let him brag a while", "Nod, listen to the story"],
+          neutral: ["Let him brag a while", "Hear the story out"],
         },
       },
       {
@@ -509,7 +509,7 @@ export default {
           kind: "Hold your palm to his",
           playful: "Wiggle your fingers at him",
           bold: "Press where his hand traced",
-          neutral: "Let him trace, say nothing",
+          neutral: "Let him trace your hand",
         },
       },
       {
@@ -533,7 +533,7 @@ export default {
           kind: "Stay right where he stopped",
           playful: "Count how long he'll wait",
           bold: "Say the inch is his to close",
-          neutral: "Hold still, say nothing",
+          neutral: "Stay that inch away",
         },
       },
       {
@@ -571,7 +571,7 @@ export default {
           kind: "Let him know you need him",
           playful: "Tease the almost-touch",
           bold: "Hold your palm to his",
-          neutral: "Hold your palm still, silent",
+          neutral: "Hold your palm still",
         },
       },
       {
@@ -606,7 +606,7 @@ export default {
           kind: "Tell him you'll come back",
           playful: "Tease him for standing there",
           bold: "Say you're already coming back",
-          neutral: "Look back once, say nothing",
+          neutral: "Look back at him once",
         },
       },
     ],
@@ -620,7 +620,7 @@ export default {
           kind: "Hold still for the gloves",
           playful: "Steal a glove",
           bold: "Say he's thought of everything",
-          neutral: "Hold still, say nothing",
+          neutral: "Hold still for him",
         },
       },
       {
@@ -632,7 +632,7 @@ export default {
           kind: "Tell him this is enough",
           playful: "Get inventive back",
           bold: "Tell him one day is a promise",
-          neutral: "Go with it, say nothing",
+          neutral: "Go along with it",
         },
       },
       {

@@ -25,7 +25,7 @@ export default {
           kind: ["Say you missed him too", "Say you came straight here"],
           playful: ['Ask how long "a while" was', "Ask if he counted the days"],
           bold: ["Say you'll come back sooner", "Take the spot beside him"],
-          neutral: ["Go over, say nothing", "Wave from where you are"],
+          neutral: ["Cross the room", "Wave from where you are"],
         },
       },
       {
@@ -134,7 +134,7 @@ export default {
           kind: ["Read a little of the list", "Offer to help with it"],
           playful: ["Read it back in his voice", "Read it like a love letter"],
           bold: ["Toss the list aside with him", "Say the chores can wait"],
-          neutral: ["Set the list down, say nothing", "Leave the list alone"],
+          neutral: ["Set the list down", "Leave the list alone"],
         },
       },
       {
@@ -146,7 +146,7 @@ export default {
           kind: ["Say you like them both", "Laugh off his conclusions"],
           playful: ["Name someone else entirely", "Make him guess"],
           bold: ["Say he'll never guess", "Say neither, and look at him"],
-          neutral: ["Shrug, say nothing", "Change the subject"],
+          neutral: ["Give him no hint", "Change the subject"],
         },
       },
       {
@@ -170,7 +170,7 @@ export default {
           kind: ["Let him see the real thing", "Stay exactly where you are"],
           playful: ["Ask what the predator's like", "Ask for the act back"],
           bold: ["Tell him to keep it out", "Meet the look head on"],
-          neutral: ["Stay, say nothing", "Come closer, no comment"],
+          neutral: ["Stay where you are", "Step a little closer"],
         },
       },
       {
@@ -182,7 +182,7 @@ export default {
           kind: ["Say it's not disappointing", "Say you trust him now"],
           playful: ["Ask which he'd prefer", "Flinch on purpose, badly"],
           bold: ["Say he'll have to try harder", "Ask what he'd do about it"],
-          neutral: ["Let him decide, say nothing", "Let the observation stand"],
+          neutral: ["Let him decide which", "Let the observation stand"],
         },
       },
       {
@@ -206,7 +206,7 @@ export default {
           kind: ["Say one is plenty", "Say the coat is enough"],
           playful: ["Take all three at once", "Ask what else is on offer"],
           bold: ["Take the arm, skip the rest", "Refuse all three, stay close"],
-          neutral: ["Take the arm, say nothing", "Take the chair only"],
+          neutral: ["Take just the arm", "Take the chair only"],
         },
       },
       {
@@ -217,7 +217,7 @@ export default {
           kind: ["Raise the glass to him", "Say the optimism paid off"],
           playful: ["Ask how he knew", "Toast his optimism"],
           bold: ["Say of course he remembered", "Ask what else he predicted"],
-          neutral: ["Take the glass, say nothing", "Drink without comment"],
+          neutral: ["Take the glass", "Drink without comment"],
         },
       },
       {
@@ -421,7 +421,7 @@ export default {
           kind: "Take him at his word",
           playful: "Ask how poor the promises are",
           bold: "Say you know what he is",
-          neutral: "Hold still, say nothing",
+          neutral: "Come a little closer",
         },
       },
       {
@@ -433,7 +433,7 @@ export default {
           kind: "Tell him you're not frightened",
           playful: "Ask what he intends",
           bold: "Say you're already his",
-          neutral: "Let him look, say nothing",
+          neutral: "Let him look his fill",
         },
       },
     ],
@@ -457,7 +457,7 @@ export default {
           kind: "Tell him he's not alone",
           playful: "Tease him about the theatrics",
           bold: "Say you'd stay lifetimes",
-          neutral: "Stay, say nothing",
+          neutral: "Settle in beside him",
         },
       },
       {
@@ -552,7 +552,7 @@ export default {
           kind: "Tell him he's yours too",
           playful: "Tease the gentleman act",
           bold: "Say you like what's underneath",
-          neutral: "Let him be, say nothing",
+          neutral: "Let him stop pretending",
         },
       },
     ],

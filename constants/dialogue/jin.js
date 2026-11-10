@@ -77,7 +77,7 @@ export default {
             "Say you're worth remembering",
             "Say you'll make sure it stays",
           ],
-          neutral: ["Let him have the denial", "Say nothing, let it stand"],
+          neutral: ["Let him have the denial", "Don't ask why"],
         },
       },
       {
@@ -213,7 +213,7 @@ export default {
           kind: ["Say you're glad to be back", "Ask how he's been"],
           playful: ["Refuse to reveal your methods", "Brag about your way in"],
           bold: ["Say you'll always get in", "Say you'll keep coming back"],
-          neutral: ["Shrug and say nothing", "Let him wonder how"],
+          neutral: ["Take the seat", "Let him wonder how"],
         },
       },
       {
@@ -288,7 +288,7 @@ export default {
             "Ask if he'd have summoned you",
           ],
           bold: ["Say you'd come either way", "Say you were staying anyway"],
-          neutral: ["Stay, since he allows it", "Take him at his word"],
+          neutral: ["Stay put", "Take him at his word"],
         },
       },
       {
@@ -302,7 +302,7 @@ export default {
           bold: ["Say you'll do the whole room", "Tell him the jacket's next"],
           neutral: [
             "Stack them without comment",
-            "Clear the floor, say nothing",
+            "Clear the floor",
           ],
         },
       },
@@ -351,7 +351,7 @@ export default {
           kind: ["Top up his cup first", "Drink it and say it's good"],
           playful: ["Ask who it was really for", "Gawk at him a little longer"],
           bold: ["Say the cup's yours now", "Toast him with it"],
-          neutral: ["Drink without comment", "Hold the cup, say nothing"],
+          neutral: ["Drink without comment", "Hold the cup"],
         },
       },
       {
@@ -406,7 +406,7 @@ export default {
           ],
           playful: ["Complain about the smoke", "Ask what's so good out here"],
           bold: ["Stay as long as he does", "Ask what's on his mind"],
-          neutral: ["Look out at the grounds", "Keep him company, no talk"],
+          neutral: ["Look out at the grounds", "Stand upwind"],
         },
       },
       {
@@ -417,7 +417,7 @@ export default {
           kind: ["Drop it and stay", "Say you talk about him too"],
           playful: ["Say you'll ask Tohma", "Ask for one example"],
           bold: ["Say you hope it was good", "Say you're not leaving"],
-          neutral: ["Stay and say nothing", "Change the subject"],
+          neutral: ["Drop it", "Change the subject"],
         },
       },
       {
@@ -431,7 +431,7 @@ export default {
           kind: ["Say it made your day", "Tell him it's really good"],
           playful: ["Ask what put him in a mood", "Offer him half"],
           bold: ["Ask for another one", "Eat it in front of him"],
-          neutral: ["Pocket the chocolate", "Unwrap it, say nothing"],
+          neutral: ["Pocket the chocolate", "Unwrap the chocolate"],
         },
       },
       {

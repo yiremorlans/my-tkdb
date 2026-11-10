@@ -32,7 +32,7 @@ export default {
             "Say you came for the next one",
             "Admit you only heard the end",
           ],
-          neutral: ["Nod along", "Listen, say nothing"],
+          neutral: ["Nod along", "Say you caught the end"],
         },
       },
       {
@@ -87,7 +87,7 @@ export default {
           kind: ["Say you're happy to return", "Say it's your favorite stop"],
           playful: ["Ask if you're a regular now", "Tease him about 'fixture'"],
           bold: ["Say you'll keep coming back", "Claim the title outright"],
-          neutral: ["Nod, keep walking", "Take the compliment quietly"],
+          neutral: ["Keep walking", "Take the compliment quietly"],
         },
       },
       {
@@ -126,7 +126,7 @@ export default {
           kind: ["Say the outfit works", "Say he wears it well"],
           playful: ["Ask where he shops", "Tease the cat's pajamas line"],
           bold: ["Say he's not wrong", "Challenge him to prove it"],
-          neutral: ["Nod at the outfit", "Say nothing, let him preen"],
+          neutral: ["Nod at the outfit", "Let him preen"],
         },
       },
       {
@@ -137,7 +137,7 @@ export default {
           kind: ["Fill in something gentle", "Fill in something true"],
           playful: ["Fill in something silly", "Steal the ending for yourself"],
           bold: ["Finish it better than he would", "Take over the whole story"],
-          neutral: ["Fill it in plainly", "Say the line, move on"],
+          neutral: ["Fill it in plainly", "Say the line"],
         },
       },
       {
@@ -176,7 +176,7 @@ export default {
           kind: ["Say it's a wonderful name", "Say it suits him"],
           playful: ["Suggest a sillier name", "Ask for the lecture anyway"],
           bold: ["Say yours could rival it", "Say it out loud yourself"],
-          neutral: ["Shrug, say it's fine", "Give a plain opinion"],
+          neutral: ["Say it's fine", "Give a plain opinion"],
         },
       },
       {
@@ -272,7 +272,7 @@ export default {
           kind: ["Say it's the best cup yet", "Say it tastes like spring"],
           playful: ["Ask how long he saved it", "Ask what vintage this is"],
           bold: ["Drink it before he explains", "Ask what he gave up for it"],
-          neutral: ["Take the tea, say nothing", "Sip it, let him watch"],
+          neutral: ["Take the tea", "Let him watch you sip"],
         },
       },
       {
@@ -283,7 +283,7 @@ export default {
           kind: ["Say the same about him", "Say he's a season too"],
           playful: ["Ask which season he means", "Ask to be a better season"],
           bold: ["Say you're the gift then", "Say he's the expected one"],
-          neutral: ["Arrive, say little", "Accept the verse, move on"],
+          neutral: ["Say hello", "Accept the verse"],
         },
       },
       {
@@ -297,7 +297,7 @@ export default {
           kind: ["Tell him it's beautiful", "Ask what the rain became"],
           playful: ["Beg for the next page", "Offer a terrible rhyme"],
           bold: ["Read it before he stops you", "Ask to keep a page"],
-          neutral: ["Read quietly, say nothing", "Hand the pages back"],
+          neutral: ["Read the pages", "Hand the pages back"],
         },
       },
       {
@@ -309,7 +309,7 @@ export default {
           kind: ["Tell him something warm", "Say the line can wait"],
           playful: ["Make the small thing absurd", "Invent a scandal for him"],
           bold: ["Say you're worth the pause", "Ask for the line instead"],
-          neutral: ["Tell him something plain", "Keep it short, let him write"],
+          neutral: ["Tell him something plain", "Let him finish the line"],
         },
       },
       {
@@ -503,7 +503,7 @@ export default {
           kind: "Let his hand stay",
           playful: "Ask what rhymes with you",
           bold: "Catch his hand this time",
-          neutral: "Wear it, say nothing",
+          neutral: "Leave the flower there",
         },
       },
       {

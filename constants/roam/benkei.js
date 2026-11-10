@@ -49,7 +49,7 @@ export default {
         kind: ["Say you'll share it with him", "Ask which one he'd pick"],
         playful: ["Ask if it's past its date", "Ask what else he's got"],
         bold: ["Ask why he carries snacks", "Say you'll pay him back"],
-        neutral: ["Say nothing, just nod", "Take it and smile"],
+        neutral: ["Wait for him to say it", "Take it and smile"],
       },
     },
     {

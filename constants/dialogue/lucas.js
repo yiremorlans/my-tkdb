@@ -17,7 +17,7 @@ export default {
             "Ask if there's a warm-up lap",
           ],
           bold: ["Ask for his hardest drill", "Walk to the yard with him"],
-          neutral: ["Smile back, say little", "Stay silent"],
+          neutral: ["Smile back at him", "Stay silent"],
         },
       },
       {
@@ -32,7 +32,7 @@ export default {
             "Say you'll get the next one",
             "Say the offer goes both ways",
           ],
-          neutral: ["Walk through, say nothing", "Nod your thanks"],
+          neutral: ["Walk through the door", "Nod your thanks"],
         },
       },
       {
@@ -56,7 +56,7 @@ export default {
           kind: ["Say you're glad he was there", "Say you're lucky he was close"],
           playful: ["Blame the flagstone", "Ask if he catches everyone"],
           bold: ["Offer your hand to shake", "Give him your name in return"],
-          neutral: ["Nod and keep walking", "Give your name, nothing more"],
+          neutral: ["Nod and keep walking", "Give him your name"],
         },
       },
       {
@@ -96,7 +96,7 @@ export default {
           kind: ["Ask if Kaito's all right", "Offer to check on Kaito too"],
           playful: ["Catch him staring", "Ask what he's plotting"],
           bold: ["Go talk to Kaito with him", "Say Kaito's tougher than that"],
-          neutral: ["Let him keep his worry", "Say nothing, let it pass"],
+          neutral: ["Let him keep his worry", "Glance over at Kaito"],
         },
       },
       {
@@ -126,7 +126,7 @@ export default {
             "Accuse him of being a furnace",
           ],
           bold: ["Say you'll see for yourself", "Stand closer to keep warm"],
-          neutral: ["Rub your hands, say little", "Nod and keep walking"],
+          neutral: ["Keep rubbing your hands", "Nod and keep walking"],
         },
       },
       {
@@ -138,7 +138,7 @@ export default {
           kind: ["Agree Kaito's improved", "Say he's a good influence"],
           playful: ["Wink back conspiratorially", "Cheer Kaito on too"],
           bold: ["Say you noticed the look", "Say you'll keep Kaito to it"],
-          neutral: ["Nod along, say nothing", "Let the moment pass quietly"],
+          neutral: ["Nod along with Kaito", "Let the moment pass quietly"],
         },
       },
       {
@@ -162,7 +162,7 @@ export default {
           kind: ["Say he carries enough already", "Say you'll carry his next"],
           playful: ["Make him carry more", "Ask if chivalry ever rests"],
           bold: ["Take his bag in exchange", "Say you'll walk him back too"],
-          neutral: ["Let him carry it, say nothing", "Walk on without comment"],
+          neutral: ["Hand over the bag", "Walk on without comment"],
         },
       },
       {
@@ -189,7 +189,7 @@ export default {
           kind: ["Split it with him", "Say he didn't have to"],
           playful: ["Ask who it's really for", "Steal a second one"],
           bold: ["Say you'll bring the next one", "Call it out as thoughtful"],
-          neutral: ["Take it, say nothing", "Eat it without comment"],
+          neutral: ["Take the biscuit", "Eat it without comment"],
         },
       },
       {
@@ -244,7 +244,7 @@ export default {
           bold: ["Take his arm without asking", "Say he can lean on you too"],
           neutral: [
             "Accept the support quietly",
-            "Steady yourself, say nothing",
+            "Steady yourself",
           ],
         },
       },
@@ -258,7 +258,7 @@ export default {
           kind: ["Say that smile's your favorite", "Tell him you missed this"],
           playful: ["Ask what earned the smile", "Ask if that one's private"],
           bold: ["Smile back just as private", "Hold the look a beat longer"],
-          neutral: ["Return the smile quietly", "Smile, say nothing"],
+          neutral: ["Return the smile quietly", "Ask how he's been"],
         },
       },
       {
@@ -273,7 +273,7 @@ export default {
             "Ask if he's lost his footing",
           ],
           bold: ["Close the half-step yourself", "Name the half-step"],
-          neutral: ["Walk beside him, say nothing", "Keep to his pace"],
+          neutral: ["Walk beside him", "Keep to his pace"],
         },
       },
       {
@@ -284,7 +284,7 @@ export default {
           kind: ["Say you're safe with him", "Tell him he can relax"],
           playful: ["Ask what could get past him", "Ask for a threat report"],
           bold: ["Say you'll watch his back too", "Say the room can wait"],
-          neutral: ["Let him check, say nothing", "Wait for the all clear"],
+          neutral: ["Let him check the room", "Wait for the all clear"],
         },
       },
       {
@@ -296,7 +296,7 @@ export default {
           kind: ["Admit you're a little tired", "Ask him to sit with you"],
           playful: ["Ask how he spotted it", "Ask if you look that bad"],
           bold: ["Say he looks tired too", "Make him take his own advice"],
-          neutral: ["Sit, say nothing", "Take the seat offered"],
+          neutral: ["Say it's been a long day", "Take the seat offered"],
         },
       },
       {
@@ -540,7 +540,7 @@ export default {
           kind: "Say you know who he is",
           playful: "Ask just how not-harmless",
           bold: "Tell him you like the danger",
-          neutral: "Take the risk, say nothing",
+          neutral: "Keep trusting him",
         },
       },
     ],
@@ -659,7 +659,7 @@ export default {
           kind: "Say he gets to keep you",
           playful: "Ask if he still doubts it",
           bold: "Tell him to stop doubting it",
-          neutral: "Let him hold on, say nothing",
+          neutral: "Stay with him",
         },
       },
     ],

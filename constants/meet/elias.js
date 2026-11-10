@@ -10,7 +10,7 @@ export default {
         kind: ["Keep him company on this one", "Say he's earned a break"],
         playful: ["Bet he's taking the long way", "Ask how many he's done"],
         bold: ["Ask where he's headed next", "Say you'll run one with him"],
-        neutral: ["Nod, file it away", "Let him get back to it"],
+        neutral: ["File it away", "Let him get back to it"],
       },
     },
     {

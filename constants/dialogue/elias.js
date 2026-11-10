@@ -31,7 +31,7 @@ export default {
           ],
           playful: ["Toast the dorm", "Ask if you count as the dorm"],
           bold: ["Claim the dorm's share", "Say he planned this"],
-          neutral: ["Take the soda, say nothing", "Drink it without comment"],
+          neutral: ["Open the soda", "Drink it without comment"],
         },
       },
       {
@@ -98,7 +98,7 @@ export default {
             "Ask if he's guarding the hall",
           ],
           bold: ["Say you came this way for him", "Ask why he's really here"],
-          neutral: ["Let him keep sweeping", "Say nothing, walk on"],
+          neutral: ["Let him keep sweeping", "Walk on past him"],
         },
       },
       {
@@ -109,7 +109,7 @@ export default {
           kind: ["Say it's your favorite", "Stay for the company"],
           playful: ["Guess the flavor first", "Ask for his favorite flavor"],
           bold: ["Hold out your hand for more", "Eat it right in front of him"],
-          neutral: ["Take it, say nothing", "Eat it without comment"],
+          neutral: ["Take the last candy", "Eat it without comment"],
         },
       },
       {
@@ -169,7 +169,7 @@ export default {
           kind: ["Say you'd be glad to have him", "Offer to practice with him"],
           playful: ["Ask for a circus trick", "Bet he's less rusty than that"],
           bold: ["Sign him up for the next one", "Say he'll keep up, period"],
-          neutral: ["Let the doubt pass", "Say nothing, stay put"],
+          neutral: ["Let the doubt pass", "Stay where you are"],
         },
       },
       // candidate from new
@@ -181,7 +181,7 @@ export default {
           kind: ["Say you're glad it was him", "Ask if you can walk with him"],
           playful: ["Ask if he gets lost too", "Say out of the way suits you"],
           bold: ["Say you meant to find him", "Ask what he's doing out here"],
-          neutral: ["Nod and walk on", "Say nothing, keep going"],
+          neutral: ["Nod and walk on", "Keep to the left"],
         },
       },
     ],
@@ -414,7 +414,7 @@ export default {
           kind: ["Ask if he misses the stage", "Stay and watch with him"],
           playful: ["Clap at the wrong parts", "Bet he still knows every cue"],
           bold: ["Clap louder than anyone", "Ask to come back tomorrow"],
-          neutral: ["Watch the rehearsal", "Sit and say nothing"],
+          neutral: ["Watch the rehearsal", "Stay in the back row"],
         },
       },
     ],
@@ -439,7 +439,7 @@ export default {
           kind: "Say yes, no angle either",
           playful: "Make him work for the yes",
           bold: "Tell him not to behave",
-          neutral: "Hold still, say nothing",
+          neutral: "Hold still for now",
         },
       },
       {
@@ -472,7 +472,7 @@ export default {
           kind: "Let him have the moment",
           playful: "Lean back just as far",
           bold: "Block the door yourself",
-          neutral: "Hold the door, say nothing",
+          neutral: "Stay in the doorway",
         },
       },
       {
@@ -581,7 +581,7 @@ export default {
           kind: "Take his hands",
           playful: "Check his hands anyway",
           bold: "Say this is the dangerous part",
-          neutral: "Take it in, say nothing",
+          neutral: "Let it sink in",
         },
       },
       {
@@ -626,7 +626,7 @@ export default {
           kind: "Notice what it cost him",
           playful: "Tease him for finally quitting",
           bold: "Tell him to make it worth it",
-          neutral: "Let him just be, quietly",
+          neutral: "Let him just be",
         },
       },
       {

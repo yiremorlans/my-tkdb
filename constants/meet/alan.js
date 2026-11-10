@@ -10,7 +10,7 @@ export default {
         kind: ["Say you'd like to know him", "Ask if you can stick around"],
         playful: ["Ask how involved is too much", "Ask if saying hi counts"],
         bold: ["Say you're not most people", "Say you'll take that chance"],
-        neutral: ["Don't move, don't answer", "Let him say his piece"],
+        neutral: ["Hold your ground", "Let him say his piece"],
       },
     },
     {

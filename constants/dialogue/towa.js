@@ -13,7 +13,7 @@ export default {
           kind: ["Beam right back at him", "Say you love flowers too"],
           playful: ["Ask how the flower tastes", "Try a petal yourself"],
           bold: ["Crouch down beside him", "Introduce yourself first"],
-          neutral: ["Smile, say nothing", "Let him finish the flower"],
+          neutral: ["Smile back at him", "Let him finish the flower"],
         },
       },
       {
@@ -37,7 +37,7 @@ export default {
           playful: ["Flick some water at him", "Try it upside down too"],
           bold: ["Drink from the tap too", "Wipe his chin for him"],
           neutral: [
-            "Shake your head, say nothing",
+            "Shake your head",
             "Watch him shake off the water",
           ],
         },
@@ -50,7 +50,7 @@ export default {
           kind: ["Let him hold it", "Show him what it is"],
           playful: ["Call it your treasure", "Let him sniff it first"],
           bold: ["Put it right in his hands", "Say he can keep it"],
-          neutral: ["Let him hum beside you", "Keep walking, say nothing"],
+          neutral: ["Let him hum beside you", "Keep walking"],
         },
       },
       {
@@ -61,7 +61,7 @@ export default {
           kind: ["Follow him wherever", "Let him pick the game"],
           playful: ["Chase him in slow motion", "Skip along after him"],
           bold: ["Take off running first", "Grab his sleeve and go"],
-          neutral: ["Shrug, agree quietly", "Shrug and follow"],
+          neutral: ["Say you're done", "Shrug and follow"],
         },
       },
     ],
@@ -74,7 +74,7 @@ export default {
           kind: ["Wave until he reaches you", "Say you're glad he found you"],
           playful: ["Ask if you were lost", "Ask who Dandelion is"],
           bold: ["Meet him halfway", "Say you found him first"],
-          neutral: ["Stay put, let him arrive", "Wait to see what he does"],
+          neutral: ["Stay where you are", "Wait to see what he does"],
         },
       },
       {
@@ -113,7 +113,7 @@ export default {
           kind: ["Keep it in your pocket", "Say five is very lucky"],
           playful: ["Ask how long he held it", "Wear it somewhere silly"],
           bold: ["Take it without asking", "Say he waited long enough"],
-          neutral: ["Take it, say nothing", "Accept it quietly"],
+          neutral: ["Take the clover", "Accept it quietly"],
         },
       },
       {
@@ -124,7 +124,7 @@ export default {
           kind: ["Say it's sweet, like he said", "Say you'll save him one"],
           playful: ["Feed him one back", "Ask if it tastes different"],
           bold: ["Take the whole flower instead", "Eat it without hesitation"],
-          neutral: ["Eat it, say nothing", "Take the petal quietly"],
+          neutral: ["Eat the petal", "Take the petal quietly"],
         },
       },
       {
@@ -136,7 +136,7 @@ export default {
           kind: ["Promise him a love story", "Let him keep counting"],
           playful: ["Guess how it ends", "Count along with him"],
           bold: ["Ask who the flower's about", "Say the story's about you"],
-          neutral: ["Let him count in peace", "Say nothing, watch him count"],
+          neutral: ["Let him count in peace", "Watch him count"],
         },
       },
       {
@@ -169,7 +169,7 @@ export default {
           kind: ["Laugh, say a little", "Admit he got you"],
           playful: ["Say boo right back", "Pretend you saw him coming"],
           bold: ["Say it takes more than that", "Dare him to do it again"],
-          neutral: ["Give him a look", "Shake it off, say nothing"],
+          neutral: ["Give him a look", "Shake off the start"],
         },
       },
       {
@@ -215,7 +215,7 @@ export default {
           kind: ["Keep him company", "Say you'd love to"],
           playful: ["Guess what Haru's up to", "Call this Towa R&R instead"],
           bold: ["Say Haru's missing out", "Claim the evening for you two"],
-          neutral: ["Nod, say nothing", "Sit with him quietly"],
+          neutral: ["Stay a while", "Sit with him quietly"],
         },
       },
     ],
@@ -228,7 +228,7 @@ export default {
           kind: ["Fall into step with him", "Give him the cuddle"],
           playful: ["Say sorry very dramatically", "Ask what he's sorry for"],
           bold: ["Take his hand instead", "Hug him first"],
-          neutral: ["Walk with him, say nothing", "Keep walking together"],
+          neutral: ["Let him hold your sleeve", "Keep walking together"],
         },
       },
       {
@@ -250,7 +250,7 @@ export default {
           kind: ["Go with him", "Say you'd climb anywhere"],
           playful: ["Race him to the top", "Ask if he can see better"],
           bold: ["Lead the way yourself", "Pick the highest spot"],
-          neutral: ["Follow, say nothing", "Look up with him"],
+          neutral: ["Follow him up", "Look up with him"],
         },
       },
       {
@@ -272,7 +272,7 @@ export default {
           kind: ["Listen to the tree with him", "Ask what the tree needs"],
           playful: ["Ask why the tree's crying", "Ask if the tree likes you"],
           bold: ["Say you'll always come back", "Promise it out loud"],
-          neutral: ["Listen, say nothing", "Look at the tree, quiet"],
+          neutral: ["Listen for the tree", "Look at the tree"],
         },
       },
       {
@@ -451,7 +451,7 @@ export default {
           kind: "Let him stay close",
           playful: "Sigh back at him",
           bold: "Close the last of it",
-          neutral: "Breathe with him, say nothing",
+          neutral: "Breathe with him",
         },
       },
       {
@@ -474,7 +474,7 @@ export default {
           kind: "Let his hand linger",
           playful: "Tuck one behind his ear",
           bold: "Take his hand and hold it",
-          neutral: "Stay still, let it happen",
+          neutral: "Let his fingers linger",
         },
       },
       {
@@ -509,7 +509,7 @@ export default {
           kind: "Let him hold on",
           playful: "Hold his sleeve back",
           bold: "Take his hand instead",
-          neutral: "Let him hold on, say nothing",
+          neutral: "Let him keep your sleeve",
         },
       },
       {
@@ -532,7 +532,7 @@ export default {
           kind: "Keep the flower on",
           playful: "Hide, and let him find you",
           bold: "Take his hand first",
-          neutral: "Let him tuck it, say nothing",
+          neutral: "Let him tuck it in",
         },
       },
       {
@@ -601,7 +601,7 @@ export default {
           kind: "Let him hold your shirt",
           playful: "Ask how long he's owed",
           bold: "Pull him closer still",
-          neutral: "Let it happen, unhurried",
+          neutral: "Let him take his time",
         },
       },
     ],
@@ -632,7 +632,7 @@ export default {
           kind: ["Smile back at him", "Tilt your head too"],
           playful: ["Tilt your head the other way", "Hum him a new question"],
           bold: ["Step closer, pleased too", "Hum the next line yourself"],
-          neutral: ["Hold still, say nothing", "Nod along instead"],
+          neutral: ["Tilt your head back", "Nod along instead"],
         },
       },
       {
@@ -643,7 +643,7 @@ export default {
           kind: ["Wait as long as he needs", "Nod so he keeps going"],
           playful: ["Guess the song out loud", "Clap along off the beat"],
           bold: ["Step in close to listen", "Hum the next note for him"],
-          neutral: ["Keep listening", "Wait, say nothing"],
+          neutral: ["Keep listening", "Wait for more notes"],
         },
       },
       {
@@ -667,7 +667,7 @@ export default {
           kind: ["Hold still for him", "Nod him on"],
           playful: ["Hum the phrase back wrong", "Hum a different ending"],
           bold: ["Ask him to hum it again", "Hum the whole phrase back"],
-          neutral: ["Let the phrase settle", "Listen, say nothing"],
+          neutral: ["Let the phrase settle", "Hear the phrase out"],
         },
       },
       {
@@ -689,7 +689,7 @@ export default {
           kind: ["Hold it up to the light", "Smile and keep it"],
           playful: ["Sniff it like it's fancy", "Tuck it behind your ear"],
           bold: ["Take it, and his hand too", "Pick one back for him"],
-          neutral: ["Take it without a word", "Hold it, say nothing"],
+          neutral: ["Take it without a word", "Hold the dandelion"],
         },
       },
       {
@@ -713,7 +713,7 @@ export default {
           kind: "Hum in harmony with him",
           playful: "Add a little dance",
           bold: "Take the melody from him",
-          neutral: "Hum along, quietly",
+          neutral: "Hum along",
         },
       },
       {
@@ -770,7 +770,7 @@ export default {
           kind: "Stay right where you are",
           playful: "Whisper a note back",
           bold: "Lean in toward him",
-          neutral: "Stay still, keep listening",
+          neutral: "Keep listening",
         },
       },
       {
@@ -781,7 +781,7 @@ export default {
           kind: "Match his softer volume",
           playful: "Hit a note way too high",
           bold: "Take the lead in the tune",
-          neutral: "Hold the note, no more",
+          neutral: "Hold the note",
         },
       },
       {
@@ -827,7 +827,7 @@ export default {
           kind: "Hum it back, just for him",
           playful: "Hum it wrong to tease him",
           bold: "Hum it and hold his eyes",
-          neutral: "Hum it once, softly",
+          neutral: "Hum it once",
         },
       },
       {
@@ -862,7 +862,7 @@ export default {
           kind: "Rest your hand on his chest",
           playful: "Hum a different song at him",
           bold: "Kiss the top of his head",
-          neutral: "Feel it, and stay still",
+          neutral: "Stay still",
         },
       },
       {
@@ -873,7 +873,7 @@ export default {
           kind: "Hum it back, soft and slow",
           playful: "Hum it back too fast",
           bold: "Hum it right against his ear",
-          neutral: "Hum it back, once",
+          neutral: "Hum it back",
         },
       },
       {

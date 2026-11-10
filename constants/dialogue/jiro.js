@@ -55,7 +55,7 @@ export default {
           kind: ["Promise to be careful", "Ask if he's careful too"],
           playful: ["Joke about dying anyway", "Ask if a pulse is enough"],
           bold: ["Say you'll come by tomorrow", "Ask for the check-up now"],
-          neutral: ["Stay, say nothing", "Agree to drop by"],
+          neutral: ["Ask what the check-up is", "Agree to drop by"],
         },
       },
       {
@@ -67,7 +67,7 @@ export default {
           kind: ["Respect the sterile space", "Stay where he can work"],
           playful: ["Ask if you fit in too", "Ask if he decorated"],
           bold: ["Say it suits him", "Say nothing here scares you"],
-          neutral: ["Stand still, say nothing", "Keep a careful distance"],
+          neutral: ["Look at the jars", "Keep a careful distance"],
         },
       },
     ],
@@ -92,7 +92,7 @@ export default {
           kind: ["Offer to hand him things", "Ask if he's eaten today"],
           playful: ["Ask if you count as staff", "Ask if staying is allowed"],
           bold: ["Ask what he's working on", "Say you like watching him work"],
-          neutral: ["Stay quietly, out of the way", "Say nothing, just stay"],
+          neutral: ["Stay out of the way", "Hold the container"],
         },
       },
       {
@@ -120,8 +120,8 @@ export default {
             "Say you'd rather hear it plain",
           ],
           neutral: [
-            "Take the explanation, move on",
-            "Say nothing, just listen",
+            "Accept his explanation",
+            "Hear him out",
           ],
         },
       },
@@ -133,7 +133,7 @@ export default {
           kind: ["Say you're very much alive", "Say you feel rested now"],
           playful: ["Ask if 'alive' is the verdict", "Ask if he was worried"],
           bold: ["Ask what your pulse was", "Say he can check anytime"],
-          neutral: ["Nod, still half-asleep", "Stretch, say nothing"],
+          neutral: ["Rub your eyes", "Sit up and stretch"],
         },
       },
       {
@@ -148,7 +148,7 @@ export default {
             "Call his name to test him",
           ],
           bold: ["Say you'll practice with him", "Tell him to answer loudly"],
-          neutral: ["Nod, say nothing", "Let it go unremarked"],
+          neutral: ["Glance at the record", "Let it go unremarked"],
         },
       },
       {
@@ -160,7 +160,7 @@ export default {
           kind: ["Promise to cover for him", "Tell him to get some air"],
           playful: ["Ask where he's really going", "Offer him a better alibi"],
           bold: ["Ask to go with him", "Say you'll answer Yuri for him"],
-          neutral: ["Nod, say nothing", "Let him slip out"],
+          neutral: ["Say you'll pass it on", "Let him slip out"],
         },
       },
       {
@@ -187,7 +187,7 @@ export default {
           kind: ["Put the mask on right away", "Ask if he's feeling okay"],
           playful: ["Ask how contagious, exactly", "Ask if the mask is a gift"],
           bold: ["Tell him to put his on", "Say you've been careful"],
-          neutral: ["Put it on, say nothing", "Nod and keep your distance"],
+          neutral: ["Put on the mask", "Nod and keep your distance"],
         },
       },
       {
@@ -277,7 +277,7 @@ export default {
           kind: ["Offer to take him to Yuri", "Help him press on it"],
           playful: ["Ask if he just noticed", "Ask if it's even his blood"],
           bold: ["Say he shouldn't go alone", "Say you're not leaving him"],
-          neutral: ["Walk along, say nothing", "Hand him a cloth for it"],
+          neutral: ["Walk him to Yuri", "Hand him a cloth for it"],
         },
       },
       {
@@ -329,7 +329,7 @@ export default {
           kind: ["Sit down, no argument", "Inhale the salts"],
           playful: ["Ask if it's that bad", "Sniff once, make a face"],
           bold: ["Ask how terrible exactly", "Tell him you haven't slept"],
-          neutral: ["Sit down, say nothing", "Take the salts, say nothing"],
+          neutral: ["Sit where he points", "Take one breath of it"],
         },
       },
       {
@@ -352,7 +352,7 @@ export default {
           kind: ["Tell him to take his time", "Say two bites is progress"],
           playful: ["Count the bites out loud", "Cheer for a third bite"],
           bold: ["Say you made it for him", "Say you'll feed him the rest"],
-          neutral: ["Watch, say nothing", "Let him eat in peace"],
+          neutral: ["Watch him eat", "Let him eat in peace"],
         },
       },
       {
@@ -409,7 +409,7 @@ export default {
           kind: ["Drink all of it", "Say it's the best tea"],
           playful: ["Ask what's actually in it", "Wince at the first sip"],
           bold: ["Make him drink one too", "Finish it in one go"],
-          neutral: ["Drink it, say nothing", "Sip it slowly"],
+          neutral: ["Drink half of it", "Sip it slowly"],
         },
       },
       {
@@ -488,7 +488,7 @@ export default {
           kind: ["Hold still for the count", "Admit it's because of him"],
           playful: ["Ask what else he's confirming", "Ask what he'll write"],
           bold: ["Say it's him, not the walk", "Tell him to write it down"],
-          neutral: ["Say nothing, let him note it", "Let him write in silence"],
+          neutral: ["Keep your wrist still", "Let him write in silence"],
         },
       },
       {
@@ -524,7 +524,7 @@ export default {
           kind: ["Tell him it's alright", "Guide his hand"],
           playful: ["Offer him your wrist", "Suggest he examine you"],
           bold: ["Take his hands in yours", "Put his hand on your cheek"],
-          neutral: ["Let the silence answer", "Stay close, say nothing"],
+          neutral: ["Let the silence answer", "Stay close to him"],
         },
       },
     ],
@@ -574,7 +574,7 @@ export default {
         greeting:
           '"If something happens to you, I\'m the one who has to fix it. So nothing is going to happen to you."',
         responses: {
-          kind: ["Let him be warm, say nothing", "Promise to be careful"],
+          kind: ["Let him look after you", "Promise to be careful"],
           playful: ["Diagnose him right back", "Ask if that's a prescription"],
           bold: ["Ask him to stop working", "Say the same goes for him"],
           neutral: ["Let the ward go quiet", "Let the promise stand"],
@@ -589,7 +589,7 @@ export default {
           kind: ["Tell him plainly he matters", "Say you trust only him"],
           playful: ["Tease him in front of the ward", "Ask what Yuri would do"],
           bold: ["Say you're the only case", "Tell him to never hand off"],
-          neutral: ["Let him focus, say nothing", "Stay under his care"],
+          neutral: ["Let him focus on you", "Stay under his care"],
         },
       },
     ],
@@ -615,7 +615,7 @@ export default {
           kind: ["Let him lock it", "Tell him Yuri can wait"],
           playful: ["Steal the clipboard", "Cover his ears for him"],
           bold: ["Lock the door yourself", "Tell Yuri he's busy"],
-          neutral: ["Wait, say nothing", "Let Yuri call, say nothing"],
+          neutral: ["Wait against the door", "Let Yuri keep calling"],
         },
       },
       {
@@ -650,7 +650,7 @@ export default {
           kind: ["Say you'll teach him", "Say you'll learn it together"],
           playful: ["Ask for a longer checkup", "Say lesson one is breakfast"],
           bold: ["Show him, starting now", "Kiss him good morning"],
-          neutral: ["Stay, say nothing", "Stay close, say nothing"],
+          neutral: ["Stay for the checkup", "Say you'll work it out"],
         },
       },
     ],

@@ -266,7 +266,7 @@ export default {
           kind: ["Say you'll take the case", "Ask what the problem is"],
           playful: ["Make him wait for it", "Ask what's in it for you"],
           bold: ["Name your fee first", "Solve it before he finishes"],
-          neutral: ["Sit, hear the problem", "Sit, wait for details"],
+          neutral: ["Hear the problem", "Wait for the details"],
         },
       },
       {
@@ -277,7 +277,7 @@ export default {
           kind: ["Clear your hour for him too", "Say the hour is well spent"],
           playful: ["Call the coincidence out", "Call it a lucky accident"],
           bold: ["Book him for the next one", "Ask for a standing slot"],
-          neutral: ["Take the hour, say nothing", "Use the hour as planned"],
+          neutral: ["Take the hour", "Use the hour as planned"],
         },
       },
       {

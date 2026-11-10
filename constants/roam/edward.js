@@ -30,7 +30,7 @@ export default {
           "Take his arm, bring him along",
           "Say he's not too old for this",
         ],
-        neutral: ["Say you're just in a hurry", "Let him watch, say nothing"],
+        neutral: ["Say you're just in a hurry", "Keep hurrying past"],
       },
     },
     {
@@ -56,7 +56,7 @@ export default {
         kind: ["Promise to be careful", "Ask him to walk with you"],
         playful: ["Ask why it'd trouble him", "Ask if he followed you"],
         bold: ["Say you're not going anywhere", "Say he found you fast enough"],
-        neutral: ["Hold your ground, say nothing", "Step back a pace"],
+        neutral: ["Hold your ground", "Step back a pace"],
       },
     },
     {

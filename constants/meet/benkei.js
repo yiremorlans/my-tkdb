@@ -31,7 +31,7 @@ export default {
         kind: ["Tell him your name", "Say it's nice to meet him"],
         playful: ["Make him guess your name", "Ask what the store's best at"],
         bold: ["Ask if he knows everyone", "Offer him a handshake"],
-        neutral: ["Give your name, nothing else", "Nod back"],
+        neutral: ["Give him your name", "Nod back"],
       },
     },
     {

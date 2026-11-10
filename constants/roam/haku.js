@@ -13,7 +13,7 @@ export default {
         kind: ["Say you'll be careful", "Promise you're keeping clear"],
         playful: ["Say not yet, give it time", "Say trouble found you"],
         bold: ["Say he was your first stop", "Say he's in it now too"],
-        neutral: ["Shrug, say nothing", "Ask what he means"],
+        neutral: ["Say you're just passing", "Ask what he means"],
       },
     },
     {
@@ -25,7 +25,7 @@ export default {
         kind: ["Say you're glad of the company", "Stay close to him"],
         playful: ["Ask whose attention, exactly", "Ask if a fox spirit's out"],
         bold: ["Walk a step ahead of him", "Say they can take a number"],
-        neutral: ["Let him walk, say nothing", "Fall into step quietly"],
+        neutral: ["Keep to your own pace", "Fall into step quietly"],
       },
     },
     {

@@ -34,7 +34,7 @@ export default {
         kind: ["Say you'd like to know him", "Ask if you can stick around"],
         playful: ["Ask if this is too close", "Ask if standing here counts"],
         bold: ["Say you're not like the others", "Say you'll take that chance"],
-        neutral: ["Don't move, don't answer", "Step back half a pace"],
+        neutral: ["Hold your ground", "Step back half a pace"],
       },
     },
     {
@@ -45,7 +45,7 @@ export default {
         kind: ["Point him the right way", "Offer to walk with him"],
         playful: ["Ask if this happens often", "Ask how long he's been lost"],
         bold: ["Ask straight where he's headed", "Say you'll lead from here"],
-        neutral: ["Let the moment pass", "Say nothing, just point"],
+        neutral: ["Let the moment pass", "Point out where you are"],
       },
     },
     {

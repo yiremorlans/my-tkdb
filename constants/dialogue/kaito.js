@@ -29,7 +29,7 @@ export default {
           kind: ["Ask him to start from the top", "Ask him to show you the post"],
           playful: ["Gasp along with him", "Ask if you're in the leak"],
           bold: ["Ask who leaked it", "Pull up WickHive beside him"],
-          neutral: ["Let him run out of steam", "Half-listen, say nothing"],
+          neutral: ["Let him run out of steam", "Half-listen to the leak"],
         },
       },
       {
@@ -65,7 +65,7 @@ export default {
           kind: ["Offer to split one", "Say you'll try his favorite"],
           playful: ["Vote for the weirdest one", "Suggest a taste-test"],
           bold: ["Buy him the new flavor", "Ask him to pick for you"],
-          neutral: ["Grab a snack, say nothing", "Browse the shelf beside him"],
+          neutral: ["Grab one snack", "Browse the shelf beside him"],
         },
       },
     ],
@@ -91,7 +91,7 @@ export default {
           kind: ["Tell him they're really good", "Say you'd eat these daily"],
           playful: ["Take three to be safe", "Ask for the secret ingredient"],
           bold: ["Say you want the recipe", "Take the whole tin"],
-          neutral: ["Take one, say nothing", "Eat it without comment"],
+          neutral: ["Take one cookie", "Eat it without comment"],
         },
       },
       {
@@ -249,7 +249,7 @@ export default {
           kind: ["Say you hoped he'd ask", "Say you're free, all evening"],
           playful: ["Ask if he hoped you'd come", "Make him sweat a second"],
           bold: ["Take the seat like you own it", "Say yes before he finishes"],
-          neutral: ["Sit down without a word", "Take the seat, no fuss"],
+          neutral: ["Sit down without a word", "Take the saved seat"],
         },
       },
       {
@@ -261,7 +261,7 @@ export default {
           kind: ["Admit he crossed your mind", "Say that's not weird at all"],
           playful: ["Ask what he was thinking", "Ask if it was flattering"],
           bold: ["Say it fits you well", "Ask what else he thinks"],
-          neutral: ["Greet him back plainly", "Say hello, nothing more"],
+          neutral: ["Greet him back plainly", "Ask what's up"],
         },
       },
       {
@@ -285,7 +285,7 @@ export default {
           kind: ["Say next lunch is on you", "Say he didn't have to"],
           playful: ["Order the most expensive thing", "Order dessert first"],
           bold: ["Say you'll get the next one", "Order for both of you"],
-          neutral: ["Take the offer, say nothing", "Order something small"],
+          neutral: ["Take him up on it", "Order something small"],
         },
       },
       {
@@ -466,7 +466,7 @@ export default {
           kind: "Say you noticed on purpose",
           playful: "Repeat it back to him",
           bold: "Put him on the spot",
-          neutral: "Shrug, say you don't know",
+          neutral: "Say you don't know",
         },
       },
       {
@@ -552,7 +552,7 @@ export default {
           kind: "Thank him for the cookies",
           playful: "Raid the cookie stash",
           bold: "Demand more cookies",
-          neutral: "Eat quietly, say nothing",
+          neutral: "Eat a cookie",
         },
       },
       {

@@ -72,7 +72,7 @@ export default {
           kind: ["Say you'll be quick", "Ask nicely anyway"],
           playful: ["Ask when the next opening is", "Whisper it instead"],
           bold: ["Say he'll make an exception", "Start talking anyway"],
-          neutral: ["Wait for him to look up", "Say nothing, stay put"],
+          neutral: ["Wait for him to look up", "Stay where you are"],
         },
       },
     ],
@@ -98,7 +98,7 @@ export default {
           kind: ["Offer to share your lunch", "Say Sho's truck is open"],
           playful: ["Ask if you're the NPC", "Say Sho ditched him"],
           bold: ["Say you'll eat with him", "Say you'll go, his treat"],
-          neutral: ["Shrug, no idea", "Let him look around"],
+          neutral: ["Say you've never wondered", "Let him look around"],
         },
       },
       {
@@ -113,7 +113,7 @@ export default {
             "Tease Leo for tracking him",
           ],
           bold: ["Bet you find Cap first", "Say you came for him, not Cap"],
-          neutral: ["Shrug, no idea", "Say nothing, let it go"],
+          neutral: ["Say you haven't seen him", "Let him go on"],
         },
       },
       {
@@ -181,7 +181,7 @@ export default {
           ],
           playful: ["Ham it up for the camera", "Demand a cut of the views"],
           bold: ["Film him right back", "Make it a duet"],
-          neutral: ["Ignore the camera entirely", "Let it happen, say nothing"],
+          neutral: ["Ignore the camera entirely", "Let him complain"],
         },
       },
       {
@@ -239,7 +239,7 @@ export default {
           kind: ["Say you're glad to be here", "Confirm you're not leaving"],
           playful: ["Ask what category that is", "Threaten to stay forever"],
           bold: ["Say you're not going anywhere", "Dare him to catalog that"],
-          neutral: ["Stay, say nothing", "Let him keep cataloging"],
+          neutral: ["Stay where you are", "Let him keep cataloging"],
         },
       },
     ],
@@ -299,7 +299,7 @@ export default {
           kind: ["Keep your voice low for him", "Say two minutes, tops"],
           playful: ["Tap it for no reason", "Ask what 'only you' means"],
           bold: ["Say you're the exception", "Take the other headphone"],
-          neutral: ["Talk, then let him refocus", "Say your piece and stop"],
+          neutral: ["Keep it to one question", "Say your piece and stop"],
         },
       },
       {
@@ -311,7 +311,7 @@ export default {
           kind: ["Say it suits him", "Say he smells expensive"],
           playful: ["Say it's a bit much", "Say you'll buy the same one"],
           bold: ["Say you noticed already", "Stand closer, like he said"],
-          neutral: ["Shrug, unbothered either way", "Let the topic drop"],
+          neutral: ["Say it's a nice scent", "Let the topic drop"],
         },
       },
       {
@@ -480,7 +480,7 @@ export default {
           kind: "Let him look, stay soft",
           playful: "Tilt his chin up instead",
           bold: "Ask for what you want",
-          neutral: "Hold still, give nothing away",
+          neutral: "Keep your face still",
         },
       },
       {
@@ -503,7 +503,7 @@ export default {
           kind: "Say you might",
           playful: "Take it as a compliment",
           bold: "Tell him to ruin you",
-          neutral: "Let it land, say nothing",
+          neutral: "Let it land",
         },
       },
       {
@@ -515,7 +515,7 @@ export default {
           kind: "Let him keep the rule",
           playful: "Duck under his arm",
           bold: "Break the no-touch rule",
-          neutral: "Respect the rule, for now",
+          neutral: "Keep your hands to yourself",
         },
       },
     ],
@@ -634,7 +634,7 @@ export default {
           kind: "Let him hold on",
           playful: "Test how tight the grip is",
           bold: "Refuse to leave either",
-          neutral: "Stay put, say nothing",
+          neutral: "Stay in bed",
         },
       },
       {

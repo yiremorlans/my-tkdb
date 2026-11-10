@@ -43,7 +43,7 @@ export default {
         kind: ["Ask if he enjoys his own", "Ask what he enjoys most"],
         playful: ["Ask if that's a warning", "Ask if he's offering tips"],
         bold: ["Ask him to show you how", "Say you'll start right now"],
-        neutral: ["Take it as advice", "Nod, unsure what to say"],
+        neutral: ["Take it as advice", "Let it hang there"],
       },
     },
     {

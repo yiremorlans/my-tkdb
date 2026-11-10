@@ -44,7 +44,7 @@ export default {
           kind: ["Say he can count on you", "Ask what else needs a hand"],
           playful: ["Ask if holding pays", "Ask if this makes you staff"],
           bold: ["Ask for the next tool too", "Ask to do more than hold"],
-          neutral: ["Keep it steady", "Do as asked, quietly"],
+          neutral: ["Keep it steady", "Hold it for him"],
         },
       },
       {
@@ -59,7 +59,7 @@ export default {
             "Ask if it comes in more colors",
           ],
           bold: ["Say his work holds up", "Ask for an upgrade"],
-          neutral: ["Give a flat status update", "Say it works, nothing more"],
+          neutral: ["Give a flat status update", "Say it works fine"],
         },
       },
       {
@@ -73,7 +73,7 @@ export default {
             "Say you'll wait till he's done",
             "Say you're walking him back",
           ],
-          neutral: ["Nod, let him work", "Say nothing, let him push on"],
+          neutral: ["Let him work", "Hand him the next part"],
         },
       },
       {
@@ -91,7 +91,7 @@ export default {
             "Ask if you're his alibi now",
           ],
           bold: ["Say you'll hold him to one", "Say he's walking you after"],
-          neutral: ["Stay quietly, say nothing", "Wait without pushing him"],
+          neutral: ["Stay while he works", "Wait without pushing him"],
         },
       },
       {
@@ -103,7 +103,7 @@ export default {
           kind: ["Say you like being listened to", "Let him keep the list"],
           playful: ["Try to read it upside down", "Guess what's on it"],
           bold: ["Add one to the list", "Say you keep one too"],
-          neutral: ["Let the list go unremarked", "Shrug, say nothing"],
+          neutral: ["Let the list go unremarked", "Take his word for it"],
         },
       },
       {
@@ -193,7 +193,7 @@ export default {
           ],
           playful: ["Ask if he's following you", "Say see you on lap four"],
           bold: ["Suggest a break together", "Say he never rests either"],
-          neutral: ["Nod, say nothing", "Take the advice, move on"],
+          neutral: ["Agree it's a busy day", "Say you'll take one later"],
         },
       },
     ],
@@ -558,7 +558,7 @@ export default {
           kind: "Let him lean on you",
           playful: "Tease him for leaning back",
           bold: "Tell him to stop fixing",
-          neutral: "Let him lean, say nothing",
+          neutral: "Call it a fair trade",
         },
       },
       {

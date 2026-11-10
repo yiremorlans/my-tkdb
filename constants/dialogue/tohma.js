@@ -14,7 +14,7 @@ export default {
           kind: ["Say you'd follow his lead", "Admit you're a little lost"],
           playful: ["Ask if he's the map", "Say you're lost on purpose"],
           bold: ["Say you're exploring", "Say you know exactly where"],
-          neutral: ["Wait for his verdict", "Nod, say nothing more"],
+          neutral: ["Wait for his verdict", "Say you're finding your way"],
         },
       },
       {
@@ -44,7 +44,7 @@ export default {
             "Call him more than a servant",
             "Say you'd rather talk to him",
           ],
-          neutral: ["Say only what's needed", "State your business, briefly"],
+          neutral: ["Say only what's needed", "Ask for the captain"],
         },
       },
       {
@@ -137,7 +137,7 @@ export default {
             "Ask which one he's hoping for",
           ],
           bold: ["Say you ask better ones now", "Ask a question right now"],
-          neutral: ["Shrug and keep walking", "Nod back, say nothing"],
+          neutral: ["Shrug and keep walking", "Nod back at him"],
         },
       },
       {
@@ -155,7 +155,7 @@ export default {
             "Ask if there's a quiz later",
           ],
           bold: ["Say you'll figure it out", "Say you'll know it by tomorrow"],
-          neutral: ["Take it in, say little", "Nod along at the schedule"],
+          neutral: ["Follow along with him", "Nod along at the schedule"],
         },
       },
       {
@@ -169,7 +169,7 @@ export default {
             "Say you mean to stay that way",
             "Say you never needed warning",
           ],
-          neutral: ["Let the murmur pass", "Say nothing, let it stand"],
+          neutral: ["Let the murmur pass", "Let it stand"],
         },
       },
       {
@@ -220,7 +220,7 @@ export default {
           kind: ["Say you'll split it", "Say it looks good"],
           playful: ["Ask him to taste it first", "Ask what poison it is"],
           bold: ["Eat it without hesitating", "Say you'd know if it were"],
-          neutral: ["Eat it, say nothing", "Take the joke in stride"],
+          neutral: ["Take a small bite", "Take the joke in stride"],
         },
       },
       {
@@ -244,7 +244,7 @@ export default {
           playful: ["Ask what never happened", "Swear on the king's crown"],
           bold: ["Say your word is enough", "Say it's already forgotten"],
           neutral: [
-            "Say nothing, keep it quiet",
+            "Keep it to yourself",
             "Let the trust go unremarked",
           ],
         },
@@ -273,7 +273,7 @@ export default {
           kind: ["Tell him what's on your mind", "Ask what he was working on"],
           playful: ["Interrupt him again", "Ask if you earned that"],
           bold: ["Say you're worth it", "Make it worth his while"],
-          neutral: ["Interrupt, then go quiet", "Wait until he's finished"],
+          neutral: ["Say what you came to say", "Wait until he's finished"],
         },
       },
       {
@@ -298,7 +298,7 @@ export default {
           kind: ["Ask how he's doing today", "Sit in the space he made"],
           playful: ["Ask if there's room for you", "Call it lucky timing"],
           bold: ["Sit closer than he planned", "Stay longer than usual"],
-          neutral: ["Take the space, say nothing", "Say a quick hello"],
+          neutral: ["Take the space he made", "Say a quick hello"],
         },
       },
       {
@@ -345,7 +345,7 @@ export default {
           kind: ["Say you'd like to learn", "Ask him to show you the trick"],
           playful: ["Ask how easy is 'somewhat'", "Play for bragging rights"],
           bold: ["Say you'll win one day", "Move first without asking"],
-          neutral: ["Sit, say nothing, play", "Take the white pieces"],
+          neutral: ["Study the board", "Take the white pieces"],
         },
       },
       {
@@ -632,7 +632,7 @@ export default {
           kind: "Let him be late",
           playful: "Ruin his schedule",
           bold: "Pull him back down",
-          neutral: "Let him be late, say nothing",
+          neutral: "Stay in with him",
         },
       },
       {

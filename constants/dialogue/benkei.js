@@ -53,7 +53,7 @@ export default {
           kind: ["Say he earns every one", "Say you'll keep coming by"],
           playful: ["Ask if he's grading manners", "Thank the manager, too"],
           bold: ["Ask why it matters to him", "Ask who forgets to say it"],
-          neutral: ["Say it plainly, move on", "Just nod back"],
+          neutral: ["Say it's just manners", "Just nod back"],
         },
       },
       {
@@ -109,7 +109,7 @@ export default {
           ],
           playful: ["Guess his favorite first", "Ask which ones he hides"],
           bold: ["Ask why he stocks the rest", "Call out the bad ones"],
-          neutral: ["Nod along, say little", "Just pick one up"],
+          neutral: ["Note the good ones", "Just pick one up"],
         },
       },
       {
@@ -123,7 +123,7 @@ export default {
             "Say you'll pay in compliments",
           ],
           bold: ["Refuse to let it slide", "Insist on paying full price"],
-          neutral: ["Take it without protest", "Nod, pocket it"],
+          neutral: ["Take it without protest", "Pocket it"],
         },
       },
       {
@@ -171,7 +171,7 @@ export default {
           kind: ["Say you'll be there", "Say you like the routine"],
           playful: ["Ask where it's posted", "Book the whole slot"],
           bold: ["Ask what else he schedules", "Claim the two o'clock slot"],
-          neutral: ["Note the time, nothing else", "Say you'll try"],
+          neutral: ["Note the time down", "Say you'll try"],
         },
       },
     ],
@@ -221,7 +221,7 @@ export default {
             "Say you're his best customer",
           ],
           bold: ["Say you'll come by more", "Tell him to keep listening"],
-          neutral: ["Say nothing, let it be", "Head for the shelf"],
+          neutral: ["Catch the door behind you", "Head for the shelf"],
         },
       },
       {
@@ -249,7 +249,7 @@ export default {
             "Add something to the list",
           ],
           bold: ["Ask why he keeps track", "Ask to see the whole shelf"],
-          neutral: ["Take it, say nothing", "Pay for it anyway"],
+          neutral: ["Take it off the shelf", "Pay for it anyway"],
         },
       },
       {
@@ -356,7 +356,7 @@ export default {
           kind: ["Promise to be careful", "Say it's nice someone worries"],
           playful: ["Ask if it goes on your tab", "Promise only small heroics"],
           bold: ["Ask why he worries so much", "Say you can handle it"],
-          neutral: ["Take the kit, say nothing", "Nod and pocket it"],
+          neutral: ["Take the kit", "Nod and pocket it"],
         },
       },
       {
@@ -370,7 +370,7 @@ export default {
           kind: ["Say you're happy to help", "Tell him to take his time"],
           playful: ["Ask about the staff discount", "Ask the cat for training"],
           bold: ["Say you want the job", "Ask what he's hiding now"],
-          neutral: ["Stand there, say nothing", "Nod and take the stool"],
+          neutral: ["Watch the register", "Nod and take the stool"],
         },
       },
       {
@@ -412,7 +412,7 @@ export default {
             "Claim the shop is yours now",
           ],
           bold: ["Say he's stuck with you", "Ask if he minds"],
-          neutral: ["Pay and say nothing", "Put it on the counter"],
+          neutral: ["Pay for it", "Put it on the counter"],
         },
       },
       {
@@ -459,7 +459,7 @@ export default {
           kind: "Take his arm",
           playful: "Doubt the ground's uneven",
           bold: "Take his hand instead",
-          neutral: "Take the arm, say nothing",
+          neutral: "Watch your footing",
         },
       },
       {
@@ -483,7 +483,7 @@ export default {
           kind: "Let him hold on a moment",
           playful: "Ask if he plans to let go",
           bold: "Close the distance first",
-          neutral: "Step back, steady now",
+          neutral: "Find your footing",
         },
       },
       {
@@ -495,7 +495,7 @@ export default {
           kind: "Tell him to take his time",
           playful: "Ask what the till did wrong",
           bold: "Ask him straight, no stalling",
-          neutral: "Say nothing, let him find it",
+          neutral: "Let him sort the till",
         },
       },
       {
@@ -601,7 +601,7 @@ export default {
           kind: "Let him blame the register",
           playful: "Doubt the register's guilt",
           bold: "Say it's not the register",
-          neutral: "Let him recover, say nothing",
+          neutral: "Wait for the till to open",
         },
       },
       {
@@ -685,7 +685,7 @@ export default {
           kind: "Follow without question",
           playful: "Ask if he's lost",
           bold: "Ask him straight out why",
-          neutral: "Follow, say nothing",
+          neutral: "Take the long way",
         },
       },
       {
@@ -697,7 +697,7 @@ export default {
           kind: "Fall into step with him",
           playful: "Race him to the corner",
           bold: "Close the gap between you",
-          neutral: "Walk beside him, quiet",
+          neutral: "Match his pace",
         },
       },
       {
@@ -744,7 +744,7 @@ export default {
           kind: "Say you'll wait for it",
           playful: "Guess what he's building to",
           bold: "Tell him to just spit it out",
-          neutral: "Wait, say nothing",
+          neutral: "Wait for the first word",
         },
       },
     ],
@@ -782,7 +782,7 @@ export default {
           kind: "Tell him to rest too",
           playful: "Tease him for worrying",
           bold: "Promise to look after him",
-          neutral: "Sit and say nothing",
+          neutral: "Say you'll slow down",
         },
       },
       {
@@ -794,7 +794,7 @@ export default {
           kind: "Let him care for you",
           playful: "Tease him about the shop",
           bold: "Say you'd stay too",
-          neutral: "Notice, say nothing",
+          neutral: "Let him keep it quiet",
         },
       },
       {
@@ -852,7 +852,7 @@ export default {
           kind: "Let him hold you close",
           playful: "Tease him about the trust",
           bold: "Trust him right back",
-          neutral: "Rest in his arms, quiet",
+          neutral: "Rest in his arms",
         },
       },
       {

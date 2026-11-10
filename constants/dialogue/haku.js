@@ -14,7 +14,7 @@ export default {
           kind: ["Sit and keep him company", "Promise not to jinx it"],
           playful: ["Jinx it anyway", "Knock on wood for him"],
           bold: ["Bet on a disaster by dark", "Say you'll handle any disaster"],
-          neutral: ["Sit, say nothing", "Watch the sun go down"],
+          neutral: ["Take a seat", "Watch the sun go down"],
         },
       },
       {
@@ -26,7 +26,7 @@ export default {
           kind: ["Say you'll back Zenji up", "Say you don't mind waiting"],
           playful: ["Guess the worst possible spot", "Tease Zenji's pickiness"],
           bold: ["Pick the spot yourself", "Take over the filming"],
-          neutral: ["Wait for Zenji, say nothing", "Watch without helping"],
+          neutral: ["Wait for Zenji to pick", "Watch without helping"],
         },
       },
       {
@@ -49,7 +49,7 @@ export default {
           kind: ["Admit you actually slept", "Laugh and wipe it off"],
           playful: ["Deny the sleep mark", "Blame the pillow"],
           bold: ["Wear the sleep mark proudly", "Ask him to get it for you"],
-          neutral: ["Wipe it off, say nothing", "Ignore the comment"],
+          neutral: ["Wipe your cheek", "Ignore the comment"],
         },
       },
       {
@@ -61,7 +61,7 @@ export default {
           kind: ["Take a cup, sit with him", "Say it's good tea"],
           playful: ["Ask how much is too much", "Bet he'd nap through it"],
           bold: ["Say you'll be back tomorrow", "Pour him the second cup"],
-          neutral: ["Drink the tea quietly", "Take a cup, say nothing"],
+          neutral: ["Drink the tea quietly", "Pour yourself a cup"],
         },
       },
       {
@@ -96,7 +96,7 @@ export default {
             "Ask if he's scared of the dark",
           ],
           bold: ["Walk a little closer", "Say you'll take the long way"],
-          neutral: ["Walk along, say nothing", "Let him walk without comment"],
+          neutral: ["Head back with him", "Let him walk without comment"],
         },
       },
       {
@@ -107,7 +107,7 @@ export default {
           kind: ["Share the look with him", "Ask him to flag any others"],
           playful: ["Say it just moved", "Ask what happens if you don't"],
           bold: ["Say you're in on it now", "Walk closer to him past it"],
-          neutral: ["Go around it, say nothing", "Keep walking past"],
+          neutral: ["Step around the spot", "Keep walking past"],
         },
       },
       {
@@ -119,7 +119,7 @@ export default {
           kind: ["Sit in, keep them company", "Say you'll stay a while"],
           playful: ["Ask who's doing the work", "Bring snacks, not help"],
           bold: ["Say you were on your way", "Make him take a stack too"],
-          neutral: ["Join quietly, say little", "Sit without much comment"],
+          neutral: ["Join them", "Sit without much comment"],
         },
       },
       {
@@ -131,7 +131,7 @@ export default {
           kind: ["Say they both need a break", "Ask how he's holding up"],
           playful: ["Say they should start a club", "Bet Tohma says the same"],
           bold: ["Say he should rest too", "Ask what they talked about"],
-          neutral: ["Listen, say nothing", "Nod along quietly"],
+          neutral: ["Let him go on about Tohma", "Nod along quietly"],
         },
       },
       {
@@ -181,7 +181,7 @@ export default {
           kind: ["Settle in beside him", "Say you came to sit with him"],
           playful: ["Check if anyone's looking", "Say they already are"],
           bold: ["Sit even closer", "Dare him to move away"],
-          neutral: ["Stay put, say nothing", "Sit at a normal distance"],
+          neutral: ["Stay where you are", "Sit at a normal distance"],
         },
       },
       {
@@ -193,7 +193,7 @@ export default {
           kind: ["Say it's better with him too", "Say you'll stay right here"],
           playful: ["Ask if that was a line", "Ask if a minute's his limit"],
           bold: ["Catch his sleeve back", "Ask him to say it again"],
-          neutral: ["Stay put, no comment", "Stay, pretend you missed it"],
+          neutral: ["Stay a minute", "Let him have his nap"],
         },
       },
       {
@@ -219,7 +219,7 @@ export default {
           kind: ["Say you're used to him now", "Say he can try again"],
           playful: ["Start charging for reactions", "Ask his week's runner-up"],
           bold: ["Say the bar's higher now", "Say you'll never flinch again"],
-          neutral: ["Wait for the new scare", "Walk on, say nothing"],
+          neutral: ["Wait for the new scare", "Keep walking"],
         },
       },
       {
@@ -234,7 +234,7 @@ export default {
             "Ask if that's a compliment",
           ],
           bold: ["Say you'll fit in together", "Say he fits in fine now"],
-          neutral: ["Sit with that a while", "Lean back, say nothing"],
+          neutral: ["Sit with that a while", "Look out at the campus"],
         },
       },
       {
@@ -248,7 +248,7 @@ export default {
           kind: ["Say he's earned the break", "Say you needed one too"],
           playful: ["Ask if this counts as work", "Say you'll tell Subaru"],
           bold: ["Say you'll make it a habit", "Say you'll stay all afternoon"],
-          neutral: ["Enjoy the quiet a while", "Nod, say nothing"],
+          neutral: ["Enjoy the quiet a while", "Take the break"],
         },
       },
       {
@@ -271,7 +271,7 @@ export default {
           kind: ["Say that helps, actually", "Ask if he's ever nervous"],
           playful: ["Ask if he's normal, then", "Say normal's overrated"],
           bold: ["Say you're going anyway", "Ask him to stay close by"],
-          neutral: ["Take a breath, say nothing", "Stand with him a while"],
+          neutral: ["Take a steadying breath", "Stand with him a while"],
         },
       },
       {
@@ -286,7 +286,7 @@ export default {
           ],
           playful: ["Say you'll make some noise", "Ask how quiet, exactly"],
           bold: ["Say he was your first stop", "Say you'll be around more"],
-          neutral: ["Just say hi back", "Nod, say you're fine"],
+          neutral: ["Just say hi back", "Say you're fine"],
         },
       },
       {
@@ -299,7 +299,7 @@ export default {
           kind: ["Say you're glad it's him", "Sit with him a while"],
           playful: ["Ask if he ever sleeps", "Ask if the ghosts woke him"],
           bold: ["Say you hoped he'd be up", "Take the seat beside him"],
-          neutral: ["Sit quietly with him", "Say nothing, just stay"],
+          neutral: ["Sit quietly with him", "Stay up with him"],
         },
       },
       {
@@ -329,7 +329,7 @@ export default {
             "Ask if he knows how, really",
           ],
           bold: ["Hang yours next to his", "Say you'll show him yours"],
-          neutral: ["Write one, keep it hidden", "Tie it up and step back"],
+          neutral: ["Write a wish", "Tie it up and step back"],
         },
       },
       {
@@ -458,7 +458,7 @@ export default {
           kind: "Say you're not going anywhere",
           playful: "Tease him for slipping",
           bold: "Don't let him keep it light",
-          neutral: "Stay quiet, let him mean it",
+          neutral: "Let him finish brushing",
         },
       },
       {
@@ -532,7 +532,7 @@ export default {
           kind: "Say you'd have waited",
           playful: "Warn him he started it",
           bold: "Hold on just as tight",
-          neutral: "Let him hold on, say nothing",
+          neutral: "Let him keep your hand",
         },
       },
     ],

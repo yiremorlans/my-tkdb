@@ -51,7 +51,7 @@ export default {
             "Take the seat like it's owed",
             "Pull the chair closer to him",
           ],
-          neutral: ["Sit, say nothing", "Sit and watch the cards"],
+          neutral: ["Take the chair", "Sit and watch the cards"],
         },
       },
       {
@@ -90,7 +90,7 @@ export default {
             "Play without asking questions",
             "Bet big and see what happens",
           ],
-          neutral: ["Watch a round first", "Play it out, say nothing"],
+          neutral: ["Watch a round first", "Play your cards"],
         },
       },
       {
@@ -102,7 +102,7 @@ export default {
           kind: ["Nod and join him", "Stay till he's done playing"],
           playful: ["Say you'll tell Lulu", "Ask who taught him manners"],
           bold: ["Deal yourself in", "Say you're here to win"],
-          neutral: ["Sit, say nothing", "Take the seat"],
+          neutral: ["Pick up your cards", "Take the seat"],
         },
       },
       {
@@ -113,7 +113,7 @@ export default {
           kind: ["Answer to kitten", "Say it's fine if he forgets"],
           playful: ["Make him guess your name", "Give a fake name to test him"],
           bold: ["Say he never forgets you", "Say kitten works fine"],
-          neutral: ["Let it go unremarked", "Shrug, say nothing"],
+          neutral: ["Let it go unremarked", "Let him call you that"],
         },
       },
       {
@@ -125,7 +125,7 @@ export default {
           kind: ["Smile back at him", "Stay close by him"],
           playful: ["Ask if he's going soft", "Accuse him of being nice"],
           bold: ["Say he's looking out for you", "Bet he won't stay this nice"],
-          neutral: ["Nod, say nothing", "Let the moment pass"],
+          neutral: ["Take the advice", "Let the moment pass"],
         },
       },
       {
@@ -137,7 +137,7 @@ export default {
           kind: ["Say he took it well", "Admit it was mostly luck"],
           playful: ["Ask for that in writing", "Take a very smug bow"],
           bold: ["Say it wasn't luck", "Raise the next pot"],
-          neutral: ["Stack your chips, say nothing", "Wait for the next deal"],
+          neutral: ["Stack your chips", "Wait for the next deal"],
         },
       },
       {
@@ -174,7 +174,7 @@ export default {
             "Say you're Taiga's bodyguard",
           ],
           bold: ["Say you're with Taiga", "Say Taiga knows who you are"],
-          neutral: ["Say your name, nothing else", "Let the question die"],
+          neutral: ["Give the mook your name", "Let the question die"],
         },
       },
       {
@@ -199,7 +199,7 @@ export default {
           kind: ["Take the bite he saved", "Split it with him"],
           playful: ["Ask what's actually in it", "Eat it slow to tease him"],
           bold: ["Take a bite from his hand", "Ask for seconds"],
-          neutral: ["Eat it, say nothing", "Poke at it first"],
+          neutral: ["Eat the last bite", "Poke at it first"],
         },
       },
       {
@@ -283,7 +283,7 @@ export default {
             "Say the night's not over yet",
           ],
           bold: ["Stall Romeo for him", "Grab his hand and run"],
-          neutral: ["Go, say nothing", "Follow him out"],
+          neutral: ["Ask where he's off to", "Follow him out"],
         },
       },
       {
@@ -334,7 +334,7 @@ export default {
             "Say Romeo would charge for it",
           ],
           bold: ["Say you'll outplay him", "Say you're in for the long run"],
-          neutral: ["Take the answer as given", "Nod, keep playing"],
+          neutral: ["Take the answer as given", "Keep playing"],
         },
       },
       {
@@ -360,7 +360,7 @@ export default {
           kind: ["Say you're glad he waited", "Say Ritsu kept you late"],
           playful: ["Ask how long he's shuffled", "Say the deck needs a break"],
           bold: ["Say you're all his now", "Sit close till he forgives you"],
-          neutral: ["Sit, offer no excuse", "Sit before he says more"],
+          neutral: ["Skip the excuse", "Sit before he says more"],
         },
       },
       {
@@ -383,7 +383,7 @@ export default {
           kind: ["Say you'll spend it well", "Say he should keep it"],
           playful: ["Ask if that's how he flirts", "Bet it all next hand"],
           bold: ["Ask for the other half too", "Raise him with it next hand"],
-          neutral: ["Take it, say nothing", "Pocket the chips"],
+          neutral: ["Slide it into your pile", "Pocket the chips"],
         },
       },
       {
@@ -432,7 +432,7 @@ export default {
           kind: ["Promise not to wander", "Say you'd rather stay close"],
           playful: ["Wander a little anyway", "Ask if he'd come find you"],
           bold: ["Say you're hard to lose", "Hold on to his sleeve"],
-          neutral: ["Stay put, say nothing", "Stay in sight"],
+          neutral: ["Drop back a step", "Stay in sight"],
         },
       },
       {
@@ -506,7 +506,7 @@ export default {
           kind: "Let him keep his arm there",
           playful: "Steal a chip while he's close",
           bold: "Sit on his side",
-          neutral: "Sit, say nothing",
+          neutral: "Move to his side",
         },
       },
       {
@@ -517,7 +517,7 @@ export default {
           kind: "Let him forget the point",
           playful: "Make him blush first",
           bold: "Close the last bit yourself",
-          neutral: "Hold still, say nothing",
+          neutral: "Hold his stare",
         },
       },
       {
@@ -555,7 +555,7 @@ export default {
           kind: "See past the snarl",
           playful: "Be the one who can rile him",
           bold: "Grab his collar first",
-          neutral: "Let his hand stay, say nothing",
+          neutral: "Let his hand stay",
         },
       },
       {
@@ -567,7 +567,7 @@ export default {
           kind: "Tell him you worry too",
           playful: "Tease the worry out of him",
           bold: "Tell him you're his bet",
-          neutral: "Let him worry, say nothing",
+          neutral: "Let him worry",
         },
       },
       {
@@ -614,7 +614,7 @@ export default {
           kind: "Call him kitten too",
           playful: "Say it in front of the table",
           bold: "Climb into his lap",
-          neutral: "Settle in, say nothing",
+          neutral: "Settle into his lap",
         },
       },
       {
@@ -637,7 +637,7 @@ export default {
           kind: "Say it back",
           playful: "Test how tight the arm is",
           bold: "Hold on just as tight",
-          neutral: "Stay still, let him sleep",
+          neutral: "Let him sleep",
         },
       },
       {

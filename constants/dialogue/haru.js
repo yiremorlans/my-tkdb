@@ -103,7 +103,7 @@ export default {
           ],
           bold: ["Say Peekaboo has good taste", "Pet him with confidence"],
           neutral: [
-            "Nod at Peekaboo, say nothing",
+            "Nod at Peekaboo",
             "Let Peekaboo keep watching",
           ],
         },
@@ -120,7 +120,7 @@ export default {
             "Take the bucket like it's owed",
             "Start before he assigns you",
           ],
-          neutral: ["Take the bucket, say nothing", "Get to work quietly"],
+          neutral: ["Take the bucket", "Get to work quietly"],
         },
       },
       {
@@ -132,7 +132,7 @@ export default {
           kind: ["Say you were paying attention", "Ask the critter's name"],
           playful: ["Ask to join Jabberwock", "Ask what kind of furniture"],
           bold: ["Say you remember everything", "Challenge him to test you"],
-          neutral: ["Shrug, say nothing", "Nod at the compliment"],
+          neutral: ["Step around the biter", "Nod at the compliment"],
         },
       },
       {
@@ -174,7 +174,7 @@ export default {
             "Say you weren't worried at all",
             "Ask him to explain the read",
           ],
-          neutral: ["Shrug, say nothing", "Take it in stride"],
+          neutral: ["Say you'll be fine", "Take it in stride"],
         },
       },
       {
@@ -186,7 +186,7 @@ export default {
           kind: ["Say you'll be there", "Ask what time he starts"],
           playful: ["Ask if overtime's paid", "Ask for a staff discount"],
           bold: ["Say you'll be there first", "Say you'd have come anyway"],
-          neutral: ["Go along, say nothing", "Show up, unbothered"],
+          neutral: ["Grab a bucket", "Show up for the rounds"],
         },
       },
       {
@@ -213,7 +213,7 @@ export default {
           kind: ["Say you'll take Ren's rounds", "Offer to help find him"],
           playful: ["Guess where Ren's hiding", "Ask if you get a tracker too"],
           bold: ["Say you'll check his room", "Volunteer to drag Ren back"],
-          neutral: ["Shrug, say nothing", "Let it go unremarked"],
+          neutral: ["Say you haven't seen him", "Let it go unremarked"],
         },
       },
       {
@@ -237,7 +237,7 @@ export default {
           kind: ["Promise to come every day", "Say you'll bring a mate"],
           playful: ["Say your lips are sealed", "Haggle the rate down further"],
           bold: ["Say you'd come without it", "Ask why you get special rates"],
-          neutral: ["Take the deal, say nothing", "Nod, say you'll be around"],
+          neutral: ["Take the deal", "Say you'll be around"],
         },
       },
       {
@@ -249,7 +249,7 @@ export default {
           kind: ["Say it's not just Towa", "Admit you like the company"],
           playful: ["Say it's all for Peekaboo", "Say Towa's great company"],
           bold: ["Say you come for him", "Ask who he hopes it is"],
-          neutral: ["Shrug, say nothing", "Say you like it here"],
+          neutral: ["Change the subject", "Say you like it here"],
         },
       },
     ],
@@ -269,7 +269,7 @@ export default {
             "Ask if the animals snore",
           ],
           bold: ["Say his warmth got you", "Ask him to show you around"],
-          neutral: ["Stay, say nothing", "Stay for the shift"],
+          neutral: ["Ask what the night feed is", "Stay for the shift"],
         },
       },
       {
@@ -281,7 +281,7 @@ export default {
           kind: ["Say the hard work shows", "Say they all like him best"],
           playful: ["Tease the modesty", "Point out the muck on him"],
           bold: ["Say he's clearly proud of it", "Tell him to take the credit"],
-          neutral: ["Learn quietly, say nothing", "Follow the feeding order"],
+          neutral: ["Watch how he does it", "Follow the feeding order"],
         },
       },
       {
@@ -293,7 +293,7 @@ export default {
           kind: ["Say you'll take the far pens", "Take the next job off it"],
           playful: ["Ask when the fun starts", "Rate the fun out of ten"],
           bold: ["Say you'll hold him to 'fun'", "Take two buckets at once"],
-          neutral: ["Grab a bucket, say nothing", "Start on the list"],
+          neutral: ["Grab a bucket", "Start on the list"],
         },
       },
       {
@@ -319,7 +319,7 @@ export default {
           kind: ["Call his name back", "Say you missed the noise too"],
           playful: ["Ask if the critters missed you", "Shout back louder"],
           bold: ["Say of course you missed him", "Say he'd have called anyway"],
-          neutral: ["Wave back, say nothing", "Head over to him"],
+          neutral: ["Wave back at him", "Head over to him"],
         },
       },
       {
@@ -331,7 +331,7 @@ export default {
           kind: ["Tell him something true", "Say you like listening"],
           playful: ["Pitch yourself like the tour", "Trade a fact for a fact"],
           bold: ["Ask what he wants to know", "Say he could just ask"],
-          neutral: ["Give the short version", "Shrug, keep it brief"],
+          neutral: ["Give the short version", "Say there's not much to tell"],
         },
       },
       {
@@ -369,7 +369,7 @@ export default {
           kind: ["Tuck Peekaboo in close", "Say you've got Peekaboo"],
           playful: ["Ask Peekaboo for orders", "Salute and take the post"],
           bold: ["Say you're coming too", "Bring Peekaboo along after"],
-          neutral: ["Take Peekaboo, say nothing", "Hold the sling and wait"],
+          neutral: ["Take Peekaboo", "Hold the sling and wait"],
         },
       },
       {
@@ -381,7 +381,7 @@ export default {
           kind: ["Stay and keep him company", "Say you don't mind the quiet"],
           playful: ["Ask for the night tour", "Ask if the fort has snacks"],
           bold: ["Say you'd stay regardless", "Stay till Towa's back"],
-          neutral: ["Stay, say nothing", "Settle in for the evening"],
+          neutral: ["Stay a bit", "Settle in for the evening"],
         },
       },
       {
@@ -398,7 +398,7 @@ export default {
             "Say he sounds like a parent",
           ],
           bold: ["Say you can handle Sinostra", "Say they don't scare you"],
-          neutral: ["Nod, say nothing", "Let the warning land"],
+          neutral: ["Say you'll be careful", "Let the warning land"],
         },
       },
       {
@@ -422,7 +422,7 @@ export default {
           kind: ["Take half the list", "Say you'll do the shopping"],
           playful: ["Add a nap to the list", "Add 'have fun' to the list"],
           bold: ["Take the hardest one on it", "Start the washing unasked"],
-          neutral: ["Take a task, say nothing", "Get on with the washing"],
+          neutral: ["Take the shopping", "Get on with the washing"],
         },
       },
       {
@@ -446,7 +446,7 @@ export default {
           kind: ["Go give Towa attention", "Say you'll make time for him"],
           playful: ["Wave Towa over to help", "Ask who's jealous of who"],
           bold: ["Make room for Towa", "Put Towa to work with you"],
-          neutral: ["Glance over, say nothing", "Keep working, unbothered"],
+          neutral: ["Glance over at Towa", "Keep on working"],
         },
       },
       {
@@ -463,7 +463,7 @@ export default {
             "Bet he's up again in ten",
           ],
           bold: ["Say he never takes breaks", "Say you're holding him to it"],
-          neutral: ["Sit and eat, say nothing", "Eat in the shade with him"],
+          neutral: ["Take the other crate", "Eat in the shade with him"],
         },
       },
       {
@@ -475,7 +475,7 @@ export default {
           kind: ["Say you'll text once home", "Say you'll stay and help"],
           playful: ["Race him to close the pens", "Say he owes you a walk"],
           bold: ["Stay till he's finished", "Close the last pen for him"],
-          neutral: ["Head back, say nothing", "Wave and go"],
+          neutral: ["Head back alone", "Wave and go"],
         },
       },
       {
@@ -487,7 +487,7 @@ export default {
           kind: ["Say you'd wear it every shift", "Say you'd wear it proudly"],
           playful: ["Ask for a name tag too", "Negotiate for a hat"],
           bold: ["Say you've earned one", "Say you'll earn the patch"],
-          neutral: ["Nod, say nothing", "Keep hauling the feed"],
+          neutral: ["Say your clothes are fine", "Keep hauling the feed"],
         },
       },
     ],
@@ -525,7 +525,7 @@ export default {
           kind: "Say you'll stay for rounds",
           playful: "Ask if you're a critter too",
           bold: "Ask why you're different",
-          neutral: "Let him be gentle, say nothing",
+          neutral: "Let him be gentle",
         },
       },
       {
@@ -549,7 +549,7 @@ export default {
           kind: "Let him have the nerve",
           playful: "Tease him for running out",
           bold: "Move first",
-          neutral: "Hold still, wait him out",
+          neutral: "Wait him out",
         },
       },
     ],
@@ -586,7 +586,7 @@ export default {
           kind: "Say it wasn't a joke either",
           playful: "Get into trouble with him",
           bold: "Take his hand first",
-          neutral: "Sit close and say nothing",
+          neutral: "Move in closer",
         },
       },
       {
@@ -624,7 +624,7 @@ export default {
           kind: "Take his face in your hands",
           playful: "Kiss him mid-sentence first",
           bold: "Pull him into the stairwell",
-          neutral: "Let him kiss you, say nothing",
+          neutral: "Let him kiss you",
         },
       },
       {
@@ -648,7 +648,7 @@ export default {
           kind: "Say it back",
           playful: "Ask what home smells like",
           bold: "Tell him he's it for you",
-          neutral: "Hold his hand and say nothing",
+          neutral: "Hold his hand",
         },
       },
       {

@@ -14,7 +14,7 @@ export default {
           kind: ["Say he's allowed a break", "Ask what he's planting next"],
           playful: ["Offer to supervise", "Ask if it's an anomaly garden"],
           bold: ["Say you came to see him", "Kneel and start weeding"],
-          neutral: ["Watch him work", "Look around, say little"],
+          neutral: ["Watch him work", "Look around the garden"],
         },
       },
       {
@@ -79,7 +79,7 @@ export default {
           kind: ["Ask what he's brewing", "Say it smells wonderful"],
           playful: ["Ask if there are sweets too", "Ask if he expected you"],
           bold: ["Stay for the whole pot", "Say you'll pour the next one"],
-          neutral: ["Take the tea, say nothing", "Wait for the tea"],
+          neutral: ["Take the second cup", "Wait for the tea"],
         },
       },
     ],
@@ -105,7 +105,7 @@ export default {
           kind: ["Say you trust him with it", "Hand him the bag"],
           playful: ["Ask why not the handle", "Tease him about the care"],
           bold: ["Hand it over without asking", "Say he can just take it"],
-          neutral: ["Nod, say nothing", "Hand it over quietly"],
+          neutral: ["Let him take the strap", "Hand it over quietly"],
         },
       },
       {
@@ -117,7 +117,7 @@ export default {
           kind: ["Sit down while it's hot", "Say you hoped he'd guess"],
           playful: ["Ask how long it's been out", "Claim the extra cup"],
           bold: ["Take the cup, no argument", "Say it was obviously for you"],
-          neutral: ["Take the cup, say nothing", "Sit and wait quietly"],
+          neutral: ["Pick up the cup", "Sit and wait quietly"],
         },
       },
       {
@@ -129,7 +129,7 @@ export default {
           kind: ["Ask if he'll be all right", "Say you'll share it with him"],
           playful: ["Ask what else he noticed", "Tease him about the umbrella"],
           bold: ["Take it without fuss", "Say he didn't need to explain"],
-          neutral: ["Take it, say nothing", "Accept it quietly"],
+          neutral: ["Take the umbrella", "Accept it quietly"],
         },
       },
       {
@@ -156,7 +156,7 @@ export default {
           kind: ["Say he's a good teacher", "Say Lyca learns from him"],
           playful: ["Ask what word it was", "Tease him for being so pleased"],
           bold: ["Say you're proud of them both", "Ask him to tell it again"],
-          neutral: ["Smile, say little", "Let him have the moment"],
+          neutral: ["Smile at the news", "Let him have the moment"],
         },
       },
       {
@@ -204,7 +204,7 @@ export default {
           kind: ["Say you'll hold his place", "Offer to help him decide"],
           playful: ["Tease him for taking so long", "Guess his order for him"],
           bold: ["Just order for him", "Ask Sho to pick for him"],
-          neutral: ["Go along without comment", "Say yes, keep it simple"],
+          neutral: ["Go along without comment", "Say yes"],
         },
       },
       {
@@ -257,7 +257,7 @@ export default {
             "Say you wanted him to read it",
             "Say there's nothing to hide",
           ],
-          neutral: ["Hand it over, say nothing", "Let him read what he reads"],
+          neutral: ["Hand him your things", "Let him read what he reads"],
         },
       },
       {
@@ -315,7 +315,7 @@ export default {
             "Ask who's minding the rules",
           ],
           bold: ["Say you're worth the exception", "Say Haku's got it handled"],
-          neutral: ["Sit in comfortable quiet", "Sit, let him decide"],
+          neutral: ["Sit in comfortable quiet", "Let him set the pace"],
         },
       },
       {
@@ -327,7 +327,7 @@ export default {
           kind: ["Say the feeling's mutual", "Tell him he's kind too"],
           playful: ["Ask if that's why he smiles", "Add yourself to the list"],
           bold: ["Say he should hear it more", "Say you're lucky too"],
-          neutral: ["Let him have the thought", "Nod, leave it there"],
+          neutral: ["Let him have the thought", "Leave it there"],
         },
       },
       {
@@ -342,7 +342,7 @@ export default {
             "Ask if he adds a tea leaf",
           ],
           bold: ["Bring him breakfast tomorrow", "Say half is the rule now"],
-          neutral: ["Set the food down", "Eat together, no fuss"],
+          neutral: ["Set the food down", "Eat your share"],
         },
       },
       {
@@ -547,7 +547,7 @@ export default {
           kind: "Help him set down his burden",
           playful: "Make him blush",
           bold: "Ask for him, not the house",
-          neutral: "Let him lean, wordlessly",
+          neutral: "Let him lean on you",
         },
       },
       {
@@ -617,7 +617,7 @@ export default {
           kind: "Say you love him too",
           playful: "Kiss him where they'll see",
           bold: "Kiss him back just as openly",
-          neutral: "Let him kiss you, say nothing",
+          neutral: "Let him kiss you",
         },
       },
       {

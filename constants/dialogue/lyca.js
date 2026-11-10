@@ -13,7 +13,7 @@ export default {
           kind: ["Let him come to you", "Stop right where you are"],
           playful: ["Offer your hand to sniff", "Ask what you smell like"],
           bold: ["Give him your name", "Say you'll wait till he does"],
-          neutral: ["Keep your hands down", "Hold still, say nothing"],
+          neutral: ["Keep your hands down", "Stay where you are"],
         },
       },
       {
@@ -36,7 +36,7 @@ export default {
           kind: ["Let him decide how close", "Say you like the company"],
           playful: ["Ask what took him so long", "Ask if he's staying a while"],
           bold: ["Say you're not going anywhere", "Say you'll stay right here"],
-          neutral: ["Stand still, say nothing", "Let him watch you"],
+          neutral: ["Hold your ground", "Let him watch you"],
         },
       },
       {
@@ -95,7 +95,7 @@ export default {
           kind: ["Say he's doing great", "Offer to help him practice"],
           playful: ["Ask what Neros looks like", "Bet him he's ready now"],
           bold: ["Say he's got nothing to prove", "Say Neros will be proud"],
-          neutral: ["Let him talk about Neros", "Say nothing, listen"],
+          neutral: ["Let him talk about Neros", "Hear him out"],
         },
       },
       {
@@ -165,7 +165,7 @@ export default {
           kind: ["Say he'll pick them up", "Offer to help him practice"],
           playful: ["Say Rui has too many", "Tease the way he says it"],
           bold: ["Say Rui's wrong about him", "Tell him to prove Rui wrong"],
-          neutral: ["Nod, say nothing", "Let it go unremarked"],
+          neutral: ["Let him figure it out", "Let it go unremarked"],
         },
       },
       {
@@ -176,7 +176,7 @@ export default {
           kind: ["Say you'd like to come", "Let him pick the path"],
           playful: ["Say you'll race him", "Say you'll pick a new route"],
           bold: ["Tell him to lead the way", "Match his pace exactly"],
-          neutral: ["Walk together, say nothing", "Walk at his pace"],
+          neutral: ["Go with him", "Walk at his pace"],
         },
       },
       {
@@ -188,7 +188,7 @@ export default {
           kind: ["Offer to read him the menu", "Say you'll go with him"],
           playful: ["Say Suba's off duty today", "Say reading costs a bite"],
           bold: ["Say you're buying", "Say you'll order for both"],
-          neutral: ["Nod, say nothing", "Head to the truck with him"],
+          neutral: ["Read him the menu", "Head to the truck with him"],
         },
       },
       {
@@ -215,7 +215,7 @@ export default {
             "Tease that you liked him fast",
           ],
           bold: ["Say you'd do it again", "Ask why that surprises him"],
-          neutral: ["Shrug, say nothing", "Let the question hang"],
+          neutral: ["Say it seemed right", "Let the question hang"],
         },
       },
     ],
@@ -228,7 +228,7 @@ export default {
           kind: ["Say you're glad to be back", "Say you missed that smile"],
           playful: ["Ask what made him smile", "Ask for another one"],
           bold: ["Say you're happy too", "Say it's your favorite smile"],
-          neutral: ["Take the spot beside him", "Nod, walk over"],
+          neutral: ["Take the spot beside him", "Walk over to him"],
         },
       },
       {
@@ -300,7 +300,7 @@ export default {
           kind: ["Say you'd rather sit with him", "Say you'd have moved too"],
           playful: ["Say that's exactly jealous", "Ask where Rui ended up"],
           bold: ["Say you saw him do it", "Say he can sit closer"],
-          neutral: ["Shrug it off", "Eat, let it go"],
+          neutral: ["Shrug it off", "Keep eating lunch"],
         },
       },
       {
@@ -311,7 +311,7 @@ export default {
           kind: ["Take one bite and smile", "Say you'll share yours too"],
           playful: ["Ask for a fork, at least", "Eat with your hands too"],
           bold: ["Ask why only you", "Say you'll hold him to that"],
-          neutral: ["Eat beside him", "Nod, keep eating"],
+          neutral: ["Eat beside him", "Try some of it"],
         },
       },
       {
@@ -334,7 +334,7 @@ export default {
           kind: ["Say it's okay to protect you", "Say you weren't bothered"],
           playful: ["Tease the embarrassed growl", "Growl back at him"],
           bold: ["Say he did the right thing", "Say one growl isn't much"],
-          neutral: ["Let it go, unbothered", "Keep walking, no comment"],
+          neutral: ["Let it go", "Keep walking"],
         },
       },
       {
@@ -349,7 +349,7 @@ export default {
             "Ask if that disappoints him",
           ],
           bold: ["Say you trust him completely", "Say the others are wrong"],
-          neutral: ["Shrug, unconcerned", "Walk on beside him"],
+          neutral: ["Shrug it off", "Walk on beside him"],
         },
       },
       {
@@ -387,7 +387,7 @@ export default {
             "Ask if he counted the days",
           ],
           bold: ["Say you could never hate him", "Say you won't do it again"],
-          neutral: ["Stay put and let him look", "Nod, say nothing"],
+          neutral: ["Stay put and let him look", "Tell him you're back"],
         },
       },
       {
@@ -496,7 +496,7 @@ export default {
           kind: "Let him take his time",
           playful: "Hold the hand hostage",
           bold: "Turn his hand over first",
-          neutral: "Let him learn it, say nothing",
+          neutral: "Let him turn it over",
         },
       },
       {
@@ -508,7 +508,7 @@ export default {
           kind: "Let him look, stay soft",
           playful: "Ask what he's looking at",
           bold: "Don't let him look away",
-          neutral: "Hold still, say nothing",
+          neutral: "Don't move",
         },
       },
     ],
@@ -567,7 +567,7 @@ export default {
           kind: "Say you're glad he's loyal",
           playful: "Let him win the race",
           bold: "Say wherever you go, he goes",
-          neutral: "Accept it, say nothing",
+          neutral: "Accept it as decided",
         },
       },
     ],
@@ -615,7 +615,7 @@ export default {
           kind: "Say you like the yes too",
           playful: "Teach him a better kiss",
           bold: "Take the lead this time",
-          neutral: "Let him keep trying, silent",
+          neutral: "Let him keep practicing",
         },
       },
       {
@@ -627,7 +627,7 @@ export default {
           kind: "Let him close the last of it",
           playful: "Make him ask again",
           bold: "Close what's left",
-          neutral: "Let it happen, say nothing",
+          neutral: "Let him close the gap",
         },
       },
     ],
