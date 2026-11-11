@@ -67,6 +67,7 @@ Source: Tokyo Debunker Wiki, Jiro Kirisaki page, Trivia section (tokyodebunker.f
 - He appears to be right-handed, as seen in his campus writing animation.
 - In Episode 14, it’s revealed that Jiro barely has enough credits to advance to the next semester due to frequent absences helping in Yuri’s lab. Even when attending class, he often forgets to confirm his attendance.
 - In Episode 22, it is revealed that Yuri gave Jiro his glasses, which Yuri himself had worn for a long time before passing them to him.
+- Jiro has an SSR card titled "Blurred Vision," which strongly implies he struggles with his eyesight (added per user, 2026-11-10). Implied, not stated: lines may lean on it lightly (squinting, needing his glasses, things up close or far off), but never invent a diagnosis, a cause, or a link to his illness.
 - Jiro uses the 俺 [Ore] pronoun for himself and the あなた [Anata] pronoun for others.
 
 ## Voicelines

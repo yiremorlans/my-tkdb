@@ -149,7 +149,7 @@ export default {
       "...You smudged the lens. That's okay.",
     ],
     glassesOff: [
-      "Oh. You took them. ...I can see fine without them, you know.",
+      "Oh. You took them. ...I suppose that's fine.",
       "...Was that an experiment? What were you testing?",
     ],
     maskPat: [
@@ -300,7 +300,7 @@ export default {
     ],
     glassesOff: [
       "You keep taking them. Yuri's going to start asking questions.",
-      "Oh. ...You can keep them a while. I don't need them.",
+      "Oh. ...You can keep them a while. I know your face well enough without them.",
     ],
     maskPat: [
       "Still on? I thought you'd have it off by now.",
