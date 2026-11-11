@@ -87,7 +87,7 @@ export default {
         kind: ["Insist he eat something", "Say you made it for him"],
         playful: ["Wave it under his nose", "Dare him to ignore it"],
         bold: ["Put the meal in his hands", "Say a doctor needs to eat"],
-        neutral: ["Leave it on his desk", "Say nothing, just walk away"],
+        neutral: ["Leave it on his desk", "Walk away"],
       },
     },
     {
@@ -146,7 +146,7 @@ export default {
         kind: ["Say his work deserves better", "Let him vent"],
         playful: ["Award him first place", "Offer to run a bake sale"],
         bold: ["Say they'll regret it", "Ask to see the numbers"],
-        neutral: ["Half-listen, say nothing", "Tune out the rant"],
+        neutral: ["Wait for the rant to end", "Tune out the rant"],
       },
     },
   ],
@@ -272,7 +272,7 @@ export default {
         kind: ["Play along as the patient", "Let him off the hook"],
         playful: ["Ask what he nearly said", "Introduce yourself better"],
         bold: ["Say 'his' was enough", "Stand a little closer to him"],
-        neutral: ["Shake the visitor's hand", "Say nothing, let it pass"],
+        neutral: ["Shake the visitor's hand", "Let it pass"],
       },
     },
     {
@@ -284,7 +284,87 @@ export default {
         kind: ["Tuck the spine back in", "Straighten the stack for him"],
         playful: ["Zip your lips, dramatically", "Ask if it's any good"],
         bold: ["Ask to borrow it after", "Say you'd read it too"],
-        neutral: ["Pretend you didn't see it", "Look away, say nothing"],
+        neutral: ["Pretend you didn't see it", "Carry on with your visit"],
+      },
+    },
+  ],
+  spark: [
+    {
+      line: "He's marching you across Mortkranken to see a recent finding. Three corridors in, he still hasn't admitted he's lost.",
+      approach: "Ask how much farther it is",
+      greeting:
+        '"I know precisely where we are. The building was renovated, that\'s all."',
+      responses: {
+        kind: ["Let him lead anyway", "Say you're in no hurry"],
+        playful: ["Ask if he's lost", "Ask if they moved the lab too"],
+        bold: ["Take his arm and lead", "Point the right way"],
+        neutral: ["Follow without comment", "Read the next door sign"],
+      },
+    },
+    {
+      line: "He's preparing Jiro's injection with the tray pulled close, and nobody else is allowed near it.",
+      approach: "Offer to help",
+      greeting:
+        '"Not with this. Jiro\'s stigma reflects every injury back onto its source. Even a needle. I am the sole exception, you see."',
+      responses: {
+        kind: ["Leave it in his hands", "Ask if it ever costs him"],
+        playful: ["Ask if that's concern", "Say he'd lose his best subject"],
+        bold: ["Stay beside him while he works", "Make him rest after this"],
+        neutral: ["Step clear of the tray", "Let him finish the dose"],
+      },
+    },
+    {
+      line: "The space heater has migrated across the lab to the spot where he always examines you.",
+      approach: "Sit where it's warm",
+      greeting:
+        '"The heater is positioned for equipment calibration. You simply happen to be in its range."',
+      responses: {
+        kind: ["Say his patients are lucky", "Say you noticed the warmth"],
+        playful: ["Ask which equipment", "Ask if you're the equipment"],
+        bold: ["Say it can stay right there", "Pull him into the warm too"],
+        neutral: ["Hold your hands to the heat", "Stay where you are"],
+      },
+    },
+    {
+      line: "There's a vial on the shelf with your name on the label, written far more carefully than the others.",
+      mood: true,
+      approach: "Ask about the vial",
+      greeting:
+        '"That one is yours. Formulated for you specifically. Legible labeling is basic laboratory protocol."',
+      responses: {
+        kind: ["Say you trust his formula", "Say you'll follow his dosing"],
+        playful: ["Ask if he practiced your name", "Ask if it's a love potion"],
+        bold: ["Ask for the next batch", "Ask him to administer it"],
+        neutral: ["Check the dosage", "Compare the labels"],
+      },
+    },
+    {
+      line: "He's cleared a space on the bench beside him without being asked, mid-rant, like it's obvious you'd sit there.",
+      // "Don't act shocked" is an invitation: playing up the surprise
+      // flusters him more than sitting down without fuss.
+      mood: true,
+      approach: "Look for a seat",
+      greeting: '"...Sit, then. I already made room, don\'t act shocked."',
+      responses: {
+        kind: ["Ask what has him worked up", "Ask to hear the whole story"],
+        playful: ["Ask if this is a reservation", "Say you're touched instead"],
+        bold: ["Sit close to him", "Lean on his shoulder"],
+        neutral: ["Sit and listen", "Set your things down"],
+      },
+    },
+    {
+      line: "The research budget came through at last. He has found four separate excuses to mention it in ten minutes.",
+      approach: "Ask about the new equipment",
+      greeting:
+        '"Hmph. You noticed the new equipment. The faculty finally saw sense and approved my budget. About time."',
+      responses: {
+        kind: ["Admire the new equipment", "Say his work earned it"],
+        playful: [
+          "Ask if you can push a button",
+          "Ask which one's his favorite",
+        ],
+        bold: ["Say you knew they'd cave", "Claim the first demonstration"],
+        neutral: ["Glance at the equipment", "Let him list the upgrades"],
       },
     },
   ],

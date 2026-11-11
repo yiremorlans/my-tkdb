@@ -72,7 +72,7 @@ export default {
           "Ask which one's his favorite",
         ],
         bold: ["Say you knew they'd cave", "Claim the first demonstration"],
-        neutral: ["Glance at it and say nothing", "Let him talk, say nothing"],
+        neutral: ["Glance at the equipment", "Let him list the upgrades"],
       },
     },
     {
@@ -81,7 +81,7 @@ export default {
         kind: ["Say his work deserves better", "Let him vent"],
         playful: ["Award him first place", "Offer to run a bake sale"],
         bold: ["Say they'll regret it", "Ask to see the numbers"],
-        neutral: ["Half-listen, say nothing", "Tune out the rant"],
+        neutral: ["Wait for the rant to end", "Tune out the rant"],
       },
     },
     {
@@ -90,7 +90,7 @@ export default {
         kind: ["Say you know he's busy", "Say you'll give more notice"],
         playful: ["Ask if you were worth it", "Ask what he moved for you"],
         bold: ["Say you'll keep turning up", "Say he can rearrange again"],
-        neutral: ["Accept it, ask nothing", "Nod and move on"],
+        neutral: ["Let him rearrange it", "Nod and move on"],
       },
     },
     {
@@ -251,7 +251,7 @@ export default {
     {
       line: "Take it, worm. A formula developed for one specimen alone. I-It's not as though I stayed up perfecting it! The research simply demanded it!",
       // Staying up gives him away: teasing what it means flusters him more
-      // than taking the flask at face value.
+      // than taking the formula at face value.
       mood: true,
       responses: {
         kind: ["Say you'll take it daily", "Ask what went into it"],
@@ -294,6 +294,227 @@ export default {
         playful: ["Ask if it's a contest", "Say he's observant as ever"],
         bold: ["Say you both need sleep", "Say it's his turn to rest"],
         neutral: ["Say you slept fine", "Let the remark pass"],
+      },
+    },
+  ],
+  spark: [
+    {
+      line: "Your color is off. Hold still. That body of yours is a vital specimen, and I am monitoring it. ...Stop smiling.",
+      // "Stop smiling" is the opening: playing the smile back as a symptom
+      // flusters him more than praising his bedside manner does.
+      mood: true,
+      responses: {
+        kind: ["Say he's an attentive doctor", "Ask what the reading says"],
+        playful: [
+          "Say the smile is a symptom",
+          "Ask if the smile is contagious",
+        ],
+        bold: ["Ask him to check your heart", "Say he can keep monitoring"],
+        neutral: ["Let it stay clinical", "Wait for him to finish"],
+      },
+    },
+    {
+      line: "Groundbreaking! That is the word the faculty chose for my latest paper. An inevitable result, of course. ...Well? I am waiting for your assessment.",
+      responses: {
+        kind: ["Congratulate him", "Ask to read the paper"],
+        playful: [
+          "Ask if yours counts for more",
+          "Ask why your verdict matters",
+        ],
+        bold: ["Say they undersold it", "Say you knew before they did"],
+        neutral: ["Give a polite nod", "Ask which paper it was"],
+      },
+    },
+    {
+      line: "You're running warm. As suspected. Allow me to examine you. Fortunately for you, I happen to have a new formula on hand.",
+      // A fever is the opening: blaming it on him flusters him more than
+      // settling in as his patient does.
+      mood: true,
+      responses: {
+        kind: ["Say you're in his care", "Say you're glad he noticed"],
+        playful: ["Say it started when he arrived", "Ask if it's a love fever"],
+        bold: ["Ask him to be thorough", "Say he should check twice"],
+        neutral: ["Let him finish checking", "Let him examine you"],
+      },
+    },
+    {
+      line: "Jiro is occupied with the new formula, so I shall see you home myself. You are under observation, and observation does not stop at my door.",
+      responses: {
+        kind: ["Say you're glad it's him", "Say he's as thorough as ever"],
+        playful: [
+          "Ask how closely he'll observe",
+          "Ask if this counts as a date",
+        ],
+        bold: ["Say observation goes both ways", "Offer him your arm"],
+        neutral: ["Head out with him", "Say the walk is short"],
+      },
+    },
+    {
+      line: "Jiro's glasses? Yes, they were mine. I wore them for a considerable time. Jiro's eyes required them more than mine did. ...Hmph. Don't look at me like that.",
+      responses: {
+        kind: ["Say a good doctor would", "Say they suit Jiro"],
+        playful: ["Ask if you get a pair too", "Ask if you get his next pair"],
+        bold: ["Say his eyes matter too", "Say you'll buy him new ones"],
+        neutral: ["Let the subject drop", "Look somewhere else, then"],
+      },
+    },
+    {
+      line: "I have isolated a new compound. Naming rights belong to the discoverer, and I have... not yet decided. Suggestions are being accepted.",
+      responses: {
+        kind: ["Say it should bear his name", "Ask what the compound does"],
+        playful: ["Suggest your own name", "Suggest something ridiculous"],
+        bold: ["Say it deserves a grand name", "Say you'll name it, then"],
+        neutral: ["Say you'll think on it", "Ask for a few options"],
+      },
+    },
+    {
+      line: "The Ace Doctor Wows Minds In Another World Thesis is a medical journal. The protagonist's surgical technique is wildly inaccurate. I am documenting the errors.",
+      responses: {
+        kind: ["Ask what the hero gets wrong", "Ask him to read you a page"],
+        playful: ["Ask if it's peer-reviewed", "Offer to co-author the notes"],
+        bold: ["Read over his shoulder", "Ask what happens next"],
+        neutral: ["Leave him to his reading", "Let the excuse stand"],
+      },
+    },
+    {
+      line: "Three months of stalled research. Agnihaet. ...Solved, in a single breath. Do try to keep your admiration within reasonable limits.",
+      responses: {
+        kind: ["Say it was remarkable", "Say only he could do that"],
+        playful: ["Ask for an encore", "Ask if he practiced that"],
+        bold: [
+          "Say the world should see this",
+          "Stare at him, openly impressed",
+        ],
+        neutral: ["Say well done", "Say it was quick"],
+      },
+    },
+    {
+      line: "How many theses? Twenty-three this month, every one annotated. No one else at this academy keeps such a pace.",
+      responses: {
+        kind: ["Ask which one stayed with him", "Say the effort shows"],
+        playful: ["Ask if he's keeping score", "Ask if he reads in his sleep"],
+        bold: ["Say you'll read one with him", "Bring him the twenty-fourth"],
+        neutral: ["Say you've read none", "Say that's a lot"],
+      },
+    },
+    {
+      line: "Brutes! Every other house! Not a single viable specimen came back. Do they think anomalies grow on trees!?",
+      responses: {
+        kind: ["Ask what he can salvage", "Say he'll make do brilliantly"],
+        playful: ["Offer to plant a few", "Volunteer as a stand-in"],
+        bold: ["Help him draft the complaint", "Say you'll bring one back"],
+        neutral: ["Let him vent", "Wait out the tirade"],
+      },
+    },
+    {
+      line: "You prepared my wake-up tonic? That is Jiro's task. ...Very well. I shall evaluate your efforts. ...Acceptable, I suppose.",
+      responses: {
+        kind: ["Ask how he likes it made", "Say you'll do it his way"],
+        playful: ["Ask if he wants a refill", "Ask if Jiro's is better"],
+        bold: ["Ask for a real verdict", "Say it deserves better marks"],
+        neutral: ["Take the cup back", "Say it was easy"],
+      },
+    },
+    {
+      line: "You will be assisting me today. A captain need not explain himself. Gloves, please. ...Why are you still standing there?",
+      responses: {
+        kind: ["Say you're ready to learn", "Ask what the first step is"],
+        playful: [
+          "Ask if this is a promotion",
+          "Ask if he just wanted company",
+        ],
+        bold: ["Ask for a lab coat of your own", "Say you'll be back tomorrow"],
+        neutral: ["Wait for instructions", "Wash your hands"],
+      },
+    },
+    {
+      line: "The chocolate on my desk was yours? My blood sugar was just starting to drop. I suppose you do have it in you to be considerate every now and then.",
+      responses: {
+        kind: ["Say you'll bring more", "Ask what flavor he likes best"],
+        playful: ["Ask if that was a thank-you", "Ask if he wants seconds"],
+        bold: ["Say it's doctor's orders", "Put him on a snack schedule"],
+        neutral: ["Say it was nothing", "Let him eat in peace"],
+      },
+    },
+    {
+      line: "Hmm hmm hmm ♪ ...Beethoven's Ninth. It aids concentration, you see. You may remain, provided you do not interrupt my process.",
+      responses: {
+        kind: ["Ask his favorite movement", "Say it sounds lovely"],
+        playful: ["Make a request", "Say you came for the music"],
+        bold: ["Ask him to keep going", "Ask for the full symphony"],
+        neutral: ["Let him work", "Stay out of his way"],
+      },
+    },
+    {
+      line: "No one assists with Jiro's injections. Jiro's stigma reflects every injury back onto its source. Even a needle. I am the sole exception, you see.",
+      responses: {
+        kind: ["Leave it in his hands", "Say Jiro's lucky to have him"],
+        playful: ["Ask what makes him so special", "Ask if he's showing off"],
+        bold: ["Ask to watch him work", "Say that's a lot on him"],
+        neutral: ["Keep your distance", "Let him finish the dose"],
+      },
+    },
+    {
+      line: "That vial is yours. Formulated for you specifically. Legible labeling is basic laboratory protocol.",
+      responses: {
+        kind: ["Say you trust his formula", "Say you'll follow his dosing"],
+        playful: ["Ask if he practiced your name", "Ask if it's a love potion"],
+        bold: ["Say you'll come for refills", "Ask him to administer it"],
+        neutral: ["Check the dosage", "Compare the labels"],
+      },
+    },
+    {
+      line: "You wish to follow in my footsteps? Ha! You are a hundred years too early. ...Ninety, perhaps. You have shown some aptitude.",
+      responses: {
+        kind: ["Say you'll learn from him", "Ask where you should start"],
+        playful: ["Haggle him down to fifty", "Ask if he'll be your mentor"],
+        bold: ["Say you'll close the gap", "Say you'll get there sooner"],
+        neutral: ["Say that's a long wait", "Say you'll think about it"],
+      },
+    },
+    {
+      line: "I will soon be finished with today's lessons, then I shall confirm the status of my latest test subject. You may accompany me.",
+      responses: {
+        kind: ["Say you'd be honored", "Say you'd love to see it"],
+        playful: ["Ask if it's friendly", "Ask if you were his first pick"],
+        bold: ["Ask to see it up close", "Ask to see his notes too"],
+        neutral: ["Follow him there", "Ask how far it is"],
+      },
+    },
+    {
+      line: "That last case was entirely beneath my expertise, so I handed it to Jiro. Which leaves me with an unexpected opening. I grant you the privilege of filling it.",
+      responses: {
+        kind: ["Ask if he's eaten yet", "Say he's earned a break"],
+        playful: ["Say it's your treat this time", "Say the genius eats free"],
+        bold: ["Say it's a date", "Steal him for a walk"],
+        neutral: ["Say you have a few minutes", "Ask what he has in mind"],
+      },
+    },
+    {
+      line: "Three appointment reminders. Not one reply. Do you have any idea how... Ahem. A patient is expected to confirm receipt. You will reply next time.",
+      responses: {
+        kind: ["Promise to answer from now on", "Say you'll check in daily"],
+        playful: ["Ask if a fourth was drafted", "Say you'll send a sticker"],
+        bold: ["Say he can come find you", "Say he should call instead"],
+        neutral: ["Say you missed them", "Check your phone"],
+      },
+    },
+    {
+      line: "Hmph! Other than this genius doctor, does Darkwick have any redeeming qualities? Of course not! ...You may be the exception. Possibly.",
+      responses: {
+        kind: ["Say he's the best part", "Say you'd stay for him"],
+        playful: ["Ask if he's sure about that", "Ask if you outrank the lab"],
+        bold: ["Say he's stuck with you", "Say there's no doubt"],
+        neutral: ["Take the compliment", "Say it has its moments"],
+      },
+    },
+    {
+      line: "I'm making my rounds. I have saved you for last today. A thorough examination cannot be rushed, you see.",
+      responses: {
+        kind: ["Say he's worth the wait", "Offer to grab food after"],
+        playful: ["Ask to be first next time", "Ask if it's a privilege"],
+        bold: ["Say his visit makes your day", "Make him stay a while"],
+        neutral: ["Ask how long it'll take", "Say you're ready"],
       },
     },
   ],

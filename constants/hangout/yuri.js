@@ -45,7 +45,7 @@ export default {
     ],
     chestTouch: [
       "Wh-Who gave you permission!? I am the one who examines!",
-      "Back! I am a very busy man.",
+      "Wh-What are you... I am not your patient!",
     ],
     bellyTouch: [
       "Wh-Who gave you permission to palpate me!?",

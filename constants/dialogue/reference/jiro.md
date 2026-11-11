@@ -32,7 +32,7 @@ Source: "Tokyo Debunker Stigmas, Artifacts, And Other Possibly Combat Relevant I
 ### Stigma
 - Effect - Reflects any damage sustained back onto the one who dealt the damage
 - Activates automatically and involuntarily in response to sustained damage, without use of an incantation.
-- Anything that is injected into him will also be injected into the person who injected it into him. The same with someone trying to poison him. If someone tries to open him with a scalpel they'll also be cut open.
+- Any damage, injury, or physical harm inflicted upon Jiro, whether from an external attacker or an internal source, is instantly mirrored and reflected back onto the person or source that caused it. Yuri is the only exception. It reflects the harm, not the substance: whoever gives him an injection takes the needle wound, not the dose. If someone tries to open him with a scalpel they'll also be cut open.
 - Does not work on Yuri for some reason, which is why Yuri is the only one who can treat him.
 
 ### Artifact
