@@ -10,7 +10,7 @@ export default {
   acquaintance: {
     beats: [
       "**{firstName}**: Good evening. I hope this isn't strange, writing out of nowhere. There's something I've been meaning to say.",
-      "You've passed me on campus {timesMet} times. I've been keeping track, apparently. Every time, you've said good evening to the man with the mop.\n\nMost people don't. They don't see the help, and usually I like it that way.",
+      "You've passed me on campus {timesMet} times. Every time, you've said good evening to the man with the mop.\n\nMost people don't. They don't see the help, and usually I like it that way.",
       "You mentioned once you don't care for the east path after dark. I take a walk most evenings, nowhere in particular.\n\nOne path's as good as another to me, if you ever wanted the company.",
     ],
     faces: { 0: "default", 1: "close", 2: "smile" },
@@ -53,7 +53,7 @@ export default {
     beats: [
       "**{firstName}**: Jo asked why a quick errand took me all afternoon.",
       "I told him the line at the shop was long. He gave me a look and let it slide. I didn't mention you.",
-      "You led with {favResponse}, and I lost track of the time. I'm not sure why I kept that part to myself. It just felt like mine.",
+      "You led with {favResponse} the whole walk, and I lost track of the time.\n\nI kept that part to myself. It just felt like mine.",
     ],
     faces: { 0: "sweat", 1: "smile", 2: "close" },
     choice: {
@@ -77,10 +77,10 @@ export default {
         {
           key: "bold",
           face: "blush",
-          label: "Ask why he left you out",
+          label: "Say you'd have told Jo",
           style: 4,
           close:
-            "If I'd told him, he'd have teased me for a week.\n\nThat's most of the reason.",
+            "Oh, I know you would. Let's not.\n\nI'd never hear the end of it…",
         },
       ],
     },
@@ -92,43 +92,42 @@ export default {
 
   closeFriend: {
     beats: [
-      "**{firstName}**: Are you awake? If you don't mind… would you come down to the hall? You don't need to bring anything. It isn't that sort of night.",
-      "*There's a record playing, something old and warm, nothing like what Dionysia usually puts on, and the whole hall smells like jambalaya.*\n\n> My mother's recipe. I import half the ingredients from home, and customs and I are on a first-name basis because of the rest. I make it once a year, at two in the morning, when nobody's awake to be polite about it.",
-      "> It's my mother's music, and my mother's cooking, and this is the closest I get to New Orleans from here.\n\n*He sets the plate down in front of you and doesn't sit yet.*\n\n> I've done this alone for years. It wasn't a rule, exactly. It simply never occurred to me there was anyone I'd want in the room. Then it occurred to me, and it wouldn't stop occurring to me. So… here we are.",
+      "**{firstName}**: I hope I'm not bothering you. Did I leave a scarf with you, by any chance?",
+      "It's the one my mother knit. I've had it longer than anything else I own… and I've only just noticed it's gone.",
+      "*A pause.*\n\nI'm not sure I left it by accident. I've been a little careless since we met in {sinceMet}… I can't think why.\n\nIf it's with you, keep it a while. I like knowing where it is.",
     ],
-    faces: { 0: "default", 1: "smile", 2: "sweat" },
+    faces: { 0: "sweat", 1: "close", 2: "blush" },
     choice: {
-      prompt: "…Would you say something? I've made myself nervous.",
+      prompt: "…Did I guess right?",
       options: [
         {
           key: "kind",
-          face: "close",
-          label: "Ask about his mother",
+          face: "smile",
+          label: "Say you'll keep it safe",
           style: 3,
           close:
-            "*He talks for two hours. No one in this house has ever heard any of it.*\n\n*At the end, quietly, with none of his usual carefulness:*\n\n> I'd like to bring her here one day. I wanted someone to know that. It's the only real plan I have.",
+            "I know you will. That's why I left it where I did…",
         },
         {
           key: "playful",
           face: "full_smile",
-          label: "Ask about the customs man",
+          label: "Say it smells like peppermint",
           style: 1,
           close:
-            "> Oh, we're very close now. He knows my name, my face, and my opinion of his paperwork.\n\n> Eat, please, while it's hot. I'll be unbearable if you let it go cold.",
+            "Oh, it would. Now you'll think of me every time you wear it.",
         },
         {
           key: "bold",
           face: "blush",
-          label: "Ask him to dance to it",
+          label: "Say it looks better on you",
           style: 4,
-          close:
-            "*He looks at you for a long moment over the record player.*\n\n> …I haven't done that in a long time either.\n\n*He does it anyway, slow, unhurried, one hand at your back, the whole thing conducted at perhaps a third of the speed the song is asking for. Neither of you mentions that the record ended some time ago.*",
+          close: "I don't doubt it. Would you show me sometime?",
         },
       ],
     },
     keepsake: {
-      emoji: "🎷",
-      line: "A record that kept turning long after the song had finished.",
+      emoji: "🧣",
+      line: "A scarf he lost exactly where he meant to.",
     },
   },
 
