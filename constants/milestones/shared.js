@@ -188,7 +188,7 @@ export default {
     bucket: "close",
     label: "Got a playlist made just for you",
     afterline: "{He}'d made you a playlist and acted like it was nothing.",
-    hint: "that playlist made for you",
+    hint: "that playlist",
   },
   stolen_glances: {
     tier: "close",
@@ -220,9 +220,9 @@ export default {
     tier: "close",
     emoji: "🗣️",
     bucket: "close",
-    label: "Gave people something to talk about",
-    afterline: "People have noticed how much time you two spend together. Neither of you minds.",
-    hint: "all that talk about you two",
+    label: "Got mistaken for a couple",
+    afterline: "Someone asked if you two were together. Neither of you said no.",
+    hint: "being taken for a couple",
   },
 
   // --- Devoted ---
