@@ -1,6 +1,8 @@
 # Jiro: story dialogue
 
-Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). Each of his lines is in **bold**, with the line before it for context. `[Name]` is the MC; `NAR` is the MC's narration.
+Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). `[Name]` is the MC; `NAR` is the MC's narration.
+
+**Only the bold lines are Jiro's voice.** Each italic line is a short excerpt of what someone else said just before, there only so you can see what he's answering. Never borrow wording, slang, tics, pet names or rhythm from an italic line, and never use one as an anchor.
 
 **How to use:** register evidence for voice-check and drafting. Use it for sentence shape, rhythm, how he talks to the MC and to others. These lines are not voicelines: home-screen voicelines in `../jiro.md` stay the primary anchors and the tier-fit ladder. **Plot facts, reveals and relationships learned here are spark+** (same as the `## Stigma & Artifact` rule). Don't quote a story line into new/known/warm content, and don't build a beat on an event the MC hasn't reached.
 
@@ -24,23 +26,23 @@ Short ambient barks while he walks campus.
 - Has something changed?
 
 ## Part 14, ch. 20: Trio Sneaks In To Spend Night At Museum
-*NAR: I tensed up as heavy footsteps echoed toward us from the quiet darkness.*
+*NAR: I tensed up as heavy footsteps echoed toward us from the…*
 **Jiro: I'm back.**
 *Yuri: Did everything go according to plan?*
 **Jiro: Yes. There was one watchman, but I put him to sleep.**
 *[Name]: You put him to sleep...?*
 **Jiro: ...? Is that a problem?**
-*Yuri: It's in this showcase. Jiro, use the key from the security office to open it.*
+*Yuri: It's in this showcase. Jiro, use the key from the security…*
 **Jiro: Okay.**
-*NAR: Jiro pulled on a pair of plastic gloves before opening the lock on the glass case, exposing its contents.*
+*NAR: Jiro pulled on a pair of plastic gloves before opening the…*
 **Jiro: You should step back.**
 **Jiro: If this plague mask really is the causal agent, you could be infected just by touching it.**
 *Yuri: Jiro.*
 **Jiro: Okay.**
-*Tohma: Just getting some fresh air. I like to walk the grounds on nights I can't sleep.*
+*Tohma: Just getting some fresh air. I like to walk the grounds on…*
 **Jiro: This road only leads to Mortkranken though.**
 **Jiro: And Dionysia, but it's defunct.**
-*NAR: After some time, a large machine in the corner of the room spat out a piece of paper. Jiro picked it up.*
+*NAR: After some time, a large machine in the corner of the room…*
 **Jiro: Yuri. I have the results.**
 *Yuri: ...*
 **Jiro: ...? Yuri? Can you hear me?**
@@ -52,15 +54,15 @@ Short ambient barks while he walks campus.
 *[Name]: (Yuri can't stand Frostheim... This really is bad timing.)*
 **Jiro: It's a superficial abrasion.**
 **Jiro: You're not cursed, so I'll just prescribe you an ointment you can apply yourself.**
-*NAR: It was a black belt demonstration of sarcasm veiled in polite social convention. Yuri sputtered.*
+*NAR: It was a black belt demonstration of sarcasm veiled in…*
 **Jiro: Your examination is done.**
-*NAR: Jiro stepped in front of Yuri, and the two Frostheim students jumped.*
+*NAR: Jiro stepped in front of Yuri, and the two Frostheim…*
 **Jiro: Do you have any questions?**
 
 ## Part 14, ch. 27: Girl To Participate In Drug Trial
-*NAR: A flood of relief rushed through me at the sight of Jiro sitting up in bed.*
+*NAR: A flood of relief rushed through me at the sight of Jiro…*
 **Jiro: Yes. Yuri showed up here in the middle of the night and tried a bunch of things.**
-*NAR: Yuri spoke with his usual confidence, but his white lab coat was more dishevelled than I'd ever seen it.*
+*NAR: Yuri spoke with his usual confidence, but his white lab…*
 **Jiro: I heard the exhibition is closed though.**
 **Jiro: It's a shame. I was hoping to take a proper look once I recovered.**
 *[Name]: Professor Nicolas! And Dr_ Kanzaki...?*
@@ -70,11 +72,11 @@ Short ambient barks while he walks campus.
 ## Part 17, ch. 9: Ghouls Compete For Pearl's Heart
 *Haru: This bread's actually really good. You wanna try some?*
 **Jiro: No. This is the only thing I can have.**
-*Haru: Hey, I'm not here to judge. Just trust me—one day you're gonna regret this! Stop while you still can!*
+*Haru: Hey, I'm not here to judge. Just trust me—one day you're…*
 **Jiro: What?**
 
 ## Part 17, ch. 10: Behind The Scenes
-*Rui: And this food is for the cocktail party— would you stop eating it already?*
+*Rui: And this food is for the cocktail party— would you stop…*
 **Jiro: You're the one who gave him that bread in the first place, though.**
 *[Name]: Without Yuri, I mean...*
 **Jiro: I should be fine. We adjusted my medication, and it lasted five days last time we trialed it.**
@@ -91,7 +93,7 @@ Short ambient barks while he walks campus.
 
 ## Part 24, ch. 14: Doctor Delivers Lecture On Diagnosing Vampires
 **Jiro: An examination.**
-*Yuri: Ordinary knowledge has no bearing with this patient, so you can't just examine him willy-nilly!*
+*Yuri: Ordinary knowledge has no bearing with this patient, so you…*
 **Jiro: Okay. Sorry.**
 *Yuri: Would you stop acting without my permission?!*
 **Jiro: I observed a dry cough, so I used palpation.**
@@ -100,7 +102,7 @@ Short ambient barks while he walks campus.
 **Jiro: Yes, Yuri.**
 
 ## Part 24, ch. 15: Seven Houses Assemble
-*NAR: As Haku and Subaru modestly deflected my praise, Jiro pointed to the gemstones glittering on their lapels.*
+*NAR: As Haku and Subaru modestly deflected my praise, Jiro…*
 **Jiro: Among zoisite gemstones...**
 **Jiro: Those that contain vanadium like yours are called tanzanite. They're known for their bluish-purple color.**
 **Jiro: Our gemstones are a type of beryl, by the way.**
@@ -112,7 +114,7 @@ Short ambient barks while he walks campus.
 **Jiro: Doll...**
 *[Name]: I haven't seen Saburo at all today...*
 **Jiro: Ugh...**
-*NAR: Haku held out a hand to steady Jiro, but his body seemed to tremble even more painfully.*
+*NAR: Haku held out a hand to steady Jiro, but his body seemed to…*
 **Jiro: Ugh...**
 **Jiro: Don't...call me that...**
 **Jiro: ...don't have...**
@@ -137,21 +139,21 @@ Short ambient barks while he walks campus.
 **Jiro: Either way, it's interesting.**
 
 ## Season 2 Episode 1, ch. 11: Band Tasked WIth Mission From Chancellor
-*Chancellor Cornelius: Still, I felt much better when I heard that you would be entering the contest!*
+*Chancellor Cornelius: Still, I felt much better when I heard that you would be…*
 **Jiro: ...? How are those two things related?**
-*NAR: The chancellor lifted the application form and stared at the name with a quirked brow.*
+*NAR: The chancellor lifted the application form and stared at…*
 **Jiro: Concentus Sanctae Crucis. Yuri named us.**
 *Yuri: You cannot simply call for me whenever the whim strikes you!*
 **Jiro: If the other contestants will be there though, we'll be able to see what the competition will be like.**
 **Jiro: I think it would be beneficial for us to go.**
-*Yuri: Anyway, we have no time to waste. If we're done here, then let's go!*
+*Yuri: Anyway, we have no time to waste. If we're done here, then…*
 **Jiro: Okay.**
 
 ## Season 2 Episode 1, ch. 25: Knight's Temporary Stint As Diner Employee
 *[Name]: Sorry...*
 **Jiro: Huh. So anomalies run this diner?**
 **Jiro: I don't come to places like this, so I didn't know.**
-*NAR: From Zenji's reaction, I sensed that the Bray Men saw the ghouls in a positive light.*
+*NAR: From Zenji's reaction, I sensed that the Bray Men saw the…*
 **Jiro: ...What are they saying?**
 
 ## Season 2 Episode 1, ch. 26: Girl Entrusted With Surprising Lost Property
@@ -159,11 +161,11 @@ Short ambient barks while he walks campus.
 **Jiro: Okay.**
 
 ## Season 2 Episode 1, ch. 27: Devestation Visited Upon CSC
-*Kaito: Well...the instruments our band was using are all smashed for some reason...*
+*Kaito: Well...the instruments our band was using are all smashed…*
 **Jiro: It's pretty clear from the damage that it wasn't an accident.**
-*NAR: Something in Elias’s proposal seemed to give Yuri pause. He didn't reply right away, face tense as he thought.*
+*NAR: Something in Elias’s proposal seemed to give Yuri pause. He…*
 **Jiro: Yuri. Even if we order new instruments now, there's no guarantee they'll arrive in time.**
-*Kaito: They might not look that threatening, but they're still anomalies.*
+*Kaito: They might not look that threatening, but they're still…*
 **Jiro: It's not impossible, but we also can't prove it yet.**
 **Jiro: If they do have that ability...**
 **Jiro: ...we wouldn't stand much of a chance against them.**
@@ -177,11 +179,11 @@ Short ambient barks while he walks campus.
 **Jiro: This? It's mistletoe. It was growing on the Yateveo.**
 **Jiro: It's possible this mistletoe contains a compound that affects human memory.**
 **Jiro: I'm taking it back to the lab to analyze.**
-*Hotarubi Student: A compound that affects memory... That sounds a little scary.*
+*Hotarubi Student: A compound that affects memory... That sounds a little…*
 **Jiro: Well, according to the person from Obscuary, it's a minor effect.**
 *Hotarubi Student: I see...*
 **Jiro: I didn't expect someone from Hotarubi to be interested in this sort of thing,**
-*Hotarubi Student: Ha ha... I actually mostly draw plants. I don't know much about medicine.*
+*Hotarubi Student: Ha ha... I actually mostly draw plants. I don't know much…*
 **Jiro: I see. We're nearly at the exit. You shouldn't wander into this forest.**
 **Jiro: People go missing in here every year.**
 
@@ -201,12 +203,12 @@ Short ambient barks while he walks campus.
 **Jiro: I know where it is, Yuri.**
 
 ## Season 2 Episode 1, ch. 34: Hopes And Dreams Pinned On Contest
-*Yuri: Give it up. We're onto your scheme of handing out cursed artifacts to assist the Town Musicians of Bremen.*
+*Yuri: Give it up. We're onto your scheme of handing out cursed…*
 **Jiro: You destroyed our instruments too, didn't you?**
 **Jiro: Your body is made of slime, so you would be able to slip through the door even if it was locked.**
 
 ## Season 2 Episode 1, ch. 38: What Girl And Monster Discussed By The Fire
-*NAR: As the Samhain Festival drew to a close and the afterparty began, I met Jiro at the Spirit Fire.*
+*NAR: As the Samhain Festival drew to a close and the afterparty…*
 **Jiro: It's fine. I was watching the fire.**
 *[Name]: So...what did you want to talk about?*
 **Jiro: I said I would explain everything after the Star Contest was over.**
@@ -225,18 +227,18 @@ Short ambient barks while he walks campus.
 **Jiro: It was quite simple. Like rewriting an equation.**
 *[Name]: ...because of this curse...?*
 **Jiro: Well, I don't know how effective it actually was.**
-*NAR: At a loss for words, I fell silent. Jiro's pomegranate red eyes bore into me.*
+*NAR: At a loss for words, I fell silent. Jiro's pomegranate red…*
 **Jiro: Situations like this are another reason we should accelerate our development of a memory erasing drug.**
 **Jiro: I can only ask you as a favor, but please don't tell Yuri about this.**
 **Jiro: It will be troublesome if he finds out.**
-*NAR: Seeing them so happy, I couldn’t help but feel a tangle of emotions, knowing the truth behind it all.*
+*NAR: Seeing them so happy, I couldn’t help but feel a tangle of…*
 **Jiro: Well, we didn't have long to prepare, but I think it's reasonable to say our practice sessions paid off.**
 
 ## Season 2 Episode 9, ch. 2
-*NAR: Jiro glanced over at a glowing cylindrical case on the desk as he picked up the Salus Flower.*
+*NAR: Jiro glanced over at a glowing cylindrical case on the desk…*
 **Jiro: You participated in the Star Festival held in Hotarubi the other day, right?**
 **Jiro: We were given the Oblivion Capsule you received as a research sample.**
-*[Name]: (That's the capsule the Sky King and the Observer gave us...)*
+*[Name]: (That's the capsule the Sky King and the Observer gave…*
 **Jiro: These rare specimens usually end up at Darkwick General.**
 **Jiro: But this time we were asked to analyze it. We don't know why, but it was fortunate.**
 *[Name]: Okay...*
@@ -244,7 +246,7 @@ Short ambient barks while he walks campus.
 **Jiro: It'll be a while before we can call Noetrin X ready.**
 **Jiro: Even so, the portions of the capsule we've successfully analyzed have clear practical value.**
 **Jiro: But whether it and Isoprophen EX will be ready before your curse comes into effect is uncertain.**
-*Yuri: J-Jiro!! There is no need for you to share these details with her!*
+*Yuri: J-Jiro!! There is no need for you to share these details…*
 **Jiro: Sorry. I thought we needed informed consent.**
 *Yuri: Don't flatter yourself!*
 **Jiro: Is it?**
@@ -253,21 +255,21 @@ Short ambient barks while he walks campus.
 **Jiro: Okay.**
 
 ## Season 2 Episode 9, ch. 3
-*NAR: I read off some of the words on the cover page of the documents Jiro had given me.*
+*NAR: I read off some of the words on the cover page of the…*
 **Jiro: Yes. To the public, Soshinkai Clinic was a regular general hospital.**
 **Jiro: In reality, it was an Institute facility used to treat patients with anomalous diseases.**
 **Jiro: These files say it was closed due to "various circumstances," though.**
 *[Name]: What happened, exactly?*
 **Jiro: We don't know. They don't seem to know the full circumstances of the accident, or what caused it.**
 **Jiro: That's why the site has been left untouched. All the equipment and documents are still in there.**
-*NAR: Hope surged through me. Jiro coolly picked up from where Yuri had left off.*
+*NAR: Hope surged through me. Jiro coolly picked up from where…*
 **Jiro: Yes. We classify your curse as a type of anomalous infectious disease.**
 **Jiro: But this isn't an official assignment from Darkwick.**
 **Jiro: If we want to go to Soshinkai Clinic, we need permission from Professor Nicolas.**
 **Jiro: He should be at Darkwick General.**
 
 ## Season 2 Episode 9, ch. 10: Doctor Faces Emergency Patient
-*NAR: Blood gushed from the man's lips as the face on his neck swelled and burst into cackling laughter.*
+*NAR: Blood gushed from the man's lips as the face on his neck…*
 **Jiro: That looks like a human-faced tumor. But his symptoms are...**
 *Yuri: Jiro!*
 **Jiro: Yes, Yuri.**

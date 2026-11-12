@@ -1,6 +1,8 @@
 # Kaito: story dialogue
 
-Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). Each of his lines is in **bold**, with the line before it for context. `[Name]` is the MC; `NAR` is the MC's narration.
+Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). `[Name]` is the MC; `NAR` is the MC's narration.
+
+**Only the bold lines are Kaito's voice.** Each italic line is a short excerpt of what someone else said just before, there only so you can see what he's answering. Never borrow wording, slang, tics, pet names or rhythm from an italic line, and never use one as an anchor.
 
 **How to use:** register evidence for voice-check and drafting. Use it for sentence shape, rhythm, how he talks to the MC and to others. These lines are not voicelines: home-screen voicelines in `../kaito.md` stay the primary anchors and the tier-fit ladder. **Plot facts, reveals and relationships learned here are spark+** (same as the `## Stigma & Artifact` rule). Don't quote a story line into new/known/warm content, and don't build a beat on an event the MC hasn't reached.
 
@@ -26,18 +28,18 @@ Short ambient barks while he walks campus.
 ## Part 13, ch. 2: Class With The Chaos Combo
 *NAR: His eyes were on the notebook open in front of him.*
 **Kaito: Dude...what is that?**
-*Lucas: What do you mean? I copied the anatomical diagram from the textbook.*
+*Lucas: What do you mean? I copied the anatomical diagram from the…*
 **Kaito: Ha ha ha ha!! That's supposed to be a person?!**
 **Kaito: It looks like a caterpillar or something! Ah ha ha!**
-*NAR: Professor Nicolas quickly cleaned off his desk, muttering to himself as he walked out the door.*
+*NAR: Professor Nicolas quickly cleaned off his desk, muttering…*
 **Kaito: Ugh, free at last!**
-*Lucas: It's a shame. I'm quite interested in hearing more about anomalous wounds on different parts of the body.*
+*Lucas: It's a shame. I'm quite interested in hearing more about…*
 **Kaito: What's with your whole "insatiable thirst for knowledge" thing? I'd be impressed if it didn't creep me out.**
-*Lucas: We're lucky to be in such a place. Failing to take advantage of it is slovenly.*
+*Lucas: We're lucky to be in such a place. Failing to take…*
 **Kaito: Yeah, yeah. I'm just some dim-witted, softheaded, ham-fisted, thick-skulled tortoise.**
 **Kaito: I mean, I doubt I'll even get a present this year, let alone be invited to the ball.**
 **Kaito: Ugh. I hope Christmas never comes.**
-*NAR: Luca watched as Kaito turned away in a huff. Eyes filling with pity, he reached into his breast pocket.*
+*NAR: Luca watched as Kaito turned away in a huff. Eyes filling…*
 **Kaito: Do not try to give me a biscuit right now.**
 *[Name]: Oh, someone's texting me.*
 **Kaito: Huh? Me too.**
@@ -56,7 +58,7 @@ Short ambient barks while he walks campus.
 **Kaito: It's totally cool! I swear I'll touch base with him later! Promise!**
 *[Name]: Kaito, are you trying to run away again?*
 **Kaito: N-No...! I mean, I'm a busy guy too, y'know?! I just figured it'd be faster to contact him on my own...**
-*Lucas: Kaito, I won't allow you to force her to lie. You should know better.*
+*Lucas: Kaito, I won't allow you to force her to lie. You should…*
 **Kaito: Grk...! It was a joke, okay?!**
 **Kaito: A-Anyway, look, he messaged again.**
 
@@ -67,7 +69,7 @@ Short ambient barks while he walks campus.
 **Kaito: Uh, nothing.**
 *Lucas: No, none at all. We humbly accept.*
 **Kaito: Uh, no?! We don't even know what this mission's about, dude!**
-*Tohma: I do commend you for your initiative in confirming the details of the mission ahead of your deployment, Fuji.*
+*Tohma: I do commend you for your initiative in confirming the…*
 **Kaito: ...Is that your way of telling me I have no say in this?**
 *Tohma: ...you need no reminding of this, do you, Fuji?*
 **Kaito: Nope! I remember it as clear as day! How could I ever forget?!**
@@ -77,7 +79,7 @@ Short ambient barks while he walks campus.
 **Kaito: Anyway, that just goes to show how charismatic a leader Jin used to be.**
 *Tohma: Mind your wording.*
 **Kaito: Sorry! Slip of the tongue!!**
-*Lucas: We occasionally see him around Frostheim, but even that's only recently.*
+*Lucas: We occasionally see him around Frostheim, but even that's…*
 **Kaito: Dude, mind your wording! I already told you—**
 
 ## Part 13, ch. 8: Party En Route To Masquerade
@@ -98,7 +100,7 @@ Short ambient barks while he walks campus.
 ## Part 13, ch. 19: Archer's Treasure Breaks Language Barrier
 *Prince Hugo: <Is something the matter, Marius?>*
 **Kaito: Uh, what's happening?? You're freaking me out!**
-*Lucas: Kaito, Prince Marius wants to know where you got your pendant.*
+*Lucas: Kaito, Prince Marius wants to know where you got your…*
 **Kaito: Where? Uh...**
 **Kaito: I dunno. Gram left it to me when she died. A flea market or something?**
 *Lucas: That's what Prince Marius said.*
@@ -112,15 +114,15 @@ Short ambient barks while he walks campus.
 **Kaito: I'm sorry I'm leaving right now I swear please I'm begging you don't curse me!**
 
 ## Part 24, ch. 4: Darkwick Gala Goes Ahead
-*[Name]: (They announced this year's theme while I was holed up in my room...)*
+*[Name]: (They announced this year's theme while I was holed up in…*
 **Kaito (Kaito's Voice): Ah! [Name]!!**
 *Lucas: Good morning, [Name]. Your dress is—*
 **Kaito: Wait!**
 **Kaito: I'm saying it!**
-*NAR: Kaito stepped in front of Luca, then turned his sharp gaze on me.*
+*NAR: Kaito stepped in front of Luca, then turned his sharp gaze…*
 **Kaito: [Name]. Your dress really suits you.**
 **Kaito: You're the most beautiful person in the world right now.**
-*[Name]: Oh, thank you! Even if you're just being nice, I feel a lot less nervous now.*
+*[Name]: Oh, thank you! Even if you're just being nice, I feel a lot…*
 **Kaito: Ah! Your smile's even more dazzling than usual!!**
 *[Name]: Come on... That's overkill, don't you think?*
 **Kaito: R-Really? Huh?**
@@ -137,13 +139,13 @@ Short ambient barks while he walks campus.
 
 ## Part 24, ch. 5: Vagastrom Arrives To Some Controversy
 **Kaito: No, not him!**
-*NAR: I didn't have time to react, so in the photo beside his perfect smile I looked awkwardly surprised.*
+*NAR: I didn't have time to react, so in the photo beside his…*
 **Kaito: Okay, you are way too close right now!**
 **Kaito: Also if that's not your vibe what is your vibe exactly?!**
 *Leo: God, you're so shrill, Freckle Flop.*
 **Kaito: Freckle Flop...?**
 **Kaito: Wait, am I Freckle Flop?!**
-*Tohma: It suggests a motif for each house that pairs with the theme for the year.*
+*Tohma: It suggests a motif for each house that pairs with the…*
 **Kaito: (The main closet... That's where [Name] and I first met...)**
 **Kaito: (In hindsight, that was straight-up fate, wasn't it?**
 **Kaito: Heh heh...)**
@@ -157,14 +159,14 @@ Short ambient barks while he walks campus.
 *Kaito & Towa: ...*
 **Kaito: Come on!**
 **Kaito: One, two, three, four, five, dude!!**
-*NAR: I entered the empty classroom to find Towa and Kaito focused on practice.*
+*NAR: I entered the empty classroom to find Towa and Kaito…*
 **Kaito: [Name]! This guy!!**
 **Kaito: He won't let me count him in!**
-*[Name]: You've only just started practicing. I'm sure things will fall into place over time!*
+*[Name]: You've only just started practicing. I'm sure things will…*
 **Kaito: (sniff) Can't exactly give up now, can I?**
 *[Name]: You've been working hard, huh?*
 **Kaito: (sniff) Now I get how Gram felt when she said dealing with me was like talking to a brick wall...**
-*Yuri: We only have six days left! If Concentus Sanctae Crucis is to reign victorious, we have no time to waste!*
+*Yuri: We only have six days left! If Concentus Sanctae Crucis is…*
 **Kaito: Concentus... What?**
 
 ## Season 2 Episode 1, ch. 25: Knight's Temporary Stint As Diner Employee
@@ -187,14 +189,14 @@ Short ambient barks while he walks campus.
 **Kaito: Huh? Wait, did you say Mio?!**
 *Elias: Of course. Don’t you worry—we’ll take care of them.*
 **Kaito: I still don't get why someone would do this.**
-*NAR: Yuri's fists were trembling with anger but Kaito stroked his chin, looking unconvinced.*
+*NAR: Yuri's fists were trembling with anger but Kaito stroked…*
 **Kaito: You guys seriously think the Bray Men did this?**
 **Kaito: They really don't look like the types to me...**
 *[Name]: (So it's more likely it was an...)*
 **Kaito: Hey... You don't think that weird music was like...brainwashing them or something, do you?!**
 **Kaito: Isn't it weird? WickHive has been going crazy over the Bray Men for days now.**
 **Kaito: They might not look that threatening, but they're still anomalies.**
-*Yuri: (sigh) This is exactly why you pampered Frostheim fools are such easy marks.*
+*Yuri: (sigh) This is exactly why you pampered Frostheim fools are…*
 **Kaito: Excuse me?! I'll have you know I am a pleb!**
 
 ## Season 2 Episode 1, ch. 33: Exclusive! The Bray Men's True Face Revealed
@@ -209,7 +211,7 @@ Short ambient barks while he walks campus.
 **Kaito: ...but then all the reviews say it's trash, you're like "yeah I guess it was pretty mid," right?**
 *NAR: Yuri turned and strode toward the door.*
 **Kaito: Huh? What are you talking about?**
-*Yuri: Fuji! Lead us to the anomaly that was handing out those dolls!*
+*Yuri: Fuji! Lead us to the anomaly that was handing out those…*
 **Kaito: What...? The Slime Log stinks though... Can we not?**
 
 ## Season 2 Episode 1, ch. 34: Hopes And Dreams Pinned On Contest
@@ -235,35 +237,35 @@ Short ambient barks while he walks campus.
 *Towa: Hmm? So can we win tomorrow?*
 **Kaito: ...Who knows? Well, even if we don't win Best Group...**
 **Kaito: ...just getting to be the lead singer in a band at a festival is a win in my books. I don't really mind.**
-*Towa: I'm gonna work harder than I did at any of the practices tomorrow, and play the bass really, really good!*
+*Towa: I'm gonna work harder than I did at any of the practices…*
 **Kaito: ...Oh, for real?**
 *Towa: Ah! A shooting star!*
 **Kaito: Yeah... So sparkly...**
 
 ## Season 2 Episode 1, ch. 37: Star Contest Winners Announced
-*NAR: A brilliant white spotlight illuminated the ghouls on the stage.*
+*NAR: A brilliant white spotlight illuminated the ghouls on the…*
 **Kaito: No way...**
 *Yuri: Y-You...! I was just about to...!*
 **Kaito: Ha ha...**
 **Kaito: Maybe next year's gonna be my year.**
 
 ## Season 2 Episode 1, ch. 38: What Girl And Monster Discussed By The Fire
-*NAR: After my secret rendezvous with Jiro, we headed to the music classroom where the others were waiting.*
+*NAR: After my secret rendezvous with Jiro, we headed to the…*
 **Kaito: Look, Towa!**
 *Towa: Give me a turn next, Coriander!*
 **Kaito: Sure, but we only got one of these things, so you gotta be careful with it, dude.**
 *Towa: Yay! Shiny!*
 **Kaito: Geez! This is what I was talking about! Don't spin it around like that!**
-*Jiro: Well, we didn't have long to prepare, but I think it's reasonable to say our practice sessions paid off.*
+*Jiro: Well, we didn't have long to prepare, but I think it's…*
 **Kaito: Heh, music's all about heart! You just gotta sing with your soul—that's how you connect with the audience.**
 
 ## Season 2 Episode 7, ch. 7
-*Ren: (I'll just say I'm sick or something to get out of it on the day.)*
+*Ren: (I'll just say I'm sick or something to get out of it on…*
 **Kaito: What?! They picked you to be a cowherd?!**
 *Lucas: But I thought I'd let you know earlier.*
 **Kaito: Hold on. [Name]'s gonna be the weaver?!**
 **Kaito: You're kidding, right?! I was gonna ask if she wanted to go around the stalls with me!!**
-*Lucas: Not so loud, Kaito. There are people enjoying their dinner here.*
+*Lucas: Not so loud, Kaito. There are people enjoying their dinner…*
 **Kaito: Can you blame me?! This was my chance to watch the fireworks with her and live out my romcom dreams!**
 **Kaito: Ughhhhhh...**
 **Kaito: I finally got some real cred being in a band, and I still gotta spend summer single?**
@@ -271,7 +273,7 @@ Short ambient barks while he walks campus.
 **Kaito: I just want a taste of some bittersweet romance... Is that so much to ask...?**
 *Jo: ...*
 **Kaito: (Ah! It's her! Darkwick's totally unapproachable Venus!)**
-*Lucas: Your cheeks are awfully red all of a sudden. You're not sick, are you...?*
+*Lucas: Your cheeks are awfully red all of a sudden. You're not…*
 **Kaito: (Sick...**
 **Kaito: Wait! Could this feeling be...?)**
 **Kaito: (No! This is wrong! I've only got one girl in my heart, and it's [Name]!)**
@@ -285,10 +287,10 @@ Short ambient barks while he walks campus.
 **Kaito: Yep. Last year the Star Festival was canceled, but I still came here to make a wish.**
 **Kaito: It's a special kind of bamboo plant that grows in one night on July 7th every year.**
 **Kaito: See those slips of paper and pens? You write your wish on them and tie it to the bamboo.**
-*Lucas: You write your wish... Does that mean this bamboo plant has the power to grant it?*
+*Lucas: You write your wish... Does that mean this bamboo plant has…*
 **Kaito: Well, not exactly...**
 **Kaito: How do I put this? It's just an old tradition.**
-*Lucas: I see. Regardless, it's true that periodically putting your goals into words is important.*
+*Lucas: I see. Regardless, it's true that periodically putting your…*
 **Kaito: Right?**
 **Kaito: I thought you'd feel that way, so I wanted to bring you here.**
 **Kaito: But then!!**

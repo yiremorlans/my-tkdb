@@ -1,6 +1,8 @@
 # Elias: story dialogue
 
-Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). Each of his lines is in **bold**, with the line before it for context. `[Name]` is the MC; `NAR` is the MC's narration.
+Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). `[Name]` is the MC; `NAR` is the MC's narration.
+
+**Only the bold lines are Elias's voice.** Each italic line is a short excerpt of what someone else said just before, there only so you can see what he's answering. Never borrow wording, slang, tics, pet names or rhythm from an italic line, and never use one as an anchor.
 
 **How to use:** register evidence for voice-check and drafting. Use it for sentence shape, rhythm, how he talks to the MC and to others. These lines are not voicelines: home-screen voicelines in `../elias.md` stay the primary anchors and the tier-fit ladder. **Plot facts, reveals and relationships learned here are spark+** (same as the `## Stigma & Artifact` rule). Don't quote a story line into new/known/warm content, and don't build a beat on an event the MC hasn't reached.
 
@@ -27,19 +29,19 @@ Short ambient barks while he walks campus.
 *[Name]: Elias...*
 **Elias: This is the profound tragedy from the kudan's prophecy.**
 **Elias: To avoid this fate, you needed to know the truth.**
-*NAR: He met my question with a sad smile, then turned toward the flames.*
+*NAR: He met my question with a sad smile, then turned toward the…*
 **Elias: ...That prophecy has—**
 
 ## Season 2 Episode 1, ch. 27: Devestation Visited Upon CSC
-*NAR: I stood staring in horror at the broken instruments. Suddenly, the door opened again behind us.*
+*NAR: I stood staring in horror at the broken instruments…*
 **Elias: Oh? I noticed the light was still on in here, so I came to see what was going on.**
 *Yuri: You're the Dionysia...*
 **Elias: Pardon the intrusion.**
 **Elias: But this doesn't look too good.**
 **Elias: Are you folks in some kind of trouble?**
-*Jiro: It's pretty clear from the damage that it wasn't an accident.*
+*Jiro: It's pretty clear from the damage that it wasn't an…*
 **Elias: I see... Mind if I take a quick look?**
-*NAR: Elias walked over to the broken instruments and picked up a fragment, then smiled.*
+*NAR: Elias walked over to the broken instruments and picked up a…*
 **Elias: Hmm. I think Mio can have these fixed up in no time.**
 *[Name]: (So they know him too...)*
 **Elias: Yes.**
@@ -53,9 +55,9 @@ Short ambient barks while he walks campus.
 **Elias: That's right. Best tasting bog water you'll find. Would you two like a cup?**
 *Shion: ...That shite isn't Mio's.*
 **Elias: Your control really is remarkable, Shion.**
-*Jo: Right. Apparently the elusive Twin Orion will be on display there.*
+*Jo: Right. Apparently the elusive Twin Orion will be on display…*
 **Elias: The Twin Orion... I've heard that name somewhere before.**
-*Mio: Apparently it's pretty famous. Trade magazines do features on it all the time.*
+*Mio: Apparently it's pretty famous. Trade magazines do features…*
 **Elias: Ah. That would be it.**
 *Mio: Usually it's held in the US.*
 **Elias: I see. So the legendary Twin Orion coveted by jewelers across the world...**
@@ -65,9 +67,9 @@ Short ambient barks while he walks campus.
 **Elias: No, we should make our move when it's on display.**
 **Elias: There's too many variables while it's in transport.**
 **Elias: At least during the exhibition we’ve got a five-day window.**
-*NAR: I looked up and locked eyes with Elias, who was smiling pleasantly at me.*
+*NAR: I looked up and locked eyes with Elias, who was smiling…*
 **Elias: Is that all the information we have on Blink?**
-*Shion: I wonder what sort of face he'll make when he cries after we steal his precious wares.*
+*Shion: I wonder what sort of face he'll make when he cries after…*
 **Elias: My heart goes out to the man, but if his wares have been classified anomalous, our hands are tied.**
 **Elias: If you could check whether he has any close aides, Jo.**
 **Elias: I'd also like information on the team responsible for security during the exhibition, if you wouldn't mind.**
@@ -76,16 +78,16 @@ Short ambient barks while he walks campus.
 **Elias: Anything with eyes should do the trick.**
 *Mio: All right. I'll get it ready today.*
 **Elias: It would help to have a replica of the Twin Orion too.**
-*NAR: I couldn't help but state the obvious as I watched the object form from the bottom up before my eyes.*
+*NAR: I couldn't help but state the obvious as I watched the…*
 **Elias: That's one of Mio's too. That blend of digital and anomalous tech gives it a real edge.**
-*Jo: If we're gonna be fooling an event full of eagle-eyed jewelers, quality is pretty important.*
+*Jo: If we're gonna be fooling an event full of eagle-eyed…*
 **Elias: Well, if that’s the way of it, we'll have to get a look on the day ourselves.**
 
 ## Season 2 Episode 2, ch. 13: Price Of Failure Comes To Light
 *[Name]: What...?*
 **Elias: If it comes to that, Dionysia will end up shut down again, I’m sure. And I’ll be right back to being a janitor.**
 **Elias: Could I have a refill too, Jo?**
-*NAR: Elias received a refill of coffee from Jo, then sat back down on his round stool.*
+*NAR: Elias received a refill of coffee from Jo, then sat back…*
 **Elias: I truly am sorry, but if I’m being straight with you, this task probably isn’t tied to your curse.**
 *Shion: Curse...?*
 **Elias: But this mission will decide the course of our future.**
@@ -93,7 +95,7 @@ Short ambient barks while he walks campus.
 *[Name]: Of course! I'll do my best to be of some help.*
 **Elias: Thank you. I appreciate that.**
 **Elias: I’ll do my best not to slow you down.**
-*[Name]: I'll do my best... I have to be honest though, I'm not confident I'll be much help.*
+*[Name]: I'll do my best... I have to be honest though, I'm not…*
 **Elias: Well, I'd say you're selling yourself short. You being with us is more help than you realize.**
 *[Name]: Well, it's my job, so I'll do it to the best of my ability.*
 **Elias: Now I know what all the fuss is about. You really are a hard worker.**
@@ -105,7 +107,7 @@ Short ambient barks while he walks campus.
 **Elias: Me too. Thank you.**
 
 ## Season 2 Episode 2, ch. 18: Ghouls Head To Trade Show At Royal Hotel
-*NAR: We were gathered at the Galaxy Express station closest to the Royal Hotel—a storage shed in a public park.*
+*NAR: We were gathered at the Galaxy Express station closest to…*
 **Elias: I did what I could about your car, but we don't have a budget right now so I couldn't sweeten the deal.**
 **Elias: It should all be done in a few days. Sorry I couldn't get it handled any quicker.**
 *Mio: ...That's not a compliment for anyone, man.*
@@ -114,7 +116,7 @@ Short ambient barks while he walks campus.
 **Elias: I should mention, the clothes in Jo's wardrobe are all work essentials purchased with our house budget.**
 **Elias: So if somebody were to damage one on purpose, we’d have no choice but to ask for compensation.**
 **Elias: Let’s just say replacing that suit right there would come with a price tag high enough to put your dream out of reach.**
-*Exhibition Staff: Good idea. The stage where the Twin Orion will be displayed does get crowded though, so get there early.*
+*Exhibition Staff: Good idea. The stage where the Twin Orion will be displayed…*
 **Elias: Thank you for the advice.**
 
 ## Season 2 Episode 2, ch. 19: The Elusive Twin Orion
@@ -126,25 +128,25 @@ Short ambient barks while he walks campus.
 **Elias: He didn’t hire local security—he brought his own people from the States.**
 **Elias: People he knows personally he can trust.**
 **Elias: Apparently he had to be talked into holding this exhibition in Japan in the first place.**
-*Jo: ...So even in this crowd only a small number of VIPs will be able to see it.*
+*Jo: ...So even in this crowd only a small number of VIPs will…*
 **Elias: Meaning Orion's Blood won't even make it out into this hall.**
-*Shion: Something's wrong with this place. The floor's too soft. Makes it hard to walk.*
+*Shion: Something's wrong with this place. The floor's too soft…*
 **Elias: Welcome back. Did you get the layout?**
 *[Name]: Huh...?*
 **Elias: Would you mind coming with me, [Name]?**
 
 ## Season 2 Episode 2, ch. 27: Final Day Of Jewelry Trade Show Draws Crowds
-*NAR: I spoke in a low voice into the mic in my collar so the people around me couldn't hear.*
+*NAR: I spoke in a low voice into the mic in my collar so the…*
 **Elias (Elias's Voice): All right. Sorry, could you sit tight there for a little while?**
 *Mio's Voice: We're ready, Elias.*
 **Elias (Elias's Voice): Thanks. All right—it's go time, folks.**
 
 ## Season 2 Episode 2, ch. 28: Magician Laughs At Eye Of Storm
-*NAR: The hall dissolved into chaos. I sensed someone beside me and jumped, looking around nervously.*
+*NAR: The hall dissolved into chaos. I sensed someone beside me…*
 **Elias (Elias's Voice): ...It's just me. Easy now—you're all right.**
 *NAR: As the venue went dark again, Elias seized my right hand.*
 **Elias: Let's go.**
-*NAR: The clamor from the exhibition hall faded behind us as Elias led me down an empty corridor.*
+*NAR: The clamor from the exhibition hall faded behind us as…*
 **Elias: I'm sorry for rushing you out like that.**
 **Elias: Security’s probably shut down every exit in that place by now.**
 **Elias: We’d have been trapped with everyone else if we’d waited. So I had to be a little forceful.**
@@ -170,7 +172,7 @@ Short ambient barks while he walks campus.
 **Elias: I must say, I wasn't expecting to meet such a charming young lady.**
 **Elias: I may not look it, but I'm a pilot for an international airline.**
 **Elias: My job has me out and about a lot, so I hope you can forgive that.**
-*Elias Pratt (Pilot): I'll do my very best to earn her trust and prove I'm no Rogue.*
+*Elias Pratt (Pilot): I'll do my very best to earn her trust and prove I'm no…*
 **Elias: I'll see you later then, dear heart.**
 
 ## Season 2 Episode 5, ch. 9
@@ -180,7 +182,7 @@ Short ambient barks while he walks campus.
 **Elias: Well, I’d say things have taken a rather troubling turn.**
 
 ## Season 2 Episode 5, ch. 10: Shoot Hijacked By Masked Enigma
-*Ritsu: It must also be formalized in a written amendment or memorandum and executed anew. Your claim is invalid.*
+*Ritsu: It must also be formalized in a written amendment or…*
 **Elias: ...Unfortunately, it looks like those contracts we signed were imbued with magic.**
 
 ## Season 2 Episode 6, ch. 1
@@ -195,16 +197,16 @@ Short ambient barks while he walks campus.
 *[Name]: Wait, so we don't get any hints?!*
 **Elias (Elias's Voice): That does put us in a spot. Could I confirm something with you, [Name]?**
 **Elias (Elias's Voice): Are there currently 10 rows of tiles leading to the exit?**
-*[Name]: Yes... I can see a door beyond them, so I assume that's the exit.*
+*[Name]: Yes... I can see a door beyond them, so I assume that's the…*
 **Elias (Elias's Voice): Got it. And the rows are three across. I'm assuming there's no way to sidestep them either?**
-*[Name]: No. They're arranged so you have to step on one of the three if you want to move forward.*
+*[Name]: No. They're arranged so you have to step on one of the…*
 **Elias (Elias's Voice): One more question. Would the size of these tiles make it so you could move from one edge to the other?**
-*[Name]: They're about two meters wide, so jumping over one would be pretty hard.*
+*[Name]: They're about two meters wide, so jumping over one would be…*
 **Elias (Elias's Voice): I see... So we'll have to consider the next tile too when choosing which way to go.**
 **Elias (Elias's Voice): By the way, you didn't happen to see any of the staff in the dungeon, did you?**
 *[Name]: She gave me a key to use in the trial.*
 **Elias (Elias's Voice): ...Do you remember which direction she came from?**
-*[Name]: The dungeon, I think. She came through the door leading into it.*
+*[Name]: The dungeon, I think. She came through the door leading…*
 **Elias (Elias's Voice): ...I see. Then she must've...**
 *[Name]: ...?*
 **Elias (Elias's Voice): ...Let's start on the far left tile, [Name].**
@@ -223,14 +225,14 @@ Short ambient barks while he walks campus.
 **Elias (Elias's Voice): ...Looks like I guessed wrong...**
 *[Name]: (huff)... (huff)... The shock...went though my whole body...*
 **Elias (Elias's Voice): I'm sorry, dear heart. That was on me. Are you all right?**
-*[Name]: It caught me by surprise, but I guess the voltage wasn't too high since we're only on the third row...*
+*[Name]: It caught me by surprise, but I guess the voltage wasn't…*
 **Elias (Elias's Voice): I'm glad. But this makes figuring out where to go next a tad difficult...**
 **Elias (Elias's Voice): ...[Name]. Do you think you could move to the middle tile next?**
 *[Name]: (huff)... (huff)... The middle tile...*
 **Elias (Elias's Voice): ...Yes. The climax of this challenge depends on wherever the next electric tile is.**
 *[Name]: Ngh...*
 **Elias (Elias's Voice): Let's take a break. The clock is ticking, but your health comes first.**
-*[Name]: ...No. I haven't even made it halfway yet. I'll move on to the middle tile...*
+*[Name]: ...No. I haven't even made it halfway yet. I'll move on to…*
 **Elias (Elias's Voice): ...Thank you.**
 *[Name]: Ahhhh!!*
 **Elias (Elias's Voice): ...[Name], say something if you're all right.**

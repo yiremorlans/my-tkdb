@@ -1,6 +1,8 @@
 # Zenji: story dialogue
 
-Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). Each of his lines is in **bold**, with the line before it for context. `[Name]` is the MC; `NAR` is the MC's narration.
+Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). `[Name]` is the MC; `NAR` is the MC's narration.
+
+**Only the bold lines are Zenji's voice.** Each italic line is a short excerpt of what someone else said just before, there only so you can see what he's answering. Never borrow wording, slang, tics, pet names or rhythm from an italic line, and never use one as an anchor.
 
 **How to use:** register evidence for voice-check and drafting. Use it for sentence shape, rhythm, how he talks to the MC and to others. These lines are not voicelines: home-screen voicelines in `../zenji.md` stay the primary anchors and the tier-fit ladder. **Plot facts, reveals and relationships learned here are spark+** (same as the `## Stigma & Artifact` rule). Don't quote a story line into new/known/warm content, and don't build a beat on an event the MC hasn't reached.
 
@@ -34,7 +36,7 @@ Short ambient barks while he walks campus.
 *Towa: Be quiet! The fish hate your weird noises, Iris!*
 **Zenji: Jeepers! Perhaps it's a tuning issue.**
 **Zenji: I'll get Haku to see to it when he gets back!**
-*Towa: It's not just today. They've hated it since last year. The salamanders said so.*
+*Towa: It's not just today. They've hated it since last year. The…*
 **Zenji: Since last year? Oh...**
 **Zenji: Has it really been that long...**
 **Zenji: ...since I began my biwa recitals here?**
@@ -61,15 +63,15 @@ Short ambient barks while he walks campus.
 **Zenji: T-Towa! You can't run around inside. It's—**
 
 ## Season 2 Episode 1, ch. 26: Girl Entrusted With Surprising Lost Property
-*Rooster: In the breath before I drown, I sing my final hymn. Heaven and Hell wage their final war. Let us shape the chaos.*
+*Rooster: In the breath before I drown, I sing my final hymn. Heaven…*
 **Zenji: He's thanking you for a marvellous time, guys and doll.**
 **Zenji: And he's looking forward to your battle of beats.**
 *[Name]: This is for me...?*
 **Zenji: It's something from the containment facility where they were being held.**
 **Zenji: It looks like lipstick...**
-*Rooster: The relic seeks its rightful place. Its master leads the lonely beasts whose chains have been broken.*
+*Rooster: The relic seeks its rightful place. Its master leads the…*
 **Zenji: It belongs to someone who was released from the containment facility. The leader of a group...**
-*NAR: The rooster gazed at the ghoul's retreating backs as he spoke.*
+*NAR: The rooster gazed at the ghoul's retreating backs as he…*
 **Zenji: Someone like us...a ghoul...?**
 
 ## Season 2 Episode 1, ch. 34: Hopes And Dreams Pinned On Contest
@@ -88,15 +90,15 @@ Short ambient barks while he walks campus.
 **Zenji: Wait, nothing hurts...**
 *Haku: It might make your body heavier, so watch your step.*
 **Zenji: You lout! You left that out on purpose, didn't you?!**
-*NAR: As the sound slowly grew louder Zenji hid behind Haku, trembling and glancing around anxiously.*
+*NAR: As the sound slowly grew louder Zenji hid behind Haku…*
 **Zenji: H-Haku...**
 *[Name]: Whoa?!*
 **Zenji: [Name]!!**
-*NAR: Covering their noses with their sleeves, Subaru and Haku leveled their blades at the anomaly.*
+*NAR: Covering their noses with their sleeves, Subaru and Haku…*
 **Zenji: Are you all right, my dear?!**
 
 ## Season 2 Episode 4, ch. 12: Ayakashi Hunt: A Potential Lead?
-*NAR: I kept my voice low to match Subaru's. Beside us, Zenji nodded in agreement.*
+*NAR: I kept my voice low to match Subaru's. Beside us, Zenji…*
 **Zenji: I read you. After seeing all those anomalies...**
 **Zenji: ...we ought to figure out just what sort of anomaly we’re meant to be dealing with here.**
 *Katsuyoshi: Even so, might I humbly ask that you disarm yourselves here?*

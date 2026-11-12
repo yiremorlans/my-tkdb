@@ -1,6 +1,8 @@
 # Ritsu: story dialogue
 
-Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). Each of his lines is in **bold**, with the line before it for context. `[Name]` is the MC; `NAR` is the MC's narration.
+Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). `[Name]` is the MC; `NAR` is the MC's narration.
+
+**Only the bold lines are Ritsu's voice.** Each italic line is a short excerpt of what someone else said just before, there only so you can see what he's answering. Never borrow wording, slang, tics, pet names or rhythm from an italic line, and never use one as an anchor.
 
 **How to use:** register evidence for voice-check and drafting. Use it for sentence shape, rhythm, how he talks to the MC and to others. These lines are not voicelines: home-screen voicelines in `../ritsu.md` stay the primary anchors and the tier-fit ladder. **Plot facts, reveals and relationships learned here are spark+** (same as the `## Stigma & Artifact` rule). Don't quote a story line into new/known/warm content, and don't build a beat on an event the MC hasn't reached.
 
@@ -24,15 +26,15 @@ Short ambient barks while he walks campus.
 - Have you submitted the paperwork?
 
 ## Part 4, ch. 35: Ghouls vs. Anomaly— All Bets Are Off
-*Romeo: Are you absolutely certain that anomalous dealer is going to show up tonight?!*
+*Romeo: Are you absolutely certain that anomalous dealer is going…*
 **Ritsu: Yes. Based on my behavioral model, the probability is 79%.**
 *[Name]: Is that...*
 **Ritsu: Yes, he's coming. Keep your voice down, Vice-Captain.**
 *Romeo: That fool!!*
 **Ritsu: Now. Let's make our move.**
-*NAR: Ritsu walked straight past Taiga, ignoring his cold stare and taking a seat at the table.*
+*NAR: Ritsu walked straight past Taiga, ignoring his cold stare…*
 **Ritsu: Please sit down, everyone. This is an official Sinostra mission.**
-*Anomalous Dealer: Please select the game you wish to play from these four options.*
+*Anomalous Dealer: Please select the game you wish to play from these four…*
 **Ritsu: We choose blackjack.**
 *[Name]: Sounds like you know this game well...*
 **Ritsu: Of course. Once I was assigned to this house and learned that a casino was being run here...**
@@ -40,7 +42,7 @@ Short ambient barks while he walks campus.
 *Taiga: ...*
 **Ritsu: The dealer will ask you to stake dates from history on the game, rather than money.**
 **Ritsu: When it does, it is imperative that the dates you stake be from a time before you were born.**
-*[Name]: Before I was born...? So a date from a really long time ago is okay?*
+*[Name]: Before I was born...? So a date from a really long time ago…*
 **Ritsu: Yes.**
 *Anomalous Dealer: Please specify your date.*
 **Ritsu: I will wager March 22nd, 1925.**
@@ -48,15 +50,15 @@ Short ambient barks while he walks campus.
 ## Part 12, ch. 9: Free Spirit Receives Important Life Lesson
 *Towa: ~~, ~~~~♪*
 **Ritsu: Please return my camera, Mr_ Otonashi.**
-*NAR: Towa smiled as he held up the digital camera. Ritsu extended one hand expectantly.*
+*NAR: Towa smiled as he held up the digital camera. Ritsu…*
 **Ritsu: With my skills as an attorney, it would not be difficult for me to have you prosecuted for property theft.**
-*[Name]: Why don't you give Ritsu his camera back, Towa? You shouldn't take people's things without asking.*
+*[Name]: Why don't you give Ritsu his camera back, Towa? You…*
 **Ritsu: [Name], this dispute is between me and Mr_ Otonashi. I ask that you refrain from interfering and act as a witness.**
 *[Name]: Hold on, Ritsu. I don't think Towa means any harm.*
 **Ritsu: In the law, one must be aware of certain facts to have malintent. Mr_ Otonashi is aware that is my property.**
 *[Name]: Let's all just calm down for a moment.*
 **Ritsu: Don't worry—I am quite calm. Disputes such as this should be solved quickly to avoid magnification of damage.**
-*NAR: Ritsu accepted the camera from Haru, face betraying nothing. He then took a sheet of paper from his briefcase.*
+*NAR: Ritsu accepted the camera from Haru, face betraying…*
 **Ritsu: Very well. In the case I discover it has been damaged...**
 **Ritsu: ...I will invoice you for the cost of it along with my retainer fee, day rate, and expenses.**
 
@@ -74,7 +76,7 @@ Short ambient barks while he walks campus.
 ## Season 2 Episode 2, ch. 2
 *[Name]: ?!*
 **Ritsu: No. I deny the allegation. As I have stated repeatedly, I am not the perpetrator.**
-*Romeo: Once Fuji gets here, I'll have all of the suspects in one place.*
+*Romeo: Once Fuji gets here, I'll have all of the suspects in one…*
 **Ritsu: I saw Mr_ Fuji twelve minutes ago, at 14:47, near the casino entrance.**
 **Ritsu: He told me, "Don’t tell Romeo you saw me," and then left Sinostra.**
 *[Name]: What?!*
@@ -83,18 +85,18 @@ Short ambient barks while he walks campus.
 **Ritsu: Thus, we are suspects.**
 *NAR: Ritsu produced a familiar document from his briefcase.*
 **Ritsu: Could I also have your signature on this?**
-*Romeo: Excuse me?! The only paper I'll permit being shoved in my face is cold hard cash!!*
+*Romeo: Excuse me?! The only paper I'll permit being shoved in my…*
 **Ritsu: Are you sure? This is a nondisclosure agreement pertaining to your private office.**
 
 ## Season 2 Episode 2, ch. 6
 *Shion: ...Honor student?*
 **Ritsu: Ritsu Shinjo, Sinostra first-year and acting representative.**
-*NAR: Jo offered a hand for a handshake. Ritsu stood up a little straighter as he obliged with a smile.*
+*NAR: Jo offered a hand for a handshake. Ritsu stood up a little…*
 **Ritsu: Indeed. I have maintained the top rank in the first year, and I regularly handle matters on behalf of Sinostra.**
 **Ritsu: Should anyone in Dionysia require legal assistance, you are welcome to contact me any time.**
 *[Name]: ...?*
 **Ritsu: Pardon the interruption, but our time is limited. May I proceed to the matter at hand?**
-*Mio: All right. Let's go. I just need to finish up here, so could you give me ten minutes?*
+*Mio: All right. Let's go. I just need to finish up here, so…*
 **Ritsu: Very well.**
 **Ritsu: Let's wait outside, [Name].**
 
@@ -105,15 +107,15 @@ Short ambient barks while he walks campus.
 **Ritsu: That contradiction casts immediate doubt on the credibility of your statement—**
 *NAR: Romeo glanced at Mio, who nodded with a wry smile.*
 **Ritsu: I see. So the rumors were true—even you, greedy and suspicious as you are, place this much trust in Mr_ Susuhara.**
-*[Name]: (Huh? But didn't Sinostra and Dionysia used to be rivals...?)*
+*[Name]: (Huh? But didn't Sinostra and Dionysia used to be…*
 **Ritsu: In the absence of a formal employment contract, unpaid labor is unlikely to constitute a legal violation.**
 **Ritsu: It is difficult to imagine the captain formalizing an employment agreement with Mr_ Susuhara.**
-*Romeo: If they reopen Dionysia, we might as well kiss our profits goodbye.*
+*Romeo: If they reopen Dionysia, we might as well kiss our profits…*
 **Ritsu: Rest assured, Vice-Captain. You have me now.**
 **Ritsu: I will take charge of the Missing Bracelet Case. Let us proceed to the crime scene.**
 
 ## Season 2 Episode 5, ch. 10: Shoot Hijacked By Masked Enigma
-*Game Master's Voice: The mission shared by the Goddess and her Suitors is to fill this glass vessel entirely with flowers.*
+*Game Master's Voice: The mission shared by the Goddess and her Suitors is to…*
 **Ritsu: You expect us to fill this enormous container with flowers?**
 *[Name]: Wait... You mean those key slips?!*
 **Ritsu: That is not correct. The document we signed was strictly for the receipt of the key required to stay in this castle.**
@@ -123,7 +125,7 @@ Short ambient barks while he walks campus.
 ## Season 2 Episode 6, ch. 1
 *Haku: (It separated us.)*
 **Ritsu: (This room has a diameter of around five meters. There's a spiral staircase at its center going downward.)**
-*Game Master's Voice: Finally, there are no Bugs on the 100th floor or the 1st floor where the Goddess resides.*
+*Game Master's Voice: Finally, there are no Bugs on the 100th floor or the 1st…*
 **Ritsu: I see...**
 
 ## Season 2 Episode 6, ch. 2
@@ -141,11 +143,11 @@ Short ambient barks while he walks campus.
 **Ritsu: Provided there is no Bug there, you can return to Tower X knowing that every floor below 99 is safe.**
 **Ritsu: Furthermore, if you do run into an Bug on the 98th floor of Tower X minus 1...**
 **Ritsu: All you have to do is go down to the 99th floor at Tower X plus 1 and return to Tower X for the 98th floor and below.**
-*[Name]: Sorry, I'm not following... Your explanation was pretty complicated.*
+*[Name]: Sorry, I'm not following... Your explanation was pretty…*
 **Ritsu: As my business partner, I implore you to use your head more.**
-*[Name]: I see! That explains how you got to the first floor so quickly!*
+*[Name]: I see! That explains how you got to the first floor so…*
 **Ritsu: Indeed. Though how much time it takes depends on when you encounter the Bug.**
-*[Name]: The 99th floor of Tower X plus 1? Sorry, could you explain that again?*
+*[Name]: The 99th floor of Tower X plus 1? Sorry, could you explain…*
 **Ritsu: Do you really think we have the time for that? Getting out of this tower comes first, remember?**
 **Ritsu: I'm surprised the Game Master hasn't responded, though. Did he have trouble understanding my explanation?**
 *[Name]: You're right... I wonder what happened.*

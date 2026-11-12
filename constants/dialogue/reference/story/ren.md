@@ -1,6 +1,8 @@
 # Ren: story dialogue
 
-Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). Each of his lines is in **bold**, with the line before it for context. `[Name]` is the MC; `NAR` is the MC's narration.
+Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). `[Name]` is the MC; `NAR` is the MC's narration.
+
+**Only the bold lines are Ren's voice.** Each italic line is a short excerpt of what someone else said just before, there only so you can see what he's answering. Never borrow wording, slang, tics, pet names or rhythm from an italic line, and never use one as an anchor.
 
 **How to use:** register evidence for voice-check and drafting. Use it for sentence shape, rhythm, how he talks to the MC and to others. These lines are not voicelines: home-screen voicelines in `../ren.md` stay the primary anchors and the tier-fit ladder. **Plot facts, reveals and relationships learned here are spark+** (same as the `## Stigma & Artifact` rule). Don't quote a story line into new/known/warm content, and don't build a beat on an event the MC hasn't reached.
 
@@ -29,17 +31,17 @@ Short ambient barks while he walks campus.
 **Ren: (Fuck, now I have to move it with my foot.)**
 *???: Kyoo?! Kyoo!!*
 **Ren: (Ugh, there's something in there...)**
-*NAR: I arrived just in time to see the box being kicked, and hurried over to the dormitory.*
+*NAR: I arrived just in time to see the box being kicked, and…*
 **Ren: You again? Hurry up, these sheets are heavy, you know.**
-*NAR: I picked up the box and looked for somewhere I could put it that would be out of the way.*
+*NAR: I picked up the box and looked for somewhere I could put it…*
 **Ren: Can't you see I've got my hands full? At least open the door if you're sorry.**
 *[Name]: Look out! An anomalous animal just—*
 **Ren (Ren's Voice): WAAAARRRGH?!**
-*NAR: In the center was a pile a freshly-dried sheets. I could hear muffled mumbling coming from underneath.*
+*NAR: In the center was a pile a freshly-dried sheets. I could…*
 **Ren (Ren's Voice): This sucks... Gross... This is the worst...**
 *[Name]: The anomalous animal I had in this box ran in here...*
 **Ren (Ren's Voice): Worst day ever... Dirty... Gross... Stinks...**
-*Haru: You listening, Ren? Those sheets are 100% cotton, super breathable!*
+*Haru: You listening, Ren? Those sheets are 100% cotton, super…*
 **Ren (Ren's Voice): I'm not going.**
 *Haru: Who is?*
 **Ren (Ren's Voice): I am!**
@@ -47,20 +49,20 @@ Short ambient barks while he walks campus.
 **Ren (Ren's Voice): Don't put words in my mouth...**
 
 ## Part 3, ch. 9: Ink Bath Ends In Spontaneous Sunshower
-*Haru: Hey, Ren, you're good at naming stuff. Give this little guy a name.*
+*Haru: Hey, Ren, you're good at naming stuff. Give this little guy…*
 **Ren (Ren's Voice): What? No I'm not. Where'd you pull that character setting from?**
-*Haru: What were they again? Ah right. There was "BroodingWanderer" and "SleepingLion," right?*
+*Haru: What were they again? Ah right. There was…*
 **Ren: Quit making random stuff up!**
-*Haru: Gahaha! What were you doing under there, eating squid ink spaghetti?!*
+*Haru: Gahaha! What were you doing under there, eating squid ink…*
 **Ren: God, you're the worst... How did you know I play with multiple accounts...?**
 **Ren: Calamari.**
 
 ## Part 3, ch. 13: Ranger And Free Spirit Return With Day's Findings
 *Calamari: Kyoo...?*
 **Ren: How long is that thing gonna be here for?**
-*[Name]: Jabberwock is supposed to take care of him for the time being.*
+*[Name]: Jabberwock is supposed to take care of him for the time…*
 **Ren: Jabberwock? You're an outsider though, what are you doing here?**
-*[Name]: Outsider... I suppose that's true, but I'm helping out as an inspector.*
+*[Name]: Outsider... I suppose that's true, but I'm helping out as…*
 **Ren: Inspector...? Right, I think they said something like that at the entrance ceremony...**
 *[Name]: Yes. I'm [Name], the, um...honor student.*
 **Ren: So that's your deal. You sure are convenient, agreeing to do all this dirty work.**
@@ -69,18 +71,18 @@ Short ambient barks while he walks campus.
 **Ren: Of course not. These monsters are disgusting.**
 **Ren: They're entertaining enough in movies, but what kind of weirdo wants to actually touch them?**
 **Ren: They're dirty, and they stink. No idea why he actually chose to transfer here. He must be some kind of freak...**
-*NAR: Haru went about everything with such practiced ease I'd assumed he had a lot of experience.*
+*NAR: Haru went about everything with such practiced ease I'd…*
 **Ren: Apparently. I heard it from Professor Hyde, so I don't know the details.**
 **Ren: Not particularly interested in knowing them either. Seriously, where is my phone?**
-*Haru: Don't tell me you're eating off the floor again, that'll wreck your stomach, mate.*
+*Haru: Don't tell me you're eating off the floor again, that'll…*
 **Ren: I'm not! Quit making stuff up!**
-*NAR: Haru and Towa held up a fishing net. It appeared to be full of black seaweed and fish bones.*
+*NAR: Haru and Towa held up a fishing net. It appeared to be full…*
 **Ren: What is that? Ugh, it reeks!**
-*Haru: Got something of yours too. Bit of a scatterbrain, aren't you?*
+*Haru: Got something of yours too. Bit of a scatterbrain, aren't…*
 **Ren: That's my phone! Ugh, don't touch it with your dirty hands!**
-*NAR: Ren snatched his phone out of Haru's hand, gave it a hesitant sniff, and scowled.*
+*NAR: Ren snatched his phone out of Haru's hand, gave it a…*
 **Ren: It stinks like fish... You're the worst...**
-*Haru: Ah, don't worry about that! You can just chuck them out when you're done with them.*
+*Haru: Ah, don't worry about that! You can just chuck them out…*
 **Ren: Those are mine, asshole...**
 
 ## Part 3, ch. 14: Early Morning Intruder— How Did He Break In?
@@ -90,7 +92,7 @@ Short ambient barks while he walks campus.
 **Ren: (There's no one knocking at my door...)**
 *Haru: Oh, you are in here.*
 **Ren: Hey! Don't just barge in here! Also what the fuck, I locked that door!!**
-*Haru: No worries though, I'll come wake you up from now on! Gahaha!*
+*Haru: No worries though, I'll come wake you up from now on…*
 **Ren: This sucks... My head hurts...**
 **Ren: I hate animals... You can't tell what they're thinking...**
 **Ren: My dad's allergic to dogs so I've never even owned a pet...**
@@ -104,7 +106,7 @@ Short ambient barks while he walks campus.
 *Haru: Dunno what to do about that...*
 **Ren: Are you serious? You made me touch this shit for nothing?**
 **Ren: Hurk...urgh...**
-*Haru: Sorry Ren, I've gotta go milk the cow. Watch Calamari for me.*
+*Haru: Sorry Ren, I've gotta go milk the cow. Watch Calamari for…*
 **Ren: What?! No way, I can't!**
 *Haru: Yeah you can! I believe in you!*
 **Ren: Hey! Come back! Shit, he really just left me with this thing...**
@@ -134,12 +136,12 @@ Short ambient barks while he walks campus.
 **Ren: Don't be dumb, of course it can't.**
 
 ## Part 3, ch. 17: Fatal Defect Stops Investigation Short
-*NAR: A boat was falling to pieces in the grassy meadow in front of the dormitory.*
+*NAR: A boat was falling to pieces in the grassy meadow in front…*
 **Ren: Why'd you bring more garbage back here?**
-*[Name]: (There seems to be a lot of tension between the houses here...)*
+*[Name]: (There seems to be a lot of tension between the houses…*
 **Ren: If you want a boat, it's Frostheim you should be asking.**
 **Ren: They must have at least a few personal cruisers between them.**
-*[Name]: Okay, they're going to meet us at the Odaiba Seaside Park docks at 6 PM tomorrow.*
+*[Name]: Okay, they're going to meet us at the Odaiba Seaside Park…*
 **Ren: I'm not going.**
 
 ## Part 3, ch. 18: Anomalous Diversity— Can We Really Coexist?
@@ -272,14 +274,14 @@ Short ambient barks while he walks campus.
 **Ren: Do it!**
 *Haru: No way!!*
 **Ren: Do it!!**
-*NAR: ...the door burst open of its own accord, and an ice-cold wind blew in from outside.*
+*NAR: ...the door burst open of its own accord, and an ice-cold…*
 **Ren: Argh?! It's freezing!!**
 
 ## Part 12, ch. 3: Dorm Hit With Unexpected Shower
 *[Name]: Brrr...*
 **Ren: Great. First the heat goes out, and now it's like a freezer in here...**
 **Ren: This is the worst...**
-*NAR: Haru blew out the front door, seeming to have a plan in mind.*
+*NAR: Haru blew out the front door, seeming to have a plan in…*
 **Ren: Achoo!**
 **Ren: Ugh... My nose is running...**
 **Ren: I'm going to bed.**
@@ -290,11 +292,11 @@ Short ambient barks while he walks campus.
 *[Name]: Hold on, Ren. We still haven't done what Haru asked.*
 **Ren: Do you really need two people to wrap blankets around those things?**
 **Ren: Ugh, it's freezing...**
-*NAR: While I sat dazed in a pink haze, a door slammed open on the second floor.*
+*NAR: While I sat dazed in a pink haze, a door slammed open on…*
 **Ren (Ren's Voice): Hey! What the fuck?!**
 
 ## Part 12, ch. 4: Carpenter Cats—What You Need To Know
-*NAR: Ren came storming down the staircase, griping at no one in particular.*
+*NAR: Ren came storming down the staircase, griping at no one in…*
 **Ren: Seriously, what the hell is going on in here?!**
 *[Name]: It's because Ren wouldn't help me look for the blankets...*
 **Ren: What? How is this my fault?**
@@ -309,13 +311,13 @@ Short ambient barks while he walks campus.
 
 ## Part 12, ch. 5: Ranger Proposes Game Plan
 **Ren: Catnip treats...?**
-*NAR: Haru put the sheet down on the table, and Towa obediently produced a pen from somewhere.*
+*NAR: Haru put the sheet down on the table, and Towa obediently…*
 **Ren: What? That's for missions, isn't it? Why do I have to sign it...?**
 *Haru: You wanna stay here and freeze your bits off instead?*
 **Ren: Those are two unrelated things!**
 *Haru: Nah, they're related. Take a closer look.*
 **Ren: Why...?**
-*NAR: Ren reluctantly accepted the sheet Haru held out to him, glancing down at it with a frown.*
+*NAR: Ren reluctantly accepted the sheet Haru held out to him…*
 **Ren: "Undercover Investigation As Short- Term Staff At Father Farm"...?**
 *Haru: A part-time job, basically.*
 **Ren: You better not be suggesting we go work on this farm.**
@@ -332,11 +334,11 @@ Short ambient barks while he walks campus.
 **Ren: Ritsu and [Name] can take care of the rest. Time to for some quality level grinding.**
 
 ## Part 12, ch. 10: Jabberwock Storms Local Farm
-*NAR: The next morning, we departed Darkwick early for our first day undercover as staff at Father Farm.*
+*NAR: The next morning, we departed Darkwick early for our first…*
 **Ren: How did you not mention it was a 40 minute walk from the nearest Galaxy Express station to this place?**
-*Daiki: We're very lucky to have students from an agricultural university here to help us out!*
+*Daiki: We're very lucky to have students from an agricultural…*
 **Ren: You made us agriculture students...? Was that really necessary?**
-*Haru: You guys've got sheepdogs here, right? Thing is, I... (mumble)*
+*Haru: You guys've got sheepdogs here, right? Thing is, I…*
 **Ren: That's not suspicious at all... What's he up to?**
 
 ## Part 17, ch. 9: Ghouls Compete For Pearl's Heart
@@ -345,18 +347,18 @@ Short ambient barks while he walks campus.
 *[Name]: Hi... It's nice to meet you.*
 **Ren: [Name]...**
 **Ren: Pfft. What's with those clothes? Aren't you trying a little too hard?**
-*KP: Ren, Ren, Ren! You can't say stuff like that! You're putting us in a tough spot here!*
+*KP: Ren, Ren, Ren! You can't say stuff like that! You're…*
 **Ren: That's my line...**
 **Ren: You can't dress her up like this without warning me first...**
 **Ren: Pfft...**
-*KP: Our viewers want to see you fall head over heels in real time!*
+*KP: Our viewers want to see you fall head over heels in real…*
 **Ren: Don't make a script if you want reality...**
 *[Name]: Everyone makes mistakes. Let's try it one more time!*
 **Ren: That was my real reaction though. Pretty sure it's gonna be the same next time too...**
 **Ren: Pfft.**
-*[Name]: You should apologize, Ren. You're being very rude to me, and to the producer.*
+*[Name]: You should apologize, Ren. You're being very rude to me…*
 **Ren: Ngh... Where's this coming from? Don't tell me you're out to harass me too.**
-*[Name]: Don't laugh at me... The hair and make up artist worked really hard to make me look nice...*
+*[Name]: Don't laugh at me... The hair and make up artist worked…*
 **Ren: Pfft... Sorry. Can you give me a sec to get used to it?**
 *[Name]: Um... I'm actually a big fan of enemies to lovers?*
 **Ren: ...What?!**
@@ -370,16 +372,16 @@ Short ambient barks while he walks campus.
 **Ren: See you, I guess.**
 *Jiro: If something goes wrong, I'll just go back early.*
 **Ren: I'll go with you then. It won't stand out as much if we both leave at the same time.**
-*Rui: Don't get the wrong idea, [Name]! I'm hype to be here, bonus or no!*
+*Rui: Don't get the wrong idea, [Name]! I'm hype to be here…*
 **Ren: Even if we get the bonus you're just gonna use to fix the creepy bus the cows broke.**
 **Ren: There's nothing in this for me.**
-*Haru: I promise I'll give you some pocket money this time, so stick it out till the end!*
+*Haru: I promise I'll give you some pocket money this time, so…*
 **Ren: How are you giving me pocket money from my own salary?**
-*Haru: Ah well, everyone's here and happy. One mission, one show—let's give 'em both all we got!*
+*Haru: Ah well, everyone's here and happy. One mission, one…*
 **Ren: I'm not happy! Why the hell am I a surfer anyway? Surfers are all party animals...**
 *Haru's Voice: A single dad?!*
 **Ren (Ren's Voice): Pfft... Yeah, I see it. It suits you.**
-*KP: You, next to him—you can be a surfer! You're the youngest contestant, and you've got an ocean-lover name.*
+*KP: You, next to him—you can be a surfer! You're the youngest…*
 **Ren (Ren's Voice): What?! Are you kidding me?!**
 *KP: Make sure you go to a tanning salon before we film, 'kay?*
 **Ren (Ren's Voice): You've got to be f—mmph?!**
@@ -395,7 +397,7 @@ Short ambient barks while he walks campus.
 
 ## Season 2 Episode 1, ch. 25: Knight's Temporary Stint As Diner Employee
 **Ren: ...What is this?**
-*NAR: I bowed my head sheepishly. I hadn't expected the general students to follow us to the diner.*
+*NAR: I bowed my head sheepishly. I hadn't expected the general…*
 **Ren: So I have you to blame for this, huh...?**
 **Ren: It's bad enough I have to deal with Errant every day...**
 *[Name]: Oh... Are they curious...?*
@@ -405,7 +407,7 @@ Short ambient barks while he walks campus.
 **Ren: ...The Bray Men. They're all anyone's talking about on WickHive.**
 *Lucas: Kaito is going to compete with these odd anomalies?*
 **Ren: That one is definitely into Catcher In The Rye.**
-*NAR: Kaito and Towa, who I'd thought had been rehearsing, appeared in the doorway of the diner.*
+*NAR: Kaito and Towa, who I'd thought had been rehearsing…*
 **Ren: Ugh... They're multiplying...**
 *Yuri: ...*
 **Ren: And now the floor's all wet. This is the worst...**
@@ -415,16 +417,16 @@ Short ambient barks while he walks campus.
 **Ren: Gross, he looks so smug now... Shouldn't have given him a pity vote.**
 
 ## Season 2 Episode 7, ch. 6
-*NAR: Luca, Ren, and I left for the east side of campus to meet up with the third and final cowherd.*
+*NAR: Luca, Ren, and I left for the east side of campus to meet…*
 **Ren: Isn't this the way to Hotarubi? Not that I've ever been...**
-*[Name]: They're holding festivals there every weekend this month. You're not going to go?*
+*[Name]: They're holding festivals there every weekend this month…*
 **Ren: ...The only people who go to shit like that are pick-up artists and couples into PDA.**
 **Ren: I'd rather die.**
-*NAR: Mio knocked on a large clockwork anomaly at the top of the pillar.*
+*NAR: Mio knocked on a large clockwork anomaly at the top of the…*
 **Ren: What is that...? A map...?**
 *[Name]: Oh wow, that's so handy!*
 **Ren: Wouldn't it be easier to make a pamphlet or app instead of building this whole thing?**
-*Lucas: None of this is official, so I still have my reservations, though.*
+*Lucas: None of this is official, so I still have my reservations…*
 **Ren: Wait, what? You can do that? Then I'm gonna ask someone...**
 *NAR: Ren seemed to lose steam halfway through that thought.*
 **Ren: ...If I ask Shinjo he's just gonna charge me for 24 hours of work.**
@@ -434,9 +436,9 @@ Short ambient barks while he walks campus.
 **Ren: Does it really matter who does it?**
 
 ## Season 2 Episode 7, ch. 7
-*Lucas: ...the Sky King will grant a wish related to either "oblivion" or "immortality."*
+*Lucas: ...the Sky King will grant a wish related to either…*
 **Ren: Oblivion or immortality? That sounds like shitty video game writing.**
-*Mio: ...I see. In that case, we'd better put our best foot forward on the day then.*
+*Mio: ...I see. In that case, we'd better put our best foot…*
 **Ren: (sigh)...**
 **Ren: What even is this trial thing anyway?**
 **Ren: The more I hear about it, the more it sounds like a massive pain in the ass.**
@@ -465,7 +467,7 @@ Short ambient barks while he walks campus.
 **Ren: ...Huh?**
 *Lucas: Ren! Are you okay?!*
 **Ren: This is the worst... Why'd it have to be a lake...**
-*[Name]: (Now that the three of them are here in their outfits, it really feels like the Star Festival's about to start.)*
+*[Name]: (Now that the three of them are here in their outfits, it…*
 **Ren: These clothes were a pain in the ass to put on too. How do you even go to the can?**
 *Mio: I guess the right clothes can make anyone look good.*
 **Ren: (sigh)**
@@ -477,7 +479,7 @@ Short ambient barks while he walks campus.
 *Subaru: ...I know how you feel.*
 **Ren: Can you guys just go already?**
 **Ren: I'll be waiting over by the stalls.**
-*Subaru: Oh, but...all four of you need to be present to receive the Sky King's riddle...*
+*Subaru: Oh, but...all four of you need to be present to receive the…*
 **Ren: Huh? Why, though? That's so old school...**
 *[Name]: ...Ren, are you scared of getting on a hoverboard?*
 **Ren: What?**
@@ -487,26 +489,26 @@ Short ambient barks while he walks campus.
 **Ren: Why can't the Sky King just come to us?**
 *[Name]: Come on, it'll be fun!*
 **Ren: Do I look like a thrill seeker to you?**
-*Mio: The festival's packed right now. You sure you want to go hang out alone in that outfit?*
+*Mio: The festival's packed right now. You sure you want to go…*
 **Ren: Urk...**
-*NAR: With a polite nod, Subaru followed the general student back to the stalls.*
+*NAR: With a polite nod, Subaru followed the general student back…*
 **Ren: (This sucks... What if I fall in?)**
 
 ## Season 2 Episode 7, ch. 19: One Man's Impressive Dedication To The Hustle
-*NAR: As he spoke, Haru took the price list from his stall and placed it right where we could see it clearly.*
+*NAR: As he spoke, Haru took the price list from his stall and…*
 **Ren: ...Wow, are you seriously trying to imply we've gotta buy this info from you?**
-*Haru: Thanks for your patronage! That'll be 1000 yen, tax included!*
+*Haru: Thanks for your patronage! That'll be 1000 yen, tax…*
 **Ren: Sly little fucker...**
 *Haru: Ren! You could learn a thing or two from him!*
 **Ren: And you could learn five.**
 **Ren: You make those delinquents from before look like saints...**
-*NAR: Haru saw us off with a smile, and we headed to our next destination—the ring toss stall.*
+*NAR: Haru saw us off with a smile, and we headed to our next…*
 **Ren: (Ugh... These idiots have no idea what they're doing, and I'm starving... I'm so pissed off right now...)**
 *Lucas: That doesn't look good. We need to stop them.*
 **Ren: What?! You're making another detour?!**
 **Ren: Everyone knows they don't even put the real prize in those things.**
 **Ren: It's that guy's fault for falling for an obvious scam.**
-*Lucas: Extending your hand to aid them is the only logical course of action for one who has.*
+*Lucas: Extending your hand to aid them is the only logical course…*
 **Ren: Save me the sermon.**
 **Ren: I'm out.**
 
@@ -520,7 +522,7 @@ Short ambient barks while he walks campus.
 *Shion: I've seen your face before.*
 **Ren: Well yeah. You literally just showed me around the Heebie-Jeebie House the other day.**
 **Ren: What are you even doing with that fake head?**
-*Shion: But they told me I had to apply for a stall in advance. Ever heard such a load of shite?*
+*Shion: But they told me I had to apply for a stall in advance…*
 **Ren: I mean, that's kind of just the way these things are run.**
 **Ren: Plus, I'm pretty sure the only one delighted by that head is me.**
 *Shion: (sigh)... Can't believe I ran into someone so dull again.*
@@ -537,7 +539,7 @@ Short ambient barks while he walks campus.
 **Ren: ...Sure.**
 
 ## Season 2 Episode 8, ch. 9
-*NAR: As Mio bent down to collect the broken arm from the ground, a new shadow fell over him.*
+*NAR: As Mio bent down to collect the broken arm from the ground…*
 **Ren: Susuhara? What're you doing here?**
 **Ren: ...Wait, why do you have that arm?!**
 *Haru: Ah... It's a long story...*
@@ -556,7 +558,7 @@ Short ambient barks while he walks campus.
 **Ren: Bye.**
 *Mio: I thought they were closed for repairs after the earthquake.*
 **Ren: Uh, yeah...I'm supposed to help with that...**
-*Lyca: Hey, Seaweed Head! If you're coming with us, hurry up already!*
+*Lyca: Hey, Seaweed Head! If you're coming with us, hurry up…*
 **Ren: ...Uh, no. I mixed up the dates.**
 **Ren: I'm off today.**
 
@@ -567,9 +569,9 @@ Short ambient barks while he walks campus.
 **Ren: There's no fucking way I'm going in there...**
 **Ren: I'm heading back to the dorm. You guys can handle this on your own.**
 **Ren: This is the worst...**
-*Haru: No answer. I don't remember seeing a cave like this here before...*
+*Haru: No answer. I don't remember seeing a cave like this here…*
 **Ren: There's a little light coming in from above, but I can barely see my feet...**
-*NAR: We cautiously made our way forward, only to find a giant hole in the ground.*
+*NAR: We cautiously made our way forward, only to find a giant…*
 **Ren: Shit...**
 **Ren: I knew there'd be some kind of trap in here...**
 
@@ -584,16 +586,16 @@ Short ambient barks while he walks campus.
 **Ren: The Queen of Hearts is totally unhinged, the crows keep pecking at my teapots...**
 **Ren: And now some random girl comes barging into my garden.**
 **Ren: Such a mad, sad, world...**
-*NAR: Then suddenly he grabbed my chin and leaned in close, staring down at me with ice-cold eyes.*
+*NAR: Then suddenly he grabbed my chin and leaned in close…*
 **Ren: Get out of my garden.**
 *[Name]: Ren, it's me. [Name]...*
 **Ren: ...[Name]?**
-*NAR: Then his eyes grew wide, and he stumbled backward over his chair.*
+*NAR: Then his eyes grew wide, and he stumbled backward over his…*
 **Ren: HUH?! Wh-Wh-What are you wearing?!**
 **Ren: And where the hell are we?!**
 *[Name]: Phew... You remember me!*
 **Ren: ...Huh? I'm dressed even crazier than you are...**
-*NAR: I repeated Ren's story back to him as we sat at a table full of colorful teacups and sweets.*
+*NAR: I repeated Ren's story back to him as we sat at a table…*
 **Ren: Pretty much, yeah...**
 **Ren: (sigh)... Wish I could forget what I just did...**
 *[Name]: I'm not even sure if we're in Jabberwock anymore...*
@@ -602,12 +604,12 @@ Short ambient barks while he walks campus.
 **Ren: Basically, we're lost in Wonderland.**
 *[Name]: I knew it! I was thinking the same thing.*
 **Ren: It's got to be because of that hole we fell into. Can't believe I got dragged into this shit again...**
-*[Name]: Really? So this is the world from the book come to life somehow?*
+*[Name]: Really? So this is the world from the book come to life…*
 **Ren: Yeah, like an isekai novel or something. I guess it's usually a game in those, though.**
 *[Name]: Um... What's Alice in Wonderland?*
 **Ren: ...Google it.**
 **Ren: First I get stuck in the Sky King's sci-fi romance movie, and now I'm in a fairy tale... Ugh...**
-*[Name]: I guess this means that Haru, Towa, and Peekaboo must be here somewhere too...*
+*[Name]: I guess this means that Haru, Towa, and Peekaboo must be…*
 **Ren: Wait,**
 **Ren: where's my phone?**
 *[Name]: Maybe it knows something!*
@@ -618,7 +620,7 @@ Short ambient barks while he walks campus.
 ## Season 2 Episode 8, ch. 14: Pair Seeks Escape From Wonderland
 *Tweedledum: Mad Hatter, it's nice to meet you.*
 **Ren: Who the hell are these guys...?**
-*NAR: Raising a brow at my noncommittal response, Ren approached the two identical men.*
+*NAR: Raising a brow at my noncommittal response, Ren approached…*
 **Ren: Hey, do you know which way we should go to get out of this place?**
 *Tweedledum: Go left for the exit, no doubt.*
 **Ren: ...Huh? Which is it? Are you fucking with us?**
@@ -628,9 +630,9 @@ Short ambient barks while he walks campus.
 **Ren: Look for them? Fuck that.**
 **Ren: I'm done with this crap.**
 **Ren: You all keep mindlessly running into shit and dragging me along for the ride.**
-*NAR: Ren kept powering ahead without so much as a glance my way as I struggled to keep up.*
+*NAR: Ren kept powering ahead without so much as a glance my way…*
 **Ren: Ugh... Water...**
-*NAR: To get there, we would have no choice but to cross the rickety bridge.*
+*NAR: To get there, we would have no choice but to cross the…*
 **Ren: We came here through a cave, so I guess it makes sense if we have to go back through one to get out...**
 **Ren: This sucks... I really don't wanna go anywhere near that water...**
 *[Name]: You're really going to leave everyone behind...?*
@@ -640,12 +642,12 @@ Short ambient barks while he walks campus.
 **Ren: Huh? What do you mea—**
 *[Name]: (Those are definitely anomalies...!)*
 **Ren: Shit... Let's go back, [Name].**
-*NAR: We quickly fled the bank back into the forest. After finding a convenient tree stump, we sat down for a break.*
+*NAR: We quickly fled the bank back into the forest. After…*
 **Ren: What the hell were those things...? They're definitely not in the book...**
-*[Name]: I really think we should find the others and work together to get out of here.*
+*[Name]: I really think we should find the others and work together…*
 **Ren: How are we supposed to find them when we have no clue where they are?**
 **Ren: We don't even have food, let alone a place to sleep.**
-*NAR: A deep crease in his brow, Ren stared down at the phone in his hand.*
+*NAR: A deep crease in his brow, Ren stared down at the phone in…*
 **Ren: ...Should we ask Darkwick for help? No...better contact Shinjo first. He can deal with them.**
 *Yellow Flower: Hee hee hee...*
 **Ren: Gross...**
@@ -654,11 +656,11 @@ Short ambient barks while he walks campus.
 ## Season 2 Episode 8, ch. 16: Squad Seeks Missing Members
 *Adam: I am Adam, madam.*
 **Ren: Great. Another weirdo.**
-*Adam: Oh, a search! How I love a good search! Young folk ought to do as much searching as they can.*
+*Adam: Oh, a search! How I love a good search! Young folk ought to…*
 **Ren: What kind of worthless description is that?**
 **Ren: We're looking for a big guy. Sways a lot, red flag vibes.**
 **Ren: Seen anyone like that around?**
-*NAR: Adam pointed behind us, and we all turned to look over our shoulders.*
+*NAR: Adam pointed behind us, and we all turned to look over our…*
 **Ren: Huh? There's no one there.**
 *Adam: Or perhaps he's simply too big.*
 **Ren: Not this shit again... Everyone in this place is a lunatic...**

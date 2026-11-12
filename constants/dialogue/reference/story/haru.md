@@ -1,6 +1,8 @@
 # Haru: story dialogue
 
-Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). Each of his lines is in **bold**, with the line before it for context. `[Name]` is the MC; `NAR` is the MC's narration.
+Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). `[Name]` is the MC; `NAR` is the MC's narration.
+
+**Only the bold lines are Haru's voice.** Each italic line is a short excerpt of what someone else said just before, there only so you can see what he's answering. Never borrow wording, slang, tics, pet names or rhythm from an italic line, and never use one as an anchor.
 
 **How to use:** register evidence for voice-check and drafting. Use it for sentence shape, rhythm, how he talks to the MC and to others. These lines are not voicelines: home-screen voicelines in `../haru.md` stay the primary anchors and the tier-fit ladder. **Plot facts, reveals and relationships learned here are spark+** (same as the `## Stigma & Artifact` rule). Don't quote a story line into new/known/warm content, and don't build a beat on an event the MC hasn't reached.
 
@@ -24,7 +26,7 @@ Short ambient barks while he walks campus.
 - Smashed it!
 
 ## Part 3, ch. 7: Hostile Bellow Suggests Disturbance In Paradise
-*NAR: The storm clouds were gone as quickly as they'd come, and sunlight warmed the air once more.*
+*NAR: The storm clouds were gone as quickly as they'd come, and…*
 **Haru: Huff... Huff... Huff... That was close...**
 *[Name]: Oh, I'm [Name]. We met at the diner?*
 **Haru: Ah, right! What're you doing here?!**
@@ -32,15 +34,15 @@ Short ambient barks while he walks campus.
 **Haru: Oh, that! Nothing to worry about, we're just...practicing for a new show! They're definitely not fighting!**
 *Bull Anomaly: GROOOOAR!!*
 **Haru: H-How weird is that? Usually super chill, these guys!**
-*NAR: The colorful bubbles grew in number, filling the sky above the paddock and creating an ethereal landscape.*
+*NAR: The colorful bubbles grew in number, filling the sky above…*
 **Haru: Towa, you're a legend!**
-*NAR: The anomalies seemed to have forgotten their fight, distracted by the bubbles.*
+*NAR: The anomalies seemed to have forgotten their fight…*
 **Haru: Let me break this up while I've got the chance!**
 *—: With practiced hands, he attached a bridle to its head.*
 **Haru: All right, mate, time for a walk!**
 
 ## Part 3, ch. 8: Close Encounters Of The Cephalopod Kind
-*NAR: It spat black liquid at me then crawled away, seeming to want to get as far from me as possible.*
+*NAR: It spat black liquid at me then crawled away, seeming to…*
 **Haru: What're you screaming about?**
 *Ren's Voice: Worst day ever... Dirty... Gross... Stinks...*
 **Haru: An anomalous animal? Where?**
@@ -54,7 +56,7 @@ Short ambient barks while he walks campus.
 **Haru: You look like you came from the sea. How about we save the artwork for a little later, huh?**
 **Haru: Hey, Ren, go get some salt water from the caves.**
 **Haru: You listening, Ren? Those sheets are 100% cotton, super breathable!**
-*[Name]: Um... I think he's a little uncomfortable with this anomaly...*
+*[Name]: Um... I think he's a little uncomfortable with this…*
 **Haru: Who is?**
 *Ren's Voice: I am!*
 **Haru: Good, you can hear us!**
@@ -62,7 +64,7 @@ Short ambient barks while he walks campus.
 *Ren's Voice: Don't put words in my mouth...*
 **Haru: Anyway, we should focus on sorting this little guy out first.**
 **Haru: Truth is, I knew the day would come an anomaly would barge in here spitting ink everywhere.**
-*NAR: Haru sauntered off toward a shelf at the back of the room and started rummaging around for something.*
+*NAR: Haru sauntered off toward a shelf at the back of the room…*
 **Haru: I'm sure this is where I put it...**
 **Haru: Ah ha!**
 *NAR: Haru returned with a large bag of white powder.*
@@ -82,12 +84,12 @@ Short ambient barks while he walks campus.
 **Haru: How's that? Anomalous or not, animals get stressed when they're taken out of their natural habitat.**
 **Haru: I've never seen a critter like you before, though. Feels mean to just keep calling you "anomalous animal."**
 **Haru: Hey, Ren, you're good at naming stuff. Give this little guy a name.**
-*Ren's Voice: What? No I'm not. Where'd you pull that character setting from?*
+*Ren's Voice: What? No I'm not. Where'd you pull that character setting…*
 **Haru: You make up all kinds of names in that game you're always playing.**
 **Haru: What were they again? Ah right. There was "BroodingWanderer" and "SleepingLion," right?**
-*NAR: Ren finally emerged from under the sheets. His face was covered in black ink.*
+*NAR: Ren finally emerged from under the sheets. His face was…*
 **Haru: Gahaha! What were you doing under there, eating squid ink spaghetti?!**
-*NAR: Haru's comments seemed to have put Ren in a bad mood. He stomped up the stairs with a sour look on his face.*
+*NAR: Haru's comments seemed to have put Ren in a bad mood. He…*
 **Haru: Hey! Give this little guy a name before you go!**
 *[Name]: (Isn't that squid, not octopus...?)*
 **Haru: Calamari.... That's a great name.**
@@ -100,11 +102,11 @@ Short ambient barks while he walks campus.
 **Haru: Oh well, I'll wash the lot of you. Come on everyone, outside!**
 *Calamari: Kyoo...?*
 **Haru: All right, line up!**
-*NAR: Towa and the anomalies lined up in front of the building, and Haru pointed the nozzle of a hose at them.*
+*NAR: Towa and the anomalies lined up in front of the building…*
 **Haru: Sagara Cannon, blast off!!**
 *Calamari: Kyo... Kyoo...*
 **Haru: You've got a little brother now, Peekaboo, show him how it's done!**
-*NAR: Peekaboo threw himself down in a puddle and rolled around, his white fur becoming quickly brown with mud.*
+*NAR: Peekaboo threw himself down in a puddle and rolled around…*
 **Haru: Hey now, that's not what I meant!**
 *Calamari: Kyoo! Kyoo!*
 **Haru: Aaaaaah....**
@@ -113,7 +115,7 @@ Short ambient barks while he walks campus.
 **Haru: Looks like he only squirts ink when he's scared. As long as we're gentle with him, he won't paint the room.**
 
 ## Part 3, ch. 10: Distress Signal Cut Short In Troubled Waters
-*NAR: The sun had begun to set, so we finished playing with the hose and went back inside.*
+*NAR: The sun had begun to set, so we finished playing with the…*
 **Haru: Sorry we don't have your size.**
 **Haru: They're even bigger on you than I though, but they suit you.**
 **Haru: They're Ren's, by the way.**
@@ -137,11 +139,11 @@ Short ambient barks while he walks campus.
 **Haru: "Voluminous typical and anomalous animal remains in the area have led us to declare the ecosystem destabilized."**
 **Haru: "Fieldwork, ecological surveys, and securement of any anomalous animals discovered are urgent priorities."**
 **Haru: That's not good. We better move on this quick to prevent any more loss of life.**
-*[Name]: 21 people are missing? What does that have to do with all the animal remains...?*
+*[Name]: 21 people are missing? What does that have to do with all…*
 **Haru: The infant anomalous animal found on the ship must be Calamari.**
 *[Name]: Who do they mean by "DA personnel"?*
 **Haru: Huh? You're a student here, aren't you? How come you don't know that?**
-*[Name]: Officially I'm an honor student, but I'm still pretty clueless about a lot of things...*
+*[Name]: Officially I'm an honor student, but I'm still pretty…*
 **Haru: Honor student...?**
 **Haru: Ah! I remember now! I thought I saw you at the rookies' entrance ceremony!**
 *Towa: ~~~♪~~~♪*
@@ -154,7 +156,7 @@ Short ambient barks while he walks campus.
 **Haru: Apart from the students and professors, Darkwick has employees just referred to as "personnel."**
 **Haru: Some are in charge of managing and maintaining the academy, but there's also anomalous researchers.**
 **Haru: Out in the field you'll come across reconnaissance folks, search and recovery folks, and special ops folks.**
-*[Name]: (Alan mentioned special ops too. And I guess that janitor I saw earlier is DA personnel.)*
+*[Name]: (Alan mentioned special ops too. And I guess that janitor I…*
 **Haru: Anyway, the personnel mentioned in this report are probably mostly search and recovery.**
 *Towa: ~~~♪*
 **Haru: I like your attitude!**
@@ -164,9 +166,9 @@ Short ambient barks while he walks campus.
 **Haru: Nothing else for it. Guess I'll have to go get Ren and have him babysit while we're out.**
 
 ## Part 3, ch. 13: Ranger And Free Spirit Return With Day's Findings
-*Ren: Not particularly interested in knowing them either. Seriously, where is my phone?*
+*Ren: Not particularly interested in knowing them either…*
 **Haru: We're back!**
-*NAR: The door flew open, smacking Ren, who'd been searching around the entrance, right in the face.*
+*NAR: The door flew open, smacking Ren, who'd been searching…*
 **Haru: What're you squatting down there for?**
 **Haru: Don't tell me you're eating off the floor again, that'll wreck your stomach, mate.**
 *Peekaboo: Boo! Boo!*
@@ -181,7 +183,7 @@ Short ambient barks while he walks campus.
 *Towa: Heh heh ♪*
 **Haru: Gotta thank you too, [Name]. Looks like you kept these two happy.**
 **Haru: You can take off now, we'll take it from here.**
-*[Name]: Thank you for everything. I'll wash these clothes and bring them back tomorrow.*
+*[Name]: Thank you for everything. I'll wash these clothes and bring…*
 **Haru: Ah, don't worry about that! You can just chuck them out when you're done with them.**
 
 ## Part 3, ch. 14: Early Morning Intruder— How Did He Break In?
@@ -191,7 +193,7 @@ Short ambient barks while he walks campus.
 **Haru (Haru's Voice): That's weird. Did he go out?**
 *Ren: ...?!*
 **Haru: Oh, you are in here.**
-*Ren: Hey! Don't just barge in here! Also what the fuck, I locked that door!!*
+*Ren: Hey! Don't just barge in here! Also what the fuck, I locked…*
 **Haru: I didn't think you'd be able to get up on your own.**
 **Haru: No worries though, I'll come wake you up from now on! Gahaha!**
 *Ren: It was obviously a mistake I was put in this house...*
@@ -215,7 +217,7 @@ Short ambient barks while he walks campus.
 **Haru: People are getting hurt. This could be a full-on case.**
 **Haru: We've gotta catch some of the anomalous animals that've been affected and figure out what's going on.**
 **Haru: I want to get out to Tokyo Bay as soon as possible, but...**
-*[Name]: (I still don't know what actually triggers the ring's ability...)*
+*[Name]: (I still don't know what actually triggers the ring's…*
 **Haru: We've got a big problem though....**
 **Haru: Come with me, guys.**
 *Ren: Why'd you bring more garbage back here?*
@@ -226,11 +228,11 @@ Short ambient barks while he walks campus.
 **Haru: I only just finished paying off the tour bus and GPS with my own pocket money!**
 **Haru: Then there's the paint for the signs and the printing costs for the flyers... I can't even make back the repair costs!**
 **Haru: (hick) (sob) At this rate we're gonna be in the red forever!**
-*[Name]: Can't you ask Vagastrom to lend you a boat? They've got all kinds of vehicles.*
+*[Name]: Can't you ask Vagastrom to lend you a boat? They've got all…*
 **Haru: ...No. They're not my biggest fans.**
 **Haru: I even had to use a middleman just to buy the Capybus.**
 **Haru: And that middleman charged me 30% even though we shook on 10...**
-*Ren: They must have at least a few personal cruisers between them.*
+*Ren: They must have at least a few personal cruisers between…*
 **Haru: ...Of course! Ren, you're a genius!**
 **Haru: I don't know if Jin will answer my calls though...**
 *[Name]: Um... I could try asking, if you like.*
@@ -246,7 +248,7 @@ Short ambient barks while he walks campus.
 **Haru: Hey, Calamari can't eat flowers, Towa. Don't try to force him.**
 *Ren: I'm not going.*
 **Haru: You sure? It'll be too late if you come crying to us later.**
-*NAR: Tempted by its fluffy-looking fur, I reached out a hand toward it.*
+*NAR: Tempted by its fluffy-looking fur, I reached out a hand…*
 **Haru: Don't!**
 *Peekaboo: Boo?!*
 **Haru: Ngh...**
@@ -259,24 +261,24 @@ Short ambient barks while he walks campus.
 **Haru: If someone you didn't know suddenly touched you out of the blue, you'd be scared too, wouldn't you?**
 *Calamari: Kyoo...*
 **Haru: Oops, I just grabbed your hand though, so I guess we're as bad as each other!**
-*NAR: A bolt of lightning shot out of the sky into a nearby thicket, sending the fox anomaly that had hidden there running.*
+*NAR: A bolt of lightning shot out of the sky into a nearby…*
 **Haru: Towa, I'm fine. Look.**
 *Towa: ...*
 **Haru: Wah! Hey! Are you trying to pull my arm off?!**
-*NAR: Towa grabbed Haru's hand and dragged him back to the dormitory, face unreadable.*
+*NAR: Towa grabbed Haru's hand and dragged him back to the…*
 **Haru: Cheers, Towa.**
 *Calamari's Voice: Kyoo! Kyoo!!*
 **Haru: Hm? What's he so excited about?**
-*NAR: We turned around to see Calamari swaying excitedly to and fro with a phone held in his tentacles.*
+*NAR: We turned around to see Calamari swaying excitedly to and…*
 **Haru: Hey, that's my phone!**
 *Ren: "How to Cut an Octopus for Sashimi."*
 **Haru: What?! That's R-rated!!**
 *Towa: ~~~~♪*
 **Haru: Sorry I can't walk you back to your house. Now we've got Calamari too I've gotta keep an eye on things.**
-*[Name]: It's fine! It was kind of you to walk me this far. And your hand...*
+*[Name]: It's fine! It was kind of you to walk me this far. And your…*
 **Haru: How long are you gonna worry about that? It's not like you're the one who bit me.**
 **Haru: That fox is a bit of a troublemaker. He's always picking fights with me.**
-*NAR: I jumped in surprise when Towa reached over and engulfed me in a hug.*
+*NAR: I jumped in surprise when Towa reached over and engulfed me…*
 **Haru: Hey! Don't just jump on her out of the blue!**
 **Haru: You've got to be gentle when you hug!**
 
@@ -288,14 +290,14 @@ Short ambient barks while he walks campus.
 **Haru: Didn't I tell you lock-picking's one of my special skills?**
 *Ren: God, please no... I'll get up on my own from now on...*
 **Haru: That's the spirit!**
-*Ren: If you're healthy enough to pick locks, why are you still wearing that over-the- top bandage?*
+*Ren: If you're healthy enough to pick locks, why are you still…*
 **Haru: Oh, right! Ow, I'm injured... The pain, the agony...**
-*Ren: And don't even try asking me to look after that octopus for you.*
+*Ren: And don't even try asking me to look after that octopus for…*
 **Haru: Nah he's good, he was kyoo-kyooing before since he was hungry so I already gave him breakfast.**
 **Haru: All you have to do is clean his cage! Counting on you!**
 
 ## Part 3, ch. 20: Beguiling Biwa Bewitches Apathetic Audience
-*Ren: Geez, what's wrong with you? You mad? Gonna spit ink everywhere?*
+*Ren: Geez, what's wrong with you? You mad? Gonna spit ink…*
 **Haru: You two look like you're having fun.**
 *Ren: Huh? What's wrong with your face?*
 **Haru: What do you mean? I'm a handsome devil, same as always.**
@@ -339,7 +341,7 @@ Short ambient barks while he walks campus.
 *Ren: This is the worst...*
 **Haru: Hey...**
 **Haru: I've got an idea!**
-*NAR: Haru pointed his finger skyward, then spun around to smile at Towa.*
+*NAR: Haru pointed his finger skyward, then spun around to smile…*
 **Haru: I've gotta run out for a sec. Wait here with Peekaboo and the rest, okay?**
 *Towa: ~~~~?*
 **Haru: I've got a way we can do this without reaching into the budget or my savings!**
@@ -349,7 +351,7 @@ Short ambient barks while he walks campus.
 *[Name]: Wh-What is it?!*
 **Haru: There's some Brr! Time For A Blanket! blankets on that shelf over there! 2360 yen each, tax included!**
 **Haru: Wrap them around Peekaboo and the rest of the little ones!**
-*[Name]: That's pretty cheap... They're not super thin or something, are they...?*
+*[Name]: That's pretty cheap... They're not super thin or something…*
 **Haru: Gahaha! They're thin all right, but they're space blankets! Perfect for keeping in the heat!**
 *[Name]: Got it! The shelf with the rest of your gadgets, right?*
 **Haru: Right on! Look at us on the same wavelength!**
@@ -360,7 +362,7 @@ Short ambient barks while he walks campus.
 ## Part 12, ch. 4: Carpenter Cats—What You Need To Know
 *[Name]: Ren? What's—*
 **Haru: I'm back!**
-*NAR: Before I had the time to be impressed by his swift return, Haru caught sight of Towa and let out a cry of horror.*
+*NAR: Before I had the time to be impressed by his swift return…*
 **Haru: AHHHHH!!?? What're you doing?!**
 **Haru: I only bought that powdered detergent last week! Moxy Clean Deluxe is supposed to remove any stain!**
 **Haru: My gadget hoard!!**
@@ -378,7 +380,7 @@ Short ambient barks while he walks campus.
 **Haru: The carpenter cats stepped in to fill the gap, but they're run off their feet.**
 **Haru: Especially since Darkwick General got flattened two months ago.**
 **Haru: There's a huge waiting list now.**
-*[Name]: (I guess that's why the repairs to my dormitory stopped there, though...)*
+*[Name]: (I guess that's why the repairs to my dormitory stopped…*
 **Haru: You need a little something if you want to skip the queue.**
 *Ren: Are you talking about money...?*
 **Haru: Nah.**
@@ -392,30 +394,30 @@ Short ambient barks while he walks campus.
 **Haru: So here's my plan! Ta-da!!**
 *[Name]: An investigation permit application?*
 **Haru: Went to get one from Hyde. C'mon, guys, sign it.**
-*Ren: What? That's for missions, isn't it? Why do I have to sign it...?*
+*Ren: What? That's for missions, isn't it? Why do I have to sign…*
 **Haru: You wanna stay here and freeze your bits off instead?**
 *Ren: Those are two unrelated things!*
 **Haru: Nah, they're related. Take a closer look.**
-*Ren: "Undercover Investigation As Short- Term Staff At Father Farm"...?*
+*Ren: "Undercover Investigation As Short- Term Staff At Father…*
 **Haru: I picked something from the low-ranking mission list to help us outta this bind.**
 **Haru: A part-time job, basically.**
 *Ren: You better not be suggesting we go work on this farm.*
 **Haru: Yep! Always quick on the uptake, aren't you?**
-*NAR: Haru continued beaming as Ren's face slowly morphed into something resembling "The Scream."*
+*NAR: Haru continued beaming as Ren's face slowly morphed into…*
 **Haru: Father Farm's a tourist farm, open to the public. Apparently they're short-staffed too.**
 **Haru: 'Cause their staff keep having nervous breakdowns and quitting.**
-*[Name]: Nervous breakdowns...? Is this farm a really difficult place to work?*
+*[Name]: Nervous breakdowns...? Is this farm a really difficult…*
 **Haru: Dunno.**
 **Haru: If it was as a cushy as our park, I don't reckon anyone'd be quitting.**
 
 ## Part 12, ch. 9: Free Spirit Receives Important Life Lesson
 *[Name]: Towa...*
 **Haru: I'm back!**
-*NAR: Haru returned at a timely moment. Towa skipped over to him to show off the camera.*
+*NAR: Haru returned at a timely moment. Towa skipped over to him…*
 **Haru: Hey, isn't that Ritsu's? You can't shake it around like that. You've got to hold it carefully.**
-*NAR: Perhaps out of annoyance at being told off, Towa tossed Ritsu's camera aside.*
+*NAR: Perhaps out of annoyance at being told off, Towa tossed…*
 **Haru: H-Hey! Bahnti!**
-*NAR: Haru reached out his right arm to catch the camera as it flew across the room.*
+*NAR: Haru reached out his right arm to catch the camera as it…*
 **Haru: Ngh...**
 *[Name]: !*
 **Haru: Phew...**
@@ -425,20 +427,20 @@ Short ambient barks while he walks campus.
 **Haru: You can't do things like that. What do we do when we make mistakes?**
 *Towa: ~~~~...*
 **Haru: Legend apology, Towa!**
-*NAR: Towa lowered his head apologetically, and Haru ruffled his hair.*
+*NAR: Towa lowered his head apologetically, and Haru ruffled his…*
 **Haru: Sorry, Ritsu. Here you go.**
 **Haru: If it's broken, I'll pay for it. Just say the word.**
-*Ritsu: ...I will invoice you for the cost of it along with my retainer fee, day rate, and expenses.*
+*Ritsu: ...I will invoice you for the cost of it along with my…*
 **Haru: Gotcha.**
 **Haru: Wait, you're charging for this?!**
 
 ## Part 12, ch. 10: Jabberwock Storms Local Farm
-*Ren: How did you not mention it was a 40 minute walk from the nearest Galaxy Express station to this place?*
+*Ren: How did you not mention it was a 40 minute walk from the…*
 **Haru: Not much we can do about that. Not as many stops out here in the sticks.**
 **Haru: We're lucky it was only 40 minutes.**
 *Daiki: Good morning! Welcome to Father Farm! I'm Daiki.*
 **Haru: Morning! Haru Sagara—me and my classmates here were referred to you by our professor.**
-*NAR: Ren muttered under his breath at the employee's sunny greeting.*
+*NAR: Ren muttered under his breath at the employee's sunny…*
 **Haru: Just glad we can lend a hand!**
 **Haru: C'mon, you lot—say hello!**
 *Daiki: Um...what is that?*
@@ -452,11 +454,11 @@ Short ambient barks while he walks campus.
 *Daiki: Looking after animals is a 24-hour job, after all.*
 **Haru: Right, of course.**
 **Haru: Oh yeah! I've actually got a little favor to ask of you.**
-*NAR: Seeming to have remembered something important, Haru pulled Daiki aside.*
+*NAR: Seeming to have remembered something important, Haru pulled…*
 **Haru: You guys've got sheepdogs here, right? Thing is, I... (mumble)**
 
 ## Part 17, ch. 9: Ghouls Compete For Pearl's Heart
-*Edward: That's a cruel thing to say to someone you just met. It's not that I can't—I just don't.*
+*Edward: That's a cruel thing to say to someone you just met. It's…*
 **Haru: This bread's actually really good. You wanna try some?**
 *Jiro: No. This is the only thing I can have.*
 **Haru: What's in that box...?**
@@ -466,36 +468,36 @@ Short ambient barks while he walks campus.
 ## Part 17, ch. 10: Behind The Scenes
 *Rui: [Name]! Hey!*
 **Haru: There you are! You've gotta get in on this bread!**
-*Jiro: You're the one who gave him that bread in the first place, though.*
+*Jiro: You're the one who gave him that bread in the first place…*
 **Haru: You tell him, Jiro! If I'm going down, you're coming down with me! Gahaha!**
-*Ren: I'll go with you then. It won't stand out as much if we both leave at the same time.*
+*Ren: I'll go with you then. It won't stand out as much if we…*
 **Haru: No you don't! If we don't stay to the end, we don't get the bonus!**
 *Ren: There's nothing in this for me.*
 **Haru: She's not a creepy bus, she's a Capybus!**
 **Haru: The ushi-oni only went rogue because they had no sake...**
 **Haru: I promise I'll give you some pocket money this time, so stick it out till the end!**
-*Rui: Ugh, so they changed their story to match us. On brand for them, really.*
+*Rui: Ugh, so they changed their story to match us. On brand for…*
 **Haru: Ah well, everyone's here and happy. One mission, one show—let's give 'em both all we got!**
-*KP: Even if you're elites from Darkwick, student romance isn't raw enough for our viewers. How about you?*
+*KP: Even if you're elites from Darkwick, student romance isn't…*
 **Haru (Haru's Voice): M-Me? I run a safari park! I mostly look after the...**
 **Haru (Haru's Voice): Hey, Peekaboo! Don't play with those cords! How many times've I gotta tell you?**
-*KP: All right, you can be a vet! And you've got hard-knock vibes, so you can be a single dad too!*
+*KP: All right, you can be a vet! And you've got hard-knock…*
 **Haru (Haru's Voice): A single dad?!**
 *Ren's Voice: You've got to be f—mmph?!*
 **Haru (Haru's Voice): He'll go, don't you worry! A hundred times, if you want! Can't wait to work with you!**
 
 ## Part 21, ch. 5: Girl And Flutist Ask Ranger To Join Inter-House Squad
-*NAR: As I watched him disappear down the path, I voiced the question that had been on my mind.*
+*NAR: As I watched him disappear down the path, I voiced the…*
 **Haru: Yeah, about that...**
 **Haru: He is, technically. He doesn't actually work here. He's on probation.**
 *[Name]: I see... All this time I thought he was part of the staff...*
 **Haru: Well, even before he got put on probation he used to wander around a lot.**
 **Haru: Doesn't feel all that different to us to be honest. Gahaha!**
-*NAR: Haru smiled at us, then, seeming to remember something, cocked his head.*
+*NAR: Haru smiled at us, then, seeming to remember something…*
 **Haru: So, what did you guys need?**
-*NAR: As succinctly as possible, I explained that we'd found the Kyklos and that we wanted Haru's help on the mission.*
+*NAR: As succinctly as possible, I explained that we'd found the…*
 **Haru: ...Gotcha. So you finally found the Kyklos...**
-*NAR: Seeming to feel my gaze on him, Haru reached out and clapped a hand on my shoulder with a gentle smile.*
+*NAR: Seeming to feel my gaze on him, Haru reached out and…*
 **Haru: I've got no reason to say no. You got something you need I can do? I'll do it.**
 **Haru: We'll catch the Kyklos and break your curse.**
 *[Name]: Haru... Thank you so much!*
@@ -512,29 +514,29 @@ Short ambient barks while he walks campus.
 ## Part 21, ch. 10: Squad Departs For Kyklos' Location
 *Rui: Could you not put your shoes all over the seats, Tai?*
 **Haru: Don't waste your breath, Rui. Just leave him be—I'll clean them off later.**
-*Rui: We really need to catch this thing before it does hurt anyone.*
+*Rui: We really need to catch this thing before it does hurt…*
 **Haru: Oh yeah, Ren said the same thing when I said I was going there.**
 **Haru: Something about a fully immersive experience or something?**
 **Haru: They switched things up a bit recently, and it seems like the new direction's really working for them.**
-*NAR: Haku held up his phone. It was open to the Lockburn Castle homepage.*
+*NAR: Haku held up his phone. It was open to the Lockburn Castle…*
 **Haru: "Lockburn Mystery"... "Unlock the Secrets of Wonderland"...**
 *NAR: Rui's shoulders slumped, and Haru nodded sagely.*
 **Haru: We're here to find and catch the Kyklos.**
 **Haru: We can't start getting picky about how we do it.**
-*NAR: Haku spoke kindly to Taiga, who hadn't participated in the conversation at all.*
+*NAR: Haku spoke kindly to Taiga, who hadn't participated in the…*
 **Haru: You'll turn on that charm for just anyone, won't you?**
 **Haru: Hey, Taiga! We're about to go among a ton of regular folk.**
 **Haru: Don't go whipping out your piece out of habit, you hear?!**
 *Taiga: About that. I lost the little one I usually keep on me.*
 **Haru: Huh? That gold one?**
-*Taiga: Yeah. Only got my big one today. Not gonna pull it out unless something really pisses me off.*
+*Taiga: Yeah. Only got my big one today. Not gonna pull it out…*
 **Haru: All right! Well, now I feel much better! Gahaha!**
 
 ## Part 21, ch. 11: At The Gates Of Lockburn Castle
-*NAR: I stared up in awe at the two stately lion statues that greeted us at the entrance to Lockburn Castle.*
+*NAR: I stared up in awe at the two stately lion statues that…*
 **Haru: Fair go. Had my doubts when I heard it was all the way out here, to be honest.**
 **Haru: Looks like most of the visitors are pretty young.**
-*Haku: Sounds like Darkwick. They brought that here from somewhere else too if I recall.*
+*Haku: Sounds like Darkwick. They brought that here from somewhere…*
 **Haru: What's the Kyklos doing all the way out here though?**
 *Elderly Woman: We're looking for our daughter...*
 **Haru: Your daughter?**
@@ -543,7 +545,7 @@ Short ambient barks while he walks campus.
 **Haru: ...can't even imagine what those parents must be going through.**
 
 ## Part 21, ch. 20: Plot Thickens As Second Victim Emerges
-*NAR: The mice gesticulated wildly as they pleaded with us. Haru nodded, face solemn.*
+*NAR: The mice gesticulated wildly as they pleaded with us. Haru…*
 **Haru: ...All right. We'll find the one who did this to your brother. I promise.**
 
 ## Part 21, ch. 21: Nancy Of The Marketplace
@@ -560,7 +562,7 @@ Short ambient barks while he walks campus.
 **Haru: Huh. Thought there'd be more.**
 
 ## Part 21, ch. 29: Squad Reflects On Day's Findings
-*Rui: ...but we don't want it to realize we're on to it and take off before we can catch it either.*
+*Rui: ...but we don't want it to realize we're on to it and take…*
 **Haru: Well, we did learn we met all the denizens, and that all the murders were committed by the same person.**
 **Haru: And if that spider's telling the truth, if we solve his riddle, he'll tell us where the Kyklos is.**
 **Haru: That's progress.**
@@ -583,7 +585,7 @@ Short ambient barks while he walks campus.
 *Lyca: Harurin drinks this sake.*
 **Haru: Gahaha! You've got a good memory, Lyca!**
 **Haru: You're always helping us out at the park too. You're really saving my bacon.**
-*Romeo: Let them talk. No one else can take the fall for how you live your life but you.*
+*Romeo: Let them talk. No one else can take the fall for how you…*
 **Haru: Exactly! You're the one person you can't live without, so don't worry about what other people say.**
 *Rui: Cheers!*
 **Haru: Cheers!**
@@ -591,7 +593,7 @@ Short ambient barks while he walks campus.
 ## Part 24, ch. 3: The Leavers And The Left Behind
 *Lyca: Transfer? What's that?*
 **Haru: Once you're in your second year, you can apply for permission to transfer to a different house.**
-*Romeo: How are you going to run that zoo of yours once you leave for your internship?*
+*Romeo: How are you going to run that zoo of yours once you leave…*
 **Haru: About that...**
 *Romeo: Repeating?*
 **Haru: You don't go to class much, but you do a lot of solo missions, don't you?**
@@ -599,13 +601,13 @@ Short ambient barks while he walks campus.
 **Haru: Rui...**
 
 ## Part 24, ch. 13: Surprise Examination
-*[Name]: I guess there's more than usual since the fourth-years are here too.*
+*[Name]: I guess there's more than usual since the fourth-years are…*
 **Haru: Oh yeah. You got a minute, Rui? Something I need to talk to you about.**
-*Rui: Uh, what? You're kinda freaking me out coming at me with that energy all of a sudden.*
+*Rui: Uh, what? You're kinda freaking me out coming at me with…*
 **Haru: ...It's about that arm.**
 
 ## Part 24, ch. 29: Tragedy Begets Tragedy
-*Rui: ...Harurin. You sure you should be breaking out of hospital right now?*
+*Rui: ...Harurin. You sure you should be breaking out of hospital…*
 **Haru: ...Yeah. There's anomalies on the loose all over the place.**
 **Haru: Doesn't really matter where I am now.**
 *Rui: ...Guess that's true. I hope everyone's okay...*
@@ -620,20 +622,20 @@ Short ambient barks while he walks campus.
 **Haru: (gulp) (gulp) (gulp)**
 **Haru: Fwah!**
 **Haru: Hit me, Rui!**
-*Rui: You're overdoing it, Harurin! Why don't you have a chaser in between? I'll put one here.*
+*Rui: You're overdoing it, Harurin! Why don't you have a chaser…*
 **Haru: Nope! I don't wanna see the bottom of this glass! C'mon! Fill 'er up!**
-*Romeo: I wish I could call it a bad day. It was a clusterfuck of a day. WTWUT.*
+*Romeo: I wish I could call it a bad day. It was a clusterfuck of a…*
 **Haru: Why're you so grumpy, Romeo? Tell me—I'll help you out.**
 *Rui: Nope, just saying it feels all kinds of wrong.*
 **Haru: Pretty strange stuff, you losing track of something important to you.**
 **Haru: Maybe it'll snow tomorrow, huh? Gahaha!**
 *Romeo: I'm out of leads.*
 **Haru: Maybe you really did chuck it out then.**
-*Rui: Without the clockwork engineers no one was maintaining the security systems properly.*
+*Rui: Without the clockwork engineers no one was maintaining the…*
 **Haru: (gulp) (gulp) (gulp)**
 **Haru: Fwah!**
 **Haru: Hit me, Rui!**
-*Romeo: Why are you drinking so much? I thought your little zoo was going well.*
+*Romeo: Why are you drinking so much? I thought your little zoo was…*
 **Haru: ...That's why it's bad...**
 **Haru: He's not**
 **Haru: (hic)**
@@ -649,23 +651,23 @@ Short ambient barks while he walks campus.
 ## Season 2 Episode 7, ch. 9
 *Ren: Ugh... Leave me alone... My head hurts...*
 **Haru (Haru's Voice): Reeeennnn! You got visitors!**
-*Ren: (Why the hell did they come here to get me in person? Way to fuck up the schedule...!)*
+*Ren: (Why the hell did they come here to get me in person? Way…*
 **Haru (Haru's Voice): That's weird. Could've sworn he was in there...**
-*Lucas's Voice: Haru, as this is an emergency, please forgive me for resorting to drastic measures.*
+*Lucas's Voice: Haru, as this is an emergency, please forgive me for…*
 **Haru (Haru's Voice): Drastic measures?**
 *Ren: ...Huh?*
 **Haru (Haru's Voice): Ahhh!**
 
 ## Season 2 Episode 7, ch. 19: One Man's Impressive Dedication To The Hustle
-*Lucas: Is there something about the words "capture the expanding monster" that rings a bell?*
+*Lucas: Is there something about the words "capture the expanding…*
 **Haru: Hmm... But I dunno... Maybe I'm overthinking things...**
-*Ren: ...Wow, are you seriously trying to imply we've gotta buy this info from you?*
+*Ren: ...Wow, are you seriously trying to imply we've gotta buy…*
 **Haru: No way! Never! I'd be happy to help whether you buy something or not!**
 **Haru: (glance)**
 **Haru: (glance)**
-*NAR: Luca pulled a 10,000 yen bill from his leather money clip, handing it to Haru.*
+*NAR: Luca pulled a 10,000 yen bill from his leather money clip…*
 **Haru: Thanks for your patronage! That'll be 1000 yen, tax included!**
-*Lucas: Oh, you can keep the change. Consider it our payment for letting us borrow the clockwork anomaly.*
+*Lucas: Oh, you can keep the change. Consider it our payment for…*
 **Haru: R-R-Really?! What a stand-up guy!**
 **Haru: Ren! You could learn a thing or two from him!**
 *[Name]: (I'm still full from earlier, so I'll keep it for later.)*
@@ -676,11 +678,11 @@ Short ambient barks while he walks campus.
 **Haru: That little golden fella's nothing to sniff at, though. Don't say I didn't warn you! Gahaha!**
 
 ## Season 2 Episode 8, ch. 8
-*NAR: Standing at its base were Haru, Mio, and, for some reason, Shion.*
+*NAR: Standing at its base were Haru, Mio, and, for some reason…*
 **Haru: Shion...**
 *[Name]: That arm...*
 **Haru: ...It's mine. Had Mio make it for me after some stuff happened.**
-*NAR: Haru’s prosthetic arm split cleanly in two, one half ending up in Shion’s hand and the other in Towa’s.*
+*NAR: Haru’s prosthetic arm split cleanly in two, one half ending…*
 **Haru: AHHHH?! My arm! My precious arm!**
 *[Name]: Towa...*
 **Haru: It's fine, Towa. You can do a surprising lot of stuff with just one arm, y'know.**
@@ -704,7 +706,7 @@ Short ambient barks while he walks campus.
 *Towa: ~~! ~~~~♪*
 **Haru: You're a legend, Towa! Phew, that's a weight off my back.**
 **Haru: All right! Lead the way!**
-*NAR: After retrieving the other half of Haru's arm from Towa, Mio put it into his toolbox.*
+*NAR: After retrieving the other half of Haru's arm from Towa…*
 **Haru: Thanks for the help, you guys! I swear I'll make it up to you once I make it big!**
 *NAR: As I waved them off, Ren followed after them.*
 **Haru: Ren! You're with us!**
@@ -713,20 +715,20 @@ Short ambient barks while he walks campus.
 *[Name]: Me neither. This is the first time I've gone this far...*
 **Haru: This place is pure wilderness so it's not very safe. I'm usually the only one who comes in here, but...**
 **Haru: Towa, you sure this is where Peekaboo is?**
-*NAR: I glanced around and saw Peekaboo hopping around in the thick undergrowth.*
+*NAR: I glanced around and saw Peekaboo hopping around in the…*
 **Haru: Peekaboo! What're you doing here?!**
-*NAR: But Peekaboo turned away from us, disappearing into the shadowed shrubbery.*
+*NAR: But Peekaboo turned away from us, disappearing into the…*
 **Haru: Peekaboo! Where are you going?!**
 *Towa: ~~~~♪*
 **Haru: This is bad... Tonight's gonna be a scorcher.**
 **Haru: He won't survive it if we don't go in there and get him.**
-*Ren: I'm heading back to the dorm. You guys can handle this on your own.*
+*Ren: I'm heading back to the dorm. You guys can handle this on…*
 **Haru: You can't! Peekaboo was acting really weird just now.**
 **Haru: We might need you to use your artifact to catch him.**
 **Haru: Besides, do you even know the way home from here?**
 *[Name]: Peekaboo! Peekaboo?!*
 **Haru: No answer. I don't remember seeing a cave like this here before...**
-*NAR: The hole looked like a bottomless pit, and peering into it made my stomach lurch.*
+*NAR: The hole looked like a bottomless pit, and peering into it…*
 **Haru: ...All right. I'm going down to check.**
 **Haru: Ren, put your swim ring around me and—**
 
@@ -734,16 +736,16 @@ Short ambient barks while he walks campus.
 **Haru: Hmm... Coulda sworn I heard something in this direction...**
 *Ren: Great. Another weirdo.*
 **Haru: You don't look like an anomalous animal...**
-*NAR: Haru took a bold step toward the newt as Ren watched on warily.*
+*NAR: Haru took a bold step toward the newt as Ren watched on…*
 **Haru: Hey, I've got a question for you. We're looking for some friends of ours.**
 **Haru: One of them's a human about yea tall,**
 **Haru: and the other one's a little critter about yea big. Ring any bells?**
 *[Name]: Jabberwock...?*
 **Haru: Hmm... I get the feeling we've got the wrong guy, but let's ask anyway.**
 **Haru: Do you know where he is now?**
-*Adam: For we live in a mad, sad, topsy-turvy, helter-skelter world!*
+*Adam: For we live in a mad, sad, topsy-turvy, helter-skelter…*
 **Haru: Not sure what you're getting at, but is that the castle you're talking about?**
-*Ren: Hey, don't we have better things to do than hang around here?*
+*Ren: Hey, don't we have better things to do than hang around…*
 **Haru: Right...**
 **Haru: Thanks for the help, Adam!**
 

@@ -1,6 +1,8 @@
 # Alan: story dialogue
 
-Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). Each of his lines is in **bold**, with the line before it for context. `[Name]` is the MC; `NAR` is the MC's narration.
+Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). `[Name]` is the MC; `NAR` is the MC's narration.
+
+**Only the bold lines are Alan's voice.** Each italic line is a short excerpt of what someone else said just before, there only so you can see what he's answering. Never borrow wording, slang, tics, pet names or rhythm from an italic line, and never use one as an anchor.
 
 **How to use:** register evidence for voice-check and drafting. Use it for sentence shape, rhythm, how he talks to the MC and to others. These lines are not voicelines: home-screen voicelines in `../alan.md` stay the primary anchors and the tier-fit ladder. **Plot facts, reveals and relationships learned here are spark+** (same as the `## Stigma & Artifact` rule). Don't quote a story line into new/known/warm content, and don't build a beat on an event the MC hasn't reached.
 
@@ -43,9 +45,9 @@ Short ambient barks while he walks campus.
 **Alan: Nothing major. It healed overnight with some meds. I'm fine.**
 *NAR: Tohma's eye flicked to Alan, who looked down at his chest.*
 **Alan: ...What is this?**
-*NAR: In contrast with their evident displeasure, the same jewel sparkled on their stylish suits.*
+*NAR: In contrast with their evident displeasure, the same jewel…*
 **Alan: [Name].**
-*NAR: Alan turned back toward me, his face solemn and his eyes cast downward.*
+*NAR: Alan turned back toward me, his face solemn and his eyes…*
 **Alan: ...I didn't find a way to break your curse yesterday. I'm sorry.**
 **Alan: Sure... There's time. I don't mind, but...**
 *Tohma: Your concern is appreciated. Let's go, Mido.*
@@ -63,11 +65,11 @@ Short ambient barks while he walks campus.
 ## Season 2 Episode 5, ch. 9
 *Haku: Something's wrong with the staff.*
 **Alan: I'll go check out the host. The rest of you—**
-*NAR: Standing next to him, eyes glowing like the rest of the staff, was AP.*
+*NAR: Standing next to him, eyes glowing like the rest of the…*
 **Alan: ...What is this?**
-*NAR: Sho glared at the screen. The man in the monitor's shoulders shook as he laughed at us.*
+*NAR: Sho glared at the screen. The man in the monitor's…*
 **Alan: Who are you? What did you do to the staff?**
-*NAR: At the man's cue, AP and the rest of staff in the hall began to walk, heads slumped in a zombie-like daze.*
+*NAR: At the man's cue, AP and the rest of staff in the hall…*
 **Alan: Wait, what are you—**
 
 ## Season 2 Episode 5, ch. 10: Shoot Hijacked By Masked Enigma
@@ -80,7 +82,7 @@ Short ambient barks while he walks campus.
 **Alan: (Where am I...?)**
 
 ## Season 2 Episode 6, ch. 7
-*Game Master's Voice: Your partner in the Room of Heartbeats will be Alan Mido. Tell me, can you hear our voices?*
+*Game Master's Voice: Your partner in the Room of Heartbeats will be Alan Mido…*
 **Alan (Alan's Voice): ...Yeah.**
 *[Name]: ...?! Alan, there's already water at my feet...!*
 **Alan (Alan's Voice): ...How quickly is it coming in?**
@@ -92,7 +94,7 @@ Short ambient barks while he walks campus.
 **Alan (Alan's Voice): Sorry, go back where you came from. Go left instead.**
 *[Name]: ...There's a fork in the road. Should I go left or right?*
 **Alan (Alan's Voice): ...Gimme a moment.**
-*[Name]: (The water is up to my knees... I don't even know how far away the exit is...)*
+*[Name]: (The water is up to my knees... I don't even know how far…*
 **Alan (Alan's Voice): ...[Name]. You okay?**
 *[Name]: The water... It's up to my knees already...*
 **Alan (Alan's Voice): ...Got it. Go right.**
@@ -112,7 +114,7 @@ Short ambient barks while he walks campus.
 **Alan (Alan's Voice): ...Take deep breaths.**
 *[Name]: (huff)... (huff)...*
 **Alan (Alan's Voice): ...You'll be fine. You'll make it out there.**
-*[Name]: And if I use my hands to wade through it, I can move a lot faster!*
+*[Name]: And if I use my hands to wade through it, I can move a lot…*
 **Alan (Alan's Voice): Good... You’ve got a way of holding steady. It helps.**
 **Alan (Alan's Voice): Turn right at the next fork in the road. The door should be there.**
 *[Name]: ...Found it! The door's right there!*

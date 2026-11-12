@@ -1,6 +1,8 @@
 # Tohma: story dialogue
 
-Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). Each of his lines is in **bold**, with the line before it for context. `[Name]` is the MC; `NAR` is the MC's narration.
+Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). `[Name]` is the MC; `NAR` is the MC's narration.
+
+**Only the bold lines are Tohma's voice.** Each italic line is a short excerpt of what someone else said just before, there only so you can see what he's answering. Never borrow wording, slang, tics, pet names or rhythm from an italic line, and never use one as an anchor.
 
 **How to use:** register evidence for voice-check and drafting. Use it for sentence shape, rhythm, how he talks to the MC and to others. These lines are not voicelines: home-screen voicelines in `../tohma.md` stay the primary anchors and the tier-fit ladder. **Plot facts, reveals and relationships learned here are spark+** (same as the `## Stigma & Artifact` rule). Don't quote a story line into new/known/warm content, and don't build a beat on an event the MC hasn't reached.
 
@@ -28,28 +30,28 @@ Short ambient barks while he walks campus.
 **Tohma: Yes. Darkwick has specifically requested Frostheim's cooperation.**
 **Tohma: It's something only we are capable of handling.**
 **Tohma: [Name], you have been summoned to accompany us.**
-*Kaito: Not this again. It's obvious they're just blowing smoke up our asses to make us do what they want.*
+*Kaito: Not this again. It's obvious they're just blowing smoke up…*
 **Tohma: What was that, Fuji? I'm afraid I didn't hear you.**
 *Kaito: Uh, nothing.*
 **Tohma: Are you sure? Should you have any reservations, I'm all ears.**
 *Kaito: Uh, no?! We don't even know what this mission's about, dude!*
 **Tohma: I do commend you for your initiative in confirming the details of the mission ahead of your deployment, Fuji.**
-*NAR: Kaito's voice wavered as he asked. The smile never left Tohma's lips as he responded.*
+*NAR: Kaito's voice wavered as he asked. The smile never left…*
 **Tohma: Just a month ago, we received two directives from our captain.**
 **Tohma: To one, claim the Laurel Crown in the name of Frostheim...**
 **Tohma: ...and two, prioritize capturing the Kyklos anomaly that cursed [Name].**
 **Tohma: But I'm sure...**
 *NAR: Tohma looked down at Kaito over his monocle.*
 **Tohma: ...you need no reminding of this, do you, Fuji?**
-*Kaito: Nope! I remember it as clear as day! How could I ever forget?!*
+*Kaito: Nope! I remember it as clear as day! How could I ever…*
 **Tohma: I'm relieved to hear that.**
 **Tohma: We ghouls must lead our peers by example. By completing all missions assigned us...**
 **Tohma: ...we must remind Darkwick which of the houses is most profitable to them.**
-*NAR: Luca's violet eyes glittered, never leaving Tohma as he spoke.*
+*NAR: Luca's violet eyes glittered, never leaving Tohma as he…*
 **Tohma: Exactly. Our captain made his mark in just his first year.**
 **Tohma: It was his unparalleled leadership...**
 **Tohma: ...that won Frostheim the crown two years ago.**
-*Kaito: Anyway, that just goes to show how charismatic a leader Jin used to be.*
+*Kaito: Anyway, that just goes to show how charismatic a leader Jin…*
 **Tohma: Used to be? He still is.**
 **Tohma: Mind your wording.**
 *Kaito: Dude, mind your wording! I already told you—*
@@ -58,14 +60,14 @@ Short ambient barks while he walks campus.
 **Tohma: For you see, any mission he is a part of would be resolved far too quickly.**
 
 ## Part 13, ch. 8: Party En Route To Masquerade
-*[Name]: (Tohma said this limo was an old model, but it looks brand new to me...)*
+*[Name]: (Tohma said this limo was an old model, but it looks brand…*
 **Tohma: I've given our destination to the driver.**
 *Jin: ...*
 **Tohma: We'll be passing through the underwater tunnel and should arrive at our destination in about 20 minutes.**
 *NAR: The limo slowly began to move as Tohma spoke.*
 **Tohma: Politicians with close ties to Lapona are already gathered at the venue.**
 **Tohma: In addition, affiliates of the Laponan and French embassies will be making appearances as well.**
-*Lucas: Won't it be difficult for him to investigate with so many people around who know him?*
+*Lucas: Won't it be difficult for him to investigate with so many…*
 **Tohma: Why do you think we are participating as his attendants, Errant?**
 *Lucas: ...To move on his behalf.*
 **Tohma: Yes. To be precise, so that we can focus on gathering information.**
@@ -88,7 +90,7 @@ Short ambient barks while he walks campus.
 *Kaito: Uh...*
 **Tohma: It means "spirited older woman."**
 **Tohma: But it's a rather antiquated way of speaking, so I would caution against using it.**
-*Prince Hugo: Marius and I were just about to head over to check in on him.*
+*Prince Hugo: Marius and I were just about to head over to check in on…*
 **Tohma: That's certainly troubling.**
 **Tohma: We were just thinking of asking if we could greet him ourselves.**
 **Tohma: Would it be all right if we accompanied you?**
@@ -116,9 +118,9 @@ Short ambient barks while he walks campus.
 **Tohma: A branch of Japan's secret service.**
 
 ## Part 14, ch. 20: Trio Sneaks In To Spend Night At Museum
-*???: Oh my. I don't recommend pulling your special artifact out on strangers while on Darkwick grounds.*
+*???: Oh my. I don't recommend pulling your special artifact out…*
 **Tohma: You could wind up falsely accused of something.**
-*[Name]: Tohma! What are you doing out here in the middle of the night?!*
+*[Name]: Tohma! What are you doing out here in the middle of the…*
 **Tohma: Just getting some fresh air. I like to walk the grounds on nights I can't sleep.**
 *Jiro: And Dionysia, but it's defunct.*
 **Tohma: I like to visit ruins. I've finally begun to feel a little sleepy.**
@@ -136,10 +138,10 @@ Short ambient barks while he walks campus.
 ## Part 24, ch. 4: Darkwick Gala Goes Ahead
 *Kaito: I don't even want to think about how much this thing costs.*
 **Tohma: Good morning, everyone.**
-*NAR: A large blue stone glittered at Tohma's throat too, underscoring the dignity of his office as vice-captain.*
+*NAR: A large blue stone glittered at Tohma's throat too…*
 **Tohma: I'm relieved it seems the Laurel Crown award ceremony will be able to proceed without incident...**
 **Tohma: ...due to your faithful adherence to my instructions.**
-*Lucas: There were no new reports of students having their wishes granted by the demon arm.*
+*Lucas: There were no new reports of students having their wishes…*
 **Tohma: Good. Let me make myself perfectly clear.**
 **Tohma: Should hostilities arise, you two are strictly forbidden from engaging on your own.**
 **Tohma: Retreat immediately and notify me without delay.**
@@ -156,7 +158,7 @@ Short ambient barks while he walks campus.
 *Kaito: Heh heh...)*
 **Tohma: This year, it chose lapis lazuli as the motif for Frostheim.**
 **Tohma: And for Vagastrom...**
-*NAR: Seeing Alan so sincerely full of remorse, I raised my voice, forgetting the eyes of the crowd.*
+*NAR: Seeing Alan so sincerely full of remorse, I raised my…*
 **Tohma: ...Mido. We need to talk. Could you spare a moment before the ceremony?**
 *Leo: Not hiding it anymore, huh?*
 **Tohma: No. It's well known Mido and I used to be in the same house.**
@@ -211,7 +213,7 @@ Short ambient barks while he walks campus.
 **Tohma: ...but the general student acting as our informant in Hotarubi is occupied at the moment.**
 **Tohma: With everything going on, I doubt they'll be able to keep in touch.**
 **Tohma: As such, it pains me to say that this is all I have to report about the current state of matters.**
-*Jin: They're just some idiots you've blackmailed into being your pawns.*
+*Jin: They're just some idiots you've blackmailed into being your…*
 **Tohma: ...People are much more charitable than you seem to believe.**
 **Tohma: Their faith in their future president transcends the factions.**
 **Tohma: That said...**

@@ -1,6 +1,8 @@
 # Edward: story dialogue
 
-Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). Each of his lines is in **bold**, with the line before it for context. `[Name]` is the MC; `NAR` is the MC's narration.
+Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). `[Name]` is the MC; `NAR` is the MC's narration.
+
+**Only the bold lines are Edward's voice.** Each italic line is a short excerpt of what someone else said just before, there only so you can see what he's answering. Never borrow wording, slang, tics, pet names or rhythm from an italic line, and never use one as an anchor.
 
 **How to use:** register evidence for voice-check and drafting. Use it for sentence shape, rhythm, how he talks to the MC and to others. These lines are not voicelines: home-screen voicelines in `../edward.md` stay the primary anchors and the tier-fit ladder. **Plot facts, reveals and relationships learned here are spark+** (same as the `## Stigma & Artifact` rule). Don't quote a story line into new/known/warm content, and don't build a beat on an event the MC hasn't reached.
 
@@ -33,11 +35,11 @@ Short ambient barks while he walks campus.
 **Edward: Do you think true love exists?**
 *[Name]: Huh...?*
 **Edward: I teach philosophy at a university in Tokyo. I thought I'd give you some homework.**
-*Edward Hart (Professor): I was relieved she didn't answer right away. Frivolous responses get a zero from me.*
+*Edward Hart (Professor): I was relieved she didn't answer right away. Frivolous…*
 **Edward: It would be nice if you found the answer while you're here. Best of luck to you.**
-*[Name]: (He is convincing as a professor of philosophy... I guess vampires are okay with beaches?)*
+*[Name]: (He is convincing as a professor of philosophy... I guess…*
 **Edward: Hello. Mind if I join you?**
-*Rui: Ugh, some super shady dude just walked in! He looks like the kind of guy who can't even put his own socks on!*
+*Rui: Ugh, some super shady dude just walked in! He looks like…*
 **Edward: Ah ha ha ha.**
 **Edward: That's a cruel thing to say to someone you just met. It's not that I can't—I just don't.**
 *Jiro: ?*
@@ -46,7 +48,7 @@ Short ambient barks while he walks campus.
 ## Part 17, ch. 10: Behind The Scenes
 *Ren: How are you giving me pocket money from my own salary?*
 **Edward: What's this bonus they're talking about, Rui?**
-*Rui: If we participate in the filming while we're investigating, apparently the chancellor will give us a bonus.*
+*Rui: If we participate in the filming while we're investigating…*
 **Edward: No, they didn't. I suppose it's because I agreed right away.**
 
 ## Part 24, ch. 3: The Leavers And The Left Behind
@@ -84,7 +86,7 @@ Short ambient barks while he walks campus.
 **Edward: He is still so young.**
 
 ## Part 24, ch. 13: Surprise Examination
-*Rui: Sorry, Ed! I'll be back before the ceremony, so save me a seat, 'kay?*
+*Rui: Sorry, Ed! I'll be back before the ceremony, so save me a…*
 **Edward: All right. Goodbye.**
 *NAR: then grimaced.*
 **Edward: Ouch...**
@@ -98,14 +100,14 @@ Short ambient barks while he walks campus.
 **Edward: It seems he mistook me for a demon. A rather cruel distortion of the truth, wouldn't you agree?**
 *[Name]: But the ceremony is going to start pretty soon...*
 **Edward: Exactly. If you would nurse me back to health, I'm sure I'll be able to join the ceremony.**
-*Lyca: What? The Gala's starting soon, idiot! If you want to rest, just sit down here!*
+*Lyca: What? The Gala's starting soon, idiot! If you want to rest…*
 **Edward: (cough cough)**
 **Edward: Come now, Lyca. Don't be so unkind.**
 **Edward: Oh, how weary I grow...**
 *[Name]: Jiro?!*
 **Edward: Oargh!**
 **Edward: Oargh!**
-*NAR: Jiro stared down at Ed as he gasped for breath, pulling off his gloves and changing them for new ones.*
+*NAR: Jiro stared down at Ed as he gasped for breath, pulling off…*
 **Edward: That gave me a fright.**
 **Edward: You're a doctor?**
 **Edward: How much should I disrobe for your examination?**
@@ -139,13 +141,13 @@ Short ambient barks while he walks campus.
 ## Season 2 Episode 3, ch. 10: Host Training Proves More Difficult Than Anticipated
 *Lyca: P-Princess...*
 **Edward: Good evening. May I have this seat?**
-*Kurosaka: ...Cross. I distinctly recall informing you that your seat is across the table from the princess, not next to her.*
+*Kurosaka: ...Cross. I distinctly recall informing you that your seat…*
 **Edward: It was only a joke. Have a sense of humor, won't you? I promise I'll act properly when it counts.**
-*Lyca: Hey... Those pics we took at the end, are they like those ones from Jojorin's magazines?*
+*Lyca: Hey... Those pics we took at the end, are they like those…*
 **Edward: Something similar, yes. They said they'll hurry and have them touched up to include in their man book.**
 *[Name]: Most of them sound like urban legends.*
 **Edward: But there never were any reports of deaths here prior, were there?**
-*[Name]: The thread's called "Spooky Host Deaths." It has a lot of comments...*
+*[Name]: The thread's called "Spooky Host Deaths." It has a lot of…*
 **Edward: No doubt these are from witnesses or people connected to the police... Or even the family of the deceased.**
 **Edward: Humans so love speaking about the misfortunes of others.**
 
@@ -154,9 +156,9 @@ Short ambient barks while he walks campus.
 **Edward: I'm afraid my eyesight isn't what it used to be.**
 **Edward: When I try to read swaths of text on this small screen, my head aches...**
 **Edward: Rui. Forgive me, but could you read the contents of this site out loud?**
-*[Name]: ...there's a chance whichever host is the most popular will encounter this anomaly...?*
+*[Name]: ...there's a chance whichever host is the most popular will…*
 **Edward: But Kurosaka said they're forbidden from stating who has the greatest sales in advertisements.**
-*Rui: Aiming for number one this late in the game's gonna be rough.*
+*Rui: Aiming for number one this late in the game's gonna be…*
 **Edward: Ah. So that's why they predicted this mission may take time.**
 
 ## Season 2 Episode 7, ch. 7

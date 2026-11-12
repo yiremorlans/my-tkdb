@@ -1,6 +1,8 @@
 # Romeo: story dialogue
 
-Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). Each of his lines is in **bold**, with the line before it for context. `[Name]` is the MC; `NAR` is the MC's narration.
+Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). `[Name]` is the MC; `NAR` is the MC's narration.
+
+**Only the bold lines are Romeo's voice.** Each italic line is a short excerpt of what someone else said just before, there only so you can see what he's answering. Never borrow wording, slang, tics, pet names or rhythm from an italic line, and never use one as an anchor.
 
 **How to use:** register evidence for voice-check and drafting. Use it for sentence shape, rhythm, how he talks to the MC and to others. These lines are not voicelines: home-screen voicelines in `../romeo.md` stay the primary anchors and the tier-fit ladder. **Plot facts, reveals and relationships learned here are spark+** (same as the `## Stigma & Artifact` rule). Don't quote a story line into new/known/warm content, and don't build a beat on an event the MC hasn't reached.
 
@@ -30,31 +32,31 @@ Short ambient barks while he walks campus.
 *Ritsu: Yes, he's coming. Keep your voice down, Vice-Captain.*
 **Romeo: It's Fico! And what's coming?**
 **Romeo: Is that...?**
-*NAR: The casino dissolved into panic, screams and shouts drowning out the clinking of coins.*
+*NAR: The casino dissolved into panic, screams and shouts…*
 **Romeo: That fool!!**
 *Ritsu: Now. Let's make our move.*
 **Romeo: Don't tell me what to do!**
 *[Name]: This place again...!*
 **Romeo: Wh-What is this?! I don't remember purchasing such a tacky table!**
-*NAR: I soon found myself seated beside Ritsu, unsettled by how drawn I felt to the table.*
+*NAR: I soon found myself seated beside Ritsu, unsettled by how…*
 **Romeo: Tch... You want me to sit? Fine, I'll sit.**
-*Ritsu: ...I familiarized myself with the rules and history of all common casino games, to remain ahead of the curve.*
+*Ritsu: ...I familiarized myself with the rules and history of all…*
 **Romeo: Get off your high horse. A child could play blackjack.**
 *Ritsu: I will wager March 22nd, 1925.*
 **Romeo: Tch... March 26th, 1881.**
 
 ## Part 24, ch. 2: Lights On In Reaper's Bar
-*Haru: Hey! Thought I saw a light on in here! I was right, Romeo! He's in the bar!*
+*Haru: Hey! Thought I saw a light on in here! I was right, Romeo…*
 **Romeo: Hey! What kind of professional closes his business for two weeks?!**
 *Rui: Ah... Sorry guys, I was a little under the weather.*
 **Romeo: Managing your health is part of your job! For fuck's sake...**
 **Romeo: I'll have my usual. Take your time.**
-*Haru: Been running 'round campus all day looking for something. I'm knackered.*
+*Haru: Been running 'round campus all day looking for something…*
 **Romeo: You're not the only one. I've been watching my EITS while calculating our revenue.**
 **Romeo: And then sending boots out to search for hours now. My eyes and my throat and my skin are all DAAB.**
-*Haru: You're always helping us out at the park too. You're really saving my bacon.*
+*Haru: You're always helping us out at the park too. You're really…*
 **Romeo: Hmph. A man’s only worth the work he can do. Better get that into your head now.**
-*Lyca: There's people in class that say mean stuff though. That's annoying.*
+*Lyca: There's people in class that say mean stuff though. That's…*
 **Romeo: Let them talk. No one else can take the fall for how you live your life but you.**
 *Lyca: Cheers!*
 **Romeo: Cheers.**
@@ -69,11 +71,11 @@ Short ambient barks while he walks campus.
 **Romeo: How are you going to run that zoo of yours once you leave for your internship?**
 *Lyca: Does that mean you can't just come back when you want?*
 **Romeo: Urgh! Would you stop interrupting, you mutt?!**
-*Lyca: I-I'm not a mutt! Neros told me to ask right away when I don't know stuff!*
+*Lyca: I-I'm not a mutt! Neros told me to ask right away when I…*
 **Romeo: You're a third-year too, Mickey. Haven't you told him about internships yet?!**
 *Rui: So there wasn't much reason for me to explain.*
 **Romeo: Repeating?**
-*Haru: You don't go to class much, but you do a lot of solo missions, don't you?*
+*Haru: You don't go to class much, but you do a lot of solo…*
 **Romeo: Right. That POG aside, why would you be repeating?**
 *Haru: Rui...*
 **Romeo: (sigh)**
@@ -124,25 +126,25 @@ Short ambient barks while he walks campus.
 ## Season 2 Episode 2, ch. 7
 *Jin: ...*
 **Romeo: What happened to your hair?**
-*[Name]: Um... Well... There was an accident. I'm going to get it fixed later.*
+*[Name]: Um... Well... There was an accident. I'm going to get it…*
 **Romeo: ...Hmph.**
-*Mio: It would've been a pain if the internal mechanism was broken.*
+*Mio: It would've been a pain if the internal mechanism was…*
 **Romeo: What kind of feeling is that?!**
 **Romeo: Well, you work fast, I'll give you that.**
-*NAR: The waterfall stopped, revealing the clockwork anomaly that hid the secret passageway.*
+*NAR: The waterfall stopped, revealing the clockwork anomaly that…*
 **Romeo: Great work. The button felt even smoother than it used to.**
-*Ritsu: That contradiction casts immediate doubt on the credibility of your statement—*
+*Ritsu: That contradiction casts immediate doubt on the credibility…*
 **Romeo: There's no contradiction. Mee built the clockwork anomaly.**
 **Romeo: But I never told him what's beyond the door. He's not interested.**
-*NAR: With Ritsu's gaze now focused on him also, Mio shook his head modestly.*
+*NAR: With Ritsu's gaze now focused on him also, Mio shook his…*
 **Romeo: Could you not casually diss me?!**
 **Romeo: Mee is a man with no worldly desires. Nothing but Ls from my perspective... But he seems happy enough.**
 **Romeo: All the facilities in this casino... Even the equipment they used here when it was just a gambling den.**
 **Romeo: Mee made all of it pretty much for free.**
-*[Name]: ...Then this probably means they want me to join the mission as inspector...*
+*[Name]: ...Then this probably means they want me to join the…*
 **Romeo: (sigh)...**
 **Romeo: If they reopen Dionysia, we might as well kiss our profits goodbye.**
-*Ritsu: I will take charge of the Missing Bracelet Case. Let us proceed to the crime scene.*
+*Ritsu: I will take charge of the Missing Bracelet Case. Let us…*
 **Romeo: Why are you taking charge?! You're still a suspect!**
 **Romeo: ...Before you go, Mee. Here. For the repairs.**
 *Mio: That's all right. The sentiment's enough—*
@@ -159,16 +161,16 @@ Short ambient barks while he walks campus.
 **Romeo: Shinjo swore up and down he could find the trash who stole my bracelet.**
 **Romeo: Then five hours later he comes back and says "you probably just threw it away by accident"!**
 **Romeo: Do you really think I could do something that careless?!**
-*Rui: If someone stole it, you should be able to see them on there, shouldn't you?*
+*Rui: If someone stole it, you should be able to see them on…*
 **Romeo: (sigh) Obviously I checked the EITSs. I had Shinjo double-check them too.**
 **Romeo: But I don't have any cameras in the VIP room for privacy reasons.**
 **Romeo: At best all we could do was keep an eye out for people acting suspiciously. No one went near the VIP room.**
 **Romeo: I'm out of leads.**
 *Haru: Maybe you really did chuck it out then.*
 **Romeo: Obviously I didn't fucking do that!**
-*Rui: Like did you hear about that anomaly that disappeared from that containment facility?*
+*Rui: Like did you hear about that anomaly that disappeared from…*
 **Romeo: No. What?**
-*Rui: Seriously? I've been down this road before, and it always leads to you crashing here for the night.*
+*Rui: Seriously? I've been down this road before, and it always…*
 **Romeo: Why are you drinking so much? I thought your little zoo was going well.**
 *Haru: gonna like that...*
 **Romeo: He? Who?**
@@ -185,9 +187,9 @@ Short ambient barks while he walks campus.
 **Romeo: But then the only other possibility is—)**
 *Professor Hyde: Did you lose something?*
 **Romeo: ...It has nothing to do with you. What are you doing here?**
-*Professor Hyde: You're so grumpy! And here I brought you a surprise and everything.*
+*Professor Hyde: You're so grumpy! And here I brought you a surprise and…*
 **Romeo: ...Again? I'd rather you get our probation lifted so we can actually get things done.**
-*Professor Hyde: No matter what I say they keep putting it on the back burner.*
+*Professor Hyde: No matter what I say they keep putting it on the back…*
 **Romeo: (sigh)... They've always been good for nothing but getting in the way...**
 *Professor Hyde: Here. An early Christmas present for you.*
 **Romeo: ...Huh? For me?**
@@ -198,7 +200,7 @@ Short ambient barks while he walks campus.
 ## Season 2 Episode 8, ch. 17: Reflections On The Past
 *Mio: ...?*
 **Romeo: ...(sigh) WTWUT...**
-*Mio: Oh, Romeo. You're back. Just came to tell you the machine's fixed.*
+*Mio: Oh, Romeo. You're back. Just came to tell you the machine's…*
 **Romeo: Already? At least someone around here knows how to get the job done.**
 *Taiga: I want praise too!*
 **Romeo: For what? You can't just walk around once and stop. You need to do it for the whole time we're open!**
@@ -206,7 +208,7 @@ Short ambient barks while he walks campus.
 **Romeo: I just had to kick out a rowdy customer! Do you have any idea what a pain in the ass that was?!**
 *Mio: Let's see... Coins... Coins...*
 **Romeo: ...Hm? That arm... Is that Harry's?**
-*Mio: Ah, yeah. Some stuff happened, so I've gotta make him a new one.*
+*Mio: Ah, yeah. Some stuff happened, so I've gotta make him a new…*
 **Romeo: He has been complaining about the joints being stiff lately.**
-*Mio: Either way, I think it's a good time to do a little maintenance.*
+*Mio: Either way, I think it's a good time to do a little…*
 **Romeo: ...Fine. Just tell me when.**

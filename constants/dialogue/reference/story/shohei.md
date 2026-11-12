@@ -1,6 +1,8 @@
 # Sho: story dialogue
 
-Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). Each of his lines is in **bold**, with the line before it for context. `[Name]` is the MC; `NAR` is the MC's narration.
+Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). `[Name]` is the MC; `NAR` is the MC's narration.
+
+**Only the bold lines are Sho's voice.** Each italic line is a short excerpt of what someone else said just before, there only so you can see what he's answering. Never borrow wording, slang, tics, pet names or rhythm from an italic line, and never use one as an anchor.
 
 **How to use:** register evidence for voice-check and drafting. Use it for sentence shape, rhythm, how he talks to the MC and to others. These lines are not voicelines: home-screen voicelines in `../shohei.md` stay the primary anchors and the tier-fit ladder. **Plot facts, reveals and relationships learned here are spark+** (same as the `## Stigma & Artifact` rule). Don't quote a story line into new/known/warm content, and don't build a beat on an event the MC hasn't reached.
 
@@ -33,13 +35,13 @@ Short ambient barks while he walks campus.
 **Sho: Buy it yourself. Quit whining and get on already.**
 *Leo: Yes, sir!*
 **Sho: I don't even remember the last time we did this.**
-*Leo: Ugh, right? We can't make enough cash unless we come out more often.*
+*Leo: Ugh, right? We can't make enough cash unless we come out…*
 **Sho: It's 'cause Captain Tightass never approves any R&R requests.**
 **Sho: He's denied us pretty much every time. He probably doesn't even read them.**
 *Leo: I want to go clubbing.*
 **Sho: Yep. I heard it only applies when it's personal leave, though.**
 **Sho: There's no curfew on missions. Wanna do one?**
-*Leo: Hey, stop at that Starbucks. I haven't taken any pics of the new frappe yet.*
+*Leo: Hey, stop at that Starbucks. I haven't taken any pics of…*
 **Sho: Say it sooner, asshole! Did you wait till we were in a no u-turn zone?**
 *Leo: Ahaha! You're so rough, Sho.*
 **Sho: You told me to come over here!**
@@ -48,7 +50,7 @@ Short ambient barks while he walks campus.
 **Sho: Asshole...**
 *Leo: Oops, your hand's in it. Oh well, let's start some rumors.*
 **Sho: ...You don't regret coming to Darkwick?**
-*Leo: When I heard there were other pact makers I was super pumped. What a buzzkill.*
+*Leo: When I heard there were other pact makers I was super…*
 **Sho: The whole "For the people! For our noble academy!" thing?**
 *Leo: That could be fun. Aren't you curious?*
 **Sho: About what?**
@@ -68,7 +70,7 @@ Short ambient barks while he walks campus.
 **Sho: Come on... That thing is a pain in the ass to get reissued. Just look for it.**
 *Leo: No. Just go past already.*
 **Sho: ...Hold on.**
-*NAR: Luca must have used his stigma, because an invisible wall was preventing his collision with the bike.*
+*NAR: Luca must have used his stigma, because an invisible wall…*
 **Sho: Shit!**
 *Leo: Hey! I'm gonna fall!!*
 **Sho: Leo!**
@@ -89,12 +91,12 @@ Short ambient barks while he walks campus.
 **Sho: (Just gotta stick it in place now...)**
 *Leo: Hey Sho!*
 **Sho: Leo... What do you want?**
-*Leo: All you do lately is mess around with this food truck and spar with Cap.*
+*Leo: All you do lately is mess around with this food truck and…*
 **Sho: I'm only doing that because he's so gung ho about it.**
 **Sho: You wanna trade places?**
-*Leo: Forget that. I thought of what we should do for our next bet.*
+*Leo: Forget that. I thought of what we should do for our next…*
 **Sho: You're still on that?**
-*Leo: What crawled up your ass? You enjoyed being my bitch after the last one.*
+*Leo: What crawled up your ass? You enjoyed being my bitch after…*
 **Sho: I really didn't. So? What's the bet?**
 *Leo: Subaru Kagami.*
 **Sho: What? What are you—**
@@ -111,10 +113,10 @@ Short ambient barks while he walks campus.
 ## Part 24, ch. 1: Girl Hits A Wall
 *Leo: What the fuck is taking him so long?!*
 **Sho: It's not even dinner time, dude. He's not a kid. He'll come back eventually.**
-*Leo: You don't think Dante's gonna have some questions about that?*
+*Leo: You don't think Dante's gonna have some questions about…*
 **Sho: (sigh)**
 **Sho: Did you text him?**
-*Leo: He never checks his phone so I spammed him with stickers. Still nothing.*
+*Leo: He never checks his phone so I spammed him with stickers…*
 **Sho: Think his battery died?**
 *Leo: Wouldn't put it past him.*
 **Sho: Huh... Maybe that's him now.**
@@ -126,7 +128,7 @@ Short ambient barks while he walks campus.
 **Sho: Leo?**
 *Leo: Your abdomen is bleeding. And you're out of breath.*
 **Sho: Whoa... What happened, Mido?**
-*Professor Dante: You can't treat a wound like that with medicine students can buy.*
+*Professor Dante: You can't treat a wound like that with medicine students…*
 **Sho: (sigh) Guess he's still got questions even though you made curfew, huh?**
 *Leo: Sho.*
 **Sho: (sigh)... Never thought I'd have to carry your giant ass anywhere...**
@@ -137,11 +139,11 @@ Short ambient barks while he walks campus.
 ## Part 24, ch. 5: Vagastrom Arrives To Some Controversy
 *Leo: Could you fuck off? You're in my shot.*
 **Sho: C'mon, dude, don't start shit.**
-*NAR: Sho appeared, trudging toward us as though it were the last thing he wanted to do at that moment.*
+*NAR: Sho appeared, trudging toward us as though it were the last…*
 **Sho: What are you even taking photos for? You can't upload them anywhere.**
 *Tohma: (sigh)...*
 **Sho: Here we go...**
-*NAR: When Alan suddenly stepped into the group, Kaito panicked and hid behind Luca.*
+*NAR: When Alan suddenly stepped into the group, Kaito panicked…*
 **Sho: Mido. You okay to be walking around already?**
 *Leo: Sphalerite. I told you this morning.*
 **Sho: If they've got money to blow on stuff like this, why don't they fix all the busted up stuff around this place?**
@@ -161,17 +163,17 @@ Short ambient barks while he walks campus.
 **Sho: (yawn)**
 **Sho: ...Dude. You're still at it?**
 **Sho: If I don't start prep soon, I'm not gonna be ready for the lunch rush tomorrow.**
-*Leo: Shut up. Don't you have more important things to do than play chef?*
+*Leo: Shut up. Don't you have more important things to do than…*
 **Sho: Like what? If this is about Cap, I'm staying out of it.**
 **Sho: It's gonna be a pain in the ass if he catches wind of what you're doing.**
-*Leo: I wasn't talking about that. I'm talking about Subaru Kagami. Or did you forget our bet?*
+*Leo: I wasn't talking about that. I'm talking about Subaru…*
 **Sho: Oh, right...**
 **Sho: I didn't forget about it. We never decided on a timeline, so I figured I didn't need to rush or anything.**
-*Leo: He and Cap are both gonna be interns off campus next year. Whatever time you think you have, you don't.*
+*Leo: He and Cap are both gonna be interns off campus next year…*
 **Sho: (sigh) Yeah, I know.**
 **Sho: Why are you so stuck on Subaru anyway?**
 **Sho: If you want a target, we've got a whole list of 'em.**
-*Leo: Aww, don't tell me you're feeling bad for poor, widdle Subaru?*
+*Leo: Aww, don't tell me you're feeling bad for poor, widdle…*
 **Sho: ...That ain't it. Besides, he's not gonna spill his guts to someone like—**
 *Leo: Ah. Found it.*
 **Sho: ...Seriously?**
@@ -194,17 +196,17 @@ Short ambient barks while he walks campus.
 **Sho: You don't have to be so nervous. How're you gonna find the Rogue like that?**
 **Sho: Oh, right. My job. I'm owner and chef of a one Michelin star restaurant in Azabu.**
 **Sho: If you're ever feeling hungry, hit me up. I'll treat you any time.**
-*Sho Haizono (Chef): I guess she's kinda plain? Not in a bad way. Like, genuine, so she'd be chill to hang out with.*
+*Sho Haizono (Chef): I guess she's kinda plain? Not in a bad way. Like, genuine…*
 **Sho: Anyway, that's all from me.**
 
 ## Season 2 Episode 5, ch. 9
-*Haku: ...Watch out, everyone. The malevolent energy in this place just exploded.*
+*Haku: ...Watch out, everyone. The malevolent energy in this place…*
 **Sho: Are these guys possessed...?**
 *Alan: Wait, what are you—*
 **Sho: Mido. There's no point trying to stop them. Let's just see what this guy does.**
 
 ## Season 2 Episode 5, ch. 10: Shoot Hijacked By Masked Enigma
-*Game Master's Voice: If you clear the mission and achieve the True Ending, the Rogue dies. This is not negotiable.*
+*Game Master's Voice: If you clear the mission and achieve the True Ending, the…*
 **Sho: Then I'm out. Whoever these viewers you're talking about are, they've got no taste.**
 *Alan: ...! ....!*
 **Sho: ...This is real, huh?**
@@ -212,7 +214,7 @@ Short ambient barks while he walks campus.
 ## Season 2 Episode 6, ch. 1
 *Elias: (I was right. That anomaly can use teleportation.)*
 **Sho: (Shit... Where's [Name]?!)**
-*Game Master's Voice: ...you will be sent back to where you started—the very room you stand in now.*
+*Game Master's Voice: ...you will be sent back to where you started—the very room…*
 **Sho: Seriously? Ugh...**
 
 ## Season 2 Episode 6, ch. 2

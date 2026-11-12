@@ -1,6 +1,8 @@
 # Mio: story dialogue
 
-Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). Each of his lines is in **bold**, with the line before it for context. `[Name]` is the MC; `NAR` is the MC's narration.
+Official English lines from the game's main story and Season 2, pulled from the BlueStacks cache (2026-11-12). `[Name]` is the MC; `NAR` is the MC's narration.
+
+**Only the bold lines are Mio's voice.** Each italic line is a short excerpt of what someone else said just before, there only so you can see what he's answering. Never borrow wording, slang, tics, pet names or rhythm from an italic line, and never use one as an anchor.
 
 **How to use:** register evidence for voice-check and drafting. Use it for sentence shape, rhythm, how he talks to the MC and to others. These lines are not voicelines: home-screen voicelines in `../mio.md` stay the primary anchors and the tier-fit ladder. **Plot facts, reveals and relationships learned here are spark+** (same as the `## Stigma & Artifact` rule). Don't quote a story line into new/known/warm content, and don't build a beat on an event the MC hasn't reached.
 
@@ -24,39 +26,39 @@ Short ambient barks while he walks campus.
 - (yawn)
 
 ## Season 2 Episode 2, ch. 6
-*NAR: He reached out to me, his fingertips brushing gently over the strands of my hair that had just been cut.*
+*NAR: He reached out to me, his fingertips brushing gently over…*
 **Mio: Don't worry. This is probably the most decent person in our house.**
 *Shion: Or...can you do what Haru used to do?*
 **Mio: Shion. It's starting soon.**
-*Jo: ...He never missed a day, even when we were locked up, did he?*
+*Jo: ...He never missed a day, even when we were locked up, did…*
 **Mio: Nope. You can use it like this when the timing's right.**
-*Ritsu: Pardon the interruption, but our time is limited. May I proceed to the matter at hand?*
+*Ritsu: Pardon the interruption, but our time is limited. May I…*
 **Mio: Right. What does Romeo want?**
 *[Name]: He was hoping you could come and fix it.*
 **Mio: ...That thing, huh? I got a little overenthusiastic at the time and I made it pretty complex.**
 **Mio: He'll be in a tight spot without it though, right? Okay. I'll head over now.**
-*Jo: Sorry to ask this when you're busy, but keep an eye on your phone.*
+*Jo: Sorry to ask this when you're busy, but keep an eye on your…*
 **Mio: Thought as much. Got it.**
 **Mio: All right. Let's go. I just need to finish up here, so could you give me ten minutes?**
 
 ## Season 2 Episode 2, ch. 7
 *Romeo: ...Hmph.*
 **Mio: ...All right. It should be good now.**
-*NAR: ...with only a couple of tools and parts he finished repairing it, almost like magic.*
+*NAR: ...with only a couple of tools and parts he finished…*
 **Mio: Well, I had a feeling Romeo probably smacked it and broke something.**
 **Mio: It would've been a pain if the internal mechanism was broken.**
 *Romeo: Well, you work fast, I'll give you that.*
 **Mio: Thanks. Could you test it out for me so I can make sure it works?**
-*Ritsu: It is difficult to imagine the captain formalizing an employment agreement with Mr_ Susuhara.*
+*Ritsu: It is difficult to imagine the captain formalizing an…*
 **Mio: Well, I got a lot of experience out of it. Let's just leave it at that.**
-*NAR: At that moment someone's phone buzzed, and Mio and I both checked our pockets.*
+*NAR: At that moment someone's phone buzzed, and Mio and I both…*
 **Mio: ...Oh, it's me.**
 **Mio: Jo sent me a message.**
 *[Name]: I got one too... Professor Nicolas wants to see me.*
 **Mio: They've assigned us a comeback mission. Jo's asking me to go get the case file from Professor Nicolas.**
-*NAR: Romeo took an envelope from inside his jacket and handed it to Mio.*
+*NAR: Romeo took an envelope from inside his jacket and handed it…*
 **Mio: That's all right. The sentiment's enough—**
-*Romeo: Don't embarrass me. Professionals pay their dues. That's business!*
+*Romeo: Don't embarrass me. Professionals pay their dues. That's…*
 **Mio: ...Okay. Thanks.**
 
 ## Season 2 Episode 2, ch. 8
@@ -75,11 +77,11 @@ Short ambient barks while he walks campus.
 **Mio: I should've stepped in sooner. I will next time.**
 *[Name]: Professor Nicolas! I was just on my way to see you.*
 **Mio: I was coming to get those documents.**
-*Professor Nicolas: ...and the general students who transferred to other houses will be given special permission to return.*
+*Professor Nicolas: ...and the general students who transferred to other houses…*
 **Mio: Thank you. They've heard the rumors, so they're pretty antsy about it.**
-*Professor Hyde: ...Mio. The rest of you just got dragged along for the ride, right?*
+*Professor Hyde: ...Mio. The rest of you just got dragged along for the…*
 **Mio: ...No comment.**
-*[Name]: "Information provided by the Anomalous Investigation Institute, U_S_ Branch"...*
+*[Name]: "Information provided by the Anomalous Investigation…*
 **Mio: So the Institute's pretty hands on this time, huh?**
 
 ## Season 2 Episode 2, ch. 11: Dionysia Ghouls Discuss Comeback Mission
@@ -89,21 +91,21 @@ Short ambient barks while he walks campus.
 **Mio: I'll have one. I was looking for some caffeine.**
 *Jo: This one's yours, right, Mio?*
 **Mio: Oh, no, that's—**
-*Jo: Shion. How many times do I have to tell you not to throw those things at people?*
+*Jo: Shion. How many times do I have to tell you not to throw…*
 **Mio: My cup's this one. I can make it myself, so you can get things started.**
 *Shion: Jewelry trade show? What's that?*
 **Mio: Basically an exhibition for people in the industry to do business. Buyers go to buy stock for their stores.**
 **Mio: Anyone can go if they have an invite though. Some regular people probably try to get good jewelry cheap.**
 *Elias: The Twin Orion... I've heard that name somewhere before.*
 **Mio: Apparently it's pretty famous. Trade magazines do features on it all the time.**
-*NAR: Eventually a photo came into view of a necklace so ornate that its brilliance seemed to spill from the page itself.*
+*NAR: Eventually a photo came into view of a necklace so ornate…*
 **Mio: This is the first time this necklace will be on Japanese soil, and the first time it'll be on display to the public.**
 **Mio: Usually it's held in the US.**
 
 ## Season 2 Episode 2, ch. 12: Ghouls Plan Jewelry Heist
 *Elias: At least during the exhibition we’ve got a five-day window.*
 **Mio: I agree. I'd prefer to have a chance to do some recon.**
-*Jo: ...This case file was provided by the U_S_ branch, wasn't it?*
+*Jo: ...This case file was provided by the U_S_ branch, wasn't…*
 **Mio: Apparently.**
 *NAR: Jo made a face as he typed rapidly on the laptop.*
 **Mio: You want me to ask Darkwick for more information on this company and its execs?**
@@ -111,11 +113,11 @@ Short ambient barks while he walks campus.
 **Mio: What should I bring along this time, Elias?**
 *Elias: Anything with eyes should do the trick.*
 **Mio: All right. I'll get it ready today.**
-*NAR: For some reason Mio took a metallic object from his pocket at Elias's comment.*
+*NAR: For some reason Mio took a metallic object from his pocket…*
 **Mio: Figured as much. I'm already done tuning these.**
 *[Name]: Glasses...?*
 **Mio: They're a type of clockwork anomaly. Here, give them a try.**
-*NAR: Mio handed me the glasses, then put his cup down on the table and pointed to it.*
+*NAR: Mio handed me the glasses, then put his cup down on the…*
 **Mio: Put them on and look at that cup. Then push the little button on the right side.**
 *[Name]: ?!*
 **Mio: It can recognize objects within about a meter.**
@@ -124,11 +126,11 @@ Short ambient barks while he walks campus.
 **Mio: This one should be done in about three minutes.**
 *Shion: Why don't you just use it to make a copy of this rock then?*
 **Mio: It can make replicas from photos, but the quality's not as good as when it scans them directly.**
-*Elias: Well, if that’s the way of it, we'll have to get a look on the day ourselves.*
+*Elias: Well, if that’s the way of it, we'll have to get a look on…*
 **Mio: All right. If there's time, I'll optimize it for printing jewelry.**
 
 ## Season 2 Episode 2, ch. 13: Price Of Failure Comes To Light
-*NAR: Shion suddenly slipped in between Elias and I, holding a large mug of coffee.*
+*NAR: Shion suddenly slipped in between Elias and I, holding a…*
 **Mio: Shion... I already told you about it.**
 *Shion: You're as pitiful as me...*
 **Mio: Don't laugh at that, Shion...**
@@ -147,14 +149,14 @@ Short ambient barks while he walks campus.
 **Mio: ...Worse than I thought. The floor's completely gone in some places.**
 *[Name]: Um...*
 **Mio: Sorry for the wait.**
-*NAR: Just at that moment, Mio returned, interrupting the unsettling exchange.*
+*NAR: Just at that moment, Mio returned, interrupting the…*
 **Mio: I took a quick look at everything.**
 **Mio: Like I thought, I'm going to need some specialized equipment to do the repairs.**
 *[Name]: Is it really that bad...?*
 **Mio: It'll be fine. I'll get started on it once everything calms down a little.**
 
 ## Season 2 Episode 2, ch. 18: Ghouls Head To Trade Show At Royal Hotel
-*Jo: It was pretty sudden, so it is what it is. As long as we can make a quick getaway when we're done.*
+*Jo: It was pretty sudden, so it is what it is. As long as we…*
 **Mio: Well, there's a lot of eyes in the center of town. If we're only going in and out, this isn't a bad spot.**
 **Mio: It's so close to the venue too.**
 *Shion: It does. You looked right at home in that dirty shed.*
@@ -163,7 +165,7 @@ Short ambient barks while he walks campus.
 **Mio: Keep it down, would you?**
 
 ## Season 2 Episode 2, ch. 19: The Elusive Twin Orion
-*NAR: As I stood there rattled by the turn of events, I spotted Mio and Shion weaving through the crowd toward us.*
+*NAR: As I stood there rattled by the turn of events, I spotted…*
 **Mio: We're back.**
 *Elias: Welcome back. Did you get the layout?*
 **Mio: It's big so I was a little worried, but we managed it. Guy in charge is in the service corridor.**
@@ -193,7 +195,7 @@ Short ambient barks while he walks campus.
 **Mio: See those numbers on the map?**
 **Mio: If you turn the dial to one of them...**
 **Mio: ...it'll show you the fastest route to get there.**
-*Ren: Wouldn't it be easier to make a pamphlet or app instead of building this whole thing?*
+*Ren: Wouldn't it be easier to make a pamphlet or app instead of…*
 **Mio: You'd think so, right? But the kind of people who get lost easily...**
 **Mio: ...tend to lose pamphlets and their own phones a lot too.**
 *NAR: Mio put away his tools with a wry smile.*
@@ -201,32 +203,32 @@ Short ambient barks while he walks campus.
 *NAR: Mio scratched the back of his neck with a frown.*
 **Mio: It's hard to know how strict the Celestial Oracle is...**
 **Mio: What I can say is I sure don't see myself convincing Jin to change his mind right now.**
-*Ren: And there it is. The nepo baby treatment. This is why Frostheim has so many haters.*
+*Ren: And there it is. The nepo baby treatment. This is why…*
 **Mio: Ha ha...**
 **Mio: Anyway, I think I've got the gist of everything. Have you guys picked a weaver?**
-*[Name]: (They seem to want to discuss it, so I should just wait and see what they decide.)*
+*[Name]: (They seem to want to discuss it, so I should just wait and…*
 **Mio: Well, I vote for [Name].**
 
 ## Season 2 Episode 7, ch. 7
 **Mio: All right, so [Name]'s our weaver.**
-*NAR: I breathed a quiet sigh of relief. Becoming the Weaver had been an easier process than I'd expected.*
+*NAR: I breathed a quiet sigh of relief. Becoming the Weaver had…*
 **Mio: The cowherds and the weaver have to work together, right?**
 **Mio: On the day of the festival the Sky King anomaly comes down and gives us a trial to overcome.**
-*NAR: Mio's face changed at my words. He folded his arms thoughtfully.*
+*NAR: Mio's face changed at my words. He folded his arms…*
 **Mio: ...I see. In that case, we'd better put our best foot forward on the day then.**
-*Ren: The more I hear about it, the more it sounds like a massive pain in the ass.*
+*Ren: The more I hear about it, the more it sounds like a massive…*
 **Mio: From what I've heard from Elias, it's more like a riddle than a physical challenge.**
 **Mio: It's nothing dangerous, so why not treat it like a game?**
 
 ## Season 2 Episode 7, ch. 9
-*Ren: (Damn it... That clown always has to stick his nose where it doesn't belong...)*
+*Ren: (Damn it... That clown always has to stick his nose where…*
 **Mio (Mio's Voice): Hm? Looks like the door is chained and padlocked from the outside to keep anyone from opening it.**
 **Mio (Mio's Voice): How does he even go in and out like this?**
-*Ren: These clothes were a pain in the ass to put on too. How do you even go to the can?*
+*Ren: These clothes were a pain in the ass to put on too. How do…*
 **Mio: Ha ha ha... These are loaners, so we should probably try not to get them dirty.**
-*Lucas: Good morning. Thank you for giving up your time to help us today.*
+*Lucas: Good morning. Thank you for giving up your time to help us…*
 **Mio: You must be busy running everything today. Sorry for adding to your workload.**
-*NAR: Subaru gazed at the three cowherds as though admiring art in a museum.*
+*NAR: Subaru gazed at the three cowherds as though admiring art…*
 **Mio: The gold woven into the silk really does the trick.**
 **Mio: I guess the right clothes can make anyone look good.**
 *Subaru: Huh? Um... Not that I know of...*
@@ -247,7 +249,7 @@ Short ambient barks while he walks campus.
 ## Season 2 Episode 7, ch. 19: One Man's Impressive Dedication To The Hustle
 *Haru: (glance)*
 **Mio: Ha ha... And none of these are cheap, either.**
-*Haru: There's a ring toss stall up ahead on the right. You should go there.*
+*Haru: There's a ring toss stall up ahead on the right. You should…*
 **Mio: Ring toss...**
 *[Name]: ...What should we do...?*
 **Mio: (sigh)...**
@@ -268,7 +270,7 @@ Short ambient barks while he walks campus.
 **Mio: I'll treat you to something later to make up for it.**
 
 ## Season 2 Episode 8, ch. 8
-*Shion: Again with that disgusting voice of yours. Maybe I should slit your throat. That'll shut you up.*
+*Shion: Again with that disgusting voice of yours. Maybe I should…*
 **Mio: Hey, Shion. Enough already—**
 *Haru: AHHHH?! My arm! My precious arm!*
 **Mio: (sigh)...**
@@ -302,7 +304,7 @@ Short ambient barks while he walks campus.
 **Mio: Anyway, if Romeo's out I'll just text him and get going.**
 *Romeo: ...(sigh) WTWUT...*
 **Mio: Oh, Romeo. You're back. Just came to tell you the machine's fixed.**
-*Romeo: I just had to kick out a rowdy customer! Do you have any idea what a pain in the ass that was?!*
+*Romeo: I just had to kick out a rowdy customer! Do you have any…*
 **Mio: Sorry. This is my fault for interrupting him to chat.**
 *Taiga: ...*
 **Mio: ...Ah, they must have fallen into the bottom of my toolbox. Man, I really need to clean this thing out...**
@@ -329,7 +331,7 @@ Short ambient barks while he walks campus.
 *Shion: ...*
 **Mio: Listen, you're the one who's gonna suffer if you break that thing.**
 **Mio: You were told it'll take two more days till you fully heal, remember?**
-*Shion: That oaf's bullets barely made a scratch on me. I'm fine now.*
+*Shion: That oaf's bullets barely made a scratch on me. I'm fine…*
 **Mio: Pretty hard to believe that with those scales on your face.**
 **Mio: You realize this is only taking so long because you refused to let Mortkranken treat you.**
 *Shion: I'd rather die.*
@@ -344,7 +346,7 @@ Short ambient barks while he walks campus.
 **Mio: He's in the ICU, though, so we can't go see him.**
 *Shion: ICU?*
 **Mio: The intensive care unit. It's a special room where they've got doctors monitoring him around the clock.**
-*Shion: Bet he's choking on it by now. Feeling boxed in, skin crawling, temper fraying with every passing hour.*
+*Shion: Bet he's choking on it by now. Feeling boxed in, skin…*
 **Mio: I doubt he's in any condition to care.**
 **Mio: Most people don't have your super regenerative abilities, you know.**
 **Mio: The only reason you got off easy was because Haru told them the clockwork anomaly just went berserk.**
