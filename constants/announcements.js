@@ -68,7 +68,7 @@ export const ANNOUNCEMENTS = [
     id: "reset-2026-11-14",
     kind: "reset",
     showFrom: "2026-11-14T14:00:00-05:00",
-    endsAt: "2026-11-17T14:00:00-05:00", // claimable for 3 days from the start
+    endsAt: "2026-11-18T00:00:00-05:00", // 3 days past the same-day reopening, whatever hour it lands
     message: "Thanks for waiting out the maintenance. Here's a free cooldown reset.",
   },
 ];
