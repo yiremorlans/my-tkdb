@@ -58,6 +58,12 @@ export const ANNOUNCEMENTS = [
     endsAt: "2026-11-11T19:10:00-05:00", // claimable for 3 days from reopening
     message: "Thanks for waiting out the maintenance. Here's a free cooldown reset.",
   },
+  {
+    id: "maint-2026-11-14",
+    kind: "maintenance",
+    showFrom: "2026-11-12T00:00:00-05:00",
+    startsAt: "2026-11-14T14:00:00-05:00", // 2 PM Eastern (EST)
+  },
 ];
 
 export const ANNOUNCEMENT_KINDS = ["maintenance", "reset"];
