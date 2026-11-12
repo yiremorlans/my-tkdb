@@ -78,7 +78,7 @@ Short ambient barks while he walks campus.
 *Tohma: Mind your wording.*
 **Kaito: Sorry! Slip of the tongue!!**
 *Lucas: We occasionally see him around Frostheim, but even that's only recently.*
-**Kaito: Dude, mind your wording! I already told**
+**Kaito: Dude, mind your wording! I already told you—**
 
 ## Part 13, ch. 8: Party En Route To Masquerade
 *[Name]: That's a lot of important people...*

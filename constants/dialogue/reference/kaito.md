@@ -166,8 +166,10 @@ Winter Night	 Gram... No... No more mandarins... ...Huh?! Oh, it was just a drea
 ### Special
 His Birthday 1	 Why did Jin, Tohma, and Luca give me all this high-end stuff?! It's freaking me out!! Thank you!?!?
 His Birthday 2	 No way, a present? For me? Thank you... Wait, this isn't a dream, right?! Ow!
+His Birthday 3	 Ahh!! You scared me... What's this? No way, a surprise present?! I can die happy now!!
 MC's Birthday 1	 Happy birthday, MC! We'll make this the best one— Hey, give those back! Those are the cue cards I made yesterday!!
 MC's Birthday 2	 Tada! Happy birthday, MC! I made you a cake—check it out!
+MC's Birthday 3	 Happy birthday, [Name]! I decorated the dorm with balloons for you! Come on, let’s take a picture together!
 New Year's 1	 Happy New Year! Let's make it a good one! S-So hey, if, er, if you'd like, c-could we, um... could we make our first shrine visit together?
 New Year's 2	 MC! Happy New Year! Running into each other this early in the new year's gotta be some kind of sign, right?! Maybe my luck's finally turning...
 Valentine's Day 1	 C'mon Kaito, deep breaths. Girls aren't into guys with no chill. So stay cool... Stay— Are those chocolates for me?! I'll take them to my grave!
@@ -178,6 +180,7 @@ April Fools' 1	 I'd never lie to a girl. Ah! That's not a lie, I swear! MC? Are 
 April Fools' 2	 All I did was lightly prank Luca and he lectured me for like 20 minutes. Why's he gotta be such a stick-in-the-mud?
 Halloween 1	 Trick or treat! See those carved pumpkins? I was actually the one who made them. What do you think?
 Halloween 2	 Heh heh heh... No one's gonna recognize me in this costume. ...Romeo?! How?!
+Halloween 3	 AHH!! Oh, it's you, [Name]... Everyone’s going way too hard on these costumes. My heart can’t take it…
 Christmas 1	 Hey, uh, MC, do you, uh... Do you have any plans for Christmas? I'm actually totally free!
 Christmas 2	 Hold on. Chill, Kaito. This is a dream. No way MC is wearing a Santa outfit right now. Ow!
 

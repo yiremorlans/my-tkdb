@@ -153,8 +153,10 @@ Winter Night	 They say that on cold nights like this, humans long for the warmth
 ### Special
 His Birthday 1	 Having you celebrate my birthday makes all these long years of life worth it. How old am I? A gentleman doesn't tell.
 His Birthday 2	 Yes, it is my birthday today. You wish to know my heart's desire? Hmm... If I were to say an eternity spent with you?
+His Birthday 3	 My birthday... Ah, yes, was it today? After living so long, the years begin to blur together. Perhaps you’ll count them for me from now on.
 MC's Birthday 1	 It's your birthday, is it? I'll have to give you a present. What do you want? Go on, tell me.
 MC's Birthday 2	 Happy birthday. Yes, Rui and Lyca were making quite the fuss about it this morning. Come by tonight. We can celebrate.
+MC's Birthday 3	 Humans grow so quickly, don’t they? One blink, and you’re another step nearer to the grave. I suppose that is what makes you so endearing.
 New Year's 1	 Happy New Year. I heard it's a tradition in this country to impart small monetary gifts. Here, for you.
 New Year's 2	 Happy New Year. I'm told it's customary in this land to speak one's vow for the year ahead. Tell me, what is yours?
 Valentine's Day 1	 My, is this for me? I'm touched. I don't usually partake of human food, but I suppose I'll make an exception.
@@ -165,6 +167,7 @@ April Fools' 1	 Oh, I'm burning up... I'm not long for this world... Won't you g
 April Fools' 2	 Ow... I seem to have hurt my back. Would you come with me to my bed? A shame. I did mean it.
 Halloween 1	 Trick or treat. I'm a real vampire, you know. Give me your blood, or I'll play a trick on you.
 Halloween 2	 Oh? Lyca isn't with you? He dashed out in high spirits just a moment ago, saying he was off to gather sweets with you.
+Halloween 3	 A costume parade... What an amusing age. Humans who know nothing of true monsters, dressing themselves in the trappings of darkness.
 Christmas 1	 Merry Christmas. Rather amusing for a vampire to celebrate a holy day, don't you think? Let's fill tonight with magic and wonder.
 Christmas 2	 My, such a charming little Santa. When you beg so sweetly, how could I not be generous with my gifts? Merry Christmas.
 

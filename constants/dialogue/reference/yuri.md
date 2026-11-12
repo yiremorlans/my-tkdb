@@ -156,6 +156,7 @@ His Birthday 2	 Wha— You really... got me a birthday present!? F-Fine, I suppo
 His Birthday 3	 A birthday gift...for me? I-I can't imagine what it could be, but...very well. I shall evaluate your efforts!
 MC's Birthday 1	 I am here to celebrate your birthday. Do you feel honored? I've prepared a new formula for you. Let's continue this in the lab, shall we?
 MC's Birthday 2	 Happy birthday. I am doing you the honor of celebrating it. I hope you're prepared to spend this time mindfully.
+MC's Birthday 3	 Hmph. Today, I will graciously preside over a celebration of your birth—despite your being an ordinary specimen. We shall begin with the opening remarks of Yuri Isami.
 New Year's 1	 Happy New Year. I am on my way to make my first shrine visit. You didn't think me the type? I-It's just a tradition!
 New Year's 2	 A happy New Year to you. You noticed the pine arrangement at the entrance? Jiro obtained it.
 Valentine's Day 1	 Hmm, my blood sugar was just starting to drop. I suppose you do have it in you to be considerate every now and then... Pardon? Valentine's Day? ...(gasp)
@@ -166,6 +167,7 @@ April Fools' 1	 Hmph, did you honestly think you could fool me? I won't fall for
 April Fools' 2	 Confounded April Fool's Day... I'm calling off today's experiment. I refuse to speak to Jiro until tomorrow.
 Halloween 1	 Trick or treat! I have coordinated the ultimate matching costumes for Jiro and I... Yes, perfect.
 Halloween 2	 This? It is, quite obviously, a portrayal of Victor Frankenstein himself!
+Halloween 3	 Trick or treat? Hmph. If you truly have the nerve to play a trick on me, then by all means, try.
 Christmas 1	 Merry Christmas. You can hand me my present at your earliest convenience. You did prepare one for me, didn't you!?
 Christmas 2	 Merry Christm... Wh-what are you wearing?! Cover yourself with my lab coat! Quickly!
 

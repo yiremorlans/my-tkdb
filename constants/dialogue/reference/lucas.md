@@ -155,8 +155,10 @@ Winter Night	 On a clear, frosty night, you can see an aurora in the sky above F
 ### Special
 His Birthday 1	 I suppose today is my birthday. Thank you. If you don't mind, will you join me in praying for my twin brother's safety?
 His Birthday 2	 ...You want to celebrate my birthday? Thank you, MC. I'm sure somewhere out there someone is celebrating for my brother too.
+His Birthday 3	 Thank you for the birthday wishes. I’ll continue striving to better myself this coming year, so I can be worthy of the faith you place in me.
 MC's Birthday 1	 Happy birthday, MC. There is a reason you were born into this world, and it's something that should be celebrated.
 MC's Birthday 2	 Happy birthday, MC! I truly appreciate how lucky I am to be able to spend this day with you.
+MC's Birthday 3	 Happy birthday, [Name]. I promise I’ll keep you safe this year too, so you can spend your days in peace.
 New Year's 1	 Happy New Year. I've heard it's customary to visit a shrine, so I'm planning to invite Kaito to go with me. Would you like to come along?
 New Year's 2	 Happy New Year. The way Japan welcomes the new year is so calm and peaceful. It reminds me of home.
 Valentine's Day 1	 Thank you! This is all very new to me. In the UK, it's men who express their gratitude to women on Valentine's Day.
@@ -167,6 +169,7 @@ April Fools' 1	 How odd... Kaito has been acting peculiar all morning. I wonder 
 April Fools' 2	 In England, there's a rule that April Fool's mischief is only allowed until midday. Honestly, it's true!
 Halloween 1	 Is that you under that mask, MC? I could just tell. I don't really understand what's so fun about this holiday.
 Halloween 2	 Today marks the end of the light and the beginning of darkness. The boundary between this world and the next is at its thinnest, so take care.
+Halloween 3	 …There’s something odd lurking amongst all these costumes. Please stick close to me for the rest of the day, [Name]. Just a precaution.
 Christmas 1	 Happy Christmas! It's a shame I'm not able to celebrate Christmas Eve with my family this year, but I'm glad that I have all of you now.
 Christmas 2	 You look lovely, MC! That's a Santa Claus costume, isn't it? I am curious about the skirt, though.
 

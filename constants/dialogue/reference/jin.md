@@ -106,7 +106,7 @@ Affinity LVL 22	 You don't know about dining etiquette? I don't have time for th
 Night 1
 Affinity LVL 4	 Put my dinner over there. I'll eat later if I feel like it.
 Night 2
-Affinity LVL 5	 There aren't enough documents for the mission. Call my servant, Tohma.
+Affinity LVL 5	 I need more data for this case... Go find Tohma, servant.
 Night 3
 Affinity LVL 9	 Bianerus! ...I'm not feeling it today. You can go.
 Night 4
@@ -146,8 +146,10 @@ Winter Night	 You're staying here tonight, servant. I'll show you an aurora you 
 ### Special
 His Birthday 1	 A birthday party? This has Tohma written all over it, that asshole's always using me to— You're planning it? ...I'll think about it.
 His Birthday 2	 What? You got me a present? ...You can give it to me later. Come to my room in an hour.
+His Birthday 3	 ...Quit standing there like an idiot. If you're going to wish me a happy birthday, do it already. I'll allow it just this once.
 MC's Birthday 1	 The song I just played? It's G. F. Handel. He wrote it for the queen's birthday.
 MC's Birthday 2	 Hey, servant. Did you get the package from Tohma yet? ...No? Tch... What the hell is he doing...
+MC's Birthday 3	 It's your birthday, servant? Why should I care. If you want something, take it from that pile of boxes over there.
 New Year's 1	 Hope you're ready for another year being at beck and call, servant. First up, my New Year's courtesy calls. Go do them for me.
 New Year's 2	 ...What took you so long? You're already resigned to another year as my servant, aren't you? ...Hurry up and make my tea then.
 Valentine's Day 1	 What's that sad-looking box you're holding? ...Oh. No, don't throw it away. I'll take it.
@@ -158,6 +160,7 @@ April Fools' 1	 Hey, are you all right? ...Tsk. If that was a joke, it wasn't fu
 April Fools' 2	 ...I've only got one thing to say to you. Don’t lie to me. Keep that in mind when you open your mouth.
 Halloween 1	 Where the hell's Tohma? Asshole sent the brats to my room to beg for candy. Next time I see him I'm going to wring his fucking neck.
 Halloween 2	 Trick or treat? Huh. You've got guts. Come here. I'll give you a treat.
+Halloween 3	 Figured you'd show up. Tohma left some sweets over there. Take some for the brats too.
 Christmas 1	 Go tell Tohma what color dress you're wearing tonight. Why? Maybe I'll wear a matching ascot tie. If I feel like it.
 Christmas 2	 ...What tasteless rags are you wearing, servant? Take them off. Now.
 

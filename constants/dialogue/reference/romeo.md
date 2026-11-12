@@ -192,6 +192,7 @@ April Fools' 1	 Just you try and fool me—I'll tear those rags off you and thro
 April Fools' 2	 A drug to make me kinder? Cute. I hope you're prepared for what will happen when it doesn't work.
 Halloween 1	 Do you have face paint in your pores!? Go wash it off before you end up with hyperpigmentation!!
 Halloween 2	 What are those hands for? Charity isn't in my vocabulary. And any prank you pull I'll repay a thousandfold.
+Halloween 3	 ...I think you need cleansing oil more than you need sugar right now. Here. Use this later.
 Christmas 1	 Buon Natale! Go get ready—that reindeer's around again. This year I'm going to catch it for sure!!
 Christmas 2	 Buon Natale! Perfect timing. Get out on the floor in that outfit. You've got tables to wait.
 

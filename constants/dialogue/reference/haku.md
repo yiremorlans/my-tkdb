@@ -152,8 +152,10 @@ Winter Night	 Your hands hurt because of the cold? Let me see. Oh yeah, your fin
 ### Special
 His Birthday 1	 Wait, you got me a birthday present? You're so conscientious. Oh, I didn't mean it in a bad way. Thanks, I appreciate it.
 His Birthday 2	 Oh yeah... Today's my birthday, huh? If you’re the one celebrating me, I guess I’ll clear the rest of my day.
+His Birthday 3	 This is for me? Thanks. Look at that... You remembered, huh?
 MC's Birthday 1	 Hey, come over here a sec. Here. It's nothing special, but I got you a something. Today's your birthday, right?
 MC's Birthday 2	 Happy birthday. Today's your special day, so I'll take you anywhere you want, Your Highness.
+MC's Birthday 3	 Hey, there you are. Happy birthday. Today’s your day, princess. Whatever you want to do, I’m in.
 New Year's 1	 Happy New Year. I know it's a cliché, but I hope this year's a good one for you.
 New Year's 2	 Hey, happy New Year. I'm sensing it's gonna be a rough ride... I'm kidding. Let's take it easy and make it a good one.
 Valentine's Day 1	 Whoa, chocolate? I didn't think you'd give them to me too. Guess I better think of something good to get you in return.
@@ -164,6 +166,7 @@ April Fools' 1	 A bunch of spirits have been following you around all day, are y
 April Fools' 2	 Don't move, MC. ...Okay, you're good now. ...Ah, busted? Yeah, you got me. I was kidding.
 Halloween 1	 Looks like you've had your fair share of tricks today. I'll narrow down your options and just make it a treat, then.
 Halloween 2	 Trick or treat? Huh... So you want me to play a trick on you then? Pfft...
+Halloween 3	 Oh, look at that. A cute little ghost. Bad news, though—I'm all out of candy. Guess you'll just have to give me the trick instead.
 Christmas 1	 You look like you're having fun. Do you have a present for me, Little Miss Santa? Haha, I'm just kidding. Here you go. Merry Christmas.
 Christmas 2	 Cute Santa. Sorry, couldn't help myself. It really does suit you. Mind coming just a little closer?
 

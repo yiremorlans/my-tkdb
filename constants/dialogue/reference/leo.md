@@ -153,8 +153,10 @@ Winter Night	 The ghouls won't listen to you? No shit. You realize we were hand-
 ### Special
 His Birthday 1	 You got me a birthday present? Oh, thanks. Just put it over there, I'll look at it later. I will, I promise.
 His Birthday 2	 Yeah, it's my birthday. What do I want? ...How about you give me your bank card?
+His Birthday 3	 Hm? I’m about to go live and do an unboxing. You brought a tribute for me too? Great, just put it over there.
 MC's Birthday 1	 It's your birthday? I'll help you celebrate. Meet me behind the garage later.
 MC's Birthday 2	 Hey, Honor Roll. Heard it's your bday. I'll make you one of those surprise birthday videos. Shut up, just go stand over there.
+MC's Birthday 3	 It's your birthday today, Honor Roll? Perfect, I need content for a story. Let's do a birthday toast!
 New Year's 1	 Happy New Year! I prefer digital payment. What do you mean, what do I mean? I'll be nice to you again this year, so pay up.
 New Year's 2	 Yeah, happy New Year. What do you want? I'm kind of busy right now. I'm about to stream my New Year's gift money collection run.
 Valentine's Day 1	 This is that ultra-spicy chocolate they only sell this time of year... I'm actually genuinely stoked right now.
@@ -165,6 +167,7 @@ April Fools' 1	 Ha ha. You were photobombing one of my pics so I uploaded it and
 April Fools' 2	 Hey, Honor Roll, did you know if you pretend to be a dog on April Fool's you get a year of peace? Of course it's true.
 Halloween 1	 Trick or treat! Ugh, the only good thing about this dumb event is the video content it provides.
 Halloween 2	 Hey, why aren't you wearing the sexy policewoman costume I got for you, Honor Roll? Go change.
+Halloween 3	 Have you seen Sho yet? Ahaha! This year's look is sexy ninja girl. You're welcome.
 Christmas 1	 This Christmas-themed food Sho made might pull some traffic. All right, uploaded. You can eat the rest, Honor Roll. Say "ah"!
 Christmas 2	 Ahaha! I can't believe you're actually wearing that Santa costume I got you. Stand over there so I can take a pic. Merry Christmas.
 

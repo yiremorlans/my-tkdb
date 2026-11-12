@@ -163,8 +163,10 @@ Winter Night	 It's cold outside so some of the critters have been sneaking into 
 His Birthday 1	 It's my birthday?! Oops, totally slipped my mind... Thanks for remembering!
 His Birthday 2	 Hmm? What is this? ...A birthday present for me?! You're such a good kid...
 His Birthday 3	 Thanks for celebrating my birthday. I must be doing something right for you to go to all this trouble, huh? Gahaha!
+His Birthday 4	 Huh? What's this? ...You got me a birthday present?! You're such a good egg...
 MC's Birthday 1	 Happy birthday. The Capybus is all yours today—I've got a custom birthday tour all planned out for you!
 MC's Birthday 2	 Hey, there you are! MC! Today's your birthday, right? I got a little something planned for you. Come with me!
+MC's Birthday 3	 Hey there, birthday star! We're doing a capybara parade at the park in your honor!
 New Year's 1	 Happy New Year! How'd I ring it in? I was milking the cow and when I looked up I'd totally missed the first sunrise! Gahaha!
 New Year's 2	 Happy New Year! We're having a little shindig at Rui's place after work tonight. Wanna come?
 Valentine's Day 1	 You're kidding, I can really have this?! They say a little sugar helps sweeten a tired day! Thanks a million, this'll keep me going a while!
@@ -175,6 +177,7 @@ April Fools' 1	 Can you believe this? Ren got up early, and Towa fed everyone fo
 April Fools' 2	 Aw no! The Capybus sprouted wings and flew off... April Fool's! Gahaha!
 Halloween 1	 Check it out! The pumpkin Capybus, in town for three days only! I sacrificed sleep and some of our budget to get her ready!
 Halloween 2	 Trick or treat? Guess I'll have to give you some of these sweet potato chips then.
+Halloween 3	 Happy Halloween! Check this out—I put sheets on all the little ones. Now I've got an army of tiny ghosts!
 Christmas 1	 Merry Christmas! This is a reindeer, she lives up in the mountains! And I'm Sagara Claus! Gahaha!
 Christmas 2	 What's the story behind that get-up? Nah, I didn't mean it like that! It suits you! 'Tis the season and all, right?
 

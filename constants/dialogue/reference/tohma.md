@@ -165,6 +165,7 @@ April Fools' 1	 What I wouldn't give to knock that bastard Jin's head off... Oh 
 April Fools' 2	 Oh? And who might you be? I must insist that trespassers vacate the premises... I'm joking, of course. I didn't expect such a look from you.
 Halloween 1	 Trick or treat. Oh? So you prefer tricks... Interesting.
 Halloween 2	 I was wondering why the second-years are so excitable today. So it's Halloween. Very well. Come back later this evening.
+Halloween 3	 Welcome. I’ve been expecting you. The sweets are waiting in the Captain’s room. Or is it the other option you prefer?
 Christmas 1	 Merry Christmas. We'll be holding a party in Frostheim later. Would you care to join us?
 Christmas 2	 A very Merry Christmas to you. Are you going to see the Captain? Oh no, no need for you to change. Please, do go and visit him just as you are now.
 

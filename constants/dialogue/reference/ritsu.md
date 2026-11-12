@@ -142,8 +142,10 @@ Winter Night	 People say that hard work is the key to success, but it only took 
 ### Special
 His Birthday 1	 Indeed, today is my birthday. I've always celebrated this day by enjoying my mother's cooking, but from this year I am striving for a more self-reliant existence.
 His Birthday 2	 You got me a birthday present? Thank you. I’ll record the package contents and time of receipt immediately.
+His Birthday 3	 With another year to my name, my market value has increased once more. As my business partner, you would do well to keep pace.
 MC's Birthday 1	 Happy birthday. A year older, a year wiser. I have high hopes for your performance in the coming year.
 MC's Birthday 2	 Happy birthday. Here is an item with the same monetary value as the item you gifted me for my last birthday. Please accept it.
+MC's Birthday 3	 Since today is your birthday, I’ve reserved approximately four hours in my schedule for a special discussion.
 New Year's 1	 Happy New Year. Let's devote these next 365 days—or 8760 hours—to finding fitting solutions to the challenges that come our way.
 New Year's 2	 Happy New Year. Let us proceed into this year without lapsing in the essentials-inquiry, documentation, and order.
 Valentine's Day 1	 Thank you for the chocolates. Are you gifting them to me out of social obligation, or is this an expression of affection? Your answer will influence what you receive in return.
@@ -154,6 +156,7 @@ April Fools' 1	 The spreading of false rumors is subject to strict punishment un
 April Fools' 2	 When a lie undermines the trust built day by day, what conceivable worth can it claim? I invite you to share your reasoning.
 Halloween 1	 Coercing another party to choose between a "trick" or a "treat" could amount to intimidation. Engage in such festivities at your own risk.
 Halloween 2	 The words "trick or treat" you just uttered satisfy the elements of a threat. Shall I handle your defense?
+Halloween 3	 The campus is unusually rowdy today... A Halloween party? That explains the Phantom of the Opera I saw earlier...
 Christmas 1	 Religious freedom is guaranteed by Article 20 of the Constitution. If this is a day that you wish to celebrate, then I will accept that.
 Christmas 2	 That appears to be a costume modeled after Santa Claus. While I doubt its persuasiveness in court, its marketing appeal seems promising.
 

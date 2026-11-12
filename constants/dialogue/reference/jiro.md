@@ -163,6 +163,7 @@ His Birthday 2	 Yes, it should be my birthday today. I can have this? Oh. Thank 
 His Birthday 3	 Is it my birthday today? Yes, it says so on my chart. I didn't expect you to remember.
 MC's Birthday 1	 Oh, it's your birthday today, isn't it? What should I do? I suppose I'll go to your room later.
 MC's Birthday 2	 It's time for your check up. Please roll your sleeve and sit here. Yes, the right arm is fine. Also, happy birthday.
+MC's Birthday 3	 You once said you were worried about dry skin, so I prescribed a moisturizer. It's technically a present.
 New Year's 1	 Happy New Year. Why are you looking at me like that? Even I celebrate New Years.
 New Year's 2	 Happy New Year. Have I had my first bath of the year? Not yet. Okay. I'll go now.
 Valentine's Day 1	 What's this packet? I can't eat solids. You made it? Oh. I can probably eat some of it then.
@@ -173,6 +174,7 @@ April Fools' 1	 Yuri's kicking up a fuss and saying I deceived him? I don't reme
 April Fools' 2	 You want me to lie? Okay. If I only need to fool you, I don't think it will be that hard.
 Halloween 1	 I don't know much about Halloween. I can't eat candy though, so I have to play a trick on you, right?
 Halloween 2	 This? It's a Frankenstein's Monster costume. Yuri put it together for me. He did the makeup too.
+Halloween 3	 Trick or treat? I haven't prepared either. If you make an appointment now, I'll have something ready for you then.
 Christmas 1	 This tree? It's a fir tree. Yuri told me to get one, so I cut it down and carried it back here. My special artifact doesn't cut very well.
 Christmas 2	 You're wearing something that short at this time of year? When blood cools at your extremities it dulls mental function. But it does look good.
 

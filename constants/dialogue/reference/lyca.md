@@ -174,6 +174,7 @@ His Birthday 1	 Oh right, it's my birthday. Neros told me my mom wrote down the 
 His Birthday 2	 Huh? That's a birthday present? For me? ...Thanks. Can I open it? ...Whoa. This is awesome!
 MC's Birthday 1	 It's your birthday, right? No, I only know 'cause that blond gigolo was yelling about it. ...Here's your present.
 MC's Birthday 2	 Here. You can have this. You said you liked it, right? ...It's fine. It's your birthday, so it's special.
+MC's Birthday 3	 ...Hey, [Name]. What do you want the most right now? No reason. Just say it already!
 New Year's 1	 Hope you have a happy and prop...props... prosp...prospinous? new year... Damn it, I practiced that for ages...
 New Year's 2	 May the new year bring you... Abundant! Prosperity! And happiness! See? I can say it.
 Valentine's Day 1	 Oh, thanks. Professor Nicolas said I can't eat chocolate, so I'll give it to Casanova and Gigolo!
@@ -184,6 +185,7 @@ April Fools' 1	 Why's everyone being so mean today?! Telling lies and laughing a
 April Fools' 2	 Look, MC! This medicine'll make Romi nice! Kurosagi gave it to me!
 Halloween 1	 My ears and tail are out? I know, I'm doing it on purpose. The moth-eaten Casanova said it's okay today.
 Halloween 2	 Rowr, Rowr! Huh? I'm practicin' for Halloween. The moth-eaten Casanova said I could get sweets if I do this.
+Halloween 3	 Look! I'm a yeti today! Suba— I mean, a yuki-onna bought the whole costume for me!
 Christmas 1	 Hey, look! When I got up this present was next to my pillow! Santa really came...
 Christmas 2	 ...Here, put this on. It's my hoodie. Don't ask why, dummy! Santa doesn't wear clothes like that!!
 

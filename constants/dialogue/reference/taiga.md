@@ -159,8 +159,10 @@ Winter Night	 I don't like the cold... Come on, come be my hot water bottle! Let
 ### Special
 His Birthday 1	 Huh? Whose birthday? Mine? Gyahaha! Totally forgot about it! Grazie!
 His Birthday 2	 What? Things were just getting good. My birthday? Good timing. Go buy me some chips from over there.
+His Birthday 3	 ...There's something way tastier than cake here, isn't there? Drop the innocent act and get those clothes off, kitty-cat.
 MC's Birthday 1	 Is it your birthday today? That little twerp told me. Okay, you can take one thing from my room.
 MC's Birthday 2	 Here, kitten. What? You got eyes? It's my wallet. Go buy yourself something nice.
+MC's Birthday 3	 Huh? It’s your birthday? Sure, I'll give you a present. Come sit over here.
 New Year's 1	 You gonna go skipping off to a shrine together just to get your fortune told? That's dumb. Here, let me guess what it'll say—you'll have an okay year.
 New Year's 2	 (yawn) Oh, you're still alive. Huh? Oh, my first dream of the year was you dying. Gyahaha!
 Valentine's Day 1	 Is that for me? Sure I'll take it, but it better be edible.
@@ -171,6 +173,7 @@ April Fools' 1	 I'm gonna die soon, you know? And I'm taking Lulu with me. ...Go
 April Fools' 2	 Hey, kitty-cat. I'll break your curse. Abracadabra! Gyahaha! Just kidding!
 Halloween 1	 Trick or treat. Where you gonna put your chips, kitty-cat?
 Halloween 2	 Trick or treat? You're into both, though. You really want it? Down on your knees, kitty-cat.
+Halloween 3	 Hey, kitten. I'm in a good mood today, so I'll let you choose. Trick or treat.
 Christmas 1	 Come on Santa kitty, tie a ribbon 'round yourself and get over here. Gyahaha!
 Christmas 2	 You know what you're getting yourself into showing up here dressed like that. No slipping away tonight, kitten.
 

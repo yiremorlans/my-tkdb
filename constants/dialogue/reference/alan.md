@@ -146,8 +146,10 @@ Winter Night	 It's freezing... Guess I'll break out the kerosene heater. Gotta m
 ### Special
 His Birthday 1	 Whose birthday? ...Mine? Oh... Forgot all about it. ...Thanks.
 His Birthday 2	 Today? Hold on. ...April 25th. What's that? A present?
+His Birthday 3	 I'm a little too old to be celebrating my birthday... But since you went to the trouble. Wait here—I'll go wash my hands.
 MC's Birthday 1	 Today's your birthday, yeah? ...Get your stuff. I'll take you for a drive.
 MC's Birthday 2	 Meet me out back, MC. ...No, that's not what I meant. I got something I need to give you.
+MC's Birthday 3	 Today’s your day. If there’s something you want, say it. I'll take care of it best I can.
 New Year's 1	 You helped us out a lot last year. Hope you'll stick around.
 New Year's 2	 MC. I'm taking the guys for the first shrine visit. You want to come?
 Valentine's Day 1	 This chocolate's for me? Do everything proper, don't you? Thanks. I appreciate it.
@@ -158,6 +160,7 @@ April Fools' 1	 I'm actually a dog. Woof. ...Sorry, that was a lie. Forget I sai
 April Fools' 2	 Hey, look outside. It's snowing. ...Wait. That was a lie. Don't fall for it. Bandana... This isn't how he said it'd go...
 Halloween 1	 Saw an anomaly I'd never seen before just now. Ran away when I tried to stop it. That's when I realized it was a human.
 Halloween 2	 There's a lot of suspicious-looking characters around campus today. Tohma said not to worry about it, but... Be careful.
+Halloween 3	 ...Huh? Trick...? Bandana told me to get sweets, so I did... I'm supposed to do a trick?
 Christmas 1	 ...You should spend Christmas with family.
 Christmas 2	 What are you wearing...? Put this on. You're gonna catch a cold.
 

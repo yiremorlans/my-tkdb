@@ -146,8 +146,10 @@ Winter Night	 People say winter makes you want to snuggle up with someone, but I
 ### Special
 His Birthday 1	 A present? For me? Thank you... I didn't expect you to do anything for my birthday, so I'm a little caught off guard. I really appreciate it.
 His Birthday 2	 You got me a birthday present? I'm touched...Thank you so much. I'll treasure it.
+His Birthday 3	 This means a lot to me, having you celebrate my birthday like this... Just sharing this moment with you already feels like the perfect gift.
 MC's Birthday 1	 Um... Happy birthday. I really hope this year will be a wonderful one for you.
 MC's Birthday 2	 Happy birthday, MC. Please accept this as a token of my gratitude for all you do for me.
+MC's Birthday 3	 Happy birthday. I actually ordered a cake from a pastry shop I like. If you're free... would you share it with me?
 New Year's 1	 Happy New Year. I hope I can depend on your guidance and support again this year.
 New Year's 2	 Happy New Year. Last year had its ups and downs... but I hope this year will be a little kinder to us all.
 Valentine's Day 1	 Chocolate? Oh, It's Valentine's Day, isn't it? Does that mean these are for me...?
@@ -158,6 +160,7 @@ April Fools' 1	 Earlier, Haku told me he was switching houses. It gave me a real
 April Fools' 2	 Hmm... It's tricky to think of lies, and to spot them. But maybe today's the one day it's better not to overthink things and to just have a little fun.
 Halloween 1	 Happy Halloween. I know it's nothing special, but I've prepared some treats for the occasion. Oh... But you're more than welcome to play a trick instead.
 Halloween 2	 Halloween actually started out as a festival to drive away evil spirits. And did you know— Oh, sorry. I got a little carried away.
+Halloween 3	 H-Happy Halloween! This year, Lyca and I dressed up as snow spirits. What do you think?
 Christmas 1	 Merry Christmas. We already have our New Year decorations up in Hotarubi, so it has a real east-meets-west atmosphere now. I hope everyone is okay with it...
 Christmas 2	 MC?! Oh, um, you just look a little...different, than usual, and it took me by surprise. No, that Santa costume really suits you.
 

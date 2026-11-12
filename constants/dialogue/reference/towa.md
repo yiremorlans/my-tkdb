@@ -170,8 +170,10 @@ Winter Night 2	 What? Are you cold, Dandelion? I'll cuddle you, so come outside 
 ### Special
 His Birthday 1	 Yep, it's my birthday today! You want to give me a present? Okay, then tell me who you like!
 His Birthday 2	 What's this, Dandelion? A present? For my birthday? Heh heh ♪ Big squeeze!
+His Birthday 3	 I'm the king today, right? I'm gonna give you lots of orders, Dandelion!
 MC's Birthday 1	 Happy birthday, Dandelion! I picked this Aphrodite Orchid for you from a secret spot. Say "ah"!
 MC's Birthday 2	 Found you, Dandelion! This is called a tweedia. I grew it for you for your birthday.
+MC's Birthday 3	 Today you're nearly as much of a legend as I am, Dandelion. So you have to stay with me until it's tomorrow, okay?
 New Year's (Night)	 Haru told me that today's a special day in Japan. Are you happy, Dandelion?
 New Year's	 New Year's is funny! Everyone keeps bowing their heads. Animals do that every day, you know?
 Valentine's Day (Night)	 I know what these are! They're Valentine's Day chocolates! They're Coriander's favorite food. You're giving them to me? Thanks...?
@@ -182,6 +184,7 @@ April Fools' (Night)	 Haru's a dope! I hate liars! You won't lie to me, will you
 April Fools'	 When you said you liked me before... Was that real? Or was it a lie?
 Halloween (Night)	 Trick or treat! If you don't give me lots of delicious flowers, I'm going to play a trick on you!
 Halloween	 Haru told me to wear this bat mask all day today. But I really, really hate it!!
+Halloween 3	 There's a party for spooks today! Let's go together, Dandelion! I'll beat all of them ♪
 Christmas (Night)	 Heh heh ♪ Merry Christmas! I heard you're supposed to spend today with your soulmate! I can't wait!
 Christmas	 A red Dandelion! You're supposed to spend the night with the people special to you today. Come over here, Dandelion.
 

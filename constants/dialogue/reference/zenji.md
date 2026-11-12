@@ -152,8 +152,10 @@ Winter Night	 Are you cold? Then let me warm you up... My dear, why are you scoo
 ### Special
 His Birthday 1	 Is this... a birthday present...? (hic) (sob) I'm the luckiest fella around...!
 His Birthday 2	 Today, my dear, is a miracle day destined for the future history of literature—my birthday! There it is. That smile's exactly what I was hoping for.
+His Birthday 3	 Oh? What's the matter? Is that...for my birthday...? (sob) Thank you... Thank you...
 MC's Birthday 1	 I've planned the perfect day to celebrate the miracle of your birth... We'll start with an ode to you, accompanied by my biwa.
 MC's Birthday 2	 Happy birthday! A song for you, lyrics and composition by Zenji Kotodama... "My Dear."
+MC's Birthday 3	 And now, a private recital for the birthday girl, performed by Zenji Kotodama himself. Go on, have a seat
 New Year's 1	 Happy New Year, my dear. I'll be making the first shrine visit with Haku—care to join us?
 New Year's 2	 Happy New Year, my dear! Another twelve months keeping me right in the swing of things, I'd say! Ha ha!
 Valentine's Day 1	 My dear... is this for me? (hic) (sob) I'll treasure it always...!
@@ -164,6 +166,7 @@ April Fools' 1	 No, I would never lie to you. An inspired man spins fiction with
 April Fools' 2	 MC!! Can you see me?! Oh, thank goodness... That lout tricked me!
 Halloween 1	 Why, you gave me quite a fright in that getup! What a marvelously queer celebration this is! So this is the legacy of westernization...
 Halloween 2	 Say, those are some swanky glad rags you're rocking! You and I are going to steal the show tonight, my dear.
+Halloween 3	 Trick or treat! Feast your eyes, my dear! Tonight, I've transformed myself into a ghost!
 Christmas 1	 Merry Christmas! I've completed a new fairy tale. May my wishes reach the hearts of children everywhere...
 Christmas 2	 Merry Christmas. Just for tonight, I'm going to lay down my pen, so let's pray together for the happiness of every child across the globe.
 

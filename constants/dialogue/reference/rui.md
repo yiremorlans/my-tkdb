@@ -169,8 +169,10 @@ Winter Night	 Here, this Rui-original hot cocktail will warm you up! I'll blow o
 ### Special
 His Birthday 1	 Yeah, it's my birthday today! Oh damn, you're gonna celebrate it with me!? No way, I'm like, super touched right now!!
 His Birthday 2	 What's this? A present?! No way, my heart!! Let me get you a drink to say thank you, on the house!
+His Birthday 3	 Birthday wishes from you? Wow, I must be the luckiest guy around. Seriously, thanks for all the amazing memories!
 MC's Birthday 1	 MC... Happy birthday!! C'mon, birthday girl, sit down and chill out! This is your day, you should take it easy!
 MC's Birthday 2	 Happy bday! Dear MC's parents, seriously major props and my eternal gratitude for bringing such a cutie into this world!
+MC's Birthday 3	 Ta-da! Introducing today’s star—[Name]! This seat right here is yours. Come on, let’s start with a toast!
 New Year's 1	 Happy New Year! Want to start the year off on a high and come on a shrine date with me?
 New Year's 2	 MC, happy New Year! I'm out grabbing stuff for the party tonight. Obviously you're welcome to crash it!
 Valentine's Day 1	 Oh damn, are these for me? My heart! Is this your way of professing your love to me? Do I have a shot here?
@@ -181,6 +183,7 @@ April Fools' 1	 Guess what!? I finally broke my curse! Let's hold hands... just 
 April Fools' 2	 I just saw Lyca run off with some weird bottle... He definitely got scammed by someone.
 Halloween 1	 Happy happy happy Halloween!! Trick or treat! Obviously I'm picking trick, ahaha!
 Halloween 2	 Look, MC! Matching costumes! Since we've got it, let's rock the curse twin look!
+Halloween 3	 There you are! I've been dying to see your costume! Wait, can I get a pic?!
 Christmas 1	 Merry Christmas, MC! Oh man, I must be like, super blessed to get to spend it with you!
 Christmas 2	 MC, that Santa fit... My heart! Hold on, we gotta take a selfie together!
 

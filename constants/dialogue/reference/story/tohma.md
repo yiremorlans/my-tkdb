@@ -52,7 +52,7 @@ Short ambient barks while he walks campus.
 *Kaito: Anyway, that just goes to show how charismatic a leader Jin used to be.*
 **Tohma: Used to be? He still is.**
 **Tohma: Mind your wording.**
-*Kaito: Dude, mind your wording! I already told*
+*Kaito: Dude, mind your wording! I already told you—*
 **Tohma: Our captain has gifted us in our inexperience a tremendous opportunity for growth.**
 *NAR: Tohma interrupted Kaito with a smile.*
 **Tohma: For you see, any mission he is a part of would be resolved far too quickly.**

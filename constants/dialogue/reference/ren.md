@@ -163,8 +163,11 @@ Winter Night	 That clown broke my window so my room's like a freezer... Oh, don'
 ### Special
 His Birthday 1	 You got this for me? That clown's been spreading my personal info around... No, it's fine, I'll still take it. Thanks.
 His Birthday 2	 A birthday present? Thanks. Huh? Senpai, where did you get this?
+His Birthday 3	 You got me a present? ...Thanks. Can I open it? ...What? Where did you even find one of these?!
+His Birthday 4	 Birthdays are just proof you’re getting older. What’s there to celebrate? I guess if it's from you though...I'll take it.
 MC's Birthday 1	 Happy birthday, MC. ...Isn't it kind of rude to look so surprised I'd celebrate your birthday? That came from the heart, you know.
 MC's Birthday 2	 Hey, come with me a sec. Here. It's for you. Don't overthink it. That clown just kept bugging me about celebrating...
+MC's Birthday 3	 Come by my job later. Don’t read into it or anything... You've always got room for cake, right?
 New Year's 1	 Happy New Year. My resolution? Escaping the hell hole that is Jabberwock, for starters.
 New Year's 2	 The calendar changes and suddenly everything's supposed to be different? Sure, whatever. Anyway... Guess we're stuck with each other again.
 Valentine's Day 1	 You got me chocolates? You're the type who does all this kind of stuff, huh? No, it's fine, you went to the trouble and everything so I'll take them.
@@ -175,6 +178,7 @@ April Fools' 1	 Guess what? I got special permission to switch houses. That nigh
 April Fools' 2	 (sigh) You think you can throw out a "just kidding!" and get away with anything today? That's shallow.
 Halloween 1	 I hope everyone who gets excited about Halloween lives in misery for the rest of their lives. Why the hell do I have to help out with this stupid themed tour?
 Halloween 2	 Halloween? Come on, it's nothing but a clown parade for the clout chasers... Wait, you're dressing up? Seriously?
+Halloween 3	 Ugh, the extroverts are so loud... Since when did Halloween become an excuse for them to dress in skimpy outfits and party?
 Christmas 1	 Can I ask you a question, MC? You don't still believe in Santa Claus, do you? Never mind, it doesn't matter. Have a good Christmas.
 Christmas 2	 Whoa, what's with that outfit? Way to jump scare me... You know, skimpy Santa cosplay at Christmas is a pretty basic move...
 
