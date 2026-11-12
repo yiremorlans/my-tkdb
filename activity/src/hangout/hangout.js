@@ -192,6 +192,12 @@ export class Hangout {
     return null;
   }
 
+  /** The hotspot's own line pool (rig.json hotspot `line`) if this tier has one, else null. */
+  spotLine(spot) {
+    const name = this.rig.hotspots?.[spot]?.line;
+    return name && this.pool(name)?.length ? name : null;
+  }
+
   /** A tap at a reference-space point. Returns what happened, for the UI. */
   tapAt(point, t) {
     const spot = hotspotAt(this.rig, this.renderer, point);
@@ -226,10 +232,16 @@ export class Hangout {
    * face and pose of the spot unless the rig sets a `<article>Pat` reaction. Articles that are only out in some poses
    * (`shownOnly`) leave the spot alone. articles.js passes `worn: false`
    * and decides itself.
+   *
+   * A hotspot's `line` names a pool of its own for that one spot (Haru's
+   * prosthetic right hand: `hand_r` draws `prostheticTap`), keeping the
+   * spot's face and pose; a tier with no such pool keeps the reaction's.
    */
   spotInfo(spot, { worn = true } = {}) {
     const hotspot = this.rig.hotspots[spot] ?? {};
     const info = { annoyance: hotspot.annoyance ?? SPOT_ANNOYANCE[spot], reaction: hotspot.reaction ?? TOUCH_SPOTS[spot] };
+    const own = this.spotLine(spot);
+    if (own) info.line = own;
     if (!worn) return info;
     for (const [name, a] of Object.entries(this.rig.articles ?? {})) {
       if (a.shownOnly || a.blocks === false || !coveredSpots(a.covers, this.tier).includes(spot)) continue;

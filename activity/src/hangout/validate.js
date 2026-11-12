@@ -179,6 +179,13 @@ async function outfitProblems(rig, name, { readJson, mocIds, lines }) {
 
   const ids = mocIds && refs.Moc ? await mocIds(join(dirname(outfit.model), refs.Moc)) : null;
   problems.push(...articleProblems(outfit.articles, { hotspots, parts, ids, lines }));
+  // A hotspot's own pool (`line`) starts at new, or its early taps would
+  // quietly draw the spot's normal pool.
+  for (const [spot, h] of Object.entries(hotspots)) {
+    if (h?.line == null) continue;
+    if (typeof h.line !== "string" || !h.line) problems.push(`hotspots.${spot}.line must be a pool name`);
+    else if (lines && !lines[DIALOGUE_TIERS[0]]?.[h.line]?.length) problems.push(`hotspots.${spot}.line: no ${h.line} lines at ${DIALOGUE_TIERS[0]}`);
+  }
   for (const [name, a] of Object.entries(outfit.articles ?? {})) {
     if (a?.offPose == null) continue;
     for (const g of [a.offPose, `${a.offPose}_hold`, `${a.offPose}_return`]) {

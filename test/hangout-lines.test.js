@@ -68,7 +68,9 @@ for (const file of files) {
       assert.ok(lines[tier], `${file}: no ${tier} tier`);
       // Article pools (hatPat, peekabooOff...) follow the same house rules.
       const articlePools = Object.keys(lines[tier]).filter((k) => /^[a-z]+(Pat|Off)$/.test(k));
-      for (const trigger of [...TRIGGERS, ...articlePools]) {
+      // So do pools a rig hotspot names for itself (Haru's prostheticTap).
+      const spotPools = Object.keys(lines[tier]).filter((k) => /^[a-z]+Tap$/.test(k) && !TRIGGERS.includes(k));
+      for (const trigger of [...TRIGGERS, ...articlePools, ...spotPools]) {
         const article = covered(trigger, tier);
         if (article && !lines[tier][trigger]) {
           const pat = DIALOGUE_TIERS_UP_TO(tier).map((t) => lines[t]?.[`${article}Pat`]).find(Boolean);

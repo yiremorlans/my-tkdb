@@ -481,7 +481,10 @@ export function attachHolds(scene, { warmth, onStart, debug, coach = attachCoach
       holding = null;
       // Over an article, the tap is the article's (articles.js).
       if (article) scene.onTap?.(hangout.tapAt(point, scene.time));
-      else hangout.react(TAP_REACTION[spot], scene.time, spot);
+      else {
+        const line = hangout.spotLine(spot);
+        hangout.react(TAP_REACTION[spot], scene.time, spot, line ? { line } : undefined);
+      }
       return;
     }
     onStart?.();

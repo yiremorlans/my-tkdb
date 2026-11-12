@@ -159,7 +159,11 @@ checks it, in the browser on load and in
   hotspot's `rect` is normalized to the combined bounds of the part's
   visible drawables, read every tap, so it follows the art through poses.
   Outfit `parts` and `hotspots` merge over the shared ones (the body
-  differs per outfit; the face doesn't).
+  differs per outfit; the face doesn't). A hotspot's `line` names a pool
+  of its own for that spot, with the spot's usual face and pose (Haru's
+  `hand_r` draws `prostheticTap`, his prosthetic; `hand_l` keeps
+  `handTap`). A tier without that pool falls back to the nearest lower
+  tier's, then to the spot's normal pool.
 - **Outfits.** Each outfit names its `model3.json`; `defaultOutfit` picks
   the one shown first. Which outfits each character gets is tracked in
   [`live2d-outfits.md`](./live2d-outfits.md): academy plus one of

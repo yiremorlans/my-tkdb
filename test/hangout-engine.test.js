@@ -248,3 +248,20 @@ test('a side spot twitches and clenches its own arm; other spots both', () => {
   hangout.frame(2.01, 0.01);
   assert.deepStrictEqual(renderer.handPose, { r: 'relaxed', l: 'relaxed' }, 'a twitch alone swaps no pose');
 });
+
+test("a hotspot's own line pool replaces the spot's lines only where a tier has it", () => {
+  const r = rig({
+    hotspots: { hand_r: { part: 'hand', line: 'prostheticTap' }, hand_l: { part: 'hand' } },
+    expressions: { head: 'head', moods: { default: {} } },
+  });
+  const lines = { new: { handTap: ['plain'] }, known: { handTap: ['plain'], prostheticTap: ['arm'] } };
+  const at = (tier) => {
+    const renderer = { rig: r, moodName: 'default', handPose: {}, setMood() {}, update() {} };
+    return new Hangout({ renderer, motion: { blinking: () => false, pose: () => ({}) }, lines, tier });
+  };
+  assert.strictEqual(at('new').spotInfo('hand_r').line, undefined, 'no pool at new: the spot keeps handTap');
+  assert.strictEqual(at('known').spotInfo('hand_r').line, 'prostheticTap');
+  assert.strictEqual(at('warm').spotInfo('hand_r').line, 'prostheticTap', 'a higher tier falls back to the lower pool');
+  assert.strictEqual(at('known').spotInfo('hand_l').line, undefined, 'the other hand keeps handTap');
+  assert.strictEqual(at('known').spotInfo('hand_r').reaction, 'handTap', 'face and pose stay the hand tap');
+});
