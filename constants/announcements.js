@@ -64,6 +64,13 @@ export const ANNOUNCEMENTS = [
     showFrom: "2026-11-12T00:00:00-05:00",
     startsAt: "2026-11-14T14:00:00-05:00", // 2 PM Eastern (EST)
   },
+  {
+    id: "reset-2026-11-14",
+    kind: "reset",
+    showFrom: "2026-11-14T14:00:00-05:00",
+    endsAt: "2026-11-17T14:00:00-05:00", // claimable for 3 days from the start
+    message: "Thanks for waiting out the maintenance. Here's a free cooldown reset.",
+  },
 ];
 
 export const ANNOUNCEMENT_KINDS = ["maintenance", "reset"];
