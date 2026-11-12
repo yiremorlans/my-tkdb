@@ -768,7 +768,6 @@ export const CHARACTERS = [
     firstName: "Haru",
     lastName: "Sagara",
     house: HOUSES.JABBERWOCK,
-    additionalLocations: [HOUSES.DIONYSIA],
     images: {
       uniform: "Haru_Sagara_Uniform.png",
       casual: "Haru_Sagara_Casual.png",

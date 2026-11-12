@@ -175,7 +175,7 @@ test('a character reaches their attributed locations and signature spots, and no
 });
 
 test('a borrowed location is reachable without changing the character\'s house', () => {
-  // The three characters who can be found outside their own house. This is the
+  // The characters who can be found outside their own house. This is the
   // reason attributedLocations exists: before it they could only ever be shown
   // on their own house's turf, while the old location-first draw still counted
   // the borrowed house as extra chances to be *picked*. Exactly backwards — a
@@ -183,7 +183,6 @@ test('a borrowed location is reachable without changing the character\'s house',
   const expectations = {
     tohma: { house: 'Frostheim', alsoSeenAt: ['Vagastrom', 'Jin_Room'] },
     lyca: { house: 'Obscuary', alsoSeenAt: ['Hotarubi'] },
-    haru: { house: 'Jabberwock', alsoSeenAt: ['Dionysia'] },
   };
 
   for (const [id, { house, alsoSeenAt }] of Object.entries(expectations)) {

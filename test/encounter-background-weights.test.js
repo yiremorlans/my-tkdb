@@ -82,6 +82,12 @@ test('Haru can turn up at the Obscuary bar, unboosted', () => {
   );
 });
 
+test("Haru's bar weighs 4x after dark, since it has no _PM file to boost", () => {
+  const day = countsByFile(turfSpots(getCharacterById('haru'), DAY));
+  const night = countsByFile(turfSpots(getCharacterById('haru'), EVENING));
+  assert.strictEqual(night.get('Obscuary_Bar.png'), day.get('Obscuary_Bar.png') * 4);
+});
+
 test('/roam finds Benkei on turf less often than everyone else', () => {
   assert.ok(roamTurfProbability(getCharacterById('benkei')) < TURF_PROBABILITY);
   assert.strictEqual(

@@ -586,6 +586,9 @@ export function getRandomBackgroundForCharacter(character, now = new Date()) {
 // shared it — 1.73% for Benkei against 6.22% for Edward, a 3.6x spread nobody
 // authored. Weighting a *spot* for a character who has already been drawn
 // expresses the same flavor and cannot touch the character distribution.
+//
+// A weight is a number, or { day, evening } for a spot with no _PM file that
+// should still read as a night spot (isEveningHour picks which applies).
 export const CHARACTER_SIGNATURE_SPOTS = {
   ren: {
     "Darkwick_Mystery_Diner.png": 1.5,
@@ -646,9 +649,34 @@ export const CHARACTER_SIGNATURE_SPOTS = {
   // No Jabberwock weights: running after his creatures, he could be anywhere
   // in the house, so every Jabberwock spot is equally his.
   haru: {
-    // Can turn up at Rui's bar. 1x: findable there, not a regular (he has no
-    // "usual" drink there; his canon drink is an energy drink).
-    "Obscuary_Bar.png": 1,
+    // Can turn up at Rui's bar: findable there, not a regular (he has no
+    // "usual" drink there; his canon drink is an energy drink). The bar has no
+    // _PM file to ride the evening boost, so it gets its own evening weight:
+    // ~8% of his turf by day, ~10% after EVENING_HOUR.
+    "Obscuary_Bar.png": { day: 1, evening: 4 },
+    // His old house: the circus he performed in as an acrobat, and Mio's
+    // workshop (Mio built his arm). Pinned at 0.25x so Dionysia as a whole is
+    // as occasional as the bar (four day files x 0.25 = the bar's 1x), rather
+    // than borrowing all of Dionysia, which put him there nearly as often as
+    // Jabberwock (~45% of his turf by day).
+    "Dionysia_Circus.png": 0.25,
+    "Dionysia_Circus_Front.png": 0.25,
+    "Dionysia_Circus_Front_PM.png": 0.25,
+    "Dionysia_Workshop.png": 0.25,
+    "Dionysia_Workshop_2.png": 0.25,
+  },
+  // Tohma transferred out of Vagastrom and still meets Alan out back of the
+  // garage, so Vagastrom stays on his turf (additionalLocations), but at 0.5x:
+  // at full weight it was ~31% of his turf draws, nearly half as often as
+  // Frostheim itself. Now ~18%.
+  tohma: {
+    "Vagastrom_Back_Garage.png": 0.5,
+    "Vagastrom_Back_Garage_PM.png": 0.5,
+    "Vagastrom_Corridor.png": 0.5,
+    "Vagastrom_Garage.png": 0.5,
+    "Vagastrom_Garage_PM.png": 0.5,
+    "Vagastrom_Secret_Car.png": 0.5,
+    "Vagastrom_The_Pit.png": 0.5,
   },
   // The Jabberwock tree is his spot. Already on his turf (house), so this is
   // only a weight.
@@ -692,12 +720,13 @@ export function roamTurfProbability(character) {
   return ROAM_TURF_PROBABILITY_OVERRIDES[character.id] ?? TURF_PROBABILITY;
 }
 
-// All CHARACTER_SIGNATURE_SPOTS weights are multiples of 0.5 (the 1.5x ones
-// included), so scaling every repeat count by 2 before rounding represents
-// them exactly — no Math.ceil rounding a 1.5x up into an indistinguishable
-// 2x. Applied uniformly (unweighted spots repeat 1*2=2 times too), so it only
-// changes pool size, never the ratios a uniform pick over the pool reflects.
-const SIGNATURE_SPOT_SCALE = 2;
+// All CHARACTER_SIGNATURE_SPOTS weights are multiples of 0.25 (Haru's 0.25x
+// Dionysia spots, the 1.5x ones), so scaling every repeat count by 4 before
+// rounding represents them exactly — no rounding a 0.25x up into a 0.5x or a
+// 1.5x into an indistinguishable 2x. Applied uniformly (unweighted spots
+// repeat 1*4=4 times too), so it only changes pool size, never the ratios a
+// uniform pick over the pool reflects.
+const SIGNATURE_SPOT_SCALE = 4;
 
 // Reverse of BACKGROUNDS_BY_LOCATION: which location a given file actually
 // belongs to. A signature spot names a file, not a location, and several
@@ -768,8 +797,11 @@ export function turfSpots(character, now) {
     }
   }
 
+  const evening = isEveningHour(now);
   return pool.flatMap((entry) => {
-    const repeats = Math.round((signature[entry.file] || 1) * SIGNATURE_SPOT_SCALE);
+    const weight = signature[entry.file] ?? 1;
+    const w = typeof weight === "number" ? weight : evening ? weight.evening : weight.day;
+    const repeats = Math.round(w * SIGNATURE_SPOT_SCALE);
     return Array(repeats).fill(entry);
   });
 }
