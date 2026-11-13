@@ -77,8 +77,8 @@ Helpers in `constants/warding/index.js`:
 ## 3. Rendering: the dialogue beat, on card art
 
 A warding card carries **one inlined dialogue beat** and fills the same render
-slots `/roam` fills, with the same four field names a `constants/dialogue` beat
-uses. A beat is a pool member drawn from a tier; a card is a single authored
+slots `/roam` fills, with the same four field names a `/roam` beat
+(`constants/roam/<id>.js`) uses. A beat is a pool member drawn from a tier; a card is a single authored
 moment bolted to one piece of art, so there are no tiers, no variants and no
 arrays — the fields sit flat on the card:
 

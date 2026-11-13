@@ -623,7 +623,7 @@ a Discord-ToS-safe posture: bot DMs must be wanted.
 ### 5.1 Where it lives
 
 A `bondScenes` key on each `constants/dialogue/<id>.js` default export, beside
-`dialogue` / `approach` / `responses`. Its content lives in its own file,
+`dialogue` / `winnerLines`. Its content lives in its own file,
 `constants/bondScenes/<id>.js`, which the dialogue file imports:
 
 ```js

@@ -60,7 +60,7 @@ signals are computed in code. Authors never write match rules. It's also what
 ### 1.2 Shape
 
 A new `personal` pool on each `constants/dialogue/<id>.js` default export,
-beside `dialogue`/`approach`/`responses`. It's keyed by signal, then by tier
+beside `dialogue`/`winnerLines`. It's keyed by signal, then by tier
 band, then holds full beats:
 
 ```js
@@ -79,8 +79,10 @@ personal: {
 // §4 recall beats live on the bond scene itself, not here.
 ```
 
-`beat` is the same `{ line, approach, greeting, responses }` shape as every
-drawable beat. Tier bands: **early** = `known` + `warm`, **late** = `spark` +
+`beat` is the full `{ line, approach, greeting, responses }` shape a `/roam`
+beat has. Personal beats are shared by both commands; `/meet` reads only
+`line` and `responses`, so its `line` must read as spoken on its own (see
+§13 for the per-pool alternative). Tier bands: **early** = `known` + `warm`, **late** = `spark` +
 `close` + `bound`. Nobody at `new` gets a personal beat, because a stranger has
 nothing to notice. A band that has no beats skips the signal for that
 character, which is a validator **warning**, not an error, so the roster can
@@ -415,6 +417,9 @@ Every phase updates `db/SCHEMA.md` (where tables or columns change) and keeps
 
 ## 13. Open questions
 
+- §1.2 split pools: one shared `personal` pool (as written), or one per
+  interaction like the tier pools (`constants/meet/`, `constants/roam/`),
+  so `/meet` personal beats are `{ line, responses }` written for `/meet`?
 - §1.2 tier bands: is early = known+warm / late = spark+close+bound the right
   cut, or should personal beats follow all six tiers?
 - §9 eligibility floor: Friend+, or does an Acquaintance anniversary make sense

@@ -315,7 +315,7 @@ from `encounters.js`, `storage.js`, and tests. Keep that working.
 
 ## 8. Dialogue & reactions (the long pole)
 
-### 8a. Per-character pools — `constants/dialogue/<id>.js`, the six volatile only
+### 8a. Per-character pools — `constants/meet/<id>.js` + `constants/roam/<id>.js`, the six volatile only
 
 | Level(s) | Dialogue tier | Track |
 |---|---|---|
@@ -330,9 +330,13 @@ from `encounters.js`, `storage.js`, and tests. Keep that working.
 | Consumed | `consuming` | EtL |
 | Obsession | `ruinous` | EtL |
 
-Per character, per tier: `dialogue` beats, `{ line, approach, greeting,
-responses }`, with `responses` keyed `kind` / `playful` / `bold` / **`cold`**
-(no `neutral`). The `turn`
+Per character, per tier, split like the positive tiers (updated 2026-11-13):
+`/meet` beats `{ line, responses }` in `constants/meet/<id>.js` and `/roam`
+beats `{ line, approach, greeting, responses }` in `constants/roam/<id>.js`,
+sized by `SPLIT_POOL_TARGET_BY_TIER` (`constants/game.js`). A new tier is
+written straight into the split pools, never into `dialogue.<tier>` first.
+`responses` are keyed `kind` / `playful` / `bold` / **`cold`** (no
+`neutral`). The `turn`
 tier's `responses` are the Accept / Reject / confirm / cancel labels.
 
 **The Rejected track is fully separate content (§3a).** Its three tiers

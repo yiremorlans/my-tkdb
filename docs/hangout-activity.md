@@ -42,7 +42,7 @@ only, no App Directory listing, no monetization.
 | `command_usage_log`, `character_engagement` | `db/SCHEMA.md` | analytics: `'meet'` for answers (§11.7), `'hangout_open'` for opens (§5.2) |
 | `CHARACTER_ROOMS`, `backgroundPath` | `constants/backgrounds.js` | the room background (`Vagastrom_Alan_Room.png`) |
 | Dialogue box look, fonts | `imageComposition.js`, `assets/fonts` | the Activity's UI styling (§4.4) |
-| Alan's voice | `constants/dialogue/alan.js` | reference for drafting hangout lines (§4.3) |
+| Alan's voice | `constants/dialogue/reference/alan.md` | reference for drafting hangout lines (§4.3) |
 | `DATE_LOCATIONS`, `assets/bg/date/` | `constants/backgrounds.js` | the date spots (§12.4) |
 
 **Affinity sources.** [`bond-scene-dms.md`](./bond-scene-dms.md) and
@@ -704,8 +704,9 @@ the preview.
 tier) and `handHold` and `lipHold` (`close` and `bound` only, played on
 dates). Removable articles (§4.2) add the article's own pool
 (`hatPat`, `peekabooPat`…) and its removal pool (`hatOff`…). Claude drafts
-them in Alan's voice from `constants/dialogue/alan.js`. **The user approves
-them before release.** They're kept apart from the `/meet` dialogue files.
+them in Alan's voice from `constants/dialogue/reference/alan.md`. **The user
+approves them before release.** They're kept apart from the encounter
+dialogue pools (`constants/dialogue/`, `constants/meet/`, `constants/roam/`).
 
 ### 4.4 UI
 
@@ -999,7 +1000,9 @@ In order:
 2. **The beat.** The drawn beat's `line` under the character's name plate.
 3. **Four response buttons.** The four choices (kind / playful / bold /
    neutral, in `RESPONSE_TYPE_ORDER`) stack above the box with the beat's
-   labels, within the 30-character limit (the same pools `/roam` uses).
+   labels, within the 30-character limit, drawn from `/meet`'s own pool
+   (`constants/meet/<id>.js`, or the unsplit `dialogue.<tier>` in
+   `constants/dialogue/<id>.js` for a tier not split yet).
    - **Type indicator.** The `RESPONSE_STYLES` colors (kind green, playful
      blurple, bold red, neutral grey) as each button's edge, plus a small
      glyph per type so the type never depends on color alone.
@@ -1144,6 +1147,55 @@ framing.
 **Loading.** The Activity loads only the drawn outfit's images, not every
 outfit's, so it opens faster on phones.
 
+#### Spot-gated beats (designed 2026-11-12, not built)
+
+**Problem.** The background is drawn at random, so a beat that names a
+place ("the library") clashes with whatever spot came up. Today the fix is
+editorial: encounter beats never name a place, and tier-split removes
+place beats. This design would let a beat name its place again.
+
+**Design.** A beat may carry an optional `spots`: background files and/or
+location keys (`constants/backgrounds.js`), e.g.
+`spots: ['Darkwick_Library.png', 'Darkwick_Library_PM.png']`. In
+`pickDialogueEntry` (`constants/characters.js`), before `pickMixedBeat`, a
+beat with `spots` is eligible only when `ctx.backgroundFile` or
+`ctx.locationKey` is in its list. A beat without `spots` behaves as today.
+
+- **Both commands, one seam.** /meet and /roam both draw the spot first and
+  pass it in `dialogueCtx` (`encounters.js`, `buildRoamDialogueMessage` and
+  `drawMeetEncounter`) through `drawBeatFor` → `pickDialogueEntry`. The
+  filter runs on whichever pool that tier draws (`constants/meet/<id>.js`,
+  `constants/roam/<id>.js`, or the unsplit `dialogue.<tier>`), and on the
+  `TIER_MIX` pool too.
+- **Draw order is unchanged.** It stays spot → outfit → beat, so spot-bound
+  outfits and the "agrees to meet you at X" intro aren't affected. (The
+  other option, where the beat picks the background, was rejected because
+  it breaks this order.)
+- **Not `dialogueWhen` again.** That was removed because its conditional
+  blocks were bare lines with no greeting or responses. A spot beat is an
+  ordinary complete beat in the normal pool with one extra field, so the
+  beat-completeness tests and the recent-beat skip still cover it.
+- **Validation.** `validateContent` errors on a `spots` entry that isn't a
+  real background file or location key.
+- **Test.** A spot beat is never drawn at another spot and is drawable at
+  its own.
+
+**Authoring.**
+
+- Spot beats are bonus beats. They come up rarely (only when their
+  background is drawn), so they don't count toward
+  `SPLIT_POOL_TARGET_BY_TIER`, and every tier still needs a full set of
+  place-free beats.
+- Only a beat with `spots` may name or lean on its place. The no-places
+  rule still applies to every other beat.
+- List every file for the place (`_PM`, `_2`) unless the beat assumes one
+  of them. A beat at an always-there spot-bound outfit spot (Benkei's
+  store, Mio's workshop) can assume that outfit.
+
+**Effort.** About 30 lines: the filter, the validator check and one test.
+Once it's built, place beats removed by tier-split can come back with
+`spots`.
+
 ### 11.6 When §11 starts
 
 Every character has a Live2D rig (Benkei's since 2026-10-30).
@@ -1255,8 +1307,11 @@ image fallback.
 
 ### 12.3 Beats
 
-- In the character's dialogue file, beside the `/meet` pools:
-  `date: { close: { arrival, middle, parting }, bound: { … } }`. Each beat
+- A standalone `date` dialogue pool (`DIALOGUE_POOL` in
+  `constants/dialoguePools.js`, `splitsCharacterDialogue: false`, `scene:
+  false`): `constants/date/<id>.js`, shaped
+  `{ close: { arrival, middle, parting }, bound: { … } }`. The header of
+  `constants/dialoguePools.js` lists the steps for adding a pool. Each beat
   has a `line` and four `responses` (kind / playful / bold / neutral, the
   30-character limit).
 - **About 2 beats per stage per tier:** 26 characters × 2 tiers × 6 beats

@@ -640,10 +640,9 @@ export const SHARED_ENCOUNTER_TEASERS = {
 };
 ```
 
-`any` merges into whichever `TIME_BUCKETS` pool is current — the same merge rule
-as the `when: { time }` dialogue blocks. The split is the point: shadows and
-half-light are an evening register, and at midday the same figure is lost in a
-crush of students instead. Lines are deliberately short; the message body below
+`any` merges into whichever `TIME_BUCKETS` pool is current. The split is the
+point: shadows and half-light are an evening register, and at midday the same
+figure is just one of the students passing by. Lines are deliberately short; the message body below
 already carries the how and the deadline.
 
 ### Message content (silhouette post)
