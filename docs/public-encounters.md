@@ -623,8 +623,7 @@ Uniform random over all `CHARACTERS` (all 26, Benkei included).
 ### Variant
 
 50/50 `uniform` vs `casual`. If the chosen variant has no art
-(`character.images.casual` is undefined for Elias, Mio, Shion; Benkei has
-`work`, not `casual`), fall back to `uniform` (or the first key of
+(`character.images.casual` is undefined for Elias, Mio, Shion, Benkei), fall back to `uniform` (or the first key of
 `character.images`). Net effect: those characters always appear in uniform.
 Documented, not a bug.
 

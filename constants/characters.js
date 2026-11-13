@@ -1102,7 +1102,7 @@ export const CHARACTERS = [
     firstName: "Benkei",
     lastName: null,
     house: null,
-    images: { uniform: "Benkei_Uniform.png", work: "Benkei_Work.png" },
+    images: { uniform: "Benkei_Uniform.png" },
     // PARTIALLY VERIFIED. reference/benkei.md is a short section for Benkei
     // (kind hearted, warm/gentle smile, campus-store shopkeep with one of
     // Cornelius' cats for a manager, former professor and advisor to the
