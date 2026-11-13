@@ -43,12 +43,12 @@ export default {
       "Oh... Excuse me. Not my lips.",
     ],
     earTouch: [
-      "The earring... Please be careful with it.",
+      "The earring... Please be gentle with it.",
       "Oh! That tickles.",
     ],
     handTap: [
       "Oh! Please, not my hands.",
-      "Oh, please be careful. I'd hate to... Never mind. I'm sorry.",
+      "Oh, please be gentle. I'd hate to... Never mind. I'm sorry.",
     ],
     chestTouch: [
       "Could you step back a little?",
@@ -82,7 +82,7 @@ export default {
       "I don't think that's... Please don't.",
     ],
     earTouch: [
-      "Careful. That earring is very dear to me.",
+      "Please, that earring is very dear to me.",
       "Oh, that tickles... I'm not used to it.",
     ],
     handTap: [

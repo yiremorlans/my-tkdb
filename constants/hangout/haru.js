@@ -34,7 +34,7 @@ export default {
       "Oi. That's not part of the tour.",
     ],
     earTouch: [
-      "Careful, those go right through!",
+      "Whoa, those go right through!",
       "Oi! No need to scratch behind my ears, mate. I'm not one of the critters!",
     ],
     handTap: [
@@ -50,7 +50,7 @@ export default {
       "Oi, personal space. Even Peekaboo knows that one.",
     ],
     peekabooPat: [
-      "Whoa, careful! Peekaboo bites. Ask me how I know.",
+      "Whoa! Peekaboo bites. Ask me how I know.",
       "Easy! He's not used to you yet. Go slow, hey?",
     ],
     bellyTouch: [
@@ -117,7 +117,7 @@ export default {
     ],
     prostheticTap: [
       "Firm grip, huh? That hand never gets tired. Wish I could say the same! Gahaha!",
-      "Careful, that one's due in with Mio for a tune-up. It's had a big week.",
+      "That one's due in with Mio for a tune-up. It's had a big week.",
     ],
     chestTouch: [
       "...Hey. That's a bit close.",
@@ -258,7 +258,7 @@ export default {
     ],
     hipsTouch: [
       "Bold of you! ...Gahaha. And here I thought I was the troublemaker.",
-      "Careful, mate. Keep that up and I might not want you to stop.",
+      "Oi, mate. Keep that up and I might not want you to stop.",
     ],
     heartbeatHold: [
       "Stamina's my strong suit, but that's not what's got it racing.",

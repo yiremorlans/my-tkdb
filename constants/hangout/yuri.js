@@ -40,7 +40,7 @@ export default {
       "Kindly keep your hands off a genius at work.",
     ],
     handTap: [
-      "Careful! These are a surgeon's hands.",
+      "Hands off! These are a surgeon's hands.",
       "Are you injured? Then I shall begin the examination.",
     ],
     chestTouch: [
@@ -141,7 +141,7 @@ export default {
     ],
     stethoscopeOff: [
       "Wh-What are you doing with my stethoscope!? Give that back! ...At least don't drop it!",
-      "Th-That's mine! A physician without his stethoscope is...! Hmph. Be careful with it.",
+      "Th-That's mine! A physician without his stethoscope is...! Hmph. Handle it gently.",
     ],
     hipsTouch: ["Unhand me this instant!", "Wh-Where is that hand going!?"],
     upset: [

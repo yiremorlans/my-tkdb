@@ -27,7 +27,7 @@ export default {
     ],
     lipsTouch: ["Hey! ...What was that? Hands off the lips.", "Nope. Denied."],
     earTouch: [
-      "Hey, careful with the earrings.",
+      "Hey, watch the earrings.",
       "Ugh, not by my ear. Everything's fucking loud enough already.",
     ],
     handTap: [
@@ -109,7 +109,7 @@ export default {
     ],
     earTouch: [
       "Hey, easy. My ears are sensitive. Like, really sensitive.",
-      "Careful with the earrings.",
+      "Not the earrings.",
     ],
     handTap: [
       "You're getting comfortable, huh. ...I'll allow it.",
@@ -209,7 +209,7 @@ export default {
       "...Tease. You know exactly what you're doing, Honor Roll.",
     ],
     earTouch: [
-      "Careful. Keep that up and I'm returning the favor.",
+      "Keep that up and I'm returning the favor.",
       "Ugh. Making you squirm is my job.",
     ],
     handTap: [

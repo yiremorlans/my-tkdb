@@ -60,7 +60,7 @@ export default {
   },
   known: {
     headPat: [
-      "Whoa, careful! I know the hair's tempting, but no.",
+      "Whoa there! I know the hair's tempting, but no.",
       "Hey, hey! You're way too relaxed about this, you know?",
     ],
     cheekPoke: [
@@ -85,7 +85,7 @@ export default {
     ],
     bellyTouch: [
       "Whoa! Easy! That's a no-fly zone.",
-      "Ahaha, whoa! Careful, Honor Roll. I'm ticklish there.",
+      "Ahaha, whoa! Honor Roll! I'm ticklish there.",
     ],
     hipsTouch: [
       "Hey! Okay, that's a no.",
@@ -118,7 +118,7 @@ export default {
       "Gimme one sec, then I'm all yours.",
     ],
     chestTouch: [
-      "Hey, careful! That's way too close.",
+      "Hey! That's way too close.",
       "Whoa. Okay, a little space, please?",
     ],
     bellyTouch: [
@@ -154,7 +154,7 @@ export default {
     ],
     chestTouch: [
       "Whoa, okay, my heart's going crazy.",
-      "Hey, careful... You'll find out how much I like you.",
+      "Hey... You'll find out how much I like you.",
     ],
     bellyTouch: [
       "Ahaha... my stomach just did a flip. That's on you.",

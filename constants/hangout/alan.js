@@ -77,7 +77,7 @@ export default {
     handTap: ["...Here. Give me your hand.", "You can hold on. I don't mind."],
     chestTouch: [
       "...You can hear that, can't you.",
-      "Careful. I'm not used to this.",
+      "...I'm not used to this.",
     ],
     bellyTouch: [
       "...Your hand's cold. No, leave it.",

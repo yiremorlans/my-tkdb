@@ -77,7 +77,7 @@ export default {
     ],
     chestTouch: [
       "My dear, I see where you're aiming. Let's keep my heart out of it for now.",
-      "Careful. A hand over a fella's heart says rather a lot.",
+      "A hand over a fella's heart says rather a lot.",
     ],
     bellyTouch: [
       "Trying to tickle me? I'll put that in a comedy, not a romance.",

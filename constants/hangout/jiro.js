@@ -89,7 +89,7 @@ export default {
       "Your hands are cold. That dulls circulation.",
     ],
     chestTouch: [
-      "Careful. Some of those wounds tear easily.",
+      "Some of those wounds tear easily.",
       "Please don't press there.",
     ],
     bellyTouch: [
@@ -203,7 +203,7 @@ export default {
       "Do you need to adjust them every time?",
     ],
     glassesOff: [
-      "Oh. ...Be careful with those. Yuri gave them to me.",
+      "Oh. ...Please don't drop those. Yuri gave them to me.",
       "...Okay. Now what were you planning to do?",
     ],
     maskPat: [
@@ -250,7 +250,7 @@ export default {
     ],
     chestTouch: [
       "You can leave your hand there. I'll tell you if anything tears.",
-      "...You're learning where the scars are. Good. Then you'll know where to be careful.",
+      "...You're learning where the scars are. Good. Then you'll know where not to press.",
     ],
     bellyTouch: [
       "If you're examining me, I'll allow it. I'll lie still as long as you need.",

@@ -32,7 +32,7 @@ export default {
       "Hey, hold on. Hands down, hands down.",
     ],
     earTouch: [
-      "Careful! Those hoops snag on everything.",
+      "Whoa! Those hoops snag on everything.",
       "Ow, okay. Not the earrings.",
     ],
     handTap: [
@@ -41,7 +41,7 @@ export default {
     ],
     phonePat: [
       "Whoa, hey! I'm mid-video. Hands off the phone.",
-      "Careful! If you like a post by accident, I'm done for.",
+      "Wait! If you like a post by accident, I'm done for.",
     ],
     chestTouch: [
       "Hey, not the necklace. Seriously.",
@@ -75,7 +75,7 @@ export default {
     ],
     earTouch: [
       "Silver on this side, gold on the other. Don't mix them up.",
-      "Ah, careful! They snag.",
+      "Ah, wait! They snag.",
     ],
     handTap: [
       "Huh? You want my attention? You've got it.",
@@ -86,7 +86,7 @@ export default {
       "Quit it! I'm checking WickHive. Someone leaked the cafeteria menu again.",
     ],
     chestTouch: [
-      "Hey, careful with the pendant. Gram gave me that.",
+      "Hey, watch the pendant. Gram gave me that.",
       "Not the necklace, okay? It's important.",
     ],
     bellyTouch: [
@@ -132,7 +132,7 @@ export default {
       "Wait, I was gonna show you something! ...It can wait, I guess.",
     ],
     chestTouch: [
-      "That's Gram's pendant. I'm careful with it, so you be careful too.",
+      "That's Gram's pendant. I look after it, so you look after it too.",
       "Hands off there, okay? Anything else, fine.",
     ],
     bellyTouch: [

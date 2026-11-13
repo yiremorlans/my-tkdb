@@ -53,7 +53,7 @@ export default {
     ],
     lipsTouch: ["Absolutely not.", "Tch... Don't even think about it."],
     earTouch: [
-      "Careful with those, they're real gold.",
+      "Hands off, those are real gold.",
       "If you scratch them, you're paying.",
     ],
     handTap: ["What? You need something from me?", "Hands off, BB."],
@@ -183,7 +183,7 @@ export default {
     ],
     lipHold: [
       "...Tch. You know I can't think straight when you do that.",
-      "Careful. I'll start expecting that every time.",
+      "I'll start expecting that every time.",
     ],
     handHold: [
       "Don't let go yet. I'm not done looking after you.",

@@ -22,7 +22,7 @@ export default {
     lipsTouch: ["Don't. That's harassment.", "Okay. No. Hands down, Senpai."],
     earTouch: ["Don't touch the earrings.", "...That's my ear. Why."],
     handTap: [
-      "Careful. My RSI's bad enough already.",
+      "...My RSI's bad enough already.",
       "...I'm kind of in the middle of something.",
     ],
     chestTouch: ["Back up.", "Personal space. Look it up."],
@@ -170,7 +170,7 @@ export default {
     ],
     lipsTouch: [
       "...O-Okay. That was... Again. I wasn't ready that time.",
-      "...Careful, Senpai. I might, uh... start doing it back.",
+      "...Senpai. I might, uh... start doing it back.",
     ],
     earTouch: [
       "Pfft. Okay, you found my weak spot. Go ahead, abuse it.",

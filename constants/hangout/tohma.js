@@ -54,7 +54,7 @@ export default {
     ],
     monoclePat: [
       "Ah. Mind the monocle, if you please.",
-      "Careful. I'd rather not see the world through your fingerprint.",
+      "I'd rather not see the world through your fingerprint.",
     ],
   },
   known: {
@@ -142,7 +142,7 @@ export default {
   spark: {
     headPat: [
       "...I'm usually the one doing the looking after. How novel.",
-      "Careful. I could grow used to that.",
+      "Ah. I could grow used to that.",
     ],
     cheekPoke: [
       "Is this payback? I take it my face is the flushed one now.",
@@ -170,7 +170,7 @@ export default {
     ],
     hipsTouch: [
       "...Now that is a bold move. I'll need a moment to plan my reply.",
-      "Careful. I'd hate to be caught looking this flustered.",
+      "I'd hate to be caught looking this flustered.",
     ],
     upset: [
       "Honestly. You'll undo all my composure if you keep that up.",
@@ -203,7 +203,7 @@ export default {
       "Ha ha... Again, if you please. I've earned a little spoiling.",
     ],
     cheekPoke: [
-      "Careful. I keep score, and I always collect.",
+      "I keep score, and I always collect.",
       "Ha ha. You've found the one face I don't show anyone else.",
     ],
     lipsTouch: [
@@ -244,7 +244,7 @@ export default {
     ],
     caughtTease: [
       "...Ha ha. Not here, and not yet. I do prefer to choose the moment myself.",
-      "Ah, ah. Careful. A good player never rushes the endgame.",
+      "Ah, ah. A good player never rushes the endgame.",
     ],
     monoclePat: [
       "Go on. I've long since given up protecting it from you.",

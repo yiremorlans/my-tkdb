@@ -27,7 +27,7 @@ export default {
     lipsTouch: ["Whoa. Hey, let's not.", "Hm?! ...Sorry. Not the lips."],
     earTouch: ["Hm? Sorry, I was miles away.", "Ha. That tickles. Don't."],
     handTap: [
-      "Careful, my hands are covered in oil.",
+      "Hold on, my hands are covered in oil.",
       "Need something fixed? Get in line. ...Kidding. What is it?",
     ],
     chestTouch: [
@@ -128,7 +128,7 @@ export default {
     ],
     chestTouch: [
       "...Yeah, it's running fast. Guess you're the reason.",
-      "Careful. That's one thing I can't fix.",
+      "...That's one thing I can't fix.",
     ],
     bellyTouch: [
       "...Hey. Now I'm wide awake. Thanks a lot.",
@@ -233,7 +233,7 @@ export default {
     ],
     lipHold: [
       "Hm. You know that's not where you usually stop.",
-      "Careful. Keep that up and I'll be awake all night.",
+      "Keep that up and I'll be awake all night.",
     ],
     handHold: [
       "The work can wait. ...Let's go for a walk. I'm not letting go, so you're coming too.",

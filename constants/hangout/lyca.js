@@ -41,7 +41,7 @@ export default {
     lipsTouch: ["Don't. That's weird.", "Wh-What?! N-Not my lips, dummy!"],
     earTouch: [
       "Not the earring. I've had it forever.",
-      "Careful! You'll make my ears pop out.",
+      "Hey! You'll make my ears pop out.",
     ],
     handTap: [
       "...You smell like you. That's good.",
@@ -69,7 +69,7 @@ export default {
       "Hey. Not that, okay?",
     ],
     earTouch: [
-      "Careful with that. It's important.",
+      "Leave that alone. It's important.",
       "Hey, that tickles! Quit it!",
     ],
     handTap: ["Hm? ...Did you need something?", "C'mon. Let's go somewhere."],
@@ -146,7 +146,7 @@ export default {
     ],
     earTouch: [
       "There go my ears again. ...Fine. Only you get to touch 'em.",
-      "Careful with the earring. ...The ear's okay. Do the ear.",
+      "Not the earring. ...The ear's okay. Do the ear.",
     ],
     handTap: [
       "C'mon, walk with me. You hold on the whole way. That's the rule.",

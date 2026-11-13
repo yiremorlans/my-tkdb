@@ -102,7 +102,7 @@ export default {
     ],
     handTap: ["You keep reaching for me.", "...What now?"],
     chestTouch: [
-      "Careful. That's not a game.",
+      "That's not a game.",
       "...Back a little. I'm thinking.",
     ],
     bellyTouch: [

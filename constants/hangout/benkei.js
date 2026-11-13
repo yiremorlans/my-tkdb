@@ -44,7 +44,7 @@ export default {
     ],
     chestTouch: [
       "Ah, could you give me a little room? Sorry.",
-      "Hey, careful. My manager's watching.",
+      "Hey. My manager's watching.",
     ],
     bellyTouch: [
       "Oh! Uh, that's my stomach. Sorry, could you not?",
@@ -52,7 +52,7 @@ export default {
     ],
     nametagPat: [
       "Oh, the tag? Yep, that's me. Need help finding something?",
-      "Ah, careful, it's only pinned on. Sorry, did you need something?",
+      "Ah, it's only pinned on. Sorry, did you need something?",
     ],
     hipsTouch: ["Whoa! Hey, I'm working here.", "Ah, no, sorry. Not okay."],
     upset: [
@@ -75,12 +75,12 @@ export default {
       "Oh, sorry, was I zoning out? I'm listening.",
     ],
     handTap: [
-      "Careful, I've got marker on these from the price tags.",
+      "Ah, I've got marker on these from the price tags.",
       "Hey, you. Need something? I'm right here.",
     ],
     chestTouch: [
       "Ah, a little close. Sorry.",
-      "Careful, you'll wrinkle the tie.",
+      "Oh, you'll wrinkle the tie.",
     ],
     bellyTouch: [
       "Hey, no poking. I'm not the bread.",
@@ -235,7 +235,7 @@ export default {
       "Off the clock, then. Ha ha... Don't tell anyone.",
     ],
     hipsTouch: [
-      "Hey... Careful. I'm only so good at keeping my cool.",
+      "Hey... I'm only so good at keeping my cool.",
       "Keep that up and I'm gonna forget I'm on the clock.",
     ],
     heartbeatHold: [
@@ -269,7 +269,7 @@ export default {
       "It's never once calmed down around you. Not even after.",
     ],
     lipHold: [
-      "Ah... Careful. I remember exactly where that leads.",
+      "Ah... I remember exactly where that leads.",
       "Mm. ...You know I can't say no to you now.",
     ],
     handHold: [

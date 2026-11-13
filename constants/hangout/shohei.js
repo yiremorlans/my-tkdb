@@ -116,7 +116,7 @@ export default {
     ],
     lipsTouch: [
       "...Senpai. You can't just do that.",
-      "Careful. I might not let that go.",
+      "Hey. I might not let that go.",
     ],
     earTouch: [
       "...Hey. That's not fair.",
@@ -173,7 +173,7 @@ export default {
       "Again? C'mon, at least make it count.",
     ],
     lipsTouch: [
-      "...Careful, Senpai. I'm gonna start asking for that.",
+      "...Senpai. I'm gonna start asking for that.",
       "...Yeah? C'mere, then.",
     ],
     earTouch: [
@@ -190,7 +190,7 @@ export default {
     ],
     bellyTouch: [
       "Hah... That tickles, Senpai. You're lucky I like you.",
-      "Careful, Senpai. I know where you're ticklish too.",
+      "Watch it, Senpai. I know where you're ticklish too.",
     ],
     hipsTouch: [
       "Bold. ...C'mere, then. Your move, Senpai.",
