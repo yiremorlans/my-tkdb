@@ -40,21 +40,6 @@ async function withGatewayRetry(fn, { retries = 1, delayMs = 500 } = {}) {
 }
 
 /**
- * True if the two timestamps fall in the same UTC calendar month.
- * Used to lazily roll `commands_this_month` over at month boundaries so the
- * counter is correct even before the scheduled monthly reset job runs (see
- * db/migrations/005_monthly_reset.sql).
- */
-function isSameUtcMonth(isoTimestamp, reference = new Date()) {
-  if (!isoTimestamp) return false;
-  const then = new Date(isoTimestamp);
-  return (
-    then.getUTCFullYear() === reference.getUTCFullYear() &&
-    then.getUTCMonth() === reference.getUTCMonth()
-  );
-}
-
-/**
  * Get or create a character relationship record
  */
 export async function getOrCreateRelationship(userId, characterId) {
@@ -118,83 +103,39 @@ export async function getOrCreateRelationship(userId, characterId) {
 }
 
 /**
- * Update character affinity for a user
+ * Record one dialogue answer in a single atomic write (db/migrations/038):
+ * creates the row for a never-met pair, adds `gain` to affinity, bumps
+ * times_met, stamps last_interaction_at, and sets last_response_type when one
+ * is given (null keeps the stored one). Returns the updated row plus
+ * `previous_affinity`, the pre-write value, which is how a caller tells a
+ * level *crossing* from a level: recordResponse needs both sides to decide
+ * whether a bond scene fires (storage.js, docs/bond-scene-dms.md §1.1).
+ *
+ * The function holds the row lock for the whole write, so two answers landing
+ * together can't overwrite each other's gain.
  */
-export async function updateAffinity(userId, characterId, affinityChange) {
-  const relationship = await getOrCreateRelationship(userId, characterId);
-  // The pre-write affinity, handed back on the result as `previous_affinity`.
-  // The read above already has it, so this costs nothing, and it is the only
-  // way a caller can tell a level *crossing* from a level: recordResponse needs
-  // both sides to decide whether a bond scene fires (storage.js, and
-  // docs/bond-scene-dms.md §1.1). Named in the row's snake_case so it reads as
-  // part of the same record rather than something bolted onto it.
-  const previousAffinity = relationship.affinity || 0;
-
-  const { data, error } = await supabase
-    .from('character_relationships')
-    .update({
-      affinity: relationship.affinity + affinityChange,
-      last_interaction_at: new Date().toISOString(),
-    })
-    .eq('discord_user_id', userId)
-    .eq('character_id', characterId)
-    .select()
-    .single();
+export async function recordResponseRow(userId, characterId, gain, responseType = null) {
+  const { data, error } = await supabase.rpc('record_response', {
+    p_user_id: userId,
+    p_character_id: characterId,
+    p_gain: gain,
+    p_response_type: responseType,
+  });
 
   if (error) {
-    console.error('Error updating affinity:', error);
+    console.error('Error recording response:', error);
     throw error;
   }
 
-  return { ...data, previous_affinity: previousAffinity };
+  return data;
 }
 
 /**
- * Increment times_met counter
+ * Bump times_met for a meeting that isn't an answer (a /call win): the same
+ * atomic write as recordResponseRow with no gain and no response type.
  */
 export async function incrementTimesMet(userId, characterId) {
-  const relationship = await getOrCreateRelationship(userId, characterId);
-
-  const { data, error } = await supabase
-    .from('character_relationships')
-    .update({
-      times_met: relationship.times_met + 1,
-      last_interaction_at: new Date().toISOString(),
-    })
-    .eq('discord_user_id', userId)
-    .eq('character_id', characterId)
-    .select()
-    .single();
-
-  if (error) {
-    console.error('Error incrementing times_met:', error);
-    throw error;
-  }
-
-  return data;
-}
-
-/**
- * Update response type for a relationship
- */
-export async function updateLastResponseType(userId, characterId, responseType) {
-  const { data, error } = await supabase
-    .from('character_relationships')
-    .update({
-      last_response_type: responseType,
-      last_interaction_at: new Date().toISOString(),
-    })
-    .eq('discord_user_id', userId)
-    .eq('character_id', characterId)
-    .select()
-    .single();
-
-  if (error) {
-    console.error('Error updating response type:', error);
-    throw error;
-  }
-
-  return data;
+  return recordResponseRow(userId, characterId, 0, null);
 }
 
 /**
@@ -275,309 +216,31 @@ export async function rememberDialogueBeat(userId, characterId, beatKey, cap) {
 }
 
 /**
- * Track user activity and command usage
+ * Count a command toward the user's monthly and lifetime totals: one atomic
+ * upsert (db/migrations/038), with the month rollover done in SQL.
  */
 export async function trackUserActivity(userId) {
-  // First, get or create the user activity record
-  let userActivity = await getUserMonthlyActivity(userId);
-
-  if (!userActivity) {
-    // Create new user activity record
-    const { data: newData, error: insertError } = await supabase
-      .from('user_activity')
-      .insert([
-        {
-          discord_user_id: userId,
-          last_used_at: new Date().toISOString(),
-          commands_this_month: 1,
-          total_commands: 1,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString(),
-        }
-      ])
-      .select()
-      .single();
-
-    if (insertError) {
-      console.error('Error creating user activity:', insertError);
-      throw insertError;
-    }
-
-    return newData;
-  }
-
-  // Update existing record with incremented counters. commands_this_month
-  // restarts at 1 when the last activity was in a previous month.
-  const now = new Date();
-  const commandsThisMonth = isSameUtcMonth(userActivity.last_used_at, now)
-    ? (userActivity.commands_this_month || 0) + 1
-    : 1;
-
-  const { data, error } = await supabase
-    .from('user_activity')
-    .update({
-      last_used_at: now.toISOString(),
-      commands_this_month: commandsThisMonth,
-      total_commands: (userActivity.total_commands || 0) + 1,
-      updated_at: now.toISOString(),
-    })
-    .eq('discord_user_id', userId)
-    .select()
-    .single();
+  const { error } = await supabase.rpc('track_user_activity', { p_user_id: userId });
 
   if (error) {
     console.error('Error tracking user activity:', error);
     throw error;
   }
-
-  return data;
 }
 
 /**
- * Track character engagement for analytics
+ * Same as trackUserActivity, per (user, character), for analytics.
  */
 export async function trackCharacterEngagement(userId, characterId) {
-  // Read the current counters so we can increment them. upsert can't express
-  // `col = col + 1`, so this is a read-modify-write (racy under concurrent
-  // interactions from the same user, but good enough for analytics).
-  const { data: existing, error: readError } = await supabase
-    .from('character_engagement')
-    .select('commands_this_month, total_commands, last_interacted_at')
-    .eq('discord_user_id', userId)
-    .eq('character_id', characterId)
-    .single();
-
-  if (readError && readError.code !== 'PGRST116') { // PGRST116 = no rows found
-    console.error('Error reading character engagement:', readError);
-    throw readError;
-  }
-
-  // commands_this_month restarts at 1 when the last interaction was in a
-  // previous month (matches the scheduled monthly reset in migration 005).
-  const now = new Date();
-  const commandsThisMonth = isSameUtcMonth(existing?.last_interacted_at, now)
-    ? (existing?.commands_this_month || 0) + 1
-    : 1;
-
-  const { data, error } = await supabase
-    .from('character_engagement')
-    .upsert(
-      {
-        discord_user_id: userId,
-        character_id: characterId,
-        commands_this_month: commandsThisMonth,
-        total_commands: (existing?.total_commands || 0) + 1,
-        last_interacted_at: now.toISOString(),
-        updated_at: now.toISOString(),
-      },
-      { onConflict: 'discord_user_id,character_id' }
-    )
-    .select()
-    .single();
+  const { error } = await supabase.rpc('track_character_engagement', {
+    p_user_id: userId,
+    p_character_id: characterId,
+  });
 
   if (error) {
     console.error('Error tracking character engagement:', error);
     throw error;
   }
-
-  return data;
-}
-
-/**
- * Get most popular characters (by total commands)
- */
-export async function getMostPopularCharacters(limit = 10) {
-  const { data, error } = await supabase
-    .from('character_engagement')
-    .select('character_id, total_commands, COUNT(*) as user_count', { count: 'exact' })
-    .order('total_commands', { ascending: false })
-    .limit(limit);
-
-  if (error) {
-    console.error('Error fetching popular characters:', error);
-    throw error;
-  }
-
-  return data || [];
-}
-
-/**
- * Get user's command activity for current month
- */
-export async function getUserMonthlyActivity(userId) {
-  const { data, error } = await supabase
-    .from('user_activity')
-    .select('*')
-    .eq('discord_user_id', userId)
-    .single();
-
-  if (error && error.code !== 'PGRST116') {
-    console.error('Error fetching user activity:', error);
-    throw error;
-  }
-
-  return data || null;
-}
-
-/**
- * Get character popularity for current month
- */
-export async function getCharacterPopularityThisMonth() {
-  const { data, error } = await supabase
-    .from('character_engagement')
-    .select('character_id, commands_this_month, COUNT(DISTINCT discord_user_id) as unique_users', { count: 'exact' })
-    .order('commands_this_month', { ascending: false });
-
-  if (error) {
-    console.error('Error fetching character popularity:', error);
-    throw error;
-  }
-
-  return data || [];
-}
-
-/**
- * Get monthly analytics for a specific month
- */
-export async function getMonthlyAnalytics(yearMonth) {
-  const { data, error } = await supabase
-    .from('monthly_analytics')
-    .select('*')
-    .eq('year_month', yearMonth)
-    .order('commands_count', { ascending: false });
-
-  if (error) {
-    console.error('Error fetching monthly analytics:', error);
-    throw error;
-  }
-
-  return data || [];
-}
-
-/**
- * ANONYMIZED ANALYTICS (GDPR/PRIVACY COMPLIANT - No Discord IDs)
- */
-
-/**
- * Get most popular characters (anonymized)
- */
-export async function getPopularCharactersAnalytics(limit = 10) {
-  const { data, error } = await supabase
-    .from('vw_popular_characters')
-    .select('*')
-    .limit(limit);
-
-  if (error) {
-    console.error('Error fetching popular characters analytics:', error);
-    throw error;
-  }
-
-  return data || [];
-}
-
-/**
- * Get monthly character statistics (anonymized)
- */
-export async function getMonthlyCharacterStatsAnalytics(yearMonth) {
-  const { data, error } = await supabase
-    .from('vw_monthly_character_stats')
-    .select('*')
-    .eq('year_month', yearMonth);
-
-  if (error) {
-    console.error('Error fetching monthly character stats:', error);
-    throw error;
-  }
-
-  return data || [];
-}
-
-/**
- * Get platform-wide statistics (anonymized)
- */
-export async function getPlatformStatsAnalytics() {
-  const { data, error } = await supabase
-    .from('vw_platform_stats')
-    .select('*')
-    .single();
-
-  if (error) {
-    console.error('Error fetching platform stats:', error);
-    throw error;
-  }
-
-  return data || null;
-}
-
-/**
- * Get characters ranked by average affinity (anonymized)
- */
-export async function getCharactersByAffinityAnalytics(limit = 10) {
-  const { data, error } = await supabase
-    .from('vw_characters_by_affinity')
-    .select('*')
-    .limit(limit);
-
-  if (error) {
-    console.error('Error fetching affinity rankings:', error);
-    throw error;
-  }
-
-  return data || [];
-}
-
-/**
- * Get engagement trends over months (anonymized)
- */
-export async function getEngagementTrendsAnalytics(months = 12) {
-  const { data, error } = await supabase
-    .from('vw_engagement_trends')
-    .select('*')
-    .limit(months);
-
-  if (error) {
-    console.error('Error fetching engagement trends:', error);
-    throw error;
-  }
-
-  return data || [];
-}
-
-/**
- * Get complete analytics dashboard (anonymized)
- */
-export async function getAnalyticsDashboard() {
-  const [
-    { data: platformStats, error: statsError },
-    { data: topCharacters, error: charsError },
-    { data: affinityRankings, error: affinityError },
-    { data: trends, error: trendsError },
-  ] = await Promise.all([
-    supabase
-      .from('vw_platform_stats')
-      .select('*')
-      .single(),
-    supabase
-      .from('vw_popular_characters')
-      .select('*')
-      .limit(5),
-    supabase
-      .from('vw_characters_by_affinity')
-      .select('*')
-      .limit(5),
-    supabase
-      .from('vw_engagement_trends')
-      .select('*')
-      .limit(6),
-  ]);
-
-  return {
-    platformStats: platformStats || null,
-    topCharacters: topCharacters || [],
-    affinityRankings: affinityRankings || [],
-    trends: trends || [],
-    errors: { statsError, charsError, affinityError, trendsError },
-  };
 }
 
 /**
@@ -587,7 +250,7 @@ export async function getAnalyticsDashboard() {
 // 'fallback' (migration 035, docs/hangout-activity.md §11.7); left off the
 // row entirely otherwise.
 export async function trackCommandUsage(userId, commandName, { path = null } = {}) {
-  const { data, error } = await supabase
+  const { error } = await supabase
     .from('command_usage_log')
     .insert([
       {
@@ -596,16 +259,12 @@ export async function trackCommandUsage(userId, commandName, { path = null } = {
         used_at: new Date().toISOString(),
         ...(path ? { path } : {}),
       }
-    ])
-    .select()
-    .single();
+    ]);
 
   if (error) {
     console.error('Error tracking command usage:', error);
     throw error;
   }
-
-  return data;
 }
 
 /**
@@ -686,25 +345,6 @@ export async function clearCommandLimits(userId, commandNames) {
     console.error('Error clearing command limits:', error);
     throw error;
   }
-}
-
-/**
- * Get command usage statistics for a time period (anonymized)
- */
-export async function getCommandUsageStats(days = 30) {
-  const { data, error } = await supabase
-    .from('command_usage_log')
-    .select('command_name, COUNT(*) as usage_count', { count: 'exact' })
-    .gte('used_at', new Date(Date.now() - days * 24 * 60 * 60 * 1000).toISOString())
-    .group_by('command_name')
-    .order('usage_count', { ascending: false });
-
-  if (error) {
-    console.error('Error fetching command usage stats:', error);
-    throw error;
-  }
-
-  return data || [];
 }
 
 /**

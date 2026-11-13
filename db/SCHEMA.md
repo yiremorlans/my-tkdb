@@ -409,6 +409,20 @@ await trackUserActivity(userId);
 await trackCharacterEngagement(userId, characterId);
 ```
 
+Both are single atomic upserts (`track_user_activity` /
+`track_character_engagement`, migration 038), so concurrent commands from one
+user can't lose a count.
+
+### Dialogue Answers
+```javascript
+// Add the gain, bump times_met, stamp the response type: one atomic write.
+// Returns the updated row plus previous_affinity (for level-up detection).
+await recordResponseRow(userId, characterId, gain, responseType);
+
+// A meeting that isn't an answer (a /call win): times_met only
+await incrementTimesMet(userId, characterId);
+```
+
 ### Command Cooldowns
 ```javascript
 // Read a user's last-used timestamp for a command (ISO string or null)
@@ -419,24 +433,6 @@ await recordCommandUse(userId, commandName);
 
 // Clear a user's cooldown (testing); omit commandName to clear all
 await clearCommandLimit(userId, commandName);
-```
-
-### Analytics Queries
-```javascript
-// Get most popular characters
-await getMostPopularCharacters(limit = 10);
-
-// Get user's current month stats
-await getUserMonthlyActivity(userId);
-
-// Get character popularity this month
-await getCharacterPopularityThisMonth();
-
-// Get all analytics for a specific month
-await getMonthlyAnalytics("2026-08");
-
-// Get dashboard summary data
-await getAnalyticsDashboard();
 ```
 
 ## Monthly Counter Reset Logic
@@ -455,9 +451,9 @@ Run it manually any time with:
 SELECT public.snapshot_and_reset_monthly_counters();
 ```
 
-As a safety net, `trackUserActivity()` / `trackCharacterEngagement()` in
-`db/supabase.js` also roll `commands_this_month` back to 1 when a row's last
-activity was in a previous UTC month, so the counter stays correct even if the
+As a safety net, the `track_user_activity` / `track_character_engagement`
+functions (migration 038) also roll `commands_this_month` back to 1 when a
+row's last activity was in a previous UTC month, so the counter stays correct even if the
 cron job is delayed or disabled.
 
 ## Security & Privacy
@@ -470,39 +466,12 @@ All user data tables have RLS enabled:
 
 Policies use `discord_user_id = current_user_id()` to enforce user isolation. Since you're the only user, you can access all data via authenticated requests.
 
-### Privacy-Compliant Analytics Views
-All public analytics are served through anonymized views that **never expose Discord IDs**:
-- `vw_popular_characters` — Most used characters
-- `vw_monthly_character_stats` — Monthly per-character stats
-- `vw_platform_stats` — Overall platform statistics
-- `vw_characters_by_affinity` — Character rankings by average affinity
-- `vw_engagement_trends` — Engagement trends over time
-
-These views are safe to expose publicly or publish in an analytics dashboard.
-
-## Analytics Functions
-
-Query anonymized analytics with these GDPR-compliant functions:
-
-```javascript
-// Get most popular characters
-await getPopularCharactersAnalytics(limit = 10);
-
-// Get monthly stats for a specific month
-await getMonthlyCharacterStatsAnalytics("2026-08");
-
-// Get platform-wide statistics
-await getPlatformStatsAnalytics();
-
-// Get characters ranked by affinity
-await getCharactersByAffinityAnalytics(limit = 10);
-
-// Get engagement trends (monthly)
-await getEngagementTrendsAnalytics(months = 12);
-
-// Get complete dashboard (all above data)
-await getAnalyticsDashboard();
-```
+### Analytics Views (removed)
+The `vw_*` analytics views from migration 004 were dropped in migration 038:
+nothing read them, and their `GRANT SELECT ... TO PUBLIC` let anyone holding
+the anon key run full-table aggregates. If a dashboard is built, query
+`monthly_analytics` / `character_engagement` through the service role, or add
+a view granted to `service_role` only.
 
 ## Suggested Analytics Pages
 

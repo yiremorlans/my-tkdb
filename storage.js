@@ -1,13 +1,14 @@
 // Supabase-backed relationship storage
 // All affinity and relationship data is now stored in Postgres
 import { getRelationshipLevel, bondLevelIndex } from './constants/game.js';
-import { updateAffinity, incrementTimesMet, updateLastResponseType } from './db/supabase.js';
+import { recordResponseRow } from './db/supabase.js';
 
 /**
- * Where an updateAffinity result left the user: `level` now, `previousLevel` a
+ * Where a recordResponseRow result left the user: `level` now, `previousLevel` a
  * moment ago, and `leveledUp`, the crossing the bond-scene DM hangs off
- * (docs/bond-scene-dms.md §1.1). updateAffinity hands back the affinity it read
- * before writing, so the crossing is free. Used by /roam's reply.
+ * (docs/bond-scene-dms.md §1.1). recordResponseRow hands back the affinity it
+ * read under the row lock before writing, so the crossing is free. Used by
+ * /roam's reply.
  *
  * Compared by ladder position rather than by name so the check is directional:
  * only a move *up* the ladder is a level-up. Levels are never skipped — the
@@ -30,20 +31,12 @@ export function levelChange(updated) {
 // RESPONSE_TYPES value the user picked. Returns the updated relationship.
 export async function recordResponse(userId, characterId, gain, responseType) {
   try {
-    // Update affinity in DB
-    const updated = await updateAffinity(userId, characterId, gain);
-
-    // Increment times_met
-    await incrementTimesMet(userId, characterId);
-
-    // Record which response type they chose
-    if (responseType) {
-      await updateLastResponseType(userId, characterId, responseType);
-    }
+    // Affinity, times_met and the response type in one atomic write.
+    const updated = await recordResponseRow(userId, characterId, gain, responseType || null);
 
     return {
       affinity: updated.affinity || 0,
-      timesMet: (updated.times_met || 0) + 1,
+      timesMet: updated.times_met || 0,
       gain,
       ...levelChange(updated),
     };

@@ -719,13 +719,10 @@ export async function handleCall(body, now = new Date()) {
   ].join('\n'));
 
   const afterReply = async () => {
-    // Run these in series, not concurrently. grantEncounterBoost is atomic
-    // (db/migrations/014) and creates the row for a never-met character;
-    // incrementTimesMet is still a read-then-write, so letting it start first
-    // — or alongside — would race a second INSERT into a unique violation, or
-    // read a counter the other write is about to change. Grant first, and it
-    // finds the row waiting. Each catches independently so one failing doesn't
-    // skip the other or the reveal.
+    // Both writes are atomic upserts now (db/migrations/014 and 038), so the
+    // order no longer matters for correctness; kept in series so the boost
+    // lands before the reveal reads anything. Each catches independently so
+    // one failing doesn't skip the other or the reveal.
     await grantEncounterBoost(userId, encounter.character_id, ENCOUNTER_BOOST_CAP)
       .catch((err) => console.error('[publicEncounters] grantEncounterBoost failed:', err?.message));
     await incrementTimesMet(userId, encounter.character_id)

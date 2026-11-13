@@ -192,7 +192,92 @@ export function createFakeSupabase(initialTables = {}) {
     return held ? `busy:${held.mission_type || 'unknown'}` : null;
   }
 
+  // Same calendar month in UTC — the CASE in migration 038's tracking upserts.
+  function sameUtcMonth(iso, now) {
+    if (!iso) return false;
+    const then = new Date(iso);
+    return then.getUTCFullYear() === now.getUTCFullYear() && then.getUTCMonth() === now.getUTCMonth();
+  }
+
   const rpcHandlers = {
+    // db/migrations/038: create the pair's row if missing, then add p_gain,
+    //                    bump times_met, stamp last_interaction_at, and set
+    //                    last_response_type unless p_response_type is null.
+    //                    Returns the row plus previous_affinity.
+    record_response({ p_user_id, p_character_id, p_gain, p_response_type }) {
+      tables.character_relationships = tables.character_relationships || [];
+      let row = tables.character_relationships.find(
+        (r) => r.discord_user_id === p_user_id && r.character_id === p_character_id,
+      );
+      if (!row) {
+        row = {
+          discord_user_id: p_user_id,
+          character_id: p_character_id,
+          affinity: 0,
+          times_met: 0,
+          pending_encounter_boost: 0,
+          last_response_type: null,
+        };
+        tables.character_relationships.push(row);
+      }
+      const previous_affinity = row.affinity || 0;
+      row.affinity = previous_affinity + p_gain;
+      row.times_met = (row.times_met || 0) + 1;
+      if (p_response_type != null) row.last_response_type = p_response_type;
+      row.last_interaction_at = rpcNow.toISOString();
+      return { ...row, previous_affinity };
+    },
+
+    // db/migrations/038: upsert, commands_this_month restarting at 1 in a new
+    //                    UTC month.
+    track_user_activity({ p_user_id }) {
+      tables.user_activity = tables.user_activity || [];
+      const now = rpcNow.toISOString();
+      const row = tables.user_activity.find((r) => r.discord_user_id === p_user_id);
+      if (!row) {
+        tables.user_activity.push({
+          discord_user_id: p_user_id,
+          last_used_at: now,
+          commands_this_month: 1,
+          total_commands: 1,
+          created_at: now,
+          updated_at: now,
+        });
+        return null;
+      }
+      row.commands_this_month = sameUtcMonth(row.last_used_at, rpcNow) ? (row.commands_this_month || 0) + 1 : 1;
+      row.total_commands = (row.total_commands || 0) + 1;
+      row.last_used_at = now;
+      row.updated_at = now;
+      return null;
+    },
+
+    // db/migrations/038: the same upsert per (user, character).
+    track_character_engagement({ p_user_id, p_character_id }) {
+      tables.character_engagement = tables.character_engagement || [];
+      const now = rpcNow.toISOString();
+      const row = tables.character_engagement.find(
+        (r) => r.discord_user_id === p_user_id && r.character_id === p_character_id,
+      );
+      if (!row) {
+        tables.character_engagement.push({
+          discord_user_id: p_user_id,
+          character_id: p_character_id,
+          commands_this_month: 1,
+          total_commands: 1,
+          last_interacted_at: now,
+          created_at: now,
+          updated_at: now,
+        });
+        return null;
+      }
+      row.commands_this_month = sameUtcMonth(row.last_interacted_at, rpcNow) ? (row.commands_this_month || 0) + 1 : 1;
+      row.total_commands = (row.total_commands || 0) + 1;
+      row.last_interacted_at = now;
+      row.updated_at = now;
+      return null;
+    },
+
     // db/migrations/031: upsert, moving p_beat_key to the front of beat_keys
     //                    (older copy dropped) and keeping the newest p_cap.
     remember_dialogue_beat({ p_user_id, p_character_id, p_beat_key, p_cap }) {
